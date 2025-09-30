@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.28.0",
-    "@etchteam/storybook-addon-status": "5.0.0",
+    "@etchteam/storybook-addon-status": "7.0.1",
     "@example/assets": "workspace:*",
     "@example/components-css": "workspace:*",
     "@example/design-tokens": "workspace:*",
