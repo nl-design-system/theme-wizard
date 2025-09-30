@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+  "extends": "../../tsconfig.json",
+  "include": ["config/**/*.ts", "config/**/*.tsx", "src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["**/node_modules/*"]
+}

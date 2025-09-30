@@ -1,0 +1,49 @@
+{
+  "name": "@example/storybook",
+  "author": "Community for NL Design System",
+  "description": "Storybook based on the NL Design System architecture",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/example.git",
+    "directory": "packages/storybook"
+  },
+  "scripts": {
+    "build": "storybook build --output-dir dist/ --config-dir config/",
+    "clean": "rimraf dist/",
+    "lint-build": "tsc --noEmit --project tsconfig.json",
+    "storybook": "storybook dev --config-dir config/ --port 6006"
+  },
+  "devDependencies": {
+    "@babel/core": "7.28.0",
+    "@etchteam/storybook-addon-status": "5.0.0",
+    "@example/assets": "workspace:*",
+    "@example/components-css": "workspace:*",
+    "@example/design-tokens": "workspace:*",
+    "@example/font": "workspace:*",
+    "@example/web-components-react": "workspace:*",
+    "@example/web-components-stencil": "workspace:*",
+    "@storybook/addon-a11y": "8.6.14",
+    "@storybook/addon-actions": "8.6.14",
+    "@storybook/addon-docs": "8.6.14",
+    "@storybook/addon-interactions": "8.6.14",
+    "@storybook/addon-links": "8.6.14",
+    "@storybook/addon-viewport": "8.6.14",
+    "@storybook/react": "8.6.14",
+    "@storybook/react-vite": "8.6.14",
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
+    "@whitespace/storybook-addon-html": "6.1.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-syntax-highlighter": "15.6.1",
+    "rimraf": "6.0.1",
+    "storybook": "8.6.14",
+    "typescript": "5.8.3",
+    "vite": "6.3.5"
+  }
+}

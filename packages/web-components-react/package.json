@@ -1,0 +1,44 @@
+{
+  "name": "@example/web-components-react",
+  "version": "1.0.0-alpha.0",
+  "author": "Community for NL Design System",
+  "description": "React web components bundle based on the NL Design System architecture",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/example.git",
+    "directory": "packages/web-components-react"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p .",
+    "clean": "rimraf dist/ src/components.ts src/react-component-lib/"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@example/web-components-stencil": "workspace:*",
+    "@types/node": "22.16.4",
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "rimraf": "6.0.1",
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "@stencil/react-output-target": "1.2.0"
+  }
+}

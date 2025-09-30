@@ -1,0 +1,35 @@
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      patch-and-minor-dependencies:
+        applies-to: "version-updates"
+        update-types:
+          - "patch"
+          - "minor"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "@types/react"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "@types/react-dom"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "react"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "react-dom"
+        update-types:
+          - "version-update:semver-major"
+    versioning-strategy: "increase-if-necessary"
+    open-pull-requests-limit: 20

@@ -1,0 +1,87 @@
+{
+  "name": "@example/design-system",
+  "version": "1.0.0-alpha.0",
+  "author": "Community for NL Design System",
+  "description": "Design system based on the NL Design System architecture",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/example.git",
+    "directory": "."
+  },
+  "packageManager": "pnpm@10.17.0+sha512.fce8a3dd29a4ed2ec566fb53efbb04d8c44a0f05bc6f24a73046910fb9c3ce7afa35a0980500668fa3573345bd644644fa98338fa168235c80f4aa17aa17fbef",
+  "engines": {
+    "//": "Update @types/node to match the highest node version here",
+    "node": ">=20 <=22",
+    "pnpm": "^10.16.0"
+  },
+  "workspaces": [
+    "./packages/*",
+    "./proprietary/*"
+  ],
+  "devDependencies": {
+    "@changesets/cli": "2.29.5",
+    "@eslint/js": "9.31.0",
+    "@eslint/json": "0.13.0",
+    "@nl-design-system/eslint-config": "2.1.1",
+    "@types/node": "22.16.4",
+    "eslint": "9.31.0",
+    "eslint-config-prettier": "10.1.5",
+    "eslint-plugin-perfectionist": "4.15.0",
+    "eslint-plugin-react": "7.37.5",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.2",
+    "markdownlint-cli": "0.45.0",
+    "npm-check-updates": "18.0.1",
+    "npm-package-json-lint": "9.0.0",
+    "postcss": "8.5.6",
+    "prettier": "3.6.2",
+    "stylelint": "16.22.0",
+    "stylelint-config-standard-scss": "15.0.1",
+    "stylelint-order": "7.0.0",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.37.0"
+  },
+  "scripts": {
+    "build": "pnpm --recursive run build",
+    "clean": "pnpm --recursive run clean",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:css": "stylelint --allow-empty-input '**/*.{css,scss}'",
+    "lint:js": "eslint",
+    "lint:md": "markdownlint '**/*.md'",
+    "lint:package-json": "npmPkgJsonLint .",
+    "lint:package-lock": "pnpm ls --recursive",
+    "lint:prettier": "prettier --check .",
+    "lint-fix": "pnpm run --sequential '/^lint-fix:.+$/",
+    "lint-fix:css": "stylelint --fix '**/*.{css,scss}'",
+    "lint-fix:js": "eslint --fix",
+    "lint-fix:md": "markdownlint --fix '**/*.md'",
+    "lint-build": "pnpm --recursive --if-present run lint-build",
+    "lint-prettier": "prettier --write .",
+    "prepare": "husky",
+    "changeset": "changeset add",
+    "changeset:empty": "changeset --empty",
+    "changeset:publish": "changeset publish",
+    "changeset:status": "changeset status --since origin/main",
+    "start": "http-server packages/storybook/dist/",
+    "storybook": "pnpm run '/^watch:.+$/'",
+    "test": "pnpm run --recursive test",
+    "test-update": "pnpm run --sequential '/^test-update:.+$/'",
+    "test-update:clean": "pnpm run clean",
+    "test-update:lint": "pnpm run lint",
+    "test-update:build": "pnpm run build",
+    "test-update:test": "pnpm run test",
+    "update-patch": "npm-check-updates --configFileName .ncurc.patch.cjs",
+    "update-minor": "npm-check-updates --configFileName .ncurc.minor.cjs",
+    "update-major": "npm-check-updates --configFileName .ncurc.major.cjs",
+    "watch:storybook": "pnpm --filter @example/web-components-stencil run build:stencil && pnpm --filter @example/design-tokens run build:style-dictionary && pnpm --filter ./packages/storybook run storybook",
+    "watch:style-dictionary": "pnpm --filter @example/design-tokens run watch:style-dictionary"
+  },
+  "dependencies": {
+    "http-server": "14.1.1"
+  }
+}
