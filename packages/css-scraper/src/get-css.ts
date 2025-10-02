@@ -120,7 +120,7 @@ const getStyles = (nodes: NodeListOf<Element>, baseUrl: string) => {
   return items;
 };
 
-export async function getCss(url: string, { timeout = 10000 } = {}) {
+export const getCss = async (url: string, { timeout = 10000 } = {}) => {
   const resolvedUrl = resolveUrl(url);
 
   if (resolvedUrl === undefined) {
