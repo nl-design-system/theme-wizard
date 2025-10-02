@@ -261,7 +261,7 @@ export const getCss = async (url: string, { timeout = 10000 } = {}) => {
           continue;
         }
         item.css = await getCssFile(fileUrl, abortController.signal);
-        // Set the URL to the resolved URL to fix relative URLs
+        // Set the URL to the resolved URL instead of item.href to fix relative URLs
         // e.g. ./styles.css -> https://example.com/styles.css
         item.url = fileUrl.toString();
       }
