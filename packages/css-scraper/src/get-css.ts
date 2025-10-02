@@ -1,12 +1,9 @@
 import { parse, walk } from 'css-tree';
 import { parseHTML } from 'linkedom';
 import { resolveUrl } from './resolve-url.js';
+import { isWaybackUrl } from './strip-wayback.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
-
-const isWaybackUrl = (url: string) => {
-  return /^(?:(?:https:)?\/\/)?web\.archive\.org\/web\/\d{14}\/.+/.test(url);
-};
 
 /**
  * @description Parse a string of CSS to get all the `@import url()` URL's if there are any
