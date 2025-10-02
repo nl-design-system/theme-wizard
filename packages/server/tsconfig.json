@@ -1,0 +1,22 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"declaration": true,
+		"outDir": "dist",
+		"target": "es2022",
+		"skipLibCheck": true,
+		"lib": [
+			"es2022",
+			"DOM",
+		],
+		"allowJs": false,
+		"strict": true
+	},
+	"include": [
+		"src"
+	],
+	"exclude": [
+		"**/node_modules/*"
+	]
+}
