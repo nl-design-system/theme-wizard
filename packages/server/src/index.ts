@@ -1,53 +1,59 @@
-import { serve } from '@hono/node-server'
-import { get_css } from '@nl-design-system-community/css-scraper'
-import { Hono } from 'hono'
-import { cors } from 'hono/cors'
-import { HTTPException } from 'hono/http-exception'
+import { serve } from '@hono/node-server';
+import { get_css } from '@nl-design-system-community/css-scraper';
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { HTTPException } from 'hono/http-exception';
 
-const app = new Hono()
-app.use('*', cors({
-	origin: '*'
-}))
+const app = new Hono();
+app.use(
+  '*',
+  cors({
+    origin: '*',
+  }),
+);
 
 app.get('/api/get-css', async (c) => {
-	const url = c.req.query('url')
+  const url = c.req.query('url');
 
-	if (!url || url.trim().length === 0) {
-		throw new HTTPException(400, { message: 'missing `url` parameter' })
-	}
+  if (!url || url.trim().length === 0) {
+    throw new HTTPException(400, { message: 'missing `url` parameter' });
+  }
 
-	const origins = await get_css(url)
-	// const origins = [{
-	//   css: `a {
-	//     color: red;
-	//     color: green;
-	//     color: blue;
+  const origins = await get_css(url);
+  // const origins = [{
+  //   css: `a {
+  //     color: red;
+  //     color: green;
+  //     color: blue;
 
-	//     font-size: 19px;
-	//     font-size: 1rem;
-	//     font-size: 2rem;
+  //     font-size: 19px;
+  //     font-size: 1rem;
+  //     font-size: 2rem;
 
-	//     line-height: 1rem;
-	//     line-height: 2rem;
+  //     line-height: 1rem;
+  //     line-height: 2rem;
 
-	//     font-family: "open sans", sans-serif;
-	//     font-family: "MS Comic Sans";
-	//   }`
-	// }]
+  //     font-family: "open sans", sans-serif;
+  //     font-family: "MS Comic Sans";
+  //   }`
+  // }]
 
-	if ('error' in origins) {
-		console.error(origins.error)
-		throw new HTTPException(500, { cause: origins.error, message: 'encountered a scraping error' })
-	}
+  if ('error' in origins) {
+    console.error(origins.error);
+    throw new HTTPException(500, { cause: origins.error, message: 'encountered a scraping error' });
+  }
 
-	c.res.headers.set('content-type', 'text/css;utf-8')
-	const css = origins.map(origin => origin.css).join('')
-	return c.text(css)
-})
+  c.res.headers.set('content-type', 'text/css;utf-8');
+  const css = origins.map((origin) => origin.css).join('');
+  return c.text(css);
+});
 
-serve({
-	fetch: app.fetch,
-	port: 3000
-}, (info) => {
-	console.log(`Server is running on http://localhost:${info.port}`)
-})
+serve(
+  {
+    fetch: app.fetch,
+    port: 3000,
+  },
+  (info) => {
+    console.log(`Server is running on http://localhost:${info.port}`);
+  },
+);

@@ -1,44 +1,44 @@
 {
-	"name": "@nl-design-system-community/theme-wizard-server",
-	"version": "1.0.0-alpha.0",
-	"author": "Community for NL Design System",
-	"description": "Stencil web components bundle based on the NL Design System architecture",
-	"license": "EUPL-1.2",
-	"keywords": [
-		"nl-design-system"
-	],
-	"private": true,
-	"main": "./dist/index.cjs.js",
-	"module": "./dist/index.js",
-	"types": "./dist/types/components.d.ts",
-	"files": [
-		"dist/",
-		"loader/"
-	],
-	"repository": {
-		"type": "git+ssh",
-		"url": "git@github.com:nl-design-system/theme-wizard.git",
-		"directory": "packages/server"
-	},
-	"scripts": {
-		"start": "vite preview",
-		"dev": "vite",
-		"lint": "eslint",
-		"test": "pnpm run test:vitest",
-		"test:vitest": "vitest",
-		"build": "vite build",
-		"clean": "rimraf dist/"
-	},
-	"devDependencies": {
-		"rimraf": "6.0.1",
-		"typescript": "5.9.3",
-		"vite": "6.3.5",
-		"vite-plugin-dts": "4.5.4",
-		"vitest": "3.2.4"
-	},
-	"dependencies": {
-		"@hono/node-server": "1.19.5",
-		"@nl-design-system-community/css-scraper": "workspace:*",
-		"hono": "4.9.9"
-	}
+  "name": "@nl-design-system-community/theme-wizard-server",
+  "version": "1.0.0-alpha.0",
+  "author": "Community for NL Design System",
+  "description": "Stencil web components bundle based on the NL Design System architecture",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "private": true,
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/components.d.ts",
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
+    "directory": "packages/server"
+  },
+  "scripts": {
+    "start": "vite preview",
+    "dev": "vite",
+    "lint": "eslint",
+    "test": "echo \"No tests implemented yet\"",
+    "test:vitest": "vitest",
+    "build": "vite build",
+    "clean": "rimraf dist/"
+  },
+  "devDependencies": {
+    "rimraf": "6.0.1",
+    "typescript": "5.9.3",
+    "vite": "6.3.5",
+    "vite-plugin-dts": "4.5.4",
+    "vitest": "3.2.4"
+  },
+  "dependencies": {
+    "@hono/node-server": "1.19.5",
+    "@nl-design-system-community/css-scraper": "workspace:*",
+    "hono": "4.9.9"
+  }
 }
