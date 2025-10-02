@@ -1,22 +1,10 @@
 <!-- @license CC0-1.0 -->
 
-# Example Design System
+# Theme Wizard
 
-This design system is based on the NL Design System architecture.
+This repository is based on the NL Design System architecture.
 
 For more info about the NL Design System and learn about things happening in our open source community, join the `#nl-design-system` Slack via [praatmee.codefor.nl](https://praatmee.codefor.nl)!
-
----
-
-✂ In your own repository: **remove the "Getting started" section below!**
-
----
-
-## Getting started with the NL Design System template
-
-This template contains all relevant linting rules used by the NL Design System repository.
-It also contains the Storybook setup with two example components and two example general documentation page.
-Feel free to add or modify those documentation pages and use the example components as an initial template to create your own storybook components.
 
 ### Install prerequisites
 
