@@ -15,7 +15,9 @@ export function resolve_url(url: string, base_url?: string | URL): URL | undefin
 	// try as full URL
 	try {
 		return new URL(url)
-	} catch { }
+	} catch {
+		// do nothing, continue to check in next block
+	}
 
 	// allow domain-like without scheme (any a-z0-9.- and a dot with 2+ letters)
 	// and optional path, query or fragment

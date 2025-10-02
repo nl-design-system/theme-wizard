@@ -5,7 +5,7 @@ import dts from "vite-plugin-dts"
 export default defineConfig({
 	build: {
 		lib: {
-			entry: resolve(__dirname, "src/get-css.ts"),
+			entry: resolve("./src/get-css.ts"),
 			formats: ["es"],
 		},
 		rollupOptions: {

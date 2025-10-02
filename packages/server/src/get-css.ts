@@ -23,6 +23,7 @@ function get_import_urls(css: string): string[] {
 
 	walk(ast, function (node) {
 		// Can not be a URL inside something else because otherwise this.atrule could never be an import
+		// eslint-disable-next-line no-invalid-this
 		if (node.type === 'Url' && this.atrule?.name === 'import') {
 			urls.push(node.value)
 		}
@@ -45,7 +46,7 @@ async function get_css_file(url: string | URL, abort_signal: AbortSignal) {
 			throw new Error(response.statusText)
 		}
 		return response.text()
-	} catch (error: unknown) {
+	} catch {
 		return ''
 	}
 }
