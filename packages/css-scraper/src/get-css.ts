@@ -2,13 +2,7 @@ import { parse, walk } from 'css-tree';
 import { parseHTML } from 'linkedom';
 import { resolveUrl } from './resolve-url.js';
 import { isWaybackUrl } from './strip-wayback.js';
-import type {
-  CSSImportOrigin,
-  CSSInlineStyleOrigin,
-  CSSLinkOrigin,
-  CSSOrigin,
-  CSSStyleTagOrigin,
-} from './css-origin.types.js';
+import type { CSSOrigin } from './css-origin.types.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
@@ -76,17 +70,17 @@ const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLEl
         href,
         media: node.getAttribute('media') || undefined,
         rel: node.getAttribute('rel')!,
-        type: 'link',
+        type: 'link' as const,
         url: href !== null && href.startsWith('http') ? href : baseUrl + href,
-      } satisfies CSSLinkOrigin;
+      };
       items.push(origin);
     } else if (node.nodeName === 'STYLE' && node.textContent !== null && node.textContent.trim().length > 0) {
       const css = node.textContent;
       const origin = {
         css,
-        type: 'style',
+        type: 'style' as const,
         url: baseUrl,
-      } satisfies CSSStyleTagOrigin;
+      };
       items.push(origin);
     } else if (node.hasAttribute('style')) {
       let declarations = (node.getAttribute('style') || '').trim();
@@ -127,9 +121,9 @@ const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLEl
 
     const origin = {
       css: inlined,
-      type: 'inline',
+      type: 'inline' as const,
       url: baseUrl,
-    } satisfies CSSInlineStyleOrigin;
+    };
     items.push(origin);
   }
 
@@ -314,8 +308,8 @@ export const getCss = async (
           const importOrigin = {
             css,
             href: importUrls[index],
-            type: 'import',
-          } satisfies CSSImportOrigin;
+            type: 'import' as const,
+          };
           result.push(importOrigin);
         });
       }

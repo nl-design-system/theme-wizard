@@ -1,5 +1,6 @@
 import { serve } from '@hono/node-server';
-import { get_css } from '@nl-design-system-community/css-scraper';
+// TODO: take from `@nl-design-system-community/css-scraper` local workspace package
+import { getCss } from '../../css-scraper/src/get-css';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { HTTPException } from 'hono/http-exception';
@@ -19,24 +20,7 @@ app.get('/api/get-css', async (c) => {
     throw new HTTPException(400, { message: 'missing `url` parameter' });
   }
 
-  const origins = await get_css(url);
-  // const origins = [{
-  //   css: `a {
-  //     color: red;
-  //     color: green;
-  //     color: blue;
-
-  //     font-size: 19px;
-  //     font-size: 1rem;
-  //     font-size: 2rem;
-
-  //     line-height: 1rem;
-  //     line-height: 2rem;
-
-  //     font-family: "open sans", sans-serif;
-  //     font-family: "MS Comic Sans";
-  //   }`
-  // }]
+  const origins = await getCss(url);
 
   if ('error' in origins) {
     console.error(origins.error);
