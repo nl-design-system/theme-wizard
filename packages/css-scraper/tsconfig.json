@@ -1,0 +1,15 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"lib": [
+			"es2022",
+			"dom"
+		],
+		"outDir": "dist",
+		"skipLibCheck": true
+	},
+	"include": [
+		"src"
+	]
+}

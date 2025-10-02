@@ -1,8 +1,8 @@
 {
-	"name": "@nl-design-system-community/theme-wizard-server",
+	"name": "@nl-design-system-community/css-scraper",
 	"version": "1.0.0-alpha.0",
 	"author": "Community for NL Design System",
-	"description": "Stencil web components bundle based on the NL Design System architecture",
+	"description": "CSS Scraper",
 	"license": "EUPL-1.2",
 	"keywords": [
 		"nl-design-system"
@@ -18,7 +18,7 @@
 	"repository": {
 		"type": "git+ssh",
 		"url": "git@github.com:nl-design-system/theme-wizard.git",
-		"directory": "packages/server"
+		"directory": "packages/css-scraper"
 	},
 	"scripts": {
 		"start": "vite preview",
@@ -30,6 +30,7 @@
 		"clean": "rimraf dist/"
 	},
 	"devDependencies": {
+		"@types/css-tree": "2.3.11",
 		"rimraf": "6.0.1",
 		"typescript": "5.9.3",
 		"vite": "6.3.5",
@@ -37,8 +38,7 @@
 		"vitest": "3.2.4"
 	},
 	"dependencies": {
-		"@hono/node-server": "1.19.5",
-		"@nl-design-system-community/css-scraper": "workspace:*",
-		"hono": "4.9.9"
+		"css-tree": "3.1.0",
+		"linkedom": "0.18.12"
 	}
 }
