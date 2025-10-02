@@ -293,4 +293,4 @@ export const getCss = async (url: string, { timeout = 10000 } = {}) => {
   clearTimeout(timeoutId);
 
   return result;
-}
+};
