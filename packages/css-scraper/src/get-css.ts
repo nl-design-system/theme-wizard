@@ -2,6 +2,13 @@ import { parse, walk } from 'css-tree';
 import { parseHTML } from 'linkedom';
 import { resolveUrl } from './resolve-url.js';
 import { isWaybackUrl } from './strip-wayback.js';
+import type {
+  CSSImportOrigin,
+  CSSInlineStyleOrigin,
+  CSSLinkOrigin,
+  CSSOrigin,
+  CSSStyleTagOrigin,
+} from './css-origin.types.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
@@ -57,33 +64,35 @@ const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
   }
 };
 
-const getStyles = (nodes: NodeListOf<Element>, baseUrl: string) => {
+const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLElement>, baseUrl: string) => {
   const items = [];
   const inlineStyles: string[] = [];
 
   for (const node of Array.from(nodes)) {
     if (node.nodeName === 'LINK') {
-      const href = node.getAttribute('href');
-      items.push({
+      const href = node.getAttribute('href')!;
+      const origin = {
         css: '',
         href,
-        media: node.getAttribute('media'),
-        rel: node.getAttribute('rel'),
+        media: node.getAttribute('media') || undefined,
+        rel: node.getAttribute('rel')!,
         type: 'link',
         url: href !== null && href.startsWith('http') ? href : baseUrl + href,
-      });
+      } satisfies CSSLinkOrigin;
+      items.push(origin);
     } else if (node.nodeName === 'STYLE' && node.textContent !== null && node.textContent.trim().length > 0) {
       const css = node.textContent;
-      items.push({
+      const origin = {
         css,
         type: 'style',
         url: baseUrl,
-      });
+      } satisfies CSSStyleTagOrigin;
+      items.push(origin);
     } else if (node.hasAttribute('style')) {
       let declarations = (node.getAttribute('style') || '').trim();
       if (declarations.length === 0) continue;
 
-      // I forgot why I added this, but it's apparently important
+      // Make sure to terminate all declarations properly
       if (!declarations.endsWith(';')) {
         declarations += ';';
       }
@@ -116,17 +125,30 @@ const getStyles = (nodes: NodeListOf<Element>, baseUrl: string) => {
       '\n',
     );
 
-    items.push({
+    const origin = {
       css: inlined,
       type: 'inline',
       url: baseUrl,
-    });
+    } satisfies CSSInlineStyleOrigin;
+    items.push(origin);
   }
 
   return items;
 };
 
-export const getCss = async (url: string, { timeout = 10000 } = {}) => {
+export const getCss = async (
+  url: string,
+  { timeout = 10000 } = {},
+): Promise<
+  | CSSOrigin[]
+  | {
+      error: {
+        message: string;
+        statusCode: number;
+        url: string;
+      };
+    }
+> => {
   const resolvedUrl = resolveUrl(url);
 
   if (resolvedUrl === undefined) {
@@ -253,7 +275,7 @@ export const getCss = async (url: string, { timeout = 10000 } = {}) => {
   const baseUrl =
     baseElement !== null && baseElement.hasAttribute('href') ? baseElement.getAttribute('href') : resolvedUrl;
   const items = getStyles(nodes, baseUrl?.toString() || '') || [];
-  const result = [];
+  const result: CSSOrigin[] = [];
 
   for (const item of items) {
     if (item.type === 'link' && item.href) {
@@ -289,11 +311,12 @@ export const getCss = async (url: string, { timeout = 10000 } = {}) => {
         );
         const importedFiles = await Promise.all(cssRequests);
         importedFiles.forEach((css, index) => {
-          result.push({
+          const importOrigin = {
             css,
             href: importUrls[index],
             type: 'import',
-          });
+          } satisfies CSSImportOrigin;
+          result.push(importOrigin);
         });
       }
     }

@@ -36,10 +36,17 @@ export type CSSStyleTagOrigin = {
   url: string;
 };
 
+export type CSSInlineStyleOrigin = {
+  type: 'inline';
+  css: string;
+  url: string;
+};
+
 export type CSSOrigin =
   | CSSImportOrigin
   | CSSLinkOrigin
   | CSSFileOrigin
   | CSSStyleTagOrigin
   | CSSRawInputOrigin
-  | CSSLocalFileOrigin;
+  | CSSLocalFileOrigin
+  | CSSInlineStyleOrigin;
