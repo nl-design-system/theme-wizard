@@ -1,5 +1,5 @@
 {
-  "name": "@example/design-tokens",
+  "name": "@nl-design-system-community/design-tokens",
   "version": "1.0.0-alpha.0",
   "author": "Community for NL Design System",
   "description": "Example design tokens",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git+ssh",
-    "url": "git@github.com:nl-design-system/example.git",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
     "directory": "proprietary/design-tokens"
   },
   "scripts": {

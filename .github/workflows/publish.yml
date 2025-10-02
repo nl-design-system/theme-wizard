@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   publish:
-    if: ${{ github.repository != 'nl-design-system/example' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -46,7 +45,7 @@ jobs:
           GIT_COMMITTER_NAME: "NL Design System"
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
-          commit: "docs(release): design system packages"
+          commit: "docs(release): theme wizard packages"
           setupGitUser: false
-          title: "docs(release): design system packages"
+          title: "docs(release): theme wizard packages"
           publish: "pnpm run changeset:publish"

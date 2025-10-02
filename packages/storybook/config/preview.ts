@@ -1,10 +1,6 @@
-import '@example/design-tokens/dist/index.css';
-import '@example/font/src/index.scss';
+import '@nl-design-system-community/design-tokens/dist/index.css';
 import type { Preview } from '@storybook/react';
-import { defineCustomElements } from '@example/web-components-stencil/loader/index.js';
 import { ParametersArgsDecorator } from './ParametersArgsDecorator';
-
-defineCustomElements();
 
 const preview: Preview = {
   decorators: [ParametersArgsDecorator],

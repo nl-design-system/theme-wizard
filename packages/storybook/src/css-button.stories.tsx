@@ -1,9 +1,7 @@
 /* @license CC0-1.0 */
 
 import type { Meta, StoryObj } from '@storybook/react';
-import readme from '@example/components-css/button/README.md?raw';
 import { PropsWithChildren } from 'react';
-import '@example/components-css/button/index.scss';
 
 const Button = ({ children }: PropsWithChildren) => (
   <button className="example-button" type="button">
@@ -30,9 +28,7 @@ const meta = {
   component: Button,
   parameters: {
     docs: {
-      description: {
-        component: readme,
-      },
+      description: {},
     },
   },
   tags: ['autodocs'],
