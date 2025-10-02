@@ -5,6 +5,15 @@ import { isWaybackUrl } from './strip-wayback.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
+export const isLocalhostUrl = (url: string): boolean => {
+  try {
+    const parsed = new URL(url);
+    return parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1' || parsed.hostname.startsWith('192.168.');
+  } catch {
+    return false;
+  }
+};
+
 /**
  * @description Parse a string of CSS to get all the `@import url()` URL's if there are any
  */
@@ -169,7 +178,7 @@ export const getCss = async (url: string, { timeout = 10000 } = {}) => {
       // Examples: localhost, sduhsdf.test
       if (error.message === 'fetch failed') {
         let message = 'The origin server is refusing connections.';
-        if (url.includes('localhost') || url.includes('192.168') || url.includes('127.0.0.1')) {
+        if (isLocalhostUrl(url)) {
           message += ' You are trying to scrape a local server. Make sure to use a public URL.';
         }
 
