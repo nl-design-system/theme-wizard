@@ -2,7 +2,7 @@ export function resolve_url(url: string, base_url?: string | URL): URL | undefin
 	// validate base_url if given
 	if (base_url) {
 		try {
-			let base = new URL(base_url)
+			const base = new URL(base_url)
 			if (!base.protocol || !base.hostname) {
 				return undefined
 			}

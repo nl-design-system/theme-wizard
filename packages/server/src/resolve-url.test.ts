@@ -1,5 +1,5 @@
-import { resolve_url } from "./resolve-url"
 import { test, expect, describe } from "vitest"
+import { resolve_url } from "./resolve-url"
 
 describe('valid urls', () => {
 	; ([

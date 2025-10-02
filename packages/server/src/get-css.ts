@@ -1,5 +1,5 @@
-import { parseHTML } from 'linkedom'
 import { parse, walk } from 'css-tree'
+import { parseHTML } from 'linkedom'
 import { resolve_url } from './resolve-url.js'
 
 export const USER_AGENT = 'Project Wallace CSS Scraper/1.1 (+https://www.projectwallace.com/docs/css-scraper)'
@@ -12,13 +12,14 @@ function is_wayback_url(url: string) {
  * @description Parse a string of CSS to get all the `@import url()` URL's if there are any
  */
 function get_import_urls(css: string): string[] {
-	let ast = parse(css, {
+	// TODO: including an entire CSS parser is quite heavy for only getting some `@import url()` rules
+	const ast = parse(css, {
 		parseAtrulePrelude: false,
+		parseCustomProperty: false,
 		parseRulePrelude: false,
-		parseValue: false,
-		parseCustomProperty: false
+		parseValue: false
 	})
-	let urls: string[] = []
+	const urls: string[] = []
 
 	walk(ast, function (node) {
 		// Can not be a URL inside something else because otherwise this.atrule could never be an import
@@ -31,10 +32,10 @@ function get_import_urls(css: string): string[] {
 
 async function get_css_file(url: string | URL, abort_signal: AbortSignal) {
 	try {
-		let response = await fetch(url, {
+		const response = await fetch(url, {
 			headers: {
-				'User-Agent': USER_AGENT,
-				'Accept': 'text/css,*/*;q=0.1'
+				'Accept': 'text/css,*/*;q=0.1',
+				'User-Agent': USER_AGENT
 			},
 			// If aborted early try to return an empty string so we can continue with just the content we have
 			signal: abort_signal,
@@ -50,25 +51,25 @@ async function get_css_file(url: string | URL, abort_signal: AbortSignal) {
 }
 
 function get_styles(nodes: NodeListOf<Element>, base_url: string) {
-	let items = []
+	const items = []
 	let inline_styles = ''
 
-	for (let node of Array.from(nodes)) {
+	for (const node of Array.from(nodes)) {
 		if (node.nodeName === 'LINK') {
-			let href = node.getAttribute('href')
+			const href = node.getAttribute('href')
 			items.push({
-				type: 'link',
+				css: '',
 				href,
 				media: node.getAttribute('media'),
 				rel: node.getAttribute('rel'),
-				url: href !== null && href.startsWith('http') ? href : base_url + href,
-				css: ''
+				type: 'link',
+				url: href !== null && href.startsWith('http') ? href : base_url + href
 			})
 		} else if (node.nodeName === 'STYLE' && node.textContent !== null && node.textContent.trim().length > 0) {
-			let css = node.textContent
+			const css = node.textContent
 			items.push({
-				type: 'style',
 				css,
+				type: 'style',
 				url: base_url,
 			})
 		} else if (node.hasAttribute('style')) {
@@ -81,7 +82,7 @@ function get_styles(nodes: NodeListOf<Element>, base_url: string) {
 			}
 
 			// Try to add a class name to the selector
-			let class_attr = node.getAttribute('class')
+			const class_attr = node.getAttribute('class')
 			let class_name = ''
 			if (class_attr !== null && class_attr.length > 0) {
 				class_name += '.'
@@ -90,7 +91,7 @@ function get_styles(nodes: NodeListOf<Element>, base_url: string) {
 					.filter((s: string) => {
 						if (s.length === 0) return false
 						if (s.length === 1) {
-							let code = s.charCodeAt(0)
+							const code = s.charCodeAt(0)
 							if (code < 48 || code > 122) return false // 0-9a-zA-Z range
 						}
 						return true
@@ -98,7 +99,7 @@ function get_styles(nodes: NodeListOf<Element>, base_url: string) {
 					.map((s: string) => s.replaceAll(/(\[|\]|:|\.|\/)/g, '\\$1'))
 					.join('.')
 			}
-			let node_name = node.nodeName.toLocaleLowerCase()
+			const node_name = node.nodeName.toLocaleLowerCase()
 			inline_styles += `${node_name}${class_name} { ${declarations} }\n`
 		}
 	}
@@ -109,8 +110,8 @@ function get_styles(nodes: NodeListOf<Element>, base_url: string) {
 		inlined += '/** End Project Wallace extracted inline styles */'
 
 		items.push({
-			type: 'inline',
 			css: inlined,
+			type: 'inline',
 			url: base_url
 		})
 	}
@@ -121,30 +122,30 @@ function get_styles(nodes: NodeListOf<Element>, base_url: string) {
 export async function get_css(url: string, {
 	timeout = 10000,
 } = {}) {
-	let resolved_url = resolve_url(url)
+	const resolved_url = resolve_url(url)
 
 	if (resolved_url === undefined) {
 		return {
 			error: {
-				url,
+				message: 'The URL is not valid. Are you sure you entered a URL and not CSS?',
 				statusCode: 400,
-				message: 'The URL is not valid. Are you sure you entered a URL and not CSS?'
+				url
 			}
 		}
 	}
 
 	let body: string
 	let headers: Headers
-	let abort_controller = new AbortController()
-	let timeout_id = setTimeout(() => abort_controller.abort(), timeout)
+	const abort_controller = new AbortController()
+	const timeout_id = setTimeout(() => abort_controller.abort(), timeout)
 
 	try {
-		let response = await fetch(resolved_url, {
-			signal: abort_controller.signal,
+		const response = await fetch(resolved_url, {
 			headers: {
-				'User-Agent': USER_AGENT,
-				'Accept': 'text/html,*/*;q=0.1'
-			}
+				'Accept': 'text/html,*/*;q=0.1',
+				'User-Agent': USER_AGENT
+			},
+			signal: abort_controller.signal
 		})
 
 		if (!response.ok) {
@@ -161,9 +162,9 @@ export async function get_css(url: string, {
 			if (error.message === 'Forbidden') {
 				return {
 					error: {
-						url,
+						message: "The origin server responded with a 403 Forbidden status code which means that scraping CSS is blocked. Is the URL publicly accessible?",
 						statusCode: 403,
-						message: "The origin server responded with a 403 Forbidden status code which means that scraping CSS is blocked. Is the URL publicly accessible?"
+						url
 					}
 				}
 			}
@@ -177,9 +178,9 @@ export async function get_css(url: string, {
 
 				return {
 					error: {
-						url,
-						statusCode: 400,
 						message,
+						statusCode: 400,
+						url,
 					}
 				}
 			}
@@ -188,9 +189,9 @@ export async function get_css(url: string, {
 			if (error.message === 'Not Found') {
 				return {
 					error: {
-						url,
+						message: "The origin server responded with a 404 Not Found status code.",
 						statusCode: 404,
-						message: "The origin server responded with a 404 Not Found status code."
+						url
 					}
 				}
 			}
@@ -199,9 +200,9 @@ export async function get_css(url: string, {
 		// Generic error handling (TODO: add test case)
 		return {
 			error: {
-				url,
-				statusCode: 500,
 				message: 'something went wrong',
+				statusCode: 500,
+				url,
 			}
 		}
 	}
@@ -211,9 +212,9 @@ export async function get_css(url: string, {
 		clearTimeout(timeout_id)
 		return [
 			{
-				type: 'file',
+				css: body,
 				href: url,
-				css: body
+				type: 'file'
 			}
 		]
 	}
@@ -222,37 +223,37 @@ export async function get_css(url: string, {
 	const START_COMMENT = '<!-- BEGIN WAYBACK TOOLBAR INSERT -->'
 	const END_COMMENT = '<!-- END WAYBACK TOOLBAR INSERT -->'
 
-	let start_insert = body.indexOf(START_COMMENT)
-	let end_insert = body.indexOf(END_COMMENT)
+	const start_insert = body.indexOf(START_COMMENT)
+	const end_insert = body.indexOf(END_COMMENT)
 
 	if (start_insert !== -1 && end_insert !== -1) {
 		body = body.substring(0, start_insert) + body.substring(end_insert + END_COMMENT.length)
 	}
 
-	let { document } = parseHTML(body)
+	const { document } = parseHTML(body)
 
 	// If the URL is an archive.org URL, we need to strip out the archive injected stuff
 	if (is_wayback_url(url)) {
-		let injected_links = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"][href^="https://web-static.archive.org"]')
-		for (let link of Array.from(injected_links)) {
+		const injected_links = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"][href^="https://web-static.archive.org"]')
+		for (const link of Array.from(injected_links)) {
 			link.remove()
 		}
 	}
 
-	let nodes = document.querySelectorAll<HTMLLinkElement>('link[rel*="stylesheet"][href], style, [style]')
-	let baseElement = document.querySelector('base[href]')
-	let baseUrl = (baseElement !== null && baseElement.hasAttribute('href')) ? baseElement.getAttribute('href') : resolved_url
-	let items = get_styles(nodes, baseUrl?.toString() || '') || []
-	let result = []
+	const nodes = document.querySelectorAll<HTMLLinkElement>('link[rel*="stylesheet"][href], style, [style]')
+	const baseElement = document.querySelector('base[href]')
+	const baseUrl = (baseElement !== null && baseElement.hasAttribute('href')) ? baseElement.getAttribute('href') : resolved_url
+	const items = get_styles(nodes, baseUrl?.toString() || '') || []
+	const result = []
 
-	for (let item of items) {
+	for (const item of items) {
 		if (item.type === 'link' && item.href) {
 			if (item.href.startsWith('data:text/css')) {
-				let comma_position = item.href.indexOf(',')
-				let encoded = item.href.substring(comma_position)
+				const comma_position = item.href.indexOf(',')
+				const encoded = item.href.substring(comma_position)
 				item.css = Buffer.from(encoded, 'base64').toString('ascii')
 			} else {
-				let file_url = resolve_url(item.href, resolved_url)
+				const file_url = resolve_url(item.href, resolved_url)
 				if (file_url === undefined) {
 					continue
 				}
@@ -272,15 +273,15 @@ export async function get_css(url: string, {
 		if (item.type === 'style' || item.type === 'link') {
 			// Resolve @import CSS 1 level deep (to avoid infinite loops)
 			// And c'mon, don't @import inside your @import.
-			let importUrls = get_import_urls(item.css)
+			const importUrls = get_import_urls(item.css)
 			if (importUrls.length > 0) {
-				let cssRequests = importUrls.map((importUrl) => get_css_file(resolve_url(importUrl, url)!, abort_controller.signal))
-				let importedFiles = await Promise.all(cssRequests)
+				const cssRequests = importUrls.map((importUrl) => get_css_file(resolve_url(importUrl, url)!, abort_controller.signal))
+				const importedFiles = await Promise.all(cssRequests)
 				importedFiles.forEach((css, index) => {
 					result.push({
-						type: 'import',
 						css,
-						href: importUrls[index]
+						href: importUrls[index],
+						type: 'import'
 					})
 				})
 			}
