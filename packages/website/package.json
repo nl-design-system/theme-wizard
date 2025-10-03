@@ -12,7 +12,7 @@
     "build": "pnpm run clean && pnpm run stencil:build && astro build",
     "stencil:build": "stencil build",
     "clean": "rm -rf dist .astro build",
-    "start": "astro preview",
+    "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
