@@ -1,0 +1,83 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  themeData?: {
+    colors?: {
+      primary?: string;
+      secondary?: string;
+      background?: string;
+    };
+    typography?: {
+      bodyFontFamily?: string;
+      headingFontFamily?: string;
+    };
+    sourceUrl?: string;
+  };
+}
+
+const {
+  title = 'Theme Wizard',
+  description = 'Preview and analyze website themes',
+  themeData = {
+    colors: {
+      primary: '#ffffff',
+      secondary: '#000000',
+      background: '#ffffff',
+    },
+    typography: {
+      bodyFontFamily: "'Times New Roman', serif",
+      headingFontFamily: "'Times New Roman', serif",
+    },
+    sourceUrl: 'https://www.utrecht.nl/',
+  },
+} = Astro.props;
+
+// Generate theme data for client-side hydration
+const clientThemeData = {
+  colors: themeData.colors,
+  sourceUrl: themeData.sourceUrl,
+  typography: themeData.typography,
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Inject theme data for client-side components
+      (window as any).__THEME_DATA__ = {
+        colors: {
+          primary: '#{clientThemeData.colors.primary}',
+          secondary: '#{clientThemeData.colors.secondary}',
+          background: '#{clientThemeData.colors.background}',
+        },
+        sourceUrl: '#{clientThemeData.sourceUrl}',
+        typography: {
+          bodyFontFamily: '#{clientThemeData.typography.bodyFontFamily}',
+          headingFontFamily: '#{clientThemeData.typography.headingFontFamily}',
+        },
+      };
+      (window as any).__SSR__ = true;
+    </script>
+
+    <script type="module">
+      (async () => {
+        if (typeof window !== 'undefined') {
+          const { defineCustomElements } = await import(/* @vite-ignore */ '/dist/loader/index.js');
+          defineCustomElements();
+        }
+      })();
+    </script>
+  </body>
+</html>

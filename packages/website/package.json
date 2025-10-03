@@ -1,0 +1,19 @@
+{
+  "name": "website",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npm run stencil:build && astro dev",
+    "build": "npm run stencil:build && astro build",
+    "stencil:build": "stencil build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.14.1"
+  },
+  "devDependencies": {
+    "@astrojs/node": "9.4.4",
+    "@stencil/core": "4.37.1"
+  }
+}
