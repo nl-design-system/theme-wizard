@@ -70,6 +70,7 @@
     "start": "http-server packages/storybook/dist/",
     "storybook": "pnpm run '/^watch:.+$/'",
     "test": "pnpm run --recursive test",
+    "test-build": "pnpm run --recursive test-build",
     "test-update": "pnpm run --sequential '/^test-update:.+$/'",
     "test-update:clean": "pnpm run clean",
     "test-update:lint": "pnpm run lint",

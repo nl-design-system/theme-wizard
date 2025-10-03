@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node dist/index.mjs",
     "dev": "vite",
-    "test": "vitest",
+    "test-build": "vitest",
     "build": "vite build",
     "clean": "rimraf dist/"
   },
