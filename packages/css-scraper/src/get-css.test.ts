@@ -16,3 +16,25 @@ describe('isLocalhostUrl', () => {
     expect(isLocalhostUrl('http://192.168.1.1')).toBeTruthy();
   });
 });
+
+describe('get-css', () => {
+  describe('<style> tags', () => {
+    test.todo('happy path');
+    test.todo('empty tag');
+  });
+
+  describe('<link> tags', () => {
+    // Tets matrix:
+    // - href: absolute | relative | base64-encoded
+    // - <base> element present: yes | no
+    // - media: null | string
+    // - rel: stylesheet | alternate stylesheet | etc
+    test.todo('rel=-stylesheet href=absolute');
+  });
+
+  describe('inline `style=".." attributes', () => {
+    test.todo('happy path');
+    test.todo('missing trailing ;');
+    test.todo('empty attribute');
+  });
+});

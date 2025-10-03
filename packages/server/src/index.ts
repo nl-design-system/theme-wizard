@@ -1,8 +1,8 @@
+// TODO: take from `@nl-design-system-community/css-scraper` local workspace package
+import { getCss } from '@nl-design-system-community/css-scraper';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { HTTPException } from 'hono/http-exception';
-// TODO: take from `@nl-design-system-community/css-scraper` local workspace package
-import { getCss } from '../../css-scraper/src/get-css';
 
 const app = new Hono();
 app.use(

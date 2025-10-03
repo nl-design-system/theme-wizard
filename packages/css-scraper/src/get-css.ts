@@ -87,7 +87,7 @@ const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLEl
         url: url.toString(),
       };
       items.push(origin);
-    } else if (node.nodeName === 'STYLE' && node.textContent !== null && node.textContent.trim().length > 0) {
+    } else if (node.nodeName === 'STYLE' && node.textContent.trim().length > 0) {
       const css = node.textContent;
       const origin = {
         css,

@@ -8,12 +8,11 @@
     "nl-design-system"
   ],
   "private": true,
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.js",
-  "types": "./dist/types/components.d.ts",
+  "type": "module",
+  "main": "./dist/css-scraper.mjs",
+  "types": "./dist/get-css.d.ts",
   "files": [
-    "dist/",
-    "loader/"
+    "dist/"
   ],
   "repository": {
     "type": "git+ssh",
@@ -24,8 +23,7 @@
     "start": "vite preview",
     "dev": "vite",
     "lint": "eslint",
-    "test": "pnpm run test:vitest",
-    "test:vitest": "vitest",
+    "test": "vitest",
     "build": "vite build",
     "clean": "rimraf dist/"
   },
