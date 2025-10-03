@@ -5,6 +5,7 @@ describe('isLocalhostUrl', () => {
   test('localhost', () => {
     expect(isLocalhostUrl('http://localhost')).toBeTruthy();
     expect(isLocalhostUrl('http://localhost:8080')).toBeTruthy();
+    expect(isLocalhostUrl('HTTP://LOCALHOST:8080')).toBeTruthy();
   });
   test('127.0.0.1', () => {
     expect(isLocalhostUrl('http://127.0.0.1/')).toBeTruthy();

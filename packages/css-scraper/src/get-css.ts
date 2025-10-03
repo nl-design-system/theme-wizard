@@ -86,7 +86,7 @@ export const getCssFromHtml = (html: string, url: string | URL) => {
       if (href.startsWith('data:text/css')) {
         const commaPosition = href.indexOf(',');
         const encodedCss = href.substring(commaPosition + 1);
-        // using atob so this can run server-side and client-side
+        // using `atob` so this can run server-side and client-side
         const css = atob(encodedCss);
         const linkOrigin = {
           css,
@@ -100,7 +100,7 @@ export const getCssFromHtml = (html: string, url: string | URL) => {
       } else {
         if (!url) continue;
         const linkOrigin = {
-          css: undefined, // still need to fetch the url
+          css: undefined, // still need to fetch CSS from the url
           href,
           media,
           rel,
@@ -144,6 +144,25 @@ export const getCssFromHtml = (html: string, url: string | URL) => {
   return origins;
 };
 
+const fetchHtml = async (url: string | URL, signal: AbortSignal) => {
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'text/html,*/*;q=0.1',
+      'User-Agent': USER_AGENT,
+    },
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return {
+    body: await response.text(),
+    contentType: response.headers.get('content-type'),
+  };
+};
+
 export const getCss = async (
   url: string,
   { timeout = 10000 } = {},
@@ -170,25 +189,16 @@ export const getCss = async (
   }
 
   let body: string;
-  let headers: Headers;
+  let contentType: string | null;
+
+  // Setup a timeout and abortcontroller so we can stop in-flight fetch requests when we've crossed timeout limit
   const abortController = new AbortController();
   const timeoutId = setTimeout(() => abortController.abort(), timeout);
 
   try {
-    const response = await fetch(resolvedUrl, {
-      headers: {
-        Accept: 'text/html,*/*;q=0.1',
-        'User-Agent': USER_AGENT,
-      },
-      signal: abortController.signal,
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    body = await response.text();
-    headers = response.headers;
+    const response = await fetchHtml(resolvedUrl, abortController.signal);
+    body = response.body;
+    contentType = response.contentType;
   } catch (error: unknown) {
     clearTimeout(timeoutId);
 
@@ -244,7 +254,7 @@ export const getCss = async (
   }
 
   // Return early if our response was a CSS file already
-  if (headers.get('content-type')?.includes('text/css')) {
+  if (contentType?.includes('text/css')) {
     clearTimeout(timeoutId);
     return [
       {
@@ -266,15 +276,15 @@ export const getCss = async (
   for (const origin of origins) {
     if (origin.type === 'link' && !origin.css) {
       origin.css = await getCssFile(origin.url, abortController.signal);
-    } else if (origin.css) {
-      for (const importUrl of getImportUrls(origin.css)) {
-        const css = await getCssFile(importUrl, abortController.signal);
-        origins.push({
-          css,
-          type: 'import',
-          url: importUrl,
-        });
-      }
+    }
+    // casting `origin.css` to `as string` is safe here because we've fetched the CSS in case it wasn't there before
+    for (const importUrl of getImportUrls(origin.css as string)) {
+      const css = await getCssFile(importUrl, abortController.signal);
+      origins.push({
+        css,
+        type: 'import',
+        url: importUrl,
+      });
     }
   }
 
