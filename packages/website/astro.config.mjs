@@ -3,5 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  publicDir: 'build',
+  publicDir: 'public',
+  devToolbar: {
+    enabled: false,
+  },
 });

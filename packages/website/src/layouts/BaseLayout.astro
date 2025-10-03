@@ -23,30 +23,7 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
   <body>
     <slot />
 
-    <script>
-      // Inject theme data for client-side components
-      (window as any).__THEME_DATA__ = {
-        colors: {
-          primary: '#{clientThemeData.colors.primary}',
-          secondary: '#{clientThemeData.colors.secondary}',
-          background: '#{clientThemeData.colors.background}',
-        },
-        sourceUrl: '#{clientThemeData.sourceUrl}',
-        typography: {
-          bodyFontFamily: '#{clientThemeData.typography.bodyFontFamily}',
-          headingFontFamily: '#{clientThemeData.typography.headingFontFamily}',
-        },
-      };
-      (window as any).__SSR__ = true;
-    </script>
-
-    <script type="module">
-      (async () => {
-        if (typeof window !== 'undefined') {
-          const { defineCustomElements } = await import(/* @vite-ignore */ '/loader/index.js');
-          defineCustomElements();
-        }
-      })();
-    </script>
+    <script type="module" src="/build/website.esm.js"></script>
+    <script nomodule src="/build/website.js"></script>
   </body>
 </html>
