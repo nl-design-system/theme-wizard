@@ -12,6 +12,10 @@ app.use(
   }),
 );
 
+app.get('/healthz', (c) => {
+  return c.json({});
+});
+
 app.get('/api/get-css', async (c) => {
   const url = c.req.query('url');
 

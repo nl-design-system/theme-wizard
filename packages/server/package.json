@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node dist/index.mjs",
     "dev": "vite",
-    "test": "echo \"No tests implemented yet\"",
+    "test-build": "vitest",
     "build": "vite build",
     "clean": "rimraf dist/"
   },
@@ -29,7 +29,8 @@
     "@hono/vite-dev-server": "0.21.1",
     "rimraf": "6.0.1",
     "typescript": "5.9.3",
-    "vite": "6.3.5"
+    "vite": "6.3.5",
+    "vitest": "3.2.4"
   },
   "dependencies": {
     "@nl-design-system-community/css-scraper": "workspace:*",
