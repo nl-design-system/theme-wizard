@@ -8,10 +8,11 @@
     "directory": "packages/website"
   },
   "scripts": {
-    "dev": "npm run stencil:build && astro dev",
-    "build": "npm run stencil:build && astro build",
+    "dev": "pnpm run stencil:build && astro dev",
+    "build": "pnpm run clean && pnpm run stencil:build && astro build",
     "stencil:build": "stencil build",
-    "preview": "astro preview",
+    "clean": "rm -rf dist .astro build",
+    "start": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
