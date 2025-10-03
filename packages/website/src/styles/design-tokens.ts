@@ -1,0 +1,101 @@
+import { css } from 'lit';
+
+/**
+ * Shared styles that can be imported by any Lit component
+ */
+
+export const designTokens = css`
+  /* Typography Scale */
+  --theme-font-family: system-ui, -apple-system, 'Segoe UI', roboto, sans-serif;
+  --theme-font-size-sm: 0.8125rem;
+  --theme-font-size-base: 0.875rem;
+  --theme-font-size-lg: 1.75rem;
+  --theme-font-weight-medium: 500;
+  --theme-font-weight-semibold: 600;
+  --theme-font-weight-bold: 700;
+
+  /* Color Palette */
+  --theme-primary: #007bff;
+  --theme-primary-hover: #0056b3;
+  --theme-success: #28a745;
+  --theme-info: #17a2b8;
+  --theme-warning: #ffc107;
+  --theme-error: #dc3545;
+
+  /* Neutral Grays */
+  --theme-gray-100: #f8f9fa;
+  --theme-gray-200: #e9ecef;
+  --theme-gray-400: #ced4da;
+  --theme-gray-600: #6c757d;
+  --theme-gray-700: #495057;
+  --theme-gray-900: #212529;
+
+  /* Spacing Scale */
+  --theme-space-1: 0.25rem;
+  --theme-space-2: 0.5rem;
+  --theme-space-3: 0.75rem;
+  --theme-space-4: 1rem;
+  --theme-space-6: 1.5rem;
+  --theme-space-8: 2rem;
+
+  /* Layout Properties */
+  --theme-sidebar-width: 400px;
+  --theme-border-radius: 4px;
+  --theme-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  --theme-shadow-light: 0 2px 8px rgb(0 0 0 / 8%);
+`;
+
+export const buttonStyles = css`
+  .theme-button {
+    align-items: center;
+    border: none;
+    border-radius: var(--theme-border-radius);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: var(--theme-font-size-sm);
+    font-weight: var(--theme-font-weight-semibold);
+    gap: var(--theme-space-2);
+    justify-content: center;
+    padding-block: 0.625rem;
+    padding-inline: var(--theme-space-4);
+    transition:
+      background-color 200ms ease,
+      transform 100ms ease;
+  }
+
+  .theme-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .theme-button--primary {
+    background: var(--theme-primary);
+    color: white;
+  }
+
+  .theme-button--primary:hover {
+    background: var(--theme-primary-hover);
+  }
+
+  .theme-button--full {
+    inline-size: 100%;
+  }
+`;
+
+export const inputStyles = css`
+  .theme-input {
+    inline-size: 100%;
+    padding: var(--theme-space-2);
+    border: 1px solid var(--theme-gray-400);
+    border-radius: var(--theme-border-radius);
+    font-family: var(--theme-font-family);
+    font-size: var(--theme-font-size-sm);
+    transition: border-color 200ms ease;
+  }
+
+  .theme-input:focus {
+    outline: none;
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 2px rgb(0 123 255 / 25%);
+  }
+`;

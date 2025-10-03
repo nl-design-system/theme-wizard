@@ -5,6 +5,7 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Component, Prop, State, Watch, h } from '@stencil/core';
+import { loadUrlParams } from '../../../helpers/index';
 import type { TypographyConfig, FontOption } from './types';
 
 /**
@@ -42,7 +43,29 @@ export class TypographyComponent {
    * Initialize component from props
    */
   componentWillLoad() {
+    this.loadFromUrlParams();
     this.mergeWithProps();
+  }
+
+  /**
+   * Load typography configuration from URL parameters
+   * @private
+   */
+  private loadFromUrlParams(): void {
+    try {
+      const urlParams = loadUrlParams(['headingFont', 'bodyFont']);
+
+      // Apply loaded parameters to component properties
+      if (urlParams.headingFont) {
+        this.headingFont = urlParams.headingFont;
+      }
+
+      if (urlParams.bodyFont) {
+        this.bodyFont = urlParams.bodyFont;
+      }
+    } catch (error) {
+      console.warn('Failed to load typography from URL parameters:', error);
+    }
   }
 
   /**

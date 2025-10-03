@@ -16,29 +16,7 @@ export interface Props {
   };
 }
 
-const {
-  title = 'Theme Wizard',
-  description = 'Preview and analyze website themes',
-  themeData = {
-    colors: {
-      primary: '#ffffff',
-      secondary: '#000000',
-      background: '#ffffff',
-    },
-    typography: {
-      bodyFontFamily: "'Times New Roman', serif",
-      headingFontFamily: "'Times New Roman', serif",
-    },
-    sourceUrl: 'https://www.utrecht.nl/',
-  },
-} = Astro.props;
-
-// Generate theme data for client-side hydration
-const clientThemeData = {
-  colors: themeData.colors,
-  sourceUrl: themeData.sourceUrl,
-  typography: themeData.typography,
-};
+const { title = 'Theme Wizard', description = 'Preview and analyze website themes' } = Astro.props;
 ---
 
 <!doctype html>
@@ -75,8 +53,12 @@ const clientThemeData = {
     <script type="module">
       (async () => {
         if (typeof window !== 'undefined') {
-          const { defineCustomElements } = await import(/* @vite-ignore */ '/dist/loader/index.js');
-          defineCustomElements();
+          // Load Stencil components
+          // const { defineCustomElements } = await import(/* @vite-ignore */ '/dist/loader/index.js');
+          // defineCustomElements();
+
+          // Load Lit components
+          await import('/src/components/lit/index.ts');
         }
       })();
     </script>

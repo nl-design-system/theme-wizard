@@ -6,6 +6,7 @@
 import type { EventEmitter } from '@stencil/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Component, Prop, State, Event, Watch, h } from '@stencil/core';
+import { loadUrlParams, updateUrlParams, processCustomCss } from '../../../helpers/index';
 import type { SidebarConfig, ThemePreviewElement } from './types';
 
 /**
@@ -62,37 +63,29 @@ export class SidebarComponent {
    */
   private initializeFromURL(): void {
     try {
-      const url = new URL(window.location.href);
-      const urlConfig: Partial<SidebarConfig> = {};
+      const urlParams = loadUrlParams(['url', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
 
-      // Read URL parameters with validation
-      const urlParam = url.searchParams.get('url');
-      if (urlParam && this.isValidUrl(urlParam)) {
-        urlConfig.sourceUrl = urlParam;
+      // Validate URL if provided
+      if (urlParams.url && this.isValidUrl(urlParams.url)) {
+        this.currentConfig.sourceUrl = urlParams.url;
       }
 
-      const headingFontParam = url.searchParams.get('headingFont');
-      if (headingFontParam) {
-        urlConfig.headingFont = headingFontParam;
+      // Apply other parameters
+      if (urlParams.headingFont) {
+        this.currentConfig.headingFont = urlParams.headingFont;
       }
 
-      const bodyFontParam = url.searchParams.get('bodyFont');
-      if (bodyFontParam) {
-        urlConfig.bodyFont = bodyFontParam;
+      if (urlParams.bodyFont) {
+        this.currentConfig.bodyFont = urlParams.bodyFont;
       }
 
-      const themeClassParam = url.searchParams.get('themeClass');
-      if (themeClassParam?.trim()) {
-        urlConfig.themeClass = themeClassParam.trim();
+      if (urlParams.themeClass?.trim()) {
+        this.currentConfig.themeClass = urlParams.themeClass.trim();
       }
 
-      const customCssParam = url.searchParams.get('customCss');
-      if (customCssParam) {
-        urlConfig.customCss = customCssParam;
+      if (urlParams.customCss) {
+        this.currentConfig.customCss = urlParams.customCss;
       }
-
-      // Merge URL config with current config
-      this.currentConfig = { ...this.currentConfig, ...urlConfig };
     } catch (error) {
       console.warn('Failed to parse URL parameters:', error);
     }
@@ -195,10 +188,13 @@ export class SidebarComponent {
       return;
     }
 
+    // Process custom CSS for Shadow DOM compatibility
+    const processedCustomCss = processCustomCss(this.currentConfig.customCss ?? '', this.currentConfig.sourceUrl ?? '');
+
     // Update theme preview properties
     Object.assign(themePreview, {
       bodyFontFamily: this.currentConfig.bodyFont,
-      customCss: this.currentConfig.customCss,
+      customCss: processedCustomCss,
       headingFontFamily: this.currentConfig.headingFont,
       themeClass: this.currentConfig.themeClass,
       url: this.currentConfig.sourceUrl,
@@ -211,42 +207,33 @@ export class SidebarComponent {
    */
   private updateURLParameters(): void {
     try {
-      const url = new URL(window.location.href);
       const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = this.currentConfig;
 
       // Only set non-default values to keep URL clean
+      const urlParams: Record<string, string> = {};
+
       if (sourceUrl && sourceUrl !== DEFAULT_CONFIG.sourceUrl) {
-        url.searchParams.set('url', sourceUrl);
-      } else {
-        url.searchParams.delete('url');
+        urlParams.url = sourceUrl;
       }
 
       if (headingFont && headingFont !== DEFAULT_CONFIG.headingFont) {
-        url.searchParams.set('headingFont', headingFont);
-      } else {
-        url.searchParams.delete('headingFont');
+        urlParams.headingFont = headingFont;
       }
 
       if (bodyFont && bodyFont !== DEFAULT_CONFIG.bodyFont) {
-        url.searchParams.set('bodyFont', bodyFont);
-      } else {
-        url.searchParams.delete('bodyFont');
+        urlParams.bodyFont = bodyFont;
       }
 
       if (themeClass && themeClass !== DEFAULT_CONFIG.themeClass) {
-        url.searchParams.set('themeClass', themeClass);
-      } else {
-        url.searchParams.delete('themeClass');
+        urlParams.themeClass = themeClass;
       }
 
       if (customCss) {
-        url.searchParams.set('customCss', customCss);
-      } else {
-        url.searchParams.delete('customCss');
+        urlParams.customCss = customCss;
       }
 
-      // Update browser URL without page reload
-      window.history.replaceState({}, '', url.toString());
+      // Update URL parameters using utility function
+      updateUrlParams(urlParams, true);
     } catch (error) {
       console.error('Failed to update URL parameters:', error);
     }
@@ -314,7 +301,7 @@ export class SidebarComponent {
     try {
       const url = window.location.href;
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
+      if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(url);
       } else {
         console.warn('Clipboard API not available');
@@ -403,6 +390,7 @@ export class SidebarComponent {
               />
               <small class="theme-form-field__help">bijv. utrecht-theme of voorbeeld-theme</small>
             </div>
+
             <div class="theme-form-field">
               <label htmlFor="customCss" class="theme-form-field__label">
                 CSS Code

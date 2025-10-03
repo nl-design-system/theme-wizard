@@ -8,17 +8,16 @@
     "directory": "packages/website"
   },
   "scripts": {
-    "dev": "npm run stencil:build && astro dev",
-    "build": "npm run stencil:build && astro build",
-    "stencil:build": "stencil build",
+    "dev": "astro dev",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "5.14.1"
+    "astro": "5.14.1",
+    "lit": "3.3.1"
   },
   "devDependencies": {
-    "@astrojs/node": "9.4.4",
-    "@stencil/core": "4.37.1"
+    "@astrojs/node": "9.4.4"
   }
 }

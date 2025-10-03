@@ -15,7 +15,9 @@ import {
   fetchAndProcessExternalStylesheets,
   extractAndProcessInlineHeadStyles,
   processCustomCss,
-} from '../../helpers';
+  getThemeStyleObject,
+  extractThemeProperties,
+} from '../../../helpers/index';
 
 @Component({
   shadow: true,
@@ -101,10 +103,7 @@ export class ThemePreview {
   }
 
   render() {
-    const styles = {
-      '--theme-body-font-family': this.bodyFontFamily,
-      '--theme-heading-font-family': this.headingFontFamily,
-    };
+    const styles = getThemeStyleObject(extractThemeProperties(this));
 
     // Rewrite customCss to be Shadow DOM scoped and asset URLs absolute relative to this.url
     const processedCustomCss = this.customCss ? processCustomCss(this.customCss, this.url) : '';
