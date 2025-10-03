@@ -58,14 +58,6 @@ const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
   }
 };
 
-const getAbsoluteUrl = (pathOrUrl: string, baseUrl: string) => {
-  try {
-    return new URL(pathOrUrl);
-  } catch {
-    return resolveUrl(pathOrUrl, baseUrl);
-  }
-};
-
 const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLElement>, baseUrl: string) => {
   const items = [];
   const inlineStyles: string[] = [];
@@ -75,7 +67,7 @@ const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLEl
       const href = node.getAttribute('href')!;
       // Set the URL to the resolved URL instead of item.href to fix relative URLs
       // e.g. ./styles.css -> https://example.com/styles.css
-      const url = getAbsoluteUrl(href, baseUrl);
+      const url = resolveUrl(href, baseUrl);
       if (!url) continue;
 
       const origin = {
@@ -141,6 +133,90 @@ const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLEl
   }
 
   return items;
+};
+
+export const getCssFromHtml = (html: string, url: string | URL) => {
+  // TODO: if we want this to run client-side we can use DOMParser and avoid linkedom
+  const { document } = parseHTML(html);
+
+  const nodes = document.querySelectorAll<HTMLLinkElement | HTMLStyleElement | HTMLElement>(
+    'link[rel*="stylesheet"][href], style, [style]',
+  );
+  const baseElement = document.querySelector('base[href]');
+  const baseHref = baseElement?.getAttribute('href');
+  const baseUrl = baseElement !== null && baseHref ? baseHref : url;
+  const origins = [];
+  const inlinedStyles: string[] = [];
+
+  for (const node of Array.from(nodes)) {
+    if (node.tagName === 'LINK') {
+      const link = node as HTMLLinkElement;
+      const href = link.getAttribute('href')!;
+      // Set the URL to the resolved URL instead of item.href to fix relative URLs
+      // e.g. ./styles.css -> https://example.com/styles.css
+      const url = resolveUrl(href, baseUrl);
+      const media = link.getAttribute('media') || undefined;
+      const rel = link.getAttribute('rel')!;
+
+      if (href.startsWith('data:text/css')) {
+        const commaPosition = href.indexOf(',');
+        const encodedCss = href.substring(commaPosition + 1);
+        // using atob so this can run server-side and client-side
+        const css = atob(encodedCss);
+        const linkOrigin = {
+          css,
+          href,
+          media,
+          rel,
+          type: 'link',
+          url: href,
+        };
+        origins.push(linkOrigin);
+      } else {
+        if (!url) continue;
+        const linkOrigin = {
+          css: undefined, // still need to fetch the url
+          href,
+          media,
+          rel,
+          type: 'link',
+          url: url.toString(),
+        };
+        origins.push(linkOrigin);
+      }
+    } else if (node.tagName === 'STYLE') {
+      const css = node.textContent.trim();
+      if (css.length === 0) continue;
+      const styleOrigin = {
+        css,
+        type: 'style',
+        url,
+      };
+      origins.push(styleOrigin);
+    } else if (node.hasAttribute('style')) {
+      let declarations = (node.getAttribute('style') || '').trim();
+      // Avoid processing empty style attributes
+      if (declarations.length === 0) continue;
+
+      // Make sure to terminate all declarations properly to avoid malformed CSS
+      if (!declarations.endsWith(';')) {
+        declarations += ';';
+      }
+
+      inlinedStyles.push(declarations);
+    }
+  }
+
+  if (inlinedStyles.length > 0) {
+    const inlineStylesOrigin = {
+      css: `:where([css-scraper-inline-styles]) { ${inlinedStyles.join('')} }`,
+      type: 'inline',
+      url,
+    };
+    origins.push(inlineStylesOrigin);
+  }
+
+  return origins;
 };
 
 export const getCss = async (
@@ -254,24 +330,16 @@ export const getCss = async (
     ];
   }
 
-  body = removeWaybackToolbar(body);
+  if (isWaybackUrl(url)) {
+    body = removeWaybackToolbar(body);
+  }
 
   const { document } = parseHTML(body);
 
-  // If the URL is an archive.org URL, we need to strip out the archive injected stuff
-  if (isWaybackUrl(url)) {
-    const injectedLinks = document.querySelectorAll<HTMLLinkElement>(
-      'link[rel="stylesheet"][href^="https://web-static.archive.org"]',
-    );
-    for (const link of Array.from(injectedLinks)) {
-      link.remove();
-    }
-  }
-
   const nodes = document.querySelectorAll<HTMLLinkElement>('link[rel*="stylesheet"][href], style, [style]');
   const baseElement = document.querySelector('base[href]');
-  const baseUrl =
-    baseElement !== null && baseElement.hasAttribute('href') ? baseElement.getAttribute('href') : resolvedUrl;
+  const baseHref = baseElement?.getAttribute('href');
+  const baseUrl = baseElement !== null && baseHref ? baseHref : resolvedUrl;
   const items = getStyles(nodes, baseUrl?.toString() || '') || [];
   const result: CSSOrigin[] = [];
 

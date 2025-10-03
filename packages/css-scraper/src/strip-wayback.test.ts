@@ -33,7 +33,14 @@ describe(`removeWaybackInsertions`, () => {
     const html = `
       <!doctype>
       <html>
-        <head>
+        <head><script type="text/javascript">
+    __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.projectwallace.com/","20250307010338","https://web.archive.org/","web","https://web-static.archive.org/_static/",
+	      "1741309418");
+</script>
+<link rel="stylesheet" type="text/css" href="https://web-static.archive.org/_static/css/banner-styles.css?v=p7PEIJWi" />
+<link rel="stylesheet" type="text/css" href="https://web-static.archive.org/_static/css/iconochive.css?v=3PDvdIFv" />
+          <!-- End Wayback Rewrite JS Include -->
           <title>Hello World</title>
         </head>
         <body><!-- BEGIN WAYBACK TOOLBAR INSERT -->

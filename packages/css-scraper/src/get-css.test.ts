@@ -1,5 +1,5 @@
 import { test, expect, describe } from 'vitest';
-import { isLocalhostUrl } from './get-css';
+import { isLocalhostUrl, getCssFromHtml } from './get-css';
 
 describe('isLocalhostUrl', () => {
   test('localhost', () => {
@@ -17,10 +17,50 @@ describe('isLocalhostUrl', () => {
   });
 });
 
-describe('get-css', () => {
+describe('getCssFromHtml', () => {
   describe('<style> tags', () => {
-    test.todo('happy path');
-    test.todo('empty tag');
+    test('single style element', () => {
+      const html = `
+        <style>.my-css { color: red; }</style>
+      `;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([
+        {
+          css: '.my-css { color: red; }',
+          type: 'style',
+          url: 'example.com',
+        },
+      ]);
+    });
+
+    test('multiple style elements', () => {
+      const html = `
+        <style>.my-css { color: red; }</style>
+        <p>Hello world</p>
+        <style>.my-css { background: green; }</style>
+      `;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([
+        {
+          css: '.my-css { color: red; }',
+          type: 'style',
+          url: 'example.com',
+        },
+        {
+          css: '.my-css { background: green; }',
+          type: 'style',
+          url: 'example.com',
+        },
+      ]);
+    });
+
+    test('empty style tag', () => {
+      const html = `<style></style>`;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([]);
+    });
+
+    test('empty style tag with whitespace', () => {
+      const html = `<style> </style>`;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([]);
+    });
   });
 
   describe('<link> tags', () => {
@@ -29,12 +69,86 @@ describe('get-css', () => {
     // - <base> element present: yes | no
     // - media: null | string
     // - rel: stylesheet | alternate stylesheet | etc
-    test.todo('rel=-stylesheet href=absolute');
+    test('rel=stylesheet href=absolute', () => {
+      expect(
+        getCssFromHtml('<link rel="stylesheet" href="https://example.com/style.css">', 'https://example.com'),
+      ).toEqual([
+        {
+          css: undefined,
+          href: 'https://example.com/style.css',
+          media: undefined,
+          rel: 'stylesheet',
+          type: 'link',
+          url: 'https://example.com/style.css',
+        },
+      ]);
+    });
+
+    test('handles base64 encoded hrefs', () => {
+      const expectedCss = 'test {}';
+      const href = `data:text/css;base64,${btoa(expectedCss)}`;
+      const html = `<link rel="stylesheet" href="${href}">`;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([
+        {
+          css: expectedCss,
+          href: href,
+          media: undefined,
+          rel: 'stylesheet',
+          type: 'link',
+          url: href,
+        },
+      ]);
+    });
   });
 
   describe('inline `style=".." attributes', () => {
-    test.todo('happy path');
-    test.todo('missing trailing ;');
-    test.todo('empty attribute');
+    test('a single element with a style attribute', () => {
+      const html = `<p style="font-size: 20px; font-weight: bold;">I am h1</p>`;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([
+        {
+          css: ':where([css-scraper-inline-styles]) { font-size: 20px; font-weight: bold; }',
+          type: 'inline',
+          url: 'example.com',
+        },
+      ]);
+    });
+
+    test('multiple elements with a style attribute', () => {
+      const html = `
+        <p style="font-size: 20px;">I am h1</p>
+        <marquee style="animation-duration: 60s;">WHIEEEEE</marquee>
+      `;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([
+        {
+          css: ':where([css-scraper-inline-styles]) { font-size: 20px;animation-duration: 60s; }',
+          type: 'inline',
+          url: 'example.com',
+        },
+      ]);
+    });
+
+    test('missing trailing ;', () => {
+      const html = `
+        <p style="font-size: 20px">I am h1</p>
+        <marquee style="animation-duration: 60s;">WHIEEEEE</marquee>
+      `;
+      expect(getCssFromHtml(html, 'example.com')).toEqual([
+        {
+          css: ':where([css-scraper-inline-styles]) { font-size: 20px;animation-duration: 60s; }',
+          type: 'inline',
+          url: 'example.com',
+        },
+      ]);
+    });
+
+    test('empty attribute', () => {
+      const html = '<p style="">test</p>';
+      expect(getCssFromHtml(html, 'example.com')).toEqual([]);
+    });
+
+    test('attribute with whitespace only', () => {
+      const html = '<p style="  ">test</p>';
+      expect(getCssFromHtml(html, 'example.com')).toEqual([]);
+    });
   });
 });
