@@ -211,7 +211,7 @@ export class SidebarComponent {
    * @private
    */
   private updateThemePreview(): void {
-    const themePreview = document.querySelector('example-theme-preview') as ThemePreviewElement;
+    const themePreview = document.querySelector('theme-preview') as ThemePreviewElement;
 
     if (!themePreview) {
       console.warn('Theme preview component not found');
@@ -452,15 +452,15 @@ export class SidebarComponent {
             <h2 class="theme-sidebar__heading" id="url-heading">
               Huisstijl URL
             </h2>
-            <div class="theme-url-input">
-              <label htmlFor="sourceUrl" class="theme-url-input__label">
+            <div class="theme-form-field">
+              <label htmlFor="sourceUrl" class="theme-form-field__label">
                 Website URL
               </label>
               <input
                 type="url"
                 id="sourceUrl"
                 name="sourceUrl"
-                class="theme-url-input__field"
+                class="theme-form-field__input"
                 value={sourceUrl}
                 onInput={this.handleInputChange}
                 placeholder="Voer een URL in..."
@@ -484,11 +484,12 @@ export class SidebarComponent {
                 type="text"
                 id="themeClass"
                 name="themeClass"
-                class="theme-url-input__field"
+                class="theme-form-field__input"
                 value={themeClass}
                 onInput={this.handleInputChange}
                 placeholder="bijv. voorbeeld-theme"
               />
+              <small class="theme-form-field__help">bijv. utrecht-theme of voorbeeld-theme</small>
             </div>
             <div class="theme-form-field">
               <label htmlFor="customCss" class="theme-form-field__label">
@@ -497,7 +498,7 @@ export class SidebarComponent {
               <textarea
                 id="customCss"
                 name="customCss"
-                class="theme-css-input"
+                class="theme-form-field__input theme-css-input"
                 rows={6}
                 value={customCss}
                 onInput={this.handleInputChange}
