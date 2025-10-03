@@ -7,8 +7,8 @@
 }
 
 /* ============================================
-   SIDEBAR LAYOUT & STRUCTURE
-   ============================================ */
+     SIDEBAR LAYOUT & STRUCTURE
+     ============================================ */
 .theme-sidebar {
   background: var(--theme-gray-100);
   block-size: 100%;
@@ -43,8 +43,8 @@
 }
 
 /* ============================================
-   SIDEBAR TYPOGRAPHY
-   ============================================ */
+     SIDEBAR TYPOGRAPHY
+     ============================================ */
 .theme-sidebar__title {
   color: var(--theme-gray-900);
   font-size: var(--theme-font-size-lg);
@@ -70,8 +70,8 @@
 }
 
 /* ============================================
-   FORM COMPONENTS & INPUTS
-   ============================================ */
+     FORM COMPONENTS & INPUTS
+     ============================================ */
 
 .theme-form-field {
   display: flex;

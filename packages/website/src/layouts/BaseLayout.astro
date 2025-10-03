@@ -1,5 +1,6 @@
 ---
 import favicon from '../assets/favicon.svg';
+import tokensCssUrl from '@nl-design-system-community/stencil/website.css?url';
 
 export interface Props {
   title?: string;
@@ -18,35 +19,11 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link rel="stylesheet" href="/website/website.css" />
+    <link rel="stylesheet" href={tokensCssUrl} />
   </head>
   <body>
     <slot />
 
-    <script>
-      // Inject theme data for client-side components
-      (window as any).__THEME_DATA__ = {
-        colors: {
-          primary: '#{clientThemeData.colors.primary}',
-          secondary: '#{clientThemeData.colors.secondary}',
-          background: '#{clientThemeData.colors.background}',
-        },
-        sourceUrl: '#{clientThemeData.sourceUrl}',
-        typography: {
-          bodyFontFamily: '#{clientThemeData.typography.bodyFontFamily}',
-          headingFontFamily: '#{clientThemeData.typography.headingFontFamily}',
-        },
-      };
-      (window as any).__SSR__ = true;
-    </script>
-
-    <script type="module">
-      (async () => {
-        if (typeof window !== 'undefined') {
-          const { defineCustomElements } = await import(/* @vite-ignore */ '/loader/index.js');
-          defineCustomElements();
-        }
-      })();
-    </script>
+    <script type="module" src="/src/scripts/stencil.client.js"></script>
   </body>
 </html>

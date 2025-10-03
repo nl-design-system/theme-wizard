@@ -11,9 +11,7 @@ import {
   rewriteAttributeUrlsToAbsolute,
   rewriteSvgXlinkToAbsolute,
   rewriteInlineStyleAttributesToAbsolute,
-  extractStylesheetUrls,
-  fetchAndProcessExternalStylesheets,
-  extractAndProcessInlineHeadStyles,
+  // rewriteGenericUrlAttributes,
   processCustomCss,
 } from '../../helpers';
 
@@ -42,8 +40,6 @@ export class ThemePreview {
   @Prop() customCss: string = '';
 
   @State() htmlContent: string = '';
-  @State() externalStyles: string = '';
-  @State() inlineStyles: string = '';
   @State() isLoading: boolean = true;
   @State() error: string = '';
 
@@ -83,15 +79,11 @@ export class ThemePreview {
       rewriteSvgXlinkToAbsolute(doc.body, this.url);
       rewriteInlineStyleAttributesToAbsolute(doc.body, this.url);
 
-      const stylesheetUrls = extractStylesheetUrls(doc.head, this.url);
-      const externalStyles = await fetchAndProcessExternalStylesheets(stylesheetUrls);
-      const inlineStyles = extractAndProcessInlineHeadStyles(doc.head, this.url);
+      // External stylesheets are no longer loaded via proxy; only inject optional custom CSS
       const processedCustomCss = processCustomCss(this.customCss, this.url);
 
       this.htmlContent = doc.body.innerHTML;
 
-      this.externalStyles = externalStyles;
-      this.inlineStyles = inlineStyles;
       this.customCss = processedCustomCss;
       this.isLoading = false;
     } catch (err) {
@@ -106,7 +98,7 @@ export class ThemePreview {
       '--theme-heading-font-family': this.headingFontFamily,
     };
 
-    // Rewrite customCss to be Shadow DOM scoped and asset URLs absolute relative to this.url
+    // Process custom CSS at render-time to ensure latest value has absolute URLs
     const processedCustomCss = this.customCss ? processCustomCss(this.customCss, this.url) : '';
 
     if (this.isLoading) {
@@ -127,12 +119,6 @@ export class ThemePreview {
 
     return (
       <div class={`theme-preview ${this.themeClass}`} style={styles}>
-        {/* Inject fetched external CDN stylesheets (with :root replaced by :host) */}
-        {this.externalStyles && <style innerHTML={this.externalStyles}></style>}
-
-        {/* Inject inline <style> tags from the original page's <head> */}
-        {this.inlineStyles && <style innerHTML={this.inlineStyles}></style>}
-
         {/* Inject custom CSS provided by the application (textarea), processed and scoped */}
         {processedCustomCss && <style innerHTML={processedCustomCss}></style>}
 

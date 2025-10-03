@@ -111,47 +111,6 @@ export function rewriteInlineStyleAttributesToAbsolute(root: ParentNode, baseUrl
   });
 }
 
-/** Extract absolute stylesheet URLs from a document head. */
-export function extractStylesheetUrls(head: ParentNode, baseUrl: string): string[] {
-  const linkElements = head.querySelectorAll('link[rel="stylesheet"]');
-  const stylesheetUrls: string[] = [];
-  linkElements.forEach((link) => {
-    const href = link.getAttribute('href');
-    if (href) {
-      try {
-        const absoluteUrl = new URL(href, baseUrl).href;
-        stylesheetUrls.push(absoluteUrl);
-      } catch {
-        console.error('Failed to convert href to absolute URL', href);
-      }
-    }
-  });
-  return stylesheetUrls;
-}
-
-/** Fetch external stylesheets through proxy, scope and rewrite URLs, and combine. */
-export async function fetchAndProcessExternalStylesheets(urls: string[]): Promise<string> {
-  const stylesheetPromises = urls.map((url) =>
-    fetch(`/api/proxy?url=${encodeURIComponent(url)}`)
-      .then((res) => res.text())
-      .then((css) => scopeAndRewriteCss(url, css))
-      .catch(() => ''),
-  );
-  const parts = await Promise.all(stylesheetPromises);
-  return parts.join('\n\n');
-}
-
-/** Extract inline <style> content from head and scope/rewrite CSS. */
-export function extractAndProcessInlineHeadStyles(head: ParentNode, baseUrl: string): string {
-  const styleElements = head.querySelectorAll('style');
-  let combined = '';
-  styleElements.forEach((style) => {
-    const styleContent = style.textContent || '';
-    combined += scopeAndRewriteCss(baseUrl, styleContent) + '\n';
-  });
-  return combined;
-}
-
 /** Process custom CSS provided by host app for Shadow DOM scoping and absolute URLs. */
 export function processCustomCss(customCss: string, baseUrl: string): string {
   if (!customCss) return '';

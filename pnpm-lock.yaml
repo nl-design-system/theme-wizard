@@ -126,6 +126,15 @@ importers:
         specifier: 6.3.5
         version: 6.3.5(@types/node@22.16.4)(yaml@2.8.0)
 
+  packages/stencil:
+    devDependencies:
+      '@stencil/core':
+        specifier: 4.37.1
+        version: 4.37.1
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+
   packages/storybook:
     devDependencies:
       '@babel/core':
@@ -200,13 +209,15 @@ importers:
 
   packages/website:
     dependencies:
+      '@nl-design-system-community/stencil':
+        specifier: workspace:*
+        version: link:../stencil
       astro:
         specifier: 5.14.1
         version: 5.14.1(@types/node@22.16.4)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0)
-    devDependencies:
-      '@stencil/core':
-        specifier: 4.37.1
-        version: 4.37.1
+    dependenciesMeta:
+      '@nl-design-system-community/stencil':
+        built: true
 
   proprietary/assets: {}
 

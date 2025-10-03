@@ -19,6 +19,7 @@ export class AppWrapper {
   render() {
     return (
       <div class="theme-app">
+        <h1>Hello World</h1>
         <slot name="sidebar"></slot>
 
         <main class="theme-preview-main" id="main-content" role="main">
