@@ -3,7 +3,8 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Component, Prop, State, Watch, h } from '@stencil/core';
 import {
   fetchHtml,
   parseHtml,
