@@ -1,12 +1,10 @@
+import devServer from '@hono/vite-dev-server';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
-    {
-      name: 'run-server',
-      configureServer() {
-        import('./src/index.ts');
-      },
-    },
+    devServer({
+      entry: 'src/index.ts',
+    }),
   ],
 });

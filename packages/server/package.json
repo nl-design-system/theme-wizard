@@ -30,6 +30,7 @@
     "clean": "rimraf dist/"
   },
   "devDependencies": {
+    "@hono/vite-dev-server": "0.21.1",
     "rimraf": "6.0.1",
     "typescript": "5.9.3",
     "vite": "6.3.5",
@@ -37,7 +38,6 @@
     "vitest": "3.2.4"
   },
   "dependencies": {
-    "@hono/node-server": "1.19.5",
     "@nl-design-system-community/css-scraper": "workspace:*",
     "hono": "4.9.9"
   }
