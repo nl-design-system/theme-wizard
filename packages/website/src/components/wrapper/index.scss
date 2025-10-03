@@ -1,0 +1,65 @@
+/**
+ * @license EUPL-1.2
+ * Copyright (c) 2021 Community for NL Design System
+ */
+
+/* Global styles */
+:host {
+  --example-heading-font-family: system-ui, sans-serif;
+  --example-body-font-family: system-ui, sans-serif;
+  --example-primary-color: #007bff;
+  --example-primary-hover: #0056b3;
+  --example-sidebar-bg: #f8f9fa;
+  --example-border-color: #ced4da;
+  --example-sidebar-width: 500px;
+}
+* {
+  box-sizing: border-box;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+.example-app {
+  display: flex;
+  min-block-size: 100vh;
+}
+
+.example-preview-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+  overflow-y: auto;
+  padding-block: 2rem;
+  padding-inline: 2rem;
+}
+
+.example-preview-main__title {
+  color: #212529;
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-block-end: 0.5rem;
+}
+
+.example-preview-main__description {
+  color: #6c757d;
+  display: block;
+  font-size: 0.9375rem;
+  margin-block-end: 1.5rem;
+}
+
+.example-preview {
+  background: white;
+  border: 1px solid var(--example-border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  flex: 1;
+  min-block-size: 500px;
+  min-inline-size: 400px;
+  overflow: auto;
+  padding-block: 0;
+  padding-inline: 0;
+}
