@@ -19,7 +19,6 @@
     "astro": "5.14.1"
   },
   "devDependencies": {
-    "@astrojs/node": "9.4.4",
     "@stencil/core": "4.37.1"
   }
 }
