@@ -7,8 +7,8 @@ import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   shadow: true,
-  styleUrl: 'index.scss',
-  tag: 'example-app',
+  styleUrl: 'wrapper.css',
+  tag: 'theme-app',
 })
 export class AppWrapper {
   @Prop() pageTitle: string = 'Live Voorbeeld';
@@ -17,14 +17,14 @@ export class AppWrapper {
 
   render() {
     return (
-      <div class="example-app">
+      <div class="theme-app">
         <slot name="sidebar"></slot>
 
-        <main class="example-preview-main" id="main-content" role="main">
-          <h2 class="example-preview-main__title">{this.pageTitle}</h2>
-          <p class="example-preview-main__description">{this.pageDescription}</p>
+        <main class="theme-preview-main" id="main-content" role="main">
+          <h2 class="theme-preview-main__title">{this.pageTitle}</h2>
+          <p class="theme-preview-main__description">{this.pageDescription}</p>
 
-          <section class="example-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
+          <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <slot name="preview"></slot>
           </section>
         </main>

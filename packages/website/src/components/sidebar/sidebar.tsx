@@ -35,7 +35,7 @@ const DEFAULT_CONFIG: SidebarConfig = {
 @Component({
   shadow: true,
   styleUrl: 'sidebar.css',
-  tag: 'example-sidebar',
+  tag: 'theme-sidebar',
 })
 export class SidebarComponent {
   @Prop({ reflect: true }) sourceUrl: string = DEFAULT_CONFIG.sourceUrl || '';
@@ -399,7 +399,7 @@ export class SidebarComponent {
   private showNotification(message: string, type: NotificationType = 'info'): void {
     try {
       const notification = document.createElement('div');
-      notification.className = `example-notification example-notification--${type}`;
+      notification.className = `theme-notification theme-notification--${type}`;
       notification.textContent = message;
       notification.setAttribute('role', 'alert');
       notification.setAttribute('aria-live', 'polite');
@@ -408,12 +408,12 @@ export class SidebarComponent {
 
       // Show notification with animation
       requestAnimationFrame(() => {
-        notification.classList.add('example-notification--visible');
+        notification.classList.add('theme-notification--visible');
       });
 
       // Auto-remove after 3 seconds
       setTimeout(() => {
-        notification.classList.remove('example-notification--visible');
+        notification.classList.remove('theme-notification--visible');
         setTimeout(() => {
           if (notification.parentNode) {
             document.body.removeChild(notification);
@@ -443,130 +443,125 @@ export class SidebarComponent {
     const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = this.currentConfig;
 
     return (
-      <aside class="example-sidebar" aria-label="Configuratie">
-        <h1 class="example-sidebar__title">Theme Wizard</h1>
-        <p class="example-sidebar__subtitle">Stencil</p>
+      <aside class="theme-sidebar" aria-label="Configuratie">
+        <h1 class="theme-sidebar__title">Theme Wizard</h1>
+        <p class="theme-sidebar__subtitle">Stencil</p>
 
-        <form class="example-sidebar__form" onSubmit={this.handleFormSubmit}>
-          <section class="example-sidebar__section" aria-labelledby="url-heading">
-            <h2 class="example-sidebar__heading" id="url-heading">
+        <form class="theme-sidebar__form" onSubmit={this.handleFormSubmit}>
+          <section class="theme-sidebar__section" aria-labelledby="url-heading">
+            <h2 class="theme-sidebar__heading" id="url-heading">
               Huisstijl URL
             </h2>
-            <div class="example-url-input">
-              <label htmlFor="sourceUrl" class="example-url-input__label">
+            <div class="theme-url-input">
+              <label htmlFor="sourceUrl" class="theme-url-input__label">
                 Website URL
               </label>
               <input
                 type="url"
                 id="sourceUrl"
                 name="sourceUrl"
-                class="example-url-input__field"
+                class="theme-url-input__field"
                 value={sourceUrl}
                 onInput={this.handleInputChange}
                 placeholder="Voer een URL in..."
                 required
               />
-              <button class="example-button example-button--primary" type="submit">
+              <button class="theme-button theme-button--primary" type="submit">
                 Analyseer
               </button>
             </div>
           </section>
 
-          <section class="example-sidebar__section" aria-labelledby="css-heading">
-            <h2 class="example-sidebar__heading" id="css-heading">
+          <section class="theme-sidebar__section" aria-labelledby="css-heading">
+            <h2 class="theme-sidebar__heading" id="css-heading">
               Design System CSS
             </h2>
-            <div class="example-form-field">
-              <label htmlFor="themeClass" class="example-form-field__label">
+            <div class="theme-form-field">
+              <label htmlFor="themeClass" class="theme-form-field__label">
                 Theme Class
               </label>
               <input
                 type="text"
                 id="themeClass"
                 name="themeClass"
-                class="example-url-input__field"
+                class="theme-url-input__field"
                 value={themeClass}
                 onInput={this.handleInputChange}
                 placeholder="bijv. voorbeeld-theme"
               />
             </div>
-            <div class="example-form-field">
-              <label htmlFor="customCss" class="example-form-field__label">
+            <div class="theme-form-field">
+              <label htmlFor="customCss" class="theme-form-field__label">
                 CSS Code
               </label>
               <textarea
                 id="customCss"
                 name="customCss"
-                class="example-css-input"
+                class="theme-css-input"
                 rows={6}
                 value={customCss}
                 onInput={this.handleInputChange}
                 placeholder="Plak hier de gescrapede CSS..."
               />
             </div>
-            <button class="example-button example-button--primary example-button--full" type="submit">
+            <button class="theme-button theme-button--primary theme-button--full" type="submit">
               CSS Toepassen
             </button>
           </section>
 
-          <section class="example-sidebar__section" aria-labelledby="typography-heading">
-            <h2 class="example-sidebar__heading" id="typography-heading">
+          <section class="theme-sidebar__section" aria-labelledby="typography-heading">
+            <h2 class="theme-sidebar__heading" id="typography-heading">
               Typografie
             </h2>
-            <div class="example-form-field">
-              <label htmlFor="headingFont" class="example-form-field__label">
+            <div class="theme-form-field">
+              <label htmlFor="headingFont" class="theme-form-field__label">
                 Heading Font
               </label>
               <select
                 id="headingFont"
                 name="headingFont"
-                class="example-form-field__select"
+                class="theme-form-field__select"
                 onChange={this.handleInputChange}
               >
                 {this.renderFontOptions(headingFont || '')}
               </select>
             </div>
-            <div class="example-form-field">
-              <label htmlFor="bodyFont" class="example-form-field__label">
+            <div class="theme-form-field">
+              <label htmlFor="bodyFont" class="theme-form-field__label">
                 Body Font
               </label>
-              <select
-                id="bodyFont"
-                name="bodyFont"
-                class="example-form-field__select"
-                onChange={this.handleInputChange}
-              >
+              <select id="bodyFont" name="bodyFont" class="theme-form-field__select" onChange={this.handleInputChange}>
                 {this.renderFontOptions(bodyFont || '')}
               </select>
             </div>
-            <button class="example-button example-button--primary example-button--full" type="submit">
+            <button class="theme-button theme-button--primary theme-button--full" type="submit">
               Update Typografie
             </button>
           </section>
         </form>
 
         {/* Action Buttons */}
-        <section class="example-sidebar__section" aria-labelledby="actions-heading">
-          <h2 class="example-sidebar__heading" id="actions-heading">
+        <section class="theme-sidebar__section" aria-labelledby="actions-heading">
+          <h2 class="theme-sidebar__heading" id="actions-heading">
             Acties
           </h2>
-          <div class="example-sidebar__actions">
+          <div class="theme-sidebar__actions">
             <button
-              class="example-button example-button--primary example-button--full"
+              class="theme-button theme-button--primary theme-button--full"
               onClick={() => this.exportDesignTokens()}
               type="button"
             >
               Exporteer Design Tokens
             </button>
             <button
-              class="example-button example-button--primary example-button--full"
+              class="theme-button theme-button--primary theme-button--full"
               onClick={() => this.shareTheme()}
               type="button"
             >
               Deel Thema
             </button>
             <button
-              class="example-button example-button--primary example-button--full"
+              class="theme-button theme-button--primary theme-button--full"
               onClick={() => this.resetToDefaults()}
               type="button"
             >
