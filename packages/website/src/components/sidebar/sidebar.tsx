@@ -5,20 +5,8 @@
 
 import { Component, h, Prop, State, Event, Watch } from '@stencil/core';
 
-import type { SidebarConfig, NotificationType, FontOption, ThemePreviewElement } from './types';
+import type { SidebarConfig, ThemePreviewElement } from './types';
 import type { EventEmitter } from '@stencil/core';
-
-/**
- * Font options for typography selection (hardcoded for now)
- */
-const FONT_OPTIONS: FontOption[] = [
-  { label: 'System UI', value: 'system-ui, sans-serif' },
-  { label: 'Arial', value: 'Arial, sans-serif' },
-  { label: 'Georgia', value: 'Georgia, serif' },
-  { label: 'Times New Roman', value: "'Times New Roman', serif" },
-  { label: 'Courier New', value: "'Courier New', monospace" },
-  { label: 'Verdana', value: 'Verdana, sans-serif' },
-];
 
 /**
  * Default configuration values
@@ -84,12 +72,12 @@ export class SidebarComponent {
       }
 
       const headingFontParam = url.searchParams.get('headingFont');
-      if (headingFontParam && this.isValidFont(headingFontParam)) {
+      if (headingFontParam) {
         urlConfig.headingFont = headingFontParam;
       }
 
       const bodyFontParam = url.searchParams.get('bodyFont');
-      if (bodyFontParam && this.isValidFont(bodyFontParam)) {
+      if (bodyFontParam) {
         urlConfig.bodyFont = bodyFontParam;
       }
 
@@ -137,10 +125,6 @@ export class SidebarComponent {
     }
   }
 
-  private isValidFont(font: string): boolean {
-    return FONT_OPTIONS.some((option) => option.value === font);
-  }
-
   /**
    * Handle input changes and update component state
    * @param event - Input change event
@@ -176,7 +160,6 @@ export class SidebarComponent {
 
     // Validate URL if provided
     if (sourceUrl?.trim() && !this.isValidUrl(sourceUrl)) {
-      this.showNotification('Ongeldige URL formaat', 'error');
       return;
     }
 
@@ -195,14 +178,8 @@ export class SidebarComponent {
 
       // Update URL parameters
       this.updateURLParameters();
-
-      // Emit event for external listeners
-      this.configChanged.emit({ ...this.currentConfig });
-
-      this.showNotification('Configuratie bijgewerkt', 'success');
     } catch (error) {
       console.error('Failed to update configuration:', error);
-      this.showNotification('Fout bij bijwerken configuratie', 'error');
     }
   }
 
@@ -302,11 +279,8 @@ export class SidebarComponent {
       };
 
       this.downloadFile(JSON.stringify(tokens, null, 2), 'theme-tokens.json', 'application/json');
-
-      this.showNotification('Design tokens geëxporteerd', 'success');
     } catch (error) {
       console.error('Failed to export design tokens:', error);
-      this.showNotification('Fout bij exporteren design tokens', 'error');
     }
   }
 
@@ -342,22 +316,12 @@ export class SidebarComponent {
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(url);
-        this.showNotification('Link gekopieerd naar klembord', 'success');
       } else {
-        this.fallbackShare();
+        console.warn('Clipboard API not available');
       }
     } catch (error) {
       console.error('Failed to share theme:', error);
-      this.fallbackShare();
     }
-  }
-
-  /**
-   * Fallback share method when clipboard API is not available
-   * @private
-   */
-  private fallbackShare(): void {
-    this.showNotification('Clipboard niet beschikbaar. Kopieer de URL uit de adresbalk.', 'warning');
   }
 
   /**
@@ -382,61 +346,9 @@ export class SidebarComponent {
 
       // Emit reset event
       this.configChanged.emit({ ...this.currentConfig });
-
-      this.showNotification('Huisstijl gereset naar standaard waarden', 'info');
     } catch (error) {
       console.error('Failed to reset to defaults:', error);
-      this.showNotification('Fout bij resetten naar standaard waarden', 'error');
     }
-  }
-
-  /**
-   * Show notification to user
-   * @param message - Notification message
-   * @param type - Notification type
-   * @private
-   */
-  private showNotification(message: string, type: NotificationType = 'info'): void {
-    try {
-      const notification = document.createElement('div');
-      notification.className = `theme-notification theme-notification--${type}`;
-      notification.textContent = message;
-      notification.setAttribute('role', 'alert');
-      notification.setAttribute('aria-live', 'polite');
-
-      document.body.appendChild(notification);
-
-      // Show notification with animation
-      requestAnimationFrame(() => {
-        notification.classList.add('theme-notification--visible');
-      });
-
-      // Auto-remove after 3 seconds
-      setTimeout(() => {
-        notification.classList.remove('theme-notification--visible');
-        setTimeout(() => {
-          if (notification.parentNode) {
-            document.body.removeChild(notification);
-          }
-        }, 300);
-      }, 3000);
-    } catch (error) {
-      console.error('Failed to show notification:', error);
-    }
-  }
-
-  /**
-   * Render font options for select elements
-   * @param selectedValue - Currently selected value
-   * @returns Array of option elements
-   * @private
-   */
-  private renderFontOptions(selectedValue: string) {
-    return FONT_OPTIONS.map((option) => (
-      <option key={option.value} value={option.value} selected={selectedValue === option.value}>
-        {option.label}
-      </option>
-    ));
   }
 
   render() {
@@ -510,35 +422,7 @@ export class SidebarComponent {
             </button>
           </section>
 
-          <section class="theme-sidebar__section" aria-labelledby="typography-heading">
-            <h2 class="theme-sidebar__heading" id="typography-heading">
-              Typografie
-            </h2>
-            <div class="theme-form-field">
-              <label htmlFor="headingFont" class="theme-form-field__label">
-                Heading Font
-              </label>
-              <select
-                id="headingFont"
-                name="headingFont"
-                class="theme-form-field__select"
-                onChange={this.handleInputChange}
-              >
-                {this.renderFontOptions(headingFont || '')}
-              </select>
-            </div>
-            <div class="theme-form-field">
-              <label htmlFor="bodyFont" class="theme-form-field__label">
-                Body Font
-              </label>
-              <select id="bodyFont" name="bodyFont" class="theme-form-field__select" onChange={this.handleInputChange}>
-                {this.renderFontOptions(bodyFont || '')}
-              </select>
-            </div>
-            <button class="theme-button theme-button--primary theme-button--full" type="submit">
-              Update Typografie
-            </button>
-          </section>
+          <theme-typography heading-font={headingFont} body-font={bodyFont}></theme-typography>
         </form>
 
         {/* Action Buttons */}

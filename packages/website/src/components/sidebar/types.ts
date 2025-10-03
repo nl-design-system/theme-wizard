@@ -11,8 +11,6 @@ export interface SidebarConfig {
   customCss?: string;
 }
 
-export type NotificationType = 'success' | 'error' | 'warning' | 'info';
-
 export interface FontOption {
   value: string;
   label: string;
@@ -49,13 +47,6 @@ export interface WindowWithThemeData extends Window {
 export interface FontCategory {
   name: string;
   fonts: FontOption[];
-}
-
-export interface NotificationState {
-  type: NotificationType;
-  message: string;
-  visible: boolean;
-  duration?: number;
 }
 
 export interface UrlValidationResult {
