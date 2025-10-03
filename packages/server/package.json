@@ -8,12 +8,10 @@
     "nl-design-system"
   ],
   "private": true,
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.js",
-  "types": "./dist/types/components.d.ts",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "files": [
-    "dist/",
-    "loader/"
+    "dist/"
   ],
   "repository": {
     "type": "git+ssh",
@@ -21,11 +19,10 @@
     "directory": "packages/server"
   },
   "scripts": {
-    "start": "vite preview",
+    "start": "node dist/index.mjs",
     "dev": "vite",
     "lint": "eslint",
     "test": "echo \"No tests implemented yet\"",
-    "test:vitest": "vitest",
     "build": "vite build",
     "clean": "rimraf dist/"
   },
@@ -33,9 +30,7 @@
     "@hono/vite-dev-server": "0.21.1",
     "rimraf": "6.0.1",
     "typescript": "5.9.3",
-    "vite": "6.3.5",
-    "vite-plugin-dts": "4.5.4",
-    "vitest": "3.2.4"
+    "vite": "6.3.5"
   },
   "dependencies": {
     "@nl-design-system-community/css-scraper": "workspace:*",

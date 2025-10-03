@@ -8,6 +8,7 @@ const app = new Hono();
 app.use(
   '*',
   cors({
+    // TODO: scope down
     origin: '*',
   }),
 );
