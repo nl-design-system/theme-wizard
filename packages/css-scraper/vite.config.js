@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve('./src/get-css.ts'),
-      formats: ['es', 'cjs'],
+      formats: ['es'],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
