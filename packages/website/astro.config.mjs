@@ -6,4 +6,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   adapter: node({ mode: 'standalone' }),
   output: 'server',
+  publicDir: 'build',
 });

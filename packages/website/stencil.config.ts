@@ -5,8 +5,9 @@ export const config: Config = {
   namespace: 'website',
   outputTargets: [
     {
-      esmLoaderPath: './loader',
+      esmLoaderPath: '../build/loader',
       type: 'dist',
+      dir: 'build',
     },
   ],
   tsconfig: './tsconfig.stencil.json',
