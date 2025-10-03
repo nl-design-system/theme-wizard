@@ -1,0 +1,47 @@
+{
+  "name": "@nl-design-system-community/css-scraper",
+  "version": "1.0.0-alpha.0",
+  "author": "Community for NL Design System",
+  "description": "CSS Scraper",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "private": true,
+  "type": "module",
+  "module": "./dist/css-scraper.js",
+  "types": "./dist/get-css.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/get-css.d.ts",
+      "import": "./dist/css-scraper.js"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
+    "directory": "packages/css-scraper"
+  },
+  "scripts": {
+    "start": "vite preview",
+    "dev": "vite",
+    "test": "vitest",
+    "build": "vite build",
+    "clean": "rimraf dist/"
+  },
+  "devDependencies": {
+    "@types/css-tree": "2.3.11",
+    "rimraf": "6.0.1",
+    "typescript": "5.9.3",
+    "vite": "6.3.5",
+    "vite-plugin-dts": "4.5.4",
+    "vitest": "3.2.4"
+  },
+  "dependencies": {
+    "css-tree": "3.1.0",
+    "linkedom": "0.18.12"
+  }
+}

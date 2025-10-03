@@ -1,0 +1,38 @@
+{
+  "name": "@nl-design-system-community/theme-wizard-server",
+  "version": "1.0.0-alpha.0",
+  "author": "Community for NL Design System",
+  "description": "Web server with REST API for scraping websites to extract design tokens",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "private": true,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
+    "directory": "packages/server"
+  },
+  "scripts": {
+    "start": "node dist/index.mjs",
+    "dev": "vite",
+    "test": "echo \"No tests implemented yet\"",
+    "build": "vite build",
+    "clean": "rimraf dist/"
+  },
+  "devDependencies": {
+    "@hono/vite-dev-server": "0.21.1",
+    "rimraf": "6.0.1",
+    "typescript": "5.9.3",
+    "vite": "6.3.5"
+  },
+  "dependencies": {
+    "@nl-design-system-community/css-scraper": "workspace:*",
+    "hono": "4.9.9"
+  }
+}
