@@ -3,10 +3,11 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
-import { Component, h, Prop, State, Event, Watch } from '@stencil/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { EventEmitter } from '@stencil/core';
+import { Component, Prop, State, Event, Watch, h } from '@stencil/core';
 
 import type { SidebarConfig, ThemePreviewElement } from './types';
-import type { EventEmitter } from '@stencil/core';
 
 /**
  * Default configuration values

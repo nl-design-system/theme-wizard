@@ -3,9 +3,9 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
-import { Component, h, Prop, State, Watch } from '@stencil/core';
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { TypographyConfig, FontOption } from './types';
+import { Component, Prop, State, Watch, h } from '@stencil/core';
 
 /**
  * Font options for typography selection
@@ -115,7 +115,7 @@ export class TypographyComponent {
    * @private
    */
   private updateThemePreview(): void {
-    const themePreview = document.querySelector('theme-preview') as any;
+    const themePreview = document.querySelector('theme-preview') as HTMLElement;
 
     if (!themePreview) {
       console.warn('Theme preview component not found');
