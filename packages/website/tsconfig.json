@@ -1,0 +1,12 @@
+{
+  "extends": "./node_modules/astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "types": ["@stencil/core"]
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}

@@ -1,0 +1,52 @@
+---
+import favicon from '../assets/favicon.svg';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Theme Wizard', description = 'Preview and analyze website themes' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={favicon.src} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/website/website.css" />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Inject theme data for client-side components
+      (window as any).__THEME_DATA__ = {
+        colors: {
+          primary: '#{clientThemeData.colors.primary}',
+          secondary: '#{clientThemeData.colors.secondary}',
+          background: '#{clientThemeData.colors.background}',
+        },
+        sourceUrl: '#{clientThemeData.sourceUrl}',
+        typography: {
+          bodyFontFamily: '#{clientThemeData.typography.bodyFontFamily}',
+          headingFontFamily: '#{clientThemeData.typography.headingFontFamily}',
+        },
+      };
+      (window as any).__SSR__ = true;
+    </script>
+
+    <script type="module">
+      (async () => {
+        if (typeof window !== 'undefined') {
+          const { defineCustomElements } = await import(/* @vite-ignore */ '/loader/index.js');
+          defineCustomElements();
+        }
+      })();
+    </script>
+  </body>
+</html>
