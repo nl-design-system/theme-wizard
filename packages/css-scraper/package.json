@@ -9,8 +9,16 @@
   ],
   "private": true,
   "type": "module",
-  "main": "./dist/css-scraper.mjs",
+  "main": "./dist/css-scraper.cjs",
+  "module": "./dist/css-scraper.js",
   "types": "./dist/get-css.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/get-css.d.ts",
+      "require": "./dist/css-scraper.cjs",
+      "import": "./dist/css-scraper.js"
+    }
+  },
   "files": [
     "dist/"
   ],

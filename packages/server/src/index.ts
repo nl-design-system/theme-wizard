@@ -1,4 +1,3 @@
-// TODO: take from `@nl-design-system-community/css-scraper` local workspace package
 import { getCss } from '@nl-design-system-community/css-scraper';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -27,11 +26,9 @@ app.get('/api/get-css', async (c) => {
     throw new HTTPException(500, { cause: origins.error, message: 'encountered a scraping error' });
   }
 
-  return c.json(origins);
-
-  // c.res.headers.set('content-type', 'text/css;utf-8');
-  // const css = origins.map((origin) => origin.css).join('');
-  // return c.text(css);
+  c.res.headers.set('content-type', 'text/css;utf-8');
+  const css = origins.map((origin) => origin.css).join('');
+  return c.text(css);
 });
 
 export default app;
