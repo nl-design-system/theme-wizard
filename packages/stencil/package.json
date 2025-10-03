@@ -10,20 +10,11 @@
     "directory": "packages/stencil"
   },
   "files": [
-    "build"
+    "dist/"
   ],
   "exports": {
-    ".": {
-      "import": "./build/index.js"
-    },
-    "./loader": {
-      "import": "./build/loader/index.js"
-    },
-    "./website/website.css": {
-      "default": "./build/website/website.css"
-    },
     "./website.css": {
-      "default": "./build/website/website.css"
+      "default": "./dist/website/website.css"
     }
   },
   "scripts": {
