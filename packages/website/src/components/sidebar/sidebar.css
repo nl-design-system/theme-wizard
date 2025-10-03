@@ -7,48 +7,6 @@
 }
 
 /* ============================================
-   NOTIFICATION SYSTEM
-   ============================================ */
-.theme-notification {
-  background: white;
-  border-radius: var(--theme-border-radius);
-  box-shadow: var(--theme-shadow);
-  color: white;
-  font-size: var(--theme-font-size-base);
-  font-weight: var(--theme-font-weight-medium);
-  inset-block-end: var(--theme-space-8);
-  inset-inline-end: var(--theme-space-8);
-  opacity: 0%;
-  padding-block: var(--theme-space-4);
-  padding-inline: var(--theme-space-6);
-  position: fixed;
-  transform: translateY(20px);
-  transition:
-    opacity 300ms ease,
-    transform 300ms ease;
-  z-index: 1000;
-}
-
-.theme-notification--visible {
-  opacity: 100%;
-  transform: translateY(0);
-}
-
-.theme-notification--success {
-  background: var(--theme-success);
-}
-.theme-notification--info {
-  background: var(--theme-info);
-}
-.theme-notification--warning {
-  background: var(--theme-warning);
-  color: var(--theme-gray-900);
-}
-.theme-notification--error {
-  background: var(--theme-error);
-}
-
-/* ============================================
    SIDEBAR LAYOUT & STRUCTURE
    ============================================ */
 .theme-sidebar {
@@ -139,7 +97,6 @@
 }
 
 .theme-form-field__input,
-.theme-form-field__select,
 .theme-css-input {
   border: 1px solid var(--theme-gray-400);
   border-radius: var(--theme-border-radius);
@@ -156,55 +113,9 @@
   font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
 }
 
-.theme-form-field__select {
-  background: white;
-  cursor: pointer;
-  font-size: var(--theme-font-size-sm);
-  inline-size: 100%;
-}
-
 .theme-form-field__input:focus,
-.theme-form-field__select:focus,
 .theme-css-input:focus {
   border-color: var(--theme-primary);
   box-shadow: 0 0 0 2px rgb(0 123 255 / 25%);
   outline: none;
-}
-
-/* ============================================
-   BUTTONS
-   ============================================ */
-.theme-button {
-  align-items: center;
-  border: none;
-  border-radius: var(--theme-border-radius);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: inherit;
-  font-size: var(--theme-font-size-sm);
-  font-weight: var(--theme-font-weight-semibold);
-  gap: var(--theme-space-2);
-  justify-content: center;
-  padding-block: 0.625rem;
-  padding-inline: var(--theme-space-4);
-  transition:
-    background-color 200ms ease,
-    transform 100ms ease;
-}
-
-.theme-button:hover {
-  transform: translateY(-1px);
-}
-
-.theme-button--primary {
-  background: var(--theme-primary);
-  color: white;
-}
-
-.theme-button--primary:hover {
-  background: var(--theme-primary-hover);
-}
-
-.theme-button--full {
-  inline-size: 100%;
 }
