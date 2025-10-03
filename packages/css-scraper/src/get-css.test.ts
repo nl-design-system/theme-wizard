@@ -84,6 +84,69 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
+    test('rel="stylesheet alternate"', () => {
+      expect(
+        getCssFromHtml('<link rel="stylesheet alternate" href="https://example.com/style.css">', 'https://example.com'),
+      ).toEqual([
+        {
+          css: undefined,
+          href: 'https://example.com/style.css',
+          media: undefined,
+          rel: 'stylesheet alternate',
+          type: 'link',
+          url: 'https://example.com/style.css',
+        },
+      ]);
+    });
+
+    test('rel="stylesheet media=(prefers-color-scheme: dark)"', () => {
+      expect(
+        getCssFromHtml(
+          '<link rel="stylesheet" href="https://example.com/style.css" media="(prefers-color-scheme: dark)">',
+          'https://example.com',
+        ),
+      ).toEqual([
+        {
+          css: undefined,
+          href: 'https://example.com/style.css',
+          media: '(prefers-color-scheme: dark)',
+          rel: 'stylesheet',
+          type: 'link',
+          url: 'https://example.com/style.css',
+        },
+      ]);
+    });
+
+    describe('relative URLs', () => {
+      test('rel=stylesheet href=./style.css', () => {
+        expect(getCssFromHtml('<link rel="stylesheet" href="./style.css">', 'https://example.com')).toEqual([
+          {
+            css: undefined,
+            href: './style.css',
+            media: undefined,
+            rel: 'stylesheet',
+            type: 'link',
+            url: 'https://example.com/style.css',
+          },
+        ]);
+      });
+
+      test('rel=stylesheet href=./style.css', () => {
+        expect(
+          getCssFromHtml('<link rel="stylesheet" href="../../style.css">', 'https://example.com/blog/post'),
+        ).toEqual([
+          {
+            css: undefined,
+            href: '../../style.css',
+            media: undefined,
+            rel: 'stylesheet',
+            type: 'link',
+            url: 'https://example.com/style.css',
+          },
+        ]);
+      });
+    });
+
     test('handles base64 encoded hrefs', () => {
       const expectedCss = 'test {}';
       const href = `data:text/css;base64,${btoa(expectedCss)}`;
