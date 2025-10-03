@@ -30,7 +30,6 @@
   "scripts": {
     "start": "vite preview",
     "dev": "vite",
-    "lint": "eslint",
     "test": "vitest",
     "build": "vite build",
     "clean": "rimraf dist/"

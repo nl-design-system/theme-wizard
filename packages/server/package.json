@@ -2,7 +2,7 @@
   "name": "@nl-design-system-community/theme-wizard-server",
   "version": "1.0.0-alpha.0",
   "author": "Community for NL Design System",
-  "description": "Stencil web components bundle based on the NL Design System architecture",
+  "description": "Web server with REST API for scraping websites to extract design tokens",
   "license": "EUPL-1.2",
   "keywords": [
     "nl-design-system"
@@ -21,7 +21,6 @@
   "scripts": {
     "start": "node dist/index.mjs",
     "dev": "vite",
-    "lint": "eslint",
     "test": "echo \"No tests implemented yet\"",
     "build": "vite build",
     "clean": "rimraf dist/"
