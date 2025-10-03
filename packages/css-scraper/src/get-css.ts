@@ -1,8 +1,8 @@
 import { parse, walk } from 'css-tree';
 import { parseHTML } from 'linkedom';
-import { resolveUrl } from './resolve-url.js';
-import { isWaybackUrl } from './strip-wayback.js';
 import type { CSSOrigin } from './css-origin.types.js';
+import { resolveUrl } from './resolve-url.js';
+import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
@@ -58,6 +58,14 @@ const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
   }
 };
 
+const getAbsoluteUrl = (pathOrUrl: string, baseUrl: string) => {
+  try {
+    return new URL(pathOrUrl);
+  } catch {
+    return resolveUrl(pathOrUrl, baseUrl);
+  }
+};
+
 const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLElement>, baseUrl: string) => {
   const items = [];
   const inlineStyles: string[] = [];
@@ -65,13 +73,18 @@ const getStyles = (nodes: NodeListOf<HTMLLinkElement | HTMLStyleElement | HTMLEl
   for (const node of Array.from(nodes)) {
     if (node.nodeName === 'LINK') {
       const href = node.getAttribute('href')!;
+      // Set the URL to the resolved URL instead of item.href to fix relative URLs
+      // e.g. ./styles.css -> https://example.com/styles.css
+      const url = getAbsoluteUrl(href, baseUrl);
+      if (!url) continue;
+
       const origin = {
         css: '',
         href,
         media: node.getAttribute('media') || undefined,
         rel: node.getAttribute('rel')!,
         type: 'link' as const,
-        url: href !== null && href.startsWith('http') ? href : baseUrl + href,
+        url: url.toString(),
       };
       items.push(origin);
     } else if (node.nodeName === 'STYLE' && node.textContent !== null && node.textContent.trim().length > 0) {
@@ -241,16 +254,7 @@ export const getCss = async (
     ];
   }
 
-  // Remove the Wayback Machine toolbar if it's present
-  const START_COMMENT = '<!-- BEGIN WAYBACK TOOLBAR INSERT -->';
-  const END_COMMENT = '<!-- END WAYBACK TOOLBAR INSERT -->';
-
-  const startInsert = body.indexOf(START_COMMENT);
-  const endInsert = body.indexOf(END_COMMENT);
-
-  if (startInsert !== -1 && endInsert !== -1) {
-    body = body.substring(0, startInsert) + body.substring(endInsert + END_COMMENT.length);
-  }
+  body = removeWaybackToolbar(body);
 
   const { document } = parseHTML(body);
 
@@ -278,14 +282,8 @@ export const getCss = async (
         const encoded = item.href.substring(commaPosition);
         item.css = Buffer.from(encoded, 'base64').toString('ascii');
       } else {
-        const fileUrl = resolveUrl(item.href, resolvedUrl);
-        if (fileUrl === undefined) {
-          continue;
-        }
-        item.css = await getCssFile(fileUrl, abortController.signal);
-        // Set the URL to the resolved URL instead of item.href to fix relative URLs
-        // e.g. ./styles.css -> https://example.com/styles.css
-        item.url = fileUrl.toString();
+        // TODO(perf): avoid await in loop
+        item.css = await getCssFile(item.url, abortController.signal);
       }
 
       result.push(item);

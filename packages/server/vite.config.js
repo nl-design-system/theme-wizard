@@ -1,14 +1,12 @@
-import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 
 export default defineConfig({
-  build: {
-    lib: {
-      entry: resolve('./src/index.ts'),
-      formats: ['es'],
+  plugins: [
+    {
+      name: 'run-server',
+      configureServer() {
+        import('./src/index.ts');
+      },
     },
-    rollupOptions: {},
-  },
-  plugins: [dts()],
+  ],
 });

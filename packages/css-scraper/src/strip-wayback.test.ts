@@ -1,5 +1,5 @@
 import { test, expect, describe } from 'vitest';
-import { isWaybackUrl } from './strip-wayback';
+import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback';
 
 describe('isWaybackUrl', () => {
   test('valid cases', () => {
@@ -8,7 +8,7 @@ describe('isWaybackUrl', () => {
       'https://web.archive.org/web/20250311183954/https://www.projectwallace.com/',
       'https://web.archive.org/web/20250322053451/https://www.projectwallace.com/design-tokens',
     ];
-    for (let url of urls) {
+    for (const url of urls) {
       expect(isWaybackUrl(url)).toBeTruthy();
     }
   });
@@ -22,8 +22,70 @@ describe('isWaybackUrl', () => {
       'https://web.archive.org/web/2025032205345/https://www.projectwallace.com/', // incomplete timestamp in pathname
       'https://web.archive.org/web/20250322053451/', // missing data after trailing /
     ];
-    for (let url of urls) {
+    for (const url of urls) {
       expect(isWaybackUrl(url)).toBeFalsy();
     }
+  });
+});
+
+describe(`removeWaybackInsertions`, () => {
+  test('removes toolbar html', () => {
+    const html = `
+      <!doctype>
+      <html>
+        <head>
+          <title>Hello World</title>
+        </head>
+        <body><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+
+          EVERYTHING IN BETWEEN HERE WILL BE REMOVED
+
+          <script>console.log('test');</script>
+          <style>html color: green; }</style>
+
+          <!-- END WAYBACK TOOLBAR INSERT -->
+          <h1>Hello World</h1>
+        </body>
+      </html>
+    `;
+    expect(removeWaybackToolbar(html).trim()).toEqual(
+      `
+      <!doctype>
+      <html>
+        <head>
+          <title>Hello World</title>
+        </head>
+        <body>
+          <h1>Hello World</h1>
+        </body>
+      </html>
+    `.trim(),
+    );
+  });
+
+  describe('leaves everything else intact', () => {
+    test('no toolbar present', () => {
+      const html = `
+      <!doctype>
+      <html>
+        <head>
+          <title>Hello World</title>
+        </head>
+        <body>
+          <h1>Hello World</h1>
+        </body>
+      </html>
+    `;
+      expect(removeWaybackToolbar(html)).toEqual(html);
+    });
+
+    test('does not remove just any comment', () => {
+      const html = `
+      <p>Hello</p>
+      <!-- this is my comment -->
+      <p>ByeM/p>
+    `;
+      expect(removeWaybackToolbar(html)).toEqual(html);
+    });
   });
 });

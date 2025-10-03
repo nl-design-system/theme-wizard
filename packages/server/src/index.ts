@@ -1,9 +1,9 @@
 import { serve } from '@hono/node-server';
-// TODO: take from `@nl-design-system-community/css-scraper` local workspace package
-import { getCss } from '../../css-scraper/src/get-css';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { HTTPException } from 'hono/http-exception';
+// TODO: take from `@nl-design-system-community/css-scraper` local workspace package
+import { getCss } from '../../css-scraper/src/get-css';
 
 const app = new Hono();
 app.use(
@@ -27,12 +27,14 @@ app.get('/api/get-css', async (c) => {
     throw new HTTPException(500, { cause: origins.error, message: 'encountered a scraping error' });
   }
 
-  c.res.headers.set('content-type', 'text/css;utf-8');
-  const css = origins.map((origin) => origin.css).join('');
-  return c.text(css);
+  return c.json(origins);
+
+  // c.res.headers.set('content-type', 'text/css;utf-8');
+  // const css = origins.map((origin) => origin.css).join('');
+  // return c.text(css);
 });
 
-serve(
+const server = serve(
   {
     fetch: app.fetch,
     port: 3000,
@@ -41,3 +43,5 @@ serve(
     console.log(`Server is running on http://localhost:${info.port}`);
   },
 );
+
+export default server;
