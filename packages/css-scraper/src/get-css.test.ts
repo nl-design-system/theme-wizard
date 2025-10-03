@@ -1,5 +1,5 @@
 import { test, expect, describe } from 'vitest';
-import { isLocalhostUrl, getCssFromHtml } from './get-css';
+import { isLocalhostUrl, getCssFromHtml, getImportUrls } from './get-css';
 
 describe('isLocalhostUrl', () => {
   test('localhost', () => {
@@ -212,6 +212,121 @@ describe('getCssFromHtml', () => {
     test('attribute with whitespace only', () => {
       const html = '<p style="  ">test</p>';
       expect(getCssFromHtml(html, 'example.com')).toEqual([]);
+    });
+  });
+});
+
+describe('getImportUrls', () => {
+  describe('1 @import', () => {
+    test('no url(), single quotes', () => {
+      expect(getImportUrls(`@import 'test.css';`)).toEqual(['test.css']);
+    });
+
+    test('no url(), double quotes', () => {
+      expect(getImportUrls(`@import "test.css";`)).toEqual(['test.css']);
+    });
+
+    test('url() w/o quotes', () => {
+      expect(getImportUrls('@import url(test.css);')).toEqual(['test.css']);
+    });
+
+    test('url() w/ single quotes', () => {
+      expect(getImportUrls(`@import url('test.css');`)).toEqual(['test.css']);
+    });
+
+    test('url() w/ double quotes', () => {
+      expect(getImportUrls(`@import url("test.css");`)).toEqual(['test.css']);
+    });
+  });
+
+  test('multiple @imports', () => {
+    // examples from https://developer.mozilla.org/en-US/docs/Web/CSS/@import#examples
+    const css = `
+      @import "custom.css";
+      @import url("chrome://communicator/skin/");
+      @import "fine-print.css" print;
+      @import "bluish.css" print, screen;
+      @import "common.css" screen;
+      @import "landscape.css" screen and (orientation: landscape);
+    `;
+    expect(getImportUrls(css)).toEqual([
+      'custom.css',
+      'chrome://communicator/skin/',
+      'fine-print.css',
+      'bluish.css',
+      'common.css',
+      'landscape.css',
+    ]);
+  });
+
+  describe('with layer()', () => {
+    test('@import with layer', () => {
+      expect(getImportUrls(`@import url("test.css") layer;`)).toEqual(['test.css']);
+    });
+
+    test('@import url() layer(test)', () => {
+      expect(getImportUrls(`@import url("test.css") layer(test);`)).toEqual(['test.css']);
+    });
+
+    test('@import url() layer(test.me.nested)', () => {
+      expect(getImportUrls(`@import url("test.css") layer(test.me.nested);`)).toEqual(['test.css']);
+    });
+  });
+
+  describe('with supports()', () => {
+    test('@import url("test.css") supports(display: grid);', () => {
+      expect(getImportUrls(`@import url("test.css") supports(display: grid);`)).toEqual(['test.css']);
+    });
+  });
+
+  describe('with @media', () => {
+    test('@import url("test.css") (min-width: 1000px);', () => {
+      expect(getImportUrls('@import url("test.css") (min-width: 1000px);')).toEqual(['test.css']);
+    });
+  });
+
+  describe('kitchen sink', () => {
+    const imports = [
+      '@import "test.css" layer supports(display: grid) (min-width: 30em);',
+      '@import "test.css" layer() supports(display: grid) (min-width: 30em);',
+      '@import "test.css" layer(test) supports(display: grid) (min-width: 30em);',
+      '@import "test.css" layer(test.nested.layers) supports(display: grid) (min-width: 30em);',
+      '@import "test.css" screen and (orientation: landscape);',
+      '@import "test.css" supports(display: grid) screen and (width <= 400px);',
+      '@import "test.css" supports((not (display: grid)) and (display: flex)) screen and (width <= 400px);',
+      '@import "test.css" supports((selector(h2 > p)) and (font-tech(color-COLRv1)));',
+    ];
+    for (const imprt of imports) {
+      test(imprt, () => {
+        expect(getImportUrls(imprt)).toEqual(['test.css']);
+      });
+    }
+  });
+
+  describe('invalid cases that we do not care about', () => {
+    test('@import declared after a ruleset', () => {
+      const css = `
+        * {
+          margin: 0;
+          padding: 0;
+        }
+        /* more styles */
+        @import "my-imported-styles.css";
+      `;
+      expect(getImportUrls(css)).toEqual(['my-imported-styles.css']);
+    });
+
+    test('nested @import in a conditional at-rule', () => {
+      const css = `
+        @media (max-width: 0) {
+          @import url('test1.css');
+        }
+
+        @supports (display: grid) {
+          @import url('test2.css');
+        }
+      `;
+      expect(getImportUrls(css)).toEqual(['test1.css', 'test2.css']);
     });
   });
 });
