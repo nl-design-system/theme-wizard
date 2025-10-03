@@ -3,8 +3,8 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { TypographyConfig, FontOption } from './types';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Component, Prop, State, Watch, h } from '@stencil/core';
 
 /**
