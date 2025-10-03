@@ -38,11 +38,11 @@ const DEFAULT_CONFIG: SidebarConfig = {
   tag: 'example-sidebar',
 })
 export class SidebarComponent {
-  @Prop({ reflect: true }) sourceUrl: string = DEFAULT_CONFIG.sourceUrl;
-  @Prop({ reflect: true }) headingFont: string = DEFAULT_CONFIG.headingFont;
-  @Prop({ reflect: true }) bodyFont: string = DEFAULT_CONFIG.bodyFont;
-  @Prop({ reflect: true }) themeClass: string = DEFAULT_CONFIG.themeClass;
-  @Prop({ reflect: true }) customCss: string = DEFAULT_CONFIG.customCss;
+  @Prop({ reflect: true }) sourceUrl: string = DEFAULT_CONFIG.sourceUrl || '';
+  @Prop({ reflect: true }) headingFont: string = DEFAULT_CONFIG.headingFont || '';
+  @Prop({ reflect: true }) bodyFont: string = DEFAULT_CONFIG.bodyFont || '';
+  @Prop({ reflect: true }) themeClass: string = DEFAULT_CONFIG.themeClass || '';
+  @Prop({ reflect: true }) customCss: string = DEFAULT_CONFIG.customCss || '';
 
   @State() private currentConfig: SidebarConfig = { ...DEFAULT_CONFIG };
 
@@ -523,7 +523,7 @@ export class SidebarComponent {
                 class="example-form-field__select"
                 onChange={this.handleInputChange}
               >
-                {this.renderFontOptions(headingFont)}
+                {this.renderFontOptions(headingFont || '')}
               </select>
             </div>
             <div class="example-form-field">
@@ -536,7 +536,7 @@ export class SidebarComponent {
                 class="example-form-field__select"
                 onChange={this.handleInputChange}
               >
-                {this.renderFontOptions(bodyFont)}
+                {this.renderFontOptions(bodyFont || '')}
               </select>
             </div>
             <button class="example-button example-button--primary example-button--full" type="submit">
