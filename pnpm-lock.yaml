@@ -151,7 +151,7 @@ importers:
   packages/website:
     dependencies:
       astro:
-        specifier: ^5.14.1
+        specifier: 5.14.1
         version: 5.14.1(@types/node@22.16.4)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0)
     devDependencies:
       '@astrojs/node':
@@ -2954,10 +2954,6 @@ packages:
 
   lowlight@1.20.0:
     resolution: {integrity: sha512-8Ktj+prEb1RoCPkEOrPMYUN/nCggB7qAWe3a7OpMjWQkh3l2RD5wKRQ+o8Q8YuI9RG/xs95waaI/E6ym/7NsTw==}
-
-  lru-cache@10.0.0:
-    resolution: {integrity: sha512-svTf/fzsKHffP42sujkO/Rjs37BCIsQVRCeNYIm9WN8rgT7ffoUnRtZCqU+6BqcSBdv8gwJeTz8knJpgACeQMw==}
-    engines: {node: 14 || >=16.14}
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
@@ -5788,7 +5784,7 @@ snapshots:
 
   '@types/hast@3.0.4':
     dependencies:
-      '@types/unist': 2.0.7
+      '@types/unist': 3.0.3
 
   '@types/json-schema@7.0.15': {}
 
@@ -5806,7 +5802,7 @@ snapshots:
 
   '@types/nlcst@2.0.3':
     dependencies:
-      '@types/unist': 2.0.7
+      '@types/unist': 3.0.3
 
   '@types/node@12.20.55': {}
 
@@ -7812,8 +7808,6 @@ snapshots:
       fault: 1.0.4
       highlight.js: 10.7.3
 
-  lru-cache@10.0.0: {}
-
   lru-cache@10.4.3: {}
 
   lru-cache@11.0.0: {}
@@ -8581,7 +8575,7 @@ snapshots:
 
   path-scurry@1.10.1:
     dependencies:
-      lru-cache: 10.0.0
+      lru-cache: 10.4.3
       minipass: 7.0.2
 
   path-scurry@2.0.0:
