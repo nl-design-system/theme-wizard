@@ -1,16 +1,16 @@
 :host {
-  --example-heading-font-family: system-ui, sans-serif;
-  --example-body-font-family: system-ui, sans-serif;
-  --example-primary-color: #007bff;
-  --example-primary-hover: #0056b3;
-  --example-sidebar-bg: #f8f9fa;
-  --example-border-color: #ced4da;
-  --example-sidebar-width: 500px;
+  --theme-heading-font-family: system-ui, sans-serif;
+  --theme-body-font-family: system-ui, sans-serif;
+  --theme-primary-color: #007bff;
+  --theme-primary-hover: #0056b3;
+  --theme-sidebar-bg: #f8f9fa;
+  --theme-border-color: #ced4da;
+  --theme-sidebar-width: 500px;
 
   min-inline-size: 400px;
 }
 
-.example-notification {
+.theme-notification {
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
@@ -30,32 +30,32 @@
   z-index: 1000;
 }
 
-.example-notification--visible {
+.theme-notification--visible {
   opacity: 100%;
   transform: translateY(0);
 }
 
-.example-notification--success {
+.theme-notification--success {
   background: #28a745;
 }
 
-.example-notification--info {
+.theme-notification--info {
   background: #17a2b8;
 }
 
-.example-notification--warning {
+.theme-notification--warning {
   background: #ffc107;
   color: #212529;
 }
 
-.example-notification--error {
+.theme-notification--error {
   background: #dc3545;
 }
 
-.example-sidebar {
-  background: var(--example-sidebar-bg);
+.theme-sidebar {
+  background: var(--theme-sidebar-bg);
   block-size: 100%;
-  border-inline-end: 1px solid var(--example-border-color);
+  border-inline-end: 1px solid var(--theme-border-color);
   inset-block-start: 0;
   max-block-size: 100vh;
   overflow-y: auto;
@@ -64,39 +64,35 @@
   position: sticky;
 }
 
-.example-sidebar__title {
+.theme-sidebar__title {
   color: #212529;
   font-size: 1.75rem;
   font-weight: 700;
   margin-block-end: 0.25rem;
 }
 
-.example-sidebar__subtitle {
+.theme-sidebar__subtitle {
   color: #6c757d;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   margin-block-end: 2rem;
   text-transform: uppercase;
 }
-.example-sidebar__form {
+.theme-sidebar__form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.example-sidebar__section:not(:last-of-type) {
-  border-block-end: 1px solid #e9ecef;
-}
-
-.example-sidebar__section {
+.theme-sidebar__section {
   margin-block-end: 1.5rem;
   padding-block-end: 1.5rem;
 }
 
-.example-sidebar__section:not(:last-of-type) {
+.theme-sidebar__section:not(:last-of-type) {
   border-block-end: 1px solid #e9ecef;
 }
-.example-sidebar__heading {
+.theme-sidebar__heading {
   color: #495057;
   font-size: 0.875rem;
   font-weight: 700;
@@ -104,20 +100,20 @@
   margin-block-end: 1rem;
   text-transform: uppercase;
 }
-.example-url-input {
+.theme-url-input {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.example-url-input__label {
+.theme-url-input__label {
   color: #495057;
   font-size: 0.875rem;
   font-weight: 500;
 }
 
-.example-url-input__field {
-  border: 1px solid var(--example-border-color);
+.theme-url-input__field {
+  border: 1px solid var(--theme-border-color);
   border-radius: 4px;
   font-family: inherit;
   font-size: 0.875rem;
@@ -125,12 +121,12 @@
   padding-inline: 0.75rem;
 }
 
-.example-button--primary {
-  background: var(--example-primary-color);
+.theme-button--primary {
+  background: var(--theme-primary-color);
   color: white;
 }
 
-.example-button {
+.theme-button {
   align-items: center;
   border: none;
   border-radius: 4px;
@@ -148,26 +144,26 @@
     transform 100ms;
 }
 
-.example-form-field {
+.theme-form-field {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   margin-block-end: 1rem;
 }
-.example-form-field__label {
+.theme-form-field__label {
   color: #495057;
   display: block;
   font-size: 0.8125rem;
   font-weight: 600;
   margin-block-end: 0.375rem;
 }
-.example-button--full {
+.theme-button--full {
   inline-size: 100%;
 }
 
-.example-form-field__select {
+.theme-form-field__select {
   background: white;
-  border: 1px solid var(--example-border-color);
+  border: 1px solid var(--theme-border-color);
   border-radius: 4px;
   cursor: pointer;
   font-family: inherit;
@@ -180,7 +176,7 @@
     box-shadow 200ms;
 }
 
-.example-sidebar__actions {
+.theme-sidebar__actions {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;

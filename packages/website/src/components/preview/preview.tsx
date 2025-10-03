@@ -19,7 +19,7 @@ import {
 @Component({
   shadow: true,
   styleUrl: 'preview.css',
-  tag: 'example-theme-preview',
+  tag: 'theme-preview',
 })
 export class ThemePreview {
   @Prop({ mutable: true }) url: string =
@@ -110,7 +110,7 @@ export class ThemePreview {
 
     if (this.isLoading) {
       return (
-        <div class="example-theme-preview example-theme-preview--loading">
+        <div class="theme-preview theme-preview--loading">
           <p>Laden...</p>
         </div>
       );
@@ -118,14 +118,14 @@ export class ThemePreview {
 
     if (this.error) {
       return (
-        <div class="example-theme-preview example-theme-preview--error">
+        <div class="theme-preview theme-preview--error">
           <p>Error: {this.error}</p>
         </div>
       );
     }
 
     return (
-      <div class={`example-theme-preview ${this.themeClass}`} style={styles}>
+      <div class={`theme-preview ${this.themeClass}`} style={styles}>
         {/* Inject fetched external CDN stylesheets (with :root replaced by :host) */}
         {this.externalStyles && <style innerHTML={this.externalStyles}></style>}
 
@@ -135,7 +135,7 @@ export class ThemePreview {
         {/* Inject custom CSS provided by the application (textarea), processed and scoped */}
         {processedCustomCss && <style innerHTML={processedCustomCss}></style>}
 
-        <div class="example-theme-preview__content" innerHTML={this.htmlContent}></div>
+        <div class="theme-preview__content" innerHTML={this.htmlContent}></div>
       </div>
     );
   }
