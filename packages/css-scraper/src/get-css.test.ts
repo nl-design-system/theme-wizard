@@ -1,22 +1,5 @@
 import { test, expect, describe } from 'vitest';
-import { isLocalhostUrl, getCssFromHtml, getImportUrls } from './get-css';
-
-describe('isLocalhostUrl', () => {
-  test('localhost', () => {
-    expect(isLocalhostUrl('http://localhost')).toBeTruthy();
-    expect(isLocalhostUrl('http://localhost:8080')).toBeTruthy();
-    expect(isLocalhostUrl('HTTP://LOCALHOST:8080')).toBeTruthy();
-  });
-  test('127.0.0.1', () => {
-    expect(isLocalhostUrl('http://127.0.0.1/')).toBeTruthy();
-    expect(isLocalhostUrl('http://127.0.0.1/hello-world')).toBeTruthy();
-    expect(isLocalhostUrl('http://127.0.0.1:8080')).toBeTruthy();
-  });
-  test('192.168.*.*', () => {
-    expect(isLocalhostUrl('http://192.168.0.0')).toBeTruthy();
-    expect(isLocalhostUrl('http://192.168.1.1')).toBeTruthy();
-  });
-});
+import { getCssFromHtml, getImportUrls } from './get-css';
 
 describe('getCssFromHtml', () => {
   describe('<style> tags', () => {
@@ -304,7 +287,7 @@ describe('getImportUrls', () => {
     }
   });
 
-  describe('invalid cases that we do not care about', () => {
+  describe('invalid CSS cases that we do not care about', () => {
     test('@import declared after a ruleset', () => {
       const css = `
         * {

@@ -1,7 +1,4 @@
-export type CSSRawInputOrigin = {
-  type: 'raw';
-  css: string;
-};
+type UrlLike = string | URL;
 
 export type CSSLocalFileOrigin = {
   type: 'local-file';
@@ -19,27 +16,30 @@ export type CSSImportOrigin = {
   type: 'import';
   href: string;
   css: string;
+  url: UrlLike;
 };
 
 export type CSSLinkOrigin = {
   type: 'link';
   href: string;
-  url: string;
+  url: UrlLike;
   media?: string;
   rel: string;
   css: string;
 };
 
+export type PartialCSSLinkOrigin = Omit<CSSLinkOrigin, 'css'> & { css?: undefined };
+
 export type CSSStyleTagOrigin = {
   type: 'style';
   css: string;
-  url: string;
+  url: UrlLike;
 };
 
 export type CSSInlineStyleOrigin = {
   type: 'inline';
   css: string;
-  url: string;
+  url: UrlLike;
 };
 
 export type CSSOrigin =
@@ -47,6 +47,5 @@ export type CSSOrigin =
   | CSSLinkOrigin
   | CSSFileOrigin
   | CSSStyleTagOrigin
-  | CSSRawInputOrigin
   | CSSLocalFileOrigin
   | CSSInlineStyleOrigin;
