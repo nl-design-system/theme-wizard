@@ -3,5 +3,5 @@
 # Changes to any file require approval from @nl-design-system/expertteam-digitale-toegankelijkheid-committer
 * @nl-design-system/expertteam-digitale-toegankelijkheid-committer
 
-# Changes to this file (.github/CODEOWNERS) require approval from @nl-design-system/kernteam-admin
-.github/CODEOWNERS @nl-design-system/kernteam-admin
+# Changes to this file (.github/CODEOWNERS) require approval from @nl-design-system/kernteam-admin or @nl-design-system/expertteam-digitale-toegankelijkheid-maintainer
+.github/CODEOWNERS @nl-design-system/kernteam-admin @nl-design-system/expertteam-digitale-toegankelijkheid-maintainer
