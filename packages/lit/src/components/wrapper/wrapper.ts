@@ -5,7 +5,7 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import appStyles from './wrapper.css.js';
+import appStyles from './wrapper.css';
 
 @customElement('theme-wizard-wrapper')
 export class Wrapper extends LitElement {
@@ -15,7 +15,7 @@ export class Wrapper extends LitElement {
   @property({ type: String })
   pageDescription = 'Hieronder zie je een live voorbeeld van de opgegeven website met de geselecteerde huisstijl.';
 
-  static override readonly styles = appStyles;
+  static override readonly styles = [appStyles];
 
   override render() {
     return html`
