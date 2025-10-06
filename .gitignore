@@ -10,7 +10,6 @@ build/
 coverage/
 dist/
 tmp/
-public/
 
 # Ignore archives
 *.7z
@@ -61,7 +60,8 @@ pnpm-lock.yaml
 !/pnpm-lock.yaml
 
 # Ignore generated files from Stencil
-components.d.ts
+loader/
+www/
 
 # Ignore generated files from Astro
 .astro/

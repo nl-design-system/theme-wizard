@@ -10,13 +10,9 @@
     "directory": "packages/stencil"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "loader/"
   ],
-  "exports": {
-    "./website.css": {
-      "default": "./dist/website/website.css"
-    }
-  },
   "scripts": {
     "build": "stencil build",
     "clean": "rm -rf dist build",
