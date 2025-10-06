@@ -29,6 +29,7 @@
     "start": "vite preview",
     "dev": "vite",
     "test": "vitest",
+    "test-coverage": "vitest run --coverage",
     "build": "vite build",
     "clean": "rimraf dist/"
   },
