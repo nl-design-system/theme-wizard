@@ -1,19 +1,26 @@
 import { parse, walk } from 'css-tree';
 import { parseHTML } from 'linkedom';
-import type { CSSOrigin } from './css-origin.types.js';
+import type {
+  CSSImportOrigin,
+  CSSInlineStyleOrigin,
+  CSSLinkOrigin,
+  CSSOrigin,
+  CSSStyleTagOrigin,
+  PartialCSSLinkOrigin,
+} from './css-origin.types.js';
+import {
+  type UrlLike,
+  TimeoutError,
+  ScrapingError,
+  ForbiddenError,
+  ConnectionRefusedError,
+  NotFoundError,
+  InvalidUrlError,
+} from './errors.js';
 import { resolveUrl } from './resolve-url.js';
 import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
-
-export const isLocalhostUrl = (url: string): boolean => {
-  try {
-    const parsed = new URL(url);
-    return parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1' || parsed.hostname.startsWith('192.168.');
-  } catch {
-    return false;
-  }
-};
 
 /**
  * @description Parse a string of CSS to get all the `@import url()` URL's if there are any
@@ -40,6 +47,32 @@ export const getImportUrls = (css: string): string[] => {
   return urls;
 };
 
+const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number) => {
+  // TODO: pass error cause
+
+  if (error instanceof Error) {
+    if (error.name === 'AbortError') {
+      throw new TimeoutError(url, timeout);
+    }
+
+    const { message } = error;
+
+    if (message === 'Forbidden') {
+      throw new ForbiddenError(url);
+    }
+
+    if (message === 'fetch failed') {
+      throw new ConnectionRefusedError(url);
+    }
+
+    if (message === 'Not Found') {
+      throw new NotFoundError(url);
+    }
+  }
+
+  throw new ScrapingError('something went wrong', 500, url);
+};
+
 const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
   try {
     const response = await fetch(url, {
@@ -60,8 +93,11 @@ const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
   }
 };
 
-export const getCssFromHtml = (html: string, url: string | URL) => {
-  // TODO: if we want this to run client-side we can use DOMParser and avoid linkedom
+export const getCssFromHtml = (
+  html: string,
+  url: string | URL,
+): (CSSStyleTagOrigin | CSSInlineStyleOrigin | PartialCSSLinkOrigin | CSSLinkOrigin)[] => {
+  // TODO?: if we want this to run client-side we can use DOMParser and avoid linkedom
   const { document } = parseHTML(html);
 
   const nodes = document.querySelectorAll<HTMLLinkElement | HTMLStyleElement | HTMLElement>(
@@ -93,7 +129,7 @@ export const getCssFromHtml = (html: string, url: string | URL) => {
           href,
           media,
           rel,
-          type: 'link',
+          type: 'link' as const,
           url: href,
         };
         origins.push(linkOrigin);
@@ -104,7 +140,7 @@ export const getCssFromHtml = (html: string, url: string | URL) => {
           href,
           media,
           rel,
-          type: 'link',
+          type: 'link' as const,
           url: url.toString(),
         };
         origins.push(linkOrigin);
@@ -114,7 +150,7 @@ export const getCssFromHtml = (html: string, url: string | URL) => {
       if (css.length === 0) continue;
       const styleOrigin = {
         css,
-        type: 'style',
+        type: 'style' as const,
         url,
       };
       origins.push(styleOrigin);
@@ -135,7 +171,7 @@ export const getCssFromHtml = (html: string, url: string | URL) => {
   if (inlinedStyles.length > 0) {
     const inlineStylesOrigin = {
       css: `:where([css-scraper-inline-styles]) { ${inlinedStyles.join('')} }`,
-      type: 'inline',
+      type: 'inline' as const,
       url,
     };
     origins.push(inlineStylesOrigin);
@@ -163,132 +199,72 @@ const fetchHtml = async (url: string | URL, signal: AbortSignal) => {
   };
 };
 
-export const getCss = async (
-  url: string,
-  { timeout = 10000 } = {},
-): Promise<
-  | CSSOrigin[]
-  | {
-      error: {
-        message: string;
-        statusCode: number;
-        url: string;
-      };
-    }
-> => {
-  const resolvedUrl = resolveUrl(url);
-
-  if (resolvedUrl === undefined) {
-    return {
-      error: {
-        message: 'The URL is not valid. Are you sure you entered a URL and not CSS?',
-        statusCode: 400,
-        url,
-      },
-    };
-  }
-
-  let body: string;
-  let contentType: string | null;
-
-  // Setup a timeout and abortcontroller so we can stop in-flight fetch requests when we've crossed timeout limit
-  const abortController = new AbortController();
-  const timeoutId = setTimeout(() => abortController.abort(), timeout);
-
-  try {
-    const response = await fetchHtml(resolvedUrl, abortController.signal);
-    body = response.body;
-    contentType = response.contentType;
-  } catch (error: unknown) {
-    clearTimeout(timeoutId);
-
-    if (typeof error === 'object' && error !== null && 'message' in error) {
-      // Examples: chatgpt.com
-      if (error.message === 'Forbidden') {
-        return {
-          error: {
-            message:
-              'The origin server responded with a 403 Forbidden status code which means that scraping CSS is blocked. Is the URL publicly accessible?',
-            statusCode: 403,
-            url,
-          },
-        };
-      }
-
-      // Examples: localhost, sduhsdf.test
-      if (error.message === 'fetch failed') {
-        let message = 'The origin server is refusing connections.';
-        if (isLocalhostUrl(url)) {
-          message += ' You are trying to scrape a local server. Make sure to use a public URL.';
-        }
-
-        return {
-          error: {
-            message,
-            statusCode: 400,
-            url,
-          },
-        };
-      }
-
-      // Examples: projectwallace.com/auygsdjhgsj
-      if (error.message === 'Not Found') {
-        return {
-          error: {
-            message: 'The origin server responded with a 404 Not Found status code.',
-            statusCode: 404,
-            url,
-          },
-        };
-      }
-    }
-
-    // Generic error handling (TODO: add test case)
-    return {
-      error: {
-        message: 'something went wrong',
-        statusCode: 500,
-        url,
-      },
-    };
-  }
-
-  // Return early if our response was a CSS file already
-  if (contentType?.includes('text/css')) {
-    clearTimeout(timeoutId);
-    return [
-      {
-        css: body,
-        href: url,
-        type: 'file',
-      },
-    ];
-  }
-
-  if (isWaybackUrl(url)) {
-    body = removeWaybackToolbar(body);
-  }
-
-  const result: CSSOrigin[] = [];
-
-  const origins = getCssFromHtml(body, resolvedUrl);
+const processOrigins = async (
+  origins: (PartialCSSLinkOrigin | CSSLinkOrigin | CSSStyleTagOrigin | CSSInlineStyleOrigin)[],
+  abortSignal: AbortSignal,
+) => {
+  const result: (CSSLinkOrigin | CSSImportOrigin | CSSStyleTagOrigin | CSSInlineStyleOrigin)[] = [];
 
   for (const origin of origins) {
     if (origin.type === 'link' && !origin.css) {
-      origin.css = await getCssFile(origin.url, abortController.signal);
+      origin.css = await getCssFile(origin.url, abortSignal);
+      result.push(origin as CSSLinkOrigin);
+    } else {
+      result.push(origin);
     }
-    // casting `origin.css` to `as string` is safe here because we've fetched the CSS in case it wasn't there before
+
     for (const importUrl of getImportUrls(origin.css as string)) {
-      const css = await getCssFile(importUrl, abortController.signal);
-      origins.push({
+      const css = await getCssFile(importUrl, abortSignal);
+      result.push({
         css,
-        type: 'import',
+        href: importUrl,
+        type: 'import' as const,
         url: importUrl,
       });
     }
   }
 
-  clearTimeout(timeoutId);
-
   return result;
+};
+
+export const getCss = async (url: string, { timeout = 10000 } = {}): Promise<CSSOrigin[]> => {
+  const resolvedUrl = resolveUrl(url);
+
+  if (resolvedUrl === undefined) {
+    throw new InvalidUrlError(url);
+  }
+
+  // Setup a timeout and abortcontroller so we can stop in-flight fetch requests when we've crossed the timeout limit
+  const abortController = new AbortController();
+  const timeoutId = setTimeout(() => abortController.abort(), timeout);
+
+  try {
+    const response = await fetchHtml(resolvedUrl, abortController.signal);
+    let body = response.body;
+
+    if (response.contentType?.includes('text/css')) {
+      clearTimeout(timeoutId);
+      return [
+        {
+          css: body,
+          href: url,
+          type: 'file',
+        },
+      ];
+    }
+
+    if (isWaybackUrl(resolvedUrl)) {
+      body = removeWaybackToolbar(body);
+    }
+
+    const origins = getCssFromHtml(body, resolvedUrl);
+    const result = processOrigins(origins, abortController.signal);
+
+    clearTimeout(timeoutId);
+    return result;
+  } catch (error: unknown) {
+    clearTimeout(timeoutId);
+    handleFetchError(error, resolvedUrl, timeout);
+    return [];
+  }
 };

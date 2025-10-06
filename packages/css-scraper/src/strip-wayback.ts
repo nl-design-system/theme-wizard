@@ -1,4 +1,4 @@
-export const isWaybackUrl = (url: string) => {
+export const isWaybackUrl = (url: string | URL) => {
   try {
     const parsed = new URL(url);
     return parsed.hostname === 'web.archive.org' && /web\/\d{14}\/.+/.test(parsed.pathname);

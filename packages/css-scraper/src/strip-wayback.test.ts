@@ -7,6 +7,7 @@ describe('isWaybackUrl', () => {
       'https://web.archive.org/web/20250311183954/x', // invalid URL but not our concern
       'https://web.archive.org/web/20250311183954/https://www.projectwallace.com/',
       'https://web.archive.org/web/20250322053451/https://www.projectwallace.com/design-tokens',
+      new URL('https://web.archive.org/web/20250311183954/https://www.projectwallace.com/'),
     ];
     for (const url of urls) {
       expect(isWaybackUrl(url)).toBeTruthy();

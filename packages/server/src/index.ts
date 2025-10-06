@@ -23,19 +23,26 @@ app.get('/api/get-css', async (c) => {
     throw new HTTPException(400, { message: 'missing `url` parameter' });
   }
 
-  const startTime = Date.now();
-  const origins = await getCss(url);
-  const endTime = Date.now();
+  try {
+    const startTime = Date.now();
+    const origins = await getCss(url);
+    const css = origins.map((origin) => origin.css).join('');
+    const endTime = Date.now();
 
-  if ('error' in origins) {
-    console.error(origins.error);
-    throw new HTTPException(500, { cause: origins.error, message: 'encountered a scraping error' });
+    c.res.headers.set('server-timing', `scraping;desc="Scraping CSS";dur=${endTime - startTime}`);
+    c.res.headers.set('content-type', 'text/css; charset=utf-8');
+    return c.body(css);
+  } catch (error: unknown) {
+    console.error(error);
+    if (error instanceof Error && 'statusCode' in error) {
+      throw new HTTPException(400, {
+        cause: error,
+        message: error.message,
+      });
+    }
+
+    throw new HTTPException(500, { cause: error, message: 'encountered a scraping error' });
   }
-
-  c.res.headers.set('content-type', 'text/css; charset=utf-8');
-  c.res.headers.set('server-timing', `scraping;desc="Scraping CSS";dur=${endTime - startTime}`);
-  const css = origins.map((origin) => origin.css).join('');
-  return c.body(css);
 });
 
 export default app;
