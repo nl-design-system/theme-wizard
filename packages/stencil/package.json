@@ -20,7 +20,7 @@
     "clean:stencil": "rimraf dist/ loader/ www/",
     "lint-build": "pnpm run '/^lint:.*/'",
     "lint-build:ts": "tsc --noEmit --project tsconfig.json",
-    "start": "stencil build --dev --watch --serve",
+    "dev": "stencil build --dev --watch --serve",
     "watch:build": "stencil build --watch",
     "generate": "stencil generate"
   },

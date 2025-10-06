@@ -215,6 +215,9 @@ importers:
 
   packages/website:
     dependencies:
+      '@nl-design-system-community/stencil':
+        specifier: workspace:*
+        version: link:../stencil
       astro:
         specifier: 5.14.1
         version: 5.14.1(@types/node@22.16.4)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0)

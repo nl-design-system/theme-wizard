@@ -10,13 +10,13 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run clean && astro build",
-    "prebuild": "pnpm -C ../stencil build",
     "clean": "rm -rf dist .astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "5.14.1"
+    "astro": "5.14.1",
+    "@nl-design-system-community/stencil": "workspace:*"
   },
   "devDependencies": {
     "@stencil/core": "4.37.1"
