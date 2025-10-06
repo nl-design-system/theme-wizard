@@ -73,7 +73,7 @@ const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number)
   throw new ScrapingError('something went wrong', 500, url);
 };
 
-const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
+export const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
   try {
     const response = await fetch(url, {
       headers: {

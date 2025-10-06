@@ -1,5 +1,5 @@
-import { test, expect, describe } from 'vitest';
-import { getCssFromHtml, getImportUrls } from './get-css';
+import { test, expect, describe, vi, beforeEach, type Mock } from 'vitest';
+import { getCssFromHtml, getImportUrls, getCssFile } from './get-css';
 
 describe('getCssFromHtml', () => {
   describe('<style> tags', () => {
@@ -312,5 +312,54 @@ describe('getImportUrls', () => {
       `;
       expect(getImportUrls(css)).toEqual(['test1.css', 'test2.css']);
     });
+  });
+});
+
+describe('fetCssFile', () => {
+  global.fetch = vi.fn() as Mock;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  const REQUEST_HEADERS = {
+    Accept: 'text/css,*/*;q=0.1',
+    'User-Agent': 'NL Design System CSS Scraper/1.0',
+  };
+
+  test('it fetches CSS content successfully', async () => {
+    const mockResponse = 'body { margin: 0; }';
+    (fetch as Mock).mockResolvedValueOnce({
+      ok: true,
+      text: async () => mockResponse,
+    });
+
+    const controller = new AbortController();
+    const result = await getCssFile('http://example.com/style.css', controller.signal);
+    expect(fetch).toHaveBeenCalledWith('http://example.com/style.css', {
+      headers: REQUEST_HEADERS,
+      signal: controller.signal,
+    });
+    expect(result).toEqual(mockResponse);
+  });
+
+  test('it returns an empty string when the request fails', async () => {
+    (fetch as Mock).mockResolvedValueOnce({
+      ok: false,
+    });
+
+    const controller = new AbortController();
+    const result = await getCssFile('http://example.com/style.css', controller.signal);
+    expect(result).toEqual('');
+  });
+
+  test('it returns an empty string when the request is aborted', async () => {
+    (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
+
+    const controller = new AbortController();
+    controller.abort();
+
+    const result = await getCssFile('http://example.com/style.css', controller.signal);
+    expect(result).toEqual('');
   });
 });
