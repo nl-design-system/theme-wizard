@@ -1,0 +1,37 @@
+/* ============================================
+     GLOBAL BUTTON COMPONENTS
+     ============================================ */
+.theme-button {
+  align-items: center;
+  border: none;
+  border-radius: var(--theme-border-radius);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: var(--theme-font-size-sm);
+  font-weight: var(--theme-font-weight-semibold);
+  gap: var(--theme-space-2);
+  justify-content: center;
+  padding-block: 0.625rem;
+  padding-inline: var(--theme-space-4);
+  transition:
+    background-color 200ms ease,
+    transform 100ms ease;
+}
+
+.theme-button:hover {
+  transform: translateY(-1px);
+}
+
+.theme-button--primary {
+  background: var(--theme-primary);
+  color: white;
+}
+
+.theme-button--primary:hover {
+  background: var(--theme-primary-hover);
+}
+
+.theme-button--full {
+  inline-size: 100%;
+}

@@ -4,7 +4,7 @@
  */
 
 /* ============================================
-   DESIGN SYSTEM TOKENS
+   THEME TOKENS
    ============================================ */
 :root {
   /* Typography Scale */
@@ -46,6 +46,7 @@
   --theme-shadow: 0 4px 12px rgb(0 0 0 / 15%);
   --theme-shadow-light: 0 2px 8px rgb(0 0 0 / 8%);
 }
+<<<<<<<< HEAD:packages/website/src/styles/design-tokens.css
 
 /* ============================================
    GLOBAL BUTTON COMPONENTS
@@ -84,3 +85,5 @@
 .theme-button--full {
   inline-size: 100%;
 }
+========
+>>>>>>>> 0d052f2 (refactor: reorganize styles, update favicon and update gitignore):packages/website/src/styles/theme.css
