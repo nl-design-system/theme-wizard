@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run clean && astro build",
+    "prebuild": "pnpm -C ../stencil build",
     "clean": "rm -rf dist .astro build",
     "preview": "astro preview",
     "astro": "astro"
