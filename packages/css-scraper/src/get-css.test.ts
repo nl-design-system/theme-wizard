@@ -1,5 +1,61 @@
 import { test, expect, describe, vi, beforeEach, type Mock } from 'vitest';
-import { getCssFromHtml, getImportUrls, getCssFile } from './get-css';
+import { ForbiddenError, NotFoundError, ConnectionRefusedError, InvalidUrlError, TimeoutError } from './errors';
+import { getCssFromHtml, getImportUrls, getCssFile, getCss } from './get-css';
+
+describe('getCss', () => {
+  describe('errors', () => {
+    global.fetch = vi.fn() as Mock;
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    test('InvalidUrlError', async () => {
+      await expect(getCss('')).rejects.toThrowError(InvalidUrlError);
+    });
+
+    test('NotFoundError', async () => {
+      (fetch as Mock).mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+      });
+      await expect(getCss('http://example.com')).rejects.toThrowError(NotFoundError);
+    });
+
+    test('ForbiddenError', async () => {
+      (fetch as Mock).mockResolvedValueOnce({
+        ok: false,
+        status: 403,
+        statusText: 'Forbidden',
+      });
+      await expect(getCss('http://example.com')).rejects.toThrowError(ForbiddenError);
+    });
+
+    test('ConnectionRefusedError', async () => {
+      (fetch as Mock).mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        statusText: 'fetch failed',
+      });
+      await expect(getCss('http://example.com')).rejects.toThrowError(ConnectionRefusedError);
+    });
+
+    test('ConnectionRefusedError (localhost)', async () => {
+      (fetch as Mock).mockResolvedValueOnce({
+        ok: false,
+        status: 400,
+        statusText: 'fetch failed',
+      });
+      await expect(getCss('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
+    });
+
+    test('TimeourError', async () => {
+      (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
+      await expect(getCss('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
+    });
+  });
+});
 
 describe('getCssFromHtml', () => {
   describe('<style> tags', () => {

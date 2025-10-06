@@ -19,26 +19,33 @@ describe('valid urls', () => {
       expect(resolveUrl(input)).toEqual(expected);
     });
   });
-});
 
-test('paths with base url', () => {
-  expect.soft(resolveUrl('/path', 'https://example.com')).toEqual(new URL('https://example.com/path'));
-  expect.soft(resolveUrl('path', 'https://example.com')).toEqual(new URL('https://example.com/path'));
-  expect.soft(resolveUrl('path?query=1', 'https://example.com')).toEqual(new URL('https://example.com/path?query=1'));
-  expect.soft(resolveUrl('//other.com/path', 'https://example.com')).toEqual(new URL('https://other.com/path'));
-});
+  test('handles base64 encoded data URLs', () => {
+    const input = `data:text/css;charset=utf-8,${encodeURIComponent('h1 { color: red; }')}`;
+    expect(resolveUrl(input)?.toString()).toEqual(input);
+  });
 
-test('parent paths with base url', () => {
-  expect
-    .soft(resolveUrl('./style.css', 'https://example.com/lots/of/nested/folders'))
-    .toEqual(new URL('https://example.com/lots/of/nested/style.css'));
-  expect.soft(resolveUrl('../style.css', 'https://example.com/css/')).toEqual(new URL('https://example.com/style.css'));
-  expect
-    .soft(resolveUrl('../path/style.css', 'https://example.com/dir/file.css'))
-    .toEqual(new URL('https://example.com/path/style.css'));
-  expect
-    .soft(resolveUrl('../../style.css', 'https://example.com/dir/subdir'))
-    .toEqual(new URL('https://example.com/style.css'));
+  test('paths with base url', () => {
+    expect.soft(resolveUrl('/path', 'https://example.com')).toEqual(new URL('https://example.com/path'));
+    expect.soft(resolveUrl('path', 'https://example.com')).toEqual(new URL('https://example.com/path'));
+    expect.soft(resolveUrl('path?query=1', 'https://example.com')).toEqual(new URL('https://example.com/path?query=1'));
+    expect.soft(resolveUrl('//other.com/path', 'https://example.com')).toEqual(new URL('https://other.com/path'));
+  });
+
+  test('parent paths with base url', () => {
+    expect
+      .soft(resolveUrl('./style.css', 'https://example.com/lots/of/nested/folders'))
+      .toEqual(new URL('https://example.com/lots/of/nested/style.css'));
+    expect
+      .soft(resolveUrl('../style.css', 'https://example.com/css/'))
+      .toEqual(new URL('https://example.com/style.css'));
+    expect
+      .soft(resolveUrl('../path/style.css', 'https://example.com/dir/file.css'))
+      .toEqual(new URL('https://example.com/path/style.css'));
+    expect
+      .soft(resolveUrl('../../style.css', 'https://example.com/dir/subdir'))
+      .toEqual(new URL('https://example.com/style.css'));
+  });
 });
 
 describe('invalid urls', () => {
