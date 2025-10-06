@@ -1,0 +1,24 @@
+{
+  "name": "@nl-design-system-community/website",
+  "type": "module",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nl-design-system/theme-wizard.git",
+    "directory": "packages/website"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "pnpm run clean && astro build",
+    "clean": "rm -rf dist .astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "5.14.1",
+    "@nl-design-system-community/stencil": "workspace:*"
+  },
+  "devDependencies": {
+    "@stencil/core": "4.37.1"
+  }
+}

@@ -1,0 +1,28 @@
+---
+import favicon from '../assets/favicon.svg';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Theme Wizard', description = 'Preview and analyze website themes' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={favicon.src} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/build/website.css" />
+  </head>
+  <body>
+    <slot />
+
+    <script type="module" src="/build/website.esm.js"></script>
+  </body>
+</html>

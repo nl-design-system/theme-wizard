@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  inline-size: 100%;
+}
+
+/* Apply typography to content */
+span,
+p,
+li,
+a,
+button,
+input,
+textarea {
+  font-family: var(--theme-body-font-family, system-ui, sans-serif) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--theme-heading-font-family, system-ui, sans-serif) !important;
+}

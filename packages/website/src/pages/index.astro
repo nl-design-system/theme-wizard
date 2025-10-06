@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Theme configuration - can be made dynamic later
+const themeData = {
+  colors: {
+    primary: '#ffffff',
+    secondary: '#000000',
+    background: '#ffffff',
+  },
+  typography: {
+    bodyFontFamily: "'Times New Roman', serif",
+    headingFontFamily: "'Times New Roman', serif",
+  },
+  sourceUrl: 'https://www.utrecht.nl/',
+};
+---
+
+<BaseLayout title="Theme Wizard - Stencil POC" description="Preview and analyze website themes">
+  <theme-app>
+    <theme-sidebar slot="sidebar"></theme-sidebar>
+
+    <theme-preview slot="preview" id="theme-preview"></theme-preview>
+  </theme-app>
+</BaseLayout>

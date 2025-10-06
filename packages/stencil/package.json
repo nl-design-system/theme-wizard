@@ -1,0 +1,32 @@
+{
+  "name": "@nl-design-system-community/stencil",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "description": "Stencil components and helpers extracted from the website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nl-design-system/theme-wizard.git",
+    "directory": "packages/stencil"
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "pnpm run '/^build:.*/'",
+    "build:stencil": "stencil build",
+    "clean": "pnpm run '/^clean:.*/'",
+    "clean:stencil": "rimraf dist/ loader/ www/",
+    "lint-build": "pnpm run '/^lint:.*/'",
+    "lint-build:ts": "tsc --noEmit --project tsconfig.json",
+    "dev": "stencil build --dev --watch --serve",
+    "watch:build": "stencil build --watch",
+    "generate": "stencil generate"
+  },
+  "devDependencies": {
+    "@stencil/core": "4.37.1",
+    "typescript": "5.8.3",
+    "rimraf": "6.0.1"
+  }
+}
