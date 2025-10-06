@@ -1,19 +1,18 @@
 import type { Config } from '@stencil/core';
 
 export const config: Config = {
-  globalStyle: 'src/styles/design-tokens.css',
-  srcDir: 'src/',
+  globalStyle: 'src/styles/theme.css',
   namespace: 'website',
   outputTargets: [
     {
-      type: 'dist',
       esmLoaderPath: '../loader',
+      type: 'dist',
     },
     {
-      type: 'www',
       dir: '../website/public',
       serviceWorker: null,
+      type: 'www',
     },
   ],
-  tsconfig: './tsconfig.stencil.json',
+  srcDir: 'src/',
 };

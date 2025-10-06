@@ -8,8 +8,8 @@
     "directory": "packages/website"
   },
   "scripts": {
-    "dev": "pnpm run stencil:build && astro dev",
-    "build": "pnpm run clean && pnpm run stencil:build && astro build",
+    "dev": "astro dev",
+    "build": "pnpm run clean && astro build",
     "stencil:build": "stencil build",
     "clean": "rm -rf dist .astro build",
     "preview": "astro preview",
