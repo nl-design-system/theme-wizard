@@ -315,7 +315,7 @@ describe('getImportUrls', () => {
   });
 });
 
-describe('fetCssFile', () => {
+describe('getCssFile', () => {
   global.fetch = vi.fn() as Mock;
 
   beforeEach(() => {
