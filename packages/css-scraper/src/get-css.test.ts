@@ -3,13 +3,223 @@ import { ForbiddenError, NotFoundError, ConnectionRefusedError, InvalidUrlError,
 import { getCssFromHtml, getImportUrls, getCssFile, getCss } from './get-css';
 
 describe('getCss', () => {
-  describe('errors', () => {
-    global.fetch = vi.fn() as Mock;
+  global.fetch = vi.fn() as Mock;
 
-    beforeEach(() => {
-      vi.clearAllMocks();
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  test('get a CSS file directly (no further scraping', async () => {
+    const mockCss = 'a { color: blue; }';
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => mockCss,
+    });
+    const result = await getCss('https://example.com/style.css');
+    expect(result).toEqual([
+      {
+        css: mockCss,
+        href: 'https://example.com/style.css',
+        type: 'file',
+      },
+    ]);
+  });
+
+  test('get remote CSS referenced in a <link> tag', async () => {
+    // Mock the HTML request
+    const mockHtml = `
+      <html>
+        <head>
+          <link rel="stylesheet" href="https://example.com/style.css">
+        </head>
+      </html>
+    `;
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/html' }),
+      ok: true,
+      status: 200,
+      text: async () => mockHtml,
     });
 
+    // Mock the CSS request
+    const mockCss = 'a { color: blue; }';
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => mockCss,
+    });
+
+    const result = await getCss('https://example.com');
+    expect(result).toEqual([
+      {
+        css: mockCss,
+        href: 'https://example.com/style.css',
+        media: undefined,
+        rel: 'stylesheet',
+        type: 'link',
+        url: 'https://example.com/style.css',
+      },
+    ]);
+  });
+
+  test('get embedded CSS from a <style> tag', async () => {
+    // Mock the HTML request
+    const mockCss = 'a { color: blue; }';
+    const mockHtml = `
+      <html>
+        <head>
+          <style>${mockCss}</style>
+        </head>
+      </html>
+    `;
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/html' }),
+      ok: true,
+      status: 200,
+      text: async () => mockHtml,
+    });
+
+    const result = await getCss('https://example.com');
+    expect(result).toEqual([
+      {
+        css: mockCss,
+        type: 'style',
+        url: 'https://example.com/',
+      },
+    ]);
+  });
+
+  test('deep-fetch CSS from an @import rule', async () => {
+    // Mock the HTML request
+    const mockCss = '@import url("./fonts.css");';
+    const mockHtml = `
+      <html>
+        <head>
+          <style>${mockCss}</style>
+        </head>
+      </html>
+    `;
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/html' }),
+      ok: true,
+      status: 200,
+      text: async () => mockHtml,
+    });
+
+    // Mock the CSS request
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => 'a { color: blue; }',
+    });
+
+    const result = await getCss('https://example.com');
+    expect(result).toEqual([
+      {
+        css: mockCss,
+        type: 'style',
+        url: 'https://example.com/',
+      },
+      {
+        css: 'a { color: blue; }',
+        href: './fonts.css',
+        type: 'import',
+        url: './fonts.css',
+      },
+    ]);
+  });
+
+  test('fetch CSS from a remote source with relative path and <base> element in the HTML', async () => {
+    // Mock the HTML request
+    const mockHtml = `
+      <html>
+        <head>
+          <link rel="stylesheet" href="./style.css">
+          <base href="https://example.com">
+        </head>
+      </html>
+    `;
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/html' }),
+      ok: true,
+      status: 200,
+      text: async () => mockHtml,
+    });
+
+    // Mock the CSS request
+    const mockCss = 'a { color: blue; }';
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => mockCss,
+    });
+
+    const result = await getCss('https://example.com/very/deep/path/to/page');
+    expect(result).toEqual([
+      {
+        css: mockCss,
+        href: './style.css',
+        media: undefined,
+        rel: 'stylesheet',
+        type: 'link',
+        url: 'https://example.com/style.css',
+      },
+    ]);
+  });
+
+  test('strips wyback machine toolbar', async () => {
+    // Mock the HTML request
+    const mockCss = 'html { color: green; }';
+    const mockHtml = `
+      <!doctype>
+      <html>
+        <head><script type="text/javascript">
+          __wm.init("https://web.archive.org/web");
+          __wm.wombat("https://www.projectwallace.com/","20250307010338","https://web.archive.org/","web","https://web-static.archive.org/_static/",
+                  "1741309418");
+          </script>
+          <link rel="stylesheet" type="text/css" href="https://web-static.archive.org/_static/css/banner-styles.css?v=p7PEIJWi" />
+          <link rel="stylesheet" type="text/css" href="https://web-static.archive.org/_static/css/iconochive.css?v=3PDvdIFv" />
+          <!-- End Wayback Rewrite JS Include -->
+          <title>Hello World</title>
+        </head>
+        <body><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+
+          EVERYTHING IN BETWEEN HERE WILL BE REMOVED
+
+          <script>console.log('test');</script>
+          <style>${mockCss}</style>
+
+          <!-- END WAYBACK TOOLBAR INSERT -->
+
+          <h1>Hello World</h1>
+          <style>${mockCss}</style>
+        </body>
+      </html>
+    `;
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/html' }),
+      ok: true,
+      status: 200,
+      text: async () => mockHtml,
+    });
+
+    const result = await getCss('https://web.archive.org/web/20250311183954/https://example.com/');
+    expect(result).toEqual([
+      {
+        css: mockCss,
+        type: 'style',
+        url: 'https://web.archive.org/web/20250311183954/https://example.com/',
+      },
+    ]);
+  });
+
+  describe('errors', () => {
     test('InvalidUrlError', async () => {
       await expect(getCss('')).rejects.toThrowError(InvalidUrlError);
     });
@@ -50,7 +260,7 @@ describe('getCss', () => {
       await expect(getCss('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
     });
 
-    test('TimeourError', async () => {
+    test('TimeoutError', async () => {
       (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
       await expect(getCss('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
     });

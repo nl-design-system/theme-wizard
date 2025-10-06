@@ -11,7 +11,6 @@ import type {
 import {
   type UrlLike,
   TimeoutError,
-  ScrapingError,
   ForbiddenError,
   ConnectionRefusedError,
   NotFoundError,
@@ -49,7 +48,6 @@ export const getImportUrls = (css: string): string[] => {
 
 const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number) => {
   // TODO: pass error cause
-
   if (error instanceof Error) {
     if (error.name === 'AbortError') {
       throw new TimeoutError(url, timeout);
@@ -70,7 +68,7 @@ const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number)
     }
   }
 
-  throw new ScrapingError('something went wrong', 500, url);
+  // throw new ScrapingError('something went wrong', 500, url);
 };
 
 export const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
@@ -115,7 +113,7 @@ export const getCssFromHtml = (
       const href = link.getAttribute('href')!;
       // Set the URL to the resolved URL instead of item.href to fix relative URLs
       // e.g. ./styles.css -> https://example.com/styles.css
-      const url = resolveUrl(href, baseUrl);
+      const url = resolveUrl(href, baseUrl)!;
       const media = link.getAttribute('media') || undefined;
       const rel = link.getAttribute('rel')!;
 
@@ -134,7 +132,6 @@ export const getCssFromHtml = (
         };
         origins.push(linkOrigin);
       } else {
-        if (!url) continue;
         const linkOrigin = {
           css: undefined, // still need to fetch CSS from the url
           href,
@@ -151,7 +148,7 @@ export const getCssFromHtml = (
       const styleOrigin = {
         css,
         type: 'style' as const,
-        url,
+        url: url.toString(),
       };
       origins.push(styleOrigin);
     } else if (node.hasAttribute('style')) {
@@ -172,7 +169,7 @@ export const getCssFromHtml = (
     const inlineStylesOrigin = {
       css: `:where([css-scraper-inline-styles]) { ${inlinedStyles.join('')} }`,
       type: 'inline' as const,
-      url,
+      url: url.toString(),
     };
     origins.push(inlineStylesOrigin);
   }
