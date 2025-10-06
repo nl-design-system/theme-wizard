@@ -3,9 +3,6 @@ export const resolveUrl = (url: string, baseUrl?: string | URL): URL | undefined
   if (baseUrl) {
     try {
       const base = new URL(baseUrl);
-      if (!base.protocol || !base.hostname) {
-        return undefined;
-      }
       return new URL(url, base);
     } catch {
       return undefined;
