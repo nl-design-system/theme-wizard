@@ -14,12 +14,19 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build",
-    "clean": "rm -rf dist build",
-    "dev": "stencil build --dev --watch"
+    "build": "pnpm run '/^build:.*/'",
+    "build:stencil": "stencil build",
+    "clean": "pnpm run '/^clean:.*/'",
+    "clean:stencil": "rimraf dist/ loader/ www/",
+    "lint-build": "pnpm run '/^lint:.*/'",
+    "lint-build:ts": "tsc --noEmit --project tsconfig.json",
+    "start": "stencil build --dev --watch --serve",
+    "watch:build": "stencil build --watch",
+    "generate": "stencil generate"
   },
   "devDependencies": {
     "@stencil/core": "4.37.1",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "rimraf": "6.0.1"
   }
 }
