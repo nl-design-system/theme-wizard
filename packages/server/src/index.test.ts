@@ -14,12 +14,16 @@ test('health check', async () => {
 describe('/get-css', () => {
   describe('query param validation', () => {
     test('missing `url` query param', async () => {
+      const { getCss } = await import('@nl-design-system-community/css-scraper');
+      (getCss as Mock).mockResolvedValueOnce([]);
       const response = await app.request('/api/get-css');
       expect.soft(response.status).toBe(400);
       expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
     });
 
     test('empty `url` query param', async () => {
+      const { getCss } = await import('@nl-design-system-community/css-scraper');
+      (getCss as Mock).mockResolvedValueOnce([]);
       const response = await app.request('/api/get-css?url=');
       expect.soft(response.status).toBe(400);
       expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
