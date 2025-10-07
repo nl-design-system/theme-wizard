@@ -3,15 +3,6 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
-export interface ThemePreviewElement extends HTMLElement {
-  url?: string;
-  headingFontFamily?: string;
-  bodyFontFamily?: string;
-  themeClass?: string;
-  customCss?: string;
-  refresh?: () => Promise<void>;
-}
-
 export interface ThemeData {
   colors: {
     primary: string;

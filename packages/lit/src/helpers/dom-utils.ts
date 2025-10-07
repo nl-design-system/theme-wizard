@@ -43,7 +43,7 @@ export function rewriteAttributeUrlsToAbsolute(root: ParentNode, baseUrl: string
  */
 export function rewriteSvgXlinkToAbsolute(root: ParentNode, baseUrl: string): void {
   const xlinkNS = 'http://www.w3.org/1999/xlink';
-  const svgImages = root.querySelectorAll('image') as NodeListOf<SVGImageElement>;
+  const svgImages = root.querySelectorAll<SVGImageElement>('image');
   svgImages.forEach((img) => {
     const legacy = img.getAttribute('xlink:href');
     const current = img.getAttribute('href');
@@ -56,26 +56,6 @@ export function rewriteSvgXlinkToAbsolute(root: ParentNode, baseUrl: string): vo
         img.setAttribute('href', abs);
       }
     }
-  });
-}
-
-/**
- * Normalize inline style url(...) values inside style attributes to absolute.
- * @param root - Root element to process
- * @param baseUrl - Base URL for relative URLs
- */
-export function rewriteInlineStyleAttributesToAbsolute(root: ParentNode, baseUrl: string): void {
-  const styledNodes = root.querySelectorAll('[style]');
-  styledNodes.forEach((el: Element) => {
-    const styleVal = el.getAttribute('style') || '';
-    const rewritten = styleVal.replace(/url\(([^)]+)\)/g, (match, p1) => {
-      const raw = String(p1)
-        .trim()
-        .replace(/(?:^["']|["']$)/g, '');
-      const abs = toAbsolute(raw, baseUrl);
-      return abs ? `url(${abs})` : match;
-    });
-    if (rewritten !== styleVal) el.setAttribute('style', rewritten);
   });
 }
 

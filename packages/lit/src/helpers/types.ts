@@ -22,7 +22,7 @@ export interface ThemeStyleProperties {
  */
 export interface UrlParamsConfig {
   /** Website URL to analyze */
-  url?: string;
+  sourceUrl?: string;
   /** Font family for headings */
   headingFont?: string;
   /** Font family for body text */

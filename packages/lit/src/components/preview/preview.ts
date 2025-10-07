@@ -1,18 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import {
-  fetchHtml,
-  parseHtml,
-  rewriteAttributeUrlsToAbsolute,
-  rewriteSvgXlinkToAbsolute,
-  rewriteInlineStyleAttributesToAbsolute,
-  extractStylesheetUrls,
-  fetchAndProcessExternalStylesheets,
-  extractAndProcessInlineHeadStyles,
-  processCustomCss,
-} from '../../helpers';
+import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../helpers';
 
-@customElement('theme-preview')
+@customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property({ reflect: true, type: String }) url: string =
     'https://documentatie-git-feat-2654-html-stappen-f9d4f8-nl-design-system.vercel.app/examples/zonder-front-end-framework.html#';
@@ -23,14 +13,13 @@ export class ThemePreview extends LitElement {
   @property({ reflect: true, type: String }) customCss: string = '';
 
   @state() private htmlContent: string = '';
-  @state() private externalStyles: string = '';
-  @state() private inlineStyles: string = '';
   @state() private isLoading: boolean = true;
   @state() private error: string = '';
 
   override connectedCallback() {
     super.connectedCallback();
     this.initializeFromURL();
+    document.addEventListener('configChanged', this.handleConfigChanged as EventListener);
   }
 
   override firstUpdated() {
@@ -43,7 +32,36 @@ export class ThemePreview extends LitElement {
     }
   }
 
-  private initializeFromURL() {
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener('configChanged', this.handleConfigChanged as EventListener);
+  }
+
+  private readonly handleConfigChanged = (e: CustomEvent) => {
+    const detail = (e?.detail || {}) as {
+      sourceUrl?: string;
+      headingFont?: string;
+      bodyFont?: string;
+      themeClass?: string;
+      customCss?: string;
+    };
+
+    if (detail.sourceUrl) {
+      const normalized = this.normalizeUrl(detail.sourceUrl);
+      if (normalized !== this.url) {
+        this.url = normalized;
+      } else {
+        // Same URL value; still re-run analysis
+        this.fetchContent();
+      }
+    }
+    if (detail.headingFont) this.headingFontFamily = detail.headingFont;
+    if (detail.bodyFont) this.bodyFontFamily = detail.bodyFont;
+    if (detail.themeClass) this.themeClass = detail.themeClass;
+    if (typeof detail.customCss === 'string') this.customCss = detail.customCss;
+  };
+
+  private readonly initializeFromURL = () => {
     const url = new URL(window.location.href);
     const urlParam = url.searchParams.get('url');
     const headingFontParam = url.searchParams.get('headingFont');
@@ -51,42 +69,45 @@ export class ThemePreview extends LitElement {
     const themeClassParam = url.searchParams.get('themeClass');
     const customCssParam = url.searchParams.get('customCss');
 
-    if (urlParam) this.url = urlParam;
+    if (urlParam) this.url = this.normalizeUrl(urlParam);
     if (headingFontParam) this.headingFontFamily = headingFontParam;
     if (bodyFontParam) this.bodyFontFamily = bodyFontParam;
     if (themeClassParam) this.themeClass = themeClassParam;
     if (customCssParam) this.customCss = customCssParam;
-  }
+  };
 
-  private async fetchContent() {
+  private readonly normalizeUrl = (value: string): string => {
+    if (!value) return value;
+    if (value.startsWith('http://') || value.startsWith('https://')) return value;
+    return `https://${value}`;
+  };
+
+  private readonly fetchContent = async () => {
+    this.isLoading = true;
+    this.error = '';
+
+    if (!this.url) {
+      this.isLoading = false;
+      return;
+    }
+
     try {
-      this.isLoading = true;
-      this.error = '';
-
       const html = await fetchHtml(this.url);
       const doc = parseHtml(html);
 
       rewriteAttributeUrlsToAbsolute(doc.body, this.url);
       rewriteSvgXlinkToAbsolute(doc.body, this.url);
-      rewriteInlineStyleAttributesToAbsolute(doc.body, this.url);
-
-      const stylesheetUrls = extractStylesheetUrls(doc.head, this.url);
-      const externalStyles = await fetchAndProcessExternalStylesheets(stylesheetUrls);
-      const inlineStyles = extractAndProcessInlineHeadStyles(doc.head, this.url);
-      const processedCustomCss = processCustomCss(this.customCss, this.url);
 
       this.htmlContent = doc.body.innerHTML;
-      this.externalStyles = externalStyles;
-      this.inlineStyles = inlineStyles;
-      this.customCss = processedCustomCss;
-      this.isLoading = false;
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
+    } finally {
       this.isLoading = false;
+      this.requestUpdate();
     }
-  }
+  };
 
-  static override styles = css`
+  static override readonly styles = css`
     .theme-preview--loading,
     .theme-preview--error {
       padding: 1rem;
@@ -104,7 +125,7 @@ export class ThemePreview extends LitElement {
       '--theme-heading-font-family': this.headingFontFamily,
     };
 
-    if (this.isLoading) {
+    if (this.isLoading && !this.htmlContent) {
       return html`
         <div class="theme-preview theme-preview--loading">
           <p>Laden...</p>
@@ -122,22 +143,11 @@ export class ThemePreview extends LitElement {
 
     return html`
       <div class="theme-preview ${this.themeClass}" style=${this.mapToStyle(styleVars)}>
-        ${this.externalStyles
-          ? html`<style>
-              ${this.externalStyles}
-            </style>`
-          : ''}
-        ${this.inlineStyles
-          ? html`<style>
-              ${this.inlineStyles}
-            </style>`
-          : ''}
         ${this.customCss
           ? html`<style>
               ${this.customCss}
             </style>`
           : ''}
-
         <div class="theme-preview__content" .innerHTML=${this.htmlContent}></div>
       </div>
     `;
@@ -148,4 +158,11 @@ export class ThemePreview extends LitElement {
       .map(([key, value]) => `${key}: ${value}`)
       .join('; ');
   };
+}
+
+// Declare the custom element for TypeScript
+declare global {
+  interface HTMLElementTagNameMap {
+    'theme-wizard-preview': ThemePreview;
+  }
 }

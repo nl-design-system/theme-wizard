@@ -4,9 +4,9 @@
  */
 
 import { LitElement, html } from 'lit';
-import { customElement, eventOptions, property } from 'lit/decorators.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from './types';
-import { processCustomCss, loadUrlParams, updateUrlParams } from '../../helpers';
+import { loadUrlParams, updateURLParameters } from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import sidebarStyles from './sidebar.css';
 
@@ -39,6 +39,9 @@ export class LitThemeSidebar extends LitElement {
   @property({ attribute: 'custom-css', reflect: true, type: String })
   customCss = DEFAULT_CONFIG.customCss || '';
 
+  @state()
+  currentConfig: SidebarConfig = { ...DEFAULT_CONFIG };
+
   // Typed setters map for concise, type-safe updates from inputs
   private readonly setters: Record<keyof SidebarConfig, (v: string) => void> = {
     bodyFont: (v) => (this.bodyFont = v),
@@ -54,55 +57,43 @@ export class LitThemeSidebar extends LitElement {
     super.connectedCallback();
     this.loadFromUrlParams();
     // Listen for typography changes to update URL parameters
-    document.addEventListener('typographyChanged', this.onTypographyChanged as EventListener);
+    // document.addEventListener('typographyChanged', this.onTypographyChanged as EventListener);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('typographyChanged', this.onTypographyChanged as EventListener);
+    // document.removeEventListener('typographyChanged', this.onTypographyChanged as EventListener);
   }
 
-  // Wrap event to satisfy addEventListener typing
-  private readonly onTypographyChanged = (e: Event) =>
-    this.handleTypographyChange(e as CustomEvent<{ headingFont?: string; bodyFont?: string }>);
+  // // Wrap event to satisfy addEventListener typing
+  // private readonly onTypographyChanged = (e: Event) =>
+  //   this.handleTypographyChange(e as CustomEvent<{ headingFont?: string; bodyFont?: string }>);
 
-  private readonly handleTypographyChange = (event: CustomEvent<{ headingFont?: string; bodyFont?: string }>) => {
-    const config = event.detail || {};
+  // private readonly handleTypographyChange = (event: CustomEvent<{ headingFont?: string; bodyFont?: string }>) => {
+  //   const config = event.detail || {};
 
-    // Update typography properties if changed
-    if (config.headingFont && config.headingFont !== this.headingFont) {
-      this.headingFont = config.headingFont;
-    }
-    if (config.bodyFont && config.bodyFont !== this.bodyFont) {
-      this.bodyFont = config.bodyFont;
-    }
+  //   // Update typography properties if changed
+  //   if (config.headingFont && config.headingFont !== this.headingFont) {
+  //     this.headingFont = config.headingFont;
+  //   }
+  //   if (config.bodyFont && config.bodyFont !== this.bodyFont) {
+  //     this.bodyFont = config.bodyFont;
+  //   }
 
-    // Update URL parameters with all current settings
-    const currentConfig = this.getCurrentConfig();
-    updateUrlParams(
-      {
-        bodyFont: currentConfig.bodyFont,
-        customCss: currentConfig.customCss,
-        headingFont: currentConfig.headingFont,
-        themeClass: currentConfig.themeClass,
-        url: currentConfig.sourceUrl,
-      },
-      true,
-    );
+  //   // Update URL parameters (preserve existing params, canonicalize url)
+  //   this.updateConfiguration();
+  // };
+
+  private readonly loadFromUrlParams = () => {
+    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
+    this.sourceUrl = params.sourceUrl || '';
+    this.headingFont = params.headingFont || '';
+    this.bodyFont = params.bodyFont || '';
+    this.themeClass = params.themeClass || '';
+    this.customCss = params.customCss || '';
   };
 
-  private loadFromUrlParams() {
-    const params = loadUrlParams(['url', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
-
-    // Apply loaded parameters to component properties
-    if (params.url) this.sourceUrl = params.url;
-    if (params.headingFont) this.headingFont = params.headingFont;
-    if (params.bodyFont) this.bodyFont = params.bodyFont;
-    if (params.themeClass) this.themeClass = params.themeClass;
-    if (params.customCss) this.customCss = params.customCss;
-  }
-
-  private getCurrentConfig(): SidebarConfig {
+  private readonly getCurrentConfig = (): SidebarConfig => {
     const config = {
       bodyFont: this.bodyFont || DEFAULT_CONFIG.bodyFont,
       customCss: this.customCss || DEFAULT_CONFIG.customCss,
@@ -112,15 +103,10 @@ export class LitThemeSidebar extends LitElement {
     };
 
     return config;
-  }
+  };
 
   private notifyConfigChanged() {
     const config = this.getCurrentConfig();
-
-    // Process custom CSS if provided
-    if (config.customCss && config.sourceUrl) {
-      config.customCss = processCustomCss(config.customCss, config.sourceUrl);
-    }
 
     const event = new CustomEvent('configChanged', {
       bubbles: true,
@@ -146,7 +132,6 @@ export class LitThemeSidebar extends LitElement {
         primary: config.sourceUrl,
         secondary: config.themeClass,
       },
-      customCss: config.customCss,
       typography: {
         bodyFont: config.bodyFont,
         headingFont: config.headingFont,
@@ -167,15 +152,8 @@ export class LitThemeSidebar extends LitElement {
   }
 
   private shareTheme() {
-    const config = this.getCurrentConfig();
-
-    updateUrlParams({
-      bodyFont: config.bodyFont,
-      customCss: config.customCss,
-      headingFont: config.headingFont,
-      themeClass: config.themeClass,
-      url: config.sourceUrl,
-    });
+    // Preserve other params and canonicalize url
+    this.updateConfiguration({});
 
     const shareUrl = window.location.href;
 
@@ -216,39 +194,46 @@ export class LitThemeSidebar extends LitElement {
     }
   }
 
-  /**
-   * Handle form submission and update configuration
-   * @param event - Form submit event
-   * @private
-   */
-  private readonly handleAnalyzeClick = (): void => {
+  private readonly handleFormSubmit = (event: Event): void => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const sourceUrl = formData.get('sourceUrl') as string;
     // Validate URL if provided
-    if (this.sourceUrl?.trim() && !this.isValidUrl(this.sourceUrl)) {
+    if (sourceUrl?.trim() && !this.isValidUrl(sourceUrl)) {
+      console.log('sourceUrl is not a valid URL');
       return;
     }
 
-    // Update URL parameters with current settings
-    const config = this.getCurrentConfig();
-    updateUrlParams(
-      {
-        bodyFont: config.bodyFont,
-        customCss: config.customCss,
-        headingFont: config.headingFont,
-        themeClass: config.themeClass,
-        url: config.sourceUrl,
-      },
-      true,
-    );
-
-    this.notifyConfigChanged();
+    this.updateConfiguration({ sourceUrl });
   };
+
+  private updateConfiguration(config: Partial<SidebarConfig>) {
+    try {
+      updateURLParameters(
+        {
+          bodyFont: config.bodyFont || this.bodyFont,
+          customCss: config.customCss || this.customCss,
+          headingFont: config.headingFont || this.headingFont,
+          sourceUrl: config.sourceUrl || this.sourceUrl,
+          themeClass: config.themeClass || this.themeClass,
+        },
+        DEFAULT_CONFIG,
+      );
+      this.notifyConfigChanged();
+    } catch (error) {
+      console.error('Failed to update configuration:', error);
+    }
+  }
+
   override render() {
     return html`
       <div class="theme-sidebar">
         <h1 class="theme-sidebar__title">Theme Wizard</h1>
         <p class="theme-sidebar__subtitle">Lit</p>
 
-        <div class="theme-sidebar__form">
+        <form class="theme-sidebar__form" @submit=${this.handleFormSubmit}>
           <section class="theme-sidebar__section">
             <h2 class="theme-sidebar__heading">Huisstijl URL</h2>
             <div class="theme-form-field">
@@ -263,9 +248,7 @@ export class LitThemeSidebar extends LitElement {
                 placeholder="https://example.com"
               />
 
-              <button class="theme-button theme-button--primary" type="button" @click=${this.handleAnalyzeClick}>
-                Analyseer
-              </button>
+              <button class="theme-button theme-button--primary" type="submit">Analyseer</button>
             </div>
           </section>
 
@@ -297,15 +280,9 @@ export class LitThemeSidebar extends LitElement {
                 placeholder="Plak hier de gescrapede CSS..."
               ></textarea>
             </div>
-            <button
-              class="theme-button theme-button--primary theme-button--full"
-              type="button"
-              @click=${this.handleAnalyzeClick}
-            >
-              CSS Toepassen
-            </button>
+            <button class="theme-button theme-button--primary theme-button--full" type="submit">CSS Toepassen</button>
           </section>
-        </div>
+        </form>
 
         <lit-theme-typography
           heading-font=${this.getCurrentConfig().headingFont}

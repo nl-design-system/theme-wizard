@@ -4,7 +4,6 @@
  */
 
 export * from './url-utils';
-export * from './css-utils';
 export * from './dom-utils';
 export * from './url-params';
 export * from './style-utils';

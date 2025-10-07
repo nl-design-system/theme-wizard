@@ -10,6 +10,3 @@ export interface SidebarConfig {
   themeClass?: string;
   customCss?: string;
 }
-
-// Re-export shared types for convenience
-export type { ThemePreviewElement } from '../shared/types';
