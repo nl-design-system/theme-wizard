@@ -16,7 +16,7 @@
   "repository": {
     "type": "git+ssh",
     "url": "git@github.com:nl-design-system/theme-wizard.git",
-    "directory": "packages/server"
+    "directory": "packages/theme-wizard-server"
   },
   "scripts": {
     "start": "node dist/index.mjs",

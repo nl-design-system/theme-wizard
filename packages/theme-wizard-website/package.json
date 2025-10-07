@@ -1,11 +1,11 @@
 {
-  "name": "@nl-design-system-community/website",
+  "name": "@nl-design-system-community/theme-wizard-website",
   "type": "module",
   "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/nl-design-system/theme-wizard.git",
-    "directory": "packages/website"
+    "directory": "packages/theme-wizard-website"
   },
   "scripts": {
     "dev": "astro dev",
