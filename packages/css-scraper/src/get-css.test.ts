@@ -509,6 +509,11 @@ describe('getImportUrls', () => {
     ]);
   });
 
+  test('multiple consecutive (minified) @imports', () => {
+    const css = '@import "custom1.css";@import "custom2.css";';
+    expect(getImportUrls(css)).toEqual(['custom1.css', 'custom2.css']);
+  });
+
   describe('with layer()', () => {
     test('@import with layer', () => {
       expect(getImportUrls(`@import url("test.css") layer;`)).toEqual(['test.css']);
