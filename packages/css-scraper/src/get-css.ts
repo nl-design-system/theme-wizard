@@ -34,15 +34,16 @@ const getUrlFromImportRule = (importRule: string): string => {
     }
   } else if (importRule.startsWith('url(')) {
     for (let x = 4; x < importRule.length; x++) {
+      const character = importRule.charAt(x);
       // End of url() reached
-      if (importRule[x] === ')') {
+      if (character === ')') {
         break;
       }
       // Do not include quotes as part uf the url
-      if (/['"]/.test(importRule[x])) {
+      if (/['"]/.test(character)) {
         continue;
       }
-      href.push(importRule[x]);
+      href.push(character);
     }
   }
   return href.join('');
