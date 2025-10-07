@@ -82,7 +82,7 @@ export class LitTypography extends LitElement {
 
   private readonly handleFormSubmit = (event: Event): void => {
     event.preventDefault();
-    this.updateConfiguration();
+    this.notifyConfigChanged();
   };
 
   private readonly onConfigChanged = (e: Event): void => {
@@ -96,15 +96,6 @@ export class LitTypography extends LitElement {
       console.log('detail onConfigChanged', detail);
     }
   };
-
-  private updateConfiguration(): void {
-    try {
-      this.notifyConfigChanged();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to update typography:', error);
-    }
-  }
 
   private notifyConfigChanged(): void {
     const event = new CustomEvent('configChanged', {
