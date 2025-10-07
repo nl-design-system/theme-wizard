@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     viteStaticCopy({
       hook: 'writeBundle',
-      targets: [{ dest: '../../website/public/build', rename: 'lit.esm.js', src: 'dist/index.js' }],
+      targets: [{ dest: '../../theme-wizard-website/public/build', rename: 'lit.esm.js', src: 'dist/index.js' }],
     }),
   ],
 });

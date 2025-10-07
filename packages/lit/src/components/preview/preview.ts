@@ -1,6 +1,14 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../helpers';
+import {
+  extractThemeProperties,
+  fetchHtml,
+  getThemeStyleString,
+  parseHtml,
+  rewriteAttributeUrlsToAbsolute,
+  rewriteSvgXlinkToAbsolute,
+} from '../../helpers';
+import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
@@ -22,10 +30,6 @@ export class ThemePreview extends LitElement {
     document.addEventListener('configChanged', this.handleConfigChanged as EventListener);
   }
 
-  override firstUpdated() {
-    this.fetchContent();
-  }
-
   override updated(changedProps: Map<string | number | symbol, unknown>) {
     if (changedProps.has('url')) {
       this.fetchContent();
@@ -45,43 +49,39 @@ export class ThemePreview extends LitElement {
       themeClass?: string;
       customCss?: string;
     };
+    const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = detail;
 
-    if (detail.sourceUrl) {
-      const normalized = this.normalizeUrl(detail.sourceUrl);
-      if (normalized !== this.url) {
-        this.url = normalized;
-      } else {
-        // Same URL value; still re-run analysis
-        this.fetchContent();
-      }
-    }
-    if (detail.headingFont) this.headingFontFamily = detail.headingFont;
-    if (detail.bodyFont) this.bodyFontFamily = detail.bodyFont;
-    if (detail.themeClass) this.themeClass = detail.themeClass;
-    if (typeof detail.customCss === 'string') this.customCss = detail.customCss;
+    if (sourceUrl) this.url = sourceUrl;
+    if (headingFont) this.headingFontFamily = headingFont;
+    if (bodyFont) this.bodyFontFamily = bodyFont;
+    if (themeClass) this.themeClass = themeClass;
+    if (customCss) this.customCss = customCss;
+
+    this.fetchContent();
   };
 
   private readonly initializeFromURL = () => {
     const url = new URL(window.location.href);
-    const urlParam = url.searchParams.get('url');
+    const sourceUrlParam = url.searchParams.get('sourceUrl');
     const headingFontParam = url.searchParams.get('headingFont');
     const bodyFontParam = url.searchParams.get('bodyFont');
     const themeClassParam = url.searchParams.get('themeClass');
     const customCssParam = url.searchParams.get('customCss');
 
-    if (urlParam) this.url = this.normalizeUrl(urlParam);
+    const initialUrl = sourceUrlParam || '';
+    if (initialUrl) this.url = initialUrl;
     if (headingFontParam) this.headingFontFamily = headingFontParam;
     if (bodyFontParam) this.bodyFontFamily = bodyFontParam;
     if (themeClassParam) this.themeClass = themeClassParam;
     if (customCssParam) this.customCss = customCssParam;
+
+    // Trigger initial fetch when a URL param is present
+    if (initialUrl) this.fetchContent();
   };
 
-  private readonly normalizeUrl = (value: string): string => {
-    if (!value) return value;
-    if (value.startsWith('http://') || value.startsWith('https://')) return value;
-    return `https://${value}`;
-  };
-
+  /**
+   * Fetch the content from the URL
+   */
   private readonly fetchContent = async () => {
     this.isLoading = true;
     this.error = '';
@@ -107,24 +107,9 @@ export class ThemePreview extends LitElement {
     }
   };
 
-  static override readonly styles = css`
-    .theme-preview--loading,
-    .theme-preview--error {
-      padding: 1rem;
-      font-family: sans-serif;
-    }
-
-    .theme-preview__content {
-      all: initial;
-    }
-  `;
+  static override readonly styles = [previewStyles];
 
   override render() {
-    const styleVars = {
-      '--theme-body-font-family': this.bodyFontFamily,
-      '--theme-heading-font-family': this.headingFontFamily,
-    };
-
     if (this.isLoading && !this.htmlContent) {
       return html`
         <div class="theme-preview theme-preview--loading">
@@ -142,7 +127,7 @@ export class ThemePreview extends LitElement {
     }
 
     return html`
-      <div class="theme-preview ${this.themeClass}" style=${this.mapToStyle(styleVars)}>
+      <div class="theme-preview ${this.themeClass}" style=${getThemeStyleString(extractThemeProperties(this))}>
         ${this.customCss
           ? html`<style>
               ${this.customCss}
@@ -152,12 +137,6 @@ export class ThemePreview extends LitElement {
       </div>
     `;
   }
-
-  private readonly mapToStyle = (vars: Record<string, string>): string => {
-    return Object.entries(vars)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join('; ');
-  };
 }
 
 // Declare the custom element for TypeScript

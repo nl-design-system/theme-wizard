@@ -49,17 +49,13 @@ const getCurrentUrl = (): URL => {
   }
 };
 
-/**
- * Converts a URL to its hostname
- * @param url - The URL to convert
- * @returns The hostname of the URL
- */
-const toHost = (url: string): string => {
-  try {
-    return new URL(url).hostname;
-  } catch {
-    return url;
-  }
+const normalize = (v: string): string => {
+  const s = v.trim();
+  if (!s) return '';
+  if (/^https?:\/\//i.test(s)) return s;
+  // blokkeer niet-http(s) protocollen
+  if (/^[a-z]+:\/\//i.test(s)) return '';
+  return `https://${s}`;
 };
 
 /**
@@ -73,8 +69,8 @@ export const updateURLParameters = (params: Record<string, string>, defaultConfi
 
   // Only set non-default values to keep URL clean
   if (sourceUrl && sourceUrl !== defaultConfig.sourceUrl) {
-    const host = toHost(sourceUrl);
-    url.searchParams.set('sourceUrl', host);
+    const normalized = normalize(sourceUrl);
+    url.searchParams.set('sourceUrl', normalized);
   } else {
     url.searchParams.delete('sourceUrl');
   }

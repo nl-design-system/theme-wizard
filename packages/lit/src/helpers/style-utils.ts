@@ -65,44 +65,21 @@ export function getThemeStyleString(properties: ThemeStyleProperties): string {
 }
 
 /**
- * Converts theme properties to inline style object for React/JSX
- * @param properties - Theme properties to convert
- * @returns Inline style object
+ * Automatically extracts theme properties from a component-like object.
+ * Reads only keys present in the component; missing keys are ignored.
+ * @param component - Partial theme props (e.g. `this` of a component)
+ * @returns Theme properties object with only defined values
  * @example
- * ```typescript
- * const properties = {
- *   bodyFontFamily: 'Arial, sans-serif',
- *   headingFontFamily: 'Times New Roman, serif'
- * };
- * const styleObject = getThemeStyleObject(properties);
- * // Returns: { '--theme-body-font-family': 'Arial, sans-serif', '--theme-heading-font-family': 'Times New Roman, serif' }
- * ```
- */
-export function getThemeStyleObject(properties: ThemeStyleProperties): Record<string, string> {
-  return getThemeStyleProperties(properties);
-}
-
-/**
- * Automatically extracts theme properties from a component object
- * This function looks for properties that match the ThemeStyleProperties interface
- * @param component - Component object to extract properties from
- * @returns Theme properties object
- * @example
- * ```typescript
- * // In a component:
- * const themeProps = extractThemeProperties(this);
+ * const themeProps = extractThemeProperties({ bodyFontFamily: 'Arial' });
  * const styles = getThemeStyleString(themeProps);
- * ```
  */
-export function extractThemeProperties(component: Record<string, any>): ThemeStyleProperties {
+export function extractThemeProperties(component: Partial<ThemeStyleProperties>): ThemeStyleProperties {
   const themeProperties: ThemeStyleProperties = {};
-
-  // Automatically extract all theme properties from the component
-  Object.keys(THEME_PROPERTY_MAPPING).forEach((key) => {
-    if (component[key] !== undefined && component[key] !== null) {
-      (themeProperties as any)[key] = component[key];
+  for (const key of Object.keys(THEME_PROPERTY_MAPPING) as Array<keyof ThemeStyleProperties>) {
+    const value = component[key];
+    if (typeof value === 'string' && value.trim() !== '') {
+      themeProperties[key] = value;
     }
-  });
-
+  }
   return themeProperties;
 }

@@ -23,7 +23,7 @@ const DEFAULT_CONFIG: SidebarConfig = {
 };
 
 @customElement('theme-wizard-sidebar')
-export class LitThemeSidebar extends LitElement {
+export class LitSidebar extends LitElement {
   @property({ attribute: 'source-url', reflect: true, type: String })
   sourceUrl = DEFAULT_CONFIG.sourceUrl || '';
 
@@ -56,34 +56,68 @@ export class LitThemeSidebar extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.loadFromUrlParams();
-    // Listen for typography changes to update URL parameters
-    // document.addEventListener('typographyChanged', this.onTypographyChanged as EventListener);
+    document.addEventListener('configChanged', this.onConfigChanged as EventListener);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    // document.removeEventListener('typographyChanged', this.onTypographyChanged as EventListener);
+    document.removeEventListener('configChanged', this.onConfigChanged as EventListener);
   }
 
-  // // Wrap event to satisfy addEventListener typing
-  // private readonly onTypographyChanged = (e: Event) =>
-  //   this.handleTypographyChange(e as CustomEvent<{ headingFont?: string; bodyFont?: string }>);
+  private readonly onConfigChanged = (e: Event) =>
+    this.handleConfigChanged(
+      e as CustomEvent<{
+        headingFont?: string;
+        bodyFont?: string;
+        sourceUrl?: string;
+        themeClass?: string;
+        customCss?: string;
+      }>,
+    );
 
-  // private readonly handleTypographyChange = (event: CustomEvent<{ headingFont?: string; bodyFont?: string }>) => {
-  //   const config = event.detail || {};
+  private readonly handleConfigChanged = (
+    event: CustomEvent<{
+      headingFont?: string;
+      bodyFont?: string;
+      sourceUrl?: string;
+      themeClass?: string;
+      customCss?: string;
+    }>,
+  ) => {
+    const detail = event.detail || {};
+    const next: Partial<SidebarConfig> = {};
+    if (typeof detail.headingFont === 'string') next.headingFont = detail.headingFont;
+    if (typeof detail.bodyFont === 'string') next.bodyFont = detail.bodyFont;
+    if (typeof detail.sourceUrl === 'string') next.sourceUrl = detail.sourceUrl;
+    if (typeof detail.themeClass === 'string') next.themeClass = detail.themeClass;
+    if (typeof detail.customCss === 'string') next.customCss = detail.customCss;
 
-  //   // Update typography properties if changed
-  //   if (config.headingFont && config.headingFont !== this.headingFont) {
-  //     this.headingFont = config.headingFont;
-  //   }
-  //   if (config.bodyFont && config.bodyFont !== this.bodyFont) {
-  //     this.bodyFont = config.bodyFont;
-  //   }
+    if (Object.keys(next).length === 0) return;
 
-  //   // Update URL parameters (preserve existing params, canonicalize url)
-  //   this.updateConfiguration();
-  // };
+    // Ignore if values are effectively unchanged to avoid loops
+    const noEffectiveChange =
+      (next.headingFont === undefined || next.headingFont === this.headingFont) &&
+      (next.bodyFont === undefined || next.bodyFont === this.bodyFont) &&
+      (next.sourceUrl === undefined || next.sourceUrl === this.sourceUrl) &&
+      (next.themeClass === undefined || next.themeClass === this.themeClass) &&
+      (next.customCss === undefined || next.customCss === this.customCss);
+    if (noEffectiveChange) return;
 
+    // Apply to local state so UI reflects changes
+    if (next.headingFont) this.headingFont = next.headingFont;
+    if (next.bodyFont) this.bodyFont = next.bodyFont;
+    if (next.sourceUrl) this.sourceUrl = next.sourceUrl;
+    if (next.themeClass) this.themeClass = next.themeClass;
+    if (typeof next.customCss === 'string') this.customCss = next.customCss;
+
+    // Update URL without re-emitting to avoid feedback loop
+    this.updateConfiguration(next, false);
+  };
+
+  /**
+   * Load configuration from URL parameters
+   * @private
+   */
   private readonly loadFromUrlParams = () => {
     const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
     this.sourceUrl = params.sourceUrl || '';
@@ -200,32 +234,54 @@ export class LitThemeSidebar extends LitElement {
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const sourceUrl = formData.get('sourceUrl') as string;
-    // Validate URL if provided
+    const headingFont = formData.get('headingFont') as string;
+    const bodyFont = formData.get('bodyFont') as string;
+    const customCss = formData.get('customCss') as string;
+
     if (sourceUrl?.trim() && !this.isValidUrl(sourceUrl)) {
       console.log('sourceUrl is not a valid URL');
       return;
     }
 
-    this.updateConfiguration({ sourceUrl });
+    this.updateConfiguration({ bodyFont, customCss, headingFont, sourceUrl });
   };
 
-  private updateConfiguration(config: Partial<SidebarConfig>) {
-    try {
-      updateURLParameters(
-        {
-          bodyFont: config.bodyFont || this.bodyFont,
-          customCss: config.customCss || this.customCss,
-          headingFont: config.headingFont || this.headingFont,
-          sourceUrl: config.sourceUrl || this.sourceUrl,
-          themeClass: config.themeClass || this.themeClass,
-        },
-        DEFAULT_CONFIG,
-      );
-      this.notifyConfigChanged();
-    } catch (error) {
-      console.error('Failed to update configuration:', error);
-    }
-  }
+  private readonly computeNextConfig = (
+    current: SidebarConfig,
+    partial: Partial<SidebarConfig>,
+    defaults: SidebarConfig,
+  ): SidebarConfig => {
+    const sourceChanged = typeof partial.sourceUrl === 'string' && partial.sourceUrl !== current.sourceUrl;
+    return {
+      bodyFont: sourceChanged ? defaults.bodyFont : (partial.bodyFont ?? current.bodyFont),
+      customCss: sourceChanged ? defaults.customCss : (partial.customCss ?? current.customCss),
+      headingFont: sourceChanged ? defaults.headingFont : (partial.headingFont ?? current.headingFont),
+      sourceUrl: partial.sourceUrl ?? current.sourceUrl,
+      themeClass: partial.themeClass ?? current.themeClass,
+    };
+  };
+
+  private readonly updateConfiguration = (config: Partial<SidebarConfig>, emitEvent: boolean = true) => {
+    this.currentConfig = this.computeNextConfig(this.currentConfig, config, DEFAULT_CONFIG);
+
+    // Reflect into individual props so UI resets immediately when sourceUrl changes
+    this.sourceUrl = this.currentConfig.sourceUrl || '';
+    this.themeClass = this.currentConfig.themeClass || '';
+    this.bodyFont = this.currentConfig.bodyFont || '';
+    this.headingFont = this.currentConfig.headingFont || '';
+    this.customCss = this.currentConfig.customCss || '';
+    updateURLParameters(
+      {
+        bodyFont: this.currentConfig.bodyFont || '',
+        customCss: this.currentConfig.customCss || '',
+        headingFont: this.currentConfig.headingFont || '',
+        sourceUrl: this.currentConfig.sourceUrl || '',
+        themeClass: this.currentConfig.themeClass || '',
+      },
+      DEFAULT_CONFIG,
+    );
+    if (emitEvent) this.notifyConfigChanged();
+  };
 
   override render() {
     return html`
@@ -284,10 +340,10 @@ export class LitThemeSidebar extends LitElement {
           </section>
         </form>
 
-        <lit-theme-typography
+        <theme-wizard-typography
           heading-font=${this.getCurrentConfig().headingFont}
           body-font=${this.getCurrentConfig().bodyFont}
-        ></lit-theme-typography>
+        ></theme-wizard-typography>
 
         <!-- Action Buttons -->
         <section class="theme-sidebar__section" aria-labelledby="actions-heading">
@@ -324,6 +380,6 @@ export class LitThemeSidebar extends LitElement {
 // Declare the custom element for TypeScript
 declare global {
   interface HTMLElementTagNameMap {
-    'theme-wizard-sidebar': LitThemeSidebar;
+    'theme-wizard-sidebar': LitSidebar;
   }
 }
