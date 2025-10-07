@@ -20,7 +20,7 @@ app.get('/api/get-css', async (c) => {
   const url = c.req.query('url');
 
   if (!url || url.trim().length === 0) {
-    throw new HTTPException(400, { message: 'missing `url` parameter' });
+    throw new HTTPException(400, { message: 'missing `url` parameter: specify a url like ?url=example.com' });
   }
 
   try {
@@ -33,7 +33,6 @@ app.get('/api/get-css', async (c) => {
     c.res.headers.set('content-type', 'text/css; charset=utf-8');
     return c.body(css);
   } catch (error: unknown) {
-    console.error(error);
     if (error instanceof Error && 'statusCode' in error) {
       throw new HTTPException(400, {
         cause: error,
