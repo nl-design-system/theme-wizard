@@ -1,4 +1,4 @@
-import { parse, walk } from 'css-tree';
+// import { parse, walk } from 'css-tree';
 import { parseHTML } from 'linkedom';
 import type {
   CSSImportOrigin,
@@ -26,23 +26,23 @@ export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
  */
 export const getImportUrls = (css: string): string[] => {
   // TODO: including an entire CSS parser is quite heavy for only getting some `@import url()` rules
-  const ast = parse(css, {
-    parseAtrulePrelude: true,
-    parseCustomProperty: false,
-    parseRulePrelude: false,
-    parseValue: false,
-  });
+  // const ast = parse(css, {
+  //   parseAtrulePrelude: true,
+  //   parseCustomProperty: false,
+  //   parseRulePrelude: false,
+  //   parseValue: false,
+  // });
   const urls: string[] = [];
 
-  walk(ast, function (node) {
-    // Can not be a URL inside something else because otherwise this.atrule could never be an import
-    // `this` is necessary because it's the only way CSSTree lets us access a parent rule
-    // eslint-disable-next-line no-invalid-this
-    if ((node.type === 'Url' || node.type === 'String') && this.atrule?.name === 'import') {
-      // TODO: support base64-encoded URL's?
-      urls.push(node.value);
-    }
-  });
+  // walk(ast, function (node) {
+  //   // Can not be a URL inside something else because otherwise this.atrule could never be an import
+  //   // `this` is necessary because it's the only way CSSTree lets us access a parent rule
+  //   // eslint-disable-next-line no-invalid-this
+  //   if ((node.type === 'Url' || node.type === 'String') && this.atrule?.name === 'import') {
+  //     // TODO: support base64-encoded URL's?
+  //     urls.push(node.value);
+  //   }
+  // });
   return urls;
 };
 

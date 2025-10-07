@@ -8,9 +8,7 @@ export default defineConfig({
       fileName: 'index',
       formats: ['es'],
     },
-    ssr: {
-      noExternal: [],
-    },
+    ssr: true,
   },
   plugins: [
     devServer({
