@@ -1,4 +1,3 @@
-// import { parse, walk } from 'css-tree';
 import { parseHTML } from 'linkedom';
 import type {
   CSSImportOrigin,
@@ -21,28 +20,54 @@ import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
+const getUrlFromImportRule = (importRule: string): string => {
+  const href: string[] = [];
+
+  if (/^['"]/.test(importRule)) {
+    const quote = importRule.charCodeAt(0);
+    for (let x = 1; x < importRule.length; x++) {
+      // Do not make the quotes part of the url
+      if (importRule.charCodeAt(x) === quote) {
+        break;
+      }
+      href.push(importRule[x]);
+    }
+  } else if (importRule.startsWith('url(')) {
+    for (let x = 4; x < importRule.length; x++) {
+      // End of url() reached
+      if (importRule[x] === ')') {
+        break;
+      }
+      // Do not include quotes as part uf the url
+      if (/['"]/.test(importRule[x])) {
+        continue;
+      }
+      href.push(importRule[x]);
+    }
+  }
+  return href.join('');
+};
+
 /**
  * @description Parse a string of CSS to get all the `@import url()` URL's if there are any
  */
 export const getImportUrls = (css: string): string[] => {
-  // TODO: including an entire CSS parser is quite heavy for only getting some `@import url()` rules
-  // const ast = parse(css, {
-  //   parseAtrulePrelude: true,
-  //   parseCustomProperty: false,
-  //   parseRulePrelude: false,
-  //   parseValue: false,
-  // });
   const urls: string[] = [];
 
-  // walk(ast, function (node) {
-  //   // Can not be a URL inside something else because otherwise this.atrule could never be an import
-  //   // `this` is necessary because it's the only way CSSTree lets us access a parent rule
-  //   // eslint-disable-next-line no-invalid-this
-  //   if ((node.type === 'Url' || node.type === 'String') && this.atrule?.name === 'import') {
-  //     // TODO: support base64-encoded URL's?
-  //     urls.push(node.value);
-  //   }
-  // });
+  for (let i = 0; i < css.length; i++) {
+    if (!css.startsWith('@import', i)) {
+      continue;
+    }
+
+    // The first semicolon after @import ends the atrule
+    const semicolonIndex = css.indexOf(';', i + `@import`.length);
+    const importRule = css.substring(i + '@import'.length, semicolonIndex).trim();
+    const url = getUrlFromImportRule(importRule);
+    urls.push(url);
+
+    i += importRule.length;
+  }
+
   return urls;
 };
 
