@@ -31,7 +31,7 @@ export class LitSidebar extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.loadFromUrlParams();
+    this.initializeFromURL();
     document.addEventListener('configChanged', this.onConfigChanged as EventListener);
   }
 
@@ -51,10 +51,10 @@ export class LitSidebar extends LitElement {
   };
 
   /**
-   * Load configuration from URL parameters
+   * Initialize from URL parameters
    * @private
    */
-  private readonly loadFromUrlParams = () => {
+  private readonly initializeFromURL = () => {
     const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
     this.config = {
       ...DEFAULT_CONFIG,

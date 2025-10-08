@@ -40,6 +40,9 @@ export class LitTypography extends LitElement {
     document.addEventListener('configChanged', this.onConfigChanged as EventListener);
   }
 
+  /**
+   * Initialize from URL parameters
+   */
   private initializeFromURL() {
     const params = loadUrlParams(['headingFont', 'bodyFont', 'sourceUrl']);
     if (params.headingFont) this.headingFont = params.headingFont;
@@ -52,6 +55,10 @@ export class LitTypography extends LitElement {
     document.removeEventListener('configChanged', this.onConfigChanged as EventListener);
   }
 
+  /**
+   * Handle config changed event
+   * @param e - Event
+   */
   private readonly onConfigChanged = (e: Event) => {
     const { bodyFont, headingFont, sourceUrl } = (e as CustomEvent).detail || {};
     if (sourceUrl && sourceUrl !== this.lastSourceUrl) {
@@ -61,6 +68,10 @@ export class LitTypography extends LitElement {
     }
   };
 
+  /**
+   * Handle change event
+   * @param e - Event
+   */
   private readonly handleChange = (e: Event) => {
     const { name, value } = e.target as HTMLSelectElement;
     const event = new CustomEvent('configChanged', {
