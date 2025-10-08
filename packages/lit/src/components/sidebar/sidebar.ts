@@ -6,7 +6,14 @@
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../helpers/types';
-import { loadUrlParams, updateURLParameters, isValidUrl, exportDesignTokens, shareTheme } from '../../helpers';
+import {
+  dispatchConfigChanged,
+  exportDesignTokens,
+  isValidUrl,
+  loadUrlParams,
+  shareTheme,
+  updateURLParameters,
+} from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import sidebarStyles from './sidebar.css';
 
@@ -63,14 +70,7 @@ export class LitSidebar extends LitElement {
   };
 
   private notifyConfigChanged() {
-    const event = new CustomEvent('configChanged', {
-      bubbles: true,
-      composed: true,
-      detail: this.config,
-    });
-
-    // Dispatch on document level so other components can listen
-    document.dispatchEvent(event);
+    dispatchConfigChanged(this.config);
   }
 
   private readonly resetToDefaults = () => {

@@ -5,7 +5,7 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { loadUrlParams } from '../../helpers';
+import { dispatchConfigChanged, loadUrlParams } from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import typographyStyles from './typography.css';
 
@@ -74,12 +74,7 @@ export class LitTypography extends LitElement {
    */
   private readonly handleChange = (e: Event) => {
     const { name, value } = e.target as HTMLSelectElement;
-    const event = new CustomEvent('configChanged', {
-      bubbles: true,
-      composed: true,
-      detail: { [name]: value },
-    });
-    document.dispatchEvent(event);
+    dispatchConfigChanged({ [name]: value });
   };
 
   override render() {

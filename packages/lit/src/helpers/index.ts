@@ -10,3 +10,4 @@ export * from './style-utils';
 export * from './types';
 export * from './share-utils';
 export * from './export-tokens';
+export * from './event-utils';
