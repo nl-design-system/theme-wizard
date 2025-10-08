@@ -3,7 +3,7 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
-import type { SidebarConfig } from '../components/sidebar/types';
+import type { SidebarConfig } from './types';
 
 /**
  * Export current theme configuration as design tokens JSON file

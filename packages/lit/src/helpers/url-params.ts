@@ -62,7 +62,7 @@ const normalize = (v: string): string => {
  * Update browser URL parameters with current configuration
  * @private
  */
-export const updateURLParameters = (params: Record<string, string>, defaultConfig: UrlParamsConfig): void => {
+export const updateURLParameters = (params: Partial<UrlParamsConfig>, defaultConfig: UrlParamsConfig): void => {
   const url: URL = getCurrentUrl();
 
   const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = params;

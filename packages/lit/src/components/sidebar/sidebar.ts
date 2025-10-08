@@ -5,7 +5,7 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import type { SidebarConfig } from './types';
+import type { SidebarConfig } from '../../helpers/types';
 import { loadUrlParams, updateURLParameters, isValidUrl, exportDesignTokens, shareTheme } from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import sidebarStyles from './sidebar.css';
@@ -47,7 +47,7 @@ export class LitSidebar extends LitElement {
     if (Object.keys(detail).length === 0) return;
 
     this.config = { ...this.config, ...detail };
-    updateURLParameters(this.config as Record<string, string>, DEFAULT_CONFIG);
+    updateURLParameters(this.config, DEFAULT_CONFIG);
   };
 
   /**
@@ -75,7 +75,7 @@ export class LitSidebar extends LitElement {
 
   private readonly resetToDefaults = () => {
     this.config = { ...DEFAULT_CONFIG };
-    updateURLParameters(this.config as Record<string, string>, DEFAULT_CONFIG);
+    updateURLParameters(this.config, DEFAULT_CONFIG);
     this.notifyConfigChanged();
   };
 
@@ -113,7 +113,7 @@ export class LitSidebar extends LitElement {
         : {}),
     };
 
-    updateURLParameters(this.config as Record<string, string>, DEFAULT_CONFIG);
+    updateURLParameters(this.config, DEFAULT_CONFIG);
     this.notifyConfigChanged();
   };
 

@@ -18,17 +18,29 @@ export interface ThemeStyleProperties {
 }
 
 /**
- * Interface for URL parameters configuration
+ * Sidebar configuration interface
  */
-export interface UrlParamsConfig {
+export interface SidebarConfig {
   /** Website URL to analyze */
-  sourceUrl?: string;
+  sourceUrl: string;
   /** Font family for headings */
-  headingFont?: string;
+  headingFont: string;
   /** Font family for body text */
-  bodyFont?: string;
+  bodyFont: string;
   /** CSS theme class name */
-  themeClass?: string;
+  themeClass: string;
   /** Custom CSS rules */
-  customCss?: string;
+  customCss: string;
+}
+
+/**
+ * URL parameters configuration (optional version of SidebarConfig)
+ */
+export type UrlParamsConfig = Partial<SidebarConfig>;
+
+/**
+ * Config changed event detail with source marker
+ */
+export interface ConfigChangedDetail extends UrlParamsConfig {
+  _source?: string;
 }
