@@ -42,3 +42,16 @@ export function rewriteSrcset(value: string | null, baseUrl: string): string | n
     .join(', ');
   return rewritten;
 }
+
+/**
+ * Validation methods
+ * @private
+ */
+export const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
