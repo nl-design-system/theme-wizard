@@ -37,10 +37,3 @@ export interface SidebarConfig {
  * URL parameters configuration (optional version of SidebarConfig)
  */
 export type UrlParamsConfig = Partial<SidebarConfig>;
-
-/**
- * Config changed event detail with source marker
- */
-export interface ConfigChangedDetail extends UrlParamsConfig {
-  _source?: string;
-}

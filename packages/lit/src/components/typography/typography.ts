@@ -5,7 +5,7 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { DEFAULT_TYPOGRAPHY, dispatchConfigChanged, FONT_OPTIONS, loadUrlParams } from '../../helpers';
+import { DEFAULT_TYPOGRAPHY, dispatchTypographyChanged, EVENT_NAMES, FONT_OPTIONS, loadUrlParams } from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import typographyStyles from './typography.css';
 
@@ -21,7 +21,7 @@ export class LitTypography extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.initializeFromURL();
-    document.addEventListener('configChanged', this.onConfigChanged as EventListener);
+    document.addEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleParentConfigChange as EventListener);
   }
 
   /**
@@ -36,14 +36,14 @@ export class LitTypography extends LitElement {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('configChanged', this.onConfigChanged as EventListener);
+    document.removeEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleParentConfigChange as EventListener);
   }
 
   /**
-   * Handle config changed event
+   * Handle parent config changes and reset typography when source URL changes
    * @param e - Event
    */
-  private readonly onConfigChanged = (e: Event) => {
+  private readonly handleParentConfigChange = (e: Event) => {
     const { bodyFont, headingFont, sourceUrl } = (e as CustomEvent).detail || {};
     if (sourceUrl && sourceUrl !== this.lastSourceUrl) {
       this.lastSourceUrl = sourceUrl;
@@ -58,7 +58,7 @@ export class LitTypography extends LitElement {
    */
   private readonly handleChange = (e: Event) => {
     const { name, value } = e.target as HTMLSelectElement;
-    dispatchConfigChanged({ [name]: value });
+    dispatchTypographyChanged({ [name]: value });
   };
 
   override render() {

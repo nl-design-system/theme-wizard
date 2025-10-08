@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import {
+  EVENT_NAMES,
   extractThemeProperties,
   fetchHtml,
   getThemeStyleString,
@@ -27,7 +28,7 @@ export class ThemePreview extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.initializeFromURL();
-    document.addEventListener('configChanged', this.handleConfigChanged as EventListener);
+    document.addEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleConfigChanged as EventListener);
   }
 
   override updated(changedProps: Map<string | number | symbol, unknown>) {
@@ -38,7 +39,7 @@ export class ThemePreview extends LitElement {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('configChanged', this.handleConfigChanged as EventListener);
+    document.removeEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleConfigChanged as EventListener);
   }
 
   private readonly handleConfigChanged = (e: Event) => {

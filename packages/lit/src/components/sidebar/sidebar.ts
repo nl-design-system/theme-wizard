@@ -7,7 +7,8 @@ import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../helpers/types';
 import {
-  dispatchConfigChanged,
+  dispatchSidebarConfigChanged,
+  EVENT_NAMES,
   exportDesignTokens,
   isValidUrl,
   loadUrlParams,
@@ -39,15 +40,15 @@ export class LitSidebar extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.initializeFromURL();
-    document.addEventListener('configChanged', this.onConfigChanged as EventListener);
+    document.addEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGED, this.handleChildConfigChanged as EventListener);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('configChanged', this.onConfigChanged as EventListener);
+    document.removeEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGED, this.handleChildConfigChanged as EventListener);
   }
 
-  private readonly onConfigChanged = (e: Event) => {
+  private readonly handleChildConfigChanged = (e: Event) => {
     const event = e as CustomEvent<Partial<SidebarConfig>>;
     const detail = event.detail || {};
 
@@ -55,6 +56,7 @@ export class LitSidebar extends LitElement {
 
     this.config = { ...this.config, ...detail };
     updateURLParameters(this.config, DEFAULT_CONFIG);
+    dispatchSidebarConfigChanged(this.config);
   };
 
   /**
@@ -70,7 +72,7 @@ export class LitSidebar extends LitElement {
   };
 
   private notifyConfigChanged() {
-    dispatchConfigChanged(this.config);
+    dispatchSidebarConfigChanged(this.config);
   }
 
   private readonly resetToDefaults = () => {
