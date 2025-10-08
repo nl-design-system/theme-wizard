@@ -5,6 +5,7 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { loadUrlParams } from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import typographyStyles from './typography.css';
 
@@ -35,7 +36,15 @@ export class LitTypography extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
+    this.initializeFromURL();
     document.addEventListener('configChanged', this.onConfigChanged as EventListener);
+  }
+
+  private initializeFromURL() {
+    const params = loadUrlParams(['headingFont', 'bodyFont', 'sourceUrl']);
+    if (params.headingFont) this.headingFont = params.headingFont;
+    if (params.bodyFont) this.bodyFont = params.bodyFont;
+    if (params.sourceUrl) this.lastSourceUrl = params.sourceUrl;
   }
 
   override disconnectedCallback() {
@@ -63,7 +72,6 @@ export class LitTypography extends LitElement {
   };
 
   override render() {
-    const renderFontOptions = FONT_OPTIONS.map((opt) => html`<option value=${opt.value}>${opt.label}</option>`);
     return html`
       <section class="theme-typography" aria-labelledby="typography-heading">
         <h2 class="theme-typography__heading" id="typography-heading">Typografie</h2>
@@ -76,7 +84,10 @@ export class LitTypography extends LitElement {
             .value=${this.headingFont}
             @change=${this.handleChange}
           >
-            ${renderFontOptions}
+            ${FONT_OPTIONS.map(
+              (opt) =>
+                html`<option value=${opt.value} ?selected=${opt.value === this.headingFont}>${opt.label}</option>`,
+            )}
           </select>
         </div>
 
@@ -89,7 +100,9 @@ export class LitTypography extends LitElement {
             .value=${this.bodyFont}
             @change=${this.handleChange}
           >
-            ${renderFontOptions}
+            ${FONT_OPTIONS.map(
+              (opt) => html`<option value=${opt.value} ?selected=${opt.value === this.bodyFont}>${opt.label}</option>`,
+            )}
           </select>
         </div>
       </section>

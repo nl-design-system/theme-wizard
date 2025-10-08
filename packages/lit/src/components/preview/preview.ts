@@ -97,7 +97,6 @@ export class ThemePreview extends LitElement {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
     } finally {
       this.isLoading = false;
-      this.requestUpdate();
     }
   };
 
