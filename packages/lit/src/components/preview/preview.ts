@@ -12,13 +12,13 @@ import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
-  @property({ reflect: true, type: String }) url: string =
+  @property() url: string =
     'https://documentatie-git-feat-2654-html-stappen-f9d4f8-nl-design-system.vercel.app/examples/zonder-front-end-framework.html#';
 
-  @property({ reflect: true, type: String }) headingFontFamily: string = 'system-ui, sans-serif';
-  @property({ reflect: true, type: String }) bodyFontFamily: string = 'system-ui, sans-serif';
-  @property({ reflect: true, type: String }) themeClass: string = 'voorbeeld-theme';
-  @property({ reflect: true, type: String }) customCss: string = '';
+  @property() headingFontFamily: string = 'system-ui, sans-serif';
+  @property() bodyFontFamily: string = 'system-ui, sans-serif';
+  @property() themeClass: string = 'voorbeeld-theme';
+  @property() customCss: string = '';
 
   @state() private htmlContent: string = '';
   @state() private isLoading: boolean = true;
@@ -41,14 +41,8 @@ export class ThemePreview extends LitElement {
     document.removeEventListener('configChanged', this.handleConfigChanged as EventListener);
   }
 
-  private readonly handleConfigChanged = (e: CustomEvent) => {
-    const detail = (e?.detail || {}) as {
-      sourceUrl?: string;
-      headingFont?: string;
-      bodyFont?: string;
-      themeClass?: string;
-      customCss?: string;
-    };
+  private readonly handleConfigChanged = (e: Event) => {
+    const detail = (e as CustomEvent).detail || {};
     const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = detail;
 
     if (sourceUrl) this.url = sourceUrl;
