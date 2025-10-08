@@ -6,6 +6,8 @@
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
+import { DEFAULT_CONFIG } from '../../constants/default';
+import { buttonStyles } from '../../styles/button/index.css';
 import {
   dispatchSidebarConfigChanged,
   EVENT_NAMES,
@@ -15,20 +17,7 @@ import {
   shareTheme,
   updateURLParameters,
 } from '../../utils';
-import { buttonStyles } from '../../styles/button/index.css';
 import sidebarStyles from './sidebar.css';
-
-/**
- * Default configuration values
- */
-const DEFAULT_CONFIG: SidebarConfig = {
-  bodyFont: 'system-ui, sans-serif',
-  customCss: '',
-  headingFont: 'system-ui, sans-serif',
-  sourceUrl:
-    'https://documentatie-git-feat-2654-html-stappen-f9d4f8-nl-design-system.vercel.app/examples/zonder-front-end-framework.html#',
-  themeClass: 'voorbeeld-theme',
-};
 
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {

@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { DEFAULT_CONFIG } from '../../constants/default';
 import {
   EVENT_NAMES,
   extractThemeProperties,
@@ -8,21 +9,22 @@ import {
   parseHtml,
   rewriteAttributeUrlsToAbsolute,
   rewriteSvgXlinkToAbsolute,
+  loadUrlParams,
+  UrlParamsConfig,
 } from '../../utils';
 import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
-  @property() url: string =
-    'https://documentatie-git-feat-2654-html-stappen-f9d4f8-nl-design-system.vercel.app/examples/zonder-front-end-framework.html#';
+  @property() url: string = DEFAULT_CONFIG.sourceUrl;
 
-  @property() headingFontFamily: string = 'system-ui, sans-serif';
-  @property() bodyFontFamily: string = 'system-ui, sans-serif';
-  @property() themeClass: string = 'voorbeeld-theme';
-  @property() customCss: string = '';
+  @property() headingFontFamily: string = DEFAULT_CONFIG.headingFont;
+  @property() bodyFontFamily: string = DEFAULT_CONFIG.bodyFont;
+  @property() themeClass: string = DEFAULT_CONFIG.themeClass;
+  @property() customCss: string = DEFAULT_CONFIG.customCss;
 
   @state() private htmlContent = '';
-  @state() private isLoading = true;
+  @state() private isLoading = false;
   @state() private error = '';
 
   override connectedCallback() {
@@ -43,36 +45,38 @@ export class ThemePreview extends LitElement {
   }
 
   private readonly handleConfigChanged = (e: Event) => {
-    const detail = (e as CustomEvent).detail || {};
-    const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = detail;
+    this.updatePropertiesFromConfig((e as CustomEvent).detail || {});
+    this.fetchContent();
+  };
+
+  /**
+   * Initialize the component properties from the URL parameters
+   * and fetch the content if the sourceUrl is present
+   */
+  private readonly initializeFromURL = () => {
+    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
+    const hasSourceUrlToFetch = params.sourceUrl;
+    this.updatePropertiesFromConfig(params);
+
+    if (hasSourceUrlToFetch) {
+      this.fetchContent();
+    }
+  };
+
+  /**
+   * Update the component properties from the config
+   * @param config - The config object { bodyFont, customCss, headingFont, sourceUrl, themeClass }
+   * TODO: use property mapping for the growing number of properties
+   */
+  private updatePropertiesFromConfig(config: UrlParamsConfig): void {
+    const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = config;
 
     if (sourceUrl) this.url = sourceUrl;
     if (headingFont) this.headingFontFamily = headingFont;
     if (bodyFont) this.bodyFontFamily = bodyFont;
     if (themeClass) this.themeClass = themeClass;
     if (customCss) this.customCss = customCss;
-
-    this.fetchContent();
-  };
-
-  private readonly initializeFromURL = () => {
-    const url = new URL(window.location.href);
-    const sourceUrlParam = url.searchParams.get('sourceUrl');
-    const headingFontParam = url.searchParams.get('headingFont');
-    const bodyFontParam = url.searchParams.get('bodyFont');
-    const themeClassParam = url.searchParams.get('themeClass');
-    const customCssParam = url.searchParams.get('customCss');
-
-    const initialUrl = sourceUrlParam || '';
-    if (initialUrl) this.url = initialUrl;
-    if (headingFontParam) this.headingFontFamily = headingFontParam;
-    if (bodyFontParam) this.bodyFontFamily = bodyFontParam;
-    if (themeClassParam) this.themeClass = themeClassParam;
-    if (customCssParam) this.customCss = customCssParam;
-
-    // Trigger initial fetch when a URL param is present
-    if (initialUrl) this.fetchContent();
-  };
+  }
 
   /**
    * Fetch the content from the URL
