@@ -46,8 +46,8 @@ export class LitSidebar extends LitElement {
 
     if (Object.keys(detail).length === 0) return;
 
-    // Update config without re-emitting to avoid feedback loop
-    this.updateConfig(detail, false);
+    this.config = { ...this.config, ...detail };
+    updateURLParameters(this.config as Record<string, string>, DEFAULT_CONFIG);
   };
 
   /**
@@ -91,16 +91,12 @@ export class LitSidebar extends LitElement {
       },
     };
 
-    const blob = new Blob([JSON.stringify(designTokens, null, 2)], {
-      type: 'application/json',
-    });
+    const blob = new Blob([JSON.stringify(designTokens, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'design-tokens.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'design-tokens.json';
+    link.click();
     URL.revokeObjectURL(url);
   }
 
@@ -126,6 +122,7 @@ export class LitSidebar extends LitElement {
 
   private resetToDefaults() {
     this.config = { ...DEFAULT_CONFIG };
+    updateURLParameters(this.config as Record<string, string>, DEFAULT_CONFIG);
     this.notifyConfigChanged();
   }
 
@@ -160,7 +157,7 @@ export class LitSidebar extends LitElement {
     this.updateConfig({ bodyFont, customCss, headingFont, sourceUrl });
   };
 
-  private readonly updateConfig = (partial: Partial<SidebarConfig>, emitEvent: boolean = true) => {
+  private readonly updateConfig = (partial: Partial<SidebarConfig>) => {
     const sourceChanged = partial.sourceUrl && partial.sourceUrl !== this.config.sourceUrl;
 
     this.config = {
@@ -176,7 +173,7 @@ export class LitSidebar extends LitElement {
     };
 
     updateURLParameters(this.config as Record<string, string>, DEFAULT_CONFIG);
-    if (emitEvent) this.notifyConfigChanged();
+    this.notifyConfigChanged();
   };
 
   override render() {
