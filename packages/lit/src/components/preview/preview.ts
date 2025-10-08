@@ -20,9 +20,9 @@ export class ThemePreview extends LitElement {
   @property() themeClass: string = 'voorbeeld-theme';
   @property() customCss: string = '';
 
-  @state() private htmlContent: string = '';
-  @state() private isLoading: boolean = true;
-  @state() private error: string = '';
+  @state() private htmlContent = '';
+  @state() private isLoading = true;
+  @state() private error = '';
 
   override connectedCallback() {
     super.connectedCallback();
