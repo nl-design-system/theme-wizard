@@ -10,7 +10,8 @@
     "emitDeclarationOnly": false,
     "outDir": "dist",
     "types": [],
-    "importHelpers": false
+    "importHelpers": false,
+    "useDefineForClassFields": false
   },
   "include": ["src/**/*"]
 }
