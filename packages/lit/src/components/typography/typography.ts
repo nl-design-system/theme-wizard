@@ -6,8 +6,8 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, FONT_OPTIONS } from '../../constants';
-import { dispatchTypographyChanged, EVENT_NAMES, loadUrlParams } from '../../utils';
 import { buttonStyles } from '../../styles/button/index.css';
+import { dispatchTypographyChanged, EVENT_NAMES, loadUrlParams } from '../../utils';
 import typographyStyles from './typography.css';
 
 @customElement('theme-wizard-typography')
@@ -66,6 +66,7 @@ export class LitTypography extends LitElement {
     return html`
       <section class="theme-typography" aria-labelledby="typography-heading">
         <h2 class="theme-typography__heading" id="typography-heading">Typografie</h2>
+
         <div class="theme-form-field">
           <label for="headingFont" class="theme-form-field__label">Heading Font</label>
           <select

@@ -117,6 +117,7 @@ export class LitSidebar extends LitElement {
         <form class="theme-sidebar__form" @submit=${this.handleFormSubmit}>
           <section class="theme-sidebar__section">
             <h2 class="theme-sidebar__heading">Huisstijl URL</h2>
+
             <div class="theme-form-field">
               <label class="theme-form-field__label" for="source-url">Website URL</label>
               <input
@@ -134,6 +135,7 @@ export class LitSidebar extends LitElement {
 
           <section class="theme-sidebar__section" aria-labelledby="css-heading">
             <h2 class="theme-sidebar__heading" id="css-heading">Design System CSS</h2>
+
             <div class="theme-form-field">
               <label class="theme-sidebar__label" for="theme-class">CSS klasse naam</label>
               <input
@@ -158,6 +160,7 @@ export class LitSidebar extends LitElement {
                 placeholder="Plak hier de gescrapede CSS..."
               ></textarea>
             </div>
+
             <button class="theme-button theme-button--primary theme-button--full" type="submit">CSS Toepassen</button>
           </section>
 
@@ -170,6 +173,7 @@ export class LitSidebar extends LitElement {
         <!-- Action Buttons -->
         <section class="theme-sidebar__section" aria-labelledby="actions-heading">
           <h2 class="theme-sidebar__heading" id="actions-heading">Acties</h2>
+
           <div class="theme-sidebar__actions">
             <button
               class="theme-button theme-button--primary theme-button--full"
@@ -178,6 +182,7 @@ export class LitSidebar extends LitElement {
             >
               Exporteer Design Tokens
             </button>
+
             <button
               class="theme-button theme-button--primary theme-button--full"
               @click=${() => shareTheme()}
@@ -185,6 +190,7 @@ export class LitSidebar extends LitElement {
             >
               Deel Thema
             </button>
+
             <button
               class="theme-button theme-button--primary theme-button--full"
               @click=${() => this.resetToDefaults()}
