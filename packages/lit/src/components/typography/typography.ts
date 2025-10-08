@@ -5,9 +5,8 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { DEFAULT_TYPOGRAPHY, FONT_OPTIONS } from '../../constants';
+import { DEFAULT_TYPOGRAPHY, EVENT_NAMES, FONT_OPTIONS } from '../../constants';
 import { buttonStyles } from '../../styles/button/index.css';
-import { dispatchTypographyChanged, EVENT_NAMES, loadUrlParams } from '../../utils';
 import typographyStyles from './typography.css';
 
 @customElement('theme-wizard-typography')
@@ -15,51 +14,20 @@ export class LitTypography extends LitElement {
   @property() headingFont = DEFAULT_TYPOGRAPHY.headingFont;
   @property() bodyFont = DEFAULT_TYPOGRAPHY.bodyFont;
 
-  private lastSourceUrl = '';
-
   static override readonly styles = [typographyStyles, buttonStyles];
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.initializeFromURL();
-    document.addEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleParentConfigChange as EventListener);
-  }
-
   /**
-   * Initialize from URL parameters
-   */
-  private initializeFromURL() {
-    const params = loadUrlParams(['headingFont', 'bodyFont', 'sourceUrl']);
-    if (params.headingFont) this.headingFont = params.headingFont;
-    if (params.bodyFont) this.bodyFont = params.bodyFont;
-    if (params.sourceUrl) this.lastSourceUrl = params.sourceUrl;
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleParentConfigChange as EventListener);
-  }
-
-  /**
-   * Handle parent config changes and reset typography when source URL changes
-   * @param e - Event
-   */
-  private readonly handleParentConfigChange = (e: Event) => {
-    const { bodyFont, headingFont, sourceUrl } = (e as CustomEvent).detail || {};
-    if (sourceUrl && sourceUrl !== this.lastSourceUrl) {
-      this.lastSourceUrl = sourceUrl;
-      this.headingFont = headingFont ?? DEFAULT_TYPOGRAPHY.headingFont;
-      this.bodyFont = bodyFont ?? DEFAULT_TYPOGRAPHY.bodyFont;
-    }
-  };
-
-  /**
-   * Handle change event
+   * Handle change event - dispatch to parent (sidebar)
    * @param e - Event
    */
   private readonly handleChange = (e: Event) => {
     const { name, value } = e.target as HTMLSelectElement;
-    dispatchTypographyChanged({ [name]: value });
+    const event = new CustomEvent(EVENT_NAMES.TYPOGRAPHY_CHANGE, {
+      bubbles: true,
+      composed: true,
+      detail: { [name]: value },
+    });
+    this.dispatchEvent(event);
   };
 
   override render() {

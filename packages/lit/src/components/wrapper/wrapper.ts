@@ -4,7 +4,13 @@
  */
 
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import type { SidebarConfig } from '../../utils/types';
+import { EVENT_NAMES } from '../../constants';
+import { DEFAULT_CONFIG } from '../../constants/default';
+import { loadUrlParams, updateURLParameters } from '../../utils';
+import '../sidebar/sidebar';
+import '../preview/preview';
 import appStyles from './wrapper.css';
 
 @customElement('theme-wizard-wrapper')
@@ -15,19 +21,101 @@ export class Wrapper extends LitElement {
   @property({ type: String })
   pageDescription = 'Hieronder zie je een live voorbeeld van de opgegeven website met de geselecteerde huisstijl.';
 
+  @state()
+  private config: SidebarConfig = this.getInitialConfig();
+
   static override readonly styles = [appStyles];
+
+  override connectedCallback() {
+    super.connectedCallback();
+    // Listen for config updates from sidebar
+    this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.handleConfigUpdate as EventListener);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.handleConfigUpdate as EventListener);
+  }
+
+  private getInitialConfig(): SidebarConfig {
+    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
+
+    // Only override defaults with non-empty values from URL
+    const config = { ...DEFAULT_CONFIG };
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        config[key as keyof SidebarConfig] = value;
+      }
+    });
+
+    return config;
+  }
+
+  private readonly handleConfigUpdate = (e: Event) => {
+    const config = (e as CustomEvent<Partial<SidebarConfig>>).detail || {};
+
+    // Determine update strategy when source URL changes - should reset all styling to defaults
+    const isNewSourceUrl = config.sourceUrl && config.sourceUrl !== this.config.sourceUrl;
+    if (isNewSourceUrl) {
+      this.resetStylingForNewSource(config.sourceUrl!);
+      this.syncConfigChanges();
+      return;
+    }
+
+    this.mergeConfigUpdate(config);
+    this.syncConfigChanges();
+  };
+
+  /**
+   * Reset all styling when analyzing a new source URL
+   */
+  private resetStylingForNewSource(newSourceUrl: string) {
+    this.config = {
+      ...DEFAULT_CONFIG,
+      sourceUrl: newSourceUrl,
+    };
+  }
+
+  /**
+   * Merge partial config update into existing config
+   */
+  private mergeConfigUpdate(partial: Partial<SidebarConfig>) {
+    this.config = {
+      ...this.config,
+      ...partial,
+    };
+  }
+
+  /**
+   * Sync config changes to URL parameters
+   */
+  private syncConfigChanges() {
+    updateURLParameters(this.config, DEFAULT_CONFIG);
+  }
 
   override render() {
     return html`
       <div class="theme-app">
-        <slot name="sidebar"></slot>
+        <theme-wizard-sidebar
+          .sourceUrl=${this.config.sourceUrl}
+          .headingFont=${this.config.headingFont}
+          .bodyFont=${this.config.bodyFont}
+          .themeClass=${this.config.themeClass}
+          .customCss=${this.config.customCss}
+        ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
           <h2 class="theme-preview-main__title">${this.pageTitle}</h2>
           <p class="theme-preview-main__description">${this.pageDescription}</p>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <slot name="preview"></slot>
+            <theme-wizard-preview
+              .url=${this.config.sourceUrl}
+              .headingFontFamily=${this.config.headingFont}
+              .bodyFontFamily=${this.config.bodyFont}
+              .themeClass=${this.config.themeClass}
+              .customCss=${this.config.customCss}
+            ></theme-wizard-preview>
           </section>
         </main>
       </div>

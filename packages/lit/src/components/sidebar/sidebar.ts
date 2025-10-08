@@ -4,70 +4,49 @@
  */
 
 import { LitElement, html } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import type { SidebarConfig } from '../../utils/types';
+import { customElement, property } from 'lit/decorators.js';
+import { EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
 import { buttonStyles } from '../../styles/button/index.css';
-import {
-  dispatchSidebarConfigChanged,
-  EVENT_NAMES,
-  exportDesignTokens,
-  isValidUrl,
-  loadUrlParams,
-  shareTheme,
-  updateURLParameters,
-} from '../../utils';
+import { exportDesignTokens, isValidUrl, shareTheme } from '../../utils';
 import sidebarStyles from './sidebar.css';
 
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {
-  @state()
-  private config: SidebarConfig = { ...DEFAULT_CONFIG };
+  @property() sourceUrl = DEFAULT_CONFIG.sourceUrl;
+  @property() headingFont = DEFAULT_CONFIG.headingFont;
+  @property() bodyFont = DEFAULT_CONFIG.bodyFont;
+  @property() themeClass = DEFAULT_CONFIG.themeClass;
+  @property() customCss = DEFAULT_CONFIG.customCss;
 
   static override readonly styles = [sidebarStyles, buttonStyles];
 
   override connectedCallback() {
     super.connectedCallback();
-    this.initializeFromURL();
-    document.addEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGED, this.handleChildConfigChanged as EventListener);
+    this.addEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGED, this.handleChildConfigChanged as EventListener);
+    this.removeEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
   }
 
-  private readonly handleChildConfigChanged = (e: Event) => {
-    const event = e as CustomEvent<Partial<SidebarConfig>>;
-    const detail = event.detail || {};
-
-    if (Object.keys(detail).length === 0) return;
-
-    this.config = { ...this.config, ...detail };
-    updateURLParameters(this.config, DEFAULT_CONFIG);
-    dispatchSidebarConfigChanged(this.config);
+  private readonly handleTypographyChange = (e: Event) => {
+    const detail = (e as CustomEvent).detail || {};
+    this.notifyConfigChange(detail);
   };
 
-  /**
-   * Initialize from URL parameters
-   * @private
-   */
-  private readonly initializeFromURL = () => {
-    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
-    this.config = {
-      ...DEFAULT_CONFIG,
-      ...params,
-    };
-  };
-
-  private notifyConfigChanged() {
-    dispatchSidebarConfigChanged(this.config);
+  private notifyConfigChange(config: Partial<typeof DEFAULT_CONFIG>) {
+    const event = new CustomEvent(EVENT_NAMES.CONFIG_CHANGE, {
+      bubbles: true,
+      composed: true,
+      detail: config,
+    });
+    this.dispatchEvent(event);
   }
 
   private readonly resetToDefaults = () => {
-    this.config = { ...DEFAULT_CONFIG };
-    updateURLParameters(this.config, DEFAULT_CONFIG);
-    this.notifyConfigChanged();
+    this.notifyConfigChange(DEFAULT_CONFIG);
   };
 
   private readonly handleFormSubmit = (event: Event): void => {
@@ -86,26 +65,7 @@ export class LitSidebar extends LitElement {
       return;
     }
 
-    this.updateConfig({ bodyFont, customCss, headingFont, sourceUrl, themeClass });
-  };
-
-  private readonly updateConfig = (partial: Partial<SidebarConfig>) => {
-    const sourceChanged = partial.sourceUrl && partial.sourceUrl !== this.config.sourceUrl;
-
-    this.config = {
-      ...this.config,
-      ...partial,
-      ...(sourceChanged
-        ? {
-            bodyFont: DEFAULT_CONFIG.bodyFont,
-            customCss: DEFAULT_CONFIG.customCss,
-            headingFont: DEFAULT_CONFIG.headingFont,
-          }
-        : {}),
-    };
-
-    updateURLParameters(this.config, DEFAULT_CONFIG);
-    this.notifyConfigChanged();
+    this.notifyConfigChange({ bodyFont, customCss, headingFont, sourceUrl, themeClass });
   };
 
   override render() {
@@ -125,7 +85,7 @@ export class LitSidebar extends LitElement {
                 name="sourceUrl"
                 class="theme-form-field__input"
                 type="url"
-                .value=${this.config.sourceUrl || ''}
+                .value=${this.sourceUrl || ''}
                 placeholder="https://example.com"
               />
 
@@ -143,7 +103,7 @@ export class LitSidebar extends LitElement {
                 name="themeClass"
                 class="theme-form-field__input"
                 type="text"
-                .value=${this.config.themeClass || ''}
+                .value=${this.themeClass || ''}
                 placeholder="bijv. voorbeeld-theme"
               />
               <small class="theme-form-field__help">bijv. utrecht-theme of voorbeeld-theme</small>
@@ -156,7 +116,7 @@ export class LitSidebar extends LitElement {
                 name="customCss"
                 rows="6"
                 class="theme-form-field__input theme-css-input"
-                .value=${this.config.customCss || ''}
+                .value=${this.customCss || ''}
                 placeholder="Plak hier de gescrapede CSS..."
               ></textarea>
             </div>
@@ -165,8 +125,8 @@ export class LitSidebar extends LitElement {
           </section>
 
           <theme-wizard-typography
-            heading-font=${this.config.headingFont}
-            body-font=${this.config.bodyFont}
+            .headingFont=${this.headingFont}
+            .bodyFont=${this.bodyFont}
           ></theme-wizard-typography>
         </form>
 
@@ -177,7 +137,14 @@ export class LitSidebar extends LitElement {
           <div class="theme-sidebar__actions">
             <button
               class="theme-button theme-button--primary theme-button--full"
-              @click=${() => exportDesignTokens(this.config)}
+              @click=${() =>
+                exportDesignTokens({
+                  bodyFont: this.bodyFont,
+                  customCss: this.customCss,
+                  headingFont: this.headingFont,
+                  sourceUrl: this.sourceUrl,
+                  themeClass: this.themeClass,
+                })}
               type="button"
             >
               Exporteer Design Tokens

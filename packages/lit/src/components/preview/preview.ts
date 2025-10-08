@@ -2,15 +2,12 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
 import {
-  EVENT_NAMES,
   extractThemeProperties,
   fetchHtml,
   getThemeStyleString,
   parseHtml,
   rewriteAttributeUrlsToAbsolute,
   rewriteSvgXlinkToAbsolute,
-  loadUrlParams,
-  UrlParamsConfig,
 } from '../../utils';
 import previewStyles from './preview.css';
 
@@ -27,55 +24,11 @@ export class ThemePreview extends LitElement {
   @state() private isLoading = false;
   @state() private error = '';
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.initializeFromURL();
-    document.addEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleConfigChanged as EventListener);
-  }
-
-  override updated(changedProps: Map<string | number | symbol, unknown>) {
-    if (changedProps.has('url')) {
+  override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
+    // Fetch content when URL changes (before render)
+    if (changedProps.has('url') && this.url) {
       this.fetchContent();
     }
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener(EVENT_NAMES.SIDEBAR_CONFIG_CHANGED, this.handleConfigChanged as EventListener);
-  }
-
-  private readonly handleConfigChanged = (e: Event) => {
-    this.updatePropertiesFromConfig((e as CustomEvent).detail || {});
-    this.fetchContent();
-  };
-
-  /**
-   * Initialize the component properties from the URL parameters
-   * and fetch the content if the sourceUrl is present
-   */
-  private readonly initializeFromURL = () => {
-    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
-    const hasSourceUrlToFetch = params.sourceUrl;
-    this.updatePropertiesFromConfig(params);
-
-    if (hasSourceUrlToFetch) {
-      this.fetchContent();
-    }
-  };
-
-  /**
-   * Update the component properties from the config
-   * @param config - The config object { bodyFont, customCss, headingFont, sourceUrl, themeClass }
-   * TODO: use property mapping for the growing number of properties
-   */
-  private updatePropertiesFromConfig(config: UrlParamsConfig): void {
-    const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = config;
-
-    if (sourceUrl) this.url = sourceUrl;
-    if (headingFont) this.headingFontFamily = headingFont;
-    if (bodyFont) this.bodyFontFamily = bodyFont;
-    if (themeClass) this.themeClass = themeClass;
-    if (customCss) this.customCss = customCss;
   }
 
   /**
