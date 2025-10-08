@@ -5,7 +5,8 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { DEFAULT_TYPOGRAPHY, dispatchTypographyChanged, EVENT_NAMES, FONT_OPTIONS, loadUrlParams } from '../../helpers';
+import { DEFAULT_TYPOGRAPHY, FONT_OPTIONS } from '../../constants';
+import { dispatchTypographyChanged, EVENT_NAMES, loadUrlParams } from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import typographyStyles from './typography.css';
 
