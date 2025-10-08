@@ -5,25 +5,9 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { dispatchConfigChanged, loadUrlParams } from '../../helpers';
+import { DEFAULT_TYPOGRAPHY, dispatchConfigChanged, FONT_OPTIONS, loadUrlParams } from '../../helpers';
 import { buttonStyles } from '../../styles/button/index.css';
 import typographyStyles from './typography.css';
-
-type FontOption = { label: string; value: string };
-
-const FONT_OPTIONS: FontOption[] = [
-  { label: 'System UI', value: 'system-ui, sans-serif' },
-  { label: 'Arial', value: 'Arial, sans-serif' },
-  { label: 'Georgia', value: 'Georgia, serif' },
-  { label: 'Times New Roman', value: "'Times New Roman', serif" },
-  { label: 'Courier New', value: "'Courier New', monospace" },
-  { label: 'Verdana', value: 'Verdana, sans-serif' },
-];
-
-const DEFAULT_TYPOGRAPHY = {
-  bodyFont: 'system-ui, sans-serif',
-  headingFont: 'system-ui, sans-serif',
-};
 
 @customElement('theme-wizard-typography')
 export class LitTypography extends LitElement {
