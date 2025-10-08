@@ -23,6 +23,8 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
   <body>
     <slot />
 
-    <script type="module" type="module" src="/build/lit.esm.js" is:inline></script>
+    <script>
+      import '@nl-design-system-community/theme-wizard-lit-components';
+    </script>
   </body>
 </html>
