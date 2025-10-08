@@ -8,7 +8,7 @@ import {
   parseHtml,
   rewriteAttributeUrlsToAbsolute,
   rewriteSvgXlinkToAbsolute,
-} from '../../helpers';
+} from '../../utils';
 import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')

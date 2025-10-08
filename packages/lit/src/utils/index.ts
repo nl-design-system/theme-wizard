@@ -8,5 +8,5 @@ export * from './dom-utils';
 export * from './style-utils';
 export * from './types';
 export * from './share-utils';
-export * from './export-tokens';
+export * from './export-utils';
 export * from './event-utils';

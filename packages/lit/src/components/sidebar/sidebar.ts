@@ -5,7 +5,7 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import type { SidebarConfig } from '../../helpers/types';
+import type { SidebarConfig } from '../../utils/types';
 import {
   dispatchSidebarConfigChanged,
   EVENT_NAMES,
@@ -14,7 +14,7 @@ import {
   loadUrlParams,
   shareTheme,
   updateURLParameters,
-} from '../../helpers';
+} from '../../utils';
 import { buttonStyles } from '../../styles/button/index.css';
 import sidebarStyles from './sidebar.css';
 
