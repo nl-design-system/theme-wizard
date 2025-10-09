@@ -5,10 +5,17 @@ vi.mock('@nl-design-system-community/css-scraper', () => ({
   getCss: vi.fn(),
 }));
 
-test('health check', async () => {
-  const response = await app.request('/healthz');
-  expect(response.status).toBe(200);
-  expect(await response.json()).toEqual({});
+describe('health check', () => {
+  test('returns correct response', async () => {
+    const response = await app.request('/healthz');
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({});
+  });
+
+  test('does not send server timing header', async () => {
+    const response = await app.request('/healthz');
+    expect(response.headers.get('server-timing')).toBeNull();
+  });
 });
 
 describe('/api/v1', () => {
@@ -33,13 +40,8 @@ describe('/api/v1', () => {
         const { getCss } = await import('@nl-design-system-community/css-scraper');
         (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
         const response = await app.request(`${url}?url=example.com`);
-        const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
-
-        expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
-        const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
-
-        expect.soft(duration).not.toBeNaN();
-        expect.soft(Number(duration)).toBeGreaterThanOrEqual(0);
+        const timingHeader = response.headers.get('server-timing');
+        expect.soft(timingHeader).toMatch(/scraping;dur=\d+(:?\.\d+);desc="Scraping CSS"/);
       });
     }
   });
@@ -96,15 +98,6 @@ describe('/api/v1', () => {
         line_height: {},
         radius: {},
       });
-    });
-
-    test('contains server-timing', async () => {
-      const { getCss } = await import('@nl-design-system-community/css-scraper');
-      (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
-      const response = await app.request('/api/v1/css-design-tokens?url=example.com');
-      const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
-
-      expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
     });
   });
 });
