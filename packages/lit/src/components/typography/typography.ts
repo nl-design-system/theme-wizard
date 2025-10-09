@@ -6,7 +6,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, EVENT_NAMES, FONT_OPTIONS } from '../../constants';
-import { buttonStyles } from '../../styles/button/index.css';
 import typographyStyles from './typography.css';
 
 @customElement('theme-wizard-typography')
@@ -14,7 +13,7 @@ export class LitTypography extends LitElement {
   @property() headingFont = DEFAULT_TYPOGRAPHY.headingFont;
   @property() bodyFont = DEFAULT_TYPOGRAPHY.bodyFont;
 
-  static override readonly styles = [typographyStyles, buttonStyles];
+  static override readonly styles = [typographyStyles];
 
   /**
    * Handle change event - dispatch to parent (sidebar)
