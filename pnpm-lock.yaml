@@ -103,6 +103,9 @@ importers:
 
   packages/lit:
     dependencies:
+      '@nl-design-system-community/ma-design-tokens':
+        specifier: 2.5.0
+        version: 2.5.0
       lit:
         specifier: 3.3.1
         version: 3.3.1
@@ -248,7 +251,7 @@ importers:
         version: 1.0.0
       astro:
         specifier: 5.14.1
-        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0)
+        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0)
     devDependencies:
       '@stencil/core':
         specifier: 4.37.1
@@ -984,6 +987,9 @@ packages:
 
   '@napi-rs/wasm-runtime@1.0.6':
     resolution: {integrity: sha512-DXj75ewm11LIWUk198QSKUTxjyRjsBwk09MuMk5DGK+GDUtyPhhEHOGP/Xwwj3DjQXXkivoBirmOnKrLfc0+9g==}
+
+  '@nl-design-system-community/ma-design-tokens@2.5.0':
+    resolution: {integrity: sha512-3TYzzbo0C5br42SiS6jISScUL7u4hxgDvU2DZVBv6gJ40jBZPpXIgLI1T/JESQj79+nY2AddGm6l8xg2o2WLFA==}
 
   '@nl-design-system/eslint-config@2.1.1':
     resolution: {integrity: sha512-CU1IOIZk6gV9048rU/1wfV2OaQKhdRFCktpC7jNj4NpnNQstOHKUojmB08xajxPTzwwerQS303dGSrC1XW6r/w==}
@@ -6750,6 +6756,8 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
+  '@nl-design-system-community/ma-design-tokens@2.5.0': {}
+
   '@nl-design-system/eslint-config@2.1.1(eslint@9.31.0)(typescript@5.8.3)':
     dependencies:
       '@eslint/js': 9.31.0
@@ -7989,7 +7997,7 @@ snapshots:
 
   astral-regex@2.0.0: {}
 
-  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0):
+  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.3
@@ -8039,7 +8047,7 @@ snapshots:
       smol-toml: 1.4.2
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
-      tsconfck: 3.1.6(typescript@5.8.3)
+      tsconfck: 3.1.6(typescript@5.9.3)
       ultrahtml: 1.6.0
       unifont: 0.5.2
       unist-util-visit: 5.0.0
@@ -8052,7 +8060,7 @@ snapshots:
       yocto-spinner: 0.2.3
       zod: 3.25.76
       zod-to-json-schema: 3.24.6(zod@3.25.76)
-      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.76)
+      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.76)
     optionalDependencies:
       sharp: 0.34.4
     transitivePeerDependencies:
@@ -11908,9 +11916,9 @@ snapshots:
 
   ts-toolbelt@6.15.5: {}
 
-  tsconfck@3.1.6(typescript@5.8.3):
+  tsconfck@3.1.6(typescript@5.9.3):
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   tsconfig-paths@4.2.0:
     dependencies:
@@ -12507,9 +12515,9 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.76):
+  zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.76):
     dependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
       zod: 3.25.76
 
   zod@3.22.4: {}

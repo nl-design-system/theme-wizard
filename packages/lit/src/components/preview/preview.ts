@@ -17,7 +17,6 @@ export class ThemePreview extends LitElement {
 
   @property() headingFontFamily: string = DEFAULT_CONFIG.headingFont;
   @property() bodyFontFamily: string = DEFAULT_CONFIG.bodyFont;
-  @property() themeClass: string = DEFAULT_CONFIG.themeClass;
   @property() customCss: string = DEFAULT_CONFIG.customCss;
 
   @state() private htmlContent = '';
@@ -63,7 +62,7 @@ export class ThemePreview extends LitElement {
   override render() {
     if (this.isLoading && !this.htmlContent) {
       return html`
-        <div class="theme-preview theme-preview--loading">
+        <div>
           <p>Laden...</p>
         </div>
       `;
@@ -71,20 +70,21 @@ export class ThemePreview extends LitElement {
 
     if (this.error) {
       return html`
-        <div class="theme-preview theme-preview--error">
+        <div>
           <p>Error: ${this.error}</p>
         </div>
       `;
     }
 
     return html`
-      <div class="theme-preview ${this.themeClass}" style=${getThemeStyleString(extractThemeProperties(this))}>
+      <div class="ma-theme" style=${getThemeStyleString(extractThemeProperties(this))}>
         ${this.customCss
           ? html`<style>
               ${this.customCss}
             </style>`
           : ''}
-        <div class="theme-preview__content" .innerHTML=${this.htmlContent}></div>
+
+        <div .innerHTML=${this.htmlContent}></div>
       </div>
     `;
   }

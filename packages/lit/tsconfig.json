@@ -13,5 +13,5 @@
     "importHelpers": false,
     "useDefineForClassFields": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "globals.d.ts"]
 }

@@ -9,9 +9,11 @@ import type { ThemeStyleProperties } from './types';
  * Central mapping of theme properties to CSS custom properties
  * Add new properties here to automatically include them in all components
  */
-const THEME_PROPERTY_MAPPING: Record<keyof ThemeStyleProperties, string> = {
-  bodyFontFamily: '--theme-body-font-family',
-  headingFontFamily: '--theme-heading-font-family',
+const THEME_PROPERTY_MAPPING = {
+  bodyFontFamily: '--basis-text-font-family-default',
+  headingColor: '--basis-heading-color',
+  headingFontFamily: '--basis-heading-font-family',
+  headingFontSize: '--basis-heading-font-size',
 };
 
 /**
@@ -25,7 +27,7 @@ const THEME_PROPERTY_MAPPING: Record<keyof ThemeStyleProperties, string> = {
  *   headingFontFamily: 'Times New Roman, serif',
  * };
  * const cssProps = getThemeStyleProperties(properties);
- * // Returns: { '--theme-body-font-family': 'Arial, sans-serif', '--theme-heading-font-family': 'Times New Roman, serif' }
+ * // Returns: { '--basis-text-font-family-default': 'Arial, sans-serif', '--basis-heading-font-family': 'Times New Roman, serif' }
  * ```
  */
 export function getThemeStyleProperties(properties: ThemeStyleProperties): Record<string, string> {
@@ -52,7 +54,7 @@ export function getThemeStyleProperties(properties: ThemeStyleProperties): Recor
  *   headingFontFamily: 'Times New Roman, serif'
  * };
  * const cssString = getThemeStyleString(properties);
- * // Returns: "--theme-body-font-family: Arial, sans-serif; --theme-heading-font-family: Times New Roman, serif;"
+ * // Returns: "--basis-text-font-family-default: Arial, sans-serif; --basis-heading-font-family: Times New Roman, serif;"
  * ```
  */
 export function getThemeStyleString(properties: ThemeStyleProperties): string {
