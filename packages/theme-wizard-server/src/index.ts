@@ -1,7 +1,8 @@
 import { getCss as getCssOrigins } from '@nl-design-system-community/css-scraper';
-import { type Context, type Next, Hono, MiddlewareHandler } from 'hono';
+import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { HTTPException } from 'hono/http-exception';
+import { requireUrlParam } from './middleware/url-required';
+import { withScrapingErrorHandler } from './scraping-error-handler';
 
 const app = new Hono();
 app.use(
@@ -15,37 +16,6 @@ app.use(
 app.get('/healthz', (c) => {
   return c.json({});
 });
-
-export const requireUrlParam = async (c: Context, next: Next) => {
-  const url = c.req.query('url');
-
-  if (!url || url.trim().length === 0) {
-    throw new HTTPException(400, {
-      message: 'missing `url` parameter: specify a url like ?url=example.com',
-    });
-  }
-
-  await next();
-};
-
-export const withScrapingErrorHandler = (handler: MiddlewareHandler): MiddlewareHandler => {
-  return async (c: Context, next: Next) => {
-    try {
-      return await handler(c, next);
-    } catch (error) {
-      if (error instanceof Error && 'statusCode' in error) {
-        throw new HTTPException(400, {
-          cause: error,
-          message: error.message,
-        });
-      }
-      throw new HTTPException(500, {
-        cause: error,
-        message: 'encountered a scraping error',
-      });
-    }
-  };
-};
 
 app.get(
   '/api/v1/css',
