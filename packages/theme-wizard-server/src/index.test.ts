@@ -12,25 +12,39 @@ test('health check', async () => {
 });
 
 describe('/api/v1', () => {
-  describe('/css & /css-design-tokens param valiation', () => {
-    describe('query param validation', () => {
+  const mockedGetCssData = [
+    {
+      css: 'a { color: blue; }',
+      href: 'example.com',
+      type: 'style',
+      url: 'https://example.com',
+    },
+  ];
+
+  describe('shared /css & /css-design-tokens', () => {
+    for (const url of ['/api/v1/css', '/api/v1/css-design-tokens']) {
       test('missing `url` query param', async () => {
-        const response = await app.request('/api/v1/css');
+        const response = await app.request(url);
         expect.soft(response.status).toBe(400);
         expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
       });
-    });
+
+      test('contains server-timing', async () => {
+        const { getCss } = await import('@nl-design-system-community/css-scraper');
+        (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
+        const response = await app.request(`${url}?url=example.com`);
+        const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
+
+        expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
+        const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
+
+        expect.soft(duration).not.toBeNaN();
+        expect.soft(Number(duration)).toBeGreaterThanOrEqual(0);
+      });
+    }
   });
 
   describe('/css', () => {
-    const mockedGetCssData = [
-      {
-        css: 'a { color: blue; }',
-        href: 'example.com',
-        type: 'style',
-        url: 'https://example.com',
-      },
-    ];
     test('returns a string of css', async () => {
       const { getCss } = await import('@nl-design-system-community/css-scraper');
       (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
@@ -38,19 +52,6 @@ describe('/api/v1', () => {
 
       expect.soft(await response.text()).toBe('a { color: blue; }');
       expect.soft(response.headers.get('content-type')).toContain('text/css');
-    });
-
-    test('contains server-timing', async () => {
-      const { getCss } = await import('@nl-design-system-community/css-scraper');
-      (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
-      const response = await app.request('/api/v1/css?url=example.com');
-      const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
-
-      expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
-      const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
-
-      expect.soft(duration).not.toBeNaN();
-      expect.soft(Number(duration)).toBeGreaterThanOrEqual(0);
     });
   });
 
@@ -104,10 +105,6 @@ describe('/api/v1', () => {
       const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
 
       expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
-      const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
-
-      expect.soft(duration).not.toBeNaN();
-      expect.soft(Number(duration)).toBeGreaterThanOrEqual(0);
     });
   });
 });
