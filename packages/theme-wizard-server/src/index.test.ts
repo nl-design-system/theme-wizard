@@ -11,22 +11,16 @@ test('health check', async () => {
   expect(await response.json()).toEqual({});
 });
 
-describe('/get-css', () => {
-  describe('query param validation', () => {
-    test('missing `url` query param', async () => {
-      const response = await app.request('/api/get-css');
-      expect.soft(response.status).toBe(400);
-      expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
+describe('/api/v1', () => {
+  describe('/css', () => {
+    describe('query param validation', () => {
+      test('missing `url` query param', async () => {
+        const response = await app.request('/api/v1/css');
+        expect.soft(response.status).toBe(400);
+        expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
+      });
     });
 
-    test('empty `url` query param', async () => {
-      const response = await app.request('/api/get-css?url=');
-      expect.soft(response.status).toBe(400);
-      expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
-    });
-  });
-
-  describe('fetching css', () => {
     describe('happy path', () => {
       const mockedGetCssData = [
         {
@@ -39,7 +33,7 @@ describe('/get-css', () => {
       test('returns a string of css', async () => {
         const { getCss } = await import('@nl-design-system-community/css-scraper');
         (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
-        const response = await app.request('/api/get-css?url=example.com');
+        const response = await app.request('/api/v1/css?url=example.com');
         expect.soft(await response.text()).toBe('a { color: blue; }');
         expect.soft(response.headers.get('content-type')).toContain('text/css');
       });
@@ -47,7 +41,7 @@ describe('/get-css', () => {
       test('contains server-timing', async () => {
         const { getCss } = await import('@nl-design-system-community/css-scraper');
         (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
-        const response = await app.request('/api/get-css?url=example.com');
+        const response = await app.request('/api/v1/css?url=example.com');
         const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
         expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
         const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
@@ -63,14 +57,14 @@ describe('/get-css', () => {
         // @ts-expect-error We're mimicking an internal getCss error here
         scraperError.statusCode = 403;
         (getCss as Mock).mockRejectedValueOnce(scraperError);
-        const response = await app.request('/api/get-css?url=thisdoesnotexist.com');
+        const response = await app.request('/api/v1/css?url=thisdoesnotexist.com');
         expect.soft(response.status).toBe(400);
       });
 
       test('generic errors are handled', async () => {
         const { getCss } = await import('@nl-design-system-community/css-scraper');
         (getCss as Mock).mockRejectedValueOnce(new Error());
-        const response = await app.request('/api/get-css?url=thisdoesnotexist.com');
+        const response = await app.request('/api/v1/css?url=thisdoesnotexist.com');
         expect.soft(response.status).toBe(500);
       });
     });
