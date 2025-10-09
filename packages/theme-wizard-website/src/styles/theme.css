@@ -1,0 +1,48 @@
+/**
+ * @license EUPL-1.2
+ * Copyright (c) 2021 Community for NL Design System
+ */
+
+/* ============================================
+   THEME TOKENS
+   ============================================ */
+:root {
+  /* Typography Scale */
+  --theme-font-family: system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+  --theme-font-size-sm: 0.8125rem;
+  --theme-font-size-base: 0.875rem;
+  --theme-font-size-lg: 1.75rem;
+  --theme-font-weight-medium: 500;
+  --theme-font-weight-semibold: 600;
+  --theme-font-weight-bold: 700;
+
+  /* Color Palette */
+  --theme-primary: #007bff;
+  --theme-primary-hover: #0056b3;
+  --theme-success: #28a745;
+  --theme-info: #17a2b8;
+  --theme-warning: #ffc107;
+  --theme-error: #dc3545;
+
+  /* Neutral Grays */
+  --theme-gray-100: #f8f9fa;
+  --theme-gray-200: #e9ecef;
+  --theme-gray-400: #ced4da;
+  --theme-gray-600: #6c757d;
+  --theme-gray-700: #495057;
+  --theme-gray-900: #212529;
+
+  /* Spacing Scale */
+  --theme-space-1: 0.25rem;
+  --theme-space-2: 0.5rem;
+  --theme-space-3: 0.75rem;
+  --theme-space-4: 1rem;
+  --theme-space-6: 1.5rem;
+  --theme-space-8: 2rem;
+
+  /* Layout Properties */
+  --theme-sidebar-width: 400px;
+  --theme-border-radius: 4px;
+  --theme-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  --theme-shadow-light: 0 2px 8px rgb(0 0 0 / 8%);
+}

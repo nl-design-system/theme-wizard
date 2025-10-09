@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "astro": "5.14.1",
-    "@nl-design-system-community/stencil": "workspace:*"
+    "@nl-design-system-community/stencil": "workspace:*",
+    "@nl-design-system-community/theme-wizard-lit-components": "workspace:*"
   },
   "devDependencies": {
     "@stencil/core": "4.37.1"

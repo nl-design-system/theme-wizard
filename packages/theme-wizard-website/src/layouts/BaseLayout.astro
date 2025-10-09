@@ -1,5 +1,6 @@
 ---
 import favicon from '../assets/favicon.svg';
+import '../styles/theme.css';
 
 export interface Props {
   title?: string;
@@ -18,11 +19,12 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link rel="stylesheet" href="/build/theme-wizard-website.css" />
   </head>
   <body>
     <slot />
-
-    <script type="module" src="/build/theme-wizard-website.esm.js"></script>
+    <!-- <script type="module" src="/build/theme-wizard-website.esm.js"></script> -->
+    <script>
+      import '@nl-design-system-community/theme-wizard-lit-components';
+    </script>
   </body>
 </html>

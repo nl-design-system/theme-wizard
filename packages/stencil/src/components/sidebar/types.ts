@@ -3,14 +3,6 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
-export interface SidebarConfig {
-  sourceUrl?: string;
-  headingFont?: string;
-  bodyFont?: string;
-  themeClass?: string;
-  customCss?: string;
-}
-
 export interface FontOption {
   value: string;
   label: string;
