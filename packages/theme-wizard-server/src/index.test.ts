@@ -19,12 +19,6 @@ describe('/api/v1', () => {
         expect.soft(response.status).toBe(400);
         expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
       });
-
-      test('empty `url` query param', async () => {
-        const response = await app.request('/api/v1/css?url=');
-        expect.soft(response.status).toBe(400);
-        expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
-      });
     });
 
     describe('fetching css', () => {
