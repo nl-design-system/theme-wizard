@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "vc dev",
+    "dev": "vite",
     "test-build": "vitest run --coverage",
     "build": "vite build",
     "clean": "rimraf dist/"
