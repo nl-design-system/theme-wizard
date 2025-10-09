@@ -14,8 +14,8 @@ describe('withScrapingErrorHandler', () => {
         throw error;
       }),
     );
-
     const response = await app.request('/test');
+
     expect(response.status).toBe(400);
     expect(await response.text()).toBe('custom error');
   });
@@ -28,8 +28,8 @@ describe('withScrapingErrorHandler', () => {
         throw new Error('unexpected error');
       }),
     );
-
     const response = await app.request('/test');
+
     expect(response.status).toBe(500);
     expect(await response.text()).toBe('encountered a scraping error');
   });
@@ -42,8 +42,8 @@ describe('withScrapingErrorHandler', () => {
         return c.text('success');
       }),
     );
-
     const response = await app.request('/test');
+
     expect(response.status).toBe(200);
     expect(await response.text()).toBe('success');
   });

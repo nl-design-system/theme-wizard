@@ -115,7 +115,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 7.1.7
-        version: 7.1.7
+        version: 7.1.7(@types/node@22.16.4)(yaml@2.8.0)
 
   packages/stencil:
     devDependencies:
@@ -206,6 +206,9 @@ importers:
       '@nl-design-system-community/css-scraper':
         specifier: workspace:*
         version: link:../css-scraper
+      '@projectwallace/css-design-tokens':
+        specifier: 0.8.0
+        version: 0.8.0
       hono:
         specifier: 4.9.9
         version: 4.9.9
@@ -242,7 +245,7 @@ importers:
         version: link:../lit
       astro:
         specifier: 5.14.1
-        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0)
+        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0)
     devDependencies:
       '@stencil/core':
         specifier: 4.37.1
@@ -372,6 +375,10 @@ packages:
   '@bcoe/v8-coverage@1.0.2':
     resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
     engines: {node: '>=18'}
+
+  '@bramus/specificity@2.4.2':
+    resolution: {integrity: sha512-ctxtJ/eA+t+6q2++vj5j7FYX3nRu311q1wfYH3xjlLOsczhlhxAg2FWNUXhpGvAw3BWo1xBcvOV6/YLc2r5FJw==}
+    hasBin: true
 
   '@capsizecss/unpack@2.4.0':
     resolution: {integrity: sha512-GrSU71meACqcmIUxPYOJvGKF0yryjN/L1aCuE9DViCTJI7bfkjgYDPD1zbNDcINJwSSP6UaBZY9GAbYDO7re0Q==}
@@ -1005,6 +1012,14 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@projectwallace/css-analyzer@7.6.0':
+    resolution: {integrity: sha512-up4GNW2WM/L0cKBrwhoKKcKB+Q9gRvlL9+llGRh9wZraUSzlJSoVvv76Olsx6K/gfQjZZxQiwQEBwcsVcVfDlg==}
+    engines: {node: '>=18.0.0'}
+
+  '@projectwallace/css-design-tokens@0.8.0':
+    resolution: {integrity: sha512-evZGrMjgYZuyDdSN95r1HXYH5iaYiKJRucLs7/VUUs7Oe0hKXg/5FM9xwwdATw/ZN4zBLh6Ow342839w901pgg==}
+    engines: {node: '>=22'}
 
   '@rolldown/binding-android-arm64@1.0.0-beta.35':
     resolution: {integrity: sha512-zVTg0544Ib1ldJSWwjy8URWYHlLFJ98rLnj+2FIj5fRs4KqGKP4VgH/pVUbXNGxeLFjItie6NSK1Un7nJixneQ==}
@@ -2295,11 +2310,18 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
+  color-sorter@7.0.0:
+    resolution: {integrity: sha512-22yIaIsugOqqa21TiwP/nNeF2NV33ztrR26t1DIK6OVcfsX/6a6WgS3ozeMdRh8BOCXNHBrVyAUAr59NRechBg==}
+    engines: {node: '>=18.0.0'}
+
   colord@2.9.3:
     resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
+
+  colorjs.io@0.6.0-alpha.1:
+    resolution: {integrity: sha512-c/h/8uAmPydQcriRdX8UTAFHj6SpSHFHBA8LvMikvYWAVApPTwg/pyOXNsGmaCBd6L/EeDlRHSNhTtnIFp/qsg==}
 
   comma-separated-tokens@1.0.8:
     resolution: {integrity: sha512-GHuDRO12Sypu2cV70d1dkA2EUmXHgntrzbpvOB+Qy+49ypNfGgFQIC2fhhXbnyrJRynDCAARsT7Ou0M6hirpfw==}
@@ -2400,6 +2422,10 @@ packages:
 
   css-select@5.2.2:
     resolution: {integrity: sha512-TizTzUddG/xYLA3NXodFM0fSbNizXjOKhqiQQwvhlspadZokn1KDy0NZFS0wuEubIYAV5/c1/lAr0TaaFXEXzw==}
+
+  css-time-sort@3.0.0:
+    resolution: {integrity: sha512-/yMLLXdZwFlrPBU1ircZjiMBK1bNdRFC8wrXtZ81lZ+TdGwdtED2WkYyfF/3jX2sl41EM41va++BV+9NneUf2Q==}
+    engines: {node: '>=18.0.0'}
 
   css-tree@3.1.0:
     resolution: {integrity: sha512-0eW44TGN5SQXU1mWSkKwFstI/22X2bG1nYzZTYMAWjylYURhse752YgbE4Cx46AC+bAvI+/dYTPRk1LqSUnu6w==}
@@ -6121,6 +6147,10 @@ snapshots:
 
   '@bcoe/v8-coverage@1.0.2': {}
 
+  '@bramus/specificity@2.4.2':
+    dependencies:
+      css-tree: 3.1.0
+
   '@capsizecss/unpack@2.4.0':
     dependencies:
       blob-to-buffer: 1.2.9
@@ -6748,6 +6778,19 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@projectwallace/css-analyzer@7.6.0':
+    dependencies:
+      '@bramus/specificity': 2.4.2
+      css-tree: 3.1.0
+
+  '@projectwallace/css-design-tokens@0.8.0':
+    dependencies:
+      '@projectwallace/css-analyzer': 7.6.0
+      color-sorter: 7.0.0
+      colorjs.io: 0.6.0-alpha.1
+      css-time-sort: 3.0.0
+      css-tree: 3.1.0
 
   '@rolldown/binding-android-arm64@1.0.0-beta.35':
     optional: true
@@ -7936,7 +7979,7 @@ snapshots:
 
   astral-regex@2.0.0: {}
 
-  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0):
+  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.3
@@ -7986,7 +8029,7 @@ snapshots:
       smol-toml: 1.4.2
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
-      tsconfck: 3.1.6(typescript@5.9.3)
+      tsconfck: 3.1.6(typescript@5.8.3)
       ultrahtml: 1.6.0
       unifont: 0.5.2
       unist-util-visit: 5.0.0
@@ -7999,7 +8042,7 @@ snapshots:
       yocto-spinner: 0.2.3
       zod: 3.25.76
       zod-to-json-schema: 3.24.6(zod@3.25.76)
-      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.76)
+      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.76)
     optionalDependencies:
       sharp: 0.34.4
     transitivePeerDependencies:
@@ -8324,9 +8367,15 @@ snapshots:
 
   color-name@1.1.4: {}
 
+  color-sorter@7.0.0:
+    dependencies:
+      colorjs.io: 0.6.0-alpha.1
+
   colord@2.9.3: {}
 
   colorette@2.0.20: {}
+
+  colorjs.io@0.6.0-alpha.1: {}
 
   comma-separated-tokens@1.0.8: {}
 
@@ -8413,6 +8462,8 @@ snapshots:
       domhandler: 5.0.3
       domutils: 3.2.2
       nth-check: 2.1.1
+
+  css-time-sort@3.0.0: {}
 
   css-tree@3.1.0:
     dependencies:
@@ -11847,9 +11898,9 @@ snapshots:
 
   ts-toolbelt@6.15.5: {}
 
-  tsconfck@3.1.6(typescript@5.9.3):
+  tsconfck@3.1.6(typescript@5.8.3):
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 5.8.3
 
   tsconfig-paths@4.2.0:
     dependencies:
@@ -12197,17 +12248,6 @@ snapshots:
       fsevents: 2.3.3
       yaml: 2.8.0
 
-  vite@7.1.7:
-    dependencies:
-      esbuild: 0.25.10
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.52.3
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      fsevents: 2.3.3
-
   vite@7.1.7(@types/node@22.16.4)(yaml@2.8.0):
     dependencies:
       esbuild: 0.25.10
@@ -12457,9 +12497,9 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.76):
+  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.76):
     dependencies:
-      typescript: 5.9.3
+      typescript: 5.8.3
       zod: 3.25.76
 
   zod@3.22.4: {}

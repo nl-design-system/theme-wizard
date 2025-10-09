@@ -5,8 +5,8 @@ import { requireUrlParam } from './url-required';
 test('throws 400 when url is missing', async () => {
   const app = new Hono();
   app.get('/test', requireUrlParam, (c) => c.text('ok'));
-  const response = await app.request('/test');
 
+  const response = await app.request('/test');
   expect(response.status).toBe(400);
   expect(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
 });
