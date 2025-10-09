@@ -14,24 +14,24 @@ test('throws 400 when url is missing', async () => {
 test('throws 400 when url is empty', async () => {
   const app = new Hono();
   app.get('/test', requireUrlParam, (c) => c.text('ok'));
-
   const response = await app.request('/test?url=');
+
   expect(response.status).toBe(400);
 });
 
 test('throws 400 when url is whitespace', async () => {
   const app = new Hono();
   app.get('/test', requireUrlParam, (c) => c.text('ok'));
-
   const response = await app.request('/test?url=%20');
+
   expect(response.status).toBe(400);
 });
 
 test('sets url in context when valid', async () => {
   const app = new Hono<{ Variables: { url: string } }>();
   app.get('/test', requireUrlParam, (c) => c.text('ok'));
-
   const response = await app.request('/test?url=example.com');
+
   expect(response.status).toBe(200);
   expect(await response.text()).toBe('ok');
 });
