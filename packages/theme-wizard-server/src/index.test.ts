@@ -23,35 +23,34 @@ describe('/api/v1', () => {
   });
 
   describe('/css', () => {
-    describe('fetching css', () => {
-      describe('happy path', () => {
-        const mockedGetCssData = [
-          {
-            css: 'a { color: blue; }',
-            href: 'example.com',
-            type: 'style',
-            url: 'https://example.com',
-          },
-        ];
-        test('returns a string of css', async () => {
-          const { getCss } = await import('@nl-design-system-community/css-scraper');
-          (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
-          const response = await app.request('/api/v1/css?url=example.com');
-          expect.soft(await response.text()).toBe('a { color: blue; }');
-          expect.soft(response.headers.get('content-type')).toContain('text/css');
-        });
+    const mockedGetCssData = [
+      {
+        css: 'a { color: blue; }',
+        href: 'example.com',
+        type: 'style',
+        url: 'https://example.com',
+      },
+    ];
+    test('returns a string of css', async () => {
+      const { getCss } = await import('@nl-design-system-community/css-scraper');
+      (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
+      const response = await app.request('/api/v1/css?url=example.com');
 
-        test('contains server-timing', async () => {
-          const { getCss } = await import('@nl-design-system-community/css-scraper');
-          (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
-          const response = await app.request('/api/v1/css?url=example.com');
-          const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
-          expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
-          const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
-          expect.soft(duration).not.toBeNaN();
-          expect.soft(Number(duration)).toBeGreaterThanOrEqual(0);
-        });
-      });
+      expect.soft(await response.text()).toBe('a { color: blue; }');
+      expect.soft(response.headers.get('content-type')).toContain('text/css');
+    });
+
+    test('contains server-timing', async () => {
+      const { getCss } = await import('@nl-design-system-community/css-scraper');
+      (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
+      const response = await app.request('/api/v1/css?url=example.com');
+      const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
+
+      expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
+      const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
+
+      expect.soft(duration).not.toBeNaN();
+      expect.soft(Number(duration)).toBeGreaterThanOrEqual(0);
     });
   });
 
@@ -69,6 +68,7 @@ describe('/api/v1', () => {
       const { getCss } = await import('@nl-design-system-community/css-scraper');
       (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
       const response = await app.request('/api/v1/css-design-tokens?url=example.com');
+
       expect.soft(response.headers.get('content-type')).toContain('application/json');
       expect.soft(await response.json()).toEqual({
         box_shadow: {},
@@ -102,8 +102,10 @@ describe('/api/v1', () => {
       (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
       const response = await app.request('/api/v1/css-design-tokens?url=example.com');
       const expectedTiming = 'scraping;desc="Scraping CSS";dur=';
+
       expect.soft(response.headers.get('server-timing')).toContain(expectedTiming);
       const duration = response.headers.get('server-timing')?.substring(expectedTiming.length);
+
       expect.soft(duration).not.toBeNaN();
       expect.soft(Number(duration)).toBeGreaterThanOrEqual(0);
     });
