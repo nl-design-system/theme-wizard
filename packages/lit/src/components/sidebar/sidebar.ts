@@ -7,7 +7,6 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import { buttonStyles } from '../../styles/button/index.css';
 import { exportDesignTokens, isValidUrl, shareTheme } from '../../utils';
 import sidebarStyles from './sidebar.css';
 
@@ -19,7 +18,7 @@ export class LitSidebar extends LitElement {
   @property() themeClass = DEFAULT_CONFIG.themeClass;
   @property() customCss = DEFAULT_CONFIG.customCss;
 
-  static override readonly styles = [sidebarStyles, buttonStyles];
+  static override readonly styles = [sidebarStyles];
 
   override connectedCallback() {
     super.connectedCallback();
