@@ -1,7 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withRelatedProject } from '@vercel/related-projects';
+
+const scraperUrl = withRelatedProject({
+  projectName: 'theme-wizard-server',
+  // Fallback API host
+  defaultHost: process.env.API_HOST || '',
+});
+
 ---
 
-<BaseLayout title="Theme Wizard - Stencil POC" description="Preview and analyze website themes">
+<BaseLayout title="Theme Wizard - Stencil POC" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
   <theme-wizard-wrapper></theme-wizard-wrapper>
 </BaseLayout>
