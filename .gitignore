@@ -60,10 +60,5 @@ package-lock.json
 pnpm-lock.yaml
 !/pnpm-lock.yaml
 
-# Ignore generated files from Stencil
-loader/
-www/
-components.d.ts
-
 # Ignore generated files from Astro
 .astro/

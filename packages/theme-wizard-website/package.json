@@ -15,12 +15,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@nl-design-system-community/stencil": "workspace:*",
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*",
     "@vercel/related-projects": "1.0.0",
     "astro": "5.14.1"
-  },
-  "devDependencies": {
-    "@stencil/core": "4.37.1"
   }
 }
