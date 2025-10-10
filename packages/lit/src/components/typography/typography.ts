@@ -12,6 +12,7 @@ import typographyStyles from './typography.css';
 export class LitTypography extends LitElement {
   @property() headingFont = DEFAULT_TYPOGRAPHY.headingFont;
   @property() bodyFont = DEFAULT_TYPOGRAPHY.bodyFont;
+  @property() options: FontOption[] = [];
 
   static override readonly styles = [typographyStyles];
 
@@ -29,6 +30,9 @@ export class LitTypography extends LitElement {
     this.dispatchEvent(event);
   };
 
+  protected override createRenderRoot() {
+    return this;
+  }
   override render() {
     return html`
       <section class="theme-typography" aria-labelledby="typography-heading">
