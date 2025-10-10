@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withRelatedProject } from '@vercel/related-projects';
+import { API_HOST } from 'astro:env/client'
 
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
   // Fallback API host
-  defaultHost: process.env.API_HOST || '',
+  defaultHost: API_HOST,
 });
 ---
 
