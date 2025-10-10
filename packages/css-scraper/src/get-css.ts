@@ -291,3 +291,6 @@ export const getCss = async (url: string, { timeout = 10000 } = {}): Promise<CSS
     return [];
   }
 };
+
+export { resolveUrl } from './resolve-url.js';
+export { ScrapingError } from './errors.js';

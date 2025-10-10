@@ -194,22 +194,46 @@ importers:
 
   packages/theme-wizard-server:
     dependencies:
+      '@hono/standard-validator':
+        specifier: 0.1.5
+        version: 0.1.5(@standard-schema/spec@1.0.0)(hono@4.9.9)
       '@nl-design-system-community/css-scraper':
         specifier: workspace:*
         version: link:../css-scraper
       '@projectwallace/css-design-tokens':
         specifier: 0.8.0
         version: 0.8.0
+      '@standard-community/standard-json':
+        specifier: 0.3.5
+        version: 0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3))
+      '@standard-community/standard-openapi':
+        specifier: 0.2.8
+        version: 0.2.8(@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3)))(@standard-schema/spec@1.0.0)(openapi-types@12.1.3)(valibot@1.1.0(typescript@5.9.3))
+      '@standard-schema/spec':
+        specifier: 1.0.0
+        version: 1.0.0
+      '@valibot/to-json-schema':
+        specifier: 1.3.0
+        version: 1.3.0(valibot@1.1.0(typescript@5.9.3))
       hono:
         specifier: 4.9.9
         version: 4.9.9
+      hono-openapi:
+        specifier: 1.1.0
+        version: 1.1.0(@hono/standard-validator@0.1.5(@standard-schema/spec@1.0.0)(hono@4.9.9))(@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3)))(@standard-community/standard-openapi@0.2.8(@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3)))(@standard-schema/spec@1.0.0)(openapi-types@12.1.3)(valibot@1.1.0(typescript@5.9.3)))(@types/json-schema@7.0.15)(hono@4.9.9)(openapi-types@12.1.3)
+      valibot:
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.9.3)
     devDependencies:
       '@hono/vite-dev-server':
         specifier: 0.21.1
         version: 0.21.1(hono@4.9.9)
       '@vitest/coverage-v8':
         specifier: 3.2.4
-        version: 3.2.4(vitest@3.2.4(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.16.4)(yaml@2.8.0))
+        version: 3.2.4(vitest@3.2.4(@edge-runtime/vm@3.2.0))
+      openapi-types:
+        specifier: 12.1.3
+        version: 12.1.3
       rimraf:
         specifier: 6.0.1
         version: 6.0.1
@@ -221,10 +245,10 @@ importers:
         version: 48.2.0(rollup@4.52.3)
       vite:
         specifier: 6.3.5
-        version: 6.3.5(@types/node@22.16.4)(yaml@2.8.0)
+        version: 6.3.5
       vitest:
         specifier: 3.2.4
-        version: 3.2.4(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.16.4)(yaml@2.8.0)
+        version: 3.2.4(@edge-runtime/vm@3.2.0)
 
   packages/theme-wizard-website:
     dependencies:
@@ -236,7 +260,11 @@ importers:
         version: 1.0.0
       astro:
         specifier: 5.14.1
-        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0)
+        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0)
+    devDependencies:
+      '@stencil/core':
+        specifier: 4.37.1
+        version: 4.37.1
 
   proprietary/assets: {}
 
@@ -320,10 +348,6 @@ packages:
 
   '@babel/helper-string-parser@7.27.1':
     resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-validator-identifier@7.25.9':
-    resolution: {integrity: sha512-Ed61U6XJc3CVRfkERJWDz4dJwKe7iLmmJsbOGu9wSloNSFttHV0I8g6UAgb7qnK5ly5bGLPd4oXZlxCdANBOWQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-validator-identifier@7.27.1':
@@ -704,6 +728,12 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/standard-validator@0.1.5':
+    resolution: {integrity: sha512-EIyZPPwkyLn6XKwFj5NBEWHXhXbgmnVh2ceIFo5GO7gKI9WmzTjPDKnppQB0KrqKeAkq3kpoW4SIbu5X1dgx3w==}
+    peerDependencies:
+      '@standard-schema/spec': 1.0.0
+      hono: '>=3.9.0'
 
   '@hono/vite-dev-server@0.21.1':
     resolution: {integrity: sha512-HRqwsgbbTJ4a0Jiq7aB5aWb12upHtXGSU6nh+LuokTaB6VzFfiIkUBRUdAtRbGV7a3EWehoGhAbVZZjfKgR3uw==}
@@ -1272,6 +1302,75 @@ packages:
   '@sinclair/typebox@0.25.24':
     resolution: {integrity: sha512-XJfwUVUKDHF5ugKwIcxEgc9k8b7HbznCp6eUfWgu710hMPNIO4aw4/zB5RogDQz8nd6gyCDpU9O/m6qYEWY6yQ==}
 
+  '@standard-community/standard-json@0.3.5':
+    resolution: {integrity: sha512-4+ZPorwDRt47i+O7RjyuaxHRK/37QY/LmgxlGrRrSTLYoFatEOzvqIc85GTlM18SFZ5E91C+v0o/M37wZPpUHA==}
+    peerDependencies:
+      '@standard-schema/spec': ^1.0.0
+      '@types/json-schema': ^7.0.15
+      '@valibot/to-json-schema': ^1.3.0
+      arktype: ^2.1.20
+      effect: ^3.16.8
+      quansync: ^0.2.11
+      sury: ^10.0.0
+      typebox: ^1.0.17
+      valibot: ^1.1.0
+      zod: ^3.25.0 || ^4.0.0
+      zod-to-json-schema: ^3.24.5
+    peerDependenciesMeta:
+      '@valibot/to-json-schema':
+        optional: true
+      arktype:
+        optional: true
+      effect:
+        optional: true
+      sury:
+        optional: true
+      typebox:
+        optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
+      zod-to-json-schema:
+        optional: true
+
+  '@standard-community/standard-openapi@0.2.8':
+    resolution: {integrity: sha512-80ap74p5oy/SU4al5HkPwO5+NbN2wH/FBr6kwaE5ROq7AvcDFaxzUfTazewroNaCotbvdGcvzXb9oEoOIyfC/Q==}
+    peerDependencies:
+      '@standard-community/standard-json': ^0.3.5
+      '@standard-schema/spec': ^1.0.0
+      arktype: ^2.1.20
+      effect: ^3.17.14
+      openapi-types: ^12.1.3
+      sury: ^10.0.0
+      typebox: ^1.0.0
+      valibot: ^1.1.0
+      zod: ^3.25.0 || ^4.0.0
+      zod-openapi: ^4
+    peerDependenciesMeta:
+      arktype:
+        optional: true
+      effect:
+        optional: true
+      sury:
+        optional: true
+      typebox:
+        optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
+      zod-openapi:
+        optional: true
+
+  '@standard-schema/spec@1.0.0':
+    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
+
+  '@stencil/core@4.37.1':
+    resolution: {integrity: sha512-s4ZroxdYc2HU0b7V3n59RVtMKdNlTvWWBN8KofaP64eCzvg1qRh6SKMet7MJ069F1lx/FxDvsYfOv7pZRiMWmQ==}
+    engines: {node: '>=16.0.0', npm: '>=7.10.0'}
+    hasBin: true
+
   '@storybook/addon-a11y@8.6.14':
     resolution: {integrity: sha512-fozv6enO9IgpWq2U8qqS8MZ21Nt+MVHiRQe3CjnCpBOejTyo/ATm690PeYYRVHVG6M/15TVePb0h3ngKQbrrzQ==}
     peerDependencies:
@@ -1621,6 +1720,11 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@valibot/to-json-schema@1.3.0':
+    resolution: {integrity: sha512-82Vv6x7sOYhv5YmTRgSppSqj1nn2pMCk5BqCMGWYp0V/fq+qirrbGncqZAtZ09/lrO40ne/7z8ejwE728aVreg==}
+    peerDependencies:
+      valibot: ^1.1.0
 
   '@vercel/blob@1.0.2':
     resolution: {integrity: sha512-Im/KeFH4oPx7UsM+QiteimnE07bIUD7JK6CBafI9Z0jRFogaialTBMiZj8EKk/30ctUYsrpIIyP9iIY1YxWnUQ==}
@@ -3216,6 +3320,21 @@ packages:
   highlightjs-vue@1.0.0:
     resolution: {integrity: sha512-PDEfEF102G23vHmPhLyPboFCD+BkMGu+GuJe2d9/eH4FsCwvgBpnc9n0pGE+ffKdph38s6foEZiEjdgHdzp+IA==}
 
+  hono-openapi@1.1.0:
+    resolution: {integrity: sha512-eA5hN8D2O30EkPPUxWFilcZcThAe81TShbH38Y183ZZp8WkgMh4BrPEDeZ/EFN2tyDi3cmTgKTa3+oStyJX0UA==}
+    peerDependencies:
+      '@hono/standard-validator': ^0.1.2
+      '@standard-community/standard-json': ^0.3.5
+      '@standard-community/standard-openapi': ^0.2.8
+      '@types/json-schema': ^7.0.15
+      hono: ^4.8.3
+      openapi-types: ^12.1.3
+    peerDependenciesMeta:
+      '@hono/standard-validator':
+        optional: true
+      hono:
+        optional: true
+
   hono@4.9.9:
     resolution: {integrity: sha512-Hxw4wT6zjJGZJdkJzAx9PyBdf7ZpxaTSA0NfxqjLghwMrLBX8p33hJBzoETRakF3UJu6OdNQBZAlNSkGqKFukw==}
     engines: {node: '>=16.9.0'}
@@ -4275,6 +4394,9 @@ packages:
   open@8.4.2:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
+
+  openapi-types@12.1.3:
+    resolution: {integrity: sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==}
 
   opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
@@ -5533,6 +5655,14 @@ packages:
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
+  valibot@1.1.0:
+    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -5981,7 +6111,7 @@ snapshots:
 
   '@babel/code-frame@7.26.2':
     dependencies:
-      '@babel/helper-validator-identifier': 7.25.9
+      '@babel/helper-validator-identifier': 7.27.1
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
@@ -6048,8 +6178,6 @@ snapshots:
       - supports-color
 
   '@babel/helper-string-parser@7.27.1': {}
-
-  '@babel/helper-validator-identifier@7.25.9': {}
 
   '@babel/helper-validator-identifier@7.27.1': {}
 
@@ -6440,6 +6568,11 @@ snapshots:
 
   '@hono/node-server@1.19.5(hono@4.9.9)':
     dependencies:
+      hono: 4.9.9
+
+  '@hono/standard-validator@0.1.5(@standard-schema/spec@1.0.0)(hono@4.9.9)':
+    dependencies:
+      '@standard-schema/spec': 1.0.0
       hono: 4.9.9
 
   '@hono/vite-dev-server@0.21.1(hono@4.9.9)':
@@ -6932,6 +7065,35 @@ snapshots:
 
   '@sinclair/typebox@0.25.24': {}
 
+  '@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3))':
+    dependencies:
+      '@standard-schema/spec': 1.0.0
+      '@types/json-schema': 7.0.15
+    optionalDependencies:
+      '@valibot/to-json-schema': 1.3.0(valibot@1.1.0(typescript@5.9.3))
+      valibot: 1.1.0(typescript@5.9.3)
+
+  '@standard-community/standard-openapi@0.2.8(@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3)))(@standard-schema/spec@1.0.0)(openapi-types@12.1.3)(valibot@1.1.0(typescript@5.9.3))':
+    dependencies:
+      '@standard-community/standard-json': 0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3))
+      '@standard-schema/spec': 1.0.0
+      openapi-types: 12.1.3
+    optionalDependencies:
+      valibot: 1.1.0(typescript@5.9.3)
+
+  '@standard-schema/spec@1.0.0': {}
+
+  '@stencil/core@4.37.1':
+    optionalDependencies:
+      '@rollup/rollup-darwin-arm64': 4.34.9
+      '@rollup/rollup-darwin-x64': 4.34.9
+      '@rollup/rollup-linux-arm64-gnu': 4.34.9
+      '@rollup/rollup-linux-arm64-musl': 4.34.9
+      '@rollup/rollup-linux-x64-gnu': 4.34.9
+      '@rollup/rollup-linux-x64-musl': 4.34.9
+      '@rollup/rollup-win32-arm64-msvc': 4.34.9
+      '@rollup/rollup-win32-x64-msvc': 4.34.9
+
   '@storybook/addon-a11y@8.6.14(storybook@8.6.14(prettier@3.6.2))':
     dependencies:
       '@storybook/addon-highlight': 8.6.14(storybook@8.6.14(prettier@3.6.2))
@@ -7363,6 +7525,10 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
+  '@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3))':
+    dependencies:
+      valibot: 1.1.0(typescript@5.9.3)
+
   '@vercel/blob@1.0.2':
     dependencies:
       async-retry: 1.3.3
@@ -7582,6 +7748,25 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@vitest/coverage-v8@3.2.4(vitest@3.2.4(@edge-runtime/vm@3.2.0))':
+    dependencies:
+      '@ampproject/remapping': 2.3.0
+      '@bcoe/v8-coverage': 1.0.2
+      ast-v8-to-istanbul: 0.3.5
+      debug: 4.4.1
+      istanbul-lib-coverage: 3.2.2
+      istanbul-lib-report: 3.0.1
+      istanbul-lib-source-maps: 5.0.6
+      istanbul-reports: 3.2.0
+      magic-string: 0.30.19
+      magicast: 0.3.5
+      std-env: 3.9.0
+      test-exclude: 7.0.1
+      tinyrainbow: 2.0.0
+      vitest: 3.2.4(@edge-runtime/vm@3.2.0)
+    transitivePeerDependencies:
+      - supports-color
+
   '@vitest/expect@2.0.5':
     dependencies:
       '@vitest/spy': 2.0.5
@@ -7604,6 +7789,14 @@ snapshots:
       magic-string: 0.30.19
     optionalDependencies:
       vite: 6.3.5(@types/node@22.16.4)(yaml@2.8.0)
+
+  '@vitest/mocker@3.2.4(vite@6.3.5)':
+    dependencies:
+      '@vitest/spy': 3.2.4
+      estree-walker: 3.0.3
+      magic-string: 0.30.19
+    optionalDependencies:
+      vite: 6.3.5
 
   '@vitest/pretty-format@2.0.5':
     dependencies:
@@ -7894,7 +8087,7 @@ snapshots:
 
   astral-regex@2.0.0: {}
 
-  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0):
+  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.3
@@ -7944,7 +8137,7 @@ snapshots:
       smol-toml: 1.4.2
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
-      tsconfck: 3.1.6(typescript@5.9.3)
+      tsconfck: 3.1.6(typescript@5.8.3)
       ultrahtml: 1.6.0
       unifont: 0.5.2
       unist-util-visit: 5.0.0
@@ -7957,7 +8150,7 @@ snapshots:
       yocto-spinner: 0.2.3
       zod: 3.25.76
       zod-to-json-schema: 3.24.6(zod@3.25.76)
-      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.76)
+      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.76)
     optionalDependencies:
       sharp: 0.34.4
     transitivePeerDependencies:
@@ -9355,6 +9548,16 @@ snapshots:
 
   highlightjs-vue@1.0.0: {}
 
+  hono-openapi@1.1.0(@hono/standard-validator@0.1.5(@standard-schema/spec@1.0.0)(hono@4.9.9))(@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3)))(@standard-community/standard-openapi@0.2.8(@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3)))(@standard-schema/spec@1.0.0)(openapi-types@12.1.3)(valibot@1.1.0(typescript@5.9.3)))(@types/json-schema@7.0.15)(hono@4.9.9)(openapi-types@12.1.3):
+    dependencies:
+      '@standard-community/standard-json': 0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3))
+      '@standard-community/standard-openapi': 0.2.8(@standard-community/standard-json@0.3.5(@standard-schema/spec@1.0.0)(@types/json-schema@7.0.15)(@valibot/to-json-schema@1.3.0(valibot@1.1.0(typescript@5.9.3)))(valibot@1.1.0(typescript@5.9.3)))(@standard-schema/spec@1.0.0)(openapi-types@12.1.3)(valibot@1.1.0(typescript@5.9.3))
+      '@types/json-schema': 7.0.15
+      openapi-types: 12.1.3
+    optionalDependencies:
+      '@hono/standard-validator': 0.1.5(@standard-schema/spec@1.0.0)(hono@4.9.9)
+      hono: 4.9.9
+
   hono@4.9.9: {}
 
   hookified@1.10.0: {}
@@ -10613,6 +10816,8 @@ snapshots:
       is-docker: 2.2.1
       is-wsl: 2.2.0
 
+  openapi-types@12.1.3: {}
+
   opener@1.5.2: {}
 
   optionator@0.9.4:
@@ -10713,7 +10918,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.26.2
+      '@babel/code-frame': 7.27.1
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -11813,9 +12018,9 @@ snapshots:
 
   ts-toolbelt@6.15.5: {}
 
-  tsconfck@3.1.6(typescript@5.9.3):
+  tsconfck@3.1.6(typescript@5.8.3):
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 5.8.3
 
   tsconfig-paths@4.2.0:
     dependencies:
@@ -12048,6 +12253,10 @@ snapshots:
 
   v8-compile-cache-lib@3.0.1: {}
 
+  valibot@1.1.0(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
+
   validate-npm-package-license@3.0.4:
     dependencies:
       spdx-correct: 3.2.0
@@ -12097,6 +12306,27 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
+  vite-node@3.2.4:
+    dependencies:
+      cac: 6.7.14
+      debug: 4.4.1
+      es-module-lexer: 1.7.0
+      pathe: 2.0.3
+      vite: 7.1.7
+    transitivePeerDependencies:
+      - '@types/node'
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
   vite-node@3.2.4(@types/node@22.16.4)(yaml@2.8.0):
     dependencies:
       cac: 6.7.14
@@ -12137,6 +12367,17 @@ snapshots:
       - rollup
       - supports-color
 
+  vite@6.3.5:
+    dependencies:
+      esbuild: 0.25.10
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+      postcss: 8.5.6
+      rollup: 4.52.3
+      tinyglobby: 0.2.15
+    optionalDependencies:
+      fsevents: 2.3.3
+
   vite@6.3.5(@types/node@22.16.4)(yaml@2.8.0):
     dependencies:
       esbuild: 0.25.10
@@ -12163,6 +12404,17 @@ snapshots:
       fsevents: 2.3.3
       yaml: 2.8.0
 
+  vite@7.1.7:
+    dependencies:
+      esbuild: 0.25.10
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+      postcss: 8.5.6
+      rollup: 4.52.3
+      tinyglobby: 0.2.15
+    optionalDependencies:
+      fsevents: 2.3.3
+
   vite@7.1.7(@types/node@22.16.4)(yaml@2.8.0):
     dependencies:
       esbuild: 0.25.10
@@ -12179,6 +12431,47 @@ snapshots:
   vitefu@1.1.1(vite@6.3.6(@types/node@22.16.4)(yaml@2.8.0)):
     optionalDependencies:
       vite: 6.3.6(@types/node@22.16.4)(yaml@2.8.0)
+
+  vitest@3.2.4(@edge-runtime/vm@3.2.0):
+    dependencies:
+      '@types/chai': 5.2.2
+      '@vitest/expect': 3.2.4
+      '@vitest/mocker': 3.2.4(vite@6.3.5)
+      '@vitest/pretty-format': 3.2.4
+      '@vitest/runner': 3.2.4
+      '@vitest/snapshot': 3.2.4
+      '@vitest/spy': 3.2.4
+      '@vitest/utils': 3.2.4
+      chai: 5.3.3
+      debug: 4.4.1
+      expect-type: 1.2.2
+      magic-string: 0.30.19
+      pathe: 2.0.3
+      picomatch: 4.0.3
+      std-env: 3.9.0
+      tinybench: 2.9.0
+      tinyexec: 0.3.2
+      tinyglobby: 0.2.15
+      tinypool: 1.1.1
+      tinyrainbow: 2.0.0
+      vite: 6.3.5
+      vite-node: 3.2.4
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@edge-runtime/vm': 3.2.0
+    transitivePeerDependencies:
+      - jiti
+      - less
+      - lightningcss
+      - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
 
   vitest@3.2.4(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.16.4)(yaml@2.8.0):
     dependencies:
@@ -12412,9 +12705,9 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.76):
+  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.76):
     dependencies:
-      typescript: 5.9.3
+      typescript: 5.8.3
       zod: 3.25.76
 
   zod@3.22.4: {}
