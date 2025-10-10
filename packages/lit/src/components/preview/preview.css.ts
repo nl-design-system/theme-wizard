@@ -23,8 +23,6 @@ export default css`
   h4,
   h5,
   h6 {
-    color: var(--basis-heading-color) !important;
     font-family: var(--theme-heading-font-family, var(--basis-heading-font-family)) !important;
-    font-size: var(--basis-heading-font-size) !important;
   }
 `;
