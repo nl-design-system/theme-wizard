@@ -23,6 +23,8 @@ export interface ThemeStyleProperties {
 export interface SidebarConfig {
   /** Website URL to analyze */
   sourceUrl: string;
+  /** Custom CSS rules */
+  previewUrl: string;
   /** Font family for headings */
   headingFont: string;
   /** Font family for body text */
