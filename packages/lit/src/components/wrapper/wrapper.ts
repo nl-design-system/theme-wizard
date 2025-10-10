@@ -18,6 +18,9 @@ import appStyles from './wrapper.css';
 
 @customElement('theme-wizard-wrapper')
 export class Wrapper extends LitElement {
+  @property({ type: CSSStyleSheet })
+  stylesheet = new CSSStyleSheet();
+
   @property({ type: String })
   pageTitle = 'Live Voorbeeld';
 
@@ -54,6 +57,8 @@ export class Wrapper extends LitElement {
 
   private getInitialConfig(): SidebarConfig {
     const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont']);
+
+    this.stylesheet.replaceSync(` div { background-color: red }`);
 
     // Only override defaults with non-empty values from URL
     const config = { ...DEFAULT_CONFIG };
@@ -122,10 +127,7 @@ export class Wrapper extends LitElement {
           <p class="theme-preview-main__description">${this.pageDescription}</p>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <theme-wizard-preview
-              .headingFontFamily=${this.config.headingFont}
-              .bodyFontFamily=${this.config.bodyFont}
-            ></theme-wizard-preview>
+            <theme-wizard-preview .stylesheet=${this.stylesheet}></theme-wizard-preview>
           </section>
         </main>
       </div>
