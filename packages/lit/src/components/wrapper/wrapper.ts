@@ -53,6 +53,7 @@ export class Wrapper extends LitElement {
   }
 
   private applyTheme({ bodyFont, headingFont }: Partial<SidebarConfig>) {
+    /** TODO: code something better than this but it does the job for now :D */
     const css = `:host {
       /* Write out common tokens based on supplied values */
       --basis-text-font-family-default: ${bodyFont || '"Comic Sans"'};
@@ -61,14 +62,10 @@ export class Wrapper extends LitElement {
       --basis-text-font-weight-bold: 700;
       --basis-heading-font-family: ${headingFont || '"Comic Sans"'};
       --basis-heading-font-bold: 700;
-    }`
+    }`;
 
     this.stylesheet.replaceSync(css);
-    const preview = this.shadowRoot?.querySelector('theme-wizard-preview')
-    const previewStylesheets = preview?.shadowRoot?.adoptedStyleSheets
-    if (previewStylesheets) {
-      previewStylesheets.push(this.stylesheet);
-    }
+    this.requestUpdate();
   }
 
   private getInitialConfig(): SidebarConfig {
@@ -145,7 +142,7 @@ export class Wrapper extends LitElement {
           <p class="theme-preview-main__description">${this.pageDescription}</p>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <theme-wizard-preview></theme-wizard-preview>
+            <theme-wizard-preview .stylesheet=${this.stylesheet}></theme-wizard-preview>
           </section>
         </main>
       </div>
