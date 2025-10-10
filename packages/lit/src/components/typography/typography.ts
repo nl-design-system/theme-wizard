@@ -5,13 +5,14 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { DEFAULT_TYPOGRAPHY, EVENT_NAMES, FONT_OPTIONS } from '../../constants';
+import { DEFAULT_TYPOGRAPHY, EVENT_NAMES, FONT_OPTIONS, type FontOption } from '../../constants';
 import typographyStyles from './typography.css';
 
 @customElement('theme-wizard-typography')
 export class LitTypography extends LitElement {
   @property() headingFont = DEFAULT_TYPOGRAPHY.headingFont;
   @property() bodyFont = DEFAULT_TYPOGRAPHY.bodyFont;
+  @property() options: FontOption[] = [];
 
   static override readonly styles = [typographyStyles];
 
@@ -29,6 +30,9 @@ export class LitTypography extends LitElement {
     this.dispatchEvent(event);
   };
 
+  protected override createRenderRoot() {
+    return this;
+  }
   override render() {
     return html`
       <section class="theme-typography" aria-labelledby="typography-heading">
@@ -43,10 +47,22 @@ export class LitTypography extends LitElement {
             .value=${this.headingFont}
             @change=${this.handleChange}
           >
-            ${FONT_OPTIONS.map(
-              (opt) =>
-                html`<option value=${opt.value} ?selected=${opt.value === this.headingFont}>${opt.label}</option>`,
-            )}
+            ${this.options.length && html`
+              <optgroup label="Opties uit opgegeven website">
+                ${this.options.map((opt) => html`
+                  <option value=${opt.value} ?selected=${opt.value === this.headingFont}>
+                    ${opt.label}
+                  </option>`,
+    )}
+              </optgroup>
+            `}
+            <optgroup label="Veelgebruikte opties">
+              ${FONT_OPTIONS.map((opt) => html`
+                <option value=${opt.value} ?selected=${opt.value === this.headingFont}>
+                  ${opt.label}
+                </option>`,
+    )}
+            </optgroup>
           </select>
         </div>
 
@@ -59,9 +75,22 @@ export class LitTypography extends LitElement {
             .value=${this.bodyFont}
             @change=${this.handleChange}
           >
-            ${FONT_OPTIONS.map(
-              (opt) => html`<option value=${opt.value} ?selected=${opt.value === this.bodyFont}>${opt.label}</option>`,
-            )}
+            ${this.options.length && html`
+              <optgroup label="Opties uit opgegeven website">
+                ${this.options.map((opt) => html`
+                  <option value=${opt.value} ?selected=${opt.value === this.headingFont}>
+                    ${opt.label}
+                  </option>`,
+    )}
+              </optgroup>
+            `}
+            <optgroup label="Veelgebruikte opties">
+            ${FONT_OPTIONS.map((opt) => html`
+              <option value=${opt.value} ?selected=${opt.value === this.bodyFont}>
+                ${opt.label}
+              </option>`
+    )}
+            </optgroup>
           </select>
         </div>
       </section>
