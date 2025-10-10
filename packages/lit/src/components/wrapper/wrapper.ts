@@ -110,7 +110,6 @@ export class Wrapper extends LitElement {
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
-              .url=${this.config.sourceUrl}
               .headingFontFamily=${this.config.headingFont}
               .bodyFontFamily=${this.config.bodyFont}
               .themeClass=${this.config.themeClass}
