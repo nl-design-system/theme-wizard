@@ -13,7 +13,7 @@ import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
-  @property() url: string = DEFAULT_CONFIG.sourceUrl;
+  @property() url: string = DEFAULT_CONFIG.previewUrl;
 
   @property() headingFontFamily: string = DEFAULT_CONFIG.headingFont;
   @property() bodyFontFamily: string = DEFAULT_CONFIG.bodyFont;

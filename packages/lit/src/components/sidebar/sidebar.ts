@@ -7,7 +7,8 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import { exportDesignTokens, isValidUrl, shareTheme } from '../../utils';
+import { type TokenTree } from '../../lib/Scraper';
+import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
 
 @customElement('theme-wizard-sidebar')
@@ -17,6 +18,8 @@ export class LitSidebar extends LitElement {
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
   @property() themeClass = DEFAULT_CONFIG.themeClass;
   @property() customCss = DEFAULT_CONFIG.customCss;
+
+  @property() scrapedTokens: TokenTree = {};
 
   static override readonly styles = [sidebarStyles];
 
@@ -44,28 +47,47 @@ export class LitSidebar extends LitElement {
     this.dispatchEvent(event);
   }
 
-  private readonly resetToDefaults = () => {
-    this.notifyConfigChange(DEFAULT_CONFIG);
-  };
-
-  private readonly handleFormSubmit = (event: Event): void => {
+  private readonly handleScrapeForm = (event: Event): void => {
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const sourceUrl = formData.get('sourceUrl') as string;
-    const headingFont = formData.get('headingFont') as string;
-    const bodyFont = formData.get('bodyFont') as string;
-    const customCss = formData.get('customCss') as string;
-    const themeClass = formData.get('themeClass') as string;
 
     if (sourceUrl?.trim() && !isValidUrl(sourceUrl)) {
       console.log('sourceUrl is not a valid URL');
       return;
     }
 
-    this.notifyConfigChange({ bodyFont, customCss, headingFont, sourceUrl, themeClass });
+    this.notifyConfigChange({
+      ...DEFAULT_CONFIG,
+      sourceUrl
+    });
+  }
+
+  private readonly handleThemeForm = (event: Event): void => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const headingFont = formData.get('headingFont') as string;
+    const bodyFont = formData.get('bodyFont') as string;
+
+    this.notifyConfigChange({ bodyFont, headingFont });
   };
+
+  get fontOptions() {
+    const families = this.scrapedTokens['font_family'] || [];
+    return Object.values(families).map((token) => {
+      const { $extensions, $value } = token
+      // TODO: Refactor when proper typing is in place
+      const value = `${(Array.isArray($value)) ? $value.join(', ') : $value}`;
+      return {
+        label: $extensions['com.projectwallace.css-authored-as'] || value,
+        value
+      }
+    });
+  }
 
   override render() {
     return html`
@@ -73,7 +95,7 @@ export class LitSidebar extends LitElement {
         <h1 class="theme-sidebar__title">Theme Wizard</h1>
         <p class="theme-sidebar__subtitle">Lit</p>
 
-        <form class="theme-sidebar__form" @submit=${this.handleFormSubmit}>
+        <form @submit=${this.handleScrapeForm}>
           <section class="theme-sidebar__section">
             <h2 class="theme-sidebar__heading">Huisstijl URL</h2>
 
@@ -91,7 +113,9 @@ export class LitSidebar extends LitElement {
               <button class="theme-button theme-button--primary" type="submit">Analyseer</button>
             </div>
           </section>
+        </form>
 
+        <form class="theme-sidebar__form" @submit=${this.handleThemeForm}>
           <section class="theme-sidebar__section" aria-labelledby="css-heading">
             <h2 class="theme-sidebar__heading" id="css-heading">Design System CSS</h2>
 
@@ -126,46 +150,9 @@ export class LitSidebar extends LitElement {
           <theme-wizard-typography
             .headingFont=${this.headingFont}
             .bodyFont=${this.bodyFont}
+            .options=${this.fontOptions}
           ></theme-wizard-typography>
         </form>
-
-        <!-- Action Buttons -->
-        <section class="theme-sidebar__section" aria-labelledby="actions-heading">
-          <h2 class="theme-sidebar__heading" id="actions-heading">Acties</h2>
-
-          <div class="theme-sidebar__actions">
-            <button
-              class="theme-button theme-button--primary theme-button--full"
-              @click=${() =>
-                exportDesignTokens({
-                  bodyFont: this.bodyFont,
-                  customCss: this.customCss,
-                  headingFont: this.headingFont,
-                  sourceUrl: this.sourceUrl,
-                  themeClass: this.themeClass,
-                })}
-              type="button"
-            >
-              Exporteer Design Tokens
-            </button>
-
-            <button
-              class="theme-button theme-button--primary theme-button--full"
-              @click=${() => shareTheme()}
-              type="button"
-            >
-              Deel Thema
-            </button>
-
-            <button
-              class="theme-button theme-button--primary theme-button--full"
-              @click=${() => this.resetToDefaults()}
-              type="button"
-            >
-              Reset naar Standaard
-            </button>
-          </div>
-        </section>
       </div>
     `;
   }
