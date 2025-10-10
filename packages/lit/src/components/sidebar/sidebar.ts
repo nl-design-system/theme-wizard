@@ -64,7 +64,7 @@ export class LitSidebar extends LitElement {
       return;
     }
 
-    this.notifyConfigChange({ bodyFont, customCss, headingFont, sourceUrl, themeClass });
+    this.notifyConfigChange({ bodyFont, headingFont, sourceUrl });
   };
 
   override render() {
