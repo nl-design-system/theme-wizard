@@ -14,14 +14,20 @@ import previewStyles from './preview.css';
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
+  @property() stylesheet: CSSStyleSheet = new CSSStyleSheet();
 
-  @property() headingFontFamily: string = DEFAULT_CONFIG.headingFont;
-  @property() bodyFontFamily: string = DEFAULT_CONFIG.bodyFont;
-  @property() customCss: string = DEFAULT_CONFIG.customCss;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
+
+  override firstUpdated() {
+    if (this.shadowRoot) {
+      this.shadowRoot.adoptedStyleSheets = ([this.stylesheet])
+    } else {
+      throw new Error('Adopted stylesheets only work on (shadow-)DOM')
+    }
+  }
 
   override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
     // Fetch content when URL changes (before render)
