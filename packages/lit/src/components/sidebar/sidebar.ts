@@ -20,19 +20,19 @@ export class LitSidebar extends LitElement {
 
   static override readonly styles = [sidebarStyles];
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
-  }
+  private readonly handleChange = (event: Event) => {
+    const form = event?.currentTarget;
+    console.log(form);
+    if (!(form instanceof HTMLFormElement)) {
+      return
+    }
+    const formData = new FormData(form);
+    const headingFont = formData.get('headingFont') as string;
+    const bodyFont = formData.get('bodyFont') as string;
 
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
-  }
+    console.log({ bodyFont, headingFont })
 
-  private readonly handleTypographyChange = (e: Event) => {
-    const detail = (e as CustomEvent).detail || {};
-    this.notifyConfigChange(detail);
+    this.notifyConfigChange({ bodyFont, headingFont });
   };
 
   private notifyConfigChange(config: Partial<typeof DEFAULT_CONFIG>) {
@@ -56,8 +56,6 @@ export class LitSidebar extends LitElement {
     const sourceUrl = formData.get('sourceUrl') as string;
     const headingFont = formData.get('headingFont') as string;
     const bodyFont = formData.get('bodyFont') as string;
-    const customCss = formData.get('customCss') as string;
-    const themeClass = formData.get('themeClass') as string;
 
     if (sourceUrl?.trim() && !isValidUrl(sourceUrl)) {
       console.log('sourceUrl is not a valid URL');
@@ -73,7 +71,7 @@ export class LitSidebar extends LitElement {
         <h1 class="theme-sidebar__title">Theme Wizard</h1>
         <p class="theme-sidebar__subtitle">Lit</p>
 
-        <form class="theme-sidebar__form" @submit=${this.handleFormSubmit}>
+        <form class="theme-sidebar__form" @submit=${this.handleFormSubmit} @change=${this.handleChange}>
           <section class="theme-sidebar__section">
             <h2 class="theme-sidebar__heading">Huisstijl URL</h2>
 
@@ -95,31 +93,6 @@ export class LitSidebar extends LitElement {
           <section class="theme-sidebar__section" aria-labelledby="css-heading">
             <h2 class="theme-sidebar__heading" id="css-heading">Design System CSS</h2>
 
-            <div class="theme-form-field">
-              <label class="theme-sidebar__label" for="theme-class">CSS klasse naam</label>
-              <input
-                id="theme-class"
-                name="themeClass"
-                class="theme-form-field__input"
-                type="text"
-                .value=${this.themeClass || ''}
-                placeholder="bijv. voorbeeld-theme"
-              />
-              <small class="theme-form-field__help">bijv. utrecht-theme of voorbeeld-theme</small>
-            </div>
-
-            <div class="theme-form-field">
-              <label class="theme-sidebar__label" for="custom-css">Extra CSS regels</label>
-              <textarea
-                id="custom-css"
-                name="customCss"
-                rows="6"
-                class="theme-form-field__input theme-css-input"
-                .value=${this.customCss || ''}
-                placeholder="Plak hier de gescrapede CSS..."
-              ></textarea>
-            </div>
-
             <button class="theme-button theme-button--primary theme-button--full" type="submit">CSS Toepassen</button>
           </section>
 
@@ -137,13 +110,13 @@ export class LitSidebar extends LitElement {
             <button
               class="theme-button theme-button--primary theme-button--full"
               @click=${() =>
-                exportDesignTokens({
-                  bodyFont: this.bodyFont,
-                  customCss: this.customCss,
-                  headingFont: this.headingFont,
-                  sourceUrl: this.sourceUrl,
-                  themeClass: this.themeClass,
-                })}
+        exportDesignTokens({
+          bodyFont: this.bodyFont,
+          customCss: this.customCss,
+          headingFont: this.headingFont,
+          sourceUrl: this.sourceUrl,
+          themeClass: this.themeClass,
+        })}
               type="button"
             >
               Exporteer Design Tokens

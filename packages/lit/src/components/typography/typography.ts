@@ -19,15 +19,17 @@ export class LitTypography extends LitElement {
    * Handle change event - dispatch to parent (sidebar)
    * @param e - Event
    */
-  private readonly handleChange = (e: Event) => {
-    const { name, value } = e.target as HTMLSelectElement;
-    const event = new CustomEvent(EVENT_NAMES.TYPOGRAPHY_CHANGE, {
+  private readonly handleChange = () => {
+    const event = new Event('change', {
       bubbles: true,
       composed: true,
-      detail: { [name]: value },
     });
     this.dispatchEvent(event);
   };
+
+  override createRenderRoot() {
+    return this;
+  }
 
   override render() {
     return html`
