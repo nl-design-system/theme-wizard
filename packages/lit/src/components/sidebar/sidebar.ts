@@ -22,19 +22,19 @@ export class LitSidebar extends LitElement {
 
   static override readonly styles = [sidebarStyles];
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
-  }
+  private readonly handleChange = (event: Event) => {
+    const form = event?.currentTarget;
+    console.log(form);
+    if (!(form instanceof HTMLFormElement)) {
+      return;
+    }
+    const formData = new FormData(form);
+    const headingFont = formData.get('headingFont') as string;
+    const bodyFont = formData.get('bodyFont') as string;
 
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
-  }
+    console.log({ bodyFont, headingFont });
 
-  private readonly handleTypographyChange = (e: Event) => {
-    const detail = (e as CustomEvent).detail || {};
-    this.notifyConfigChange(detail);
+    this.notifyConfigChange({ bodyFont, headingFont });
   };
 
   private notifyConfigChange(config: Partial<typeof DEFAULT_CONFIG>) {
