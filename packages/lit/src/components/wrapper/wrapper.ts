@@ -55,10 +55,29 @@ export class Wrapper extends LitElement {
     this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.handleConfigUpdate as EventListener);
   }
 
+  private applyTheme({ bodyFont, headingFont }: Partial<SidebarConfig>) {
+    const css = `:host {
+      /* Write out common tokens based on supplied values */
+      --basis-text-font-family-default: ${bodyFont || '"Comic Sans"'};
+      --basis-text-font-family-monospace: 'Change me';
+      --basis-text-font-weight-default: 400;
+      --basis-text-font-weight-bold: 700;
+      --basis-heading-font-family: ${headingFont || '"Comic Sans"'};
+      --basis-heading-font-bold: 700;
+    }`
+
+    this.stylesheet.replaceSync(css);
+    const preview = this.shadowRoot?.querySelector('theme-wizard-preview')
+    const previewStylesheets = preview?.shadowRoot?.adoptedStyleSheets
+    if (previewStylesheets) {
+      previewStylesheets.push(this.stylesheet);
+    }
+  }
+
   private getInitialConfig(): SidebarConfig {
     const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont']);
 
-    this.stylesheet.replaceSync(` div { background-color: red }`);
+    this.applyTheme(params);
 
     // Only override defaults with non-empty values from URL
     const config = { ...DEFAULT_CONFIG };
@@ -80,6 +99,8 @@ export class Wrapper extends LitElement {
       this.syncConfigChanges();
       return;
     }
+
+    this.applyTheme(config);
 
     this.mergeConfigUpdate(config);
     this.syncConfigChanges();
@@ -127,7 +148,7 @@ export class Wrapper extends LitElement {
           <p class="theme-preview-main__description">${this.pageDescription}</p>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <theme-wizard-preview .stylesheet=${this.stylesheet}></theme-wizard-preview>
+            <theme-wizard-preview></theme-wizard-preview>
           </section>
         </main>
       </div>

@@ -20,14 +20,6 @@ export class ThemePreview extends LitElement {
   @state() private isLoading = false;
   @state() private error = '';
 
-  override firstUpdated() {
-    if (this.shadowRoot) {
-      this.shadowRoot.adoptedStyleSheets = [this.stylesheet];
-    } else {
-      throw new Error('Adopted stylesheets only work on (shadow-)DOM');
-    }
-  }
-
   override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
     // Fetch content when URL changes (before render)
     if (changedProps.has('url') && this.url) {
