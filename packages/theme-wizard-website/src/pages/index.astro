@@ -7,9 +7,8 @@ const scraperUrl = withRelatedProject({
   // Fallback API host
   defaultHost: process.env.API_HOST || '',
 });
-
 ---
 
-<BaseLayout title="Theme Wizard - Stencil POC" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
+<BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
   <theme-wizard-wrapper></theme-wizard-wrapper>
 </BaseLayout>

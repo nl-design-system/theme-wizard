@@ -9,7 +9,7 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   // use the built-in globalIgnores utility to globally ignore files in the project
-  globalIgnores(['**/dist/', '**/build/', '**/coverage/', 'packages/web-components-stencil/loader']),
+  globalIgnores(['**/dist/', '**/build/', '**/coverage/']),
   {
     // Use the Perfectionist recommended/natural configuration for all possible JavaScript, TypeScript and JSX files
     name: 'perfectionist/recommended/natural',
@@ -71,18 +71,6 @@ export default defineConfig([
     plugins: { react },
     ...react.configs.flat.recommended,
     ...react.configs.flat['jsx-runtime'],
-  },
-  {
-    // Minor override for Stencil files that import `h` but do not use it so allow this
-    files: ['packages/web-components-stencil/**/*.tsx'],
-    rules: {
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          varsIgnorePattern: '^h$',
-        },
-      ],
-    },
   },
   {
     // NL Design System specific rules
