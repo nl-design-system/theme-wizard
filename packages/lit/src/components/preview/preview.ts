@@ -1,29 +1,37 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import {
-  extractThemeProperties,
-  fetchHtml,
-  getThemeStyleString,
-  parseHtml,
-  rewriteAttributeUrlsToAbsolute,
-  rewriteSvgXlinkToAbsolute,
-} from '../../utils';
+import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
+  @property({ attribute: false }) stylesheet?: CSSStyleSheet;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
 
-
   override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
     // Fetch content when URL changes (before render)
     if (changedProps.has('url') && this.url) {
       this.fetchContent();
+    }
+
+    if (changedProps.has('stylesheet') && this.stylesheet) {
+      this.applyThemeStylesheet();
+    }
+  }
+
+  /**
+   * Apply the theme stylesheet to the preview
+   */
+  private applyThemeStylesheet() {
+    if (this.shadowRoot && this.stylesheet) {
+      if (!this.shadowRoot.adoptedStyleSheets.includes(this.stylesheet)) {
+        this.shadowRoot.adoptedStyleSheets.push(this.stylesheet);
+      }
     }
   }
 
@@ -73,17 +81,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html`
-      <div class="ma-theme" style=${getThemeStyleString(extractThemeProperties(this))}>
-        ${this.customCss
-          ? html`<style>
-              ${this.customCss}
-            </style>`
-          : ''}
-
-        <div .innerHTML=${this.htmlContent}></div>
-      </div>
-    `;
+    return html` <div .innerHTML=${this.htmlContent}></div> `;
   }
 }
 

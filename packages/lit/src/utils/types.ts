@@ -29,10 +29,6 @@ export interface SidebarConfig {
   headingFont: string;
   /** Font family for body text */
   bodyFont: string;
-  /** CSS theme class name */
-  themeClass: string;
-  /** Custom CSS rules */
-  customCss: string;
 }
 
 /**

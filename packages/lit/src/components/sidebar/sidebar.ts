@@ -15,8 +15,6 @@ export class LitSidebar extends LitElement {
   @property() sourceUrl = DEFAULT_CONFIG.sourceUrl;
   @property() headingFont = DEFAULT_CONFIG.headingFont;
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
-  @property() themeClass = DEFAULT_CONFIG.themeClass;
-  @property() customCss = DEFAULT_CONFIG.customCss;
 
   static override readonly styles = [sidebarStyles];
 
@@ -24,13 +22,11 @@ export class LitSidebar extends LitElement {
     const form = event?.currentTarget;
     console.log(form);
     if (!(form instanceof HTMLFormElement)) {
-      return
+      return;
     }
     const formData = new FormData(form);
     const headingFont = formData.get('headingFont') as string;
     const bodyFont = formData.get('bodyFont') as string;
-
-    console.log({ bodyFont, headingFont })
 
     this.notifyConfigChange({ bodyFont, headingFont });
   };
@@ -110,13 +106,11 @@ export class LitSidebar extends LitElement {
             <button
               class="theme-button theme-button--primary theme-button--full"
               @click=${() =>
-        exportDesignTokens({
-          bodyFont: this.bodyFont,
-          customCss: this.customCss,
-          headingFont: this.headingFont,
-          sourceUrl: this.sourceUrl,
-          themeClass: this.themeClass,
-        })}
+                exportDesignTokens({
+                  bodyFont: this.bodyFont,
+                  headingFont: this.headingFont,
+                  sourceUrl: this.sourceUrl,
+                })}
               type="button"
             >
               Exporteer Design Tokens

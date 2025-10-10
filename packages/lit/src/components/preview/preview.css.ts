@@ -27,7 +27,5 @@ export default css`
   h5,
   h6 {
     font-family: var(--theme-heading-font-family, var(--basis-heading-font-family)) !important;
-    color: var(--basis-heading-color) !important;
-    font-size: var(--basis-heading-font-size) !important;
   }
 `;

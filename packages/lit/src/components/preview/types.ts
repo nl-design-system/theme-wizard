@@ -15,6 +15,4 @@ export interface PreviewConfig {
   url: string;
   headingFontFamily: string;
   bodyFontFamily: string;
-  themeClass: string;
-  customCss: string;
 }
