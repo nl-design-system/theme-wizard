@@ -17,6 +17,7 @@ export class LitSidebar extends LitElement {
   @property() sourceUrl = DEFAULT_CONFIG.sourceUrl;
   @property() headingFont = DEFAULT_CONFIG.headingFont;
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
+  @property({ attribute: false }) onResetTheme?: () => void;
 
   @property() scrapedTokens: DesignToken[] = [];
 
