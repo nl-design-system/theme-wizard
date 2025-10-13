@@ -4,7 +4,8 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["es2022", "dom"],
     "outDir": "dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
-  "include": ["src"]
+  "include": ["src", "package.json"]
 }

@@ -6,6 +6,7 @@ import { css_to_tokens as cssToTokens } from '@projectwallace/css-design-tokens'
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { timing, startTime, endTime } from 'hono/timing';
+import pkg from '../package.json';
 import { clientErrorSchema } from './schemas/client-error';
 import { DesignTokens } from './schemas/design-tokens';
 import { serverErrorSchema } from './schemas/server-error';
@@ -161,7 +162,7 @@ app.doc31('api/v1/openapi.json', {
   info: {
     description: 'NL Design System CSS Scraper API',
     title: 'CSS Scraper',
-    version: '0.1.0', // TODO: make version reflect actual package version
+    version: pkg.version,
   },
   openapi: '3.1.0',
 });
