@@ -69,10 +69,13 @@ export class LitSidebar extends LitElement {
 
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
-    const headingFont = formData.get('heading-font') as string;
-    const bodyFont = formData.get('body-font') as string;
+    const headingFont = formData.get('heading-font');
+    const bodyFont = formData.get('body-font');
 
-    this.notifyConfigChange({ bodyFont, headingFont });
+    this.notifyConfigChange({
+      bodyFont: typeof bodyFont === 'string' ? bodyFont : '',
+      headingFont: typeof headingFont === 'string' ? headingFont : '',
+    });
   };
 
   get fontOptions() {
