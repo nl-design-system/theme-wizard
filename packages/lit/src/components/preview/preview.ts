@@ -13,25 +13,22 @@ export class ThemePreview extends LitElement {
   @state() private isLoading = false;
   @state() private error = '';
 
+  static override readonly styles = [previewStyles];
+
+  override connectedCallback() {
+    super.connectedCallback();
+    if (!this.shadowRoot || !this.stylesheet) return;
+
+    const sheets = this.shadowRoot.adoptedStyleSheets;
+    if (!sheets.includes(this.stylesheet)) {
+      sheets.push(this.stylesheet);
+    }
+  }
+
   override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
     // Fetch content when URL changes (before render)
     if (changedProps.has('url') && this.url) {
       this.fetchContent();
-    }
-
-    if (changedProps.has('stylesheet') && this.stylesheet) {
-      this.applyThemeStylesheet();
-    }
-  }
-
-  /**
-   * Apply the theme stylesheet to the preview
-   */
-  private applyThemeStylesheet() {
-    if (this.shadowRoot && this.stylesheet) {
-      if (!this.shadowRoot.adoptedStyleSheets.includes(this.stylesheet)) {
-        this.shadowRoot.adoptedStyleSheets.push(this.stylesheet);
-      }
     }
   }
 
@@ -61,8 +58,6 @@ export class ThemePreview extends LitElement {
       this.isLoading = false;
     }
   };
-
-  static override readonly styles = [previewStyles];
 
   override render() {
     if (this.isLoading && !this.htmlContent) {
