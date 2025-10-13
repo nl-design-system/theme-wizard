@@ -19,10 +19,6 @@
     "url": "git@github.com:nl-design-system/theme-wizard.git",
     "directory": "packages/theme-wizard-server"
   },
-  "#": "sideEffects is necessary to trick vercel into using the HonoJS project preset",
-  "sideEffects": [
-    "node_modules/hono/**"
-  ],
   "scripts": {
     "start": "node dist/index.js",
     "dev": "vite",
