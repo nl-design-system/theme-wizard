@@ -42,6 +42,7 @@
     "vitest": "3.2.4"
   },
   "dependencies": {
+    "@projectwallace/css-design-tokens": "0.9.0",
     "linkedom": "0.18.12"
   }
 }
