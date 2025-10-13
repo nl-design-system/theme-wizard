@@ -22,39 +22,24 @@ export class ThemeModel {
     this.updateStylesheet();
   }
 
-  /**
-   * Get current configuration
-   */
   getConfig(): SidebarConfig {
     return { ...this.config };
   }
 
-  /**
-   * Update configuration
-   */
   updateConfig(partial: Partial<SidebarConfig>): void {
     this.config = this.#mergeConfig(partial);
     this.updateStylesheet();
   }
 
-  /**
-   * Merge configuration with defaults
-   */
   #mergeConfig(partial: Partial<SidebarConfig>): SidebarConfig {
     return { ...this.config, ...partial };
   }
 
-  /**
-   * Reset to defaults
-   */
   reset(): void {
     this.config = { ...DEFAULT_CONFIG };
     this.updateStylesheet();
   }
 
-  /**
-   * Get the generated CSS stylesheet
-   */
   getStylesheet(): CSSStyleSheet {
     return this.stylesheet;
   }
