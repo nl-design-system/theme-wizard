@@ -10,7 +10,7 @@ import { serverErrorSchema } from './schemas/server-error';
 import { withScrapingErrorHandler } from './scraping-error-handler';
 
 // This is necessary to trick Vercel into deploying this as a HonoJS app
-/* @__PURE__ */ await import('hono');
+/* @__PURE__ */ import('hono');
 
 const urlSchema = z.string().nonempty().openapi({
   example: 'example.com',
