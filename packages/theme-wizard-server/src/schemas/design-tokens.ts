@@ -13,7 +13,7 @@ const ColorValue = z.strictObject({
   components: z.tuple([ColorComponent, ColorComponent, ColorComponent]),
 });
 
-const Color = z.strictObject({
+export const ColorToken = z.strictObject({
   $extensions: WallaceExtensions.extend({
     'com.projectwallace.css-properties': z.array(z.string()),
   }),
@@ -26,13 +26,13 @@ const DimensionValue = z.strictObject({
   value: z.number(),
 });
 
-const Dimension = z.object({
+export const DimensionToken = z.object({
   $extensions: WallaceExtensions,
   $type: z.literal('dimension'),
   $value: DimensionValue,
 });
 
-const UnparsedToken = z.object({
+export const UnparsedToken = z.strictObject({
   $extensions: WallaceExtensions,
   $type: z.never(),
   $value: z.string(),
@@ -40,18 +40,8 @@ const UnparsedToken = z.object({
 
 const FontFamilyValue = z.array(z.string());
 
-const FontFamily = z.strictObject({
+export const FontFamilyToken = z.strictObject({
   $extensions: WallaceExtensions,
   $type: z.literal('fontFamily'),
   $value: FontFamilyValue,
 });
-
-export const DesignTokens = z
-  .strictObject({
-    colors: z.record(z.string(), Color),
-    fontFamilies: z.record(z.string(), FontFamily),
-    fontSizes: z.record(z.string(), z.union([Dimension, UnparsedToken])),
-  })
-  .openapi({
-    type: 'object',
-  });
