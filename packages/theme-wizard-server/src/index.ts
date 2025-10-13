@@ -38,6 +38,8 @@ app.use(
   }),
 );
 
+app.get('/', (c) => c.redirect('/api/v1/openapi.json'));
+
 // TODO: add security headers
 // See https://hono.dev/docs/middleware/builtin/secure-headers
 

@@ -20,6 +20,12 @@ describe('health check', () => {
 });
 
 describe('/api/v1', () => {
+  test('/ redirects to openapi', async () => {
+    const response = await app.request('/');
+    expect.soft(response.status).toBe(302);
+    expect.soft(response.headers.get('Location')).toBe('/api/v1/openapi.json');
+  });
+
   describe('openapi.json', () => {
     test('exists', async () => {
       const response = await app.request('/api/v1/openapi.json');
