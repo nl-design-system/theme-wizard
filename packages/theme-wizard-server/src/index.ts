@@ -1,6 +1,9 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import { getCss as getCssOrigins } from '@nl-design-system-community/css-scraper';
 import { css_to_tokens as cssToTokens } from '@projectwallace/css-design-tokens';
+// @ts-expect-error Vercel expects this import
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { timing, startTime, endTime } from 'hono/timing';
 import { clientErrorSchema } from './schemas/client-error';
