@@ -15,8 +15,6 @@ export class LitSidebar extends LitElement {
   @property() sourceUrl = DEFAULT_CONFIG.sourceUrl;
   @property() headingFont = DEFAULT_CONFIG.headingFont;
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
-  @property() themeClass = DEFAULT_CONFIG.themeClass;
-  @property() customCss = DEFAULT_CONFIG.customCss;
 
   static override readonly styles = [sidebarStyles];
 
@@ -92,37 +90,7 @@ export class LitSidebar extends LitElement {
             </div>
           </section>
 
-          <section class="theme-sidebar__section" aria-labelledby="css-heading">
-            <h2 class="theme-sidebar__heading" id="css-heading">Design System CSS</h2>
-
-            <div class="theme-form-field">
-              <label class="theme-sidebar__label" for="theme-class">CSS klasse naam</label>
-              <input
-                id="theme-class"
-                name="themeClass"
-                class="theme-form-field__input"
-                type="text"
-                .value=${this.themeClass || ''}
-                placeholder="bijv. voorbeeld-theme"
-              />
-              <small class="theme-form-field__help">bijv. utrecht-theme of voorbeeld-theme</small>
-            </div>
-
-            <div class="theme-form-field">
-              <label class="theme-sidebar__label" for="custom-css">Extra CSS regels</label>
-              <textarea
-                id="custom-css"
-                name="customCss"
-                rows="6"
-                class="theme-form-field__input theme-css-input"
-                .value=${this.customCss || ''}
-                placeholder="Plak hier de gescrapede CSS..."
-              ></textarea>
-            </div>
-
-            <button class="theme-button theme-button--primary theme-button--full" type="submit">CSS Toepassen</button>
-          </section>
-
+        <form class="theme-sidebar__form" @submit=${this.handleThemeForm}>
           <theme-wizard-typography
             .headingFont=${this.headingFont}
             .bodyFont=${this.bodyFont}

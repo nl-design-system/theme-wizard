@@ -38,7 +38,7 @@ export class Wrapper extends LitElement {
   }
 
   private getInitialConfig(): SidebarConfig {
-    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
+    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont']);
 
     // Only override defaults with non-empty values from URL
     const config = { ...DEFAULT_CONFIG };
@@ -100,8 +100,7 @@ export class Wrapper extends LitElement {
           .sourceUrl=${this.config.sourceUrl}
           .headingFont=${this.config.headingFont}
           .bodyFont=${this.config.bodyFont}
-          .themeClass=${this.config.themeClass}
-          .customCss=${this.config.customCss}
+          .scrapedTokens=${this.scrapedTokens}
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
@@ -112,8 +111,6 @@ export class Wrapper extends LitElement {
             <theme-wizard-preview
               .headingFontFamily=${this.config.headingFont}
               .bodyFontFamily=${this.config.bodyFont}
-              .themeClass=${this.config.themeClass}
-              .customCss=${this.config.customCss}
             ></theme-wizard-preview>
           </section>
         </main>
