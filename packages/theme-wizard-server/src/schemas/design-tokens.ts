@@ -13,13 +13,23 @@ const ColorValue = z.strictObject({
   components: z.tuple([ColorComponent, ColorComponent, ColorComponent]),
 });
 
+const Color = z.strictObject({
+  $extensions: WallaceExtensions.extend({
+    'com.projectwallace.css-properties': z.array(z.string()),
+  }),
+  $type: z.literal('color'),
+  $value: ColorValue,
+});
+
+const DimensionValue = z.strictObject({
+  unit: z.string(),
+  value: z.number(),
+});
+
 const Dimension = z.object({
   $extensions: WallaceExtensions,
   $type: z.literal('dimension'),
-  $value: z.strictObject({
-    unit: z.string(),
-    value: z.number(),
-  }),
+  $value: DimensionValue,
 });
 
 const UnparsedToken = z.object({
@@ -28,75 +38,20 @@ const UnparsedToken = z.object({
   $value: z.string(),
 });
 
+const FontFamilyValue = z.array(z.string());
+
+const FontFamily = z.strictObject({
+  $extensions: WallaceExtensions,
+  $type: z.literal('fontFamily'),
+  $value: FontFamilyValue,
+});
+
 export const DesignTokens = z
   .strictObject({
-    colors: z.record(
-      z.string(),
-      z.strictObject({
-        $extensions: WallaceExtensions.extend({
-          'com.projectwallace.css-properties': z.array(z.string()),
-        }),
-        $type: z.literal('color'),
-        $value: ColorValue,
-      }),
-    ),
-    fontFamilies: z.record(
-      z.string(),
-      z.strictObject({
-        $extensions: WallaceExtensions,
-        $type: z.literal('fontFamily'),
-        $value: z.array(z.string()),
-      }),
-    ),
+    colors: z.record(z.string(), Color),
+    fontFamilies: z.record(z.string(), FontFamily),
     fontSizes: z.record(z.string(), z.union([Dimension, UnparsedToken])),
   })
   .openapi({
-    example: {
-      colors: {
-        'black-123': {
-          $extensions: {
-            'com.projectwallace.css-authored-as': '#000',
-            'com.projectwallace.css-properties': ['color', 'background-color'],
-            'com.projectwallace.usage-count': 1,
-          },
-          $type: 'color',
-          $value: {
-            alpha: 1,
-            colorSpace: 'rgba',
-            components: [0, 0, 0],
-          },
-        },
-      },
-      fontFamilies: {
-        'fontFamily-1': {
-          $extensions: {
-            'com.projectwallace.css-authored-as': 'Arial, sans-serif',
-            'com.projectwallace.usage-count': 1,
-          },
-          $type: 'fontFamily',
-          $value: ['Arial', 'sans-serif'],
-        },
-      },
-      fontSizes: {
-        'fontSize-1234': {
-          $extensions: {
-            'com.projectwallace.css-authored-as': '1.4rem',
-            'com.projectwallace.usage-count': 1,
-          },
-          $type: 'dimension',
-          $value: {
-            unit: 'rem',
-            value: 1.4,
-          },
-        },
-        'fontSize-5678': {
-          $extensions: {
-            'com.projectwallace.css-authored-as': '1em',
-            'com.projectwallace.usage-count': 1,
-          },
-          $value: '1em',
-        },
-      },
-    },
     type: 'object',
   });
