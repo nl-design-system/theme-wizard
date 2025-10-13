@@ -25,10 +25,11 @@ export class LitSidebar extends LitElement {
 
   private readonly handleChange = (event: Event) => {
     const form = event?.currentTarget;
-    console.log(form);
+
     if (!(form instanceof HTMLFormElement)) {
       return;
     }
+
     const formData = new FormData(form);
     const headingFont = formData.get('headingFont') as string;
     const bodyFont = formData.get('bodyFont') as string;
@@ -53,7 +54,6 @@ export class LitSidebar extends LitElement {
     const sourceUrl = formData.get('sourceUrl') as string;
 
     if (sourceUrl?.trim() && !isValidUrl(sourceUrl)) {
-      console.log('sourceUrl is not a valid URL');
       return;
     }
 
