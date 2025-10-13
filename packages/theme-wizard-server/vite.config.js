@@ -15,4 +15,7 @@ export default defineConfig({
       entry: 'src/index.ts',
     }),
   ],
+  server: {
+    port: 9491, // (T9 for WIZ)1
+  },
 });
