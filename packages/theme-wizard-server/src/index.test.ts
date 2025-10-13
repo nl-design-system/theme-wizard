@@ -3,6 +3,7 @@ import app from './index';
 
 vi.mock('@nl-design-system-community/css-scraper', () => ({
   getCss: vi.fn(),
+  ScrapingError: vi.fn(),
 }));
 
 describe('health check', () => {
@@ -19,6 +20,27 @@ describe('health check', () => {
 });
 
 describe('/api/v1', () => {
+  test('/ redirects to openapi', async () => {
+    const response = await app.request('/');
+    expect.soft(response.status).toBe(302);
+    expect.soft(response.headers.get('Location')).toBe('/api/v1/openapi.json');
+  });
+
+  describe('openapi.json', () => {
+    test('exists', async () => {
+      const response = await app.request('/api/v1/openapi.json');
+      expect.soft(response.status).toBe(200);
+      expect.soft(response.headers.get('Content-Type')).toBe('application/json');
+    });
+
+    test('lists all endpoints', async () => {
+      const response = await app.request('/api/v1/openapi.json');
+      const data = await response.json();
+      const endpoints = Object.keys(data.paths);
+      expect(endpoints).toEqual(['/healthz', '/api/v1/css', '/api/v1/css-design-tokens']);
+    });
+  });
+
   const mockedGetCssData = [
     {
       css: 'a { color: blue; }',
@@ -33,7 +55,16 @@ describe('/api/v1', () => {
       test('missing `url` query param', async () => {
         const response = await app.request(url);
         expect.soft(response.status).toBe(400);
-        expect.soft(await response.text()).toBe('missing `url` parameter: specify a url like ?url=example.com');
+        expect.soft(await response.json()).toEqual({
+          errors: [
+            {
+              name: 'invalid_type',
+              message: 'Invalid input: expected string, received undefined',
+              path: 'url',
+            },
+          ],
+          ok: false,
+        });
       });
 
       test('contains server-timing', async () => {
@@ -74,8 +105,7 @@ describe('/api/v1', () => {
 
       expect.soft(response.headers.get('content-type')).toContain('application/json');
       expect.soft(await response.json()).toEqual({
-        box_shadow: {},
-        color: {
+        colors: {
           'blue-edec3e9a': {
             $extensions: {
               'com.projectwallace.css-authored-as': 'blue',
@@ -90,13 +120,8 @@ describe('/api/v1', () => {
             },
           },
         },
-        duration: {},
-        easing: {},
-        font_family: {},
-        font_size: {},
-        gradient: {},
-        line_height: {},
-        radius: {},
+        fontFamilies: {},
+        fontSizes: {},
       });
     });
   });

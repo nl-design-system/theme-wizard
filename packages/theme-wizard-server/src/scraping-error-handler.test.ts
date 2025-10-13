@@ -1,3 +1,4 @@
+import { ScrapingError } from '@nl-design-system-community/css-scraper';
 import { Hono } from 'hono';
 import { describe, test, expect } from 'vitest';
 import { withScrapingErrorHandler } from './scraping-error-handler';
@@ -8,16 +9,13 @@ describe('withScrapingErrorHandler', () => {
     app.get(
       '/test',
       withScrapingErrorHandler(async () => {
-        const error = new Error('custom error');
-        // @ts-expect-error We're mimicking an internal getCss error here
-        error.statusCode = 404;
-        throw error;
+        throw new ScrapingError('Scraping Error', 'https://example.com/non-existent-page');
       }),
     );
     const response = await app.request('/test');
 
     expect(response.status).toBe(400);
-    expect(await response.text()).toBe('custom error');
+    expect(await response.text()).toBe('Scraping Error');
   });
 
   test('converts unknown errors to 500', async () => {
