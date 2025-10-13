@@ -5,11 +5,12 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { EVENT_NAMES } from '../../constants';
+import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
 import { type TokenTree } from '../../lib/Scraper';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
+import '../font-select';
 
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {
@@ -59,17 +60,17 @@ export class LitSidebar extends LitElement {
 
     this.notifyConfigChange({
       ...DEFAULT_CONFIG,
-      sourceUrl
+      sourceUrl,
     });
-  }
+  };
 
   private readonly handleThemeForm = (event: Event): void => {
     event.preventDefault();
 
-    const form = event.target as HTMLFormElement;
+    const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
-    const headingFont = formData.get('headingFont') as string;
-    const bodyFont = formData.get('bodyFont') as string;
+    const headingFont = formData.get('heading-font') as string;
+    const bodyFont = formData.get('body-font') as string;
 
     this.notifyConfigChange({ bodyFont, headingFont });
   };
@@ -115,12 +116,26 @@ export class LitSidebar extends LitElement {
           </section>
         </form>
 
-        <form class="theme-sidebar__form" @submit=${this.handleThemeForm}>
-          <theme-wizard-typography
-            .headingFont=${this.headingFont}
-            .bodyFont=${this.bodyFont}
-            .options=${this.fontOptions}
-          ></theme-wizard-typography>
+        <form class="theme-sidebar__form" @change=${this.handleThemeForm} @submit=${this.handleThemeForm}>
+          <fieldset>
+            <legend>Lettertypes</legend>
+            <font-select
+              name="heading-font"
+              label="Koppen"
+              value=${DEFAULT_TYPOGRAPHY.headingFont}
+              optionsLabel="Opties uit opgegeven website"
+              .options=${this.fontOptions}
+            ></font-select>
+            <font-select
+              name="body-font"
+              label="Lopende tekst"
+              value=${DEFAULT_TYPOGRAPHY.bodyFont}
+              optionsLabel="Opties uit opgegeven website"
+              .options=${this.fontOptions}
+            ></font-select>
+          </fieldset>
+
+          <button type="submit">Update</button>
         </form>
       </div>
     `;

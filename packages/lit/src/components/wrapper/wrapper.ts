@@ -35,9 +35,7 @@ export class Wrapper extends LitElement {
   constructor() {
     super();
     const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content');
-    this.scraper = new Scraper(
-      scraperURL || '',
-    );
+    this.scraper = new Scraper(scraperURL || '');
   }
 
   override connectedCallback() {
