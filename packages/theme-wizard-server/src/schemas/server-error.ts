@@ -4,7 +4,7 @@ export const serverErrorSchema = z
   .object({
     name: z.optional(z.string()),
     message: z.string(),
-    ok: false,
+    ok: z.literal(false),
   })
   .openapi({
     example: {
