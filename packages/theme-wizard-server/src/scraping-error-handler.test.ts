@@ -9,7 +9,7 @@ describe('withScrapingErrorHandler', () => {
     app.get(
       '/test',
       withScrapingErrorHandler(async () => {
-        throw new ScrapingError('Scraping Error', 404, 'example.com');
+        throw new ScrapingError('Scraping Error', 'https://example.com/non-existent-page');
       }),
     );
     const response = await app.request('/test');
