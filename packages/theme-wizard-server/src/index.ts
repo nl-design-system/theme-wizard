@@ -1,26 +1,17 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
-import { getCss as getCssOrigins, ScrapingError } from '@nl-design-system-community/css-scraper';
-import { resolveUrl } from '@nl-design-system-community/css-scraper';
+import { getCss as getCssOrigins } from '@nl-design-system-community/css-scraper';
 import { css_to_tokens as cssToTokens } from '@projectwallace/css-design-tokens';
 import { cors } from 'hono/cors';
 import { timing, startTime, endTime } from 'hono/timing';
 import { clientErrorSchema } from './schemas/client-error';
+import { DesignTokens } from './schemas/design-tokens';
 import { serverErrorSchema } from './schemas/server-error';
+import { withScrapingErrorHandler } from './scraping-error-handler';
 
-const urlSchema = z
-  .string()
-  .nonempty()
-  .refine(
-    (input) => {
-      if (typeof input !== 'string') return false;
-      return resolveUrl(input) !== undefined;
-    },
-    { message: 'Expected a valid URL-like string (protocol and www. optional)' },
-  )
-  .openapi({
-    example: 'example.com',
-    type: 'string',
-  });
+const urlSchema = z.string().nonempty().openapi({
+  example: 'example.com',
+  type: 'string',
+});
 
 const app = new OpenAPIHono({
   defaultHook: (result, c) => {
@@ -119,49 +110,47 @@ app.openapi(
   },
 );
 
-// app.get(
-//   '/api/v1/css-design-tokens',
-//   createRoute({
-//     description: 'Scrape all CSS from a URL',
-//     responses: {
-//       200: {
-//         content: { 'application/json': { schema: cssDesignTokensResponseType } },
-//         description: 'Scraping successful',
-//       },
-//       400: {
-//         content: { 'application/json': { schema: clientErrorSchema } },
-//         description: 'Scraping failed: user error',
-//       },
-//       500: {
-//         content: { 'application/json': { schema: serverErrorSchema } },
-//         description: 'Scraping failed: unexpected error',
-//       },
-//     },
-//   }),
-//   async (c) => {
-//     const url = c.req.query('url')!;
-
-//     startTime(c, 'scraping', 'Scraping CSS');
-//     const origins = await getCssOrigins(url);
-//     endTime(c, 'scraping');
-
-//     const css = origins.map((origin) => origin.css).join('');
-//     const tokens = cssToTokens(css);
-//     return c.json(tokens);
-//   },
-// );
-
-app.onError((error, c) => {
-  console.debug('onError triggered', error);
-  return c.json<z.infer<typeof serverErrorSchema>>(
-    {
-      name: error.name,
-      message: error.message,
-      ok: false,
+app.openapi(
+  createRoute({
+    description: 'Scrape all CSS from a URL',
+    method: 'get',
+    path: '/api/v1/css-design-tokens',
+    request: {
+      query: z.object({
+        url: urlSchema,
+      }),
     },
-    error instanceof ScrapingError ? 400 : 500,
-  );
-});
+    responses: {
+      200: {
+        content: { 'application/json': { schema: DesignTokens } },
+        description: 'Scraping successful',
+      },
+      400: {
+        content: { 'application/json': { schema: clientErrorSchema } },
+        description: 'Scraping failed: user error',
+      },
+      500: {
+        content: { 'application/json': { schema: serverErrorSchema } },
+        description: 'Scraping failed: unexpected error',
+      },
+    },
+  }),
+  withScrapingErrorHandler(async (c) => {
+    const url = c.req.query('url')!;
+
+    startTime(c, 'scraping', 'Scraping CSS');
+    const origins = await getCssOrigins(url);
+    endTime(c, 'scraping');
+
+    const css = origins.map((origin) => origin.css).join('');
+    const tokens = cssToTokens(css);
+    return c.json({
+      colors: tokens.color,
+      fontFamilies: tokens.font_family,
+      fontSizes: tokens.font_size,
+    });
+  }),
+);
 
 app.doc31('api/v1/openapi.json', {
   info: {

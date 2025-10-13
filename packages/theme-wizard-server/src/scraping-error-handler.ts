@@ -1,8 +1,10 @@
-import type { MiddlewareHandler, Context, Next } from 'hono';
+import type { Handler, Context, Env, Next } from 'hono';
 import { ScrapingError } from '@nl-design-system-community/css-scraper';
 import { HTTPException } from 'hono/http-exception';
 
-export const withScrapingErrorHandler = (handler: MiddlewareHandler): MiddlewareHandler => {
+export const withScrapingErrorHandler = <E extends Env = Env, P extends string = string>(
+  handler: Handler<E, P>,
+): Handler<E, P> => {
   return async (c: Context, next: Next) => {
     try {
       return await handler(c, next);
