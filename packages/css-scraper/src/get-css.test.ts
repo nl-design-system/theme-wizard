@@ -1,8 +1,8 @@
 import { test, expect, describe, vi, beforeEach, type Mock } from 'vitest';
 import { ForbiddenError, NotFoundError, ConnectionRefusedError, InvalidUrlError, TimeoutError } from './errors';
-import { getCssFromHtml, getImportUrls, getCssFile, getCss } from './get-css';
+import { getCssFromHtml, getImportUrls, getCssFile, getCssOrigins, getCss, getDesignTokens } from './get-css';
 
-describe('getCss', () => {
+describe('getCssOrigins', () => {
   global.fetch = vi.fn() as Mock;
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('getCss', () => {
       status: 200,
       text: async () => mockCss,
     });
-    const result = await getCss('https://example.com/style.css');
+    const result = await getCssOrigins('https://example.com/style.css');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -52,7 +52,7 @@ describe('getCss', () => {
       text: async () => mockCss,
     });
 
-    const result = await getCss('https://example.com');
+    const result = await getCssOrigins('https://example.com');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -82,7 +82,7 @@ describe('getCss', () => {
       text: async () => mockHtml,
     });
 
-    const result = await getCss('https://example.com');
+    const result = await getCssOrigins('https://example.com');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -117,7 +117,7 @@ describe('getCss', () => {
       text: async () => 'a { color: blue; }',
     });
 
-    const result = await getCss('https://example.com');
+    const result = await getCssOrigins('https://example.com');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -159,7 +159,7 @@ describe('getCss', () => {
       text: async () => mockCss,
     });
 
-    const result = await getCss('https://example.com/very/deep/path/to/page');
+    const result = await getCssOrigins('https://example.com/very/deep/path/to/page');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -209,7 +209,7 @@ describe('getCss', () => {
       text: async () => mockHtml,
     });
 
-    const result = await getCss('https://web.archive.org/web/20250311183954/https://example.com/');
+    const result = await getCssOrigins('https://web.archive.org/web/20250311183954/https://example.com/');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -221,7 +221,7 @@ describe('getCss', () => {
 
   describe('errors', () => {
     test('InvalidUrlError', async () => {
-      await expect(getCss('')).rejects.toThrowError(InvalidUrlError);
+      await expect(getCssOrigins('')).rejects.toThrowError(InvalidUrlError);
     });
 
     test('NotFoundError', async () => {
@@ -230,7 +230,7 @@ describe('getCss', () => {
         status: 404,
         statusText: 'Not Found',
       });
-      await expect(getCss('http://example.com')).rejects.toThrowError(NotFoundError);
+      await expect(getCssOrigins('http://example.com')).rejects.toThrowError(NotFoundError);
     });
 
     test('ForbiddenError', async () => {
@@ -239,7 +239,7 @@ describe('getCss', () => {
         status: 403,
         statusText: 'Forbidden',
       });
-      await expect(getCss('http://example.com')).rejects.toThrowError(ForbiddenError);
+      await expect(getCssOrigins('http://example.com')).rejects.toThrowError(ForbiddenError);
     });
 
     test('ConnectionRefusedError', async () => {
@@ -248,7 +248,7 @@ describe('getCss', () => {
         status: 400,
         statusText: 'fetch failed',
       });
-      await expect(getCss('http://example.com')).rejects.toThrowError(ConnectionRefusedError);
+      await expect(getCssOrigins('http://example.com')).rejects.toThrowError(ConnectionRefusedError);
     });
 
     test('ConnectionRefusedError (localhost)', async () => {
@@ -257,13 +257,27 @@ describe('getCss', () => {
         status: 400,
         statusText: 'fetch failed',
       });
-      await expect(getCss('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
+      await expect(getCssOrigins('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
     });
 
     test('TimeoutError', async () => {
       (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
-      await expect(getCss('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
+      await expect(getCssOrigins('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
     });
+  });
+});
+
+describe('getCss', () => {
+  test('concatenates origins', async () => {
+    const mockCss = 'a { color: blue; }';
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => mockCss,
+    });
+    const result = await getCss('example.com/style.css');
+    expect(result).toBe(mockCss);
   });
 });
 
@@ -632,5 +646,58 @@ describe('getCssFile', () => {
 
     const result = await getCssFile('http://example.com/style.css', controller.signal);
     expect(result).toEqual('');
+  });
+});
+
+describe('getDesignTokens', () => {
+  test('formats css into design tokens', () => {
+    const mockCss = `
+      a {
+        color: blue;
+        font-size: 16px;
+        font-family: Arial, system-ui, sans-serif;
+      }
+    `;
+    const result = getDesignTokens(mockCss);
+    expect(result).toEqual({
+      colors: {
+        'blue-edec3e9a': {
+          $extensions: {
+            'com.projectwallace.css-authored-as': 'blue',
+            'com.projectwallace.css-properties': ['color'],
+            'com.projectwallace.usage-count': 1,
+          },
+          $type: 'color',
+          $value: {
+            alpha: 1,
+            colorSpace: 'srgb',
+            components: [0, 0, 1],
+          },
+        },
+      },
+      fontFamilies: {
+        'fontFamily-4aaee372': {
+          $extensions: {
+            'com.projectwallace.css-authored-as': 'Arial, system-ui, sans-serif',
+            'com.projectwallace.usage-count': 1,
+          },
+          $type: 'fontFamily',
+          $value: ['Arial', 'system-ui', 'sans-serif'],
+        },
+      },
+      fontSizes: {
+        'fontSize-171eed': {
+          $extensions: {
+            'com.projectwallace.css-authored-as': '16px',
+            'com.projectwallace.usage-count': 1,
+          },
+          $type: 'dimension',
+          $value: {
+            unit: 'px',
+            value: 16,
+          },
+        },
+      },
+    });
   });
 });

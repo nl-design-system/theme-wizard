@@ -300,6 +300,7 @@ export const getCssOrigins = async (url: string, { timeout = 10000 } = {}): Prom
 };
 
 export { ScrapingError } from './errors.js';
+
 export const getCss = async (url: string): Promise<string> => {
   const origins = await getCssOrigins(url);
   return origins.map(({ css }) => css).join('');
