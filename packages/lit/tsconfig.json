@@ -11,7 +11,8 @@
     "outDir": "dist",
     "types": [],
     "importHelpers": false,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "skipLibCheck": true
   },
   "include": ["src/**/*", "globals.d.ts"]
 }
