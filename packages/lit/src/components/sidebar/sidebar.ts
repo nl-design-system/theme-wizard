@@ -23,20 +23,6 @@ export class LitSidebar extends LitElement {
 
   static override readonly styles = [sidebarStyles];
 
-  private readonly handleChange = (event: Event) => {
-    const form = event?.currentTarget;
-
-    if (!(form instanceof HTMLFormElement)) {
-      return;
-    }
-
-    const formData = new FormData(form);
-    const headingFont = formData.get('headingFont') as string;
-    const bodyFont = formData.get('bodyFont') as string;
-
-    this.notifyConfigChange({ bodyFont, headingFont });
-  };
-
   private notifyConfigChange(config: Partial<typeof DEFAULT_CONFIG>) {
     const event = new CustomEvent(EVENT_NAMES.CONFIG_CHANGE, {
       bubbles: true,
