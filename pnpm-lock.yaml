@@ -79,8 +79,8 @@ importers:
   packages/css-scraper:
     dependencies:
       '@projectwallace/css-design-tokens':
-        specifier: 0.8.0
-        version: 0.8.0
+        specifier: 0.9.0
+        version: 0.9.0
       linkedom:
         specifier: 0.18.12
         version: 0.18.12
@@ -245,7 +245,7 @@ importers:
         version: 1.0.0
       astro:
         specifier: 5.14.1
-        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0)
+        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0)
 
   proprietary/assets: {}
 
@@ -1026,8 +1026,8 @@ packages:
     resolution: {integrity: sha512-up4GNW2WM/L0cKBrwhoKKcKB+Q9gRvlL9+llGRh9wZraUSzlJSoVvv76Olsx6K/gfQjZZxQiwQEBwcsVcVfDlg==}
     engines: {node: '>=18.0.0'}
 
-  '@projectwallace/css-design-tokens@0.8.0':
-    resolution: {integrity: sha512-evZGrMjgYZuyDdSN95r1HXYH5iaYiKJRucLs7/VUUs7Oe0hKXg/5FM9xwwdATw/ZN4zBLh6Ow342839w901pgg==}
+  '@projectwallace/css-design-tokens@0.9.0':
+    resolution: {integrity: sha512-A4q5VfFn2yHzADrPKjwBfzlW2cGNrHpZGBbyB6h+GJSKXL6ewJWBQrpYp0hHpiCKDCH2bBMcCqVYj9LLnlQJFg==}
     engines: {node: '>=22'}
 
   '@rolldown/binding-android-arm64@1.0.0-beta.35':
@@ -6780,7 +6780,7 @@ snapshots:
       '@bramus/specificity': 2.4.2
       css-tree: 3.1.0
 
-  '@projectwallace/css-design-tokens@0.8.0':
+  '@projectwallace/css-design-tokens@0.9.0':
     dependencies:
       '@projectwallace/css-analyzer': 7.6.0
       color-sorter: 7.0.0
@@ -7944,7 +7944,7 @@ snapshots:
 
   astral-regex@2.0.0: {}
 
-  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0):
+  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.3
@@ -7994,7 +7994,7 @@ snapshots:
       smol-toml: 1.4.2
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
-      tsconfck: 3.1.6(typescript@5.8.3)
+      tsconfck: 3.1.6(typescript@5.9.3)
       ultrahtml: 1.6.0
       unifont: 0.5.2
       unist-util-visit: 5.0.0
@@ -8007,7 +8007,7 @@ snapshots:
       yocto-spinner: 0.2.3
       zod: 3.25.76
       zod-to-json-schema: 3.24.6(zod@3.25.76)
-      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.76)
+      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.76)
     optionalDependencies:
       sharp: 0.34.4
     transitivePeerDependencies:
@@ -11878,9 +11878,9 @@ snapshots:
 
   ts-toolbelt@6.15.5: {}
 
-  tsconfck@3.1.6(typescript@5.8.3):
+  tsconfck@3.1.6(typescript@5.9.3):
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   tsconfig-paths@4.2.0:
     dependencies:
@@ -12477,9 +12477,9 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.76):
+  zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.76):
     dependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
       zod: 3.25.76
 
   zod@3.22.4: {}
