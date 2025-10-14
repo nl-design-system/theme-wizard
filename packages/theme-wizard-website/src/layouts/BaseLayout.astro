@@ -21,7 +21,7 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     {scraperUrl ? <meta name="scraper-api" content={scraperUrl} /> : null}
     <title>{title}</title>
   </head>
-  <body>
+  <body class="ma-theme">
     <slot />
 
     <script>
