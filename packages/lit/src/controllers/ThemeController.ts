@@ -1,14 +1,7 @@
-/**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { SidebarConfig } from '../utils/types';
-import { DEFAULT_CONFIG } from '../constants/default';
 import Scraper from '../lib/Scraper';
 import { ThemeModel } from '../models';
-import { loadUrlParams, updateURLParameters } from '../utils';
 
 /**
  * ThemeController - Orchestrator for managing theme state and coordinating components
@@ -30,7 +23,7 @@ export class ThemeController implements ReactiveController {
 
   constructor(host: ReactiveControllerHost) {
     this.host = host;
-    this.themeModel = new ThemeModel(this.loadInitialConfig());
+    this.themeModel = new ThemeModel();
     const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
     this.#scraper = new Scraper(scraperURL);
     host.addController(this);
@@ -42,23 +35,6 @@ export class ThemeController implements ReactiveController {
 
   hostDisconnected(): void {
     /** */
-  }
-
-  /**
-   * Load initial configuration from URL parameters
-   * @returns Partial<SidebarConfig>
-   */
-  private loadInitialConfig(): Partial<SidebarConfig> {
-    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont']);
-
-    const config: Partial<SidebarConfig> = {};
-    Object.entries(params).forEach(([key, value]) => {
-      if (value) {
-        config[key as keyof SidebarConfig] = value;
-      }
-    });
-
-    return config;
   }
 
   /**
@@ -88,30 +64,18 @@ export class ThemeController implements ReactiveController {
     this.themeModel.updateConfig({ sourceUrl });
   }
 
-  #finalizeUpdate(): void {
-    this.#syncToUrl();
-    this.host.requestUpdate();
-  }
-
   updateTheme(partial: Partial<SidebarConfig>): void {
     if (this.#isNewSourceUrl(partial)) {
       this.#setSourceUrlWithReset(partial.sourceUrl!);
     } else {
       this.#applyPartial(partial);
     }
-    this.#finalizeUpdate();
-  }
 
-  /**
-   * Sync current configuration to URL parameters
-   */
-  #syncToUrl(): void {
-    updateURLParameters(this.themeModel.getConfig(), DEFAULT_CONFIG);
+    this.host.requestUpdate();
   }
 
   resetToDefaults(): void {
     this.themeModel.reset();
-    this.#syncToUrl();
     this.host.requestUpdate();
   }
 

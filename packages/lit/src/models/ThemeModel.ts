@@ -1,8 +1,3 @@
-/**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
 import type { SidebarConfig } from '../utils/types';
 import { DEFAULT_CONFIG } from '../constants/default';
 

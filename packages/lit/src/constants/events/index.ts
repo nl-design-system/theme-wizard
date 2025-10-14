@@ -1,11 +1,3 @@
-/**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
-/**
- * Event names for component communication
- */
 export const EVENT_NAMES = {
   /** Sidebar → App: config updates */
   CONFIG_CHANGE: 'config-change',

@@ -1,8 +1,3 @@
-/**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
@@ -35,12 +30,12 @@ export class App extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate as EventListener);
+    this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate as EventListener);
+    this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
   }
 
   /**
@@ -48,7 +43,9 @@ export class App extends LitElement {
    * Bridge events to controller
    */
   readonly #handleConfigUpdate = async (e: Event) => {
-    const config = (e as CustomEvent<Partial<SidebarConfig>>).detail || {};
+    if (!(e instanceof CustomEvent)) return;
+
+    const config = e.detail || {};
     if (config.sourceUrl) {
       await this.themeController.analyzeSourceUrl(config.sourceUrl);
     } else {
