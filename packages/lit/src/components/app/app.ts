@@ -47,10 +47,10 @@ export class App extends LitElement {
    * Handle configuration updates from child components
    * Bridge events to controller
    */
-  readonly #handleConfigUpdate = (e: Event) => {
+  readonly #handleConfigUpdate = async (e: Event) => {
     const config = (e as CustomEvent<Partial<SidebarConfig>>).detail || {};
     if (config.sourceUrl) {
-      this.themeController.analyzeSourceUrl(config.sourceUrl);
+      await this.themeController.analyzeSourceUrl(config.sourceUrl);
     } else {
       this.themeController.updateTheme(config);
     }
