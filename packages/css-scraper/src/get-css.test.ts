@@ -10,7 +10,7 @@ const CSS_FILE_REPONSE_MOCK = {
 };
 
 describe('getCssOrigins', () => {
-  global.fetch = vi.fn();
+  globalThis.fetch = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -582,7 +582,7 @@ describe('getImportUrls', () => {
 });
 
 describe('getCssFile', () => {
-  global.fetch = vi.fn();
+  globalThis.fetch = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
