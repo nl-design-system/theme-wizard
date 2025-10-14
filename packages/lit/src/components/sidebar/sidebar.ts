@@ -3,11 +3,11 @@
  * Copyright (c) 2021 Community for NL Design System
  */
 
+import { DesignToken, EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import { type TokenTree } from '../../lib/Scraper';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
 import '../font-select';
@@ -18,7 +18,7 @@ export class LitSidebar extends LitElement {
   @property() headingFont = DEFAULT_CONFIG.headingFont;
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
 
-  @property() scrapedTokens: TokenTree = {};
+  @property() scrapedTokens: DesignToken[] = [];
 
   static override readonly styles = [sidebarStyles];
 
@@ -79,18 +79,16 @@ export class LitSidebar extends LitElement {
   };
 
   get fontOptions() {
-    const families = this.scrapedTokens['fontFamilies'] || [];
-    return Object.values(families)
+    return this.scrapedTokens
+      .filter((token) => token.$type === 'fontFamily')
       .map((token) => {
         const { $extensions, $value } = token;
-        // TODO: Refactor when proper typing is in place
-        const value = `${Array.isArray($value) ? $value.join(', ') : $value}`;
+        const value = $value.join(', ');
         return {
-          label: $extensions['com.projectwallace.css-authored-as'] || value,
+          label: $extensions[EXTENSION_AUTHORED_AS],
           value,
         };
-      })
-      .filter(({ value }) => !value.match(/var\(--.*\)/));
+      });
   }
 
   override render() {

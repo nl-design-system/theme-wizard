@@ -1,10 +1,3 @@
-import {
-  css_to_tokens as cssToTokens,
-  type ColorToken,
-  type FontFamilyToken,
-  type DimensionToken,
-  type UnparsedToken,
-} from '@projectwallace/css-design-tokens';
 import { parseHTML } from 'linkedom';
 import type {
   CSSImportOrigin,
@@ -100,8 +93,6 @@ const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number)
       throw new NotFoundError(url);
     }
   }
-
-  // throw new ScrapingError('something went wrong', 500, url);
 };
 
 export const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
@@ -306,20 +297,4 @@ export const getCss = async (url: string): Promise<string> => {
   return origins.map(({ css }) => css).join('');
 };
 
-export type { ColorToken, FontFamilyToken, DimensionToken, UnparsedToken } from '@projectwallace/css-design-tokens';
-
-export const getDesignTokens = (
-  css: string,
-): {
-  colors: Record<string, ColorToken>;
-  fontFamilies: Record<string, FontFamilyToken | UnparsedToken>;
-  fontSizes: Record<string, DimensionToken | UnparsedToken>;
-} => {
-  const tokens = cssToTokens(css);
-
-  return {
-    colors: tokens.color,
-    fontFamilies: tokens.font_family,
-    fontSizes: tokens.font_size,
-  };
-};
+export * from './design-tokens.js';

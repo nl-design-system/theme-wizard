@@ -17,6 +17,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nl-design-system-community/css-scraper": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
     "lit": "3.3.1"
   },
