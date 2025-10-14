@@ -640,45 +640,44 @@ describe('getDesignTokens', () => {
       }
     `;
     const result = getDesignTokens(mockCss);
-    expect(result).toEqual({
-      colors: {
-        'blue-edec3e9a': {
-          $extensions: {
-            'com.projectwallace.css-authored-as': 'blue',
-            'com.projectwallace.css-properties': ['color'],
-            'com.projectwallace.usage-count': 1,
-          },
-          $type: 'color',
-          $value: {
-            alpha: 1,
-            colorSpace: 'srgb',
-            components: [0, 0, 1],
-          },
+    expect(result).toEqual([
+      {
+        $extensions: {
+          'nl.designsystem.theme-wizard.css-authored-as': 'blue',
+          'nl.designsystem.theme-wizard.css-properties': ['color'],
+          'nl.designsystem.theme-wizard.token-id': 'blue-edec3e9a',
+          'nl.designsystem.theme-wizard.usage-count': 1,
+        },
+        $type: 'color',
+        $value: {
+          alpha: 1,
+          colorSpace: 'srgb',
+          components: [0, 0, 1],
         },
       },
-      fontFamilies: {
-        'fontFamily-4aaee372': {
-          $extensions: {
-            'com.projectwallace.css-authored-as': 'Arial, system-ui, sans-serif',
-            'com.projectwallace.usage-count': 1,
-          },
-          $type: 'fontFamily',
-          $value: ['Arial', 'system-ui', 'sans-serif'],
+      {
+        $extensions: {
+          'nl.designsystem.theme-wizard.css-authored-as': 'Arial, system-ui, sans-serif',
+          'nl.designsystem.theme-wizard.css-properties': ['font-family'],
+          'nl.designsystem.theme-wizard.token-id': 'fontFamily-4aaee372',
+          'nl.designsystem.theme-wizard.usage-count': 1,
+        },
+        $type: 'fontFamily',
+        $value: ['Arial', 'system-ui', 'sans-serif'],
+      },
+      {
+        $extensions: {
+          'nl.designsystem.theme-wizard.css-authored-as': '16px',
+          'nl.designsystem.theme-wizard.css-properties': ['font-size'],
+          'nl.designsystem.theme-wizard.token-id': 'fontSize-171eed',
+          'nl.designsystem.theme-wizard.usage-count': 1,
+        },
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 16,
         },
       },
-      fontSizes: {
-        'fontSize-171eed': {
-          $extensions: {
-            'com.projectwallace.css-authored-as': '16px',
-            'com.projectwallace.usage-count': 1,
-          },
-          $type: 'dimension',
-          $value: {
-            unit: 'px',
-            value: 16,
-          },
-        },
-      },
-    });
+    ]);
   });
 });

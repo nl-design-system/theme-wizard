@@ -4,7 +4,7 @@ import { cors } from 'hono/cors';
 import { timing, startTime, endTime } from 'hono/timing';
 import pkg from '../package.json';
 import { clientErrorSchema } from './schemas/client-error';
-import { ColorToken, FontFamilyToken, DimensionToken, UnparsedToken } from './schemas/design-tokens';
+import { DesignToken } from './schemas/design-tokens';
 import { serverErrorSchema } from './schemas/server-error';
 import { withScrapingErrorHandler } from './scraping-error-handler';
 
@@ -128,15 +128,9 @@ app.openapi(
       200: {
         content: {
           'application/json': {
-            schema: z
-              .strictObject({
-                colors: z.record(z.string(), ColorToken),
-                fontFamilies: z.record(z.string(), z.union([FontFamilyToken, UnparsedToken])),
-                fontSizes: z.record(z.string(), z.union([DimensionToken, UnparsedToken])),
-              })
-              .openapi({
-                type: 'object',
-              }),
+            schema: z.array(DesignToken).openapi({
+              type: 'array',
+            }),
           },
         },
         description: 'Scraping successful',
