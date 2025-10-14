@@ -6,9 +6,9 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { SidebarConfig } from '../utils/types';
 import { DEFAULT_CONFIG } from '../constants/default';
+import Scraper from '../lib/Scraper';
 import { ThemeModel } from '../models';
 import { loadUrlParams, updateURLParameters } from '../utils';
-import Scraper from '../lib/Scraper';
 
 /**
  * ThemeController - Orchestrator for managing theme state and coordinating components
@@ -26,7 +26,7 @@ export class ThemeController implements ReactiveController {
 
   #scrapedTokens: Record<string, unknown> = {};
 
-  #scraper: Scraper;
+  readonly #scraper: Scraper;
 
   constructor(host: ReactiveControllerHost) {
     this.host = host;
