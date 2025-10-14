@@ -2,25 +2,26 @@ import { test, expect, describe, vi, beforeEach, type Mock } from 'vitest';
 import { ForbiddenError, NotFoundError, ConnectionRefusedError, InvalidUrlError, TimeoutError } from './errors';
 import { getCssFromHtml, getImportUrls, getCssFile, getCssOrigins, getCss, getDesignTokens } from './get-css';
 
+const CSS_FILE_REPONSE_MOCK = {
+  headers: new Headers({ 'Content-Type': 'text/css' }),
+  ok: true,
+  status: 200,
+  text: async () => 'a { color: blue; }',
+};
+
 describe('getCssOrigins', () => {
-  global.fetch = vi.fn() as Mock;
+  global.fetch = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   test('get a CSS file directly (no further scraping', async () => {
-    const mockCss = 'a { color: blue; }';
-    (fetch as Mock).mockResolvedValueOnce({
-      headers: new Headers({ 'Content-Type': 'text/css' }),
-      ok: true,
-      status: 200,
-      text: async () => mockCss,
-    });
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
     const result = await getCssOrigins('https://example.com/style.css');
     expect(result).toEqual([
       {
-        css: mockCss,
+        css: 'a { color: blue; }',
         href: 'https://example.com/style.css',
         type: 'file',
       },
@@ -45,12 +46,7 @@ describe('getCssOrigins', () => {
 
     // Mock the CSS request
     const mockCss = 'a { color: blue; }';
-    (fetch as Mock).mockResolvedValueOnce({
-      headers: new Headers({ 'Content-Type': 'text/css' }),
-      ok: true,
-      status: 200,
-      text: async () => mockCss,
-    });
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
 
     const result = await getCssOrigins('https://example.com');
     expect(result).toEqual([
@@ -110,12 +106,7 @@ describe('getCssOrigins', () => {
     });
 
     // Mock the CSS request
-    (fetch as Mock).mockResolvedValueOnce({
-      headers: new Headers({ 'Content-Type': 'text/css' }),
-      ok: true,
-      status: 200,
-      text: async () => 'a { color: blue; }',
-    });
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
 
     const result = await getCssOrigins('https://example.com');
     expect(result).toEqual([
@@ -152,12 +143,7 @@ describe('getCssOrigins', () => {
 
     // Mock the CSS request
     const mockCss = 'a { color: blue; }';
-    (fetch as Mock).mockResolvedValueOnce({
-      headers: new Headers({ 'Content-Type': 'text/css' }),
-      ok: true,
-      status: 200,
-      text: async () => mockCss,
-    });
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
 
     const result = await getCssOrigins('https://example.com/very/deep/path/to/page');
     expect(result).toEqual([
@@ -270,12 +256,7 @@ describe('getCssOrigins', () => {
 describe('getCss', () => {
   test('concatenates origins', async () => {
     const mockCss = 'a { color: blue; }';
-    (fetch as Mock).mockResolvedValueOnce({
-      headers: new Headers({ 'Content-Type': 'text/css' }),
-      ok: true,
-      status: 200,
-      text: async () => mockCss,
-    });
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
     const result = await getCss('example.com/style.css');
     expect(result).toBe(mockCss);
   });
@@ -601,7 +582,7 @@ describe('getImportUrls', () => {
 });
 
 describe('getCssFile', () => {
-  global.fetch = vi.fn() as Mock;
+  global.fetch = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
