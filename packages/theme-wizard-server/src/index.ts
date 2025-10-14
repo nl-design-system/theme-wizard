@@ -1,6 +1,5 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
-import { getCss as getCssOrigins } from '@nl-design-system-community/css-scraper';
-import { css_to_tokens as cssToTokens } from '@projectwallace/css-design-tokens';
+import { getCss, getDesignTokens } from '@nl-design-system-community/css-scraper';
 import { cors } from 'hono/cors';
 import { timing, startTime, endTime } from 'hono/timing';
 import pkg from '../package.json';
@@ -107,10 +106,9 @@ app.openapi(
     const url = c.req.query('url')!;
 
     startTime(c, 'scraping', 'Scraping CSS');
-    const origins = await getCssOrigins(url);
+    const css = await getCss(url);
     endTime(c, 'scraping');
 
-    const css = origins.map((origin) => origin.css).join('');
     c.res.headers.set('content-type', 'text/css; charset=utf-8');
     return c.body(css);
   },
@@ -157,16 +155,11 @@ app.openapi(
     const url = c.req.query('url')!;
 
     startTime(c, 'scraping', 'Scraping CSS');
-    const origins = await getCssOrigins(url);
+    const css = await getCss(url);
+    const tokens = getDesignTokens(css);
     endTime(c, 'scraping');
 
-    const css = origins.map((origin) => origin.css).join('');
-    const tokens = cssToTokens(css);
-    return c.json({
-      colors: tokens.color,
-      fontFamilies: tokens.font_family,
-      fontSizes: tokens.font_size,
-    });
+    return c.json(tokens);
   }),
 );
 

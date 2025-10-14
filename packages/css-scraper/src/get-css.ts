@@ -1,4 +1,10 @@
-import { css_to_tokens as cssToTokens } from '@projectwallace/css-design-tokens';
+import {
+  css_to_tokens as cssToTokens,
+  type ColorToken,
+  type FontFamilyToken,
+  type DimensionToken,
+  type UnparsedToken,
+} from '@projectwallace/css-design-tokens';
 import { parseHTML } from 'linkedom';
 import type {
   CSSImportOrigin,
@@ -296,22 +302,18 @@ export const getCssOrigins = async (url: string, { timeout = 10000 } = {}): Prom
 export { ScrapingError } from './errors.js';
 export const getCss = async (url: string): Promise<string> => {
   const origins = await getCssOrigins(url);
-  return origins.map(({ css }) => css).join('\n');
+  return origins.map(({ css }) => css).join('');
 };
 
-type Tokens = ReturnType<typeof cssToTokens>;
-type ColorToken = Tokens['color'][string];
-type FontFamilyToken = Tokens['font_family'][string];
-type FontSizeToken = Tokens['font_size'][string];
+export type { ColorToken, FontFamilyToken, DimensionToken, UnparsedToken } from '@projectwallace/css-design-tokens';
 
-export const getDesigntokens = async (
-  url: string,
-): Promise<{
+export const getDesignTokens = (
+  css: string,
+): {
   colors: Record<string, ColorToken>;
-  fontFamilies: Record<string, FontFamilyToken>;
-  fontSizes: Record<string, FontSizeToken>;
-}> => {
-  const css = await getCss(url);
+  fontFamilies: Record<string, FontFamilyToken | UnparsedToken>;
+  fontSizes: Record<string, DimensionToken | UnparsedToken>;
+} => {
   const tokens = cssToTokens(css);
 
   return {

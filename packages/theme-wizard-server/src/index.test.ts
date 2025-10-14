@@ -1,10 +1,6 @@
-import { test, expect, describe, vi, type Mock } from 'vitest';
+import * as cssScraper from '@nl-design-system-community/css-scraper';
+import { test, expect, describe, vi } from 'vitest';
 import app from './index';
-
-vi.mock('@nl-design-system-community/css-scraper', () => ({
-  getCss: vi.fn(),
-  ScrapingError: vi.fn(),
-}));
 
 describe('health check', () => {
   test('returns correct response', async () => {
@@ -41,14 +37,7 @@ describe('/api/v1', () => {
     });
   });
 
-  const mockedGetCssData = [
-    {
-      css: 'a { color: blue; }',
-      href: 'example.com',
-      type: 'style',
-      url: 'https://example.com',
-    },
-  ];
+  const mockedGetCssData = 'a { color: blue; }';
 
   describe('shared /css & /css-design-tokens', () => {
     for (const url of ['/api/v1/css', '/api/v1/css-design-tokens']) {
@@ -68,8 +57,7 @@ describe('/api/v1', () => {
       });
 
       test('contains server-timing', async () => {
-        const { getCss } = await import('@nl-design-system-community/css-scraper');
-        (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
+        vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
         const response = await app.request(`${url}?url=example.com`);
         const timingHeader = response.headers.get('server-timing');
         expect.soft(timingHeader).toMatch(/scraping;dur=\d+(:?\.\d+);desc="Scraping CSS"/);
@@ -79,28 +67,25 @@ describe('/api/v1', () => {
 
   describe('/css', () => {
     test('returns a string of css', async () => {
-      const { getCss } = await import('@nl-design-system-community/css-scraper');
-      (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
+      vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
       const response = await app.request('/api/v1/css?url=example.com');
 
-      expect.soft(await response.text()).toBe('a { color: blue; }');
+      expect.soft(await response.text()).toBe(mockedGetCssData);
       expect.soft(response.headers.get('content-type')).toContain('text/css');
     });
   });
 
   describe('/css-design-tokens', () => {
-    const mockedGetCssData = [
-      {
-        css: 'a { color: blue; }',
-        href: 'example.com',
-        type: 'style',
-        url: 'https://example.com',
-      },
-    ];
+    const mockCss = `
+      a {
+        color: blue;
+        font-size: 16px;
+        font-family: Arial, system-ui, sans-serif;
+      }
+    `;
 
     test('returns tokens', async () => {
-      const { getCss } = await import('@nl-design-system-community/css-scraper');
-      (getCss as Mock).mockResolvedValueOnce(mockedGetCssData);
+      vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockCss);
       const response = await app.request('/api/v1/css-design-tokens?url=example.com');
 
       expect.soft(response.headers.get('content-type')).toContain('application/json');
@@ -120,8 +105,29 @@ describe('/api/v1', () => {
             },
           },
         },
-        fontFamilies: {},
-        fontSizes: {},
+        fontFamilies: {
+          'fontFamily-4aaee372': {
+            $extensions: {
+              'com.projectwallace.css-authored-as': 'Arial, system-ui, sans-serif',
+              'com.projectwallace.usage-count': 1,
+            },
+            $type: 'fontFamily',
+            $value: ['Arial', 'system-ui', 'sans-serif'],
+          },
+        },
+        fontSizes: {
+          'fontSize-171eed': {
+            $extensions: {
+              'com.projectwallace.css-authored-as': '16px',
+              'com.projectwallace.usage-count': 1,
+            },
+            $type: 'dimension',
+            $value: {
+              unit: 'px',
+              value: 16,
+            },
+          },
+        },
       });
     });
   });
