@@ -112,7 +112,7 @@ export class LitSidebar extends LitElement {
                 placeholder="https://example.com"
               />
 
-              <button class="theme-button theme-button--primary" type="submit">Analyseer</button>
+              <utrecht-button appearance="primary-action-button" type="submit">Analyseer</utrecht-button>
             </div>
           </section>
         </form>
@@ -136,7 +136,7 @@ export class LitSidebar extends LitElement {
             ></font-select>
           </fieldset>
 
-          <button type="submit">Update</button>
+          <utrecht-button appearance="primary-action-button" type="submit">Update</utrecht-button>
         </form>
       </div>
     `;
