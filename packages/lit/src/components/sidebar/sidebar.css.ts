@@ -22,6 +22,7 @@ export default css`
     padding-block: var(--theme-space-6);
     padding-inline: var(--theme-space-6);
     position: sticky;
+    inline-size: 320px;
   }
 
   .theme-sidebar__form {
@@ -101,7 +102,7 @@ export default css`
 
   .theme-form-field__input,
   .theme-css-input {
-    border: 1px solid var(--theme-gray-400);
+    border: 1px solid var(--theme-gray-400, #999);
     border-radius: var(--theme-border-radius);
     font-family: inherit;
     font-size: var(--theme-font-size-base);

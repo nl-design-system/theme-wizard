@@ -47,6 +47,7 @@
     "typescript-eslint": "8.37.0"
   },
   "scripts": {
+    "dev": "pnpm --recursive --parallel run dev",
     "build": "pnpm --recursive run build",
     "clean": "pnpm --recursive run clean",
     "lint": "pnpm run --sequential '/^lint:.+$/'",

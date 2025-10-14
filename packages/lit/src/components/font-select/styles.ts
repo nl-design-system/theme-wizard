@@ -1,33 +1,6 @@
 import { css } from 'lit';
 
 export default css`
-  /* ============================================
-   TYPOGRAPHY COMPONENT
-   ============================================ */
-  .theme-typography {
-    border-block-end: 1px solid var(--theme-gray-200);
-    margin-block-end: var(--theme-space-6);
-    padding-block-end: var(--theme-space-6);
-  }
-
-  .theme-typography__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--theme-space-2);
-  }
-
-  .theme-typography__heading {
-    color: var(--theme-gray-700);
-    font-size: var(--theme-font-size-base);
-    font-weight: var(--theme-font-weight-bold);
-    letter-spacing: 0.025em;
-    margin-block-end: var(--theme-space-4);
-    text-transform: uppercase;
-  }
-
-  /* ============================================
-   FORM COMPONENTS & INPUTS
-   ============================================ */
   .theme-form-field {
     display: flex;
     flex-direction: column;
@@ -45,7 +18,7 @@ export default css`
 
   .theme-form-field__select {
     background: white;
-    border: 1px solid var(--theme-gray-400);
+    border: 1px solid var(--theme-gray-400, #999);
     border-radius: var(--theme-border-radius);
     cursor: pointer;
     font-family: inherit;

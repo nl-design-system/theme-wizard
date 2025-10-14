@@ -8,7 +8,7 @@
     "directory": "packages/theme-wizard-website"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "API_HOST=http://localhost:9491 astro dev",
     "build": "pnpm run clean && astro build",
     "clean": "rm -rf dist .astro build",
     "preview": "astro preview",

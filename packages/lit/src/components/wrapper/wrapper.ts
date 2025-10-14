@@ -8,9 +8,10 @@ import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import { loadUrlParams, updateURLParameters } from '../../utils';
 import '../sidebar/sidebar';
 import '../preview/preview';
+import Scraper from '../../lib/Scraper';
+import { loadUrlParams, updateURLParameters } from '../../utils';
 import appStyles from './wrapper.css';
 
 @customElement('theme-wizard-wrapper')
@@ -24,7 +25,18 @@ export class Wrapper extends LitElement {
   @state()
   private config: SidebarConfig = this.getInitialConfig();
 
+  @state()
+  private scrapedTokens: Record<string, unknown> = {};
+
+  private scraper: Scraper;
+
   static override readonly styles = [appStyles];
+
+  constructor() {
+    super();
+    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content');
+    this.scraper = new Scraper(scraperURL || '');
+  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -38,7 +50,7 @@ export class Wrapper extends LitElement {
   }
 
   private getInitialConfig(): SidebarConfig {
-    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont', 'themeClass', 'customCss']);
+    const params = loadUrlParams(['sourceUrl', 'headingFont', 'bodyFont']);
 
     // Only override defaults with non-empty values from URL
     const config = { ...DEFAULT_CONFIG };
@@ -51,12 +63,11 @@ export class Wrapper extends LitElement {
     return config;
   }
 
-  private readonly handleConfigUpdate = (e: Event) => {
+  private readonly handleConfigUpdate = async (e: Event) => {
     const config = (e as CustomEvent<Partial<SidebarConfig>>).detail || {};
 
-    // Determine update strategy when source URL changes - should reset all styling to defaults
-    const isNewSourceUrl = config.sourceUrl && config.sourceUrl !== this.config.sourceUrl;
-    if (isNewSourceUrl) {
+    if (config.sourceUrl) {
+      this.scrapedTokens = await this.scraper.getTokens(new URL(config.sourceUrl));
       this.resetStylingForNewSource(config.sourceUrl!);
       this.syncConfigChanges();
       return;
@@ -100,8 +111,7 @@ export class Wrapper extends LitElement {
           .sourceUrl=${this.config.sourceUrl}
           .headingFont=${this.config.headingFont}
           .bodyFont=${this.config.bodyFont}
-          .themeClass=${this.config.themeClass}
-          .customCss=${this.config.customCss}
+          .scrapedTokens=${this.scrapedTokens}
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
@@ -110,11 +120,8 @@ export class Wrapper extends LitElement {
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
-              .url=${this.config.sourceUrl}
               .headingFontFamily=${this.config.headingFont}
               .bodyFontFamily=${this.config.bodyFont}
-              .themeClass=${this.config.themeClass}
-              .customCss=${this.config.customCss}
             ></theme-wizard-preview>
           </section>
         </main>

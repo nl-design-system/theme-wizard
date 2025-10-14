@@ -13,11 +13,10 @@ import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
-  @property() url: string = DEFAULT_CONFIG.sourceUrl;
+  @property() url: string = DEFAULT_CONFIG.previewUrl;
 
   @property() headingFontFamily: string = DEFAULT_CONFIG.headingFont;
   @property() bodyFontFamily: string = DEFAULT_CONFIG.bodyFont;
-  @property() customCss: string = DEFAULT_CONFIG.customCss;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
@@ -78,12 +77,6 @@ export class ThemePreview extends LitElement {
 
     return html`
       <div class="ma-theme" style=${getThemeStyleString(extractThemeProperties(this))}>
-        ${this.customCss
-          ? html`<style>
-              ${this.customCss}
-            </style>`
-          : ''}
-
         <div .innerHTML=${this.htmlContent}></div>
       </div>
     `;

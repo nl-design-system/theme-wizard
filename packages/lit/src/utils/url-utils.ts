@@ -109,7 +109,7 @@ const normalize = (v: string): string => {
 export const updateURLParameters = (params: Partial<UrlParamsConfig>, defaultConfig: UrlParamsConfig): void => {
   const url: URL = getCurrentUrl();
 
-  const { bodyFont, customCss, headingFont, sourceUrl, themeClass } = params;
+  const { bodyFont, headingFont, sourceUrl } = params;
 
   // Only set non-default values to keep URL clean
   if (sourceUrl && sourceUrl !== defaultConfig.sourceUrl) {
@@ -129,18 +129,6 @@ export const updateURLParameters = (params: Partial<UrlParamsConfig>, defaultCon
     url.searchParams.set('bodyFont', bodyFont);
   } else {
     url.searchParams.delete('bodyFont');
-  }
-
-  if (themeClass && themeClass !== defaultConfig.themeClass) {
-    url.searchParams.set('themeClass', themeClass);
-  } else {
-    url.searchParams.delete('themeClass');
-  }
-
-  if (customCss) {
-    url.searchParams.set('customCss', customCss);
-  } else {
-    url.searchParams.delete('customCss');
   }
 
   window.history.replaceState({}, '', url.toString());
