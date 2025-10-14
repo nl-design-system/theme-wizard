@@ -1,8 +1,3 @@
-/**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
 import { DesignToken, EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
