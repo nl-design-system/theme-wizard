@@ -1,8 +1,8 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
+import Scraper from '../../lib/Scraper';
 import '../sidebar/sidebar';
 import '../preview/preview';
 import appStyles from './app.css';
@@ -19,6 +19,7 @@ import appStyles from './app.css';
 @customElement('theme-wizard-app')
 export class App extends LitElement {
   private readonly themeController: ThemeController = new ThemeController(this);
+  private readonly scraper: Scraper;
 
   @property({ type: String })
   pageTitle = 'Live Voorbeeld';
@@ -27,6 +28,12 @@ export class App extends LitElement {
   pageDescription = 'Hieronder zie je een live voorbeeld van de opgegeven website met de geselecteerde huisstijl.';
 
   static override readonly styles = [appStyles];
+
+  constructor() {
+    super();
+    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
+    this.scraper = new Scraper(scraperURL);
+  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -47,9 +54,22 @@ export class App extends LitElement {
 
     const config = e.detail || {};
     if (config.sourceUrl) {
-      await this.themeController.analyzeSourceUrl(config.sourceUrl);
+      await this.#handleSourceUrlChange(config.sourceUrl);
     } else {
       this.themeController.updateTheme(config);
+    }
+  };
+
+  /**
+   * Handle source URL changes - scrape tokens and update theme
+   */
+  readonly #handleSourceUrlChange = async (sourceUrl: string): Promise<void> => {
+    try {
+      const tokens = await this.scraper.getTokens(new URL(sourceUrl));
+      this.themeController.scrapedTokens = tokens;
+      this.themeController.updateTheme({ sourceUrl });
+    } catch (error) {
+      console.error('Failed to analyze website:', error);
     }
   };
 
@@ -62,7 +82,7 @@ export class App extends LitElement {
           .sourceUrl=${sourceUrl}
           .headingFont=${headingFont}
           .bodyFont=${bodyFont}
-          .scrapedTokens=${this.themeController.getScrapedTokens()}
+          .scrapedTokens=${this.themeController.scrapedTokens}
           .onResetTheme=${() => this.themeController.resetToDefaults()}
         ></theme-wizard-sidebar>
 

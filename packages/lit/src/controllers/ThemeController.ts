@@ -1,6 +1,5 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { SidebarConfig } from '../utils/types';
-import Scraper from '../lib/Scraper';
 import { ThemeModel } from '../models';
 
 /**
@@ -19,13 +18,9 @@ export class ThemeController implements ReactiveController {
 
   #scrapedTokens: Record<string, unknown> = {};
 
-  readonly #scraper: Scraper;
-
   constructor(host: ReactiveControllerHost) {
     this.host = host;
     this.themeModel = new ThemeModel();
-    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
-    this.#scraper = new Scraper(scraperURL);
     host.addController(this);
   }
 
@@ -87,16 +82,12 @@ export class ThemeController implements ReactiveController {
     return this.themeModel.getStylesheet();
   }
 
-  analyzeSourceUrl = async (sourceUrl: string): Promise<void> => {
-    try {
-      this.#scrapedTokens = await this.#scraper.getTokens(new URL(sourceUrl));
-      this.updateTheme({ sourceUrl });
-    } catch {
-      console.error('Failed to analyze website');
-    }
-  };
+  set scrapedTokens(tokens: Record<string, unknown>) {
+    this.#scrapedTokens = tokens;
+    this.host.requestUpdate();
+  }
 
-  getScrapedTokens(): Record<string, unknown> {
+  get scrapedTokens() {
     return this.#scrapedTokens;
   }
 }
