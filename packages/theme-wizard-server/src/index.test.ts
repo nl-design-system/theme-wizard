@@ -78,9 +78,9 @@ describe('/api/v1', () => {
   describe('/css-design-tokens', () => {
     const mockCss = `
       a {
-        color: blue;
-        font-size: 16px;
-        font-family: Arial, system-ui, sans-serif;
+        background-color: red;
+        font-size: 1rem;
+        font-family: Georgia, "Times New Roman", serif;
       }
     `;
 
@@ -91,40 +91,40 @@ describe('/api/v1', () => {
       expect.soft(response.headers.get('content-type')).toContain('application/json');
       expect.soft(await response.json()).toEqual({
         colors: {
-          'blue-edec3e9a': {
+          'red-edecb2da': {
             $extensions: {
-              'com.projectwallace.css-authored-as': 'blue',
-              'com.projectwallace.css-properties': ['color'],
+              'com.projectwallace.css-authored-as': 'red',
+              'com.projectwallace.css-properties': ['background-color'],
               'com.projectwallace.usage-count': 1,
             },
             $type: 'color',
             $value: {
               alpha: 1,
               colorSpace: 'srgb',
-              components: [0, 0, 1],
+              components: [1, 0, 0],
             },
           },
         },
         fontFamilies: {
-          'fontFamily-4aaee372': {
+          'fontFamily-c0fc8c3a': {
             $extensions: {
-              'com.projectwallace.css-authored-as': 'Arial, system-ui, sans-serif',
+              'com.projectwallace.css-authored-as': 'Georgia, "Times New Roman", serif',
               'com.projectwallace.usage-count': 1,
             },
             $type: 'fontFamily',
-            $value: ['Arial', 'system-ui', 'sans-serif'],
+            $value: ['Georgia', 'Times New Roman', 'serif'],
           },
         },
         fontSizes: {
-          'fontSize-171eed': {
+          'fontSize-17fec9': {
             $extensions: {
-              'com.projectwallace.css-authored-as': '16px',
+              'com.projectwallace.css-authored-as': '1rem',
               'com.projectwallace.usage-count': 1,
             },
             $type: 'dimension',
             $value: {
-              unit: 'px',
-              value: 16,
+              unit: 'rem',
+              value: 1,
             },
           },
         },
