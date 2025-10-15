@@ -1,9 +1,4 @@
 /**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
-/**
  * Interface for theme style properties
  *
  * This interface defines all available theme properties that can be used
@@ -30,8 +25,3 @@ export interface SidebarConfig {
   /** Font family for body text */
   bodyFont: string;
 }
-
-/**
- * URL parameters configuration (optional version of SidebarConfig)
- */
-export type UrlParamsConfig = Partial<SidebarConfig>;

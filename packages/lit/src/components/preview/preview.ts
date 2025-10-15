@@ -1,31 +1,36 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import {
-  extractThemeProperties,
-  fetchHtml,
-  getThemeStyleString,
-  parseHtml,
-  rewriteAttributeUrlsToAbsolute,
-  rewriteSvgXlinkToAbsolute,
-} from '../../utils';
+import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
-
-  @property() headingFontFamily: string = DEFAULT_CONFIG.headingFont;
-  @property() bodyFontFamily: string = DEFAULT_CONFIG.bodyFont;
+  @property() scrapedCSS: string = '';
+  @property() stylesheet: CSSStyleSheet | null = null;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
+  private readonly baseSheet = new CSSStyleSheet();
+  private readonly mappingSheet = new CSSStyleSheet();
+
+  static override readonly styles = [previewStyles];
+
+  override connectedCallback() {
+    super.connectedCallback();
+  }
 
   override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
     // Fetch content when URL changes (before render)
     if (changedProps.has('url') && this.url) {
       this.fetchContent();
+    }
+
+    if (changedProps.has('scrapedCSS') && this.scrapedCSS) {
+      this.baseSheet.replaceSync(this.scrapedCSS);
+      this.#adoptSheets();
     }
   }
 
@@ -56,7 +61,19 @@ export class ThemePreview extends LitElement {
     }
   };
 
-  static override readonly styles = [previewStyles];
+  // Ensures both scraped CSS and theme stylesheet are applied in shadow DOM
+  #adoptSheets(): void {
+    const sheets: CSSStyleSheet[] = [];
+    if (this.stylesheet) sheets.push(this.stylesheet);
+    if (this.baseSheet) sheets.push(this.baseSheet);
+
+    sheets.push(this.mappingSheet);
+
+    const root = this.shadowRoot;
+    if (root) {
+      root.adoptedStyleSheets = sheets;
+    }
+  }
 
   override render() {
     if (this.isLoading && !this.htmlContent) {
@@ -75,11 +92,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html`
-      <div class="ma-theme" style=${getThemeStyleString(extractThemeProperties(this))}>
-        <div .innerHTML=${this.htmlContent}></div>
-      </div>
-    `;
+    return html` <div class="ma-theme" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 
