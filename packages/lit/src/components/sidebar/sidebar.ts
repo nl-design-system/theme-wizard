@@ -60,6 +60,7 @@ export class LitSidebar extends LitElement {
 
   get fontOptions() {
     const families = this.scrapedTokens['fontFamilies'] || [];
+
     return Object.values(families)
       .map((token) => {
         const { $extensions, $value } = token;
