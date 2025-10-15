@@ -1,7 +1,5 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { SidebarConfig } from '../utils/types';
 import { ThemeModel } from '../models';
-
 /**
  * ThemeController - Orchestrator for managing theme state and coordinating components
  *
@@ -10,84 +8,47 @@ import { ThemeModel } from '../models';
  * - Coordinates state changes and exposes data to the host
  * - Provides high-level methods for theme operations
  */
-export class ThemeController implements ReactiveController {
-  private readonly host: ReactiveControllerHost;
-
+export class ThemeController {
   /** Theme model containing configuration and generation logic */
   public themeModel: ThemeModel;
+  readonly #stylesheet: CSSStyleSheet = new CSSStyleSheet();
 
-  #scrapedTokens: Record<string, unknown> = {};
-
-  constructor(host: ReactiveControllerHost) {
-    this.host = host;
+  constructor() {
     this.themeModel = new ThemeModel();
-    host.addController(this);
+    this.updateStylesheet();
   }
 
-  hostConnected(): void {
-    /** */
+  get stylesheet(): CSSStyleSheet {
+    return this.#stylesheet;
   }
 
-  hostDisconnected(): void {
-    /** */
-  }
-
-  /**
-   * Check if the source URL is new
-   * @param partial - Partial<SidebarConfig>
-   * @returns boolean
-   */
-  #isNewSourceUrl(partial: Partial<SidebarConfig>): boolean {
-    const current = this.themeModel.getConfig().sourceUrl;
-    return Boolean(partial.sourceUrl && partial.sourceUrl !== current);
-  }
-
-  /**
-   * Apply partial configuration
-   * @param partial - Partial<SidebarConfig>
-   */
-  #applyPartial(partial: Partial<SidebarConfig>): void {
+  applyPartial(partial: Partial<SidebarConfig>): void {
     this.themeModel.updateConfig(partial);
-  }
-
-  /**
-   * Set source URL with reset
-   * @param sourceUrl - string
-   */
-  #setSourceUrlWithReset(sourceUrl: string): void {
-    this.themeModel.reset();
-    this.themeModel.updateConfig({ sourceUrl });
-  }
-
-  updateTheme(partial: Partial<SidebarConfig>): void {
-    if (this.#isNewSourceUrl(partial)) {
-      this.#setSourceUrlWithReset(partial.sourceUrl!);
-    } else {
-      this.#applyPartial(partial);
-    }
-
-    this.host.requestUpdate();
+    this.updateStylesheet();
   }
 
   resetToDefaults(): void {
     this.themeModel.reset();
-    this.host.requestUpdate();
+    this.updateStylesheet();
   }
 
   getConfig(): SidebarConfig {
     return this.themeModel.getConfig();
   }
 
-  getStylesheet(): CSSStyleSheet {
-    return this.themeModel.getStylesheet();
-  }
+  private updateStylesheet(): void {
+    const { bodyFont, headingFont } = this.themeModel.getConfig();
 
-  set scrapedTokens(tokens: Record<string, unknown>) {
-    this.#scrapedTokens = tokens;
-    this.host.requestUpdate();
-  }
+    const css = `:host {
+      /* Design tokens based on theme configuration */
+      --basis-text-font-family-default: ${bodyFont || '"Comic Sans"'};
+      --basis-text-font-family-monospace: 'Change me';
+      --basis-text-font-weight-default: 400;
+      --basis-text-font-weight-bold: 700;
+      --basis-heading-font-family: ${headingFont || '"Comic Sans"'};
+      --basis-heading-font-bold: 700;
+    }`;
 
-  get scrapedTokens() {
-    return this.#scrapedTokens;
+    this.#stylesheet.replaceSync(css);
   }
 }

@@ -1,10 +1,10 @@
+import '../preview/preview';
+import '../sidebar/sidebar';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
-import '../sidebar/sidebar';
-import '../preview/preview';
 import appStyles from './app.css';
 
 /**
@@ -20,6 +20,8 @@ import appStyles from './app.css';
 export class App extends LitElement {
   private readonly themeController: ThemeController = new ThemeController(this);
   private readonly scraper: Scraper;
+  private scrapedTokens: Record<string, unknown> = {};
+  private scrapedCSS: string = '';
 
   @property({ type: String })
   pageTitle = 'Live Voorbeeld';
@@ -35,8 +37,16 @@ export class App extends LitElement {
     this.scraper = new Scraper(scraperURL);
   }
 
+  readonly #loadInitialCSS = async () => {
+    this.scrapedCSS = await this.scraper.getCSS(new URL(this.themeController.getConfig().previewUrl));
+    this.requestUpdate();
+  };
+
   override connectedCallback() {
     super.connectedCallback();
+
+    this.#loadInitialCSS();
+
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
   }
 
@@ -53,21 +63,24 @@ export class App extends LitElement {
     if (!(e instanceof CustomEvent)) return;
 
     const config = e.detail || {};
+
     if (config.sourceUrl) {
       await this.#handleSourceUrlChange(config.sourceUrl);
     } else {
-      this.themeController.updateTheme(config);
+      this.themeController.applyPartial(config);
     }
   };
 
   /**
-   * Handle source URL changes - scrape tokens and update theme
+   * Handle source URL changes - scrape tokens
    */
   readonly #handleSourceUrlChange = async (sourceUrl: string): Promise<void> => {
     try {
+      this.themeController.resetToDefaults();
       const tokens = await this.scraper.getTokens(new URL(sourceUrl));
-      this.themeController.scrapedTokens = tokens;
-      this.themeController.updateTheme({ sourceUrl });
+      this.scrapedTokens = tokens;
+
+      this.requestUpdate();
     } catch (error) {
       console.error('Failed to analyze website:', error);
     }
@@ -82,7 +95,7 @@ export class App extends LitElement {
           .sourceUrl=${sourceUrl}
           .headingFont=${headingFont}
           .bodyFont=${bodyFont}
-          .scrapedTokens=${this.themeController.scrapedTokens}
+          .scrapedTokens=${this.scrapedTokens}
           .onResetTheme=${() => this.themeController.resetToDefaults()}
         ></theme-wizard-sidebar>
 
@@ -93,7 +106,8 @@ export class App extends LitElement {
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${previewUrl}
-              .stylesheet=${this.themeController.getStylesheet()}
+              .stylesheet=${this.scrapedCSS ? this.themeController.stylesheet : null}
+              .scrapedCSS=${this.scrapedCSS}
             ></theme-wizard-preview>
           </section>
         </main>

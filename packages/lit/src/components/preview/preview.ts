@@ -7,28 +7,30 @@ import previewStyles from './preview.css';
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
-  @property() stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  @property() scrapedCSS: string = '';
+  @property() stylesheet: CSSStyleSheet | null = null;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
+  private readonly baseSheet = new CSSStyleSheet();
+  private readonly mappingSheet = new CSSStyleSheet();
 
   static override readonly styles = [previewStyles];
 
   override connectedCallback() {
     super.connectedCallback();
-    if (!this.shadowRoot || !this.stylesheet) return;
-
-    const sheets = this.shadowRoot.adoptedStyleSheets;
-    if (!sheets.includes(this.stylesheet)) {
-      sheets.push(this.stylesheet);
-    }
   }
 
   override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
     // Fetch content when URL changes (before render)
     if (changedProps.has('url') && this.url) {
       this.fetchContent();
+    }
+
+    if (changedProps.has('scrapedCSS') && this.scrapedCSS) {
+      this.baseSheet.replaceSync(this.scrapedCSS);
+      this.#adoptSheets();
     }
   }
 
@@ -59,6 +61,20 @@ export class ThemePreview extends LitElement {
     }
   };
 
+  // Ensures both scraped CSS and theme stylesheet are applied in shadow DOM
+  #adoptSheets(): void {
+    const sheets: CSSStyleSheet[] = [];
+    if (this.stylesheet) sheets.push(this.stylesheet);
+    if (this.baseSheet) sheets.push(this.baseSheet);
+
+    sheets.push(this.mappingSheet);
+
+    const root = this.shadowRoot;
+    if (root) {
+      root.adoptedStyleSheets = sheets;
+    }
+  }
+
   override render() {
     if (this.isLoading && !this.htmlContent) {
       return html`
@@ -76,7 +92,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div .innerHTML=${this.htmlContent}></div> `;
+    return html` <div class="ma-theme" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 
