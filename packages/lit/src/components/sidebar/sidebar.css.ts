@@ -16,13 +16,13 @@ export default css`
     background: var(--theme-gray-100);
     block-size: 100%;
     border-inline-end: 1px solid var(--theme-gray-400);
+    inline-size: 320px;
     inset-block-start: 0;
     max-block-size: 100vh;
     overflow-y: auto;
     padding-block: var(--theme-space-6);
     padding-inline: var(--theme-space-6);
     position: sticky;
-    inline-size: 320px;
   }
 
   .theme-sidebar__form {
