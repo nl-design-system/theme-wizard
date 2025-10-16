@@ -92,10 +92,10 @@ describe('/api/v1', () => {
       expect.soft(await response.json()).toEqual([
         {
           $extensions: {
-            'nl.designsystem.theme-wizard.css-authored-as': 'red',
-            'nl.designsystem.theme-wizard.css-properties': ['background-color'],
-            'nl.designsystem.theme-wizard.token-id': 'red-edecb2da',
-            'nl.designsystem.theme-wizard.usage-count': 1,
+            'nl.nldesignsystem.theme-wizard.css-authored-as': 'red',
+            'nl.nldesignsystem.theme-wizard.css-properties': ['background-color'],
+            'nl.nldesignsystem.theme-wizard.token-id': 'red-edecb2da',
+            'nl.nldesignsystem.theme-wizard.usage-count': 1,
           },
           $type: 'color',
           $value: {
@@ -106,20 +106,20 @@ describe('/api/v1', () => {
         },
         {
           $extensions: {
-            'nl.designsystem.theme-wizard.css-authored-as': 'Georgia, "Times New Roman", serif',
-            'nl.designsystem.theme-wizard.css-properties': ['font-family'],
-            'nl.designsystem.theme-wizard.token-id': 'fontFamily-c0fc8c3a',
-            'nl.designsystem.theme-wizard.usage-count': 1,
+            'nl.nldesignsystem.theme-wizard.css-authored-as': 'Georgia, "Times New Roman", serif',
+            'nl.nldesignsystem.theme-wizard.css-properties': ['font-family'],
+            'nl.nldesignsystem.theme-wizard.token-id': 'fontFamily-c0fc8c3a',
+            'nl.nldesignsystem.theme-wizard.usage-count': 1,
           },
           $type: 'fontFamily',
           $value: ['Georgia', 'Times New Roman', 'serif'],
         },
         {
           $extensions: {
-            'nl.designsystem.theme-wizard.css-authored-as': '1rem',
-            'nl.designsystem.theme-wizard.css-properties': ['font-size'],
-            'nl.designsystem.theme-wizard.token-id': 'fontSize-17fec9',
-            'nl.designsystem.theme-wizard.usage-count': 1,
+            'nl.nldesignsystem.theme-wizard.css-authored-as': '1rem',
+            'nl.nldesignsystem.theme-wizard.css-properties': ['font-size'],
+            'nl.nldesignsystem.theme-wizard.token-id': 'fontSize-17fec9',
+            'nl.nldesignsystem.theme-wizard.usage-count': 1,
           },
           $type: 'dimension',
           $value: {
