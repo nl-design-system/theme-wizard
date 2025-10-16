@@ -1,12 +1,12 @@
 import { parseHTML } from 'linkedom';
 import type {
-  CSSImportOrigin,
-  CSSInlineStyleOrigin,
-  CSSLinkOrigin,
-  CSSOrigin,
-  CSSStyleTagOrigin,
-  PartialCSSLinkOrigin,
-} from './css-origin.types.js';
+  CSSImportResource,
+  CSSInlineStyleResource,
+  CSSLinkResource,
+  CSSResource,
+  CSSStyleTagResource,
+  PartialCSSLinkResource,
+} from './css-resource.types.js';
 import {
   type UrlLike,
   TimeoutError,
@@ -118,8 +118,8 @@ export const getCssFile = async (url: string | URL, abortSignal: AbortSignal) =>
 export const getCssFromHtml = (
   html: string,
   url: string | URL,
-): (CSSStyleTagOrigin | CSSInlineStyleOrigin | PartialCSSLinkOrigin | CSSLinkOrigin)[] => {
-  // TODO?: if we want this to run client-side we can use DOMParser and avoid linkedom
+): (CSSStyleTagResource | CSSInlineStyleResource | PartialCSSLinkResource | CSSLinkResource)[] => {
+  // if we want this to run client-side we can use DOMParser and avoid linkedom
   const { document } = parseHTML(html);
 
   const nodes = document.querySelectorAll<HTMLLinkElement | HTMLStyleElement | HTMLElement>(
@@ -128,7 +128,7 @@ export const getCssFromHtml = (
   const baseElement = document.querySelector('base[href]');
   const baseHref = baseElement?.getAttribute('href');
   const baseUrl = baseElement !== null && baseHref ? baseHref : url;
-  const origins = [];
+  const resources = [];
   const inlinedStyles: string[] = [];
 
   for (const node of Array.from(nodes)) {
@@ -146,7 +146,7 @@ export const getCssFromHtml = (
         const encodedCss = href.substring(commaPosition + 1);
         // using `atob` so this can run server-side and client-side
         const css = atob(encodedCss);
-        const linkOrigin = {
+        const linkResource = {
           css,
           href,
           media,
@@ -154,9 +154,9 @@ export const getCssFromHtml = (
           type: 'link' as const,
           url: href,
         };
-        origins.push(linkOrigin);
+        resources.push(linkResource);
       } else {
-        const linkOrigin = {
+        const linkResource = {
           css: undefined, // still need to fetch CSS from the url
           href,
           media,
@@ -164,17 +164,17 @@ export const getCssFromHtml = (
           type: 'link' as const,
           url: url.toString(),
         };
-        origins.push(linkOrigin);
+        resources.push(linkResource);
       }
     } else if (node.tagName === 'STYLE') {
       const css = node.textContent.trim();
       if (css.length === 0) continue;
-      const styleOrigin = {
+      const styleResource = {
         css,
         type: 'style' as const,
         url: url.toString(),
       };
-      origins.push(styleOrigin);
+      resources.push(styleResource);
     } else if (node.hasAttribute('style')) {
       let declarations = (node.getAttribute('style') || '').trim();
       // Avoid processing empty style attributes
@@ -190,15 +190,15 @@ export const getCssFromHtml = (
   }
 
   if (inlinedStyles.length > 0) {
-    const inlineStylesOrigin = {
+    const inlineStylesResource = {
       css: `:where([css-scraper-inline-styles]) { ${inlinedStyles.join('')} }`,
       type: 'inline' as const,
       url: url.toString(),
     };
-    origins.push(inlineStylesOrigin);
+    resources.push(inlineStylesResource);
   }
 
-  return origins;
+  return resources;
 };
 
 const fetchHtml = async (url: string | URL, signal: AbortSignal) => {
@@ -220,21 +220,21 @@ const fetchHtml = async (url: string | URL, signal: AbortSignal) => {
   };
 };
 
-const processOrigins = async (
-  origins: (PartialCSSLinkOrigin | CSSLinkOrigin | CSSStyleTagOrigin | CSSInlineStyleOrigin)[],
+const processResources = async (
+  resources: (PartialCSSLinkResource | CSSLinkResource | CSSStyleTagResource | CSSInlineStyleResource)[],
   abortSignal: AbortSignal,
 ) => {
-  const result: (CSSLinkOrigin | CSSImportOrigin | CSSStyleTagOrigin | CSSInlineStyleOrigin)[] = [];
+  const result: (CSSLinkResource | CSSImportResource | CSSStyleTagResource | CSSInlineStyleResource)[] = [];
 
-  for (const origin of origins) {
-    if (origin.type === 'link' && !origin.css) {
-      origin.css = await getCssFile(origin.url, abortSignal);
-      result.push(origin as CSSLinkOrigin);
+  for (const resource of resources) {
+    if (resource.type === 'link' && !resource.css) {
+      resource.css = await getCssFile(resource.url, abortSignal);
+      result.push(resource as CSSLinkResource);
     } else {
-      result.push(origin);
+      result.push(resource);
     }
 
-    for (const importUrl of getImportUrls(origin.css as string)) {
+    for (const importUrl of getImportUrls(resource.css as string)) {
       const css = await getCssFile(importUrl, abortSignal);
       result.push({
         css,
@@ -248,7 +248,7 @@ const processOrigins = async (
   return result;
 };
 
-export const getCssOrigins = async (url: string, { timeout = 10000 } = {}): Promise<CSSOrigin[]> => {
+export const getCssResources = async (url: string, { timeout = 10000 } = {}): Promise<CSSResource[]> => {
   const resolvedUrl = resolveUrl(url);
 
   if (resolvedUrl === undefined) {
@@ -278,8 +278,8 @@ export const getCssOrigins = async (url: string, { timeout = 10000 } = {}): Prom
       body = removeWaybackToolbar(body);
     }
 
-    const origins = getCssFromHtml(body, resolvedUrl);
-    const result = processOrigins(origins, abortController.signal);
+    const resources = getCssFromHtml(body, resolvedUrl);
+    const result = processResources(resources, abortController.signal);
 
     clearTimeout(timeoutId);
     return result;
@@ -293,8 +293,8 @@ export const getCssOrigins = async (url: string, { timeout = 10000 } = {}): Prom
 export { ScrapingError } from './errors.js';
 
 export const getCss = async (url: string): Promise<string> => {
-  const origins = await getCssOrigins(url);
-  return origins.map(({ css }) => css).join('');
+  const resources = await getCssResources(url);
+  return resources.map(({ css }) => css).join('');
 };
 
 export * from './design-tokens.js';

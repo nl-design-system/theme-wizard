@@ -1,6 +1,6 @@
 import { test, expect, describe, vi, beforeEach, type Mock } from 'vitest';
 import { ForbiddenError, NotFoundError, ConnectionRefusedError, InvalidUrlError, TimeoutError } from './errors';
-import { getCssFromHtml, getImportUrls, getCssFile, getCssOrigins, getCss, getDesignTokens } from './get-css';
+import { getCssFromHtml, getImportUrls, getCssFile, getCssResources, getCss, getDesignTokens } from './get-css';
 
 const CSS_FILE_REPONSE_MOCK = {
   headers: new Headers({ 'Content-Type': 'text/css' }),
@@ -9,7 +9,7 @@ const CSS_FILE_REPONSE_MOCK = {
   text: async () => 'a { color: blue; }',
 };
 
-describe('getCssOrigins', () => {
+describe('getCssResources', () => {
   globalThis.fetch = vi.fn();
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('getCssOrigins', () => {
 
   test('get a CSS file directly (no further scraping', async () => {
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
-    const result = await getCssOrigins('https://example.com/style.css');
+    const result = await getCssResources('https://example.com/style.css');
     expect(result).toEqual([
       {
         css: 'a { color: blue; }',
@@ -48,7 +48,7 @@ describe('getCssOrigins', () => {
     const mockCss = 'a { color: blue; }';
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
 
-    const result = await getCssOrigins('https://example.com');
+    const result = await getCssResources('https://example.com');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -78,7 +78,7 @@ describe('getCssOrigins', () => {
       text: async () => mockHtml,
     });
 
-    const result = await getCssOrigins('https://example.com');
+    const result = await getCssResources('https://example.com');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -108,7 +108,7 @@ describe('getCssOrigins', () => {
     // Mock the CSS request
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
 
-    const result = await getCssOrigins('https://example.com');
+    const result = await getCssResources('https://example.com');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -145,7 +145,7 @@ describe('getCssOrigins', () => {
     const mockCss = 'a { color: blue; }';
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
 
-    const result = await getCssOrigins('https://example.com/very/deep/path/to/page');
+    const result = await getCssResources('https://example.com/very/deep/path/to/page');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -195,7 +195,7 @@ describe('getCssOrigins', () => {
       text: async () => mockHtml,
     });
 
-    const result = await getCssOrigins('https://web.archive.org/web/20250311183954/https://example.com/');
+    const result = await getCssResources('https://web.archive.org/web/20250311183954/https://example.com/');
     expect(result).toEqual([
       {
         css: mockCss,
@@ -207,7 +207,7 @@ describe('getCssOrigins', () => {
 
   describe('errors', () => {
     test('InvalidUrlError', async () => {
-      await expect(getCssOrigins('')).rejects.toThrowError(InvalidUrlError);
+      await expect(getCssResources('')).rejects.toThrowError(InvalidUrlError);
     });
 
     test('NotFoundError', async () => {
@@ -216,7 +216,7 @@ describe('getCssOrigins', () => {
         status: 404,
         statusText: 'Not Found',
       });
-      await expect(getCssOrigins('http://example.com')).rejects.toThrowError(NotFoundError);
+      await expect(getCssResources('http://example.com')).rejects.toThrowError(NotFoundError);
     });
 
     test('ForbiddenError', async () => {
@@ -225,7 +225,7 @@ describe('getCssOrigins', () => {
         status: 403,
         statusText: 'Forbidden',
       });
-      await expect(getCssOrigins('http://example.com')).rejects.toThrowError(ForbiddenError);
+      await expect(getCssResources('http://example.com')).rejects.toThrowError(ForbiddenError);
     });
 
     test('ConnectionRefusedError', async () => {
@@ -234,7 +234,7 @@ describe('getCssOrigins', () => {
         status: 400,
         statusText: 'fetch failed',
       });
-      await expect(getCssOrigins('http://example.com')).rejects.toThrowError(ConnectionRefusedError);
+      await expect(getCssResources('http://example.com')).rejects.toThrowError(ConnectionRefusedError);
     });
 
     test('ConnectionRefusedError (localhost)', async () => {
@@ -243,18 +243,18 @@ describe('getCssOrigins', () => {
         status: 400,
         statusText: 'fetch failed',
       });
-      await expect(getCssOrigins('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
+      await expect(getCssResources('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
     });
 
     test('TimeoutError', async () => {
       (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
-      await expect(getCssOrigins('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
+      await expect(getCssResources('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
     });
   });
 });
 
 describe('getCss', () => {
-  test('concatenates origins', async () => {
+  test('concatenates resources', async () => {
     const mockCss = 'a { color: blue; }';
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
     const result = await getCss('example.com/style.css');
