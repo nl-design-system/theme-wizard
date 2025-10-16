@@ -11,6 +11,7 @@ import {
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
 import { cors } from 'hono/cors';
+import { secureHeaders } from 'hono/secure-headers';
 import { timing, startTime, endTime } from 'hono/timing';
 import pkg from '../package.json';
 import { clientErrorSchema } from './schemas/client-error';
@@ -50,10 +51,9 @@ app.use(
   }),
 );
 
-app.get('/', (c) => c.redirect('/api/v1/openapi.json'));
+app.use('*', secureHeaders());
 
-// TODO: add security headers
-// See https://hono.dev/docs/middleware/builtin/secure-headers
+app.get('/', (c) => c.redirect('/api/v1/openapi.json'));
 
 app.openapi(
   createRoute({

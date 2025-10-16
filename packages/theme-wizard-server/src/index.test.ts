@@ -72,6 +72,17 @@ describe('/api/v1', () => {
         const timingHeader = response.headers.get('server-timing');
         expect.soft(timingHeader).toMatch(/scraping;dur=\d+(:?\.\d+);desc="Scraping CSS"/);
       });
+
+      test('contain security headers', async () => {
+        vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
+        const response = await app.request(`${url}?url=example.com`);
+
+        const hsts = response.headers.get('Strict-Transport-Security');
+        expect.soft(hsts).toBe('max-age=15552000; includeSubDomains');
+
+        const poweredBy = response.headers.get('X-Powered-By');
+        expect.soft(poweredBy).toBeNull();
+      });
     }
   });
 
