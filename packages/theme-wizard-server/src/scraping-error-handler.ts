@@ -1,6 +1,7 @@
 import type { Handler, Context, Env, Next } from 'hono';
 import { ScrapingError } from '@nl-design-system-community/css-scraper';
-import { HTTPException } from 'hono/http-exception';
+import type { ClientError } from './schemas/client-error';
+import type { ServerError } from './schemas/server-error';
 
 export const withScrapingErrorHandler = <E extends Env = Env, P extends string = string>(
   handler: Handler<E, P>,
@@ -10,15 +11,29 @@ export const withScrapingErrorHandler = <E extends Env = Env, P extends string =
       return await handler(c, next);
     } catch (error) {
       if (error instanceof ScrapingError) {
-        throw new HTTPException(400, {
-          cause: error,
-          message: error.message,
-        });
+        return c.json<ClientError>(
+          {
+            errors: [
+              {
+                name: error.name,
+                message: error.message,
+              },
+            ],
+            ok: false,
+          },
+          400,
+        );
       }
-      throw new HTTPException(500, {
-        cause: error,
-        message: 'encountered a scraping error',
-      });
+
+      return c.json<ServerError>(
+        {
+          error: {
+            message: 'encountered a scraping error',
+          },
+          ok: false,
+        },
+        500,
+      );
     }
   };
 };

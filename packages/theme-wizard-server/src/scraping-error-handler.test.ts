@@ -15,7 +15,15 @@ describe('withScrapingErrorHandler', () => {
     const response = await app.request('/test');
 
     expect(response.status).toBe(400);
-    expect(await response.text()).toBe('Scraping Error');
+    expect(await response.json()).toEqual({
+      errors: [
+        {
+          name: 'ScrapingError',
+          message: 'Scraping Error',
+        },
+      ],
+      ok: false,
+    });
   });
 
   test('converts unknown errors to 500', async () => {
@@ -29,7 +37,12 @@ describe('withScrapingErrorHandler', () => {
     const response = await app.request('/test');
 
     expect(response.status).toBe(500);
-    expect(await response.text()).toBe('encountered a scraping error');
+    expect(await response.json()).toEqual({
+      error: {
+        message: 'encountered a scraping error',
+      },
+      ok: false,
+    });
   });
 
   test('returns response when no error', async () => {

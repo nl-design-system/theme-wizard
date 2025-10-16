@@ -1,10 +1,20 @@
+import { swaggerUI } from '@hono/swagger-ui';
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
-import { getCss, getDesignTokens, DesignTokenSchema } from '@nl-design-system-community/css-scraper';
+import {
+  getCss,
+  getDesignTokens,
+  DesignTokenSchema,
+  type DesignToken,
+  EXTENSION_AUTHORED_AS,
+  EXTENSION_CSS_PROPERTIES,
+  EXTENSION_TOKEN_ID,
+  EXTENSION_USAGE_COUNT,
+} from '@nl-design-system-community/css-scraper';
 import { cors } from 'hono/cors';
 import { timing, startTime, endTime } from 'hono/timing';
 import pkg from '../package.json';
 import { clientErrorSchema } from './schemas/client-error';
-import { serverErrorSchema } from './schemas/server-error';
+import { type ServerError, serverErrorSchema } from './schemas/server-error';
 import { withScrapingErrorHandler } from './scraping-error-handler';
 
 // This is necessary to trick Vercel into deploying this as a HonoJS app
@@ -128,6 +138,31 @@ app.openapi(
         content: {
           'application/json': {
             schema: z.array(DesignTokenSchema).openapi({
+              example: [
+                {
+                  $extensions: {
+                    [EXTENSION_AUTHORED_AS]: 'Arial, sans-serif',
+                    [EXTENSION_CSS_PROPERTIES]: ['font-family'],
+                    [EXTENSION_TOKEN_ID]: 'fontFamily-abc123',
+                    [EXTENSION_USAGE_COUNT]: 12,
+                  },
+                  $type: 'fontFamily',
+                  $value: ['Arial', 'sans-serif'],
+                },
+                {
+                  $extensions: {
+                    [EXTENSION_AUTHORED_AS]: '16px',
+                    [EXTENSION_CSS_PROPERTIES]: ['font-size'],
+                    [EXTENSION_TOKEN_ID]: 'fontSize-abc123',
+                    [EXTENSION_USAGE_COUNT]: 3,
+                  },
+                  $type: 'dimension',
+                  $value: {
+                    unit: 'px',
+                    value: 16,
+                  },
+                },
+              ] satisfies DesignToken[],
               type: 'array',
             }),
           },
@@ -163,6 +198,26 @@ app.doc31('api/v1/openapi.json', {
     version: pkg.version,
   },
   openapi: '3.1.0',
+});
+
+app.get(
+  '/api/docs',
+  swaggerUI({
+    url: '/api/v1/openapi.json',
+  }),
+);
+
+// // Make all error responses uniform: all respond with the correct schema
+app.onError((error, c) => {
+  return c.json<ServerError>(
+    {
+      error: {
+        message: 'Internal server error',
+      },
+      ok: false,
+    },
+    500,
+  );
 });
 
 export default app;

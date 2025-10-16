@@ -206,6 +206,9 @@ importers:
 
   packages/theme-wizard-server:
     dependencies:
+      '@hono/swagger-ui':
+        specifier: 0.5.2
+        version: 0.5.2(hono@4.9.9)
       '@hono/zod-openapi':
         specifier: 1.1.3
         version: 1.1.3(hono@4.9.9)(zod@4.1.12)
@@ -716,6 +719,11 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/swagger-ui@0.5.2':
+    resolution: {integrity: sha512-7wxLKdb8h7JTdZ+K8DJNE3KXQMIpJejkBTQjrYlUWF28Z1PGOKw6kUykARe5NTfueIN37jbyG/sBYsbzXzG53A==}
+    peerDependencies:
+      hono: '*'
 
   '@hono/vite-dev-server@0.21.1':
     resolution: {integrity: sha512-HRqwsgbbTJ4a0Jiq7aB5aWb12upHtXGSU6nh+LuokTaB6VzFfiIkUBRUdAtRbGV7a3EWehoGhAbVZZjfKgR3uw==}
@@ -6482,6 +6490,10 @@ snapshots:
   '@fastify/busboy@2.1.1': {}
 
   '@hono/node-server@1.19.5(hono@4.9.9)':
+    dependencies:
+      hono: 4.9.9
+
+  '@hono/swagger-ui@0.5.2(hono@4.9.9)':
     dependencies:
       hono: 4.9.9
 
