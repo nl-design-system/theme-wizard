@@ -13,5 +13,5 @@
     "importHelpers": false,
     "useDefineForClassFields": false
   },
-  "include": ["src/**/*", "globals.d.ts"]
+  "include": ["src/**/*", "vite-env.d.ts"]
 }
