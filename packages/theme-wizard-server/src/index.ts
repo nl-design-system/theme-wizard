@@ -1,10 +1,9 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
-import { getCss, getDesignTokens } from '@nl-design-system-community/css-scraper';
+import { getCss, getDesignTokens, DesignTokenSchema } from '@nl-design-system-community/css-scraper';
 import { cors } from 'hono/cors';
 import { timing, startTime, endTime } from 'hono/timing';
 import pkg from '../package.json';
 import { clientErrorSchema } from './schemas/client-error';
-import { DesignToken } from './schemas/design-tokens';
 import { serverErrorSchema } from './schemas/server-error';
 import { withScrapingErrorHandler } from './scraping-error-handler';
 
@@ -90,15 +89,15 @@ app.openapi(
             }),
           },
         },
-        description: 'Scraping successful',
+        description: 'Scraping css successful',
       },
       400: {
         content: { 'application/json': { schema: clientErrorSchema } },
-        description: 'Scraping failed: user error',
+        description: 'Scraping css failed: user error',
       },
       500: {
         content: { 'application/json': { schema: serverErrorSchema } },
-        description: 'Scraping failed: unexpected error',
+        description: 'Scraping css failed: unexpected error',
       },
     },
   }),
@@ -128,20 +127,20 @@ app.openapi(
       200: {
         content: {
           'application/json': {
-            schema: z.array(DesignToken).openapi({
+            schema: z.array(DesignTokenSchema).openapi({
               type: 'array',
             }),
           },
         },
-        description: 'Scraping successful',
+        description: 'Scraping design tokens successful',
       },
       400: {
         content: { 'application/json': { schema: clientErrorSchema } },
-        description: 'Scraping failed: user error',
+        description: 'Scraping design tokens failed: user error',
       },
       500: {
         content: { 'application/json': { schema: serverErrorSchema } },
-        description: 'Scraping failed: unexpected error',
+        description: 'Scraping design tokens failed: unexpected error',
       },
     },
   }),
