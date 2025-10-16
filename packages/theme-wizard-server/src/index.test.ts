@@ -37,11 +37,21 @@ describe('/api/v1', () => {
     });
   });
 
+  describe('swagger docs', () => {
+    test('shows the UI', async () => {
+      const response = await app.request('/api/docs');
+
+      expect.soft(response.status).toBe(200);
+      expect.soft(response.headers.get('content-type')).toContain('text/html');
+      expect.soft(await response.text()).toContain('<div id="swagger-ui">');
+    });
+  });
+
   const mockedGetCssData = 'a { color: blue; }';
 
   describe('shared /css & /css-design-tokens', () => {
     for (const url of ['/api/v1/css', '/api/v1/css-design-tokens']) {
-      test('missing `url` query param', async () => {
+      test(`missing "url" query param (${url})`, async () => {
         const response = await app.request(url);
         expect.soft(response.status).toBe(400);
         expect.soft(await response.json()).toEqual({
@@ -56,7 +66,7 @@ describe('/api/v1', () => {
         });
       });
 
-      test('contains server-timing', async () => {
+      test(`contains server-timing (${url})`, async () => {
         vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
         const response = await app.request(`${url}?url=example.com`);
         const timingHeader = response.headers.get('server-timing');
@@ -72,6 +82,19 @@ describe('/api/v1', () => {
 
       expect.soft(await response.text()).toBe(mockedGetCssData);
       expect.soft(response.headers.get('content-type')).toContain('text/css');
+    });
+
+    test('server error', async () => {
+      vi.spyOn(cssScraper, 'getCss').mockRejectedValueOnce(new Error('Generic error'));
+      const response = await app.request('/api/v1/css?url=example.com');
+
+      expect.soft(response.status).toBe(500);
+      expect.soft(await response.json()).toEqual({
+        error: {
+          message: 'Internal server error',
+        },
+        ok: false,
+      });
     });
   });
 
