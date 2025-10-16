@@ -108,8 +108,8 @@ export class LitSidebar extends LitElement {
                 name="sourceUrl"
                 class="theme-form-field__input"
                 type="url"
-                .value=${this.sourceUrl || ''}
                 placeholder="https://example.com"
+                .value=${this.sourceUrl || ''}
               />
 
               <utrecht-button appearance="primary-action-button" type="submit">Analyseer</utrecht-button>
