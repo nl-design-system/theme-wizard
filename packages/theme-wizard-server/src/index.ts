@@ -47,7 +47,29 @@ const app = new OpenAPIHono({
 app.use(
   '*',
   cors({
-    origin: '*', // TODO: scope down
+    allowMethods: ['HEAD', 'GET'],
+    origin: (origin) => {
+      // Allow requests with no origin (like curl, Postman)
+      if (!origin) return null;
+
+      // Allow localhost with any port
+      if (/^https?:\/\/localhost(:\d+)?$/i.test(origin)) return origin;
+
+      // Preview deploys
+      if (
+        /^https:\/\/theme-wizard-[a-z0-9]+-nl-design-system\.vercel\.app$/i.test(origin) ||
+        /^https:\/\/theme-wizard-git-[a-z0-9]+-nl-design-system\.vercel\.app$/i.test(origin)
+      ) {
+        return origin;
+      }
+
+      // Production deploys
+      if (origin === 'https://theme-wizard-nl-design-system.vercel.app') {
+        return origin;
+      }
+
+      return null;
+    },
   }),
 );
 

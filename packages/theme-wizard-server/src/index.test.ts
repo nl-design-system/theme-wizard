@@ -15,6 +15,47 @@ describe('health check', () => {
   });
 });
 
+describe('cors', () => {
+  test('allows request without origin', async () => {
+    const response = await app.request('/');
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
+  });
+
+  const allowedOrigins = [
+    'http://localhost',
+    'http://localhost:9491',
+    // preview deploys
+    'https://theme-wizard-8od19p602-nl-design-system.vercel.app',
+    'https://theme-wizard-git-main-nl-design-system.vercel.app',
+    // production
+    'https://theme-wizard-nl-design-system.vercel.app',
+  ];
+
+  for (const origin of allowedOrigins) {
+    test(`allows ${origin}`, async () => {
+      const response = await app.request('/', {
+        headers: { origin },
+      });
+      expect(response.headers.get('Access-Control-Allow-Origin')).toBe(origin);
+    });
+  }
+
+  const disallowedOrigins = [
+    'https://example.com',
+    'https://theme-wizard-spoof-url-8od19p602-nl-design-system.vercel.app',
+    'https://theme-wizard-8od19p602-spoof-url-nl-design-system.vercel.app',
+  ];
+
+  for (const origin of disallowedOrigins) {
+    test(`disallows ${origin}`, async () => {
+      const response = await app.request('/', {
+        headers: { origin },
+      });
+      expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
+    });
+  }
+});
+
 describe('/api/v1', () => {
   test('/ redirects to openapi', async () => {
     const response = await app.request('/');
