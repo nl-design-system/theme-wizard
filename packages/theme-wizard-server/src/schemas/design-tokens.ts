@@ -1,10 +1,16 @@
 import { z } from '@hono/zod-openapi';
+import {
+  EXTENSION_AUTHORED_AS,
+  EXTENSION_CSS_PROPERTIES,
+  EXTENSION_TOKEN_ID,
+  EXTENSION_USAGE_COUNT,
+} from '@nl-design-system-community/css-scraper';
 
 const TokenExtensions = z.object({
-  'nl.designsystem.theme-wizard.css-authored-as': z.string(),
-  'nl.designsystem.theme-wizard.css-properties': z.array(z.string()),
-  'nl.designsystem.theme-wizard.token-id': z.string(),
-  'nl.designsystem.theme-wizard.usage-count': z.int().positive(),
+  [EXTENSION_AUTHORED_AS]: z.string(),
+  [EXTENSION_CSS_PROPERTIES]: z.array(z.string()),
+  [EXTENSION_TOKEN_ID]: z.string(),
+  [EXTENSION_USAGE_COUNT]: z.int().positive(),
 });
 
 const ColorComponent = z.union([z.number(), z.literal('none')]);
