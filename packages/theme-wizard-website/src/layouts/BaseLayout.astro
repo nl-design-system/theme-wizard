@@ -1,5 +1,5 @@
 ---
-import favicon from '../assets/favicon.svg';
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 
 export interface Props {
   title?: string;
@@ -14,7 +14,6 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href={favicon.src} />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
