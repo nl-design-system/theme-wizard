@@ -643,10 +643,10 @@ describe('getDesignTokens', () => {
     expect(result).toEqual([
       {
         $extensions: {
-          'nl.designsystem.theme-wizard.css-authored-as': 'blue',
-          'nl.designsystem.theme-wizard.css-properties': ['color'],
-          'nl.designsystem.theme-wizard.token-id': 'blue-edec3e9a',
-          'nl.designsystem.theme-wizard.usage-count': 1,
+          'nl.nldesignsystem.theme-wizard.css-authored-as': 'blue',
+          'nl.nldesignsystem.theme-wizard.css-properties': ['color'],
+          'nl.nldesignsystem.theme-wizard.token-id': 'blue-edec3e9a',
+          'nl.nldesignsystem.theme-wizard.usage-count': 1,
         },
         $type: 'color',
         $value: {
@@ -657,20 +657,20 @@ describe('getDesignTokens', () => {
       },
       {
         $extensions: {
-          'nl.designsystem.theme-wizard.css-authored-as': 'Arial, system-ui, sans-serif',
-          'nl.designsystem.theme-wizard.css-properties': ['font-family'],
-          'nl.designsystem.theme-wizard.token-id': 'fontFamily-4aaee372',
-          'nl.designsystem.theme-wizard.usage-count': 1,
+          'nl.nldesignsystem.theme-wizard.css-authored-as': 'Arial, system-ui, sans-serif',
+          'nl.nldesignsystem.theme-wizard.css-properties': ['font-family'],
+          'nl.nldesignsystem.theme-wizard.token-id': 'fontFamily-4aaee372',
+          'nl.nldesignsystem.theme-wizard.usage-count': 1,
         },
         $type: 'fontFamily',
         $value: ['Arial', 'system-ui', 'sans-serif'],
       },
       {
         $extensions: {
-          'nl.designsystem.theme-wizard.css-authored-as': '16px',
-          'nl.designsystem.theme-wizard.css-properties': ['font-size'],
-          'nl.designsystem.theme-wizard.token-id': 'fontSize-171eed',
-          'nl.designsystem.theme-wizard.usage-count': 1,
+          'nl.nldesignsystem.theme-wizard.css-authored-as': '16px',
+          'nl.nldesignsystem.theme-wizard.css-properties': ['font-size'],
+          'nl.nldesignsystem.theme-wizard.token-id': 'fontSize-171eed',
+          'nl.nldesignsystem.theme-wizard.usage-count': 1,
         },
         $type: 'dimension',
         $value: {

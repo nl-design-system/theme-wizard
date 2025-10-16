@@ -8,10 +8,10 @@ import {
   EXTENSION_USAGE_COUNT as PW_EXTENSION_USAGE_COUNT,
 } from '@projectwallace/css-design-tokens';
 
-export const EXTENSION_TOKEN_ID = 'nl.designsystem.theme-wizard.token-id';
-export const EXTENSION_USAGE_COUNT = 'nl.designsystem.theme-wizard.usage-count';
-export const EXTENSION_AUTHORED_AS = 'nl.designsystem.theme-wizard.css-authored-as';
-export const EXTENSION_CSS_PROPERTIES = 'nl.designsystem.theme-wizard.css-properties';
+export const EXTENSION_TOKEN_ID = 'nl.nldesignsystem.theme-wizard.token-id';
+export const EXTENSION_USAGE_COUNT = 'nl.nldesignsystem.theme-wizard.usage-count';
+export const EXTENSION_AUTHORED_AS = 'nl.nldesignsystem.theme-wizard.css-authored-as';
+export const EXTENSION_CSS_PROPERTIES = 'nl.nldesignsystem.theme-wizard.css-properties';
 
 type TokenExtensions = {
   [EXTENSION_TOKEN_ID]: string;
