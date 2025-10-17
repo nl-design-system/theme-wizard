@@ -17,7 +17,9 @@
     "lint-fix": "pnpm run --sequential '/^lint-fix:.+$/'",
     "lint-fix:css": "pnpm run lint:css --fix",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test-e2e-install-browsers": "playwright install",
+    "test-e2e": "playwright test"
   },
   "dependencies": {
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "postcss-html": "1.8.0",
     "stylelint": "16.22.0",
-    "stylelint-config-astro": "1.0.4"
+    "stylelint-config-astro": "1.0.4",
+    "@playwright/test": "1.56.0"
   }
 }
