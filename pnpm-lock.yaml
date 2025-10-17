@@ -49,8 +49,8 @@ importers:
         specifier: 0.45.0
         version: 0.45.0
       npm-check-updates:
-        specifier: 18.0.1
-        version: 18.0.1
+        specifier: 19.0.0
+        version: 19.0.0
       npm-package-json-lint:
         specifier: 9.0.0
         version: 9.0.0(typescript@5.8.3)
@@ -254,7 +254,7 @@ importers:
         version: 1.0.0
       astro:
         specifier: 5.14.1
-        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0)
+        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0)
 
   proprietary/assets: {}
 
@@ -4237,9 +4237,9 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
-  npm-check-updates@18.0.1:
-    resolution: {integrity: sha512-MO7mLp/8nm6kZNLLyPgz4gHmr9tLoU+pWPLdXuGAx+oZydBHkHWN0ibTonsrfwC2WEQNIQxuZagYwB67JQpAuw==}
-    engines: {node: ^18.18.0 || >=20.0.0, npm: '>=8.12.1'}
+  npm-check-updates@19.0.0:
+    resolution: {integrity: sha512-qcfjZEv6xB+WvW24S8wU1MKISPPiTREraBg62XDo/7zmOLXH3Zj7ti2v/LRfks0qITU8SDZLTWwgIitflvursw==}
+    engines: {node: '>=20.0.0', npm: '>=8.12.1'}
     hasBin: true
 
   npm-package-json-lint@9.0.0:
@@ -7962,7 +7962,7 @@ snapshots:
 
   astral-regex@2.0.0: {}
 
-  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0):
+  astro@5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.9.3)(yaml@2.8.0):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.3
@@ -8012,7 +8012,7 @@ snapshots:
       smol-toml: 1.4.2
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
-      tsconfck: 3.1.6(typescript@5.8.3)
+      tsconfck: 3.1.6(typescript@5.9.3)
       ultrahtml: 1.6.0
       unifont: 0.5.2
       unist-util-visit: 5.0.0
@@ -8025,7 +8025,7 @@ snapshots:
       yocto-spinner: 0.2.3
       zod: 3.25.76
       zod-to-json-schema: 3.24.6(zod@3.25.76)
-      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.76)
+      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.76)
     optionalDependencies:
       sharp: 0.34.4
     transitivePeerDependencies:
@@ -10576,7 +10576,7 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-  npm-check-updates@18.0.1: {}
+  npm-check-updates@19.0.0: {}
 
   npm-package-json-lint@9.0.0(typescript@5.8.3):
     dependencies:
@@ -11896,9 +11896,9 @@ snapshots:
 
   ts-toolbelt@6.15.5: {}
 
-  tsconfck@3.1.6(typescript@5.8.3):
+  tsconfck@3.1.6(typescript@5.9.3):
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   tsconfig-paths@4.2.0:
     dependencies:
@@ -12495,9 +12495,9 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.76):
+  zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.76):
     dependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
       zod: 3.25.76
 
   zod@3.22.4: {}
