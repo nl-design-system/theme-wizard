@@ -1,10 +1,10 @@
 export default {
   extends: ['../../.stylelintrc.json'],
-  ignoreFiles: ['**/*.ts', '!**/*.css.ts'],
+  ignoreFiles: ['**/*', '!**/*.ts'],
   overrides: [
     {
       customSyntax: 'postcss-lit',
-      files: ['**/*.css.ts'],
+      files: ['**/*.ts'],
     },
   ],
 };
