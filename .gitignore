@@ -11,6 +11,7 @@ build/
 coverage/
 dist/
 tmp/
+test-results/
 
 # Ignore archives
 *.7z
