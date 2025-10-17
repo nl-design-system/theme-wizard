@@ -18,7 +18,7 @@
     "lint-fix:css": "pnpm run lint:css --fix",
     "preview": "astro preview",
     "astro": "astro",
-    "test-e2e-install-browsers": "playwright install",
+    "test-e2e-install-browsers": "pnpm exec playwright install",
     "test-e2e": "playwright test"
   },
   "dependencies": {
