@@ -23,12 +23,6 @@ export class App extends LitElement {
   private scrapedTokens: Record<string, unknown> = {};
   private scrapedCSS: string = '';
 
-  @property({ type: String })
-  pageTitle = 'Live Voorbeeld';
-
-  @property({ type: String })
-  pageDescription = 'Hieronder zie je een live voorbeeld van de opgegeven website met de geselecteerde huisstijl.';
-
   static override readonly styles = [appStyles];
 
   constructor() {
@@ -44,10 +38,8 @@ export class App extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-
-    this.#loadInitialCSS();
-
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
+    this.#loadInitialCSS();
   }
 
   override disconnectedCallback() {
@@ -100,9 +92,6 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <h2 class="theme-preview-main__title">${this.pageTitle}</h2>
-          <p class="theme-preview-main__description">${this.pageDescription}</p>
-
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${previewUrl}

@@ -1,5 +1,8 @@
+import { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { SidebarConfig } from '../utils/types';
 import { ThemeModel } from '../models';
+import { generateThemeCSS } from '../utils/css-generator';
+
 /**
  * ThemeController - Orchestrator for managing theme state and coordinating components
  *
@@ -8,15 +11,21 @@ import { ThemeModel } from '../models';
  * - Coordinates state changes and exposes data to the host
  * - Provides high-level methods for theme operations
  */
-export class ThemeController {
+export class ThemeController implements ReactiveController {
   /** Theme model containing configuration and generation logic */
   public themeModel: ThemeModel;
   readonly #stylesheet: CSSStyleSheet = new CSSStyleSheet();
 
-  constructor() {
+  host: ReactiveControllerHost;
+
+  constructor(host: ReactiveControllerHost) {
     this.themeModel = new ThemeModel();
+
+    (this.host = host).addController(this);
     this.updateStylesheet();
   }
+
+  hostConnected(): void {}
 
   get stylesheet(): CSSStyleSheet {
     return this.#stylesheet;
@@ -36,19 +45,13 @@ export class ThemeController {
     return this.themeModel.getConfig();
   }
 
+  /**
+   * Updates the adopted stylesheet with generated CSS from the current theme config
+   * All theme-related CSS generation is delegated to the css-generator utility
+   */
   private updateStylesheet(): void {
-    const { bodyFont, headingFont } = this.themeModel.getConfig();
-
-    const css = `:host {
-      /* Design tokens based on theme configuration */
-      --basis-text-font-family-default: ${bodyFont || '"Comic Sans"'};
-      --basis-text-font-family-monospace: 'Change me';
-      --basis-text-font-weight-default: 400;
-      --basis-text-font-weight-bold: 700;
-      --basis-heading-font-family: ${headingFont || '"Comic Sans"'};
-      --basis-heading-font-bold: 700;
-    }`;
-
+    const config = this.themeModel.getConfig();
+    const css = generateThemeCSS(config);
     this.#stylesheet.replaceSync(css);
   }
 }

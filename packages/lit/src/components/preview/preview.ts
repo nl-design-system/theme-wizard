@@ -8,7 +8,8 @@ import previewStyles from './preview.css';
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
   @property() scrapedCSS: string = '';
-  @property() stylesheet: CSSStyleSheet | null = null;
+  @property({ hasChanged: (v, o) => v !== o })
+  stylesheet: CSSStyleSheet | null = null;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
@@ -28,8 +29,7 @@ export class ThemePreview extends LitElement {
       this.fetchContent();
     }
 
-    if (changedProps.has('scrapedCSS') && this.scrapedCSS) {
-      this.baseSheet.replaceSync(this.scrapedCSS);
+    if (changedProps.has('stylesheet')) {
       this.#adoptSheets();
     }
   }
@@ -56,21 +56,30 @@ export class ThemePreview extends LitElement {
       this.htmlContent = doc.body.innerHTML;
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
+      errinstanceofErrorerr.message;
     } finally {
       this.isLoading = false;
     }
   };
 
-  // Ensures both scraped CSS and theme stylesheet are applied in shadow DOM
   #adoptSheets(): void {
-    const sheets: CSSStyleSheet[] = [];
-    if (this.stylesheet) sheets.push(this.stylesheet);
-    if (this.baseSheet) sheets.push(this.baseSheet);
-
-    sheets.push(this.mappingSheet);
-
     const root = this.shadowRoot;
-    if (root) {
+    if (!root) return;
+
+    const sheets: CSSStyleSheet[] = [];
+    sheets;
+    if (this.stylesheet) sheets.push(this.stylesheet);
+    if (this.scrapedCSS) {
+      const scraped = new CSSStyleSheet();
+      scraped.replaceSync(this.scrapedCSS);
+      sheets.push(scraped);
+    }
+
+    // Alleen hertoewijzen als het echt anders is
+    const currentSheets = root.adoptedStyleSheets;
+    const isDifferent = sheets.length !== currentSheets.length || sheets.some((s, i) => s !== currentSheets[i]);
+
+    if (isDifferent) {
       root.adoptedStyleSheets = sheets;
     }
   }
@@ -92,7 +101,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div class="ma-theme" .innerHTML=${this.htmlContent}></div> `;
+    return html` <div .innerHTML=${this.htmlContent}></div> `;
   }
 }
 
