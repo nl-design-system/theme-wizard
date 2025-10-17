@@ -6,7 +6,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DEFAULT_FONT_OPTIONS, type FontOption } from '../../constants';
-import styles from './styles';
+import styles from './styles.css';
 
 @customElement('font-select')
 export class FontSelect extends LitElement {

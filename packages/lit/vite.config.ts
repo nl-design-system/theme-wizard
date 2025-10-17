@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import litCss from 'vite-plugin-lit-css';
 
 export default defineConfig({
   build: {
@@ -11,4 +12,5 @@ export default defineConfig({
       external: ['lit'],
     },
   },
+  plugins: [litCss()]
 });
