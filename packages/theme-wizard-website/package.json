@@ -11,6 +11,11 @@
     "dev": "API_HOST=http://localhost:9491 astro dev",
     "build": "pnpm run clean && astro build",
     "clean": "rm -rf dist .astro build",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:astro": "astro check",
+    "lint:css": "stylelint .",
+    "lint-fix": "pnpm run --sequential '/^lint-fix:.+$/'",
+    "lint-fix:css": "pnpm run lint:css --fix",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -18,5 +23,10 @@
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*",
     "@vercel/related-projects": "1.0.0",
     "astro": "5.14.1"
+  },
+  "devDependencies": {
+    "postcss-html": "1.8.0",
+    "stylelint": "16.22.0",
+    "stylelint-config-astro": "1.0.4"
   }
 }
