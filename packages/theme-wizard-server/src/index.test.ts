@@ -1,6 +1,46 @@
 import * as cssScraper from '@nl-design-system-community/css-scraper';
-import { test, expect, describe, vi } from 'vitest';
+import { test, expect, describe, vi, beforeEach } from 'vitest';
+
+vi.mock('@vercel/related-projects', () => ({
+  withRelatedProject: vi.fn(),
+}));
+
+import { withRelatedProject } from '@vercel/related-projects';
 import app from './index';
+
+describe('cors', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    // Clear module cache so app re-imports on the fly with fresh mocks
+    vi.resetModules();
+  });
+
+  test('allows request without origin', async () => {
+    const response = await app.request('/');
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
+  });
+
+  test('allows theme wizard website origin', async () => {
+    const origin = 'http://localhost:8080';
+    vi.mocked(withRelatedProject).mockReturnValue(origin);
+    // Re-import app so it has withRelatedProject correctly mocked
+    const { default: app } = await import('./index');
+    const response = await app.request('/', {
+      headers: { origin },
+    });
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBe(origin);
+  });
+
+  test('disallows foreign origins', async () => {
+    vi.mocked(withRelatedProject).mockReturnValue('http://example.com');
+    // Re-import app so it has withRelatedProject correctly mocked
+    const { default: app } = await import('./index');
+    const response = await app.request('/', {
+      headers: { origin: 'http://spoof-website.com' },
+    });
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
+  });
+});
 
 describe('health check', () => {
   test('returns correct response', async () => {
@@ -13,47 +53,6 @@ describe('health check', () => {
     const response = await app.request('/healthz');
     expect(response.headers.get('server-timing')).toBeNull();
   });
-});
-
-describe('cors', () => {
-  test('allows request without origin', async () => {
-    const response = await app.request('/');
-    expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
-  });
-
-  const allowedOrigins = [
-    'http://localhost',
-    'http://localhost:9491',
-    // preview deploys
-    'https://theme-wizard-8od19p602-nl-design-system.vercel.app',
-    'https://theme-wizard-git-main-nl-design-system.vercel.app',
-    // production
-    'https://theme-wizard-nl-design-system.vercel.app',
-  ];
-
-  for (const origin of allowedOrigins) {
-    test(`allows ${origin}`, async () => {
-      const response = await app.request('/', {
-        headers: { origin },
-      });
-      expect(response.headers.get('Access-Control-Allow-Origin')).toBe(origin);
-    });
-  }
-
-  const disallowedOrigins = [
-    'https://example.com',
-    'https://theme-wizard-spoof-url-8od19p602-nl-design-system.vercel.app',
-    'https://theme-wizard-8od19p602-spoof-url-nl-design-system.vercel.app',
-  ];
-
-  for (const origin of disallowedOrigins) {
-    test(`disallows ${origin}`, async () => {
-      const response = await app.request('/', {
-        headers: { origin },
-      });
-      expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
-    });
-  }
 });
 
 describe('/api/v1', () => {

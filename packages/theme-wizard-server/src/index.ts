@@ -22,7 +22,7 @@ import { withScrapingErrorHandler } from './scraping-error-handler';
 // This tricks Vercel into deploying this as a HonoJS app
 /* @__PURE__ */ import('hono');
 
-const urlSchema = z.string().trim().nonempty().openapi({
+const urlSchema = z.string().trim().openapi({
   example: 'example.com',
   type: 'string',
 });
