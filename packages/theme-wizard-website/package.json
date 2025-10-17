@@ -27,9 +27,9 @@
     "astro": "5.14.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.56.0",
     "postcss-html": "1.8.0",
     "stylelint": "16.22.0",
-    "stylelint-config-astro": "1.0.4",
-    "@playwright/test": "1.56.0"
+    "stylelint-config-astro": "1.0.4"
   }
 }
