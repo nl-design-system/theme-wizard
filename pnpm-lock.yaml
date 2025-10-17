@@ -271,7 +271,6 @@ importers:
       stylelint-config-astro:
         specifier: 1.0.4
         version: 1.0.4(postcss-html@1.8.0)(stylelint@16.22.0(typescript@5.9.3))
-        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.3)(typescript@5.8.3)(yaml@2.8.0)
 
   proprietary/assets: {}
 
