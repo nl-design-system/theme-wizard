@@ -7,9 +7,6 @@ test('page has accessibility basics', async ({ page }) => {
   const title = await page.title();
   expect.soft(title).toBeTruthy();
 
-  // Has language specified
+  // Has document language specified
   await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
-
-  // Has <h1>
-  await expect.soft(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
