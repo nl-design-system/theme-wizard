@@ -1,6 +1,46 @@
 import * as cssScraper from '@nl-design-system-community/css-scraper';
-import { test, expect, describe, vi } from 'vitest';
+import { test, expect, describe, vi, beforeEach } from 'vitest';
+
+vi.mock('@vercel/related-projects', () => ({
+  withRelatedProject: vi.fn(),
+}));
+
+import { withRelatedProject } from '@vercel/related-projects';
 import app from './index';
+
+describe('cors', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    // Clear module cache so app re-imports on the fly with fresh mocks
+    vi.resetModules();
+  });
+
+  test('allows request without origin', async () => {
+    const response = await app.request('/');
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
+  });
+
+  test('allows theme wizard website origin', async () => {
+    const origin = 'http://localhost:8080';
+    vi.mocked(withRelatedProject).mockReturnValue(origin);
+    // Re-import app so it has withRelatedProject correctly mocked
+    const { default: app } = await import('./index');
+    const response = await app.request('/', {
+      headers: { origin },
+    });
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBe(origin);
+  });
+
+  test('disallows foreign origins', async () => {
+    vi.mocked(withRelatedProject).mockReturnValue('https://example.com');
+    // Re-import app so it has withRelatedProject correctly mocked
+    const { default: app } = await import('./index');
+    const response = await app.request('/', {
+      headers: { origin: 'https://spoof-website.com' },
+    });
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
+  });
+});
 
 describe('health check', () => {
   test('returns correct response', async () => {
@@ -71,6 +111,17 @@ describe('/api/v1', () => {
         const response = await app.request(`${url}?url=example.com`);
         const timingHeader = response.headers.get('server-timing');
         expect.soft(timingHeader).toMatch(/scraping;dur=\d+(:?\.\d+);desc="Scraping CSS"/);
+      });
+
+      test('contain security headers', async () => {
+        vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
+        const response = await app.request(`${url}?url=example.com`);
+
+        const hsts = response.headers.get('Strict-Transport-Security');
+        expect.soft(hsts).toBe('max-age=15552000; includeSubDomains');
+
+        const poweredBy = response.headers.get('X-Powered-By');
+        expect.soft(poweredBy).toBeNull();
       });
     }
   });

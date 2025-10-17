@@ -10,17 +10,19 @@ import {
   EXTENSION_TOKEN_ID,
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
+import { withRelatedProject } from '@vercel/related-projects';
 import { cors } from 'hono/cors';
+import { secureHeaders } from 'hono/secure-headers';
 import { timing, startTime, endTime } from 'hono/timing';
 import pkg from '../package.json';
 import { clientErrorSchema } from './schemas/client-error';
 import { type ServerError, serverErrorSchema } from './schemas/server-error';
 import { withScrapingErrorHandler } from './scraping-error-handler';
 
-// This is necessary to trick Vercel into deploying this as a HonoJS app
+// This tricks Vercel into deploying this as a HonoJS app
 /* @__PURE__ */ import('hono');
 
-const urlSchema = z.string().nonempty().openapi({
+const urlSchema = z.string().trim().openapi({
   example: 'example.com',
   type: 'string',
 });
@@ -43,17 +45,25 @@ const app = new OpenAPIHono({
   },
 });
 
+const websiteHost = withRelatedProject({
+  defaultHost: 'http://localhost:9492',
+  projectName: 'theme-wizard',
+});
+
 app.use(
   '*',
   cors({
-    origin: '*', // TODO: scope down
+    allowMethods: ['HEAD', 'GET'],
+    origin: (origin) => {
+      if (origin === websiteHost) return origin;
+      return null;
+    },
   }),
 );
 
-app.get('/', (c) => c.redirect('/api/v1/openapi.json'));
+app.use('*', secureHeaders());
 
-// TODO: add security headers
-// See https://hono.dev/docs/middleware/builtin/secure-headers
+app.get('/', (c) => c.redirect('/api/v1/openapi.json'));
 
 app.openapi(
   createRoute({
