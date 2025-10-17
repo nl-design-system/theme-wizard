@@ -1,9 +1,6 @@
-import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
-import { css, unsafeCSS } from 'lit';
+import { css } from 'lit';
 
 export default css`
-  ${unsafeCSS(maTheme)}
-
   :host {
     display: block;
     inline-size: 100%;
@@ -26,8 +23,8 @@ export default css`
   h4,
   h5,
   h6 {
-    font-family: var(--theme-heading-font-family, var(--basis-heading-font-family)) !important;
     color: var(--basis-heading-color) !important;
+    font-family: var(--theme-heading-font-family, var(--basis-heading-font-family)) !important;
     font-size: var(--basis-heading-font-size) !important;
   }
 `;
