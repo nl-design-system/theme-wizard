@@ -32,11 +32,11 @@ describe('cors', () => {
   });
 
   test('disallows foreign origins', async () => {
-    vi.mocked(withRelatedProject).mockReturnValue('http://example.com');
+    vi.mocked(withRelatedProject).mockReturnValue('https://example.com');
     // Re-import app so it has withRelatedProject correctly mocked
     const { default: app } = await import('./index');
     const response = await app.request('/', {
-      headers: { origin: 'http://spoof-website.com' },
+      headers: { origin: 'https://spoof-website.com' },
     });
     expect(response.headers.get('Access-Control-Allow-Origin')).toBeNull();
   });
