@@ -10,6 +10,7 @@ import {
   EXTENSION_TOKEN_ID,
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
+import { withRelatedProject } from '@vercel/related-projects';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
 import { timing, startTime, endTime } from 'hono/timing';
@@ -18,10 +19,10 @@ import { clientErrorSchema } from './schemas/client-error';
 import { type ServerError, serverErrorSchema } from './schemas/server-error';
 import { withScrapingErrorHandler } from './scraping-error-handler';
 
-// This is necessary to trick Vercel into deploying this as a HonoJS app
+// This tricks Vercel into deploying this as a HonoJS app
 /* @__PURE__ */ import('hono');
 
-const urlSchema = z.string().nonempty().openapi({
+const urlSchema = z.string().trim().nonempty().openapi({
   example: 'example.com',
   type: 'string',
 });
@@ -44,30 +45,17 @@ const app = new OpenAPIHono({
   },
 });
 
+const websiteHost = withRelatedProject({
+  defaultHost: 'http://localhost:9492',
+  projectName: 'theme-wizard',
+});
+
 app.use(
   '*',
   cors({
     allowMethods: ['HEAD', 'GET'],
     origin: (origin) => {
-      // Allow requests with no origin (like curl, Postman)
-      if (!origin) return null;
-
-      // Allow localhost with any port
-      if (/^https?:\/\/localhost(:\d+)?$/i.test(origin)) return origin;
-
-      // Preview deploys
-      if (
-        /^https:\/\/theme-wizard-[a-z0-9]+-nl-design-system\.vercel\.app$/i.test(origin) ||
-        /^https:\/\/theme-wizard-git-[a-z0-9]+-nl-design-system\.vercel\.app$/i.test(origin)
-      ) {
-        return origin;
-      }
-
-      // Production deploys
-      if (origin === 'https://theme-wizard-nl-design-system.vercel.app') {
-        return origin;
-      }
-
+      if (origin === websiteHost) return origin;
       return null;
     },
   }),
