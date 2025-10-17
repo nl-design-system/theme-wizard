@@ -13,7 +13,9 @@
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "build": "pnpm run types && vite build",
     "clean": "rimraf dist/",
-    "lint": "stylelint 'src/**/*.css.ts'",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:css": "stylelint .",
+    "lint-fix:css": "pnpm run lint:css --fix",
     "lint-build": "tsc --noEmit --project tsconfig.json",
     "preview": "vite preview"
   },
