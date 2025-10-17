@@ -146,8 +146,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build
+        run: pnpm run build
+
       - name: Install headless browsers for end-to-end testing
-        run: pnpm run --if-present test-e2e-install-browsers
+        run: pnpm run test-e2e-install-browsers
 
       - name: End-to-end tests
-        run: pnpm run --if-present test-e2e
+        run: pnpm run test-e2e
