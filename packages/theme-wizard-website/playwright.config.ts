@@ -38,7 +38,7 @@ const config: PlaywrightTestConfig = {
   testDir: './e2e',
   testMatch: '**/*spec.ts',
   /* Maximum time one test can run for. */
-  timeout: process.env.CI ? 10_000 : 5_000,
+  timeout: process.env.CI ? 10_000 : 5000,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
