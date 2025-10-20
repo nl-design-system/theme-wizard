@@ -18,6 +18,7 @@ const config: PlaywrightTestConfig = {
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
   globalTimeout: 10 * 60 * 1000,
+  outputDir: './tmp/playwright-results/',
   /* Configure projects for major browsers */
   projects: [
     {
@@ -48,16 +49,16 @@ const config: PlaywrightTestConfig = {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
-    // MacBook Pro dimensions
+    // WCAG 100% dimensions
     viewport: {
-      height: 1600,
-      width: 2560,
+      height: 1280,
+      width: 1024,
     },
   },
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: process.env.CI ? 'pnpm build && pnpm preview' : 'pnpm dev',
+    command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
     port: 9492,
     reuseExistingServer: !process.env.CI,
     timeout: 600_000, // 10 minutes
