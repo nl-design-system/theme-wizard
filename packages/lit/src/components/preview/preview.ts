@@ -19,7 +19,6 @@ export class ThemePreview extends LitElement {
   @state() private error = '';
 
   private readonly scraper: Scraper;
-  private scrapedCSS: string = '';
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   // TODO: Drop injection of maTheme and generate a full wizard theme CSS
@@ -43,8 +42,9 @@ export class ThemePreview extends LitElement {
    */
   readonly #loadInitialCSS = async () => {
     const url = new URL(DEFAULT_CONFIG.previewUrl);
-    this.scrapedCSS = await this.scraper.getCSS(url);
-    this.previewStylesheet?.replaceSync(this.scrapedCSS);
+    const css = await this.scraper.getCSS(url);
+
+    this.previewStylesheet?.replaceSync(css);
   };
 
   /** Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview */
