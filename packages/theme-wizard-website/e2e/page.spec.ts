@@ -13,22 +13,30 @@ test('page has accessibility basics', async ({ page }) => {
 
 test('can change heading font to Courier New', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('theme-wizard-app');
 
-  const select = page.locator(`theme-wizard-sidebar font-select[name="heading-font"] select`);
+  const preview = page.getByRole('main');
+  const heading = preview.getByRole('heading', { level: 1 });
+
+  const initialFont = await heading.evaluate((el) => window.getComputedStyle(el).fontFamily);
+  expect(initialFont).not.toContain('Courier New');
+
+  const select = page.getByLabel('Koppen');
   await select.selectOption({ label: 'Courier New' });
 
-  const heading = page.locator('theme-wizard-preview h1');
   await expect(heading).toHaveCSS('font-family', /Courier New/);
 });
 
 test('can change body font to Arial', async ({ page }) => {
   await page.goto('/');
-  await page.waitForSelector('theme-wizard-app');
 
-  const select = page.locator(`theme-wizard-sidebar font-select[name="body-font"] select`);
+  const preview = page.getByRole('main');
+  const paragraph = preview.getByRole('paragraph').first();
+
+  const initialFont = await paragraph.evaluate((el) => window.getComputedStyle(el).fontFamily);
+  expect(initialFont).not.toContain('Arial');
+
+  const select = page.getByLabel('Lopende tekst');
   await select.selectOption({ label: 'Arial' });
 
-  const paragraph = page.locator('theme-wizard-preview p').first();
   await expect(paragraph).toHaveCSS('font-family', /Arial/);
 });
