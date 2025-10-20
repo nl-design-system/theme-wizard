@@ -80,18 +80,12 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build
-        env:
-          BASE_URL: "/utrecht/"
         run: pnpm run --if-present build
 
       - name: "Continuous Integration: lint build"
-        env:
-          BASE_URL: "/utrecht/"
         run: pnpm run --if-present lint-build
 
       - name: "Continuous Integration: test build"
-        env:
-          BASE_URL: "/utrecht/"
         run: pnpm run --if-present test-build
 
   test:
