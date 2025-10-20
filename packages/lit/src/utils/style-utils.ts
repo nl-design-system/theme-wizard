@@ -69,8 +69,8 @@ export function getThemeStyleString(properties: ThemeStyleProperties): string {
  * const themeProps = extractThemeProperties({ bodyFontFamily: 'Arial' });
  * const styles = getThemeStyleString(themeProps);
  */
-export function extractThemeProperties(component: Partial<ThemeStyleProperties>): ThemeStyleProperties {
-  const themeProperties: ThemeStyleProperties = {};
+export function extractThemeProperties(component: Partial<ThemeStyleProperties>): Partial<ThemeStyleProperties> {
+  const themeProperties: Partial<ThemeStyleProperties> = {};
   for (const key of Object.keys(THEME_PROPERTY_MAPPING) as Array<keyof ThemeStyleProperties>) {
     const value = component[key];
     if (typeof value === 'string' && value.trim() !== '') {
