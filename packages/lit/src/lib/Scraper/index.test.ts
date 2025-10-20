@@ -1,0 +1,16 @@
+import { describe, expect, test, vi } from 'vitest';
+import Scraper from './index';
+
+describe('Scraper', () => {
+  const fetchSpy = vi.spyOn(window, 'fetch');
+
+  test('tries to fetch css for given url', () => {
+    const scraperURL = 'https://example.com/';
+    const targetURL = 'https://example.com/target';
+    const scraper = new Scraper(scraperURL);
+
+    scraper.getCSS(new URL(targetURL));
+
+    expect(fetchSpy).toBeCalledWith(new URL(`${scraperURL}api/v1/css?url=${encodeURIComponent(targetURL)}`));
+  });
+});
