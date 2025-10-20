@@ -20,8 +20,6 @@ export class ThemeController {
     this.updateStylesheet();
   }
 
-  hostConnected(): void {}
-
   get stylesheet(): CSSStyleSheet {
     return this.#themeStylesheet;
   }

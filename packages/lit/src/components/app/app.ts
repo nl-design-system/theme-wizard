@@ -1,7 +1,9 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
+import { DesignToken } from '@nl-design-system-community/css-scraper';
+import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
@@ -23,12 +25,15 @@ export class App extends LitElement {
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
-  private scrapedTokens: Record<string, unknown> = {};
+
+  @state()
+  private scrapedTokens: DesignToken[] = [];
 
   static override readonly styles = [appStyles];
 
   override connectedCallback() {
     super.connectedCallback();
+    defineCustomElements();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
   }
 
