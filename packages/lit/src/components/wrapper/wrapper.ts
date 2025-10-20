@@ -4,6 +4,7 @@
  */
 
 import type { DesignToken } from '@nl-design-system-community/css-scraper';
+import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
@@ -41,6 +42,7 @@ export class Wrapper extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
+    defineCustomElements();
     // Listen for config updates from sidebar
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.handleConfigUpdate as EventListener);
   }
