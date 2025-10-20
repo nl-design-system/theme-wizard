@@ -1,3 +1,5 @@
+import { ThemeStyleProperties } from '../../utils';
+
 export type FontOption = { label: string; value: string };
 
 /**
@@ -15,7 +17,7 @@ export const DEFAULT_FONT_OPTIONS: FontOption[] = [
 /**
  * Default typography configuration
  */
-export const DEFAULT_TYPOGRAPHY = {
+export const DEFAULT_TYPOGRAPHY: ThemeStyleProperties = {
   bodyFont: 'system-ui, sans-serif',
   headingFont: 'system-ui, sans-serif',
 };

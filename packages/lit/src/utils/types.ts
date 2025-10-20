@@ -6,10 +6,8 @@
  * Add new properties here to automatically include them in all components.
  */
 export interface ThemeStyleProperties {
-  /** Font family for body text */
-  bodyFont?: string;
-  /** Font family for headings */
-  headingFont?: string;
+  bodyFont: string;
+  headingFont: string;
 }
 
 /**
