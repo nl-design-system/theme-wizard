@@ -36,8 +36,7 @@ export class ThemePreview extends LitElement {
     this.#loadInitialCSS();
 
     // Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview
-    const adoptedStylesheets = [this.previewStylesheet, this.themeStylesheet];
-    this.shadowRoot?.adoptedStyleSheets.push(...adoptedStylesheets);
+    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
   /**
