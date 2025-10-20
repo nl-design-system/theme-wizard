@@ -1,33 +1,57 @@
-import { LitElement, html } from 'lit';
+import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import {
-  extractThemeProperties,
-  fetchHtml,
-  getThemeStyleString,
-  parseHtml,
-  rewriteAttributeUrlsToAbsolute,
-  rewriteSvgXlinkToAbsolute,
-} from '../../utils';
+import Scraper from '../../lib/Scraper';
+import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
+
+export const PREVIEW_THEME = '.preview-theme';
+const previewTheme = maTheme.replace('.ma-theme', PREVIEW_THEME);
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
-
-  @property() headingFontFamily: string = DEFAULT_CONFIG.headingFont;
-  @property() bodyFontFamily: string = DEFAULT_CONFIG.bodyFont;
+  @property() themeStylesheet!: CSSStyleSheet;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
 
-  override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
-    // Fetch content when URL changes (before render)
-    if (changedProps.has('url') && this.url) {
-      this.fetchContent();
-    }
+  private readonly scraper: Scraper;
+  previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
+
+  // TODO: Drop injection of maTheme and generate a full wizard theme CSS
+  static override readonly styles = [previewStyles, unsafeCSS(previewTheme)];
+
+  constructor() {
+    super();
+    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
+    this.scraper = new Scraper(scraperURL);
   }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.fetchContent();
+    this.#loadInitialCSS();
+    this.#adoptStylesheets();
+  }
+
+  /**
+   * Load the initial CSS from the preview URL and set it to the preview stylesheet
+   */
+  readonly #loadInitialCSS = async () => {
+    const url = new URL(DEFAULT_CONFIG.previewUrl);
+    const css = await this.scraper.getCSS(url);
+
+    this.previewStylesheet?.replaceSync(css);
+  };
+
+  /** Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview */
+  readonly #adoptStylesheets = () => {
+    const adoptedStylesheets = [this.previewStylesheet, this.themeStylesheet];
+    this.shadowRoot?.adoptedStyleSheets.push(...adoptedStylesheets);
+  };
 
   /**
    * Fetch the content from the URL
@@ -56,8 +80,6 @@ export class ThemePreview extends LitElement {
     }
   };
 
-  static override readonly styles = [previewStyles];
-
   override render() {
     if (this.isLoading && !this.htmlContent) {
       return html`
@@ -75,11 +97,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html`
-      <div class="ma-theme" style=${getThemeStyleString(extractThemeProperties(this))}>
-        <div .innerHTML=${this.htmlContent}></div>
-      </div>
-    `;
+    return html` <div class="preview-theme" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 

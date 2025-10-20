@@ -6,12 +6,12 @@ const TOKEN_ENDPOINT = '/api/v1/css-design-tokens';
 
 export default class Scraper {
   #scraperUrl: URL;
-  #requestCssUrl: URL;
+  #requestCSSUrl: URL;
   #requestTokenUrl: URL;
 
   constructor(scraperURL = DEFAULT_SCRAPER_URL) {
     this.#scraperUrl = new URL(scraperURL);
-    this.#requestCssUrl = new URL(CSS_ENDPOINT, this.#scraperUrl);
+    this.#requestCSSUrl = new URL(CSS_ENDPOINT, this.#scraperUrl);
     this.#requestTokenUrl = new URL(TOKEN_ENDPOINT, this.#scraperUrl);
   }
 
@@ -20,8 +20,8 @@ export default class Scraper {
     return fetch(endpoint);
   }
 
-  async getCss(url: URL): Promise<string> {
-    return this.#get(this.#requestCssUrl, url).then((result) => result.text());
+  async getCSS(url: URL): Promise<string> {
+    return this.#get(this.#requestCSSUrl, url).then((result) => result.text());
   }
 
   async getTokens(url: URL): Promise<DesignToken[]> {

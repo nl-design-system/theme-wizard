@@ -1,8 +1,3 @@
-/**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
 import { DesignToken, EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -17,25 +12,11 @@ export class LitSidebar extends LitElement {
   @property() sourceUrl = DEFAULT_CONFIG.sourceUrl;
   @property() headingFont = DEFAULT_CONFIG.headingFont;
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
+  @property({ attribute: false }) onResetTheme?: () => void;
 
   @property() scrapedTokens: DesignToken[] = [];
 
   static override readonly styles = [sidebarStyles];
-
-  override connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this.removeEventListener(EVENT_NAMES.TYPOGRAPHY_CHANGE, this.handleTypographyChange as EventListener);
-  }
-
-  private readonly handleTypographyChange = (e: Event) => {
-    const detail = (e as CustomEvent).detail || {};
-    this.notifyConfigChange(detail);
-  };
 
   private notifyConfigChange(config: Partial<typeof DEFAULT_CONFIG>) {
     const event = new CustomEvent(EVENT_NAMES.CONFIG_CHANGE, {
@@ -54,7 +35,6 @@ export class LitSidebar extends LitElement {
     const sourceUrl = formData.get('sourceUrl') as string;
 
     if (sourceUrl?.trim() && !isValidUrl(sourceUrl)) {
-      console.log('sourceUrl is not a valid URL');
       return;
     }
 

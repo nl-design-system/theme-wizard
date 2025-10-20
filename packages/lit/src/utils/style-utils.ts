@@ -1,19 +1,12 @@
-/**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
 import type { ThemeStyleProperties } from './types';
 
 /**
  * Central mapping of theme properties to CSS custom properties
  * Add new properties here to automatically include them in all components
  */
-const THEME_PROPERTY_MAPPING = {
-  bodyFontFamily: '--basis-text-font-family-default',
-  headingColor: '--basis-heading-color',
-  headingFontFamily: '--basis-heading-font-family',
-  headingFontSize: '--basis-heading-font-size',
+const THEME_PROPERTY_MAPPING: ThemeStyleProperties = {
+  bodyFont: '--basis-text-font-family-default',
+  headingFont: '--basis-heading-font-family',
 };
 
 /**
@@ -33,8 +26,9 @@ const THEME_PROPERTY_MAPPING = {
 export function getThemeStyleProperties(properties: ThemeStyleProperties): Record<string, string> {
   const cssProperties: Record<string, string> = {};
 
-  Object.entries(properties).forEach(([key, value]) => {
-    const cssProperty = THEME_PROPERTY_MAPPING[key as keyof ThemeStyleProperties];
+  (Object.keys(properties) as Array<keyof ThemeStyleProperties>).forEach((key) => {
+    const value = properties[key];
+    const cssProperty = THEME_PROPERTY_MAPPING[key];
     if (cssProperty && value && value.trim() !== '') {
       cssProperties[cssProperty] = value;
     }
@@ -75,8 +69,8 @@ export function getThemeStyleString(properties: ThemeStyleProperties): string {
  * const themeProps = extractThemeProperties({ bodyFontFamily: 'Arial' });
  * const styles = getThemeStyleString(themeProps);
  */
-export function extractThemeProperties(component: Partial<ThemeStyleProperties>): ThemeStyleProperties {
-  const themeProperties: ThemeStyleProperties = {};
+export function extractThemeProperties(component: Partial<ThemeStyleProperties>): Partial<ThemeStyleProperties> {
+  const themeProperties: Partial<ThemeStyleProperties> = {};
   for (const key of Object.keys(THEME_PROPERTY_MAPPING) as Array<keyof ThemeStyleProperties>) {
     const value = component[key];
     if (typeof value === 'string' && value.trim() !== '') {

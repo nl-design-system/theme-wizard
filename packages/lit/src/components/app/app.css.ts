@@ -1,18 +1,6 @@
 import { css } from 'lit';
 
 export default css`
-  /**
- * @license EUPL-1.2
- * Copyright (c) 2021 Community for NL Design System
- */
-
-  /* ============================================
-   COMPONENT BASE
-   ============================================ */
-  :host {
-    font-family: var(--theme-font-family);
-  }
-
   /* ============================================
    APP LAYOUT
    ============================================ */
