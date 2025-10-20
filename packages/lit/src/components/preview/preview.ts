@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
+import Scraper from '../../lib/Scraper';
 import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
@@ -8,8 +9,9 @@ import previewStyles from './preview.css';
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
   @property() scrapedCSS: string = '';
-  @property({ hasChanged: (v, o) => v !== o })
-  stylesheet: CSSStyleSheet | null = null;
+  @property({ hasChanged: () => true })
+  previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
+  private readonly scraper: Scraper;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
@@ -19,20 +21,40 @@ export class ThemePreview extends LitElement {
 
   static override readonly styles = [previewStyles];
 
+  constructor() {
+    super();
+    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
+    this.scraper = new Scraper(scraperURL);
+  }
+
   override connectedCallback() {
     super.connectedCallback();
-  }
+    this.fetchContent();
+    this.#loadInitialCSS();
 
-  override willUpdate(changedProps: Map<string | number | symbol, unknown>) {
-    // Fetch content when URL changes (before render)
-    if (changedProps.has('url') && this.url) {
-      this.fetchContent();
-    }
-
-    if (changedProps.has('stylesheet')) {
-      this.#adoptSheets();
-    }
+    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet);
   }
+  // override updated(changedProps: Map<string | number | symbol, unknown>) {
+  //   super.updated(changedProps);
+
+  //   // Log computed styles after the DOM has been updated
+  //   if (changedProps.has('stylesheet')) {
+  //     const element = this.shadowRoot?.querySelector('.nl-heading--level-1');
+  //     if (element) {
+  //       const computedStyle = getComputedStyle(element);
+  //       console.log('Heading styles:', {
+  //         'font-family': computedStyle.getPropertyValue('font-family'),
+  //         '--basis-heading-font-family': computedStyle.getPropertyValue('--basis-heading-font-family'),
+  //       });
+  //     }
+  //   }
+  // }
+
+  readonly #loadInitialCSS = async () => {
+    const url = new URL(DEFAULT_CONFIG.previewUrl);
+    this.scrapedCSS = await this.scraper.getCSS(url);
+    this.previewStylesheet?.replaceSync(this.scrapedCSS);
+  };
 
   /**
    * Fetch the content from the URL
@@ -56,33 +78,10 @@ export class ThemePreview extends LitElement {
       this.htmlContent = doc.body.innerHTML;
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
-      errinstanceofErrorerr.message;
     } finally {
       this.isLoading = false;
     }
   };
-
-  #adoptSheets(): void {
-    const root = this.shadowRoot;
-    if (!root) return;
-
-    const sheets: CSSStyleSheet[] = [];
-    sheets;
-    if (this.stylesheet) sheets.push(this.stylesheet);
-    if (this.scrapedCSS) {
-      const scraped = new CSSStyleSheet();
-      scraped.replaceSync(this.scrapedCSS);
-      sheets.push(scraped);
-    }
-
-    // Alleen hertoewijzen als het echt anders is
-    const currentSheets = root.adoptedStyleSheets;
-    const isDifferent = sheets.length !== currentSheets.length || sheets.some((s, i) => s !== currentSheets[i]);
-
-    if (isDifferent) {
-      root.adoptedStyleSheets = sheets;
-    }
-  }
 
   override render() {
     if (this.isLoading && !this.htmlContent) {
@@ -101,7 +100,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div .innerHTML=${this.htmlContent}></div> `;
+    return html` <div class="theme-wizard-preview" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 

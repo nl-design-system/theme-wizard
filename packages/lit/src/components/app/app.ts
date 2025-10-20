@@ -19,9 +19,10 @@ import appStyles from './app.css';
 @customElement('theme-wizard-app')
 export class App extends LitElement {
   private readonly themeController: ThemeController = new ThemeController(this);
-  private readonly scraper: Scraper;
   private scrapedTokens: Record<string, unknown> = {};
   private scrapedCSS: string = '';
+
+  private testCSS: CSSStyleSheet = new CSSStyleSheet();
 
   static override readonly styles = [appStyles];
 
@@ -31,15 +32,14 @@ export class App extends LitElement {
     this.scraper = new Scraper(scraperURL);
   }
 
-  readonly #loadInitialCSS = async () => {
-    this.scrapedCSS = await this.scraper.getCSS(new URL(this.themeController.getConfig().previewUrl));
-    this.requestUpdate();
-  };
-
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
-    this.#loadInitialCSS();
+
+    const stylesheet = this.themeController.stylesheet;
+    console.log('Stylesheet: ', stylesheet);
+    console.log(this.scrapedCSS);
+    stylesheet.replaceSync(`* { --basis-heading-font-family: 'Courier New'; }`);
   }
 
   override disconnectedCallback() {
@@ -95,7 +95,7 @@ export class App extends LitElement {
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${previewUrl}
-              .stylesheet=${this.scrapedCSS ? this.themeController.stylesheet : null}
+              .stylesheet=${this.themeController.stylesheet}
               .scrapedCSS=${this.scrapedCSS}
             ></theme-wizard-preview>
           </section>
