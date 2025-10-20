@@ -1,4 +1,3 @@
-import { ReactiveController, ReactiveControllerHost } from 'lit';
 import type { SidebarConfig } from '../utils/types';
 import { ThemeModel } from '../models';
 import { generateThemeCSS } from '../utils/css-generator';
@@ -11,17 +10,13 @@ import { generateThemeCSS } from '../utils/css-generator';
  * - Coordinates state changes and exposes data to the host
  * - Provides high-level methods for theme operations
  */
-export class ThemeController implements ReactiveController {
+export class ThemeController {
   /** Theme model containing configuration and generation logic */
   public themeModel: ThemeModel;
   readonly #stylesheet: CSSStyleSheet = new CSSStyleSheet();
 
-  host: ReactiveControllerHost;
-
-  constructor(host: ReactiveControllerHost) {
+  constructor() {
     this.themeModel = new ThemeModel();
-
-    (this.host = host).addController(this);
     this.updateStylesheet();
   }
 

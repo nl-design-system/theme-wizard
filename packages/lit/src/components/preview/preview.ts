@@ -1,25 +1,29 @@
-import { LitElement, html } from 'lit';
+import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
 import Scraper from '../../lib/Scraper';
 import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
+export const PREVIEW_THEME = '.preview-theme';
+const previewTheme = maTheme.replace('.ma-theme', PREVIEW_THEME);
+
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
-  @property() scrapedCSS: string = '';
-  @property({ hasChanged: () => true })
-  previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
-  private readonly scraper: Scraper;
+  @property() themeStylesheet!: CSSStyleSheet;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
-  private readonly baseSheet = new CSSStyleSheet();
-  private readonly mappingSheet = new CSSStyleSheet();
 
-  static override readonly styles = [previewStyles];
+  private readonly scraper: Scraper;
+  private scrapedCSS: string = '';
+  previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
+
+  // TODO: Drop injection of maTheme and generate a full wizard theme CSS
+  static override readonly styles = [previewStyles, unsafeCSS(previewTheme)];
 
   constructor() {
     super();
@@ -33,22 +37,12 @@ export class ThemePreview extends LitElement {
     this.#loadInitialCSS();
 
     this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet);
+    if (this.themeStylesheet) {
+      this.shadowRoot?.adoptedStyleSheets.push(this.themeStylesheet);
+    } else {
+      console.error('Theme stylesheet not found');
+    }
   }
-  // override updated(changedProps: Map<string | number | symbol, unknown>) {
-  //   super.updated(changedProps);
-
-  //   // Log computed styles after the DOM has been updated
-  //   if (changedProps.has('stylesheet')) {
-  //     const element = this.shadowRoot?.querySelector('.nl-heading--level-1');
-  //     if (element) {
-  //       const computedStyle = getComputedStyle(element);
-  //       console.log('Heading styles:', {
-  //         'font-family': computedStyle.getPropertyValue('font-family'),
-  //         '--basis-heading-font-family': computedStyle.getPropertyValue('--basis-heading-font-family'),
-  //       });
-  //     }
-  //   }
-  // }
 
   readonly #loadInitialCSS = async () => {
     const url = new URL(DEFAULT_CONFIG.previewUrl);
@@ -100,7 +94,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div class="theme-wizard-preview" .innerHTML=${this.htmlContent}></div> `;
+    return html` <div class="preview-theme" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 

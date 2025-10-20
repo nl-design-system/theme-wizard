@@ -7,9 +7,9 @@
  */
 export interface ThemeStyleProperties {
   /** Font family for body text */
-  bodyFontFamily?: string;
+  bodyFont?: string;
   /** Font family for headings */
-  headingFontFamily?: string;
+  headingFont?: string;
 }
 
 /**

@@ -1,5 +1,4 @@
 ---
-import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -11,5 +10,5 @@ const scraperUrl = withRelatedProject({
 ---
 
 <BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
-  <theme-wizard-app class="ma-theme"></theme-wizard-app>
+  <theme-wizard-app></theme-wizard-app>
 </BaseLayout>

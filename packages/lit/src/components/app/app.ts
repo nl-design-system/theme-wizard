@@ -20,9 +20,6 @@ import appStyles from './app.css';
 export class App extends LitElement {
   private readonly themeController: ThemeController = new ThemeController(this);
   private scrapedTokens: Record<string, unknown> = {};
-  private scrapedCSS: string = '';
-
-  private testCSS: CSSStyleSheet = new CSSStyleSheet();
 
   static override readonly styles = [appStyles];
 
@@ -35,11 +32,6 @@ export class App extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
-
-    const stylesheet = this.themeController.stylesheet;
-    console.log('Stylesheet: ', stylesheet);
-    console.log(this.scrapedCSS);
-    stylesheet.replaceSync(`* { --basis-heading-font-family: 'Courier New'; }`);
   }
 
   override disconnectedCallback() {
@@ -95,8 +87,7 @@ export class App extends LitElement {
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${previewUrl}
-              .stylesheet=${this.themeController.stylesheet}
-              .scrapedCSS=${this.scrapedCSS}
+              .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
         </main>
