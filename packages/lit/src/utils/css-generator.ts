@@ -12,7 +12,7 @@ export function generateThemeCSS(config: SidebarConfig): string {
   const themeStyleProperties = getThemeStyleString(config);
 
   const css = `
-  ${PREVIEW_THEME} {
+  .${PREVIEW_THEME} {
       ${themeStyleProperties}
     }
   `.trim();

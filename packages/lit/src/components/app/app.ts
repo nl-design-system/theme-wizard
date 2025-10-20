@@ -22,7 +22,6 @@ import appStyles from './app.css';
 @customElement('theme-wizard-app')
 export class App extends LitElement {
   private readonly themeController: ThemeController = new ThemeController();
-  private readonly themeStylesheet: CSSStyleSheet = this.themeController.stylesheet;
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
@@ -89,7 +88,10 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <theme-wizard-preview .url=${previewUrl} .themeStylesheet=${this.themeStylesheet}></theme-wizard-preview>
+            <theme-wizard-preview
+              .url=${previewUrl}
+              .themeStylesheet=${this.themeController.stylesheet}
+            ></theme-wizard-preview>
           </section>
         </main>
       </div>

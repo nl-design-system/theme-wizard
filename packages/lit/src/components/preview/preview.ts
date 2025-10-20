@@ -6,8 +6,8 @@ import Scraper from '../../lib/Scraper';
 import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
-export const PREVIEW_THEME = '.preview-theme';
-const previewTheme = maTheme.replace('.ma-theme', PREVIEW_THEME);
+export const PREVIEW_THEME = 'preview-theme';
+const previewTheme = maTheme.replace('.ma-theme', `.${PREVIEW_THEME}`);
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
@@ -34,7 +34,9 @@ export class ThemePreview extends LitElement {
     super.connectedCallback();
     this.fetchContent();
     this.#loadInitialCSS();
-    this.#adoptStylesheets();
+
+    // Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview
+    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
   /**
@@ -45,12 +47,6 @@ export class ThemePreview extends LitElement {
     const css = await this.scraper.getCSS(url);
 
     this.previewStylesheet?.replaceSync(css);
-  };
-
-  /** Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview */
-  readonly #adoptStylesheets = () => {
-    const adoptedStylesheets = [this.previewStylesheet, this.themeStylesheet];
-    this.shadowRoot?.adoptedStyleSheets.push(...adoptedStylesheets);
   };
 
   /**
