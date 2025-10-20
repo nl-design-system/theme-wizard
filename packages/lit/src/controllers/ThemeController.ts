@@ -13,7 +13,7 @@ import { generateThemeCSS } from '../utils/css-generator';
 export class ThemeController {
   /** Theme model containing configuration and generation logic */
   public themeModel: ThemeModel;
-  readonly #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  readonly #themeStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   constructor() {
     this.themeModel = new ThemeModel();
@@ -23,7 +23,7 @@ export class ThemeController {
   hostConnected(): void {}
 
   get stylesheet(): CSSStyleSheet {
-    return this.#stylesheet;
+    return this.#themeStylesheet;
   }
 
   applyPartial(partial: Partial<SidebarConfig>): void {
@@ -47,6 +47,6 @@ export class ThemeController {
   private updateStylesheet(): void {
     const config = this.themeModel.getConfig();
     const css = generateThemeCSS(config);
-    this.#stylesheet.replaceSync(css);
+    this.#themeStylesheet.replaceSync(css);
   }
 }

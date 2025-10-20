@@ -35,19 +35,22 @@ export class ThemePreview extends LitElement {
     super.connectedCallback();
     this.fetchContent();
     this.#loadInitialCSS();
-
-    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet);
-    if (this.themeStylesheet) {
-      this.shadowRoot?.adoptedStyleSheets.push(this.themeStylesheet);
-    } else {
-      console.error('Theme stylesheet not found');
-    }
+    this.#adoptStylesheets();
   }
 
+  /**
+   * Load the initial CSS from the preview URL and set it to the preview stylesheet
+   */
   readonly #loadInitialCSS = async () => {
     const url = new URL(DEFAULT_CONFIG.previewUrl);
     this.scrapedCSS = await this.scraper.getCSS(url);
     this.previewStylesheet?.replaceSync(this.scrapedCSS);
+  };
+
+  /** Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview */
+  readonly #adoptStylesheets = () => {
+    const adoptedStylesheets = [this.previewStylesheet, this.themeStylesheet];
+    this.shadowRoot?.adoptedStyleSheets.push(...adoptedStylesheets);
   };
 
   /**

@@ -1,7 +1,7 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
@@ -18,16 +18,14 @@ import appStyles from './app.css';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
-  private readonly themeController: ThemeController = new ThemeController(this);
+  private readonly themeController: ThemeController = new ThemeController();
+  private readonly themeStylesheet: CSSStyleSheet = this.themeController.stylesheet;
+  private readonly scraper: Scraper = new Scraper(
+    document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
+  );
   private scrapedTokens: Record<string, unknown> = {};
 
   static override readonly styles = [appStyles];
-
-  constructor() {
-    super();
-    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
-    this.scraper = new Scraper(scraperURL);
-  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -85,10 +83,7 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <theme-wizard-preview
-              .url=${previewUrl}
-              .themeStylesheet=${this.themeController.stylesheet}
-            ></theme-wizard-preview>
+            <theme-wizard-preview .url=${previewUrl} .themeStylesheet=${this.themeStylesheet}></theme-wizard-preview>
           </section>
         </main>
       </div>
