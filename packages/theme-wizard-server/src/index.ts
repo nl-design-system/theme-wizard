@@ -54,9 +54,9 @@ app.use(
   '*',
   cors({
     allowMethods: ['HEAD', 'GET'],
-    origin: (origin) => {
-      console.debug({ origin, websiteHost });
-      if (origin === websiteHost) return origin;
+    origin: (requestOrigin) => {
+      console.debug({ requestOrigin, websiteHost });
+      if (requestOrigin === websiteHost) return requestOrigin;
       return null;
     },
   }),
