@@ -17,8 +17,7 @@ test('can change heading font to Courier New', async ({ page }) => {
   const preview = page.getByRole('main');
   const heading = preview.getByRole('heading', { level: 1 });
 
-  const initialFont = await heading.evaluate((el) => window.getComputedStyle(el).fontFamily);
-  expect(initialFont).not.toContain('Courier New');
+  await expect(heading).not.toHaveCSS('font-family', /Courier New/);
 
   const select = page.getByLabel('Koppen');
   await select.selectOption({ label: 'Courier New' });
@@ -32,8 +31,7 @@ test('can change body font to Arial', async ({ page }) => {
   const preview = page.getByRole('main');
   const paragraph = preview.getByRole('paragraph').first();
 
-  const initialFont = await paragraph.evaluate((el) => window.getComputedStyle(el).fontFamily);
-  expect(initialFont).not.toContain('Arial');
+  await expect(paragraph).not.toHaveCSS('font-family', /Arial/);
 
   const select = page.getByLabel('Lopende tekst');
   await select.selectOption({ label: 'Arial' });
