@@ -4,6 +4,7 @@ import { DesignToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
@@ -49,7 +50,7 @@ export class App extends LitElement {
   readonly #handleConfigUpdate = async (e: Event) => {
     if (!(e instanceof CustomEvent)) return;
 
-    const config = e.detail || {};
+    const config: Partial<SidebarConfig> = e.detail || {};
 
     if (config.sourceUrl) {
       await this.#handleSourceUrlChange(config.sourceUrl);
