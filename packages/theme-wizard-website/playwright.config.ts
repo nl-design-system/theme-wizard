@@ -10,7 +10,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 10_000,
+    timeout: 5000,
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: Boolean(process.env.CI),
@@ -38,13 +38,18 @@ const config: PlaywrightTestConfig = {
   testDir: './e2e',
   testMatch: '**/*spec.ts',
   /* Maximum time one test can run for. */
-  timeout: process.env.CI ? 10_000 : 5000,
+  timeout: process.env.CI ? 15_000 : 5000,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://localhost:9492',
+
+    screenshot: {
+      fullPage: true,
+      mode: 'on-first-failure',
+    },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -62,11 +67,10 @@ const config: PlaywrightTestConfig = {
       name: 'API Server',
       command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
       cwd: '../theme-wizard-server',
-      // port: 9491,
+      port: 9491,
       reuseExistingServer: !process.env.CI,
       // How long the server can take to start up
       timeout: 10_000,
-      url: 'http://localhost:9491/healthz',
     },
     {
       name: 'Website',

@@ -148,3 +148,10 @@ jobs:
 
       - name: End-to-end tests
         run: pnpm run test-e2e
+
+      - name: Store Website Playwright artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: playwright-results
+          path: ./theme-wizard-website/tmp/playwright-results
+          retention-days: 1
