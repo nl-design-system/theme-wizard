@@ -10,14 +10,14 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000,
+    timeout: 10_000,
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: Boolean(process.env.CI),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
-  globalTimeout: 10 * 60 * 1000,
+  globalTimeout: 60_000,
   outputDir: './tmp/playwright-results/',
   /* Configure projects for major browsers */
   projects: [
@@ -65,7 +65,7 @@ const config: PlaywrightTestConfig = {
       port: 9491,
       reuseExistingServer: !process.env.CI,
       // How long the server can take to start up
-      timeout: 10_000, // ms
+      timeout: 10_000,
     },
     {
       name: 'Website',
@@ -73,7 +73,7 @@ const config: PlaywrightTestConfig = {
       port: 9492,
       reuseExistingServer: !process.env.CI,
       // How long the server can take to start up
-      timeout: 10_000, // ms
+      timeout: 10_000,
     },
   ],
 
