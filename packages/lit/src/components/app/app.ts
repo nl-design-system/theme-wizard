@@ -29,6 +29,9 @@ export class App extends LitElement {
   @state()
   private scrapedTokens: DesignToken[] = [];
 
+  @state()
+  private selectedTemplate: 'collage' | 'preview' = 'collage';
+
   static override readonly styles = [appStyles];
 
   override connectedCallback() {
@@ -73,8 +76,22 @@ export class App extends LitElement {
     }
   };
 
+  readonly #handleTemplateChange = (e: Event) => {
+    const select = e.target as HTMLSelectElement;
+    this.selectedTemplate = select.value as 'collage' | 'preview';
+  };
+
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
+
+    // Determine template config based on selection
+    const templateConfig =
+      this.selectedTemplate === 'collage'
+        ? {
+            cssUrl: '/templates/collage/variation.css',
+            htmlUrl: '/templates/collage/variation.html',
+          }
+        : undefined;
 
     return html`
       <div class="theme-app">
@@ -87,9 +104,21 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
+          <!-- Placeholder for component selector -->
+          <div>
+            <label for="template-select"> Kies een template: </label>
+            <select id="template-select" @change=${this.#handleTemplateChange}>
+              <option value="collage" ?selected=${this.selectedTemplate === 'collage'}>
+                Collage (Component Variaties)
+              </option>
+              <option value="preview" ?selected=${this.selectedTemplate === 'preview'}>Preview (${previewUrl})</option>
+            </select>
+          </div>
+
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
-              .url=${previewUrl}
+              .templateConfig=${templateConfig}
+              .url=${this.selectedTemplate === 'preview' ? previewUrl : undefined}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
