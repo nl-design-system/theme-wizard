@@ -76,7 +76,7 @@ const config: PlaywrightTestConfig = {
     },
     {
       name: 'Website',
-      command: process.env.CI ? 'pnpm run dev' : 'pnpm run dev',
+      command: process.env.CI ? 'pnpm run preview' : 'pnpm run dev',
       port: 9492,
       reuseExistingServer: !process.env.CI,
       // How long the server can take to start up

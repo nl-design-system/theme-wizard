@@ -97,7 +97,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div class="preview-theme" .innerHTML=${this.htmlContent}></div> `;
+    return html` <div class="preview-theme" data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 
