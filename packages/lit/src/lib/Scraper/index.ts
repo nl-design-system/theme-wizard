@@ -16,7 +16,7 @@ export default class Scraper {
   }
 
   async #get(endpoint: URL, url: URL) {
-    endpoint.searchParams.append('url', url.toString());
+    endpoint.searchParams.set('url', url.toString());
     return fetch(endpoint);
   }
 
