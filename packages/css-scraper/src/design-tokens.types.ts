@@ -16,9 +16,27 @@ export type TokenExtensions = z.infer<typeof TokenExtensionsSchema>;
 export const ColorComponentSchema = z.union([z.number(), z.literal('none')]);
 export type ColorComponent = z.infer<typeof ColorComponentSchema>;
 
+export const ColorSpaceSchema = z.union([
+  z.literal('srgb'),
+  z.literal('display-p3'),
+  z.literal('hsl'),
+  z.literal('hwb'),
+  z.literal('lab'),
+  z.literal('lch'),
+  z.literal('oklab'),
+  z.literal('oklch'),
+  z.literal('display-p3'),
+  z.literal('a98-rgb'),
+  z.literal('prophoto-rgb'),
+  z.literal('rec2020'),
+  z.literal('xyz-d65'),
+  z.literal('xyz-d50'),
+]);
+export type ColorSpace = z.infer<typeof ColorSpaceSchema>;
+
 export const ColorValueSchema = z.strictObject({
   alpha: z.number().gte(0).lte(1),
-  colorSpace: z.string(),
+  colorSpace: ColorSpaceSchema,
   components: z.tuple([ColorComponentSchema, ColorComponentSchema, ColorComponentSchema]),
 });
 export type ColorValue = z.infer<typeof ColorValueSchema>;
