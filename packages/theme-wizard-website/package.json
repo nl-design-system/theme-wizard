@@ -16,7 +16,7 @@
     "lint:css": "stylelint .",
     "lint-fix": "pnpm run --sequential '/^lint-fix:.+$/'",
     "lint-fix:css": "pnpm run lint:css --fix",
-    "preview": "API_HOST=http://localhost:9491 astro preview",
+    "preview": "astro preview",
     "astro": "astro",
     "test-e2e-install-browsers": "playwright install chromium --no-shell",
     "test-e2e": "playwright test"

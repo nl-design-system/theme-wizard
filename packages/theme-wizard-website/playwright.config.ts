@@ -52,7 +52,7 @@ const config: PlaywrightTestConfig = {
     },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
 
     // WCAG 100% dimensions
     viewport: {
@@ -65,10 +65,11 @@ const config: PlaywrightTestConfig = {
   webServer: [
     {
       name: 'API Server',
-      command: process.env.CI ? 'pnpm run preview' : 'pnpm run dev',
+      command: 'pnpm run dev',
       cwd: '../theme-wizard-server',
       port: 9491,
       reuseExistingServer: !process.env.CI,
+      // Log server errors directly to the main output for easier debugging in CI
       stderr: 'pipe',
       // How long the server can take to start up
       timeout: 10_000,

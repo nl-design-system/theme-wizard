@@ -21,7 +21,6 @@
   },
   "scripts": {
     "dev": "vite",
-    "preview": "vite",
     "test-build": "vitest run --coverage",
     "build": "vite build",
     "clean": "rimraf dist/"
