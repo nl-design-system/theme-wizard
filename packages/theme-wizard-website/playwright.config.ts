@@ -62,10 +62,11 @@ const config: PlaywrightTestConfig = {
       name: 'API Server',
       command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
       cwd: '../theme-wizard-server',
-      port: 9491,
+      // port: 9491,
       reuseExistingServer: !process.env.CI,
       // How long the server can take to start up
       timeout: 10_000,
+      url: 'http://localhost:9491/healthz',
     },
     {
       name: 'Website',
