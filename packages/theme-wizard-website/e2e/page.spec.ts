@@ -12,7 +12,7 @@ test('page has accessibility basics', async ({ page }) => {
 });
 
 test('can change heading font to Courier New', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'load' });
+  await page.goto('/');
 
   const preview = page.getByRole('main');
   const heading = preview.getByRole('heading', { level: 1 });
@@ -27,7 +27,7 @@ test('can change heading font to Courier New', async ({ page }) => {
 });
 
 test('can change body font to Arial', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'load' });
+  await page.goto('/');
 
   const preview = page.getByRole('main');
   const paragraph = preview.getByRole('paragraph').first();

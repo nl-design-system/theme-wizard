@@ -69,6 +69,8 @@ const config: PlaywrightTestConfig = {
       cwd: '../theme-wizard-server',
       port: 9491,
       reuseExistingServer: !process.env.CI,
+      stderr: 'pipe',
+      stdout: 'pipe',
       // How long the server can take to start up
       timeout: 10_000,
     },
