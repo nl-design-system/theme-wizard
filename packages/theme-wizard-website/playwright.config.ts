@@ -65,7 +65,7 @@ const config: PlaywrightTestConfig = {
   webServer: [
     {
       name: 'API Server',
-      command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
+      command: process.env.CI ? 'pnpm run preview' : 'pnpm run dev',
       cwd: '../theme-wizard-server',
       port: 9491,
       reuseExistingServer: !process.env.CI,
@@ -76,7 +76,7 @@ const config: PlaywrightTestConfig = {
     },
     {
       name: 'Website',
-      command: process.env.CI ? 'pnpm dev' : 'pnpm dev',
+      command: process.env.CI ? 'pnpm run dev' : 'pnpm run dev',
       port: 9492,
       reuseExistingServer: !process.env.CI,
       // How long the server can take to start up
