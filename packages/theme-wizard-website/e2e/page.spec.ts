@@ -12,11 +12,11 @@ test('page has accessibility basics', async ({ page }) => {
 });
 
 test('can change heading font to Courier New', async ({ page }) => {
-  await page.route('http://localhost:9491/api/v1/css', async (route) => {
-    await route.fulfill({
-      body: 'a { color: blue; }',
-    });
-  });
+  // await page.route('http://localhost:9491/api/v1/css', async (route) => {
+  //   await route.fulfill({
+  //     body: 'a { color: blue; }',
+  //   });
+  // });
 
   await page.goto('/');
 
