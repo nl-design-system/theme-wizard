@@ -60,7 +60,7 @@ const config: PlaywrightTestConfig = {
   webServer: [
     {
       name: 'API Server',
-      command: process.env.CI ? 'pnpm run preview' : 'pnpm run dev',
+      command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
       cwd: '../theme-wizard-server',
       port: 9491,
       reuseExistingServer: !process.env.CI,
