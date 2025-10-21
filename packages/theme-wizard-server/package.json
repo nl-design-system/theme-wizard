@@ -20,9 +20,8 @@
     "directory": "packages/theme-wizard-server"
   },
   "scripts": {
-    "start": "node dist/index.js",
     "dev": "vite",
-    "preview": "vite preview",
+    "preview": "vite",
     "test-build": "vitest run --coverage",
     "build": "vite build",
     "clean": "rimraf dist/"

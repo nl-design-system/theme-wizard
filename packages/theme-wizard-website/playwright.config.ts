@@ -58,23 +58,22 @@ const config: PlaywrightTestConfig = {
 
   /* Run your local dev server before starting the tests */
   webServer: [
-    // Start the API server
     {
       name: 'API Server',
-      command: process.env.CI
-        ? 'cd ../theme-wizard-server && pnpm run preview'
-        : 'cd ../theme-wizard-server && pnpm run dev',
+      command: process.env.CI ? 'pnpm run preview' : 'pnpm run dev',
+      cwd: '../theme-wizard-server',
       port: 9491,
       reuseExistingServer: !process.env.CI,
-      timeout: 600_000, // 10 minutes
+      // How long the server can take to start up
+      timeout: 10_000, // ms
     },
-    // Start the website
     {
       name: 'Website',
       command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
       port: 9492,
       reuseExistingServer: !process.env.CI,
-      timeout: 600_000, // 10 minutes
+      // How long the server can take to start up
+      timeout: 10_000, // ms
     },
   ],
 
