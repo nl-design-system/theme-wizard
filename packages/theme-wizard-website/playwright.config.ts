@@ -17,7 +17,7 @@ const config: PlaywrightTestConfig = {
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
-  globalTimeout: 10 * 60 * 1000,
+  globalTimeout: 60_000,
   outputDir: './tmp/playwright-results/',
   /* Configure projects for major browsers */
   projects: [
@@ -38,7 +38,7 @@ const config: PlaywrightTestConfig = {
   testDir: './e2e',
   testMatch: '**/*spec.ts',
   /* Maximum time one test can run for. */
-  timeout: process.env.CI ? 10_000 : 5000,
+  timeout: process.env.CI ? 15_000 : 5000,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
@@ -46,8 +46,13 @@ const config: PlaywrightTestConfig = {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://localhost:9492',
 
+    screenshot: {
+      fullPage: true,
+      mode: 'on-first-failure',
+    },
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
 
     // WCAG 100% dimensions
     viewport: {
@@ -57,12 +62,27 @@ const config: PlaywrightTestConfig = {
   },
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
-    port: 9492,
-    reuseExistingServer: !process.env.CI,
-    timeout: 600_000, // 10 minutes
-  },
+  webServer: [
+    {
+      name: 'API Server',
+      command: 'pnpm run dev',
+      cwd: '../theme-wizard-server',
+      port: 9491,
+      reuseExistingServer: !process.env.CI,
+      // Log server errors directly to the main output for easier debugging in CI
+      stderr: 'pipe',
+      // How long the server can take to start up
+      timeout: 10_000,
+    },
+    {
+      name: 'Website',
+      command: 'pnpm run dev',
+      port: 9492,
+      reuseExistingServer: !process.env.CI,
+      // How long the server can take to start up
+      timeout: 10_000,
+    },
+  ],
 
   /* Let GitHub Actions use 4 workers; Locally let Playwright figure out how many to use. */
   workers: process.env.CI ? 4 : undefined,

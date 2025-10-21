@@ -18,5 +18,6 @@ export default defineConfig({
   server: {
     cors: false, // disable Vite CORS in favour of HonoJS's CORS
     port: 9491, // (T9 for WIZ)1
+    strictPort: true,
   },
 });
