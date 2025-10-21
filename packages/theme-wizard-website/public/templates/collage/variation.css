@@ -1,0 +1,51 @@
+/* Generic component layout */
+.component {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-block-end: 1px solid #e5e7eb;
+}
+
+.component-header {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-block-end: 1rem;
+}
+
+.component-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #370101;
+}
+
+.component-header p {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.component-header code {
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: monospace;
+}
+
+.component-content {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.component-content.stacked {
+  flex-direction: column;
+  gap: 0.5rem;
+}
