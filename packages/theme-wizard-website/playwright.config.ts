@@ -57,12 +57,26 @@ const config: PlaywrightTestConfig = {
   },
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
-    port: 9492,
-    reuseExistingServer: !process.env.CI,
-    timeout: 600_000, // 10 minutes
-  },
+  webServer: [
+    // Start the API server
+    {
+      name: 'API Server',
+      command: process.env.CI
+        ? 'cd ../theme-wizard-server && pnpm run preview'
+        : 'cd ../theme-wizard-server && pnpm run dev',
+      port: 9491,
+      reuseExistingServer: !process.env.CI,
+      timeout: 600_000, // 10 minutes
+    },
+    // Start the website
+    {
+      name: 'Website',
+      command: process.env.CI ? 'pnpm preview' : 'pnpm dev',
+      port: 9492,
+      reuseExistingServer: !process.env.CI,
+      timeout: 600_000, // 10 minutes
+    },
+  ],
 
   /* Let GitHub Actions use 4 workers; Locally let Playwright figure out how many to use. */
   workers: process.env.CI ? 4 : undefined,
