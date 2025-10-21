@@ -17,6 +17,7 @@ test('can change heading font to Courier New', async ({ page }) => {
   const preview = page.getByRole('main');
   const heading = preview.getByRole('heading', { level: 1 });
 
+  await expect(heading).toBeVisible();
   await expect(heading).not.toHaveCSS('font-family', /Courier New/);
 
   const select = page.getByLabel('Koppen');
@@ -31,6 +32,7 @@ test('can change body font to Arial', async ({ page }) => {
   const preview = page.getByRole('main');
   const paragraph = preview.getByRole('paragraph').first();
 
+  await expect(paragraph).toBeVisible();
   await expect(paragraph).not.toHaveCSS('font-family', /Arial/);
 
   const select = page.getByLabel('Lopende tekst');
