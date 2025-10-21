@@ -7,7 +7,7 @@ export default defineConfig({
       headless: true,
       instances: [{ browser: 'chromium' }],
       provider: 'playwright',
-      screenshotDirectory: new URL('__screenshots__', import.meta.url).pathname,
+      screenshotDirectory: new URL('./tmp/__screenshots__', import.meta.url).pathname,
     },
   },
 });
