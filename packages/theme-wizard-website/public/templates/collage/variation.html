@@ -101,5 +101,54 @@
         <p class="nl-paragraph nl-paragraph--lead">This is a lead paragraph</p>
       </div>
     </div>
+
+    <div class="component">
+      <div class="component-header">
+        <h2>Textboxes</h2>
+        <p>Textboxes are used to input text in a user interface.</p>
+        <p>The textboxes are styled with the <code>utrecht-textbox</code> component.</p>
+      </div>
+
+      <div class="component-content stacked">
+        <label for="textbox">Textbox</label>
+        <utrecht-textbox
+          id="textbox"
+          name="textbox"
+          value="The Quick Brown Fox Jumps Over The Lazy Dog"
+        ></utrecht-textbox>
+
+        <label for="textbox-disabled">Textbox disabled</label>
+        <utrecht-textbox
+          id="textbox-disabled"
+          name="textbox-disabled"
+          value="The Quick Brown Fox Jumps Over The Lazy Dog"
+          disabled
+        ></utrecht-textbox>
+
+        <label for="textbox-invalid">Textbox invalid</label>
+        <utrecht-textbox
+          id="textbox-invalid"
+          name="textbox-invalid"
+          value="The Quick Brown Fox Jumps Over The Lazy Dog"
+          invalid
+        ></utrecht-textbox>
+
+        <label for="textbox-readonly">Textbox readonly</label>
+        <utrecht-textbox
+          id="textbox-readonly"
+          name="textbox-readonly"
+          value="The Quick Brown Fox Jumps Over The Lazy Dog"
+          readonly
+        ></utrecht-textbox>
+
+        <label for="textbox-search">Textbox search</label>
+        <utrecht-textbox
+          id="textbox-search"
+          name="textbox-search"
+          value="The Quick Brown Fox Jumps Over The Lazy Dog"
+          type="search"
+        ></utrecht-textbox>
+      </div>
+    </div>
   </body>
 </html>
