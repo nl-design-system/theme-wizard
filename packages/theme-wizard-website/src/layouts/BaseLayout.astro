@@ -1,6 +1,4 @@
 ---
-import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
-
 export interface Props {
   title?: string;
   description?: string;
@@ -20,7 +18,7 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     {scraperUrl ? <meta name="scraper-api" content={scraperUrl} /> : null}
     <title>{title}</title>
   </head>
-  <body class="ma-theme">
+  <body>
     <slot />
 
     <script>
