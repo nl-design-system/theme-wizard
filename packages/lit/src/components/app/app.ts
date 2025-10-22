@@ -1,11 +1,13 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
+import '../template-switcher/template-switcher';
 import { DesignToken } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
+import type { TemplateChangeEvent } from '../template-switcher/template-switcher';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
@@ -36,12 +38,25 @@ export class App extends LitElement {
     super.connectedCallback();
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
+    this.addEventListener('template-change', this.#handleTemplateChange);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
+    this.removeEventListener('template-change', this.#handleTemplateChange);
   }
+
+  /**
+   * Handle template change from template switcher
+   */
+  readonly #handleTemplateChange = (e: Event) => {
+    if (!(e instanceof CustomEvent)) return;
+
+    const detail = e.detail as TemplateChangeEvent;
+    console.log('Template change event:', detail);
+    // TODO: Load the selected template
+  };
 
   /**
    * Handle configuration updates from child components
@@ -88,6 +103,8 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
+          <template-switcher></template-switcher>
+
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${previewUrl}
