@@ -1,8 +1,9 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
+import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
@@ -32,7 +33,7 @@ export class App extends LitElement {
   @state()
   private selectedTemplate: 'collage' | 'preview' = 'collage';
 
-  static override readonly styles = [appStyles];
+  static override readonly styles = [unsafeCSS(maTheme), appStyles];
 
   override connectedCallback() {
     super.connectedCallback();
@@ -98,7 +99,7 @@ export class App extends LitElement {
         : undefined;
 
     return html`
-      <div class="theme-app">
+      <div class="theme-app ma-theme">
         <theme-wizard-sidebar
           .sourceUrl=${sourceUrl}
           .headingFont=${headingFont}
