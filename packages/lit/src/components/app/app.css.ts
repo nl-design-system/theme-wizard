@@ -7,11 +7,14 @@ export default css`
   .theme-app {
     display: flex;
     min-block-size: 100vh;
+
+    --basis-form-control-max-inline-size: unset;
   }
 
   /* ============================================
    MAIN CONTENT AREA
    ============================================ */
+
   .theme-preview-main {
     display: flex;
     flex-direction: column;
