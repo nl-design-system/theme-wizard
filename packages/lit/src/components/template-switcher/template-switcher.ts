@@ -116,7 +116,11 @@ export class TemplateSwitcher extends LitElement {
       <div class="template ${this.activeSelect === 'template' ? 'active' : ''}">
         ${this.activeSelect === 'template'
           ? html`
-              <select class="utrecht-select utrecht-select--html-select" @change=${this.handleTemplateChange}>
+              <select
+                class="utrecht-select utrecht-select--html-select"
+                @change=${this.handleTemplateChange}
+                aria-label="Voorvertoning Templates"
+              >
                 ${TEMPLATES.map(this.#renderOptGroup)}
               </select>
             `
@@ -129,7 +133,11 @@ export class TemplateSwitcher extends LitElement {
       <div class="component ${this.activeSelect === 'component' ? 'active' : ''}">
         ${this.activeSelect === 'component'
           ? html`
-              <select class="utrecht-select utrecht-select--html-select" @change=${this.handleComponentChange}>
+              <select
+                class="utrecht-select utrecht-select--html-select"
+                @change=${this.handleComponentChange}
+                aria-label="Voorvertoning losse componenten"
+              >
                 ${COMPONENTS.map(this.#renderOptGroup)}
               </select>
             `
