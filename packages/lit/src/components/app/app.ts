@@ -111,7 +111,7 @@ export class App extends LitElement {
               <option value="collage" ?selected=${this.selectedTemplate === 'collage'}>
                 Collage (Component Variaties)
               </option>
-              <option value="preview" ?selected=${this.selectedTemplate === 'preview'}>Preview (${previewUrl})</option>
+              <option value="preview" ?selected=${this.selectedTemplate === 'preview'}>Preview</option>
             </select>
           </div>
 
