@@ -1,6 +1,6 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
-import { DesignToken } from '@nl-design-system-community/css-scraper';
+import { DesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -68,7 +68,11 @@ export class App extends LitElement {
     try {
       this.themeController.resetToDefaults();
       const tokens = await this.scraper.getTokens(new URL(sourceUrl));
-      this.scrapedTokens = tokens;
+      this.scrapedTokens = tokens.sort(
+        (a, b) =>
+          // Reverse order, highest count first
+          b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
+      );
 
       this.requestUpdate();
     } catch (error) {
