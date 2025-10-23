@@ -101,19 +101,27 @@ export class ThemePreview extends LitElement {
    * Fetch CSS from a URL (local or remote)
    */
   readonly #fetchCSS = async (url: string): Promise<string> => {
-    const isExternal = url.startsWith('http://') || url.startsWith('https://');
+    try {
+      // External URL gets ignored since it's already absolute
+      const absoluteUrl = new URL(url, window.location.href).href;
+      const currentOrigin = new URL(window.location.href).origin;
+      const urlOrigin = new URL(absoluteUrl).origin;
+      const isExternal = currentOrigin !== urlOrigin;
 
-    if (isExternal) {
-      // Use scraper API for external URLs to bypass CORS
-      const cssUrl = new URL(url);
-      return this.scraper.getCSS(cssUrl);
-    } else {
-      // Direct fetch for local/relative URLs
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch CSS: ${response.statusText}`);
+      if (isExternal) {
+        // Use scraper API
+        const cssUrl = new URL(url);
+        return this.scraper.getCSS(cssUrl);
+      } else {
+        // Direct fetch for local/relative URLs
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch CSS: ${response.statusText}`);
+        }
+        return response.text();
       }
-      return response.text();
+    } catch (error) {
+      throw new Error(`Failed to fetch CSS: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
