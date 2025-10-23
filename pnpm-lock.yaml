@@ -78,6 +78,9 @@ importers:
 
   packages/css-scraper:
     dependencies:
+      '@nl-design-system-community/design-tokens-schema':
+        specifier: workspace:*
+        version: link:../design-tokens-schema
       '@projectwallace/css-design-tokens':
         specifier: 0.9.0
         version: 0.9.0
