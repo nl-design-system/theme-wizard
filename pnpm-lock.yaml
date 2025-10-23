@@ -107,6 +107,31 @@ importers:
         specifier: 3.2.4
         version: 3.2.4(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.16.4)(@vitest/browser@3.2.4)(yaml@2.8.0)
 
+  packages/design-tokens-schema:
+    dependencies:
+      zod:
+        specifier: 4.1.12
+        version: 4.1.12
+    devDependencies:
+      '@vitest/coverage-v8':
+        specifier: 3.2.4
+        version: 3.2.4(@vitest/browser@3.2.4)(vitest@3.2.4)
+      rimraf:
+        specifier: 6.0.1
+        version: 6.0.1
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vite:
+        specifier: 6.3.5
+        version: 6.3.5(@types/node@22.16.4)(yaml@2.8.0)
+      vite-plugin-dts:
+        specifier: 4.5.4
+        version: 4.5.4(@types/node@22.16.4)(rollup@4.52.3)(typescript@5.9.3)(vite@6.3.5(@types/node@22.16.4)(yaml@2.8.0))
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.16.4)(@vitest/browser@3.2.4)(yaml@2.8.0)
+
   packages/lit:
     dependencies:
       '@nl-design-system-candidate/code-css':
