@@ -34,52 +34,51 @@
 .theme-wizard-collage-component {
   display: flex;
   flex-direction: column;
-  padding-block: 1rem;
-  padding-inline: 1rem;
-  border-block-end: 1px solid #e5e7eb;
+  padding: var(--basis-space-block-xl) var(--basis-space-inline-lg);
+  border-block-end: 1px solid var(--basis-color-default-border-default);
 }
 
 .theme-wizard-collage-component-header {
   font-family: "Roboto", sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-block-end: 1rem;
+  gap: var(--basis-space-block-sm);
+  margin-block-end: var(--basis-space-block-lg);
 }
 
 .theme-wizard-collage-component-header h2 {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 900;
-  line-height: 1.2;
-  color: #370101;
+  font-size: var(--basis-text-font-size-lg);
+  font-weight: var(--basis-text-font-weight-bold);
+  line-height: var(--basis-text-line-height-md);
+  color: var(--basis-color-default-color-default);
 }
 
 .theme-wizard-collage-component-header p {
   font-family: "Roboto", sans-serif;
   margin-block: 0;
   margin-inline: 0;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #4b5563;
+  font-size: var(--basis-text-font-size-md);
+  font-weight: var(--basis-text-font-weight-regular);
+  line-height: var(--basis-text-line-height-md);
+  color: var(--basis-color-default-color-subtle);
 }
 
 .theme-wizard-collage-component-header code {
-  background-color: #f3f4f6;
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.875rem;
-  font-family: monospace;
+  background-color: var(--basis-color-default-bg-subtle);
+  padding: var(--basis-space-inline-xs) var(--basis-space-inline-sm);
+  border-radius: var(--basis-border-radius-sm);
+  font-size: var(--basis-text-font-size-sm);
+  font-family: var(--basis-text-font-family-monospace);
 }
 
 .theme-wizard-collage-component-content {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--basis-space-block-sm);
   flex-wrap: wrap;
 }
 
 .theme-wizard-collage-component-content.theme-wizard-collage-component-content--stacked {
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--basis-space-block-sm);
 }
