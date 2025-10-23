@@ -1,11 +1,13 @@
-import { DesignToken, EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
+import { DesignToken, EXTENSION_AUTHORED_AS, EXTENSION_TOKEN_ID } from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
+import ColorToken from '../../lib/ColorToken';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
 import '../font-select';
+import '../color-select';
 
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {
@@ -71,11 +73,23 @@ export class LitSidebar extends LitElement {
       });
   }
 
+  get colorOptions() {
+    return this.scrapedTokens
+      .filter((token) => token.$type === 'color')
+      .map((token) => {
+        const { $extensions } = token;
+        return {
+          label: $extensions[EXTENSION_AUTHORED_AS],
+          token: new ColorToken(token),
+          value: $extensions[EXTENSION_TOKEN_ID],
+        };
+      });
+  }
+
   override render() {
     return html`
       <div class="theme-sidebar">
         <h1 class="theme-sidebar__title">Theme Wizard</h1>
-        <p class="theme-sidebar__subtitle">Lit</p>
 
         <form @submit=${this.handleScrapeForm}>
           <section class="theme-sidebar__section">
@@ -98,6 +112,15 @@ export class LitSidebar extends LitElement {
         </form>
 
         <form class="theme-sidebar__form" @change=${this.handleThemeForm} @submit=${this.handleThemeForm}>
+          <fieldset>
+            <legend>Kleuren</legend>
+            <color-select
+              name="brand-colors"
+              label="Basiskleuren"
+              .options=${this.colorOptions}
+            >
+          </fieldset>
+
           <fieldset>
             <legend>Lettertypes</legend>
             <font-select
