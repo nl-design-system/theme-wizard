@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="nl-NL">
+  <head>
+    <title>Collage Variation</title>
+    <link rel="stylesheet" href="./variation.css" />
+  </head>
+  <body>
+    <div class="theme-wizard-collage-component">
+      <div class="theme-wizard-collage-component-header">
+        <theme-wizard-heading level="2">Button</theme-wizard-heading>
+        <theme-wizard-paragraph
+          >Buttons worden gebruikt om acties in een gebruikersinterface te activeren.</theme-wizard-paragraph
+        >
+        <theme-wizard-paragraph
+          >De buttons zijn gestyled met de
+          <theme-wizard-code>utrecht-button</theme-wizard-code> component.</theme-wizard-paragraph
+        >
+      </div>
+
+      <div class="theme-wizard-collage-component-content">
+        <utrecht-button>Start je aanvraag</utrecht-button>
+        <utrecht-button appearance="primary-action-button">Start je aanvraag</utrecht-button>
+        <utrecht-button appearance="secondary-action-button">Start je aanvraag</utrecht-button>
+        <utrecht-button appearance="subtle-button">Start je aanvraag</utrecht-button>
+      </div>
+    </div>
+
+    <div class="theme-wizard-collage-component">
+      <div class="theme-wizard-collage-component-header">
+        <theme-wizard-heading level="2">Alert</theme-wizard-heading>
+        <theme-wizard-paragraph>Alerts worden gebruikt om berichten aan de gebruiker te tonen.</theme-wizard-paragraph>
+        <theme-wizard-paragraph
+          >De alerts zijn gestyled met de
+          <theme-wizard-code>utrecht-alert</theme-wizard-code> component.</theme-wizard-paragraph
+        >
+      </div>
+
+      <div class="theme-wizard-collage-component-content">
+        <utrecht-alert type="info"
+          ><utrecht-heading-2>Dit is een informatieve alert</utrecht-heading-2
+          ><utrecht-paragraph>Dit is een informatieve alert</utrecht-paragraph></utrecht-alert
+        >
+        <utrecht-alert type="ok"
+          ><utrecht-heading-2>Dit is een succesvolle alert</utrecht-heading-2
+          ><utrecht-paragraph>Dit is een succesvolle alert</utrecht-paragraph></utrecht-alert
+        >
+        <utrecht-alert type="warning"
+          ><utrecht-heading-2>Dit is een alert</utrecht-heading-2
+          ><utrecht-paragraph>Dit is een alert</utrecht-paragraph></utrecht-alert
+        >
+        <utrecht-alert type="error"
+          ><utrecht-heading-2>Dit is een error alert</utrecht-heading-2
+          ><utrecht-paragraph>Dit is een error alert</utrecht-paragraph></utrecht-alert
+        >
+      </div>
+    </div>
+
+    <div class="theme-wizard-collage-component">
+      <div class="theme-wizard-collage-component-header">
+        <theme-wizard-heading level="2">Breadcrumb navigation</theme-wizard-heading>
+        <theme-wizard-paragraph
+          >Breadcrumb navigation wordt gebruikt om naar andere pagina's in een gebruikersinterface te
+          navigeren.</theme-wizard-paragraph
+        >
+        <theme-wizard-paragraph>
+          De breadcrumb navigation is gestyled met de<theme-wizard-code>utrecht-breadcrumb-nav</theme-wizard-code>
+          component.
+        </theme-wizard-paragraph>
+      </div>
+
+      <div class="theme-wizard-collage-component-content">
+        <utrecht-breadcrumb-nav
+          json='[{"href":"https://example.com/","title":"Home"},{"href":"https://example.com/a/","title":"Wonen en leven"},{"href":"https://example.com/a/b/","title":"Afval"},{"href":"https://example.com/a/b/c/","title":"Kliko&#x27;s","current":true}]'
+          variant="arrows"
+          lang="nl-NL"
+        ></utrecht-breadcrumb-nav>
+      </div>
+    </div>
+
+    <div class="theme-wizard-collage-component">
+      <div class="theme-wizard-collage-component-header">
+        <theme-wizard-heading level="2">Heading</theme-wizard-heading>
+        <theme-wizard-paragraph
+          >Headings worden gebruikt om de inhoud van een pagina te structureren.</theme-wizard-paragraph
+        >
+        <theme-wizard-paragraph
+          >De headings zijn gestyled met de
+          <theme-wizard-code>theme-wizard-heading</theme-wizard-code> component.</theme-wizard-paragraph
+        >
+      </div>
+
+      <div class="theme-wizard-collage-component-content theme-wizard-collage-component-content--stacked">
+        <theme-wizard-heading level="1">Hoofdkop van de pagina</theme-wizard-heading>
+        <theme-wizard-heading level="2"
+          >Een koptekst die volgt na de hoofdkop en in de koppenstructuur op het tweede niveau
+          staat</theme-wizard-heading
+        >
+        <theme-wizard-heading level="3"
+          >Een koptekst die in de koppenstructuur op het derde niveau staat</theme-wizard-heading
+        >
+        <theme-wizard-heading level="4"
+          >Een koptekst die in de koppenstructuur op het vierde niveau staat</theme-wizard-heading
+        >
+        <theme-wizard-heading level="5"
+          >Een koptekst die in de koppenstructuur op het vijfde niveau staat</theme-wizard-heading
+        >
+        <theme-wizard-heading level="6"
+          >Een koptekst die in de koppenstructuur op het zesde niveau staat</theme-wizard-heading
+        >
+      </div>
+    </div>
+
+    <div class="theme-wizard-collage-component">
+      <div class="theme-wizard-collage-component-header">
+        <theme-wizard-heading level="2">Paragraph</theme-wizard-heading>
+        <theme-wizard-paragraph
+          >Paragraphs worden gebruikt om tekst in een gebruikersinterface weer te geven.</theme-wizard-paragraph
+        >
+        <theme-wizard-paragraph>
+          De paragraphs zijn gestyled met de <theme-wizard-code>theme-wizard-paragraph</theme-wizard-code> component.
+        </theme-wizard-paragraph>
+      </div>
+
+      <div class="theme-wizard-collage-component-content theme-wizard-collage-component-content--stacked">
+        <theme-wizard-paragraph>Dit is een paragraaf</theme-wizard-paragraph>
+        <theme-wizard-paragraph lead="true">Dit is een lead paragraaf</theme-wizard-paragraph>
+      </div>
+    </div>
+
+    <div class="theme-wizard-collage-component">
+      <div class="theme-wizard-collage-component-header">
+        <theme-wizard-heading level="2">Textbox</theme-wizard-heading>
+        <theme-wizard-paragraph
+          >Textboxes worden gebruikt om tekst in een gebruikersinterface in te voeren.</theme-wizard-paragraph
+        >
+        <theme-wizard-paragraph>
+          De textboxes zijn gestyled met de <theme-wizard-code>utrecht-form-field-textbox</theme-wizard-code> component.
+        </theme-wizard-paragraph>
+      </div>
+
+      <div class="theme-wizard-collage-component-content theme-wizard-collage-component-content--stacked">
+        <utrecht-form-field-textbox
+          id="textbox"
+          label="Tekstveld"
+          name="textbox"
+          value="Pa’s wijze lynx bezag vroom het fikse aquaduct."
+        ></utrecht-form-field-textbox>
+
+        <utrecht-form-field-textbox
+          id="textbox-disabled"
+          label="Tekstveld uitgeschakeld"
+          name="textbox-disabled"
+          value="Pa’s wijze lynx bezag vroom het fikse aquaduct."
+          disabled
+        ></utrecht-form-field-textbox>
+
+        <utrecht-form-field-textbox
+          id="textbox-invalid"
+          label="Tekstveld ongeldig"
+          name="textbox-invalid"
+          value="Pa’s wijze lynx bezag vroom het fikse aquaduct."
+          invalid
+        ></utrecht-form-field-textbox>
+
+        <utrecht-form-field-textbox
+          id="textbox-readonly"
+          label="Tekstveld alleen-lezen"
+          name="textbox-readonly"
+          value="Pa’s wijze lynx bezag vroom het fikse aquaduct."
+          readonly
+        ></utrecht-form-field-textbox>
+
+        <utrecht-form-field-textbox
+          id="textbox-search"
+          label="Zoekveld"
+          name="textbox-search"
+          value="Pa’s wijze lynx bezag vroom het fikse aquaduct."
+          type="search"
+        ></utrecht-form-field-textbox>
+      </div>
+    </div>
+  </body>
+</html>

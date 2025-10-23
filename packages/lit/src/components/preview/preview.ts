@@ -3,16 +3,22 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
 import Scraper from '../../lib/Scraper';
-import { fetchHtml, parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
+import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
 export const PREVIEW_THEME = 'preview-theme';
 const previewTheme = maTheme.replace('.ma-theme', `.${PREVIEW_THEME}`);
 
+interface TemplateConfig {
+  htmlUrl: string;
+  cssUrl?: string;
+}
+
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() url: string = DEFAULT_CONFIG.previewUrl;
   @property() themeStylesheet!: CSSStyleSheet;
+  @property({ type: Object }) templateConfig?: TemplateConfig;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
@@ -32,47 +38,90 @@ export class ThemePreview extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.fetchContent();
-    this.#loadInitialCSS();
+    this.#loadContent();
 
     // Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview
     this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
-  /**
-   * Load the initial CSS from the preview URL and set it to the preview stylesheet
-   */
-  readonly #loadInitialCSS = async () => {
-    const url = new URL(DEFAULT_CONFIG.previewUrl);
-    const css = await this.scraper.getCSS(url);
+  override willUpdate(changedProperties: Map<string, unknown>) {
+    super.willUpdate(changedProperties);
 
-    this.previewStylesheet?.replaceSync(css);
-  };
+    // Reload content when template config or URL changes
+    if (changedProperties.has('templateConfig')) {
+      this.#loadContent();
+    }
+  }
 
-  /**
-   * Fetch the content from the URL
-   */
-  private readonly fetchContent = async () => {
+  readonly #loadContent = async () => {
+    const config: TemplateConfig | null = this.templateConfig
+      ? this.templateConfig
+      : this.url
+        ? { cssUrl: this.url, htmlUrl: this.url }
+        : null;
+
+    if (!config) return;
+
     this.isLoading = true;
     this.error = '';
 
-    if (!this.url) {
-      this.isLoading = false;
-      return;
-    }
-
     try {
-      const html = await fetchHtml(this.url);
-      const doc = parseHtml(html);
+      this.htmlContent = await this.#fetchHTML(config.htmlUrl);
 
-      rewriteAttributeUrlsToAbsolute(doc.body, this.url);
-      rewriteSvgXlinkToAbsolute(doc.body, this.url);
-
-      this.htmlContent = doc.body.innerHTML;
+      if (config.cssUrl) {
+        const cssContent = await this.#fetchCSS(config.cssUrl);
+        this.previewStylesheet?.replaceSync(cssContent);
+      }
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
     } finally {
       this.isLoading = false;
+    }
+  };
+
+  /**
+   * Fetch and process HTML from the URL
+   */
+  readonly #fetchHTML = async (url: string): Promise<string> => {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch HTML: ${response.statusText}`);
+    }
+
+    const html = await response.text();
+    const doc = parseHtml(html);
+
+    rewriteAttributeUrlsToAbsolute(doc.body, url);
+    rewriteSvgXlinkToAbsolute(doc.body, url);
+
+    return doc.body.innerHTML;
+  };
+
+  /**
+   * Fetch CSS from a URL (local or remote)
+   */
+  readonly #fetchCSS = async (url: string): Promise<string> => {
+    try {
+      // External URL gets ignored since it's already absolute
+      const absoluteUrl = new URL(url, window.location.href).href;
+      const currentOrigin = new URL(window.location.href).origin;
+      const urlOrigin = new URL(absoluteUrl).origin;
+      const isExternal = currentOrigin !== urlOrigin;
+
+      if (isExternal) {
+        // Use scraper API
+        const cssUrl = new URL(url);
+        return this.scraper.getCSS(cssUrl);
+      } else {
+        // Direct fetch for local/relative URLs
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch CSS: ${response.statusText}`);
+        }
+        return response.text();
+      }
+    } catch (error) {
+      throw new Error(`Failed to fetch CSS: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
