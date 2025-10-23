@@ -85,12 +85,8 @@ export class TemplateSwitcher extends LitElement {
   handleTemplateChange = (e: Event) => this.#dispatchTemplateChange('template', e);
   handleComponentChange = (e: Event) => this.#dispatchTemplateChange('component', e);
 
-  #activateTemplate = () => {
-    this.activeSelect = 'template';
-  };
-
-  #activateComponent = () => {
-    this.activeSelect = 'component';
+  #activateSelect = (type: 'template' | 'component') => {
+    this.activeSelect = type;
   };
 
   #renderOptGroup = (template: (typeof TEMPLATES)[number]) => html`
@@ -125,7 +121,7 @@ export class TemplateSwitcher extends LitElement {
               </select>
             `
           : html`
-              <utrecht-button appearance="primary-action-button" @click=${this.#activateTemplate}>
+              <utrecht-button appearance="primary-action-button" @click=${() => this.#activateSelect('template')}>
                 Voorvertoning Templates
               </utrecht-button>
             `}
@@ -142,7 +138,7 @@ export class TemplateSwitcher extends LitElement {
               </select>
             `
           : html`
-              <utrecht-button appearance="primary-action-button" @click=${this.#activateComponent}>
+              <utrecht-button appearance="primary-action-button" @click=${() => this.#activateSelect('component')}>
                 Voorvertoning losse componenten
               </utrecht-button>
             `}
