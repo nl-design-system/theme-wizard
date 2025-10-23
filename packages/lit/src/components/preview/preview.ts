@@ -1,4 +1,3 @@
-import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
@@ -30,12 +29,7 @@ export class ThemePreview extends LitElement {
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   // TODO: Drop injection of maTheme and generate a full wizard theme CSS
-  static override readonly styles = [
-    previewStyles,
-    unsafeCSS(previewTheme),
-    unsafeCSS(paragraphCss),
-    unsafeCSS(headingCss),
-  ];
+  static override readonly styles = [previewStyles, unsafeCSS(previewTheme), unsafeCSS(paragraphCss)];
 
   constructor() {
     super();
