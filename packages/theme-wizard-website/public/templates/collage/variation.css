@@ -64,14 +64,6 @@
   color: var(--basis-color-default-color-subtle);
 }
 
-.theme-wizard-collage-component-header code {
-  background-color: var(--basis-color-default-bg-subtle);
-  padding: var(--basis-space-inline-xs) var(--basis-space-inline-sm);
-  border-radius: var(--basis-border-radius-sm);
-  font-size: var(--basis-text-font-size-sm);
-  font-family: var(--basis-text-font-family-monospace);
-}
-
 .theme-wizard-collage-component-content {
   display: flex;
   gap: var(--basis-space-block-sm);
