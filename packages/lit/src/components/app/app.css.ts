@@ -5,6 +5,8 @@ export default css`
    APP LAYOUT
    ============================================ */
   .theme-app {
+    --basis-form-control-max-inline-size: unset;
+
     display: flex;
     min-block-size: 100vh;
   }
@@ -12,6 +14,7 @@ export default css`
   /* ============================================
    MAIN CONTENT AREA
    ============================================ */
+
   .theme-preview-main {
     display: flex;
     flex: 1;

@@ -41,4 +41,17 @@ test.describe('Behavioural tests', () => {
 
     await expect(paragraph).toHaveCSS('font-family', /Arial/);
   });
+
+  test('can switch between template and component views', async ({ page }) => {
+    await expect(page.getByRole('combobox', { name: 'Voorvertoning Templates' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Voorvertoning Templates' })).not.toBeVisible();
+    await expect(page.getByRole('button', { name: 'Voorvertoning losse componenten' })).toBeVisible();
+
+    // Switch to component view
+    await page.getByRole('button', { name: 'Voorvertoning losse componenten' }).click();
+
+    await expect(page.getByRole('combobox', { name: 'Voorvertoning losse componenten' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Voorvertoning Templates' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Voorvertoning losse componenten' })).not.toBeVisible();
+  });
 });
