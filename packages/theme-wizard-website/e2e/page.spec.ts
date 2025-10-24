@@ -1,27 +1,41 @@
-import { test, expect } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import { ThemeWizardPage } from './pages/ThemeWizardPage';
 
-test('page has accessibility basics', async ({ page }) => {
-  const themeWizard = new ThemeWizardPage(page);
-  await themeWizard.goto();
+type ThemeWizardFixture = {
+  themeWizard: ThemeWizardPage;
+  previewPage: ThemeWizardPage;
+  collagePage: ThemeWizardPage;
+};
 
+export const test = base.extend<ThemeWizardFixture>({
+  collagePage: async ({ themeWizard }, use) => {
+    await themeWizard.selectTemplate('Collage (Component Variaties)');
+    await use(themeWizard);
+  },
+
+  previewPage: async ({ themeWizard }, use) => {
+    await themeWizard.selectTemplate('Preview');
+    await use(themeWizard);
+  },
+
+  themeWizard: async ({ page }, use) => {
+    const themeWizard = new ThemeWizardPage(page);
+    await themeWizard.goto();
+    await use(themeWizard);
+  },
+});
+
+test('page has accessibility basics', async ({ themeWizard }) => {
   // Has <title>
-  const title = await page.title();
+  const title = await themeWizard.page.title();
   expect.soft(title).toBeTruthy();
 
   // Has document language specified
-  await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
+  await expect.soft(themeWizard.page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 });
 
 test.describe('Behavioural tests', () => {
-  let themeWizard: ThemeWizardPage;
-
-  test.beforeEach(async ({ page }) => {
-    themeWizard = new ThemeWizardPage(page);
-    await themeWizard.goto();
-  });
-
-  test('can switch between template and component views', async () => {
+  test('can switch between template and component views', async ({ themeWizard }) => {
     const previewChild = themeWizard.getPreviewChild();
 
     // Test Preview template
@@ -38,43 +52,35 @@ test.describe('Behavioural tests', () => {
     await expect(themeWizard.getCollageComponents()).toHaveCount(6);
   });
 
-  test('can change heading font to Courier New on preview', async () => {
-    const heading = themeWizard.getHeading(1);
+  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
+    const heading = previewPage.getHeading(1);
 
-    await themeWizard.selectTemplate('Preview');
-    await themeWizard.verifyFontChange(heading, /Courier New/);
-
-    await themeWizard.changeHeadingFont('Courier New');
-    await themeWizard.verifyFontApplied(heading, /Courier New/);
+    await previewPage.verifyFontChange(heading, /Courier New/);
+    await previewPage.changeHeadingFont('Courier New');
+    await previewPage.verifyFontApplied(heading, /Courier New/);
   });
 
-  test('can change body font to Arial', async () => {
-    const paragraph = themeWizard.getParagraphs();
+  test('can change body font to Arial', async ({ previewPage }) => {
+    const paragraph = previewPage.getParagraphs();
 
-    await themeWizard.selectTemplate('Preview');
-    await themeWizard.verifyFontChange(paragraph, /Arial/);
-
-    await themeWizard.changeBodyFont('Arial');
-    await themeWizard.verifyFontApplied(paragraph, /Arial/);
+    await previewPage.verifyFontChange(paragraph, /Arial/);
+    await previewPage.changeBodyFont('Arial');
+    await previewPage.verifyFontApplied(paragraph, /Arial/);
   });
 
-  test('can change heading font to Verdana on collage', async () => {
-    const heading = themeWizard.getHeading(2);
+  test('can change heading font to Verdana on collage', async ({ collagePage }) => {
+    const heading = collagePage.getHeading(2);
 
-    await themeWizard.selectTemplate('Collage (Component Variaties)');
-    await themeWizard.verifyFontChange(heading, /Verdana/);
-
-    await themeWizard.changeHeadingFont('Verdana');
-    await themeWizard.verifyFontApplied(heading, /Verdana/);
+    await collagePage.verifyFontChange(heading, /Verdana/);
+    await collagePage.changeHeadingFont('Verdana');
+    await collagePage.verifyFontApplied(heading, /Verdana/);
   });
 
-  test('can change body font to Georgia on collage', async () => {
-    const paragraph = themeWizard.getParagraphs();
+  test('can change body font to Georgia on collage', async ({ collagePage }) => {
+    const paragraph = collagePage.getParagraphs();
 
-    await themeWizard.selectTemplate('Collage (Component Variaties)');
-    await themeWizard.verifyFontChange(paragraph, /Georgia/);
-
-    await themeWizard.changeBodyFont('Georgia');
-    await themeWizard.verifyFontApplied(paragraph, /Georgia/);
+    await collagePage.verifyFontChange(paragraph, /Georgia/);
+    await collagePage.changeBodyFont('Georgia');
+    await collagePage.verifyFontApplied(paragraph, /Georgia/);
   });
 });
