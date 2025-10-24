@@ -9,15 +9,15 @@ type ThemeWizardFixture = {
 
 export const test = base.extend<ThemeWizardFixture>({
   collagePage: async ({ themeWizard }, use) => {
+    await themeWizard.page.reload();
     await themeWizard.selectTemplate('Collage (Component Variaties)');
     await use(themeWizard);
   },
-
   previewPage: async ({ themeWizard }, use) => {
+    await themeWizard.page.reload();
     await themeWizard.selectTemplate('Preview');
     await use(themeWizard);
   },
-
   themeWizard: async ({ page }, use) => {
     const themeWizard = new ThemeWizardPage(page);
     await themeWizard.goto();
@@ -35,21 +35,22 @@ test('page has accessibility basics', async ({ themeWizard }) => {
 });
 
 test.describe('Behavioural tests', () => {
-  test('can switch between template and component views', async ({ themeWizard }) => {
-    const previewChild = themeWizard.getPreviewChild();
+  test('preview template shows correct content and structure', async ({ previewPage }) => {
+    const previewChild = previewPage.getPreviewChild();
 
-    // Test Preview template
-    await themeWizard.switchToTemplateAndVerify('Preview', 'Graffiti laten verwijderen van uw pand');
+    await expect(previewPage.preview).toContainText('Graffiti laten verwijderen van uw pand');
     await expect(previewChild).not.toHaveClass('theme-wizard-collage-component');
-    await expect(themeWizard.getCollageComponents()).not.toBeVisible();
+    await expect(previewPage.getCollageComponents()).not.toBeVisible();
+  });
 
-    // Test Collage template
-    await themeWizard.switchToTemplateAndVerify(
-      'Collage (Component Variaties)',
+  test('collage template shows correct content and structure', async ({ collagePage }) => {
+    const previewChild = collagePage.getPreviewChild();
+
+    await expect(collagePage.preview).toContainText(
       "Breadcrumb navigation wordt gebruikt om naar andere pagina's in een gebruikersinterface te navigeren.",
     );
     await expect(previewChild).toHaveClass('theme-wizard-collage-component');
-    await expect(themeWizard.getCollageComponents()).toHaveCount(6);
+    await expect(collagePage.getCollageComponents()).toHaveCount(6);
   });
 
   test('can change heading font to Courier New on preview', async ({ previewPage }) => {

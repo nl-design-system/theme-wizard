@@ -1,7 +1,7 @@
 import { type Page, type Locator, expect } from '@playwright/test';
 
 export class ThemeWizardPage {
-  private readonly preview: Locator;
+  readonly preview: Locator;
   private readonly templateSelect: Locator;
 
   constructor(public readonly page: Page) {
@@ -32,11 +32,6 @@ export class ThemeWizardPage {
 
   async verifyFontApplied(element: Locator, fontFamily: RegExp) {
     await expect(element).toHaveCSS('font-family', fontFamily);
-  }
-
-  async switchToTemplateAndVerify(templateName: string, expectedText: string) {
-    await this.selectTemplate(templateName);
-    await expect(this.preview).toContainText(expectedText);
   }
 
   getPreviewChild(): Locator {
