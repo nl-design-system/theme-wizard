@@ -9,12 +9,12 @@
   ],
   "private": true,
   "type": "module",
-  "module": "./dist/design-tokens-schema.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/design-tokens-schema.js"
+      "import": "./dist/index.mjs"
     }
   },
   "files": [
