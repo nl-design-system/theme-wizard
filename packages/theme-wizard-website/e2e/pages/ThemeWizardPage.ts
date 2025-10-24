@@ -46,7 +46,7 @@ export class ThemeWizardPage {
     return this.preview.getByRole('heading', { level }).first();
   }
 
-  getParagraphs(): Locator {
+  getParagraph(): Locator {
     return this.preview.getByRole('paragraph').first();
   }
 }
