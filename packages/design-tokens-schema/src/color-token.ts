@@ -43,7 +43,7 @@ export const ColorHexFallbackSchema = z.string().regex(/^#[0-9a-f]{6}$/i);
 export type ColorHexFallback = z.infer<typeof ColorHexFallbackSchema>;
 
 export const ColorValueSchema = z.strictObject({
-  alpha: ColorAlphaSchema,
+  alpha: ColorAlphaSchema.default(1),
   colorSpace: ColorSpaceSchema,
   components: z.tuple([ColorComponentSchema, ColorComponentSchema, ColorComponentSchema]),
   hex: ColorHexFallbackSchema.optional(),

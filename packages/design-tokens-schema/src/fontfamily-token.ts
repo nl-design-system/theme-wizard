@@ -7,7 +7,7 @@ import { BaseDesignTokenValueSchema } from './base-token';
 const FontFamilyNameSchema = z.custom<string>((value) => {
   if (typeof value !== 'string') return false;
   if (value.includes(',')) return false;
-  return true;
+  return value.trim().length > 0;
 });
 
 export const FontFamilyValueSchema = z.union([FontFamilyNameSchema, z.array(FontFamilyNameSchema)]);
