@@ -26,14 +26,6 @@ export class ThemeWizardPage {
     await this.page.getByLabel('Lopende tekst').selectOption({ label: fontName });
   }
 
-  async verifyFontChange(element: Locator, fontFamily: RegExp) {
-    await expect(element).not.toHaveCSS('font-family', fontFamily);
-  }
-
-  async verifyFontApplied(element: Locator, fontFamily: RegExp) {
-    await expect(element).toHaveCSS('font-family', fontFamily);
-  }
-
   getPreviewChild(): Locator {
     return this.preview.locator(':first-child').first();
   }

@@ -1,4 +1,4 @@
-import { test } from './fixtures/fixtures';
+import { test, expect } from './fixtures/fixtures';
 
 test('page has accessibility basics', async ({ themeWizard }) => {
   // Has <title>
@@ -31,32 +31,32 @@ test.describe('Behavioural tests', () => {
   test('can change heading font to Courier New on preview', async ({ previewPage }) => {
     const heading = previewPage.getHeading(1);
 
-    await previewPage.verifyFontChange(heading, /Courier New/);
+    await expect(heading).not.toHaveFont('Courier New');
     await previewPage.changeHeadingFont('Courier New');
-    await previewPage.verifyFontApplied(heading, /Courier New/);
+    await expect(heading).toHaveFont('Courier New');
   });
 
   test('can change body font to Arial', async ({ previewPage }) => {
-    const paragraph = previewPage.getParagraphs();
+    const paragraph = previewPage.getParagraph();
 
-    await previewPage.verifyFontChange(paragraph, /Arial/);
+    await expect(paragraph).not.toHaveFont('Arial');
     await previewPage.changeBodyFont('Arial');
-    await previewPage.verifyFontApplied(paragraph, /Arial/);
+    await expect(paragraph).toHaveFont('Arial');
   });
 
   test('can change heading font to Verdana on collage', async ({ collagePage }) => {
     const heading = collagePage.getHeading(2);
 
-    await collagePage.verifyFontChange(heading, /Verdana/);
+    await expect(heading).not.toHaveFont('Verdana');
     await collagePage.changeHeadingFont('Verdana');
-    await collagePage.verifyFontApplied(heading, /Verdana/);
+    await expect(heading).toHaveFont('Verdana');
   });
 
   test('can change body font to Georgia on collage', async ({ collagePage }) => {
-    const paragraph = collagePage.getParagraphs();
+    const paragraph = collagePage.getParagraph();
 
-    await collagePage.verifyFontChange(paragraph, /Georgia/);
+    await expect(paragraph).not.toHaveFont('Georgia');
     await collagePage.changeBodyFont('Georgia');
-    await collagePage.verifyFontApplied(paragraph, /Georgia/);
+    await expect(paragraph).toHaveFont('Georgia');
   });
 });
