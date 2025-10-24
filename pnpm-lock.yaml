@@ -149,6 +149,9 @@ importers:
       '@nl-design-system-community/css-scraper':
         specifier: workspace:*
         version: link:../css-scraper
+      '@nl-design-system-community/design-tokens-schema':
+        specifier: workspace:*
+        version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
         specifier: 2.5.0
         version: 2.5.0

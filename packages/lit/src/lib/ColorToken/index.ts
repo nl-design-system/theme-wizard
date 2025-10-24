@@ -1,8 +1,5 @@
-import type {
-  ColorToken as ScrapedColorToken,
-  ColorSpace,
-  ColorComponent,
-} from '@nl-design-system-community/css-scraper';
+import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
+import type { ColorSpace, ColorComponent } from '@nl-design-system-community/design-tokens-schema';
 export type { ColorSpace };
 
 export type ColorTokenOkLCh = ColorToken & {

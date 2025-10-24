@@ -2,6 +2,7 @@ import {
   ColorTokenSchema,
   DimensionTokenSchema,
   FontFamilyTokenSchema,
+  FontFamilyNameSchema,
 } from '@nl-design-system-community/design-tokens-schema';
 import { z } from 'zod';
 
@@ -33,6 +34,8 @@ export type ScrapedDimensionToken = z.infer<typeof ScrapedDimensionTokenSchema>;
 export const ScrapedFontFamilyTokenSchema = z.strictObject({
   ...FontFamilyTokenSchema.shape,
   $extensions: TokenExtensionsSchema,
+  // Force font-families to be an Array because that's what css-design-tokens returns
+  $value: z.array(FontFamilyNameSchema),
 });
 export type ScrapedFontFamilyToken = z.infer<typeof ScrapedFontFamilyTokenSchema>;
 

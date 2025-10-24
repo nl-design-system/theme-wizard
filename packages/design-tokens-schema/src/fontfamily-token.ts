@@ -4,7 +4,7 @@ import { BaseDesignTokenValueSchema } from './base-token';
 // 8.3 Font family
 
 // "The value MUST either be a string value containing a single font name or an array of strings, each being a single font name."
-const FontFamilyNameSchema = z.custom<string>((value) => {
+export const FontFamilyNameSchema = z.custom<string>((value) => {
   if (typeof value !== 'string') return false;
   if (value.includes(',')) return false;
   return value.trim().length > 0;

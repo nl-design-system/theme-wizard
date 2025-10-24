@@ -1,4 +1,4 @@
-import type { DesignToken } from '@nl-design-system-community/css-scraper';
+import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 
 const DEFAULT_SCRAPER_URL = '';
 const CSS_ENDPOINT = '/api/v1/css';
@@ -24,7 +24,7 @@ export default class Scraper {
     return this.#get(this.#requestCSSUrl, url).then((result) => result.text());
   }
 
-  async getTokens(url: URL): Promise<DesignToken[]> {
+  async getTokens(url: URL): Promise<ScrapedDesignToken[]> {
     return this.#get(this.#requestTokenUrl, url).then((result) => result.json());
   }
 }

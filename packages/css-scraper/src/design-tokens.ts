@@ -1,4 +1,4 @@
-import { type DimensionValue } from '@nl-design-system-community/design-tokens-schema';
+import { type DimensionValue, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import {
   css_to_tokens as cssToTokens,
   EXTENSION_AUTHORED_AS as PW_EXTENSION_AUTHORED_AS,
@@ -31,7 +31,9 @@ export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
           [EXTENSION_USAGE_COUNT]: token.$extensions[PW_EXTENSION_USAGE_COUNT],
         },
         $type: 'color',
-        $value: token.$value,
+        // Casting necessary because css-design-tokens allows colorSpace to be String
+        // while our definition is more strict
+        $value: token.$value as ColorValue,
       });
     }
   }

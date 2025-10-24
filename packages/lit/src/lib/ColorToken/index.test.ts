@@ -1,4 +1,4 @@
-import type { ColorToken as ScrapedColorToken } from '@nl-design-system-community/css-scraper';
+import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import ColorToken, { ColorComponents, ColorSpace } from './index';
 
