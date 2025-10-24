@@ -13,11 +13,13 @@ export const test = base.extend<ThemeWizardFixture>({
     await themeWizard.selectTemplate('Collage (Component Variaties)');
     await use(themeWizard);
   },
+
   previewPage: async ({ themeWizard }, use) => {
     await themeWizard.page.reload();
     await themeWizard.selectTemplate('Preview');
     await use(themeWizard);
   },
+
   themeWizard: async ({ page }, use) => {
     const themeWizard = new ThemeWizardPage(page);
     await themeWizard.goto();
