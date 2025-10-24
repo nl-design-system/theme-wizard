@@ -1,5 +1,5 @@
 import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
-import type { ColorSpace, ColorComponent } from '@nl-design-system-community/design-tokens-schema';
+import { ColorSpace, ColorComponent, COLOR_SPACES } from '@nl-design-system-community/design-tokens-schema';
 export type { ColorSpace };
 
 export type ColorTokenOkLCh = ColorToken & {
@@ -57,27 +57,27 @@ export default class ColorToken {
 
     switch (colorSpace) {
       // These color spaces are polar:
-      case 'hsl':
+      case COLOR_SPACES.hsl:
         return `hsl(${first} ${rest.map(percentage).join(' ')})`;
-      case 'hwb':
+      case COLOR_SPACES.hwb:
         return `hwb(${first} ${rest.map(percentage).join(' ')})`;
-      case 'lch':
+      case COLOR_SPACES.lch:
         return `lch(${percentage(first)} ${rest.join(' ')})`;
-      case 'oklch':
+      case COLOR_SPACES.oklch:
         return `oklch(${components.join(' ')})`;
       // These color spaces are cartesian:
-      case 'lab':
+      case COLOR_SPACES.lab:
         return `lab(${percentage(first)} ${rest.join(' ')})`;
-      case 'oklab':
+      case COLOR_SPACES.oklab:
         return `oklab(${components.join(' ')})`;
       // These color spaces are cartesian and have components encoded as [ 0.0 - 1.0, 0.0 - 1.0 , 0.0 - 1.0 ]
-      case 'srgb':
-      case 'display-p3':
-      case 'a98-rgb':
-      case 'prophoto-rgb':
-      case 'rec2020':
-      case 'xyz-d50':
-      case 'xyz-d65':
+      case COLOR_SPACES.srgb:
+      case COLOR_SPACES['display-p3']:
+      case COLOR_SPACES['a98-rgb']:
+      case COLOR_SPACES['prophoto-rgb']:
+      case COLOR_SPACES.rec2020:
+      case COLOR_SPACES['xyz-d50']:
+      case COLOR_SPACES['xyz-d65']:
       default:
         // Assume a missing color space is also cartesian
         return `color(${colorSpace} ${components.join(' ')})`;

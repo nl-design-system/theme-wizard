@@ -20,7 +20,10 @@ const spaces = [
 ] as const;
 
 /** @see https://www.designtokens.org/tr/drafts/color/#supported-color-spaces */
-export const COLOR_SPACES = Object.fromEntries(spaces.map((space) => [space, space]));
+export const COLOR_SPACES = Object.fromEntries(spaces.map((space) => [space, space])) as Record<
+  (typeof spaces)[number],
+  (typeof spaces)[number]
+>;
 
 export const ColorSpaceSchema = z.union(spaces.map((space) => z.literal(space)));
 
