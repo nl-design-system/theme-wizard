@@ -36,16 +36,19 @@ export class ColorSelect extends LitElement {
     super.connectedCallback();
   }
 
-  handleChange(event: Event) {
-    if (event.target instanceof HTMLSelectElement) {
-      this.value = event.target.value;
-      this.dispatchEvent(new Event('change', { bubbles: true }));
-    }
+  handleChange() {
+    if (!this.shadowRoot) return;
+    const checkedBoxes: NodeListOf<HTMLInputElement> = this.shadowRoot?.querySelectorAll(
+      `input[type=checkbox][name="${this.name}[]"]:checked`,
+    );
+    const values = Array.from(checkedBoxes).map((checkbox) => checkbox.value);
+    this.value = values.join(',');
+    this.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   override render() {
     return html`
-      <fieldset class="theme-color-select">
+      <fieldset class="theme-color-select" @change=${this.handleChange}>
         <legend class="theme-color-select__label">${this.label}</legend>
         <div class="theme-color-select__options">
           ${this.options.map(
