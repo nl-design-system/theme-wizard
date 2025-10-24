@@ -63,16 +63,13 @@ export const expect = baseExpect.extend({
       pass = !pass;
     }
 
-    let locatorString = 'Unknown locator';
-    try {
-      locatorString = (locator as { toString(): string }).toString();
-    } catch {
+    const locatorString = (() => {
       try {
-        locatorString = await locator.evaluate((el) => el.outerHTML);
+        return (locator as { toString(): string }).toString();
       } catch {
-        locatorString = 'Element unavailable';
+        return 'Element unavailable';
       }
-    }
+    })();
 
     const message = pass
       ? () =>
