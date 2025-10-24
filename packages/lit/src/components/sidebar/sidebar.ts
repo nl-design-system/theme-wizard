@@ -5,14 +5,16 @@ import {
   type ScrapedColorToken,
 } from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
+import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
-import '../font-select';
 import '../color-select';
+import '../color-scale';
+import '../font-select';
 
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {
@@ -20,6 +22,8 @@ export class LitSidebar extends LitElement {
   @property() headingFont = DEFAULT_CONFIG.headingFont;
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
   @property({ attribute: false }) onResetTheme?: () => void;
+
+  @state() brandColors: ColorToken[] = [];
 
   @property() scrapedTokens: ScrapedDesignToken[] = [];
 
@@ -58,6 +62,13 @@ export class LitSidebar extends LitElement {
     const formData = new FormData(form);
     const headingFont = formData.get('heading-font');
     const bodyFont = formData.get('body-font');
+    const brandColors = formData.get('brand-colors');
+
+    this.brandColors = this.colorOptions
+      .filter(({ value }) =>
+        (typeof brandColors === 'string' ? brandColors : '').split(',').some((color) => color === value),
+      )
+      .map(({ token }) => token);
 
     this.notifyConfigChange({
       bodyFont: typeof bodyFont === 'string' ? bodyFont : '',
@@ -119,11 +130,17 @@ export class LitSidebar extends LitElement {
         <form class="theme-sidebar__form" @change=${this.handleThemeForm} @submit=${this.handleThemeForm}>
           <fieldset>
             <legend>Kleuren</legend>
-            <color-select
-              name="brand-colors"
-              label="Basiskleuren"
-              .options=${this.colorOptions}
-            >
+            <color-select id="color-select" name="brand-colors" label="Basiskleuren" .options=${this.colorOptions}>
+            </color-select>
+
+            <fieldset>
+              <legend>Kleurverlopen</legend>
+              <output for="color-select">
+                ${this.brandColors.map(
+      (token) => html`<color-scale .from=${token} .stops=${new ColorScale(token).list()}></color-scale>`,
+    )}
+              </output>
+            </fieldset>
           </fieldset>
 
           <fieldset>
