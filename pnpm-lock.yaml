@@ -78,12 +78,43 @@ importers:
 
   packages/css-scraper:
     dependencies:
+      '@nl-design-system-community/design-tokens-schema':
+        specifier: workspace:*
+        version: link:../design-tokens-schema
       '@projectwallace/css-design-tokens':
-        specifier: 0.9.0
-        version: 0.9.0
+        specifier: 0.10.0
+        version: 0.10.0
       linkedom:
         specifier: 0.18.12
         version: 0.18.12
+      zod:
+        specifier: 4.1.12
+        version: 4.1.12
+    devDependencies:
+      '@vitest/coverage-v8':
+        specifier: 3.2.4
+        version: 3.2.4(@vitest/browser@3.2.4)(vitest@3.2.4)
+      rimraf:
+        specifier: 6.0.1
+        version: 6.0.1
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vite:
+        specifier: 6.3.5
+        version: 6.3.5(@types/node@22.16.4)(yaml@2.8.0)
+      vite-plugin-dts:
+        specifier: 4.5.4
+        version: 4.5.4(@types/node@22.16.4)(rollup@4.52.3)(typescript@5.9.3)(vite@6.3.5(@types/node@22.16.4)(yaml@2.8.0))
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.16.4)(@vitest/browser@3.2.4)(yaml@2.8.0)
+
+  packages/design-tokens-schema:
+    dependencies:
+      colorjs.io:
+        specifier: 0.5.2
+        version: 0.5.2
       zod:
         specifier: 4.1.12
         version: 4.1.12
@@ -121,6 +152,9 @@ importers:
       '@nl-design-system-community/css-scraper':
         specifier: workspace:*
         version: link:../css-scraper
+      '@nl-design-system-community/design-tokens-schema':
+        specifier: workspace:*
+        version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
         specifier: 2.5.0
         version: 2.5.0
@@ -1100,8 +1134,8 @@ packages:
     resolution: {integrity: sha512-up4GNW2WM/L0cKBrwhoKKcKB+Q9gRvlL9+llGRh9wZraUSzlJSoVvv76Olsx6K/gfQjZZxQiwQEBwcsVcVfDlg==}
     engines: {node: '>=18.0.0'}
 
-  '@projectwallace/css-design-tokens@0.9.0':
-    resolution: {integrity: sha512-A4q5VfFn2yHzADrPKjwBfzlW2cGNrHpZGBbyB6h+GJSKXL6ewJWBQrpYp0hHpiCKDCH2bBMcCqVYj9LLnlQJFg==}
+  '@projectwallace/css-design-tokens@0.10.0':
+    resolution: {integrity: sha512-lfX997iC+pH1G++mdIhcXMfVfS4Zt8v9kJbLVq8XQoHzhe5PqSjHyFN/hA/aOK2fDYyQ8S6F4Ff6sGYTPM6x5w==}
     engines: {node: '>=22'}
 
   '@rolldown/binding-android-arm64@1.0.0-beta.35':
@@ -2385,6 +2419,9 @@ packages:
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
+
+  colorjs.io@0.5.2:
+    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
 
   colorjs.io@0.6.0-alpha.1:
     resolution: {integrity: sha512-c/h/8uAmPydQcriRdX8UTAFHj6SpSHFHBA8LvMikvYWAVApPTwg/pyOXNsGmaCBd6L/EeDlRHSNhTtnIFp/qsg==}
@@ -6951,7 +6988,7 @@ snapshots:
       '@bramus/specificity': 2.4.2
       css-tree: 3.1.0
 
-  '@projectwallace/css-design-tokens@0.9.0':
+  '@projectwallace/css-design-tokens@0.10.0':
     dependencies:
       '@projectwallace/css-analyzer': 7.6.0
       color-sorter: 7.0.0
@@ -8570,6 +8607,8 @@ snapshots:
   colord@2.9.3: {}
 
   colorette@2.0.20: {}
+
+  colorjs.io@0.5.2: {}
 
   colorjs.io@0.6.0-alpha.1: {}
 

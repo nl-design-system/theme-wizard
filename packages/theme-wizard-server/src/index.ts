@@ -3,8 +3,8 @@ import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import {
   getCss,
   getDesignTokens,
-  DesignTokenSchema,
-  type DesignToken,
+  ScrapedDesignTokenSchema,
+  type ScrapedDesignToken,
   EXTENSION_AUTHORED_AS,
   EXTENSION_CSS_PROPERTIES,
   EXTENSION_TOKEN_ID,
@@ -147,7 +147,7 @@ app.openapi(
       200: {
         content: {
           'application/json': {
-            schema: z.array(DesignTokenSchema).openapi({
+            schema: z.array(ScrapedDesignTokenSchema).openapi({
               example: [
                 {
                   $extensions: {
@@ -172,7 +172,7 @@ app.openapi(
                     value: 16,
                   },
                 },
-              ] satisfies DesignToken[],
+              ] satisfies ScrapedDesignToken[],
               type: 'array',
             }),
           },

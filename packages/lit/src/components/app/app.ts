@@ -1,6 +1,6 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
-import { DesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
+import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -27,7 +27,7 @@ export class App extends LitElement {
   );
 
   @state()
-  private scrapedTokens: DesignToken[] = [];
+  private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
   private selectedTemplate: 'collage' | 'preview' = 'collage';

@@ -1,4 +1,8 @@
-import { DesignToken, EXTENSION_AUTHORED_AS, EXTENSION_TOKEN_ID } from '@nl-design-system-community/css-scraper';
+import {
+  type ScrapedDesignToken,
+  EXTENSION_AUTHORED_AS,
+  EXTENSION_TOKEN_ID,
+} from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
@@ -16,7 +20,7 @@ export class LitSidebar extends LitElement {
   @property() bodyFont = DEFAULT_CONFIG.bodyFont;
   @property({ attribute: false }) onResetTheme?: () => void;
 
-  @property() scrapedTokens: DesignToken[] = [];
+  @property() scrapedTokens: ScrapedDesignToken[] = [];
 
   static override readonly styles = [sidebarStyles];
 
