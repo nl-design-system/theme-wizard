@@ -63,13 +63,7 @@ export const expect = baseExpect.extend({
       pass = !pass;
     }
 
-    const locatorString = (() => {
-      try {
-        return (locator as { toString(): string }).toString();
-      } catch {
-        return 'Element unavailable';
-      }
-    })();
+    const locatorString = (locator as { toString(): string }).toString();
 
     const message = pass
       ? () =>
