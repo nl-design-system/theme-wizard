@@ -1,92 +1,62 @@
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import { test, expect } from './fixtures/fixtures';
 
-test('page has accessibility basics', async ({ page }) => {
-  await page.goto('/');
-
+test('page has accessibility basics', async ({ themeWizard }) => {
   // Has <title>
-  const title = await page.title();
+  const title = await themeWizard.page.title();
   expect.soft(title).toBeTruthy();
 
   // Has document language specified
-  await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
+  await expect.soft(themeWizard.page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 });
 
 test.describe('Behavioural tests', () => {
-  let preview: Locator;
+  test('preview template shows correct content and structure', async ({ previewPage }) => {
+    const previewChild = previewPage.getPreviewChild();
 
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-
-    // Wait for the preview rendering to complete before doing assertions on it
-    preview = page.getByTestId('preview');
-    await expect(preview).toBeVisible();
+    await expect(previewPage.preview).toContainText('Graffiti laten verwijderen van uw pand');
+    await expect(previewChild).not.toHaveClass('theme-wizard-collage-component');
+    await expect(previewPage.getCollageComponents()).not.toBeVisible();
   });
 
-  const selectTemplate = async (page: Page, templateName: string) => {
-    const select = page.getByLabel('Kies een template');
-    await select.selectOption({ label: templateName });
-  };
+  test('collage template shows correct content and structure', async ({ collagePage }) => {
+    const previewChild = collagePage.getPreviewChild();
 
-  const changeFont = async (page: Page, fontType: string, fontName: string) => {
-    const selectFont = page.getByLabel(fontType);
-    await selectFont.selectOption({ label: fontName });
-  };
-
-  test('can switch between template and component views', async ({ page }) => {
-    const previewChild = preview.locator(':first-child').first();
-
-    // Test Preview template)
-    await selectTemplate(page, 'Preview');
-
-    await expect(preview).toContainText('Graffiti laten verwijderen van uw pand');
-    await expect(previewChild).not.toHaveClass('theme-wizard-collage-component');
-    await expect(preview.locator('.theme-wizard-collage-component')).not.toBeVisible();
-
-    // Test Collage template
-    await selectTemplate(page, 'Collage (Component Variaties)');
-
-    await expect(preview).toContainText(
+    await expect(collagePage.preview).toContainText(
       "Breadcrumb navigation wordt gebruikt om naar andere pagina's in een gebruikersinterface te navigeren.",
     );
     await expect(previewChild).toHaveClass('theme-wizard-collage-component');
-    await expect(preview.locator('.theme-wizard-collage-component')).toHaveCount(6);
+    await expect(collagePage.getCollageComponents()).toHaveCount(6);
   });
 
-  const expectFontChange = async (
-    page: Page,
-    templateName: string,
-    elementSelector: Locator,
-    fontType: string,
-    fontName: string,
-    fontFamily: RegExp,
-  ) => {
-    await selectTemplate(page, templateName);
+  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
+    const heading = previewPage.getHeading(1);
 
-    const element = elementSelector;
-    await expect(element).not.toHaveCSS('font-family', fontFamily);
-
-    await changeFont(page, fontType, fontName);
-
-    await expect(element).toHaveCSS('font-family', fontFamily);
-  };
-
-  test('can change heading font to Courier New on preview', async ({ page }) => {
-    const heading = preview.getByRole('heading', { level: 1 });
-    await expectFontChange(page, 'Preview', heading, 'Koppen', 'Courier New', /Courier New/);
+    await expect(heading).not.toHaveFont('Courier New');
+    await previewPage.changeHeadingFont('Courier New');
+    await expect(heading).toHaveFont('Courier New');
   });
 
-  test('can change body font to Arial', async ({ page }) => {
-    const paragraph = preview.getByRole('paragraph').first();
-    await expectFontChange(page, 'Preview', paragraph, 'Lopende tekst', 'Arial', /Arial/);
+  test('can change body font to Arial', async ({ previewPage }) => {
+    const paragraph = previewPage.getParagraph();
+
+    await expect(paragraph).not.toHaveFont('Arial');
+    await previewPage.changeBodyFont('Arial');
+    await expect(paragraph).toHaveFont('Arial');
   });
 
-  test('can change heading font to Verdana on collage', async ({ page }) => {
-    const heading = preview.getByRole('heading', { level: 2 }).first();
-    await expectFontChange(page, 'Collage (Component Variaties)', heading, 'Koppen', 'Verdana', /Verdana/);
+  test('can change heading font to Verdana on collage', async ({ collagePage }) => {
+    const heading = collagePage.getHeading(2);
+
+    await expect(heading).not.toHaveFont('Verdana');
+    await collagePage.changeHeadingFont('Verdana');
+    await expect(heading).toHaveFont('Verdana');
   });
 
-  test('can change body font to Georgia on collage', async ({ page }) => {
-    const paragraph = preview.getByRole('paragraph').first();
-    await expectFontChange(page, 'Collage (Component Variaties)', paragraph, 'Lopende tekst', 'Georgia', /Georgia/);
+  test('can change body font to Georgia on collage', async ({ collagePage }) => {
+    const paragraph = collagePage.getParagraph();
+
+    await expect(paragraph).not.toHaveFont('Georgia');
+    await collagePage.changeBodyFont('Georgia');
+    await expect(paragraph).toHaveFont('Georgia');
   });
 });

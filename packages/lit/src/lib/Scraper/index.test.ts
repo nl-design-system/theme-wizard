@@ -2,7 +2,9 @@ import { describe, expect, test, vi } from 'vitest';
 import Scraper from './index';
 
 describe('Scraper', () => {
-  const fetchSpy = vi.spyOn(window, 'fetch');
+  const fetchSpy = vi.spyOn(window, 'fetch').mockImplementation(async () => {
+    return new Response('', { status: 200 });
+  });
 
   test('tries to fetch css for given url', () => {
     const scraperURL = 'https://example.com/';
