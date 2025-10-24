@@ -27,10 +27,15 @@ export const COLOR_SPACES = Object.fromEntries(spaces.map((space) => [space, spa
 
 export const ColorSpaceSchema = z.union(spaces.map((space) => z.literal(space)));
 
+export const NoneKeywordSchema = z.literal('none');
+
+/** @see https://www.designtokens.org/tr/drafts/color/#the-none-keyword */
+export type NoneKeyword = z.infer<typeof NoneKeywordSchema>;
+
 /** @see https://www.designtokens.org/tr/drafts/color/#supported-color-spaces */
 export type ColorSpace = z.infer<typeof ColorSpaceSchema>;
 
-export const ColorComponentSchema = z.union([z.number(), z.literal('none')]);
+export const ColorComponentSchema = z.union([z.number(), NoneKeywordSchema]);
 
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorComponent = z.infer<typeof ColorComponentSchema>;
@@ -46,9 +51,9 @@ export const ColorHexFallbackSchema = z.string().regex(/^#[0-9a-f]{6}$/i);
 export type ColorHexFallback = z.infer<typeof ColorHexFallbackSchema>;
 
 export const ColorValueSchema = z.strictObject({
-  alpha: ColorAlphaSchema.default(1),
-  colorSpace: ColorSpaceSchema,
-  components: z.tuple([ColorComponentSchema, ColorComponentSchema, ColorComponentSchema]),
+  alpha: ColorAlphaSchema.optional().default(1),
+  colorSpace: ColorSpaceSchema.nonoptional(),
+  components: z.tuple([ColorComponentSchema, ColorComponentSchema, ColorComponentSchema]).nonoptional(),
   hex: ColorHexFallbackSchema.optional(),
 });
 export type ColorValue = z.infer<typeof ColorValueSchema>;
