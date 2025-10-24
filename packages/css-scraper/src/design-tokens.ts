@@ -1,4 +1,3 @@
-import { type DimensionValue, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import {
   css_to_tokens as cssToTokens,
   EXTENSION_AUTHORED_AS as PW_EXTENSION_AUTHORED_AS,
@@ -31,9 +30,7 @@ export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
           [EXTENSION_USAGE_COUNT]: token.$extensions[PW_EXTENSION_USAGE_COUNT],
         },
         $type: 'color',
-        // Casting necessary because css-design-tokens allows colorSpace to be String
-        // while our definition is more strict
-        $value: token.$value as ColorValue,
+        $value: token.$value,
       });
     }
   }
@@ -67,9 +64,7 @@ export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
           [EXTENSION_USAGE_COUNT]: token.$extensions[PW_EXTENSION_USAGE_COUNT],
         },
         $type: token.$type,
-        // Casting necessary here because Project Wallace sets `unit` to string
-        // https://github.com/projectwallace/css-design-tokens/blob/340e88649e1774c388e561ed3e0cd7cd35bfab27/src/types.ts#L70
-        $value: token.$value as DimensionValue,
+        $value: token.$value,
       });
     }
   }
