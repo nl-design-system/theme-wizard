@@ -28,13 +28,13 @@ export type BaseDesignTokenName = z.infer<typeof BaseDesignTokenNameSchema>;
 
 export const BaseDesignTokenValueSchema = z.strictObject({
   /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
-  $deprecated: z.union([z.boolean(), z.string()]).optional(),
+  $deprecated: z.union([z.boolean(), z.string()]).nullish(),
   /** @see 5.2.1 Description https://www.designtokens.org/tr/drafts/format/#description */
-  $description: z.string().optional(),
+  $description: z.string().nullish(),
   /** @see 5.2.3 Extensions https://www.designtokens.org/tr/drafts/format/#extensions */
-  $extensions: z.record(z.string(), z.unknown()).optional(),
+  $extensions: z.record(z.string(), z.unknown()).nullish(),
   /** @see 5.2.2 Type https://www.designtokens.org/tr/drafts/format/#type-0 */
-  $type: z.string().optional(),
+  $type: z.string().nullish(),
   $value: z.unknown().nonoptional(), // refine exact shape in concrete token types
 });
 export type BaseDesignTokenValue = z.infer<typeof BaseDesignTokenValueSchema>;

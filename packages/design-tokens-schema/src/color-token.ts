@@ -1,3 +1,4 @@
+import Color, { type Coords } from 'colorjs.io';
 import * as z from 'zod';
 import { BaseDesignTokenValueSchema } from './base-token';
 
@@ -51,18 +52,91 @@ export const ColorHexFallbackSchema = z.string().regex(/^#[0-9a-f]{6}$/i);
 export type ColorHexFallback = z.infer<typeof ColorHexFallbackSchema>;
 
 export const ColorValueSchema = z.strictObject({
-  alpha: ColorAlphaSchema.optional().default(1),
+  alpha: ColorAlphaSchema.optional(),
   colorSpace: ColorSpaceSchema.nonoptional(),
   components: z.tuple([ColorComponentSchema, ColorComponentSchema, ColorComponentSchema]).nonoptional(),
   hex: ColorHexFallbackSchema.optional(),
 });
 export type ColorValue = z.infer<typeof ColorValueSchema>;
 
-export const ColorTokenSchema = z.strictObject({
-  ...BaseDesignTokenValueSchema.shape,
+export const LegacyColorTokenSchema = BaseDesignTokenValueSchema.extend({
+  $type: z.literal('color'),
+  $value: z.string(),
+});
+
+export const ColorTokenSchema = BaseDesignTokenValueSchema.extend({
   $type: z.literal('color'),
   $value: ColorValueSchema,
 });
 
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorToken = z.infer<typeof ColorTokenSchema>;
+
+// https://github.com/projectwallace/css-design-tokens/blob/main/src/colors.ts#L1-L92
+export const parseColor = (color: string): ColorValue => {
+  const lowercased = color.toLowerCase();
+
+  // The keyword "transparent" specifies a transparent black.
+  // > https://drafts.csswg.org/css-color-4/#transparent-color
+  // colorjs.io does not handle this well so we need to do it ourselves
+  if (lowercased === 'transparent') {
+    return {
+      alpha: 0,
+      colorSpace: 'srgb',
+      components: [0, 0, 0],
+    };
+  }
+
+  try {
+    const parsedColor = new Color(color);
+    return {
+      alpha: parsedColor.alpha ?? 0,
+      colorSpace: parsedColor.spaceId as ColorSpace,
+      components: parsedColor.coords,
+    };
+  } catch {
+    // A catch for edge cases that we don't support yet.
+    return {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [0, 0, 0],
+    };
+  }
+};
+
+export const stringifyColor = (color: ColorValue): string => {
+  const reference = new Color({
+    alpha: color.alpha,
+    coords: color.components.map((component) => (component === 'none' ? 0 : component)) as Coords,
+    spaceId: color.colorSpace,
+  });
+  const converted = reference.to('srgb');
+  return converted.toString({ inGamut: true });
+};
+
+/**
+ * @description Convert back and forth between a legacy color value and a modern value
+ * @example
+ * ```ts
+ * legacyToModernColor.decode('#000');
+ * //=> { alpha: 1, components: [0, 0, 0], colorSpace: 'rgb' }
+ *
+ * legacyToModernColor.encode({ alpha: 1, components: [0, 0, 0], colorSpace: 'rgb' })
+ * //=> `#000`
+ * ```
+ */
+export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
+  decode: (color) => parseColor(color),
+  encode: (modernColorTokenValue) => stringifyColor(modernColorTokenValue),
+});
+
+/** @description Validation schema that allows legacy color tokens and upgrades them to modern */
+export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema]).transform((token) => {
+  // Token already is modern format
+  if (typeof token.$value !== 'string') return token;
+
+  return {
+    ...token,
+    $value: legacyToModernColor.decode(token.$value),
+  };
+});
