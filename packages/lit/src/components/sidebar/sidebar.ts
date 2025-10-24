@@ -1,7 +1,8 @@
 import {
-  type ScrapedDesignToken,
   EXTENSION_AUTHORED_AS,
   EXTENSION_TOKEN_ID,
+  type ScrapedDesignToken,
+  type ScrapedColorToken,
 } from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -79,7 +80,7 @@ export class LitSidebar extends LitElement {
 
   get colorOptions() {
     return this.scrapedTokens
-      .filter((token) => token.$type === 'color')
+      .filter((token): token is ScrapedColorToken => token.$type === 'color' && Number(token.$value.alpha) === 1)
       .map((token) => {
         const { $extensions } = token;
         return {
