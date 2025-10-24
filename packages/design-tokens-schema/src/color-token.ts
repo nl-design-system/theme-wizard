@@ -72,25 +72,11 @@ export const ColorTokenSchema = BaseDesignTokenValueSchema.extend({
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorToken = z.infer<typeof ColorTokenSchema>;
 
-// https://github.com/projectwallace/css-design-tokens/blob/main/src/colors.ts#L1-L92
 export const parseColor = (color: string): ColorValue => {
-  const lowercased = color.toLowerCase();
-
-  // The keyword "transparent" specifies a transparent black.
-  // > https://drafts.csswg.org/css-color-4/#transparent-color
-  // colorjs.io does not handle this well so we need to do it ourselves
-  if (lowercased === 'transparent') {
-    return {
-      alpha: 0,
-      colorSpace: 'srgb',
-      components: [0, 0, 0],
-    };
-  }
-
   try {
     const parsedColor = new Color(color);
     return {
-      alpha: parsedColor.alpha ?? 0,
+      alpha: parsedColor.alpha,
       colorSpace: parsedColor.spaceId as ColorSpace,
       components: parsedColor.coords,
     };
@@ -111,7 +97,12 @@ export const stringifyColor = (color: ColorValue): string => {
     spaceId: color.colorSpace,
   });
   const converted = reference.to('srgb');
-  return converted.toString({ inGamut: true });
+  return converted.toString({
+    // Collapse prevents using the shorthand notation
+    collapse: false,
+    format: 'hex',
+    inGamut: true,
+  });
 };
 
 /**
@@ -126,8 +117,8 @@ export const stringifyColor = (color: ColorValue): string => {
  * ```
  */
 export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
-  decode: (color) => parseColor(color),
-  encode: (modernColorTokenValue) => stringifyColor(modernColorTokenValue),
+  decode: (value) => parseColor(value),
+  encode: (value) => stringifyColor(value),
 });
 
 /** @description Validation schema that allows legacy color tokens and upgrades them to modern */

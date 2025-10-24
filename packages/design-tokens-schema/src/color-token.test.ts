@@ -5,7 +5,10 @@ import {
   type ColorHexFallback,
   ColorHexFallbackSchema,
   ColorTokenValidationSchema,
+  ColorValue,
   ColorToken,
+  stringifyColor,
+  legacyToModernColor,
 } from './color-token';
 
 describe('Alpha', () => {
@@ -44,8 +47,22 @@ describe('Hex fallback', () => {
   });
 });
 
-describe('upgrade lecacy color token to modern tokens', () => {
-  test('valid legacy color', () => {
+describe('color token validation', () => {
+  test('leave valid modern tokens intact', () => {
+    const token = {
+      $type: 'color',
+      $value: {
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 0, 0],
+      },
+    } satisfies ColorToken;
+    const result = ColorTokenValidationSchema.safeParse(token);
+    expect(result.success).toBeTruthy();
+    expect(result.data).toEqual(token);
+  });
+
+  test('upgrade legacy color to modern', () => {
     const legacyColor = {
       $type: 'color',
       $value: '#f00',
@@ -78,5 +95,40 @@ describe('upgrade lecacy color token to modern tokens', () => {
         components: [0, 0, 0],
       },
     } satisfies ColorToken);
+  });
+});
+
+describe('stringify token to string', () => {
+  test('stringify a color value to an srgb string', () => {
+    const tokenValue = {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [1, 0, 0],
+    } satisfies ColorValue;
+    const result = stringifyColor(tokenValue);
+    expect(result).toBe('#ff0000');
+  });
+
+  // https://www.designtokens.org/tr/drafts/color/#using-the-none-keyword
+  test('stringifies colors that use "none" in their components', () => {
+    const tokenValue = {
+      alpha: 1,
+      colorSpace: 'hsl',
+      components: ['none', 0, 100],
+      hex: '#ffffff',
+    } satisfies ColorValue;
+    const result = stringifyColor(tokenValue);
+    expect(result).toBe('#ffffff');
+  });
+
+  test('using the zod legacyToModernColor codec', () => {
+    expect(
+      legacyToModernColor.encode({
+        alpha: 1,
+        colorSpace: 'hsl',
+        components: ['none', 0, 100],
+        hex: '#ffffff',
+      }),
+    ).toEqual('#ffffff');
   });
 });
