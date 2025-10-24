@@ -8,9 +8,7 @@ export const DimensionValueSchema = z.strictObject({
   value: z.number(),
 });
 
-/**
- * @see https://www.designtokens.org/tr/drafts/format/#dimension
- */
+/** @see https://www.designtokens.org/tr/drafts/format/#dimension */
 export type DimensionValue = z.infer<typeof DimensionValueSchema>;
 
 export const DimensionTokenSchema = z.strictObject({
@@ -19,7 +17,5 @@ export const DimensionTokenSchema = z.strictObject({
   $value: DimensionValueSchema,
 });
 
-/**
- * @see https://www.designtokens.org/tr/drafts/format/#dimension
- */
+/** @see https://www.designtokens.org/tr/drafts/format/#dimension */
 export type DimensionToken = z.infer<typeof DimensionTokenSchema>;
