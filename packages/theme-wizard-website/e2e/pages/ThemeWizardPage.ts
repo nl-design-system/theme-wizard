@@ -1,27 +1,21 @@
 import { type Page, type Locator, expect } from '@playwright/test';
 
 export class ThemeWizardPage {
-  constructor(private page: Page) {}
+  private readonly preview: Locator;
+  private readonly templateSelect: Locator;
 
-  static async create(page: Page): Promise<ThemeWizardPage> {
-    const themeWizard = new ThemeWizardPage(page);
-    await themeWizard.pageInstance.goto('/');
-    await expect(themeWizard.pageInstance.getByTestId('preview')).toBeVisible();
-
-    return themeWizard;
+  constructor(public readonly page: Page) {
+    this.preview = this.page.getByTestId('preview');
+    this.templateSelect = this.page.getByLabel('Kies een template');
   }
 
-  get pageInstance() {
-    return this.page;
-  }
-
-  get preview(): Locator {
-    return this.page.getByTestId('preview');
+  async goto() {
+    await this.page.goto('/');
+    await expect(this.preview).toBeVisible();
   }
 
   async selectTemplate(templateName: string) {
-    const templateSelect = this.page.getByLabel('Kies een template');
-    await templateSelect.selectOption({ label: templateName });
+    await this.templateSelect.selectOption({ label: templateName });
   }
 
   async changeHeadingFont(fontName: string) {
