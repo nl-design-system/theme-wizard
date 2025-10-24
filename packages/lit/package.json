@@ -18,7 +18,7 @@
     "lint-fix:css": "pnpm run lint:css --fix",
     "lint-build": "tsc --noEmit --project tsconfig.json",
     "test": "pnpm run '/^test:.+$/'",
-    "test-coverage": "vitest --run --coverage",
+    "test-build": "vitest --run --coverage",
     "test-install-browsers": "playwright install chromium",
     "test:unit": "vitest --run",
     "preview": "vite preview"
