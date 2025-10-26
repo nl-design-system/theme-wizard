@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read # since GH_TOKEN is provided, we only need 'read'
+  id-token: write
   pull-requests: write # Needed to create and update pull requests
   # https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
   # id-token: write
@@ -13,6 +14,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: publish
 
     steps:
       - name: Checkout
@@ -33,6 +35,11 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: Set up Node.js that is compatible with OIDC
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24
 
       - name: Publish to the npm Registry
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
