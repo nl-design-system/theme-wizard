@@ -6,14 +6,13 @@ export class ThemeWizardPage {
 
   constructor(public readonly page: Page) {
     this.preview = this.page.getByTestId('preview');
-    this.templateSelect = this.page.getByLabel('Kies een template');
+    this.templateSelect = this.page.getByLabel('Voorvertoning');
   }
 
   async goto() {
     await this.page.goto('/');
     await expect(this.preview).toBeVisible();
   }
-
   async selectTemplate(templateName: string) {
     await this.templateSelect.selectOption({ label: templateName });
   }

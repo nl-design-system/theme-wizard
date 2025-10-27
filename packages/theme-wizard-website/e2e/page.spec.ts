@@ -60,16 +60,26 @@ test.describe('Behavioural tests', () => {
     await expect(paragraph).toHaveFont('Georgia');
   });
 
-  test('can switch between template and component views', async ({ page }) => {
-    await expect(page.getByRole('combobox', { name: 'Voorvertoning Templates' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Voorvertoning Templates' })).not.toBeVisible();
-    await expect(page.getByRole('button', { name: 'Voorvertoning losse componenten' })).toBeVisible();
+  test('can select different templates from the selector', async ({ themeWizard }) => {
+    await themeWizard.selectTemplate('Overzichtspagina');
 
-    // Switch to component view
-    await page.getByRole('button', { name: 'Voorvertoning losse componenten' }).click();
+    // Verify the select element is visible
+    const templateSelect = themeWizard.page.getByLabel('Voorvertoning');
+    await expect(templateSelect).toBeVisible();
 
-    await expect(page.getByRole('combobox', { name: 'Voorvertoning losse componenten' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Voorvertoning Templates' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Voorvertoning losse componenten' })).not.toBeVisible();
+    // Get initial option count
+    const optionCount = await templateSelect.locator('option').count();
+    expect(optionCount).toBeGreaterThan(1); // Should have multiple templates
+
+    const oldValue = await templateSelect.inputValue();
+
+    // Select a different option and verify the change
+    await templateSelect.selectOption({ index: 1 });
+
+    // Verify the value changed
+    const newValue = await templateSelect.inputValue();
+    expect(newValue).not.toBe(oldValue);
+
+    await expect(themeWizard.preview).toBeVisible();
   });
 });
