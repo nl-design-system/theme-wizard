@@ -57,27 +57,27 @@ export default class ColorToken {
 
     switch (colorSpace) {
       // These color spaces are polar:
-      case COLOR_SPACES.hsl:
+      case COLOR_SPACES.HSL:
         return `hsl(${first} ${rest.map(percentage).join(' ')})`;
-      case COLOR_SPACES.hwb:
+      case COLOR_SPACES.HWB:
         return `hwb(${first} ${rest.map(percentage).join(' ')})`;
-      case COLOR_SPACES.lch:
+      case COLOR_SPACES.LCH:
         return `lch(${percentage(first)} ${rest.join(' ')})`;
-      case COLOR_SPACES.oklch:
+      case COLOR_SPACES.OKLCH:
         return `oklch(${components.join(' ')})`;
       // These color spaces are cartesian:
-      case COLOR_SPACES.lab:
+      case COLOR_SPACES.LAB:
         return `lab(${percentage(first)} ${rest.join(' ')})`;
-      case COLOR_SPACES.oklab:
+      case COLOR_SPACES.OKLAB:
         return `oklab(${components.join(' ')})`;
       // These color spaces are cartesian and have components encoded as [ 0.0 - 1.0, 0.0 - 1.0 , 0.0 - 1.0 ]
-      case COLOR_SPACES.srgb:
-      case COLOR_SPACES['display-p3']:
-      case COLOR_SPACES['a98-rgb']:
-      case COLOR_SPACES['prophoto-rgb']:
-      case COLOR_SPACES.rec2020:
-      case COLOR_SPACES['xyz-d50']:
-      case COLOR_SPACES['xyz-d65']:
+      case COLOR_SPACES.SRGB:
+      case COLOR_SPACES.DISPLAY_P3:
+      case COLOR_SPACES.A98_RGB:
+      case COLOR_SPACES.PROPHOTO_RGB:
+      case COLOR_SPACES.REC2020:
+      case COLOR_SPACES.XYZ_D50:
+      case COLOR_SPACES.XYZ_D65:
       default:
         // Assume a missing color space is also cartesian
         return `color(${colorSpace} ${components.join(' ')})`;
