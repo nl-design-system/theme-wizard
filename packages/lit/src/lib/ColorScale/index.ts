@@ -1,3 +1,4 @@
+import { COLOR_SPACES } from '@nl-design-system-community/design-tokens-schema';
 import ColorToken from '../ColorToken';
 
 export default class ColorScale {
@@ -5,7 +6,8 @@ export default class ColorScale {
   #fromOKLCH: ColorToken;
   #derived: ColorToken[] = [];
   #derivedOKLCH: ColorToken[] = [];
-  #size: number = 12;
+  // Mandatory high to low
+  static #lightnessMask = [0.999, 0.97, 0.95, 0.93, 0.91, 0.79, 0.56, 0.52, 0.48, 0.38, 0.32, 0.26, 0.14, 0.1];
 
   constructor(from: ColorToken) {
     this.from = from;
@@ -21,9 +23,12 @@ export default class ColorScale {
   set from(value: ColorToken) {
     const token = value instanceof ColorToken ? value : new ColorToken(value);
     this.#from = token;
-    this.#fromOKLCH = token.toColorSpace('oklch');
-    this.#derivedOKLCH = [this.#fromOKLCH];
-    this.#derived = this.#derivedOKLCH.map((token) => token); // Convert back to `this.from` color space
+    this.#fromOKLCH = token.toColorSpace(COLOR_SPACES.OKLCH);
+    this.#derivedOKLCH = this.#deriveScale();
+
+    this.#derived = this.#derivedOKLCH.map((token) =>
+      token === this.fromOKLCH ? this.from : token.toColorSpace(this.from.$value.colorSpace),
+    );
   }
 
   get fromOKLCH() {
@@ -31,7 +36,7 @@ export default class ColorScale {
   }
 
   get size() {
-    return this.#size;
+    return ColorScale.#lightnessMask.length;
   }
 
   list() {
@@ -40,5 +45,56 @@ export default class ColorScale {
 
   get(index: number) {
     return this.#derived[index];
+  }
+
+  #getNearestIndex(lightness: number) {
+    // Find the nearest lightness of the base color.
+    let nearestIndex = 0;
+    let nearestLightnessDiff = 100;
+    ColorScale.#lightnessMask.forEach((value, index) => {
+      const diff = Math.abs(value - lightness);
+      if (diff < nearestLightnessDiff) {
+        nearestLightnessDiff = diff;
+        nearestIndex = index;
+      }
+    });
+    return nearestIndex;
+  }
+
+  #deriveScale() {
+    const [lightness, chroma, hue] = this.#fromOKLCH.$value.components;
+    if (lightness === 'none' || chroma === 'none') {
+      throw new Error('Lightness or chroma cannot be of value "none"');
+    }
+
+    const nearest = this.#getNearestIndex(lightness);
+
+    // Find the chroma decrease
+    const chromaDelta = chroma / (nearest + 1);
+
+    return ColorScale.#lightnessMask.map((l, index) => {
+      if (index === nearest) {
+        // Simply return the initial color
+        return this.fromOKLCH;
+      } else if (index < nearest) {
+        // Reduce chroma each step lighter than the base color.
+        const c = chroma - chromaDelta * (nearest - index);
+        return new ColorToken({
+          $value: {
+            alpha: 1,
+            colorSpace: COLOR_SPACES.OKLCH,
+            components: [l, c, hue],
+          },
+        });
+      } else {
+        return new ColorToken({
+          $value: {
+            alpha: 1,
+            colorSpace: COLOR_SPACES.OKLCH,
+            components: [l, chroma, hue],
+          },
+        });
+      }
+    });
   }
 }

@@ -69,5 +69,28 @@ describe('ColorScale', () => {
       expect(colorScale.get(index)).toBeDefined();
     }
   });
-});
+
+  test('list of derived colors contains base color exactly once, when lightness is in the mask', () => {
+    const lightnessMatchedGreenOKLCH = new ColorToken({
+      $value: {
+        ...greenOKLCH.$value,
+        components: [0.52, greenOKLCH.$value.components[1], greenOKLCH.$value.components[2]],
+      },
+    });
+    const colorScale = new ColorScale(lightnessMatchedGreenOKLCH);
+    const matches = colorScale
+      .list()
+      .filter(
+        (color) => color.$value.components.toString() === lightnessMatchedGreenOKLCH.$value.components.toString(),
+      );
+    expect(matches.length).toBe(1);
+  });
+
+  test('list of derived colors contains base color exactly once, even if lightness is not in the mask', () => {
+    const colorScale = new ColorScale(greenSRGB);
+    const matches = colorScale
+      .list()
+      .filter((color) => color.$value.components.toString() === greenSRGB.$value.components.toString());
+    expect(matches.length).toBe(1);
+  });
 });
