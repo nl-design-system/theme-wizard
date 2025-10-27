@@ -54,11 +54,8 @@ export class ThemePreview extends LitElement {
   }
 
   readonly #loadContent = async () => {
-    const config: TemplateConfig | null = this.templateConfig
-      ? this.templateConfig
-      : this.url
-        ? { cssUrl: this.url, htmlUrl: this.url }
-        : null;
+    const config: TemplateConfig | null =
+      this.templateConfig ?? (this.url ? { cssUrl: this.url, htmlUrl: this.url } : null);
 
     if (!config) return;
 
@@ -85,7 +82,7 @@ export class ThemePreview extends LitElement {
   readonly #fetchHTML = async (url: string): Promise<string> => {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Failed to fetch HTML: ${response.statusText}`);
+      throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
     }
 
     const html = await response.text();
@@ -103,8 +100,8 @@ export class ThemePreview extends LitElement {
   readonly #fetchCSS = async (url: string): Promise<string> => {
     try {
       // External URL gets ignored since it's already absolute
-      const absoluteUrl = new URL(url, window.location.href).href;
-      const currentOrigin = new URL(window.location.href).origin;
+      const absoluteUrl = new URL(url, globalThis.location.href).href;
+      const currentOrigin = new URL(globalThis.location.href).origin;
       const urlOrigin = new URL(absoluteUrl).origin;
       const isExternal = currentOrigin !== urlOrigin;
 
@@ -116,7 +113,7 @@ export class ThemePreview extends LitElement {
         // Direct fetch for local/relative URLs
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(`Failed to fetch CSS: ${response.statusText}`);
+          throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
         }
         return response.text();
       }

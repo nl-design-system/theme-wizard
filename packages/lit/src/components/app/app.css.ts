@@ -18,6 +18,7 @@ export default css`
   .theme-preview-main {
     display: flex;
     flex-direction: column;
+    inline-size: 100%;
   }
 
   .theme-preview-main__title {

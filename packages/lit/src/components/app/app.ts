@@ -7,7 +7,6 @@ import { defineCustomElements } from '@utrecht/web-component-library-stencil/loa
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
-import type { TemplateChangeEvent } from '../template-switcher/template-switcher';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
@@ -33,7 +32,7 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: 'collage' | 'preview' = 'collage';
+  private selectedTemplate: string = 'template';
 
   static override readonly styles = [unsafeCSS(maTheme), appStyles];
 
@@ -41,25 +40,14 @@ export class App extends LitElement {
     super.connectedCallback();
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
-    this.addEventListener('template-change', this.#handleTemplateChange);
+    this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
-    this.removeEventListener('template-change', this.#handleTemplateChange);
+    this.removeEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
   }
-
-  /**
-   * Handle template change from template switcher
-   */
-  readonly #handleTemplateChange = (e: Event) => {
-    if (!(e instanceof CustomEvent)) return;
-
-    const detail = e.detail as TemplateChangeEvent;
-    console.log('Template change event:', detail);
-    // TODO: Load the selected template
-  };
 
   /**
    * Handle configuration updates from child components
@@ -97,21 +85,27 @@ export class App extends LitElement {
   };
 
   readonly #handleTemplateChange = (e: Event) => {
-    const select = e.target as HTMLSelectElement;
-    this.selectedTemplate = select.value as 'collage' | 'preview';
+    if (!(e instanceof CustomEvent)) return;
+
+    // TODO: selectedTemplate should be the value of the template switcher
+    const { type, value } = e.detail;
+    if (type === 'collage') {
+      this.selectedTemplate = value;
+    } else {
+      this.selectedTemplate = 'template';
+    }
   };
 
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
     // Determine template config based on selection
-    const templateConfig =
-      this.selectedTemplate === 'collage'
-        ? {
-            cssUrl: '/templates/collage/variation.css',
-            htmlUrl: '/templates/collage/variation.html',
-          }
-        : undefined;
+    const templateConfig = this.selectedTemplate.startsWith('collage-')
+      ? {
+          cssUrl: `/templates/collage/${this.selectedTemplate}.css`,
+          htmlUrl: `/templates/collage/${this.selectedTemplate}.html`,
+        }
+      : undefined;
 
     return html`
       <div class="theme-app ma-theme">
@@ -129,7 +123,7 @@ export class App extends LitElement {
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .templateConfig=${templateConfig}
-              .url=${this.selectedTemplate === 'preview' ? previewUrl : undefined}
+              .url=${this.selectedTemplate === 'template' ? previewUrl : undefined}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
