@@ -1,7 +1,7 @@
 import { test, expect, describe, expectTypeOf } from 'vitest';
 import {
   BaseDesignTokenIdentifierSchema,
-  type BaseDesignTokenName,
+  type BaseDesignTokenIdentifier,
   BaseDesignTokenSchema,
   type BaseDesignToken,
 } from './index';
@@ -11,7 +11,7 @@ describe('BaseDesignTokenNameSchema', () => {
     for (const fixture of ['a', 'abc', '1', 'dashed-ident', 'snake_ident', '123abc']) {
       const result = BaseDesignTokenIdentifierSchema.safeParse(fixture);
       expect.soft(result.success).toBeTruthy();
-      expectTypeOf(result.data!).toEqualTypeOf<BaseDesignTokenName>();
+      expectTypeOf(result.data!).toEqualTypeOf<BaseDesignTokenIdentifier>();
     }
   });
 

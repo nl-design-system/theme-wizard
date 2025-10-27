@@ -24,7 +24,7 @@ export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
 });
 
 /** @see https://www.designtokens.org/tr/drafts/format/#name-and-value */
-export type BaseDesignTokenName = z.infer<typeof BaseDesignTokenIdentifierSchema>;
+export type BaseDesignTokenIdentifier = z.infer<typeof BaseDesignTokenIdentifierSchema>;
 
 export const BaseDesignTokenValueSchema = z.strictObject({
   /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
