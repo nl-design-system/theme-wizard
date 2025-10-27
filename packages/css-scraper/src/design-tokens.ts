@@ -9,14 +9,14 @@ import {
   EXTENSION_CSS_PROPERTIES,
   EXTENSION_TOKEN_ID,
   EXTENSION_USAGE_COUNT,
-  type DesignToken,
+  type ScrapedDesignToken,
 } from './design-tokens.types';
 
 export * from './design-tokens.types';
 
-export const getDesignTokens = (css: string): DesignToken[] => {
+export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
   const tokens = cssToTokens(css);
-  const flatTokens: DesignToken[] = [];
+  const flatTokens: ScrapedDesignToken[] = [];
 
   for (const tokenId in tokens.color) {
     const token = tokens.color[tokenId];

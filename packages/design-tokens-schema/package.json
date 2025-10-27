@@ -1,20 +1,20 @@
 {
-  "name": "@nl-design-system-community/css-scraper",
-  "version": "1.0.0-alpha.0",
+  "name": "@nl-design-system-community/design-tokens-schema",
+  "version": "0.0.0",
   "author": "Community for NL Design System",
-  "description": "CSS Scraper",
+  "description": "Design Tokens schemas",
   "license": "EUPL-1.2",
   "keywords": [
     "nl-design-system"
   ],
   "private": true,
   "type": "module",
-  "module": "./dist/css-scraper.js",
-  "types": "./dist/get-css.d.ts",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/get-css.d.ts",
-      "import": "./dist/css-scraper.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
     }
   },
   "files": [
@@ -23,12 +23,11 @@
   "repository": {
     "type": "git+ssh",
     "url": "git@github.com:nl-design-system/theme-wizard.git",
-    "directory": "packages/css-scraper"
+    "directory": "packages/design-tokens-schema"
   },
   "scripts": {
-    "start": "vite preview",
-    "dev": "vite",
-    "test-build": "vitest run --coverage",
+    "test": "vitest",
+    "test-coverage": "vitest run --coverage",
     "build": "vite build",
     "clean": "rimraf dist/"
   },
@@ -41,9 +40,7 @@
     "vitest": "3.2.4"
   },
   "dependencies": {
-    "@nl-design-system-community/design-tokens-schema": "workspace:*",
-    "@projectwallace/css-design-tokens": "0.10.0",
-    "linkedom": "0.18.12",
+    "colorjs.io": "0.5.2",
     "zod": "4.1.12"
   }
 }
