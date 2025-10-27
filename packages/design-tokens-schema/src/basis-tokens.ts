@@ -8,6 +8,7 @@ export const ColorOrColorScaleSchema = z.union([
   // 1 | 2 | 3 | 5..12 | accent
   z.record(BaseDesignTokenIdentifierSchema, ColorTokenValidationSchema),
 ]);
+export type ColorOrColorScale = z.infer<typeof ColorOrColorScaleSchema>;
 
 const ColorIdentifierSchema = BaseDesignTokenIdentifierSchema;
 
@@ -18,17 +19,19 @@ export const BrandSchema = z.object({
   }),
   color: z.record(ColorIdentifierSchema, ColorOrColorScaleSchema).optional(),
 });
+export type Brand = z.infer<typeof BrandSchema>;
 
 export const BrandsSchema = z.record(
   BaseDesignTokenIdentifierSchema, // ex.: "ma", "utrecht", "denhaag"
   BrandSchema,
 );
+export type Brands = z.infer<typeof BrandsSchema>;
 
 // A JSONRef:
 // - Starts with {
 // - Ends with }
 // - Contains only BaseDesignTokenNameSchema, joined by a . character
-export const JsonRefSchema = z
+export const JSONRefSchema = z
   .string()
   .trim()
   .startsWith('{')
@@ -42,11 +45,13 @@ export const JsonRefSchema = z
   .pipe(z.array(BaseDesignTokenIdentifierSchema))
   // Join them back together
   .transform((value) => `{${value.join('.')}}`);
+export type JSONRef = z.infer<typeof JSONRefSchema>;
 
 export const ColorWithRefSchema = BaseDesignTokenValueSchema.extend({
   $type: z.literal('color'),
-  $value: JsonRefSchema,
+  $value: JSONRefSchema,
 });
+export type ColorWithRef = z.infer<typeof ColorWithRefSchema>;
 
 export const ColorOrRefSchema = z.union([ColorWithRefSchema]);
 export type ColorOrRef = z.infer<typeof ColorOrRefSchema>;
@@ -67,6 +72,7 @@ export const ColorNameSchema = z.strictObject({
   'color-hover': ColorOrRefSchema.optional(),
   'color-subtle': ColorOrRefSchema.optional(),
 });
+export type ColorName = z.infer<typeof ColorNameSchema>;
 
 export const BasisColorSchema = z.strictObject({
   'accent-1': ColorNameSchema.optional(),
@@ -97,6 +103,7 @@ export const BasisColorSchema = z.strictObject({
   warning: ColorNameSchema.optional(),
   'warning-inverse': ColorNameSchema.optional(),
 });
+export type BasisColor = z.infer<typeof BasisColorSchema>;
 
 export const BasisTokensSchema = z.object({
   color: BasisColorSchema.optional(),
@@ -124,10 +131,12 @@ export const BasisTokensSchema = z.object({
   //   'line-height': z.strictObject({}),
   // }),
 });
+export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
 export const CommonSchema = z.object({
   basis: BasisTokensSchema.optional(),
 });
+export type Common = z.infer<typeof CommonSchema>;
 
 export const ThemeSchema = z.looseObject({
   // $metadata: z.strictObject({
@@ -138,3 +147,4 @@ export const ThemeSchema = z.looseObject({
   common: CommonSchema.optional(),
   // 'components/*': {},
 });
+export type Theme = z.infer<typeof ThemeSchema>;
