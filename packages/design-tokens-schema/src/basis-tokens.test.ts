@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import {
-  JsonRefSchema,
+  JSONRefSchema,
   BrandsSchema,
   BrandSchema,
   CommonSchema,
@@ -10,21 +10,21 @@ import {
 
 describe('json ref', () => {
   test('allows valid ref with a single path', () => {
-    const result = JsonRefSchema.safeParse('{ma}');
+    const result = JSONRefSchema.safeParse('{ma}');
     expect.soft(result.success).toBeTruthy();
     expect.soft(result.data).toEqual('{ma}');
   });
 
   test('allows valid ref with nested paths', () => {
-    const result = JsonRefSchema.safeParse('{ma.color.white}');
+    const result = JSONRefSchema.safeParse('{ma.color.white}');
     expect.soft(result.success).toBeTruthy();
     expect.soft(result.data).toEqual('{ma.color.white}');
   });
 
   test('disallows non-ref-like items', () => {
-    expect.soft(JsonRefSchema.safeParse('{}').success).toBeFalsy();
-    expect.soft(JsonRefSchema.safeParse('{.}').success).toBeFalsy();
-    expect.soft(JsonRefSchema.safeParse('ma.color').success).toBeFalsy();
+    expect.soft(JSONRefSchema.safeParse('{}').success).toBeFalsy();
+    expect.soft(JSONRefSchema.safeParse('{.}').success).toBeFalsy();
+    expect.soft(JSONRefSchema.safeParse('ma.color').success).toBeFalsy();
   });
 });
 
