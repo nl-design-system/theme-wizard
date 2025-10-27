@@ -1,3 +1,4 @@
+import dlv from 'dlv';
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema } from './base-token';
 import { ColorTokenValidationSchema } from './color-token';
@@ -31,7 +32,7 @@ export type Brands = z.infer<typeof BrandsSchema>;
 // - Starts with {
 // - Ends with }
 // - Contains only BaseDesignTokenNameSchema, joined by a . character
-export const JSONRefSchema = z
+export const TokenRefSchema = z
   .string()
   .trim()
   .startsWith('{')
@@ -45,15 +46,15 @@ export const JSONRefSchema = z
   .pipe(z.array(BaseDesignTokenIdentifierSchema))
   // Join them back together
   .transform((value) => `{${value.join('.')}}`);
-export type JSONRef = z.infer<typeof JSONRefSchema>;
+export type TokenRef = z.infer<typeof TokenRefSchema>;
 
 export const ColorWithRefSchema = BaseDesignTokenValueSchema.extend({
   $type: z.literal('color'),
-  $value: JSONRefSchema,
+  $value: TokenRefSchema,
 });
 export type ColorWithRef = z.infer<typeof ColorWithRefSchema>;
 
-export const ColorOrRefSchema = z.union([ColorWithRefSchema]);
+export const ColorOrRefSchema = z.union([ColorTokenValidationSchema, ColorWithRefSchema]);
 export type ColorOrRef = z.infer<typeof ColorOrRefSchema>;
 
 export const ColorNameSchema = z.strictObject({
@@ -138,13 +139,45 @@ export const CommonSchema = z.object({
 });
 export type Common = z.infer<typeof CommonSchema>;
 
-export const ThemeSchema = z.looseObject({
-  // $metadata: z.strictObject({
-  //   tokensSetOrder: z.array(z.string()),
-  // }),
-  // $themes: [],
-  brand: BrandsSchema.optional(),
-  common: CommonSchema.optional(),
-  // 'components/*': {},
-});
+const REF_REGEX = /^\{(.+)\}$/;
+
+const resolveRefs = (value: unknown, root: Record<string, unknown>): unknown => {
+  if (typeof value === 'object' && value !== null) {
+    for (const key in value) {
+      if (key === '$value' && typeof value[key] === 'string') {
+        // Check if string matches { }
+        const match = REF_REGEX.exec(value[key]);
+        if (!match) return;
+
+        // Get the value from the root config
+        const path = match[1]; // e.g. ma.color.indigo.5
+        const resolvedValue = dlv(root.brand, path);
+
+        if (resolvedValue?.$value) {
+          value[key] = resolvedValue.$value;
+        } else {
+          throw new Error(`Cannot resolve "${key}"`);
+        }
+      } else {
+        resolveRefs(value[key], root);
+      }
+    }
+  }
+};
+
+export const ThemeSchema = z
+  .looseObject({
+    // $metadata: z.strictObject({
+    //   tokensSetOrder: z.array(z.string()),
+    // }),
+    // $themes: [],
+    brand: BrandsSchema.optional(),
+    common: CommonSchema.optional(),
+    // 'components/*': {},
+  })
+  .transform((root) => {
+    const resolvedRoot = structuredClone(root);
+    resolveRefs(resolvedRoot, root);
+    return resolvedRoot;
+  });
 export type Theme = z.infer<typeof ThemeSchema>;

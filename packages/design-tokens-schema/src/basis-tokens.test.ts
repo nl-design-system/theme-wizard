@@ -1,30 +1,31 @@
 import { describe, test, expect } from 'vitest';
 import {
-  JSONRefSchema,
+  TokenRefSchema,
   BrandsSchema,
   BrandSchema,
   CommonSchema,
   BasisTokensSchema,
   BasisColorSchema,
+  ThemeSchema,
 } from './basis-tokens';
 
 describe('json ref', () => {
   test('allows valid ref with a single path', () => {
-    const result = JSONRefSchema.safeParse('{ma}');
+    const result = TokenRefSchema.safeParse('{ma}');
     expect.soft(result.success).toBeTruthy();
     expect.soft(result.data).toEqual('{ma}');
   });
 
   test('allows valid ref with nested paths', () => {
-    const result = JSONRefSchema.safeParse('{ma.color.white}');
+    const result = TokenRefSchema.safeParse('{ma.color.white}');
     expect.soft(result.success).toBeTruthy();
     expect.soft(result.data).toEqual('{ma.color.white}');
   });
 
   test('disallows non-ref-like items', () => {
-    expect.soft(JSONRefSchema.safeParse('{}').success).toBeFalsy();
-    expect.soft(JSONRefSchema.safeParse('{.}').success).toBeFalsy();
-    expect.soft(JSONRefSchema.safeParse('ma.color').success).toBeFalsy();
+    expect.soft(TokenRefSchema.safeParse('{}').success).toBeFalsy();
+    expect.soft(TokenRefSchema.safeParse('{.}').success).toBeFalsy();
+    expect.soft(TokenRefSchema.safeParse('ma.color').success).toBeFalsy();
   });
 });
 
@@ -321,4 +322,80 @@ describe('common', () => {
   });
 });
 
-describe.todo('full Theme', () => {});
+describe('full Theme', () => {
+  describe('resolving JSON refs', () => {
+    test('resolve color ref', () => {
+      const config = {
+        brand: {
+          ma: {
+            name: {
+              $type: 'text',
+              $value: 'Mooi & Anders',
+            },
+            color: {
+              indigo: {
+                '5': {
+                  $type: 'color',
+                  $value: '#A1A7F7',
+                },
+              },
+            },
+          },
+        },
+        common: {
+          basis: {
+            color: {
+              default: {
+                'bg-document': {
+                  $type: 'color',
+                  $value: `{ma.color.indigo.5}`,
+                },
+              },
+            },
+          },
+        },
+      };
+      const result = ThemeSchema.safeParse(config);
+      expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
+      expect.soft(result.success).toBeTruthy();
+      expect.soft(result.data).toEqual({
+        brand: {
+          ma: {
+            name: {
+              $type: 'text',
+              $value: 'Mooi & Anders',
+            },
+            color: {
+              indigo: {
+                '5': {
+                  $type: 'color',
+                  $value: {
+                    alpha: 1,
+                    colorSpace: 'srgb',
+                    components: [0.6313725490196078, 0.6549019607843137, 0.9686274509803922],
+                  },
+                },
+              },
+            },
+          },
+        },
+        common: {
+          basis: {
+            color: {
+              default: {
+                'bg-document': {
+                  $type: 'color',
+                  $value: {
+                    alpha: 1,
+                    colorSpace: 'srgb',
+                    components: [0.6313725490196078, 0.6549019607843137, 0.9686274509803922],
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+    });
+  });
+});

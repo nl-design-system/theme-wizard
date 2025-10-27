@@ -66,6 +66,11 @@ export const LegacyColorTokenSchema = BaseDesignTokenValueSchema.extend({
       return false;
     }
   }, 'Color can not be parsed'),
+}).transform((token) => {
+  return {
+    ...token,
+    $value: legacyToModernColor.decode(token.$value),
+  };
 });
 
 export const ColorTokenSchema = BaseDesignTokenValueSchema.extend({
@@ -117,12 +122,4 @@ export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
 });
 
 /** @description Validation schema that allows legacy color tokens and upgrades them to modern */
-export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema]).transform((token) => {
-  // Token already is modern format
-  if (typeof token.$value !== 'string') return token;
-
-  return {
-    ...token,
-    $value: legacyToModernColor.decode(token.$value),
-  };
-});
+export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema]);
