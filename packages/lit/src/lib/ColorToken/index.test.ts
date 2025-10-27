@@ -1,14 +1,8 @@
-import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
+import type { ColorToken as ColorTokenType } from '@nl-design-system-community/design-tokens-schema';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import ColorToken, { ColorComponents, ColorSpace } from './index';
 
-const greenSRGB: ScrapedColorToken = {
-  $extensions: {
-    'nl.nldesignsystem.theme-wizard.css-authored-as': '#00811f',
-    'nl.nldesignsystem.theme-wizard.css-properties': ['color', 'background-color'],
-    'nl.nldesignsystem.theme-wizard.token-id': 'green-d70ab7a9',
-    'nl.nldesignsystem.theme-wizard.usage-count': 5,
-  },
+const greenSRGB: ColorTokenType = {
   $type: 'color',
   $value: {
     alpha: 1,
@@ -17,7 +11,7 @@ const greenSRGB: ScrapedColorToken = {
   },
 };
 
-const greenOkLCh: ScrapedColorToken = {
+const greenOkLCh: ColorTokenType = {
   ...greenSRGB,
   $value: {
     ...greenSRGB.$value,
