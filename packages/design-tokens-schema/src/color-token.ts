@@ -56,7 +56,16 @@ export type ColorValue = z.infer<typeof ColorValueSchema>;
 
 export const LegacyColorTokenSchema = BaseDesignTokenValueSchema.extend({
   $type: z.literal('color'),
-  $value: z.string(),
+  // Color must be parseable in order to upgrade it
+  $value: z.custom<string>((value) => {
+    if (typeof value !== 'string') return false;
+    try {
+      parseColor(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }, 'Color can not be parsed'),
 });
 
 export const ColorTokenSchema = BaseDesignTokenValueSchema.extend({
@@ -68,21 +77,12 @@ export const ColorTokenSchema = BaseDesignTokenValueSchema.extend({
 export type ColorToken = z.infer<typeof ColorTokenSchema>;
 
 export const parseColor = (color: string): ColorValue => {
-  try {
-    const parsedColor = new Color(color);
-    return {
-      alpha: parsedColor.alpha,
-      colorSpace: parsedColor.spaceId as ColorSpace,
-      components: parsedColor.coords,
-    };
-  } catch {
-    // A catch for edge cases that we don't support yet.
-    return {
-      alpha: 1,
-      colorSpace: 'srgb',
-      components: [0, 0, 0],
-    };
-  }
+  const parsedColor = new Color(color);
+  return {
+    alpha: parsedColor.alpha,
+    colorSpace: parsedColor.spaceId as ColorSpace,
+    components: parsedColor.coords,
+  };
 };
 
 export const stringifyColor = (color: ColorValue): string => {
