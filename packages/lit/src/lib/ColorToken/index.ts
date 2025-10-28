@@ -100,6 +100,14 @@ export default class ColorToken {
     }
   }
 
+  toObject() {
+    return {
+      ...(this.$extensions && Object.keys(this.$extensions).length ? { $extensions: this.$extensions } : {}),
+      $type: this.$type,
+      $value: this.$value,
+    };
+  }
+
   static getRelativeColorFunction(
     destination: ColorSpace,
     {

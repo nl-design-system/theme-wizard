@@ -63,7 +63,7 @@ describe('ColorToken', () => {
 
   test('matches initialization token', () => {
     const colorToken = new ColorToken(greenSRGB);
-    expect(colorToken).toMatchObject(greenSRGB);
+    expect(colorToken.toObject()).toMatchObject(greenSRGB);
   });
 
   describe('toCSSColorFunction()', () => {
@@ -100,7 +100,7 @@ describe('ColorToken', () => {
       const token = new ColorToken(greenSRGB);
       const newToken = token.toColorSpace(token.$value.colorSpace);
       // Values are the same
-      expect(newToken).toMatchObject(greenSRGB);
+      expect(token.toObject()).toMatchObject(newToken.toObject());
       // But the token is a new token, ie not a shared reference
       expect(token).not.toBe(newToken);
     });
