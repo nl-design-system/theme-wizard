@@ -11,7 +11,7 @@ const greenSRGB: ColorTokenType = {
   },
 };
 
-const greenOkLCh: ColorTokenType = {
+const greenOKLCH: ColorTokenType = {
   ...greenSRGB,
   $value: {
     ...greenSRGB.$value,
@@ -73,7 +73,7 @@ describe('ColorToken', () => {
       expect(colorFunction).toBe('color(srgb 0 0.5058823529411764 0.12156862745098039)');
     });
     test('returns correct value for example oklch token', () => {
-      const colorToken = new ColorToken(greenOkLCh);
+      const colorToken = new ColorToken(greenOKLCH);
       const colorFunction = colorToken.toCSSColorFunction();
       expect(colorFunction).toBe('oklch(0.524144 0.165652 144.827)');
     });
@@ -96,7 +96,7 @@ describe('ColorToken', () => {
       });
     });
 
-    test('returns new ColorToken in if destination color space is same as source', () => {
+    test('returns new ColorToken if destination color space is same as source', () => {
       const token = new ColorToken(greenSRGB);
       const newToken = token.toColorSpace(token.$value.colorSpace);
       // Values are the same
