@@ -7,6 +7,7 @@ import {
   BasisTokensSchema,
   BasisColorSchema,
   ThemeSchema,
+  resolveConfigRefs,
 } from './basis-tokens';
 
 describe('design token ref', () => {
@@ -338,7 +339,7 @@ describe('theme', () => {
         },
       };
       const originalConfig = structuredClone(config);
-      const result = ThemeSchema.safeParse(config);
+      const result = ThemeSchema.transform(resolveConfigRefs).safeParse(config);
 
       // Full schema validation
       expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
@@ -364,6 +365,10 @@ describe('theme', () => {
                 'bg-document': {
                   $type: 'color',
                   $value: `{non.existent.token}`,
+                },
+                'bg-subtle': {
+                  $type: 'color',
+                  $value: `{incomplete.ref`,
                 },
               },
             },

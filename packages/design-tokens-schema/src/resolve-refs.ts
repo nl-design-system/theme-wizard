@@ -16,10 +16,9 @@ const isValueObject = (value: unknown): value is ValueObject => {
  * extractRefPath('something-else') // => null
  * ```
  */
-const extractRefPath = (value: unknown): string | null => {
-  if (typeof value !== 'string') return null;
-  const match = REF_REGEX.exec(value);
-  return match ? match[1] : null;
+const extractRefPath = (value: string): string | null => {
+  const match = REF_REGEX.exec(value)!;
+  return match[1];
 };
 
 const processRefs = (
@@ -30,9 +29,10 @@ const processRefs = (
   if (!isValueObject(config)) return true;
 
   for (const key in config) {
-    if (key === '$value' && typeof config[key] === 'string') {
+    const value = config[key];
+    if (key === '$value' && typeof value === 'string') {
       // extract `ma.color.indigo.5` from `{ma.color.indigo.5}` if possible
-      const refPath = extractRefPath(config[key]);
+      const refPath = extractRefPath(value);
       if (refPath) {
         // does 'ma.color.indigo.5.$value' path exist in `root`?
         // Note that we add `$value` because we replace one $value with another
@@ -41,7 +41,7 @@ const processRefs = (
           return false;
         }
       }
-    } else if (!processRefs(config[key], root, onRef)) {
+    } else if (!processRefs(value, root, onRef)) {
       return false;
     }
   }
