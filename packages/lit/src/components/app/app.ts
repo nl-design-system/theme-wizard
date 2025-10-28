@@ -32,7 +32,7 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: string = 'template';
+  private selectedTemplate: 'collage' | 'mijn-omgeving' = 'mijn-omgeving';
 
   static override readonly styles = [unsafeCSS(maTheme), appStyles];
 
@@ -85,27 +85,26 @@ export class App extends LitElement {
   };
 
   readonly #handleTemplateChange = (e: Event) => {
-    if (!(e instanceof CustomEvent)) return;
-
-    // TODO: selectedTemplate should be the value of the template switcher
-    const { type, value } = e.detail;
-    if (type === 'collage') {
-      this.selectedTemplate = value;
-    } else {
-      this.selectedTemplate = 'template';
-    }
+    const select = e.target as HTMLSelectElement;
+    this.selectedTemplate = select.value as 'collage' | 'mijn-omgeving';
   };
 
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
     // Determine template config based on selection
-    const templateConfig = this.selectedTemplate.startsWith('collage-')
-      ? {
-          cssUrl: `/templates/collage/${this.selectedTemplate}.css`,
-          htmlUrl: `/templates/collage/${this.selectedTemplate}.html`,
-        }
-      : undefined;
+    const templateConfig =
+      this.selectedTemplate === 'collage'
+        ? {
+            cssUrl: '/templates/collage/variation.css',
+            htmlUrl: '/templates/collage/variation.html',
+          }
+        : this.selectedTemplate === 'mijn-omgeving'
+          ? {
+              cssUrl: '/templates/mijnservices/mijn-omgeving.css',
+              htmlUrl: '/templates/mijnservices/mijn-omgeving.html',
+            }
+          : undefined;
 
     return html`
       <div class="theme-app ma-theme">
@@ -123,7 +122,7 @@ export class App extends LitElement {
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .templateConfig=${templateConfig}
-              .url=${this.selectedTemplate === 'template' ? previewUrl : undefined}
+              .url=${this.selectedTemplate === 'mijn-omgeving' ? previewUrl : undefined}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
