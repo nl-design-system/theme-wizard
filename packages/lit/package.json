@@ -24,6 +24,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@amsterdam/design-system-css": "2.0.1",
     "@gemeente-denhaag/action": "4.0.1",
     "@gemeente-denhaag/card": "5.0.1",
     "@gemeente-denhaag/side-navigation": "4.0.2",
