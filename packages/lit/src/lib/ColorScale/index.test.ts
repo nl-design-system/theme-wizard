@@ -93,4 +93,9 @@ describe('ColorScale', () => {
       .filter((color) => color.$value.components.toString() === greenSRGB.$value.components.toString());
     expect(matches.length).toBe(1);
   });
+
+  test('exports scale to an object defining design tokens', () => {
+    const colorScale = new ColorScale(greenSRGB);
+    expect(colorScale.toObject()).toMatchSnapshot();
+  });
 });

@@ -1,4 +1,4 @@
-import { COLOR_SPACES } from '@nl-design-system-community/design-tokens-schema';
+import { COLOR_SPACES, type ColorToken as ColorTokenType } from '@nl-design-system-community/design-tokens-schema';
 import ColorToken from '../ColorToken';
 
 export default class ColorScale {
@@ -45,6 +45,16 @@ export default class ColorScale {
 
   get(index: number) {
     return this.#derived[index];
+  }
+
+  toObject() {
+    return this.#derived.reduce(
+      (acc, token, index) => ({
+        ...acc,
+        [`${index + 1}`]: token.toObject(),
+      }),
+      {} as Record<string, ColorTokenType>,
+    );
   }
 
   #getNearestIndex(lightness: number) {
