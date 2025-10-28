@@ -4,21 +4,34 @@ import { customElement } from 'lit/decorators.js';
 import { EVENT_NAMES } from '../../constants';
 import styles from './styles.css?inline';
 
+type Category = 'template' | 'collage';
+
+type TemplateOption = {
+  name: string;
+  value: string;
+  detail?: {
+    name: string;
+    value: string;
+  };
+};
+
+type TemplateGroup = {
+  name: string;
+  value: string;
+  type: Category;
+  detail: readonly TemplateOption[];
+};
+
 export interface TemplateChangeEvent {
-  type: 'template' | 'collage';
+  type: Category;
   name: string;
   value: string;
   parent?: string;
 }
 
-type GroupConfig = {
-  name: string;
-  value: string;
-  detail: { name: string; value: string; detail?: { name: string; value: string } }[];
-  type: 'template' | 'collage';
-};
-
-const TEMPLATES: GroupConfig[] = [
+// TODO: get from outside source
+// Placeholder for now
+const TEMPLATES: TemplateGroup[] = [
   {
     name: 'Mijn Omgeving',
     detail: [
@@ -63,18 +76,24 @@ export class TemplateSwitcher extends LitElement {
 
   readonly #dispatchChange = (event: Event) => {
     const select = event.target as HTMLSelectElement;
-    const selectedOption = select.options[select.selectedIndex];
-    const metadata = JSON.parse(selectedOption.dataset['metadata'] || '{}');
+    const { options, selectedIndex } = select;
+    const { text: selectedText, value: selectedValue } = options[selectedIndex];
+
+    const matchedTemplateGroup: TemplateGroup | undefined = TEMPLATES.find(({ detail }) =>
+      detail.some(({ value }) => value === selectedValue),
+    );
+
+    if (!matchedTemplateGroup) return;
 
     this.dispatchEvent(
       new CustomEvent<TemplateChangeEvent>(EVENT_NAMES.TEMPLATE_CHANGE, {
         bubbles: true,
         composed: true,
         detail: {
-          name: selectedOption.text,
-          parent: metadata.parent,
-          type: metadata.type,
-          value: metadata.value,
+          name: selectedText,
+          parent: matchedTemplateGroup.value,
+          type: matchedTemplateGroup.type,
+          value: selectedValue,
         },
       }),
     );
@@ -91,20 +110,7 @@ export class TemplateSwitcher extends LitElement {
           ${TEMPLATES.map(
             (group) => html`
               <optgroup label="${group.name}">
-                ${group.detail.map(
-                  (option) => html`
-                    <option
-                      value="${option.value}"
-                      data-metadata=${JSON.stringify({
-                        parent: group.value,
-                        type: group.type,
-                        value: option.value,
-                      })}
-                    >
-                      ${option.name}
-                    </option>
-                  `,
-                )}
+                ${group.detail.map((option) => html` <option value="${option.value}">${option.name}</option>`)}
               </optgroup>
             `,
           )}
