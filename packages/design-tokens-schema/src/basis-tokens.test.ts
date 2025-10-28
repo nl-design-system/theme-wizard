@@ -102,6 +102,15 @@ describe('brand', () => {
   });
 
   describe('brand colors', () => {
+    const modernWhite = {
+      $type: 'color',
+      $value: {
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      },
+    };
+
     test('top-level colors with legacy color', () => {
       const config = {
         name: {
@@ -117,15 +126,7 @@ describe('brand', () => {
       };
       const result = BrandSchema.safeParse(config);
       expect.soft(result.success).toBeTruthy();
-      const upgradedColor = {
-        $type: 'color',
-        $value: {
-          alpha: 1,
-          colorSpace: 'srgb',
-          components: [1, 1, 1],
-        },
-      };
-      expect.soft(result.data?.color?.['white']).toEqual(upgradedColor);
+      expect.soft(result.data?.color?.['white']).toEqual(modernWhite);
     });
 
     test('top-level colors with modern color', () => {
@@ -135,14 +136,7 @@ describe('brand', () => {
           $value: 'my-brand',
         },
         color: {
-          white: {
-            $type: 'color',
-            $value: {
-              alpha: 1,
-              colorSpace: 'srgb',
-              components: [1, 1, 1],
-            },
-          },
+          white: modernWhite,
         },
       };
       const result = BrandSchema.safeParse(config);
@@ -168,16 +162,7 @@ describe('brand', () => {
       };
       const result = BrandSchema.safeParse(config);
       expect.soft(result.success).toBeTruthy();
-
-      const upgradedColor = {
-        $type: 'color',
-        $value: {
-          alpha: 1,
-          colorSpace: 'srgb',
-          components: [1, 1, 1],
-        },
-      };
-      expect.soft(result.data?.color?.['indigo']).toEqual({ 1: upgradedColor });
+      expect.soft(result.data?.color?.['indigo']).toEqual({ 1: modernWhite });
     });
 
     test('nested colors with modern color format', () => {
@@ -188,14 +173,7 @@ describe('brand', () => {
         },
         color: {
           indigo: {
-            '1': {
-              $type: 'color',
-              $value: {
-                alpha: 1,
-                colorSpace: 'srgb',
-                components: [1, 1, 1],
-              },
-            },
+            '1': modernWhite,
           },
         },
       };
