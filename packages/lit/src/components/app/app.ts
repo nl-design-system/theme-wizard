@@ -30,7 +30,7 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: 'collage' | 'preview' = 'collage';
+  private selectedTemplate: 'collage' | 'mijn-omgeving' = 'mijn-omgeving';
 
   static override readonly styles = [appStyles];
 
@@ -82,7 +82,7 @@ export class App extends LitElement {
 
   readonly #handleTemplateChange = (e: Event) => {
     const select = e.target as HTMLSelectElement;
-    this.selectedTemplate = select.value as 'collage' | 'preview';
+    this.selectedTemplate = select.value as 'collage' | 'mijn-omgeving';
   };
 
   override render() {
@@ -95,7 +95,12 @@ export class App extends LitElement {
             cssUrl: '/templates/collage/variation.css',
             htmlUrl: '/templates/collage/variation.html',
           }
-        : undefined;
+        : this.selectedTemplate === 'mijn-omgeving'
+          ? {
+              cssUrl: '/templates/mijnservices/mijn-omgeving.css',
+              htmlUrl: '/templates/mijnservices/mijn-omgeving.html',
+            }
+          : undefined;
 
     return html`
       <div class="theme-app">
@@ -115,14 +120,16 @@ export class App extends LitElement {
               <option value="collage" ?selected=${this.selectedTemplate === 'collage'}>
                 Collage (Component Variaties)
               </option>
-              <option value="preview" ?selected=${this.selectedTemplate === 'preview'}>Preview</option>
+              <option value="mijn-omgeving" ?selected=${this.selectedTemplate === 'mijn-omgeving'}>
+                Mijn Omgeving
+              </option>
             </select>
           </div>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .templateConfig=${templateConfig}
-              .url=${this.selectedTemplate === 'preview' ? previewUrl : undefined}
+              .url=${this.selectedTemplate === 'mijn-omgeving' ? previewUrl : undefined}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
