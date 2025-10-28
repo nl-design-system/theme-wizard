@@ -4,7 +4,7 @@ import {
   type ColorComponent,
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
-import { createHelperElement } from './lib';
+import { createHelperElement, getCSSColorComponents } from './lib';
 
 type MinimalColorToken = Omit<ColorTokenType, '$type'> & { $type?: ColorTokenType['$type'] };
 export type ColorComponents = ColorTokenType['$value']['components'];
@@ -45,8 +45,8 @@ export default class ColorToken {
     const relativeColor = ColorToken.getRelativeColorFunction(destination, this.$value);
     helperElement.style.color = relativeColor;
     const value = getComputedStyle(helperElement).color;
+    const components = getCSSColorComponents(value);
 
-    const components = value.match(/(\d+\.?\d*)/g)?.map(Number) || [NaN, NaN, NaN];
     return new ColorToken({
       ...this,
       $value: {

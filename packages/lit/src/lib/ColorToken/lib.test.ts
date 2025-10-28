@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from 'vitest';
-import { createHelperElement } from './lib';
+import { createHelperElement, getCSSColorComponents } from './lib';
 
 describe('ColorToken/createHelperElement', () => {
   afterEach(() => {
@@ -22,4 +22,41 @@ describe('ColorToken/createHelperElement', () => {
     const display = createdElement && getComputedStyle(createdElement).display;
     expect(display).toBe('none');
   });
+});
+
+describe('ColorToken/getCSSColorComponents', () => {
+  const testScenarios = [
+    {
+      name: 'extracts all numeric values',
+      input: 'color(srgb 0 0 0)',
+      result: '0,0,0',
+    },
+    {
+      name: 'ignores numbers in color spaces',
+      input: 'color(rec2020 0 0 0)',
+      result: '0,0,0',
+    },
+    {
+      name: 'maps to canonical values',
+      input: 'color(srgb 0 0.0 .0)',
+      result: '0,0,0',
+    },
+    {
+      name: 'supports negative values',
+      input: 'color(srgb -1 -1 -1)',
+      result: '-1,-1,-1',
+    },
+    {
+      name: 'supports negative values',
+      input: `color(srgb 1e3 -1e-3 -0)`,
+      result: '1000,-0.001,0',
+    },
+  ];
+
+  for (const { name, input, result } of testScenarios) {
+    test(name, () => {
+      const components = getCSSColorComponents(input);
+      expect(components.toString()).toBe(result);
+    });
+  }
 });

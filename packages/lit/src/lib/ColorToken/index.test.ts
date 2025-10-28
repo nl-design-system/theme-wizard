@@ -96,6 +96,16 @@ describe('ColorToken', () => {
       // But the token is a new token, ie not a shared reference
       expect(token).not.toBe(newToken);
     });
+
+    const token = new ColorToken(greenSRGB);
+    Object.values(COLOR_SPACES).forEach((destination) => {
+      test(`ColorToken converted to ${destination} and back returns near identical values`, () => {
+        const roundTripToken = new ColorToken(greenSRGB).toColorSpace(destination).toColorSpace('srgb');
+        token.$value.components.every((value, index) =>
+          expect(value).toBeCloseTo(Number(roundTripToken.$value.components[index]), 3)
+        );
+      });
+    });
   });
 
   describe('getCSSColorFunction()', () => {
