@@ -300,7 +300,7 @@ describe('theme', () => {
   };
 
   describe('resolving Design Token refs', () => {
-    test('resolve color ref', () => {
+    describe('resolve color ref', () => {
       const config = {
         brand: brandConfig,
         common: {
@@ -316,21 +316,26 @@ describe('theme', () => {
           },
         },
       };
-      const originalConfig = structuredClone(config);
-      const result = ThemeSchema.transform(resolveConfigRefs).safeParse(config);
 
-      // Full schema validation
-      expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
-      expect.soft(result.success).toBeTruthy();
+      test('does not mutate the input config', () => {
+        const originalConfig = structuredClone(config);
+        ThemeSchema.transform(resolveConfigRefs).safeParse(config);
+        const originalBg = originalConfig.common.basis.color.default['bg-document'].$value;
+        const bgAfterValidation = config.common.basis.color.default['bg-document'].$value;
+        expect.soft(originalBg).toEqual(bgAfterValidation);
+      });
 
-      // Check parse output
-      const expectedCommonColor = brandConfig.ma.color.indigo[5];
-      expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual(expectedCommonColor);
+      test('validates the input', () => {
+        const result = ThemeSchema.transform(resolveConfigRefs).safeParse(config);
+        expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
+        expect.soft(result.success).toBeTruthy();
+      });
 
-      // Make sure we don't mutate the original input
-      const originalBg = originalConfig.common.basis.color.default['bg-document'].$value;
-      const bgAfterValidation = config.common.basis.color.default['bg-document'].$value;
-      expect.soft(originalBg).toEqual(bgAfterValidation);
+      test('returns the schema with refs replaced by actual values', () => {
+        const result = ThemeSchema.transform(resolveConfigRefs).safeParse(config);
+        const expectedCommonColor = brandConfig.ma.color.indigo[5];
+        expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual(expectedCommonColor);
+      });
     });
 
     test('does not throw when a ref can not be resolved', () => {

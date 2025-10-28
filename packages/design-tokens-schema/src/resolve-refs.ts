@@ -24,7 +24,7 @@ const extractRefPath = (value: string): string | null => {
 const processRefs = (
   config: unknown,
   root: Record<string, unknown> | undefined,
-  onRef: (config: ValueObject, key: string, resolvedRef: unknown) => boolean,
+  onRefFound: (config: ValueObject, key: string, resolvedRef: unknown) => boolean,
 ): boolean => {
   if (!isValueObject(config)) return true;
 
@@ -37,11 +37,11 @@ const processRefs = (
         // does 'ma.color.indigo.5.$value' path exist in `root`?
         // Note that we add `$value` because we replace one $value with another
         const resolvedRef = dlv(root, `${refPath}.$value`);
-        if (!onRef(config, key, resolvedRef)) {
+        if (!onRefFound(config, key, resolvedRef)) {
           return false;
         }
       }
-    } else if (!processRefs(value, root, onRef)) {
+    } else if (!processRefs(value, root, onRefFound)) {
       return false;
     }
   }
