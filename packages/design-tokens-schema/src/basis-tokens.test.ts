@@ -299,7 +299,7 @@ describe('theme', () => {
     },
   };
 
-  describe('resolving JSON refs', () => {
+  describe('resolving Design Token refs', () => {
     test('resolve color ref', () => {
       const config = {
         brand: brandConfig,

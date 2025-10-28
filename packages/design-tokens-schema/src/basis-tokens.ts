@@ -28,7 +28,7 @@ export const BrandsSchema = z.record(
 );
 export type Brands = z.infer<typeof BrandsSchema>;
 
-// A JSONRef:
+// A Design Token ref:
 // - Starts with {
 // - Ends with }
 // - Contains only BaseDesignTokenNameSchema, joined by a . character
