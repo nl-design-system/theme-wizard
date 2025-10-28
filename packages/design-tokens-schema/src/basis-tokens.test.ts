@@ -261,7 +261,7 @@ describe('common', () => {
         expect(BasisColorSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
       });
 
-      test('allows JSON refs', () => {
+      test('allows references to other tokens in the schema', () => {
         const config = {
           default: {
             'bg-document': {
