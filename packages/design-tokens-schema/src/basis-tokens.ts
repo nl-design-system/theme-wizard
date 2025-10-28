@@ -1,7 +1,7 @@
-import dlv from 'dlv';
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema } from './base-token';
 import { ColorTokenValidationSchema } from './color-token';
+import { validateRefs, resolveRefs } from './resolve-refs';
 
 export const ColorOrColorScaleSchema = z.union([
   ColorTokenValidationSchema,
@@ -139,32 +139,6 @@ export const CommonSchema = z.object({
 });
 export type Common = z.infer<typeof CommonSchema>;
 
-const REF_REGEX = /^\{(.+)\}$/;
-
-const resolveRefs = (value: unknown, root: Record<string, unknown>): unknown => {
-  if (typeof value === 'object' && value !== null) {
-    for (const key in value) {
-      if (key === '$value' && typeof value[key] === 'string') {
-        // Check if string matches { }
-        const match = REF_REGEX.exec(value[key]);
-        if (!match) return;
-
-        // Get the value from the root config
-        const path = match[1]; // e.g. ma.color.indigo.5
-        const resolvedValue = dlv(root.brand, path);
-
-        if (resolvedValue?.$value) {
-          value[key] = resolvedValue.$value;
-        } else {
-          throw new Error(`Cannot resolve "${key}"`);
-        }
-      } else {
-        resolveRefs(value[key], root);
-      }
-    }
-  }
-};
-
 export const ThemeSchema = z
   .looseObject({
     // $metadata: z.strictObject({
@@ -175,9 +149,13 @@ export const ThemeSchema = z
     common: CommonSchema.optional(),
     // 'components/*': {},
   })
+  .refine((root) => {
+    return validateRefs(root.common, root.brand);
+  })
   .transform((root) => {
+    // Clone the input root because resolveRefs is a mutable operation
     const resolvedRoot = structuredClone(root);
-    resolveRefs(resolvedRoot, root);
+    resolveRefs(resolvedRoot.common, root.brand);
     return resolvedRoot;
   });
 export type Theme = z.infer<typeof ThemeSchema>;

@@ -9,7 +9,7 @@ import {
   ThemeSchema,
 } from './basis-tokens';
 
-describe('json ref', () => {
+describe('design token ref', () => {
   test('allows valid ref with a single path', () => {
     const result = TokenRefSchema.safeParse('{ma}');
     expect.soft(result.success).toBeTruthy();
@@ -30,81 +30,73 @@ describe('json ref', () => {
 });
 
 describe('brand', () => {
-  describe('valid cases', () => {
-    test('no brands present', () => {
-      expect(BrandsSchema.safeParse({}).success).toBeTruthy();
-    });
-
-    test('valid brand name', () => {
-      const config = {
-        ma: {
-          name: {
-            $type: 'text',
-            $value: 'Mooi & anders',
-          },
-        },
-      };
-      expect(BrandsSchema.safeParse(config).success).toBeTruthy();
-    });
+  test('no brands present', () => {
+    expect(BrandsSchema.safeParse({}).success).toBeTruthy();
   });
 
-  describe('invalid cases', () => {
-    test('brand name should be a valid Design Token', () => {
-      const config = {
-        // invalid identifier
-        '$my-brand': {
-          name: {
-            $type: 'text',
-            $value: 'My brand',
-          },
+  test('valid brand name', () => {
+    const config = {
+      ma: {
+        name: {
+          $type: 'text',
+          $value: 'Mooi & anders',
         },
-      };
-      expect(BrandsSchema.safeParse(config).success).toBeFalsy();
-    });
+      },
+    };
+    expect(BrandsSchema.safeParse(config).success).toBeTruthy();
+  });
+
+  test('brand name should be a valid Design Token', () => {
+    const config = {
+      // invalid identifier
+      '$my-brand': {
+        name: {
+          $type: 'text',
+          $value: 'My brand',
+        },
+      },
+    };
+    expect(BrandsSchema.safeParse(config).success).toBeFalsy();
   });
 
   describe('single brand', () => {
-    describe('valid cases', () => {
-      test('empty color config', () => {
-        const config = {
-          name: {
-            $type: 'text',
-            $value: 'my-brand',
-          },
-          color: {},
-        };
-        expect(BrandSchema.safeParse(config).success).toBeTruthy();
-      });
-
-      test('missing color config', () => {
-        const config = {
-          name: {
-            $type: 'text',
-            $value: 'my-brand',
-          },
-          // missing color
-        };
-        expect(BrandSchema.safeParse(config).success).toBeTruthy();
-      });
+    test('empty color config', () => {
+      const config = {
+        name: {
+          $type: 'text',
+          $value: 'my-brand',
+        },
+        color: {},
+      };
+      expect(BrandSchema.safeParse(config).success).toBeTruthy();
     });
 
-    describe('invalid cases', () => {
-      test('missing name', () => {
-        const config = {
-          color: {},
-        };
-        expect(BrandSchema.safeParse(config).success).toBeFalsy();
-      });
+    test('missing color config', () => {
+      const config = {
+        name: {
+          $type: 'text',
+          $value: 'my-brand',
+        },
+        // missing color
+      };
+      expect(BrandSchema.safeParse(config).success).toBeTruthy();
+    });
 
-      test('incorrect name type', () => {
-        const config = {
-          name: {
-            $type: 'string', // instead of 'text'
-            $value: 'invalid-brand',
-          },
-        };
-        expect(BrandSchema.safeParse(config).success).toBeFalsy();
-      });
+    test('missing name', () => {
+      const config = {
+        color: {},
+      };
+      expect(BrandSchema.safeParse(config).success).toBeFalsy();
+    });
+
+    test('incorrect name type', () => {
+      const config = {
+        name: {
+          $type: 'string', // instead of 'text'
+          $value: 'invalid-brand',
+        },
+      };
+      expect(BrandSchema.safeParse(config).success).toBeFalsy();
     });
   });
 
@@ -124,23 +116,15 @@ describe('brand', () => {
       };
       const result = BrandSchema.safeParse(config);
       expect.soft(result.success).toBeTruthy();
-      expect.soft(result.data).toEqual({
-        name: {
-          $type: 'text',
-          $value: 'my-brand',
+      const upgradedColor = {
+        $type: 'color',
+        $value: {
+          alpha: 1,
+          colorSpace: 'srgb',
+          components: [1, 1, 1],
         },
-        color: {
-          // Color is upgraded to modern format
-          white: {
-            $type: 'color',
-            $value: {
-              alpha: 1,
-              colorSpace: 'srgb',
-              components: [1, 1, 1],
-            },
-          },
-        },
-      });
+      };
+      expect.soft(result.data?.color?.['white']).toEqual(upgradedColor);
     });
 
     test('top-level colors with modern color', () => {
@@ -162,6 +146,7 @@ describe('brand', () => {
       };
       const result = BrandSchema.safeParse(config);
       expect.soft(result.success).toBeTruthy();
+      // Nothing had to change
       expect.soft(result.data).toEqual(config);
     });
 
@@ -182,25 +167,16 @@ describe('brand', () => {
       };
       const result = BrandSchema.safeParse(config);
       expect.soft(result.success).toBeTruthy();
-      expect.soft(result.data).toEqual({
-        name: {
-          $type: 'text',
-          $value: 'my-brand',
+
+      const upgradedColor = {
+        $type: 'color',
+        $value: {
+          alpha: 1,
+          colorSpace: 'srgb',
+          components: [1, 1, 1],
         },
-        color: {
-          // Color is upgraded to modern format
-          indigo: {
-            '1': {
-              $type: 'color',
-              $value: {
-                alpha: 1,
-                colorSpace: 'srgb',
-                components: [1, 1, 1],
-              },
-            },
-          },
-        },
-      });
+      };
+      expect.soft(result.data?.color?.['indigo']).toEqual({ 1: upgradedColor });
     });
 
     test('nested colors with modern color format', () => {
@@ -322,26 +298,32 @@ describe('common', () => {
   });
 });
 
-describe('full Theme', () => {
-  describe('resolving JSON refs', () => {
-    test('resolve color ref', () => {
-      const config = {
-        brand: {
-          ma: {
-            name: {
-              $type: 'text',
-              $value: 'Mooi & Anders',
-            },
-            color: {
-              indigo: {
-                '5': {
-                  $type: 'color',
-                  $value: '#A1A7F7',
-                },
-              },
+describe('theme', () => {
+  const brandConfig = {
+    ma: {
+      name: {
+        $type: 'text',
+        $value: 'Mooi & Anders',
+      },
+      color: {
+        indigo: {
+          '5': {
+            $type: 'color',
+            $value: {
+              alpha: 1,
+              colorSpace: 'srgb',
+              components: [0, 0, 0],
             },
           },
         },
+      },
+    },
+  };
+
+  describe('resolving JSON refs', () => {
+    test('resolve color ref', () => {
+      const config = {
+        brand: brandConfig,
         common: {
           basis: {
             color: {
@@ -355,47 +337,43 @@ describe('full Theme', () => {
           },
         },
       };
+      const originalConfig = structuredClone(config);
       const result = ThemeSchema.safeParse(config);
+
+      // Full schema validation
       expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
       expect.soft(result.success).toBeTruthy();
-      expect.soft(result.data).toEqual({
-        brand: {
-          ma: {
-            name: {
-              $type: 'text',
-              $value: 'Mooi & Anders',
-            },
-            color: {
-              indigo: {
-                '5': {
-                  $type: 'color',
-                  $value: {
-                    alpha: 1,
-                    colorSpace: 'srgb',
-                    components: [0.6313725490196078, 0.6549019607843137, 0.9686274509803922],
-                  },
-                },
-              },
-            },
-          },
-        },
+
+      // Check parse output
+      const expectedCommonColor = brandConfig.ma.color.indigo[5];
+      expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual(expectedCommonColor);
+
+      // Make sure we don't mutate the original input
+      const originalBg = originalConfig.common.basis.color.default['bg-document'].$value;
+      const bgAfterValidation = config.common.basis.color.default['bg-document'].$value;
+      expect.soft(originalBg).toEqual(bgAfterValidation);
+    });
+
+    test('does not throw when a ref can not be resolved', () => {
+      const config = {
+        brand: brandConfig,
         common: {
           basis: {
             color: {
               default: {
                 'bg-document': {
                   $type: 'color',
-                  $value: {
-                    alpha: 1,
-                    colorSpace: 'srgb',
-                    components: [0.6313725490196078, 0.6549019607843137, 0.9686274509803922],
-                  },
+                  $value: `{non.existent.token}`,
                 },
               },
             },
           },
         },
-      });
+      };
+
+      expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
+      const result = ThemeSchema.safeParse(config);
+      expect.soft(result.success).toBeFalsy();
     });
   });
 });
