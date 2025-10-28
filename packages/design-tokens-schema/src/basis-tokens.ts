@@ -139,6 +139,23 @@ export const CommonSchema = z.object({
 });
 export type Common = z.infer<typeof CommonSchema>;
 
+export const resolveConfigRefs = (rootConfig: Theme) => {
+  // Clone the input root because resolveRefs is a mutable operation
+  const resolvedRoot = structuredClone(rootConfig);
+  resolveRefs(resolvedRoot.common, rootConfig.brand);
+  return resolvedRoot;
+};
+
+/**
+ * Validate a full theme
+ * If you want to replace all tokens refs with their actual value, tag on a `.transform(resolveConfigRefs)`
+ *
+ * @example
+ * ```ts
+ * const validated = ThemeSchema.safeParse(yourTokensJson);
+ * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
+ * ```
+ */
 export const ThemeSchema = z
   .looseObject({
     // $metadata: z.strictObject({
@@ -151,11 +168,6 @@ export const ThemeSchema = z
   })
   .refine((root) => {
     return validateRefs(root.common, root.brand);
-  })
-  .transform((root) => {
-    // Clone the input root because resolveRefs is a mutable operation
-    const resolvedRoot = structuredClone(root);
-    resolveRefs(resolvedRoot.common, root.brand);
-    return resolvedRoot;
   });
+
 export type Theme = z.infer<typeof ThemeSchema>;
