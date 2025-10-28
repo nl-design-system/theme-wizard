@@ -32,6 +32,7 @@
     "@nl-design-system-candidate/heading-css": "1.1.1",
     "@nl-design-system-candidate/link-css": "2.0.1",
     "@nl-design-system-candidate/paragraph-css": "2.1.1",
+    "@nl-design-system-candidate/skip-link-css": "1.0.3",
     "@nl-design-system-community/css-scraper": "workspace:*",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
