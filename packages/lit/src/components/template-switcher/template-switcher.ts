@@ -80,42 +80,37 @@ export class TemplateSwitcher extends LitElement {
     );
   };
 
-  readonly #renderOption = (
-    option: { name: string; value: string; detail?: { name: string; value: string } },
-    group: GroupConfig,
-  ) => {
-    return html`
-      <option
-        value="${option.value}"
-        data-metadata=${JSON.stringify({
-          parent: group.value,
-          type: group.type,
-          value: option.value,
-        })}
-      >
-        ${option.name}
-      </option>
-    `;
-  };
-
-  readonly #renderOptGroup = (group: GroupConfig) => {
-    return html`
-      <optgroup label="${group.name}">${group.detail.map((detail) => this.#renderOption(detail, group))}</optgroup>
-    `;
-  };
-
-  readonly #renderSelect = (label: string, groups: GroupConfig[]) => {
-    return html`<select
-      class="utrecht-select utrecht-select--html-select"
-      @change=${this.#dispatchChange}
-      aria-label=${label}
-    >
-      ${groups.map(this.#renderOptGroup)}
-    </select>`;
-  };
-
   override render() {
-    return html`<div class="select-container preview-theme">${this.#renderSelect('Voorvertoning', TEMPLATES)}</div>`;
+    return html`
+      <div class="select-container preview-theme">
+        <select
+          class="utrecht-select utrecht-select--html-select"
+          @change=${this.#dispatchChange}
+          aria-label="Voorvertoning"
+        >
+          ${TEMPLATES.map(
+            (group) => html`
+              <optgroup label="${group.name}">
+                ${group.detail.map(
+                  (option) => html`
+                    <option
+                      value="${option.value}"
+                      data-metadata=${JSON.stringify({
+                        parent: group.value,
+                        type: group.type,
+                        value: option.value,
+                      })}
+                    >
+                      ${option.name}
+                    </option>
+                  `,
+                )}
+              </optgroup>
+            `,
+          )}
+        </select>
+      </div>
+    `;
   }
 }
 
