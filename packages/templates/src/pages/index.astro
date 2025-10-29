@@ -1,0 +1,22 @@
+---
+import { TEMPLATES } from '../templates';
+
+const items = TEMPLATES.map(({ value, name, detail }) => ({ href: `/${value}`, title: name, detail }));
+---
+
+<h1>Templates</h1>
+
+{
+  items.map(({ href, title, detail }) => (
+    <>
+      <h2>{title}</h2>
+      <p>href: {href}</p>
+      <p>detail: {JSON.stringify(detail)}</p>
+      <ul>
+        <li>
+          <a href={`${href}/${detail.value}`}>{detail.name}</a>
+        </li>
+      </ul>
+    </>
+  ))
+}

@@ -1,20 +1,18 @@
 .layout {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--basis-space-column-md);
-  align-items: flex-start;
+  flex-direction: column;
 }
 
-.layout > theme-wizard-side-nav {
+.layout-main {
+  display: flex;
+}
+
+.layout-main > theme-wizard-side-nav {
   flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
 }
 
-.layout > utrecht-page-content {
+.layout-main > utrecht-page-content {
   flex: 1;
-}
-
-.layout > utrecht-page-footer {
-  flex: 0 0 100%;
 }
 
 .todo-card-layout {
