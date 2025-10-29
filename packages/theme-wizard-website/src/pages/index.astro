@@ -1,6 +1,7 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { TEMPLATES, type TemplateGroup } from '@nl-design-system-community/templates';
 
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
@@ -8,13 +9,13 @@ const scraperUrl = withRelatedProject({
   defaultHost: process.env.API_HOST || '',
 });
 
-const templatesJson = JSON.stringify([
-  {
-    id: 'mijn-omgeving',
-    label: 'Mijn omgeving',
-    htmlUrl: '/templates/mijn-services/mijn-omgeving',
-  },
-]);
+const templatesJson = JSON.stringify(
+  TEMPLATES.map(({ detail, name, value }: TemplateGroup) => ({
+    id: value,
+    label: name,
+    htmlUrl: `/templates/${value}/${detail?.value}`,
+  }))
+);
 ---
 
 <BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>

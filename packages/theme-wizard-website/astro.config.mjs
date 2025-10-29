@@ -4,6 +4,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const thisDir = dirname(fileURLToPath(import.meta.url));
+const srcDir = resolve(thisDir, 'src');
 const templatesRoot = resolve(thisDir, '../templates');
 const templatesSrc = resolve(templatesRoot, 'src');
 
@@ -18,6 +19,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
+        '@': srcDir,
         '@templates': templatesSrc,
       },
     },
