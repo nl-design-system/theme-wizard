@@ -3,7 +3,7 @@ import '../sidebar/sidebar';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
@@ -26,11 +26,31 @@ export class App extends LitElement {
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
 
+  // Template list provided by the host application (JSON string attribute)
+  // Expected shape: [{ id, label, htmlUrl, cssUrl }]
+  @property({ attribute: 'templates' })
+  templatesAttr?: string;
+
+  // Parsed templates list (computed)
+  get templates(): Array<{ id: string; label: string; htmlUrl: string; cssUrl?: string }> {
+    console.log('templatesAttr:', this.templatesAttr);
+    try {
+      if (this.templatesAttr) {
+        const parsed = JSON.parse(this.templatesAttr);
+        console.log('templates:', parsed);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch {
+      console.error('Failed to parse templates:', this.templatesAttr);
+    }
+    return [];
+  }
+
   @state()
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: 'collage' | 'mijn-omgeving' = 'mijn-omgeving';
+  private selectedTemplateId: string = 'mijn-omgeving';
 
   static override readonly styles = [appStyles];
 
@@ -82,25 +102,20 @@ export class App extends LitElement {
 
   readonly #handleTemplateChange = (e: Event) => {
     const select = e.target as HTMLSelectElement;
-    this.selectedTemplate = select.value as 'collage' | 'mijn-omgeving';
+    this.selectedTemplateId = select.value;
   };
 
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
     // Determine template config based on selection
-    const templateConfig =
-      this.selectedTemplate === 'collage'
-        ? {
-            cssUrl: '/templates/collage/variation.css',
-            htmlUrl: '/templates/collage/variation.html',
-          }
-        : this.selectedTemplate === 'mijn-omgeving'
-          ? {
-              cssUrl: '/templates/mijnservices/mijn-omgeving.css',
-              htmlUrl: '/templates/mijnservices/mijn-omgeving.html',
-            }
-          : undefined;
+    const selected = this.templates.find((t) => t.id === this.selectedTemplateId) || this.templates[0];
+    const templateConfig = selected
+      ? {
+          cssUrl: selected.cssUrl,
+          htmlUrl: selected.htmlUrl,
+        }
+      : undefined;
 
     return html`
       <div class="theme-app">
@@ -117,19 +132,16 @@ export class App extends LitElement {
           <div>
             <label for="template-select"> Kies een template: </label>
             <select id="template-select" @change=${this.#handleTemplateChange}>
-              <option value="collage" ?selected=${this.selectedTemplate === 'collage'}>
-                Collage (Component Variaties)
-              </option>
-              <option value="mijn-omgeving" ?selected=${this.selectedTemplate === 'mijn-omgeving'}>
-                Mijn Omgeving
-              </option>
+              ${this.templates.map(
+                (t) => html`<option value=${t.id} ?selected=${t.id === this.selectedTemplateId}>${t.label}</option>`,
+              )}
             </select>
           </div>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .templateConfig=${templateConfig}
-              .url=${this.selectedTemplate === 'mijn-omgeving' ? previewUrl : undefined}
+              .url=${selected?.id === 'mijn-omgeving' ? previewUrl : undefined}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>

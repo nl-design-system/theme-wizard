@@ -1,0 +1,27 @@
+{
+  "name": "@nl-design-system-community/templates",
+  "version": "1.0.0-alpha.0",
+  "author": "Community for NL Design System",
+  "description": "Templates",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
+    "directory": "packages/templates"
+  },
+  "scripts": {
+    "dev": "astro dev --port 9493",
+    "build": "astro build",
+    "clean": "rm -rf dist .astro build"
+  },
+  "dependencies": {
+    "astro": "5.14.1"
+  }
+}
