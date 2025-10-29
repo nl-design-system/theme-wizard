@@ -23,5 +23,9 @@
   },
   "dependencies": {
     "astro": "5.14.1"
+  },
+  "devDependencies": {
+    "@nl-design-system-community/ma-design-tokens": "2.5.0",
+    "@nl-design-system-community/theme-wizard-lit-components": "workspace:*"
   }
 }
