@@ -7,8 +7,16 @@ const scraperUrl = withRelatedProject({
   // Fallback API host
   defaultHost: process.env.API_HOST || '',
 });
+
+const templatesJson = JSON.stringify([
+  {
+    id: 'mijn-omgeving',
+    label: 'Mijn omgeving',
+    htmlUrl: '/templates/mijn-services/mijn-omgeving',
+  },
+]);
 ---
 
 <BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
-  <theme-wizard-app></theme-wizard-app>
+  <theme-wizard-app templates={templatesJson}></theme-wizard-app>
 </BaseLayout>

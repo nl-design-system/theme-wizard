@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import './mijn-omgeving.css';
+import './logo.svg';
+---
+
+<BaseLayout title="Mijn Services">
+  <utrecht-root>
+    <theme-wizard-page-header>
+      <skip-link>Direct naar de hoofdinhoud</skip-link>
+
+      <theme-wizard-link href="/" slot="logo">
+        <span id=":r0:" hidden="">homepage</span>
+        <img src="templates/mijn-services/logo.svg" alt="Gemeente Voorbeeld" />
+      </theme-wizard-link>
+
+      <!-- Menu items -->
+      <theme-wizard-link href="#" slot="menu-links">Contact</theme-wizard-link>
+
+      <theme-wizard-link href="#" slot="menu-links">
+        Jeroen van Drouwen
+        <span
+          style="
+              --utrecht-icon-color: var(--basis-color-action-2-color-default);
+              --utrecht-icon-size: 14px;
+              margin-inline-start: var(--basis-space-inline-sm);
+            "
+        >
+          <utrecht-icon-chevron-down></utrecht-icon-chevron-down>
+        </span>
+      </theme-wizard-link>
+
+      <span slot="menu-links" style="display: inline-flex; gap: 0.5rem; align-items: center">
+        <utrecht-textbox placeholder="Bijvoorbeeld zwembad of grofvuil"></utrecht-textbox>
+        <utrecht-button appearance="secondary-action-button">Zoeken</utrecht-button>
+      </span>
+    </theme-wizard-page-header>
+
+    <utrecht-breadcrumb-nav json='[{"href":"#","title":"Home"},{"href":"#","title":"Gemeente Voorbeeld"}]' lang="nl-NL"
+    ></utrecht-breadcrumb-nav>
+
+    <div class="layout">
+      <theme-wizard-side-nav></theme-wizard-side-nav>
+
+      <utrecht-page-content>
+        <main id="main">
+          <utrecht-alert type="info">
+            <utrecht-icon-informatie slot="icon"></utrecht-icon-informatie>
+
+            <utrecht-heading-2>Heading</utrecht-heading-2>
+
+            <utrecht-paragraph
+              >Lorem ipsum dolor sit amet, consectetur ad * isicing elit, sed do eiusmod *</utrecht-paragraph
+            >
+          </utrecht-alert>
+
+          <theme-wizard-heading level="2">Hallo Jeroen van Drouwen</theme-wizard-heading>
+
+          <theme-wizard-paragraph
+            >In ‘Mijn omgeving’ kunt u zelf uw persoonlijke zaken regelen wanneer het u uitkomt. U kunt bijvoorbeeld uw
+            rekeningen betalen en zien wanneer uw aanvraag klaar is.</theme-wizard-paragraph
+          >
+          <section>
+            <theme-wizard-heading level="2"> Wat moet ik regelen </theme-wizard-heading>
+
+            <theme-wizard-action>Geef informatie voor uw aanvraag subsidie geluidisolatie</theme-wizard-action>
+
+            <theme-wizard-action>Betaal uw parkeerbon van € 74,90 voor parkeren bij Valeriusplein</theme-wizard-action>
+            <theme-wizard-action>Verleng uw identiteitskaart</theme-wizard-action>
+          </section>
+
+          <section>
+            <theme-wizard-heading level="2"> Lopende zaken </theme-wizard-heading>
+            <div class="todo-card-layout">
+              <theme-wizard-case-card>
+                <theme-wizard-paragraph slot="title">Aanvraag subsidie geluidisolatie</theme-wizard-paragraph>
+                <p slot="context">ZK-228402</p>
+              </theme-wizard-case-card>
+
+              <theme-wizard-case-card>
+                <theme-wizard-paragraph slot="title">Aanvraag Parkeervergunning</theme-wizard-paragraph>
+                <p slot="context">ZK-228402</p>
+              </theme-wizard-case-card>
+
+              <theme-wizard-case-card>
+                <theme-wizard-paragraph slot="title">Aanvraag subsidie geluidisolatie</theme-wizard-paragraph>
+                <p slot="context">ZK-228402</p>
+              </theme-wizard-case-card>
+
+              <theme-wizard-case-card>
+                <theme-wizard-paragraph slot="title">Aanvraag Parkeervergunning</theme-wizard-paragraph>
+                <p slot="context">ZK-228402</p>
+              </theme-wizard-case-card>
+            </div>
+          </section>
+        </main>
+      </utrecht-page-content>
+
+      <utrecht-page-footer>
+        <div class="footer-grid">
+          <div>
+            <utrecht-link href="/">
+              <span id=":r0:" hidden="">homepage</span>
+              <img src="templates/mijnservices/logo.svg" alt="Gemeente Voorbeeld" />
+            </utrecht-link>
+
+            <div>
+              <theme-wizard-heading level="4">Contact</theme-wizard-heading>
+
+              <address class="todo-address">
+                Bel
+                <theme-wizard-link href="tel:453453">453 453</theme-wizard-link>
+                (maandag tot en met vrijdag van 09.00 tot 17.00 uur) of stuur een e-mail naar
+                <theme-wizard-link href="mailto:vragen@gemeentevoorbeeld.nl">
+                  <span class="utrecht-url-data">vragen@gemeentevoorbeeld.nl</span>
+                </theme-wizard-link>
+                .
+              </address>
+            </div>
+          </div>
+
+          <div>
+            <theme-wizard-link-list
+              link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"}]'
+            >
+            </theme-wizard-link-list>
+          </div>
+        </div>
+      </utrecht-page-footer>
+    </div>
+  </utrecht-root>
+</BaseLayout>

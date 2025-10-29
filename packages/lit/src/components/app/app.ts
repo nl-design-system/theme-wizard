@@ -4,7 +4,7 @@ import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-com
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
@@ -28,6 +28,26 @@ export class App extends LitElement {
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
+
+  // Template list provided by the host application (JSON string attribute)
+  // Expected shape: [{ id, label, htmlUrl, cssUrl }]
+  @property({ attribute: 'templates' })
+  templatesAttr?: string;
+
+  // Parsed templates list (computed)
+  get templates(): Array<{ id: string; label: string; htmlUrl: string; cssUrl?: string }> {
+    console.log('templatesAttr:', this.templatesAttr);
+    try {
+      if (this.templatesAttr) {
+        const parsed = JSON.parse(this.templatesAttr);
+        console.log('templates:', parsed);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch {
+      console.error('Failed to parse templates:', this.templatesAttr);
+    }
+    return [];
+  }
 
   @state()
   private scrapedTokens: ScrapedDesignToken[] = [];

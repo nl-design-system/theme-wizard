@@ -2,7 +2,6 @@ import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import Scraper from '../../lib/Scraper';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
@@ -11,7 +10,6 @@ const previewTheme = maTheme.replace('.ma-theme', `.${PREVIEW_THEME}`);
 
 interface TemplateConfig {
   htmlUrl: string;
-  cssUrl?: string;
 }
 
 @customElement('theme-wizard-preview')
@@ -24,17 +22,10 @@ export class ThemePreview extends LitElement {
   @state() private isLoading = false;
   @state() private error = '';
 
-  private readonly scraper: Scraper;
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   // TODO: Drop injection of maTheme and generate a full wizard theme CSS
   static override readonly styles = [previewStyles, unsafeCSS(previewTheme)];
-
-  constructor() {
-    super();
-    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
-    this.scraper = new Scraper(scraperURL);
-  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -63,11 +54,12 @@ export class ThemePreview extends LitElement {
     this.error = '';
 
     try {
-      this.htmlContent = await this.#fetchHTML(config.htmlUrl);
+      const { bodyHTML, fullHTML } = await this.#fetchHTML(config.htmlUrl);
+      this.htmlContent = bodyHTML;
 
-      if (config.cssUrl) {
-        const cssContent = await this.#fetchCSS(config.cssUrl);
-        this.previewStylesheet?.replaceSync(cssContent);
+      const inlinedCss = await this.#extractStylesFromHTML(fullHTML);
+      if (inlinedCss && inlinedCss.trim().length > 0) {
+        this.previewStylesheet?.replaceSync(inlinedCss);
       }
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
@@ -79,7 +71,7 @@ export class ThemePreview extends LitElement {
   /**
    * Fetch and process HTML from the URL
    */
-  readonly #fetchHTML = async (url: string): Promise<string> => {
+  readonly #fetchHTML = async (url: string): Promise<{ bodyHTML: string; fullHTML: string }> => {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
@@ -91,13 +83,14 @@ export class ThemePreview extends LitElement {
     rewriteAttributeUrlsToAbsolute(doc.body, url);
     rewriteSvgXlinkToAbsolute(doc.body, url);
 
-    return doc.body.innerHTML;
+    return { bodyHTML: doc.body.innerHTML, fullHTML: html };
   };
 
   /**
-   * Fetch CSS from a URL (local or remote)
+   * Extract CSS from HTML content: collects <style> tags from head/body and inlines same-origin <link rel="stylesheet">.
+   * This enables templates to ship a single built HTML file containing or referencing its CSS.
    */
-  readonly #fetchCSS = async (url: string): Promise<string> => {
+  readonly #extractStylesFromHTML = async (fullHtml: string): Promise<string> => {
     try {
       // External URL gets ignored since it's already absolute
       const absoluteUrl = new URL(url, globalThis.location.href).href;
@@ -115,10 +108,11 @@ export class ThemePreview extends LitElement {
         if (!response.ok) {
           throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
         }
-        return response.text();
       }
-    } catch (error) {
-      throw new Error(`Failed to fetch CSS: ${error instanceof Error ? error.message : 'Unknown error'}`);
+
+      return styles.join('\n');
+    } catch {
+      return '';
     }
   };
 
@@ -139,7 +133,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div class="preview-theme" data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
+    return html` <div class=${PREVIEW_THEME} data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 

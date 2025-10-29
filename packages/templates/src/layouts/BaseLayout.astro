@@ -1,0 +1,9 @@
+---
+export interface Props {
+  title?: string;
+}
+
+const { title = 'VNG Template' } = Astro.props;
+---
+
+<slot />
