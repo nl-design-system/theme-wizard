@@ -40,7 +40,6 @@ export class App extends LitElement {
     try {
       if (this.templatesAttr) {
         const parsed = JSON.parse(this.templatesAttr);
-        console.log('templates:', parsed);
         if (Array.isArray(parsed)) return parsed;
       }
     } catch {
