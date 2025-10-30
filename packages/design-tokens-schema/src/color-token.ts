@@ -36,6 +36,9 @@ export const ColorComponentSchema = z.union([z.number(), NoneKeywordSchema]);
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorComponent = z.infer<typeof ColorComponentSchema>;
 
+export const ColorComponentsSchema = z.tuple([ColorComponentSchema, ColorComponentSchema, ColorComponentSchema]);
+export type ColorComponents = z.infer<typeof ColorComponentsSchema>;
+
 export const ColorAlphaSchema = z.number().gte(0).lte(1);
 
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
@@ -49,13 +52,13 @@ export type ColorHexFallback = z.infer<typeof ColorHexFallbackSchema>;
 export const ColorValueSchema = z.strictObject({
   alpha: ColorAlphaSchema.optional(),
   colorSpace: ColorSpaceSchema.nonoptional(),
-  components: z.tuple([ColorComponentSchema, ColorComponentSchema, ColorComponentSchema]).nonoptional(),
+  components: ColorComponentsSchema.nonoptional(),
   hex: ColorHexFallbackSchema.optional(),
 });
 export type ColorValue = z.infer<typeof ColorValueSchema>;
 
 export const LegacyColorTokenSchema = z
-  .looseObject({
+  .object({
     ...BaseDesignTokenValueSchema.shape,
     $type: z.literal('color'),
     // Color must be parseable in order to upgrade it
@@ -76,7 +79,7 @@ export const LegacyColorTokenSchema = z
     };
   });
 
-export const ColorTokenSchema = z.looseObject({
+export const ColorTokenSchema = z.object({
   ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('color'),
   $value: ColorValueSchema,
@@ -90,7 +93,7 @@ export const parseColor = (color: string): ColorValue => {
   return {
     alpha: parsedColor.alpha,
     colorSpace: parsedColor.spaceId as ColorSpace,
-    components: parsedColor.coords,
+    components: parsedColor.coords.map((component) => component ?? 'none') as ColorComponents,
   };
 };
 

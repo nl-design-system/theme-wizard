@@ -4,7 +4,8 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["es2022", "dom"],
     "outDir": "dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "bundler"
   },
   "include": ["src"],
   "exclude": ["**/*.test.ts"]
