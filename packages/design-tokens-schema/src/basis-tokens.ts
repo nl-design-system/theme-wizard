@@ -33,7 +33,7 @@ export type Brands = z.infer<typeof BrandsSchema>;
 // - Starts with {
 // - Ends with }
 // - Contains only BaseDesignTokenNameSchema, joined by a . character
-export const TokenRefSchema = z
+export const TokenReferenceSchema = z
   .string()
   .trim()
   .startsWith('{')
@@ -47,15 +47,15 @@ export const TokenRefSchema = z
   .pipe(z.array(BaseDesignTokenIdentifierSchema))
   // Join them back together
   .transform((value) => `{${value.join('.')}}`);
-export type TokenRef = z.infer<typeof TokenRefSchema>;
+export type TokenReference = z.infer<typeof TokenReferenceSchema>;
 
 export const ColorWithRefSchema = BaseDesignTokenValueSchema.extend({
   $type: z.literal('color'),
-  $value: TokenRefSchema,
+  $value: TokenReferenceSchema,
 });
 export type ColorWithRef = z.infer<typeof ColorWithRefSchema>;
 
-export const ColorOrRefSchema = z.union([ColorTokenValidationSchema, ColorWithRefSchema]);
+export const ColorOrRefSchema = z.union([ColorTokenValidationSchema, z.looseObject({ ...ColorWithRefSchema.shape })]);
 export type ColorOrRef = z.infer<typeof ColorOrRefSchema>;
 
 export const ColorNameSchema = z.strictObject({
@@ -114,9 +114,9 @@ export const BasisTextSchema = z.object({
       monospace: FontFamilyTokenSchema.optional(),
     })
     .optional(),
-  'font-size': z.strictObject({}).optional(),
-  'font-weight': z.strictObject({}).optional(),
-  'line-height': z.strictObject({}).optional(),
+  // 'font-size': z.looseObject({}).optional(),
+  // 'font-weight': z.looseObject({}).optional(),
+  // 'line-height': z.looseObject({}).optional(),
 });
 
 export const BasisTokensSchema = z.object({
@@ -125,6 +125,7 @@ export const BasisTokensSchema = z.object({
   // 'border-radius': z.strictObject({}),
   // 'border-width': z.strictObject({}),
   // 'box-shadow': z.strictObject({}),
+  // dataset: z.strictObject({}),
   // focus: z.strictObject({}),
   'form-control': z
     .object({
@@ -148,9 +149,41 @@ export const BasisTokensSchema = z.object({
           color: ColorTokenValidationSchema.optional(),
         })
         .optional(),
+      focus: z
+        .object({
+          'accent-color': ColorTokenValidationSchema.optional(),
+          'background-color': ColorTokenValidationSchema.optional(),
+          'border-color': ColorTokenValidationSchema.optional(),
+          color: ColorTokenValidationSchema.optional(),
+        })
+        .optional(),
       'font-family': FontFamilyTokenSchema.optional(),
+      hover: z
+        .object({
+          'accent-color': ColorTokenValidationSchema.optional(),
+          'background-color': ColorTokenValidationSchema.optional(),
+          'border-color': ColorTokenValidationSchema.optional(),
+          color: ColorTokenValidationSchema.optional(),
+        })
+        .optional(),
+      invalid: z
+        .object({
+          'accent-color': ColorTokenValidationSchema.optional(),
+          'background-color': ColorTokenValidationSchema.optional(),
+          'border-color': ColorTokenValidationSchema.optional(),
+          color: ColorTokenValidationSchema.optional(),
+        })
+        .optional(),
       placeholder: z
         .object({
+          color: ColorTokenValidationSchema.optional(),
+        })
+        .optional(),
+      'read-only': z
+        .object({
+          'accent-color': ColorTokenValidationSchema.optional(),
+          'background-color': ColorTokenValidationSchema.optional(),
+          'border-color': ColorTokenValidationSchema.optional(),
           color: ColorTokenValidationSchema.optional(),
         })
         .optional(),

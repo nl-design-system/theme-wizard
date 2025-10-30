@@ -97,6 +97,23 @@ describe('color token validation', () => {
     } satisfies ColorToken);
   });
 
+  test('convert `rgba(0, 0, 0, 0)` to fully transparent black, modern syntax', () => {
+    const transparentColor = {
+      $type: 'color',
+      $value: 'rgba(0, 0, 0, 0)',
+    };
+    const result = ColorTokenValidationSchema.safeParse(transparentColor);
+    expect(result.success).toBeTruthy();
+    expect(result.data).toEqual({
+      $type: 'color',
+      $value: {
+        alpha: 0,
+        colorSpace: 'srgb',
+        components: [0, 0, 0],
+      },
+    } satisfies ColorToken);
+  });
+
   test('invalid colors are rejected', () => {
     const legacyColor = {
       $type: 'color',
