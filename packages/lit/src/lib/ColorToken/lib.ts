@@ -30,3 +30,39 @@ export function getHue([r, g, b]: [r: number, g: number, b: number]): Degree {
   const radians = Math.atan2(Math.sqrt(3) * (g - b), 2 * r - g - b);
   return ((radians * 180) / Math.PI + 360) % 360; // wrap around when negative
 }
+
+type Percentage = number;
+/**
+ * Convert RGB components to HSL components.
+ *
+ * @SEE https://en.wikipedia.org/wiki/HSL_and_HSV
+ *
+ * @param RGB as numbers between 0 and 1, inclusive
+ * @returns Hue in degrees, saturation and lightness in percentages
+ */
+export function toHSL([r, g, b]: [r: number, g: number, b: number]): [Degree, Percentage, Percentage] {
+  const hue = getHue([r, g, b]);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const lightness = (max + min) / 2;
+  const saturation =
+    lightness % 1 !== 0 // no divide by zero
+      ? (max - lightness) / Math.min(lightness, 1 - lightness)
+      : 0;
+  return [hue, saturation * 100, lightness * 100];
+}
+
+/**
+ * Convert RGB components to HWB components.
+ *
+ * @SEE https://en.wikipedia.org/wiki/HWB_color_model
+ *
+ * @param RGB as numbers between 0 and 1, inclusive
+ * @returns Hue in degrees, whiteness and blackness in percentages
+ */
+export function toHWB([r, g, b]: [r: number, g: number, b: number]): [Degree, Percentage, Percentage] {
+  const hue = getHue([r, g, b]);
+  const whiteness = Math.min(r, g, b);
+  const blackness = 1 - Math.max(r, g, b);
+  return [hue, whiteness * 100, blackness * 100];
+}
