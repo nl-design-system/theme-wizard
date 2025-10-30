@@ -30,13 +30,18 @@ export class App extends LitElement {
   );
 
   // Template list provided by the host application (JSON string attribute)
-  // Expected shape: [{ id, label, htmlUrl, cssUrl }]
-  @property({ attribute: 'templates' })
-  templatesAttr?: string;
+  // Expected shape: [{ htmlUrl, name, title, pageTitle, page }]
+  @property({ attribute: 'templates' }) templatesAttr?: string;
 
   // Parsed templates list (computed)
-  get templates(): Array<{ id: string; label: string; htmlUrl: string; cssUrl?: string }> {
-    console.log('templatesAttr:', this.templatesAttr);
+  get templates(): Array<{
+    id: string;
+    htmlUrl: string;
+    name: string;
+    title: string;
+    pageTitle: string;
+    page: string;
+  }> {
     try {
       if (this.templatesAttr) {
         const parsed = JSON.parse(this.templatesAttr);
