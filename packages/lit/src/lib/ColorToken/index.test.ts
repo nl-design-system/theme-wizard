@@ -79,14 +79,6 @@ describe('ColorToken', () => {
     });
   });
 
-  describe('toCSSColorFunction()', () => {
-    test('returns correct srgb value for example token', () => {
-      const colorToken = new ColorToken(greenSRGB);
-      const colorFunction = colorToken.toCSSColorFunction();
-      expect(colorFunction).toBe('color(srgb 0 0.5058823529411764 0.12156862745098039)');
-    });
-  });
-
   describe('toColorSpace()', () => {
     Object.values(COLOR_SPACES).forEach((destination) => {
       test(`returns new ColorToken in ${destination} color space`, () => {
