@@ -10,7 +10,7 @@ export class ColorScale extends LitElement {
   @property() from?: ColorToken;
   @property() stops: ColorToken[] = [];
 
-  static override styles = [styles];
+  static override readonly styles = [styles];
 
   override render() {
     return html`
