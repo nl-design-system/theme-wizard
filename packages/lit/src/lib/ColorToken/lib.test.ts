@@ -3,7 +3,9 @@ import { createHelperElement } from './lib';
 
 describe('ColorToken/createHelperElement', () => {
   afterEach(() => {
-    document.querySelectorAll('[data-test-id=helper]').forEach((el) => el.remove());
+    for (const el of Array.from(document.querySelectorAll('[data-test-id=helper]'))) {
+      el.remove();
+    }
   });
 
   test('creates a div', () => {
