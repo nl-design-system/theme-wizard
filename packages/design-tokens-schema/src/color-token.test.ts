@@ -80,38 +80,35 @@ describe('color token validation', () => {
     } satisfies ColorToken);
   });
 
-  test('convert `transparent` to fully transparent black, modern syntax', () => {
-    const transparentColor = {
-      $type: 'color',
-      $value: 'transparent',
-    };
-    const result = ColorTokenValidationSchema.safeParse(transparentColor);
-    expect(result.success).toBeTruthy();
-    expect(result.data).toEqual({
+  describe('transparent colors', () => {
+    const expected_color = {
       $type: 'color',
       $value: {
         alpha: 0,
         colorSpace: 'srgb',
         components: [0, 0, 0],
       },
-    } satisfies ColorToken);
-  });
+    } satisfies ColorToken;
 
-  test('convert `rgba(0, 0, 0, 0)` to fully transparent black, modern syntax', () => {
-    const transparentColor = {
-      $type: 'color',
-      $value: 'rgba(0, 0, 0, 0)',
-    };
-    const result = ColorTokenValidationSchema.safeParse(transparentColor);
-    expect(result.success).toBeTruthy();
-    expect(result.data).toEqual({
-      $type: 'color',
-      $value: {
-        alpha: 0,
-        colorSpace: 'srgb',
-        components: [0, 0, 0],
-      },
-    } satisfies ColorToken);
+    test('convert `transparent` to fully transparent black, modern syntax', () => {
+      const transparentColor = {
+        $type: 'color',
+        $value: 'transparent',
+      };
+      const result = ColorTokenValidationSchema.safeParse(transparentColor);
+      expect(result.success).toBeTruthy();
+      expect(result.data).toEqual(expected_color);
+    });
+
+    test('convert `rgba(0, 0, 0, 0)` to fully transparent black, modern syntax', () => {
+      const transparentColor = {
+        $type: 'color',
+        $value: 'rgba(0, 0, 0, 0)',
+      };
+      const result = ColorTokenValidationSchema.safeParse(transparentColor);
+      expect(result.success).toBeTruthy();
+      expect(result.data).toEqual(expected_color);
+    });
   });
 
   test('invalid colors are rejected', () => {
