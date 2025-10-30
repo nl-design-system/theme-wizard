@@ -120,7 +120,7 @@ export const stringifyColor = (color: ColorValue): string => {
  * //=> { alpha: 1, components: [0, 0, 0], colorSpace: 'rgb' }
  *
  * legacyToModernColor.encode({ alpha: 1, components: [0, 0, 0], colorSpace: 'rgb' })
- * //=> `#000`
+ * //=> `#000000`
  * ```
  */
 export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
