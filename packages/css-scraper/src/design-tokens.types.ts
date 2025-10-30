@@ -1,8 +1,8 @@
 import {
   ColorTokenSchema,
   DimensionTokenSchema,
-  FontFamilyTokenSchema,
-  FontFamilyNameSchema,
+  ModernFontFamilyTokenSchema,
+  ModernFontFamilyNameSchema,
 } from '@nl-design-system-community/design-tokens-schema';
 import { z } from 'zod';
 
@@ -32,10 +32,10 @@ export const ScrapedDimensionTokenSchema = z.strictObject({
 export type ScrapedDimensionToken = z.infer<typeof ScrapedDimensionTokenSchema>;
 
 export const ScrapedFontFamilyTokenSchema = z.strictObject({
-  ...FontFamilyTokenSchema.shape,
+  ...ModernFontFamilyTokenSchema.shape,
   $extensions: TokenExtensionsSchema,
   // Force font-families to be an Array because that's what css-design-tokens returns
-  $value: z.array(FontFamilyNameSchema),
+  $value: z.array(ModernFontFamilyNameSchema),
 });
 export type ScrapedFontFamilyToken = z.infer<typeof ScrapedFontFamilyTokenSchema>;
 

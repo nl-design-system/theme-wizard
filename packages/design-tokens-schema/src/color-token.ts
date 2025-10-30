@@ -93,7 +93,7 @@ export const parseColor = (color: string): ColorValue => {
   return {
     alpha: parsedColor.alpha,
     colorSpace: parsedColor.spaceId as ColorSpace,
-    components: parsedColor.coords.map((component) => component ?? 'none') as ColorComponents,
+    components: parsedColor.coords as ColorComponents,
   };
 };
 
