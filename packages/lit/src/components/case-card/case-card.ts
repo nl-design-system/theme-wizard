@@ -3,8 +3,8 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import caseCardTokenMap from './case-card.css';
 
-@customElement('theme-wizard-case-card')
-export class ThemeWizardCaseCard extends LitElement {
+@customElement('wiz-case-card')
+export class WizCaseCard extends LitElement {
   static override readonly styles = [unsafeCSS(caseCardStyles), caseCardTokenMap];
 
   override render() {
@@ -49,6 +49,6 @@ export class ThemeWizardCaseCard extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'theme-wizard-case-card': ThemeWizardCaseCard;
+    'wiz-case-card': WizCaseCard;
   }
 }

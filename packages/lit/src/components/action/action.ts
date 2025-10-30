@@ -2,9 +2,10 @@ import actionStyles from '@gemeente-denhaag/action/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('theme-wizard-action')
-export class ThemeWizardAction extends LitElement {
+@customElement('wiz-action')
+export class WizAction extends LitElement {
   static override readonly styles = [unsafeCSS(actionStyles)];
+
   override render() {
     return html`<a class="nl-link denhaag-action denhaag-action--single" href="#">
       <div class="denhaag-action__content">
@@ -37,6 +38,6 @@ export class ThemeWizardAction extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'theme-wizard-action': ThemeWizardAction;
+    'wiz-action': WizAction;
   }
 }

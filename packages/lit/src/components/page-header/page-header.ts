@@ -2,8 +2,8 @@ import amsStyles from '@amsterdam/design-system-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('theme-wizard-page-header')
-export class ThemeWizardPageHeader extends LitElement {
+@customElement('wiz-page-header')
+export class WizPageHeader extends LitElement {
   static override readonly styles = [unsafeCSS(amsStyles)];
   override render() {
     return html` <header class="ams-page-header">
@@ -28,6 +28,6 @@ export class ThemeWizardPageHeader extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'theme-wizard-page-header': ThemeWizardPageHeader;
+    'wiz-page-header': WizPageHeader;
   }
 }

@@ -2,8 +2,8 @@ import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-@customElement('theme-wizard-link')
-export class ThemeWizardLink extends LitElement {
+@customElement('wiz-link')
+export class WizLink extends LitElement {
   @property() href: string = '';
 
   static override readonly styles = [unsafeCSS(linkCss)];
@@ -19,6 +19,6 @@ export class ThemeWizardLink extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'theme-wizard-link': ThemeWizardLink;
+    'wiz-link': WizLink;
   }
 }
