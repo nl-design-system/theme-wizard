@@ -1,31 +1,33 @@
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { DEFAULT_CONFIG } from '../../constants/default';
+import Scraper from '../../lib/Scraper';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
 export const PREVIEW_THEME = 'preview-theme';
 const previewTheme = maTheme.replace('.ma-theme', `.${PREVIEW_THEME}`);
 
-interface TemplateConfig {
-  htmlUrl: string;
-}
-
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
-  @property() url: string = DEFAULT_CONFIG.previewUrl;
   @property() themeStylesheet!: CSSStyleSheet;
-  @property({ type: Object }) templateConfig?: TemplateConfig;
+  @property() templateUrl?: string;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
 
+  private readonly scraper: Scraper;
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   // TODO: Drop injection of maTheme and generate a full wizard theme CSS
   static override readonly styles = [previewStyles, unsafeCSS(previewTheme)];
+
+  constructor() {
+    super();
+    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
+    this.scraper = new Scraper(scraperURL);
+  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -35,30 +37,20 @@ export class ThemePreview extends LitElement {
     this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
-  override willUpdate(changedProperties: Map<string, unknown>) {
-    super.willUpdate(changedProperties);
-
-    // Reload content when template config or URL changes
-    if (changedProperties.has('templateConfig')) {
-      this.#loadContent();
-    }
-  }
-
   readonly #loadContent = async () => {
-    const htmlUrl = this.url;
-    const config: TemplateConfig = this.templateConfig ?? { htmlUrl };
-    if (!config) return;
+    const url = this.templateUrl;
+    if (!url) return;
 
     this.isLoading = true;
     this.error = '';
 
     try {
-      const { bodyHTML, fullHTML } = await this.#fetchHTML(config.htmlUrl);
-      this.htmlContent = bodyHTML;
+      this.htmlContent = await this.#fetchHTML(url);
+      const css = await this.#fetchCSS(url);
 
-      const inlinedCss = await this.#extractStylesFromHTML(fullHTML);
-      if (inlinedCss && inlinedCss.trim().length > 0) {
-        this.previewStylesheet?.replaceSync(inlinedCss);
+      this.previewStylesheet?.replaceSync('');
+      if (css?.trim()) {
+        this.previewStylesheet.replaceSync(css);
       }
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
@@ -67,10 +59,25 @@ export class ThemePreview extends LitElement {
     }
   };
 
+  readonly #fetchCSS = async (url: string): Promise<string | undefined> => {
+    try {
+      const absoluteUrl = new URL(url, globalThis.location.href).href;
+      const currentOrigin = new URL(globalThis.location.href).origin;
+      const urlOrigin = new URL(absoluteUrl).origin;
+      const isExternal = currentOrigin !== urlOrigin;
+
+      const urlToFetch = isExternal ? new URL(url) : new URL(url, globalThis.location.href);
+      return await this.scraper.getCSS(urlToFetch);
+    } catch (err) {
+      console.error('Failed to fetch CSS:', err);
+      return undefined;
+    }
+  };
+
   /**
    * Fetch and process HTML from the URL
    */
-  readonly #fetchHTML = async (url: string): Promise<{ bodyHTML: string; fullHTML: string }> => {
+  readonly #fetchHTML = async (url: string): Promise<string> => {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch HTML: ${response.statusText}`);
@@ -82,30 +89,7 @@ export class ThemePreview extends LitElement {
     rewriteAttributeUrlsToAbsolute(doc.body, url);
     rewriteSvgXlinkToAbsolute(doc.body, url);
 
-    return { bodyHTML: doc.body.innerHTML, fullHTML: html };
-  };
-
-  /**
-   * Extract CSS from HTML content: collects <style> tags from head/body and inlines same-origin <link rel="stylesheet">.
-   * This enables templates to ship a single built HTML file containing or referencing its CSS.
-   */
-  readonly #extractStylesFromHTML = async (fullHtml: string): Promise<string> => {
-    try {
-      const doc = parseHtml(fullHtml);
-      const styles: string[] = [];
-      const styleNodes = Array.from(doc.querySelectorAll('style'));
-
-      // Collect inline <style> tags from head and body
-      for (const styleEl of styleNodes) {
-        if (styleEl instanceof HTMLStyleElement && styleEl.textContent) {
-          styles.push(styleEl.textContent);
-        }
-      }
-
-      return styles.join('\n');
-    } catch {
-      return '';
-    }
+    return doc.body.innerHTML;
   };
 
   override render() {

@@ -9,13 +9,26 @@ const scraperUrl = withRelatedProject({
   defaultHost: process.env.API_HOST || '',
 });
 
-const templatesJson = JSON.stringify(
-  TEMPLATES.map(({ detail, name, value }: TemplateGroup) => ({
-    id: value,
-    label: name,
-    htmlUrl: `/templates/${value}/${detail?.value}`,
-  }))
-);
+// my-environment/overview
+const fallback = `/${TEMPLATES[0].value}/${TEMPLATES[0].detail.value}`;
+const templatesParam = Astro.url.searchParams.get('templates') ?? fallback;
+
+const [, selectedTemplate, selectedPage] = templatesParam.split('/'); // ["", "my-environment", "overview"]
+
+const templateItems = TEMPLATES.map(({ detail, name, value }: TemplateGroup) => {
+  const isSelectedTemplate = value === selectedTemplate;
+  const page = isSelectedTemplate && selectedPage ? selectedPage : detail.value;
+
+  return {
+    htmlUrl: `/templates/${value}/${page}`,
+    name: value,
+    title: name,
+    page: detail.value,
+    pageTitle: detail.name,
+  };
+});
+
+const templatesJson = JSON.stringify(templateItems);
 ---
 
 <BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>

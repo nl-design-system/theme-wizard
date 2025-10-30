@@ -27,13 +27,18 @@ export class App extends LitElement {
   );
 
   // Template list provided by the host application (JSON string attribute)
-  // Expected shape: [{ id, label, htmlUrl, cssUrl }]
-  @property({ attribute: 'templates' })
-  templatesAttr?: string;
+  // Expected shape: [{ htmlUrl, name, title, pageTitle, page }]
+  @property({ attribute: 'templates' }) templatesAttr?: string;
 
   // Parsed templates list (computed)
-  get templates(): Array<{ id: string; label: string; htmlUrl: string; cssUrl?: string }> {
-    console.log('templatesAttr:', this.templatesAttr);
+  get templates(): Array<{
+    id: string;
+    htmlUrl: string;
+    name: string;
+    title: string;
+    pageTitle: string;
+    page: string;
+  }> {
     try {
       if (this.templatesAttr) {
         const parsed = JSON.parse(this.templatesAttr);
@@ -49,7 +54,7 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplateId: string = 'mijn-omgeving';
+  private selectedTemplateName: string = 'mijn-omgeving';
 
   static override readonly styles = [appStyles];
 
@@ -57,6 +62,12 @@ export class App extends LitElement {
     super.connectedCallback();
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
+
+    const params = new URL(globalThis.location.href).searchParams.get('templates'); // "/my-environment/overview"
+    if (params) {
+      const [, template] = params.split('/');
+      if (template) this.selectedTemplateName = template;
+    }
   }
 
   override disconnectedCallback() {
@@ -99,22 +110,13 @@ export class App extends LitElement {
     }
   };
 
-  readonly #handleTemplateChange = (e: Event) => {
-    const select = e.target as HTMLSelectElement;
-    this.selectedTemplateId = select.value;
-  };
-
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
     // Determine template config based on selection
-    const selected = this.templates.find((t) => t.id === this.selectedTemplateId) || this.templates[0];
-    const templateConfig = selected
-      ? {
-          cssUrl: selected.cssUrl,
-          htmlUrl: selected.htmlUrl,
-        }
-      : undefined;
+    const selected =
+      this.templates.find((template) => template.name === this.selectedTemplateName) || this.templates[0];
+    const templateUrl = selected?.htmlUrl;
 
     return html`
       <div class="theme-app">
@@ -129,18 +131,34 @@ export class App extends LitElement {
         <main class="theme-preview-main" id="main-content" role="main">
           <!-- Placeholder for component selector -->
           <div>
-            <label for="template-select"> Kies een template: </label>
-            <select id="template-select" @change=${this.#handleTemplateChange}>
-              ${this.templates.map(
-                (t) => html`<option value=${t.id} ?selected=${t.id === this.selectedTemplateId}>${t.label}</option>`,
-              )}
-            </select>
+            <form method="GET">
+              <label for="template-select"> Kies een template: </label>
+              <select id="template-select" name="templates">
+                ${(() => {
+                  let current = '';
+                  try {
+                    current = new URL(globalThis.location.href).searchParams.get('templates') || '';
+                  } catch {
+                    // ignore
+                  }
+                  return this.templates.map((template) => {
+                    const value = `/${template.name}/${template.page}`;
+                    const selected = current === value;
+
+                    return html`<optgroup label=${template.title}>
+                      <option value=${value} ?selected=${selected}>${template.pageTitle}</option>
+                    </optgroup>`;
+                  });
+                })()}
+              </select>
+              <button type="submit">Toepassen</button>
+            </form>
           </div>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
-              .templateConfig=${templateConfig}
-              .url=${selected?.id === 'mijn-omgeving' ? previewUrl : undefined}
+              .templateUrl=${templateUrl}
+              .url=${selected?.name === 'mijn-omgeving' ? previewUrl : undefined}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
