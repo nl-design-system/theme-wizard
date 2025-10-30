@@ -105,12 +105,10 @@ export class App extends LitElement {
             cssUrl: '/templates/collage/collage-1.css',
             htmlUrl: '/templates/collage/collage-1.html',
           }
-        : this.selectedTemplate === 'mijn-omgeving'
-          ? {
-              cssUrl: '/templates/mijnservices/mijn-omgeving.css',
-              htmlUrl: '/templates/mijnservices/mijn-omgeving.html',
-            }
-          : undefined;
+        : {
+            cssUrl: '/templates/mijnservices/mijn-omgeving.css',
+            htmlUrl: '/templates/mijnservices/mijn-omgeving.html',
+          };
 
     return html`
       <div class="theme-app ma-theme">
@@ -128,7 +126,7 @@ export class App extends LitElement {
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .templateConfig=${templateConfig}
-              .url=${this.selectedTemplate === 'mijn-omgeving' ? previewUrl : undefined}
+              .url=${previewUrl}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
