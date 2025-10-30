@@ -4,7 +4,7 @@ import {
   type ColorComponent,
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
-import { createHelperElement, getCSSColorComponents, toHSL, toHWB } from './lib';
+import { createHelperElement, getCSSColorComponents, limitColorComponents, toHSL, toHWB } from './lib';
 
 type MinimalColorToken = Omit<ColorTokenType, '$type'> & { $type?: ColorTokenType['$type'] };
 export type ColorComponents = ColorTokenType['$value']['components'];
@@ -51,10 +51,10 @@ export default class ColorToken {
 
     let components = values;
     if (destination === COLOR_SPACES.HSL) {
-      components = toHSL(values);
+      components = toHSL(limitColorComponents('srgb', values));
     }
     if (destination === COLOR_SPACES.HWB) {
-      components = toHWB(values);
+      components = toHWB(limitColorComponents('srgb', values));
     }
 
     return new ColorToken({
@@ -62,7 +62,7 @@ export default class ColorToken {
       $value: {
         ...this.#$value,
         colorSpace: destination,
-        components,
+        components: limitColorComponents(destination, components),
       },
     });
   }
