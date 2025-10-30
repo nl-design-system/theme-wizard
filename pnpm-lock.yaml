@@ -316,6 +316,9 @@ importers:
       '@nl-design-system-community/theme-wizard-lit-components':
         specifier: workspace:*
         version: link:../lit
+      '@utrecht/web-component-library-stencil':
+        specifier: 3.6.0
+        version: 3.6.0
 
   packages/theme-wizard-server:
     dependencies:
