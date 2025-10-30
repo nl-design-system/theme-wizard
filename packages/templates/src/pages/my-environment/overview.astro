@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import VNGLayout from '../../layouts/VNGLayout.astro';
 export const detail = { name: 'Overzichtspagina', value: 'overview', module: 'Mijn Omgeving' };
 ---
 
-<BaseLayout>
+<VNGLayout>
   <main id="main" slot="content">
     <utrecht-alert type="info">
       <utrecht-icon-informatie slot="icon"></utrecht-icon-informatie>
@@ -53,4 +53,4 @@ export const detail = { name: 'Overzichtspagina', value: 'overview', module: 'Mi
       </div>
     </section>
   </main>
-</BaseLayout>
+</VNGLayout>
