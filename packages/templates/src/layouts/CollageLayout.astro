@@ -1,0 +1,16 @@
+---
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+
+export interface Props {
+  title?: string;
+}
+---
+
+<html lang="nl-NL" class="ma-theme">
+  <body>
+    <slot />
+  </body>
+  <script>
+    import '@nl-design-system-community/theme-wizard-lit-components';
+  </script>
+</html>

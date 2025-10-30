@@ -9,4 +9,9 @@ export default defineConfig({
   server: {
     port: 9493, // (T9 for WIZ)3
   },
+  vite: {
+    define: {
+      __STANDALONE_PACKAGE__: true, // for building templates as standalone website
+    },
+  },
 });
