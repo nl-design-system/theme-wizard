@@ -158,6 +158,9 @@ importers:
       '@nl-design-system-community/ma-design-tokens':
         specifier: 2.5.0
         version: 2.5.0
+      '@utrecht/select-css':
+        specifier: 2.0.0
+        version: 2.0.0
       '@utrecht/web-component-library-stencil':
         specifier: 3.6.0
         version: 3.6.0
@@ -1759,6 +1762,9 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@utrecht/select-css@2.0.0':
+    resolution: {integrity: sha512-9WSTgrCmp18SBVXvPSwu3bGeBWYW2W62PVC6TIl+iUjPLxnbL9THwCV9MXzkpgNFHi6L/ZMO+C2awpeXwOEpgg==}
 
   '@utrecht/web-component-library-stencil@3.6.0':
     resolution: {integrity: sha512-bF9wkYizCy10JEqntXpY3QSB2i8382OwIAOSONmNuazUoTY2iDzuZSjKbzE96TrGzuAoh8DGP5Ch8C1ovl4RNQ==}
@@ -7626,6 +7632,8 @@ snapshots:
       eslint-visitor-keys: 4.2.1
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@utrecht/select-css@2.0.0': {}
 
   '@utrecht/web-component-library-stencil@3.6.0':
     dependencies:

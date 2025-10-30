@@ -1,8 +1,10 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
+import '../template-switcher/template-switcher';
+import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
@@ -30,19 +32,21 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: 'collage' | 'preview' = 'collage';
+  private selectedTemplate: string = 'template';
 
-  static override readonly styles = [appStyles];
+  static override readonly styles = [unsafeCSS(maTheme), appStyles];
 
   override connectedCallback() {
     super.connectedCallback();
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
+    this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
+    this.removeEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
   }
 
   /**
@@ -81,24 +85,30 @@ export class App extends LitElement {
   };
 
   readonly #handleTemplateChange = (e: Event) => {
-    const select = e.target as HTMLSelectElement;
-    this.selectedTemplate = select.value as 'collage' | 'preview';
+    if (!(e instanceof CustomEvent)) return;
+
+    // TODO: selectedTemplate should be the value of the template switcher
+    const { type, value } = e.detail;
+    if (type === 'collage') {
+      this.selectedTemplate = value;
+    } else {
+      this.selectedTemplate = 'template';
+    }
   };
 
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
     // Determine template config based on selection
-    const templateConfig =
-      this.selectedTemplate === 'collage'
-        ? {
-            cssUrl: '/templates/collage/variation.css',
-            htmlUrl: '/templates/collage/variation.html',
-          }
-        : undefined;
+    const templateConfig = this.selectedTemplate.startsWith('collage-')
+      ? {
+          cssUrl: `/templates/collage/${this.selectedTemplate}.css`,
+          htmlUrl: `/templates/collage/${this.selectedTemplate}.html`,
+        }
+      : undefined;
 
     return html`
-      <div class="theme-app">
+      <div class="theme-app ma-theme">
         <theme-wizard-sidebar
           .sourceUrl=${sourceUrl}
           .headingFont=${headingFont}
@@ -108,21 +118,12 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <!-- Placeholder for component selector -->
-          <div>
-            <label for="template-select"> Kies een template: </label>
-            <select id="template-select" @change=${this.#handleTemplateChange}>
-              <option value="collage" ?selected=${this.selectedTemplate === 'collage'}>
-                Collage (Component Variaties)
-              </option>
-              <option value="preview" ?selected=${this.selectedTemplate === 'preview'}>Preview</option>
-            </select>
-          </div>
+          <template-switcher></template-switcher>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .templateConfig=${templateConfig}
-              .url=${this.selectedTemplate === 'preview' ? previewUrl : undefined}
+              .url=${this.selectedTemplate === 'template' ? previewUrl : undefined}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>

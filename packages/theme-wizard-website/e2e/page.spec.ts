@@ -59,4 +59,27 @@ test.describe('Behavioural tests', () => {
     await collagePage.changeBodyFont('Georgia');
     await expect(paragraph).toHaveFont('Georgia');
   });
+
+  test('can select different templates from the selector', async ({ themeWizard }) => {
+    await themeWizard.selectTemplate('Overzichtspagina');
+
+    // Verify the select element is visible
+    const templateSelect = themeWizard.page.getByLabel('Voorvertoning');
+    await expect(templateSelect).toBeVisible();
+
+    // Get initial option count
+    const optionCount = await templateSelect.locator('option').count();
+    expect(optionCount).toBeGreaterThan(1); // Should have multiple templates
+
+    const oldValue = await templateSelect.inputValue();
+
+    // Select a different option and verify the change
+    await templateSelect.selectOption({ index: 1 });
+
+    // Verify the value changed
+    const newValue = await templateSelect.inputValue();
+    expect(newValue).not.toBe(oldValue);
+
+    await expect(themeWizard.preview).toBeVisible();
+  });
 });

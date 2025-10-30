@@ -22,14 +22,14 @@ export const test = base.extend<ThemeWizardFixture>({
   collagePage: async ({ page }, use) => {
     const themeWizard = new ThemeWizardPage(page);
     await themeWizard.goto();
-    await themeWizard.selectTemplate('Collage (Component Variaties)');
+    await themeWizard.selectTemplate('Collage 1');
     await use(themeWizard);
   },
 
   previewPage: async ({ page }, use) => {
     const themeWizard = new ThemeWizardPage(page);
     await themeWizard.goto();
-    await themeWizard.selectTemplate('Preview');
+    await themeWizard.selectTemplate('Overzichtspagina');
     await use(themeWizard);
   },
 

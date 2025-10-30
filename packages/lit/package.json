@@ -30,6 +30,7 @@
     "@nl-design-system-community/css-scraper": "workspace:*",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
+    "@utrecht/select-css": "2.0.0",
     "@utrecht/web-component-library-stencil": "3.6.0",
     "lit": "3.3.1"
   },
