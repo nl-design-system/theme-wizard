@@ -17,7 +17,7 @@ export default class ColorToken {
 
   constructor(token: MinimalColorToken) {
     const { $extensions, $value } = token;
-    this.#$extensions = $extensions || {};
+    this.#$extensions = $extensions;
     this.#$value = $value;
   }
 
@@ -102,6 +102,7 @@ export default class ColorToken {
 
   toObject() {
     return {
+      // make sure that $extensions is not in the object when it has no value.
       ...(this.$extensions && Object.keys(this.$extensions).length ? { $extensions: this.$extensions } : {}),
       $type: this.$type,
       $value: this.$value,
