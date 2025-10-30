@@ -1,6 +1,7 @@
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema } from './base-token';
 import { ColorTokenValidationSchema } from './color-token';
+import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs } from './resolve-refs';
 
 export const ColorOrColorScaleSchema = z.union([
@@ -106,6 +107,18 @@ export const BasisColorSchema = z.strictObject({
 });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
+export const BasisTextSchema = z.object({
+  'font-family': z
+    .object({
+      default: FontFamilyTokenSchema.optional(),
+      monospace: FontFamilyTokenSchema.optional(),
+    })
+    .optional(),
+  'font-size': z.strictObject({}).optional(),
+  'font-weight': z.strictObject({}).optional(),
+  'line-height': z.strictObject({}).optional(),
+});
+
 export const BasisTokensSchema = z.object({
   color: BasisColorSchema.optional(),
   // action: z.strictObject({}),
@@ -113,8 +126,42 @@ export const BasisTokensSchema = z.object({
   // 'border-width': z.strictObject({}),
   // 'box-shadow': z.strictObject({}),
   // focus: z.strictObject({}),
-  // 'form-control': z.strictObject({}),
-  // heading: z.strictObject({}),
+  'form-control': z
+    .object({
+      'accent-color': ColorTokenValidationSchema.optional(),
+      active: z
+        .object({
+          'accent-color': ColorTokenValidationSchema.optional(),
+          'background-color': ColorTokenValidationSchema.optional(),
+          'border-color': ColorTokenValidationSchema.optional(),
+          color: ColorTokenValidationSchema.optional(),
+        })
+        .optional(),
+      'background-color': ColorTokenValidationSchema.optional(),
+      'border-color': ColorTokenValidationSchema.optional(),
+      color: ColorTokenValidationSchema.optional(),
+      disabled: z
+        .object({
+          'accent-color': ColorTokenValidationSchema.optional(),
+          'background-color': ColorTokenValidationSchema.optional(),
+          'border-color': ColorTokenValidationSchema.optional(),
+          color: ColorTokenValidationSchema.optional(),
+        })
+        .optional(),
+      'font-family': FontFamilyTokenSchema.optional(),
+      placeholder: z
+        .object({
+          color: ColorTokenValidationSchema.optional(),
+        })
+        .optional(),
+    })
+    .optional(),
+  heading: z
+    .object({
+      color: ColorTokenValidationSchema.optional(),
+      'font-family': FontFamilyTokenSchema.optional(),
+    })
+    .optional(),
   // page: z.strictObject({}),
   // 'pointer-target': z.strictObject({}),
   // size: z.strictObject({}),
@@ -125,12 +172,7 @@ export const BasisTokensSchema = z.object({
   //   row: {},
   //   text: {},
   // }),
-  // text: z.strictObject({
-  //   'font-family': z.strictObject({}),
-  //   'font-size': z.strictObject({}),
-  //   'font-weight': z.strictObject({}),
-  //   'line-height': z.strictObject({}),
-  // }),
+  text: BasisTextSchema.optional(),
 });
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
