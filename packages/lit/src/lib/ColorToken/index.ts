@@ -4,7 +4,7 @@ import {
   type ColorComponent,
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
-import { createHelperElement, getCSSColorComponents } from './lib';
+import { createHelperElement, getCSSColorComponents, toHSL, toHWB } from './lib';
 
 type MinimalColorToken = Omit<ColorTokenType, '$type'> & { $type?: ColorTokenType['$type'] };
 export type ColorComponents = ColorTokenType['$value']['components'];
@@ -44,8 +44,18 @@ export default class ColorToken {
 
     const relativeColor = ColorToken.getRelativeColorFunction(destination, this.$value);
     helperElement.style.color = relativeColor;
+
+    // for destinations HSL and HWB this is returns RGB unfortunately
     const value = getComputedStyle(helperElement).color;
-    const components = getCSSColorComponents(value);
+    const values = getCSSColorComponents(value);
+
+    let components = values;
+    if (destination === COLOR_SPACES.HSL) {
+      components = toHSL(values);
+    }
+    if (destination === COLOR_SPACES.HWB) {
+      components = toHWB(values);
+    }
 
     return new ColorToken({
       ...this,
