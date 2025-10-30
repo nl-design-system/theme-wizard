@@ -61,13 +61,13 @@ export default class ColorScale {
     // Find the nearest lightness of the base color.
     let nearestIndex = 0;
     let nearestLightnessDiff = 100;
-    ColorScale.#lightnessMask.forEach((value, index) => {
+    for (const [index, value] of ColorScale.#lightnessMask.entries()) {
       const diff = Math.abs(value - lightness);
       if (diff < nearestLightnessDiff) {
         nearestLightnessDiff = diff;
         nearestIndex = index;
       }
-    });
+    }
     return nearestIndex;
   }
 

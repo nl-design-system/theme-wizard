@@ -74,7 +74,11 @@ const colorScenarios = [
 ];
 
 describe('ColorToken/getHue', () => {
-  for (const { name, hsl: [hue], rgb: [r, g, b] } of colorScenarios) {
+  for (const {
+    name,
+    hsl: [hue],
+    rgb: [r, g, b],
+  } of colorScenarios) {
     test(`can get hue degree of ${name}`, () => {
       const value = getHue([r, g, b]);
       expect(value.toFixed(1)).toBe(hue.toFixed(1));
@@ -83,7 +87,11 @@ describe('ColorToken/getHue', () => {
 });
 
 describe('ColorToken/toHSL', () => {
-  for (const { name, hsl, rgb: [r, g, b] } of colorScenarios) {
+  for (const {
+    name,
+    hsl,
+    rgb: [r, g, b],
+  } of colorScenarios) {
     test(`can convert RGB ${name} to HSL `, () => {
       const value = toHSL([r, g, b]);
       expect(value).toStrictEqual(hsl);
@@ -92,7 +100,11 @@ describe('ColorToken/toHSL', () => {
 });
 
 describe('ColorToken/toHWB', () => {
-  for (const { name, hwb, rgb: [r, g, b] } of colorScenarios) {
+  for (const {
+    name,
+    hwb,
+    rgb: [r, g, b],
+  } of colorScenarios) {
     test(`can convert RGB ${name} to HWB `, () => {
       const value = toHWB([r, g, b]);
       expect(value).toStrictEqual(hwb);
