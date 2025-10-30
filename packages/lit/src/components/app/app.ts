@@ -32,7 +32,7 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: 'collage' | 'mijn-omgeving' = 'mijn-omgeving';
+  private selectedTemplate: string = 'mijn-omgeving';
 
   static override readonly styles = [unsafeCSS(maTheme), appStyles];
 
@@ -85,8 +85,14 @@ export class App extends LitElement {
   };
 
   readonly #handleTemplateChange = (e: Event) => {
-    const select = e.target as HTMLSelectElement;
-    this.selectedTemplate = select.value as 'collage' | 'mijn-omgeving';
+    if (!(e instanceof CustomEvent)) return;
+
+    console.log(e.detail);
+
+    const { type, value } = e.detail;
+    if (type === 'collage') {
+      this.selectedTemplate = value as 'collage' | 'mijn-omgeving';
+    }
   };
 
   override render() {
@@ -94,10 +100,10 @@ export class App extends LitElement {
 
     // Determine template config based on selection
     const templateConfig =
-      this.selectedTemplate === 'collage'
+      this.selectedTemplate === 'collage-1'
         ? {
-            cssUrl: '/templates/collage/variation.css',
-            htmlUrl: '/templates/collage/variation.html',
+            cssUrl: '/templates/collage/collage-1.css',
+            htmlUrl: '/templates/collage/collage-1.html',
           }
         : this.selectedTemplate === 'mijn-omgeving'
           ? {
@@ -117,7 +123,7 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <template-switcher></template-switcher>
+          <template-switcher @change=${this.#handleTemplateChange}></template-switcher>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
