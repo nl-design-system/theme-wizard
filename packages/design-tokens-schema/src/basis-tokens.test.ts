@@ -1,6 +1,7 @@
+import maTokens from '@nl-design-system-community/ma-design-tokens/dist/tokens';
 import { describe, test, expect } from 'vitest';
 import {
-  TokenRefSchema,
+  TokenReferenceSchema,
   BrandsSchema,
   BrandSchema,
   CommonSchema,
@@ -8,25 +9,26 @@ import {
   BasisColorSchema,
   ThemeSchema,
   resolveConfigRefs,
+  BasisTextSchema,
 } from './basis-tokens';
 
 describe('design token ref', () => {
   test('allows valid ref with a single path', () => {
-    const result = TokenRefSchema.safeParse('{ma}');
+    const result = TokenReferenceSchema.safeParse('{ma}');
     expect.soft(result.success).toBeTruthy();
     expect.soft(result.data).toEqual('{ma}');
   });
 
   test('allows valid ref with nested paths', () => {
-    const result = TokenRefSchema.safeParse('{ma.color.white}');
+    const result = TokenReferenceSchema.safeParse('{ma.color.white}');
     expect.soft(result.success).toBeTruthy();
     expect.soft(result.data).toEqual('{ma.color.white}');
   });
 
   test('disallows non-ref-like items', () => {
-    expect.soft(TokenRefSchema.safeParse('{}').success).toBeFalsy();
-    expect.soft(TokenRefSchema.safeParse('{.}').success).toBeFalsy();
-    expect.soft(TokenRefSchema.safeParse('ma.color').success).toBeFalsy();
+    expect.soft(TokenReferenceSchema.safeParse('{}').success).toBeFalsy();
+    expect.soft(TokenReferenceSchema.safeParse('{.}').success).toBeFalsy();
+    expect.soft(TokenReferenceSchema.safeParse('ma.color').success).toBeFalsy();
   });
 });
 
@@ -362,6 +364,26 @@ describe('theme', () => {
       expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
       const result = ThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
+    });
+  });
+});
+
+describe('end-to-end tests of known basis themes', () => {
+  describe('ma-theme', () => {
+    test('basis.color is valid', () => {
+      const result = BasisColorSchema.safeParse(maTokens.basis.color);
+      expect.soft(result.success).toEqual(true);
+    });
+
+    test('basis.text is valid', () => {
+      const result = BasisTextSchema.safeParse(maTokens.basis.text);
+      expect.soft(result.success).toEqual(true);
+    });
+
+    test('basis is valid', async () => {
+      const result = BasisTokensSchema.safeParse(maTokens.basis);
+      expect.soft(result.success).toEqual(true);
+      await expect.soft(result.data).toMatchFileSnapshot('../test/snapshots/ma-theme.basis.tokens.jsonc');
     });
   });
 });

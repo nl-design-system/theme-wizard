@@ -16,7 +16,7 @@ export const LegacyFontFamilyValueSchema = z
 export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
 
 export const LegacyFontFamilyTokenSchema = z
-  .strictObject({
+  .looseObject({
     ...BaseDesignTokenValueSchema.shape,
     $type: z.literal('fontFamilies'), // plural
     $value: LegacyFontFamilyValueSchema,
@@ -32,12 +32,20 @@ export const LegacyFontFamilyTokenSchema = z
   });
 export type LegacyFontFamilyToken = z.infer<typeof LegacyFontFamilyTokenSchema>;
 
+/** Sometimes legacy $value is mixed with modern $type */
+export const MixedFontFamilyTokenSchema = z.looseObject({
+  ...BaseDesignTokenValueSchema.shape,
+  $type: z.literal('fontFamily'),
+  $value: LegacyFontFamilyValueSchema,
+});
+export type MixedFontFamilyToken = z.infer<typeof MixedFontFamilyTokenSchema>;
+
 // "The value MUST either be a string value containing a single font name or an array of strings, each being a single font name."
 export const ModernFontFamilyNameSchema = z.custom<string>((value) => {
   if (typeof value !== 'string') return false;
   if (value.includes(',')) return false;
   return value.trim().length > 0;
-});
+}, 'Invalid font family (family names must not include `,` and must not be empty)');
 export type ModernFontFamilyName = z.infer<typeof ModernFontFamilyNameSchema>;
 
 export const ModernFontFamilyValueSchema = z.union([ModernFontFamilyNameSchema, z.array(ModernFontFamilyNameSchema)]);
@@ -45,7 +53,7 @@ export const ModernFontFamilyValueSchema = z.union([ModernFontFamilyNameSchema, 
 /** @see https://www.designtokens.org/tr/drafts/format/#font-family */
 export type FontFamilyValue = z.infer<typeof ModernFontFamilyValueSchema>;
 
-export const ModernFontFamilyTokenSchema = z.strictObject({
+export const ModernFontFamilyTokenSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('fontFamily'),
   $value: ModernFontFamilyValueSchema,
@@ -54,5 +62,9 @@ export const ModernFontFamilyTokenSchema = z.strictObject({
 /** @see https://www.designtokens.org/tr/drafts/format/#font-family */
 export type ModernFontFamilyToken = z.infer<typeof ModernFontFamilyTokenSchema>;
 
-export const FontFamilyTokenSchema = z.union([LegacyFontFamilyTokenSchema, ModernFontFamilyTokenSchema]);
+export const FontFamilyTokenSchema = z.union([
+  LegacyFontFamilyTokenSchema,
+  MixedFontFamilyTokenSchema,
+  ModernFontFamilyTokenSchema,
+]);
 export type FontFamilyToken = z.infer<typeof FontFamilyTokenSchema>;
