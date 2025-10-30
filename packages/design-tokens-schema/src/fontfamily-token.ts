@@ -16,7 +16,7 @@ export const LegacyFontFamilyValueSchema = z
 export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
 
 export const LegacyFontFamilyTokenSchema = z
-  .looseObject({
+  .object({
     ...BaseDesignTokenValueSchema.shape,
     $type: z.literal('fontFamilies'), // plural
     $value: LegacyFontFamilyValueSchema,
@@ -33,7 +33,7 @@ export const LegacyFontFamilyTokenSchema = z
 export type LegacyFontFamilyToken = z.infer<typeof LegacyFontFamilyTokenSchema>;
 
 /** Sometimes legacy $value is mixed with modern $type */
-export const MixedFontFamilyTokenSchema = z.looseObject({
+export const MixedFontFamilyTokenSchema = z.object({
   ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('fontFamily'),
   $value: LegacyFontFamilyValueSchema,
