@@ -4,7 +4,6 @@ import { customElement, property } from 'lit/decorators.js';
 import ColorToken from '../../lib/ColorToken';
 import styles from './styles';
 
-
 @customElement('color-scale')
 export class ColorScale extends LitElement {
   @property() label: string = '';
@@ -19,14 +18,14 @@ export class ColorScale extends LitElement {
         <p>${this.from?.$extensions?.[EXTENSION_TOKEN_ID] || ''}</p>
         <div class="theme-color-scale__list" style=${`background-color: ${this.from?.toCSSColorFunction()}`}>
           ${this.stops.map(
-      (stop) => html`
+            (stop) => html`
               <div
                 class="theme-color-scale__stop"
                 style=${`background-color: ${stop.toCSSColorFunction()}`}
                 title=${stop.$value.components.join(', ')}
               ></div>
             `,
-    )}
+          )}
         </div>
       </div>
     `;

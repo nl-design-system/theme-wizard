@@ -137,8 +137,8 @@ export class LitSidebar extends LitElement {
               <legend>Kleurverlopen</legend>
               <output for="color-select">
                 ${this.brandColors.map(
-      (token) => html`<color-scale .from=${token} .stops=${new ColorScale(token).list()}></color-scale>`,
-    )}
+                  (token) => html`<color-scale .from=${token} .stops=${new ColorScale(token).list()}></color-scale>`,
+                )}
               </output>
             </fieldset>
           </fieldset>
@@ -160,7 +160,6 @@ export class LitSidebar extends LitElement {
               .options=${this.fontOptions}
             ></font-select>
           </fieldset>
-
           <utrecht-button appearance="primary-action-button" type="submit">Update</utrecht-button>
         </form>
       </div>
