@@ -119,6 +119,14 @@ export const BasisTextSchema = z.object({
   // 'line-height': z.looseObject({}).optional(),
 });
 
+export const FormControlStateSchema = z.object({
+  'accent-color': ColorTokenValidationSchema.optional(),
+  'background-color': ColorTokenValidationSchema.optional(),
+  'border-color': ColorTokenValidationSchema.optional(),
+  color: ColorTokenValidationSchema.optional(),
+});
+export type FormControlState = z.infer<typeof FormControlStateSchema>;
+
 export const BasisTokensSchema = z.object({
   color: BasisColorSchema.optional(),
   // action: z.strictObject({}),
@@ -129,64 +137,19 @@ export const BasisTokensSchema = z.object({
   // focus: z.strictObject({}),
   'form-control': z
     .object({
-      'accent-color': ColorTokenValidationSchema.optional(),
-      active: z
-        .object({
-          'accent-color': ColorTokenValidationSchema.optional(),
-          'background-color': ColorTokenValidationSchema.optional(),
-          'border-color': ColorTokenValidationSchema.optional(),
-          color: ColorTokenValidationSchema.optional(),
-        })
-        .optional(),
-      'background-color': ColorTokenValidationSchema.optional(),
-      'border-color': ColorTokenValidationSchema.optional(),
-      color: ColorTokenValidationSchema.optional(),
-      disabled: z
-        .object({
-          'accent-color': ColorTokenValidationSchema.optional(),
-          'background-color': ColorTokenValidationSchema.optional(),
-          'border-color': ColorTokenValidationSchema.optional(),
-          color: ColorTokenValidationSchema.optional(),
-        })
-        .optional(),
-      focus: z
-        .object({
-          'accent-color': ColorTokenValidationSchema.optional(),
-          'background-color': ColorTokenValidationSchema.optional(),
-          'border-color': ColorTokenValidationSchema.optional(),
-          color: ColorTokenValidationSchema.optional(),
-        })
-        .optional(),
+      ...FormControlStateSchema.shape,
+      active: FormControlStateSchema.optional(),
+      disabled: FormControlStateSchema.optional(),
+      focus: FormControlStateSchema.optional(),
       'font-family': FontFamilyTokenSchema.optional(),
-      hover: z
-        .object({
-          'accent-color': ColorTokenValidationSchema.optional(),
-          'background-color': ColorTokenValidationSchema.optional(),
-          'border-color': ColorTokenValidationSchema.optional(),
-          color: ColorTokenValidationSchema.optional(),
-        })
-        .optional(),
-      invalid: z
-        .object({
-          'accent-color': ColorTokenValidationSchema.optional(),
-          'background-color': ColorTokenValidationSchema.optional(),
-          'border-color': ColorTokenValidationSchema.optional(),
-          color: ColorTokenValidationSchema.optional(),
-        })
-        .optional(),
+      hover: FormControlStateSchema.optional(),
+      invalid: FormControlStateSchema.optional(),
       placeholder: z
         .object({
           color: ColorTokenValidationSchema.optional(),
         })
         .optional(),
-      'read-only': z
-        .object({
-          'accent-color': ColorTokenValidationSchema.optional(),
-          'background-color': ColorTokenValidationSchema.optional(),
-          'border-color': ColorTokenValidationSchema.optional(),
-          color: ColorTokenValidationSchema.optional(),
-        })
-        .optional(),
+      'read-only': FormControlStateSchema.optional(),
     })
     .optional(),
   heading: z
