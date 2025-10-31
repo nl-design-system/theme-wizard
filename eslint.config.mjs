@@ -4,6 +4,7 @@ import nlDesignSystemConfig from '@nl-design-system/eslint-config/configs/nl-des
 import prettier from 'eslint-config-prettier';
 import perfectionist from 'eslint-plugin-perfectionist';
 import react from 'eslint-plugin-react';
+import eslintPluginZodX from 'eslint-plugin-zod-x';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
@@ -80,5 +81,9 @@ export default defineConfig([
   {
     name: 'eslint-config-prettier',
     ...prettier,
+  },
+  {
+    name: 'eslint-plugin-zod-x',
+    ...eslintPluginZodX.configs.recommended,
   },
 ]);
