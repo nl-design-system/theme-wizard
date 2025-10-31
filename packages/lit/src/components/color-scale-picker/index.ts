@@ -4,8 +4,8 @@ import { customElement, property } from 'lit/decorators.js';
 import ColorToken from '../../lib/ColorToken';
 import styles from './styles';
 
-@customElement('color-scale')
-export class ColorScale extends LitElement {
+@customElement('color-scale-picker')
+export class ColorScalePicker extends LitElement {
   @property() label: string = '';
   @property() from?: ColorToken;
   @property() stops: ColorToken[] = [];
@@ -34,6 +34,6 @@ export class ColorScale extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'color-scale': ColorScale;
+    'color-scale-picker': ColorScalePicker;
   }
 }

@@ -13,7 +13,7 @@ import ColorToken from '../../lib/ColorToken';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
 import '../color-select';
-import '../color-scale';
+import '../color-scale-picker';
 import '../font-select';
 
 @customElement('theme-wizard-sidebar')
@@ -135,7 +135,7 @@ export class LitSidebar extends LitElement {
               <legend>Kleurverlopen</legend>
               <output for="color-select">
                 ${this.brandColors.map(
-                  (token) => html`<color-scale .from=${token} .stops=${new ColorScale(token).list()}></color-scale>`,
+                  (token) => html`<color-scale-picker .from=${token} .stops=${new ColorScale(token).list()}></color-scale-picker>`,
                 )}
               </output>
             </fieldset>
