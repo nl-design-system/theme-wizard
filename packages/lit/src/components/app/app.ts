@@ -1,7 +1,7 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
-import '../preview-picker/preview-picker';
+import '../preview-picker';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';

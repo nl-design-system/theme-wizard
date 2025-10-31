@@ -1,22 +1,22 @@
-import './dropdown';
+import '.';
 import { beforeEach, describe, expect, test } from 'vitest';
-import { Dropdown } from './dropdown';
+import { Dropdown } from '.';
 
 const tag = 'wiz-dropdown';
 
 const OPTIONS = [
   {
-    name: 'Mijn Omgeving',
+    name: 'Some name',
     detail: [
-      { name: 'Overzichtspagina', value: '/my-environment/overview' },
-      { name: 'Berichten', value: '/my-environment/messages' },
+      { name: 'Some detail 1', value: '/some/path/overview' },
+      { name: 'Some detail 2', value: '/some/path/messages' },
     ],
-    value: 'my-environment',
+    value: 'some-path',
   },
   {
-    name: 'Voorvertoning losse componenten',
-    detail: [{ name: 'Collage 1', value: '/preview-components/collage-1' }],
-    value: 'preview-components',
+    name: 'Some other name',
+    detail: [{ name: 'Some other detail', value: '/some/other/path/messages' }],
+    value: 'some-other-path',
   },
 ];
 
@@ -49,21 +49,21 @@ describe(`<${tag}> integration tests`, () => {
     expect(optgroups?.length).toBeGreaterThan(0);
     expect(options?.length).toBeGreaterThan(0);
 
-    const mijnOmgevingGroup = Array.from(optgroups || []).find((opt) => opt.getAttribute('label') === 'Mijn Omgeving');
-    expect(mijnOmgevingGroup).toBeDefined();
+    const somePathGroup = Array.from(optgroups || []).find((opt) => opt.getAttribute('label') === 'Some name');
+    expect(somePathGroup).toBeDefined();
   });
 
   test('dispatches change event on select change', async () => {
     const element = document.querySelector(tag) as Dropdown;
     element.isOptgroup = true;
     element.options = OPTIONS;
-    element.value = OPTIONS[0].detail[0].value; // '/my-environment/overview'
+    element.value = OPTIONS[0].detail[0].value; // '/some/path/overview'
     await element.updateComplete;
-    expect(element.value).toBe('/my-environment/overview');
+    expect(element.value).toBe('/some/path/overview');
 
     const select = element?.shadowRoot?.querySelector('select') as HTMLSelectElement;
     // Simulate selecting another option
-    select.value = OPTIONS[1].detail[0].value; // '/preview-components/collage-1'
+    select.value = OPTIONS[1].detail[0].value; // '/some/other/path/messages'
     let changed = false;
 
     element.addEventListener('change', () => {
@@ -71,7 +71,7 @@ describe(`<${tag}> integration tests`, () => {
     });
     select.dispatchEvent(new Event('change', { bubbles: true }));
 
-    expect(element.value).toBe('/preview-components/collage-1');
+    expect(element.value).toBe('/some/other/path/messages');
     expect(changed).toBe(true);
   });
 });

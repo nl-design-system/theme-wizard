@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import '../dropdown/dropdown.ts';
+import '../dropdown/index.js';
 import { customElement } from 'lit/decorators.js';
 
 type Category = 'template' | 'collage';
@@ -82,16 +82,12 @@ export class PreviewPicker extends LitElement {
     }));
 
     // Determine current selection from URL (?templates=...), fallback to first option
-    let current = '';
-    try {
-      current = new URL(globalThis.location.href).searchParams.get('templates') || '';
-    } catch {
-      // ignore
-    }
+    let current = new URL(globalThis.location.href).searchParams.get('templates') || '';
+
     if (!current) {
-      const firstGroup = TEMPLATES[0];
+      const firstGroup = dropdownOptions[0];
       const firstDetail = firstGroup.detail[0];
-      current = `/${firstGroup.value}/${firstDetail.detail?.value ?? firstDetail.value}`;
+      current = firstDetail.value;
     }
 
     return html`<form method="GET" id="preview-form">
