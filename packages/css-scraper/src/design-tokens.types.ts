@@ -4,7 +4,7 @@ import {
   ModernFontFamilyTokenSchema,
   ModernFontFamilyNameSchema,
 } from '@nl-design-system-community/design-tokens-schema';
-import { z } from 'zod';
+import * as z from 'zod';
 
 export const EXTENSION_TOKEN_ID = 'nl.nldesignsystem.theme-wizard.token-id';
 export const EXTENSION_USAGE_COUNT = 'nl.nldesignsystem.theme-wizard.usage-count';
