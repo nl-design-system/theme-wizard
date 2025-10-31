@@ -37,7 +37,7 @@ export class FontSelect extends LitElement {
     }
   }
 
-  handleChange(event: Event) {
+  readonly handleChange = (event: Event) => {
     if (event.target instanceof HTMLSelectElement) {
       this.value = event.target.value;
       this.dispatchEvent(new Event('change', { bubbles: true }));
