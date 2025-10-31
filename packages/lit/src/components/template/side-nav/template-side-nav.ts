@@ -1,7 +1,7 @@
 import sidenavStyles from '@gemeente-denhaag/side-navigation/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import sideNavTokenMap from './side-nav.css';
+import sideNavTokenMap from './styles';
 
 @customElement('template-side-nav')
 export class TemplateSideNav extends LitElement {

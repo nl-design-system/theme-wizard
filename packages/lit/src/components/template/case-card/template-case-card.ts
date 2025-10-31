@@ -1,7 +1,7 @@
 import caseCardStyles from '@gemeente-denhaag/card/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import caseCardTokenMap from './case-card.css';
+import caseCardTokenMap from './styles';
 
 @customElement('template-case-card')
 export class TemplateCaseCard extends LitElement {
