@@ -1,7 +1,7 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
-import '../template-switcher/template-switcher';
+import '../preview-picker/preview-picker';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
@@ -32,7 +32,7 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: string = 'mijn-omgeving';
+  private selectedTemplatePath: string = '/my-environment/overview';
 
   static override readonly styles = [unsafeCSS(maTheme), appStyles];
 
@@ -41,6 +41,18 @@ export class App extends LitElement {
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
+
+    // Parse template selection from query param: ?templates=/group/page (dynamic)
+    try {
+      const params = new URL(globalThis.location.href).searchParams.get('templates');
+      if (params) {
+        const normalized = params.startsWith('/') ? params : `/${params}`;
+        const [, group, page] = normalized.split('/');
+        if (group && page) this.selectedTemplatePath = `/${group}/${page}`;
+      }
+    } catch {
+      // ignore parsing errors
+    }
   }
 
   override disconnectedCallback() {
@@ -87,26 +99,20 @@ export class App extends LitElement {
   readonly #handleTemplateChange = (e: Event) => {
     if (!(e instanceof CustomEvent)) return;
 
-    const { type, value } = e.detail;
-    if (type === 'collage') {
-      this.selectedTemplate = value as 'collage' | 'mijn-omgeving';
-    }
+    this.selectedTemplatePath = e.detail as string;
   };
 
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
-    // Determine template config based on selection
-    const templateConfig =
-      this.selectedTemplate === 'collage-1'
-        ? {
-            cssUrl: '/templates/collage/collage-1.css',
-            htmlUrl: '/templates/collage/collage-1.html',
-          }
-        : {
-            cssUrl: '/templates/mijnservices/mijn-omgeving.css',
-            htmlUrl: '/templates/mijnservices/mijn-omgeving.html',
-          };
+    // Determine template config based on dynamic selection
+    const normalizedPath = this.selectedTemplatePath.startsWith('/')
+      ? this.selectedTemplatePath.slice(1)
+      : this.selectedTemplatePath;
+    const templateConfig = {
+      cssUrl: `/templates/${normalizedPath}.css`,
+      htmlUrl: `/templates/${normalizedPath}.html`,
+    };
 
     return html`
       <div class="theme-app ma-theme">
@@ -119,7 +125,7 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <template-switcher @change=${this.#handleTemplateChange}></template-switcher>
+          <preview-picker></preview-picker>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
