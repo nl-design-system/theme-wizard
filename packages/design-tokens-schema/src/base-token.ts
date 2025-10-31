@@ -21,7 +21,7 @@ export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
   if (trimmed.startsWith('$')) return false;
 
   return true;
-});
+}, 'Design Token identifiers must be at least 1 character long and must not contain {, } or . and must not start with $');
 
 /** @see https://www.designtokens.org/tr/drafts/format/#name-and-value */
 export type BaseDesignTokenIdentifier = z.infer<typeof BaseDesignTokenIdentifierSchema>;
