@@ -36,7 +36,7 @@ export class ColorSelect extends LitElement {
     super.connectedCallback();
   }
 
-  handleChange() {
+  readonly handleChange = () => {
     if (!this.shadowRoot) return;
     const checkedBoxes: NodeListOf<HTMLInputElement> = this.shadowRoot?.querySelectorAll(
       `input[type=checkbox][name="${this.name}[]"]:checked`,
