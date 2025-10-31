@@ -76,12 +76,12 @@ export const validateRefs = (config: unknown, root?: Record<string, unknown>): b
     }
 
     if (!resolvedRef['$value']) {
-      throw new Error(`Expected "${refPath}" to have a "$value" property`);
+      throw new Error(`Invalid token reference: expected "${refPath}" to have a "$value" property`);
     }
 
     if (tokenType !== resolvedRef['$type']) {
       throw new Error(
-        `Type "${tokenType}" of "${JSON.stringify(_config)}" does not match the $type on reference {${refPath}} => ${JSON.stringify(resolvedRef)}`,
+        `Invalid token reference: $type "${tokenType}" of "${JSON.stringify(_config)}" does not match the $type on reference {${refPath}} => ${JSON.stringify(resolvedRef)}`,
       );
     }
     return true;

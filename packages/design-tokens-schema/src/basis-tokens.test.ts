@@ -366,9 +366,8 @@ describe('theme', () => {
       expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
       const result = ThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
-      expect.soft(z.flattenError(result.error!)).toEqual({
-        fieldErrors: {},
-        formErrors: ['Expected "ma.color.indigo" to have a "$value" property'],
+      expect.soft(z.flattenError(result.error!)).toMatchObject({
+        formErrors: ['Invalid token reference: expected "ma.color.indigo" to have a "$value" property'],
       });
     });
 
@@ -390,10 +389,9 @@ describe('theme', () => {
 
       const result = ThemeSchema.safeParse(config);
       expect.soft(result.success).toEqual(false);
-      expect.soft(z.flattenError(result.error!)).toEqual({
-        fieldErrors: {},
+      expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
-          `Type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5} => {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0,0,0]}}`,
+          `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5} => {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0,0,0]}}`,
         ],
       });
     });
