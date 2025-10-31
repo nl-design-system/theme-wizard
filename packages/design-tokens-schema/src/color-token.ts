@@ -1,6 +1,7 @@
 import Color, { type Coords } from 'colorjs.io';
 import * as z from 'zod';
 import { BaseDesignTokenValueSchema } from './base-token';
+import { TokenReferenceSchema } from './token-reference';
 
 // 8.1 Color -> 4.1 Color Module: Format
 
@@ -128,5 +129,11 @@ export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
   encode: (value) => stringifyColor(value),
 });
 
+const ColorReferenceSchema = z.object({
+  ...BaseDesignTokenValueSchema.shape,
+  $type: z.literal('color'),
+  $value: TokenReferenceSchema,
+});
+
 /** @description Validation schema that allows legacy color tokens and upgrades them to modern */
-export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema]);
+export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema, ColorReferenceSchema]);

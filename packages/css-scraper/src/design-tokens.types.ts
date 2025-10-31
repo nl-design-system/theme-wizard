@@ -1,6 +1,6 @@
 import {
   ColorTokenSchema,
-  DimensionTokenSchema,
+  ModernDimensionTokenSchema,
   ModernFontFamilyTokenSchema,
   ModernFontFamilyNameSchema,
 } from '@nl-design-system-community/design-tokens-schema';
@@ -26,7 +26,7 @@ export const ScrapedColorTokenSchema = z.strictObject({
 export type ScrapedColorToken = z.infer<typeof ScrapedColorTokenSchema>;
 
 export const ScrapedDimensionTokenSchema = z.strictObject({
-  ...DimensionTokenSchema.shape,
+  ...ModernDimensionTokenSchema.shape,
   $extensions: TokenExtensionsSchema,
 });
 export type ScrapedDimensionToken = z.infer<typeof ScrapedDimensionTokenSchema>;

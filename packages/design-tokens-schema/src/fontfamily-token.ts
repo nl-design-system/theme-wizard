@@ -1,5 +1,6 @@
 import * as z from 'zod';
 import { BaseDesignTokenValueSchema } from './base-token';
+import { TokenReferenceSchema } from './token-reference';
 
 // 8.3 Font family
 
@@ -62,9 +63,17 @@ export const ModernFontFamilyTokenSchema = z.looseObject({
 /** @see https://www.designtokens.org/tr/drafts/format/#font-family */
 export type ModernFontFamilyToken = z.infer<typeof ModernFontFamilyTokenSchema>;
 
+export const FontFamilyWithRefSchema = z.looseObject({
+  ...BaseDesignTokenValueSchema.shape,
+  $type: z.literal('fontFamily'),
+  $value: TokenReferenceSchema,
+});
+export type FontFamilyWithRef = z.infer<typeof FontFamilyWithRefSchema>;
+
 export const FontFamilyTokenSchema = z.union([
   LegacyFontFamilyTokenSchema,
   MixedFontFamilyTokenSchema,
   ModernFontFamilyTokenSchema,
+  FontFamilyWithRefSchema,
 ]);
 export type FontFamilyToken = z.infer<typeof FontFamilyTokenSchema>;

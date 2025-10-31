@@ -1,26 +1,39 @@
 import * as z from 'zod';
 import { BaseDesignTokenValueSchema } from './base-token';
+import { TokenReferenceSchema } from './token-reference';
 
 // 8.2 Dimension
+
+export const DimensionTypeSchema = z.literal('dimension');
+export type DimensionType = z.infer<typeof DimensionTypeSchema>;
 
 export const DimensionUnitSchema = z.union([z.literal('px'), z.literal('rem')]);
 
 /** @see https://www.designtokens.org/tr/drafts/format/#dimension */
 export type DimensionUnit = z.infer<typeof DimensionUnitSchema>;
 
-export const DimensionValueSchema = z.strictObject({
+export const ModernDimensionValueSchema = z.strictObject({
   unit: DimensionUnitSchema,
   value: z.number(),
 });
 
 /** @see https://www.designtokens.org/tr/drafts/format/#dimension */
-export type DimensionValue = z.infer<typeof DimensionValueSchema>;
+export type ModernDimensionValue = z.infer<typeof ModernDimensionValueSchema>;
 
-export const DimensionTokenSchema = z.strictObject({
+export const ModernDimensionTokenSchema = z.strictObject({
   ...BaseDesignTokenValueSchema.shape,
-  $type: z.literal('dimension'),
-  $value: DimensionValueSchema,
+  $type: DimensionTypeSchema,
+  $value: ModernDimensionValueSchema,
 });
 
 /** @see https://www.designtokens.org/tr/drafts/format/#dimension */
+export type ModernDimensionToken = z.infer<typeof ModernDimensionTokenSchema>;
+
+export const DimensionWithRefSchema = z.object({
+  ...BaseDesignTokenValueSchema.shape,
+  $type: DimensionTypeSchema,
+  $value: TokenReferenceSchema,
+});
+
+export const DimensionTokenSchema = z.union([ModernDimensionTokenSchema, DimensionWithRefSchema]);
 export type DimensionToken = z.infer<typeof DimensionTokenSchema>;

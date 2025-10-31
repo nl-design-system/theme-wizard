@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema } from './base-token';
+import { BaseDesignTokenIdentifierSchema } from './base-token';
 import { ColorTokenValidationSchema } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs } from './resolve-refs';
@@ -29,50 +29,21 @@ export const BrandsSchema = z.record(
 );
 export type Brands = z.infer<typeof BrandsSchema>;
 
-// A Design Token ref:
-// - Starts with {
-// - Ends with }
-// - Contains only BaseDesignTokenNameSchema, joined by a . character
-export const TokenReferenceSchema = z
-  .string()
-  .trim()
-  .startsWith('{')
-  .endsWith('}')
-  .transform((value) => {
-    return value
-      .slice(1, -1) // remove { and }
-      .split('.'); // Get the individual parts
-  })
-  // Validate that each part is a valid identifier
-  .pipe(z.array(BaseDesignTokenIdentifierSchema))
-  // Join them back together
-  .transform((value) => `{${value.join('.')}}`);
-export type TokenReference = z.infer<typeof TokenReferenceSchema>;
-
-export const ColorWithRefSchema = BaseDesignTokenValueSchema.extend({
-  $type: z.literal('color'),
-  $value: TokenReferenceSchema,
-});
-export type ColorWithRef = z.infer<typeof ColorWithRefSchema>;
-
-export const ColorOrRefSchema = z.union([ColorTokenValidationSchema, z.looseObject({ ...ColorWithRefSchema.shape })]);
-export type ColorOrRef = z.infer<typeof ColorOrRefSchema>;
-
 export const ColorNameSchema = z.strictObject({
-  'bg-active': ColorOrRefSchema.optional(),
-  'bg-default': ColorOrRefSchema.optional(),
-  'bg-document': ColorOrRefSchema.optional(),
-  'bg-hover': ColorOrRefSchema.optional(),
-  'bg-subtle': ColorOrRefSchema.optional(),
-  'border-active': ColorOrRefSchema.optional(),
-  'border-default': ColorOrRefSchema.optional(),
-  'border-hover': ColorOrRefSchema.optional(),
-  'border-subtle': ColorOrRefSchema.optional(),
-  'color-active': ColorOrRefSchema.optional(),
-  'color-default': ColorOrRefSchema.optional(),
-  'color-document': ColorOrRefSchema.optional(),
-  'color-hover': ColorOrRefSchema.optional(),
-  'color-subtle': ColorOrRefSchema.optional(),
+  'bg-active': ColorTokenValidationSchema.optional(),
+  'bg-default': ColorTokenValidationSchema.optional(),
+  'bg-document': ColorTokenValidationSchema.optional(),
+  'bg-hover': ColorTokenValidationSchema.optional(),
+  'bg-subtle': ColorTokenValidationSchema.optional(),
+  'border-active': ColorTokenValidationSchema.optional(),
+  'border-default': ColorTokenValidationSchema.optional(),
+  'border-hover': ColorTokenValidationSchema.optional(),
+  'border-subtle': ColorTokenValidationSchema.optional(),
+  'color-active': ColorTokenValidationSchema.optional(),
+  'color-default': ColorTokenValidationSchema.optional(),
+  'color-document': ColorTokenValidationSchema.optional(),
+  'color-hover': ColorTokenValidationSchema.optional(),
+  'color-subtle': ColorTokenValidationSchema.optional(),
 });
 export type ColorName = z.infer<typeof ColorNameSchema>;
 
@@ -101,7 +72,7 @@ export const BasisColorSchema = z.strictObject({
   'positive-inverse': ColorNameSchema.optional(),
   selected: ColorNameSchema.optional(),
   'selected-inverse': ColorNameSchema.optional(),
-  transparent: ColorOrRefSchema.optional(),
+  transparent: ColorTokenValidationSchema.optional(),
   warning: ColorNameSchema.optional(),
   'warning-inverse': ColorNameSchema.optional(),
 });
