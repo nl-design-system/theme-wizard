@@ -2,8 +2,8 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('wiz-code')
-export class WizCode extends LitElement {
+@customElement('template-code')
+export class TemplateCode extends LitElement {
   static override readonly styles = [unsafeCSS(codeCss)];
 
   override render() {
@@ -13,6 +13,6 @@ export class WizCode extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wiz-code': WizCode;
+    'template-code': TemplateCode;
   }
 }

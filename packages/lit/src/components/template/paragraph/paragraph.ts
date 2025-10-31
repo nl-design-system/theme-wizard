@@ -2,8 +2,8 @@ import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import { LitElement, unsafeCSS, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-@customElement('wiz-paragraph')
-export class WizParagraph extends LitElement {
+@customElement('template-paragraph')
+export class TemplateParagraph extends LitElement {
   @property() lead = false;
 
   static override readonly styles = [unsafeCSS(paragraphCss)];
@@ -15,6 +15,6 @@ export class WizParagraph extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wiz-paragraph': WizParagraph;
+    'template-paragraph': TemplateParagraph;
   }
 }

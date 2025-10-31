@@ -2,8 +2,8 @@ import linkListCss from '@utrecht/link-list-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-@customElement('wiz-link-list')
-export class WizLinkList extends LitElement {
+@customElement('template-link-list')
+export class TemplateLinkList extends LitElement {
   @property({
     attribute: 'link-items',
     // Allow passing a JSON array string via attribute
@@ -44,6 +44,6 @@ export class WizLinkList extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wiz-link-list': WizLinkList;
+    'template-link-list': TemplateLinkList;
   }
 }

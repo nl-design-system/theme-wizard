@@ -2,8 +2,8 @@ import actionStyles from '@gemeente-denhaag/action/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('wiz-action')
-export class WizAction extends LitElement {
+@customElement('template-action')
+export class TemplateAction extends LitElement {
   static override readonly styles = [unsafeCSS(actionStyles)];
 
   override render() {
@@ -38,6 +38,6 @@ export class WizAction extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wiz-action': WizAction;
+    'template-action': TemplateAction;
   }
 }

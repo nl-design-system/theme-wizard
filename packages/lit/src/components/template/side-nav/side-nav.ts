@@ -3,8 +3,8 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import sideNavTokenMap from './side-nav.css';
 
-@customElement('wiz-side-nav')
-export class WizSideNav extends LitElement {
+@customElement('template-side-nav')
+export class TemplateSideNav extends LitElement {
   static override readonly styles = [unsafeCSS(sidenavStyles), sideNavTokenMap];
 
   override render() {
@@ -149,6 +149,6 @@ export class WizSideNav extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wiz-side-nav': WizSideNav;
+    'template-side-nav': TemplateSideNav;
   }
 }

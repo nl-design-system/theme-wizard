@@ -2,8 +2,8 @@ import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inli
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-@customElement('wiz-heading')
-export class WizHeading extends LitElement {
+@customElement('template-heading')
+export class TemplateHeading extends LitElement {
   @property() level = 1;
 
   static override readonly styles = [unsafeCSS(headingCss)];
@@ -15,6 +15,6 @@ export class WizHeading extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wiz-heading': WizHeading;
+    'template-heading': TemplateHeading;
   }
 }

@@ -6,18 +6,18 @@
   </head>
   <body>
     <utrecht-root class="voorbeeld-theme">
-      <wiz-page-header>
-        <wiz-skip-link>Direct naar de hoofdinhoud</wiz-skip-link>
+      <template-page-header>
+        <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
 
-        <wiz-link href="/" slot="logo">
+        <template-link href="/" slot="logo">
           <span hidden>homepage</span>
           <img src="templates/mijnservices/logo.svg" alt="Gemeente Voorbeeld" />
-        </wiz-link>
+        </template-link>
 
         <!-- Menu items -->
-        <wiz-link href="#" slot="menu-links">Contact</wiz-link>
+        <template-link href="#" slot="menu-links">Contact</template-link>
 
-        <wiz-link href="#" slot="menu-links">
+        <template-link href="#" slot="menu-links">
           Jeroen van Drouwen
           <span
             style="
@@ -28,13 +28,13 @@
           >
             <utrecht-icon-chevron-down></utrecht-icon-chevron-down>
           </span>
-        </wiz-link>
+        </template-link>
 
         <span slot="menu-links" style="display: inline-flex; gap: 0.5rem; align-items: center">
           <utrecht-textbox placeholder="Bijvoorbeeld zwembad of grofvuil"></utrecht-textbox>
           <utrecht-button appearance="secondary-action-button">Zoeken</utrecht-button>
         </span>
-      </wiz-page-header>
+      </template-page-header>
 
       <utrecht-breadcrumb-nav
         json='[{"href":"#","title":"Home"},
@@ -43,7 +43,7 @@
       ></utrecht-breadcrumb-nav>
 
       <div class="layout">
-        <wiz-side-nav></wiz-side-nav>
+        <template-side-nav></template-side-nav>
 
         <utrecht-page-content>
           <main id="main">
@@ -57,43 +57,43 @@
               >
             </utrecht-alert>
 
-            <wiz-heading level="2">Hallo Jeroen van Drouwen</wiz-heading>
+            <template-heading level="2">Hallo Jeroen van Drouwen</template-heading>
 
-            <wiz-paragraph
+            <template-paragraph
               >In ‘Mijn omgeving’ kunt u zelf uw persoonlijke zaken regelen wanneer het u uitkomt. U kunt bijvoorbeeld
-              uw rekeningen betalen en zien wanneer uw aanvraag klaar is.</wiz-paragraph
+              uw rekeningen betalen en zien wanneer uw aanvraag klaar is.</template-paragraph
             >
             <section>
-              <wiz-heading level="2"> Wat moet ik regelen </wiz-heading>
+              <template-heading level="2"> Wat moet ik regelen </template-heading>
 
-              <wiz-action>Geef informatie voor uw aanvraag subsidie geluidisolatie</wiz-action>
+              <template-action>Geef informatie voor uw aanvraag subsidie geluidisolatie</template-action>
 
-              <wiz-action>Betaal uw parkeerbon van € 74,90 voor parkeren bij Valeriusplein</wiz-action>
-              <wiz-action>Verleng uw identiteitskaart</wiz-action>
+              <template-action>Betaal uw parkeerbon van € 74,90 voor parkeren bij Valeriusplein</template-action>
+              <template-action>Verleng uw identiteitskaart</template-action>
             </section>
 
             <section>
-              <wiz-heading level="2"> Lopende zaken </wiz-heading>
+              <template-heading level="2"> Lopende zaken </template-heading>
               <div class="todo-card-layout">
-                <wiz-case-card>
-                  <wiz-paragraph slot="title">Aanvraag subsidie geluidisolatie</wiz-paragraph>
+                <template-case-card>
+                  <template-paragraph slot="title">Aanvraag subsidie geluidisolatie</template-paragraph>
                   <p slot="context">ZK-228402</p>
-                </wiz-case-card>
+                </template-case-card>
 
-                <wiz-case-card>
-                  <wiz-paragraph slot="title">Aanvraag Parkeervergunning</wiz-paragraph>
+                <template-case-card>
+                  <template-paragraph slot="title">Aanvraag Parkeervergunning</template-paragraph>
                   <p slot="context">ZK-228402</p>
-                </wiz-case-card>
+                </template-case-card>
 
-                <wiz-case-card>
-                  <wiz-paragraph slot="title">Aanvraag subsidie geluidisolatie</wiz-paragraph>
+                <template-case-card>
+                  <template-paragraph slot="title">Aanvraag subsidie geluidisolatie</template-paragraph>
                   <p slot="context">ZK-228402</p>
-                </wiz-case-card>
+                </template-case-card>
 
-                <wiz-case-card>
-                  <wiz-paragraph slot="title">Aanvraag Parkeervergunning</wiz-paragraph>
+                <template-case-card>
+                  <template-paragraph slot="title">Aanvraag Parkeervergunning</template-paragraph>
                   <p slot="context">ZK-228402</p>
-                </wiz-case-card>
+                </template-case-card>
               </div>
             </section>
           </main>
@@ -108,22 +108,22 @@
               </utrecht-link>
 
               <div>
-                <wiz-heading level="4">Contact</wiz-heading>
+                <template-heading level="4">Contact</template-heading>
 
                 <address class="todo-address">
                   Bel
-                  <wiz-link href="tel:453453">453 453</wiz-link>
+                  <template-link href="tel:453453">453 453</template-link>
                   (maandag tot en met vrijdag van 09.00 tot 17.00 uur) of stuur een e-mail naar
-                  <wiz-link href="mailto:vragen@gemeentevoorbeeld.nl">
+                  <template-link href="mailto:vragen@gemeentevoorbeeld.nl">
                     <span class="utrecht-url-data">vragen@gemeentevoorbeeld.nl</span>
-                  </wiz-link>
+                  </template-link>
                   .
                 </address>
               </div>
             </div>
 
             <div>
-              <wiz-link-list
+              <template-link-list
                 link-items='[
                   {"href":"#","text":"Over gemeente voorbeeld"},
                   {"href":"#","text":"Nieuwsbrief"},
@@ -135,7 +135,7 @@
                   {"href":"#","text":"Toegankelijkheidsverklaring"}
                 ]'
               >
-              </wiz-link-list>
+              </template-link-list>
             </div>
           </div>
         </utrecht-page-footer>

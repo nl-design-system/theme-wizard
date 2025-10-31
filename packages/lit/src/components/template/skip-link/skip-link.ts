@@ -3,8 +3,8 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './styles';
 
-@customElement('wiz-skip-link')
-export class WizSkipLink extends LitElement {
+@customElement('template-skip-link')
+export class TemplateSkipLink extends LitElement {
   static override readonly styles = [unsafeCSS(skipLinkCss), styles];
 
   override render() {
@@ -16,6 +16,6 @@ export class WizSkipLink extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wiz-skip-link': WizSkipLink;
+    'template-skip-link': TemplateSkipLink;
   }
 }
