@@ -1,0 +1,174 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ColorScale > exports scale to an object defining design tokens 1`] = `
+{
+  "1": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.967155,
+        1.01514,
+        0.966316,
+      ],
+    },
+  },
+  "10": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.146516,
+        0.337337,
+        0.087101,
+      ],
+    },
+  },
+  "11": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.145318,
+        0.269897,
+        0.0959797,
+      ],
+    },
+  },
+  "12": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.130491,
+        0.204147,
+        0.0860233,
+      ],
+    },
+  },
+  "13": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.0682464,
+        0.0779915,
+        0.0291205,
+      ],
+    },
+  },
+  "14": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.0383531,
+        0.0378082,
+        0.0115605,
+      ],
+    },
+  },
+  "2": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.896923,
+        0.992622,
+        0.895615,
+      ],
+    },
+  },
+  "3": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.837593,
+        0.981392,
+        0.836472,
+      ],
+    },
+  },
+  "4": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.777058,
+        0.969582,
+        0.776913,
+      ],
+    },
+  },
+  "5": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.714924,
+        0.957199,
+        0.716743,
+      ],
+    },
+  },
+  "6": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.525795,
+        0.814327,
+        0.532932,
+      ],
+    },
+  },
+  "7": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.1895,
+        0.539467,
+        0.221727,
+      ],
+    },
+  },
+  "8": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0,
+        0.5058823529411764,
+        0.12156862745098039,
+      ],
+    },
+  },
+  "9": {
+    "$type": "color",
+    "$value": {
+      "alpha": 1,
+      "colorSpace": "srgb",
+      "components": [
+        0.0958433,
+        0.453323,
+        0.0449238,
+      ],
+    },
+  },
+}
+`;
