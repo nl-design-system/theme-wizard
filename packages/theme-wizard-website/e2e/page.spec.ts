@@ -13,7 +13,7 @@ test.describe('Behavioural tests', () => {
   test('preview template shows correct content and structure', async ({ previewPage }) => {
     const previewChild = previewPage.getPreviewChild();
 
-    await expect(previewPage.preview).toContainText('Graffiti laten verwijderen van uw pand');
+    await expect(previewPage.preview).toContainText('Mijn omgeving');
     await expect(previewChild).not.toHaveClass('theme-wizard-collage-component');
     await expect(previewPage.getCollageComponents()).not.toBeVisible();
   });
@@ -29,7 +29,7 @@ test.describe('Behavioural tests', () => {
   });
 
   test('can change heading font to Courier New on preview', async ({ previewPage }) => {
-    const heading = previewPage.getHeading(1);
+    const heading = previewPage.getHeading(2);
 
     await expect(heading).not.toHaveFont('Courier New');
     await previewPage.changeHeadingFont('Courier New');
