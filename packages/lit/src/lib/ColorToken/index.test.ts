@@ -11,7 +11,7 @@ const greenSRGB: ColorTokenType = {
   },
 };
 
-const greenOkLCh: ColorTokenType = {
+const greenOKLCH: ColorTokenType = {
   ...greenSRGB,
   $value: {
     ...greenSRGB.$value,
@@ -73,17 +73,9 @@ describe('ColorToken', () => {
       expect(colorFunction).toBe('color(srgb 0 0.5058823529411764 0.12156862745098039)');
     });
     test('returns correct value for example oklch token', () => {
-      const colorToken = new ColorToken(greenOkLCh);
+      const colorToken = new ColorToken(greenOKLCH);
       const colorFunction = colorToken.toCSSColorFunction();
       expect(colorFunction).toBe('oklch(0.524144 0.165652 144.827)');
-    });
-  });
-
-  describe('toCSSColorFunction()', () => {
-    test('returns correct srgb value for example token', () => {
-      const colorToken = new ColorToken(greenSRGB);
-      const colorFunction = colorToken.toCSSColorFunction();
-      expect(colorFunction).toBe('color(srgb 0 0.5058823529411764 0.12156862745098039)');
     });
   });
 
@@ -96,13 +88,24 @@ describe('ColorToken', () => {
       });
     });
 
-    test('returns new ColorToken in if destination color space is same as source', () => {
+    test('returns new ColorToken if destination color space is same as source', () => {
       const token = new ColorToken(greenSRGB);
       const newToken = token.toColorSpace(token.$value.colorSpace);
       // Values are the same
       expect(token.toObject()).toMatchObject(newToken.toObject());
       // But the token is a new token, ie not a shared reference
       expect(token).not.toBe(newToken);
+    });
+
+    const token = new ColorToken(greenSRGB);
+    Object.values(COLOR_SPACES).forEach((destination) => {
+      test(`ColorToken converted to ${destination} and back returns closely matching values`, () => {
+        const roundTripToken = new ColorToken(greenSRGB).toColorSpace(destination).toColorSpace('srgb');
+        token.$value.components.every((value, index) =>
+          // transformation is inherently lossy so therefore the precision is quite low
+          expect(value).toBeCloseTo(Number(roundTripToken.$value.components[index]), 1),
+        );
+      });
     });
   });
 

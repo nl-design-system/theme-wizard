@@ -65,9 +65,7 @@ export class LitSidebar extends LitElement {
     const brandColors = formData.get('brand-colors');
 
     this.brandColors = this.colorOptions
-      .filter(({ value }) =>
-        (typeof brandColors === 'string' ? brandColors : '').split(',').some((color) => color === value),
-      )
+      .filter(({ value }) => (typeof brandColors === 'string' ? brandColors : '').split(',').includes(value))
       .map(({ token }) => token);
 
     this.notifyConfigChange({

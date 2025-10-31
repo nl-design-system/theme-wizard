@@ -7,7 +7,7 @@ export default class ColorScale {
   #derived: ColorToken[] = [];
   #derivedOKLCH: ColorToken[] = [];
   // Mandatory high to low
-  static #lightnessMask = [0.999, 0.97, 0.95, 0.93, 0.91, 0.79, 0.56, 0.52, 0.48, 0.38, 0.32, 0.26, 0.14, 0.1];
+  static readonly #lightnessMask = [0.999, 0.97, 0.95, 0.93, 0.91, 0.79, 0.56, 0.52, 0.48, 0.38, 0.32, 0.26, 0.14, 0.1];
 
   constructor(from: ColorToken) {
     this.from = from;
@@ -61,13 +61,13 @@ export default class ColorScale {
     // Find the nearest lightness of the base color.
     let nearestIndex = 0;
     let nearestLightnessDiff = 100;
-    ColorScale.#lightnessMask.forEach((value, index) => {
+    for (const [index, value] of ColorScale.#lightnessMask.entries()) {
       const diff = Math.abs(value - lightness);
       if (diff < nearestLightnessDiff) {
         nearestLightnessDiff = diff;
         nearestIndex = index;
       }
-    });
+    }
     return nearestIndex;
   }
 
