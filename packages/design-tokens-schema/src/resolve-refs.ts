@@ -66,7 +66,7 @@ export const resolveRefs = (config: unknown, root?: Record<string, unknown>): vo
 /**
  * @description
  * Recursively loop over `config` to look for {ma.color.indigo.5} -like token refs
- * and check that they have actual values in `root`
+ * and check that they have actual values in `root` and that the $type overlaps
  */
 export const validateRefs = (config: unknown, root?: Record<string, unknown>): boolean => {
   return processRefs(config, root, (_config, _key, resolvedRef) => {

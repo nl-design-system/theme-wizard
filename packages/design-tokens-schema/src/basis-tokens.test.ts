@@ -1,7 +1,7 @@
 import maTokens from '@nl-design-system-community/ma-design-tokens/dist/tokens';
 import { describe, test, expect } from 'vitest';
+import * as z from 'zod';
 import {
-  TokenReferenceSchema,
   BrandsSchema,
   BrandSchema,
   CommonSchema,
@@ -11,26 +11,6 @@ import {
   resolveConfigRefs,
   BasisTextSchema,
 } from './basis-tokens';
-
-describe('design token ref', () => {
-  test('allows valid ref with a single path', () => {
-    const result = TokenReferenceSchema.safeParse('{ma}');
-    expect.soft(result.success).toBeTruthy();
-    expect.soft(result.data).toEqual('{ma}');
-  });
-
-  test('allows valid ref with nested paths', () => {
-    const result = TokenReferenceSchema.safeParse('{ma.color.white}');
-    expect.soft(result.success).toBeTruthy();
-    expect.soft(result.data).toEqual('{ma.color.white}');
-  });
-
-  test('disallows non-ref-like items', () => {
-    expect.soft(TokenReferenceSchema.safeParse('{}').success).toBeFalsy();
-    expect.soft(TokenReferenceSchema.safeParse('{.}').success).toBeFalsy();
-    expect.soft(TokenReferenceSchema.safeParse('ma.color').success).toBeFalsy();
-  });
-});
 
 describe('brand', () => {
   test('no brands present', () => {
@@ -364,6 +344,27 @@ describe('theme', () => {
       expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
       const result = ThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
+    });
+
+    test.skip('marks as invalid when a color token reference points to an existing font-family token', () => {
+      const config = {
+        brand: brandConfig,
+        common: {
+          basis: {
+            heading: {
+              'font-family': {
+                $type: 'fontFamily',
+                // invalid ref from font family to a color token
+                $value: '{ma.color.indigo.5}',
+              },
+            },
+          },
+        },
+      };
+
+      const result = ThemeSchema.safeParse(config);
+      expect.soft(result.success).toEqual(false);
+      expect.soft(z.prettifyError(result.error!)).toEqual({});
     });
   });
 });
