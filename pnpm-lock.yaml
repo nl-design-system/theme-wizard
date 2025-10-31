@@ -113,12 +113,21 @@ importers:
   packages/design-tokens-schema:
     dependencies:
       colorjs.io:
-        specifier: 0.5.2
-        version: 0.5.2
+        specifier: 0.6.0-beta.1
+        version: 0.6.0-beta.1
+      dlv:
+        specifier: 1.1.3
+        version: 1.1.3
       zod:
         specifier: 4.1.12
         version: 4.1.12
     devDependencies:
+      '@nl-design-system-community/ma-design-tokens':
+        specifier: 2.5.0
+        version: 2.5.0
+      '@types/dlv':
+        specifier: 1.1.5
+        version: 1.1.5
       '@vitest/coverage-v8':
         specifier: 3.2.4
         version: 3.2.4(@vitest/browser@3.2.4)(vitest@3.2.4)
@@ -1624,6 +1633,9 @@ packages:
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
+  '@types/dlv@1.1.5':
+    resolution: {integrity: sha512-JHOWNfiWepAhfwlSw17kiWrWrk6od2dEQgHltJw9AS0JPFoLZJBge5+Dnil2NfdjAvJ/+vGSX60/BRW20PpUXw==}
+
   '@types/doctrine@0.0.9':
     resolution: {integrity: sha512-eOIHzCUSH7SMfonMG1LsC2f8vxBFtho6NGBznK41R84YzPuvSBzrhEps33IsQiOW9+VL6NQ9DbjQJznk/S4uRA==}
 
@@ -2426,11 +2438,11 @@ packages:
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
-  colorjs.io@0.5.2:
-    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
-
   colorjs.io@0.6.0-alpha.1:
     resolution: {integrity: sha512-c/h/8uAmPydQcriRdX8UTAFHj6SpSHFHBA8LvMikvYWAVApPTwg/pyOXNsGmaCBd6L/EeDlRHSNhTtnIFp/qsg==}
+
+  colorjs.io@0.6.0-beta.1:
+    resolution: {integrity: sha512-Qrn2bIiQH8wP8hwjcA3yh7ZJ3RBpCVTro1GCXynLmaAHNXLz9lf9ju6bstRrtgpqYmKRir3YsyLqMu5ZucSRBQ==}
 
   comma-separated-tokens@1.0.8:
     resolution: {integrity: sha512-GHuDRO12Sypu2cV70d1dkA2EUmXHgntrzbpvOB+Qy+49ypNfGgFQIC2fhhXbnyrJRynDCAARsT7Ou0M6hirpfw==}
@@ -7471,6 +7483,8 @@ snapshots:
 
   '@types/deep-eql@4.0.2': {}
 
+  '@types/dlv@1.1.5': {}
+
   '@types/doctrine@0.0.9': {}
 
   '@types/estree@1.0.7': {}
@@ -8610,15 +8624,15 @@ snapshots:
 
   color-sorter@7.0.0:
     dependencies:
-      colorjs.io: 0.6.0-alpha.1
+      colorjs.io: 0.6.0-beta.1
 
   colord@2.9.3: {}
 
   colorette@2.0.20: {}
 
-  colorjs.io@0.5.2: {}
-
   colorjs.io@0.6.0-alpha.1: {}
+
+  colorjs.io@0.6.0-beta.1: {}
 
   comma-separated-tokens@1.0.8: {}
 

@@ -80,21 +80,44 @@ describe('color token validation', () => {
     } satisfies ColorToken);
   });
 
-  test('invalid colors are converted to black', () => {
+  describe('transparent colors', () => {
+    const expected_color = {
+      $type: 'color',
+      $value: {
+        alpha: 0,
+        colorSpace: 'srgb',
+        components: [0, 0, 0],
+      },
+    } satisfies ColorToken;
+
+    test('convert `transparent` to fully transparent black, modern syntax', () => {
+      const transparentColor = {
+        $type: 'color',
+        $value: 'transparent',
+      };
+      const result = ColorTokenValidationSchema.safeParse(transparentColor);
+      expect(result.success).toBeTruthy();
+      expect(result.data).toEqual(expected_color);
+    });
+
+    test('convert `rgba(0, 0, 0, 0)` to fully transparent black, modern syntax', () => {
+      const transparentColor = {
+        $type: 'color',
+        $value: 'rgba(0, 0, 0, 0)',
+      };
+      const result = ColorTokenValidationSchema.safeParse(transparentColor);
+      expect(result.success).toBeTruthy();
+      expect(result.data).toEqual(expected_color);
+    });
+  });
+
+  test('invalid colors are rejected', () => {
     const legacyColor = {
       $type: 'color',
       $value: '__not_a_color__',
     };
     const result = ColorTokenValidationSchema.safeParse(legacyColor);
-    expect(result.success).toBeTruthy();
-    expect(result.data).toEqual({
-      $type: 'color',
-      $value: {
-        alpha: 1,
-        colorSpace: 'srgb',
-        components: [0, 0, 0],
-      },
-    } satisfies ColorToken);
+    expect(result.success).toBeFalsy();
   });
 });
 

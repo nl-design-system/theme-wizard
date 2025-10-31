@@ -1,7 +1,7 @@
 import { test, expect, describe, expectTypeOf } from 'vitest';
 import {
-  BaseDesignTokenNameSchema,
-  type BaseDesignTokenName,
+  BaseDesignTokenIdentifierSchema,
+  type BaseDesignTokenIdentifier,
   BaseDesignTokenSchema,
   type BaseDesignToken,
 } from './index';
@@ -9,21 +9,21 @@ import {
 describe('BaseDesignTokenNameSchema', () => {
   test('accepts simple strings', () => {
     for (const fixture of ['a', 'abc', '1', 'dashed-ident', 'snake_ident', '123abc']) {
-      const result = BaseDesignTokenNameSchema.safeParse(fixture);
+      const result = BaseDesignTokenIdentifierSchema.safeParse(fixture);
       expect.soft(result.success).toBeTruthy();
-      expectTypeOf(result.data!).toEqualTypeOf<BaseDesignTokenName>();
+      expectTypeOf(result.data!).toEqualTypeOf<BaseDesignTokenIdentifier>();
     }
   });
 
   test('rejects invalid types', () => {
     for (const fixture of [1, {}]) {
-      expect.soft(BaseDesignTokenNameSchema.safeParse(fixture).success).toBeFalsy();
+      expect.soft(BaseDesignTokenIdentifierSchema.safeParse(fixture).success).toBeFalsy();
     }
   });
 
   test('rejects forbidden characters', () => {
     for (const fixture of ['', '$test', '{ref}', 'test.123']) {
-      expect.soft(BaseDesignTokenNameSchema.safeParse(fixture).success).toBeFalsy();
+      expect.soft(BaseDesignTokenIdentifierSchema.safeParse(fixture).success).toBeFalsy();
     }
   });
 });

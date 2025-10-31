@@ -2,7 +2,7 @@ import * as z from 'zod';
 
 // 5.1 Name and value
 
-export const BaseDesignTokenNameSchema = z.custom<string>((value) => {
+export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
   // 5.1 A token's name MUST be a valid JSON string as defined in [RFC8259].
   if (typeof value !== 'string') return false;
   const trimmed = value.trim();
@@ -24,7 +24,7 @@ export const BaseDesignTokenNameSchema = z.custom<string>((value) => {
 });
 
 /** @see https://www.designtokens.org/tr/drafts/format/#name-and-value */
-export type BaseDesignTokenName = z.infer<typeof BaseDesignTokenNameSchema>;
+export type BaseDesignTokenIdentifier = z.infer<typeof BaseDesignTokenIdentifierSchema>;
 
 export const BaseDesignTokenValueSchema = z.strictObject({
   /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
@@ -39,7 +39,7 @@ export const BaseDesignTokenValueSchema = z.strictObject({
 });
 export type BaseDesignTokenValue = z.infer<typeof BaseDesignTokenValueSchema>;
 
-export const BaseDesignTokenSchema = z.record(BaseDesignTokenNameSchema, BaseDesignTokenValueSchema);
+export const BaseDesignTokenSchema = z.record(BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema);
 
 /** @see https://www.designtokens.org/tr/drafts/format/#design-token-0 */
 export type BaseDesignToken = z.infer<typeof BaseDesignTokenSchema>;
