@@ -1,10 +1,11 @@
-import amsStyles from '@amsterdam/design-system-css/dist/index.css?inline';
+import amsStyles from '@amsterdam/design-system-css/dist/page-header/page-header.css?inline';
+import amsVisuallyHiddenStyles from '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 @customElement('template-page-header')
 export class TemplatePageHeader extends LitElement {
-  static override readonly styles = [unsafeCSS(amsStyles)];
+  static override readonly styles = [unsafeCSS(amsStyles), unsafeCSS(amsVisuallyHiddenStyles)];
   override render() {
     return html` <header class="ams-page-header">
       <a class="ams-page-header__logo-link" href="/">
