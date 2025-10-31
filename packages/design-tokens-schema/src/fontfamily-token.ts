@@ -64,6 +64,7 @@ export const ModernFontFamilyTokenSchema = z.looseObject({
 export type ModernFontFamilyToken = z.infer<typeof ModernFontFamilyTokenSchema>;
 
 export const FontFamilyWithRefSchema = z.looseObject({
+  ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('fontFamily'),
   $value: TokenReferenceSchema,
 });

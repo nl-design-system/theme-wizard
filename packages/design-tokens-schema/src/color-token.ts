@@ -130,6 +130,7 @@ export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
 });
 
 const ColorReferenceSchema = z.object({
+  ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('color'),
   $value: TokenReferenceSchema,
 });

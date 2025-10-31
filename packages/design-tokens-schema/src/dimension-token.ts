@@ -30,6 +30,7 @@ export const ModernDimensionTokenSchema = z.strictObject({
 export type ModernDimensionToken = z.infer<typeof ModernDimensionTokenSchema>;
 
 export const DimensionWithRefSchema = z.object({
+  ...BaseDesignTokenValueSchema.shape,
   $type: DimensionTypeSchema,
   $value: TokenReferenceSchema,
 });
