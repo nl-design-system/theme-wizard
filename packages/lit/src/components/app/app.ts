@@ -87,8 +87,6 @@ export class App extends LitElement {
   readonly #handleTemplateChange = (e: Event) => {
     if (!(e instanceof CustomEvent)) return;
 
-    console.log(e.detail);
-
     const { type, value } = e.detail;
     if (type === 'collage') {
       this.selectedTemplate = value as 'collage' | 'mijn-omgeving';
