@@ -175,8 +175,15 @@ export const ThemeSchema = z
     common: CommonSchema.optional(),
     // 'components/*': {},
   })
-  .refine((root) => {
-    return validateRefs(root.common, root.brand);
+  .superRefine((root, ctx) => {
+    try {
+      validateRefs(root.common, root.brand);
+    } catch (error) {
+      ctx.addIssue({
+        code: 'custom',
+        message: error?.message,
+      });
+    }
   });
 
 export type Theme = z.infer<typeof ThemeSchema>;

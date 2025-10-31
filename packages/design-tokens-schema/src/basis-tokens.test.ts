@@ -346,7 +346,33 @@ describe('theme', () => {
       expect.soft(result.success).toBeFalsy();
     });
 
-    test.skip('marks as invalid when a color token reference points to an existing font-family token', () => {
+    test('marks as invalid if resolving to an object without a $value', () => {
+      const config = {
+        brand: brandConfig,
+        common: {
+          basis: {
+            color: {
+              default: {
+                'bg-document': {
+                  $type: 'color',
+                  $value: `{ma.color.indigo}`,
+                },
+              },
+            },
+          },
+        },
+      };
+
+      expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
+      const result = ThemeSchema.safeParse(config);
+      expect.soft(result.success).toBeFalsy();
+      expect.soft(z.flattenError(result.error!)).toEqual({
+        fieldErrors: {},
+        formErrors: ['Expected "ma.color.indigo" to have a "$value" property'],
+      });
+    });
+
+    test('marks as invalid when a color token reference points to an existing font-family token', () => {
       const config = {
         brand: brandConfig,
         common: {
@@ -354,7 +380,7 @@ describe('theme', () => {
             heading: {
               'font-family': {
                 $type: 'fontFamily',
-                // invalid ref from font family to a color token
+                // this points to a color token instead of a fontFamily
                 $value: '{ma.color.indigo.5}',
               },
             },
@@ -364,7 +390,12 @@ describe('theme', () => {
 
       const result = ThemeSchema.safeParse(config);
       expect.soft(result.success).toEqual(false);
-      expect.soft(z.prettifyError(result.error!)).toEqual({});
+      expect.soft(z.flattenError(result.error!)).toEqual({
+        fieldErrors: {},
+        formErrors: [
+          `Type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5} => {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0,0,0]}}`,
+        ],
+      });
     });
   });
 });
