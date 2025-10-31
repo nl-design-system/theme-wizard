@@ -24,7 +24,7 @@ const extractRefPath = (value: string): string | null => {
 const processRefs = (
   config: unknown,
   root: Record<string, unknown> | undefined,
-  onRefFound: (config: ValueObject, key: string, resolvedRef: unknown) => boolean,
+  onRefFound: (config: ValueObject, key: string, resolvedRef: unknown, tokenType: unknown, refPath: string) => boolean,
 ): boolean => {
   if (!isValueObject(config)) return true;
 
@@ -34,10 +34,11 @@ const processRefs = (
       // extract `ma.color.indigo.5` from `{ma.color.indigo.5}` if possible
       const refPath = extractRefPath(value);
       if (refPath) {
+        const tokenType = config['$type']; // 'color' | 'fontFamily' | etc.
+
         // does 'ma.color.indigo.5.$value' path exist in `root`?
-        // Note that we add `$value` because we replace one $value with another
-        const resolvedRef = dlv(root, `${refPath}.$value`);
-        if (!onRefFound(config, key, resolvedRef)) {
+        const resolvedRef = dlv(root, refPath);
+        if (!onRefFound(config, key, resolvedRef, tokenType, refPath)) {
           return false;
         }
       }
@@ -56,8 +57,8 @@ const processRefs = (
  */
 export const resolveRefs = (config: unknown, root?: Record<string, unknown>): void => {
   processRefs(config, root, (config, key, resolvedRef) => {
-    if (resolvedRef !== undefined) {
-      config[key] = resolvedRef;
+    if (isValueObject(resolvedRef) && resolvedRef['$value']) {
+      config[key] = resolvedRef['$value'];
     }
     return true;
   });
@@ -69,7 +70,20 @@ export const resolveRefs = (config: unknown, root?: Record<string, unknown>): vo
  * and check that they have actual values in `root` and that the $type overlaps
  */
 export const validateRefs = (config: unknown, root?: Record<string, unknown>): boolean => {
-  return processRefs(config, root, (_config, _key, resolvedRef) => {
-    return resolvedRef !== undefined;
+  return processRefs(config, root, (_config, _key, resolvedRef, tokenType, refPath) => {
+    if (!isValueObject(resolvedRef)) {
+      return false;
+    }
+
+    if (!resolvedRef['$value']) {
+      throw new Error(`Invalid token reference: expected "${refPath}" to have a "$value" property`);
+    }
+
+    if (tokenType !== resolvedRef['$type']) {
+      throw new Error(
+        `Invalid token reference: $type "${tokenType}" of "${JSON.stringify(_config)}" does not match the $type on reference {${refPath}} => ${JSON.stringify(resolvedRef)}`,
+      );
+    }
+    return true;
   });
 };

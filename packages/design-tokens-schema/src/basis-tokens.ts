@@ -175,8 +175,17 @@ export const ThemeSchema = z
     common: CommonSchema.optional(),
     // 'components/*': {},
   })
-  .refine((root) => {
-    return validateRefs(root.common, root.brand);
+  .superRefine((root, ctx) => {
+    try {
+      validateRefs(root.common, root.brand);
+    } catch (error) {
+      ctx.addIssue({
+        code: 'custom',
+        // The next line is type-safe, but because of that we don't cover all branches
+        /* v8 ignore next */
+        message: error instanceof Error ? error.message : 'Invalid roken reference',
+      });
+    }
   });
 
 export type Theme = z.infer<typeof ThemeSchema>;
