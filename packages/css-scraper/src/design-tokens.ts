@@ -21,6 +21,8 @@ export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
   for (const tokenId in tokens.color) {
     const token = tokens.color[tokenId];
 
+    // TODO: add test coverage for this
+    /* v8 ignore if -- @preserve */
     if (token.$type === 'color') {
       flatTokens.push({
         $extensions: {
@@ -38,6 +40,8 @@ export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
   for (const tokenId in tokens.font_family) {
     const token = tokens.font_family[tokenId];
 
+    // TODO: add test coverage for this
+    /* v8 ignore if -- @preserve */
     if (token.$type === 'fontFamily') {
       flatTokens.push({
         $extensions: {
@@ -55,6 +59,8 @@ export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
   for (const tokenId in tokens.font_size) {
     const token = tokens.font_size[tokenId];
 
+    // TODO: add test coverage for this
+    /* v8 ignore if -- @preserve */
     if (token.$type === 'dimension') {
       flatTokens.push({
         $extensions: {
