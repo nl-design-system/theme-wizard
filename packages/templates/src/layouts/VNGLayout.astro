@@ -14,18 +14,18 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
 ---
 
 <body class={`layout ${isStandalone ? 'ma-theme' : undefined}`}>
-  <theme-wizard-page-header>
+  <template-page-header>
     <skip-link>Direct naar de hoofdinhoud</skip-link>
 
-    <theme-wizard-link href="/" slot="logo">
+    <template-link href="/" slot="logo">
       <span id=":r0:" hidden="">homepage</span>
       <img src={logo.src} alt="Gemeente Voorbeeld" />
-    </theme-wizard-link>
+    </template-link>
 
     <!-- Menu items -->
-    <theme-wizard-link href="#" slot="menu-links">Contact</theme-wizard-link>
+    <template-link href="#" slot="menu-links">Contact</template-link>
 
-    <theme-wizard-link href="#" slot="menu-links">
+    <template-link href="#" slot="menu-links">
       Jeroen van Drouwen
       <span
         style="
@@ -36,19 +36,19 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
       >
         <utrecht-icon-chevron-down></utrecht-icon-chevron-down>
       </span>
-    </theme-wizard-link>
+    </template-link>
 
     <span slot="menu-links" style="display: inline-flex; gap: 0.5rem; align-items: center">
       <utrecht-textbox placeholder="Bijvoorbeeld zwembad of grofvuil"></utrecht-textbox>
       <utrecht-button appearance="secondary-action-button">Zoeken</utrecht-button>
     </span>
-  </theme-wizard-page-header>
+  </template-page-header>
 
   <utrecht-breadcrumb-nav json='[{"href":"#","title":"Home"},{"href":"#","title":"Gemeente Voorbeeld"}]' lang="nl-NL"
   ></utrecht-breadcrumb-nav>
 
   <div class="layout-main">
-    <theme-wizard-side-nav> </theme-wizard-side-nav>
+    <template-side-nav> </template-side-nav>
 
     <utrecht-page-content>
       <utrecht-root>
@@ -66,25 +66,25 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
         </utrecht-link>
 
         <div>
-          <theme-wizard-heading level="4">Contact</theme-wizard-heading>
+          <template-heading level="4">Contact</template-heading>
 
           <address class="todo-address">
             Bel
-            <theme-wizard-link href="tel:453453">453 453</theme-wizard-link>
+            <template-link href="tel:453453">453 453</template-link>
             (maandag tot en met vrijdag van 09.00 tot 17.00 uur) of stuur een e-mail naar
-            <theme-wizard-link href="mailto:vragen@gemeentevoorbeeld.nl">
+            <template-link href="mailto:vragen@gemeentevoorbeeld.nl">
               <span class="utrecht-url-data">vragen@gemeentevoorbeeld.nl</span>
-            </theme-wizard-link>
+            </template-link>
             .
           </address>
         </div>
       </div>
 
       <div>
-        <theme-wizard-link-list
+        <template-link-list
           link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"}]'
         >
-        </theme-wizard-link-list>
+        </template-link-list>
       </div>
     </div>
   </utrecht-page-footer>
