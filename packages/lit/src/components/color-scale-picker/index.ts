@@ -114,7 +114,7 @@ export class ColorScalePicker extends LitElement {
     return html`
       <div>
         <label for=${this.#idName}>Naam</label>
-        <input type="text" value=${this.#nameInputValue} @change=${this.handleNameChange} />
+        <input id=${this.#idName} type="text" value=${this.#nameInputValue} @change=${this.handleNameChange} />
         <label for=${this.#idColor}>Basiskleur</label>
         <input
           id=${this.#idColor}
@@ -123,7 +123,11 @@ export class ColorScalePicker extends LitElement {
           colorSpace=${this.colorSpace}
           @change=${this.handleColorChange}
         />
-        <output for=${this.#idColor} class="theme-color-scale__list" style=${`background-color: ${this.from?.toCSSColorFunction()}`}>
+        <output
+          for=${this.#idColor}
+          class="theme-color-scale__list"
+          style=${`background-color: ${this.from?.toCSSColorFunction()}`}
+        >
           ${this.#scale
             .list()
             .map(
