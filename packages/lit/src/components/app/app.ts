@@ -1,7 +1,6 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
-import '../template-switcher/template-switcher';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
@@ -10,6 +9,8 @@ import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
+import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import '../preview-picker';
 import appStyles from './app.css';
 
 /**
@@ -32,7 +33,7 @@ export class App extends LitElement {
   private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
-  private selectedTemplate: string = 'template';
+  private selectedTemplatePath: string = '/my-environment/overview';
 
   static override readonly styles = [unsafeCSS(maTheme), appStyles];
 
@@ -41,6 +42,17 @@ export class App extends LitElement {
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
+
+    // Parse template selection from query param: ?templates=/group/page (dynamic)
+    try {
+      const params = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
+      if (params) {
+        const [group, page] = params.split('/').filter(Boolean);
+        if (group && page) this.selectedTemplatePath = `/${group}/${page}`;
+      }
+    } catch {
+      // ignore parsing errors
+    }
   }
 
   override disconnectedCallback() {
@@ -87,25 +99,16 @@ export class App extends LitElement {
   readonly #handleTemplateChange = (e: Event) => {
     if (!(e instanceof CustomEvent)) return;
 
-    // TODO: selectedTemplate should be the value of the template switcher
-    const { type, value } = e.detail;
-    if (type === 'collage') {
-      this.selectedTemplate = value;
-    } else {
-      this.selectedTemplate = 'template';
-    }
+    this.selectedTemplatePath = e.detail as string;
   };
 
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
-    // Determine template config based on selection
-    const templateConfig = this.selectedTemplate.startsWith('collage-')
-      ? {
-          cssUrl: `/templates/collage/${this.selectedTemplate}.css`,
-          htmlUrl: `/templates/collage/${this.selectedTemplate}.html`,
-        }
-      : undefined;
+    const templateConfig = {
+      cssUrl: `/templates/${this.selectedTemplatePath}.css`,
+      htmlUrl: `/templates/${this.selectedTemplatePath}.html`,
+    };
 
     return html`
       <div class="theme-app ma-theme">
@@ -118,12 +121,12 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <template-switcher></template-switcher>
+          <preview-picker></preview-picker>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .templateConfig=${templateConfig}
-              .url=${this.selectedTemplate === 'template' ? previewUrl : undefined}
+              .url=${previewUrl}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>

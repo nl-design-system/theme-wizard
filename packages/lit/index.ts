@@ -1,6 +1,13 @@
 import './src/components/app/app';
 import './src/components/sidebar/sidebar';
 import './src/components/preview/preview';
-import './src/components/heading/heading';
-import './src/components/code/code';
-import './src/components/paragraph/paragraph';
+import './src/components/template-heading';
+import './src/components/template-code';
+import './src/components/template-paragraph';
+import './src/components/template-skip-link';
+import './src/components/template-side-nav';
+import './src/components/template-action';
+import './src/components/template-case-card';
+import './src/components/template-link';
+import './src/components/template-link-list';
+import './src/components/template-page-header';
