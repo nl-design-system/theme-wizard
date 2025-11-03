@@ -14,7 +14,7 @@ export class FontSelect extends LitElement {
   #id = 'font-select';
   #value = '';
 
-  static override styles = [styles];
+  static override readonly styles = [styles];
   static formAssociated = true;
 
   @property({ reflect: true })
@@ -42,7 +42,7 @@ export class FontSelect extends LitElement {
       this.value = event.target.value;
       this.dispatchEvent(new Event('change', { bubbles: true }));
     }
-  }
+  };
 
   override render() {
     return html`
