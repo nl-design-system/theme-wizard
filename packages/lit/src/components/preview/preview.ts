@@ -11,7 +11,7 @@ const previewTheme = maTheme.replace('.ma-theme', `.${PREVIEW_THEME}`);
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
   @property() themeStylesheet!: CSSStyleSheet;
-  @property() templateUrl?: string;
+  @property() url?: string;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
@@ -37,20 +37,17 @@ export class ThemePreview extends LitElement {
     this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
+  get previewUrl() {
+    return `/templates${this.url}`;
+  }
+
   readonly #loadContent = async () => {
-    const config: TemplateConfig | null =
-      this.templateConfig ?? (this.url ? { cssUrl: this.url, htmlUrl: this.url } : null);
-
-    if (!config) return;
-    const url = this.templateUrl;
-    if (!url) return;
-
     this.isLoading = true;
     this.error = '';
 
     try {
-      this.htmlContent = await this.#fetchHTML(url);
-      const css = await this.#fetchCSS(url);
+      this.htmlContent = await this.#fetchHTML();
+      const css = await this.#fetchCSS();
 
       this.previewStylesheet?.replaceSync('');
       if (css?.trim()) {
@@ -63,14 +60,14 @@ export class ThemePreview extends LitElement {
     }
   };
 
-  readonly #fetchCSS = async (url: string): Promise<string | undefined> => {
+  readonly #fetchCSS = async (): Promise<string | undefined> => {
     try {
-      const absoluteUrl = new URL(url, globalThis.location.href).href;
+      const absoluteUrl = new URL(this.previewUrl, globalThis.location.href).href;
       const currentOrigin = new URL(globalThis.location.href).origin;
       const urlOrigin = new URL(absoluteUrl).origin;
       const isExternal = currentOrigin !== urlOrigin;
 
-      const urlToFetch = isExternal ? new URL(url) : new URL(url, globalThis.location.href);
+      const urlToFetch = isExternal ? new URL(this.previewUrl) : new URL(this.previewUrl, globalThis.location.href);
       return await this.scraper.getCSS(urlToFetch);
     } catch (err) {
       console.error('Failed to fetch CSS:', err);
@@ -81,49 +78,19 @@ export class ThemePreview extends LitElement {
   /**
    * Fetch and process HTML from the URL
    */
-  readonly #fetchHTML = async (url: string): Promise<string> => {
-    const response = await fetch(url);
+  readonly #fetchHTML = async (): Promise<string> => {
+    const response = await fetch(this.previewUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+      throw new Error(`Failed to fetch ${this.previewUrl}: ${response.statusText}`);
     }
 
     const html = await response.text();
     const doc = parseHtml(html);
 
-    rewriteAttributeUrlsToAbsolute(doc.body, url);
-    rewriteSvgXlinkToAbsolute(doc.body, url);
+    rewriteAttributeUrlsToAbsolute(doc.body, this.previewUrl);
+    rewriteSvgXlinkToAbsolute(doc.body, this.previewUrl);
 
-    return { bodyHTML: doc.body.innerHTML, fullHTML: html };
-  };
-
-  /**
-   * Extract CSS from HTML content: collects <style> tags from head/body and inlines same-origin <link rel="stylesheet">.
-   * This enables templates to ship a single built HTML file containing or referencing its CSS.
-   */
-  readonly #extractStylesFromHTML = async (fullHtml: string): Promise<string> => {
-    try {
-      // External URL gets ignored since it's already absolute
-      const absoluteUrl = new URL(url, globalThis.location.href).href;
-      const currentOrigin = new URL(globalThis.location.href).origin;
-      const urlOrigin = new URL(absoluteUrl).origin;
-      const isExternal = currentOrigin !== urlOrigin;
-
-      if (isExternal) {
-        // Use scraper API
-        const cssUrl = new URL(url);
-        return this.scraper.getCSS(cssUrl);
-      } else {
-        // Direct fetch for local/relative URLs
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
-        }
-      }
-
-      return styles.join('\n');
-    } catch {
-      return '';
-    }
+    return doc.body.innerHTML;
   };
 
   override render() {

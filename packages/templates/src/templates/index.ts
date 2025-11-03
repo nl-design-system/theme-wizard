@@ -1,33 +1,18 @@
-type Category = 'template' | 'collage';
+export type Category = 'template' | 'collage';
 
-type GroupMeta = {
-  name?: string;
-  value?: string;
-  type?: Category;
-};
-
-type DetailMeta = {
-  name?: string;
-  value?: string;
-  detail?: { name: string; value: string };
-  module?: string;
-};
-
-type TemplateOption = {
+export type Page = {
   name: string;
   value: string;
-  detail?: { name: string; value: string };
-  module?: string;
 };
 
 export type TemplateGroup = {
   name: string;
-  value: string;
   type: Category;
-  detail: TemplateOption;
+  pages: Page[];
 };
 
-type PageModule = { group?: GroupMeta; detail?: DetailMeta };
+type Detail = { name?: string; value?: string; module?: string };
+type PageModule = { pages?: Page[]; detail?: Detail };
 
 const FILES = import.meta.glob('../pages/**/*.astro', { eager: true });
 
@@ -36,12 +21,11 @@ const PATH_REGEX = /pages\/([^/]+)\/([^/]+)\.astro$/;
 function parsePath(key: string): { slug: string; page: string } | null {
   const match = PATH_REGEX.exec(key);
   if (!match) return null;
-
   return { page: match[2], slug: match[1] };
 }
 
 const templateGroups = (): TemplateGroup[] => {
-  const groups: TemplateGroup[] = [];
+  const map = new Map<string, TemplateGroup>();
 
   for (const [key, module] of Object.entries(FILES)) {
     // Parse path: pages/template-name/page.astro -> { page: 'page', slug: 'template-name' }
@@ -52,23 +36,34 @@ const templateGroups = (): TemplateGroup[] => {
     }
 
     const { page, slug } = parsed;
-
     // Extract metadata exported from the Astro module
-    const { detail, group } = (module as PageModule) || {};
+    const { detail, pages = [] as Page[] } = (module as PageModule) || {};
 
-    groups.push({
-      name: group?.name ?? detail?.module ?? slug,
-      detail: {
-        name: detail?.name ?? page,
-        detail: detail?.detail,
-        module: detail?.module,
-        value: detail?.value ?? page,
-      },
-      type: group?.type ?? 'template',
-      value: slug,
-    });
+    const groupType: Category = 'template';
+    const groupTitle = detail?.module ?? slug;
+
+    // Prefer explicit pages array; otherwise fall back to a single detail; otherwise use path info
+    const metaName: string = pages[0]?.name ?? detail?.name ?? page;
+    const metaValue: string = pages[0]?.value ?? detail?.value ?? page;
+
+    const pageItem: Page = {
+      name: metaName,
+      value: `/${slug}/${metaValue}`,
+    };
+
+    if (map.has(slug)) {
+      map.get(slug)!.pages.push(pageItem);
+    } else {
+      map.set(slug, {
+        name: groupTitle,
+        pages: [pageItem],
+        type: groupType,
+      });
+    }
   }
-  return groups;
+
+  return Array.from(map.values());
 };
 
-export const TEMPLATES: TemplateGroup[] = templateGroups();
+const TEMPLATES: TemplateGroup[] = templateGroups();
+export const TEMPLATES_JSON = JSON.stringify(TEMPLATES);

@@ -1,36 +1,15 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { TEMPLATES, type TemplateGroup } from '@nl-design-system-community/templates';
+import { TEMPLATES_JSON } from '@nl-design-system-community/templates';
 
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
   // Fallback API host
   defaultHost: process.env.API_HOST || '',
 });
-
-// my-environment/overview
-const fallback = `/${TEMPLATES[0].value}/${TEMPLATES[0].detail.value}`;
-const templatesParam = Astro.url.searchParams.get('templates') ?? fallback;
-
-const [, selectedTemplate, selectedPage] = templatesParam.split('/'); // ["", "my-environment", "overview"]
-
-const templateItems = TEMPLATES.map(({ detail, name, value }: TemplateGroup) => {
-  const isSelectedTemplate = value === selectedTemplate;
-  const page = isSelectedTemplate && selectedPage ? selectedPage : detail.value;
-
-  return {
-    htmlUrl: `/templates/${value}/${page}`,
-    name: value,
-    title: name,
-    page: detail.value,
-    pageTitle: detail.name,
-  };
-});
-
-const templatesJson = JSON.stringify(templateItems);
 ---
 
 <BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
-  <theme-wizard-app templates={templatesJson}></theme-wizard-app>
+  <theme-wizard-app templates={TEMPLATES_JSON}></theme-wizard-app>
 </BaseLayout>

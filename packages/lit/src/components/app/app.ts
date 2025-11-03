@@ -1,5 +1,6 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
+import type { TemplateGroup } from '@nl-design-system-community/templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
@@ -10,9 +11,7 @@ import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
-import '../preview-picker';
 import appStyles from './app.css';
-
 /**
  * Main application component - Orchestrator coordinator
  *
@@ -34,14 +33,7 @@ export class App extends LitElement {
   @property({ attribute: 'templates' }) templatesAttr?: string;
 
   // Parsed templates list (computed)
-  get templates(): Array<{
-    id: string;
-    htmlUrl: string;
-    name: string;
-    title: string;
-    pageTitle: string;
-    page: string;
-  }> {
+  get templates(): TemplateGroup[] {
     try {
       if (this.templatesAttr) {
         const parsed = JSON.parse(this.templatesAttr);
@@ -108,11 +100,10 @@ export class App extends LitElement {
     try {
       this.themeController.resetToDefaults();
       const tokens = await this.scraper.getTokens(new URL(sourceUrl));
-      this.scrapedTokens = tokens.sort(
-        (a, b) =>
-          // Reverse order, highest count first
-          b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
+      const sortedTokens = [...tokens].sort(
+        (a, b) => b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
       );
+      this.scrapedTokens = sortedTokens;
 
       this.requestUpdate();
     } catch (error) {
@@ -127,12 +118,7 @@ export class App extends LitElement {
   };
 
   override render() {
-    const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
-
-    const templateConfig = {
-      cssUrl: `/templates/${this.selectedTemplatePath}.css`,
-      htmlUrl: `/templates/${this.selectedTemplatePath}.html`,
-    };
+    const { bodyFont, headingFont, sourceUrl } = this.themeController.getConfig();
 
     return html`
       <div class="theme-app ma-theme">
@@ -145,12 +131,11 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <preview-picker></preview-picker>
+          <preview-picker .templates=${this.templates}></preview-picker>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
-              .templateConfig=${templateConfig}
-              .url=${previewUrl}
+              .url=${this.selectedTemplatePath}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>
