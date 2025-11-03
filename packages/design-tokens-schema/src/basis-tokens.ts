@@ -182,8 +182,8 @@ export const ThemeSchema = z
       ctx.addIssue({
         code: 'custom',
         // The next line is type-safe, but because of that we don't cover all branches
-        /* v8 ignore next */
-        message: error instanceof Error ? error.message : 'Invalid roken reference',
+        /* v8 ignore next -- @preserve */
+        message: error instanceof Error ? error.message : 'Invalid token reference',
       });
     }
   });
