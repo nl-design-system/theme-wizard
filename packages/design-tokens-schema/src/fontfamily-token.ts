@@ -71,9 +71,9 @@ export const FontFamilyWithRefSchema = z.looseObject({
 export type FontFamilyWithRef = z.infer<typeof FontFamilyWithRefSchema>;
 
 export const FontFamilyTokenSchema = z.union([
+  FontFamilyWithRefSchema,
   LegacyFontFamilyTokenSchema,
   MixedFontFamilyTokenSchema,
   ModernFontFamilyTokenSchema,
-  FontFamilyWithRefSchema,
 ]);
 export type FontFamilyToken = z.infer<typeof FontFamilyTokenSchema>;
