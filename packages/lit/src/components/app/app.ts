@@ -46,8 +46,7 @@ export class App extends LitElement {
     try {
       const params = new URL(globalThis.location.href).searchParams.get('templates');
       if (params) {
-        const normalized = params.startsWith('/') ? params : `/${params}`;
-        const [, group, page] = normalized.split('/');
+        const [, group, page] = params.split('/');
         if (group && page) this.selectedTemplatePath = `/${group}/${page}`;
       }
     } catch {
@@ -105,13 +104,9 @@ export class App extends LitElement {
   override render() {
     const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
 
-    // Determine template config based on dynamic selection
-    const normalizedPath = this.selectedTemplatePath.startsWith('/')
-      ? this.selectedTemplatePath.slice(1)
-      : this.selectedTemplatePath;
     const templateConfig = {
-      cssUrl: `/templates/${normalizedPath}.css`,
-      htmlUrl: `/templates/${normalizedPath}.html`,
+      cssUrl: `/templates/${this.selectedTemplatePath}.css`,
+      htmlUrl: `/templates/${this.selectedTemplatePath}.html`,
     };
 
     return html`
