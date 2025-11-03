@@ -123,7 +123,7 @@ export class ColorScalePicker extends LitElement {
           colorSpace=${this.colorSpace}
           @change=${this.handleColorChange}
         />
-        <div class="theme-color-scale__list" style=${`background-color: ${this.from?.toCSSColorFunction()}`}>
+        <output for=${this.#idColor} class="theme-color-scale__list" style=${`background-color: ${this.from?.toCSSColorFunction()}`}>
           ${this.#scale
             .list()
             .map(
@@ -135,7 +135,7 @@ export class ColorScalePicker extends LitElement {
                 ></div>
               `,
             )}
-        </div>
+        </output>
       </div>
     `;
   }
