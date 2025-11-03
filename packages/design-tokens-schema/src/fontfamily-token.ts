@@ -12,7 +12,7 @@ export const LegacyFontFamilyValueSchema = z
   .string()
   .trim()
   .nonempty()
-  .refine((value) => splitFamily(value).every((s) => s.length > 0))
+  .refine((value) => splitFamily(value).every((s) => s.length > 0), 'Font-family names must have 1 or more characters')
   .transform((value) => splitFamily(value));
 export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
 
