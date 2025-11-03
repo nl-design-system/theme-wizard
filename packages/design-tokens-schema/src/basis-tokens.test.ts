@@ -320,7 +320,7 @@ describe('theme', () => {
       });
     });
 
-    test('does not throw when a ref can not be resolved', () => {
+    test('marks as invalid if resolving to an nonexistent object', () => {
       const config = {
         brand: brandConfig,
         common: {
@@ -346,7 +346,7 @@ describe('theme', () => {
       expect.soft(result.success).toBeFalsy();
     });
 
-    test('marks as invalid if resolving to an object without a $value', () => {
+    test('marks as invalid if resolving to an existing object without a $value property', () => {
       const config = {
         brand: brandConfig,
         common: {
