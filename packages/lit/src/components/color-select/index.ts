@@ -36,7 +36,7 @@ export class ColorSelect extends LitElement {
     super.connectedCallback();
   }
 
-  handleChange() {
+  readonly handleChange = () => {
     if (!this.shadowRoot) return;
     const checkedBoxes: NodeListOf<HTMLInputElement> = this.shadowRoot?.querySelectorAll(
       `input[type=checkbox][name="${this.name}[]"]:checked`,
@@ -44,7 +44,7 @@ export class ColorSelect extends LitElement {
     const values = Array.from(checkedBoxes).map((checkbox) => checkbox.value);
     this.value = values.join(',');
     this.dispatchEvent(new Event('change', { bubbles: true }));
-  }
+  };
 
   override render() {
     return html`

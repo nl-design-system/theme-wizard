@@ -1,5 +1,6 @@
 import {
   COLOR_SPACES,
+  stringifyColor,
   type ColorSpace,
   type ColorComponent,
   type ColorToken as ColorTokenType,
@@ -69,6 +70,16 @@ export default class ColorToken {
 
   toCSSColorFunction(): string {
     return ColorToken.getCSSColorFunction(this.$value);
+  }
+
+  /**
+   * Return current color as a hex value.
+   * Note that this might be lossy when the color is defined in a wider gamut.
+   *
+   * @returns hex string, ie. #FF9900;
+   */
+  toHex(): string {
+    return stringifyColor(this.$value);
   }
 
   static getCSSColorFunction({

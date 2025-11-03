@@ -8,12 +8,11 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
-import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
 import '../color-select';
-import '../color-scale';
+import '../color-scale-picker';
 import '../font-select';
 
 @customElement('theme-wizard-sidebar')
@@ -63,6 +62,8 @@ export class LitSidebar extends LitElement {
     const headingFont = formData.get('heading-font');
     const bodyFont = formData.get('body-font');
     const brandColors = formData.get('brand-colors');
+    // @TODO: Use defined color scales
+    // const colorScales = formData.getAll('color-scale');
 
     this.brandColors = this.colorOptions
       .filter(({ value }) => (typeof brandColors === 'string' ? brandColors : '').split(',').includes(value))
@@ -128,14 +129,19 @@ export class LitSidebar extends LitElement {
         <form class="theme-sidebar__form" @change=${this.handleThemeForm} @submit=${this.handleThemeForm}>
           <fieldset>
             <legend>Kleuren</legend>
-            <color-select id="color-select" name="brand-colors" label="Basiskleuren" .options=${this.colorOptions}>
-            </color-select>
+            <color-select
+              id="color-select"
+              name="brand-colors"
+              label="Basiskleuren"
+              .options=${this.colorOptions}
+            ></color-select>
 
             <fieldset>
               <legend>Kleurverlopen</legend>
+              <color-scale-picker name="color-scale"></color-scale-picker>
               <output for="color-select">
                 ${this.brandColors.map(
-                  (token) => html`<color-scale .from=${token} .stops=${new ColorScale(token).list()}></color-scale>`,
+                  (token) => html` <color-scale-picker .from=${token} name="color-scale"></color-scale-picker>`,
                 )}
               </output>
             </fieldset>

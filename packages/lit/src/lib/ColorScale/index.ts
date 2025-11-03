@@ -22,12 +22,14 @@ export default class ColorScale {
 
   set from(value: ColorToken) {
     const token = value instanceof ColorToken ? value : new ColorToken(value);
+    const colorSpace = token.$value.colorSpace;
+
     this.#from = token;
     this.#fromOKLCH = token.toColorSpace(COLOR_SPACES.OKLCH);
-    this.#derivedOKLCH = this.#deriveScale();
+    this.#derivedOKLCH = this.#deriveScale(this.#fromOKLCH);
 
     this.#derived = this.#derivedOKLCH.map((token) =>
-      token === this.fromOKLCH ? this.from : token.toColorSpace(this.from.$value.colorSpace),
+      token === this.fromOKLCH ? this.from : token.toColorSpace(colorSpace),
     );
   }
 
@@ -71,8 +73,8 @@ export default class ColorScale {
     return nearestIndex;
   }
 
-  #deriveScale() {
-    const [lightness, chroma, hue] = this.#fromOKLCH.$value.components;
+  #deriveScale(token: ColorToken) {
+    const [lightness, chroma, hue] = token.$value.components;
     if (lightness === 'none' || chroma === 'none') {
       throw new Error('Lightness or chroma cannot be of value "none"');
     }
