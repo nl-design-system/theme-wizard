@@ -371,7 +371,7 @@ describe('theme', () => {
       });
     });
 
-    test('marks as invalid when a color token reference points to an existing font-family token', () => {
+    test('marks as invalid when a color token reference points to an existing non-color token', () => {
       const config = {
         brand: brandConfig,
         common: {
