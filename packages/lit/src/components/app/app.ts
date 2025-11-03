@@ -1,5 +1,4 @@
 import '../preview/preview';
-import '../sidebar/sidebar';
 import type { TemplateGroup } from '@nl-design-system-community/templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';

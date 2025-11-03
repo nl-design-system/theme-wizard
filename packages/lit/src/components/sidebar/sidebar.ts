@@ -8,6 +8,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
+import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
@@ -129,19 +130,14 @@ export class LitSidebar extends LitElement {
         <form class="theme-sidebar__form" @change=${this.handleThemeForm} @submit=${this.handleThemeForm}>
           <fieldset>
             <legend>Kleuren</legend>
-            <color-select
-              id="color-select"
-              name="brand-colors"
-              label="Basiskleuren"
-              .options=${this.colorOptions}
-            ></color-select>
+            <color-select id="color-select" name="brand-colors" label="Basiskleuren" .options=${this.colorOptions}>
+            </color-select>
 
             <fieldset>
               <legend>Kleurverlopen</legend>
-              <color-scale-picker name="color-scale"></color-scale-picker>
               <output for="color-select">
                 ${this.brandColors.map(
-                  (token) => html` <color-scale-picker .from=${token} name="color-scale"></color-scale-picker>`,
+                  (token) => html`<color-scale .from=${token} .stops=${new ColorScale(token).list()}></color-scale>`,
                 )}
               </output>
             </fieldset>

@@ -65,5 +65,5 @@ const templateGroups = (): TemplateGroup[] => {
   return Array.from(map.values());
 };
 
-const TEMPLATES: TemplateGroup[] = templateGroups();
+export const TEMPLATES: TemplateGroup[] = templateGroups();
 export const TEMPLATES_JSON = JSON.stringify(TEMPLATES);
