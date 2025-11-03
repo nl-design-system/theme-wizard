@@ -261,7 +261,6 @@ describe('common', () => {
     });
 
     describe('color contrast', () => {
-      // assume both ends are modern design tokens
       // Hex notation + parseColor() because it's shorter than writing color tokens and the IDE shows a small color preview
       const black = { $type: 'color', $value: parseColor('#000') } satisfies ColorToken;
       const white = { $type: 'color', $value: parseColor('#fff') } satisfies ColorToken;
@@ -285,16 +284,55 @@ describe('common', () => {
       });
 
       test('fails when color-document vs bg-subtle do not have enough contrast', () => {
-        const colorNames = {
+        const result = ColorNameSchema.safeParse({
           'bg-subtle': white,
           'color-document': lightGray,
-        } satisfies ColorName;
-        const result = ColorNameSchema.safeParse(colorNames);
+        } satisfies ColorName);
         expect.soft(result.success).toBeFalsy();
         expect.soft(z.flattenError(result.error!)).toMatchObject({
           fieldErrors: {
             'color-document': [
               'Not enough contrast between `color-document` (#cccccc) and `bg-subtle` (#ffffff). Calculated 1.6059285649300712, need 4.5',
+            ],
+          },
+        });
+      });
+
+      test('passes when legacy tokens are used with proper contrast', () => {
+        const legacyWhite = {
+          $type: 'color',
+          $value: '#fff',
+        };
+        const legacyBlack = {
+          $type: 'color',
+          $value: '#000',
+        };
+        const result = ColorNameSchema.safeParse({
+          'bg-default': legacyWhite,
+          'border-default': legacyBlack,
+        });
+        expect.soft(result.success).toEqual(true);
+      });
+
+      test('passes when legacy tokens are used with proper contrast', () => {
+        const legacyWhite = {
+          $type: 'color',
+          $value: '#fff',
+        };
+        const legacyLightgray = {
+          $type: 'color',
+          $value: '#999',
+        };
+        const result = ColorNameSchema.safeParse({
+          'bg-default': legacyWhite,
+          'border-default': legacyLightgray,
+        });
+
+        expect.soft(result.success).toEqual(false);
+        expect.soft(z.flattenError(result.error!)).toMatchObject({
+          fieldErrors: {
+            'border-default': [
+              'Not enough contrast between `border-default` (#999999) and `bg-default` (#ffffff). Calculated 2.849027755287037, need 3',
             ],
           },
         });
