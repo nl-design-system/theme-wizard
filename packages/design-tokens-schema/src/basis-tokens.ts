@@ -1,6 +1,6 @@
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
-import { ColorTokenValidationSchema } from './color-token';
+import { ColorTokenValidationSchema, compareContrast, stringifyColor, ColorTokenSchema } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs } from './resolve-refs';
 
@@ -29,22 +29,81 @@ export const BrandsSchema = z.record(
 );
 export type Brands = z.infer<typeof BrandsSchema>;
 
-export const ColorNameSchema = z.strictObject({
-  'bg-active': ColorTokenValidationSchema.optional(),
-  'bg-default': ColorTokenValidationSchema.optional(),
-  'bg-document': ColorTokenValidationSchema.optional(),
-  'bg-hover': ColorTokenValidationSchema.optional(),
-  'bg-subtle': ColorTokenValidationSchema.optional(),
-  'border-active': ColorTokenValidationSchema.optional(),
-  'border-default': ColorTokenValidationSchema.optional(),
-  'border-hover': ColorTokenValidationSchema.optional(),
-  'border-subtle': ColorTokenValidationSchema.optional(),
-  'color-active': ColorTokenValidationSchema.optional(),
-  'color-default': ColorTokenValidationSchema.optional(),
-  'color-document': ColorTokenValidationSchema.optional(),
-  'color-hover': ColorTokenValidationSchema.optional(),
-  'color-subtle': ColorTokenValidationSchema.optional(),
-});
+const COLOR_NAME_KEYS = [
+  'bg-active',
+  'bg-default',
+  'bg-document',
+  'bg-hover',
+  'bg-subtle',
+  'border-active',
+  'border-default',
+  'border-hover',
+  'border-subtle',
+  'color-active',
+  'color-default',
+  'color-document',
+  'color-hover',
+  'color-subtle',
+] as const;
+
+type ColorNameKey = (typeof COLOR_NAME_KEYS)[number];
+
+type ContrastRequirement = Partial<Record<ColorNameKey, Partial<Record<ColorNameKey, number>>>>;
+
+const CONTRAST: ContrastRequirement = {
+  'border-active': {
+    'bg-active': 3,
+  },
+  'border-default': {
+    'bg-default': 3,
+  },
+  'border-hover': {
+    'bg-hover': 3,
+  },
+  'color-active': {
+    'bg-active': 4.5,
+  },
+  'color-default': {
+    'color-default': 4.5,
+  },
+  'color-document': {
+    'bg-subtle': 4.5,
+  },
+  'color-hover': {
+    'bg-hover': 4.5,
+  },
+} as const;
+
+export const ColorNameSchema = z
+  .strictObject(Object.fromEntries(COLOR_NAME_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])))
+  .superRefine((colorNames, context) => {
+    for (const [foreground, contrastRequirements] of Object.entries(CONTRAST)) {
+      for (const [background, expectedContrast] of Object.entries(contrastRequirements)) {
+        if (background in colorNames) {
+          const foregroundColor = colorNames[foreground];
+          const backgroundColor = colorNames[background];
+          const foregroundResult = ColorTokenSchema.safeParse(foregroundColor);
+          const backgroundResult = ColorTokenSchema.safeParse(backgroundColor);
+
+          if (!foregroundResult.success || !backgroundResult.success) {
+            return;
+          }
+
+          const result = compareContrast(foregroundResult.data, backgroundResult.data);
+          if (result < expectedContrast) {
+            context.addIssue({
+              code: 'too_small',
+              input: result,
+              message: `Not enough contrast between \`${foreground}\` (${stringifyColor(foregroundResult.data['$value'])}) and \`${background}\` (${stringifyColor(backgroundResult.data['$value'])}). Calculated ${result}, need ${expectedContrast}`,
+              minimum: expectedContrast,
+              origin: 'number',
+              path: [foreground, '$value'],
+            });
+          }
+        }
+      }
+    }
+  });
 export type ColorName = z.infer<typeof ColorNameSchema>;
 
 export const BasisColorSchema = z.strictObject({

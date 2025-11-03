@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2022", "dom"],
+    "lib": ["es2024", "dom"],
     "outDir": "dist",
     "skipLibCheck": true,
     "moduleResolution": "bundler"
