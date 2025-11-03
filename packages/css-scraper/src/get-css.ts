@@ -79,7 +79,6 @@ export const getImportUrls = (css: string): string[] => {
 
 const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number) => {
   // TODO: pass error cause
-  /* v8 ignore if -- @preserve */
   if (error instanceof Error) {
     if (error.name === 'AbortError') {
       throw new TimeoutError(url, timeout);
@@ -96,7 +95,6 @@ const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number)
     }
 
     // TODO: add test cases for this
-    /* v8 ignore if -- @preserve */
     if (message === 'Not Found') {
       throw new NotFoundError(url);
     }
