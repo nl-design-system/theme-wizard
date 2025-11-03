@@ -18,9 +18,7 @@ export class TemplatePageHeader extends LitElement {
         <h2 aria-hidden="true" class="ams-visually-hidden" id="primary-navigation">Hoofdnavigatie</h2>
 
         <ul class="ams-page-header__menu">
-          <li class="ams-page-header__menu-item">
-            <slot name="menu-links"></slot>
-          </li>
+          <slot name="menu-links"></slot>
         </ul>
       </nav>
     </header>`;
