@@ -1,7 +1,6 @@
 import '../preview/preview';
 import '../sidebar/sidebar';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
-import '../preview-picker';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
@@ -10,6 +9,8 @@ import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
+import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import '../preview-picker';
 import appStyles from './app.css';
 
 /**
@@ -44,7 +45,7 @@ export class App extends LitElement {
 
     // Parse template selection from query param: ?templates=/group/page (dynamic)
     try {
-      const params = new URL(globalThis.location.href).searchParams.get('templates');
+      const params = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
       if (params) {
         const [group, page] = params.split('/').filter(Boolean);
         if (group && page) this.selectedTemplatePath = `/${group}/${page}`;

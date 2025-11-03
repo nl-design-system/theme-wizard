@@ -27,6 +27,8 @@ export interface DropdownChangeEvent {
   parent?: string;
 }
 
+export const PREVIEW_PICKER_NAME = 'templatePath';
+
 // TODO: get from outside source
 // Placeholder for now
 const TEMPLATES: TemplateGroup[] = [
@@ -82,7 +84,7 @@ export class PreviewPicker extends LitElement {
     }));
 
     // Determine current selection from URL (?templates=...), fallback to first option
-    let current = new URL(globalThis.location.href).searchParams.get('templates') || '';
+    let current = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME) || '';
 
     if (!current) {
       const firstGroup = dropdownOptions[0];
@@ -92,7 +94,7 @@ export class PreviewPicker extends LitElement {
 
     return html`<form method="GET" id="preview-form">
       <wiz-dropdown
-        name="templates"
+        name=${PREVIEW_PICKER_NAME}
         label="Voorvertoning"
         .options=${dropdownOptions}
         .isOptgroup=${true}
