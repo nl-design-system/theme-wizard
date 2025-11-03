@@ -26,12 +26,12 @@
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*",
     "@vercel/related-projects": "1.0.0",
-    "astro": "5.14.1"
+    "astro": "5.15.3"
   },
   "devDependencies": {
-    "@playwright/test": "1.56.0",
+    "@playwright/test": "1.56.1",
     "postcss-html": "1.8.0",
-    "stylelint": "16.22.0",
+    "stylelint": "16.25.0",
     "stylelint-config-astro": "1.0.4"
   }
 }
