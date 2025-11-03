@@ -22,7 +22,7 @@ describe('public surface API', () => {
       'stringifyColor',
       'legacyToModernColor',
       'ColorTokenValidationSchema',
-      'colorValueToColorJS',
+      'colorTokenValueToColorJS',
       'compareContrast',
       'DimensionTypeSchema',
       'DimensionUnitSchema',

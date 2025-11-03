@@ -99,7 +99,7 @@ export const parseColor = (color: string): ColorValue => {
 };
 
 export const stringifyColor = (color: ColorValue): string => {
-  const reference = colorValueToColorJS(color);
+  const reference = colorTokenValueToColorJS(color);
   const converted = reference.to('srgb');
   return converted.toString({
     // Collapse prevents using the shorthand notation
@@ -134,7 +134,7 @@ const ColorReferenceSchema = z.object({
 /** @description Validation schema that allows legacy color tokens and upgrades them to modern */
 export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema, ColorReferenceSchema]);
 
-export const colorValueToColorJS = (color: ColorValue): Color => {
+export const colorTokenValueToColorJS = (color: ColorValue): Color => {
   return new Color({
     alpha: color.alpha,
     coords: color.components.map((component) => (component === 'none' ? 0 : component)) as Coords,
@@ -143,7 +143,7 @@ export const colorValueToColorJS = (color: ColorValue): Color => {
 };
 
 export const compareContrast = (tokenA: ColorToken, tokenB: ColorToken): number => {
-  const colorA = colorValueToColorJS(tokenA.$value);
-  const colorB = colorValueToColorJS(tokenB.$value);
+  const colorA = colorTokenValueToColorJS(tokenA.$value);
+  const colorB = colorTokenValueToColorJS(tokenB.$value);
   return colorA.contrastWCAG21(colorB);
 };
