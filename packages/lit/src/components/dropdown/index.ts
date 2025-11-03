@@ -21,21 +21,21 @@ export class Dropdown extends LitElement {
 
   static override readonly styles = [unsafeCSS(selectStyles)];
 
-  static formAssociated = true;
-  private readonly internals_ = this.attachInternals();
+  static readonly formAssociated = true;
+  readonly #internals = this.attachInternals();
 
   override connectedCallback() {
     super.connectedCallback();
     // Ensure initial form value reflects current value
-    this.internals_.setFormValue(this.value);
+    this.#internals.setFormValue(this.value);
   }
 
-  private readonly handleChange = (event: Event) => {
+  readonly #handleChange = (event: Event) => {
     if (event.target instanceof HTMLSelectElement) {
       const newValue = event.target.value;
       if (newValue !== this.value) {
         this.value = newValue;
-        this.internals_.setFormValue(this.value);
+        this.#internals.setFormValue(this.value);
       }
       this.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -48,7 +48,7 @@ export class Dropdown extends LitElement {
         id=${this.name}
         class="utrecht-select utrecht-select--html-select"
         .value=${this.value}
-        @change=${this.handleChange}
+        @change=${this.#handleChange}
       >
         ${this.options.map(
           (option) => html`

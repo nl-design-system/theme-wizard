@@ -13,8 +13,8 @@ const mount = async () => {
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
-    const origin = window.location.origin;
-    window.history.pushState({}, '', `${origin}/`);
+    const origin = globalThis.location.origin;
+    globalThis.history.pushState({}, '', `${origin}/`);
     document.body.innerHTML = '';
   });
 
@@ -27,7 +27,7 @@ describe(`<${tag}>`, () => {
     expect(dropdown).toBeTruthy();
   });
 
-  test('builds optgroup options with full paths', async () => {
+  test('builds optgroup options with full template paths', async () => {
     const el = await mount();
     const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
     const options = dropdown?.options;
@@ -37,16 +37,16 @@ describe(`<${tag}>`, () => {
     expect(allValues).toContain('/preview-components/collage-1');
   });
 
-  test('defaults to first option when no templates param', async () => {
+  test('defaults to first option when no templatePath param', async () => {
     const el = await mount();
     const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
 
     expect(dropdown?.value).toBe('/my-environment/overview');
   });
 
-  test('reads current value from ?templates query param', async () => {
-    const origin = window.location.origin;
-    window.history.pushState({}, '', `${origin}/?templates=/preview-components/collage-1`);
+  test('reads current value from ?templatePath query param', async () => {
+    const origin = globalThis.location.origin;
+    globalThis.history.pushState({}, '', `${origin}/?templatePath=/preview-components/collage-1`);
     const el = await mount();
     const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
 
