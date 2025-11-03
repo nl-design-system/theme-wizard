@@ -46,7 +46,7 @@ export class App extends LitElement {
     try {
       const params = new URL(globalThis.location.href).searchParams.get('templates');
       if (params) {
-        const [, group, page] = params.split('/');
+        const [group, page] = params.split('/').filter(Boolean);
         if (group && page) this.selectedTemplatePath = `/${group}/${page}`;
       }
     } catch {
