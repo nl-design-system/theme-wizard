@@ -17,8 +17,8 @@ const isValueObject = (value: unknown): value is ValueObject => {
  * ```
  */
 const extractRefPath = (value: string): string | null => {
-  const match = REF_REGEX.exec(value)!;
-  return match[1];
+  const match = REF_REGEX.exec(value);
+  return match?.[1] ?? null;
 };
 
 const processRefs = (
