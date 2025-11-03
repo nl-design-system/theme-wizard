@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import Scraper from './index';
 
 describe('Scraper', () => {
-  const fetchSpy = vi.spyOn(window, 'fetch').mockImplementation(async () => {
+  const fetchSpy = vi.spyOn(window, 'fetch').mockImplementation(async function () {
     return new Response('', { status: 200 });
   });
 
