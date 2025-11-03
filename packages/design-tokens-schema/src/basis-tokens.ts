@@ -50,6 +50,7 @@ type ColorNameKey = (typeof COLOR_NAME_KEYS)[number];
 
 type ContrastRequirement = Partial<Record<ColorNameKey, Partial<Record<ColorNameKey, number>>>>;
 
+/** @see https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#as-2-toepassing */
 const CONTRAST: ContrastRequirement = {
   'border-active': {
     'bg-active': 3,
@@ -82,6 +83,8 @@ export const ColorNameSchema = z
         if (background in colorNames) {
           const foregroundColor = colorNames[foreground];
           const backgroundColor = colorNames[background];
+
+          // Validate the colors and upgrade legacy colors to modern syntax
           const foregroundResult = ColorTokenSchema.safeParse(foregroundColor);
           const backgroundResult = ColorTokenSchema.safeParse(backgroundColor);
 
