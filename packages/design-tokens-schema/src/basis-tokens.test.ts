@@ -10,6 +10,8 @@ import {
   ThemeSchema,
   resolveConfigRefs,
   BasisTextSchema,
+  addContrastExtensions,
+  EXTENSION_CONTRAST_WITH,
 } from './basis-tokens';
 
 describe('brand', () => {
@@ -280,6 +282,69 @@ describe('theme', () => {
       },
     },
   };
+
+  describe('adding contrast-with extensions', () => {
+    test('adds contrast-with extensions for tokens that we know', () => {
+      const config = {
+        brand: brandConfig,
+        common: {
+          basis: {
+            color: {
+              default: {
+                'color-document': {
+                  $type: 'color',
+                  $value: `{ma.color.indigo.5}`,
+                  // the transformation will add an $extension here
+                },
+              },
+            },
+          },
+        },
+      };
+      const result = ThemeSchema.transform(addContrastExtensions).safeParse(config);
+      expect(result.success).toEqual(true);
+      expect(result.data?.common?.basis?.color?.default?.['color-document']).toMatchObject({
+        $extensions: {
+          [EXTENSION_CONTRAST_WITH]: [
+            {
+              color: {
+                $type: 'color',
+                $value: '{common.basis.color.default.bg-subtle}',
+              },
+              ratio: 4.5,
+            },
+          ],
+        },
+      });
+    });
+  });
+
+  test('contrast-with extensions do not mess with existing extensions', () => {
+    const config = {
+      brand: brandConfig,
+      common: {
+        basis: {
+          color: {
+            default: {
+              'color-document': {
+                // the transformation will add an $extension here
+                $extensions: {
+                  'nl.nldesignsystem.test': 1,
+                },
+                $type: 'color',
+                $value: `{ma.color.indigo.5}`,
+              },
+            },
+          },
+        },
+      },
+    };
+    const result = ThemeSchema.transform(addContrastExtensions).safeParse(config);
+    expect(result.success).toEqual(true);
+    expect(
+      result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.['nl.nldesignsystem.test'],
+    ).toEqual(1);
+  });
 
   describe('resolving Design Token refs', () => {
     describe('resolve color ref', () => {

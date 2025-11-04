@@ -3,6 +3,9 @@ import { BaseDesignTokenIdentifierSchema } from './base-token';
 import { ColorTokenValidationSchema } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs } from './resolve-refs';
+import { walkColors } from './walker';
+
+export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 
 export const ColorOrColorScaleSchema = z.union([
   ColorTokenValidationSchema,
@@ -29,23 +32,54 @@ export const BrandsSchema = z.record(
 );
 export type Brands = z.infer<typeof BrandsSchema>;
 
-export const ColorNameSchema = z.strictObject({
-  'bg-active': ColorTokenValidationSchema.optional(),
-  'bg-default': ColorTokenValidationSchema.optional(),
-  'bg-document': ColorTokenValidationSchema.optional(),
-  'bg-hover': ColorTokenValidationSchema.optional(),
-  'bg-subtle': ColorTokenValidationSchema.optional(),
-  'border-active': ColorTokenValidationSchema.optional(),
-  'border-default': ColorTokenValidationSchema.optional(),
-  'border-hover': ColorTokenValidationSchema.optional(),
-  'border-subtle': ColorTokenValidationSchema.optional(),
-  'color-active': ColorTokenValidationSchema.optional(),
-  'color-default': ColorTokenValidationSchema.optional(),
-  'color-document': ColorTokenValidationSchema.optional(),
-  'color-hover': ColorTokenValidationSchema.optional(),
-  'color-subtle': ColorTokenValidationSchema.optional(),
-});
+const COLOR_NAME_KEYS = [
+  'bg-active',
+  'bg-default',
+  'bg-document',
+  'bg-hover',
+  'bg-subtle',
+  'border-active',
+  'border-default',
+  'border-hover',
+  'border-subtle',
+  'color-active',
+  'color-default',
+  'color-document',
+  'color-hover',
+  'color-subtle',
+] as const;
+export type ColorNameKey = (typeof COLOR_NAME_KEYS)[number];
+
+export const ColorNameSchema = z.strictObject(
+  Object.fromEntries(COLOR_NAME_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
+);
 export type ColorName = z.infer<typeof ColorNameSchema>;
+
+type ContrastRequirement = Partial<Record<ColorNameKey, Partial<Record<ColorNameKey, number>>>>;
+/** @see https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#as-2-toepassing */
+const CONTRAST: ContrastRequirement = {
+  'border-active': {
+    'bg-active': 3,
+  },
+  'border-default': {
+    'bg-default': 3,
+  },
+  'border-hover': {
+    'bg-hover': 3,
+  },
+  'color-active': {
+    'bg-active': 4.5,
+  },
+  'color-default': {
+    'bg-default': 4.5,
+  },
+  'color-document': {
+    'bg-subtle': 4.5,
+  },
+  'color-hover': {
+    'bg-hover': 4.5,
+  },
+} as const;
 
 export const BasisColorSchema = z.strictObject({
   'accent-1': ColorNameSchema.optional(),
@@ -189,3 +223,32 @@ export const ThemeSchema = z
   });
 
 export type Theme = z.infer<typeof ThemeSchema>;
+
+export const addContrastExtensions = (rootConfig: Theme) => {
+  walkColors(rootConfig, (color, path) => {
+    const lastPath = path.at(-1)! as ColorNameKey;
+
+    // Check that we have listed this color to have a known contrast counterpart
+    if (!(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
+
+    // Make sure $extensions exists
+    color.$extensions ??= {};
+
+    // Loop over the expected ratios:
+    for (const [counterPartName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
+      const contrastWith = {
+        color: {
+          $type: 'color',
+          $value: `{${path.slice(0, -1).join('.')}.${counterPartName}}`,
+        },
+        ratio: expectedRatio,
+      };
+
+      color.$extensions = {
+        ...color.$extensions,
+        [EXTENSION_CONTRAST_WITH]: [contrastWith],
+      };
+    }
+  });
+  return rootConfig;
+};
