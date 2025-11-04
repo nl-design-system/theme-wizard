@@ -28,7 +28,6 @@ export class App extends LitElement {
   );
 
   // Template list provided by the host application (JSON string attribute)
-  // Expected shape: [{ htmlUrl, name, title, pageTitle, page }]
   @property({ attribute: 'templates' }) templatesAttr?: string;
 
   // Parsed templates list (computed)
