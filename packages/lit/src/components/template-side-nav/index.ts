@@ -1,11 +1,10 @@
 import sidenavStyles from '@gemeente-denhaag/side-navigation/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import sideNavTokenMap from './styles';
 
 @customElement('template-side-nav')
 export class TemplateSideNav extends LitElement {
-  static override readonly styles = [unsafeCSS(sidenavStyles), sideNavTokenMap];
+  static override readonly styles = [unsafeCSS(sidenavStyles)];
 
   override render() {
     return html`

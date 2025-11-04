@@ -186,8 +186,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 2.5.0
-        version: 2.5.0
+        specifier: 3.0.0
+        version: 3.0.0
       '@utrecht/link-list-css':
         specifier: 3.0.0
         version: 3.0.0
@@ -1188,6 +1188,9 @@ packages:
 
   '@nl-design-system-community/ma-design-tokens@2.5.0':
     resolution: {integrity: sha512-3TYzzbo0C5br42SiS6jISScUL7u4hxgDvU2DZVBv6gJ40jBZPpXIgLI1T/JESQj79+nY2AddGm6l8xg2o2WLFA==}
+
+  '@nl-design-system-community/ma-design-tokens@3.0.0':
+    resolution: {integrity: sha512-95uF6BODj/RldOGIdB0i4L8ISoJ4CauQVzZb6sgD8GBA4btEdX3Cdc6VOKncKbknads5WePeNFap7lo7YrlRGg==}
 
   '@nl-design-system/eslint-config@2.1.1':
     resolution: {integrity: sha512-CU1IOIZk6gV9048rU/1wfV2OaQKhdRFCktpC7jNj4NpnNQstOHKUojmB08xajxPTzwwerQS303dGSrC1XW6r/w==}
@@ -7161,6 +7164,8 @@ snapshots:
   '@nl-design-system-candidate/skip-link-css@1.0.3': {}
 
   '@nl-design-system-community/ma-design-tokens@2.5.0': {}
+
+  '@nl-design-system-community/ma-design-tokens@3.0.0': {}
 
   '@nl-design-system/eslint-config@2.1.1(eslint@9.31.0)(typescript@5.8.3)':
     dependencies:
