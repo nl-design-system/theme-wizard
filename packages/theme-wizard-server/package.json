@@ -26,9 +26,9 @@
     "clean": "rimraf dist/"
   },
   "devDependencies": {
-    "@hono/vite-dev-server": "0.21.1",
+    "@hono/vite-dev-server": "0.23.0",
     "@vitest/coverage-v8": "4.0.6",
-    "rimraf": "6.0.1",
+    "rimraf": "6.1.0",
     "typescript": "5.9.3",
     "vercel": "48.2.0",
     "vite": "6.3.5",
@@ -36,10 +36,10 @@
   },
   "dependencies": {
     "@hono/swagger-ui": "0.5.2",
-    "@hono/zod-openapi": "1.1.3",
+    "@hono/zod-openapi": "1.1.4",
     "@nl-design-system-community/css-scraper": "workspace:*",
     "@vercel/related-projects": "1.0.0",
-    "hono": "4.9.9",
+    "hono": "4.10.4",
     "zod": "4.1.12"
   }
 }
