@@ -232,8 +232,8 @@ importers:
         specifier: 7.28.0
         version: 7.28.0
       '@etchteam/storybook-addon-status':
-        specifier: 5.0.0
-        version: 5.0.0
+        specifier: 8.0.0
+        version: 8.0.0(storybook@8.6.14(prettier@3.6.2))
       '@nl-design-system-community/assets':
         specifier: workspace:*
         version: link:../../proprietary/assets
@@ -830,8 +830,10 @@ packages:
     resolution: {integrity: sha512-1+WqvgNMhmlAambTvT3KPtCl/Ibr68VldY2XY40SL1CE0ZXiakFR/cbTspaF5HsnpDMvcYYoJHfl4980NBjGag==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@etchteam/storybook-addon-status@5.0.0':
-    resolution: {integrity: sha512-0Dg94xQ3T+rYTi6ekFkaH0XU9k0IQOqidiSmwN47Oqw4u1qjxK6m7wV3j7C0deLEuf4U4PrAcsDfDjyehKne2A==}
+  '@etchteam/storybook-addon-status@8.0.0':
+    resolution: {integrity: sha512-PR0qiT5ndB32rfRi3a6QJE66sUuTD2GeJMmQFdaEOLjTWuJ/usdZ6hXXCmWadPLZXcg6wkvHGFQxDSOKNVjU9A==}
+    peerDependencies:
+      storybook: ^10.0.0
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -6782,9 +6784,10 @@ snapshots:
       '@eslint/core': 0.15.1
       levn: 0.4.1
 
-  '@etchteam/storybook-addon-status@5.0.0':
+  '@etchteam/storybook-addon-status@8.0.0(storybook@8.6.14(prettier@3.6.2))':
     dependencies:
       lodash: 4.17.21
+      storybook: 8.6.14(prettier@3.6.2)
 
   '@fastify/busboy@2.1.1': {}
 
