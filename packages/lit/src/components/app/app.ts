@@ -59,11 +59,8 @@ export class App extends LitElement {
 
     // Parse template selection from query param: ?templates=/group/page (dynamic)
     try {
-      const params = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
-      if (params) {
-        const [group, page] = params.split('/').filter(Boolean);
-        if (group && page) this.selectedTemplatePath = `/${group}/${page}`;
-      }
+      const templatePath = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
+      if (templatePath) this.selectedTemplatePath = templatePath;
     } catch {
       // ignore parsing errors
     }

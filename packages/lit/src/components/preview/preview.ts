@@ -62,13 +62,9 @@ export class ThemePreview extends LitElement {
 
   readonly #fetchCSS = async (): Promise<string | undefined> => {
     try {
-      const absoluteUrl = new URL(this.previewUrl, globalThis.location.href).href;
-      const currentOrigin = new URL(globalThis.location.href).origin;
-      const urlOrigin = new URL(absoluteUrl).origin;
-      const isExternal = currentOrigin !== urlOrigin;
-
-      const urlToFetch = isExternal ? new URL(this.previewUrl) : new URL(this.previewUrl, globalThis.location.href);
-      return await this.scraper.getCSS(urlToFetch);
+      // Internal template page: resolve to our templates route
+      const targetUrl = new URL(this.previewUrl, globalThis.location.href);
+      return await this.scraper.getCSS(targetUrl);
     } catch (err) {
       console.error('Failed to fetch CSS:', err);
       return undefined;
