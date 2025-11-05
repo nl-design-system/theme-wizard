@@ -8,7 +8,7 @@ For more info about the NL Design System and learn about things happening in our
 
 ## Install prerequisites
 
-You need to have the following tools installed to run Storybook locally:
+You need to have the following tools installed to run Theme Wizard locally:
 
 - Git
 - [Node.js and npm](https://nodejs.org/en/)

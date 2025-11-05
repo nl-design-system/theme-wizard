@@ -68,8 +68,6 @@
     "changeset:empty": "changeset --empty",
     "changeset:publish": "changeset publish",
     "changeset:status": "changeset status --since origin/main",
-    "start": "http-server packages/storybook/dist/",
-    "storybook": "pnpm run '/^watch:.+$/'",
     "test": "pnpm run --recursive test",
     "test-coverage": "pnpm run --recursive test-coverage",
     "test-build": "pnpm run --recursive test-build",
@@ -83,7 +81,6 @@
     "update-patch": "npm-check-updates --configFileName .ncurc.patch.cjs",
     "update-minor": "npm-check-updates --configFileName .ncurc.minor.cjs",
     "update-major": "npm-check-updates --configFileName .ncurc.major.cjs",
-    "watch:storybook": "pnpm run storybook",
     "watch:style-dictionary": "pnpm --filter @nl-design-system-community/design-tokens run watch:style-dictionary"
   },
   "dependencies": {
