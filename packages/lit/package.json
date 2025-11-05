@@ -44,6 +44,7 @@
     "style-dictionary": "4.4.0"
   },
   "devDependencies": {
+    "@nl-design-system-community/templates": "workspace:*",
     "@vitest/browser-playwright": "4.0.6",
     "@vitest/coverage-v8": "4.0.6",
     "playwright": "1.56.1",
