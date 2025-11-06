@@ -7,6 +7,7 @@ export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
+  #stylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   constructor(tokens?: DesignTokens) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
@@ -24,6 +25,14 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#tokens = values;
+    this.toCSS().then((css) => {
+      const sheet = this.#stylesheet;
+      sheet.replace(css);
+    });
+  }
+
+  get stylesheet() {
+    return this.#stylesheet;
   }
 
   async toCSS({ resolved = false }: { resolved?: boolean } = {}) {
@@ -41,14 +50,14 @@ export default class Theme {
               destination: 'variables.css',
               format: 'css/variables',
               options: {
-                outputReferences: !resolved
-              }
+                outputReferences: !resolved,
+              },
             },
           ],
           transformGroup: 'css',
         },
       },
-      tokens: this.#tokens,
+      tokens: this.tokens,
     });
     const outputs = await sd.formatPlatform('css');
     return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');

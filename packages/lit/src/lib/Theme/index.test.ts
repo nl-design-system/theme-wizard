@@ -16,7 +16,7 @@ describe('Theme', () => {
   test('can export to css custom properties', async () => {
     const theme = new Theme();
     const css = await theme.toCSS();
-    expect(css).toMatchSnapshot();
+    return expect(css).toMatchSnapshot();
   });
 
   test('can export to resolved css custom properties', async () => {
