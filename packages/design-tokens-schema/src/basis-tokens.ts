@@ -32,12 +32,7 @@ export const BrandsSchema = z.record(
 );
 export type Brands = z.infer<typeof BrandsSchema>;
 
-const COLOR_NAME_KEYS = [
-  'bg-active',
-  'bg-default',
-  'bg-document',
-  'bg-hover',
-  'bg-subtle',
+const FOREGROUND_COLOR_KEYS = [
   'border-active',
   'border-default',
   'border-hover',
@@ -48,6 +43,12 @@ const COLOR_NAME_KEYS = [
   'color-hover',
   'color-subtle',
 ] as const;
+type ForegroundColorKey = (typeof FOREGROUND_COLOR_KEYS)[number];
+
+const BACKGROUND_COLOR_KEYS = ['bg-active', 'bg-default', 'bg-document', 'bg-hover', 'bg-subtle'] as const;
+type BackgroundColorKey = (typeof BACKGROUND_COLOR_KEYS)[number];
+
+const COLOR_NAME_KEYS = [...BACKGROUND_COLOR_KEYS, ...FOREGROUND_COLOR_KEYS] as const;
 export type ColorNameKey = (typeof COLOR_NAME_KEYS)[number];
 
 export const ColorNameSchema = z.strictObject(
@@ -55,7 +56,7 @@ export const ColorNameSchema = z.strictObject(
 );
 export type ColorName = z.infer<typeof ColorNameSchema>;
 
-type ContrastRequirement = Partial<Record<ColorNameKey, Partial<Record<ColorNameKey, number>>>>;
+type ContrastRequirement = Partial<Record<ForegroundColorKey, Partial<Record<BackgroundColorKey, number>>>>;
 /** @see https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#as-2-toepassing */
 const CONTRAST: ContrastRequirement = {
   'border-active': {
@@ -226,10 +227,10 @@ export type Theme = z.infer<typeof ThemeSchema>;
 
 export const addContrastExtensions = (rootConfig: Theme) => {
   walkColors(rootConfig, (color, path) => {
-    const lastPath = path.at(-1)! as ColorNameKey;
+    const lastPath = path.at(-1)! as ForegroundColorKey;
 
     // Check that we have listed this color to have a known contrast counterpart
-    if (!(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
+    if (!FOREGROUND_COLOR_KEYS.includes(lastPath) || !(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
 
     // Make sure $extensions exists
     color.$extensions ??= {};
