@@ -12,6 +12,7 @@ import {
   BasisTextSchema,
   addContrastExtensions,
   EXTENSION_CONTRAST_WITH,
+  EXTENSION_RESOLVED_FROM,
 } from './basis-tokens';
 
 describe('brand', () => {
@@ -387,7 +388,12 @@ describe('theme', () => {
       test('returns the schema with refs replaced by actual values', () => {
         const result = ThemeSchema.transform(resolveConfigRefs).safeParse(config);
         const expectedCommonColor = brandConfig.ma.color.indigo[5];
-        expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual(expectedCommonColor);
+        expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
+          ...expectedCommonColor,
+          $extensions: {
+            [EXTENSION_RESOLVED_FROM]: 'ma.color.indigo.5',
+          },
+        });
       });
     });
 

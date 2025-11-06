@@ -4,6 +4,7 @@ import { ColorTokenValidationSchema } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs } from './resolve-refs';
 import { walkColors } from './walker';
+export { EXTENSION_RESOLVED_FROM } from './resolve-refs';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 
@@ -48,11 +49,11 @@ type ForegroundColorKey = (typeof FOREGROUND_COLOR_KEYS)[number];
 const BACKGROUND_COLOR_KEYS = ['bg-active', 'bg-default', 'bg-document', 'bg-hover', 'bg-subtle'] as const;
 type BackgroundColorKey = (typeof BACKGROUND_COLOR_KEYS)[number];
 
-const COLOR_NAME_KEYS = [...BACKGROUND_COLOR_KEYS, ...FOREGROUND_COLOR_KEYS] as const;
-export type ColorNameKey = (typeof COLOR_NAME_KEYS)[number];
+const COLOR_KEYS = [...BACKGROUND_COLOR_KEYS, ...FOREGROUND_COLOR_KEYS] as const;
+export type ColorNameKey = (typeof COLOR_KEYS)[number];
 
 export const ColorNameSchema = z.strictObject(
-  Object.fromEntries(COLOR_NAME_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
+  Object.fromEntries(COLOR_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
 );
 export type ColorName = z.infer<typeof ColorNameSchema>;
 

@@ -1,4 +1,5 @@
 import dlv from 'dlv';
+import type { BaseDesignTokenValue } from './base-token';
 
 const REF_REGEX = /^\{(.+)\}$/;
 
@@ -50,15 +51,19 @@ const processRefs = (
   return true;
 };
 
+export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
+
 /**
  * @description
  * Recursively loop over `config` to look for {ma.color.indigo.5} -like token refs
  * and replace them with the actual values from `root`
  */
 export const resolveRefs = (config: unknown, root?: Record<string, unknown>): void => {
-  processRefs(config, root, (config, key, resolvedRef) => {
+  processRefs(config, root, (config, key, resolvedRef, _tokenType, refPath) => {
     if (isValueObject(resolvedRef) && resolvedRef['$value']) {
       config[key] = resolvedRef['$value'];
+      config['$extensions'] ??= {} as BaseDesignTokenValue['$extensions'];
+      config['$extensions'][EXTENSION_RESOLVED_FROM] = refPath;
     }
     return true;
   });
