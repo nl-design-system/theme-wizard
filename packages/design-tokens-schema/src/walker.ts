@@ -39,5 +39,5 @@ const isColorToken = (obj: unknown): obj is ColorToken => {
 };
 
 export const walkColors = (data: unknown, callback: (data: ColorToken, path: string[]) => void): void => {
-  walkObject<ColorToken>(data, isColorToken, (obj, path) => callback(obj, path));
+  walkObject<ColorToken>(data, isColorToken, callback);
 };

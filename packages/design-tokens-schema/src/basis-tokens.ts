@@ -235,11 +235,11 @@ export const addContrastExtensions = (rootConfig: Theme) => {
     color.$extensions ??= {};
 
     // Loop over the expected ratios:
-    for (const [counterPartName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
+    for (const [counterpartName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
       const contrastWith = {
         color: {
           $type: 'color',
-          $value: `{${path.slice(0, -1).join('.')}.${counterPartName}}`,
+          $value: `{${path.slice(0, -1).join('.')}.${counterpartName}}`,
         },
         ratio: expectedRatio,
       };
