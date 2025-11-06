@@ -1,5 +1,5 @@
 import dlv from 'dlv';
-import type { BaseDesignTokenValue } from './base-token';
+import type { BaseDesignTokenValue, BaseDesignToken } from './base-token';
 
 const REF_REGEX = /^\{(.+)\}$/;
 
@@ -62,8 +62,9 @@ export const resolveRefs = (config: unknown, root?: Record<string, unknown>): vo
   processRefs(config, root, (config, key, resolvedRef, _tokenType, refPath) => {
     if (isValueObject(resolvedRef) && resolvedRef['$value']) {
       config[key] = resolvedRef['$value'];
-      config['$extensions'] ??= {} as BaseDesignTokenValue['$extensions'];
-      config['$extensions'][EXTENSION_RESOLVED_FROM] = refPath;
+      const token = config as BaseDesignTokenValue;
+      token['$extensions'] ??= {};
+      token['$extensions'][EXTENSION_RESOLVED_FROM] = refPath;
     }
     return true;
   });
