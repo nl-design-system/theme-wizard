@@ -1,0 +1,6839 @@
+{
+  "color": {
+    "accent-1": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9921568627450981,
+            0.9568627450980393,
+            0.9921568627450981,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+    },
+    "accent-1-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-1-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+    },
+    "accent-2": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9921568627450981,
+            0.9568627450980393,
+            0.9921568627450981,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+    },
+    "accent-2-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-2-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+    },
+    "accent-3": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9921568627450981,
+            0.9568627450980393,
+            0.9921568627450981,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+    },
+    "accent-3-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.accent-3-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+    },
+    "action-1": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9921568627450981,
+            0.9568627450980393,
+            0.9921568627450981,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+    },
+    "action-1-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-1-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+    },
+    "action-2": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.9647058823529412,
+            1,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7803921568627451,
+            0.8901960784313725,
+            1,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9647058823529412,
+            0.9803921568627451,
+            1,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.15294117647058825,
+            0.36470588235294116,
+            0.5450980392156862,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.5215686274509804,
+            0.792156862745098,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.12156862745098039,
+            0.2784313725490196,
+            0.4117647058823529,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.08235294117647059,
+            0.19215686274509805,
+            0.2901960784313726,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.15294117647058825,
+            0.36470588235294116,
+            0.5450980392156862,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+    },
+    "action-2-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.12156862745098039,
+            0.2784313725490196,
+            0.4117647058823529,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.12156862745098039,
+            0.2784313725490196,
+            0.4117647058823529,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.15294117647058825,
+            0.36470588235294116,
+            0.5450980392156862,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.08235294117647059,
+            0.19215686274509805,
+            0.2901960784313726,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.9647058823529412,
+            1,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7803921568627451,
+            0.8901960784313725,
+            1,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.5215686274509804,
+            0.792156862745098,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.action-2-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+    },
+    "default": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.8509803921568627,
+            0.8627450980392157,
+            0.8862745098039215,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9529411764705882,
+            0.9686274509803922,
+            0.996078431372549,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.27058823529411763,
+            0.2823529411764706,
+            0.30196078431372547,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.18823529411764706,
+            0.2,
+            0.2196078431372549,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.11372549019607843,
+            0.12156862745098039,
+            0.1411764705882353,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.27058823529411763,
+            0.2823529411764706,
+            0.30196078431372547,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+    },
+    "default-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.18823529411764706,
+            0.2,
+            0.2196078431372549,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.18823529411764706,
+            0.2,
+            0.2196078431372549,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.27058823529411763,
+            0.2823529411764706,
+            0.30196078431372547,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.11372549019607843,
+            0.12156862745098039,
+            0.1411764705882353,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.8509803921568627,
+            0.8627450980392157,
+            0.8862745098039215,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.default-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+    },
+    "disabled": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+    },
+    "disabled-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.disabled-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+    },
+    "highlight": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8156862745098039,
+            0.3843137254901961,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.984313725490196,
+            0.9176470588235294,
+            0.7450980392156863,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9803921568627451,
+            0.8705882352941177,
+            0.5725490196078431,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.9686274509803922,
+            0.8980392156862745,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.27450980392156865,
+            0.10196078431372549,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5607843137254902,
+            0.4549019607843137,
+            0.13725490196078433,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.44313725490196076,
+            0.3568627450980392,
+            0.08627450980392157,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8156862745098039,
+            0.3843137254901961,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20392156862745098,
+            0.17254901960784313,
+            0.0784313725490196,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.44313725490196076,
+            0.3568627450980392,
+            0.08627450980392157,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20392156862745098,
+            0.17254901960784313,
+            0.0784313725490196,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.27450980392156865,
+            0.10196078431372549,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.44313725490196076,
+            0.3568627450980392,
+            0.08627450980392157,
+          ],
+        },
+      },
+    },
+    "highlight-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.27450980392156865,
+            0.10196078431372549,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.44313725490196076,
+            0.3568627450980392,
+            0.08627450980392157,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.27450980392156865,
+            0.10196078431372549,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.27450980392156865,
+            0.10196078431372549,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20392156862745098,
+            0.17254901960784313,
+            0.0784313725490196,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.984313725490196,
+            0.9176470588235294,
+            0.7450980392156863,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8156862745098039,
+            0.3843137254901961,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9803921568627451,
+            0.8705882352941177,
+            0.5725490196078431,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6666666666666666,
+            0.5411764705882353,
+            0.14901960784313725,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.highlight-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8156862745098039,
+            0.3843137254901961,
+          ],
+        },
+      },
+    },
+    "info": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.9647058823529412,
+            1,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7803921568627451,
+            0.8901960784313725,
+            1,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9647058823529412,
+            0.9803921568627451,
+            1,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.15294117647058825,
+            0.36470588235294116,
+            0.5450980392156862,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.5215686274509804,
+            0.792156862745098,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.12156862745098039,
+            0.2784313725490196,
+            0.4117647058823529,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.08235294117647059,
+            0.19215686274509805,
+            0.2901960784313726,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.15294117647058825,
+            0.36470588235294116,
+            0.5450980392156862,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+    },
+    "info-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.12156862745098039,
+            0.2784313725490196,
+            0.4117647058823529,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.19607843137254902,
+            0.45098039215686275,
+            0.6705882352941176,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.12156862745098039,
+            0.2784313725490196,
+            0.4117647058823529,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.15294117647058825,
+            0.36470588235294116,
+            0.5450980392156862,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.08235294117647059,
+            0.19215686274509805,
+            0.2901960784313726,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.9647058823529412,
+            1,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7803921568627451,
+            0.8901960784313725,
+            1,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.5215686274509804,
+            0.792156862745098,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.info-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6274509803921569,
+            0.807843137254902,
+            0.984313725490196,
+          ],
+        },
+      },
+    },
+    "negative": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.7450980392156863,
+            0.7372549019607844,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.9529411764705882,
+            0.9529411764705882,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.8470588235294118,
+            0.8470588235294118,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.9764705882352941,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5333333333333333,
+            0.1568627450980392,
+            0.2235294117647059,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7843137254901961,
+            0.23921568627450981,
+            0.2901960784313726,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6745098039215687,
+            0.1843137254901961,
+            0.23137254901960785,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.7450980392156863,
+            0.7372549019607844,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.12941176470588237,
+            0.17254901960784313,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6745098039215687,
+            0.1843137254901961,
+            0.23137254901960785,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3686274509803922,
+            0.11372549019607843,
+            0.1450980392156863,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5333333333333333,
+            0.1568627450980392,
+            0.2235294117647059,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6745098039215687,
+            0.1843137254901961,
+            0.23137254901960785,
+          ],
+        },
+      },
+    },
+    "negative-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.12941176470588237,
+            0.17254901960784313,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6745098039215687,
+            0.1843137254901961,
+            0.23137254901960785,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.12941176470588237,
+            0.17254901960784313,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5333333333333333,
+            0.1568627450980392,
+            0.2235294117647059,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3686274509803922,
+            0.11372549019607843,
+            0.1450980392156863,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.9529411764705882,
+            0.9529411764705882,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.7450980392156863,
+            0.7372549019607844,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.8470588235294118,
+            0.8470588235294118,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7843137254901961,
+            0.23921568627450981,
+            0.2901960784313726,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.negative-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.7450980392156863,
+            0.7372549019607844,
+          ],
+        },
+      },
+    },
+    "positive": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6392156862745098,
+            0.8745098039215686,
+            0.6039215686274509,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9372549019607843,
+            0.9803921568627451,
+            0.9333333333333333,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.803921568627451,
+            0.9294117647058824,
+            0.7803921568627451,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            1,
+            0.9686274509803922,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.16470588235294117,
+            0.3058823529411765,
+            0.1411764705882353,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.49411764705882355,
+            0.2196078431372549,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.4,
+            0.1803921568627451,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6392156862745098,
+            0.8745098039215686,
+            0.6039215686274509,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.1450980392156863,
+            0.2549019607843137,
+            0.12941176470588237,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.4,
+            0.1803921568627451,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.10588235294117647,
+            0.18823529411764706,
+            0.09019607843137255,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.16470588235294117,
+            0.3058823529411765,
+            0.1411764705882353,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.4,
+            0.1803921568627451,
+          ],
+        },
+      },
+    },
+    "positive-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.1450980392156863,
+            0.2549019607843137,
+            0.12941176470588237,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.20784313725490197,
+            0.4,
+            0.1803921568627451,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.1450980392156863,
+            0.2549019607843137,
+            0.12941176470588237,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.16470588235294117,
+            0.3058823529411765,
+            0.1411764705882353,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.10588235294117647,
+            0.18823529411764706,
+            0.09019607843137255,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9372549019607843,
+            0.9803921568627451,
+            0.9333333333333333,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6392156862745098,
+            0.8745098039215686,
+            0.6039215686274509,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.803921568627451,
+            0.9294117647058824,
+            0.7803921568627451,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.49411764705882355,
+            0.2196078431372549,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.positive-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6392156862745098,
+            0.8745098039215686,
+            0.6039215686274509,
+          ],
+        },
+      },
+    },
+    "selected": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9921568627450981,
+            0.9568627450980393,
+            0.9921568627450981,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+    },
+    "selected-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5411764705882353,
+            0.22745098039215686,
+            0.6235294117647059,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.25882352941176473,
+            0.0784313725490196,
+            0.30980392156862746,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431,
+            0.8941176470588236,
+            0.9764705882352941,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9686274509803922,
+            0.8274509803921568,
+            0.984313725490196,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6470588235294118,
+            0.3058823529411765,
+            0.7529411764705882,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.selected-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9294117647058824,
+            0.7098039215686275,
+            0.9725490196078431,
+          ],
+        },
+      },
+    },
+    "transparent": {
+      "$type": "color",
+      "$value": {
+        "alpha": 0,
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0,
+        ],
+      },
+    },
+    "warning": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.7294117647058823,
+            0.5215686274509804,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9882352941176471,
+            0.8941176470588236,
+            0.8274509803921568,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.8156862745098039,
+            0.6823529411764706,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.9450980392156862,
+            0.9058823529411765,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4980392156862745,
+            0.28627450980392155,
+            0.09803921568627451,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7019607843137254,
+            0.396078431372549,
+            0.09803921568627451,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5803921568627451,
+            0.32941176470588235,
+            0.09411764705882353,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.7294117647058823,
+            0.5215686274509804,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3843137254901961,
+            0.22745098039215686,
+            0.09019607843137255,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5803921568627451,
+            0.32941176470588235,
+            0.09411764705882353,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.2901960784313726,
+            0.1803921568627451,
+            0.09019607843137255,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4980392156862745,
+            0.28627450980392155,
+            0.09803921568627451,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5803921568627451,
+            0.32941176470588235,
+            0.09411764705882353,
+          ],
+        },
+      },
+    },
+    "warning-inverse": {
+      "bg-active": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3843137254901961,
+            0.22745098039215686,
+            0.09019607843137255,
+          ],
+        },
+      },
+      "bg-default": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.5803921568627451,
+            0.32941176470588235,
+            0.09411764705882353,
+          ],
+        },
+      },
+      "bg-document": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3843137254901961,
+            0.22745098039215686,
+            0.09019607843137255,
+          ],
+        },
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4980392156862745,
+            0.28627450980392155,
+            0.09803921568627451,
+          ],
+        },
+      },
+      "bg-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.2901960784313726,
+            0.1803921568627451,
+            0.09019607843137255,
+          ],
+        },
+      },
+      "border-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning-inverse.bg-active}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9882352941176471,
+            0.8941176470588236,
+            0.8274509803921568,
+          ],
+        },
+      },
+      "border-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning-inverse.bg-default}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.7294117647058823,
+            0.5215686274509804,
+          ],
+        },
+      },
+      "border-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning-inverse.bg-hover}",
+              },
+              "ratio": 3,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.8156862745098039,
+            0.6823529411764706,
+          ],
+        },
+      },
+      "border-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7019607843137254,
+            0.396078431372549,
+            0.09803921568627451,
+          ],
+        },
+      },
+      "color-active": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning-inverse.bg-active}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-default": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning-inverse.bg-default}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-document": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning-inverse.bg-subtle}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-hover": {
+        "$extensions": {
+          "nl.nldesignsystem.contrast-with": [
+            {
+              "color": {
+                "$type": "color",
+                "$value": "{color.warning-inverse.bg-hover}",
+              },
+              "ratio": 4.5,
+            },
+          ],
+        },
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "color-subtle": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.996078431372549,
+            0.7294117647058823,
+            0.5215686274509804,
+          ],
+        },
+      },
+    },
+  },
+  "form-control": {
+    "accent-color": {
+      "$type": "color",
+      "$value": {
+        "alpha": 1,
+        "colorSpace": "srgb",
+        "components": [
+          0.5411764705882353,
+          0.22745098039215686,
+          0.6235294117647059,
+        ],
+      },
+    },
+    "active": {
+      "accent-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.3333333333333333,
+            0.11764705882352941,
+            0.40784313725490196,
+          ],
+        },
+      },
+      "background-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.27058823529411763,
+            0.2823529411764706,
+            0.30196078431372547,
+          ],
+        },
+      },
+      "color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.11372549019607843,
+            0.12156862745098039,
+            0.1411764705882353,
+          ],
+        },
+      },
+    },
+    "background-color": {
+      "$type": "color",
+      "$value": {
+        "alpha": 1,
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1,
+        ],
+      },
+    },
+    "border-color": {
+      "$type": "color",
+      "$value": {
+        "alpha": 1,
+        "colorSpace": "srgb",
+        "components": [
+          0.4117647058823529,
+          0.4235294117647059,
+          0.44313725490196076,
+        ],
+      },
+    },
+    "color": {
+      "$type": "color",
+      "$value": {
+        "alpha": 1,
+        "colorSpace": "srgb",
+        "components": [
+          0.11372549019607843,
+          0.12156862745098039,
+          0.1411764705882353,
+        ],
+      },
+    },
+    "disabled": {
+      "accent-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "background-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255,
+            0.9176470588235294,
+            0.9411764705882353,
+          ],
+        },
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.788235294117647,
+            0.8,
+            0.8235294117647058,
+          ],
+        },
+      },
+      "color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+    },
+    "focus": {
+      "background-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1,
+          ],
+        },
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.27058823529411763,
+            0.2823529411764706,
+            0.30196078431372547,
+          ],
+        },
+      },
+      "color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.11372549019607843,
+            0.12156862745098039,
+            0.1411764705882353,
+          ],
+        },
+      },
+    },
+    "font-family": {
+      "$extensions": {
+        "studio.tokens": {
+          "originalType": "fontFamilies",
+        },
+      },
+      "$type": "fontFamily",
+      "$value": [
+        "'Source Sans Pro'",
+        "Helvetica",
+        "Arial",
+        "sans-serif",
+      ],
+    },
+    "hover": {
+      "accent-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4392156862745098,
+            0.17647058823529413,
+            0.5176470588235295,
+          ],
+        },
+      },
+      "background-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.8509803921568627,
+            0.8627450980392157,
+            0.8862745098039215,
+          ],
+        },
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.34509803921568627,
+            0.3568627450980392,
+            0.3764705882352941,
+          ],
+        },
+      },
+      "color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.11372549019607843,
+            0.12156862745098039,
+            0.1411764705882353,
+          ],
+        },
+      },
+    },
+    "invalid": {
+      "background-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.9529411764705882,
+            0.9529411764705882,
+          ],
+        },
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.7843137254901961,
+            0.23921568627450981,
+            0.2901960784313726,
+          ],
+        },
+      },
+      "color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.6745098039215687,
+            0.1843137254901961,
+            0.23137254901960785,
+          ],
+        },
+      },
+    },
+    "placeholder": {
+      "color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.4117647058823529,
+            0.4235294117647059,
+            0.44313725490196076,
+          ],
+        },
+      },
+    },
+    "read-only": {
+      "background-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.9529411764705882,
+            0.9686274509803922,
+            0.996078431372549,
+          ],
+        },
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 0,
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0,
+          ],
+        },
+      },
+      "color": {
+        "$type": "color",
+        "$value": {
+          "alpha": 1,
+          "colorSpace": "srgb",
+          "components": [
+            0.11372549019607843,
+            0.12156862745098039,
+            0.1411764705882353,
+          ],
+        },
+      },
+    },
+  },
+  "heading": {
+    "color": {
+      "$type": "color",
+      "$value": {
+        "alpha": 1,
+        "colorSpace": "srgb",
+        "components": [
+          0.11372549019607843,
+          0.12156862745098039,
+          0.1411764705882353,
+        ],
+      },
+    },
+    "font-family": {
+      "$extensions": {
+        "studio.tokens": {
+          "originalType": "fontFamilies",
+        },
+      },
+      "$type": "fontFamily",
+      "$value": [
+        "'Fira Sans'",
+        "Helvetica",
+        "Arial",
+        "sans-serif",
+      ],
+    },
+  },
+  "text": {
+    "font-family": {
+      "default": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": [
+          "'Source Sans Pro'",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
+      },
+      "monospace": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": [
+          "'Fira Code'",
+          "Monaco",
+          "monospace",
+        ],
+      },
+    },
+  },
+}
