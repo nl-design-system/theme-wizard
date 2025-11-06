@@ -329,7 +329,15 @@ describe('theme', () => {
               'color-document': {
                 // the transformation will add an $extension here
                 $extensions: {
-                  'nl.nldesignsystem.test': 1,
+                  [EXTENSION_CONTRAST_WITH]: [
+                    {
+                      color: {
+                        $type: 'color',
+                        $value: '{common.basis.color.basis.default.bg-subtle}',
+                      },
+                      ratio: 1,
+                    },
+                  ],
                 },
                 $type: 'color',
                 $value: `{ma.color.indigo.5}`,
@@ -342,8 +350,8 @@ describe('theme', () => {
     const result = ThemeSchema.transform(addContrastExtensions).safeParse(config);
     expect(result.success).toEqual(true);
     expect(
-      result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.['nl.nldesignsystem.test'],
-    ).toEqual(1);
+      result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
+    ).toHaveLength(2);
   });
 
   describe('resolving Design Token refs', () => {

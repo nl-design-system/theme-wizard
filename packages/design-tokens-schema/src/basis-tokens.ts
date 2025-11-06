@@ -246,7 +246,9 @@ export const addContrastExtensions = (rootConfig: Theme) => {
 
       color.$extensions = {
         ...color.$extensions,
-        [EXTENSION_CONTRAST_WITH]: [contrastWith],
+        [EXTENSION_CONTRAST_WITH]: Array.isArray(color.$extensions[EXTENSION_CONTRAST_WITH])
+          ? [...color.$extensions[EXTENSION_CONTRAST_WITH], contrastWith]
+          : [contrastWith],
       };
     }
   });
