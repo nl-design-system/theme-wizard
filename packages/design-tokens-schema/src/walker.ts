@@ -2,17 +2,17 @@ import { ColorToken, ColorTokenValidationSchema } from './color-token';
 
 /**
  * @param data The object you want to traverse
- * @param matcherFn Predicate function that returns true when data is a T-shape object
+ * @param predicate Predicate function that returns true when data is a T-shape object
  * @param callback Is called whenever the callback returns true
  */
 export const walkObject = <T = unknown>(
   data: unknown,
-  matcherFn: (data: unknown) => data is T,
+  predicate: (data: unknown) => data is T,
   callback: (data: T, path: string[]) => void,
 ): void => {
   function traverse(currentData: unknown, path: string[]): void {
     // Check if current data matches
-    if (matcherFn(currentData)) {
+    if (predicate(currentData)) {
       callback(currentData, path);
     }
 
