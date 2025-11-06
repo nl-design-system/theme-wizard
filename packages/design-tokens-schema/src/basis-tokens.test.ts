@@ -303,18 +303,16 @@ describe('theme', () => {
       };
       const result = ThemeSchema.transform(addContrastExtensions).safeParse(config);
       expect(result.success).toEqual(true);
-      expect(result.data?.common?.basis?.color?.default?.['color-document']).toMatchObject({
-        $extensions: {
-          [EXTENSION_CONTRAST_WITH]: [
-            {
-              color: {
-                $type: 'color',
-                $value: '{common.basis.color.default.bg-subtle}',
-              },
-              ratio: 4.5,
+      expect(result.data?.common?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
+        [EXTENSION_CONTRAST_WITH]: [
+          {
+            color: {
+              $type: 'color',
+              $value: '{common.basis.color.default.bg-subtle}',
             },
-          ],
-        },
+            ratio: 4.5,
+          },
+        ],
       });
     });
   });
@@ -327,8 +325,8 @@ describe('theme', () => {
           color: {
             default: {
               'color-document': {
-                // the transformation will add an $extension here
                 $extensions: {
+                  // the transformation will add an extra contrast color here
                   [EXTENSION_CONTRAST_WITH]: [
                     {
                       color: {
