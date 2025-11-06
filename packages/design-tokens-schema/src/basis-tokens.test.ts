@@ -13,7 +13,9 @@ import {
   addContrastExtensions,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_FROM,
+  Theme,
 } from './basis-tokens';
+import { ColorToken, parseColor } from './color-token';
 
 describe('brand', () => {
   test('no brands present', () => {
@@ -302,9 +304,9 @@ describe('theme', () => {
           },
         },
       };
-      const result = ThemeSchema.transform(addContrastExtensions).safeParse(config);
+      const result = ThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      expect(result.data?.common?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
+      expect(result.data!.common.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
         [EXTENSION_CONTRAST_WITH]: [
           {
             color: {
@@ -316,41 +318,41 @@ describe('theme', () => {
         ],
       });
     });
-  });
 
-  test('contrast-with extensions do not mess with existing extensions', () => {
-    const config = {
-      brand: brandConfig,
-      common: {
-        basis: {
-          color: {
-            default: {
-              'color-document': {
-                $extensions: {
-                  // the transformation will add an extra contrast color here
-                  [EXTENSION_CONTRAST_WITH]: [
-                    {
-                      color: {
-                        $type: 'color',
-                        $value: '{common.basis.color.basis.default.bg-subtle}',
+    test('contrast-with extensions do not mess with existing extensions', () => {
+      const config = {
+        brand: brandConfig,
+        common: {
+          basis: {
+            color: {
+              default: {
+                'color-document': {
+                  $extensions: {
+                    // the transformation will add an extra contrast color here
+                    [EXTENSION_CONTRAST_WITH]: [
+                      {
+                        color: {
+                          $type: 'color',
+                          $value: '{common.basis.color.basis.default.bg-subtle}',
+                        },
+                        ratio: 1,
                       },
-                      ratio: 1,
-                    },
-                  ],
+                    ],
+                  },
+                  $type: 'color',
+                  $value: `{ma.color.indigo.5}`,
                 },
-                $type: 'color',
-                $value: `{ma.color.indigo.5}`,
               },
             },
           },
         },
-      },
-    };
-    const result = ThemeSchema.transform(addContrastExtensions).safeParse(config);
-    expect(result.success).toEqual(true);
-    expect(
-      result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
-    ).toHaveLength(2);
+      };
+      const result = ThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+      expect(
+        result.data!.common.basis.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
+      ).toHaveLength(2);
+    });
   });
 
   describe('resolving Design Token refs', () => {
@@ -373,20 +375,20 @@ describe('theme', () => {
 
       test('does not mutate the input config', () => {
         const originalConfig = structuredClone(config);
-        ThemeSchema.transform(resolveConfigRefs).safeParse(config);
+        ThemeSchema.safeParse(config);
         const originalBg = originalConfig.common.basis.color.default['bg-document'].$value;
         const bgAfterValidation = config.common.basis.color.default['bg-document'].$value;
         expect.soft(originalBg).toEqual(bgAfterValidation);
       });
 
       test('validates the input', () => {
-        const result = ThemeSchema.transform(resolveConfigRefs).safeParse(config);
+        const result = ThemeSchema.safeParse(config);
         expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
         expect.soft(result.success).toBeTruthy();
       });
 
       test('returns the schema with refs replaced by actual values', () => {
-        const result = ThemeSchema.transform(resolveConfigRefs).safeParse(config);
+        const result = ThemeSchema.safeParse(config);
         const expectedCommonColor = brandConfig.ma.color.indigo[5];
         expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
           ...expectedCommonColor,
@@ -471,6 +473,116 @@ describe('theme', () => {
           `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5} => {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0,0,0]}}`,
         ],
       });
+    });
+  });
+
+  describe('validating color contrast', () => {
+    // Hex notation + parseColor() because it's shorter than writing color tokens and the IDE shows a small color preview
+    const black = { $type: 'color', $value: parseColor('#000') } satisfies ColorToken;
+    const white = { $type: 'color', $value: parseColor('#fff') } satisfies ColorToken;
+    const lightGray = { $type: 'color', $value: parseColor('#ccc') } satisfies ColorToken;
+    const config = {
+      brand: {
+        ma: {
+          name: {
+            $type: 'text',
+            $value: 'Mooi & Anders',
+          },
+          color: {
+            black,
+            gray: {
+              2: lightGray,
+            },
+            white,
+          },
+        },
+      },
+      common: {
+        basis: {
+          color: {
+            // This is where each test case will write their own needs
+            default: Object.create(null),
+          },
+        },
+      },
+    } satisfies Theme;
+
+    test.only('passes when contrast is sufficient', () => {
+      const testConfig = structuredClone(config);
+      testConfig.common.basis.color.default['border-default'] = {
+        $type: 'color',
+        $value: '{brand.ma.color.black}',
+      };
+      testConfig.common.basis.color.default['bg-default'] = {
+        $type: 'color',
+        $value: '{brand.ma.color.white}',
+      };
+      const result = ThemeSchema.safeParse(testConfig);
+      expect(result.success).toEqual(true);
+    });
+
+    test.only('fails when color-document vs bg-subtle do not have enough contrast', () => {
+      const testConfig = structuredClone(config);
+      testConfig.common.basis.color.default['bg-subtle'] = {
+        $type: 'color',
+        $value: '{brand.ma.color.white}',
+      };
+      testConfig.common.basis.color.default['color-document'] = {
+        $type: 'color',
+        $value: '{brand.ma.color.gray.2}',
+      };
+      const result = ThemeSchema.safeParse(testConfig);
+      expect.soft(result.success).toBeFalsy();
+      expect.soft(result.error!.issues).toEqual([
+        {
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{common.basis.color.default.bg-subtle}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
+          minimum: 4.5,
+          origin: 'number',
+          path: 'common.basis.color.default.color-document.$value'.split('.'),
+        },
+      ]);
+    });
+
+    test.only('passes when legacy tokens are used with proper contrast', () => {
+      const testConfig = structuredClone(config);
+      testConfig.common.basis.color.default['bg-subtle'] = {
+        $type: 'color',
+        $value: '#fff',
+      };
+      testConfig.common.basis.color.default['color-document'] = {
+        $type: 'color',
+        $value: '#000',
+      };
+      const result = ThemeSchema.safeParse(testConfig);
+      expect.soft(result.success).toEqual(true);
+    });
+
+    test.only('fails when legacy tokens are used with improper contrast', () => {
+      const testConfig = structuredClone(config);
+      testConfig.common.basis.color.default['bg-subtle'] = {
+        $type: 'color',
+        $value: '#fff',
+      };
+      testConfig.common.basis.color.default['color-document'] = {
+        $type: 'color',
+        $value: '#ccc',
+      };
+      const result = ThemeSchema.safeParse(testConfig);
+      expect.soft(result.success).toEqual(false);
+      expect.soft(result.error!.issues).toEqual([
+        {
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{common.basis.color.default.bg-subtle}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
+          minimum: 4.5,
+          origin: 'number',
+          path: 'common.basis.color.default.color-document.$value'.split('.'),
+        },
+      ]);
     });
   });
 });

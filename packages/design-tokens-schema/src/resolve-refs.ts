@@ -1,5 +1,5 @@
 import dlv from 'dlv';
-import type { BaseDesignTokenValue, BaseDesignToken } from './base-token';
+import type { BaseDesignTokenValue } from './base-token';
 
 const REF_REGEX = /^\{(.+)\}$/;
 
@@ -27,7 +27,19 @@ const processRefs = (
   root: Record<string, unknown> | undefined,
   onRefFound: (config: ValueObject, key: string, resolvedRef: unknown, tokenType: unknown, refPath: string) => boolean,
 ): boolean => {
-  if (!isValueObject(config)) return true;
+  // Handle arrays by processing each item
+  if (Array.isArray(config)) {
+    for (const item of config) {
+      if (!processRefs(item, root, onRefFound)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  if (!isValueObject(config)) {
+    return true;
+  }
 
   for (const key in config) {
     const value = config[key];
@@ -42,9 +54,15 @@ const processRefs = (
         if (!onRefFound(config, key, resolvedRef, tokenType, refPath)) {
           return false;
         }
+        // Process the new value after replacement
+        if (!processRefs(config[key], root, onRefFound)) {
+          return false;
+        }
       }
-    } else if (!processRefs(value, root, onRefFound)) {
-      return false;
+    } else {
+      if (!processRefs(value, root, onRefFound)) {
+        return false;
+      }
     }
   }
 

@@ -1,8 +1,8 @@
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
-import { ColorTokenValidationSchema } from './color-token';
+import { ColorTokenSchema, ColorTokenValidationSchema, compareContrast, stringifyColor } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
-import { validateRefs, resolveRefs } from './resolve-refs';
+import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import { walkColors } from './walker';
 export { EXTENSION_RESOLVED_FROM } from './resolve-refs';
 
@@ -184,49 +184,14 @@ export const CommonSchema = z.object({
 });
 export type Common = z.infer<typeof CommonSchema>;
 
-export const resolveConfigRefs = (rootConfig: Theme) => {
+export const resolveConfigRefs = (rootConfig: Record<string, unknown>) => {
   // Clone the input root because resolveRefs is a mutable operation
   const resolvedRoot = structuredClone(rootConfig);
-  resolveRefs(resolvedRoot.common, rootConfig.brand);
+  resolveRefs(resolvedRoot, resolvedRoot);
   return resolvedRoot;
 };
 
-/**
- * Validate a full theme
- * If you want to replace all tokens refs with their actual value, tag on a `.transform(resolveConfigRefs)`
- *
- * @example
- * ```ts
- * const validated = ThemeSchema.safeParse(yourTokensJson);
- * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
- * ```
- */
-export const ThemeSchema = z
-  .looseObject({
-    // $metadata: z.strictObject({
-    //   tokensSetOrder: z.array(z.string()),
-    // }),
-    // $themes: [],
-    brand: BrandsSchema.optional(),
-    common: CommonSchema.optional(),
-    // 'components/*': {},
-  })
-  .superRefine((root, ctx) => {
-    try {
-      validateRefs(root.common, root.brand);
-    } catch (error) {
-      ctx.addIssue({
-        code: 'custom',
-        // The next line is type-safe, but because of that we don't cover all branches
-        /* v8 ignore next -- @preserve */
-        message: error instanceof Error ? error.message : 'Invalid token reference',
-      });
-    }
-  });
-
-export type Theme = z.infer<typeof ThemeSchema>;
-
-export const addContrastExtensions = (rootConfig: Theme) => {
+export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
     const lastPath = path.at(-1)! as ForegroundColorKey;
 
@@ -256,3 +221,69 @@ export const addContrastExtensions = (rootConfig: Theme) => {
   });
   return rootConfig;
 };
+
+export const ERROR_CODES = {
+  INSUFFICIENT_CONTRAST: 'insufficient_contrast',
+  INVALID_REF: 'invalid_ref',
+} as const;
+
+/**
+ * Validate a full theme
+ * If you want to replace all tokens refs with their actual value, tag on a `.transform(resolveConfigRefs)`
+ *
+ * @example
+ * ```ts
+ * const validated = ThemeSchema.safeParse(yourTokensJson);
+ * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
+ * ```
+ */
+export const ThemeSchema = z
+  .looseObject({
+    // $metadata: z.strictObject({
+    //   tokensSetOrder: z.array(z.string()),
+    // }),
+    // $themes: [],
+    brand: BrandsSchema.optional(),
+    common: CommonSchema.optional(),
+    // 'components/*': {},
+  })
+  .superRefine((root, ctx) => {
+    try {
+      validateRefs(root, root);
+    } catch (error) {
+      ctx.addIssue({
+        code: 'custom',
+        ERROR_CODE: ERROR_CODES.INVALID_REF,
+        // The next line is type-safe, but because of that we don't cover all branches
+        /* v8 ignore next */
+        message: error instanceof Error ? error.message : 'Invalid token reference',
+      });
+    }
+  })
+  .transform(addContrastExtensions)
+  .transform(resolveConfigRefs)
+  .superRefine((root, context) => {
+    walkColors(root, (colorToken, path) => {
+      if (!Array.isArray(colorToken.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
+
+      for (const { color: backgroundColor, ratio: expectedContrast } of colorToken.$extensions[
+        EXTENSION_CONTRAST_WITH
+      ]) {
+        const contrast = compareContrast(colorToken, backgroundColor);
+        const colorRefName = backgroundColor.$extensions[EXTENSION_RESOLVED_FROM];
+        if (contrast < expectedContrast) {
+          context.addIssue({
+            code: 'too_small',
+            ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
+            input: contrast,
+            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(colorToken['$value'])}) and \`{${colorRefName || 'unknown'}}\` (${stringifyColor(backgroundColor['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
+            minimum: expectedContrast,
+            origin: 'number',
+            path: [...path, '$value'],
+          });
+        }
+      }
+    });
+  });
+
+export type Theme = z.infer<typeof ThemeSchema>;
