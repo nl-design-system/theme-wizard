@@ -9,6 +9,9 @@ type Options = {
   type?: StorageType;
   prefix?: string;
 };
+
+const JSON_PREFIX = 'JSON';
+
 export default class PersistentStorage {
   #type: StorageType;
   #backend: Storage;
@@ -45,16 +48,29 @@ export default class PersistentStorage {
     return this.#backend.getItem(`${this.#prefix}${key}`);
   }
 
+  getJSON(key: string) {
+    const value = this.getItem(`${JSON_PREFIX}:${key}`);
+    return value && JSON.parse(value);
+  }
+
   key(index: number) {
     return this.#backend.key(index);
   }
 
   removeItem(key: string) {
-    return this.#backend.removeItem(`${this.#prefix}${key}`);
+    this.#backend.removeItem(`${this.#prefix}:${key}`);
+  }
+
+  removeJSON(key: string) {
+    this.removeItem(`${JSON_PREFIX}:${key}`);
   }
 
   setItem(key: string, value: string) {
-    this.#backend.setItem(`${this.#prefix}${key}`, value);
+    this.#backend.setItem(`${this.#prefix}:${key}`, value);
+  }
+
+  setJSON(key: string, value: Record<string, unknown>) {
+    this.setItem(`${JSON_PREFIX}:${key}`, JSON.stringify(value));
   }
 
   /** @see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API */

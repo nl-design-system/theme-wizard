@@ -2,17 +2,22 @@ import { ThemeSchema } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import StyleDictionary from 'style-dictionary';
 import { DesignTokens } from 'style-dictionary/types';
+import PersistentStorage from '../PersistentStorage';
+
+const STORAGE_PREFIX = 'Theme';
+const STORAGE_TOKENS = 'Tokens';
 
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  #storage = new PersistentStorage({ prefix: STORAGE_PREFIX });
 
   constructor(tokens?: DesignTokens) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
-    this.tokens = structuredClone(this.#defaults);
+    this.tokens = this.#storage.getJSON('tokens') || structuredClone(this.#defaults);
   }
 
   get defaults() {
@@ -25,6 +30,7 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#tokens = values;
+    this.#storage.setJSON(STORAGE_TOKENS, values);
     this.toCSS().then((css) => {
       const sheet = this.#stylesheet;
       sheet.replace(css);
