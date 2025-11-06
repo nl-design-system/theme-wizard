@@ -28,6 +28,12 @@ export default class Theme {
 
   async toCSS({ resolved = false }: { resolved?: boolean } = {}) {
     const sd = new StyleDictionary({
+      log: {
+        errors: {
+          brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
+        },
+        verbosity: 'silent', // ignore logging since it goes to browser console
+      },
       platforms: {
         css: {
           files: [
