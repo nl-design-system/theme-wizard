@@ -13,6 +13,23 @@ describe('Theme', () => {
     expect(theme.defaults).toMatchObject(tokens);
   });
 
+  test('can update tokens', async () => {
+    const theme = new Theme();
+    const initialTokens = structuredClone(theme.tokens);
+    theme.tokens = tokens;
+    const updatedTokens = structuredClone(theme.tokens);
+    return expect(updatedTokens).not.toMatchObject(initialTokens);
+  });
+
+  test('can reset tokens', async () => {
+    const theme = new Theme();
+    theme.tokens = tokens;
+    const updatedTokens = structuredClone(theme.tokens);
+    theme.reset();
+    const resettedTokens = structuredClone(theme.tokens);
+    return expect(resettedTokens).not.toMatchObject(updatedTokens);
+  });
+
   test('can export to css custom properties', async () => {
     const theme = new Theme();
     const css = await theme.toCSS();

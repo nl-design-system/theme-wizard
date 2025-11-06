@@ -35,6 +35,10 @@ export default class Theme {
     return this.#stylesheet;
   }
 
+  reset() {
+    this.tokens = structuredClone(this.#defaults);
+  }
+
   async toCSS({ resolved = false }: { resolved?: boolean } = {}) {
     const sd = new StyleDictionary({
       log: {
