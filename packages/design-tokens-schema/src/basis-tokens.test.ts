@@ -367,6 +367,30 @@ describe('theme', () => {
         result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
       ).toHaveLength(2);
     });
+
+    test('does not add extension when corresponding token does not exist', () => {
+      const config = {
+        brand: brandConfig,
+        common: {
+          basis: {
+            color: {
+              default: {
+                'color-document': {
+                  $type: 'color',
+                  $value: `{ma.color.indigo.5}`,
+                  // contrast-with extension would be added here but this object has no bg-subtle
+                },
+              },
+            },
+          },
+        },
+      };
+      const result = ThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+      expect(
+        result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
+      ).toEqual(undefined);
+    });
   });
 
   describe('resolving Design Token refs', () => {
