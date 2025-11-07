@@ -25,7 +25,7 @@ sequenceDiagram
   User->>+App: Changes token value
   App->>-Theme: Updates theme token
   Theme->>Theme: Updates stylesheet
-  Preview->>Preview: Rerenders due to stylesheet change
+  Preview->>Preview: Browser reflow and repaint due to stylesheet change
   end
 
   opt Fetching token options
