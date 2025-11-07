@@ -1,5 +1,7 @@
 import dlv from 'dlv';
-import type { BaseDesignTokenValue } from './base-token';
+import * as z from 'zod';
+import { TokenReferenceSchema } from './token-reference';
+import { walkObject } from './walker';
 
 const REF_REGEX = /^\{(.+)\}$/;
 
@@ -71,21 +73,58 @@ const processRefs = (
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
 
+const TokenWithRefSchema = z.looseObject({
+  $extensions: z.record(z.string(), z.unknown()).optional(),
+  $type: z.string(),
+  $value: TokenReferenceSchema,
+});
+type TokenWithRef = z.infer<typeof TokenWithRefSchema>;
+
+const ReferencedTokenSchema = z.looseObject({
+  $type: z.string(),
+  $value: z.object(),
+});
+
 /**
  * @description
  * Recursively loop over `config` to look for {ma.color.indigo.5} -like token refs
  * and replace them with the actual values from `root`
  */
 export const resolveRefs = (config: unknown, root?: Record<string, unknown>): void => {
-  processRefs(config, root, (config, key, resolvedRef, _tokenType, refPath) => {
-    if (isValueObject(resolvedRef) && resolvedRef['$value']) {
-      config[key] = resolvedRef['$value'];
-      const token = config as BaseDesignTokenValue;
-      token['$extensions'] ??= {};
-      token['$extensions'][EXTENSION_RESOLVED_FROM] = refPath;
-    }
-    return true;
-  });
+  walkObject<TokenWithRef>(
+    config,
+    (data): data is TokenWithRef => {
+      // Chekc that we're dealing with a token-like object
+      const parsedSource = TokenWithRefSchema.safeParse(data);
+      if (parsedSource.success === false) return false;
+
+      // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
+      const refPath = parsedSource.data.$value.slice(1, -1);
+      const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`) || dlv(root, `common.${refPath}`);
+
+      // Check that we're dealing with a token-like object
+      const parsedRef = ReferencedTokenSchema.safeParse(ref);
+      if (parsedRef.success === false) return false;
+
+      // make sure the $type of the referenced token is the same
+      if (parsedSource.data.$type !== parsedRef.data.$type) return false;
+
+      return true;
+    },
+    (obj) => {
+      // Look up path.to.ref in root
+      const refPath = obj.$value.slice(1, -1);
+      const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`) || dlv(root, `common.${refPath}`);
+
+      // Replace the object's value with the ref's value
+      obj['$value'] = ref.$value;
+      // Add an extension to indicate that we changed `refPath` to an actual value
+      obj['$extensions'] = {
+        ...(obj.$extensions || Object.create(null)),
+        [EXTENSION_RESOLVED_FROM]: refPath,
+      };
+    },
+  );
 };
 
 /**

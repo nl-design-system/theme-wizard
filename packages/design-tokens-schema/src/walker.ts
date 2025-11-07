@@ -7,12 +7,12 @@ import { ColorToken, ColorTokenValidationSchema } from './color-token';
  */
 export const walkObject = <T = unknown>(
   data: unknown,
-  predicate: (data: unknown) => data is T,
+  predicate: (data: unknown, path: string[]) => data is T,
   callback: (data: T, path: string[]) => void,
 ): void => {
   function traverse(currentData: unknown, path: string[]): void {
     // Check if current data matches
-    if (predicate(currentData)) {
+    if (predicate(currentData, path)) {
       callback(currentData, path);
     }
 

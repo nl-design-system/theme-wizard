@@ -7,13 +7,11 @@ import {
   CommonSchema,
   BasisTokensSchema,
   BasisColorSchema,
-  ThemeSchema,
-  resolveConfigRefs,
   BasisTextSchema,
-  addContrastExtensions,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_FROM,
   Theme,
+  ThemeTokensSchema,
 } from './basis-tokens';
 import { ColorToken, parseColor } from './color-token';
 
@@ -253,12 +251,12 @@ describe('common', () => {
           default: {
             'bg-document': {
               $type: 'color',
-              $value: '{ma.color.indigo.1}',
+              $value: '{brand.ma.color.indigo.1}',
             },
           },
         };
         const result = BasisColorSchema.safeParse(config);
-        expect.soft(result.success).toBeTruthy();
+        expect.soft(result.success).toEqual(true);
       });
     });
   });
@@ -273,6 +271,14 @@ describe('theme', () => {
       },
       color: {
         indigo: {
+          '1': {
+            $type: 'color',
+            $value: {
+              alpha: 1,
+              colorSpace: 'srgb',
+              components: [1, 1, 1],
+            },
+          },
           '5': {
             $type: 'color',
             $value: {
@@ -294,6 +300,10 @@ describe('theme', () => {
           basis: {
             color: {
               default: {
+                'bg-subtle': {
+                  $type: 'color',
+                  $value: '{ma.color.indigo.1}',
+                },
                 'color-document': {
                   $type: 'color',
                   $value: `{ma.color.indigo.5}`,
@@ -304,14 +314,14 @@ describe('theme', () => {
           },
         },
       };
-      const result = ThemeSchema.safeParse(config);
+      const result = ThemeTokensSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      expect(result.data!.common.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
+      expect(result.data!.common?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
         [EXTENSION_CONTRAST_WITH]: [
           {
             color: {
               $type: 'color',
-              $value: '{common.basis.color.default.bg-subtle}',
+              $value: config.brand.ma.color.indigo['1'].$value,
             },
             ratio: 4.5,
           },
@@ -326,6 +336,10 @@ describe('theme', () => {
           basis: {
             color: {
               default: {
+                'bg-subtle': {
+                  $type: 'color',
+                  $value: '{ma.color.indigo.1}',
+                },
                 'color-document': {
                   $extensions: {
                     // the transformation will add an extra contrast color here
@@ -333,7 +347,7 @@ describe('theme', () => {
                       {
                         color: {
                           $type: 'color',
-                          $value: '{common.basis.color.basis.default.bg-subtle}',
+                          $value: '{ma.color.indigo.5}',
                         },
                         ratio: 1,
                       },
@@ -347,10 +361,10 @@ describe('theme', () => {
           },
         },
       };
-      const result = ThemeSchema.safeParse(config);
+      const result = ThemeTokensSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(
-        result.data!.common.basis.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
+        result.data!.common!.basis!.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
       ).toHaveLength(2);
     });
   });
@@ -375,20 +389,20 @@ describe('theme', () => {
 
       test('does not mutate the input config', () => {
         const originalConfig = structuredClone(config);
-        ThemeSchema.safeParse(config);
+        ThemeTokensSchema.safeParse(config);
         const originalBg = originalConfig.common.basis.color.default['bg-document'].$value;
         const bgAfterValidation = config.common.basis.color.default['bg-document'].$value;
         expect.soft(originalBg).toEqual(bgAfterValidation);
       });
 
       test('validates the input', () => {
-        const result = ThemeSchema.safeParse(config);
+        const result = ThemeTokensSchema.safeParse(config);
         expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
         expect.soft(result.success).toBeTruthy();
       });
 
       test('returns the schema with refs replaced by actual values', () => {
-        const result = ThemeSchema.safeParse(config);
+        const result = ThemeTokensSchema.safeParse(config);
         const expectedCommonColor = brandConfig.ma.color.indigo[5];
         expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
           ...expectedCommonColor,
@@ -420,8 +434,8 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
-      const result = ThemeSchema.safeParse(config);
+      expect.soft(() => ThemeTokensSchema.safeParse(config)).not.toThrowError();
+      const result = ThemeTokensSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
     });
 
@@ -434,7 +448,7 @@ describe('theme', () => {
               default: {
                 'bg-document': {
                   $type: 'color',
-                  $value: `{ma.color.indigo}`,
+                  $value: `{brand.ma.color.indigo}`,
                 },
               },
             },
@@ -442,11 +456,11 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
-      const result = ThemeSchema.safeParse(config);
+      expect.soft(() => ThemeTokensSchema.safeParse(config)).not.toThrowError();
+      const result = ThemeTokensSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
       expect.soft(z.flattenError(result.error!)).toMatchObject({
-        formErrors: ['Invalid token reference: expected "ma.color.indigo" to have a "$value" property'],
+        formErrors: ['Invalid token reference: expected "brand.ma.color.indigo" to have a "$value" property'],
       });
     });
 
@@ -459,18 +473,18 @@ describe('theme', () => {
               'font-family': {
                 $type: 'fontFamily',
                 // this points to a color token instead of a fontFamily
-                $value: '{ma.color.indigo.5}',
+                $value: '{brand.ma.color.indigo.5}',
               },
             },
           },
         },
       };
 
-      const result = ThemeSchema.safeParse(config);
+      const result = ThemeTokensSchema.safeParse(config);
       expect.soft(result.success).toEqual(false);
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
-          `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5} => {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0,0,0]}}`,
+          `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{brand.ma.color.indigo.5}"}" does not match the $type on reference {brand.ma.color.indigo.5} => {"$type":"color","$value":{"alpha":1,"colorSpace":"srgb","components":[0,0,0]}}`,
         ],
       });
     });
@@ -507,38 +521,38 @@ describe('theme', () => {
       },
     } satisfies Theme;
 
-    test.only('passes when contrast is sufficient', () => {
+    test('passes when contrast is sufficient', () => {
       const testConfig = structuredClone(config);
       testConfig.common.basis.color.default['border-default'] = {
         $type: 'color',
-        $value: '{brand.ma.color.black}',
+        $value: '{ma.color.black}',
       };
       testConfig.common.basis.color.default['bg-default'] = {
         $type: 'color',
-        $value: '{brand.ma.color.white}',
+        $value: '{ma.color.white}',
       };
-      const result = ThemeSchema.safeParse(testConfig);
+      const result = ThemeTokensSchema.safeParse(testConfig);
       expect(result.success).toEqual(true);
     });
 
-    test.only('fails when color-document vs bg-subtle do not have enough contrast', () => {
+    test('fails when color-document vs bg-subtle do not have enough contrast', () => {
       const testConfig = structuredClone(config);
       testConfig.common.basis.color.default['bg-subtle'] = {
         $type: 'color',
-        $value: '{brand.ma.color.white}',
+        $value: '{ma.color.white}',
       };
       testConfig.common.basis.color.default['color-document'] = {
         $type: 'color',
-        $value: '{brand.ma.color.gray.2}',
+        $value: '{ma.color.gray.2}',
       };
-      const result = ThemeSchema.safeParse(testConfig);
+      const result = ThemeTokensSchema.safeParse(testConfig);
       expect.soft(result.success).toBeFalsy();
       expect.soft(result.error!.issues).toEqual([
         {
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message:
-            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{common.basis.color.default.bg-subtle}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
+            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{ma.color.white}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
           minimum: 4.5,
           origin: 'number',
           path: 'common.basis.color.default.color-document.$value'.split('.'),
@@ -546,7 +560,7 @@ describe('theme', () => {
       ]);
     });
 
-    test.only('passes when legacy tokens are used with proper contrast', () => {
+    test('passes when legacy tokens are used with proper contrast', () => {
       const testConfig = structuredClone(config);
       testConfig.common.basis.color.default['bg-subtle'] = {
         $type: 'color',
@@ -556,11 +570,11 @@ describe('theme', () => {
         $type: 'color',
         $value: '#000',
       };
-      const result = ThemeSchema.safeParse(testConfig);
-      expect.soft(result.success).toEqual(true);
+      const result = ThemeTokensSchema.safeParse(testConfig);
+      expect(result.success).toEqual(true);
     });
 
-    test.only('fails when legacy tokens are used with improper contrast', () => {
+    test('fails when legacy tokens are used with improper contrast', () => {
       const testConfig = structuredClone(config);
       testConfig.common.basis.color.default['bg-subtle'] = {
         $type: 'color',
@@ -570,9 +584,9 @@ describe('theme', () => {
         $type: 'color',
         $value: '#ccc',
       };
-      const result = ThemeSchema.safeParse(testConfig);
-      expect.soft(result.success).toEqual(false);
-      expect.soft(result.error!.issues).toEqual([
+      const result = ThemeTokensSchema.safeParse(testConfig);
+      expect(result.success).toEqual(false);
+      expect(result.error!.issues).toEqual([
         {
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
@@ -603,6 +617,11 @@ describe('end-to-end tests of known basis themes', () => {
       const result = BasisTokensSchema.safeParse(maTokens.basis);
       expect.soft(result.success).toEqual(true);
       await expect.soft(result.data).toMatchFileSnapshot('../test/snapshots/ma-theme.basis.tokens.jsonc');
+    });
+
+    test.skip('theme is valid', () => {
+      const result = ThemeTokensSchema.safeParse(maTokens);
+      expect(result.success).toEqual(false);
     });
   });
 });
