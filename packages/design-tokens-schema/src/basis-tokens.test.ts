@@ -316,7 +316,7 @@ describe('theme', () => {
       };
       const result = ThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      expect(result.data!.common?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
+      expect(result.data?.common?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
         [EXTENSION_CONTRAST_WITH]: [
           {
             color: {
@@ -364,7 +364,7 @@ describe('theme', () => {
       const result = ThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(
-        result.data!.common!.basis!.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
+        result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
       ).toHaveLength(2);
     });
   });
@@ -407,7 +407,7 @@ describe('theme', () => {
         expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
           ...expectedCommonColor,
           $extensions: {
-            [EXTENSION_RESOLVED_FROM]: 'ma.color.indigo.5',
+            [EXTENSION_RESOLVED_FROM]: '{ma.color.indigo.5}',
           },
         });
       });
@@ -603,17 +603,17 @@ describe('theme', () => {
 
 describe('end-to-end tests of known basis themes', () => {
   describe('ma-theme', () => {
-    test('basis.color is valid', () => {
+    test('common.basis.color is valid', () => {
       const result = BasisColorSchema.safeParse(maTokens.basis.color);
       expect.soft(result.success).toEqual(true);
     });
 
-    test('basis.text is valid', () => {
+    test('common.basis.text is valid', () => {
       const result = BasisTextSchema.safeParse(maTokens.basis.text);
       expect.soft(result.success).toEqual(true);
     });
 
-    test('basis is valid', async () => {
+    test('common.basis is valid', async () => {
       const result = BasisTokensSchema.safeParse(maTokens.basis);
       expect.soft(result.success).toEqual(true);
       await expect.soft(result.data).toMatchFileSnapshot('../test/snapshots/ma-theme.basis.tokens.jsonc');

@@ -208,7 +208,7 @@ export const addContrastExtensions = (rootConfig: Theme) => {
       const contrastWith = {
         color: {
           $extensions: {
-            [EXTENSION_RESOLVED_FROM]: `common.${refPath}`,
+            [EXTENSION_RESOLVED_FROM]: `{common.${refPath}}`,
           },
           $type: 'color',
           $value: background['$value'],
@@ -285,7 +285,7 @@ export const ThemeSchema = _ThemeSchema
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             input: contrast,
-            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foreground['$value'])}) and \`{${colorRefName}}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
+            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foreground['$value'])}) and \`${colorRefName}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
             minimum: expectedContrast,
             origin: 'number',
             path: [...path, '$value'],

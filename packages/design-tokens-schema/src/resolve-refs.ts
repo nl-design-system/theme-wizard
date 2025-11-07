@@ -75,7 +75,7 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     // Add an extension to indicate that we changed `refPath` to an actual value
     token['$extensions'] = {
       ...(token.$extensions || Object.create(null)),
-      [EXTENSION_RESOLVED_FROM]: refPath,
+      [EXTENSION_RESOLVED_FROM]: `{${refPath}}`,
     };
   });
 };
