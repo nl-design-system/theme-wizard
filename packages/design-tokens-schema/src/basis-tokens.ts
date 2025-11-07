@@ -244,7 +244,7 @@ export const ERROR_CODES = {
  * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
-export const ThemeSchema = z.looseObject({
+const _ThemeSchema = z.looseObject({
   // $metadata: z.strictObject({
   //   tokensSetOrder: z.array(z.string()),
   // }),
@@ -254,22 +254,23 @@ export const ThemeSchema = z.looseObject({
   // 'components/*': {},
 });
 
-export type Theme = z.infer<typeof ThemeSchema>;
+export type Theme = z.infer<typeof _ThemeSchema>;
 
-export const ThemeTokensSchema = ThemeSchema.superRefine((root, ctx) => {
-  try {
-    validateRefs(root, root);
-  } catch (error) {
-    ctx.addIssue({
-      code: 'custom',
-      continue: false,
-      ERROR_CODE: ERROR_CODES.INVALID_REF,
-      // The next line is type-safe, but because of that we don't cover all branches
-      /* v8 ignore next */
-      message: error instanceof Error ? error.message : 'Invalid token reference',
-    });
-  }
-})
+export const ThemeSchema = _ThemeSchema
+  .superRefine((root, ctx) => {
+    try {
+      validateRefs(root, root);
+    } catch (error) {
+      ctx.addIssue({
+        code: 'custom',
+        continue: false,
+        ERROR_CODE: ERROR_CODES.INVALID_REF,
+        // The next line is type-safe, but because of that we don't cover all branches
+        /* v8 ignore next */
+        message: error instanceof Error ? error.message : 'Invalid token reference',
+      });
+    }
+  })
   .transform(addContrastExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, context) => {
@@ -293,4 +294,3 @@ export const ThemeTokensSchema = ThemeSchema.superRefine((root, ctx) => {
       }
     });
   });
-export type ThemeTokens = z.infer<typeof ThemeTokensSchema>;
