@@ -618,10 +618,5 @@ describe('end-to-end tests of known basis themes', () => {
       expect.soft(result.success).toEqual(true);
       await expect.soft(result.data).toMatchFileSnapshot('../test/snapshots/ma-theme.basis.tokens.jsonc');
     });
-
-    test('theme is valid', () => {
-      const result = ThemeSchema.safeParse(maTokens);
-      expect(result.success).toEqual(true);
-    });
   });
 });
