@@ -1,4 +1,5 @@
 import { ColorToken, ColorTokenValidationSchema } from './color-token';
+import { isTokenWithRef, type TokenWithRef } from './token-reference';
 
 /**
  * @param data The object you want to traverse
@@ -40,4 +41,12 @@ const isColorToken = (obj: unknown): obj is ColorToken => {
 
 export const walkColors = (data: unknown, callback: (data: ColorToken, path: string[]) => void): void => {
   walkObject<ColorToken>(data, isColorToken, callback);
+};
+
+export const walkTokensWithRef = (
+  config: unknown,
+  root: Record<string, unknown>,
+  callback: (token: TokenWithRef) => void,
+): void => {
+  walkObject<TokenWithRef>(config, (data): data is TokenWithRef => isTokenWithRef(data, root), callback);
 };
