@@ -29,7 +29,7 @@ sequenceDiagram
   end
 
   opt Fetching token options
-  User->>+App: Inputs URL to scrape 
+  User->>+App: Inputs URL to scrape
   App->>+Scraper: Requests tokens from URL
   Scraper->>-App: Returns tokens
   App->>App: Updates options with scraped tokens
@@ -102,8 +102,8 @@ classDiagram
     Scraper ..> DesignToken
     class Scraper {
         -URL scraperURL
-        +getCSS(url) string   
-        +getTokens(url) Array~DesignToken~   
+        +getCSS(url) string
+        +getTokens(url) Array~DesignToken~
     }
 
     Option ..> DesignToken
