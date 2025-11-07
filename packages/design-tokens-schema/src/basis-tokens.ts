@@ -279,7 +279,7 @@ export const ThemeSchema = _ThemeSchema
 
       for (const { color: background, ratio: expectedContrast } of foreground.$extensions[EXTENSION_CONTRAST_WITH]) {
         const contrast = compareContrast(foreground, background);
-        const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM] || 'unknown';
+        const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
         if (contrast < expectedContrast) {
           context.addIssue({
             code: 'too_small',

@@ -448,7 +448,7 @@ describe('theme', () => {
               default: {
                 'bg-document': {
                   $type: 'color',
-                  $value: `{brand.ma.color.indigo}`,
+                  $value: `{ma.color.indigo}`,
                 },
               },
             },
@@ -460,9 +460,7 @@ describe('theme', () => {
       const result = ThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
       expect.soft(z.flattenError(result.error!)).toMatchObject({
-        formErrors: [
-          'Invalid token reference: expected "brand.ma.color.indigo" to have a "$value" and "$type" property',
-        ],
+        formErrors: ['Invalid token reference: expected "ma.color.indigo" to have a "$value" and "$type" property'],
       });
     });
 
@@ -475,7 +473,7 @@ describe('theme', () => {
               'font-family': {
                 $type: 'fontFamily',
                 // this points to a color token instead of a fontFamily
-                $value: '{brand.ma.color.indigo.5}',
+                $value: '{ma.color.indigo.5}',
               },
             },
           },
@@ -486,7 +484,7 @@ describe('theme', () => {
       expect.soft(result.success).toEqual(false);
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
-          `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{brand.ma.color.indigo.5}"}" does not match the $type on reference {brand.ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
+          `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
         ],
       });
     });
@@ -621,9 +619,9 @@ describe('end-to-end tests of known basis themes', () => {
       await expect.soft(result.data).toMatchFileSnapshot('../test/snapshots/ma-theme.basis.tokens.jsonc');
     });
 
-    test.skip('theme is valid', () => {
+    test('theme is valid', () => {
       const result = ThemeSchema.safeParse(maTokens);
-      expect(result.success).toEqual(false);
+      expect(result.success).toEqual(true);
     });
   });
 });
