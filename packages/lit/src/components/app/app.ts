@@ -9,8 +9,10 @@ import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
+import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
 import '../preview-picker';
+import '../wizard-token-field';
 import appStyles from './app.css';
 
 /**
@@ -24,6 +26,7 @@ import appStyles from './app.css';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
+  #theme = new Theme();
   private readonly themeController: ThemeController = new ThemeController();
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
@@ -118,7 +121,14 @@ export class App extends LitElement {
           .bodyFont=${bodyFont}
           .scrapedTokens=${this.scrapedTokens}
           .onResetTheme=${() => this.themeController.resetToDefaults()}
-        ></theme-wizard-sidebar>
+        >
+        ${Object.keys(this.#theme.tokens).map((key) => html`
+          <wizard-token-field
+            .token=${this.#theme.tokens[key]}
+            path=${key}
+          ></wizard-token-field>
+        `)}
+        </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker></preview-picker>
