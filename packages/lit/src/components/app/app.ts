@@ -1,4 +1,5 @@
 import '../preview/preview';
+import '../sidebar/sidebar';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
@@ -10,6 +11,8 @@ import { EVENT_NAMES } from '../../constants';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import '../preview-picker';
+import '../wizard-token-field';
 import appStyles from './app.css';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -120,7 +123,11 @@ export class App extends LitElement {
           .headingFont=${headingFont}
           .bodyFont=${bodyFont}
           .scrapedTokens=${this.scrapedTokens}
-        ></theme-wizard-sidebar>
+        >
+          ${Object.keys(this.#theme.tokens).map(
+            (key) => html` <wizard-token-field .token=${this.#theme.tokens[key]} path=${key}></wizard-token-field> `,
+          )}
+        </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker .templates=${this.templates}></preview-picker>

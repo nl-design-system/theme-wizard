@@ -166,6 +166,8 @@ export class LitSidebar extends LitElement {
           </fieldset>
           <utrecht-button appearance="primary-action-button" type="submit">Update</utrecht-button>
         </form>
+
+        <slot></slot>
       </div>
     `;
   }
