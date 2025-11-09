@@ -13,6 +13,7 @@ import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
 import '../color-select';
 import '../color-scale-picker';
+import '../wizard-scraper';
 
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {
@@ -34,21 +35,8 @@ export class LitSidebar extends LitElement {
     this.dispatchEvent(event);
   }
 
-  private readonly handleScrapeForm = (event: Event): void => {
+  readonly #handleScrape = (event: Event): void => {
     event.preventDefault();
-
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const sourceUrl = formData.get('sourceUrl') as string;
-
-    if (sourceUrl?.trim() && !isValidUrl(sourceUrl)) {
-      return;
-    }
-
-    this.notifyConfigChange({
-      ...DEFAULT_CONFIG,
-      sourceUrl,
-    });
   };
 
   private readonly handleThemeForm = (event: Event): void => {
@@ -83,24 +71,7 @@ export class LitSidebar extends LitElement {
       <div class="theme-sidebar">
         <h1 class="theme-sidebar__title">Theme Wizard</h1>
 
-        <form @submit=${this.handleScrapeForm}>
-          <section class="theme-sidebar__section">
-            <h2 class="theme-sidebar__heading">Huisstijl URL</h2>
-
-            <div class="theme-form-field">
-              <label class="theme-form-field__label" for="source-url">Website URL</label>
-              <input
-                id="source-url"
-                name="sourceUrl"
-                class="theme-form-field__input"
-                type="url"
-                placeholder="https://example.com"
-                .value=${this.sourceUrl || ''}
-              />
-              <utrecht-button appearance="primary-action-button" type="submit">Analyseer</utrecht-button>
-            </div>
-          </section>
-        </form>
+        <wizard-scraper @submit=${this.#handleScrape}></wizard-scraper>
 
         <form class="theme-sidebar__form" @change=${this.handleThemeForm} @submit=${this.handleThemeForm}>
           <color-select
