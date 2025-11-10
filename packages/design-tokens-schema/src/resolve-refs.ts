@@ -31,5 +31,5 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
  * and check that they have actual values in `root` and that the $type overlaps
  */
 export const validateRefs = (config: unknown, root: Record<string, unknown>): void => {
-  walkObject<TokenWithRef>(config, (data) => isTokenWithRef(data, root));
+  walkObject<TokenWithRef>(config, (data, path) => isTokenWithRef(data, root, path));
 };

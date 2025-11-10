@@ -35,24 +35,24 @@ export const walkObject = <T = unknown>(
   traverse(root, []);
 };
 
-const isColorToken = (obj: unknown): obj is ColorToken => {
-  return typeof obj === 'object' && obj !== null && '$type' in obj && obj.$type === 'color';
+const isColorToken = (token: unknown): token is ColorToken => {
+  return typeof token === 'object' && token !== null && '$type' in token && token.$type === 'color';
 };
 
-export const walkColors = (root: unknown, callback: (data: ColorToken, path: string[]) => void): void => {
+export const walkColors = (root: unknown, callback: (token: ColorToken, path: string[]) => void): void => {
   walkObject<ColorToken>(root, isColorToken, callback);
 };
 
 export const walkTokensWithRef = (
   root: unknown,
   config: Record<string, unknown>,
-  callback: (token: TokenWithRef) => void,
+  callback: (token: TokenWithRef, path: string[]) => void,
 ): void => {
   walkObject<TokenWithRef>(
     root,
-    (data): data is TokenWithRef => {
+    (token, path): token is TokenWithRef => {
       try {
-        return isTokenWithRef(data, config);
+        return isTokenWithRef(token, config, path);
       } catch {
         // If the ref is invalid, skip it - validation will catch it later
         return false;

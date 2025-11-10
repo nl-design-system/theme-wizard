@@ -19,8 +19,8 @@ export type ColorOrColorScale = z.infer<typeof ColorOrColorScaleSchema>;
 
 const ColorIdentifierSchema = BaseDesignTokenIdentifierSchema;
 
-export const BrandSchema = z.object({
-  name: z.object({
+export const BrandSchema = z.looseObject({
+  name: z.looseObject({
     $type: z.literal('text'),
     $value: z.string(),
   }),
@@ -116,9 +116,9 @@ export const BasisColorSchema = z.strictObject({
 });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
-export const BasisTextSchema = z.object({
+export const BasisTextSchema = z.looseObject({
   'font-family': z
-    .object({
+    .looseObject({
       default: FontFamilyTokenSchema.optional(),
       monospace: FontFamilyTokenSchema.optional(),
     })
@@ -128,7 +128,7 @@ export const BasisTextSchema = z.object({
   // 'line-height': z.looseObject({}).optional(),
 });
 
-export const FormControlStateSchema = z.object({
+export const FormControlStateSchema = z.looseObject({
   'accent-color': ColorTokenValidationSchema.optional(),
   'background-color': ColorTokenValidationSchema.optional(),
   'border-color': ColorTokenValidationSchema.optional(),
@@ -136,7 +136,7 @@ export const FormControlStateSchema = z.object({
 });
 export type FormControlState = z.infer<typeof FormControlStateSchema>;
 
-export const BasisTokensSchema = z.object({
+export const BasisTokensSchema = z.looseObject({
   color: BasisColorSchema.optional(),
   // action: z.strictObject({}),
   // 'border-radius': z.strictObject({}),
@@ -145,7 +145,7 @@ export const BasisTokensSchema = z.object({
   // dataset: z.strictObject({}),
   // focus: z.strictObject({}),
   'form-control': z
-    .object({
+    .looseObject({
       ...FormControlStateSchema.shape,
       active: FormControlStateSchema.optional(),
       disabled: FormControlStateSchema.optional(),
@@ -154,7 +154,7 @@ export const BasisTokensSchema = z.object({
       hover: FormControlStateSchema.optional(),
       invalid: FormControlStateSchema.optional(),
       placeholder: z
-        .object({
+        .looseObject({
           color: ColorTokenValidationSchema.optional(),
         })
         .optional(),
@@ -162,7 +162,7 @@ export const BasisTokensSchema = z.object({
     })
     .optional(),
   heading: z
-    .object({
+    .looseObject({
       color: ColorTokenValidationSchema.optional(),
       'font-family': FontFamilyTokenSchema.optional(),
     })
@@ -181,7 +181,7 @@ export const BasisTokensSchema = z.object({
 });
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
-export const CommonSchema = z.object({
+export const CommonSchema = z.looseObject({
   basis: BasisTokensSchema.optional(),
 });
 export type Common = z.infer<typeof CommonSchema>;
@@ -268,7 +268,7 @@ export type ThemeValidationIssue = {
  * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
-const _ThemeSchema = z.looseObject({
+const ThemeSchema = z.looseObject({
   // Sometimes basis is at the root, sometimes inside common
   basis: BasisTokensSchema.optional(),
   // $metadata: z.strictObject({
@@ -280,10 +280,9 @@ const _ThemeSchema = z.looseObject({
   // 'components/*': {},
 });
 
-export type Theme = z.infer<typeof _ThemeSchema>;
+export type Theme = z.infer<typeof ThemeSchema>;
 
-export const ThemeSchema = _ThemeSchema
-  .transform(addContrastExtensions)
+export const EnforcedThemeSchema = ThemeSchema.transform(addContrastExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid

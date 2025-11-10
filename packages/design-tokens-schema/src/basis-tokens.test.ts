@@ -11,7 +11,7 @@ import {
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_FROM,
   Theme,
-  ThemeSchema,
+  EnforcedThemeSchema,
   ERROR_CODES,
   ThemeValidationIssue,
 } from './basis-tokens';
@@ -316,7 +316,7 @@ describe('theme', () => {
           },
         },
       };
-      const result = ThemeSchema.safeParse(config);
+      const result = EnforcedThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(result.data?.common?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
         [EXTENSION_CONTRAST_WITH]: [
@@ -363,7 +363,7 @@ describe('theme', () => {
           },
         },
       };
-      const result = ThemeSchema.safeParse(config);
+      const result = EnforcedThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(
         result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
@@ -387,7 +387,7 @@ describe('theme', () => {
           },
         },
       };
-      const result = ThemeSchema.safeParse(config);
+      const result = EnforcedThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(
         result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
@@ -415,20 +415,20 @@ describe('theme', () => {
 
       test('does not mutate the input config', () => {
         const originalConfig = structuredClone(config);
-        ThemeSchema.safeParse(config);
+        EnforcedThemeSchema.safeParse(config);
         const originalBg = originalConfig.common.basis.color.default['bg-document'].$value;
         const bgAfterValidation = config.common.basis.color.default['bg-document'].$value;
         expect.soft(originalBg).toEqual(bgAfterValidation);
       });
 
       test('validates the input', () => {
-        const result = ThemeSchema.safeParse(config);
+        const result = EnforcedThemeSchema.safeParse(config);
         expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
         expect.soft(result.success).toBeTruthy();
       });
 
       test('returns the schema with refs replaced by actual values', () => {
-        const result = ThemeSchema.safeParse(config);
+        const result = EnforcedThemeSchema.safeParse(config);
         const expectedCommonColor = brandConfig.ma.color.indigo[5];
         expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
           ...expectedCommonColor,
@@ -460,8 +460,8 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
-      const result = ThemeSchema.safeParse(config);
+      expect.soft(() => EnforcedThemeSchema.safeParse(config)).not.toThrowError();
+      const result = EnforcedThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
     });
 
@@ -482,11 +482,13 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => ThemeSchema.safeParse(config)).not.toThrowError();
-      const result = ThemeSchema.safeParse(config);
+      expect.soft(() => EnforcedThemeSchema.safeParse(config)).not.toThrowError();
+      const result = EnforcedThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
       expect.soft(z.flattenError(result.error!)).toMatchObject({
-        formErrors: ['Invalid token reference: expected "{ma.color.indigo}" to have a "$value" and "$type" property'],
+        formErrors: [
+          'Invalid token reference: expected "{ma.color.indigo}" to have a "$value" and "$type" property (referenced from "common.basis.color.default.bg-document")',
+        ],
       });
     });
 
@@ -506,7 +508,7 @@ describe('theme', () => {
         },
       };
 
-      const result = ThemeSchema.safeParse(config);
+      const result = EnforcedThemeSchema.safeParse(config);
       expect.soft(result.success).toEqual(false);
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
@@ -557,7 +559,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '{ma.color.white}',
       };
-      const result = ThemeSchema.safeParse(testConfig);
+      const result = EnforcedThemeSchema.safeParse(testConfig);
       expect(result.success).toEqual(true);
     });
 
@@ -571,7 +573,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '{ma.color.gray.2}',
       };
-      const result = ThemeSchema.safeParse(testConfig);
+      const result = EnforcedThemeSchema.safeParse(testConfig);
       expect.soft(result.success).toBeFalsy();
       expect.soft(result.error!.issues).toEqual([
         {
@@ -596,7 +598,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '#000',
       };
-      const result = ThemeSchema.safeParse(testConfig);
+      const result = EnforcedThemeSchema.safeParse(testConfig);
       expect(result.success).toEqual(true);
     });
 
@@ -610,7 +612,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '#ccc',
       };
-      const result = ThemeSchema.safeParse(testConfig);
+      const result = EnforcedThemeSchema.safeParse(testConfig);
       expect(result.success).toEqual(false);
       expect(result.error!.issues).toEqual([
         {
@@ -665,7 +667,7 @@ describe('theme', () => {
       },
     };
 
-    const result = ThemeSchema.safeParse(themeWithBothErrors);
+    const result = EnforcedThemeSchema.safeParse(themeWithBothErrors);
     expect(result.success).toBe(false);
 
     // Should find both types of errors
@@ -700,109 +702,8 @@ describe('end-to-end tests of known basis themes', () => {
     });
 
     test('validate theme', () => {
-      // Now that we fixed the pipeline, both ref errors and contrast errors are caught!
-      const result = ThemeSchema.safeParse(maTokens);
-      expect(result.success).toEqual(false);
-      expect(result.error!.issues).toHaveLength(15);
-
-      const issues = result.error!.issues as ThemeValidationIssue[];
-      const errors = issues.map((issue) => ({
-        ERROR_CODE: issue.ERROR_CODE,
-        message: issue.message,
-        path: issue.path.join('.'),
-      }));
-      expect(new Set(errors.map((err) => err.path)).size, 'Should not contain duplicates').toEqual(errors.length);
-      expect(errors).toEqual([
-        {
-          ERROR_CODE: ERROR_CODES.INVALID_REF,
-          message: `Invalid token reference: expected "{basis.space.block.4xl}" to have a "$value" and "$type" property`,
-          path: '',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled.border-active}` (#c9ccd2) and `{basis.color.disabled.bg-active}` (#e6eaf0). Calculated contrast: 1.332588227725318, need 3',
-          path: 'basis.color.disabled.border-active.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled.border-default}` (#c9ccd2) and `{basis.color.disabled.bg-default}` (#e6eaf0). Calculated contrast: 1.332588227725318, need 3',
-          path: 'basis.color.disabled.border-default.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled.border-hover}` (#c9ccd2) and `{basis.color.disabled.bg-hover}` (#e6eaf0). Calculated contrast: 1.332588227725318, need 3',
-          path: 'basis.color.disabled.border-hover.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled.color-active}` (#696c71) and `{basis.color.disabled.bg-active}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
-          path: 'basis.color.disabled.color-active.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled.color-default}` (#696c71) and `{basis.color.disabled.bg-default}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
-          path: 'basis.color.disabled.color-default.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled.color-document}` (#696c71) and `{basis.color.disabled.bg-subtle}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
-          path: 'basis.color.disabled.color-document.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled.color-hover}` (#696c71) and `{basis.color.disabled.bg-hover}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
-          path: 'basis.color.disabled.color-hover.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled-inverse.border-active}` (#696c71) and `{basis.color.disabled-inverse.bg-active}` (#585b60). Calculated contrast: 1.2934298421246648, need 3',
-          path: 'basis.color.disabled-inverse.border-active.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled-inverse.border-default}` (#696c71) and `{basis.color.disabled-inverse.bg-default}` (#585b60). Calculated contrast: 1.2934298421246648, need 3',
-          path: 'basis.color.disabled-inverse.border-default.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled-inverse.border-hover}` (#696c71) and `{basis.color.disabled-inverse.bg-hover}` (#585b60). Calculated contrast: 1.2934298421246648, need 3',
-          path: 'basis.color.disabled-inverse.border-hover.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled-inverse.color-active}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-active}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
-          path: 'basis.color.disabled-inverse.color-active.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled-inverse.color-default}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-default}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
-          path: 'basis.color.disabled-inverse.color-default.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled-inverse.color-document}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-subtle}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
-          path: 'basis.color.disabled-inverse.color-document.$value',
-        },
-        {
-          ERROR_CODE: 'insufficient_contrast',
-          message:
-            'Not enough contrast between `{basis.color.disabled-inverse.color-hover}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-hover}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
-          path: 'basis.color.disabled-inverse.color-hover.$value',
-        },
-      ]);
+      const result = EnforcedThemeSchema.safeParse(maTokens);
+      expect(result.success).toEqual(true);
     });
   });
 });

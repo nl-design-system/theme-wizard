@@ -43,7 +43,7 @@ const ReferencedTokenSchema = z.looseObject({
  * @param data A part of the root config in which refs may be present
  * @param root The root of the config in which tokens are searched
  */
-export const isTokenWithRef = (data: unknown, root?: Record<string, unknown>): data is TokenWithRef => {
+export const isTokenWithRef = (data: unknown, root: Record<string, unknown>, path: string[]): data is TokenWithRef => {
   // Check that we're dealing with a token-like object
   const parsedSource = TokenWithRefSchema.safeParse(data);
   if (parsedSource.success === false) {
@@ -52,12 +52,18 @@ export const isTokenWithRef = (data: unknown, root?: Record<string, unknown>): d
 
   // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
   const refPath = parsedSource.data.$value.slice(1, -1);
-  const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+  const referencedToken = dlv(root, refPath) || dlv(root, `brand.${refPath}`) || dlv(root, `common.${refPath}`);
+
+  if (!referencedToken) {
+    throw new Error(`Invalid token reference: can not find "${refPath}"`);
+  }
 
   // Check that we're dealing with a token-like object
-  const parsedRef = ReferencedTokenSchema.safeParse(ref);
+  const parsedRef = ReferencedTokenSchema.safeParse(referencedToken);
   if (parsedRef.success === false) {
-    throw new Error(`Invalid token reference: expected "{${refPath}}" to have a "$value" and "$type" property`);
+    throw new Error(
+      `Invalid token reference: expected "{${refPath}}" to have a "$value" and "$type" property (referenced from "${path.join('.')}")`,
+    );
   }
 
   // make sure the $type of the referenced token is the same
