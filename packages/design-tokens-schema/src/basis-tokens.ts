@@ -186,10 +186,15 @@ export const CommonSchema = z.object({
 export type Common = z.infer<typeof CommonSchema>;
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  // Clone the input root because resolveRefs is a mutable operation
-  const resolvedRoot = structuredClone(rootConfig);
-  resolveRefs(resolvedRoot.common, resolvedRoot);
-  return resolvedRoot;
+  // Resolve refs in common.basis (if it exists)
+  if (rootConfig.common) {
+    resolveRefs(rootConfig.common, rootConfig);
+  }
+  // Also resolve refs at root level (basis can be at root or in common)
+  if (rootConfig.basis) {
+    resolveRefs(rootConfig.basis, rootConfig);
+  }
+  return rootConfig;
 };
 
 export const addContrastExtensions = (rootConfig: Theme) => {
@@ -201,14 +206,19 @@ export const addContrastExtensions = (rootConfig: Theme) => {
 
     // Loop over the expected ratios:
     for (const [backgroundName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
+      // Build the path to the background color relative to where we found the foreground
+      // path.slice(1, -1) removes the first element (basis or common) and last element (the color name)
       const refPath = `${path.slice(1, -1).join('.')}.${backgroundName}`;
-      const background = dlv(rootConfig.common, refPath);
+
+      // Look for background in the same location as foreground (basis at root or in common)
+      const lookupPath = path[0] === 'basis' ? `basis.${refPath}` : `common.${refPath}`;
+      const background = dlv(rootConfig, lookupPath);
       if (!background) continue;
 
       const contrastWith = {
         color: {
           $extensions: {
-            [EXTENSION_RESOLVED_FROM]: `{common.${refPath}}`,
+            [EXTENSION_RESOLVED_FROM]: `{${lookupPath}}`,
           },
           $type: 'color',
           $value: background['$value'],
@@ -234,6 +244,15 @@ export const ERROR_CODES = {
   INVALID_REF: 'invalid_ref',
 } as const;
 
+// Type for our custom Zod issues that include ERROR_CODE
+export type ThemeValidationIssue = {
+  code: string;
+  path: PropertyKey[];
+  message: string;
+  ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
+  [key: string]: unknown;
+};
+
 /**
  * Validate a full theme
  * If you want to replace all tokens refs with their actual value, tag on a `.transform(resolveConfigRefs)`
@@ -245,6 +264,8 @@ export const ERROR_CODES = {
  * ```
  */
 const _ThemeSchema = z.looseObject({
+  // Sometimes basis is at the root, sometimes inside common
+  basis: BasisTokensSchema.optional(),
   // $metadata: z.strictObject({
   //   tokensSetOrder: z.array(z.string()),
   // }),
@@ -257,23 +278,23 @@ const _ThemeSchema = z.looseObject({
 export type Theme = z.infer<typeof _ThemeSchema>;
 
 export const ThemeSchema = _ThemeSchema
+  .transform(addContrastExtensions)
+  .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
+    // Validation 1: Check that all token references are valid
     try {
       validateRefs(root, root);
     } catch (error) {
       ctx.addIssue({
         code: 'custom',
-        continue: false,
         ERROR_CODE: ERROR_CODES.INVALID_REF,
         // The next line is type-safe, but because of that we don't cover all branches
         /* v8 ignore next */
         message: error instanceof Error ? error.message : 'Invalid token reference',
       });
     }
-  })
-  .transform(addContrastExtensions)
-  .transform(resolveConfigRefs)
-  .superRefine((root, context) => {
+
+    // Validation 2: Check that colors have sufficient contrast
     walkColors(root, (foreground, path) => {
       if (!Array.isArray(foreground.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
 
@@ -281,7 +302,7 @@ export const ThemeSchema = _ThemeSchema
         const contrast = compareContrast(foreground, background);
         const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
         if (contrast < expectedContrast) {
-          context.addIssue({
+          ctx.addIssue({
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             input: contrast,

@@ -52,12 +52,12 @@ export const isTokenWithRef = (data: unknown, root?: Record<string, unknown>): d
 
   // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
   const refPath = parsedSource.data.$value.slice(1, -1);
-  const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`) || dlv(root, `common.${refPath}`);
+  const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
   // Check that we're dealing with a token-like object
   const parsedRef = ReferencedTokenSchema.safeParse(ref);
   if (parsedRef.success === false) {
-    throw new Error(`Invalid token reference: expected "${refPath}" to have a "$value" and "$type" property`);
+    throw new Error(`Invalid token reference: expected "{${refPath}}" to have a "$value" and "$type" property`);
   }
 
   // make sure the $type of the referenced token is the same

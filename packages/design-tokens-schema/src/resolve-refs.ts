@@ -11,9 +11,10 @@ export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
  */
 export const resolveRefs = (config: unknown, root: Record<string, unknown>): void => {
   walkTokensWithRef(config, root, (token) => {
-    // Look up path.to.ref in root
     const refPath = token.$value.slice(1, -1);
+    // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
     const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+
     // Replace the object's value with the ref's value
     token['$value'] = ref.$value;
     // Add an extension to indicate that we changed `refPath` to an actual value

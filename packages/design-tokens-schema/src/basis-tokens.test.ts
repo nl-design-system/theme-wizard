@@ -12,6 +12,8 @@ import {
   EXTENSION_RESOLVED_FROM,
   Theme,
   ThemeSchema,
+  ERROR_CODES,
+  ThemeValidationIssue,
 } from './basis-tokens';
 import { ColorToken, parseColor } from './color-token';
 
@@ -484,7 +486,7 @@ describe('theme', () => {
       const result = ThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
       expect.soft(z.flattenError(result.error!)).toMatchObject({
-        formErrors: ['Invalid token reference: expected "ma.color.indigo" to have a "$value" and "$type" property'],
+        formErrors: ['Invalid token reference: expected "{ma.color.indigo}" to have a "$value" and "$type" property'],
       });
     });
 
@@ -515,7 +517,7 @@ describe('theme', () => {
   });
 
   describe('validating color contrast', () => {
-    // Hex notation + parseColor() because it's shorter than writing color tokens and the IDE shows a small color preview
+    // parseColor() because it's shorter than writing color tokens and the IDE shows a small color preview
     const black = { $type: 'color', $value: parseColor('#000') } satisfies ColorToken;
     const white = { $type: 'color', $value: parseColor('#fff') } satisfies ColorToken;
     const lightGray = { $type: 'color', $value: parseColor('#ccc') } satisfies ColorToken;
@@ -623,6 +625,60 @@ describe('theme', () => {
       ]);
     });
   });
+
+  test('finding both ref and contrast issues at once', () => {
+    // This test case exists because previous versions would bail out after the validation found an invalid ref and skipped checking contrast
+    const white = parseColor('#ffffff');
+    const lightGray = parseColor('#cccccc');
+
+    const themeWithBothErrors: Theme = {
+      brand: {
+        test: {
+          name: { $type: 'text', $value: 'Test' },
+          color: {
+            gray: { $type: 'color', $value: lightGray },
+            white: { $type: 'color', $value: white },
+          },
+        },
+      },
+      common: {
+        basis: {
+          color: {
+            default: {
+              // Invalid ref - this token doesn't exist
+              'bg-document': {
+                $type: 'color',
+                $value: '{test.color.nonexistent}',
+              },
+              // Insufficient contrast - gray on white is too low
+              'bg-subtle': {
+                $type: 'color',
+                $value: '{test.color.white}',
+              },
+              'color-document': {
+                $type: 'color',
+                $value: '{test.color.gray}',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const result = ThemeSchema.safeParse(themeWithBothErrors);
+    expect(result.success).toBe(false);
+
+    // Should find both types of errors
+    const refErrors = (result.error!.issues as ThemeValidationIssue[]).filter(
+      (issue) => issue.ERROR_CODE === ERROR_CODES.INVALID_REF,
+    );
+    const contrastErrors = (result.error!.issues as ThemeValidationIssue[]).filter(
+      (issue) => issue.ERROR_CODE === ERROR_CODES.INSUFFICIENT_CONTRAST,
+    );
+
+    expect(refErrors.length).toBeGreaterThan(0);
+    expect(contrastErrors.length).toBeGreaterThan(0);
+  });
 });
 
 describe('end-to-end tests of known basis themes', () => {
@@ -641,6 +697,112 @@ describe('end-to-end tests of known basis themes', () => {
       const result = BasisTokensSchema.safeParse(maTokens.basis);
       expect.soft(result.success).toEqual(true);
       await expect.soft(result.data).toMatchFileSnapshot('../test/snapshots/ma-theme.basis.tokens.jsonc');
+    });
+
+    test('validate theme', () => {
+      // Now that we fixed the pipeline, both ref errors and contrast errors are caught!
+      const result = ThemeSchema.safeParse(maTokens);
+      expect(result.success).toEqual(false);
+      expect(result.error!.issues).toHaveLength(15);
+
+      const issues = result.error!.issues as ThemeValidationIssue[];
+      const errors = issues.map((issue) => ({
+        ERROR_CODE: issue.ERROR_CODE,
+        message: issue.message,
+        path: issue.path.join('.'),
+      }));
+      expect(new Set(errors.map((err) => err.path)).size, 'Should not contain duplicates').toEqual(errors.length);
+      expect(errors).toEqual([
+        {
+          ERROR_CODE: ERROR_CODES.INVALID_REF,
+          message: `Invalid token reference: expected "{basis.space.block.4xl}" to have a "$value" and "$type" property`,
+          path: '',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled.border-active}` (#c9ccd2) and `{basis.color.disabled.bg-active}` (#e6eaf0). Calculated contrast: 1.332588227725318, need 3',
+          path: 'basis.color.disabled.border-active.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled.border-default}` (#c9ccd2) and `{basis.color.disabled.bg-default}` (#e6eaf0). Calculated contrast: 1.332588227725318, need 3',
+          path: 'basis.color.disabled.border-default.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled.border-hover}` (#c9ccd2) and `{basis.color.disabled.bg-hover}` (#e6eaf0). Calculated contrast: 1.332588227725318, need 3',
+          path: 'basis.color.disabled.border-hover.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled.color-active}` (#696c71) and `{basis.color.disabled.bg-active}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
+          path: 'basis.color.disabled.color-active.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled.color-default}` (#696c71) and `{basis.color.disabled.bg-default}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
+          path: 'basis.color.disabled.color-default.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled.color-document}` (#696c71) and `{basis.color.disabled.bg-subtle}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
+          path: 'basis.color.disabled.color-document.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled.color-hover}` (#696c71) and `{basis.color.disabled.bg-hover}` (#e6eaf0). Calculated contrast: 4.365319460518423, need 4.5',
+          path: 'basis.color.disabled.color-hover.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled-inverse.border-active}` (#696c71) and `{basis.color.disabled-inverse.bg-active}` (#585b60). Calculated contrast: 1.2934298421246648, need 3',
+          path: 'basis.color.disabled-inverse.border-active.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled-inverse.border-default}` (#696c71) and `{basis.color.disabled-inverse.bg-default}` (#585b60). Calculated contrast: 1.2934298421246648, need 3',
+          path: 'basis.color.disabled-inverse.border-default.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled-inverse.border-hover}` (#696c71) and `{basis.color.disabled-inverse.bg-hover}` (#585b60). Calculated contrast: 1.2934298421246648, need 3',
+          path: 'basis.color.disabled-inverse.border-hover.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled-inverse.color-active}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-active}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
+          path: 'basis.color.disabled-inverse.color-active.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled-inverse.color-default}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-default}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
+          path: 'basis.color.disabled-inverse.color-default.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled-inverse.color-document}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-subtle}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
+          path: 'basis.color.disabled-inverse.color-document.$value',
+        },
+        {
+          ERROR_CODE: 'insufficient_contrast',
+          message:
+            'Not enough contrast between `{basis.color.disabled-inverse.color-hover}` (#c9ccd2) and `{basis.color.disabled-inverse.bg-hover}` (#585b60). Calculated contrast: 4.237043629208699, need 4.5',
+          path: 'basis.color.disabled-inverse.color-hover.$value',
+        },
+      ]);
     });
   });
 });

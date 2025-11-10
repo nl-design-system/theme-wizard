@@ -1,4 +1,4 @@
-import { ColorToken, ColorTokenValidationSchema } from './color-token';
+import { ColorToken } from './color-token';
 import { isTokenWithRef, type TokenWithRef } from './token-reference';
 
 /**
@@ -36,7 +36,7 @@ export const walkObject = <T = unknown>(
 };
 
 const isColorToken = (obj: unknown): obj is ColorToken => {
-  return ColorTokenValidationSchema.safeParse(obj).success;
+  return typeof obj === 'object' && obj !== null && '$type' in obj && obj.$type === 'color';
 };
 
 export const walkColors = (root: unknown, callback: (data: ColorToken, path: string[]) => void): void => {
@@ -48,5 +48,16 @@ export const walkTokensWithRef = (
   config: Record<string, unknown>,
   callback: (token: TokenWithRef) => void,
 ): void => {
-  walkObject<TokenWithRef>(root, (data): data is TokenWithRef => isTokenWithRef(data, config), callback);
+  walkObject<TokenWithRef>(
+    root,
+    (data): data is TokenWithRef => {
+      try {
+        return isTokenWithRef(data, config);
+      } catch {
+        // If the ref is invalid, skip it - validation will catch it later
+        return false;
+      }
+    },
+    callback,
+  );
 };
