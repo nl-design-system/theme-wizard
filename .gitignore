@@ -39,7 +39,6 @@ tsconfig.tsbuildinfo
 .code-workspace/
 *.sublime-project
 *.sublime-workspace
-.claude/
 
 # Operating system files
 .DS_Store
