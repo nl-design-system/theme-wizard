@@ -9,7 +9,7 @@
     "declaration": true,
     "emitDeclarationOnly": false,
     "outDir": "dist",
-    "types": [],
+    "types": ["vite/client"],
     "importHelpers": false,
     "useDefineForClassFields": false,
     "skipLibCheck": true

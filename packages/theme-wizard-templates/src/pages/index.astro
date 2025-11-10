@@ -1,0 +1,22 @@
+---
+import { TEMPLATES } from '../templates';
+
+const items = TEMPLATES.map(({ name, pages }) => ({ title: name, pages }));
+---
+
+<h1>Templates</h1>
+
+{
+  items.map(({ title, pages }) => (
+    <>
+      <h2>{title}</h2>
+      <ul>
+        {pages.map(({ name, value }) => (
+          <li>
+            <a href={value}>{name}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  ))
+}

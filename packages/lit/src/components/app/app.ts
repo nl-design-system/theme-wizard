@@ -1,18 +1,16 @@
 import '../preview/preview';
-import '../sidebar/sidebar';
+import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
-import '../preview-picker';
 import appStyles from './app.css';
-
 /**
  * Main application component - Orchestrator coordinator
  *
@@ -28,6 +26,22 @@ export class App extends LitElement {
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
+
+  // Template list provided by the host application (JSON string attribute)
+  @property({ attribute: 'templates' }) templatesAttr?: string;
+
+  // Parsed templates list (computed)
+  get templates(): TemplateGroup[] {
+    try {
+      if (this.templatesAttr) {
+        const parsed = JSON.parse(this.templatesAttr);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch {
+      console.error('Failed to parse templates:', this.templatesAttr);
+    }
+    return [];
+  }
 
   @state()
   private scrapedTokens: ScrapedDesignToken[] = [];
@@ -45,11 +59,8 @@ export class App extends LitElement {
 
     // Parse template selection from query param: ?templates=/group/page (dynamic)
     try {
-      const params = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
-      if (params) {
-        const [group, page] = params.split('/').filter(Boolean);
-        if (group && page) this.selectedTemplatePath = `/${group}/${page}`;
-      }
+      const templatePath = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
+      if (templatePath) this.selectedTemplatePath = templatePath;
     } catch {
       // ignore parsing errors
     }
@@ -84,11 +95,10 @@ export class App extends LitElement {
     try {
       this.themeController.resetToDefaults();
       const tokens = await this.scraper.getTokens(new URL(sourceUrl));
-      this.scrapedTokens = tokens.sort(
-        (a, b) =>
-          // Reverse order, highest count first
-          b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
+      const sortedTokens = [...tokens].sort(
+        (a, b) => b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
       );
+      this.scrapedTokens = sortedTokens;
 
       this.requestUpdate();
     } catch (error) {
@@ -103,12 +113,7 @@ export class App extends LitElement {
   };
 
   override render() {
-    const { bodyFont, headingFont, previewUrl, sourceUrl } = this.themeController.getConfig();
-
-    const templateConfig = {
-      cssUrl: `/templates/${this.selectedTemplatePath}.css`,
-      htmlUrl: `/templates/${this.selectedTemplatePath}.html`,
-    };
+    const { bodyFont, headingFont, sourceUrl } = this.themeController.getConfig();
 
     return html`
       <div class="theme-app ma-theme">
@@ -121,12 +126,11 @@ export class App extends LitElement {
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <preview-picker></preview-picker>
+          <preview-picker .templates=${this.templates}></preview-picker>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
-              .templateConfig=${templateConfig}
-              .url=${previewUrl}
+              .url=${this.selectedTemplatePath}
               .themeStylesheet=${this.themeController.stylesheet}
             ></theme-wizard-preview>
           </section>

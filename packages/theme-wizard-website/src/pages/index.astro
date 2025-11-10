@@ -1,6 +1,7 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
 
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
@@ -10,5 +11,5 @@ const scraperUrl = withRelatedProject({
 ---
 
 <BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
-  <theme-wizard-app></theme-wizard-app>
+  <theme-wizard-app templates={TEMPLATES_JSON}></theme-wizard-app>
 </BaseLayout>

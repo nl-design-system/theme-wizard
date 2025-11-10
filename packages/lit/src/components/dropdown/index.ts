@@ -2,7 +2,7 @@ import selectStyles from '@utrecht/select-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-type DropdownOption = {
+export type DropdownOption = {
   name: string;
   value: string;
   detail?: Array<{

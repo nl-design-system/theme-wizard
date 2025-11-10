@@ -1,0 +1,15 @@
+---
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import ClientInit from '../components/ClientInit.astro';
+
+export interface Props {
+  title?: string;
+}
+---
+
+<html lang="nl" class="ma-theme">
+  <body>
+    <slot />
+    <ClientInit />
+  </body>
+</html>

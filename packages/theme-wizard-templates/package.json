@@ -1,0 +1,32 @@
+{
+  "name": "@nl-design-system-community/theme-wizard-templates",
+  "version": "1.0.0-alpha.0",
+  "author": "Community for NL Design System",
+  "description": "Templates",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "nl-design-system"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
+    "directory": "packages/theme-wizard-templates"
+  },
+  "scripts": {
+    "dev": "astro dev --port 9493",
+    "build": "astro build",
+    "clean": "rm -rf dist .astro build"
+  },
+  "dependencies": {
+    "astro": "5.14.1"
+  },
+  "devDependencies": {
+    "@nl-design-system-community/ma-design-tokens": "3.0.0",
+    "@utrecht/web-component-library-stencil": "3.6.0",
+    "@nl-design-system-community/theme-wizard-lit-components": "workspace:*"
+  }
+}

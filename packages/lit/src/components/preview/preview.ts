@@ -1,7 +1,6 @@
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { DEFAULT_CONFIG } from '../../constants/default';
 import Scraper from '../../lib/Scraper';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
@@ -9,16 +8,10 @@ import previewStyles from './preview.css';
 export const PREVIEW_THEME = 'preview-theme';
 const previewTheme = maTheme.replace('.ma-theme', `.${PREVIEW_THEME}`);
 
-interface TemplateConfig {
-  htmlUrl: string;
-  cssUrl?: string;
-}
-
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
-  @property() url: string = DEFAULT_CONFIG.previewUrl;
   @property() themeStylesheet!: CSSStyleSheet;
-  @property({ type: Object }) templateConfig?: TemplateConfig;
+  @property() url?: string;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
@@ -44,30 +37,21 @@ export class ThemePreview extends LitElement {
     this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
-  override willUpdate(changedProperties: Map<string, unknown>) {
-    super.willUpdate(changedProperties);
-
-    // Reload content when template config or URL changes
-    if (changedProperties.has('templateConfig')) {
-      this.#loadContent();
-    }
+  get previewUrl() {
+    return `/templates${this.url}`;
   }
 
   readonly #loadContent = async () => {
-    const config: TemplateConfig | null =
-      this.templateConfig ?? (this.url ? { cssUrl: this.url, htmlUrl: this.url } : null);
-
-    if (!config) return;
-
     this.isLoading = true;
     this.error = '';
 
     try {
-      this.htmlContent = await this.#fetchHTML(config.htmlUrl);
+      this.htmlContent = await this.#fetchHTML();
+      const css = await this.#fetchCSS();
 
-      if (config.cssUrl) {
-        const cssContent = await this.#fetchCSS(config.cssUrl);
-        this.previewStylesheet?.replaceSync(cssContent);
+      this.previewStylesheet?.replaceSync('');
+      if (css?.trim()) {
+        this.previewStylesheet.replaceSync(css);
       }
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
@@ -76,50 +60,33 @@ export class ThemePreview extends LitElement {
     }
   };
 
+  readonly #fetchCSS = async (): Promise<string | undefined> => {
+    try {
+      // Internal template page: resolve to our templates route
+      const targetUrl = new URL(this.previewUrl, globalThis.location.href);
+      return await this.scraper.getCSS(targetUrl);
+    } catch (err) {
+      console.error('Failed to fetch CSS:', err);
+      return undefined;
+    }
+  };
+
   /**
    * Fetch and process HTML from the URL
    */
-  readonly #fetchHTML = async (url: string): Promise<string> => {
-    const response = await fetch(url);
+  readonly #fetchHTML = async (): Promise<string> => {
+    const response = await fetch(this.previewUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+      throw new Error(`Failed to fetch ${this.previewUrl}: ${response.statusText}`);
     }
 
     const html = await response.text();
     const doc = parseHtml(html);
 
-    rewriteAttributeUrlsToAbsolute(doc.body, url);
-    rewriteSvgXlinkToAbsolute(doc.body, url);
+    rewriteAttributeUrlsToAbsolute(doc.body, this.previewUrl);
+    rewriteSvgXlinkToAbsolute(doc.body, this.previewUrl);
 
     return doc.body.innerHTML;
-  };
-
-  /**
-   * Fetch CSS from a URL (local or remote)
-   */
-  readonly #fetchCSS = async (url: string): Promise<string> => {
-    try {
-      // External URL gets ignored since it's already absolute
-      const absoluteUrl = new URL(url, globalThis.location.href).href;
-      const currentOrigin = new URL(globalThis.location.href).origin;
-      const urlOrigin = new URL(absoluteUrl).origin;
-      const isExternal = currentOrigin !== urlOrigin;
-
-      if (isExternal) {
-        // Use scraper API
-        const cssUrl = new URL(url);
-        return this.scraper.getCSS(cssUrl);
-      } else {
-        // Direct fetch for local/relative URLs
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
-        }
-        return response.text();
-      }
-    } catch (error) {
-      throw new Error(`Failed to fetch CSS: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
   };
 
   override render() {
@@ -139,7 +106,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div class="preview-theme" data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
+    return html` <div class=${PREVIEW_THEME} data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 

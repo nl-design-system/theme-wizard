@@ -1,5 +1,12 @@
 {
   "extends": "./node_modules/astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@templates/*": ["../theme-wizard-templates/src/*", "../../theme-wizard-templates/src/*"]
+    }
+  },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]
 }

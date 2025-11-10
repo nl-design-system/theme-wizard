@@ -1,0 +1,38 @@
+---
+import type { PageModule } from '@/types';
+
+const param = Astro.params.template;
+const rel = Array.isArray(param) ? param.join('/') : (param as string);
+
+const modules = import.meta.glob<PageModule>('@templates/pages/**/*.astro', { eager: true });
+const suffix = `/pages/${rel}.astro`;
+const key = Object.keys(modules).find((k) => k.endsWith(suffix));
+
+const TemplatePage = key ? modules[key]?.default : undefined;
+
+export function getStaticPaths() {
+  type Path = {
+    params: {
+      template: string;
+    };
+  };
+
+  const modules = import.meta.glob<PageModule>('@templates/pages/**/*.astro', { eager: true });
+  const paths: Path[] = Object.keys(modules).flatMap((k) => {
+    const match = k.match(/pages\/(.+)\.astro$/);
+    if (!match) return [];
+    return [
+      {
+        params: {
+          template: match[1],
+        },
+      },
+    ];
+  });
+  return paths;
+}
+
+if (!TemplatePage) return new Response(`Template page ${rel} not found`, { status: 404 });
+---
+
+<TemplatePage />
