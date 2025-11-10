@@ -11,7 +11,7 @@ import {
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_FROM,
   Theme,
-  EnforcedThemeSchema,
+  StrictThemeSchema,
   ERROR_CODES,
   ThemeValidationIssue,
 } from './basis-tokens';
@@ -316,7 +316,7 @@ describe('theme', () => {
           },
         },
       };
-      const result = EnforcedThemeSchema.safeParse(config);
+      const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(result.data?.common?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
         [EXTENSION_CONTRAST_WITH]: [
@@ -363,7 +363,7 @@ describe('theme', () => {
           },
         },
       };
-      const result = EnforcedThemeSchema.safeParse(config);
+      const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(
         result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
@@ -387,7 +387,7 @@ describe('theme', () => {
           },
         },
       };
-      const result = EnforcedThemeSchema.safeParse(config);
+      const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
       expect(
         result.data?.common?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
@@ -415,20 +415,20 @@ describe('theme', () => {
 
       test('does not mutate the input config', () => {
         const originalConfig = structuredClone(config);
-        EnforcedThemeSchema.safeParse(config);
+        StrictThemeSchema.safeParse(config);
         const originalBg = originalConfig.common.basis.color.default['bg-document'].$value;
         const bgAfterValidation = config.common.basis.color.default['bg-document'].$value;
         expect.soft(originalBg).toEqual(bgAfterValidation);
       });
 
       test('validates the input', () => {
-        const result = EnforcedThemeSchema.safeParse(config);
+        const result = StrictThemeSchema.safeParse(config);
         expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
         expect.soft(result.success).toBeTruthy();
       });
 
       test('returns the schema with refs replaced by actual values', () => {
-        const result = EnforcedThemeSchema.safeParse(config);
+        const result = StrictThemeSchema.safeParse(config);
         const expectedCommonColor = brandConfig.ma.color.indigo[5];
         expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
           ...expectedCommonColor,
@@ -460,8 +460,8 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => EnforcedThemeSchema.safeParse(config)).not.toThrowError();
-      const result = EnforcedThemeSchema.safeParse(config);
+      expect.soft(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
+      const result = StrictThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
     });
 
@@ -482,8 +482,8 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => EnforcedThemeSchema.safeParse(config)).not.toThrowError();
-      const result = EnforcedThemeSchema.safeParse(config);
+      expect.soft(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
+      const result = StrictThemeSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
@@ -508,7 +508,7 @@ describe('theme', () => {
         },
       };
 
-      const result = EnforcedThemeSchema.safeParse(config);
+      const result = StrictThemeSchema.safeParse(config);
       expect.soft(result.success).toEqual(false);
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
@@ -559,7 +559,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '{ma.color.white}',
       };
-      const result = EnforcedThemeSchema.safeParse(testConfig);
+      const result = StrictThemeSchema.safeParse(testConfig);
       expect(result.success).toEqual(true);
     });
 
@@ -573,7 +573,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '{ma.color.gray.2}',
       };
-      const result = EnforcedThemeSchema.safeParse(testConfig);
+      const result = StrictThemeSchema.safeParse(testConfig);
       expect.soft(result.success).toBeFalsy();
       expect.soft(result.error!.issues).toEqual([
         {
@@ -598,7 +598,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '#000',
       };
-      const result = EnforcedThemeSchema.safeParse(testConfig);
+      const result = StrictThemeSchema.safeParse(testConfig);
       expect(result.success).toEqual(true);
     });
 
@@ -612,7 +612,7 @@ describe('theme', () => {
         $type: 'color',
         $value: '#ccc',
       };
-      const result = EnforcedThemeSchema.safeParse(testConfig);
+      const result = StrictThemeSchema.safeParse(testConfig);
       expect(result.success).toEqual(false);
       expect(result.error!.issues).toEqual([
         {
@@ -667,7 +667,7 @@ describe('theme', () => {
       },
     };
 
-    const result = EnforcedThemeSchema.safeParse(themeWithBothErrors);
+    const result = StrictThemeSchema.safeParse(themeWithBothErrors);
     expect(result.success).toBe(false);
 
     // Should find both types of errors
@@ -702,7 +702,7 @@ describe('end-to-end tests of known basis themes', () => {
     });
 
     test('validate theme', () => {
-      const result = EnforcedThemeSchema.safeParse(maTokens);
+      const result = StrictThemeSchema.safeParse(maTokens);
       expect(result.success).toEqual(true);
     });
   });

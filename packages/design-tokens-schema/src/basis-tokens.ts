@@ -83,7 +83,7 @@ const CONTRAST: ContrastRequirement = {
     'bg-hover': 4.5,
   },
 } as const;
-const SKIP_CONTRAST_EXTENSION = ['disabled', 'disabled-inverse'];
+const SKIP_CONTRAST_EXTENSION = new Set(['disabled', 'disabled-inverse']);
 
 export const BasisColorSchema = z.strictObject({
   'accent-1': ColorNameSchema.optional(),
@@ -207,7 +207,7 @@ export const addContrastExtensions = (rootConfig: Theme) => {
 
     // WARNING: we currently skip contrast checking for disabled colors because start-theme and ma-theme do not comply
     const parentPath = path.at(-2);
-    if (parentPath !== undefined && SKIP_CONTRAST_EXTENSION.includes(parentPath)) return;
+    if (parentPath !== undefined && SKIP_CONTRAST_EXTENSION.has(parentPath)) return;
 
     // Loop over the expected ratios:
     for (const [backgroundName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
@@ -268,7 +268,7 @@ export type ThemeValidationIssue = {
  * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
-const ThemeSchema = z.looseObject({
+export const ThemeSchema = z.looseObject({
   // Sometimes basis is at the root, sometimes inside common
   basis: BasisTokensSchema.optional(),
   // $metadata: z.strictObject({
@@ -282,13 +282,14 @@ const ThemeSchema = z.looseObject({
 
 export type Theme = z.infer<typeof ThemeSchema>;
 
-export const EnforcedThemeSchema = ThemeSchema.transform(addContrastExtensions)
+export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid
     try {
       validateRefs(root, root);
     } catch (error) {
+      // Later on we can throw customized ValidationErrors that also contain the `path` so we can add it to the issue
       ctx.addIssue({
         code: 'custom',
         ERROR_CODE: ERROR_CODES.INVALID_REF,
