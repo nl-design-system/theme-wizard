@@ -25,7 +25,7 @@
     "astro": "5.14.1"
   },
   "devDependencies": {
-    "@nl-design-system-community/ma-design-tokens": "2.5.0",
+    "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@utrecht/web-component-library-stencil": "3.6.0",
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*"
   }
