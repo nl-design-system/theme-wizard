@@ -25,7 +25,7 @@
   "dependencies": {
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*",
-    "@nl-design-system-community/templates": "workspace:*",
+    "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@vercel/related-projects": "1.0.0",
     "astro": "5.14.1"
   },

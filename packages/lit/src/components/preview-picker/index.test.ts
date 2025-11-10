@@ -1,5 +1,5 @@
 import '.';
-import type { Category, TemplateGroup } from '@nl-design-system-community/templates';
+import type { Category, TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { beforeEach, describe, expect, test } from 'vitest';
 import type { PreviewPicker } from '.';
 

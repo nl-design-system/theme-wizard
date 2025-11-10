@@ -1,4 +1,4 @@
-import type { TemplateGroup, Category } from '@nl-design-system-community/templates';
+import type { TemplateGroup, Category } from '@nl-design-system-community/theme-wizard-templates';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../dropdown/index.js';

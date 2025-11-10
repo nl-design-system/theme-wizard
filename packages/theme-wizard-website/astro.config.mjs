@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const thisDir = dirname(fileURLToPath(import.meta.url));
 const srcDir = resolve(thisDir, 'src');
-const templatesRoot = resolve(thisDir, '../templates');
+const templatesRoot = resolve(thisDir, '../theme-wizard-templates');
 const templatesSrc = resolve(templatesRoot, 'src');
 
 // https://astro.build/config

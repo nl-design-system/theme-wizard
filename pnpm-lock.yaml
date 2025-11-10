@@ -207,9 +207,9 @@ importers:
         specifier: 4.4.0
         version: 4.4.0
     devDependencies:
-      '@nl-design-system-community/templates':
+      '@nl-design-system-community/theme-wizard-templates':
         specifier: workspace:*
-        version: link:../templates
+        version: link:../theme-wizard-templates
       '@vitest/browser-playwright':
         specifier: 4.0.6
         version: 4.0.6(playwright@1.56.1)(vite@7.1.12(@types/node@22.16.4)(yaml@2.8.0))(vitest@4.0.6)
@@ -307,22 +307,6 @@ importers:
         specifier: 7.1.12
         version: 7.1.12(@types/node@22.16.4)(yaml@2.8.0)
 
-  packages/templates:
-    dependencies:
-      astro:
-        specifier: 5.14.1
-        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.0)
-    devDependencies:
-      '@nl-design-system-community/ma-design-tokens':
-        specifier: 3.0.0
-        version: 3.0.0
-      '@nl-design-system-community/theme-wizard-lit-components':
-        specifier: workspace:*
-        version: link:../lit
-      '@utrecht/web-component-library-stencil':
-        specifier: 3.6.0
-        version: 3.6.0
-
   packages/theme-wizard-server:
     dependencies:
       '@hono/swagger-ui':
@@ -366,17 +350,33 @@ importers:
         specifier: 4.0.6
         version: 4.0.6(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.16.4)(@vitest/browser-playwright@4.0.6)(yaml@2.8.0)
 
+  packages/theme-wizard-templates:
+    dependencies:
+      astro:
+        specifier: 5.14.1
+        version: 5.14.1(@types/node@22.16.4)(@vercel/blob@1.0.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.0)
+    devDependencies:
+      '@nl-design-system-community/ma-design-tokens':
+        specifier: 3.0.0
+        version: 3.0.0
+      '@nl-design-system-community/theme-wizard-lit-components':
+        specifier: workspace:*
+        version: link:../lit
+      '@utrecht/web-component-library-stencil':
+        specifier: 3.6.0
+        version: 3.6.0
+
   packages/theme-wizard-website:
     dependencies:
       '@nl-design-system-community/ma-design-tokens':
         specifier: 2.5.0
         version: 2.5.0
-      '@nl-design-system-community/templates':
-        specifier: workspace:*
-        version: link:../templates
       '@nl-design-system-community/theme-wizard-lit-components':
         specifier: workspace:*
         version: link:../lit
+      '@nl-design-system-community/theme-wizard-templates':
+        specifier: workspace:*
+        version: link:../theme-wizard-templates
       '@vercel/related-projects':
         specifier: 1.0.0
         version: 1.0.0
