@@ -51,8 +51,9 @@ const templateGroups = (): TemplateGroup[] => {
       value: `/${slug}/${metaValue}`,
     };
 
-    if (map.has(slug)) {
-      map.get(slug)!.pages.push(pageItem);
+    const entry = map.get(slug);
+    if (entry) {
+      entry.pages.push(pageItem);
     } else {
       map.set(slug, {
         name: groupTitle,
