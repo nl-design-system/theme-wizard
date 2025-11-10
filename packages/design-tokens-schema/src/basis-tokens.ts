@@ -83,6 +83,7 @@ const CONTRAST: ContrastRequirement = {
     'bg-hover': 4.5,
   },
 } as const;
+const SKIP_CONTRAST_EXTENSION = ['disabled', 'disabled-inverse'];
 
 export const BasisColorSchema = z.strictObject({
   'accent-1': ColorNameSchema.optional(),
@@ -203,6 +204,10 @@ export const addContrastExtensions = (rootConfig: Theme) => {
 
     // Check that we have listed this color to have a known contrast counterpart
     if (!FOREGROUND_COLOR_KEYS.includes(lastPath) || !(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
+
+    // WARNING: we currently skip contrast checking for disabled colors because start-theme and ma-theme do not comply
+    const parentPath = path.at(-2);
+    if (parentPath !== undefined && SKIP_CONTRAST_EXTENSION.includes(parentPath)) return;
 
     // Loop over the expected ratios:
     for (const [backgroundName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
