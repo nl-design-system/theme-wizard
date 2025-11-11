@@ -21,7 +21,12 @@ npm install @nl-design-system-community/design-tokens-schema
 ### Validating an entire theme configuration
 
 ```ts
-import { ThemeSchema, type Theme resolveConfigRefs } from '@nl-design-system-community/design-token-schema';
+import {
+  type Theme,
+  ThemeSchema,
+  resolveConfigRefs,
+  StrictThemeSchema,
+} from '@nl-design-system-community/design-token-schema';
 
 const myConfig = {
   brand: {
@@ -46,9 +51,15 @@ const myConfig = {
   }
 };
 
-// All refs like `{ma.color.black}` refs are validated to exist in `brand`.
+// Token references like `{ma.color.black}` are only validated to follow the proper format, they are not resolved.
 const config = ThemeSchema.parse(myConfig) satisfies Theme;
 
 // All refs like `{ma.color.black}` are first validated in the schema and the `.transform(resolveConfigRefs)` replaces the refs with the actual values
 const resolvedConfig = ThemeSchema.transform(resolveConfigRefs).parse(myConfig) satisfies Theme;
+
+// The whole theme is validated for:
+// - syntax correctness
+// - all known color combinations to have proper contrast
+// - all {ref.pointers} to exist and be of the correct type
+const strictConfig = StrictThemeSchema.safeParse(myConfig) satisfies Theme;
 ```

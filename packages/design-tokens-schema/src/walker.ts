@@ -1,19 +1,20 @@
-import { ColorToken, ColorTokenValidationSchema } from './color-token';
+import { ColorToken } from './color-token';
+import { isTokenWithRef, type TokenWithRef } from './token-reference';
 
 /**
- * @param data The object you want to traverse
- * @param predicate Predicate function that returns true when data is a T-shape object
+ * @param root The object you want to traverse
+ * @param predicate Predicate function that returns true when data is a <T>-shape object
  * @param callback Is called whenever the callback returns true
  */
 export const walkObject = <T = unknown>(
-  data: unknown,
-  predicate: (data: unknown) => data is T,
-  callback: (data: T, path: string[]) => void,
+  root: unknown,
+  predicate: (data: unknown, path: string[]) => data is T,
+  callback?: (data: T, path: string[]) => void,
 ): void => {
   function traverse(currentData: unknown, path: string[]): void {
     // Check if current data matches
-    if (predicate(currentData)) {
-      callback(currentData, path);
+    if (predicate(currentData, path)) {
+      callback?.(currentData, path);
     }
 
     // Recurse into objects
@@ -31,13 +32,32 @@ export const walkObject = <T = unknown>(
     }
   }
 
-  traverse(data, []);
+  traverse(root, []);
 };
 
-const isColorToken = (obj: unknown): obj is ColorToken => {
-  return ColorTokenValidationSchema.safeParse(obj).success;
+const isColorToken = (token: unknown): token is ColorToken => {
+  return typeof token === 'object' && token !== null && '$type' in token && token.$type === 'color';
 };
 
-export const walkColors = (data: unknown, callback: (data: ColorToken, path: string[]) => void): void => {
-  walkObject<ColorToken>(data, isColorToken, (obj, path) => callback(obj, path));
+export const walkColors = (root: unknown, callback: (token: ColorToken, path: string[]) => void): void => {
+  walkObject<ColorToken>(root, isColorToken, callback);
+};
+
+export const walkTokensWithRef = (
+  root: unknown,
+  config: Record<string, unknown>,
+  callback: (token: TokenWithRef, path: string[]) => void,
+): void => {
+  walkObject<TokenWithRef>(
+    root,
+    (token, path): token is TokenWithRef => {
+      try {
+        return isTokenWithRef(token, config, path);
+      } catch {
+        // If the ref is invalid, skip it - validation will catch it later
+        return false;
+      }
+    },
+    callback,
+  );
 };

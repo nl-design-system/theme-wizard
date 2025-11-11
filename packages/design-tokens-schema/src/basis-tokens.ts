@@ -1,9 +1,11 @@
+import dlv from 'dlv';
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
-import { ColorTokenValidationSchema } from './color-token';
+import { ColorTokenValidationSchema, compareContrast, stringifyColor } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
-import { validateRefs, resolveRefs } from './resolve-refs';
+import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import { walkColors } from './walker';
+export { EXTENSION_RESOLVED_FROM } from './resolve-refs';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 
@@ -17,8 +19,8 @@ export type ColorOrColorScale = z.infer<typeof ColorOrColorScaleSchema>;
 
 const ColorIdentifierSchema = BaseDesignTokenIdentifierSchema;
 
-export const BrandSchema = z.object({
-  name: z.object({
+export const BrandSchema = z.looseObject({
+  name: z.looseObject({
     $type: z.literal('text'),
     $value: z.string(),
   }),
@@ -32,12 +34,7 @@ export const BrandsSchema = z.record(
 );
 export type Brands = z.infer<typeof BrandsSchema>;
 
-const COLOR_NAME_KEYS = [
-  'bg-active',
-  'bg-default',
-  'bg-document',
-  'bg-hover',
-  'bg-subtle',
+const FOREGROUND_COLOR_KEYS = [
   'border-active',
   'border-default',
   'border-hover',
@@ -48,14 +45,20 @@ const COLOR_NAME_KEYS = [
   'color-hover',
   'color-subtle',
 ] as const;
-export type ColorNameKey = (typeof COLOR_NAME_KEYS)[number];
+type ForegroundColorKey = (typeof FOREGROUND_COLOR_KEYS)[number];
+
+const BACKGROUND_COLOR_KEYS = ['bg-active', 'bg-default', 'bg-document', 'bg-hover', 'bg-subtle'] as const;
+type BackgroundColorKey = (typeof BACKGROUND_COLOR_KEYS)[number];
+
+const COLOR_KEYS = [...BACKGROUND_COLOR_KEYS, ...FOREGROUND_COLOR_KEYS] as const;
+export type ColorNameKey = (typeof COLOR_KEYS)[number];
 
 export const ColorNameSchema = z.strictObject(
-  Object.fromEntries(COLOR_NAME_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
+  Object.fromEntries(COLOR_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
 );
 export type ColorName = z.infer<typeof ColorNameSchema>;
 
-type ContrastRequirement = Partial<Record<ColorNameKey, Partial<Record<ColorNameKey, number>>>>;
+type ContrastRequirement = Partial<Record<ForegroundColorKey, Partial<Record<BackgroundColorKey, number>>>>;
 /** @see https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#as-2-toepassing */
 const CONTRAST: ContrastRequirement = {
   'border-active': {
@@ -80,6 +83,7 @@ const CONTRAST: ContrastRequirement = {
     'bg-hover': 4.5,
   },
 } as const;
+const SKIP_CONTRAST_EXTENSION = new Set(['disabled', 'disabled-inverse']);
 
 export const BasisColorSchema = z.strictObject({
   'accent-1': ColorNameSchema.optional(),
@@ -112,9 +116,9 @@ export const BasisColorSchema = z.strictObject({
 });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
-export const BasisTextSchema = z.object({
+export const BasisTextSchema = z.looseObject({
   'font-family': z
-    .object({
+    .looseObject({
       default: FontFamilyTokenSchema.optional(),
       monospace: FontFamilyTokenSchema.optional(),
     })
@@ -124,7 +128,7 @@ export const BasisTextSchema = z.object({
   // 'line-height': z.looseObject({}).optional(),
 });
 
-export const FormControlStateSchema = z.object({
+export const FormControlStateSchema = z.looseObject({
   'accent-color': ColorTokenValidationSchema.optional(),
   'background-color': ColorTokenValidationSchema.optional(),
   'border-color': ColorTokenValidationSchema.optional(),
@@ -132,7 +136,7 @@ export const FormControlStateSchema = z.object({
 });
 export type FormControlState = z.infer<typeof FormControlStateSchema>;
 
-export const BasisTokensSchema = z.object({
+export const BasisTokensSchema = z.looseObject({
   color: BasisColorSchema.optional(),
   // action: z.strictObject({}),
   // 'border-radius': z.strictObject({}),
@@ -141,7 +145,7 @@ export const BasisTokensSchema = z.object({
   // dataset: z.strictObject({}),
   // focus: z.strictObject({}),
   'form-control': z
-    .object({
+    .looseObject({
       ...FormControlStateSchema.shape,
       active: FormControlStateSchema.optional(),
       disabled: FormControlStateSchema.optional(),
@@ -150,7 +154,7 @@ export const BasisTokensSchema = z.object({
       hover: FormControlStateSchema.optional(),
       invalid: FormControlStateSchema.optional(),
       placeholder: z
-        .object({
+        .looseObject({
           color: ColorTokenValidationSchema.optional(),
         })
         .optional(),
@@ -158,7 +162,7 @@ export const BasisTokensSchema = z.object({
     })
     .optional(),
   heading: z
-    .object({
+    .looseObject({
       color: ColorTokenValidationSchema.optional(),
       'font-family': FontFamilyTokenSchema.optional(),
     })
@@ -177,16 +181,81 @@ export const BasisTokensSchema = z.object({
 });
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
-export const CommonSchema = z.object({
+export const CommonSchema = z.looseObject({
   basis: BasisTokensSchema.optional(),
 });
 export type Common = z.infer<typeof CommonSchema>;
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  // Clone the input root because resolveRefs is a mutable operation
-  const resolvedRoot = structuredClone(rootConfig);
-  resolveRefs(resolvedRoot.common, rootConfig.brand);
-  return resolvedRoot;
+  // Resolve refs in common.basis (if it exists)
+  if (rootConfig.common) {
+    resolveRefs(rootConfig.common, rootConfig);
+  }
+  // Also resolve refs at root level (basis can be at root or in common)
+  if (rootConfig.basis) {
+    resolveRefs(rootConfig.basis, rootConfig);
+  }
+  return rootConfig;
+};
+
+export const addContrastExtensions = (rootConfig: Theme) => {
+  walkColors(rootConfig, (color, path) => {
+    const lastPath = path.at(-1)! as ForegroundColorKey;
+
+    // Check that we have listed this color to have a known contrast counterpart
+    if (!FOREGROUND_COLOR_KEYS.includes(lastPath) || !(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
+
+    // WARNING: we currently skip contrast checking for disabled colors because start-theme and ma-theme do not comply
+    const parentPath = path.at(-2);
+    if (parentPath !== undefined && SKIP_CONTRAST_EXTENSION.has(parentPath)) return;
+
+    // Loop over the expected ratios:
+    for (const [backgroundName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
+      // Build the path to the background color relative to where we found the foreground
+      // path.slice(1, -1) removes the first element (basis or common) and last element (the color name)
+      const refPath = `${path.slice(1, -1).join('.')}.${backgroundName}`;
+
+      // Look for background in the same location as foreground (basis at root or in common)
+      const lookupPath = path[0] === 'basis' ? `basis.${refPath}` : `common.${refPath}`;
+      const background = dlv(rootConfig, lookupPath);
+      if (!background) continue;
+
+      const contrastWith = {
+        color: {
+          $extensions: {
+            [EXTENSION_RESOLVED_FROM]: `{${lookupPath}}`,
+          },
+          $type: 'color',
+          $value: background['$value'],
+        },
+        ratio: expectedRatio,
+      };
+
+      // Make sure $extensions exists
+      color.$extensions ??= {};
+      color.$extensions = {
+        ...color.$extensions,
+        [EXTENSION_CONTRAST_WITH]: Array.isArray(color.$extensions[EXTENSION_CONTRAST_WITH])
+          ? [...color.$extensions[EXTENSION_CONTRAST_WITH], contrastWith]
+          : [contrastWith],
+      };
+    }
+  });
+  return rootConfig;
+};
+
+export const ERROR_CODES = {
+  INSUFFICIENT_CONTRAST: 'insufficient_contrast',
+  INVALID_REF: 'invalid_ref',
+} as const;
+
+// Type for our custom Zod issues that include ERROR_CODE
+export type ThemeValidationIssue = {
+  code: string;
+  path: PropertyKey[];
+  message: string;
+  ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
+  [key: string]: unknown;
 };
 
 /**
@@ -199,58 +268,55 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
  * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
-export const ThemeSchema = z
-  .looseObject({
-    // $metadata: z.strictObject({
-    //   tokensSetOrder: z.array(z.string()),
-    // }),
-    // $themes: [],
-    brand: BrandsSchema.optional(),
-    common: CommonSchema.optional(),
-    // 'components/*': {},
-  })
-  .superRefine((root, ctx) => {
-    try {
-      validateRefs(root.common, root.brand);
-    } catch (error) {
-      ctx.addIssue({
-        code: 'custom',
-        // The next line is type-safe, but because of that we don't cover all branches
-        /* v8 ignore next -- @preserve */
-        message: error instanceof Error ? error.message : 'Invalid token reference',
-      });
-    }
-  });
+export const ThemeSchema = z.looseObject({
+  // Sometimes basis is at the root, sometimes inside common
+  basis: BasisTokensSchema.optional(),
+  // $metadata: z.strictObject({
+  //   tokensSetOrder: z.array(z.string()),
+  // }),
+  // $themes: [],
+  brand: BrandsSchema.optional(),
+  common: CommonSchema.optional(),
+  // 'components/*': {},
+});
 
 export type Theme = z.infer<typeof ThemeSchema>;
 
-export const addContrastExtensions = (rootConfig: Theme) => {
-  walkColors(rootConfig, (color, path) => {
-    const lastPath = path.at(-1)! as ColorNameKey;
-
-    // Check that we have listed this color to have a known contrast counterpart
-    if (!(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
-
-    // Make sure $extensions exists
-    color.$extensions ??= {};
-
-    // Loop over the expected ratios:
-    for (const [counterPartName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
-      const contrastWith = {
-        color: {
-          $type: 'color',
-          $value: `{${path.slice(0, -1).join('.')}.${counterPartName}}`,
-        },
-        ratio: expectedRatio,
-      };
-
-      color.$extensions = {
-        ...color.$extensions,
-        [EXTENSION_CONTRAST_WITH]: Array.isArray(color.$extensions[EXTENSION_CONTRAST_WITH])
-          ? [...color.$extensions[EXTENSION_CONTRAST_WITH], contrastWith]
-          : [contrastWith],
-      };
+export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
+  .transform(resolveConfigRefs)
+  .superRefine((root, ctx) => {
+    // Validation 1: Check that all token references are valid
+    try {
+      validateRefs(root, root);
+    } catch (error) {
+      // Later on we can throw customized ValidationErrors that also contain the `path` so we can add it to the issue
+      ctx.addIssue({
+        code: 'custom',
+        ERROR_CODE: ERROR_CODES.INVALID_REF,
+        // The next line is type-safe, but because of that we don't cover all branches
+        /* v8 ignore next */
+        message: error instanceof Error ? error.message : 'Invalid token reference',
+      });
     }
+
+    // Validation 2: Check that colors have sufficient contrast
+    walkColors(root, (foreground, path) => {
+      if (!Array.isArray(foreground.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
+
+      for (const { color: background, ratio: expectedContrast } of foreground.$extensions[EXTENSION_CONTRAST_WITH]) {
+        const contrast = compareContrast(foreground, background);
+        const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
+        if (contrast < expectedContrast) {
+          ctx.addIssue({
+            code: 'too_small',
+            ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
+            input: contrast,
+            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foreground['$value'])}) and \`${colorRefName}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
+            minimum: expectedContrast,
+            origin: 'number',
+            path: [...path, '$value'],
+          });
+        }
+      }
+    });
   });
-  return rootConfig;
-};

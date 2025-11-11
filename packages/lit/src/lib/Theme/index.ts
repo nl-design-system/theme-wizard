@@ -1,7 +1,7 @@
-import { ThemeSchema } from '@nl-design-system-community/design-tokens-schema';
+import { stringifyColor, ThemeSchema } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import StyleDictionary from 'style-dictionary';
-import { DesignTokens } from 'style-dictionary/types';
+import { DesignToken, DesignTokens } from 'style-dictionary/types';
 
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
@@ -39,7 +39,40 @@ export default class Theme {
     this.tokens = structuredClone(this.#defaults);
   }
 
+  async toLegacyTokens() {
+    // TODO: replace with a design-tokens-schema transform to make sure all token types have a legacy format
+    const clonedTokens = structuredClone(this.tokens);
+
+    function convertColorTokens(obj: DesignToken): DesignToken {
+      if (obj && typeof obj === 'object') {
+        if (Array.isArray(obj)) {
+          return obj?.map(convertColorTokens);
+        }
+
+        if (obj.$type === 'color' && obj.$value?.components) {
+          return {
+            ...obj,
+            $value: stringifyColor(obj.$value),
+          };
+        }
+
+        const result: Record<string, DesignToken> = {};
+        for (const [key, value] of Object.entries(obj)) {
+          result[key] = convertColorTokens(value);
+        }
+        return result;
+      }
+
+      return obj;
+    }
+
+    return convertColorTokens(clonedTokens);
+  }
+
   async toCSS({ resolved = false }: { resolved?: boolean } = {}) {
+    // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
+    const tokens = await this.toLegacyTokens();
+
     const sd = new StyleDictionary({
       log: {
         errors: {
@@ -61,7 +94,7 @@ export default class Theme {
           transformGroup: 'css',
         },
       },
-      tokens: this.tokens,
+      tokens,
     });
     const outputs = await sd.formatPlatform('css');
     return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
