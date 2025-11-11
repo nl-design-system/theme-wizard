@@ -10,12 +10,15 @@ export class TemplateColorSwatch extends LitElement {
   static override readonly styles = [styles];
 
   override render() {
-    const referenceToken = this.reference.replaceAll('.', '-');
-    const backgroundStyle = `background-color: var(--${referenceToken})`;
+    const cssCustomProperty = `--${this.reference.replaceAll('.', '-')}`;
+    const backgroundStyle = `background-color: var(${cssCustomProperty})`;
+    const formattedReference = this.reference
+      .split('.')
+      .map((segment, index, array) => (index < array.length - 1 ? html`${segment}.<wbr />` : html`${segment}`));
 
     return html`<div class="template-color-swatch__container">
-      <div role="presentation" class="template-color-swatch" style=${backgroundStyle}></div>
-      <p class="reference">${this.reference}</p>
+      <div role="presentation" class="template-color-swatch" style=${backgroundStyle} title=${this.reference}></div>
+      <p class="reference">${formattedReference}</p>
     </div>`;
   }
 }

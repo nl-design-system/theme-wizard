@@ -1,9 +1,9 @@
 ---
 import './styles.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
-//import tokens from '@nl-design-system-community/ma-design-tokens/dist/tokens.json';
-import '@nl-design-system-community/theme-wizard-lit-components';
+import tokens from '@nl-design-system-community/ma-design-tokens/dist/tokens.json';
 import CollageLayout from '../../layouts/CollageLayout.astro';
+import type { BasisTokens } from '@nl-design-system-community/design-tokens-schema';
 
 export const detail = {
   name: 'Color Swatch',
@@ -11,39 +11,88 @@ export const detail = {
   value: 'color-swatch',
 };
 
-const demoRefs = [
-  '{basis.color.default.bg-document}',
-  '{basis.color.default.bg-subtle}',
-  '{basis.color.default.bg-default}',
-  '{basis.color.default.bg-hover}',
-  '{basis.color.default.bg-active}',
-  '{basis.color.default.border-subtle}',
-  '{basis.color.default.border-default}',
-  '{basis.color.default.border-hover}',
-  '{basis.color.default.border-active}',
-  '{basis.color.default.color-default}',
-  '{basis.color.default.color-hover}',
-  '{basis.color.default.color-active}',
-  '{basis.color.default.color-subtle}',
-  '{basis.color.default.color-document}',
-  '{basis.color.accent-1.bg-document}',
-  '{basis.color.accent-1.bg-subtle}',
-  '{basis.color.accent-1.bg-default}',
-  '{basis.color.accent-1.bg-hover}',
-  '{basis.color.accent-1.bg-active}',
-  '{basis.color.accent-1.border-subtle}',
-  '{basis.color.accent-1.border-default}',
-  '{basis.color.accent-1.border-hover}',
-  '{basis.color.accent-1.border-active}',
-  '{basis.color.accent-1.color-default}',
-  '{basis.color.accent-1.color-hover}',
-  '{basis.color.accent-1.color-active}',
-  '{basis.color.accent-1.color-subtle}',
-  '{basis.color.accent-1.color-document}',
-];
-const demoRefsString = JSON.stringify(demoRefs);
+const collectReferences = (node: BasisTokens): string[] => {
+  if (!node || typeof node !== 'object') return [];
+
+  // if [path: ['basis', 'color', 'default']]
+  const references = Array.isArray(node.path) ? [`{${node.path.join('.')}}`] : [];
+
+  const collected = Object.values(node).reduce((acc: string[], value) => {
+    /**
+     * Recursively visit nested objects that represent tokens.
+     * Each recursion step returns an array of full references. By concatenating those arrays,
+     * we flatten the entire tree into one list, e.g. ['{basis.color.default}', '{basis.color.default.bg-document}', ...].
+     */
+    return acc.concat(collectReferences(value as BasisTokens));
+  }, references);
+  return collected;
+};
+
+function sanitizeReference(reference: string): string {
+  return reference.replace('{', '').replace('}', '');
+}
+
+function extractScale(reference: string): string {
+  const segments = reference.split('.');
+  return segments[2] ?? 'default';
+}
+
+function groupReferences(): Record<string, string[]> {
+  const grouped: Record<string, string[]> = {};
+  const collectedReferences: string[] = collectReferences(tokens.basis.color);
+
+  for (const reference of collectedReferences) {
+    const sanitized = sanitizeReference(reference);
+    const scale = extractScale(sanitized);
+    if (!grouped[scale]) {
+      grouped[scale] = [];
+    }
+    grouped[scale].push(sanitized);
+  }
+
+  return grouped;
+}
 ---
 
+<style>
+  .template-color-swatch-grid,
+  .template-color-swatch-grid__row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .template-color-swatch-grid__label {
+    margin: 0;
+    text-transform: capitalize;
+  }
+
+  .template-color-swatch-grid__swatches {
+    display: flex;
+  }
+
+  .template-color-swatch-grid__swatches > template-color-swatch {
+    /* 14 columns for 14 color swatches */
+    flex: 0 0 calc(100% / 14);
+  }
+</style>
+
 <CollageLayout>
-  <template-color-swatch-grid references={demoRefsString}></template-color-swatch-grid>
+  <div class="template-color-swatch-grid">
+    {
+      Object.entries(groupReferences()).map(([scale, references]) => {
+        const rowLabel = scale.replaceAll('-', ' ');
+
+        return (
+          <section class="template-color-swatch-grid__row">
+            <h3 class="template-color-swatch-grid__label">{rowLabel}</h3>
+            <div class="template-color-swatch-grid__swatches">
+              {references.map((reference) => (
+                <template-color-swatch reference={reference} />
+              ))}
+            </div>
+          </section>
+        );
+      })
+    }
+  </div>
 </CollageLayout>

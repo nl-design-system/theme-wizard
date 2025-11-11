@@ -32,7 +32,7 @@ export default css`
   }
 
   .reference {
-    font-size: 0.5rem;
+    font-size: 1rem;
     word-break: break-word;
     padding-inline-end: 1rem;
   }
