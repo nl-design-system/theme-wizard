@@ -51,7 +51,7 @@ const myConfig = {
   }
 };
 
-// Only refs like `{ma.color.black}` refs are validated to follow the proper format.
+// Token references like `{ma.color.black}` are only validated to follow the proper format, they are not resolved.
 const config = ThemeSchema.parse(myConfig) satisfies Theme;
 
 // All refs like `{ma.color.black}` are first validated in the schema and the `.transform(resolveConfigRefs)` replaces the refs with the actual values
