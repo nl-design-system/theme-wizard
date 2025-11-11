@@ -9,6 +9,7 @@ import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
+import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
 import appStyles from './app.css';
 /**
@@ -22,6 +23,7 @@ import appStyles from './app.css';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
+  #theme = new Theme();
   private readonly themeController: ThemeController = new ThemeController();
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
@@ -131,7 +133,7 @@ export class App extends LitElement {
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${this.selectedTemplatePath}
-              .themeStylesheet=${this.themeController.stylesheet}
+              .themeStylesheet=${this.#theme.stylesheet}
             ></theme-wizard-preview>
           </section>
         </main>

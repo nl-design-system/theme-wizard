@@ -1,5 +1,5 @@
 import type { SidebarConfig } from './types';
-import { PREVIEW_THEME } from '../components/preview/preview';
+import { PREVIEW_THEME_CLASS } from '../lib/Theme';
 import { getThemeStyleString } from './style-utils';
 
 /**
@@ -12,7 +12,7 @@ export function generateThemeCSS(config: SidebarConfig): string {
   const themeStyleProperties = getThemeStyleString(config);
 
   const css = `
-  .${PREVIEW_THEME} {
+  .${PREVIEW_THEME_CLASS} {
       ${themeStyleProperties}
     }
   `.trim();
