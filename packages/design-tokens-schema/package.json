@@ -36,6 +36,8 @@
   },
   "devDependencies": {
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
+    "@nl-design-system-unstable/start-design-tokens": "1.2.0",
+    "@nl-design-system-unstable/voorbeeld-design-tokens": "6.2.0",
     "@types/dlv": "1.1.5",
     "@vitest/coverage-v8": "4.0.8",
     "rimraf": "6.1.0",
