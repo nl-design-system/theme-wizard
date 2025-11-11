@@ -1,12 +1,10 @@
-import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import Scraper from '../../lib/Scraper';
+import { PREVIEW_THEME_CLASS } from '../../lib/Theme';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import previewStyles from './preview.css';
 
-export const PREVIEW_THEME = 'preview-theme';
-const previewTheme = maTheme.replace('.ma-theme', `.${PREVIEW_THEME}`);
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
@@ -21,7 +19,7 @@ export class ThemePreview extends LitElement {
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   // TODO: Drop injection of maTheme and generate a full wizard theme CSS
-  static override readonly styles = [previewStyles, unsafeCSS(previewTheme)];
+  static override readonly styles = [previewStyles];
 
   constructor() {
     super();
@@ -106,7 +104,7 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div class=${PREVIEW_THEME} data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
+    return html` <div class=${PREVIEW_THEME_CLASS} data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
   }
 }
 
