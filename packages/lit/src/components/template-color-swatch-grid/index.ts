@@ -38,11 +38,11 @@ export class TemplateColorSwatchGrid extends LitElement {
     return html`
       <div class="template-color-swatch-grid">
         ${Object.entries(this.#groupReferences()).map(([scale, references]) => {
-          const gridLabel = scale.replaceAll('-', ' ');
+          const rowLabel = scale.replaceAll('-', ' ');
           const swatchCount = references.length || 1;
           return html`
             <section class="template-color-swatch-grid__row">
-              <h3 class="template-color-swatch-grid__label">${gridLabel}</h3>
+              <h3 class="template-color-swatch-grid__label">${rowLabel}</h3>
               <div class="template-color-swatch-grid__swatches" style=${`--swatch-count: ${swatchCount}`}>
                 ${references.map(
                   (reference) => html`<template-color-swatch reference=${reference}></template-color-swatch>`,
