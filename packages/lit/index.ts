@@ -11,4 +11,4 @@ import './src/components/template-case-card';
 import './src/components/template-link';
 import './src/components/template-link-list';
 import './src/components/template-page-header';
-import './src/components/template-color-swatch-grid';
+import './src/components/template-color-swatch';
