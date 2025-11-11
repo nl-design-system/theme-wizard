@@ -9,7 +9,6 @@ import {
   CommonSchema,
   BasisTokensSchema,
   BasisColorSchema,
-  BasisTextSchema,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_FROM,
   Theme,
