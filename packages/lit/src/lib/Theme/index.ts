@@ -1,5 +1,7 @@
 import { stringifyColor, ThemeSchema } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
+import dlv from 'dlv';
+import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 
@@ -38,6 +40,16 @@ export default class Theme {
     return this.#stylesheet;
   }
 
+  updateAt(path: string, value: DesignToken['$value']) {
+    const tokens = this.tokens;
+    dset(tokens, `${path}.$value`, value);
+    this.tokens = tokens;
+  }
+
+  at(path: string): DesignToken {
+    return dlv(this.tokens, path);
+  }
+
   reset() {
     this.tokens = structuredClone(this.#defaults);
   }
@@ -56,6 +68,13 @@ export default class Theme {
           return {
             ...obj,
             $value: stringifyColor(obj.$value),
+          };
+        }
+
+        if (obj.$type === 'fontFamily' && Array.isArray(obj.$value)) {
+          return {
+            ...obj,
+            $value: obj.$value.join(', '),
           };
         }
 

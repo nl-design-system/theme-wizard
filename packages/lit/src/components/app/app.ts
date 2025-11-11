@@ -7,24 +7,19 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
-import { ThemeController } from '../../controllers';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
 import appStyles from './app.css';
+
+const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
+const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 /**
  * Main application component - Orchestrator coordinator
- *
- * This component:
- * - Initializes ThemeController (orchestrator)
- * - Binds controller/model data to child components via props
- * - Handles layout and rendering
- * - Bridges events from components to controller
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
   #theme = new Theme();
-  private readonly themeController: ThemeController = new ThemeController();
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
@@ -86,7 +81,8 @@ export class App extends LitElement {
     if (config.sourceUrl) {
       await this.#handleSourceUrlChange(config.sourceUrl);
     } else {
-      this.themeController.applyPartial(config);
+      this.#theme.updateAt(BODY_FONT_TOKEN_REF, config.bodyFont);
+      this.#theme.updateAt(HEADING_FONT_TOKEN_REF, config.headingFont);
     }
   };
 
@@ -95,7 +91,6 @@ export class App extends LitElement {
    */
   readonly #handleSourceUrlChange = async (sourceUrl: string): Promise<void> => {
     try {
-      this.themeController.resetToDefaults();
       const tokens = await this.scraper.getTokens(new URL(sourceUrl));
       const sortedTokens = [...tokens].sort(
         (a, b) => b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
@@ -115,16 +110,16 @@ export class App extends LitElement {
   };
 
   override render() {
-    const { bodyFont, headingFont, sourceUrl } = this.themeController.getConfig();
+    const bodyFont = this.#theme.at(BODY_FONT_TOKEN_REF).$value;
+    const headingFont = this.#theme.at(HEADING_FONT_TOKEN_REF).$value;
 
     return html`
       <div class="theme-app ma-theme">
         <theme-wizard-sidebar
-          .sourceUrl=${sourceUrl}
+          .sourceUrl=""
           .headingFont=${headingFont}
           .bodyFont=${bodyFont}
           .scrapedTokens=${this.scrapedTokens}
-          .onResetTheme=${() => this.themeController.resetToDefaults()}
         ></theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
