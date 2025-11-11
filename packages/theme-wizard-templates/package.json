@@ -22,11 +22,11 @@
     "clean": "rm -rf dist .astro build"
   },
   "dependencies": {
-    "astro": "5.14.1"
+    "astro": "5.15.4"
   },
   "devDependencies": {
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
-    "@utrecht/web-component-library-stencil": "3.6.0",
+    "@utrecht/web-component-library-stencil": "3.7.0",
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*"
   }
 }
