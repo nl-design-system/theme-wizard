@@ -1,0 +1,49 @@
+---
+import './styles.css';
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+//import tokens from '@nl-design-system-community/ma-design-tokens/dist/tokens.json';
+import '@nl-design-system-community/theme-wizard-lit-components';
+import CollageLayout from '../../layouts/CollageLayout.astro';
+
+export const detail = {
+  name: 'Color Swatch',
+  module: 'Voorbeeld van een kleurswatch',
+  value: 'color-swatch',
+};
+
+const demoRefs = [
+  '{basis.color.default.bg-document}',
+  '{basis.color.default.bg-subtle}',
+  '{basis.color.default.bg-default}',
+  '{basis.color.default.bg-hover}',
+  '{basis.color.default.bg-active}',
+  '{basis.color.default.border-subtle}',
+  '{basis.color.default.border-default}',
+  '{basis.color.default.border-hover}',
+  '{basis.color.default.border-active}',
+  '{basis.color.default.color-default}',
+  '{basis.color.default.color-hover}',
+  '{basis.color.default.color-active}',
+  '{basis.color.default.color-subtle}',
+  '{basis.color.default.color-document}',
+  '{basis.color.accent-1.bg-document}',
+  '{basis.color.accent-1.bg-subtle}',
+  '{basis.color.accent-1.bg-default}',
+  '{basis.color.accent-1.bg-hover}',
+  '{basis.color.accent-1.bg-active}',
+  '{basis.color.accent-1.border-subtle}',
+  '{basis.color.accent-1.border-default}',
+  '{basis.color.accent-1.border-hover}',
+  '{basis.color.accent-1.border-active}',
+  '{basis.color.accent-1.color-default}',
+  '{basis.color.accent-1.color-hover}',
+  '{basis.color.accent-1.color-active}',
+  '{basis.color.accent-1.color-subtle}',
+  '{basis.color.accent-1.color-document}',
+];
+const demoRefsString = JSON.stringify(demoRefs);
+---
+
+<CollageLayout>
+  <template-color-swatch-grid references={demoRefsString}></template-color-swatch-grid>
+</CollageLayout>
