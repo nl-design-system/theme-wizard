@@ -1,7 +1,8 @@
 import { COLOR_SPACES, ColorSpace } from '@nl-design-system-community/design-tokens-schema';
 
 export function createHelperElement() {
-  const canRunInBrowser = CSS?.supports('color', 'oklch(from red l c h');
+  if (typeof CSS === 'undefined') return null;
+  const canRunInBrowser = CSS.supports('color', 'oklch(from red l c h');
   if (!canRunInBrowser) return null;
 
   const element = document.createElement('div');
