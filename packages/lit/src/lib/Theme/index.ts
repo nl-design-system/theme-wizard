@@ -52,7 +52,7 @@ export default class Theme {
         if (obj.$type === 'color' && obj.$value?.components) {
           return {
             ...obj,
-            $value: stringifyColor(obj.$value)
+            $value: stringifyColor(obj.$value),
           };
         }
 
@@ -71,7 +71,7 @@ export default class Theme {
 
   async toCSS({ resolved = false }: { resolved?: boolean } = {}) {
     // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
-    const tokens = await this.toLegacyTokens()
+    const tokens = await this.toLegacyTokens();
 
     const sd = new StyleDictionary({
       log: {
