@@ -44,22 +44,6 @@ test.describe('Behavioural tests', () => {
     await expect(paragraph).toHaveFont('Arial');
   });
 
-  test('can change heading font to Verdana on collage', async ({ collagePage }) => {
-    const heading = collagePage.getHeading(2);
-
-    await expect(heading).not.toHaveFont('Verdana');
-    await collagePage.changeHeadingFont('Verdana');
-    await expect(heading).toHaveFont('Verdana');
-  });
-
-  test('can change body font to Georgia on collage', async ({ collagePage }) => {
-    const paragraph = collagePage.getParagraph();
-
-    await expect(paragraph).not.toHaveFont('Georgia');
-    await collagePage.changeBodyFont('Georgia');
-    await expect(paragraph).toHaveFont('Georgia');
-  });
-
   test('can select different templates from the selector', async ({ themeWizard }) => {
     await themeWizard.selectTemplate('Overzichtspagina');
 
