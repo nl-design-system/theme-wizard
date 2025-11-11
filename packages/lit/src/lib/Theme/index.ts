@@ -3,8 +3,11 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 
+export const PREVIEW_THEME_CLASS = 'preview-theme';
+
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
+  name = 'wizard';
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
@@ -25,7 +28,7 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#tokens = values;
-    this.toCSS().then((css) => {
+    this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replace(css);
     });
@@ -69,7 +72,13 @@ export default class Theme {
     return convertColorTokens(clonedTokens);
   }
 
-  async toCSS({ resolved = false }: { resolved?: boolean } = {}) {
+  async toCSS({
+    resolved = false,
+    selector = `.${this.name}-theme`,
+  }: {
+    resolved?: boolean;
+    selector?: `.${string}`;
+  } = {}) {
     // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
     const tokens = await this.toLegacyTokens();
 
@@ -88,6 +97,7 @@ export default class Theme {
               format: 'css/variables',
               options: {
                 outputReferences: !resolved,
+                selector,
               },
             },
           ],
