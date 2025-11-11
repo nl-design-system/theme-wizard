@@ -1,4 +1,6 @@
 import maTokens from '@nl-design-system-community/ma-design-tokens/dist/tokens';
+import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
+import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
 import { describe, test, expect } from 'vitest';
 import * as z from 'zod';
 import {
@@ -7,7 +9,6 @@ import {
   CommonSchema,
   BasisTokensSchema,
   BasisColorSchema,
-  BasisTextSchema,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_FROM,
   Theme,
@@ -683,27 +684,19 @@ describe('theme', () => {
   });
 });
 
-describe('end-to-end tests of known basis themes', () => {
-  describe('ma-theme', () => {
-    test('common.basis.color is valid', () => {
-      const result = BasisColorSchema.safeParse(maTokens.basis.color);
-      expect.soft(result.success).toEqual(true);
-    });
+describe('strictly validate known basis themes', () => {
+  test('Mooi & Anders', () => {
+    const result = StrictThemeSchema.safeParse(maTokens);
+    expect(result.success).toEqual(true);
+  });
 
-    test('common.basis.text is valid', () => {
-      const result = BasisTextSchema.safeParse(maTokens.basis.text);
-      expect.soft(result.success).toEqual(true);
-    });
+  test('voorbeeld', () => {
+    const result = StrictThemeSchema.safeParse(voorbeeldTokens);
+    expect(result.success).toEqual(true);
+  });
 
-    test('common.basis is valid', async () => {
-      const result = BasisTokensSchema.safeParse(maTokens.basis);
-      expect.soft(result.success).toEqual(true);
-      await expect.soft(result.data).toMatchFileSnapshot('../test/snapshots/ma-theme.basis.tokens.jsonc');
-    });
-
-    test('validate theme', () => {
-      const result = StrictThemeSchema.safeParse(maTokens);
-      expect(result.success).toEqual(true);
-    });
+  test('start', () => {
+    const result = StrictThemeSchema.safeParse(startTokens);
+    expect(result.success).toEqual(true);
   });
 });
