@@ -3,7 +3,6 @@ import './styles.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import tokens from '@nl-design-system-community/ma-design-tokens/dist/tokens.json';
 import CollageLayout from '../../layouts/CollageLayout.astro';
-import type { BasisTokens } from '@nl-design-system-community/design-tokens-schema';
 
 export const detail = {
   name: 'Color Swatch',
@@ -11,46 +10,33 @@ export const detail = {
   value: 'color-swatch',
 };
 
-const collectReferences = (node: BasisTokens): string[] => {
-  if (!node || typeof node !== 'object') return [];
-
-  // if [path: ['basis', 'color', 'default']]
-  const references = Array.isArray(node.path) ? [`{${node.path.join('.')}}`] : [];
-
-  const collected = Object.values(node).reduce((acc: string[], value) => {
-    /**
-     * Recursively visit nested objects that represent tokens.
-     * Each recursion step returns an array of full references. By concatenating those arrays,
-     * we flatten the entire tree into one list, e.g. ['{basis.color.default}', '{basis.color.default.bg-document}', ...].
-     */
-    return acc.concat(collectReferences(value as BasisTokens));
-  }, references);
-  return collected;
-};
-
-function sanitizeReference(reference: string): string {
-  return reference.replace('{', '').replace('}', '');
-}
-
-function extractScale(reference: string): string {
-  const segments = reference.split('.');
-  return segments[2] ?? 'default';
-}
-
-function groupReferences(): Record<string, string[]> {
-  const grouped: Record<string, string[]> = {};
-  const collectedReferences: string[] = collectReferences(tokens.basis.color);
-
-  for (const reference of collectedReferences) {
-    const sanitized = sanitizeReference(reference);
-    const scale = extractScale(sanitized);
-    if (!grouped[scale]) {
-      grouped[scale] = [];
-    }
-    grouped[scale].push(sanitized);
-  }
-
+function collectColorTokensFromScale(colorNodes: Record<string, any>): string[] {
+  const grouped: string[] = [];
+  Object.entries(colorNodes).forEach(([_, node]) => {
+    // {
+    //   $type: 'color',
+    //   $value: '#ffffff',
+    //   path: ['basis', 'color', 'default', 'bg-document'],
+    //   ...
+    // }
+    Object.entries(node).filter(
+      // [...{ path: ['basis', 'color', 'selected-inverse', 'bg-document']}] -> 'basis.color.selected-inverse.bg-document'
+      ([key, colorValue]) => key === 'path' && Array.isArray(colorValue) && grouped.push(colorValue?.join('.'))
+    );
+  });
   return grouped;
+}
+
+function groupColorsByScale(): Record<string, string[]> {
+  const group: Record<string, string[]> = {};
+  const { color: colorTokens } = tokens.basis;
+  for (const [scaleName, colorNodes] of Object.entries(colorTokens)) {
+    // scaleName: the current scale identifier (e.g. 'default')
+    // colorNodes: nested object containing all color nodes for this scale ['bg-document', 'bg-subtle', etc.]
+    const entries = collectColorTokensFromScale(colorNodes);
+    group[scaleName] = entries;
+  }
+  return group;
 }
 ---
 
@@ -79,7 +65,7 @@ function groupReferences(): Record<string, string[]> {
 <CollageLayout>
   <div class="template-color-swatch-grid">
     {
-      Object.entries(groupReferences()).map(([scale, references]) => {
+      Object.entries(groupColorsByScale()).map(([scale, references]) => {
         const rowLabel = scale.replaceAll('-', ' ');
 
         return (
