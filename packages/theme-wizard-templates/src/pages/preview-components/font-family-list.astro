@@ -6,12 +6,12 @@ import { groupTokenReferencesByScale } from '../../utils/token-groups';
 import CollageLayout from '../../layouts/CollageLayout.astro';
 
 export const detail = {
-  name: 'Color Swatch',
-  module: 'Voorbeeld van een kleurswatch',
-  value: 'color-swatch',
+  name: 'Font families',
+  module: 'Display of font family list',
+  value: 'font-family-list',
 };
 
-const colorTokensByScale = groupTokenReferencesByScale(tokens.basis?.color);
+const textGroup = groupTokenReferencesByScale(tokens.basis?.text);
 ---
 
 <style>
@@ -39,7 +39,7 @@ const colorTokensByScale = groupTokenReferencesByScale(tokens.basis?.color);
 <CollageLayout>
   <div class="template-color-swatch-grid">
     {
-      Object.entries(colorTokensByScale).map(([scale, references]) => {
+      Object.entries(textGroup).map(([scale, references]) => {
         const rowLabel = scale.replaceAll('-', ' ');
 
         return (
@@ -47,7 +47,7 @@ const colorTokensByScale = groupTokenReferencesByScale(tokens.basis?.color);
             <h3 class="template-color-swatch-grid__label">{rowLabel}</h3>
             <div class="template-color-swatch-grid__swatches">
               {references.map((reference) => (
-                <template-color-swatch reference={reference} />
+                <template-font-family reference={reference} />
               ))}
             </div>
           </section>

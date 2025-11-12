@@ -12,3 +12,4 @@ import './src/components/template-link';
 import './src/components/template-link-list';
 import './src/components/template-page-header';
 import './src/components/template-color-swatch';
+import './src/components/template-font-family';
