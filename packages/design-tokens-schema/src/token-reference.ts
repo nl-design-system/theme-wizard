@@ -45,8 +45,7 @@ const isTokenLike = (obj: unknown): obj is TokenLike => {
   if (!('$type' in obj) || typeof obj['$type'] !== 'string') return false;
 
   // Check for required $value property (must be string or object)
-  if (!('$value' in obj)) return false;
-  return true;
+  return '$value' in obj;
 };
 
 const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
