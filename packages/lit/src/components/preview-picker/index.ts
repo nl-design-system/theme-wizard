@@ -1,8 +1,9 @@
 import type { TemplateGroup, Category } from '@nl-design-system-community/theme-wizard-templates';
-import { LitElement, html } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../dropdown/index.js';
 import type { DropdownOption } from '../dropdown';
+import styles from './styles';
 
 export interface DropdownChangeEvent {
   type: Category;
@@ -16,6 +17,8 @@ export const PREVIEW_PICKER_NAME = 'templatePath';
 @customElement('preview-picker')
 export class PreviewPicker extends LitElement {
   @property({ attribute: 'templates' }) templates?: TemplateGroup[];
+
+  static override readonly styles = [unsafeCSS(styles)];
 
   get dropdownOptions(): DropdownOption[] {
     return (

@@ -12,6 +12,7 @@ export default css`
     border-block-start: 1px solid #000;
     inline-size: 100%;
     position: relative;
+    print-color-adjust: exact;
   }
 
   .theme-color-swatch::after,
@@ -33,6 +34,8 @@ export default css`
 
   .theme-reference {
     font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
     padding-inline-end: 1rem;
     word-break: break-all;
   }
