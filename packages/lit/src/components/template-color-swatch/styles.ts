@@ -1,39 +1,39 @@
 import { css } from 'lit';
 
 export default css`
-  .template-color-swatch__container {
+  .theme-color-swatch__container {
     display: flex;
     flex-direction: column;
   }
 
-  .template-color-swatch {
-    position: relative;
-    inline-size: 100%;
+  .theme-color-swatch {
     aspect-ratio: 2 / 1;
-    border-block-start: 1px solid #000;
     border-block-end: 1px solid #000;
+    border-block-start: 1px solid #000;
+    inline-size: 100%;
+    position: relative;
   }
 
-  .template-color-swatch::after,
-  .template-color-swatch::before {
-    content: '';
-    position: absolute;
-    inset-block: 0;
-    inline-size: 1px;
+  .theme-color-swatch::after,
+  .theme-color-swatch::before {
     background: #000;
+    content: '';
+    inline-size: 1px;
+    inset-block: 0;
+    position: absolute;
   }
 
-  :host(:first-of-type) .template-color-swatch::before {
+  :host(:first-of-type) .theme-color-swatch::before {
     inset-inline-start: 0;
   }
 
-  :host(:last-of-type) .template-color-swatch::after {
+  :host(:last-of-type) .theme-color-swatch::after {
     inset-inline-end: 0;
   }
 
-  .reference {
+  .theme-reference {
     font-size: 1rem;
-    word-break: break-word;
     padding-inline-end: 1rem;
+    word-break: break-all;
   }
 `;
