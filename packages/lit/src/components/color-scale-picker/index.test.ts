@@ -12,7 +12,7 @@ describe(`<${tag}>`, () => {
 
   test('shows a color element', () => {
     const element = document.querySelector(tag);
-    const color = element?.shadowRoot?.querySelector('input[type=color]');
+    const color = element?.shadowRoot?.querySelector('input[type=color]') || undefined;
     expect(color).toBeDefined();
   });
 
