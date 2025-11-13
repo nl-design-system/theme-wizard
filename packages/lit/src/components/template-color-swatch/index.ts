@@ -17,8 +17,8 @@ export class TemplateColorSwatch extends LitElement {
       .map((segment, index, array) => (index < array.length - 1 ? html`${segment}.<wbr />` : html`${segment}`));
 
     return html`<div class="template-color-swatch__container">
-      <div role="presentation" class="template-color-swatch" style=${backgroundStyle} title=${this.reference}></div>
-      <p class="reference">${formattedReference}</p>
+      <div role="presentation" class="theme-color-swatch" style=${backgroundStyle} title=${this.reference}></div>
+      <p class="theme-reference">${formattedReference}</p>
     </div>`;
   }
 }
