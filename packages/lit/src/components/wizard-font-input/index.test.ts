@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import './index';
 
-const tag = 'font-select';
+const tag = 'wizard-font-input';
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {

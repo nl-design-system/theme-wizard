@@ -71,7 +71,6 @@ export class WizardTokenInput extends LitElement {
       name=${this.name}
       .value=${WizardTokenInput.valueToString(this.value)}
       @change=${this.#handleChange}
-      .value=${WizardTokenInput.valueToString(this.value)}
     ></textarea>`;
   }
 }
