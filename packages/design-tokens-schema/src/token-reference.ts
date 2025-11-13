@@ -23,17 +23,36 @@ export const TokenReferenceSchema = z
 
 export type TokenReference = z.infer<typeof TokenReferenceSchema>;
 
-const TokenWithRefSchema = z.looseObject({
-  $extensions: z.record(z.string(), z.unknown()).optional(),
-  $type: z.string(),
-  $value: TokenReferenceSchema,
-});
-export type TokenWithRef = z.infer<typeof TokenWithRefSchema>;
+const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
+  return obj !== null && typeof obj === 'object';
+};
 
-const ReferencedTokenSchema = z.looseObject({
-  $type: z.string(),
-  $value: z.unknown(),
-});
+type TokenWithRefLike = {
+  $type: string;
+  $value: `{${string}}`;
+};
+
+type TokenLike = {
+  $type: string;
+  $value: unknown;
+};
+
+const isTokenLike = (obj: unknown): obj is TokenLike => {
+  // First check if it's a valid value object
+  if (!isValueObject(obj)) return false;
+
+  // Check for required $type property (must be a string)
+  if (!('$type' in obj) || typeof obj['$type'] !== 'string') return false;
+
+  // Check for required $value property (must be string or object)
+  if (!('$value' in obj)) return false;
+  return true;
+};
+
+const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
+  if (!isTokenLike(obj)) return false;
+  return typeof obj['$value'] === 'string' && obj['$value'].startsWith('{') && obj['$value'].endsWith('}');
+};
 
 /**
  * A predicate function that checks if a given ref in our schema is valid.
@@ -43,15 +62,16 @@ const ReferencedTokenSchema = z.looseObject({
  * @param data A part of the root config in which refs may be present
  * @param root The root of the config in which tokens are searched
  */
-export const isTokenWithRef = (data: unknown, root: Record<string, unknown>, path: string[]): data is TokenWithRef => {
-  // Check that we're dealing with a token-like object
-  const parsedSource = TokenWithRefSchema.safeParse(data);
-  if (parsedSource.success === false) {
-    return false;
-  }
+export const isTokenWithRef = (
+  data: unknown,
+  root: Record<string, unknown>,
+  path: string[],
+): data is TokenWithRefLike => {
+  // Check that we're dealing with a token-like object with a ref in the $value
+  if (!isTokenWithRefLike(data)) return false;
 
   // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
-  const refPath = parsedSource.data.$value.slice(1, -1);
+  const refPath = data.$value.slice(1, -1);
   const referencedToken = dlv(root, refPath) || dlv(root, `brand.${refPath}`) || dlv(root, `common.${refPath}`);
 
   if (!referencedToken) {
@@ -59,17 +79,16 @@ export const isTokenWithRef = (data: unknown, root: Record<string, unknown>, pat
   }
 
   // Check that we're dealing with a token-like object
-  const parsedRef = ReferencedTokenSchema.safeParse(referencedToken);
-  if (parsedRef.success === false) {
+  if (!isTokenLike(referencedToken)) {
     throw new Error(
       `Invalid token reference: expected "{${refPath}}" to have a "$value" and "$type" property (referenced from "${path.join('.')}")`,
     );
   }
 
-  // make sure the $type of the referenced token is the same
-  if (parsedSource.data.$type !== parsedRef.data.$type) {
+  // make sure the $type of the referenced token is the same type
+  if (data.$type !== referencedToken.$type) {
     throw new Error(
-      `Invalid token reference: $type "${parsedSource.data['$type']}" of "${JSON.stringify(parsedSource.data)}" does not match the $type on reference {${refPath}}. Types "${parsedSource.data.$type}" and "${parsedRef.data.$type}" do not match.`,
+      `Invalid token reference: $type "${data['$type']}" of "${JSON.stringify(data)}" does not match the $type on reference {${refPath}}. Types "${data.$type}" and "${referencedToken.$type}" do not match.`,
     );
   }
 
