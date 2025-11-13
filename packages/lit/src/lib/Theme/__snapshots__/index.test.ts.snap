@@ -6,7 +6,7 @@ exports[`Theme > can export to css custom properties 1`] = `
  * Do not edit directly, this file was auto-generated.
  */
 
-:root {
+.wizard-theme {
   --basis-color-accent-1-bg-active: #dde6f1;
   --basis-color-accent-1-bg-default: #ecf1f7;
   --basis-color-accent-1-bg-document: #fbfcfd;
@@ -2480,7 +2480,7 @@ exports[`Theme > can export to resolved css custom properties 1`] = `
  * Do not edit directly, this file was auto-generated.
  */
 
-:root {
+.wizard-theme {
   --basis-color-accent-1-bg-active: #dde6f1;
   --basis-color-accent-1-bg-default: #ecf1f7;
   --basis-color-accent-1-bg-document: #fbfcfd;
