@@ -1,11 +1,6 @@
 import { css } from 'lit';
 
 export default css`
-  .theme-color-swatch__container {
-    display: flex;
-    flex-direction: column;
-  }
-
   .theme-color-swatch {
     aspect-ratio: 2 / 1;
     border-block-end: 1px solid #000;
@@ -37,6 +32,5 @@ export default css`
     margin-block-start: 0;
     margin-block-end: 0;
     padding-inline-end: 1rem;
-    word-break: break-all;
   }
 `;
