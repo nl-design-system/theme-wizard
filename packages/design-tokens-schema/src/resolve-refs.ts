@@ -1,8 +1,25 @@
 import dlv from 'dlv';
-import { type TokenWithRef, isTokenWithRef } from './token-reference';
+import { type TokenWithRefLike, isTokenWithRef, isTokenWithRefLike, type RefLike } from './token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
+// Extension that holds the actual design token value in case a token used a {ref.value} to antoher token
+export const EXTENSION_RESOLVED_AS = 'nl.nldesignsystem.value-resolved-as';
+// Extension that stores the {ref.name} to another token in case we replaced a token.$value
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
+
+export const getRef = (refPath: RefLike, root: Record<string, unknown>): unknown => {
+  // Remove the wrapping { and }
+  const path = refPath.slice(1, -1);
+  // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
+  const ref = dlv(root, path) || dlv(root, `brand.${path}`);
+  if (!ref) {
+    return null;
+  }
+  if (isTokenWithRefLike(ref)) {
+    return getRef(ref.$value, root);
+  }
+  return ref;
+};
 
 /**
  * @description
@@ -11,16 +28,11 @@ export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
  */
 export const resolveRefs = (config: unknown, root: Record<string, unknown>): void => {
   walkTokensWithRef(config, root, (token) => {
-    const refPath = token.$value.slice(1, -1);
-    // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
-    const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
-
-    // Replace the object's value with the ref's value
-    token['$value'] = ref.$value;
+    const ref = getRef(token.$value, root)!;
     // Add an extension to indicate that we changed `refPath` to an actual value
     token['$extensions'] = {
-      ...(token.$extensions || Object.create(null)),
-      [EXTENSION_RESOLVED_FROM]: `{${refPath}}`,
+      ...(token['$extensions'] || Object.create(null)),
+      [EXTENSION_RESOLVED_AS]: ref,
     };
   });
 };
@@ -31,5 +43,5 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
  * and check that they have actual values in `root` and that the $type overlaps
  */
 export const validateRefs = (config: unknown, root: Record<string, unknown>): void => {
-  walkObject<TokenWithRef>(config, (data, path) => isTokenWithRef(data, root, path));
+  walkObject<TokenWithRefLike>(config, (data, path) => isTokenWithRef(data, root, path));
 };

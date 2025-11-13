@@ -428,13 +428,13 @@ describe('theme', () => {
         expect.soft(result.success).toBeTruthy();
       });
 
-      test('returns the schema with refs replaced by actual values', () => {
+      test("returns the schema with the ref's value added to an extension", () => {
         const result = StrictThemeSchema.safeParse(config);
         const expectedCommonColor = brandConfig.ma.color.indigo[5];
         expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
-          ...expectedCommonColor,
+          ...config.common.basis.color.default['bg-document'],
           $extensions: {
-            [EXTENSION_RESOLVED_FROM]: '{ma.color.indigo.5}',
+            [EXTENSION_RESOLVED_FROM]: expectedCommonColor,
           },
         });
       });
@@ -483,9 +483,9 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
+      expect(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
       const result = StrictThemeSchema.safeParse(config);
-      expect.soft(result.success).toBeFalsy();
+      expect(result.success).toBeFalsy();
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
           'Invalid token reference: expected "{ma.color.indigo}" to have a "$value" and "$type" property (referenced from "common.basis.color.default.bg-document")',
@@ -510,7 +510,7 @@ describe('theme', () => {
       };
 
       const result = StrictThemeSchema.safeParse(config);
-      expect.soft(result.success).toEqual(false);
+      expect(result.success).toEqual(false);
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
           `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
@@ -575,13 +575,13 @@ describe('theme', () => {
         $value: '{ma.color.gray.2}',
       };
       const result = StrictThemeSchema.safeParse(testConfig);
-      expect.soft(result.success).toBeFalsy();
+      expect(result.success).toBeFalsy();
       expect.soft(result.error!.issues).toEqual([
         {
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message:
-            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{ma.color.white}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
+            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{common.basis.color.default.bg-subtle}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
           minimum: 4.5,
           origin: 'number',
           path: 'common.basis.color.default.color-document.$value'.split('.'),

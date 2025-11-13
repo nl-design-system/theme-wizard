@@ -1,5 +1,5 @@
 import { ColorToken } from './color-token';
-import { isTokenWithRef, type TokenWithRef } from './token-reference';
+import { isTokenWithRef, type TokenWithRefLike } from './token-reference';
 
 /**
  * @param root The object you want to traverse
@@ -46,11 +46,11 @@ export const walkColors = (root: unknown, callback: (token: ColorToken, path: st
 export const walkTokensWithRef = (
   root: unknown,
   config: Record<string, unknown>,
-  callback: (token: TokenWithRef, path: string[]) => void,
+  callback: (token: TokenWithRefLike, path: string[]) => void,
 ): void => {
-  walkObject<TokenWithRef>(
+  walkObject<TokenWithRefLike>(
     root,
-    (token, path): token is TokenWithRef => {
+    (token, path): token is TokenWithRefLike => {
       try {
         return isTokenWithRef(token, config, path);
       } catch {

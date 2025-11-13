@@ -3,9 +3,10 @@ import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
 import { ColorTokenValidationSchema, compareContrast, stringifyColor } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
-import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM } from './resolve-refs';
+import { validateRefs, resolveRefs, EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM, getRef } from './resolve-refs';
+import { isTokenWithRefLike } from './token-reference';
 import { walkColors } from './walker';
-export { EXTENSION_RESOLVED_FROM } from './resolve-refs';
+export { EXTENSION_RESOLVED_AS as EXTENSION_RESOLVED_FROM, getRef } from './resolve-refs';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 
@@ -217,7 +218,7 @@ export const addContrastExtensions = (rootConfig: Theme) => {
 
       // Look for background in the same location as foreground (basis at root or in common)
       const lookupPath = path[0] === 'basis' ? `basis.${refPath}` : `common.${refPath}`;
-      const background = dlv(rootConfig, lookupPath);
+      const background = getRef(`{${lookupPath}}`, rootConfig);
       if (!background) continue;
 
       const contrastWith = {
@@ -260,12 +261,10 @@ export type ThemeValidationIssue = {
 
 /**
  * Validate a full theme
- * If you want to replace all tokens refs with their actual value, tag on a `.transform(resolveConfigRefs)`
  *
  * @example
  * ```ts
  * const validated = ThemeSchema.safeParse(yourTokensJson);
- * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
 export const ThemeSchema = z.looseObject({
@@ -303,15 +302,18 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
     walkColors(root, (foreground, path) => {
       if (!Array.isArray(foreground.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
 
+      const foregroundToken = foreground.$extensions?.[EXTENSION_RESOLVED_AS] || foreground;
+
       for (const { color: background, ratio: expectedContrast } of foreground.$extensions[EXTENSION_CONTRAST_WITH]) {
-        const contrast = compareContrast(foreground, background);
+        const backgroundToken = isTokenWithRefLike(background) ? getRef(background.$value, root) : background;
+        const contrast = compareContrast(foregroundToken, backgroundToken);
         const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
         if (contrast < expectedContrast) {
           ctx.addIssue({
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             input: contrast,
-            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foreground['$value'])}) and \`${colorRefName}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
+            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foregroundToken['$value'])}) and \`${colorRefName}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
             minimum: expectedContrast,
             origin: 'number',
             path: [...path, '$value'],
