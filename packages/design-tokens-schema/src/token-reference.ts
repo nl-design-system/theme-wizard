@@ -27,11 +27,6 @@ const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj !== null && typeof obj === 'object';
 };
 
-type TokenWithRefLike = {
-  $type: string;
-  $value: `{${string}}`;
-};
-
 type TokenLike = {
   $type: string;
   $value: unknown;
@@ -48,6 +43,11 @@ const isTokenLike = (obj: unknown): obj is TokenLike => {
   return '$value' in obj;
 };
 
+type TokenWithRefLike = {
+  $type: string;
+  $value: `{${string}}`;
+};
+
 const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
   if (!isTokenLike(obj)) return false;
   return typeof obj['$value'] === 'string' && obj['$value'].startsWith('{') && obj['$value'].endsWith('}');
@@ -58,19 +58,19 @@ const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
  * Note that it either throws an error or returns a boolean:
  * This is because it's used both as a Zod validation as well as a regular predicate.
  *
- * @param data A part of the root config in which refs may be present
+ * @param token A part of the root config in which refs may be present
  * @param root The root of the config in which tokens are searched
  */
 export const isTokenWithRef = (
-  data: unknown,
+  token: unknown,
   root: Record<string, unknown>,
   path: string[],
-): data is TokenWithRefLike => {
+): token is TokenWithRefLike => {
   // Check that we're dealing with a token-like object with a ref in the $value
-  if (!isTokenWithRefLike(data)) return false;
+  if (!isTokenWithRefLike(token)) return false;
 
   // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
-  const refPath = data.$value.slice(1, -1);
+  const refPath = token.$value.slice(1, -1);
   const referencedToken = dlv(root, refPath) || dlv(root, `brand.${refPath}`) || dlv(root, `common.${refPath}`);
 
   if (!referencedToken) {
@@ -85,9 +85,9 @@ export const isTokenWithRef = (
   }
 
   // make sure the $type of the referenced token is the same type
-  if (data.$type !== referencedToken.$type) {
+  if (token.$type !== referencedToken.$type) {
     throw new Error(
-      `Invalid token reference: $type "${data['$type']}" of "${JSON.stringify(data)}" does not match the $type on reference {${refPath}}. Types "${data.$type}" and "${referencedToken.$type}" do not match.`,
+      `Invalid token reference: $type "${token['$type']}" of "${JSON.stringify(token)}" does not match the $type on reference {${refPath}}. Types "${token.$type}" and "${referencedToken.$type}" do not match.`,
     );
   }
 
