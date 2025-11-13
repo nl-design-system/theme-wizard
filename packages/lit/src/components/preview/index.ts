@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import Scraper from '../../lib/Scraper';
 import { PREVIEW_THEME_CLASS } from '../../lib/Theme';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
-import previewStyles from './preview.css';
+import styles from './styles';
 
 @customElement('theme-wizard-preview')
 export class ThemePreview extends LitElement {
@@ -18,7 +18,7 @@ export class ThemePreview extends LitElement {
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   // TODO: Drop injection of maTheme and generate a full wizard theme CSS
-  static override readonly styles = [previewStyles];
+  static override readonly styles = [unsafeCSS(styles), unsafeCSS(previewTheme)];
 
   constructor() {
     super();
