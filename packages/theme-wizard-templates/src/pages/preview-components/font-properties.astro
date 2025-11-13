@@ -19,19 +19,15 @@ function formatCSSCustomProperty(prop: string) {
 ---
 
 <CollageLayout>
-  <div class="template-font-family-grid">
-    <div class="template-font-family__container" title="${this.reference}">
-      {
-        Object.entries(textGroup).map(([key, values]) => {
-          if (!Array.isArray(values)) return null;
-          return values.map((value: string) => {
-            const cssValue = `var(${formatCSSCustomProperty(value)})`;
-            const style = `${key}: ${cssValue}`;
-            const textContent = `${key}: ${value}`;
-            return <p style={style}>{textContent}</p>;
-          });
-        })
-      }
-    </div>
-  </div>
+  {
+    Object.entries(textGroup).map(([key, values]) => {
+      if (!Array.isArray(values)) return null;
+      return values.map((value: string) => {
+        const cssValue = `var(${formatCSSCustomProperty(value)})`;
+        const style = `${key}: ${cssValue}`;
+        const textContent = `${key}: ${value}`;
+        return <p style={style}>{textContent}</p>;
+      });
+    })
+  }
 </CollageLayout>
