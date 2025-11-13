@@ -33,13 +33,10 @@ type TokenLike = {
 };
 
 const isTokenLike = (obj: unknown): obj is TokenLike => {
-  // First check if it's a valid value object
   if (!isValueObject(obj)) return false;
-
-  // Check for required $type property (must be a string)
+  // Must have a `$type: string`
   if (!('$type' in obj) || typeof obj['$type'] !== 'string') return false;
-
-  // Check for required $value property (must be string or object)
+  // Must have a `$value`
   return '$value' in obj;
 };
 
@@ -77,7 +74,6 @@ export const isTokenWithRef = (
     throw new Error(`Invalid token reference: can not find "${refPath}"`);
   }
 
-  // Check that we're dealing with a token-like object
   if (!isTokenLike(referencedToken)) {
     throw new Error(
       `Invalid token reference: expected "{${refPath}}" to have a "$value" and "$type" property (referenced from "${path.join('.')}")`,
