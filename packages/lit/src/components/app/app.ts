@@ -124,9 +124,7 @@ export class App extends LitElement {
           .bodyFont=${bodyFont}
           .scrapedTokens=${this.scrapedTokens}
         >
-          ${Object.keys(this.#theme.tokens).map(
-            (key) => html` <wizard-token-field .token=${this.#theme.tokens[key]} path=${key}></wizard-token-field> `,
-          )}
+          <wizard-token-field .token=${this.#theme.tokens['basis']} path=${`basis`}></wizard-token-field>
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
