@@ -1,9 +1,15 @@
-import { stringifyColor, ThemeSchema } from '@nl-design-system-community/design-tokens-schema';
+import {
+  stringifyColor,
+  ThemeSchema,
+  StrictThemeSchema,
+  type Theme as ThemeType,
+} from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import dlv from 'dlv';
 import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
+import * as z from 'zod';
 import ValidationError from '../ValidationError';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
@@ -32,13 +38,7 @@ export default class Theme {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
     this.tokens = structuredClone(this.#defaults);
-    console.log('Theme initialized with tokens:', this.tokens);
-
-    // Validate the entire theme and store all errors
-    this.validateTheme();
-
-    // Log the theme object with errors
-    console.log('Theme:', this.validatedTheme);
+    console.log('Theme initialized:', this.validatedTheme);
   }
 
   get defaults() {
@@ -51,6 +51,8 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#tokens = values;
+    // Automatically validate when tokens are updated
+    this.validateTheme(values);
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replace(css);
@@ -71,24 +73,43 @@ export default class Theme {
     return dlv(this.tokens, path);
   }
 
-  getAllErrors(): Map<string, ValidationError> {
-    return new Map(this.#errors);
-  }
+  validateTheme(theme: DesignTokens): Map<string, ValidationError> {
+    // Validate the entire theme using StrictThemeSchema
+    const result = StrictThemeSchema.safeParse(theme as ThemeType);
 
-  validateTheme(): void {
-    const errors = ValidationError.validateTheme(this.tokens);
-    // Clear existing errors and set new ones
-    this.#errors.clear();
+    const errors = new Map<string, ValidationError>();
+
+    if (!result.success) {
+      // Group errors by path (extract the token path from each error)
+      const errorsByPath = new Map<string, z.core.$ZodIssue[]>();
+
+      for (const issue of result.error.issues) {
+        // Extract the path to the token (remove $value if present)
+        const issuePath = issue.path.filter((p) => p !== '$value').join('.');
+        if (!errorsByPath.has(issuePath)) {
+          errorsByPath.set(issuePath, []);
+        }
+        errorsByPath.get(issuePath)!.push(issue);
+      }
+
+      // Create ValidationError for each path
+      for (const [path, issues] of errorsByPath) {
+        const zodError = new z.ZodError(issues);
+        errors.set(path, new ValidationError(path, zodError, null));
+      }
+    }
+
     for (const [path, error] of errors) {
       this.#errors.set(path, error);
     }
+
+    return errors;
   }
 
   get validatedTheme() {
     return {
       errors: Array.from(this.#errors.entries()).map(([path, error]) => ({
         issues: error.issues,
-        ok: error.ok,
         path,
       })),
       tokens: this.tokens,
