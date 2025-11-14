@@ -18,7 +18,7 @@ export class ThemePreview extends LitElement {
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   // TODO: Drop injection of maTheme and generate a full wizard theme CSS
-  static override readonly styles = [unsafeCSS(styles)];
+  static override readonly styles = [styles];
 
   constructor() {
     super();
