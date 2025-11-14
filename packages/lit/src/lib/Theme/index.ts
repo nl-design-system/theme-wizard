@@ -80,6 +80,10 @@ export default class Theme {
     return dlv(this.tokens, path);
   }
 
+  get errorCount(): number {
+    return this.#errors.size;
+  }
+
   validateTheme(theme: DesignTokens): Map<string, ValidationError> {
     // Validate the entire theme using StrictThemeSchema
     const result = StrictThemeSchema.safeParse(theme as ThemeType);
