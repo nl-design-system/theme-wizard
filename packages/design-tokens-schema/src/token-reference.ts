@@ -30,6 +30,7 @@ const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
 export type TokenLike = {
   $type: string;
   $value: unknown;
+  [key: string]: unknown;
 };
 
 const isTokenLike = (obj: unknown): obj is TokenLike => {
@@ -46,10 +47,8 @@ export const isRefLike = (str: string): str is RefLike => {
   return typeof str === 'string' && str.startsWith('{') && str.endsWith('}');
 };
 
-export type TokenWithRefLike = {
-  $type: string;
+export type TokenWithRefLike = TokenLike & {
   $value: `{${string}}`;
-  [key: string]: unknown;
 };
 
 export const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {

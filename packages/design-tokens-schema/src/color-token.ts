@@ -142,8 +142,8 @@ export const colorTokenValueToColorJS = (color: ColorValue): Color => {
   });
 };
 
-export const compareContrast = (tokenA: ColorToken, tokenB: ColorToken): number => {
-  const colorA = colorTokenValueToColorJS(tokenA.$value);
-  const colorB = colorTokenValueToColorJS(tokenB.$value);
+export const compareContrast = (valueA: ColorValue, valueB: ColorValue): number => {
+  const colorA = colorTokenValueToColorJS(valueA);
+  const colorB = colorTokenValueToColorJS(valueB);
   return colorA.contrastWCAG21(colorB);
 };

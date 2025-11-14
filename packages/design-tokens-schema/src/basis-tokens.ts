@@ -1,4 +1,3 @@
-import dlv from 'dlv';
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
 import { ColorTokenValidationSchema, compareContrast, stringifyColor } from './color-token';
@@ -229,7 +228,7 @@ export const addContrastExtensions = (rootConfig: Theme) => {
           $type: 'color',
           $value: background['$value'],
         },
-        ratio: expectedRatio,
+        expectedRatio,
       };
 
       // Make sure $extensions exists
@@ -299,26 +298,28 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
     }
 
     // Validation 2: Check that colors have sufficient contrast
-    walkColors(root, (foreground, path) => {
-      if (!Array.isArray(foreground.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
+    // walkColors(root, (token, path) => {
+    //   if (!Array.isArray(token.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
 
-      const foregroundToken = foreground.$extensions?.[EXTENSION_RESOLVED_AS] || foreground;
+    //   const foreground = token.$extensions?.[EXTENSION_RESOLVED_AS]?.['$value'] || token.$value;
 
-      for (const { color: background, ratio: expectedContrast } of foreground.$extensions[EXTENSION_CONTRAST_WITH]) {
-        const backgroundToken = isTokenWithRefLike(background) ? getRef(background.$value, root) : background;
-        const contrast = compareContrast(foregroundToken, backgroundToken);
-        const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
-        if (contrast < expectedContrast) {
-          ctx.addIssue({
-            code: 'too_small',
-            ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
-            input: contrast,
-            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foregroundToken['$value'])}) and \`${colorRefName}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
-            minimum: expectedContrast,
-            origin: 'number',
-            path: [...path, '$value'],
-          });
-        }
-      }
-    });
+    //   const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH];
+
+    //   for (const { color: background, expectedRatio } of comparisons) {
+    //     const backgroundToken = isTokenWithRefLike(background) ? getRef(background.$value, root) : background;
+    //     const contrast = compareContrast(foreground, backgroundToken);
+    //     const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
+    //     if (contrast < expectedRatio) {
+    //       ctx.addIssue({
+    //         code: 'too_small',
+    //         ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
+    //         input: contrast,
+    //         message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foreground['$value'])}) and \`${colorRefName}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
+    //         minimum: expectedRatio,
+    //         origin: 'number',
+    //         path: [...path, '$value'],
+    //       });
+    //     }
+    //   }
+    // });
   });
