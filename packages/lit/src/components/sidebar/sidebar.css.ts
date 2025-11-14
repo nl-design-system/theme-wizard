@@ -123,10 +123,4 @@ export default css`
     box-shadow: 0 0 0 2px rgb(0 123 255 / 25%);
     outline: none;
   }
-
-  @media print {
-    :host {
-      display: none;
-    }
-  }
 `;
