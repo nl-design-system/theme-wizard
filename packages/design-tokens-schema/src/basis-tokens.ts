@@ -210,8 +210,8 @@ export const addContrastExtensions = (rootConfig: Theme) => {
     if (!FOREGROUND_COLOR_KEYS.includes(lastPath) || !(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
 
     // WARNING: we currently skip contrast checking for disabled colors because start-theme and ma-theme do not comply
-    const parentPath = path.at(-2);
-    if (parentPath !== undefined && SKIP_CONTRAST_EXTENSION.has(parentPath)) return;
+    // const parentPath = path.at(-2);
+    // if (parentPath !== undefined && SKIP_CONTRAST_EXTENSION.has(parentPath)) return;
 
     // Loop over the expected ratios:
     for (const [backgroundName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
