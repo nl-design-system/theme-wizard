@@ -298,7 +298,7 @@ export const ThemeSchema = z.looseObject({
 
 export type Theme = z.infer<typeof ThemeSchema>;
 
-const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> | null }): TValue => {
+const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
