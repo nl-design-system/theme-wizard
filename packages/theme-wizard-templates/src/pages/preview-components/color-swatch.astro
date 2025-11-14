@@ -1,0 +1,64 @@
+---
+import './styles.css';
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import tokens from '@nl-design-system-community/ma-design-tokens/dist/tokens.json';
+import { groupTokenReferencesByScale } from '../../utils/token-groups';
+import CollageLayout from '../../layouts/CollageLayout.astro';
+
+export const detail = {
+  name: 'Color Swatch',
+  module: 'Voorbeeld van een kleurswatch',
+  value: 'color-swatch',
+};
+
+const colorTokensByScale = groupTokenReferencesByScale(tokens.basis?.color);
+---
+
+<style>
+  .template-color-swatch-grid,
+  .template-color-swatch-grid__row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .template-color-swatch-grid__label {
+    margin: 0;
+    text-transform: capitalize;
+  }
+
+  .template-color-swatch-grid__swatches {
+    display: flex;
+  }
+
+  .template-color-swatch-grid__swatches > template-color-swatch {
+    /* 14 columns for 14 color swatches */
+    flex: 0 0 calc(100% / 14);
+  }
+
+  @media print {
+    .template-color-swatch-grid {
+      page-break-inside: avoid;
+    }
+  }
+</style>
+
+<CollageLayout>
+  <div class="template-color-swatch-grid">
+    {
+      Object.entries(colorTokensByScale).map(([scale, references]) => {
+        const rowLabel = scale.replaceAll('-', ' ');
+
+        return (
+          <section class="template-color-swatch-grid__row">
+            <h3 class="template-color-swatch-grid__label">{rowLabel}</h3>
+            <div class="template-color-swatch-grid__swatches">
+              {references.map((reference) => (
+                <template-color-swatch reference={reference} />
+              ))}
+            </div>
+          </section>
+        );
+      })
+    }
+  </div>
+</CollageLayout>

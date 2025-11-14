@@ -27,6 +27,7 @@
   "devDependencies": {
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@utrecht/web-component-library-stencil": "3.7.0",
-    "@nl-design-system-community/theme-wizard-lit-components": "workspace:*"
+    "@nl-design-system-community/theme-wizard-lit-components": "workspace:*",
+    "@nl-design-system-community/design-tokens-schema": "workspace:*"
   }
 }

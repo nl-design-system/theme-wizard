@@ -38,4 +38,15 @@ export default css`
   .theme-preview {
     overflow: auto;
   }
+
+  @media print {
+    /* Hide all app descendants, except those that are needed to show the preview content */
+    .theme-app *:not(
+      :has(.theme-preview), /* any parent of .theme-preview */
+      .theme-preview, /* .theme-preview itself */
+      .theme-preview * /* any child of .theme-preview */
+    ) {
+      display: none;
+    }
+  }
 `;

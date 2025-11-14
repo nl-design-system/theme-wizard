@@ -7,6 +7,16 @@ export interface Props {
 }
 ---
 
+<style>
+  @media print {
+    @page {
+      size: landscape;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+    }
+  }
+</style>
+
 <html lang="nl" class="ma-theme">
   <body>
     <slot />
