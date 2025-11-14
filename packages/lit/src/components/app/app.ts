@@ -142,6 +142,7 @@ export class App extends LitElement {
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
+          <div style="background-color: red"><p>${this.#theme.errorCount} fouten in het thema gevonden</p></div>
           <preview-picker .templates=${this.templates}></preview-picker>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
