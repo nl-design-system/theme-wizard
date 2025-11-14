@@ -4,6 +4,7 @@ import dlv from 'dlv';
 import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
+import ValidationError from '../ValidationError';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
@@ -13,11 +14,19 @@ export default class Theme {
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  #errors: Map<string, ValidationError> = new Map();
 
   constructor(tokens?: DesignTokens) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
     this.tokens = structuredClone(this.#defaults);
+    console.log('Theme initialized with tokens:', this.tokens);
+
+    // Validate the entire theme and store all errors
+    this.validateTheme();
+
+    // Log the theme object with errors
+    console.log('Theme:', this.validatedTheme);
   }
 
   get defaults() {
@@ -48,6 +57,30 @@ export default class Theme {
 
   at(path: string): DesignToken {
     return dlv(this.tokens, path);
+  }
+
+  getAllErrors(): Map<string, ValidationError> {
+    return new Map(this.#errors);
+  }
+
+  validateTheme(): void {
+    const errors = ValidationError.validateTheme(this.tokens);
+    // Clear existing errors and set new ones
+    this.#errors.clear();
+    for (const [path, error] of errors) {
+      this.#errors.set(path, error);
+    }
+  }
+
+  get validatedTheme() {
+    return {
+      errors: Array.from(this.#errors.entries()).map(([path, error]) => ({
+        issues: error.issues,
+        ok: error.ok,
+        path,
+      })),
+      tokens: this.tokens,
+    };
   }
 
   reset() {
