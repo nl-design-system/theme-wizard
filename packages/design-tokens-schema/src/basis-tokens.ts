@@ -298,13 +298,8 @@ export const ThemeSchema = z.looseObject({
 
 export type Theme = z.infer<typeof ThemeSchema>;
 
-const getActualValue = (
-  token: {
-    $value: unknown;
-    $extensions?: Record<string, unknown> | null;
-  },
-) => {
-  return token.$extensions?.[EXTENSION_RESOLVED_AS] ?? token.$value;
+const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> | null }): TValue => {
+  return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
 export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
@@ -329,10 +324,10 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
       if (!Array.isArray(token.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
 
       const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH] as ContrastExtension[];
-      const baseColor = getActualValue(token) as ColorValue;
+      const baseColor = getActualValue<ColorValue>(token);
 
       for (const { color: background, expectedRatio } of comparisons) {
-        const compareColor = getActualValue(background) as ColorValue;
+        const compareColor = getActualValue<ColorValue>(background);
         const contrast = compareContrast(baseColor, compareColor);
         const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
         if (contrast < expectedRatio) {
