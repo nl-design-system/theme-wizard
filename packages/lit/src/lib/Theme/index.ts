@@ -59,7 +59,7 @@ export default class Theme {
   set tokens(values: DesignTokens) {
     this.#tokens = values;
     // Automatically validate when tokens are updated
-    this.validateTheme(values);
+    this.#validateTheme(values);
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replace(css);
@@ -84,27 +84,25 @@ export default class Theme {
     return this.#errors.size;
   }
 
-  validateTheme(theme: DesignTokens): Map<string, ValidationError> {
-    // Validate the entire theme using StrictThemeSchema
+  #validateTheme(theme: DesignTokens): Map<string, ValidationError> {
     const result = StrictThemeSchema.safeParse(theme as ThemeType);
 
     if (!result.success) {
-      // Group errors by path (extract the token path from each error)
-      const errorsByPath = new Map<string, z.core.$ZodIssue[]>();
+      // Group issues by path and create ValidationError instances
+      const issuesByPath = new Map<string, z.core.$ZodIssue[]>();
 
       for (const issue of result.error.issues) {
-        const issuePath = issue.path.filter((path) => path !== '$value').join('.');
-        if (!errorsByPath.has(issuePath)) {
-          console.log(errorsByPath);
-          errorsByPath.set(issuePath, []);
-        }
-        errorsByPath.get(issuePath)!.push(issue);
+        const path = issue.path.filter((p) => p !== '$value').join('.');
+        const issues = issuesByPath.get(path) ?? [];
+        issues.push(issue);
+        issuesByPath.set(path, issues);
       }
 
       // Create ValidationError for each path
-      for (const [path, issues] of errorsByPath) {
-        const zodError = new z.ZodError(issues);
-        this.#errors.set(path, new ValidationError(path, zodError, null));
+      for (const [path, issues] of issuesByPath) {
+        const error = new ValidationError(path, new z.ZodError(issues));
+        console.log(error);
+        this.#errors.set(path, error);
       }
     }
 
