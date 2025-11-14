@@ -88,16 +88,14 @@ export default class Theme {
     // Validate the entire theme using StrictThemeSchema
     const result = StrictThemeSchema.safeParse(theme as ThemeType);
 
-    const errors = new Map<string, ValidationError>();
-
     if (!result.success) {
       // Group errors by path (extract the token path from each error)
       const errorsByPath = new Map<string, z.core.$ZodIssue[]>();
 
       for (const issue of result.error.issues) {
-        // Extract the path to the token (remove $value if present)
-        const issuePath = issue.path.filter((p) => p !== '$value').join('.');
+        const issuePath = issue.path.filter((path) => path !== '$value').join('.');
         if (!errorsByPath.has(issuePath)) {
+          console.log(errorsByPath);
           errorsByPath.set(issuePath, []);
         }
         errorsByPath.get(issuePath)!.push(issue);
@@ -106,15 +104,11 @@ export default class Theme {
       // Create ValidationError for each path
       for (const [path, issues] of errorsByPath) {
         const zodError = new z.ZodError(issues);
-        errors.set(path, new ValidationError(path, zodError, null));
+        this.#errors.set(path, new ValidationError(path, zodError, null));
       }
     }
 
-    for (const [path, error] of errors) {
-      this.#errors.set(path, error);
-    }
-
-    return errors;
+    return new Map(this.#errors);
   }
 
   reset() {
