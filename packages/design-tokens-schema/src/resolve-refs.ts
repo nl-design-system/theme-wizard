@@ -1,8 +1,17 @@
 import dlv from 'dlv';
-import { type TokenWithRef, isTokenWithRef } from './token-reference';
+import { BaseDesignToken, type BaseDesignTokenValue } from './base-token';
+import { TokenReference, type TokenWithRefLike, isTokenWithRef } from './token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
+export const EXTENSION_RESOLVED_AS = 'nl.nldesignsystem.value-resolved-as';
+
+export type ResolvedToken = BaseDesignTokenValue & {
+  $value: TokenReference;
+  $extensions: {
+    [EXTENSION_RESOLVED_AS]: BaseDesignToken['$value'];
+  };
+};
 
 /**
  * @description
@@ -15,13 +24,11 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
     const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
-    // Replace the object's value with the ref's value
-    token['$value'] = ref.$value;
-    // Add an extension to indicate that we changed `refPath` to an actual value
+    // Add an extension with the resolved ref's value
     token['$extensions'] = {
       ...(token.$extensions || Object.create(null)),
-      [EXTENSION_RESOLVED_FROM]: `{${refPath}}`,
-    };
+      [EXTENSION_RESOLVED_AS]: ref.$value,
+    } satisfies ResolvedToken['$extensions'];
   });
 };
 
@@ -31,5 +38,5 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
  * and check that they have actual values in `root` and that the $type overlaps
  */
 export const validateRefs = (config: unknown, root: Record<string, unknown>): void => {
-  walkObject<TokenWithRef>(config, (data, path) => isTokenWithRef(data, root, path));
+  walkObject<TokenWithRefLike>(config, (data, path) => isTokenWithRef(data, root, path));
 };

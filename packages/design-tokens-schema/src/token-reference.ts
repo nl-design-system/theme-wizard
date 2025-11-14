@@ -40,7 +40,7 @@ const isTokenLike = (obj: unknown): obj is TokenLike => {
   return '$value' in obj;
 };
 
-type TokenWithRefLike = {
+export type TokenWithRefLike = {
   $type: string;
   $value: `{${string}}`;
 };

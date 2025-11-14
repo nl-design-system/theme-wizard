@@ -130,11 +130,14 @@ const ColorReferenceSchema = z.object({
   $type: z.literal('color'),
   $value: TokenReferenceSchema,
 });
+export type ColorWithRef = z.infer<typeof ColorReferenceSchema>;
 
 /** @description Validation schema that allows legacy color tokens and upgrades them to modern */
 export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema, ColorReferenceSchema]);
+export type ValidColor = z.infer<typeof ColorTokenValidationSchema>;
 
 export const colorTokenValueToColorJS = (color: ColorValue): Color => {
+  console.log('colorTokenValueToColorJS', { color });
   return new Color({
     alpha: color.alpha,
     coords: color.components.map((component) => (component === 'none' ? 0 : component)) as Coords,
@@ -142,8 +145,8 @@ export const colorTokenValueToColorJS = (color: ColorValue): Color => {
   });
 };
 
-export const compareContrast = (tokenA: ColorToken, tokenB: ColorToken): number => {
-  const colorA = colorTokenValueToColorJS(tokenA.$value);
-  const colorB = colorTokenValueToColorJS(tokenB.$value);
+export const compareContrast = (valueA: ColorValue, valueB: ColorValue): number => {
+  const colorA = colorTokenValueToColorJS(valueA);
+  const colorB = colorTokenValueToColorJS(valueB);
   return colorA.contrastWCAG21(colorB);
 };

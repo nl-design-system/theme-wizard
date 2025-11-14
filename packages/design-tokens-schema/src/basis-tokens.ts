@@ -1,11 +1,18 @@
 import dlv from 'dlv';
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
-import { ColorTokenValidationSchema, compareContrast, stringifyColor } from './color-token';
+import {
+  ColorTokenValidationSchema,
+  ColorValue,
+  compareContrast,
+  stringifyColor,
+  type ColorToken,
+} from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
-import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM } from './resolve-refs';
+import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
+import { TokenReference } from './token-reference';
 import { walkColors } from './walker';
-export { EXTENSION_RESOLVED_FROM } from './resolve-refs';
+export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 
@@ -198,6 +205,15 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   return rootConfig;
 };
 
+type ContrastExtension = {
+  color: ColorToken & {
+    $extensions: {
+      [EXTENSION_RESOLVED_FROM]: TokenReference;
+    };
+  };
+  expectedRatio: number;
+};
+
 export const addContrastExtensions = (rootConfig: Theme) => {
   walkColors(rootConfig, (color, path) => {
     const lastPath = path.at(-1)! as ForegroundColorKey;
@@ -226,10 +242,10 @@ export const addContrastExtensions = (rootConfig: Theme) => {
             [EXTENSION_RESOLVED_FROM]: `{${lookupPath}}`,
           },
           $type: 'color',
-          $value: background['$value'],
+          $value: background['$value'] as ColorToken['$value'],
         },
-        ratio: expectedRatio,
-      };
+        expectedRatio,
+      } satisfies ContrastExtension;
 
       // Make sure $extensions exists
       color.$extensions ??= {};
@@ -282,6 +298,15 @@ export const ThemeSchema = z.looseObject({
 
 export type Theme = z.infer<typeof ThemeSchema>;
 
+const getActualValue = (
+  token: {
+    $value: unknown;
+    $extensions?: Record<string, unknown> | null;
+  },
+) => {
+  return token.$extensions?.[EXTENSION_RESOLVED_AS] ?? token.$value;
+};
+
 export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
@@ -300,19 +325,23 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
     }
 
     // Validation 2: Check that colors have sufficient contrast
-    walkColors(root, (foreground, path) => {
-      if (!Array.isArray(foreground.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
+    walkColors(root, (token, path) => {
+      if (!Array.isArray(token.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
 
-      for (const { color: background, ratio: expectedContrast } of foreground.$extensions[EXTENSION_CONTRAST_WITH]) {
-        const contrast = compareContrast(foreground, background);
+      const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH] as ContrastExtension[];
+      const baseColor = getActualValue(token) as ColorValue;
+
+      for (const { color: background, expectedRatio } of comparisons) {
+        const compareColor = getActualValue(background) as ColorValue;
+        const contrast = compareContrast(baseColor, compareColor);
         const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
-        if (contrast < expectedContrast) {
+        if (contrast < expectedRatio) {
           ctx.addIssue({
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             input: contrast,
-            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(foreground['$value'])}) and \`${colorRefName}\` (${stringifyColor(background['$value'])}). Calculated contrast: ${contrast}, need ${expectedContrast}`,
-            minimum: expectedContrast,
+            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(baseColor)}) and \`${colorRefName}\` (${stringifyColor(compareColor)}). Calculated contrast: ${contrast}, need ${expectedRatio}`,
+            minimum: expectedRatio,
             origin: 'number',
             path: [...path, '$value'],
           });
