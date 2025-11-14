@@ -218,6 +218,9 @@ importers:
       style-dictionary:
         specifier: 5.1.1
         version: 5.1.1
+      zod:
+        specifier: 4.1.12
+        version: 4.1.12
     devDependencies:
       '@nl-design-system-community/theme-wizard-templates':
         specifier: workspace:*
