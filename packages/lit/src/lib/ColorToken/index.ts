@@ -12,22 +12,18 @@ export type ColorComponents = ColorTokenType['$value']['components'];
 
 export default class ColorToken {
   #$type = 'color' as const;
-  #$value: ColorTokenType['$value'];
   #$extensions: ColorTokenType['$extensions'];
   static #helperElement = createHelperElement();
+  $value: ColorTokenType['$value'];
 
   constructor(token: MinimalColorToken) {
     const { $extensions, $value } = token;
     this.#$extensions = $extensions;
-    this.#$value = $value;
+    this.$value = $value;
   }
 
   get $type() {
     return this.#$type;
-  }
-
-  get $value() {
-    return this.#$value;
   }
 
   get $extensions() {
@@ -61,7 +57,7 @@ export default class ColorToken {
     return new ColorToken({
       ...this,
       $value: {
-        ...this.#$value,
+        ...this.$value,
         colorSpace: destination,
         components: limitColorComponents(destination, components),
       },

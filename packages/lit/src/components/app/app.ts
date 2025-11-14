@@ -1,4 +1,5 @@
 import '../preview/preview';
+import '../sidebar/sidebar';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
@@ -10,6 +11,9 @@ import { EVENT_NAMES } from '../../constants';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import '../preview-picker';
+import { WizardTokenInput } from '../wizard-token-input';
+import '../wizard-token-field';
 import appStyles from './app.css';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -51,7 +55,6 @@ export class App extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     defineCustomElements();
-    this.addEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
 
     // Parse template selection from query param: ?templates=/group/page (dynamic)
@@ -65,41 +68,37 @@ export class App extends LitElement {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener(EVENT_NAMES.CONFIG_CHANGE, this.#handleConfigUpdate);
     this.removeEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
   }
 
-  /**
-   * Handle configuration updates from child components
-   * Bridge events to controller
-   */
-  readonly #handleConfigUpdate = async (e: Event) => {
-    if (!(e instanceof CustomEvent)) return;
-
-    const config: Partial<SidebarConfig> = e.detail || {};
-
-    if (config.sourceUrl) {
-      await this.#handleSourceUrlChange(config.sourceUrl);
-    } else {
-      this.#theme.updateAt(BODY_FONT_TOKEN_REF, config.bodyFont);
-      this.#theme.updateAt(HEADING_FONT_TOKEN_REF, config.headingFont);
+  readonly #handleTokenChange = async (event: Event) => {
+    const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
+    if (target instanceof WizardTokenInput) {
+      const value = target.value;
+      this.#theme.updateAt(target.name, value);
     }
   };
 
   /**
    * Handle source URL changes - scrape tokens
    */
-  readonly #handleSourceUrlChange = async (sourceUrl: string): Promise<void> => {
-    try {
-      const tokens = await this.scraper.getTokens(new URL(sourceUrl));
-      const sortedTokens = [...tokens].sort(
-        (a, b) => b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
-      );
-      this.scrapedTokens = sortedTokens;
+  readonly #handleSourceUrlChange = async (e: Event) => {
+    if (!(e instanceof CustomEvent)) return;
 
-      this.requestUpdate();
-    } catch (error) {
-      console.error('Failed to analyze website:', error);
+    const { sourceUrl }: Partial<SidebarConfig> = e.detail || {};
+
+    if (sourceUrl) {
+      try {
+        const tokens = await this.scraper.getTokens(new URL(sourceUrl));
+        const sortedTokens = [...tokens].sort(
+          (a, b) => b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
+        );
+        this.scrapedTokens = sortedTokens;
+
+        this.requestUpdate();
+      } catch (error) {
+        console.error('Failed to analyze website:', error);
+      }
     }
   };
 
@@ -110,17 +109,33 @@ export class App extends LitElement {
   };
 
   override render() {
-    const bodyFont = this.#theme.at(BODY_FONT_TOKEN_REF).$value;
-    const headingFont = this.#theme.at(HEADING_FONT_TOKEN_REF).$value;
+    const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
+    const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
 
     return html`
       <div class="theme-app ma-theme">
-        <theme-wizard-sidebar
-          .sourceUrl=""
-          .headingFont=${headingFont}
-          .bodyFont=${bodyFont}
-          .scrapedTokens=${this.scrapedTokens}
-        ></theme-wizard-sidebar>
+        <theme-wizard-sidebar .sourceUrl="" .scrapedTokens=${this.scrapedTokens} @change=${this.#handleSourceUrlChange}>
+          <form @change=${this.#handleTokenChange}>
+            <fieldset>
+              <legend>Lettertypes</legend>
+              <wizard-token-field
+                label="Koppen"
+                path=${HEADING_FONT_TOKEN_REF}
+                .token=${headingFontToken}
+              ></wizard-token-field>
+              <wizard-token-field
+                label="Lopende tekst"
+                path=${BODY_FONT_TOKEN_REF}
+                .token=${bodyFontToken}
+              ></wizard-token-field>
+            </fieldset>
+
+            <details>
+              <summary>Alle tokens</summary>
+              <wizard-token-field path=${`basis`} .token=${this.#theme.tokens['basis']}></wizard-token-field>
+            </details>
+          </form>
+        </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker .templates=${this.templates}></preview-picker>

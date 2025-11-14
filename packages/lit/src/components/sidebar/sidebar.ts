@@ -6,14 +6,13 @@ import {
 } from '@nl-design-system-community/css-scraper';
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { DEFAULT_TYPOGRAPHY, EVENT_NAMES } from '../../constants';
+import { EVENT_NAMES } from '../../constants';
 import { DEFAULT_CONFIG } from '../../constants/default';
 import ColorToken from '../../lib/ColorToken';
 import { isValidUrl } from '../../utils';
 import sidebarStyles from './sidebar.css';
 import '../color-select';
 import '../color-scale-picker';
-import '../font-select';
 
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {
@@ -146,26 +145,9 @@ export class LitSidebar extends LitElement {
               </output>
             </fieldset>
           </fieldset>
-
-          <fieldset>
-            <legend>Lettertypes</legend>
-            <font-select
-              name="heading-font"
-              label="Koppen"
-              value=${DEFAULT_TYPOGRAPHY.headingFont}
-              optionsLabel="Opties uit opgegeven website"
-              .options=${this.fontOptions}
-            ></font-select>
-            <font-select
-              name="body-font"
-              label="Lopende tekst"
-              value=${DEFAULT_TYPOGRAPHY.bodyFont}
-              optionsLabel="Opties uit opgegeven website"
-              .options=${this.fontOptions}
-            ></font-select>
-          </fieldset>
-          <utrecht-button appearance="primary-action-button" type="submit">Update</utrecht-button>
         </form>
+
+        <slot></slot>
       </div>
     `;
   }
