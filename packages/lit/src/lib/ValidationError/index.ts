@@ -6,7 +6,7 @@ import {
 } from '@nl-design-system-community/design-tokens-schema';
 import * as z from 'zod';
 
-export type ValidationIssue = Pick<z.ZodIssue, 'code' | 'message' | 'path'>;
+export type ValidationIssue = Pick<z.core.$ZodIssue, 'code' | 'message' | 'path'>;
 
 export default class ValidationError {
   readonly path: string;
