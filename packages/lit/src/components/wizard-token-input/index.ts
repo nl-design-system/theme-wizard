@@ -23,7 +23,7 @@ export class WizardTokenInput extends LitElement {
   #token: Token = {};
   static formAssociated = true;
 
-  static valueToString(value: unknown) {
+  static valueAsString(value: unknown) {
     switch (typeof value) {
       case 'string':
         return value;
@@ -49,7 +49,7 @@ export class WizardTokenInput extends LitElement {
     } else {
       this.#token = value as Token;
     }
-    this.internals_.setFormValue(WizardTokenInput.valueToString(value));
+    this.internals_.setFormValue(WizardTokenInput.valueAsString(value));
     this.requestUpdate('value', oldValue);
   }
 
@@ -60,7 +60,7 @@ export class WizardTokenInput extends LitElement {
         this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
       } catch {
         // reset to previous version when parsing fails
-        event.target.value = WizardTokenInput.valueToString(this.value);
+        event.target.value = WizardTokenInput.valueAsString(this.value);
       }
     }
   };
@@ -70,7 +70,7 @@ export class WizardTokenInput extends LitElement {
       <textarea
         id=${this.id}
         name=${this.name}
-        .value=${WizardTokenInput.valueToString(this.value)}
+        .value=${WizardTokenInput.valueAsString(this.value)}
         @change=${this.#handleChange}
       ></textarea>`;
   }

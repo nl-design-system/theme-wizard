@@ -45,7 +45,7 @@ export class WizardColorInput extends WizardTokenInput {
   override set value(value: ColorToken['$value']) {
     const oldValue = this.#token.$value;
     this.#token.$value = value;
-    this.internals_.setFormValue(WizardColorInput.valueToString(value));
+    this.internals_.setFormValue(WizardColorInput.valueAsString(value));
     this.requestUpdate('value', oldValue);
   }
 

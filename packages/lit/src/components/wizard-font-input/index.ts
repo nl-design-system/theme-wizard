@@ -40,7 +40,7 @@ export class WizardFontInput extends WizardTokenInput {
   override set value(value: ModernFontFamilyToken['$value']) {
     const oldValue = this.#token.$value;
     this.#token.$value = value;
-    this.internals_.setFormValue(WizardFontInput.valueToString(value));
+    this.internals_.setFormValue(WizardFontInput.valueAsString(value));
 
     const optionIsValue = this.valueComparator(value);
     if (!DEFAULT_FONT_OPTIONS.some(optionIsValue) && !this.options.some(optionIsValue)) {
@@ -57,7 +57,7 @@ export class WizardFontInput extends WizardTokenInput {
         this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
       } catch {
         // reset to previous version when parsing fails
-        event.target.value = WizardTokenInput.valueToString(this.value);
+        event.target.value = WizardTokenInput.valueAsString(this.value);
       }
     }
   };
@@ -76,7 +76,7 @@ export class WizardFontInput extends WizardTokenInput {
               ${this.options.map(
                 (option) =>
                   html`<option
-                    value=${WizardTokenInput.valueToString(option.value)}
+                    value=${WizardTokenInput.valueAsString(option.value)}
                     ?selected=${this.valueComparator(this.value)(option)}
                   >
                     ${option.label}
@@ -88,7 +88,7 @@ export class WizardFontInput extends WizardTokenInput {
           ${DEFAULT_FONT_OPTIONS.map(
             (option) =>
               html`<option
-                value=${WizardTokenInput.valueToString(option.value)}
+                value=${WizardTokenInput.valueAsString(option.value)}
                 ?selected=${this.valueComparator(this.value)(option)}
               >
                 ${option.label}
