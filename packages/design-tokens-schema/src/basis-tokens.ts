@@ -323,7 +323,7 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
     walkColors(root, (token, path) => {
       if (!Array.isArray(token.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
 
-      const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH] as ContrastExtension[];
+      const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH];
       const baseColor = getActualValue<ColorValue>(token);
 
       for (const { color: background, expectedRatio } of comparisons) {
