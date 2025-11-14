@@ -137,7 +137,6 @@ export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, Color
 export type ValidColor = z.infer<typeof ColorTokenValidationSchema>;
 
 export const colorTokenValueToColorJS = (color: ColorValue): Color => {
-  console.log('colorTokenValueToColorJS', { color });
   return new Color({
     alpha: color.alpha,
     coords: color.components.map((component) => (component === 'none' ? 0 : component)) as Coords,
