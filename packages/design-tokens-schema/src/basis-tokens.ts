@@ -329,7 +329,10 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
       for (const { color: background, expectedRatio } of comparisons) {
         const compareColor = getActualValue<ColorValue>(background);
         const contrast = compareContrast(baseColor, compareColor);
-        const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_FROM];
+        const resolvedFrom = background.$extensions?.[EXTENSION_RESOLVED_FROM];
+        const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_AS]
+          ? `${resolvedFrom} -> ${background.$value}`
+          : resolvedFrom;
         if (contrast < expectedRatio) {
           ctx.addIssue({
             code: 'too_small',

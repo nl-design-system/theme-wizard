@@ -584,7 +584,7 @@ describe('theme', () => {
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message:
-            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{common.basis.color.default.bg-subtle}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
+            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{common.basis.color.default.bg-subtle} -> {ma.color.white}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
           minimum: 4.5,
           origin: 'number',
           path: 'common.basis.color.default.color-document.$value'.split('.'),
