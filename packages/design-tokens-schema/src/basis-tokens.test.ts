@@ -10,7 +10,7 @@ import {
   BasisTokensSchema,
   BasisColorSchema,
   EXTENSION_CONTRAST_WITH,
-  EXTENSION_RESOLVED_FROM,
+  EXTENSION_RESOLVED_AS,
   Theme,
   StrictThemeSchema,
   ERROR_CODES,
@@ -323,10 +323,13 @@ describe('theme', () => {
         [EXTENSION_CONTRAST_WITH]: [
           {
             color: {
+              $extensions: {
+                [EXTENSION_RESOLVED_AS]: config.brand.ma.color.indigo['1'].$value,
+              },
               $type: 'color',
-              $value: config.brand.ma.color.indigo['1'].$value,
+              $value: '{ma.color.indigo.1}',
             },
-            ratio: 4.5,
+            expectedRatio: 4.5,
           },
         ],
       });
@@ -428,13 +431,13 @@ describe('theme', () => {
         expect.soft(result.success).toBeTruthy();
       });
 
-      test('returns the schema with refs replaced by actual values', () => {
+      test('returns the schema with the ref value added to an extension and the $value left intact', () => {
         const result = StrictThemeSchema.safeParse(config);
         const expectedCommonColor = brandConfig.ma.color.indigo[5];
         expect.soft(result.data?.common?.basis?.color?.default?.['bg-document']).toEqual({
-          ...expectedCommonColor,
+          ...config.common.basis.color.default['bg-document'],
           $extensions: {
-            [EXTENSION_RESOLVED_FROM]: '{ma.color.indigo.5}',
+            [EXTENSION_RESOLVED_AS]: expectedCommonColor.$value,
           },
         });
       });
@@ -483,9 +486,9 @@ describe('theme', () => {
         },
       };
 
-      expect.soft(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
+      expect(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
       const result = StrictThemeSchema.safeParse(config);
-      expect.soft(result.success).toBeFalsy();
+      expect(result.success).toBeFalsy();
       expect.soft(z.flattenError(result.error!)).toMatchObject({
         formErrors: [
           'Invalid token reference: expected "{ma.color.indigo}" to have a "$value" and "$type" property (referenced from "common.basis.color.default.bg-document")',
@@ -575,13 +578,13 @@ describe('theme', () => {
         $value: '{ma.color.gray.2}',
       };
       const result = StrictThemeSchema.safeParse(testConfig);
-      expect.soft(result.success).toBeFalsy();
+      expect(result.success).toBeFalsy();
       expect.soft(result.error!.issues).toEqual([
         {
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message:
-            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{ma.color.white}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
+            'Not enough contrast between `{common.basis.color.default.color-document}` (#cccccc) and `{common.basis.color.default.bg-subtle} -> {ma.color.white}` (#ffffff). Calculated contrast: 1.6059285649300712, need 4.5',
           minimum: 4.5,
           origin: 'number',
           path: 'common.basis.color.default.color-document.$value'.split('.'),
@@ -685,17 +688,17 @@ describe('theme', () => {
 });
 
 describe('strictly validate known basis themes', () => {
-  test('Mooi & Anders', () => {
+  test('Mooi & Anders theme', () => {
     const result = StrictThemeSchema.safeParse(maTokens);
     expect(result.success).toEqual(true);
   });
 
-  test('voorbeeld', () => {
+  test('Voorbeeld theme', () => {
     const result = StrictThemeSchema.safeParse(voorbeeldTokens);
     expect(result.success).toEqual(true);
   });
 
-  test('start', () => {
+  test('Start theme', () => {
     const result = StrictThemeSchema.safeParse(startTokens);
     expect(result.success).toEqual(true);
   });
