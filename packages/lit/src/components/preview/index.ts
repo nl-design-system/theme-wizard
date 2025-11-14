@@ -1,4 +1,4 @@
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import Scraper from '../../lib/Scraper';
 import { PREVIEW_THEME_CLASS } from '../../lib/Theme';
@@ -17,8 +17,7 @@ export class ThemePreview extends LitElement {
   private readonly scraper: Scraper;
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
-  // TODO: Drop injection of maTheme and generate a full wizard theme CSS
-  static override readonly styles = [unsafeCSS(styles)];
+  static override readonly styles = [styles];
 
   constructor() {
     super();
