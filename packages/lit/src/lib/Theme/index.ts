@@ -38,7 +38,14 @@ export default class Theme {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
     this.tokens = structuredClone(this.#defaults);
-    console.log('Theme initialized:', this.validatedTheme);
+
+    console.log('Theme initialized:', {
+      errors: Array.from(this.#errors.entries()).map(([path, error]) => ({
+        issues: error.issues,
+        path,
+      })),
+      tokens: this.tokens,
+    });
   }
 
   get defaults() {
@@ -104,16 +111,6 @@ export default class Theme {
     }
 
     return errors;
-  }
-
-  get validatedTheme() {
-    return {
-      errors: Array.from(this.#errors.entries()).map(([path, error]) => ({
-        issues: error.issues,
-        path,
-      })),
-      tokens: this.tokens,
-    };
   }
 
   reset() {
