@@ -4,6 +4,7 @@ import {
   type BaseDesignTokenIdentifier,
   BaseDesignTokenSchema,
   type BaseDesignToken,
+  BaseDesignTokenValueSchema,
 } from './index';
 
 describe('BaseDesignTokenNameSchema', () => {
@@ -42,9 +43,76 @@ describe('BaseDesignTokenSchema', () => {
     expectTypeOf(result.data!).toEqualTypeOf<BaseDesignToken>();
   });
 
+  describe('does not allow `null` for', () => {
+    const fixture = {
+      $type: 'unknown',
+      $value: 'value',
+    };
+
+    test('$description', () => {
+      const token = { ...fixture, $description: null };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+    });
+
+    test('$extensions', () => {
+      const token = { ...fixture, $extensions: null };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+    });
+
+    test('$description', () => {
+      const token = { ...fixture, $description: null };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+    });
+  });
+
+  describe('$description', () => {
+    const fixture = {
+      $type: 'unknown',
+      $value: 'value',
+    };
+
+    test('MUST be a string', () => {
+      const token = { ...fixture, $description: 'test' };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+    });
+
+    test('MUST not be null', () => {
+      const token = { ...fixture, $description: null };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+    });
+  });
+
+  describe('$deprecated', () => {
+    const fixture = {
+      $type: 'unknown',
+      $value: 'value',
+    };
+
+    test('MAY be true', () => {
+      const token = { ...fixture, $deprecated: true };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+    });
+
+    test('MAY be false', () => {
+      const token = { ...fixture, $deprecated: false };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+    });
+
+    test('MAY be a string', () => {
+      const token = { ...fixture, $deprecated: 'Use X or Y instead' };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+    });
+
+    test('MUST not be null', () => {
+      const token = { ...fixture, $deprecated: null };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+    });
+  });
+
   test('accepts a bare minimum token', () => {
     const fixture = {
       'my-token-id': {
+        $type: 'unknown',
         $value: 'not-important',
       },
     };
