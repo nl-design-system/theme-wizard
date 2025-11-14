@@ -16,6 +16,7 @@ declare global {
 
 @customElement(tag)
 export class WizardTokenField extends LitElement {
+  @property() label: string = '';
   @property() token: Token = {};
   @property() path: string = '';
   @property() options = [];
@@ -29,10 +30,6 @@ export class WizardTokenField extends LitElement {
 
   get entries() {
     return WizardTokenField.entries(this.token);
-  }
-
-  get label() {
-    return `{${this.path}}`;
   }
 
   get type() {
@@ -83,7 +80,7 @@ export class WizardTokenField extends LitElement {
   override render() {
     if (this.depth > WizardTokenField.maxDepth) return nothing;
     const type = this.type;
-    const label = this.label;
+    const label = this.label || `{${this.path}}`;
     return html`<div>
       ${type
         ? html`

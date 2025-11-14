@@ -118,8 +118,16 @@ export class App extends LitElement {
           <form @change=${this.#handleTokenChange}>
             <fieldset>
               <legend>Lettertypes</legend>
-              <wizard-token-field path=${BODY_FONT_TOKEN_REF} .token=${bodyFontToken}></wizard-token-field>
-              <wizard-token-field path=${HEADING_FONT_TOKEN_REF} .token=${headingFontToken}></wizard-token-field>
+              <wizard-token-field
+                label="Koppen"
+                path=${HEADING_FONT_TOKEN_REF}
+                .token=${headingFontToken}
+              ></wizard-token-field>
+              <wizard-token-field
+                label="Lopende tekst"
+                path=${BODY_FONT_TOKEN_REF}
+                .token=${bodyFontToken}
+              ></wizard-token-field>
             </fieldset>
 
             <details>
