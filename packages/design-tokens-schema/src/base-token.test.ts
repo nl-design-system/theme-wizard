@@ -43,28 +43,6 @@ describe('BaseDesignTokenSchema', () => {
     expectTypeOf(result.data!).toEqualTypeOf<BaseDesignToken>();
   });
 
-  describe('does not allow `null` for', () => {
-    const fixture = {
-      $type: 'unknown',
-      $value: 'value',
-    };
-
-    test('$description', () => {
-      const token = { ...fixture, $description: null };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
-    });
-
-    test('$extensions', () => {
-      const token = { ...fixture, $extensions: null };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
-    });
-
-    test('$description', () => {
-      const token = { ...fixture, $description: null };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
-    });
-  });
-
   describe('$description', () => {
     const fixture = {
       $type: 'unknown',
@@ -105,6 +83,28 @@ describe('BaseDesignTokenSchema', () => {
 
     test('MUST not be null', () => {
       const token = { ...fixture, $deprecated: null };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+    });
+  });
+
+  describe('$extensions', () => {
+    const fixture = {
+      $type: 'unknown',
+      $value: 'value',
+    };
+
+    test('MAY be an empty record', () => {
+      const token = { ...fixture, $extensions: {} };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+    });
+
+    test('MAY be an simple record', () => {
+      const token = { ...fixture, $extensions: { test: 1 } };
+      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+    });
+
+    test('MUST not be null', () => {
+      const token = { ...fixture, $extensions: null };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
     });
   });
