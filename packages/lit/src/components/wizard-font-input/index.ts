@@ -69,6 +69,7 @@ export class WizardFontInput extends WizardTokenInput {
 
   override render() {
     return html`
+      <label for=${this.id}>${this.label}</label>
       <select id=${this.id} name=${this.name} @change=${this.#handleChange}>
         ${this.options.length
           ? html`<optgroup label=${this.optionsLabel}>

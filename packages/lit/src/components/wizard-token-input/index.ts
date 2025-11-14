@@ -17,10 +17,10 @@ declare global {
 
 @customElement(tag)
 export class WizardTokenInput extends LitElement {
+  @property() label = '';
   @property() name = '';
   internals_ = this.attachInternals();
   #token: Token = {};
-
   static formAssociated = true;
 
   static valueToString(value: unknown) {
@@ -66,11 +66,12 @@ export class WizardTokenInput extends LitElement {
   };
 
   override render() {
-    return html`<textarea
-      id=${this.id}
-      name=${this.name}
-      .value=${WizardTokenInput.valueToString(this.value)}
-      @change=${this.#handleChange}
-    ></textarea>`;
+    return html` <label for=${this.id}>${this.label}</label>
+      <textarea
+        id=${this.id}
+        name=${this.name}
+        .value=${WizardTokenInput.valueToString(this.value)}
+        @change=${this.#handleChange}
+      ></textarea>`;
   }
 }

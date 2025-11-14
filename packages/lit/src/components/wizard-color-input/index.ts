@@ -57,12 +57,13 @@ export class WizardColorInput extends WizardTokenInput {
   };
 
   override render() {
-    return html`<input
-      type="color"
-      id=${this.id}
-      value=${WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex()}
-      colorSpace=${this.colorSpace}
-      @change=${this.#handleChange}
-    />`;
+    return html` <label for=${this.id}>${this.label}</label>
+      <input
+        type="color"
+        id=${this.id}
+        value=${WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex()}
+        colorSpace=${this.colorSpace}
+        @change=${this.#handleChange}
+      />`;
   }
 }

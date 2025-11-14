@@ -50,30 +50,39 @@ export class WizardTokenField extends LitElement {
     return this.token?.$value;
   }
 
-  renderField(type: typeof this.type) {
+  renderField(type: typeof this.type, label: string) {
     const key = this.path.split('.').pop();
     switch (type) {
       case 'color':
         return html` <wizard-color-input
           .value=${this.token.$value}
           id=${this.#id}
+          label=${label}
           name=${this.path}
           key=${key}
-        ></wizard-color-input>`;
+        >
+          ${label}
+        </wizard-color-input>`;
       case 'font':
         return html` <wizard-font-input
           .value=${this.token.$value}
           id=${this.#id}
+          label=${label}
           name=${this.path}
           key=${key}
-        ></wizard-font-input>`;
+        >
+          ${label}
+        </wizard-font-input>`;
       default:
         return html` <wizard-token-input
           .value=${this.token}
           id=${this.#id}
+          label=${label}
           name=${this.path}
           key=${key}
-        ></wizard-token-input>`;
+        >
+          ${label}
+        </wizard-token-input>`;
     }
   }
 
@@ -83,10 +92,7 @@ export class WizardTokenField extends LitElement {
     const label = this.label || `{${this.path}}`;
     return html`<div>
       ${type
-        ? html`
-            <label for=${this.#id}>${label}</label>
-            ${this.renderField(type)}
-          `
+        ? this.renderField(type, label)
         : html`<p for=${this.#id}>${label}</p>
             <ul>
               ${this.entries.map(
