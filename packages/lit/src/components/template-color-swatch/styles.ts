@@ -31,7 +31,7 @@ export default css`
     font-size: 1rem;
     margin-block-end: 0;
     margin-block-start: 0;
-    padding-inline-end: 1rem;
     overflow-wrap: anywhere;
+    padding-inline-end: 1rem;
   }
 `;
