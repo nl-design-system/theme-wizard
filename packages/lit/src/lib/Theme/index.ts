@@ -10,6 +10,7 @@ import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import * as z from 'zod';
+import ValidationIssue from '../ValidationIssue';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
@@ -31,7 +32,7 @@ export default class Theme {
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
   name = 'wizard';
-  issues: ValidationIssue[] = MOCK_VALIDATION_ISSUES;
+  #validationIssues: ValidationIssue[] = MOCK_VALIDATION_ISSUES;
 
   constructor(tokens?: DesignTokens) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
@@ -71,27 +72,20 @@ export default class Theme {
     return dlv(this.tokens, path);
   }
 
-  get errorCount(): number {
-    return this.#issues.length;
+  get validationIssues(): readonly ValidationIssue[] {
+    return this.#validationIssues;
   }
 
-  get issues(): readonly z.core.$ZodIssue[] {
-    return this.#issues;
+  get errorCount(): number {
+    return this.#validationIssues.length;
   }
 
   get pathsContainingIssues(): string[] {
-    const paths: string[] = [];
-    for (const issue of this.#issues) {
-      const path = this.#extractPath(issue);
-      if (path) {
-        paths.push(path);
-      }
-    }
-    return paths;
+    return Array.from(new Set(this.#validationIssues.map((issue) => issue.path)));
   }
 
-  getIssuesForPath(path: string): z.core.$ZodIssue[] {
-    return this.#issues.filter((issue) => this.#extractPath(issue) === path);
+  getIssuesForPath(path: string): ValidationIssue[] {
+    return this.#validationIssues.filter((issue) => issue.path === path);
   }
 
   #extractPath(issue: z.core.$ZodIssue): string {
@@ -101,14 +95,20 @@ export default class Theme {
       .join('.');
   }
 
-  #validateTheme(theme: DesignTokens): void {
+  #validateTheme(theme: DesignTokens): ValidationIssue[] {
     const result = StrictThemeSchema.safeParse(theme as ThemeType);
 
     if (result.success) {
-      this.#issues = [];
-    } else {
-      this.#issues = result.error.issues;
+      this.#validationIssues = [];
+      return [];
     }
+
+    const issues = (result.error.issues || []).map((issue) => {
+      const path = this.#extractPath(issue);
+      return new ValidationIssue(path, issue);
+    });
+    this.#validationIssues = issues;
+    return issues;
   }
 
   reset() {
