@@ -72,20 +72,12 @@ export default class Theme {
     return dlv(this.tokens, path);
   }
 
-  get validationIssues(): readonly ValidationIssue[] {
-    return this.#validationIssues;
-  }
-
   get errorCount(): number {
     return this.#validationIssues.length;
   }
 
-  get pathsContainingIssues(): string[] {
-    return Array.from(new Set(this.#validationIssues.map((issue) => issue.path)));
-  }
-
-  getIssuesForPath(path: string): ValidationIssue[] {
-    return this.#validationIssues.filter((issue) => issue.path === path);
+  get pathsWithIssues(): ValidationIssue[] {
+    return this.#validationIssues;
   }
 
   #extractPath(issue: z.core.$ZodIssue): string {
@@ -105,7 +97,8 @@ export default class Theme {
 
     const issues = (result.error.issues || []).map((issue) => {
       const path = this.#extractPath(issue);
-      return new ValidationIssue(path, issue);
+      const validationIssue = new ValidationIssue(path, issue);
+      return validationIssue;
     });
     this.#validationIssues = issues;
     return issues;
