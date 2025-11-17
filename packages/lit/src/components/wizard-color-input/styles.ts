@@ -1,8 +1,8 @@
 import { css } from 'lit';
 
 export default css`
-  .error {
-    padding-inline: 0.5rem;
+  .theme-error {
     background: #ffe0e0;
+    padding-inline: 0.5rem;
   }
 `;

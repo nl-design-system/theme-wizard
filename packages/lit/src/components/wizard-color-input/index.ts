@@ -79,7 +79,7 @@ export class WizardColorInput extends WizardTokenInput {
         @change=${this.#handleChange}
       />
       ${this.errors.length &&
-      html`<div class="error">
+      html`<div class="theme-error">
         ${this.errors.map(
           ({ issue }) => html`<div class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
         )}

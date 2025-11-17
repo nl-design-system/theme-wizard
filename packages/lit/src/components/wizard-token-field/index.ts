@@ -101,7 +101,7 @@ export class WizardTokenField extends LitElement {
     return html`<div>
       ${type
         ? this.renderField(type, label)
-        : html`<p class=${this.errors.length ? 'error' : ''}>${label}</p>
+        : html`<p class=${this.errors.length ? 'theme-error' : ''}>${label}</p>
             <ul>
               ${this.entries.map(([key, token]) => {
                 const path = `${this.path}.${key}`;

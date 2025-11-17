@@ -4,7 +4,7 @@ export default css`
   label {
     display: block;
   }
-  .error {
+  .theme-error {
     color: red;
   }
 `;

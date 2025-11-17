@@ -73,7 +73,7 @@ export class WizardTokenInput extends LitElement {
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
       ${this.errors.length
-        ? html`<ul class="error">
+        ? html`<ul class="theme-error">
             ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
           </ul>`
         : nothing}

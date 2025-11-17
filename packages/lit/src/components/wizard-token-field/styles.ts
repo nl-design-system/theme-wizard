@@ -1,8 +1,8 @@
 import { css } from 'lit';
 
 export default css`
-  .error {
-    color: #850000;
+  .theme-error {
     background: #ffe5e5;
+    color: #850000;
   }
 `;
