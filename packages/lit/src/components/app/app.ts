@@ -4,14 +4,14 @@ import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-tem
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
-import { PREVIEW_PICKER_NAME } from '../preview-picker';
 import '../preview-picker';
+import { PREVIEW_PICKER_NAME } from '../preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
 import appStyles from './app.css';
@@ -76,6 +76,8 @@ export class App extends LitElement {
     if (target instanceof WizardTokenInput) {
       const value = target.value;
       this.#theme.updateAt(target.name, value);
+      // Request update to reflect any new validation issues
+      this.requestUpdate();
     }
   };
 
@@ -142,7 +144,23 @@ export class App extends LitElement {
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <div style="background-color: red"><p>${this.#theme.errorCount} fouten in het thema gevonden</p></div>
+          <div style="background-color: red">
+            <p>${this.#theme.errorCount} fouten in het thema gevonden</p>
+            ${this.#theme.errorCount > 0
+              ? html`<ul>
+                  ${this.#theme.pathsContainingIssues.map(
+                    (path) => html`
+                      <li>
+                        <strong>${path}:</strong>
+                        <ul>
+                          ${this.#theme.getIssuesForPath(path).map((issue) => html` <li>${issue.message}</li>`)}
+                        </ul>
+                      </li>
+                    `,
+                  )}
+                </ul>`
+              : nothing}
+          </div>
           <preview-picker .templates=${this.templates}></preview-picker>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
