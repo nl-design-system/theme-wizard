@@ -7,12 +7,25 @@ import { DesignToken, DesignTokens } from 'style-dictionary/types';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
+export type ValidationIssue = {
+  message: string;
+  path: string;
+};
+
+const MOCK_VALIDATION_ISSUES = [
+  {
+    message: 'this color looks ugly',
+    path: 'basis.color.accent-1.bg-active',
+  },
+];
+
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
-  name = 'wizard';
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  name = 'wizard';
+  issues: ValidationIssue[] = MOCK_VALIDATION_ISSUES;
 
   constructor(tokens?: DesignTokens) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;

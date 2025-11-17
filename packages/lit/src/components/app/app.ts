@@ -119,20 +119,24 @@ export class App extends LitElement {
             <fieldset>
               <legend>Lettertypes</legend>
               <wizard-token-field
+                .token=${headingFontToken}
                 label="Koppen"
                 path=${HEADING_FONT_TOKEN_REF}
-                .token=${headingFontToken}
               ></wizard-token-field>
               <wizard-token-field
+                .token=${bodyFontToken}
                 label="Lopende tekst"
                 path=${BODY_FONT_TOKEN_REF}
-                .token=${bodyFontToken}
               ></wizard-token-field>
             </fieldset>
 
             <details>
               <summary>Alle tokens</summary>
-              <wizard-token-field path=${`basis`} .token=${this.#theme.tokens['basis']}></wizard-token-field>
+              <wizard-token-field
+                .errors=${this.#theme.issues}
+                .token=${this.#theme.tokens['basis']}
+                path=${`basis`}
+              ></wizard-token-field>
             </details>
           </form>
         </theme-wizard-sidebar>
