@@ -1,8 +1,8 @@
 import rosetta from 'rosetta';
 import * as z from 'zod';
-import messages, { type ErrorCode } from './messages'
+import messages, { type ErrorCode } from './messages';
 
-const i18n = rosetta(messages)
+const i18n = rosetta(messages);
 i18n.locale('nl');
 
 export default class ValidationIssue {
@@ -13,15 +13,14 @@ export default class ValidationIssue {
   variables: Record<string, string> = {};
   issue: z.core.$ZodIssue;
 
-  constructor(path: string, issue: z.core.$ZodIssue, , code: ErrorCode, variables: Record<string, string> = {}) {
+  constructor(path: string, issue: z.core.$ZodIssue, code: ErrorCode, variables: Record<string, string> = {}) {
     this.path = path;
     this.code = code;
     this.variables = variables;
     this.issue = issue;
-  }
 
-  toString() {
-    return ValidationIssue.i18n.t(this.code, this.variables);
+    console.log(this.issue);
+    console.log(this.variables);
   }
 
   /* filtering & querying can be done in this class

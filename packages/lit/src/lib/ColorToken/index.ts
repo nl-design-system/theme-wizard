@@ -75,6 +75,9 @@ export default class ColorToken {
    * @returns hex string, ie. #FF9900;
    */
   toHex(): string {
+    if (!this.$value || !Array.isArray(this.$value.components) || this.$value.components.length !== 3) {
+      return '#000000';
+    }
     return stringifyColor(this.$value);
   }
 
@@ -88,6 +91,10 @@ export default class ColorToken {
     /**
      * @SEE https://www.designtokens.org/tr/third-editors-draft/color/#supported-color-spaces
      */
+    if (!Array.isArray(components) || components.length !== 3) {
+      return '#000000';
+    }
+
     const percentage = (c: ColorComponent) => (c === 'none' ? c : `${c}%`);
 
     const [first, ...rest] = components;

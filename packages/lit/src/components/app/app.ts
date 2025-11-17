@@ -2,16 +2,18 @@ import '../sidebar/sidebar';
 import '../preview';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
+import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
+import ValidationIssue from '../../lib/ValidationIssue';
 import '../preview-picker';
-import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import { PREVIEW_PICKER_NAME } from '../preview-picker/index';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
 import appStyles from './app.css';
@@ -110,6 +112,52 @@ export class App extends LitElement {
     this.selectedTemplatePath = e.detail as string;
   };
 
+  /**
+   * Get issues grouped by ERROR_CODE
+   */
+  readonly #getIssuesByErrorCode = (errorCode: string): ValidationIssue[] => {
+    return this.#theme.issues.filter((issue) => {
+      const issueErrorCode = (issue.issue as { ERROR_CODE?: string }).ERROR_CODE;
+      return issueErrorCode === errorCode;
+    });
+  };
+
+  /**
+   * Parse message and convert paths in curly braces to links
+   * Splits message into segments and marks paths as links
+   */
+  readonly #formatMessageWithLinks = (message: string, issuePath: string) => {
+    // Split on { and }, keeping the delimiters
+    const segments = message.split(/([{}])/);
+    const templates: Array<string | ReturnType<typeof html>> = [];
+    let inPath = false;
+    let pathContent = '';
+
+    for (const segment of segments) {
+      if (segment === '{') {
+        inPath = true;
+        pathContent = '';
+      } else if (segment === '}' && inPath) {
+        // We have a complete path, decide if it should be a link
+        const fullPath = `{${pathContent}}`;
+        if (pathContent === issuePath) {
+          templates.push(html`<a href="#${pathContent}" data-path="${pathContent}">${fullPath}</a>`);
+        } else {
+          templates.push(fullPath);
+        }
+        inPath = false;
+      } else if (inPath) {
+        // Collecting path content
+        pathContent += segment;
+      } else if (segment) {
+        // Regular text (only add if not empty)
+        templates.push(segment);
+      }
+    }
+
+    return html`${templates}`;
+  };
+
   override render() {
     const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
@@ -145,7 +193,23 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker .templates=${this.templates}></preview-picker>
-
+          <utrecht-alert type="error"
+            ><utrecht-heading-2>Thema validatie fouten</utrecht-heading-2>
+            ${Object.values(ERROR_CODES).map((errorCode) => {
+              const issues = this.#getIssuesByErrorCode(errorCode);
+              if (issues.length === 0) return nothing;
+              return html`
+                <details>
+                  <summary>${errorCode}</summary>
+                  <ul>
+                    ${issues.map(
+                      (issue) => html`<li>${this.#formatMessageWithLinks(issue.issue.message, issue.path)}</li>`,
+                    )}
+                  </ul>
+                </details>
+              `;
+            })}
+          </utrecht-alert>
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${this.selectedTemplatePath}

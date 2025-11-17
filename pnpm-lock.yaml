@@ -197,6 +197,9 @@ importers:
       '@nl-design-system-unstable/start-design-tokens':
         specifier: 1.2.0
         version: 1.2.0
+      '@utrecht/form-field-error-message-css':
+        specifier: 2.0.1
+        version: 2.0.1
       '@utrecht/link-list-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -2226,6 +2229,9 @@ packages:
 
   '@utrecht/focus-ring-css@2.3.1':
     resolution: {integrity: sha512-mmZeNnp2VeYVrnG0uhgkLcX2nVuMW0+oZjJ7lCI1FFODpj3ORmtTi7N5UNjhM3Pyppg5LdDwqMM6jF9clPg5Yg==}
+
+  '@utrecht/form-field-error-message-css@2.0.1':
+    resolution: {integrity: sha512-4Oe5aIgMNkKXHcCZ86z+/ClSbaDxZ4atxdqgFPU1mi1L7P07QK2yatUGvjOlV1h4dwXMyl2zcNkxCn62wPhJvw==}
 
   '@utrecht/link-list-css@3.0.1':
     resolution: {integrity: sha512-/+pNmHFGadl/zVy0I3G6TVNWB3EuqRLvjsoBL7ue9+wJeye4LqDcweYgdFKm7wFcN4Tci479j21fZ63IK4KlXA==}
@@ -8503,6 +8509,8 @@ snapshots:
   '@ungap/structured-clone@1.3.0': {}
 
   '@utrecht/focus-ring-css@2.3.1': {}
+
+  '@utrecht/form-field-error-message-css@2.0.1': {}
 
   '@utrecht/link-list-css@3.0.1': {}
 
