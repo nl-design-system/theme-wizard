@@ -555,8 +555,9 @@ describe('theme', () => {
       expect.soft(result.error!.issues).toEqual([
         {
           code: 'too_small',
+          COMPARED_WITH: '{basis.color.default.bg-subtle}',
           ERROR_CODE: 'insufficient_contrast',
-          message: `Not enough contrast between '{basis.color.default.color-document}' (#cccccc) and '{basis.color.default.bg-subtle}' -> '{ma.color.white}' (#ffffff). Calculated contrast: 1.61, need 4.5`,
+          message: `Not enough contrast between "{basis.color.default.color-document}" (#cccccc) and "{basis.color.default.bg-subtle}" -> "{ma.color.white}" (#ffffff). Calculated contrast: 1.61, need 4.5`,
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.color-document.$value'.split('.'),
@@ -593,8 +594,9 @@ describe('theme', () => {
       expect(result.error!.issues).toEqual([
         {
           code: 'too_small',
+          COMPARED_WITH: '{basis.color.default.bg-subtle}',
           ERROR_CODE: 'insufficient_contrast',
-          message: `Not enough contrast between '{basis.color.default.color-document}' (#cccccc) and '{basis.color.default.bg-subtle}' (#ffffff). Calculated contrast: 1.61, need 4.5`,
+          message: `Not enough contrast between "{basis.color.default.color-document}" (#cccccc) and "{basis.color.default.bg-subtle}" (#ffffff). Calculated contrast: 1.61, need 4.5`,
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.color-document.$value'.split('.'),

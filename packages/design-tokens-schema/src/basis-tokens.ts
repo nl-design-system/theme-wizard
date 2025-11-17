@@ -261,6 +261,7 @@ export type ThemeValidationIssue = {
   path: PropertyKey[];
   message: string;
   ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
+  COMPARED_WITH?: string;
   [key: string]: unknown;
 };
 
@@ -319,14 +320,15 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
         const contrast = compareContrast(baseColor, compareColor);
         const resolvedFrom = background.$extensions?.[EXTENSION_RESOLVED_FROM];
         const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_AS]
-          ? `'${resolvedFrom}' -> '${background.$value}'`
-          : `'${resolvedFrom}'`;
+          ? `"${resolvedFrom}" -> "${background.$value}"`
+          : `"${resolvedFrom}"`;
         if (contrast < expectedRatio) {
           ctx.addIssue({
             code: 'too_small',
+            COMPARED_WITH: resolvedFrom,
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             input: contrast,
-            message: `Not enough contrast between '{${path.join('.')}}' (${stringifyColor(baseColor)}) and ${colorRefName} (${stringifyColor(compareColor)}). Calculated contrast: ${contrast.toFixed(2)}, need ${expectedRatio}`,
+            message: `Not enough contrast between "{${path.join('.')}}" (${stringifyColor(baseColor)}) and ${colorRefName} (${stringifyColor(compareColor)}). Calculated contrast: ${contrast.toFixed(2)}, need ${expectedRatio}`,
             minimum: expectedRatio,
             origin: 'number',
             path: [...path, '$value'],
