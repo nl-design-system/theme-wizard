@@ -148,14 +148,13 @@ export class App extends LitElement {
             ${this.#theme.errorCount > 0
               ? html` <p>${this.#theme.errorCount} fouten in het thema gevonden</p>
                   <ul>
-                    ${this.#theme.pathsContainingIssues.map(
-                      (path) => html`
+                    <!-- <pre>${JSON.stringify(this.#theme.pathsWithIssues, undefined, 2)}</pre> -->
+                    ${this.#theme.pathsWithIssues.map(
+                      ({ issue, path }) => html`
                         <li>
                           <strong>${path}:</strong>
                           <ul>
-                            ${this.#theme
-                              .getIssuesForPath(path)
-                              .map((errorNode) => html` <li>${errorNode.issue.message}</li>`)}
+                            <li>${issue.message}</li>
                           </ul>
                         </li>
                       `,
