@@ -1,5 +1,3 @@
-import '../sidebar/sidebar';
-import '../preview';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
@@ -8,9 +6,12 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
+import PersistentStorage from '../../lib/PersistentStorage';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import '../sidebar/sidebar';
+import '../preview';
 import '../preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
@@ -23,6 +24,7 @@ const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
+  #storage = new PersistentStorage({ prefix: 'theme-wizard' });
   #theme = new Theme();
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
@@ -57,6 +59,11 @@ export class App extends LitElement {
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
 
+    const previousTokens = this.#storage.getJSON();
+    if (previousTokens) {
+      this.#theme.tokens = previousTokens;
+    }
+
     // Parse template selection from query param: ?templates=/group/page (dynamic)
     try {
       const templatePath = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
@@ -76,6 +83,7 @@ export class App extends LitElement {
     if (target instanceof WizardTokenInput) {
       const value = target.value;
       this.#theme.updateAt(target.name, value);
+      this.#storage.setJSON(this.#theme.tokens);
     }
   };
 
