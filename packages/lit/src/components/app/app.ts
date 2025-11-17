@@ -122,42 +122,6 @@ export class App extends LitElement {
     });
   };
 
-  /**
-   * Parse message and convert paths in curly braces to links
-   * Splits message into segments and marks paths as links
-   */
-  readonly #formatMessageWithLinks = (message: string, issuePath: string) => {
-    // Split on { and }, keeping the delimiters
-    const segments = message.split(/([{}])/);
-    const templates: Array<string | ReturnType<typeof html>> = [];
-    let inPath = false;
-    let pathContent = '';
-
-    for (const segment of segments) {
-      if (segment === '{') {
-        inPath = true;
-        pathContent = '';
-      } else if (segment === '}' && inPath) {
-        // We have a complete path, decide if it should be a link
-        const fullPath = `{${pathContent}}`;
-        if (pathContent === issuePath) {
-          templates.push(html`<a href="#${pathContent}" data-path="${pathContent}">${fullPath}</a>`);
-        } else {
-          templates.push(fullPath);
-        }
-        inPath = false;
-      } else if (inPath) {
-        // Collecting path content
-        pathContent += segment;
-      } else if (segment) {
-        // Regular text (only add if not empty)
-        templates.push(segment);
-      }
-    }
-
-    return html`${templates}`;
-  };
-
   override render() {
     const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
@@ -202,9 +166,7 @@ export class App extends LitElement {
                 <details>
                   <summary>${errorCode}</summary>
                   <ul>
-                    ${issues.map(
-                      (issue) => html`<li>${this.#formatMessageWithLinks(issue.issue.message, issue.path)}</li>`,
-                    )}
+                    ${issues.map((issue) => html`<li>${issue.issue.message}</li>`)}
                   </ul>
                 </details>
               `;
