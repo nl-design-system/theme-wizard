@@ -1,16 +1,16 @@
 import dlv from 'dlv';
 import * as z from 'zod';
-import { BaseDesignTokenIdentifierSchema } from './base-token';
+import { BaseDesignTokenIdentifierSchema } from './dtcg/base-token';
 import {
   ColorTokenValidationSchema,
   ColorValue,
   compareContrast,
   stringifyColor,
   type ColorToken,
-} from './color-token';
+} from './dtcg/color-token';
+import { type TokenReference } from './dtcg/token-ref';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
-import { TokenReference } from './token-reference';
 import { walkColors } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 

@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest';
-import { TokenReferenceSchema } from './token-reference';
+import { TokenReferenceSchema } from './dtcg/token-ref';
 
 test('allows valid ref with a single path', () => {
   const result = TokenReferenceSchema.safeParse('{ma}');

@@ -16,7 +16,7 @@ import {
   ERROR_CODES,
   ThemeValidationIssue,
 } from './basis-tokens';
-import { ColorToken, parseColor } from './color-token';
+import { ColorToken, parseColor } from './dtcg/color-token';
 
 describe('brand', () => {
   test('no brands present', () => {

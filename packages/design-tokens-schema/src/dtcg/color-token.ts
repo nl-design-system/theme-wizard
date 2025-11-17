@@ -1,7 +1,7 @@
 import Color, { type Coords } from 'colorjs.io';
 import * as z from 'zod';
 import { BaseDesignTokenValueSchema } from './base-token';
-import { TokenReferenceSchema } from './token-reference';
+import { TokenReferenceSchema } from './token-ref';
 
 // 8.1 Color -> 4.1 Color Module: Format
 
@@ -22,9 +22,9 @@ export const COLOR_SPACES = {
   XYZ_D65: 'xyz-d65',
 } as const;
 
-export const ColorSpaceSchema = z.union(Object.values(COLOR_SPACES).map((space) => z.literal(space)));
+const ColorSpaceSchema = z.union(Object.values(COLOR_SPACES).map((space) => z.literal(space)));
 
-export const NoneKeywordSchema = z.literal('none');
+const NoneKeywordSchema = z.literal('none');
 
 /** @see https://www.designtokens.org/tr/drafts/color/#the-none-keyword */
 export type NoneKeyword = z.infer<typeof NoneKeywordSchema>;

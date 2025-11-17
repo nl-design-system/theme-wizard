@@ -1,4 +1,4 @@
-import { ColorToken } from './color-token';
+import { ColorToken } from './dtcg/color-token';
 import { isTokenWithRef, type TokenWithRef } from './token-reference';
 
 /**

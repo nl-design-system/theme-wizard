@@ -1,5 +1,5 @@
 import dlv from 'dlv';
-import { BaseDesignToken, type BaseDesignTokenValue } from './base-token';
+import { BaseDesignToken, type BaseDesignTokenValue } from './dtcg/base-token';
 import { TokenReference, type TokenWithRefLike, isTokenWithRef } from './token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 

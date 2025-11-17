@@ -1,6 +1,6 @@
 import * as z from 'zod';
 import { BaseDesignTokenValueSchema } from './base-token';
-import { TokenReferenceSchema } from './token-reference';
+import { TokenReferenceSchema } from './token-ref';
 
 // 8.2 Dimension
 
