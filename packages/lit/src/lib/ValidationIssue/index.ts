@@ -7,16 +7,12 @@ export default class ValidationIssue {
   variables: Record<string, string> = {};
   issue: z.core.$ZodIssue;
 
-  constructor(path: string, issue: z.core.$ZodIssue, code: ErrorCode, variables: Record<string, string> = {}) {
-    this.path = path;
-    this.code = code;
-    this.variables = variables;
+  constructor(issue: z.core.$ZodIssue, code?: ErrorCode) {
     this.issue = issue;
+    this.path = issue.path
+      .filter((p) => p !== '$value')
+      .map(String)
+      .join('.');
+    this.code = code || (issue.code as ErrorCode);
   }
-
-  /* filtering & querying can be done in this class
-  for example:
-  - filterByPath(issues, path)
-  - getUniquePaths(issues)
-  */
 }

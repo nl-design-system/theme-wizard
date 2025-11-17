@@ -9,7 +9,6 @@ import dlv from 'dlv';
 import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
-import * as z from 'zod';
 import ValidationIssue from '../ValidationIssue';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
@@ -68,13 +67,6 @@ export default class Theme {
     return this.#validationIssues;
   }
 
-  #extractPath(issue: z.core.$ZodIssue): string {
-    return issue.path
-      .filter((p) => p !== '$value')
-      .map(String)
-      .join('.');
-  }
-
   #validateTheme(theme: DesignTokens): ValidationIssue[] {
     const result = StrictThemeSchema.safeParse(theme as ThemeType);
 
@@ -83,11 +75,7 @@ export default class Theme {
       return [];
     }
 
-    const issues = (result.error.issues || []).map((issue) => {
-      const path = this.#extractPath(issue);
-      const validationIssue = new ValidationIssue(path, issue);
-      return validationIssue;
-    });
+    const issues = (result.error.issues || []).map((issue) => new ValidationIssue(issue));
     this.#validationIssues = issues;
     return issues;
   }
