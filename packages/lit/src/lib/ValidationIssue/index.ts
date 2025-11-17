@@ -1,13 +1,7 @@
-import rosetta from 'rosetta';
 import * as z from 'zod';
-import messages, { type ErrorCode } from './messages';
-
-const i18n = rosetta(messages);
-i18n.locale('nl');
 
 export default class ValidationIssue {
   // TODO: move to application level if necessary
-  static i18n = i18n;
   path: string;
   code: ErrorCode;
   variables: Record<string, string> = {};
