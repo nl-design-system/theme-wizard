@@ -145,22 +145,22 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <div style="background-color: red">
-            <p>${this.#theme.errorCount} fouten in het thema gevonden</p>
             ${this.#theme.errorCount > 0
-              ? html`<ul>
-                  ${this.#theme.pathsContainingIssues.map(
-                    (path) => html`
-                      <li>
-                        <strong>${path}:</strong>
-                        <ul>
-                          ${this.#theme
-                            .getIssuesForPath(path)
-                            .map((errorNode) => html` <li>${errorNode.issue.message}</li>`)}
-                        </ul>
-                      </li>
-                    `,
-                  )}
-                </ul>`
+              ? html` <p>${this.#theme.errorCount} fouten in het thema gevonden</p>
+                  <ul>
+                    ${this.#theme.pathsContainingIssues.map(
+                      (path) => html`
+                        <li>
+                          <strong>${path}:</strong>
+                          <ul>
+                            ${this.#theme
+                              .getIssuesForPath(path)
+                              .map((errorNode) => html` <li>${errorNode.issue.message}</li>`)}
+                          </ul>
+                        </li>
+                      `,
+                    )}
+                  </ul>`
               : nothing}
           </div>
           <preview-picker .templates=${this.templates}></preview-picker>
