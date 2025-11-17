@@ -14,25 +14,13 @@ import ValidationIssue from '../ValidationIssue';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
-export type ValidationIssue = {
-  message: string;
-  path: string;
-};
-
-const MOCK_VALIDATION_ISSUES = [
-  {
-    message: 'this color looks ugly',
-    path: 'basis.color.accent-1.bg-active',
-  },
-];
-
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
   name = 'wizard';
-  #validationIssues: ValidationIssue[] = MOCK_VALIDATION_ISSUES;
+  #validationIssues: ValidationIssue[] = [];
 
   constructor(tokens?: DesignTokens) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
@@ -76,7 +64,7 @@ export default class Theme {
     return this.#validationIssues.length;
   }
 
-  get pathsWithIssues(): ValidationIssue[] {
+  get issues(): ValidationIssue[] {
     return this.#validationIssues;
   }
 

@@ -60,7 +60,7 @@ export class WizardColorInput extends WizardTokenInput {
     return html` <label for=${this.id}>${this.label}</label>
       ${this.errors.length
         ? html`<ul class="error">
-            ${this.errors.map(({ message }) => html`<li>${message}</li>`)}
+            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
           </ul>`
         : nothing}
       <input
