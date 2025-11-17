@@ -153,7 +153,9 @@ export class App extends LitElement {
                       <li>
                         <strong>${path}:</strong>
                         <ul>
-                          ${this.#theme.getIssuesForPath(path).map((issue) => html` <li>${issue.message}</li>`)}
+                          ${this.#theme
+                            .getIssuesForPath(path)
+                            .map((errorNode) => html` <li>${errorNode.issue.message}</li>`)}
                         </ul>
                       </li>
                     `,
