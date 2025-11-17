@@ -2,7 +2,7 @@ import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-c
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
-import { ValidationIssue } from '../../lib/Theme';
+import type ValidationIssue from '../../lib/ValidationIssue';
 import styles from './styles';
 
 // TODO: use uniform token type that both conforms to the types of
@@ -74,7 +74,7 @@ export class WizardTokenInput extends LitElement {
     return html` <label for=${this.id}>${this.label}</label>
       ${this.errors.length
         ? html`<ul class="error">
-            ${this.errors.map(({ message }) => html`<li>${message}</li>`)}
+            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
           </ul>`
         : nothing}
       <textarea
