@@ -90,7 +90,7 @@ const CONTRAST: ContrastRequirement = {
     'bg-hover': 4.5,
   },
 } as const;
-const SKIP_CONTRAST_EXTENSION = new Set(['disabled', 'disabled-inverse']);
+// const SKIP_CONTRAST_EXTENSION = new Set(['disabled', 'disabled-inverse']);
 
 export const BasisColorSchema = z.strictObject({
   'accent-1': ColorNameSchema.optional(),
