@@ -12,9 +12,6 @@ export default class ValidationIssue {
     this.code = code;
     this.variables = variables;
     this.issue = issue;
-
-    console.log(this.issue);
-    console.log(this.variables);
   }
 
   /* filtering & querying can be done in this class
