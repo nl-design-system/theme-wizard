@@ -1,6 +1,6 @@
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { ValidationIssue } from '../../lib/Theme';
+import type ValidationIssue from '../../lib/ValidationIssue';
 import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';

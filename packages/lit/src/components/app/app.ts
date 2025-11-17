@@ -4,7 +4,7 @@ import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-tem
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
@@ -144,24 +144,6 @@ export class App extends LitElement {
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <div style="background-color: red">
-            ${this.#theme.errorCount > 0
-              ? html` <p>${this.#theme.errorCount} fouten in het thema gevonden</p>
-                  <ul>
-                    <!-- <pre>${JSON.stringify(this.#theme.pathsWithIssues, undefined, 2)}</pre> -->
-                    ${this.#theme.pathsWithIssues.map(
-                      ({ issue, path }) => html`
-                        <li>
-                          <strong>${path}:</strong>
-                          <ul>
-                            <li>${issue.message}</li>
-                          </ul>
-                        </li>
-                      `,
-                    )}
-                  </ul>`
-              : nothing}
-          </div>
           <preview-picker .templates=${this.templates}></preview-picker>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
