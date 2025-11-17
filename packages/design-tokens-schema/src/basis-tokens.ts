@@ -188,17 +188,7 @@ export const BasisTokensSchema = z.looseObject({
 });
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
-export const CommonSchema = z.looseObject({
-  basis: BasisTokensSchema.optional(),
-});
-export type Common = z.infer<typeof CommonSchema>;
-
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  // Resolve refs in common.basis (if it exists)
-  if (rootConfig.common) {
-    resolveRefs(rootConfig.common, rootConfig);
-  }
-  // Also resolve refs at root level (basis can be at root or in common)
   if (rootConfig.basis) {
     resolveRefs(rootConfig.basis, rootConfig);
   }
@@ -228,11 +218,11 @@ export const addContrastExtensions = (rootConfig: Theme) => {
     // Loop over the expected ratios:
     for (const [backgroundName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
       // Build the path to the background color relative to where we found the foreground
-      // path.slice(1, -1) removes the first element (basis or common) and last element (the color name)
+      // path.slice(1, -1) removes the first element (basis) and last element (the color name)
       const refPath = `${path.slice(1, -1).join('.')}.${backgroundName}`;
 
-      // Look for background in the same location as foreground (basis at root or in common)
-      const lookupPath = path[0] === 'basis' ? `basis.${refPath}` : `common.${refPath}`;
+      // Look for background in the same location as foreground (basis at root)
+      const lookupPath = path[0] === 'basis' ? `basis.${refPath}` : refPath;
       const background = dlv(rootConfig, lookupPath);
       if (!background) continue;
 
@@ -285,14 +275,12 @@ export type ThemeValidationIssue = {
  * ```
  */
 export const ThemeSchema = z.looseObject({
-  // Sometimes basis is at the root, sometimes inside common
   basis: BasisTokensSchema.optional(),
   // $metadata: z.strictObject({
   //   tokensSetOrder: z.array(z.string()),
   // }),
   // $themes: [],
   brand: BrandsSchema.optional(),
-  common: CommonSchema.optional(),
   // 'components/*': {},
 });
 
@@ -331,14 +319,14 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
         const contrast = compareContrast(baseColor, compareColor);
         const resolvedFrom = background.$extensions?.[EXTENSION_RESOLVED_FROM];
         const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_AS]
-          ? `${resolvedFrom} -> ${background.$value}`
-          : resolvedFrom;
+          ? `'${resolvedFrom}' -> '${background.$value}'`
+          : `'${resolvedFrom}'`;
         if (contrast < expectedRatio) {
           ctx.addIssue({
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             input: contrast,
-            message: `Not enough contrast between \`{${path.join('.')}}\` (${stringifyColor(baseColor)}) and \`${colorRefName}\` (${stringifyColor(compareColor)}). Calculated contrast: ${contrast}, need ${expectedRatio}`,
+            message: `Not enough contrast between '{${path.join('.')}}' (${stringifyColor(baseColor)}) and ${colorRefName} (${stringifyColor(compareColor)}). Calculated contrast: ${contrast.toFixed(2)}, need ${expectedRatio}`,
             minimum: expectedRatio,
             origin: 'number',
             path: [...path, '$value'],
