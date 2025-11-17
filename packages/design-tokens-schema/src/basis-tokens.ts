@@ -189,9 +189,7 @@ export const BasisTokensSchema = z.looseObject({
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  if (rootConfig.basis) {
-    resolveRefs(rootConfig.basis, rootConfig);
-  }
+  resolveRefs(rootConfig.basis, rootConfig);
   return rootConfig;
 };
 
@@ -222,7 +220,7 @@ export const addContrastExtensions = (rootConfig: Theme) => {
       const refPath = `${path.slice(1, -1).join('.')}.${backgroundName}`;
 
       // Look for background in the same location as foreground (basis at root)
-      const lookupPath = path[0] === 'basis' ? `basis.${refPath}` : refPath;
+      const lookupPath = `basis.${refPath}`;
       const background = dlv(rootConfig, lookupPath);
       if (!background) continue;
 
@@ -325,13 +323,21 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
         if (contrast < expectedRatio) {
           ctx.addIssue({
             code: 'too_small',
-            COMPARED_WITH: resolvedFrom,
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             input: contrast,
             message: `Not enough contrast between "{${path.join('.')}}" (${stringifyColor(baseColor)}) and ${colorRefName} (${stringifyColor(compareColor)}). Calculated contrast: ${contrast.toFixed(2)}, need ${expectedRatio}`,
             minimum: expectedRatio,
             origin: 'number',
             path: [...path, '$value'],
+          });
+          ctx.addIssue({
+            code: 'too_small',
+            ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
+            input: contrast,
+            message: `Not enough contrast between "${resolvedFrom}" (${stringifyColor(compareColor)}) and "{${path.join('.')}}" (${stringifyColor(baseColor)}). Calculated contrast: ${contrast.toFixed(2)}, need ${expectedRatio}`,
+            minimum: expectedRatio,
+            origin: 'number',
+            path: [...resolvedFrom.slice(1, -1).split('.'), '$value'],
           });
         }
       }
