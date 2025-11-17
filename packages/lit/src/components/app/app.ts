@@ -110,10 +110,15 @@ export class App extends LitElement {
     }
   };
 
-  readonly #handleTemplateChange = (e: Event) => {
-    if (!(e instanceof CustomEvent)) return;
+  readonly #handleTemplateChange = (event: Event) => {
+    if (!(event instanceof CustomEvent)) return;
 
-    this.selectedTemplatePath = e.detail as string;
+    this.selectedTemplatePath = event.detail as string;
+  };
+
+  readonly #handleReset = () => {
+    this.#theme.reset();
+    this.#storage.removeJSON();
   };
 
   override render() {
@@ -123,7 +128,7 @@ export class App extends LitElement {
     return html`
       <div class="theme-app ma-theme">
         <theme-wizard-sidebar .sourceUrl="" .scrapedTokens=${this.scrapedTokens} @change=${this.#handleSourceUrlChange}>
-          <form @change=${this.#handleTokenChange}>
+          <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
             <fieldset>
               <legend>Lettertypes</legend>
               <wizard-token-field
@@ -142,6 +147,8 @@ export class App extends LitElement {
               <summary>Alle tokens</summary>
               <wizard-token-field path=${`basis`} .token=${this.#theme.tokens['basis']}></wizard-token-field>
             </details>
+
+            <utrecht-button appearance="secondary-action-button" type="reset"> Reset Tokens </utrecht-button>
           </form>
         </theme-wizard-sidebar>
 
