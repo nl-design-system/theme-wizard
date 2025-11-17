@@ -10,7 +10,6 @@ import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import * as z from 'zod';
-import ValidationError from '../ValidationError';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
@@ -38,14 +37,6 @@ export default class Theme {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
     this.tokens = structuredClone(this.#defaults);
-
-    console.log('Theme initialized:', {
-      errors: Array.from(this.#errors.entries()).map(([path, error]) => ({
-        issues: error.issues,
-        path,
-      })),
-      tokens: this.tokens,
-    });
   }
 
   get defaults() {
@@ -81,32 +72,43 @@ export default class Theme {
   }
 
   get errorCount(): number {
-    return this.#errors.size;
+    return this.#issues.length;
   }
 
-  #validateTheme(theme: DesignTokens): Map<string, ValidationError> {
-    const result = StrictThemeSchema.safeParse(theme as ThemeType);
+  get issues(): readonly z.core.$ZodIssue[] {
+    return this.#issues;
+  }
 
-    if (!result.success) {
-      // Group issues by path and create ValidationError instances
-      const issuesByPath = new Map<string, z.core.$ZodIssue[]>();
-
-      for (const issue of result.error.issues) {
-        const path = issue.path.filter((p) => p !== '$value').join('.');
-        const issues = issuesByPath.get(path) ?? [];
-        issues.push(issue);
-        issuesByPath.set(path, issues);
-      }
-
-      // Create ValidationError for each path
-      for (const [path, issues] of issuesByPath) {
-        const error = new ValidationError(path, new z.ZodError(issues));
-        console.log(error);
-        this.#errors.set(path, error);
+  get pathsContainingIssues(): string[] {
+    const paths: string[] = [];
+    for (const issue of this.#issues) {
+      const path = this.#extractPath(issue);
+      if (path) {
+        paths.push(path);
       }
     }
+    return paths;
+  }
 
-    return new Map(this.#errors);
+  getIssuesForPath(path: string): z.core.$ZodIssue[] {
+    return this.#issues.filter((issue) => this.#extractPath(issue) === path);
+  }
+
+  #extractPath(issue: z.core.$ZodIssue): string {
+    return issue.path
+      .filter((p) => p !== '$value')
+      .map(String)
+      .join('.');
+  }
+
+  #validateTheme(theme: DesignTokens): void {
+    const result = StrictThemeSchema.safeParse(theme as ThemeType);
+
+    if (result.success) {
+      this.#issues = [];
+    } else {
+      this.#issues = result.error.issues;
+    }
   }
 
   reset() {
