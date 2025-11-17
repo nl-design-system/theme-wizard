@@ -1,8 +1,10 @@
 import { ColorSpace, parseColor } from '@nl-design-system-community/design-tokens-schema';
-import { html, nothing } from 'lit';
+import formFieldError from '@utrecht/form-field-error-message-css?inline';
+import { html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
+import styles from './styles';
 
 const tag = 'wizard-color-input';
 
@@ -39,7 +41,7 @@ export class WizardColorInput extends WizardTokenInput {
   }
 
   get colorSpace(): ColorSpace {
-    return this.#token.$value.colorSpace;
+    return this.#token.$value?.colorSpace || 'srgb';
   }
 
   override set value(value: ColorToken['$value']) {
@@ -49,6 +51,8 @@ export class WizardColorInput extends WizardTokenInput {
     this.requestUpdate('value', oldValue);
   }
 
+  static override styles = [styles, unsafeCSS(formFieldError)];
+
   readonly #handleChange = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
       this.value = parseColor(event.target.value);
@@ -57,18 +61,28 @@ export class WizardColorInput extends WizardTokenInput {
   };
 
   override render() {
+    const colorValue = this.#token.$value;
+    const hasValidColor = colorValue && Array.isArray(colorValue.components) && colorValue.components.length === 3;
+    const colorString = hasValidColor
+      ? WizardColorInput.supportsCSSColorValues
+        ? this.#token.toCSSColorFunction()
+        : this.#token.toHex()
+      : '#000000';
+
     return html` <label for=${this.id}>${this.label}</label>
-      ${this.errors.length
-        ? html`<ul class="error">
-            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
-          </ul>`
-        : nothing}
+
       <input
         type="color"
         id=${this.id}
-        value=${WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex()}
+        value=${colorString}
         colorSpace=${this.colorSpace}
         @change=${this.#handleChange}
-      />`;
+      />
+      ${this.errors.length &&
+      html`<div class="error">
+        ${this.errors.map(
+          ({ issue }) => html`<div class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
+        )}
+      </div>`}`;
   }
 }

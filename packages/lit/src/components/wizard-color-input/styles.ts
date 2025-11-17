@@ -2,7 +2,7 @@ import { css } from 'lit';
 
 export default css`
   .error {
-    color: #850000;
-    background: #ffe5e5;
+    padding-inline: 0.5rem;
+    background: #ffe0e0;
   }
 `;
