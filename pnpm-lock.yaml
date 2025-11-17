@@ -371,6 +371,9 @@ importers:
         specifier: 5.15.4
         version: 5.15.4(@types/node@22.19.0)(@vercel/blob@1.0.2)(rollup@4.53.1)(tsx@4.19.2)(typescript@5.9.3)(yaml@2.8.1)
     devDependencies:
+      '@nl-design-system-community/design-tokens-schema':
+        specifier: workspace:*
+        version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
         specifier: 3.0.0
         version: 3.0.0

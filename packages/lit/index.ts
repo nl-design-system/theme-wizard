@@ -1,6 +1,6 @@
 import './src/components/app/app';
 import './src/components/sidebar/sidebar';
-import './src/components/preview/preview';
+import './src/components/preview';
 import './src/components/template-heading';
 import './src/components/template-code';
 import './src/components/template-paragraph';
@@ -11,3 +11,4 @@ import './src/components/template-case-card';
 import './src/components/template-link';
 import './src/components/template-link-list';
 import './src/components/template-page-header';
+import './src/components/template-color-swatch';
