@@ -1,5 +1,5 @@
 import { ColorSpace, parseColor } from '@nl-design-system-community/design-tokens-schema';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -58,6 +58,11 @@ export class WizardColorInput extends WizardTokenInput {
 
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
+      ${this.errors.length
+        ? html`<ul class="error">
+            ${this.errors.map(({ message }) => html`<li>${message}</li>`)}
+          </ul>`
+        : nothing}
       <input
         type="color"
         id=${this.id}

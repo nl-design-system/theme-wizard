@@ -2,6 +2,7 @@ import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { WizardTokenInput } from '../wizard-token-input';
+import { ValidationIssue } from '../../lib/Theme';
 
 export type FontOption = { label: string; value: ModernFontFamilyToken['$value'] };
 
@@ -70,6 +71,11 @@ export class WizardFontInput extends WizardTokenInput {
   override render() {
     return html`
       <label for=${this.id}>${this.label}</label>
+      ${this.errors.length
+        ? html`<ul>
+            ${this.errors.map(({ message }) => html`<li>${message}</li>`)}
+          </ul>`
+        : nothing}
       <select id=${this.id} name=${this.name} @change=${this.#handleChange}>
         ${this.options.length
           ? html`<optgroup label=${this.optionsLabel}>
