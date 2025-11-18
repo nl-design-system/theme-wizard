@@ -1,7 +1,9 @@
 import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
+import type ValidationIssue from '../../lib/ValidationIssue';
+import styles from './styles';
 
 // TODO: use uniform token type that both conforms to the types of
 // `@nl-design-system-community/design-tokens-schema` and `style-dictionary`
@@ -19,9 +21,12 @@ declare global {
 export class WizardTokenInput extends LitElement {
   @property() label = '';
   @property() name = '';
+  @property() errors: ValidationIssue[] = [];
   internals_ = this.attachInternals();
   #token: Token = {};
+
   static formAssociated = true;
+  static override readonly styles = [styles];
 
   static valueAsString(value: unknown) {
     switch (typeof value) {
@@ -67,6 +72,11 @@ export class WizardTokenInput extends LitElement {
 
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
+      ${this.errors.length
+        ? html`<ul class="theme-error">
+            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
+          </ul>`
+        : nothing}
       <textarea
         id=${this.id}
         name=${this.name}

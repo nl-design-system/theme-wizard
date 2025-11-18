@@ -15,6 +15,7 @@ import '../preview';
 import '../preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
+import '../validation-issues-alert';
 import appStyles from './app.css';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -83,6 +84,8 @@ export class App extends LitElement {
     if (target instanceof WizardTokenInput) {
       const value = target.value;
       this.#theme.updateAt(target.name, value);
+      // Request update to reflect any new validation issues
+      this.requestUpdate();
       this.#storage.setJSON(this.#theme.tokens);
     }
   };
@@ -132,20 +135,24 @@ export class App extends LitElement {
             <fieldset>
               <legend>Lettertypes</legend>
               <wizard-token-field
+                .token=${headingFontToken}
                 label="Koppen"
                 path=${HEADING_FONT_TOKEN_REF}
-                .token=${headingFontToken}
               ></wizard-token-field>
               <wizard-token-field
+                .token=${bodyFontToken}
                 label="Lopende tekst"
                 path=${BODY_FONT_TOKEN_REF}
-                .token=${bodyFontToken}
               ></wizard-token-field>
             </fieldset>
 
             <details>
               <summary>Alle tokens</summary>
-              <wizard-token-field path=${`basis`} .token=${this.#theme.tokens['basis']}></wizard-token-field>
+              <wizard-token-field
+                .errors=${this.#theme.issues}
+                .token=${this.#theme.tokens['basis']}
+                path=${`basis`}
+              ></wizard-token-field>
             </details>
 
             <utrecht-button appearance="secondary-action-button" type="reset"> Reset Tokens </utrecht-button>
@@ -154,6 +161,7 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker .templates=${this.templates}></preview-picker>
+          <validation-issues-alert .issues=${this.#theme.issues}></validation-issues-alert>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview

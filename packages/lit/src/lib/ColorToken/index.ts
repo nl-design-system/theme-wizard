@@ -88,6 +88,7 @@ export default class ColorToken {
     /**
      * @SEE https://www.designtokens.org/tr/third-editors-draft/color/#supported-color-spaces
      */
+
     const percentage = (c: ColorComponent) => (c === 'none' ? c : `${c}%`);
 
     const [first, ...rest] = components;

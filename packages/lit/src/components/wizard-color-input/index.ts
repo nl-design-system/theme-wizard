@@ -1,8 +1,10 @@
 import { ColorSpace, parseColor } from '@nl-design-system-community/design-tokens-schema';
-import { html } from 'lit';
+import formFieldError from '@utrecht/form-field-error-message-css?inline';
+import { html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
+import styles from './styles';
 
 const tag = 'wizard-color-input';
 
@@ -39,7 +41,7 @@ export class WizardColorInput extends WizardTokenInput {
   }
 
   get colorSpace(): ColorSpace {
-    return this.#token.$value.colorSpace;
+    return this.#token.$value?.colorSpace || 'srgb';
   }
 
   override set value(value: ColorToken['$value']) {
@@ -49,6 +51,8 @@ export class WizardColorInput extends WizardTokenInput {
     this.requestUpdate('value', oldValue);
   }
 
+  static override readonly styles = [styles, unsafeCSS(formFieldError)];
+
   readonly #handleChange = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
       this.value = parseColor(event.target.value);
@@ -57,13 +61,30 @@ export class WizardColorInput extends WizardTokenInput {
   };
 
   override render() {
-    return html` <label for=${this.id}>${this.label}</label>
+    const colorValue = this.#token.$value;
+    const hasValidColor = colorValue && Array.isArray(colorValue.components) && colorValue.components.length === 3;
+
+    let colorString = '#000000';
+    if (hasValidColor) {
+      colorString = WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex();
+    }
+
+    return html`
+      <label for=${this.id}>${this.label}</label>
+      ${this.errors.length
+        ? html`<div class="theme-error">
+            ${this.errors.map(
+              ({ issue }) => html`<div class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
+            )}
+          </div>`
+        : nothing}
       <input
         type="color"
         id=${this.id}
-        value=${WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex()}
+        value=${colorString}
         colorSpace=${this.colorSpace}
         @change=${this.#handleChange}
-      />`;
+      />
+    `;
   }
 }

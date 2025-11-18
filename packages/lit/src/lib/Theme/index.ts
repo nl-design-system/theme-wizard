@@ -1,18 +1,25 @@
-import { stringifyColor, ThemeSchema } from '@nl-design-system-community/design-tokens-schema';
+import {
+  stringifyColor,
+  ThemeSchema,
+  StrictThemeSchema,
+  type Theme as ThemeType,
+} from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import dlv from 'dlv';
 import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
+import ValidationIssue from '../ValidationIssue';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
-  name = 'wizard';
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  name = 'wizard';
+  #validationIssues: ValidationIssue[] = [];
 
   constructor(tokens?: DesignTokens) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
@@ -30,6 +37,8 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#tokens = values;
+    // Automatically validate when tokens are updated
+    this.#validateTheme(values);
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replace(css);
@@ -41,13 +50,34 @@ export default class Theme {
   }
 
   updateAt(path: string, value: DesignToken['$value']) {
-    const tokens = this.tokens;
+    const tokens = structuredClone(this.tokens);
     dset(tokens, `${path}.$value`, value);
     this.tokens = tokens;
   }
 
   at(path: string): DesignToken {
     return dlv(this.tokens, path);
+  }
+
+  get errorCount(): number {
+    return this.#validationIssues.length;
+  }
+
+  get issues(): ValidationIssue[] {
+    return this.#validationIssues;
+  }
+
+  #validateTheme(theme: DesignTokens): ValidationIssue[] {
+    const result = StrictThemeSchema.safeParse(theme as ThemeType);
+
+    if (result.success) {
+      this.#validationIssues = [];
+      return [];
+    }
+
+    const issues = (result.error.issues || []).map((issue) => new ValidationIssue(issue));
+    this.#validationIssues = issues;
+    return issues;
   }
 
   reset() {
