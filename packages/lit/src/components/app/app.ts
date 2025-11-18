@@ -1,5 +1,3 @@
-import '../sidebar/sidebar';
-import '../preview';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
@@ -8,8 +6,12 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
+import PersistentStorage from '../../lib/PersistentStorage';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
+import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import '../sidebar/sidebar';
+import '../preview';
 import '../preview-picker';
 import { PREVIEW_PICKER_NAME } from '../preview-picker/index';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -24,7 +26,8 @@ const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
-  readonly #theme = new Theme();
+  #storage = new PersistentStorage({ prefix: 'theme-wizard' });
+  #theme = new Theme();
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
@@ -58,6 +61,11 @@ export class App extends LitElement {
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
 
+    const previousTokens = this.#storage.getJSON();
+    if (previousTokens) {
+      this.#theme.tokens = previousTokens;
+    }
+
     // Parse template selection from query param: ?templates=/group/page (dynamic)
     try {
       const templatePath = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
@@ -79,6 +87,7 @@ export class App extends LitElement {
       this.#theme.updateAt(target.name, value);
       // Request update to reflect any new validation issues
       this.requestUpdate();
+      this.#storage.setJSON(this.#theme.tokens);
     }
   };
 
@@ -105,10 +114,15 @@ export class App extends LitElement {
     }
   };
 
-  readonly #handleTemplateChange = (e: Event) => {
-    if (!(e instanceof CustomEvent)) return;
+  readonly #handleTemplateChange = (event: Event) => {
+    if (!(event instanceof CustomEvent)) return;
 
-    this.selectedTemplatePath = e.detail as string;
+    this.selectedTemplatePath = event.detail as string;
+  };
+
+  readonly #handleReset = () => {
+    this.#theme.reset();
+    this.#storage.removeJSON();
   };
 
   override render() {
@@ -118,7 +132,7 @@ export class App extends LitElement {
     return html`
       <div class="theme-app ma-theme">
         <theme-wizard-sidebar .sourceUrl="" .scrapedTokens=${this.scrapedTokens} @change=${this.#handleSourceUrlChange}>
-          <form @change=${this.#handleTokenChange}>
+          <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
             <fieldset>
               <legend>Lettertypes</legend>
               <wizard-token-field
@@ -141,6 +155,8 @@ export class App extends LitElement {
                 path=${`basis`}
               ></wizard-token-field>
             </details>
+
+            <utrecht-button appearance="secondary-action-button" type="reset"> Reset Tokens </utrecht-button>
           </form>
         </theme-wizard-sidebar>
 
