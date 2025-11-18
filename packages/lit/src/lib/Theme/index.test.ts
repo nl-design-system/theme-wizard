@@ -21,6 +21,14 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
+  it('can update token at a specific path', async () => {
+    const theme = new Theme();
+    const initialTokens = structuredClone(theme.tokens);
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const updatedTokens = structuredClone(theme.tokens);
+    return expect(updatedTokens).not.toMatchObject(initialTokens);
+  });
+
   it('can reset tokens', async () => {
     const theme = new Theme();
     theme.tokens = tokens;
