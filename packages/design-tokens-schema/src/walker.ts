@@ -11,6 +11,8 @@ export const walkObject = <T = unknown>(
   predicate: (data: unknown, path: string[]) => data is T,
   callback?: (data: T, path: string[]) => void,
 ): void => {
+  const visited = new WeakSet();
+
   function traverse(currentData: unknown, path: string[]): void {
     // Check if current data matches
     if (predicate(currentData, path)) {
@@ -19,6 +21,9 @@ export const walkObject = <T = unknown>(
 
     // Recurse into objects
     if (typeof currentData === 'object' && currentData !== null && !Array.isArray(currentData)) {
+      if (visited.has(currentData)) return;
+      visited.add(currentData);
+
       for (const key in currentData) {
         traverse((currentData as Record<string, unknown>)[key], [...path, key]);
       }
@@ -26,6 +31,9 @@ export const walkObject = <T = unknown>(
 
     // Recurse into arrays
     if (Array.isArray(currentData)) {
+      if (visited.has(currentData)) return;
+      visited.add(currentData);
+
       for (let i = 0; i < currentData.length; i++) {
         traverse(currentData[i], [...path, String(i)]);
       }
