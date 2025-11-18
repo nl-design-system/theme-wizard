@@ -13,7 +13,6 @@ import { PREVIEW_PICKER_NAME } from '../preview-picker';
 import '../sidebar/sidebar';
 import '../preview';
 import '../preview-picker';
-import { PREVIEW_PICKER_NAME } from '../preview-picker/index';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
 import '../validation-issues-alert';
