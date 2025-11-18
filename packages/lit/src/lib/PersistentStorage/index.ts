@@ -14,6 +14,7 @@ const JSON_PREFIX = 'JSON';
 const JSON_SUFFIX_DEFAULT = '_';
 
 export default class PersistentStorage {
+  static version = 0; // Helpful for when might need to migrate persisted data
   #type: StorageType;
   #backend: Storage;
   #prefix: string;
@@ -46,7 +47,10 @@ export default class PersistentStorage {
   }
 
   path(key: string) {
-    return `${this.#prefix}:${key}`;
+    const v = `v${PersistentStorage.version}`;
+    return this.#prefix
+      ? `${v}:${this.#prefix}:${key}`
+      : `${v}:${key}`;
   }
 
   getItem(key: string) {
