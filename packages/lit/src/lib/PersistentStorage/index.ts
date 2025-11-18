@@ -61,10 +61,6 @@ export default class PersistentStorage {
     return value && JSON.parse(value);
   }
 
-  key(index: number) {
-    return this.#backend.key(index);
-  }
-
   removeItem(key: string) {
     this.#backend.removeItem(this.path(key));
   }
