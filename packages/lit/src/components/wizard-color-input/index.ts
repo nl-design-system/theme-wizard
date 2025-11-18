@@ -74,7 +74,8 @@ export class WizardColorInput extends WizardTokenInput {
       ${this.errors.length
         ? html`<div class="theme-error">
             ${this.errors.map(
-              ({ issue }) => html`<div class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
+              ({ id, issue }) =>
+                html`<div id="${id}" class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
             )}
           </div>`
         : nothing}
@@ -83,6 +84,8 @@ export class WizardColorInput extends WizardTokenInput {
         id=${this.id}
         value=${colorString}
         colorSpace=${this.colorSpace}
+        aria-invalid=${this.errors.length !== 0}
+        aria-errormessage=${this.errors.length === 0 ? nothing : this.errors.map(({ id }) => id).join('#')}
         @change=${this.#handleChange}
       />
     `;

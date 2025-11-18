@@ -45,7 +45,7 @@ export class ValidationIssuesAlert extends LitElement {
     }
 
     return html`
-      <utrecht-alert type="error">
+      <utrecht-alert type="error" data-testid="validation-errors-alert">
         <utrecht-heading-2>Thema validatie fouten</utrecht-heading-2>
         ${Array.from(this.issuesByErrorCode.entries()).map(
           ([errorCode, issues]) => html`

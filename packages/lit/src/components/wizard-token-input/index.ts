@@ -72,15 +72,17 @@ export class WizardTokenInput extends LitElement {
 
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
-      ${this.errors.length
+      ${this.errors.length > 0
         ? html`<ul class="theme-error">
-            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
+            ${this.errors.map(({ id, issue }) => html`<li id=${id}>${issue.message}</li>`)}
           </ul>`
         : nothing}
       <textarea
         id=${this.id}
         name=${this.name}
         .value=${WizardTokenInput.valueAsString(this.value)}
+        aria-invalid=${this.errors.length === 0 ? 'false' : 'true'}
+        aria-errormessage=${this.errors.length === 0 ? nothing : this.errors.map(({ id }) => id).join(' ')}
         @change=${this.#handleChange}
       ></textarea>`;
   }
