@@ -13,6 +13,15 @@ import ValidationIssue from '../ValidationIssue';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
+const STYLE_DICTIONARY_SETTINGS = {
+  log: {
+    errors: {
+      brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
+    },
+    verbosity: 'silent', // ignore logging since it goes to browser console
+  },
+} as const;
+
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
@@ -140,18 +149,13 @@ export default class Theme {
     resolved?: boolean;
     selector?: `.${string}`;
   } = {}) {
+    const platform = 'css';
     // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
     const tokens = this.toLegacyTokens();
-
     const sd = new StyleDictionary({
-      log: {
-        errors: {
-          brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
-        },
-        verbosity: 'silent', // ignore logging since it goes to browser console
-      },
+      ...STYLE_DICTIONARY_SETTINGS,
       platforms: {
-        css: {
+        [platform]: {
           files: [
             {
               destination: 'variables.css',
@@ -167,7 +171,7 @@ export default class Theme {
       },
       tokens,
     });
-    const outputs = await sd.formatPlatform('css');
+    const outputs = await sd.formatPlatform(platform);
     return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
   }
 }
