@@ -12,6 +12,7 @@ type Options = {
 
 const JSON_PREFIX = 'JSON';
 const JSON_SUFFIX_DEFAULT = '_';
+const SEPARATOR = ':';
 
 export default class PersistentStorage {
   static version = 0; // Helpful for when might need to migrate persisted data
@@ -46,11 +47,9 @@ export default class PersistentStorage {
     return this.#type;
   }
 
-  path(key: string) {
+  path(...args: string[]) {
     const v = `v${PersistentStorage.version}`;
-    return this.#prefix
-      ? `${v}:${this.#prefix}:${key}`
-      : `${v}:${key}`;
+    return [v, this.#prefix, ...args].filter(Boolean).join(SEPARATOR);
   }
 
   getItem(key: string) {
@@ -58,7 +57,7 @@ export default class PersistentStorage {
   }
 
   getJSON(key: string = JSON_SUFFIX_DEFAULT) {
-    const value = this.getItem(`${JSON_PREFIX}:${key}`);
+    const value = this.getItem(this.path(JSON_PREFIX, key));
     return value && JSON.parse(value);
   }
 
@@ -71,7 +70,7 @@ export default class PersistentStorage {
   }
 
   removeJSON(key: string = JSON_SUFFIX_DEFAULT) {
-    this.removeItem(`${JSON_PREFIX}:${key}`);
+    this.removeItem(this.path(JSON_PREFIX, key));
   }
 
   setItem(key: string, value: string) {
@@ -85,7 +84,7 @@ export default class PersistentStorage {
       ? keyOrValue
       : JSON_SUFFIX_DEFAULT;
     const data = value || keyOrValue;
-    this.setItem(`${JSON_PREFIX}:${key}`, JSON.stringify(data));
+    this.setItem(this.path(JSON_PREFIX, key), JSON.stringify(data));
   }
 
   /** @see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API */
