@@ -2,20 +2,19 @@ import '../sidebar/sidebar';
 import '../preview';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
-import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
-import ValidationIssue from '../../lib/ValidationIssue';
 import '../preview-picker';
 import { PREVIEW_PICKER_NAME } from '../preview-picker/index';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
+import '../validation-issues-alert';
 import appStyles from './app.css';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -25,7 +24,7 @@ const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
-  #theme = new Theme();
+  readonly #theme = new Theme();
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
@@ -112,16 +111,6 @@ export class App extends LitElement {
     this.selectedTemplatePath = e.detail as string;
   };
 
-  /**
-   * Get issues grouped by ERROR_CODE
-   */
-  readonly #getIssuesByErrorCode = (errorCode: string): ValidationIssue[] => {
-    return this.#theme.issues.filter((issue) => {
-      const issueErrorCode = (issue.issue as { ERROR_CODE?: string }).ERROR_CODE;
-      return issueErrorCode === errorCode;
-    });
-  };
-
   override render() {
     const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
@@ -157,24 +146,7 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker .templates=${this.templates}></preview-picker>
-          ${this.#theme.errorCount > 0
-            ? html` <utrecht-alert type="error"
-                ><utrecht-heading-2>Thema validatie fouten</utrecht-heading-2>
-                ${Object.values(ERROR_CODES).map((errorCode) => {
-                  const issues = this.#getIssuesByErrorCode(errorCode);
-                  return issues.length > 0
-                    ? html`
-                        <details>
-                          <summary>${errorCode}</summary>
-                          <ul>
-                            ${issues.map((issue) => html`<li>${issue.issue.message}</li>`)}
-                          </ul>
-                        </details>
-                      `
-                    : nothing;
-                })}
-              </utrecht-alert>`
-            : nothing}
+          <validation-issues-alert .issues=${this.#theme.issues}></validation-issues-alert>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview

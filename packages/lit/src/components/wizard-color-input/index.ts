@@ -1,6 +1,6 @@
 import { ColorSpace, parseColor } from '@nl-design-system-community/design-tokens-schema';
 import formFieldError from '@utrecht/form-field-error-message-css?inline';
-import { html, unsafeCSS } from 'lit';
+import { html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -51,7 +51,7 @@ export class WizardColorInput extends WizardTokenInput {
     this.requestUpdate('value', oldValue);
   }
 
-  static override styles = [styles, unsafeCSS(formFieldError)];
+  static override readonly styles = [styles, unsafeCSS(formFieldError)];
 
   readonly #handleChange = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
@@ -63,14 +63,21 @@ export class WizardColorInput extends WizardTokenInput {
   override render() {
     const colorValue = this.#token.$value;
     const hasValidColor = colorValue && Array.isArray(colorValue.components) && colorValue.components.length === 3;
-    const colorString = hasValidColor
-      ? WizardColorInput.supportsCSSColorValues
-        ? this.#token.toCSSColorFunction()
-        : this.#token.toHex()
-      : '#000000';
 
-    return html` <label for=${this.id}>${this.label}</label>
+    let colorString = '#000000';
+    if (hasValidColor) {
+      colorString = WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex();
+    }
 
+    return html`
+      <label for=${this.id}>${this.label}</label>
+      ${this.errors.length
+        ? html`<div class="theme-error">
+            ${this.errors.map(
+              ({ issue }) => html`<div class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
+            )}
+          </div>`
+        : nothing}
       <input
         type="color"
         id=${this.id}
@@ -78,11 +85,6 @@ export class WizardColorInput extends WizardTokenInput {
         colorSpace=${this.colorSpace}
         @change=${this.#handleChange}
       />
-      ${this.errors.length &&
-      html`<div class="theme-error">
-        ${this.errors.map(
-          ({ issue }) => html`<div class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
-        )}
-      </div>`}`;
+    `;
   }
 }
