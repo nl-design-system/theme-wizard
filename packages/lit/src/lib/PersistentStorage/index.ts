@@ -1,4 +1,4 @@
-const STORAGE_TYPES = {
+export const STORAGE_TYPES = {
   LOCAL_STORAGE: 'localStorage',
   SESSION_STORAGE: 'sessionStorage',
 } as const;
@@ -80,9 +80,7 @@ export default class PersistentStorage {
   setJSON(key: string, value: Record<string, unknown>): void;
   setJSON(value: Record<string, unknown>): void;
   setJSON(keyOrValue: string | Record<string, unknown>, value?: Record<string, unknown>) {
-    const key = (typeof keyOrValue === 'string')
-      ? keyOrValue
-      : JSON_SUFFIX_DEFAULT;
+    const key = typeof keyOrValue === 'string' ? keyOrValue : JSON_SUFFIX_DEFAULT;
     const data = value || keyOrValue;
     this.setItem(this.path(JSON_PREFIX, key), JSON.stringify(data));
   }
