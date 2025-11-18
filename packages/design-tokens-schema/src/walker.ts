@@ -31,6 +31,9 @@ export const walkObject = <T = unknown>(
 
     // Recurse into arrays
     if (Array.isArray(currentData)) {
+      if (visited.has(currentData)) return;
+      visited.add(currentData);
+
       for (let i = 0; i < currentData.length; i++) {
         traverse(currentData[i], [...path, String(i)]);
       }
