@@ -74,8 +74,14 @@ export default class PersistentStorage {
     this.#backend.setItem(this.path(key), value);
   }
 
-  setJSON(value: Record<string, unknown>, key: string = JSON_SUFFIX_DEFAULT) {
-    this.setItem(`${JSON_PREFIX}:${key}`, JSON.stringify(value));
+  setJSON(key: string, value: Record<string, unknown>): void;
+  setJSON(value: Record<string, unknown>): void;
+  setJSON(keyOrValue: string | Record<string, unknown>, value?: Record<string, unknown>) {
+    const key = (typeof keyOrValue === 'string')
+      ? keyOrValue
+      : JSON_SUFFIX_DEFAULT;
+    const data = value || keyOrValue;
+    this.setItem(`${JSON_PREFIX}:${key}`, JSON.stringify(data));
   }
 
   /** @see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API */
