@@ -16,6 +16,7 @@ export const PREVIEW_THEME_CLASS = 'preview-theme';
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
+  #modified = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
   name = 'wizard';
@@ -31,12 +32,21 @@ export default class Theme {
     return this.#defaults;
   }
 
+  get modified() {
+    return this.#modified;
+  }
+
   get tokens() {
     return this.#tokens;
   }
 
   set tokens(values: DesignTokens) {
     this.#tokens = values;
+    if (!this.#modified) {
+      // Last resort check, this only executes when modified is false.
+      // Note that `this.updateAt()` (probably) already sets this.#modified to true.
+      this.#modified = JSON.stringify(this.#defaults) !== JSON.stringify(values);
+    }
     // Automatically validate when tokens are updated
     this.#validateTheme(values);
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
@@ -50,6 +60,7 @@ export default class Theme {
   }
 
   updateAt(path: string, value: DesignToken['$value']) {
+    this.#modified = dlv(this.#defaults, `${path}.$value`) !== value;
     const tokens = structuredClone(this.tokens);
     dset(tokens, `${path}.$value`, value);
     this.tokens = tokens;
@@ -82,6 +93,7 @@ export default class Theme {
 
   reset() {
     this.tokens = structuredClone(this.#defaults);
+    this.#modified = false;
   }
 
   async toLegacyTokens() {

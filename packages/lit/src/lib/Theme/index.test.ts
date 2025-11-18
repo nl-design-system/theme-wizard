@@ -49,4 +49,22 @@ describe('Theme', () => {
     const css = await theme.toCSS({ resolved: true });
     expect(css).toMatchSnapshot();
   });
+
+  it('indicates modified state as false on init', () => {
+    const theme = new Theme();
+    expect(theme.modified).toBe(false);
+  });
+
+  it('indicates modified state as true on update', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    expect(theme.modified).toBe(true);
+  });
+
+  it('indicates modified state as false on reset', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    theme.reset();
+    expect(theme.modified).toBe(false);
+  });
 });
