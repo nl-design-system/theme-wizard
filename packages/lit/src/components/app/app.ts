@@ -157,22 +157,23 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker .templates=${this.templates}></preview-picker>
-          ${this.#theme.errorCount > 0 &&
-          html` <utrecht-alert type="error"
-            ><utrecht-heading-2>Thema validatie fouten</utrecht-heading-2>
-            ${Object.values(ERROR_CODES).map((errorCode) => {
-              const issues = this.#getIssuesByErrorCode(errorCode);
-              if (issues.length === 0) return nothing;
-              return html`
-                <details>
-                  <summary>${errorCode}</summary>
-                  <ul>
-                    ${issues.map((issue) => html`<li>${issue.issue.message}</li>`)}
-                  </ul>
-                </details>
-              `;
-            })}
-          </utrecht-alert>`}
+          ${this.#theme.errorCount > 0
+            ? html` <utrecht-alert type="error"
+                ><utrecht-heading-2>Thema validatie fouten</utrecht-heading-2>
+                ${Object.values(ERROR_CODES).map((errorCode) => {
+                  const issues = this.#getIssuesByErrorCode(errorCode);
+                  if (issues.length === 0) return nothing;
+                  return html`
+                    <details>
+                      <summary>${errorCode}</summary>
+                      <ul>
+                        ${issues.map((issue) => html`<li>${issue.issue.message}</li>`)}
+                      </ul>
+                    </details>
+                  `;
+                })}
+              </utrecht-alert>`
+            : nothing}
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
