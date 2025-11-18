@@ -87,6 +87,7 @@ export class App extends LitElement {
       // Request update to reflect any new validation issues
       this.requestUpdate();
       this.#storage.setJSON(this.#theme.tokens);
+      this.requestUpdate();
     }
   };
 
@@ -122,6 +123,18 @@ export class App extends LitElement {
   readonly #handleReset = () => {
     this.#theme.reset();
     this.#storage.removeJSON();
+    this.requestUpdate();
+  };
+
+  readonly #downloadJSON = async () => {
+    const data = await this.#theme.toTokensJSON();
+    const encoded = encodeURIComponent(data);
+    const href = `data:application/json,${encoded}`;
+    const anchor = document.createElement('a');
+    anchor.download = 'tokens.json';
+    anchor.href = href;
+    anchor.click();
+    anchor.remove();
   };
 
   override render() {
@@ -155,7 +168,14 @@ export class App extends LitElement {
               ></wizard-token-field>
             </details>
 
-            <utrecht-button appearance="secondary-action-button" type="reset"> Reset Tokens </utrecht-button>
+            <utrecht-button
+              appearance="primary-action-button"
+              type="button"
+              ?disabled=${!this.#theme.modified}
+              @click=${this.#downloadJSON}
+              >Download tokens als JSON</utrecht-button
+            >
+            <utrecht-button appearance="secondary-action-button" type="reset">Reset tokens</utrecht-button>
           </form>
         </theme-wizard-sidebar>
 
