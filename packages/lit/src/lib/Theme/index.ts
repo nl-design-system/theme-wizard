@@ -50,7 +50,7 @@ export default class Theme {
   }
 
   updateAt(path: string, value: DesignToken['$value']) {
-    const tokens = this.tokens;
+    const tokens = structuredClone(this.tokens);
     dset(tokens, `${path}.$value`, value);
     this.tokens = tokens;
   }
