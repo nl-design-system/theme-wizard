@@ -157,7 +157,8 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <preview-picker .templates=${this.templates}></preview-picker>
-          <utrecht-alert type="error"
+          ${this.#theme.errorCount > 0 &&
+          html` <utrecht-alert type="error"
             ><utrecht-heading-2>Thema validatie fouten</utrecht-heading-2>
             ${Object.values(ERROR_CODES).map((errorCode) => {
               const issues = this.#getIssuesByErrorCode(errorCode);
@@ -171,7 +172,8 @@ export class App extends LitElement {
                 </details>
               `;
             })}
-          </utrecht-alert>
+          </utrecht-alert>`}
+
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <theme-wizard-preview
               .url=${this.selectedTemplatePath}
