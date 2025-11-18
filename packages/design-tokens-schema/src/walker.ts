@@ -1,5 +1,5 @@
 import { ColorToken } from './color-token';
-import { isTokenWithRef, type TokenWithRef } from './token-reference';
+import { isTokenWithRef, type TokenWithRefLike } from './token-reference';
 
 /**
  * @param root The object you want to traverse
@@ -11,6 +11,8 @@ export const walkObject = <T = unknown>(
   predicate: (data: unknown, path: string[]) => data is T,
   callback?: (data: T, path: string[]) => void,
 ): void => {
+  const visited = new WeakSet();
+
   function traverse(currentData: unknown, path: string[]): void {
     // Check if current data matches
     if (predicate(currentData, path)) {
@@ -19,6 +21,9 @@ export const walkObject = <T = unknown>(
 
     // Recurse into objects
     if (typeof currentData === 'object' && currentData !== null && !Array.isArray(currentData)) {
+      if (visited.has(currentData)) return;
+      visited.add(currentData);
+
       for (const key in currentData) {
         traverse((currentData as Record<string, unknown>)[key], [...path, key]);
       }
@@ -46,11 +51,11 @@ export const walkColors = (root: unknown, callback: (token: ColorToken, path: st
 export const walkTokensWithRef = (
   root: unknown,
   config: Record<string, unknown>,
-  callback: (token: TokenWithRef, path: string[]) => void,
+  callback: (token: TokenWithRefLike, path: string[]) => void,
 ): void => {
-  walkObject<TokenWithRef>(
+  walkObject<TokenWithRefLike>(
     root,
-    (token, path): token is TokenWithRef => {
+    (token, path): token is TokenWithRefLike => {
       try {
         return isTokenWithRef(token, config, path);
       } catch {

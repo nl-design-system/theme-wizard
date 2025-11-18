@@ -43,6 +43,7 @@ const isTokenLike = (obj: unknown): obj is TokenLike => {
 export type TokenWithRefLike = {
   $type: string;
   $value: `{${string}}`;
+  $extensions?: Record<string, unknown>;
 };
 
 const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {

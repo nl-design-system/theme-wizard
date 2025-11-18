@@ -25,9 +25,9 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
     // Add an extension with the resolved ref's value
-    token['$extensions'] = {
+    token.$extensions = {
       ...(token.$extensions || Object.create(null)),
-      [EXTENSION_RESOLVED_AS]: ref.$value,
+      [EXTENSION_RESOLVED_AS]: structuredClone(ref.$value),
     } satisfies ResolvedToken['$extensions'];
   });
 };
