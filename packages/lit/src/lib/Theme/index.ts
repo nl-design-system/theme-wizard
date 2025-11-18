@@ -96,7 +96,7 @@ export default class Theme {
     this.#modified = false;
   }
 
-  async toLegacyTokens() {
+  toLegacyTokens() {
     // TODO: replace with a design-tokens-schema transform to make sure all token types have a legacy format
     const clonedTokens = structuredClone(this.tokens);
 
@@ -141,7 +141,7 @@ export default class Theme {
     selector?: `.${string}`;
   } = {}) {
     // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
-    const tokens = await this.toLegacyTokens();
+    const tokens = this.toLegacyTokens();
 
     const sd = new StyleDictionary({
       log: {
