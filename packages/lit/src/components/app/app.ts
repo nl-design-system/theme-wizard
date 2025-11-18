@@ -162,15 +162,16 @@ export class App extends LitElement {
                 ><utrecht-heading-2>Thema validatie fouten</utrecht-heading-2>
                 ${Object.values(ERROR_CODES).map((errorCode) => {
                   const issues = this.#getIssuesByErrorCode(errorCode);
-                  if (issues.length === 0) return nothing;
-                  return html`
-                    <details>
-                      <summary>${errorCode}</summary>
-                      <ul>
-                        ${issues.map((issue) => html`<li>${issue.issue.message}</li>`)}
-                      </ul>
-                    </details>
-                  `;
+                  return issues.length > 0
+                    ? html`
+                        <details>
+                          <summary>${errorCode}</summary>
+                          <ul>
+                            ${issues.map((issue) => html`<li>${issue.issue.message}</li>`)}
+                          </ul>
+                        </details>
+                      `
+                    : nothing;
                 })}
               </utrecht-alert>`
             : nothing}
