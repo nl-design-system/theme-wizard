@@ -8,7 +8,7 @@ export default class ValidationIssue {
   variables: Record<string, string> = {};
   issue: z.core.$ZodIssue;
 
-  constructor(issue: z.core.$ZodIssue, code?: string) {
+  constructor(issue: z.core.$ZodIssue, code?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES]) {
     this.issue = issue;
     this.path = issue.path
       .filter((p) => p !== '$value')
