@@ -15,7 +15,7 @@ import '../wizard-preview';
 import '../wizard-preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
-import '../validation-issues-alert';
+import '../wizard-validation-issues-alert';
 import appStyles from './app.css';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -180,8 +180,8 @@ export class App extends LitElement {
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
-          <validation-issues-alert .issues=${this.#theme.issues}></validation-issues-alert>
+          <wizard-preview-picker .templates=${this.templates}></preview-picker>
+          <wizard-validation-issues-alert .issues=${this.#theme.issues}></wizard-validation-issues-alert>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <wizard-preview
