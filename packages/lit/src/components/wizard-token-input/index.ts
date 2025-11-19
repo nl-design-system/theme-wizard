@@ -1,8 +1,9 @@
 import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html, LitElement, nothing } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
+import '../wizard-validation-issue';
 import styles from './styles';
 
 // TODO: use uniform token type that both conforms to the types of
@@ -72,11 +73,7 @@ export class WizardTokenInput extends LitElement {
 
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
-      ${this.errors.length
-        ? html`<ul class="theme-error">
-            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
-          </ul>`
-        : nothing}
+      <wizard-validation-issue .errors=${this.errors}></wizard-validation-issue>
       <textarea
         id=${this.id}
         name=${this.name}
