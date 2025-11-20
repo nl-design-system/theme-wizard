@@ -1,4 +1,4 @@
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, html, nothing, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import i18n from '../../i18n/messages';
 import { ShadowDOMNavigator } from '../../lib/ShadowDOMNavigator';
@@ -90,7 +90,7 @@ export class WizardValidationIssuesAlert extends LitElement {
    * @param tokenPath - Path to the token
    * @param displayText - Optional display text (defaults to tokenPath)
    */
-  #renderTokenLink(tokenPath: string, displayText?: string) {
+  #renderTokenLink(tokenPath: string, displayText?: string): TemplateResult {
     const text = displayText ?? tokenPath;
     const ariaLabel = i18n.t('validation.token_link.aria_label', { token: text });
 
@@ -107,11 +107,11 @@ export class WizardValidationIssuesAlert extends LitElement {
     </a>`;
   }
 
-  #renderMessageDetails(messageDetails: string) {
+  #renderMessageDetails(messageDetails: string): TemplateResult {
     return html`<p>${messageDetails}</p>`;
   }
 
-  #composeStructure(tokens: unknown, details: string) {
+  #composeStructure(tokens: unknown, details: string): TemplateResult {
     return html` ${tokens}
       <ul>
         <li>${details}</li>
@@ -122,7 +122,7 @@ export class WizardValidationIssuesAlert extends LitElement {
    * Renders a single validation issue with tokens and details
    * Optimized: renders both parts in one call
    */
-  #renderIssue(issue: ValidationIssue) {
+  #renderIssue(issue: ValidationIssue): TemplateResult {
     return html`
       ${ValidationErrorRenderer.render(issue, {
         composeStructure: this.#composeStructure.bind(this),
