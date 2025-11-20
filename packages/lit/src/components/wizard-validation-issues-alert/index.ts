@@ -29,18 +29,7 @@ export class WizardValidationIssuesAlert extends LitElement {
    * Group issues by error code
    */
   private get issuesByErrorCode(): ReadonlyMap<string, ValidationIssue[]> {
-    const grouped = new Map<string, ValidationIssue[]>();
-
-    for (const issue of this.issues) {
-      const existing = grouped.get(issue.code);
-      if (existing) {
-        existing.push(issue);
-      } else {
-        grouped.set(issue.code, [issue]);
-      }
-    }
-
-    return grouped;
+    return Object.groupBy(this.issues, ({ code }) => code);
   }
 
   /**
