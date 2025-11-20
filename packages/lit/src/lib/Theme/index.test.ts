@@ -50,6 +50,12 @@ describe('Theme', () => {
     expect(css).toMatchSnapshot();
   });
 
+  it('can export to JSON token file', async () => {
+    const theme = new Theme();
+    const json = await theme.toTokensJSON();
+    return expect(json).toMatchSnapshot();
+  });
+
   it('indicates modified state as false on init', () => {
     const theme = new Theme();
     expect(theme.modified).toBe(false);

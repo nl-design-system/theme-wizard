@@ -174,4 +174,25 @@ export default class Theme {
     const outputs = await sd.formatPlatform(platform);
     return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
   }
+
+  async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
+    const platform = 'json';
+    const tokens = format === 'legacy' ? this.toLegacyTokens() : this.tokens;
+    const sd = new StyleDictionary({
+      ...STYLE_DICTIONARY_SETTINGS,
+      platforms: {
+        [platform]: {
+          files: [
+            {
+              destination: 'tokens.json',
+              format: 'json',
+            },
+          ],
+        },
+      },
+      tokens,
+    });
+    const outputs = await sd.formatPlatform(platform);
+    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
+  }
 }
