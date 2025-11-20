@@ -2,7 +2,7 @@ import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-tem
 import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
 import { EVENT_NAMES } from '../../constants';
@@ -140,7 +140,6 @@ export class App extends LitElement {
   override render() {
     const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
-
     return html`
       <div class="theme-app ma-theme">
         <theme-wizard-sidebar .sourceUrl="" .scrapedTokens=${this.scrapedTokens} @change=${this.#handleSourceUrlChange}>
@@ -148,11 +147,13 @@ export class App extends LitElement {
             <fieldset>
               <legend>Lettertypes</legend>
               <wizard-token-field
+                .issues=${this.#theme.issues}
                 .token=${headingFontToken}
                 label="Koppen"
                 path=${HEADING_FONT_TOKEN_REF}
               ></wizard-token-field>
               <wizard-token-field
+                .issues=${this.#theme.issues}
                 .token=${bodyFontToken}
                 label="Lopende tekst"
                 path=${BODY_FONT_TOKEN_REF}
@@ -162,7 +163,7 @@ export class App extends LitElement {
             <details>
               <summary>Alle tokens</summary>
               <wizard-token-field
-                .errors=${this.#theme.issues}
+                .issues=${this.#theme.issues}
                 .token=${this.#theme.tokens['basis']}
                 path=${`basis`}
               ></wizard-token-field>
@@ -181,8 +182,13 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <wizard-preview-picker .templates=${this.templates}></preview-picker>
-          <wizard-validation-issues-alert .issues=${this.#theme.issues}></wizard-validation-issues-alert>
-
+          ${
+            this.#theme.groupedIssues
+              ? html`<wizard-validation-issues-alert
+                  .issues=${this.#theme.groupedIssues}
+                ></wizard-validation-issues-alert>`
+              : nothing
+          }
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <wizard-preview
               .url=${this.selectedTemplatePath}
