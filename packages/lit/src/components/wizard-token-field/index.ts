@@ -22,7 +22,8 @@ export class WizardTokenField extends LitElement {
   @property() token: Token = {};
   @property() path: string = '';
   @property() options = [];
-  @property() errors: ValidationIssue[] = [];
+  @property({ attribute: false })
+  issues: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
 
   static maxDepth = 3;
@@ -31,6 +32,10 @@ export class WizardTokenField extends LitElement {
 
   get #id() {
     return `input-${this.path}`;
+  }
+
+  get #pathIssues(): ValidationIssue[] {
+    return this.issues.filter((issue) => issue.path === this.path);
   }
 
   get entries() {
@@ -60,7 +65,7 @@ export class WizardTokenField extends LitElement {
     switch (type) {
       case 'color':
         return html` <wizard-color-input
-          .errors=${this.errors}
+          .issues=${this.#pathIssues}
           .value=${this.token.$value}
           id=${this.#id}
           key=${key}
@@ -71,7 +76,7 @@ export class WizardTokenField extends LitElement {
         </wizard-color-input>`;
       case 'font':
         return html` <wizard-font-input
-          .errors=${this.errors}
+          .issues=${this.#pathIssues}
           .value=${this.token.$value}
           id=${this.#id}
           key=${key}
@@ -82,7 +87,7 @@ export class WizardTokenField extends LitElement {
         </wizard-font-input>`;
       default:
         return html` <wizard-token-input
-          .errors=${this.errors}
+          .issues=${this.#pathIssues}
           .value=${this.token}
           id=${this.#id}
           key=${key}
@@ -98,20 +103,20 @@ export class WizardTokenField extends LitElement {
     if (this.depth > WizardTokenField.maxDepth) return nothing;
     const type = this.type;
     const label = this.label || `{${this.path}}`;
+    const errorClass = this.#pathIssues ? 'theme-error' : '';
     return html`<div>
       ${type
         ? this.renderField(type, label)
-        : html`<p class=${this.errors.length ? 'theme-error' : ''}>${label}</p>
+        : html`<p class=${errorClass}>${label}</p>
             <ul>
               ${this.entries.map(([key, token]) => {
                 const path = `${this.path}.${key}`;
                 const depth = this.depth + 1;
-                const errors = this.errors.filter((error) => error.path.startsWith(path));
                 return html`
                   <li>
                     <wizard-token-field
                       .token=${token}
-                      .errors=${errors}
+                      .issues=${this.issues}
                       path=${path}
                       depth=${depth}
                     ></wizard-token-field>

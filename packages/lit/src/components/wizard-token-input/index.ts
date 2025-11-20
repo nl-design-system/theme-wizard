@@ -1,5 +1,5 @@
 import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
@@ -22,7 +22,7 @@ declare global {
 export class WizardTokenInput extends LitElement {
   @property() label = '';
   @property() name = '';
-  @property() errors: ValidationIssue[] = [];
+  @property() issues: ValidationIssue[] = [];
   internals_ = this.attachInternals();
   #token: Token = {};
 
@@ -73,7 +73,10 @@ export class WizardTokenInput extends LitElement {
 
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
-      <wizard-validation-issue .errors=${this.errors}></wizard-validation-issue>
+      ${this.issues.length > 0
+        ? html`<wizard-validation-issue .issues=${this.issues}></wizard-validation-issue>`
+        : nothing}
+
       <textarea
         id=${this.id}
         name=${this.name}

@@ -1,7 +1,8 @@
-import { LitElement, html, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
-import { ValidationErrorRenderer } from '../../lib/ValidationErrorRenderer';
+import { renderError } from '../../i18n/messages';
+import { BaseValidationIssues } from '../base-validation-issues';
 import styles from './styles';
 
 const tag = 'wizard-validation-issue';
@@ -17,22 +18,22 @@ declare global {
  * Used within form fields to show validation feedback
  */
 @customElement(tag)
-export class WizardValidationIssue extends LitElement {
+export class WizardValidationIssue extends BaseValidationIssues {
   @property({ attribute: false })
-  errors: ValidationIssue[] = [];
+  issues: ValidationIssue[] = [];
 
   static override readonly styles = [styles];
 
   override render() {
-    if (this.errors.length === 0) {
+    if (this.issues.length === 0) {
       return nothing;
     }
 
     return html`<div class="theme-error">
-      ${this.errors.map(
-        (error) =>
+      ${this.issues.map(
+        (issue) =>
           html`<div class="utrecht-form-field-error-message">
-            ${ValidationErrorRenderer.render(error, { format: 'inline' })}
+            ${renderError(issue, { mode: 'compact', renderTokenLink: this.renderTokenLink.bind(this) })}
           </div>`,
       )}
     </div>`;
