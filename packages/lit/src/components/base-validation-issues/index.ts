@@ -39,10 +39,10 @@ export abstract class BaseValidationIssues extends LitElement {
    * Applies a highlight animation to the field
    */
   protected applyHighlightAnimation(field: HTMLElement): void {
-    field.classList.add('validation-highlight');
+    field.classList.add('theme-validation-highlight');
 
     const handleAnimationEnd = () => {
-      field.classList.remove('validation-highlight');
+      field.classList.remove('theme-validation-highlight');
       field.removeEventListener('animationend', handleAnimationEnd);
     };
 
@@ -83,7 +83,7 @@ export abstract class BaseValidationIssues extends LitElement {
 
     return html`<a
       href="#${tokenPath}"
-      class="token-link"
+      class="theme-token-link"
       @click=${(e: Event) => {
         e.preventDefault();
         this.focusToken(tokenPath);

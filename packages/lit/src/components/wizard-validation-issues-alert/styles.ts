@@ -1,16 +1,15 @@
 import { css } from 'lit';
 
 export default css`
-  .token-link {
+  .theme-token-link {
     background: none;
     border: none;
+    border-radius: 2px;
     color: var(--utrecht-link-color);
     text-decoration: underline;
-    padding: 0;
-    border-radius: 2px;
   }
 
-  .token-link:focus:not(:focus-visible) {
+  .theme-token-link:focus:not(:focus-visible) {
     outline: none;
   }
 `;
