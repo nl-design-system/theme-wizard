@@ -2,25 +2,23 @@ import { css } from 'lit';
 
 export default css`
   :host {
-    display: block;
-    padding: 4px;
-    margin: -4px;
     border-radius: 4px;
+    display: block;
   }
 
-  :host(.validation-highlight) {
-    animation: validation-glow 2s ease-out forwards;
+  :host(.theme-validation-highlight) {
+    animation: theme-validation-glow 2000ms ease-out forwards;
   }
 
-  @keyframes validation-glow {
+  @keyframes theme-validation-glow {
     0% {
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 1);
+      box-shadow: 0 0 0 2px rgb(0 0 0 / 100%);
     }
     15% {
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 0 2px rgb(0 0 0 / 60%);
     }
     65% {
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 0 2px rgb(0 0 0 / 60%);
     }
     100% {
       box-shadow: none;
