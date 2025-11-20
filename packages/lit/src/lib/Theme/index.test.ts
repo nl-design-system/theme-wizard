@@ -21,6 +21,32 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
+  it('can update token at a specific path', async () => {
+    const theme = new Theme();
+    const initialTokens = structuredClone(theme.tokens);
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const updatedTokens = structuredClone(theme.tokens);
+    return expect(updatedTokens).not.toMatchObject(initialTokens);
+  });
+
+  it('has a different CSS output after token update', async () => {
+    const theme = new Theme();
+    const initialCSS = await theme.toCSS();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const updatedCSS = await theme.toCSS();
+    expect(updatedCSS).toMatchSnapshot();
+    return expect(initialCSS).not.toMatch(updatedCSS);
+  });
+
+  it('has a different JSON output after token update', async () => {
+    const theme = new Theme();
+    const initialJSON = await theme.toTokensJSON();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const updatedJSON = await theme.toTokensJSON();
+    expect(updatedJSON).toMatchSnapshot();
+    return expect(initialJSON).not.toMatch(updatedJSON);
+  });
+
   it('can reset tokens', async () => {
     const theme = new Theme();
     theme.tokens = tokens;
@@ -40,5 +66,29 @@ describe('Theme', () => {
     const theme = new Theme();
     const css = await theme.toCSS({ resolved: true });
     expect(css).toMatchSnapshot();
+  });
+
+  it('can export to JSON token file', async () => {
+    const theme = new Theme();
+    const json = await theme.toTokensJSON();
+    return expect(json).toMatchSnapshot();
+  });
+
+  it('indicates modified state as false on init', () => {
+    const theme = new Theme();
+    expect(theme.modified).toBe(false);
+  });
+
+  it('indicates modified state as true on update', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    expect(theme.modified).toBe(true);
+  });
+
+  it('indicates modified state as false on reset', () => {
+    const theme = new Theme();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    theme.reset();
+    expect(theme.modified).toBe(false);
   });
 });

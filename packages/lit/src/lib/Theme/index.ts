@@ -5,6 +5,7 @@ import {
   type Theme as ThemeType,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
+import { dequal } from 'dequal';
 import dlv from 'dlv';
 import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
@@ -13,9 +14,19 @@ import ValidationIssue from '../ValidationIssue';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
+const STYLE_DICTIONARY_SETTINGS = {
+  log: {
+    errors: {
+      brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
+    },
+    verbosity: 'silent', // ignore logging since it goes to browser console
+  },
+} as const;
+
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   #defaults: DesignTokens; // Every Theme has private defaults to revert to.
+  #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   #stylesheet: CSSStyleSheet = new CSSStyleSheet();
   name = 'wizard';
@@ -31,13 +42,16 @@ export default class Theme {
     return this.#defaults;
   }
 
+  get modified() {
+    return this.#modified;
+  }
+
   get tokens() {
     return this.#tokens;
   }
 
   set tokens(values: DesignTokens) {
     this.#tokens = values;
-    // Automatically validate when tokens are updated
     this.#validateTheme(values);
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
@@ -50,6 +64,7 @@ export default class Theme {
   }
 
   updateAt(path: string, value: DesignToken['$value']) {
+    this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
     dset(tokens, `${path}.$value`, value);
     this.tokens = tokens;
@@ -82,9 +97,10 @@ export default class Theme {
 
   reset() {
     this.tokens = structuredClone(this.#defaults);
+    this.#modified = false;
   }
 
-  async toLegacyTokens() {
+  toLegacyTokens() {
     // TODO: replace with a design-tokens-schema transform to make sure all token types have a legacy format
     const clonedTokens = structuredClone(this.tokens);
 
@@ -128,18 +144,13 @@ export default class Theme {
     resolved?: boolean;
     selector?: `.${string}`;
   } = {}) {
+    const platform = 'css';
     // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
-    const tokens = await this.toLegacyTokens();
-
+    const tokens = this.toLegacyTokens();
     const sd = new StyleDictionary({
-      log: {
-        errors: {
-          brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
-        },
-        verbosity: 'silent', // ignore logging since it goes to browser console
-      },
+      ...STYLE_DICTIONARY_SETTINGS,
       platforms: {
-        css: {
+        [platform]: {
           files: [
             {
               destination: 'variables.css',
@@ -155,7 +166,28 @@ export default class Theme {
       },
       tokens,
     });
-    const outputs = await sd.formatPlatform('css');
+    const outputs = await sd.formatPlatform(platform);
+    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
+  }
+
+  async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
+    const platform = 'json';
+    const tokens = format === 'legacy' ? this.toLegacyTokens() : this.tokens;
+    const sd = new StyleDictionary({
+      ...STYLE_DICTIONARY_SETTINGS,
+      platforms: {
+        [platform]: {
+          files: [
+            {
+              destination: 'tokens.json',
+              format: 'json',
+            },
+          ],
+        },
+      },
+      tokens,
+    });
+    const outputs = await sd.formatPlatform(platform);
     return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
   }
 }
