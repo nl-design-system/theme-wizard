@@ -1,5 +1,8 @@
 import { ERROR_CODES, type ThemeValidationIssue } from '@nl-design-system-community/design-tokens-schema';
 import { TemplateResult } from 'lit';
+
+export type ErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES] | 'unknown';
+
 export interface RenderOptions {
   /**
    * Rendering mode
@@ -18,7 +21,7 @@ export interface RenderOptions {
 export default class ValidationIssue {
   // TODO: move to application level if necessary
   path: string;
-  code: (typeof ERROR_CODES)[keyof typeof ERROR_CODES] | 'unknown';
+  code: ErrorCode;
   details?: ThemeValidationIssue;
 
   constructor(issue: ThemeValidationIssue, code?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES]) {

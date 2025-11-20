@@ -78,7 +78,7 @@ export default class Theme {
     return this.#validationIssues.length;
   }
 
-  get groupedIssues(): Partial<Record<string, ValidationIssue[]>> {
+  get groupedIssues(): Partial<Record<ValidationIssue['code'], ValidationIssue[]>> {
     return Object.groupBy(this.issues, ({ code }) => code);
   }
 

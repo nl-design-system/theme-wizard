@@ -16,7 +16,7 @@ declare global {
 @customElement(tag)
 export class WizardValidationIssuesAlert extends BaseValidationIssues {
   @property({ attribute: false })
-  issues: Partial<Record<string, ValidationIssue[]>> = {};
+  issues: Partial<Record<ValidationIssue['code'], ValidationIssue[]>> = {};
 
   static override readonly styles = [unsafeCSS(styles)];
 
@@ -26,7 +26,7 @@ export class WizardValidationIssuesAlert extends BaseValidationIssues {
         <utrecht-heading-2>${t('validation.title')}</utrecht-heading-2>
         ${Object.entries(this.issues).map(([errorCode, issues]) => {
           if (!issues || issues.length === 0) return nothing;
-          const label = errorLabel(errorCode);
+          const label = errorLabel(errorCode as ValidationIssue['code']);
           const count = issues.length;
 
           return html`

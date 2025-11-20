@@ -1,12 +1,8 @@
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import { html, TemplateResult, nothing } from 'lit';
 import rosetta from 'rosetta';
-import ValidationIssue, { type RenderOptions } from '../lib/ValidationIssue';
-
-export interface ErrorRenderContext {
-  details: Record<string, unknown>;
-  renderTokenLink?: (tokenPath: string) => TemplateResult;
-}
+import ValidationIssue, { type ErrorCode, type RenderOptions } from '../lib/ValidationIssue';
+import { ErrorRenderContext, I18nMessagePaths, I18nMessages } from './types';
 
 const createInsufficientContrastRenderers = (strings: {
   and: string;
@@ -70,7 +66,7 @@ const createInvalidRefRenderers = (strings: { invalidReference: string }) => {
 const i18n = rosetta();
 i18n.locale('nl');
 
-i18n.set('nl', {
+const nlTranslation = {
   unknown: 'Onbekende fout opgetreden',
   validation: {
     error: {
@@ -95,9 +91,11 @@ i18n.set('nl', {
       aria_label: 'Spring naar {{token}}',
     },
   },
-});
+} as const satisfies I18nMessages;
 
-i18n.set('en', {
+i18n.set('nl', nlTranslation);
+
+const enTranslation = {
   unknown: 'Unknown error',
   validation: {
     error: {
@@ -122,7 +120,15 @@ i18n.set('en', {
       aria_label: 'Jump to {{token}}',
     },
   },
-});
+} as const satisfies I18nMessages;
+
+i18n.set('en', enTranslation);
+
+export const t = (key: I18nMessagePaths, params?: Record<string, unknown>): string => {
+  const result = i18n.t(key, params);
+
+  return typeof result === 'string' ? result : key;
+};
 
 export const renderError = (issue: ValidationIssue, options?: RenderOptions): TemplateResult | typeof nothing => {
   const mode = options?.mode || 'compact';
@@ -138,9 +144,12 @@ export const renderError = (issue: ValidationIssue, options?: RenderOptions): Te
   return result ?? nothing;
 };
 
-export const errorLabel = (errorCode: string): string => {
-  const key = `validation.error.${errorCode}.label`;
-  const label = i18n.t(key);
+export const errorLabel = (errorCode: ErrorCode): string => {
+  if (errorCode === 'unknown') {
+    return errorCode;
+  }
+  const key: I18nMessagePaths = `validation.error.${errorCode}.label`;
+  const label = t(key);
   return label === key ? errorCode : label;
 };
 
