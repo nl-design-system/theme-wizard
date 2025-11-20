@@ -68,10 +68,8 @@ test.describe('Behavioural tests', () => {
   });
 
   test.describe('color contrast warnings', () => {
-    // start off without errors
-    // shows error at origin AND linked color
-    // Fixing the contrast makes the error go away
     test.beforeEach(async ({ themeWizard }) => {
+      // Make sure the <details> containing all color inputs is shown (<wizard-token-field>)
       await themeWizard.sidebar.locator('summary').click();
     });
 
