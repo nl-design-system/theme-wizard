@@ -1,5 +1,5 @@
 import type { TemplateResult } from 'lit';
-import { html, nothing } from 'lit';
+import { nothing } from 'lit';
 import type ValidationIssue from '../ValidationIssue';
 import i18n, { type ContrastMessageParts } from '../../i18n/messages';
 
