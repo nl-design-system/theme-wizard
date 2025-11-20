@@ -29,6 +29,7 @@ export class ValidationErrorRenderer {
    */
   static render(error: ValidationIssue, options?: RenderOptions): TemplateResult {
     const renderer = this.renderers.get(error.code);
+
     if (renderer) {
       const result = renderer(error, options);
       return result ?? this.#renderFallback(error);
@@ -68,4 +69,10 @@ export interface RenderOptions {
    * When provided, only renders the details part (e.g., "Contrast: 2.43, minimaal vereist: 4.5")
    */
   renderDetails?: (messageDetails: string) => TemplateResult;
+
+  /**
+   * Optional function to compose tokens and details into final structure
+   * When provided, allows custom HTML structure instead of default
+   */
+  composeStructure?: (tokens: unknown, details: string) => TemplateResult;
 }

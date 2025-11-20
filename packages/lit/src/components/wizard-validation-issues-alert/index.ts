@@ -111,6 +111,27 @@ export class WizardValidationIssuesAlert extends LitElement {
     return html`<p>${messageDetails}</p>`;
   }
 
+  #composeStructure(tokens: unknown, details: string) {
+    return html` ${tokens}
+      <ul>
+        <li>${details}</li>
+      </ul>`;
+  }
+
+  /**
+   * Renders a single validation issue with tokens and details
+   * Optimized: renders both parts in one call
+   */
+  #renderIssue(issue: ValidationIssue) {
+    return html`
+      ${ValidationErrorRenderer.render(issue, {
+        composeStructure: this.#composeStructure.bind(this),
+        renderDetails: this.#renderMessageDetails.bind(this),
+        renderTokenLink: this.#renderTokenLink.bind(this),
+      })}
+    `;
+  }
+
   override render() {
     if (this.issues.length === 0) {
       return nothing;
@@ -137,21 +158,7 @@ export class WizardValidationIssuesAlert extends LitElement {
         <details>
           <summary>${label} (${count})</summary>
           <ul>
-            ${issues.map(
-              (issue) =>
-                html`<li>
-                  ${ValidationErrorRenderer.render(issue, {
-                    renderTokenLink: this.#renderTokenLink.bind(this),
-                  })}
-                  <ul>
-                    <li>
-                      ${ValidationErrorRenderer.render(issue, {
-                        renderDetails: this.#renderMessageDetails.bind(this),
-                      })}
-                    </li>
-                  </ul>
-                </li>`,
-            )}
+            ${issues.map((issue) => html`<li>${this.#renderIssue(issue)}</li>`)}
           </ul>
         </details>
       `;

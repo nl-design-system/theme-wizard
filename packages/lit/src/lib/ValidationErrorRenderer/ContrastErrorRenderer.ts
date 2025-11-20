@@ -1,11 +1,12 @@
 import type { TemplateResult } from 'lit';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import type ValidationIssue from '../ValidationIssue';
 import i18n, { type ContrastMessageParts } from '../../i18n/messages';
 
 interface RenderOptions {
   renderTokenLink?: (tokenPath: string) => TemplateResult;
   renderDetails?: (messageDetails: string) => TemplateResult;
+  composeStructure?: (tokens: unknown, details: string) => TemplateResult;
 }
 
 export class ContrastErrorRenderer {
@@ -46,9 +47,19 @@ export class ContrastErrorRenderer {
    * 3. Inline combined (default)
    * @returns Template result, or null if error cannot be handled
    */
-  static render(error: ValidationIssue, options?: RenderOptions): TemplateResult | null {
+  static render(error: ValidationIssue, options?: RenderOptions): TemplateResult | typeof nothing {
     if (!this.canHandle(error)) {
-      return null;
+      console.error('ValidationIssue can not be handled.', error);
+      return nothing;
+    }
+
+    if (options?.renderTokenLink && options?.renderDetails) {
+      const tokens = this.composeTokens(options.renderTokenLink, error);
+      const details = this.getDetails(error);
+
+      if (options.composeStructure) {
+        return options.composeStructure(tokens, details);
+      }
     }
 
     // Render only tokens (for main list item with clickable links)
@@ -60,10 +71,6 @@ export class ContrastErrorRenderer {
     if (options?.renderDetails) {
       return html`${this.getDetails(error)}`;
     }
-
-    // Inline format (for input fields) - combines tokens and details as plain text
-    const tokens = this.composeTokens((token: string) => token, error);
-    const details = this.getDetails(error);
-    return html`<p>${tokens}: ${details}</p>`;
+    return nothing;
   }
 }
