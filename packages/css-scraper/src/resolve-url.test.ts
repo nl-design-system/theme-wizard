@@ -1,4 +1,4 @@
-import { test, expect, describe } from 'vitest';
+import { it, expect, describe } from 'vitest';
 import { resolveUrl } from './resolve-url';
 
 describe('valid urls', () => {
@@ -14,25 +14,24 @@ describe('valid urls', () => {
     ['example.com/path', new URL('https://example.com/path')],
     ['example.com/path?query=1#fragment', new URL('https://example.com/path?query=1#fragment')],
   ];
-  fixtures.forEach(([input, expected]) => {
-    test(`${input} => ${expected.toString()}`, () => {
-      expect(resolveUrl(input)).toEqual(expected);
-    });
+
+  it.each(fixtures)(`%s => %s}`, (input, expected) => {
+    expect(resolveUrl(input)).toEqual(expected);
   });
 
-  test('handles base64 encoded data URLs', () => {
+  it('handles base64 encoded data URLs', () => {
     const input = `data:text/css;charset=utf-8,${encodeURIComponent('h1 { color: red; }')}`;
     expect(resolveUrl(input)?.toString()).toEqual(input);
   });
 
-  test('paths with base url', () => {
+  it('paths with base url', () => {
     expect.soft(resolveUrl('/path', 'https://example.com')).toEqual(new URL('https://example.com/path'));
     expect.soft(resolveUrl('path', 'https://example.com')).toEqual(new URL('https://example.com/path'));
     expect.soft(resolveUrl('path?query=1', 'https://example.com')).toEqual(new URL('https://example.com/path?query=1'));
     expect.soft(resolveUrl('//other.com/path', 'https://example.com')).toEqual(new URL('https://other.com/path'));
   });
 
-  test('parent paths with base url', () => {
+  it('parent paths with base url', () => {
     expect
       .soft(resolveUrl('./style.css', 'https://example.com/lots/of/nested/folders'))
       .toEqual(new URL('https://example.com/lots/of/nested/style.css'));
@@ -50,9 +49,7 @@ describe('valid urls', () => {
 
 describe('invalid urls', () => {
   const fixtures: string[] = ['', 'example', '//example.com', 'a { color: red; } b { font-size: 12px; }'];
-  fixtures.forEach((input) => {
-    test(input, () => {
-      expect(resolveUrl(input)).toBeUndefined();
-    });
+  it.each(fixtures)(`%s`, (input) => {
+    expect(resolveUrl(input)).toBeUndefined();
   });
 });

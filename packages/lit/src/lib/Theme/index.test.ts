@@ -1,19 +1,19 @@
 import tokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import Theme from './index';
 
 describe('Theme', () => {
-  test('instantiates with default values', () => {
+  it('instantiates with default values', () => {
     const theme = new Theme();
     expect(theme.defaults).toMatchObject(Theme.defaults);
   });
 
-  test('can instantiate with custom defaults', () => {
+  it('can instantiate with custom defaults', () => {
     const theme = new Theme(tokens);
     expect(theme.defaults).toMatchObject(tokens);
   });
 
-  test('can update tokens', async () => {
+  it('can update tokens', async () => {
     const theme = new Theme();
     const initialTokens = structuredClone(theme.tokens);
     theme.tokens = tokens;
@@ -21,7 +21,7 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
-  test('can reset tokens', async () => {
+  it('can reset tokens', async () => {
     const theme = new Theme();
     theme.tokens = tokens;
     const updatedTokens = structuredClone(theme.tokens);
@@ -30,13 +30,13 @@ describe('Theme', () => {
     return expect(resettedTokens).not.toMatchObject(updatedTokens);
   });
 
-  test('can export to css custom properties', async () => {
+  it('can export to css custom properties', async () => {
     const theme = new Theme();
     const css = await theme.toCSS();
     return expect(css).toMatchSnapshot();
   });
 
-  test('can export to resolved css custom properties', async () => {
+  it('can export to resolved css custom properties', async () => {
     const theme = new Theme();
     const css = await theme.toCSS({ resolved: true });
     expect(css).toMatchSnapshot();

@@ -1,4 +1,4 @@
-import { test, expect, describe, expectTypeOf } from 'vitest';
+import { it, expect, describe, expectTypeOf } from 'vitest';
 import {
   BaseDesignTokenIdentifierSchema,
   type BaseDesignTokenIdentifier,
@@ -8,7 +8,7 @@ import {
 } from './index';
 
 describe('BaseDesignTokenNameSchema', () => {
-  test('accepts simple strings', () => {
+  it('accepts simple strings', () => {
     for (const fixture of ['a', 'abc', '1', 'dashed-ident', 'snake_ident', '123abc']) {
       const result = BaseDesignTokenIdentifierSchema.safeParse(fixture);
       expect.soft(result.success).toBeTruthy();
@@ -16,13 +16,13 @@ describe('BaseDesignTokenNameSchema', () => {
     }
   });
 
-  test('rejects invalid types', () => {
+  it('rejects invalid types', () => {
     for (const fixture of [1, {}]) {
       expect.soft(BaseDesignTokenIdentifierSchema.safeParse(fixture).success).toBeFalsy();
     }
   });
 
-  test('rejects forbidden characters', () => {
+  it('rejects forbidden characters', () => {
     for (const fixture of ['', '$test', '{ref}', 'test.123']) {
       expect.soft(BaseDesignTokenIdentifierSchema.safeParse(fixture).success).toBeFalsy();
     }
@@ -30,7 +30,7 @@ describe('BaseDesignTokenNameSchema', () => {
 });
 
 describe('BaseDesignTokenSchema', () => {
-  test('accepts objects with only valid properties', () => {
+  it('accepts objects with only valid properties', () => {
     const fixture = {
       'my-token-id': {
         $description: 'This is an unknown token',
@@ -49,12 +49,12 @@ describe('BaseDesignTokenSchema', () => {
       $value: 'value',
     };
 
-    test('MUST be a string', () => {
+    it('MUST be a string', () => {
       const token = { ...fixture, $description: 'test' };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
     });
 
-    test('MUST not be null', () => {
+    it('MUST not be null', () => {
       const token = { ...fixture, $description: null };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
     });
@@ -66,22 +66,22 @@ describe('BaseDesignTokenSchema', () => {
       $value: 'value',
     };
 
-    test('MAY be true', () => {
+    it('MAY be true', () => {
       const token = { ...fixture, $deprecated: true };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
     });
 
-    test('MAY be false', () => {
+    it('MAY be false', () => {
       const token = { ...fixture, $deprecated: false };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
     });
 
-    test('MAY be a string', () => {
+    it('MAY be a string', () => {
       const token = { ...fixture, $deprecated: 'Use X or Y instead' };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
     });
 
-    test('MUST not be null', () => {
+    it('MUST not be null', () => {
       const token = { ...fixture, $deprecated: null };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
     });
@@ -93,23 +93,23 @@ describe('BaseDesignTokenSchema', () => {
       $value: 'value',
     };
 
-    test('MAY be an empty record', () => {
+    it('MAY be an empty record', () => {
       const token = { ...fixture, $extensions: {} };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
     });
 
-    test('MAY be an simple record', () => {
+    it('MAY be an simple record', () => {
       const token = { ...fixture, $extensions: { test: 1 } };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
     });
 
-    test('MUST not be null', () => {
+    it('MUST not be null', () => {
       const token = { ...fixture, $extensions: null };
       expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
     });
   });
 
-  test('accepts a bare minimum token', () => {
+  it('accepts a bare minimum token', () => {
     const fixture = {
       'my-token-id': {
         $type: 'unknown',
@@ -121,7 +121,7 @@ describe('BaseDesignTokenSchema', () => {
     expectTypeOf(result.data!).toEqualTypeOf<BaseDesignToken>();
   });
 
-  test('rejects objects with unknown properties', () => {
+  it('rejects objects with unknown properties', () => {
     const fixture = {
       'my-token-id': {
         $type: 'my-token-type',
@@ -134,7 +134,7 @@ describe('BaseDesignTokenSchema', () => {
     expectTypeOf(result.data).not.toEqualTypeOf<BaseDesignToken>();
   });
 
-  test('rejects tokens without a $value', () => {
+  it('rejects tokens without a $value', () => {
     const fixture = {
       'my-token-id': {
         $type: 'my-token-type',
@@ -145,7 +145,7 @@ describe('BaseDesignTokenSchema', () => {
     expectTypeOf(result.data).not.toEqualTypeOf<BaseDesignToken>();
   });
 
-  test('rejects tokens with an invalid ID', () => {
+  it('rejects tokens with an invalid ID', () => {
     const fixture = {
       $tokenName: {
         $type: 'my-token-type',

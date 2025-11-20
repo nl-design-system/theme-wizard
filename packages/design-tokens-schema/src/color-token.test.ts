@@ -1,4 +1,4 @@
-import { describe, test, expect, expectTypeOf } from 'vitest';
+import { describe, it, expect, expectTypeOf } from 'vitest';
 import {
   ColorAlphaSchema,
   type ColorAlpha,
@@ -12,7 +12,7 @@ import {
 } from './color-token';
 
 describe('Alpha', () => {
-  test('accepts valid ranges', () => {
+  it('accepts valid ranges', () => {
     for (const alpha of [0, 1, 0.5]) {
       const result = ColorAlphaSchema.safeParse(alpha);
       expect(result.success).toBeTruthy();
@@ -20,7 +20,7 @@ describe('Alpha', () => {
     }
   });
 
-  test('rejects invalid ranges', () => {
+  it('rejects invalid ranges', () => {
     for (const alpha of ['0', -1, 2]) {
       const result = ColorAlphaSchema.safeParse(alpha);
       expect(result.success).toBeFalsy();
@@ -30,7 +30,7 @@ describe('Alpha', () => {
 });
 
 describe('Hex fallback', () => {
-  test('accepts valid ranges', () => {
+  it('accepts valid ranges', () => {
     for (const hex of ['#000000', '#ffffff', '#bada55', '#FFFFFF', '#ffFFff']) {
       const result = ColorHexFallbackSchema.safeParse(hex);
       expect(result.success).toBeTruthy();
@@ -38,7 +38,7 @@ describe('Hex fallback', () => {
     }
   });
 
-  test('rejects invalid ranges', () => {
+  it('rejects invalid ranges', () => {
     for (const hex of ['000000', '#000', '#aabbccdd', '#az09AZ']) {
       const result = ColorHexFallbackSchema.safeParse(hex);
       expect(result.success).toBeFalsy();
@@ -48,7 +48,7 @@ describe('Hex fallback', () => {
 });
 
 describe('color token validation', () => {
-  test('leave valid modern tokens intact', () => {
+  it('leave valid modern tokens intact', () => {
     const token = {
       $type: 'color',
       $value: {
@@ -62,7 +62,7 @@ describe('color token validation', () => {
     expect(result.data).toEqual(token);
   });
 
-  test('upgrade legacy color to modern', () => {
+  it('upgrade legacy color to modern', () => {
     const legacyColor = {
       $type: 'color',
       $value: '#f00',
@@ -90,7 +90,7 @@ describe('color token validation', () => {
       },
     } satisfies ColorToken;
 
-    test('convert `transparent` to fully transparent black, modern syntax', () => {
+    it('convert `transparent` to fully transparent black, modern syntax', () => {
       const transparentColor = {
         $type: 'color',
         $value: 'transparent',
@@ -100,7 +100,7 @@ describe('color token validation', () => {
       expect(result.data).toEqual(expected_color);
     });
 
-    test('convert `rgba(0, 0, 0, 0)` to fully transparent black, modern syntax', () => {
+    it('convert `rgba(0, 0, 0, 0)` to fully transparent black, modern syntax', () => {
       const transparentColor = {
         $type: 'color',
         $value: 'rgba(0, 0, 0, 0)',
@@ -111,7 +111,7 @@ describe('color token validation', () => {
     });
   });
 
-  test('invalid colors are rejected', () => {
+  it('invalid colors are rejected', () => {
     const legacyColor = {
       $type: 'color',
       $value: '__not_a_color__',
@@ -122,7 +122,7 @@ describe('color token validation', () => {
 });
 
 describe('stringify token to string', () => {
-  test('stringify a color value to an srgb string', () => {
+  it('stringify a color value to an srgb string', () => {
     const tokenValue = {
       alpha: 1,
       colorSpace: 'srgb',
@@ -133,7 +133,7 @@ describe('stringify token to string', () => {
   });
 
   // https://www.designtokens.org/tr/drafts/color/#using-the-none-keyword
-  test('stringifies colors that use "none" in their components', () => {
+  it('stringifies colors that use "none" in their components', () => {
     const tokenValue = {
       alpha: 1,
       colorSpace: 'hsl',
@@ -144,7 +144,7 @@ describe('stringify token to string', () => {
     expect(result).toBe('#ffffff');
   });
 
-  test('using the zod legacyToModernColor codec', () => {
+  it('using the zod legacyToModernColor codec', () => {
     expect(
       legacyToModernColor.encode({
         alpha: 1,

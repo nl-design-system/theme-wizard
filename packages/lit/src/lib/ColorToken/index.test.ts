@@ -1,5 +1,5 @@
 import { COLOR_SPACES, type ColorToken as ColorTokenType } from '@nl-design-system-community/design-tokens-schema';
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import ColorToken, { ColorComponents } from './index';
 
 const greenSRGB: ColorTokenType = {
@@ -56,23 +56,23 @@ const removeSwatchElements = () => {
  * and the resulting computed style will be `rgba(0, 0, 0, 0)`.
  */
 describe('ColorToken', () => {
-  test('can be initialized with a scraped color token', () => {
+  it('can be initialized with a scraped color token', () => {
     const colorToken = new ColorToken(greenSRGB);
     expect(colorToken).toBeDefined();
   });
 
-  test('matches initialization token', () => {
+  it('matches initialization token', () => {
     const colorToken = new ColorToken(greenSRGB);
     expect(colorToken.toObject()).toMatchObject(greenSRGB);
   });
 
   describe('toCSSColorFunction()', () => {
-    test('returns correct value for example srgb token', () => {
+    it('returns correct value for example srgb token', () => {
       const colorToken = new ColorToken(greenSRGB);
       const colorFunction = colorToken.toCSSColorFunction();
       expect(colorFunction).toBe('color(srgb 0 0.5058823529411764 0.12156862745098039)');
     });
-    test('returns correct value for example oklch token', () => {
+    it('returns correct value for example oklch token', () => {
       const colorToken = new ColorToken(greenOKLCH);
       const colorFunction = colorToken.toCSSColorFunction();
       expect(colorFunction).toBe('oklch(0.524144 0.165652 144.827)');
@@ -81,14 +81,14 @@ describe('ColorToken', () => {
 
   describe('toColorSpace()', () => {
     Object.values(COLOR_SPACES).forEach((destination) => {
-      test(`returns new ColorToken in ${destination} color space`, () => {
+      it(`returns new ColorToken in ${destination} color space`, () => {
         const token = new ColorToken(greenSRGB);
         const newToken = token.toColorSpace(destination);
         expect(newToken.$value.colorSpace).toBe(destination);
       });
     });
 
-    test('returns new ColorToken if destination color space is same as source', () => {
+    it('returns new ColorToken if destination color space is same as source', () => {
       const token = new ColorToken(greenSRGB);
       const newToken = token.toColorSpace(token.$value.colorSpace);
       // Values are the same
@@ -99,7 +99,7 @@ describe('ColorToken', () => {
 
     const token = new ColorToken(greenSRGB);
     Object.values(COLOR_SPACES).forEach((destination) => {
-      test(`ColorToken converted to ${destination} and back returns closely matching values`, () => {
+      it(`ColorToken converted to ${destination} and back returns closely matching values`, () => {
         const roundTripToken = new ColorToken(greenSRGB).toColorSpace(destination).toColorSpace('srgb');
         token.$value.components.every((value, index) =>
           // transformation is inherently lossy so therefore the precision is quite low
@@ -116,7 +116,7 @@ describe('ColorToken', () => {
     const components: ColorComponents = [1, 1, 1];
 
     Object.values(COLOR_SPACES).forEach((colorSpace) => {
-      test(`supports ${colorSpace}`, () => {
+      it(`supports ${colorSpace}`, () => {
         const colorFunction = ColorToken.getCSSColorFunction({ colorSpace, components });
         setSwatch(`rgb(from ${colorFunction} r g b`);
         expect(getSwatch()).not.toBe(invalidColor);
@@ -131,7 +131,7 @@ describe('ColorToken', () => {
     const components: ColorComponents = [1, 1, 1];
     Object.values(COLOR_SPACES).forEach((destination) => {
       Object.values(COLOR_SPACES).forEach((colorSpace) => {
-        test(`supports from ${colorSpace} to ${destination}`, () => {
+        it(`supports from ${colorSpace} to ${destination}`, () => {
           const colorFunction = ColorToken.getRelativeColorFunction(destination, { colorSpace, components });
           setSwatch(colorFunction);
           expect(getSwatch()).not.toBe(invalidColor);

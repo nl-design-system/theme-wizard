@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 import './index';
 
@@ -9,12 +9,12 @@ describe(`<${tag}>`, () => {
     document.body.innerHTML = `<${tag}></${tag}><button>hoi</button>`;
   });
 
-  test('shows a form control', () => {
+  it('shows a form control', () => {
     const formElement = page.getByRole('textbox');
     expect(formElement).toBeDefined();
   });
 
-  test('emits a changeEvent a form control', async () => {
+  it('emits a changeEvent a form control', async () => {
     const mockEventHandler = vi.fn();
     document.addEventListener('change', mockEventHandler);
     const textboxElement = page.getByRole('textbox');

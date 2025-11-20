@@ -1,5 +1,5 @@
 import '.';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { Dropdown } from '.';
 
 const tag = 'wiz-dropdown';
@@ -25,7 +25,7 @@ describe(`<${tag}> integration tests`, () => {
     document.body.innerHTML = `<${tag}></${tag}>`;
   });
 
-  test('renders a select element', async () => {
+  it('renders a select element', async () => {
     const element = document.querySelector(tag) as Dropdown;
     element.isOptgroup = true;
     element.options = OPTIONS;
@@ -36,7 +36,7 @@ describe(`<${tag}> integration tests`, () => {
     expect(select?.tagName.toLowerCase()).toBe('select');
   });
 
-  test('renders optgroups with options', async () => {
+  it('renders optgroups with options', async () => {
     const element = document.querySelector(tag) as Dropdown;
     element.isOptgroup = true;
     element.options = OPTIONS;
@@ -53,7 +53,7 @@ describe(`<${tag}> integration tests`, () => {
     expect(somePathGroup).toBeDefined();
   });
 
-  test('dispatches change event on select change', async () => {
+  it('dispatches change event on select change', async () => {
     const element = document.querySelector(tag) as Dropdown;
     element.isOptgroup = true;
     element.options = OPTIONS;

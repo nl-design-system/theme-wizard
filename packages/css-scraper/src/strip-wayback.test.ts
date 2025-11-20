@@ -1,8 +1,8 @@
-import { test, expect, describe } from 'vitest';
+import { it, expect, describe } from 'vitest';
 import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback';
 
 describe('isWaybackUrl', () => {
-  test('valid cases', () => {
+  it('valid cases', () => {
     const urls = [
       'https://web.archive.org/web/20250311183954/x', // invalid URL but not our concern
       'https://web.archive.org/web/20250311183954/https://www.projectwallace.com/',
@@ -14,7 +14,7 @@ describe('isWaybackUrl', () => {
     }
   });
 
-  test('invalid cases', () => {
+  it('invalid cases', () => {
     const urls = [
       '',
       'https://example.com',
@@ -30,7 +30,7 @@ describe('isWaybackUrl', () => {
 });
 
 describe(`removeWaybackInsertions`, () => {
-  test('removes toolbar html', () => {
+  it('removes toolbar html', () => {
     const html = `
       <!doctype>
       <html>
@@ -72,7 +72,7 @@ describe(`removeWaybackInsertions`, () => {
   });
 
   describe('leaves everything else intact', () => {
-    test('no toolbar present', () => {
+    it('no toolbar present', () => {
       const html = `
       <!doctype>
       <html>
@@ -87,7 +87,7 @@ describe(`removeWaybackInsertions`, () => {
       expect(removeWaybackToolbar(html)).toEqual(html);
     });
 
-    test('does not remove just any comment', () => {
+    it('does not remove just any comment', () => {
       const html = `
       <p>Hello</p>
       <!-- this is my comment -->

@@ -1,4 +1,4 @@
-import { test, expect, describe, vi, beforeEach, type Mock } from 'vitest';
+import { expect, describe, vi, beforeEach, Mock, it } from 'vitest';
 import { ForbiddenError, NotFoundError, ConnectionRefusedError, InvalidUrlError, TimeoutError } from './errors';
 import { getCssFromHtml, getImportUrls, getCssFile, getCssResources, getCss, getDesignTokens } from './get-css';
 
@@ -16,7 +16,7 @@ describe('getCssResources', () => {
     vi.clearAllMocks();
   });
 
-  test('get a CSS file directly (no further scraping', async () => {
+  it('get a CSS file directly (no further scraping', async () => {
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
     const result = await getCssResources('https://example.com/style.css');
     expect(result).toEqual([
@@ -28,7 +28,7 @@ describe('getCssResources', () => {
     ]);
   });
 
-  test('get remote CSS referenced in a <link> tag', async () => {
+  it('get remote CSS referenced in a <link> tag', async () => {
     // Mock the HTML request
     const mockHtml = `
       <html>
@@ -61,7 +61,7 @@ describe('getCssResources', () => {
     ]);
   });
 
-  test('get embedded CSS from a <style> tag', async () => {
+  it('get embedded CSS from a <style> tag', async () => {
     // Mock the HTML request
     const mockCss = 'a { color: blue; }';
     const mockHtml = `
@@ -88,7 +88,7 @@ describe('getCssResources', () => {
     ]);
   });
 
-  test('deep-fetch CSS from an @import rule', async () => {
+  it('deep-fetch CSS from an @import rule', async () => {
     // Mock the HTML request
     const mockCss = '@import url("./fonts.css");';
     const mockHtml = `
@@ -124,7 +124,7 @@ describe('getCssResources', () => {
     ]);
   });
 
-  test('fetch CSS from a remote source with relative path and <base> element in the HTML', async () => {
+  it('fetch CSS from a remote source with relative path and <base> element in the HTML', async () => {
     // Mock the HTML request
     const mockHtml = `
       <html>
@@ -158,7 +158,7 @@ describe('getCssResources', () => {
     ]);
   });
 
-  test('strips wyback machine toolbar', async () => {
+  it('strips wyback machine toolbar', async () => {
     // Mock the HTML request
     const mockCss = 'html { color: green; }';
     const mockHtml = `
@@ -206,11 +206,11 @@ describe('getCssResources', () => {
   });
 
   describe('errors', () => {
-    test('InvalidUrlError', async () => {
+    it('InvalidUrlError', async () => {
       await expect(getCssResources('')).rejects.toThrowError(InvalidUrlError);
     });
 
-    test('NotFoundError', async () => {
+    it('NotFoundError', async () => {
       (fetch as Mock).mockResolvedValueOnce({
         ok: false,
         status: 404,
@@ -219,7 +219,7 @@ describe('getCssResources', () => {
       await expect(getCssResources('http://example.com')).rejects.toThrowError(NotFoundError);
     });
 
-    test('ForbiddenError', async () => {
+    it('ForbiddenError', async () => {
       (fetch as Mock).mockResolvedValueOnce({
         ok: false,
         status: 403,
@@ -228,7 +228,7 @@ describe('getCssResources', () => {
       await expect(getCssResources('http://example.com')).rejects.toThrowError(ForbiddenError);
     });
 
-    test('ConnectionRefusedError', async () => {
+    it('ConnectionRefusedError', async () => {
       (fetch as Mock).mockResolvedValueOnce({
         ok: false,
         status: 400,
@@ -237,7 +237,7 @@ describe('getCssResources', () => {
       await expect(getCssResources('http://example.com')).rejects.toThrowError(ConnectionRefusedError);
     });
 
-    test('ConnectionRefusedError (localhost)', async () => {
+    it('ConnectionRefusedError (localhost)', async () => {
       (fetch as Mock).mockResolvedValueOnce({
         ok: false,
         status: 400,
@@ -246,7 +246,7 @@ describe('getCssResources', () => {
       await expect(getCssResources('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
     });
 
-    test('TimeoutError', async () => {
+    it('TimeoutError', async () => {
       (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
       await expect(getCssResources('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
     });
@@ -254,7 +254,7 @@ describe('getCssResources', () => {
 });
 
 describe('getCss', () => {
-  test('concatenates resources', async () => {
+  it('concatenates resources', async () => {
     const mockCss = 'a { color: blue; }';
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
     const result = await getCss('example.com/style.css');
@@ -264,7 +264,7 @@ describe('getCss', () => {
 
 describe('getCssFromHtml', () => {
   describe('<style> tags', () => {
-    test('single style element', () => {
+    it('single style element', () => {
       const html = `
         <style>.my-css { color: red; }</style>
       `;
@@ -277,7 +277,7 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
-    test('multiple style elements', () => {
+    it('multiple style elements', () => {
       const html = `
         <style>.my-css { color: red; }</style>
         <p>Hello world</p>
@@ -297,12 +297,12 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
-    test('empty style tag', () => {
+    it('empty style tag', () => {
       const html = `<style></style>`;
       expect(getCssFromHtml(html, 'example.com')).toEqual([]);
     });
 
-    test('empty style tag with whitespace', () => {
+    it('empty style tag with whitespace', () => {
       const html = `<style> </style>`;
       expect(getCssFromHtml(html, 'example.com')).toEqual([]);
     });
@@ -314,7 +314,7 @@ describe('getCssFromHtml', () => {
     // - <base> element present: yes | no
     // - media: null | string
     // - rel: stylesheet | alternate stylesheet | etc
-    test('rel=stylesheet href=absolute', () => {
+    it('rel=stylesheet href=absolute', () => {
       expect(
         getCssFromHtml('<link rel="stylesheet" href="https://example.com/style.css">', 'https://example.com'),
       ).toEqual([
@@ -329,7 +329,7 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
-    test('rel="stylesheet alternate"', () => {
+    it('rel="stylesheet alternate"', () => {
       expect(
         getCssFromHtml('<link rel="stylesheet alternate" href="https://example.com/style.css">', 'https://example.com'),
       ).toEqual([
@@ -344,7 +344,7 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
-    test('rel="stylesheet media=(prefers-color-scheme: dark)"', () => {
+    it('rel="stylesheet media=(prefers-color-scheme: dark)"', () => {
       expect(
         getCssFromHtml(
           '<link rel="stylesheet" href="https://example.com/style.css" media="(prefers-color-scheme: dark)">',
@@ -363,7 +363,7 @@ describe('getCssFromHtml', () => {
     });
 
     describe('relative URLs', () => {
-      test('rel=stylesheet href=./style.css', () => {
+      it('rel=stylesheet href=./style.css', () => {
         expect(getCssFromHtml('<link rel="stylesheet" href="./style.css">', 'https://example.com')).toEqual([
           {
             css: undefined,
@@ -376,7 +376,7 @@ describe('getCssFromHtml', () => {
         ]);
       });
 
-      test('rel=stylesheet href=./style.css', () => {
+      it('rel=stylesheet href=../../style.css', () => {
         expect(
           getCssFromHtml('<link rel="stylesheet" href="../../style.css">', 'https://example.com/blog/post'),
         ).toEqual([
@@ -392,7 +392,7 @@ describe('getCssFromHtml', () => {
       });
     });
 
-    test('handles base64 encoded hrefs', () => {
+    it('handles base64 encoded hrefs', () => {
       const expectedCss = 'test {}';
       const href = `data:text/css;base64,${btoa(expectedCss)}`;
       const html = `<link rel="stylesheet" href="${href}">`;
@@ -410,7 +410,7 @@ describe('getCssFromHtml', () => {
   });
 
   describe('inline `style=".." attributes', () => {
-    test('a single element with a style attribute', () => {
+    it('a single element with a style attribute', () => {
       const html = `<p style="font-size: 20px; font-weight: bold;">I am h1</p>`;
       expect(getCssFromHtml(html, 'example.com')).toEqual([
         {
@@ -421,7 +421,7 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
-    test('multiple elements with a style attribute', () => {
+    it('multiple elements with a style attribute', () => {
       const html = `
         <p style="font-size: 20px;">I am h1</p>
         <marquee style="animation-duration: 60s;">WHIEEEEE</marquee>
@@ -435,7 +435,7 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
-    test('missing trailing ;', () => {
+    it('missing trailing ;', () => {
       const html = `
         <p style="font-size: 20px">I am h1</p>
         <marquee style="animation-duration: 60s;">WHIEEEEE</marquee>
@@ -449,12 +449,12 @@ describe('getCssFromHtml', () => {
       ]);
     });
 
-    test('empty attribute', () => {
+    it('empty attribute', () => {
       const html = '<p style="">test</p>';
       expect(getCssFromHtml(html, 'example.com')).toEqual([]);
     });
 
-    test('attribute with whitespace only', () => {
+    it('attribute with whitespace only', () => {
       const html = '<p style="  ">test</p>';
       expect(getCssFromHtml(html, 'example.com')).toEqual([]);
     });
@@ -463,28 +463,28 @@ describe('getCssFromHtml', () => {
 
 describe('getImportUrls', () => {
   describe('1 @import', () => {
-    test('no url(), single quotes', () => {
+    it('no url(), single quotes', () => {
       expect(getImportUrls(`@import 'test.css';`)).toEqual(['test.css']);
     });
 
-    test('no url(), double quotes', () => {
+    it('no url(), double quotes', () => {
       expect(getImportUrls(`@import "test.css";`)).toEqual(['test.css']);
     });
 
-    test('url() w/o quotes', () => {
+    it('url() w/o quotes', () => {
       expect(getImportUrls('@import url(test.css);')).toEqual(['test.css']);
     });
 
-    test('url() w/ single quotes', () => {
+    it('url() w/ single quotes', () => {
       expect(getImportUrls(`@import url('test.css');`)).toEqual(['test.css']);
     });
 
-    test('url() w/ double quotes', () => {
+    it('url() w/ double quotes', () => {
       expect(getImportUrls(`@import url("test.css");`)).toEqual(['test.css']);
     });
   });
 
-  test('multiple @imports', () => {
+  it('multiple @imports', () => {
     // examples from https://developer.mozilla.org/en-US/docs/Web/CSS/@import#examples
     const css = `
       @import "custom.css";
@@ -504,33 +504,33 @@ describe('getImportUrls', () => {
     ]);
   });
 
-  test('multiple consecutive (minified) @imports', () => {
+  it('multiple consecutive (minified) @imports', () => {
     const css = '@import "custom1.css";@import "custom2.css";';
     expect(getImportUrls(css)).toEqual(['custom1.css', 'custom2.css']);
   });
 
   describe('with layer()', () => {
-    test('@import with layer', () => {
+    it('@import with layer', () => {
       expect(getImportUrls(`@import url("test.css") layer;`)).toEqual(['test.css']);
     });
 
-    test('@import url() layer(test)', () => {
+    it('@import url() layer(test)', () => {
       expect(getImportUrls(`@import url("test.css") layer(test);`)).toEqual(['test.css']);
     });
 
-    test('@import url() layer(test.me.nested)', () => {
+    it('@import url() layer(test.me.nested)', () => {
       expect(getImportUrls(`@import url("test.css") layer(test.me.nested);`)).toEqual(['test.css']);
     });
   });
 
   describe('with supports()', () => {
-    test('@import url("test.css") supports(display: grid);', () => {
+    it('@import url("test.css") supports(display: grid);', () => {
       expect(getImportUrls(`@import url("test.css") supports(display: grid);`)).toEqual(['test.css']);
     });
   });
 
   describe('with @media', () => {
-    test('@import url("test.css") (min-width: 1000px);', () => {
+    it('@import url("test.css") (min-width: 1000px);', () => {
       expect(getImportUrls('@import url("test.css") (min-width: 1000px);')).toEqual(['test.css']);
     });
   });
@@ -546,15 +546,14 @@ describe('getImportUrls', () => {
       '@import "test.css" supports((not (display: grid)) and (display: flex)) screen and (width <= 400px);',
       '@import "test.css" supports((selector(h2 > p)) and (font-tech(color-COLRv1)));',
     ];
-    for (const imprt of imports) {
-      test(imprt, () => {
-        expect(getImportUrls(imprt)).toEqual(['test.css']);
-      });
-    }
+
+    it.each(imports)('%s', (imprt) => {
+      expect(getImportUrls(imprt)).toEqual(['test.css']);
+    });
   });
 
   describe('invalid CSS cases that we do not care about', () => {
-    test('@import declared after a ruleset', () => {
+    it('@import declared after a ruleset', () => {
       const css = `
         * {
           margin: 0;
@@ -566,7 +565,7 @@ describe('getImportUrls', () => {
       expect(getImportUrls(css)).toEqual(['my-imported-styles.css']);
     });
 
-    test('nested @import in a conditional at-rule', () => {
+    it('nested @import in a conditional at-rule', () => {
       const css = `
         @media (max-width: 0) {
           @import url('test1.css');
@@ -593,7 +592,7 @@ describe('getCssFile', () => {
     'User-Agent': 'NL Design System CSS Scraper/1.0',
   };
 
-  test('it fetches CSS content successfully', async () => {
+  it('fetches CSS content successfully', async () => {
     const mockResponse = 'body { margin: 0; }';
     (fetch as Mock).mockResolvedValueOnce({
       ok: true,
@@ -609,7 +608,7 @@ describe('getCssFile', () => {
     expect(result).toEqual(mockResponse);
   });
 
-  test('it returns an empty string when the request fails', async () => {
+  it('returns an empty string when the request fails', async () => {
     (fetch as Mock).mockResolvedValueOnce({
       ok: false,
     });
@@ -619,7 +618,7 @@ describe('getCssFile', () => {
     expect(result).toEqual('');
   });
 
-  test('it returns an empty string when the request is aborted', async () => {
+  it('returns an empty string when the request is aborted', async () => {
     (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
 
     const controller = new AbortController();
@@ -631,7 +630,7 @@ describe('getCssFile', () => {
 });
 
 describe('getDesignTokens', () => {
-  test('formats css into design tokens', () => {
+  it('formats css into design tokens', () => {
     const mockCss = `
       a {
         color: blue;

@@ -1,5 +1,5 @@
 import { BrandSchema } from '@nl-design-system-community/design-tokens-schema';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { page } from 'vitest/browser';
 import './index';
 
@@ -10,25 +10,25 @@ describe(`<${tag}>`, () => {
     document.body.innerHTML = `<${tag}></${tag}>`;
   });
 
-  test('shows a color element', () => {
+  it('shows a color element', () => {
     const element = document.querySelector(tag);
     const color = element?.shadowRoot?.querySelector('input[type=color]') || undefined;
     expect(color).toBeDefined();
   });
 
-  test('shows a list of colors', () => {
+  it('shows a list of colors', () => {
     const element = document.querySelector(tag);
     const output = element?.shadowRoot?.querySelector('output');
     expect(output?.childNodes.length).toBeGreaterThan(1);
   });
 
-  test('value corresponds to valid token schema', () => {
+  it('value corresponds to valid token schema', () => {
     const element = document.querySelector(tag);
     const value = element?.value;
     expect(BrandSchema.safeParse(value)).toBeTruthy();
   });
 
-  test('value updates when color changes', async () => {
+  it('value updates when color changes', async () => {
     const element = document.querySelector(tag);
     /* @ts-expect-error element/shadowroot could be undefined, but it is fine if it would throw */
     const color = page.elementLocator(element?.shadowRoot?.querySelector('input[type=color]'));
