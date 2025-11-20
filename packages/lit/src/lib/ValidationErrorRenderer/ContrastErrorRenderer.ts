@@ -62,15 +62,6 @@ export class ContrastErrorRenderer {
       }
     }
 
-    // Render only tokens (for main list item with clickable links)
-    if (options?.renderTokenLink) {
-      return html`${this.composeTokens(options.renderTokenLink, error)}`;
-    }
-
-    // Render only details (for sub list item with contrast values)
-    if (options?.renderDetails) {
-      return html`${this.getDetails(error)}`;
-    }
     return nothing;
   }
 }
