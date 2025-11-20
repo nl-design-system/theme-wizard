@@ -1,6 +1,6 @@
 import '.';
 import type { Category, TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import type { PreviewPicker } from '.';
 
 const tag = 'preview-picker';
@@ -36,7 +36,7 @@ describe(`<${tag}>`, () => {
     document.body.innerHTML = '';
   });
 
-  test('renders a form with wiz-dropdown', async () => {
+  it('renders a form with wiz-dropdown', async () => {
     const el = await mount();
     const form = el.shadowRoot?.querySelector('form');
     const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
@@ -45,7 +45,7 @@ describe(`<${tag}>`, () => {
     expect(dropdown).toBeTruthy();
   });
 
-  test('builds optgroup options with full template paths', async () => {
+  it('builds optgroup options with full template paths', async () => {
     const el = await mount();
     const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
     const options = dropdown?.options;
@@ -55,14 +55,14 @@ describe(`<${tag}>`, () => {
     expect(allValues).toContain('/another-beautiful-thing/another-beautiful-page');
   });
 
-  test('defaults to first option when no templatePath param', async () => {
+  it('defaults to first option when no templatePath param', async () => {
     const el = await mount();
     const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
 
     expect(dropdown?.value).toBe('/something-beautiful/some-beautiful-page');
   });
 
-  test('reads current value from ?templatePath query param', async () => {
+  it('reads current value from ?templatePath query param', async () => {
     const origin = globalThis.location.origin;
     globalThis.history.pushState({}, '', `${origin}/?templatePath=/something-beautiful/some-beautiful-page`);
     const el = await mount();

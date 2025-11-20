@@ -92,7 +92,7 @@ describe('PersistentStorage', () => {
     expect(storage.getItem(key)).toBe(value);
   });
 
-  it('should remove items', () => {
+  it('should remove string items', () => {
     const storage = new PersistentStorage();
     const key = 'testKey';
     const value = 'testValue';
@@ -121,7 +121,7 @@ describe('PersistentStorage', () => {
     expect(storage.getJSON(key)).toMatchObject(object);
   });
 
-  it('should remove items', () => {
+  it('should remove object items', () => {
     const storage = new PersistentStorage();
     const key = 'testKey';
     const object = { a: 'b' };

@@ -1,7 +1,7 @@
 import maTokens from '@nl-design-system-community/ma-design-tokens/dist/tokens';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
 import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
-import { describe, test, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import * as z from 'zod';
 import {
   BrandsSchema,
@@ -18,11 +18,11 @@ import {
 import { ColorToken, parseColor } from './color-token';
 
 describe('brand', () => {
-  test('no brands present', () => {
+  it('no brands present', () => {
     expect(BrandsSchema.safeParse({}).success).toBeTruthy();
   });
 
-  test('valid brand name', () => {
+  it('valid brand name', () => {
     const config = {
       ma: {
         name: {
@@ -34,7 +34,7 @@ describe('brand', () => {
     expect(BrandsSchema.safeParse(config).success).toBeTruthy();
   });
 
-  test('brand name should be a valid Design Token', () => {
+  it('brand name should be a valid Design Token', () => {
     const config = {
       // invalid identifier
       '$my-brand': {
@@ -48,7 +48,7 @@ describe('brand', () => {
   });
 
   describe('single brand', () => {
-    test('empty color config', () => {
+    it('empty color config', () => {
       const config = {
         name: {
           $type: 'text',
@@ -59,7 +59,7 @@ describe('brand', () => {
       expect(BrandSchema.safeParse(config).success).toBeTruthy();
     });
 
-    test('missing color config', () => {
+    it('missing color config', () => {
       const config = {
         name: {
           $type: 'text',
@@ -70,14 +70,14 @@ describe('brand', () => {
       expect(BrandSchema.safeParse(config).success).toBeTruthy();
     });
 
-    test('missing name', () => {
+    it('missing name', () => {
       const config = {
         color: {},
       };
       expect(BrandSchema.safeParse(config).success).toBeFalsy();
     });
 
-    test('incorrect name type', () => {
+    it('incorrect name type', () => {
       const config = {
         name: {
           $type: 'string', // instead of 'text'
@@ -98,7 +98,7 @@ describe('brand', () => {
       },
     };
 
-    test('top-level colors with legacy color', () => {
+    it('top-level colors with legacy color', () => {
       const config = {
         name: {
           $type: 'text',
@@ -116,7 +116,7 @@ describe('brand', () => {
       expect.soft(result.data?.color?.['white']).toEqual(modernWhite);
     });
 
-    test('top-level colors with modern color', () => {
+    it('top-level colors with modern color', () => {
       const config = {
         name: {
           $type: 'text',
@@ -132,7 +132,7 @@ describe('brand', () => {
       expect.soft(result.data).toEqual(config);
     });
 
-    test('nested colors with legacy color format', () => {
+    it('nested colors with legacy color format', () => {
       const config = {
         name: {
           $type: 'text',
@@ -152,7 +152,7 @@ describe('brand', () => {
       expect.soft(result.data?.color?.['indigo']).toEqual({ 1: modernWhite });
     });
 
-    test('nested colors with modern color format', () => {
+    it('nested colors with modern color format', () => {
       const config = {
         name: {
           $type: 'text',
@@ -169,7 +169,7 @@ describe('brand', () => {
       expect.soft(result.data).toEqual(config);
     });
 
-    test('fails on invalid top-level colors', () => {
+    it('fails on invalid top-level colors', () => {
       const config = {
         name: {
           $type: 'text',
@@ -186,7 +186,7 @@ describe('brand', () => {
       expect.soft(result.success).toBeFalsy();
     });
 
-    test('fails on invalid nested colors', () => {
+    it('fails on invalid nested colors', () => {
       const config = {
         name: {
           $type: 'text',
@@ -205,7 +205,7 @@ describe('brand', () => {
       expect.soft(result.success).toBeFalsy();
     });
 
-    test('fails on invalid color name', () => {
+    it('fails on invalid color name', () => {
       const config = {
         name: {
           $type: 'text',
@@ -226,20 +226,20 @@ describe('brand', () => {
 });
 
 describe('basis', () => {
-  test('basis config allows unknown properties', () => {
+  it('basis config allows unknown properties', () => {
     expect(BasisTokensSchema.safeParse({ unknownField: {} }).success).toBeTruthy();
   });
 
   describe('color', () => {
-    test('allows known color names', () => {
+    it('allows known color names', () => {
       expect(BasisColorSchema.safeParse({ 'accent-1': {} }).success).toBeTruthy();
     });
 
-    test('does not allow unknown properties', () => {
+    it('does not allow unknown properties', () => {
       expect(BasisColorSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
     });
 
-    test('allows references to other tokens in the schema', () => {
+    it('allows references to other tokens in the schema', () => {
       const config = {
         default: {
           'bg-document': {
@@ -285,7 +285,7 @@ describe('theme', () => {
   };
 
   describe('adding contrast-with extensions', () => {
-    test('adds contrast-with extensions for tokens that we know', () => {
+    it('adds contrast-with extensions for tokens that we know', () => {
       const config = {
         basis: {
           color: {
@@ -322,7 +322,7 @@ describe('theme', () => {
       });
     });
 
-    test('contrast-with extensions do not mess with existing extensions', () => {
+    it('contrast-with extensions do not mess with existing extensions', () => {
       const config = {
         basis: {
           color: {
@@ -359,7 +359,7 @@ describe('theme', () => {
       ).toHaveLength(2);
     });
 
-    test('does not add extension when corresponding token does not exist', () => {
+    it('does not add extension when corresponding token does not exist', () => {
       const config = {
         basis: {
           color: {
@@ -398,7 +398,7 @@ describe('theme', () => {
         brand: brandConfig,
       };
 
-      test('does not mutate the input config', () => {
+      it('does not mutate the input config', () => {
         const originalConfig = structuredClone(config);
         StrictThemeSchema.safeParse(config);
         const originalBg = originalConfig.basis.color.default['bg-document'].$value;
@@ -406,13 +406,13 @@ describe('theme', () => {
         expect.soft(originalBg).toEqual(bgAfterValidation);
       });
 
-      test('validates the input', () => {
+      it('validates the input', () => {
         const result = StrictThemeSchema.safeParse(config);
         expect.soft(BrandSchema.safeParse(config.brand.ma).success).toBeTruthy();
         expect.soft(result.success).toBeTruthy();
       });
 
-      test('returns the schema with the ref value added to an extension and the $value left intact', () => {
+      it('returns the schema with the ref value added to an extension and the $value left intact', () => {
         const result = StrictThemeSchema.safeParse(config);
         const expectedColor = brandConfig.ma.color.indigo[5];
         expect.soft(result.data?.basis?.color?.default?.['bg-document']).toEqual({
@@ -424,7 +424,7 @@ describe('theme', () => {
       });
     });
 
-    test('marks as invalid if resolving to an nonexistent object', () => {
+    it('marks as invalid if resolving to an nonexistent object', () => {
       const config = {
         basis: {
           color: {
@@ -448,7 +448,7 @@ describe('theme', () => {
       expect.soft(result.success).toBeFalsy();
     });
 
-    test('marks as invalid if resolving to an existing object without a $value property', () => {
+    it('marks as invalid if resolving to an existing object without a $value property', () => {
       const config = {
         basis: {
           color: {
@@ -473,7 +473,7 @@ describe('theme', () => {
       });
     });
 
-    test('marks as invalid when a font-family token reference points to an existing non-font-family token', () => {
+    it('marks as invalid when a font-family token reference points to an existing non-font-family token', () => {
       const config = {
         basis: {
           heading: {
@@ -526,7 +526,7 @@ describe('theme', () => {
       },
     } satisfies Theme;
 
-    test('passes when contrast is sufficient', () => {
+    it('passes when contrast is sufficient', () => {
       const testConfig = structuredClone(config);
       testConfig.basis.color.default['border-default'] = {
         $type: 'color',
@@ -540,7 +540,7 @@ describe('theme', () => {
       expect(result.success).toEqual(true);
     });
 
-    test('fails when color-document vs bg-subtle do not have enough contrast', () => {
+    it('fails when color-document vs bg-subtle do not have enough contrast', () => {
       const testConfig = structuredClone(config);
       testConfig.basis.color.default['bg-subtle'] = {
         $type: 'color',
@@ -572,7 +572,7 @@ describe('theme', () => {
       ]);
     });
 
-    test('passes when legacy tokens are used with proper contrast', () => {
+    it('passes when legacy tokens are used with proper contrast', () => {
       const testConfig = structuredClone(config);
       testConfig.basis.color.default['bg-subtle'] = {
         $type: 'color',
@@ -586,7 +586,7 @@ describe('theme', () => {
       expect(result.success).toEqual(true);
     });
 
-    test('fails when legacy tokens are used with improper contrast', () => {
+    it('fails when legacy tokens are used with improper contrast', () => {
       const testConfig = structuredClone(config);
       testConfig.basis.color.default['bg-subtle'] = {
         $type: 'color',
@@ -619,7 +619,7 @@ describe('theme', () => {
     });
   });
 
-  test('finding both ref and contrast issues at once', () => {
+  it('finding both ref and contrast issues at once', () => {
     // This test case exists because previous versions would bail out after the validation found an invalid ref and skipped checking contrast
     const white = parseColor('#ffffff');
     const lightGray = parseColor('#cccccc');
@@ -673,17 +673,17 @@ describe('theme', () => {
 });
 
 describe('strictly validate known basis themes', () => {
-  test('Mooi & Anders theme', () => {
+  it('Mooi & Anders theme', () => {
     const result = StrictThemeSchema.safeParse(maTokens);
     expect(result.success).toEqual(true);
   });
 
-  test('Voorbeeld theme', () => {
+  it('Voorbeeld theme', () => {
     const result = StrictThemeSchema.safeParse(voorbeeldTokens);
     expect(result.success).toEqual(true);
   });
 
-  test('Start theme', () => {
+  it('Start theme', () => {
     const result = StrictThemeSchema.safeParse(startTokens);
     expect(result.success).toEqual(true);
   });

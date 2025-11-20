@@ -1,6 +1,7 @@
 import eslint from '@eslint/js';
 import json from '@eslint/json';
 import nlDesignSystemConfig from '@nl-design-system/eslint-config/configs/nl-design-system.config.mjs';
+import vitest from '@vitest/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import perfectionist from 'eslint-plugin-perfectionist';
 import react from 'eslint-plugin-react';
@@ -85,5 +86,29 @@ export default defineConfig([
   {
     name: 'eslint-plugin-zod-x',
     ...eslintPluginZodX.configs.recommended,
+  },
+  {
+    name: '@vitest',
+    files: ['**/*.test.ts'],
+    plugins: {
+      vitest,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
+      'vitest/consistent-test-filename': 'error',
+      'vitest/consistent-test-it': [
+        'error',
+        {
+          fn: 'it',
+          withinDescribe: 'it',
+        },
+      ],
+      'vitest/consistent-vitest-vi': 'error', // error when calling `vitest.mock()` instead of `vi.mock()`
+      'vitest/no-focused-tests': ['warn', { fixable: false }], // Warn when using it.only(), do not auto-fix
+      'vitest/prefer-each': 'error', // prefer it.each([a, b])('test %s', (thing) => {})
+      'vitest/prefer-todo': 'warn', // warn when test has empty or no body
+      'vitest/valid-title': ['error', { allowArguments: true }],
+      'vitest/warn-todo': ['warn'],
+    },
   },
 ]);

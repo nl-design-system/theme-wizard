@@ -1,5 +1,5 @@
 import { COLOR_SPACES } from '@nl-design-system-community/design-tokens-schema';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import ColorToken from '../ColorToken';
 import ColorScale from './index';
 
@@ -36,41 +36,41 @@ const orangeOKLCH = new ColorToken({
 });
 
 describe('ColorScale', () => {
-  test('can be initialized with a token', () => {
+  it('can be initialized with a token', () => {
     const colorScale = new ColorScale(greenOKLCH);
     expect(colorScale.from.toObject()).toMatchObject(greenOKLCH.toObject());
   });
 
-  test('converts srgb to oklch on initialization', () => {
+  it('converts srgb to oklch on initialization', () => {
     const colorScale = new ColorScale(greenSRGB);
     expect(colorScale.fromOKLCH.toObject()).toMatchObject(greenOKLCH.toObject());
   });
 
-  test('can be updated after initialization', () => {
+  it('can be updated after initialization', () => {
     const colorScale = new ColorScale(greenSRGB);
     colorScale.from = orangeOKLCH;
     expect(colorScale.from.toObject()).toMatchObject(orangeOKLCH.toObject());
   });
 
-  test('converts after update', () => {
+  it('converts after update', () => {
     const colorScale = new ColorScale(greenSRGB);
     colorScale.from = orangeSRGB;
     expect(colorScale.fromOKLCH.toObject()).toMatchObject(orangeOKLCH.toObject());
   });
 
-  test('returns a list of derived colors', () => {
+  it('returns a list of derived colors', () => {
     const colorScale = new ColorScale(greenSRGB);
     expect(colorScale.list().length).toBe(colorScale.size);
   });
 
-  test('get token in color scale by position', () => {
+  it('get token in color scale by position', () => {
     const colorScale = new ColorScale(greenSRGB);
     for (let index = 0; index++; index < colorScale.size) {
       expect(colorScale.get(index)).toBeDefined();
     }
   });
 
-  test('list of derived colors contains base color exactly once, when lightness is in the mask', () => {
+  it('list of derived colors contains base color exactly once, when lightness is in the mask', () => {
     const lightnessMatchedGreenOKLCH = new ColorToken({
       $value: {
         ...greenOKLCH.$value,
@@ -86,7 +86,7 @@ describe('ColorScale', () => {
     expect(matches.length).toBe(1);
   });
 
-  test('list of derived colors contains base color exactly once, even if lightness is not in the mask', () => {
+  it('list of derived colors contains base color exactly once, even if lightness is not in the mask', () => {
     const colorScale = new ColorScale(greenSRGB);
     const matches = colorScale
       .list()
@@ -94,7 +94,7 @@ describe('ColorScale', () => {
     expect(matches.length).toBe(1);
   });
 
-  test('exports scale to an object defining design tokens', () => {
+  it('exports scale to an object defining design tokens', () => {
     const colorScale = new ColorScale(greenSRGB);
     expect(colorScale.toObject()).toMatchSnapshot();
   });

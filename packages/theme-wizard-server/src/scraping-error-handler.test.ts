@@ -1,10 +1,10 @@
 import { ScrapingError } from '@nl-design-system-community/css-scraper';
 import { Hono } from 'hono';
-import { describe, test, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { withScrapingErrorHandler } from './scraping-error-handler';
 
 describe('withScrapingErrorHandler', () => {
-  test('converts scraping errors with statusCode to 400', async () => {
+  it('converts scraping errors with statusCode to 400', async () => {
     const app = new Hono();
     app.get(
       '/test',
@@ -26,7 +26,7 @@ describe('withScrapingErrorHandler', () => {
     });
   });
 
-  test('converts unknown errors to 500', async () => {
+  it('converts unknown errors to 500', async () => {
     const app = new Hono();
     app.get(
       '/test',
@@ -45,7 +45,7 @@ describe('withScrapingErrorHandler', () => {
     });
   });
 
-  test('returns response when no error', async () => {
+  it('returns response when no error', async () => {
     const app = new Hono();
     app.get(
       '/test',

@@ -1,4 +1,5 @@
-import { afterEach, describe, expect, test } from 'vitest';
+/* eslint-disable vitest/prefer-each */
+import { afterEach, describe, expect, it } from 'vitest';
 import { createHelperElement, getCSSColorComponents, getHue, toHSL, toHWB } from './lib';
 
 describe('ColorToken/createHelperElement', () => {
@@ -8,14 +9,14 @@ describe('ColorToken/createHelperElement', () => {
     }
   });
 
-  test('creates a div', () => {
+  it('creates a div', () => {
     const helper = createHelperElement();
     helper?.setAttribute('data-test-id', 'helper');
     const createdElement = document.querySelector('[data-test-id=helper]');
     expect(createdElement).toBeDefined();
   });
 
-  test('created div has display:none', () => {
+  it('created div has display:none', () => {
     const helper = createHelperElement();
     helper?.setAttribute('data-test-id', 'helper');
     const createdElement = document.querySelector('[data-test-id=helper]');
@@ -54,7 +55,7 @@ describe('ColorToken/getCSSColorComponents', () => {
   ];
 
   for (const { name, input, result } of testScenarios) {
-    test(name, () => {
+    it(`${name}`, () => {
       const components = getCSSColorComponents(input);
       expect(components.toString()).toBe(result);
     });
@@ -79,7 +80,7 @@ describe('ColorToken/getHue', () => {
     hsl: [hue],
     rgb: [r, g, b],
   } of colorScenarios) {
-    test(`can get hue degree of ${name}`, () => {
+    it(`can get hue degree of ${name}`, () => {
       const value = getHue([r, g, b]);
       expect(value.toFixed(1)).toBe(hue.toFixed(1));
     });
@@ -92,7 +93,7 @@ describe('ColorToken/toHSL', () => {
     hsl,
     rgb: [r, g, b],
   } of colorScenarios) {
-    test(`can convert RGB ${name} to HSL `, () => {
+    it(`can convert RGB ${name} to HSL `, () => {
       const value = toHSL([r, g, b]);
       expect(value).toStrictEqual(hsl);
     });
@@ -105,7 +106,7 @@ describe('ColorToken/toHWB', () => {
     hwb,
     rgb: [r, g, b],
   } of colorScenarios) {
-    test(`can convert RGB ${name} to HWB `, () => {
+    it(`can convert RGB ${name} to HWB `, () => {
       const value = toHWB([r, g, b]);
       expect(value).toStrictEqual(hwb);
     });

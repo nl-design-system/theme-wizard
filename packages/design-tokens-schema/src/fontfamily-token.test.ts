@@ -1,4 +1,4 @@
-import { describe, test, expect, expectTypeOf } from 'vitest';
+import { describe, it, expect, expectTypeOf } from 'vitest';
 import {
   type FontFamilyValue,
   ModernFontFamilyValueSchema,
@@ -9,7 +9,7 @@ import {
 } from './fontfamily-token';
 
 describe('parsing values', () => {
-  test('accepts valid font-families', () => {
+  it('accepts valid font-families', () => {
     const fixtures = ['serif', '💪', 'Arial Black', '-apple-system'];
     for (const fontFamily of fixtures) {
       const result = ModernFontFamilyValueSchema.safeParse(fontFamily);
@@ -18,14 +18,14 @@ describe('parsing values', () => {
     }
   });
 
-  test('upgrades legacy format with a single comma-separated string', () => {
+  it('upgrades legacy format with a single comma-separated string', () => {
     const result = LegacyFontFamilyValueSchema.safeParse('serif, sans-serif');
     expect(result.success).toBeTruthy();
     expect(result.data).toEqual(['serif', 'sans-serif']);
     expectTypeOf(result.data!).toEqualTypeOf<LegacyFontFamilyValue>();
   });
 
-  test('rejects invalid "families"', () => {
+  it('rejects invalid "families"', () => {
     for (const nonFamily of [16, true, ' ', ',', ' , ']) {
       const result = ModernFontFamilyValueSchema.safeParse(nonFamily);
       expect(result.success).toBeFalsy();
@@ -34,7 +34,7 @@ describe('parsing values', () => {
   });
 });
 
-test('accepts modern token', () => {
+it('accepts modern token', () => {
   const token = {
     $type: 'fontFamily',
     $value: ['sans-serif'],
@@ -51,13 +51,13 @@ describe('legacy token format', () => {
     $value: 'Source Sans Pro, Helvetica, Arial, sans-serif',
   };
 
-  test('accepts legacy token', () => {
+  it('accepts legacy token', () => {
     const result = FontFamilyTokenSchema.safeParse(token);
     expect.soft(result.success).toBeTruthy();
     expectTypeOf(result.data!).toEqualTypeOf<FontFamilyToken>();
   });
 
-  test('upgrades legacy token', () => {
+  it('upgrades legacy token', () => {
     const result = FontFamilyTokenSchema.safeParse(token);
     expect.soft(result.data?.$type).toEqual('fontFamily');
     expect.soft(result.data?.$value).toEqual(['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif']);
