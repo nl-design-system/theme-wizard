@@ -1,6 +1,6 @@
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import i18n, { errorLabel, renderError } from '../../i18n/messages';
+import { t, errorLabel, renderError } from '../../i18n/messages';
 import ValidationIssue from '../../lib/ValidationIssue';
 import { BaseValidationIssues } from '../base-validation-issues';
 import styles from './styles';
@@ -23,7 +23,7 @@ export class WizardValidationIssuesAlert extends BaseValidationIssues {
   override render() {
     return html`
       <utrecht-alert type="error">
-        <utrecht-heading-2>${i18n.t('validation.title')}</utrecht-heading-2>
+        <utrecht-heading-2>${t('validation.title')}</utrecht-heading-2>
         ${Object.entries(this.issues).map(([errorCode, issues]) => {
           if (!issues || issues.length === 0) return nothing;
           const label = errorLabel(errorCode);

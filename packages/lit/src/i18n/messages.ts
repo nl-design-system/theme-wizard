@@ -26,7 +26,7 @@ const createInsufficientContrastRenderers = (strings: {
 
       return html`<div>
         <p>${strings.errorLabel} <strong>${renderTokenLink(tokenB)}</strong></p>
-        <p>${strings.contrastLabel}: <strong>${details['current']}</strong></p>
+        <p>${strings.contrastLabel}: <strong>${details['actual']}</strong></p>
         <p>${strings.minimumRequired}: <strong>${details['minimum']}</strong></p>
       </div>`;
     },
@@ -42,7 +42,7 @@ const createInsufficientContrastRenderers = (strings: {
       const andText = ` ${strings.and} `;
       const renderedTokens = html`<strong>${renderTokenLink(tokenA)}</strong>${andText}
         <strong>${renderTokenLink(tokenB)}</strong>`;
-      const renderedContrast = html`${strings.contrastLabel}: <strong>${details['current']}</strong>`;
+      const renderedContrast = html`${strings.contrastLabel}: <strong>${details['actual']}</strong>`;
       const renderedMinimum = html`${strings.minimumRequired}: <strong>${details['minimum']}</strong>`;
 
       return html`
