@@ -28,7 +28,7 @@ export class WizardValidationIssuesAlert extends LitElement {
   /**
    * Group issues by error code
    */
-  private get issuesByErrorCode(): ReadonlyMap<string, ValidationIssue[]> {
+  private get issuesByErrorCode(): Partial<Record<string, ValidationIssue[]>> {
     return Object.groupBy(this.issues, ({ code }) => code);
   }
 
@@ -128,7 +128,8 @@ export class WizardValidationIssuesAlert extends LitElement {
    * Renders grouped validation issues organized by error code
    */
   #renderIssueGroups() {
-    return Array.from(this.issuesByErrorCode.entries()).map(([errorCode, issues]) => {
+    return Object.entries(this.issuesByErrorCode).map(([errorCode, issues]) => {
+      if (!issues) return nothing;
       const label = ValidationErrorRenderer.getLabel(errorCode);
       const count = issues.length;
 
