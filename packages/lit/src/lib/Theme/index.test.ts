@@ -29,6 +29,24 @@ describe('Theme', () => {
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
 
+  it('has a different CSS output after token update', async () => {
+    const theme = new Theme();
+    const initialCSS = await theme.toCSS();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const updatedCSS = await theme.toCSS();
+    expect(updatedCSS).toMatchSnapshot();
+    return expect(initialCSS).not.toMatch(updatedCSS);
+  });
+
+  it('has a different JSON output after token update', async () => {
+    const theme = new Theme();
+    const initialJSON = await theme.toTokensJSON();
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const updatedJSON = await theme.toTokensJSON();
+    expect(updatedJSON).toMatchSnapshot();
+    return expect(initialJSON).not.toMatch(updatedJSON);
+  });
+
   it('can reset tokens', async () => {
     const theme = new Theme();
     theme.tokens = tokens;
