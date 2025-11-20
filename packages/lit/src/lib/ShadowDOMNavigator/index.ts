@@ -50,7 +50,7 @@ export class ShadowDOMNavigator {
         current.open = true;
       }
 
-      current = this.#getParentNode(current);
+      current = this.getParentNode(current);
       depth++;
     }
   }
@@ -60,7 +60,7 @@ export class ShadowDOMNavigator {
    * @param node - Node to get parent of
    * @returns Parent node or null if at root
    */
-  #getParentNode(node: Node): Node | null {
+  getParentNode(node: Node): Node | null {
     // Standard DOM hierarchy
     if (node.parentNode) {
       return node.parentNode;

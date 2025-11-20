@@ -268,9 +268,9 @@ export const ThemeSchema = z.looseObject({
 });
 
 export type ThemeValidationIssue = z.core.$ZodIssue & {
+  actual?: number;
   ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
   tokens?: string[];
-  current?: number;
 };
 
 export type Theme = z.infer<typeof ThemeSchema>;
@@ -312,10 +312,9 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
 
         if (contrast < expectedRatio) {
           ctx.addIssue({
+            actual: Number.parseFloat(contrast.toFixed(2)),
             code: 'too_small',
-            current: Number.parseFloat(contrast.toFixed(2)),
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
-            expected: expectedRatio,
             message: 'Insufficient contrast',
             minimum: expectedRatio,
             origin: 'number',
@@ -324,8 +323,8 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
           });
 
           ctx.addIssue({
+            actual: Number.parseFloat(contrast.toFixed(2)),
             code: 'too_small',
-            current: Number.parseFloat(contrast.toFixed(2)),
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             message: 'Insufficient contrast',
             minimum: expectedRatio,
