@@ -10,6 +10,7 @@ import {
   BasisColorSchema,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_AS,
+  EXTENSION_RESOLVED_FROM,
   Theme,
   StrictThemeSchema,
   ERROR_CODES,
@@ -624,6 +625,38 @@ describe('theme', () => {
           tokens: ['basis.color.default.bg-subtle', 'basis.color.default.color-document'],
         },
       ]);
+    });
+
+    test('handles contrast error when background color has no EXTENSION_RESOLVED_FROM', () => {
+      const testConfig = structuredClone(config);
+      testConfig.basis.color.default['color-document'] = {
+        $extensions: {
+          [EXTENSION_CONTRAST_WITH]: [
+            {
+              // Background color without EXTENSION_RESOLVED_FROM
+              color: {
+                $type: 'color',
+                $value: parseColor('#fff'),
+                // No EXTENSION_RESOLVED_FROM extension
+              },
+              expectedRatio: 4.5,
+            },
+          ],
+        },
+        $type: 'color',
+        $value: '#ccc',
+      };
+      const result = StrictThemeSchema.safeParse(testConfig);
+      expect(result.success).toBeFalsy();
+      const contrastErrors = (result.error!.issues as ThemeValidationIssue[]).filter(
+        (issue) => issue.ERROR_CODE === ERROR_CODES.INSUFFICIENT_CONTRAST,
+      );
+      expect(contrastErrors.length).toBeGreaterThan(0);
+
+      const errorWithUndefinedPath = contrastErrors.find(
+        (error) => error.path?.length === 1 && error.path[0] === '$value',
+      );
+      expect(errorWithUndefinedPath).toBeDefined();
     });
   });
 
