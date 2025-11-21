@@ -29,6 +29,8 @@ export class WizardPreviewPicker extends LitElement {
 
   static override readonly styles = [styles];
 
+  static override readonly styles = [styles];
+
   get dropdownOptions(): DropdownOption[] {
     return (
       this.templates?.map((group: TemplateGroup) => ({
