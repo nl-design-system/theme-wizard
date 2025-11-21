@@ -28,7 +28,7 @@ test.describe('Download tokens as JSON', () => {
     });
 
     test('Button becomes active after changes made', async ({ themeWizard }) => {
-      await expect(themeWizard.downloadButton).not.toBeDisabled();
+      await expect(themeWizard.downloadButton).toBeEnabled();
     });
 
     test('Button downloads JSON file after click', async ({ page, themeWizard }) => {
