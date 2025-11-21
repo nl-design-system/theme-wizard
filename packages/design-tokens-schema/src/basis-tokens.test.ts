@@ -676,15 +676,18 @@ describe('strictly validate known basis themes', () => {
   it('Mooi & Anders theme', () => {
     const result = StrictThemeSchema.safeParse(maTokens);
     expect(result.success).toEqual(true);
+    expect(result.data).toMatchSnapshot();
   });
 
   it('Voorbeeld theme', () => {
     const result = StrictThemeSchema.safeParse(voorbeeldTokens);
     expect(result.success).toEqual(true);
+    expect(result.data).toMatchSnapshot();
   });
 
   it('Start theme', () => {
     const result = StrictThemeSchema.safeParse(startTokens);
     expect(result.success).toEqual(true);
+    expect(result.data).toMatchSnapshot();
   });
 });
