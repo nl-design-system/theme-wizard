@@ -121,16 +121,26 @@ describe('BaseDesignTokenSchema', () => {
     expectTypeOf(result.data!).toEqualTypeOf<BaseDesignToken>();
   });
 
-  it('rejects objects with unknown properties', () => {
+  it('strips unknown properties (metadata) from tokens', () => {
     const fixture = {
       'my-token-id': {
         $type: 'my-token-type',
         $value: 'not-important',
-        unkown_property: 'unknown',
+        filePath: 'src/tokens.json',
+        isSource: true,
+        name: 'myTokenId',
+        attributes: { category: 'my', type: 'token-type' },
+        original: { $type: 'my-token-type', $value: 'original' },
+        path: ['my', 'token', 'id'],
       },
     };
     const result = BaseDesignTokenSchema.safeParse(fixture);
-    expect(result.success).toBeFalsy();
+    expect(result.success).toBeTruthy();
+    // Verify metadata is stripped from output
+    expect(result.data?.['my-token-id']).toEqual({
+      $type: 'my-token-type',
+      $value: 'not-important',
+    });
   });
 
   it('rejects tokens without a $value', () => {
