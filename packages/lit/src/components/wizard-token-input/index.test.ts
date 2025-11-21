@@ -6,7 +6,7 @@ const tag = 'wizard-token-input';
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
-    document.body.innerHTML = `<${tag}></${tag}><button>hoi</button>`;
+    document.body.innerHTML = `<${tag}></${tag}>`;
   });
 
   it('shows a form control', () => {
