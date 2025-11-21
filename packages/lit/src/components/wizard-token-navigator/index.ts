@@ -1,6 +1,6 @@
 import { LitElement, html, TemplateResult } from 'lit';
 import { t } from '../../i18n';
-import { ShadowDOMNavigator } from '../../lib/ShadowDOMNavigator';
+import { ShadowDOMNavigator } from './ShadowDOMNavigator';
 
 const FOCUS_DELAY_MS = 300;
 const TOKEN_FIELD_SELECTOR = 'wizard-token-field';
