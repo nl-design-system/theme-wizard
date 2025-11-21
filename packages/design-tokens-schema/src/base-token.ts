@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { stripMetadata } from './strip-metadata';
 
 // 5.1 Name and value
 
@@ -26,17 +27,19 @@ export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
 /** @see https://www.designtokens.org/tr/drafts/format/#name-and-value */
 export type BaseDesignTokenIdentifier = z.infer<typeof BaseDesignTokenIdentifierSchema>;
 
-export const BaseDesignTokenValueSchema = z.strictObject({
-  /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
-  $deprecated: z.union([z.boolean(), z.string()]).optional(),
-  /** @see 5.2.1 Description https://www.designtokens.org/tr/drafts/format/#description */
-  $description: z.string().optional(),
-  /** @see 5.2.3 Extensions https://www.designtokens.org/tr/drafts/format/#extensions */
-  $extensions: z.record(z.string(), z.unknown()).optional(),
-  /** @see 5.2.2 Type https://www.designtokens.org/tr/drafts/format/#type-0 */
-  $type: z.string().nonoptional(),
-  $value: z.unknown().nonoptional(), // refine exact shape in concrete token types
-});
+export const BaseDesignTokenValueSchema = z
+  .looseObject({
+    /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
+    $deprecated: z.union([z.boolean(), z.string()]).optional(),
+    /** @see 5.2.1 Description https://www.designtokens.org/tr/drafts/format/#description */
+    $description: z.string().optional(),
+    /** @see 5.2.3 Extensions https://www.designtokens.org/tr/drafts/format/#extensions */
+    $extensions: z.record(z.string(), z.unknown()).optional(),
+    /** @see 5.2.2 Type https://www.designtokens.org/tr/drafts/format/#type-0 */
+    $type: z.string().nonoptional(),
+    $value: z.unknown().nonoptional(), // refine exact shape in concrete token types
+  })
+  .transform((token) => stripMetadata(token) as Record<string, unknown>); // Remove all metadata from output
 export type BaseDesignTokenValue = z.infer<typeof BaseDesignTokenValueSchema>;
 
 export const BaseDesignTokenSchema = z.record(BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema);

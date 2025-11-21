@@ -1,6 +1,7 @@
 import dlv from 'dlv';
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
+import { stripMetadata } from './strip-metadata';
 import {
   ColorTokenValidationSchema,
   ColorValue,
@@ -281,7 +282,7 @@ export const ThemeSchema = z.looseObject({
   // $themes: [],
   brand: BrandsSchema.optional(),
   // 'components/*': {},
-});
+}).transform((value) => stripMetadata(value) as Record<string, unknown>);
 
 export type Theme = z.infer<typeof ThemeSchema>;
 
