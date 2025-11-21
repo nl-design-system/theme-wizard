@@ -5,7 +5,15 @@ import { PREVIEW_THEME_CLASS } from '../../lib/Theme';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import styles from './styles';
 
-@customElement('theme-wizard-preview')
+const tag = 'wizard-preview';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: ThemePreview;
+  }
+}
+
+@customElement(tag)
 export class ThemePreview extends LitElement {
   @property() themeStylesheet!: CSSStyleSheet;
   @property() url?: string;
@@ -103,12 +111,5 @@ export class ThemePreview extends LitElement {
     }
 
     return html` <div class=${PREVIEW_THEME_CLASS} data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
-  }
-}
-
-// Declare the custom element for TypeScript
-declare global {
-  interface HTMLElementTagNameMap {
-    'theme-wizard-preview': ThemePreview;
   }
 }

@@ -1,9 +1,9 @@
 import '.';
 import type { Category, TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { beforeEach, describe, expect, it } from 'vitest';
-import type { PreviewPicker } from '.';
+import type { WizardPreviewPicker } from '.';
 
-const tag = 'preview-picker';
+const tag = 'wizard-preview-picker';
 const category: Category = 'template';
 
 const templates = {
@@ -23,7 +23,7 @@ const templates = {
 
 const mount = async () => {
   document.body.innerHTML = `<${tag}></${tag}>`;
-  const el = document.querySelector(tag) as PreviewPicker;
+  const el = document.querySelector(tag) as WizardPreviewPicker;
   el.templates = [templates] as TemplateGroup[];
   await el.updateComplete;
   return el;
@@ -36,10 +36,10 @@ describe(`<${tag}>`, () => {
     document.body.innerHTML = '';
   });
 
-  it('renders a form with wiz-dropdown', async () => {
+  it('renders a form with wizard-dropdown', async () => {
     const el = await mount();
     const form = el.shadowRoot?.querySelector('form');
-    const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
+    const dropdown = el.shadowRoot?.querySelector('wizard-dropdown');
 
     expect(form).toBeTruthy();
     expect(dropdown).toBeTruthy();
@@ -47,7 +47,7 @@ describe(`<${tag}>`, () => {
 
   it('builds optgroup options with full template paths', async () => {
     const el = await mount();
-    const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
+    const dropdown = el.shadowRoot?.querySelector('wizard-dropdown');
     const options = dropdown?.options;
     const allValues = options?.flatMap((g) => g.detail?.map((d) => d.value));
 
@@ -57,7 +57,7 @@ describe(`<${tag}>`, () => {
 
   it('defaults to first option when no templatePath param', async () => {
     const el = await mount();
-    const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
+    const dropdown = el.shadowRoot?.querySelector('wizard-dropdown');
 
     expect(dropdown?.value).toBe('/something-beautiful/some-beautiful-page');
   });
@@ -66,7 +66,7 @@ describe(`<${tag}>`, () => {
     const origin = globalThis.location.origin;
     globalThis.history.pushState({}, '', `${origin}/?templatePath=/something-beautiful/some-beautiful-page`);
     const el = await mount();
-    const dropdown = el.shadowRoot?.querySelector('wiz-dropdown');
+    const dropdown = el.shadowRoot?.querySelector('wizard-dropdown');
 
     expect(dropdown?.value).toBe('/something-beautiful/some-beautiful-page');
   });

@@ -1,8 +1,8 @@
 import '.';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Dropdown } from '.';
+import { WizardDropdown } from '.';
 
-const tag = 'wiz-dropdown';
+const tag = 'wizard-dropdown';
 
 const OPTIONS = [
   {
@@ -26,7 +26,7 @@ describe(`<${tag}> integration tests`, () => {
   });
 
   it('renders a select element', async () => {
-    const element = document.querySelector(tag) as Dropdown;
+    const element = document.querySelector(tag) as WizardDropdown;
     element.isOptgroup = true;
     element.options = OPTIONS;
     await element.updateComplete;
@@ -37,7 +37,7 @@ describe(`<${tag}> integration tests`, () => {
   });
 
   it('renders optgroups with options', async () => {
-    const element = document.querySelector(tag) as Dropdown;
+    const element = document.querySelector(tag) as WizardDropdown;
     element.isOptgroup = true;
     element.options = OPTIONS;
     await element.updateComplete;
@@ -54,7 +54,7 @@ describe(`<${tag}> integration tests`, () => {
   });
 
   it('dispatches change event on select change', async () => {
-    const element = document.querySelector(tag) as Dropdown;
+    const element = document.querySelector(tag) as WizardDropdown;
     element.isOptgroup = true;
     element.options = OPTIONS;
     element.value = OPTIONS[0].detail[0].value; // '/some/path/overview'

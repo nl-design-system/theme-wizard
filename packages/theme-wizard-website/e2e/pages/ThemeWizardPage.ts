@@ -2,13 +2,11 @@ import { type Page, type Locator, expect } from '@playwright/test';
 
 export class ThemeWizardPage {
   readonly preview: Locator;
-  private readonly templateSelect: Locator;
-  private readonly previewButton: Locator;
+  readonly templateSelect: Locator;
 
   constructor(public readonly page: Page) {
     this.preview = this.page.getByTestId('preview');
     this.templateSelect = this.page.getByLabel('Voorvertoning');
-    this.previewButton = this.page.getByRole('button', { name: 'Voorvertonen' });
   }
 
   async goto() {
@@ -17,7 +15,6 @@ export class ThemeWizardPage {
   }
   async selectTemplate(templateName: string) {
     await this.templateSelect.selectOption({ label: templateName });
-    await this.previewButton.click();
   }
 
   async changeHeadingFont(fontName: string) {
