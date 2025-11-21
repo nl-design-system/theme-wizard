@@ -7,6 +7,7 @@ export const tokenLinkStyles = css`
     color: var(--utrecht-link-color);
     cursor: pointer;
     padding-inline: 0;
+    text-align: start;
     text-decoration: underline;
   }
 
