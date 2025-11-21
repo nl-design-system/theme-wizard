@@ -11,7 +11,15 @@ export type DropdownOption = {
   }>;
 };
 
-@customElement('wiz-dropdown')
+const tag = 'wizard-dropdown';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: Dropdown;
+  }
+}
+
+@customElement(tag)
 export class Dropdown extends LitElement {
   @property() name = '';
   @property() label = 'Selecteer een optie';
@@ -66,11 +74,5 @@ export class Dropdown extends LitElement {
         )}
       </select>
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'wiz-dropdown': Dropdown;
   }
 }
