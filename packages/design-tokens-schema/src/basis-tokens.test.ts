@@ -10,7 +10,6 @@ import {
   BasisColorSchema,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_AS,
-  EXTENSION_RESOLVED_FROM,
   Theme,
   StrictThemeSchema,
   ERROR_CODES,
@@ -627,7 +626,7 @@ describe('theme', () => {
       ]);
     });
 
-    test('handles contrast error when background color has no EXTENSION_RESOLVED_FROM', () => {
+    it('handles contrast error when background color has no EXTENSION_RESOLVED_FROM', () => {
       const testConfig = structuredClone(config);
       testConfig.basis.color.default['color-document'] = {
         $extensions: {
