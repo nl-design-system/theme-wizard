@@ -4,6 +4,11 @@ import rosetta from 'rosetta';
 import ValidationIssue, { type ErrorCode, type RenderOptions } from '../lib/ValidationIssue';
 import { ErrorRenderContext, I18nMessagePaths, I18nMessages } from './types';
 
+const formatNumber = (value: number | undefined, locale: string): string => {
+  if (value === undefined) return '';
+  return new Intl.NumberFormat(locale, { maximumSignificantDigits: 3 }).format(value);
+};
+
 const createInsufficientContrastRenderers = (strings: {
   and: string;
   contrastLabel: string;
@@ -20,10 +25,15 @@ const createInsufficientContrastRenderers = (strings: {
         return html``;
       }
 
+      const locale = i18n.locale();
       return html`<div>
         <p>${strings.errorLabel} <strong>${renderTokenLink(tokenB)}</strong></p>
-        <p>${strings.contrastLabel}: <strong>${details['actual']}</strong></p>
-        <p>${strings.minimumRequired}: <strong>${details['minimum']}</strong></p>
+        <p>
+          ${strings.contrastLabel}: <strong>${formatNumber(details['actual'] as number | undefined, locale)}</strong>
+        </p>
+        <p>
+          ${strings.minimumRequired}: <strong>${formatNumber(details['minimum'] as number | undefined, locale)}</strong>
+        </p>
       </div>`;
     },
     detailed(ctx: ErrorRenderContext): TemplateResult {
@@ -35,11 +45,14 @@ const createInsufficientContrastRenderers = (strings: {
         return html`<p>${tokenA} ${strings.and} ${tokenB}</p>`;
       }
 
+      const locale = i18n.locale();
       const andText = ` ${strings.and} `;
       const renderedTokens = html`<strong>${renderTokenLink(tokenA)}</strong>${andText}
         <strong>${renderTokenLink(tokenB)}</strong>`;
-      const renderedContrast = html`${strings.contrastLabel}: <strong>${details['actual']}</strong>`;
-      const renderedMinimum = html`${strings.minimumRequired}: <strong>${details['minimum']}</strong>`;
+      const renderedContrast = html`${strings.contrastLabel}:
+        <strong>${formatNumber(details['actual'] as number | undefined, locale)}</strong>`;
+      const renderedMinimum = html`${strings.minimumRequired}:
+        <strong>${formatNumber(details['minimum'] as number | undefined, locale)}</strong>`;
 
       return html`
         ${renderedTokens}
