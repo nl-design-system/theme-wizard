@@ -2,7 +2,7 @@ import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { t, errorLabel, renderError } from '../../i18n/messages';
 import ValidationIssue from '../../lib/ValidationIssue';
-import { BaseValidationIssues } from '../base-validation-issues';
+import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
 const tag = 'wizard-validation-issues-alert';
@@ -14,7 +14,7 @@ declare global {
 }
 
 @customElement(tag)
-export class WizardValidationIssuesAlert extends BaseValidationIssues {
+export class WizardValidationIssuesAlert extends WizardTokenNavigator {
   @property({ attribute: false })
   issues: Partial<Record<ValidationIssue['code'], ValidationIssue[]>> = {};
 
