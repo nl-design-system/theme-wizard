@@ -6,10 +6,10 @@ const FOCUS_DELAY_MS = 300;
 const TOKEN_FIELD_SELECTOR = 'wizard-token-field';
 
 /**
- * Base class for validation issue components
- * Provides common functionality for token navigation and focus management
+ * Abstract base class for components that need token navigation functionality
+ * Provides token field navigation, focus management, and token link rendering
  */
-export abstract class BaseValidationIssues extends LitElement {
+export abstract class WizardTokenNavigator extends LitElement {
   readonly #shadowDOMNavigator = new ShadowDOMNavigator();
 
   /**
