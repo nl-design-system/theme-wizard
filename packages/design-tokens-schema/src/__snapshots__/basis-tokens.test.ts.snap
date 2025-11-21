@@ -12706,6 +12706,15 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         "$value": "#ffffff",
       },
     },
+    "name": {
+      "$extensions": {
+        "studio.tokens": {
+          "originalType": "text",
+        },
+      },
+      "$type": "content",
+      "$value": "Mooi & Anders",
+    },
     "navigation-bar": {
       "background-color": {
         "$type": "color",
