@@ -15,3 +15,41 @@ test('can change body font to Arial', async ({ previewPage }) => {
   await previewPage.changeBodyFont('Arial');
   await expect(paragraph).toHaveFont('Arial');
 });
+
+test.describe('Download tokens as JSON', () => {
+  test('initial button state is correct', async ({ themeWizard }) => {
+    await expect(themeWizard.downloadButton).toBeVisible();
+    await expect(themeWizard.downloadButton).toBeDisabled();
+  });
+
+  test.describe('after changing a token', () => {
+    test.beforeEach(async ({ themeWizard }) => {
+      await themeWizard.changeBodyFont('Arial');
+    });
+
+    test('Button becomes active after changes made', async ({ themeWizard }) => {
+      await expect(themeWizard.downloadButton).not.toBeDisabled();
+    });
+
+    test('Button downloads JSON file after click', async ({ page, themeWizard }) => {
+      const downloadPromise = page.waitForEvent('download');
+      await themeWizard.downloadButton.click();
+      const download = await downloadPromise;
+      expect(download.suggestedFilename()).toBe('tokens.json');
+    });
+
+    test('Button becomes inactive after "Reset tokens" is clicked', async ({ themeWizard }) => {
+      await themeWizard.reset();
+      await expect(themeWizard.downloadButton).toBeDisabled();
+    });
+
+    test('Button is disabled when validation errors are found', async ({ themeWizard }) => {
+      // Make sure the color inputs are visible so we can interact with them
+      await themeWizard.sidebar.locator('summary').click();
+      // Trigger a contrast warning
+      await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+
+      await expect(themeWizard.downloadButton).toBeDisabled();
+    });
+  });
+});

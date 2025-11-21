@@ -171,7 +171,7 @@ export class App extends LitElement {
             <utrecht-button
               appearance="primary-action-button"
               type="button"
-              ?disabled=${!this.#theme.modified}
+              ?disabled=${!this.#theme.modified || this.#theme.errorCount > 0}
               @click=${this.#downloadJSON}
               >Download tokens als JSON</utrecht-button
             >
