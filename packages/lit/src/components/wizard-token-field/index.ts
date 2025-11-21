@@ -23,7 +23,7 @@ export class WizardTokenField extends WizardTokenNavigator {
   @property() label: string = '';
   @property() token: Token = {};
   @property() path: string = '';
-  @property() options = [];
+  @property() options: Token[] = [];
   @property({ attribute: false })
   errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
@@ -84,7 +84,6 @@ export class WizardTokenField extends WizardTokenNavigator {
     const disabled = isRef(this.token.$value);
     const refValue = this.token.$extensions?.[EXTENSION_RESOLVED_AS];
 
-    console.log(this.path, this.token.$value, refValue);
     switch (type) {
       case 'color':
         return html` <wizard-color-input
@@ -130,23 +129,30 @@ export class WizardTokenField extends WizardTokenNavigator {
     const type = this.type;
     const label = this.label || `{${this.path}}`;
     const errorClass = this.#hasErrors ? 'theme-error' : '';
+    const ref = isRef(this.token.$value) ? this.token.$value : '';
+    const options = this.options;
     return html`
       ${type
-        ? html` <div>
-            <wizard-ref-select value=""></wizard-ref-select>
+        ? html`<div>
+            ${options.length ? html`<wizard-ref-select value=${ref} options=${options}></wizard-ref-select>` : nothing}
             ${this.renderField(type, label)}
           </div>`
         : html`<details>
             <summary><span class=${errorClass}>${label}</span></summary>
-            ${this.entries.map(([key, token]) => {
+            ${this.entries.map(([key, token], _, array) => {
               const path = `${this.path}.${key}`;
               const depth = this.depth + 1;
+              const options = [
+                ...this.options,
+                ...array.map(key => `${this.path}.${key}`),
+              ];
               return html`
                 <wizard-token-field
                   .token=${token}
                   .errors=${this.#getChildPathErrors(path)}
                   path=${path}
                   depth=${depth}
+                  options=${options}
                 ></wizard-token-field>
               `;
             })}
