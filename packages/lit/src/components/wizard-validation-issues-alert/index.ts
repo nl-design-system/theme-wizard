@@ -1,6 +1,7 @@
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { t, errorLabel, renderError } from '../../i18n/messages';
+import { t, renderError } from '../../i18n';
+import { I18nMessagePaths } from '../../i18n/types';
 import ValidationIssue from '../../lib/ValidationIssue';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
@@ -26,8 +27,11 @@ export class WizardValidationIssuesAlert extends WizardTokenNavigator {
         <utrecht-heading-2>${t('validation.title')}</utrecht-heading-2>
         ${Object.entries(this.issues).map(([errorCode, issues]) => {
           if (!issues || issues.length === 0) return nothing;
-          const label = errorLabel(errorCode as ValidationIssue['code']);
-          const count = issues.length;
+
+          const code = errorCode as ValidationIssue['code'];
+          const labelKey: I18nMessagePaths = `validation.error.${code}.label`;
+          const label: string = t(labelKey);
+          const count: number = issues.length;
 
           return html`
             <details>

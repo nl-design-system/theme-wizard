@@ -1,5 +1,5 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { t } from '../../i18n/messages';
+import { t } from '../../i18n';
 import { ShadowDOMNavigator } from '../../lib/ShadowDOMNavigator';
 
 const FOCUS_DELAY_MS = 300;

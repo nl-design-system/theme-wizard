@@ -1,8 +1,7 @@
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
-import { html, TemplateResult, nothing } from 'lit';
-import rosetta from 'rosetta';
-import ValidationIssue, { type ErrorCode, type RenderOptions } from '../lib/ValidationIssue';
-import { ErrorRenderContext, I18nMessagePaths, I18nMessages } from './types';
+import { html, TemplateResult } from 'lit';
+import i18n from './';
+import { ErrorRenderContext, I18nMessages } from './types';
 
 const formatNumber = (value: number | undefined, locale: string): string => {
   if (value === undefined) return '';
@@ -76,10 +75,7 @@ const createInvalidRefRenderers = (strings: { invalidReference: string }) => {
   };
 };
 
-const i18n = rosetta();
-i18n.locale('nl');
-
-const nlTranslation = {
+export const nl = {
   unknown: 'Onbekende fout opgetreden',
   validation: {
     error: {
@@ -106,9 +102,7 @@ const nlTranslation = {
   },
 } as const satisfies I18nMessages;
 
-i18n.set('nl', nlTranslation);
-
-const enTranslation = {
+export const en = {
   unknown: 'Unknown error',
   validation: {
     error: {
@@ -134,36 +128,3 @@ const enTranslation = {
     },
   },
 } as const satisfies I18nMessages;
-
-i18n.set('en', enTranslation);
-
-export const t = (key: I18nMessagePaths, params?: Record<string, unknown>): string => {
-  const result = i18n.t(key, params);
-
-  return typeof result === 'string' ? result : key;
-};
-
-export const renderError = (issue: ValidationIssue, options?: RenderOptions): TemplateResult | typeof nothing => {
-  const mode = options?.mode || 'compact';
-
-  const context: ErrorRenderContext = {
-    details: { ...issue.details, path: issue.path },
-    renderTokenLink: options?.renderTokenLink,
-  };
-
-  const key = `validation.error.${issue.code}.${mode}`;
-  const result = i18n.t(key, context) as unknown as TemplateResult;
-
-  return result ?? nothing;
-};
-
-export const errorLabel = (errorCode: ErrorCode): string => {
-  if (errorCode === 'unknown') {
-    return errorCode;
-  }
-  const key: I18nMessagePaths = `validation.error.${errorCode}.label`;
-  const label = t(key);
-  return label === key ? errorCode : label;
-};
-
-export default i18n;
