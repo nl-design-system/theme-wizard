@@ -64,12 +64,8 @@ export abstract class WizardTokenNavigator extends LitElement {
    * Uses setTimeout to allow scroll animation to complete first
    */
   protected focusFieldInput(field: HTMLElement, tokenPath: string): void {
-    const inputId = `input-${tokenPath}`;
-    const input = field.shadowRoot?.getElementById(`${inputId}`)?.shadowRoot?.querySelector('input');
-
-    if (input instanceof HTMLElement) {
-      setTimeout(() => input.focus(), FOCUS_DELAY_MS);
-    }
+    const input = field.shadowRoot?.querySelector<HTMLInputElement>(`input[name="${tokenPath}"]`);
+    if (input) setTimeout(() => input.focus(), FOCUS_DELAY_MS);
   }
 
   /**
