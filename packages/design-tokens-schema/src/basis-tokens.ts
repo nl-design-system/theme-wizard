@@ -312,7 +312,7 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
 
         if (contrast < expectedRatio) {
           ctx.addIssue({
-            actual: Number.parseFloat(contrast.toFixed(2)),
+            actual: contrast,
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             message: 'Insufficient contrast',
@@ -323,7 +323,7 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
           });
 
           ctx.addIssue({
-            actual: Number.parseFloat(contrast.toFixed(2)),
+            actual: contrast,
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
             message: 'Insufficient contrast',
