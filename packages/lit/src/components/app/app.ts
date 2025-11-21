@@ -9,10 +9,10 @@ import { EVENT_NAMES } from '../../constants';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
-import { PREVIEW_PICKER_NAME } from '../preview-picker';
+import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import '../sidebar/sidebar';
-import '../preview';
-import '../preview-picker';
+import '../wizard-preview';
+import '../wizard-preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
 import '../validation-issues-alert';
@@ -180,14 +180,14 @@ export class App extends LitElement {
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <preview-picker .templates=${this.templates}></preview-picker>
+          <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
           <validation-issues-alert .issues=${this.#theme.issues}></validation-issues-alert>
 
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <theme-wizard-preview
+            <wizard-preview
               .url=${this.selectedTemplatePath}
               .themeStylesheet=${this.#theme.stylesheet}
-            ></theme-wizard-preview>
+            ></wizard-preview>
           </section>
         </main>
       </div>

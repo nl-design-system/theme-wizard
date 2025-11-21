@@ -1,8 +1,8 @@
 import type { TemplateGroup, Category } from '@nl-design-system-community/theme-wizard-templates';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import '../dropdown/index.js';
-import type { DropdownOption } from '../dropdown';
+import '../wizard-dropdown';
+import type { DropdownOption } from '../wizard-dropdown';
 
 export interface DropdownChangeEvent {
   type: Category;
@@ -13,8 +13,16 @@ export interface DropdownChangeEvent {
 
 export const PREVIEW_PICKER_NAME = 'templatePath';
 
-@customElement('preview-picker')
-export class PreviewPicker extends LitElement {
+const tag = 'wizard-preview-picker';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: WizardPreviewPicker;
+  }
+}
+
+@customElement(tag)
+export class WizardPreviewPicker extends LitElement {
   @property({ attribute: 'templates' }) templates?: TemplateGroup[];
 
   get dropdownOptions(): DropdownOption[] {
@@ -38,21 +46,15 @@ export class PreviewPicker extends LitElement {
     }
 
     return html`<form method="GET" id="preview-form">
-      <wiz-dropdown
+      <wizard-dropdown
         name=${PREVIEW_PICKER_NAME}
         label="Voorvertoning"
         .options=${this.dropdownOptions}
         .isOptgroup=${true}
         .value=${current}
-      ></wiz-dropdown>
+      ></wizard-dropdown>
 
       <utrecht-button appearance="primary-action-button" type="submit">Voorvertonen</utrecht-button>
     </form>`;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'preview-picker': PreviewPicker;
   }
 }
