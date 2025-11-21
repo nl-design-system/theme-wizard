@@ -4,9 +4,9 @@ export const tokenLinkStyles = css`
   .theme-token-link {
     background: none;
     border: none;
-    padding-inline: 0;
     color: var(--utrecht-link-color);
     cursor: pointer;
+    padding-inline: 0;
     text-decoration: underline;
   }
 
