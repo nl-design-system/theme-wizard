@@ -1,4 +1,4 @@
-import { isRef } from '@nl-design-system-community/design-tokens-schema';
+import { EXTENSION_RESOLVED_AS, isRef } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
