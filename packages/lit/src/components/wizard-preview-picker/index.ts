@@ -3,6 +3,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../wizard-dropdown';
 import type { DropdownOption } from '../wizard-dropdown';
+import styles from './styles';
 
 export interface DropdownChangeEvent {
   type: Category;
@@ -24,6 +25,8 @@ declare global {
 @customElement(tag)
 export class WizardPreviewPicker extends LitElement {
   @property({ attribute: 'templates' }) templates?: TemplateGroup[];
+
+  static override readonly styles = [styles];
 
   get dropdownOptions(): DropdownOption[] {
     return (
