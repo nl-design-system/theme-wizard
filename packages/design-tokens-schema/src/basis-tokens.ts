@@ -189,7 +189,7 @@ export const BasisTokensSchema = z.looseObject({
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  resolveRefs(rootConfig.basis, rootConfig);
+  resolveRefs(rootConfig, rootConfig);
   return rootConfig;
 };
 

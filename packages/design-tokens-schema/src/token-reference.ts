@@ -72,7 +72,7 @@ export const isTokenWithRef = (
   const referencedToken = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
   if (!referencedToken) {
-    throw new Error(`Invalid token reference: can not find "${refPath}"`);
+    throw new Error(`Invalid token reference: can not find "${refPath}" (looking from "${path.join('.')}")`);
   }
 
   if (!isTokenLike(referencedToken)) {
