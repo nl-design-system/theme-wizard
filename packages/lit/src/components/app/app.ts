@@ -181,14 +181,12 @@ export class App extends LitElement {
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
-          <wizard-preview-picker .templates=${this.templates}></preview-picker>
-          ${
-            this.#theme.groupedIssues
-              ? html`<wizard-validation-issues-alert
-                  .issues=${this.#theme.groupedIssues}
-                ></wizard-validation-issues-alert>`
-              : nothing
-          }
+          <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
+          ${this.#theme.groupedIssues
+            ? html`<wizard-validation-issues-alert
+                .issues=${this.#theme.groupedIssues}
+              ></wizard-validation-issues-alert>`
+            : nothing}
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
             <wizard-preview
               .url=${this.selectedTemplatePath}
