@@ -38,6 +38,10 @@ export class WizardTokenField extends LitElement {
     return this.issues.filter((issue) => issue.path === this.path);
   }
 
+  #getChildIssues(childPath: string): ValidationIssue[] {
+    return this.issues.filter((issue) => issue.path.startsWith(childPath));
+  }
+
   get entries() {
     return WizardTokenField.entries(this.token);
   }
@@ -116,7 +120,7 @@ export class WizardTokenField extends LitElement {
                   <li>
                     <wizard-token-field
                       .token=${token}
-                      .issues=${this.issues}
+                      .issues=${this.#getChildIssues(path)}
                       path=${path}
                       depth=${depth}
                     ></wizard-token-field>
