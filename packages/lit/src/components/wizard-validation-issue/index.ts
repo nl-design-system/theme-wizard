@@ -1,7 +1,7 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
-import { renderError } from '../../i18n/messages';
+import { renderError } from '../../i18n';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
