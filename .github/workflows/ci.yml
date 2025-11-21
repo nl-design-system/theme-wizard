@@ -35,6 +35,9 @@ jobs:
         with:
           node-version-file: .nvmrc
 
+      - name: Audit dependencies
+        run: pnpm audit --audit-level critical || echo "You must address critical security vulnerabilities before continuing with `pnpm install`. More info: http://nldesignsystem.nl/pnpm-audit" && exit 1
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -53,6 +56,9 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: .nvmrc
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level critical || echo "You must address critical security vulnerabilities before continuing with `pnpm install`. More info: http://nldesignsystem.nl/pnpm-audit" && exit 1
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -75,6 +81,9 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: .nvmrc
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level critical || echo "You must address critical security vulnerabilities before continuing with `pnpm install`. More info: http://nldesignsystem.nl/pnpm-audit" && exit 1
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -100,6 +109,9 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: .nvmrc
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level critical || echo "You must address critical security vulnerabilities before continuing with `pnpm install`. More info: http://nldesignsystem.nl/pnpm-audit" && exit 1
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -136,6 +148,9 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: .nvmrc
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level critical || echo "You must address critical security vulnerabilities before continuing with `pnpm install`. More info: http://nldesignsystem.nl/pnpm-audit" && exit 1
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
