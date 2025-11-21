@@ -81,16 +81,15 @@ export abstract class WizardTokenNavigator extends LitElement {
     const text = displayText ?? tokenPath;
     const ariaLabel = t('validation.token_link.aria_label', { token: text });
 
-    return html`<a
-      href="#${tokenPath}"
+    return html`<button
+      type="button"
       class="theme-token-link"
-      @click=${(e: Event) => {
-        e.preventDefault();
+      @click=${() => {
         this.focusToken(tokenPath);
       }}
       aria-label="${ariaLabel}"
     >
       ${text}
-    </a>`;
+    </button>`;
   }
 }

@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { tokenLinkStyles } from '../wizard-token-navigator/styles';
 
 export default css`
   :host {
@@ -16,4 +17,6 @@ export default css`
     margin-block-start: var(--utrecht-form-field-error-message-margin-block-start, 0.25rem);
     padding-inline-start: 0.5rem;
   }
+
+  ${tokenLinkStyles}
 `;
