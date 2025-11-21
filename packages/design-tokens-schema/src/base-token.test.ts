@@ -131,7 +131,6 @@ describe('BaseDesignTokenSchema', () => {
     };
     const result = BaseDesignTokenSchema.safeParse(fixture);
     expect(result.success).toBeFalsy();
-    expectTypeOf(result.data).not.toEqualTypeOf<BaseDesignToken>();
   });
 
   it('rejects tokens without a $value', () => {

@@ -675,6 +675,9 @@ describe('theme', () => {
 describe('strictly validate known basis themes', () => {
   it('Mooi & Anders theme', () => {
     const result = StrictThemeSchema.safeParse(maTokens);
+    if (result.success === false) {
+      console.error(z.prettifyError(result.error));
+    }
     expect(result.success).toEqual(true);
     expect(result.data).toMatchSnapshot();
   });
