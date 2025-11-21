@@ -554,7 +554,7 @@ describe('theme', () => {
       expect(result.success).toBeFalsy();
       expect.soft(result.error!.issues).toEqual([
         {
-          actual: 1.61,
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message: 'Insufficient contrast',
@@ -564,7 +564,7 @@ describe('theme', () => {
           tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
         },
         {
-          actual: 1.61,
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message: 'Insufficient contrast',
@@ -604,7 +604,7 @@ describe('theme', () => {
       expect(result.success).toEqual(false);
       expect(result.error!.issues).toEqual([
         {
-          actual: 1.61,
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message: 'Insufficient contrast',
@@ -614,7 +614,7 @@ describe('theme', () => {
           tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
         },
         {
-          actual: 1.61,
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
           message: 'Insufficient contrast',
