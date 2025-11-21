@@ -5,6 +5,7 @@
   "description": "Zod schema's for Design Tokens JSON format",
   "license": "EUPL-1.2",
   "keywords": [
+    "expertteam-digitale-toegankelijkheid",
     "nl-design-system"
   ],
   "type": "module",

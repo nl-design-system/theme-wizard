@@ -5,6 +5,7 @@
   "description": "Web server with REST API for scraping websites to extract design tokens",
   "license": "EUPL-1.2",
   "keywords": [
+    "expertteam-digitale-toegankelijkheid",
     "nl-design-system"
   ],
   "private": true,
