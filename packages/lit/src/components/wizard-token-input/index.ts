@@ -3,6 +3,7 @@ import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
+import '../wizard-validation-issue';
 import styles from './styles';
 
 // TODO: use uniform token type that both conforms to the types of
@@ -21,7 +22,7 @@ declare global {
 export class WizardTokenInput extends LitElement {
   @property() label = '';
   @property() name = '';
-  @property() errors: ValidationIssue[] = [];
+  @property() issues: ValidationIssue[] = [];
   internals_ = this.attachInternals();
   #token: Token = {};
 
@@ -72,11 +73,10 @@ export class WizardTokenInput extends LitElement {
 
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
-      ${this.errors.length
-        ? html`<ul class="theme-error">
-            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
-          </ul>`
+      ${this.issues.length > 0
+        ? html`<wizard-validation-issue .issues=${this.issues}></wizard-validation-issue>`
         : nothing}
+
       <textarea
         id=${this.id}
         name=${this.name}

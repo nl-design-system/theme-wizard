@@ -554,20 +554,24 @@ describe('theme', () => {
       expect(result.success).toBeFalsy();
       expect.soft(result.error!.issues).toEqual([
         {
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: `Not enough contrast between "{basis.color.default.color-document}" (#cccccc) and "{basis.color.default.bg-subtle}" -> "{ma.color.white}" (#ffffff). Calculated contrast: 1.61, need 4.5`,
+          message: 'Insufficient contrast',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.color-document.$value'.split('.'),
+          tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
         },
         {
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: `Not enough contrast between "{basis.color.default.bg-subtle}" (#ffffff) and "{basis.color.default.color-document}" (#cccccc). Calculated contrast: 1.61, need 4.5`,
+          message: 'Insufficient contrast',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.bg-subtle.$value'.split('.'),
+          tokens: ['basis.color.default.bg-subtle', 'basis.color.default.color-document'],
         },
       ]);
     });
@@ -600,22 +604,58 @@ describe('theme', () => {
       expect(result.success).toEqual(false);
       expect(result.error!.issues).toEqual([
         {
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: `Not enough contrast between "{basis.color.default.color-document}" (#cccccc) and "{basis.color.default.bg-subtle}" (#ffffff). Calculated contrast: 1.61, need 4.5`,
+          message: 'Insufficient contrast',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.color-document.$value'.split('.'),
+          tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
         },
         {
+          actual: 1.6059285649300712,
           code: 'too_small',
           ERROR_CODE: 'insufficient_contrast',
-          message: `Not enough contrast between "{basis.color.default.bg-subtle}" (#ffffff) and "{basis.color.default.color-document}" (#cccccc). Calculated contrast: 1.61, need 4.5`,
+          message: 'Insufficient contrast',
           minimum: 4.5,
           origin: 'number',
           path: 'basis.color.default.bg-subtle.$value'.split('.'),
+          tokens: ['basis.color.default.bg-subtle', 'basis.color.default.color-document'],
         },
       ]);
+    });
+
+    it('handles contrast error when background color has no EXTENSION_RESOLVED_FROM', () => {
+      const testConfig = structuredClone(config);
+      testConfig.basis.color.default['color-document'] = {
+        $extensions: {
+          [EXTENSION_CONTRAST_WITH]: [
+            {
+              // Background color without EXTENSION_RESOLVED_FROM
+              color: {
+                $type: 'color',
+                $value: parseColor('#fff'),
+                // No EXTENSION_RESOLVED_FROM extension
+              },
+              expectedRatio: 4.5,
+            },
+          ],
+        },
+        $type: 'color',
+        $value: '#ccc',
+      };
+      const result = StrictThemeSchema.safeParse(testConfig);
+      expect(result.success).toBeFalsy();
+      const contrastErrors = (result.error!.issues as ThemeValidationIssue[]).filter(
+        (issue) => issue.ERROR_CODE === ERROR_CODES.INSUFFICIENT_CONTRAST,
+      );
+      expect(contrastErrors.length).toBeGreaterThan(0);
+
+      const errorWithUndefinedPath = contrastErrors.find(
+        (error) => error.path?.length === 1 && error.path[0] === '$value',
+      );
+      expect(errorWithUndefinedPath).toBeDefined();
     });
   });
 
