@@ -17,7 +17,7 @@
     "lint": "pnpm run --sequential '/^lint:.+$/'",
     "lint:css": "stylelint .",
     "lint-fix:css": "pnpm run lint:css --fix",
-    "lint-build": "pnpm run type-check",
+    "lint-build": "tsc --noEmit --project tsconfig.json",
     "test": "pnpm run '/^test:.+$/'",
     "test-build": "vitest --run --coverage",
     "test-install-browsers": "playwright install chromium",
