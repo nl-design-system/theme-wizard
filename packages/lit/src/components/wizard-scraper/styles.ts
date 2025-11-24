@@ -10,4 +10,8 @@ export default css`
     display: flex;
     gap: 1em;
   }
+
+  .wizard-scraper__color {
+    padding: .125em;
+  }
 `;
