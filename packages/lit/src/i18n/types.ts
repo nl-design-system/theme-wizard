@@ -1,11 +1,6 @@
 import { TemplateResult } from 'lit';
 import type { ObjectPath } from '../utils/types';
-
-export interface ErrorRenderContext {
-  details: Record<string, unknown>;
-  renderTokenLink?: (tokenPath: string) => TemplateResult;
-}
-
+import ValidationIssue from '../lib/ValidationIssue';
 /**
  * Define the structure of i18n messages
  */
@@ -15,10 +10,15 @@ export type I18nMessages = {
     title: string;
     error: {
       [key: string]: {
-        compact: (ctx: ErrorRenderContext) => TemplateResult;
-        detailed: (ctx: ErrorRenderContext) => TemplateResult;
+        compact: (issue: ValidationIssue) => TemplateResult;
+        detailed: (issue: ValidationIssue) => TemplateResult;
         label: string;
       };
+    };
+    issue: {
+      contrastValue: string;
+      invalidContrastWith: (params: { token: string }) => TemplateResult;
+      minimalNeeded: (params: { value: string }) => TemplateResult;
     };
     token_link: {
       aria_label: string;

@@ -1,8 +1,7 @@
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { t, renderError } from '../../i18n';
-import { I18nMessagePaths } from '../../i18n/types';
-import ValidationIssue from '../../lib/ValidationIssue';
+import { t } from '../../i18n';
+import ValidationIssue, { GroupedIssues } from '../../lib/ValidationIssue';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
@@ -17,7 +16,7 @@ declare global {
 @customElement(tag)
 export class WizardValidationIssuesAlert extends WizardTokenNavigator {
   @property({ attribute: false })
-  issues: Partial<Record<ValidationIssue['code'], ValidationIssue[]>> = {};
+  issues: GroupedIssues = {};
 
   static override readonly styles = [unsafeCSS(styles)];
 
@@ -28,23 +27,12 @@ export class WizardValidationIssuesAlert extends WizardTokenNavigator {
         ${Object.entries(this.issues).map(([errorCode, issues]) => {
           if (!issues || issues.length === 0) return nothing;
 
-          const code = errorCode as ValidationIssue['code'];
-          const labelKey: I18nMessagePaths = `validation.error.${code}.label`;
-          const label: string = t(labelKey);
-          const count: number = issues.length;
-
           return html`
             <details>
-              <summary>${label} (${count})</summary>
+              <summary>${t(`validation.error.${errorCode}.label`)} (${issues.length})</summary>
               <ul>
                 ${issues.map(
-                  (issue) =>
-                    html`<li>
-                      ${renderError(issue, {
-                        mode: 'detailed',
-                        renderTokenLink: this.renderTokenLink.bind(this),
-                      })}
-                    </li>`,
+                  (issue: ValidationIssue) => html`<li>${t(`validation.error.${issue.code}.detailed`, issue)}</li>`,
                 )}
               </ul>
             </details>

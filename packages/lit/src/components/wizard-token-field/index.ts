@@ -26,12 +26,17 @@ export class WizardTokenField extends LitElement {
   issues: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
 
-  static maxDepth = 3;
+  static readonly maxDepth = 3;
 
   static override readonly styles = [styles];
 
   get #id() {
     return `input-${this.path}`;
+  }
+
+  get #hasErrors(): boolean {
+    console.log(this.#pathIssues);
+    return this.#pathIssues.length > 0;
   }
 
   get #pathIssues(): ValidationIssue[] {
@@ -107,7 +112,7 @@ export class WizardTokenField extends LitElement {
     if (this.depth > WizardTokenField.maxDepth) return nothing;
     const type = this.type;
     const label = this.label || `{${this.path}}`;
-    const errorClass = this.#pathIssues ? 'theme-error' : '';
+    const errorClass = this.#hasErrors ? 'theme-error' : '';
     return html`<div>
       ${type
         ? this.renderField(type, label)

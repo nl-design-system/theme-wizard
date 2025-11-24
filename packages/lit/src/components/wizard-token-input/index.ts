@@ -1,8 +1,9 @@
 import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html, LitElement, nothing } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
+import { t } from '../../i18n';
 import '../wizard-validation-issue';
 import styles from './styles';
 
@@ -26,7 +27,7 @@ export class WizardTokenInput extends LitElement {
   internals_ = this.attachInternals();
   #token: Token = {};
 
-  static formAssociated = true;
+  static readonly formAssociated = true;
   static override readonly styles = [styles];
 
   static valueAsString(value: unknown) {
@@ -73,10 +74,12 @@ export class WizardTokenInput extends LitElement {
 
   override render() {
     return html` <label for=${this.id}>${this.label}</label>
-      ${this.issues.length > 0
-        ? html`<wizard-validation-issue .issues=${this.issues}></wizard-validation-issue>`
-        : nothing}
-
+      ${this.issues.map(
+        (issue) =>
+          html`<div class="utrecht-form-field-error-message">
+            ${t(`validation.error.${issue.code}.compact`, issue)}
+          </div>`,
+      )}
       <textarea
         id=${this.id}
         name=${this.name}

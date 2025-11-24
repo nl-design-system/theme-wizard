@@ -1,7 +1,8 @@
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
-import { html, TemplateResult } from 'lit';
-import i18n from './';
-import { ErrorRenderContext, I18nMessages } from './types';
+import { TemplateResult, html } from 'lit';
+import ValidationIssue from '../lib/ValidationIssue';
+import { t } from './';
+import { I18nMessages } from './types';
 
 const formatNumber = (value: number | undefined, locale: string): string => {
   if (value === undefined) return '';
@@ -13,54 +14,31 @@ export const nl = {
   validation: {
     error: {
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
-        compact(ctx: ErrorRenderContext): TemplateResult {
-          const { details, renderTokenLink } = ctx;
-          const tokens = details['tokens'] as string[];
-          const tokenB = tokens[1];
-
-          if (!renderTokenLink) {
-            return html``;
-          }
-
-          const locale = i18n.locale();
-          return html`<div>
-            <p>Onvoldoende contrast met <strong>${renderTokenLink(tokenB)}</strong></p>
-            <p>Contrast: <strong>${formatNumber(details['actual'] as number | undefined, locale)}</strong></p>
-            <p>Minimaal vereist: <strong>${formatNumber(details['minimum'] as number | undefined, locale)}</strong></p>
-          </div>`;
-        },
-        detailed(ctx: ErrorRenderContext): TemplateResult {
-          const { details, renderTokenLink } = ctx;
-          const tokens = details['tokens'] as string[];
-          const [tokenA, tokenB] = tokens;
-
-          if (!renderTokenLink) {
-            return html`<p>${tokenA} en ${tokenB}</p>`;
-          }
-
-          const locale = i18n.locale();
-          return html`
-            <strong>${renderTokenLink(tokenA)}</strong> en <strong>${renderTokenLink(tokenB)}</strong>
-            <ul>
-              <li>Contrast: <strong>${formatNumber(details['actual'] as number | undefined, locale)}</strong></li>
-              <li>
-                Minimaal vereist: <strong>${formatNumber(details['minimum'] as number | undefined, locale)}</strong>
-              </li>
-            </ul>
-          `;
+        compact: (issue: ValidationIssue): TemplateResult =>
+          html`${t('validation.issue.invalidContrastWith', { token: issue.referredToken })}.`,
+        detailed(issue: ValidationIssue): TemplateResult {
+          return html`${t('validation.issue.invalidContrastWith', { token: issue.referredToken })}.
+          ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'nl') })}.
+          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'nl') })}.`;
         },
         label: 'Onvoldoende contrast',
       },
       [ERROR_CODES.INVALID_REF]: {
-        compact(ctx: ErrorRenderContext): TemplateResult {
-          return html`<p>Ongeldige referentie: ${ctx.details['path']}</p>`;
+        compact(issue): TemplateResult {
+          return html`<p>Ongeldige referentie: ${issue.path}</p>`;
         },
-        detailed(ctx: ErrorRenderContext): TemplateResult {
-          return html`<p>${ctx.details['path']}</p>`;
+        detailed(issue): TemplateResult {
+          return html`<p>${issue.path}</p>`;
         },
         label: 'Ongeldige referentie',
       },
     },
+    issue: {
+      contrastValue: 'Contrast: {{value}}',
+      invalidContrastWith: ({ token }) => html`Onvoldoende contrast met <strong>${token}</strong>`,
+      minimalNeeded: ({ value }) => html`Minimaal vereist: <strong>${value}</strong>`,
+    },
+
     title: 'Thema validatie fouten',
     token_link: {
       aria_label: 'Spring naar {{token}}',
@@ -73,53 +51,31 @@ export const en = {
   validation: {
     error: {
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
-        compact(ctx: ErrorRenderContext): TemplateResult {
-          const { details, renderTokenLink } = ctx;
-          const tokens = details['tokens'] as string[];
-          const tokenB = tokens[1];
-
-          if (!renderTokenLink) {
-            return html``;
-          }
-
-          const locale = i18n.locale();
-          return html`<div>
-            <p>Insufficient contrast with <strong>${renderTokenLink(tokenB)}</strong></p>
-            <p>Contrast: <strong>${formatNumber(details['actual'] as number | undefined, locale)}</strong></p>
-            <p>required minimum: <strong>${formatNumber(details['minimum'] as number | undefined, locale)}</strong></p>
-          </div>`;
-        },
-        detailed(ctx: ErrorRenderContext): TemplateResult {
-          const { details, renderTokenLink } = ctx;
-          const tokens = details['tokens'] as string[];
-          const [tokenA, tokenB] = tokens;
-
-          if (!renderTokenLink) {
-            return html`<p>${tokenA} and ${tokenB}</p>`;
-          }
-
-          const locale = i18n.locale();
-          return html`
-            <strong>${renderTokenLink(tokenA)}</strong> and <strong>${renderTokenLink(tokenB)}</strong>
-            <ul>
-              <li>Contrast: <strong>${formatNumber(details['actual'] as number | undefined, locale)}</strong></li>
-              <li>
-                required minimum: <strong>${formatNumber(details['minimum'] as number | undefined, locale)}</strong>
-              </li>
-            </ul>
-          `;
+        compact: (issue: ValidationIssue): TemplateResult =>
+          html`${t('validation.issue.invalidContrastWith', { token: issue.referredToken })}.
+          ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'en') })}.
+          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}`,
+        detailed(issue: ValidationIssue): TemplateResult {
+          return html`${t('validation.issue.invalidContrastWith', { token: issue.referredToken })}.
+          ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'en') })}.
+          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}.`;
         },
         label: 'Insufficient contrast',
       },
       [ERROR_CODES.INVALID_REF]: {
-        compact(ctx: ErrorRenderContext): TemplateResult {
-          return html`<p>Invalid reference: ${ctx.details['path']}</p>`;
+        compact(issue: ValidationIssue): TemplateResult {
+          return html`<p>Invalid reference: ${issue.path}</p>`;
         },
-        detailed(ctx: ErrorRenderContext): TemplateResult {
-          return html`<p>${ctx.details['path']}</p>`;
+        detailed(issue: ValidationIssue): TemplateResult {
+          return html`<p>${issue.path}</p>`;
         },
         label: 'Invalid reference',
       },
+    },
+    issue: {
+      contrastValue: 'Contrast: {{value}}',
+      invalidContrastWith: ({ token }) => html`Insufficient contrast with <strong>${token}</strong>`,
+      minimalNeeded: ({ value }) => html`Required minimum: <strong>${value}</strong>`,
     },
     title: 'Theme validation errors',
     token_link: {

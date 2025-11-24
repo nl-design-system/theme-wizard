@@ -1,7 +1,8 @@
 import { ColorSpace, parseColor } from '@nl-design-system-community/design-tokens-schema';
 import formFieldError from '@utrecht/form-field-error-message-css?inline';
-import { html, unsafeCSS, nothing } from 'lit';
+import { html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { t } from '../../i18n';
 import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-validation-issue';
@@ -72,9 +73,12 @@ export class WizardColorInput extends WizardTokenInput {
 
     return html`
       <label for=${this.id}>${this.label}</label>
-      ${this.issues.length > 0
-        ? html`<wizard-validation-issue .issues=${this.issues}></wizard-validation-issue>`
-        : nothing}
+      ${this.issues.map(
+        (issue) =>
+          html`<div class="utrecht-form-field-error-message">
+            ${t(`validation.error.${issue.code}.compact`, issue)}
+          </div>`,
+      )}
       <input
         type="color"
         id=${this.id}

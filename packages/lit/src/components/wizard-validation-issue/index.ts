@@ -1,7 +1,7 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
-import { renderError } from '../../i18n';
+import { t } from '../../i18n';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
@@ -33,7 +33,7 @@ export class WizardValidationIssue extends WizardTokenNavigator {
       ${this.issues.map(
         (issue) =>
           html`<div class="utrecht-form-field-error-message">
-            ${renderError(issue, { mode: 'compact', renderTokenLink: this.renderTokenLink.bind(this) })}
+            ${t(`validation.error.${issue.code}.compact`, issue)}
           </div>`,
       )}
     </div>`;
