@@ -14,9 +14,7 @@ export default css`
     0% {
       box-shadow: 0 0 0 2px rgb(0 0 0 / 100%);
     }
-    15% {
-      box-shadow: 0 0 0 2px rgb(0 0 0 / 60%);
-    }
+    15%,
     65% {
       box-shadow: 0 0 0 2px rgb(0 0 0 / 60%);
     }
