@@ -71,7 +71,7 @@ export default class Theme {
     this.tokens = tokens;
   }
 
-  at(path: string): DesignToken {
+  at(path: string): DesignToken | undefined {
     return dlv(this.tokens, path);
   }
 
