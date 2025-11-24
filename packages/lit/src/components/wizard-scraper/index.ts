@@ -121,31 +121,30 @@ export class WizardScraper extends LitElement {
         </form>
 
         ${this.#colors.length
-          ? html`
-            <output>
+          ? html` <output>
               <details>
                 <summary>${this.#colors.length} Colors</summary>
                 <div class="wizard-scraper__colors">
                   ${this.#colors.map(
                     (token) => html`
-                        <button
-                          class="wizard-scraper__color"
-                          @click=${this.#handleOptionClick}
-                          value=${token.$extensions[EXTENSION_TOKEN_ID]}
-                        >
-                          ${token.$type === 'color'
-                            ? html`
-                                <span style=${`background-color: ${ColorToken.getCSSColorFunction(token.$value)}`}>
-                                  &emsp; &emsp;
-                                </span>
-                              `
-                            : nothing}
-                          ${token.$extensions[EXTENSION_TOKEN_ID]}
-                        </button>
+                      <button
+                        class="wizard-scraper__color"
+                        @click=${this.#handleOptionClick}
+                        value=${token.$extensions[EXTENSION_TOKEN_ID]}
+                      >
+                        ${token.$type === 'color'
+                          ? html`
+                              <span style=${`background-color: ${ColorToken.getCSSColorFunction(token.$value)}`}>
+                                &emsp; &emsp;
+                              </span>
+                            `
+                          : nothing}
+                        ${token.$extensions[EXTENSION_TOKEN_ID]}
+                      </button>
                     `,
                   )}
                 </div>
-                </details>
+              </details>
             </output>`
           : nothing}
       </div>
