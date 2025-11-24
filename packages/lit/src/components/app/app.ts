@@ -21,6 +21,8 @@ import appStyles from './app.css';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
 const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
+const COLOR_TOKENS_REF = 'basis.color';
+
 /**
  * Main application component - Orchestrator coordinator
  */
@@ -187,6 +189,15 @@ export class App extends LitElement {
                 .token=${bodyFontToken}
                 label="Lopende tekst"
                 path=${BODY_FONT_TOKEN_REF}
+              ></wizard-token-field>
+            </fieldset>
+
+            <fieldset>
+              <legend>Basiskleuren</legend>
+              <wizard-token-field
+                .errors=${this.#theme.issues}
+                .token=${colorTokens}
+                path=${COLOR_TOKENS_REF}
               ></wizard-token-field>
             </fieldset>
 
