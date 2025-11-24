@@ -23,7 +23,7 @@ export const TokenReferenceSchema = z
 
 export type TokenReference = z.infer<typeof TokenReferenceSchema>;
 
-const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
+export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj !== null && typeof obj === 'object';
 };
 

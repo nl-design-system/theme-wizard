@@ -14,6 +14,7 @@ import {
   StrictThemeSchema,
   ERROR_CODES,
   ThemeValidationIssue,
+  ThemeSchema,
 } from './basis-tokens';
 import { ColorToken, parseColor } from './color-token';
 
@@ -494,6 +495,38 @@ describe('theme', () => {
           `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
         ],
       });
+    });
+  });
+
+  describe('Style Dictionary specifics', () => {
+    it('replaces token.$value with token.original.$value', () => {
+      const config = {
+        basis: {
+          color: {
+            'accent-1': {
+              'bg-default': {
+                $type: 'color',
+                $value: '#ffffff',
+                original: {
+                  $type: 'color',
+                  $value: '{ma.color.white}',
+                },
+              },
+            },
+          },
+        },
+        ma: {
+          color: {
+            white: {
+              $type: 'color',
+              $value: '#ffffff',
+            },
+          },
+        },
+      };
+      const result = ThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+      expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
     });
   });
 
