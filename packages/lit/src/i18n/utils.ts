@@ -1,7 +1,7 @@
-import i18n from './i18n';
-import { I18nMessagePaths, ErrorRenderContext } from './types';
 import { TemplateResult, nothing } from 'lit';
 import ValidationIssue, { RenderOptions } from '../lib/ValidationIssue';
+import i18n from './i18n';
+import { I18nMessagePaths, ErrorRenderContext } from './types';
 
 export const t = (key: I18nMessagePaths, params?: Record<string, unknown>): string => {
   const result = i18n.t(key, params);
