@@ -54,25 +54,25 @@ export default class PersistentStorage {
     return [v, this.#prefix, ...args].filter(Boolean).join(SEPARATOR);
   }
 
-  getItem(key: string) {
-    return this.#backend.getItem(this.path(key));
+  getItem(key: string, prefix: string = '') {
+    return this.#backend.getItem(this.path(prefix, key));
   }
 
   getJSON(key: string = JSON_SUFFIX_DEFAULT) {
-    const value = this.getItem(this.path(JSON_PREFIX, key));
+    const value = this.getItem(key, JSON_PREFIX);
     return value && JSON.parse(value);
   }
 
-  removeItem(key: string) {
-    this.#backend.removeItem(this.path(key));
+  removeItem(key: string, prefix: string = '') {
+    this.#backend.removeItem(this.path(prefix, key));
   }
 
   removeJSON(key: string = JSON_SUFFIX_DEFAULT) {
-    this.removeItem(this.path(JSON_PREFIX, key));
+    this.removeItem(key, JSON_PREFIX);
   }
 
-  setItem(key: string, value: string) {
-    this.#backend.setItem(this.path(key), value);
+  setItem(key: string, value: string, prefix: string = '') {
+    this.#backend.setItem(this.path(prefix, key), value);
   }
 
   setJSON(key: string, value: ObjectOrArray): void;
@@ -80,7 +80,7 @@ export default class PersistentStorage {
   setJSON(keyOrValue: string | ObjectOrArray, value?: ObjectOrArray) {
     const key = typeof keyOrValue === 'string' ? keyOrValue : JSON_SUFFIX_DEFAULT;
     const data = value || keyOrValue;
-    this.setItem(this.path(JSON_PREFIX, key), JSON.stringify(data));
+    this.setItem(key, JSON.stringify(data), JSON_PREFIX);
   }
 
   /** @see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API */
