@@ -23,7 +23,7 @@ declare global {
 export class WizardTokenInput extends LitElement {
   @property() label = '';
   @property() name = '';
-  @property() issues: ValidationIssue[] = [];
+  @property() errors: ValidationIssue[] = [];
   internals_ = this.attachInternals();
   #token: Token = {};
 
@@ -73,16 +73,18 @@ export class WizardTokenInput extends LitElement {
   };
 
   override render() {
+    const hasErrors = this.errors.length > 0;
     return html` <label for=${this.id}>${this.label}</label>
-      ${this.issues.map(
-        (issue) =>
+      ${this.errors.map(
+        (error) =>
           html`<div class="utrecht-form-field-error-message">
-            ${t(`validation.error.${issue.code}.compact`, issue)}
+            ${t(`validation.error.${error.code}.compact`, error)}
           </div>`,
       )}
       <textarea
         id=${this.id}
         name=${this.name}
+        class=${hasErrors ? 'theme-error' : ''}
         .value=${WizardTokenInput.valueAsString(this.value)}
         @change=${this.#handleChange}
       ></textarea>`;

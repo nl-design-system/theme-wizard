@@ -147,13 +147,13 @@ export class App extends LitElement {
             <fieldset>
               <legend>Lettertypes</legend>
               <wizard-token-field
-                .issues=${this.#theme.issues}
+                .errors=${this.#theme.issues}
                 .token=${headingFontToken}
                 label="Koppen"
                 path=${HEADING_FONT_TOKEN_REF}
               ></wizard-token-field>
               <wizard-token-field
-                .issues=${this.#theme.issues}
+                .errors=${this.#theme.issues}
                 .token=${bodyFontToken}
                 label="Lopende tekst"
                 path=${BODY_FONT_TOKEN_REF}
@@ -163,7 +163,7 @@ export class App extends LitElement {
             <details>
               <summary>Alle tokens</summary>
               <wizard-token-field
-                .issues=${this.#theme.issues}
+                .errors=${this.#theme.issues}
                 .token=${this.#theme.tokens['basis']}
                 path=${`basis`}
               ></wizard-token-field>
@@ -184,7 +184,7 @@ export class App extends LitElement {
           <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
           ${this.#theme.groupedIssues
             ? html`<wizard-validation-issues-alert
-                .issues=${this.#theme.groupedIssues}
+                .errors=${this.#theme.groupedIssues}
               ></wizard-validation-issues-alert>`
             : nothing}
           <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">

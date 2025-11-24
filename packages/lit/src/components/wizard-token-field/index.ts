@@ -23,7 +23,7 @@ export class WizardTokenField extends LitElement {
   @property() path: string = '';
   @property() options = [];
   @property({ attribute: false })
-  issues: ValidationIssue[] = [];
+  errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
 
   static readonly maxDepth = 3;
@@ -35,16 +35,23 @@ export class WizardTokenField extends LitElement {
   }
 
   get #hasErrors(): boolean {
-    console.log(this.#pathIssues);
-    return this.#pathIssues.length > 0;
+    return this.#pathErrors.length > 0 || this.#hasNestedErrors;
   }
 
-  get #pathIssues(): ValidationIssue[] {
-    return this.issues.filter((issue) => issue.path === this.path);
+  get #hasNestedErrors(): boolean {
+    if (!this.path) {
+      return this.errors.length > 0;
+    }
+
+    return this.errors.some((error) => error.path.startsWith(this.path + '.'));
   }
 
-  #getChildIssues(childPath: string): ValidationIssue[] {
-    return this.issues.filter((issue) => issue.path.startsWith(childPath));
+  get #pathErrors(): ValidationIssue[] {
+    return this.errors.filter((error) => error.path === this.path);
+  }
+
+  #getChildPathErrors(childPath: string): ValidationIssue[] {
+    return this.errors.filter((error) => error.path.startsWith(childPath));
   }
 
   get entries() {
@@ -74,7 +81,7 @@ export class WizardTokenField extends LitElement {
     switch (type) {
       case 'color':
         return html` <wizard-color-input
-          .issues=${this.#pathIssues}
+          .errors=${this.#pathErrors}
           .value=${this.token.$value}
           id=${this.#id}
           key=${key}
@@ -85,7 +92,7 @@ export class WizardTokenField extends LitElement {
         </wizard-color-input>`;
       case 'font':
         return html` <wizard-font-input
-          .issues=${this.#pathIssues}
+          .errors=${this.#pathErrors}
           .value=${this.token.$value}
           id=${this.#id}
           key=${key}
@@ -96,7 +103,7 @@ export class WizardTokenField extends LitElement {
         </wizard-font-input>`;
       default:
         return html` <wizard-token-input
-          .issues=${this.#pathIssues}
+          .errors=${this.#pathErrors}
           .value=${this.token}
           id=${this.#id}
           key=${key}
@@ -113,7 +120,7 @@ export class WizardTokenField extends LitElement {
     const type = this.type;
     const label = this.label || `{${this.path}}`;
     const errorClass = this.#hasErrors ? 'theme-error' : '';
-    return html`<div>
+    return html`
       ${type
         ? this.renderField(type, label)
         : html`<p class=${errorClass}>${label}</p>
@@ -125,7 +132,7 @@ export class WizardTokenField extends LitElement {
                   <li>
                     <wizard-token-field
                       .token=${token}
-                      .issues=${this.#getChildIssues(path)}
+                      .errors=${this.#getChildPathErrors(path)}
                       path=${path}
                       depth=${depth}
                     ></wizard-token-field>
@@ -133,7 +140,7 @@ export class WizardTokenField extends LitElement {
                 `;
               })}
             </ul>`}
-    </div>`;
+    `;
   }
 
   static entries(token: Token) {

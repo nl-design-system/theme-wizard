@@ -10,7 +10,7 @@ import dlv from 'dlv';
 import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
-import ValidationIssue from '../ValidationIssue';
+import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
@@ -78,7 +78,7 @@ export default class Theme {
     return this.#validationIssues.length;
   }
 
-  get groupedIssues(): Partial<Record<ValidationIssue['code'], ValidationIssue[]>> {
+  get groupedIssues(): GroupedIssues {
     return Object.groupBy(this.issues, ({ code }) => code);
   }
 

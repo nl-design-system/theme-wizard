@@ -16,7 +16,7 @@ declare global {
 @customElement(tag)
 export class WizardValidationIssuesAlert extends WizardTokenNavigator {
   @property({ attribute: false })
-  issues: GroupedIssues = {};
+  errors: GroupedIssues = {};
 
   static override readonly styles = [unsafeCSS(styles)];
 
@@ -24,15 +24,15 @@ export class WizardValidationIssuesAlert extends WizardTokenNavigator {
     return html`
       <utrecht-alert type="error">
         <utrecht-heading-2>${t('validation.title')}</utrecht-heading-2>
-        ${Object.entries(this.issues).map(([errorCode, issues]) => {
-          if (!issues || issues.length === 0) return nothing;
+        ${Object.entries(this.errors).map(([errorCode, errors]) => {
+          if (!errors || errors.length === 0) return nothing;
 
           return html`
             <details>
-              <summary>${t(`validation.error.${errorCode}.label`)} (${issues.length})</summary>
+              <summary>${t(`validation.error.${errorCode}.label`)} (${errors.length})</summary>
               <ul>
-                ${issues.map(
-                  (issue: ValidationIssue) => html`<li>${t(`validation.error.${issue.code}.detailed`, issue)}</li>`,
+                ${errors.map(
+                  (error: ValidationIssue) => html`<li>${t(`validation.error.${error.code}.detailed`, error)}</li>`,
                 )}
               </ul>
             </details>

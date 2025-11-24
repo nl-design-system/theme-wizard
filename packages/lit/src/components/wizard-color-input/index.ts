@@ -71,12 +71,13 @@ export class WizardColorInput extends WizardTokenInput {
       colorString = WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex();
     }
 
+    const hasErrors = this.errors.length > 0;
     return html`
-      <label for=${this.id}>${this.label}</label>
-      ${this.issues.map(
-        (issue) =>
+      <label for=${this.id} class=${hasErrors ? 'theme-error' : ''}>${this.label}</label>
+      ${this.errors.map(
+        (error) =>
           html`<div class="utrecht-form-field-error-message">
-            ${t(`validation.error.${issue.code}.compact`, issue)}
+            ${t(`validation.error.${error.code}.compact`, error)}
           </div>`,
       )}
       <input

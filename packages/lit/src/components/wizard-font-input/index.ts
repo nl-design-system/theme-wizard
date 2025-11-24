@@ -70,15 +70,16 @@ export class WizardFontInput extends WizardTokenInput {
   }
 
   override render() {
+    const hasErrors = this.errors.length > 0;
     return html`
       <label for=${this.id}>${this.label}</label>
-      ${this.issues.map(
-        (issue) =>
+      ${this.errors.map(
+        (error) =>
           html`<div class="utrecht-form-field-error-message">
-            ${t(`validation.error.${issue.code}.compact`, issue)}
+            ${t(`validation.error.${error.code}.compact`, error)}
           </div>`,
       )}
-      <select id=${this.id} name=${this.name} @change=${this.#handleChange}>
+      <select id=${this.id} name=${this.name} class=${hasErrors ? 'theme-error' : ''} @change=${this.#handleChange}>
         ${this.options.length
           ? html`<optgroup label=${this.optionsLabel}>
               ${this.options.map(
