@@ -533,7 +533,7 @@ describe('theme', () => {
     it('ignores incomplete `original` objects', () => {
       const incompleteConfig = structuredClone(config);
       // @ts-expect-error what we're doing here is unexpeced, typ-wise
-      incompleteConfig.basis.color['accent-1']['bg-default'].original.$value = undefined;
+      delete incompleteConfig.basis.color['accent-1']['bg-default'].original.$value;
       const result = ThemeSchema.safeParse(incompleteConfig);
       expect(result.success).toBe(true);
       expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).not.toBe('{ma.color.white}');
