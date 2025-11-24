@@ -1,5 +1,7 @@
 import { EXTENSION_TOKEN_ID, ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
-import { html, LitElement, nothing } from 'lit';
+import formFieldStyles from '@utrecht/form-field-css?inline';
+import textboxStyles from '@utrecht/textbox-css?inline';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import ColorToken from '../../lib/ColorToken';
 import Scraper from '../../lib/Scraper';
@@ -13,7 +15,7 @@ export class WizardScraper extends LitElement {
   #id = 'target-id';
   #scraper = new Scraper(document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '');
 
-  static override readonly styles = [styles];
+  static override readonly styles = [styles, unsafeCSS(formFieldStyles), unsafeCSS(textboxStyles)];
 
   readonly #handleSubmit = async (event: SubmitEvent) => {
     event.preventDefault();
@@ -37,10 +39,20 @@ export class WizardScraper extends LitElement {
   override render() {
     return html`
       <form @submit=${this.#handleSubmit}>
-        <label for=${this.#id}>Website URL</label>
-        <div>
-          <input id=${this.#id} name=${this.#id} type="url" placeholder="https://example.com" value=${this.src} />
-          <utrecht-button appearance="primary-action-button" type="submit">Analyseer</utrecht-button>
+        <div class="utrecht-form-field utrecht-form-field--text">
+          <label for=${this.#id} class="utrecht-form-field__label">Website URL</label>
+          <div className="utrecht-form-field__description"></div>
+          <div class="wizard-scraper__input utrecht-form-field__input">
+            <input
+              class="utrecht-textbox utrecht-textbox--html-input"
+              id=${this.#id}
+              name=${this.#id}
+              type="text"
+              placeholder="example.com"
+              value=${this.src}
+            />
+            <utrecht-button appearance="primary-action-button" type="submit">Analyseer</utrecht-button>
+          </div>
         </div>
 
         ${this.tokens.length
@@ -54,12 +66,12 @@ export class WizardScraper extends LitElement {
                       <li>
                         ${token.$type === 'color'
                           ? html`
-                            <span
-                              style=${`background-color: ${ColorToken.getCSSColorFunction(token.$value)}`}>
+                              <span style=${`background-color: ${ColorToken.getCSSColorFunction(token.$value)}`}>
                                 &emsp;
-                            </span> `
+                              </span>
+                            `
                           : nothing}
-                          ${token.$extensions[EXTENSION_TOKEN_ID]}
+                        ${token.$extensions[EXTENSION_TOKEN_ID]}
                       </li>
                     `,
                   )}
