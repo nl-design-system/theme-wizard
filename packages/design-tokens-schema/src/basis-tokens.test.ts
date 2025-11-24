@@ -499,34 +499,44 @@ describe('theme', () => {
   });
 
   describe('Style Dictionary specifics', () => {
-    it('replaces token.$value with token.original.$value', () => {
-      const config = {
-        basis: {
-          color: {
-            'accent-1': {
-              'bg-default': {
+    const config = {
+      basis: {
+        color: {
+          'accent-1': {
+            'bg-default': {
+              $type: 'color',
+              $value: '#ffffff',
+              original: {
                 $type: 'color',
-                $value: '#ffffff',
-                original: {
-                  $type: 'color',
-                  $value: '{ma.color.white}',
-                },
+                $value: '{ma.color.white}',
               },
             },
           },
         },
-        ma: {
-          color: {
-            white: {
-              $type: 'color',
-              $value: '#ffffff',
-            },
+      },
+      ma: {
+        color: {
+          white: {
+            $type: 'color',
+            $value: '#ffffff',
           },
         },
-      };
+      },
+    };
+
+    it('replaces token.$value with token.original.$value', () => {
       const result = ThemeSchema.safeParse(config);
       expect(result.success).toBe(true);
       expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
+    });
+
+    it('ignores incomplete `original` objects', () => {
+      const incompleteConfig = structuredClone(config);
+      // @ts-expect-error what we're doing here is unexpeced, typ-wise
+      incompleteConfig.basis.color['accent-1']['bg-default'].original.$value = undefined;
+      const result = ThemeSchema.safeParse(incompleteConfig);
+      expect(result.success).toBe(true);
+      expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).not.toBe('{ma.color.white}');
     });
   });
 
