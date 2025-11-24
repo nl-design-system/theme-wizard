@@ -1,4 +1,9 @@
-import { EXTENSION_TOKEN_ID, ScrapedColorToken, ScrapedDesignToken, ScrapedFontFamilyToken } from '@nl-design-system-community/css-scraper';
+import {
+  EXTENSION_TOKEN_ID,
+  ScrapedColorToken,
+  ScrapedDesignToken,
+  ScrapedFontFamilyToken,
+} from '@nl-design-system-community/css-scraper';
 import formFieldStyles from '@utrecht/form-field-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
@@ -9,10 +14,10 @@ import Scraper from '../../lib/Scraper';
 import styles from './styles';
 
 const OPTIONS_STORAGE_KEY = 'options';
+const SRC_STORAGE_KEY = 'src';
 
 @customElement('wizard-scraper')
 export class WizardScraper extends LitElement {
-  @property({ reflect: true }) src = '';
   @property() tokens: ScrapedDesignToken[] = [];
   #storage = new PersistentStorage({ prefix: 'theme-wizard-scraper' });
   #options: ScrapedDesignToken[] = [];
@@ -21,24 +26,37 @@ export class WizardScraper extends LitElement {
   error = '';
   #id = 'target-id';
   #scraper = new Scraper(document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '');
+  #src: string = '';
 
   static override readonly styles = [styles, unsafeCSS(formFieldStyles), unsafeCSS(textboxStyles)];
 
   constructor() {
     super();
-    this.options = this.#storage.getJSON(OPTIONS_STORAGE_KEY);
+    this.options = this.#storage.getJSON(OPTIONS_STORAGE_KEY) || [];
+    this.src = this.#storage.getItem(SRC_STORAGE_KEY) || '';
   }
 
   get options() {
-    return this.#options
+    return this.#options;
   }
 
   set options(options: ScrapedDesignToken[]) {
+    console.log(options);
     this.#storage.setJSON(OPTIONS_STORAGE_KEY, options);
     this.#options = options;
-    this.#colors = options.filter((color): color is ScrapedColorToken => color.$type === 'color' );
+    this.#colors = options.filter((color): color is ScrapedColorToken => color.$type === 'color');
     this.#fonts = options.filter((font): font is ScrapedFontFamilyToken => font.$type === 'fontFamily');
     this.requestUpdate();
+  }
+
+  @property({ reflect: true })
+  get src() {
+    return this.#src || '';
+  }
+
+  set src(value: string) {
+    this.#storage.setItem(SRC_STORAGE_KEY, value);
+    this.#src = value;
   }
 
   get colors() {
@@ -58,13 +76,16 @@ export class WizardScraper extends LitElement {
 
     try {
       const url = new URL(`${urlLike}`);
+      this.src = '';
       this.options = await this.#scraper.getTokens(url);
       this.dispatchEvent(
         new Event('change', {
           bubbles: true,
         }),
       );
+      this.src = url.toString();
     } catch {
+      this.options = [];
       this.error = `Failed to scrape "${urlLike}"`;
     }
   };
@@ -78,7 +99,7 @@ export class WizardScraper extends LitElement {
         bubbles: true,
       }),
     );
-  }
+  };
 
   override render() {
     return html`
@@ -104,24 +125,27 @@ export class WizardScraper extends LitElement {
             <output>
               <details>
                 <summary>${this.#colors.length} Colors</summary>
-                <ul>
+                <div class="wizard-scraper__colors">
                   ${this.#colors.map(
                     (token) => html`
-                      <li>
-                        <button class="wizard-scraper__color" @click=${this.#handleOptionClick} value=${token.$extensions[EXTENSION_TOKEN_ID]}>
-                        ${token.$type === 'color'
-                          ? html`
-                              <span style=${`background-color: ${ColorToken.getCSSColorFunction(token.$value)}`}>
-                                &emsp;
-                              </span>
-                            `
-                          : nothing}
-                        ${token.$extensions[EXTENSION_TOKEN_ID]}
+                        <button
+                          class="wizard-scraper__color"
+                          @click=${this.#handleOptionClick}
+                          value=${token.$extensions[EXTENSION_TOKEN_ID]}
+                        >
+                          ${token.$type === 'color'
+                            ? html`
+                                <span style=${`background-color: ${ColorToken.getCSSColorFunction(token.$value)}`}>
+                                  &emsp; &emsp;
+                                </span>
+                              `
+                            : nothing}
+                          ${token.$extensions[EXTENSION_TOKEN_ID]}
                         </button>
-                      </li>
                     `,
                   )}
-                </ul>
+                </div>
+                </details>
             </output>`
           : nothing}
       </div>

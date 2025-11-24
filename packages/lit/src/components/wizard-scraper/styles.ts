@@ -11,7 +11,12 @@ export default css`
     gap: 1em;
   }
 
+  .wizard-scraper__colors {
+    display: grid;
+    grid: auto-flow dense / 1fr 1fr;
+    gap: 1em;
+  }
   .wizard-scraper__color {
-    padding: .125em;
+    padding: 0.125em;
   }
 `;
