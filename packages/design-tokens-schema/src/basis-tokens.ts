@@ -321,9 +321,6 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
       const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH];
       const baseColor = getActualValue<ColorValue>(token);
 
-      // Skip contrast validation if the token value is a string reference (not yet resolved)
-      if (typeof baseColor === 'string') return;
-
       for (const { color: background, expectedRatio } of comparisons) {
         const compareColor = getActualValue<ColorValue>(background);
 
