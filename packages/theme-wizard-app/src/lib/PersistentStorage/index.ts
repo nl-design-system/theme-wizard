@@ -14,6 +14,8 @@ const JSON_PREFIX = 'JSON';
 const JSON_SUFFIX_DEFAULT = '_';
 const SEPARATOR = ':';
 
+type ObjectOrArray = Record<string, unknown> | unknown[];
+
 export default class PersistentStorage {
   static version = 0; // Helpful for when might need to migrate persisted data
   #type: StorageType;
@@ -73,9 +75,9 @@ export default class PersistentStorage {
     this.#backend.setItem(this.path(key), value);
   }
 
-  setJSON(key: string, value: Record<string, unknown>): void;
-  setJSON(value: Record<string, unknown>): void;
-  setJSON(keyOrValue: string | Record<string, unknown>, value?: Record<string, unknown>) {
+  setJSON(key: string, value: ObjectOrArray): void;
+  setJSON(value: ObjectOrArray): void;
+  setJSON(keyOrValue: string | ObjectOrArray, value?: ObjectOrArray) {
     const key = typeof keyOrValue === 'string' ? keyOrValue : JSON_SUFFIX_DEFAULT;
     const data = value || keyOrValue;
     this.setItem(this.path(JSON_PREFIX, key), JSON.stringify(data));
