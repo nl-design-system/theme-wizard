@@ -3,7 +3,6 @@ import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { t } from '../../i18n';
 import { WizardTokenInput } from '../wizard-token-input';
-import '../wizard-validation-issue';
 
 export type FontOption = { label: string; value: ModernFontFamilyToken['$value'] };
 

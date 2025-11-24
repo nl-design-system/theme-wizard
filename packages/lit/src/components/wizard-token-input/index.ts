@@ -4,7 +4,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { t } from '../../i18n';
-import '../wizard-validation-issue';
 import styles from './styles';
 
 // TODO: use uniform token type that both conforms to the types of

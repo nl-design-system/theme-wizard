@@ -5,7 +5,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { t } from '../../i18n';
 import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
-import '../wizard-validation-issue';
 import styles from './styles';
 
 const tag = 'wizard-color-input';
