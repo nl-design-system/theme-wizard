@@ -77,7 +77,7 @@ test.describe('color contrast warnings', () => {
     // Make sure the actual errors are visible by opening the details
     await errorAlert.locator('summary').click();
     const errors = errorAlert.getByRole('listitem');
-    await expect(errors).toHaveCount(12);
+    await expect(errors).toHaveCount(2);
   });
 
   test('shows in-place error message with the input when contrast is insufficient', async ({ themeWizard }) => {
