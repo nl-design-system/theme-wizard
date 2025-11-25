@@ -29,10 +29,12 @@ export const BrandSchema = z.looseObject({
 });
 export type Brand = z.infer<typeof BrandSchema>;
 
-export const BrandsSchema = z.record(
+const _BrandsSchema = z.record(
   BaseDesignTokenIdentifierSchema, // ex.: "ma", "utrecht", "denhaag"
   BrandSchema,
 );
+
+export const BrandsSchema = _BrandsSchema;
 export type Brands = z.infer<typeof BrandsSchema>;
 
 const FOREGROUND_COLOR_KEYS = [
@@ -196,7 +198,7 @@ type ContrastExtension = {
   expectedRatio: number;
 };
 
-export const addContrastExtensions = (rootConfig: Theme) => {
+export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
     const lastPath = path.at(-1)! as ForegroundColorKey;
 
@@ -320,6 +322,8 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
 
       const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH];
       const baseColor = getActualValue<ColorValue>(token);
+
+      if (typeof baseColor === 'string') return;
 
       for (const { color: background, expectedRatio } of comparisons) {
         const compareColor = getActualValue<ColorValue>(background);

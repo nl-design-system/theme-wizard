@@ -532,11 +532,26 @@ describe('theme', () => {
 
     it('ignores incomplete `original` objects', () => {
       const incompleteConfig = structuredClone(config);
-      // @ts-expect-error what we're doing here is unexpeced, typ-wise
+      // @ts-expect-error what we're doing here is unexpeced, type-wise
       delete incompleteConfig.basis.color['accent-1']['bg-default'].original.$value;
       const result = ThemeSchema.safeParse(incompleteConfig);
       expect(result.success).toBe(true);
-      expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).not.toBe('{ma.color.white}');
+      expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      });
+    });
+
+    it('adds resolved-as extension in StrictTheme', () => {
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
+      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$extensions?.[EXTENSION_RESOLVED_AS]).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      });
     });
   });
 
@@ -702,7 +717,7 @@ describe('theme', () => {
     });
   });
 
-  it('finding both ref and contrast issues at once', () => {
+  it('finds both ref and contrast issues at once', () => {
     // This test case exists because previous versions would bail out after the validation found an invalid ref and skipped checking contrast
     const white = parseColor('#ffffff');
     const lightGray = parseColor('#cccccc');
