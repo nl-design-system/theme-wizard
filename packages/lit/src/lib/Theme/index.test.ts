@@ -34,8 +34,8 @@ describe('Theme', () => {
     const initialCSS = await theme.toCSS();
     theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     const updatedCSS = await theme.toCSS();
-    expect(updatedCSS).toMatchSnapshot();
-    return expect(initialCSS).not.toMatch(updatedCSS);
+    expect(initialCSS).not.toMatch(updatedCSS);
+    return expect(updatedCSS).toMatchSnapshot();
   });
 
   it('has a different JSON output after token update', async () => {
@@ -43,8 +43,8 @@ describe('Theme', () => {
     const initialJSON = await theme.toTokensJSON();
     theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     const updatedJSON = await theme.toTokensJSON();
-    expect(updatedJSON).toMatchSnapshot();
-    return expect(initialJSON).not.toMatch(updatedJSON);
+    expect(initialJSON).not.toMatch(updatedJSON);
+    return expect(updatedJSON).toMatchSnapshot();
   });
 
   it('can reset tokens', async () => {
