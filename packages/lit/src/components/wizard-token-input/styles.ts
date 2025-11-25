@@ -5,5 +5,6 @@ export default css`
   label {
     display: block;
   }
+
   ${tokenLinkStyles}
 `;

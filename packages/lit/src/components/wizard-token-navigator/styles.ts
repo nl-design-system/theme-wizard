@@ -24,12 +24,12 @@ export const tokenLinkStyles = css`
     position: relative;
   }
 
-  .utrecht-form-field-error-message:before {
-    content: '';
-    position: absolute;
-    left: -0.5rem;
-    height: 100%;
-    width: 2px;
+  .utrecht-form-field-error-message::before {
     background-color: red;
+    block-size: 100%;
+    content: '';
+    inline-size: 2px;
+    inset-inline-start: -0.5rem;
+    position: absolute;
   }
 `;
