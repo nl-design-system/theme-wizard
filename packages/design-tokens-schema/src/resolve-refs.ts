@@ -1,7 +1,7 @@
 import dlv from 'dlv';
 import { BaseDesignToken, type BaseDesignTokenValue } from './base-token';
-import { parseColor } from './color-token';
-import { TokenReference, type TokenWithRefLike, isTokenWithRef } from './token-reference';
+import { legacyToModernColor } from './color-token';
+import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef } from './token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
@@ -27,13 +27,8 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
 
     // Capture the resolved value, transforming legacy colors to modern format if needed
     let resolvedValue = ref.$value;
-    if (ref.$type === 'color' && typeof resolvedValue === 'string') {
-      try {
-        resolvedValue = parseColor(resolvedValue);
-      } catch {
-        // If parsing fails, keep the original string value
-        // (this shouldn't happen for validated color tokens, but be safe)
-      }
+    if (ref.$type === 'color' && typeof resolvedValue === 'string' && !isRef(resolvedValue)) {
+      resolvedValue = legacyToModernColor.decode(resolvedValue);
     }
 
     // Add an extension with the resolved ref's value
