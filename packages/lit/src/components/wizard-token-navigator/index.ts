@@ -6,10 +6,10 @@ const FOCUS_DELAY_MS = 300;
 const TOKEN_FIELD_SELECTOR = 'wizard-token-field';
 
 /**
- * Abstract base class for components that need token navigation functionality
+ * Base class for components that need token navigation functionality
  * Provides token field navigation, focus management, and token link rendering
  */
-export abstract class WizardTokenNavigator extends LitElement {
+export class WizardTokenNavigator extends LitElement {
   readonly #shadowDOMNavigator = new ShadowDOMNavigator();
 
   /**
@@ -29,6 +29,15 @@ export abstract class WizardTokenNavigator extends LitElement {
       return;
     }
 
+    this.focusField(field, tokenPath);
+  }
+
+  /**
+   * Focuses a specific field element (used when the field knows it's the target)
+   * @param field - The field element to focus (can be this element or another)
+   * @param tokenPath - Path to the token
+   */
+  protected focusField(field: HTMLElement, tokenPath: string): void {
     this.#shadowDOMNavigator.expandParentDetails(field);
     this.applyHighlightAnimation(field);
     this.scrollToField(field);

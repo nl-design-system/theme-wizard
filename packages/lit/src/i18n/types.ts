@@ -1,6 +1,17 @@
 import { TemplateResult } from 'lit';
 import type { ObjectPath } from '../utils/types';
 import ValidationIssue from '../lib/ValidationIssue';
+
+/**
+ * Function or object that can render token links
+ * Can be either a function that renders token links, or an object with a renderTokenLink function
+ */
+export type TokenLinkRenderer =
+  | ((tokenPath: string, displayText?: string) => TemplateResult)
+  | {
+      renderTokenLink?: (tokenPath: string, displayText?: string) => TemplateResult;
+    };
+
 /**
  * Define the structure of i18n messages
  */
@@ -10,14 +21,14 @@ export type I18nMessages = {
     title: string;
     error: {
       [key: string]: {
-        compact: (issue: ValidationIssue) => TemplateResult;
-        detailed: (issue: ValidationIssue) => TemplateResult;
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }) => TemplateResult;
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }) => TemplateResult;
         label: string;
       };
     };
     issue: {
       contrastValue: string;
-      invalidContrastWith: (params: { token: string }) => TemplateResult;
+      invalidContrastWith: (params: { context?: TokenLinkRenderer; token: string }) => TemplateResult;
       minimalNeeded: (params: { value: string }) => TemplateResult;
     };
     token_link: {

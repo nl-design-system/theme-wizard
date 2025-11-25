@@ -76,7 +76,10 @@ export class WizardColorInput extends WizardTokenInput {
       ${this.errors.map(
         (error) =>
           html`<div class="utrecht-form-field-error-message">
-            ${t(`validation.error.${error.code}.compact`, error)}
+            ${t(`validation.error.${error.code}.compact`, {
+              ...error,
+              renderTokenLink: this.renderTokenLink.bind(this),
+            })}
           </div>`,
       )}
       <input

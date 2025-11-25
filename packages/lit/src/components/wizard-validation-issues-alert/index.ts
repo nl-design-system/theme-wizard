@@ -1,7 +1,7 @@
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { t } from '../../i18n';
-import ValidationIssue, { GroupedIssues } from '../../lib/ValidationIssue';
+import { GroupedIssues } from '../../lib/ValidationIssue';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
@@ -32,7 +32,13 @@ export class WizardValidationIssuesAlert extends WizardTokenNavigator {
               <summary>${t(`validation.error.${errorCode}.label`)} (${errors.length})</summary>
               <ul>
                 ${errors.map(
-                  (error: ValidationIssue) => html`<li>${t(`validation.error.${error.code}.detailed`, error)}</li>`,
+                  (error) =>
+                    html`<li>
+                      ${t(`validation.error.${error.code}.detailed`, {
+                        ...error,
+                        renderTokenLink: this.renderTokenLink.bind(this),
+                      })}
+                    </li>`,
                 )}
               </ul>
             </details>

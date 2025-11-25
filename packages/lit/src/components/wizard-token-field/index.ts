@@ -1,10 +1,11 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
 import { Token } from '../wizard-token-input';
+import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
 const tag = 'wizard-token-field';
@@ -17,7 +18,7 @@ declare global {
 }
 
 @customElement(tag)
-export class WizardTokenField extends LitElement {
+export class WizardTokenField extends WizardTokenNavigator {
   @property() label: string = '';
   @property() token: Token = {};
   @property() path: string = '';

@@ -1,9 +1,10 @@
 import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { t } from '../../i18n';
+import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
 // TODO: use uniform token type that both conforms to the types of
@@ -19,7 +20,7 @@ declare global {
 }
 
 @customElement(tag)
-export class WizardTokenInput extends LitElement {
+export class WizardTokenInput extends WizardTokenNavigator {
   @property() label = '';
   @property() name = '';
   @property() errors: ValidationIssue[] = [];

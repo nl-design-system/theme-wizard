@@ -1,3 +1,4 @@
+import type { TemplateResult } from 'lit';
 import rosetta from 'rosetta';
 import ValidationIssue from '../lib/ValidationIssue';
 import { en, nl } from './messages';
@@ -7,8 +8,9 @@ i18n.locale('nl');
 i18n.set('nl', nl);
 i18n.set('en', en);
 
-export const t = (key: string, params?: ValidationIssue | Record<string, unknown>): string => {
+export const t = (key: string, params?: ValidationIssue | Record<string, unknown>): string | TemplateResult => {
   const result = i18n.t(key, params);
+
   return (typeof result === 'string' && result !== '') || (typeof result === 'object' && result !== null)
     ? result
     : key;
