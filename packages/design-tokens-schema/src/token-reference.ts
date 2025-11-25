@@ -46,9 +46,13 @@ export type TokenWithRefLike = {
   $extensions?: Record<string, unknown>;
 };
 
+export const isRef = (value: unknown): boolean => {
+  return typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
+};
+
 const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
   if (!isTokenLike(obj)) return false;
-  return typeof obj['$value'] === 'string' && obj['$value'].startsWith('{') && obj['$value'].endsWith('}');
+  return isRef(obj['$value']);
 };
 
 /**

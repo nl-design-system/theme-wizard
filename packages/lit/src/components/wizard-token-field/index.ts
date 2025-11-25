@@ -1,9 +1,10 @@
+import { isRef } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type ValidationIssue from '../../lib/ValidationIssue';
 import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
+import type ValidationIssue from '../../lib/ValidationIssue';
 import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
@@ -79,6 +80,14 @@ export class WizardTokenField extends WizardTokenNavigator {
 
   renderField(type: typeof this.type, label: string) {
     const key = this.path.split('.').pop();
+
+    if (isRef(this.value)) {
+      return html`
+        <span>${label}</span>
+        <span>&rarr; ${this.value}</span>
+      `;
+    }
+
     switch (type) {
       case 'color':
         return html` <wizard-color-input

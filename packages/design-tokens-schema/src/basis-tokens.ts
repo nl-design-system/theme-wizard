@@ -4,7 +4,7 @@ import { BaseDesignTokenIdentifierSchema } from './base-token';
 import { ColorTokenValidationSchema, ColorValue, compareContrast, type ColorToken } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
-import { TokenReference, isValueObject } from './token-reference';
+import { TokenReference, isValueObject, isRef } from './token-reference';
 import { walkColors, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 
@@ -252,7 +252,7 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
       if (!isValueObject(token)) return false;
       if (!isValueObject(token['original'])) return false;
       if (!('$value' in token['original'])) return false;
-      return true;
+      return isRef(token['original']['$value']);
     },
     // Place `original.$value` in `$value`
     (token) => (token['$value'] = token.original.$value),
