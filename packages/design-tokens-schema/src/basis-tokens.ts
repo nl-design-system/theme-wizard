@@ -327,9 +327,6 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
       for (const { color: background, expectedRatio } of comparisons) {
         const compareColor = getActualValue<ColorValue>(background);
 
-        // Skip if the background color is a string reference (not yet resolved)
-        if (typeof compareColor === 'string') continue;
-
         const contrast = compareContrast(baseColor, compareColor);
         const tokenAPath = path.join('.');
         const tokenBPathRaw = background.$extensions?.[EXTENSION_RESOLVED_FROM] as string | undefined;
