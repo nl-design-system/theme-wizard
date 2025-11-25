@@ -1,8 +1,10 @@
 import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html, LitElement, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
+import { t } from '../../i18n';
+import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
 // TODO: use uniform token type that both conforms to the types of
@@ -18,14 +20,14 @@ declare global {
 }
 
 @customElement(tag)
-export class WizardTokenInput extends LitElement {
+export class WizardTokenInput extends WizardTokenNavigator {
   @property() label = '';
   @property() name = '';
   @property() errors: ValidationIssue[] = [];
   internals_ = this.attachInternals();
   #token: Token = {};
 
-  static formAssociated = true;
+  static readonly formAssociated = true;
   static override readonly styles = [styles];
 
   static valueAsString(value: unknown) {
@@ -71,15 +73,18 @@ export class WizardTokenInput extends LitElement {
   };
 
   override render() {
+    const hasErrors = this.errors.length > 0;
     return html` <label for=${this.id}>${this.label}</label>
-      ${this.errors.length
-        ? html`<ul class="theme-error">
-            ${this.errors.map(({ issue }) => html`<li>${issue.message}</li>`)}
-          </ul>`
-        : nothing}
+      ${this.errors.map(
+        (error) =>
+          html`<div class="utrecht-form-field-error-message">
+            ${t(`validation.error.${error.code}.compact`, error)}
+          </div>`,
+      )}
       <textarea
         id=${this.id}
         name=${this.name}
+        class=${hasErrors ? 'theme-error' : ''}
         .value=${WizardTokenInput.valueAsString(this.value)}
         @change=${this.#handleChange}
       ></textarea>`;

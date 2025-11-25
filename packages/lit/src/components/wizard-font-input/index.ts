@@ -1,6 +1,7 @@
 import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { t } from '../../i18n';
 import { WizardTokenInput } from '../wizard-token-input';
 
 export type FontOption = { label: string; value: ModernFontFamilyToken['$value'] };
@@ -44,7 +45,7 @@ export class WizardFontInput extends WizardTokenInput {
 
     const optionIsValue = this.valueComparator(value);
     if (!DEFAULT_FONT_OPTIONS.some(optionIsValue) && !this.options.some(optionIsValue)) {
-      const label = (Array.isArray(value) ? value[0] : value).replace(/['"]/g, '');
+      const label = (Array.isArray(value) ? value[0] : value).replaceAll(/['"]/g, '');
       this.options.push({ label, value });
     }
     this.requestUpdate('value', oldValue);
@@ -68,18 +69,16 @@ export class WizardFontInput extends WizardTokenInput {
   }
 
   override render() {
+    const hasErrors = this.errors.length > 0;
     return html`
       <label for=${this.id}>${this.label}</label>
-      ${this.errors.length
-        ? html`
-            <div class="theme-error">
-              ${this.errors.map(
-                ({ issue }) => html`<div class="utrecht-form-field-error-message"><p>${issue.message}</p></div>`,
-              )}
-            </div>
-          `
-        : nothing}
-      <select id=${this.id} name=${this.name} @change=${this.#handleChange}>
+      ${this.errors.map(
+        (error) =>
+          html`<div class="utrecht-form-field-error-message">
+            ${t(`validation.error.${error.code}.compact`, error)}
+          </div>`,
+      )}
+      <select id=${this.id} name=${this.name} class=${hasErrors ? 'theme-error' : ''} @change=${this.#handleChange}>
         ${this.options.length
           ? html`<optgroup label=${this.optionsLabel}>
               ${this.options.map(

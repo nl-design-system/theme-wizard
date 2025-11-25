@@ -1,13 +1,7 @@
 import dlv from 'dlv';
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './base-token';
-import {
-  ColorTokenValidationSchema,
-  ColorValue,
-  compareContrast,
-  stringifyColor,
-  type ColorToken,
-} from './color-token';
+import { ColorTokenValidationSchema, ColorValue, compareContrast, type ColorToken } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { TokenReference } from './token-reference';
@@ -253,16 +247,6 @@ export const ERROR_CODES = {
   INVALID_REF: 'invalid_ref',
 } as const;
 
-// Type for our custom Zod issues that include ERROR_CODE
-export type ThemeValidationIssue = {
-  code: string;
-  path: PropertyKey[];
-  message: string;
-  ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
-  COMPARED_WITH?: string;
-  [key: string]: unknown;
-};
-
 /**
  * Validate a full theme
  * If you want to replace all tokens refs with their actual value, tag on a `.transform(resolveConfigRefs)`
@@ -282,6 +266,12 @@ export const ThemeSchema = z.looseObject({
   brand: BrandsSchema.optional(),
   // 'components/*': {},
 });
+
+export type ThemeValidationIssue = z.core.$ZodIssue & {
+  actual?: number;
+  ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
+  tokens?: string[];
+};
 
 export type Theme = z.infer<typeof ThemeSchema>;
 
@@ -316,28 +306,31 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
       for (const { color: background, expectedRatio } of comparisons) {
         const compareColor = getActualValue<ColorValue>(background);
         const contrast = compareContrast(baseColor, compareColor);
-        const resolvedFrom = background.$extensions?.[EXTENSION_RESOLVED_FROM];
-        const colorRefName = background.$extensions?.[EXTENSION_RESOLVED_AS]
-          ? `"${resolvedFrom}" -> "${background.$value}"`
-          : `"${resolvedFrom}"`;
+        const tokenAPath = path.join('.');
+        const tokenBPathRaw = background.$extensions?.[EXTENSION_RESOLVED_FROM] as string | undefined;
+        const tokenBPath = tokenBPathRaw?.replaceAll(/(^\{)|(\}$)/g, '');
+
         if (contrast < expectedRatio) {
           ctx.addIssue({
+            actual: contrast,
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
-            input: contrast,
-            message: `Not enough contrast between "{${path.join('.')}}" (${stringifyColor(baseColor)}) and ${colorRefName} (${stringifyColor(compareColor)}). Calculated contrast: ${contrast.toFixed(2)}, need ${expectedRatio}`,
+            message: 'Insufficient contrast',
             minimum: expectedRatio,
             origin: 'number',
             path: [...path, '$value'],
+            tokens: [tokenAPath, tokenBPath].filter(Boolean),
           });
+
           ctx.addIssue({
+            actual: contrast,
             code: 'too_small',
             ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
-            input: contrast,
-            message: `Not enough contrast between "${resolvedFrom}" (${stringifyColor(compareColor)}) and "{${path.join('.')}}" (${stringifyColor(baseColor)}). Calculated contrast: ${contrast.toFixed(2)}, need ${expectedRatio}`,
+            message: 'Insufficient contrast',
             minimum: expectedRatio,
             origin: 'number',
-            path: [...resolvedFrom.slice(1, -1).split('.'), '$value'],
+            path: [...(tokenBPath?.split('.') || []), '$value'],
+            tokens: [tokenBPath, tokenAPath].filter(Boolean),
           });
         }
       }

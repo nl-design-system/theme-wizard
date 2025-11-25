@@ -1,10 +1,11 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
 import { Token } from '../wizard-token-input';
+import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
 const tag = 'wizard-token-field';
@@ -17,20 +18,41 @@ declare global {
 }
 
 @customElement(tag)
-export class WizardTokenField extends LitElement {
+export class WizardTokenField extends WizardTokenNavigator {
   @property() label: string = '';
   @property() token: Token = {};
   @property() path: string = '';
   @property() options = [];
-  @property() errors: ValidationIssue[] = [];
+  @property({ attribute: false })
+  errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
 
-  static maxDepth = 3;
+  static readonly maxDepth = 3;
 
   static override readonly styles = [styles];
 
   get #id() {
     return `input-${this.path}`;
+  }
+
+  get #hasErrors(): boolean {
+    return this.#pathErrors.length > 0 || this.#hasNestedErrors;
+  }
+
+  get #hasNestedErrors(): boolean {
+    if (!this.path) {
+      return this.errors.length > 0;
+    }
+
+    return this.errors.some((error) => error.path.startsWith(this.path + '.'));
+  }
+
+  get #pathErrors(): ValidationIssue[] {
+    return this.errors.filter((error) => error.path === this.path);
+  }
+
+  #getChildPathErrors(childPath: string): ValidationIssue[] {
+    return this.errors.filter((error) => error.path.startsWith(childPath));
   }
 
   get entries() {
@@ -60,7 +82,7 @@ export class WizardTokenField extends LitElement {
     switch (type) {
       case 'color':
         return html` <wizard-color-input
-          .errors=${this.errors}
+          .errors=${this.#pathErrors}
           .value=${this.token.$value}
           id=${this.#id}
           key=${key}
@@ -71,7 +93,7 @@ export class WizardTokenField extends LitElement {
         </wizard-color-input>`;
       case 'font':
         return html` <wizard-font-input
-          .errors=${this.errors}
+          .errors=${this.#pathErrors}
           .value=${this.token.$value}
           id=${this.#id}
           key=${key}
@@ -82,7 +104,7 @@ export class WizardTokenField extends LitElement {
         </wizard-font-input>`;
       default:
         return html` <wizard-token-input
-          .errors=${this.errors}
+          .errors=${this.#pathErrors}
           .value=${this.token}
           id=${this.#id}
           key=${key}
@@ -98,20 +120,20 @@ export class WizardTokenField extends LitElement {
     if (this.depth > WizardTokenField.maxDepth) return nothing;
     const type = this.type;
     const label = this.label || `{${this.path}}`;
-    return html`<div>
+    const errorClass = this.#hasErrors ? 'theme-error' : '';
+    return html`
       ${type
         ? this.renderField(type, label)
-        : html`<p class=${this.errors.length ? 'theme-error' : ''}>${label}</p>
+        : html`<p class=${errorClass}>${label}</p>
             <ul>
               ${this.entries.map(([key, token]) => {
                 const path = `${this.path}.${key}`;
                 const depth = this.depth + 1;
-                const errors = this.errors.filter((error) => error.path.startsWith(path));
                 return html`
                   <li>
                     <wizard-token-field
                       .token=${token}
-                      .errors=${errors}
+                      .errors=${this.#getChildPathErrors(path)}
                       path=${path}
                       depth=${depth}
                     ></wizard-token-field>
@@ -119,7 +141,7 @@ export class WizardTokenField extends LitElement {
                 `;
               })}
             </ul>`}
-    </div>`;
+    `;
   }
 
   static entries(token: Token) {

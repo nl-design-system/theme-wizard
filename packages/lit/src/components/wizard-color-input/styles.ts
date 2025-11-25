@@ -1,8 +1,13 @@
 import { css } from 'lit';
+import { tokenLinkStyles } from '../wizard-token-navigator/styles';
 
 export default css`
-  .theme-error {
-    background: #ffe0e0;
-    padding-inline: 0.5rem;
+  :host {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-block-end: 0.5rem;
   }
+
+  ${tokenLinkStyles}
 `;
