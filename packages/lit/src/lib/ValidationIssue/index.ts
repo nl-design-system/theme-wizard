@@ -12,6 +12,7 @@ export default class ValidationIssue {
   tokens?: string[];
   message!: string;
   minimum?: number;
+  id: string;
   [key: string]: unknown;
 
   constructor(issue: ThemeValidationIssue, code?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES]) {
@@ -24,6 +25,7 @@ export default class ValidationIssue {
       : '';
     this.referredToken = this.tokens?.find((token: string) => token !== this.path);
     this.code = code || issue.ERROR_CODE || 'unknown';
+    this.id = `${this.path}-error-${this.code}`;
   }
 }
 

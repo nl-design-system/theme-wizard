@@ -22,7 +22,7 @@ export class WizardValidationIssuesAlert extends WizardTokenNavigator {
 
   override render() {
     return html`
-      <utrecht-alert type="error">
+      <utrecht-alert type="error" data-testid="validation-errors-alert">
         <utrecht-heading-2>${t('validation.title')}</utrecht-heading-2>
         ${Object.entries(this.errors).map(([errorCode, errors]) => {
           if (!errors || errors.length === 0) return nothing;

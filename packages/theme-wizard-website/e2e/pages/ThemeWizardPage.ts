@@ -54,6 +54,10 @@ export class ThemeWizardPage {
     return this.preview.getByRole('paragraph').first();
   }
 
+  getErrorAlert(): Locator {
+    return this.page.getByTestId('validation-errors-alert');
+  }
+
   async reset() {
     await this.page.getByRole('button', { name: 'Reset tokens' }).click();
   }
