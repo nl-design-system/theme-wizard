@@ -51,5 +51,10 @@ test.describe('Download tokens as JSON', () => {
 
       await expect(themeWizard.downloadButton).toBeDisabled();
     });
+
+    test('Button is enabled when user made changes in previous session', async ({ page, themeWizard }) => {
+      await page.reload();
+      await expect(themeWizard.downloadButton).toBeEnabled();
+    });
   });
 });
