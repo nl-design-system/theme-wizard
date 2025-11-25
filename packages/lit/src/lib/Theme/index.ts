@@ -25,10 +25,10 @@ const STYLE_DICTIONARY_SETTINGS = {
 
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
-  #defaults: DesignTokens; // Every Theme has private defaults to revert to.
+  readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
-  #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  readonly #stylesheet: CSSStyleSheet = new CSSStyleSheet();
   name = 'wizard';
   #validationIssues: ValidationIssue[] = [];
 
