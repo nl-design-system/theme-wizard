@@ -29,12 +29,11 @@ export const BrandSchema = z.looseObject({
 });
 export type Brand = z.infer<typeof BrandSchema>;
 
-const _BrandsSchema = z.record(
+export const BrandsSchema = z.record(
   BaseDesignTokenIdentifierSchema, // ex.: "ma", "utrecht", "denhaag"
   BrandSchema,
 );
 
-export const BrandsSchema = _BrandsSchema;
 export type Brands = z.infer<typeof BrandsSchema>;
 
 const FOREGROUND_COLOR_KEYS = [
