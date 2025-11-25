@@ -182,7 +182,7 @@ export class App extends LitElement {
 
         <main class="theme-preview-main" id="main-content" role="main">
           <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
-          ${this.#theme.groupedIssues
+          ${this.#theme.errorCount > 0
             ? html`<wizard-validation-issues-alert
                 .errors=${this.#theme.groupedIssues}
               ></wizard-validation-issues-alert>`

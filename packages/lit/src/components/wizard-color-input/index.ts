@@ -1,6 +1,6 @@
 import { ColorSpace, parseColor } from '@nl-design-system-community/design-tokens-schema';
 import formFieldError from '@utrecht/form-field-error-message-css?inline';
-import { html, unsafeCSS } from 'lit';
+import { html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { t } from '../../i18n';
 import ColorToken from '../../lib/ColorToken';
@@ -70,12 +70,11 @@ export class WizardColorInput extends WizardTokenInput {
       colorString = WizardColorInput.supportsCSSColorValues ? this.#token.toCSSColorFunction() : this.#token.toHex();
     }
 
-    const hasErrors = this.errors.length > 0;
     return html`
-      <label for=${this.id} class=${hasErrors ? 'theme-error' : ''}>${this.label}</label>
+      <label for=${this.id} class=${this.hasErrors ? 'theme-error' : ''}>${this.label}</label>
       ${this.errors.map(
         (error) =>
-          html`<div class="utrecht-form-field-error-message">
+          html`<div class="utrecht-form-field-error-message" id=${error.id}>
             ${t(`validation.error.${error.code}.compact`, {
               ...error,
               renderTokenLink: this.renderTokenLink.bind(this),
@@ -86,6 +85,8 @@ export class WizardColorInput extends WizardTokenInput {
         type="color"
         id=${this.id}
         value=${colorString}
+        aria-invalid=${this.hasErrors ? 'true' : nothing}
+        aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
         colorSpace=${this.colorSpace}
         @change=${this.#handleChange}
       />

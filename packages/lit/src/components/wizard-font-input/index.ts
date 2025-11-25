@@ -69,16 +69,22 @@ export class WizardFontInput extends WizardTokenInput {
   }
 
   override render() {
-    const hasErrors = this.errors.length > 0;
     return html`
       <label for=${this.id}>${this.label}</label>
       ${this.errors.map(
         (error) =>
-          html`<div class="utrecht-form-field-error-message">
+          html`<div class="utrecht-form-field-error-message" id=${error.id}>
             ${t(`validation.error.${error.code}.compact`, error)}
           </div>`,
       )}
-      <select id=${this.id} name=${this.name} class=${hasErrors ? 'theme-error' : ''} @change=${this.#handleChange}>
+      <select
+        id=${this.id}
+        name=${this.name}
+        class=${this.hasErrors ? 'theme-error' : ''}
+        @change=${this.#handleChange}
+        aria-invalid=${this.hasErrors ? 'true' : nothing}
+        aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
+      >
         ${this.options.length
           ? html`<optgroup label=${this.optionsLabel}>
               ${this.options.map(

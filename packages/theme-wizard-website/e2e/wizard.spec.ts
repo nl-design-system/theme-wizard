@@ -53,3 +53,57 @@ test.describe('Download tokens as JSON', () => {
     });
   });
 });
+
+test.describe('color contrast warnings', () => {
+  test.beforeEach(async ({ themeWizard }) => {
+    // Make sure the <details> containing all color inputs is shown (<wizard-token-field>)
+    await themeWizard.sidebar.locator('summary').click();
+  });
+
+  test('No errors shown before making changes', async ({ themeWizard }) => {
+    const errorAlert = themeWizard.getErrorAlert();
+    await expect(errorAlert).not.toBeVisible();
+
+    const input = themeWizard.sidebar.getByLabel('{basis.color.accent-1.bg-active}');
+    await expect(input).not.toHaveAttribute('aria-invalid');
+  });
+
+  test('shows an error alert when contrast is insufficient', async ({ themeWizard }) => {
+    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+
+    const errorAlert = themeWizard.getErrorAlert();
+    await expect(errorAlert).toBeVisible();
+
+    // Make sure the actual errors are visible by opening the details
+    await errorAlert.locator('summary').click();
+    const errors = errorAlert.getByRole('listitem');
+    await expect(errors).toHaveCount(12);
+  });
+
+  test('shows in-place error message with the input when contrast is insufficient', async ({ themeWizard }) => {
+    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+
+    // Input itself is marked as invalid
+    const input = themeWizard.sidebar.getByLabel('{basis.color.accent-1.bg-active}');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(input).toHaveAccessibleErrorMessage(/Onvoldoende contrast/);
+  });
+
+  test('remove errors when contrast issues are fixed', async ({ themeWizard }) => {
+    const input = themeWizard.sidebar.getByLabel('{basis.color.accent-1.bg-active}');
+    const errorAlert = themeWizard.getErrorAlert();
+
+    // Set invalid state
+    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(errorAlert).toBeVisible();
+
+    // Restore to valid state
+    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#ffffff');
+
+    await expect(input).not.toHaveAttribute('aria-invalid');
+    await expect(input).not.toHaveAccessibleErrorMessage(/Onvoldoende contrast/);
+    await expect(errorAlert).not.toBeVisible();
+  });
+});

@@ -1,5 +1,5 @@
 import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
@@ -60,6 +60,10 @@ export class WizardTokenInput extends WizardTokenNavigator {
     this.requestUpdate('value', oldValue);
   }
 
+  get hasErrors() {
+    return this.errors.length > 0;
+  }
+
   readonly #handleChange = (event: Event) => {
     if (event.target instanceof HTMLTextAreaElement) {
       try {
@@ -77,7 +81,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
     return html` <label for=${this.id}>${this.label}</label>
       ${this.errors.map(
         (error) =>
-          html`<div class="utrecht-form-field-error-message">
+          html`<div class="utrecht-form-field-error-message" id=${error.id}>
             ${t(`validation.error.${error.code}.compact`, error)}
           </div>`,
       )}
@@ -87,6 +91,8 @@ export class WizardTokenInput extends WizardTokenNavigator {
         class=${hasErrors ? 'theme-error' : ''}
         .value=${WizardTokenInput.valueAsString(this.value)}
         @change=${this.#handleChange}
+        aria-invalid=${this.hasErrors ? 'true' : nothing}
+        aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
       ></textarea>`;
   }
 }
