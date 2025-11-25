@@ -5,7 +5,8 @@
     "lib": ["es2022", "dom"],
     "outDir": "dist",
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "rootDir": "src"
   },
   "include": ["src", "package.json"]
 }

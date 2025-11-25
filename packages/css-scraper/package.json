@@ -8,7 +8,6 @@
     "expertteam-digitale-toegankelijkheid",
     "nl-design-system"
   ],
-  "private": true,
   "type": "module",
   "module": "./dist/css-scraper.js",
   "types": "./dist/get-css.d.ts",
@@ -21,6 +20,10 @@
   "files": [
     "dist/"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "repository": {
     "type": "git+ssh",
     "url": "git@github.com:nl-design-system/theme-wizard.git",

@@ -14,10 +14,10 @@ import { withRelatedProject } from '@vercel/related-projects';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
 import { timing, startTime, endTime } from 'hono/timing';
-import pkg from '../package.json';
-import { clientErrorSchema } from './schemas/client-error';
-import { type ServerError, serverErrorSchema } from './schemas/server-error';
-import { withScrapingErrorHandler } from './scraping-error-handler';
+import pkg from '../package.json' with { type: 'json' };
+import { clientErrorSchema } from './schemas/client-error.js';
+import { type ServerError, serverErrorSchema } from './schemas/server-error.js';
+import { withScrapingErrorHandler } from './scraping-error-handler.js';
 
 // This tricks Vercel into deploying this as a HonoJS app
 /* @__PURE__ */ import('hono');
@@ -218,7 +218,7 @@ app.get(
 );
 
 // // Make all error responses uniform: all respond with the correct schema
-app.onError((error, c) => {
+app.onError((_, c) => {
   return c.json<ServerError>(
     {
       error: {
