@@ -2,16 +2,10 @@ import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import './index';
 import type { WizardFontInput } from './index';
+import { createInvalidRefIssue } from '../../../test/utils';
 import { DEFAULT_FONT_OPTIONS } from './index';
 
 const tag = 'wizard-font-input';
-
-const baseError = {
-  id: 'test-error-id',
-  code: 'insufficient_contrast',
-  message: 'Test error',
-  path: 'test.path',
-} as const;
 
 const getFontInput = (): WizardFontInput => {
   const element = document.querySelector<WizardFontInput>(tag);
@@ -190,21 +184,21 @@ describe(`<${tag}>`, () => {
 
   describe('error rendering', () => {
     it('renders error messages when errors are present', async () => {
-      const element = await renderFontInput({ errors: [baseError] });
+      const element = await renderFontInput({ errors: [createInvalidRefIssue()] });
 
       const errorMessages = element.shadowRoot?.querySelectorAll('.utrecht-form-field-error-message');
       expect(errorMessages?.length).toBeGreaterThan(0);
     });
 
     it('applies error class to select when errors are present', async () => {
-      const element = await renderFontInput({ errors: [baseError] });
+      const element = await renderFontInput({ errors: [createInvalidRefIssue()] });
       const select = getSelect(element);
 
       expect(select.classList.contains('theme-error')).toBe(true);
     });
 
     it('removes error class from select when errors are cleared', async () => {
-      const element = await renderFontInput({ errors: [baseError] });
+      const element = await renderFontInput({ errors: [createInvalidRefIssue()] });
 
       element.errors = [];
       element.requestUpdate();
