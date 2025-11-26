@@ -2,6 +2,7 @@ import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import { html } from 'lit';
 import { describe, expect, it, vi } from 'vitest';
 import type { TokenLinkRenderer } from './types';
+import { createContrastIssue, createInvalidRefIssue } from '../../test/utils';
 
 // Mock the t function BEFORE importing messages to avoid circular dependency
 vi.mock('./index', () => ({
@@ -25,29 +26,7 @@ vi.mock('./index', () => ({
   }),
 }));
 
-import ValidationIssue from '../lib/ValidationIssue';
 import { en, nl } from './messages';
-
-const createContrastIssue = (
-  overrides?: Partial<ValidationIssue & { renderTokenLink?: TokenLinkRenderer }>,
-): ValidationIssue & { renderTokenLink?: TokenLinkRenderer } => ({
-  id: 'test.path-error-insufficient_contrast',
-  actual: 2.5,
-  code: ERROR_CODES.INSUFFICIENT_CONTRAST,
-  message: 'Test message',
-  minimum: 4.5,
-  path: 'test.path',
-  referredToken: 'basis.color.some.color.token',
-  ...overrides,
-});
-
-const createInvalidRefIssue = (overrides?: Partial<ValidationIssue>): ValidationIssue => ({
-  id: 'test.path-error-invalid_ref',
-  code: ERROR_CODES.INVALID_REF,
-  message: 'Test message',
-  path: 'test.path',
-  ...overrides,
-});
 
 describe('messages', () => {
   describe('formatNumber', () => {
