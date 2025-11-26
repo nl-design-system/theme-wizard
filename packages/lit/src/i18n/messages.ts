@@ -94,10 +94,7 @@ export const en = {
     issue: {
       contrastValue: 'Contrast: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
-        // No token: render plain text without special markup or links
-        if (!token) {
-          return html`Insufficient contrast`;
-        }
+        if (!token) return html`Insufficient contrast`;
 
         const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
         return html`Insufficient contrast with ${tokenLink}`;
