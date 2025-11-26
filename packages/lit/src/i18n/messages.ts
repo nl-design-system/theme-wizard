@@ -21,7 +21,10 @@ export const nl = {
           })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
           return html`${issue.path}:
-          ${t('validation.issue.invalidContrastWith', { context: issue.renderTokenLink, token: issue.referredToken })}.
+          ${t('validation.issue.invalidContrastWith', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
           ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'nl') })}.
           ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'nl') })}.`;
         },
@@ -40,8 +43,9 @@ export const nl = {
     issue: {
       contrastValue: 'Contrast: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
-        const renderTokenLink = typeof context === 'function' ? context : context?.renderTokenLink;
-        const tokenLink = renderTokenLink && token ? renderTokenLink(token) : html`<strong>${token}</strong>`;
+        if (!token) return html`Onvoldoende contrast`;
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
         return html`Onvoldoende contrast met ${tokenLink}`;
       },
       minimalNeeded: ({ value }) => html`Minimaal vereist: <strong>${value}</strong>`,
@@ -67,7 +71,8 @@ export const en = {
           ${t('validation.issue.contrastValue', { value: formatNumber(issue.actual, 'en') })}.
           ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
-          return html`${t('validation.issue.invalidContrastWith', {
+          return html`${issue.path}:
+          ${t('validation.issue.invalidContrastWith', {
             context: issue.renderTokenLink,
             token: issue.referredToken,
           })}.
@@ -89,8 +94,12 @@ export const en = {
     issue: {
       contrastValue: 'Contrast: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
-        const renderTokenLink = typeof context === 'function' ? context : context?.renderTokenLink;
-        const tokenLink = renderTokenLink && token ? renderTokenLink(token) : html`<strong>${token}</strong>`;
+        // No token: render plain text without special markup or links
+        if (!token) {
+          return html`Insufficient contrast`;
+        }
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
         return html`Insufficient contrast with ${tokenLink}`;
       },
       minimalNeeded: ({ value }) => html`Required minimum: <strong>${value}</strong>`,
