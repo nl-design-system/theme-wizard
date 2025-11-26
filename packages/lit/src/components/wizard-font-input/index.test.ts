@@ -6,132 +6,212 @@ import { DEFAULT_FONT_OPTIONS } from './index';
 
 const tag = 'wizard-font-input';
 
+const baseError = {
+  id: 'test-error-id',
+  code: 'insufficient_contrast',
+  message: 'Test error',
+  path: 'test.path',
+} as const;
+
+const getFontInput = (): WizardFontInput => {
+  const element = document.querySelector<WizardFontInput>(tag);
+  if (!element) throw new Error(`<${tag}> was not found in the document`);
+  return element;
+};
+
+const renderFontInput = async (overrides: Partial<WizardFontInput> = {}): Promise<WizardFontInput> => {
+  const element = getFontInput();
+  Object.assign(element, overrides);
+  element.requestUpdate();
+  await element.updateComplete;
+  return element;
+};
+
+const getSelect = (element: WizardFontInput): HTMLSelectElement => {
+  const select = element.shadowRoot?.querySelector('select') as HTMLSelectElement | null;
+  if (!select) throw new Error('Expected <select> element in wizard-font-input shadow root');
+  return select;
+};
+
+const getOptions = (element: WizardFontInput): HTMLOptionElement[] => Array.from(getSelect(element).options);
+
 describe(`<${tag}>`, () => {
   beforeEach(() => {
     document.body.innerHTML = `<${tag}></${tag}>`;
   });
 
-  it('shows a select element', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    await element?.updateComplete;
-    const select = element?.shadowRoot?.querySelector('select');
-    expect(select).toBeDefined();
+  describe('rendering', () => {
+    it('renders a select element', async () => {
+      const element = await renderFontInput();
+      const select = getSelect(element);
+
+      expect(select).toBeInstanceOf(HTMLSelectElement);
+    });
+
+    it('renders a list of common fonts including all default options', async () => {
+      const element = await renderFontInput();
+      const options = getOptions(element);
+
+      expect(options.length).toBeGreaterThan(1);
+
+      const optionLabels = options.map((opt) => opt.textContent?.trim());
+      for (const { label } of DEFAULT_FONT_OPTIONS) {
+        expect(optionLabels).toContain(label);
+      }
+    });
+
+    it('renders default font options in an optgroup', async () => {
+      const element = await renderFontInput();
+      const optgroups = Array.from(element.shadowRoot?.querySelectorAll('optgroup') ?? []);
+      const defaultOptgroup = optgroups.find((og) => og.getAttribute('label') === 'Standaardopties');
+
+      expect(defaultOptgroup).toBeDefined();
+      const defaultOptions = defaultOptgroup?.querySelectorAll('option');
+      expect(defaultOptions?.length).toBe(DEFAULT_FONT_OPTIONS.length);
+    });
+
+    it('renders custom options in a separate optgroup when provided', async () => {
+      const element = await renderFontInput({
+        options: [{ label: 'Custom Font', value: ['Custom Font', 'sans-serif'] }],
+      });
+
+      const optgroups = Array.from(element.shadowRoot?.querySelectorAll('optgroup') ?? []);
+      const customOptgroup = optgroups.find((og) => og.getAttribute('label') === 'Opties');
+
+      expect(customOptgroup).toBeDefined();
+      const customOptions = customOptgroup?.querySelectorAll('option');
+      expect(customOptions?.length).toBe(1);
+      expect(customOptions?.[0]?.textContent?.trim()).toBe('Custom Font');
+    });
+
+    it('does not render a custom options optgroup when no custom options are provided', async () => {
+      const element = await renderFontInput({ options: [] });
+
+      const optgroups = Array.from(element.shadowRoot?.querySelectorAll('optgroup') ?? []);
+      const customOptgroup = optgroups.find((og) => og.getAttribute('label') === 'Opties');
+
+      expect(customOptgroup).toBeUndefined();
+    });
   });
 
-  it('shows a list of common fonts', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    await element?.updateComplete;
-    const options = element?.shadowRoot?.querySelectorAll('option');
-    expect(options?.length).toBeGreaterThan(1);
+  describe('value handling', () => {
+    it.each([
+      ['string value', 'Arial' as ModernFontFamilyToken['$value']],
+      ['array value', ['Arial', 'sans-serif'] as ModernFontFamilyToken['$value']],
+    ])('sets and gets %s', async (_, testValue) => {
+      const element = await renderFontInput({ value: testValue });
 
-    const optionLabels = Array.from(options ?? []).map((opt) => opt.textContent?.trim());
-    for (const defaultOption of DEFAULT_FONT_OPTIONS) {
-      expect(optionLabels).toContain(defaultOption.label);
-    }
+      expect(element.value).toEqual(testValue);
+    });
+
+    it('automatically adds new values to options when set', async () => {
+      const newValue: ModernFontFamilyToken['$value'] = ['New Font', 'sans-serif'];
+      const element = await renderFontInput({ value: newValue });
+
+      expect(element.options.length).toBeGreaterThan(0);
+      const hasNewFont = element.options.some(
+        (opt) => opt.label === 'New Font' && JSON.stringify(opt.value) === JSON.stringify(newValue),
+      );
+      expect(hasNewFont).toBe(true);
+    });
+
+    it('does not add default font values to custom options', async () => {
+      const defaultValue = DEFAULT_FONT_OPTIONS[0].value;
+      const element = await renderFontInput({ value: defaultValue });
+
+      const hasDefaultInCustom = element.options.some((opt) =>
+        DEFAULT_FONT_OPTIONS.some((def) => JSON.stringify(def.value) === JSON.stringify(opt.value)),
+      );
+      expect(hasDefaultInCustom).toBe(false);
+    });
+
+    it('updates value when select changes', async () => {
+      const element = await renderFontInput();
+      const select = getSelect(element);
+
+      const georgiaOption = Array.from(select.options).find((opt) => JSON.parse(opt.value)[0] === 'Georgia');
+      expect(georgiaOption).toBeDefined();
+
+      const expectedValue: ModernFontFamilyToken['$value'] = ['Georgia', 'serif'];
+
+      select.value = georgiaOption!.value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      await element.updateComplete;
+
+      expect(element.value).toEqual(expectedValue);
+    });
   });
 
-  it('shows default font options in an optgroup', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    await element?.updateComplete;
-    const optgroups = element?.shadowRoot?.querySelectorAll('optgroup');
-    const defaultOptgroup = Array.from(optgroups || []).find(
-      (optGroup) => optGroup.getAttribute('label') === 'Standaardopties',
-    );
-    expect(defaultOptgroup).toBeDefined();
-    const defaultOptions = defaultOptgroup?.querySelectorAll('option');
-    expect(defaultOptions?.length).toBe(DEFAULT_FONT_OPTIONS.length);
+  describe('change handling', () => {
+    it('dispatches a change event when the select value changes', async () => {
+      const element = await renderFontInput();
+      const select = getSelect(element);
+      const changeHandler = vi.fn();
+
+      element.addEventListener('change', changeHandler);
+
+      const [firstOption] = getOptions(element);
+      expect(firstOption).toBeDefined();
+
+      select.value = firstOption.value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+
+      expect(changeHandler).toHaveBeenCalled();
+    });
+
+    it('restores previous value when select receives invalid JSON', async () => {
+      const element = await renderFontInput();
+      const select = getSelect(element);
+
+      const arialOption = getOptions(element).find((opt) => JSON.parse(opt.value)[0] === 'Arial');
+      expect(arialOption).toBeDefined();
+
+      // Set a valid value first
+      select.value = arialOption!.value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      await element.updateComplete;
+      const previousValue = element.value;
+      expect(previousValue).not.toBe('');
+
+      // Inject an invalid option and try to select it
+      const invalidOption = document.createElement('option');
+      invalidOption.value = 'invalid-json';
+      select.appendChild(invalidOption);
+
+      select.value = 'invalid-json';
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      await element.updateComplete;
+
+      expect(element.value).toEqual(previousValue);
+      expect(select.value).toBe(arialOption!.value);
+      expect(select.value).not.toBe('invalid-json');
+    });
   });
 
-  it('shows custom options in a separate optgroup when provided', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    element!.options = [{ label: 'Custom Font', value: ['Custom Font', 'sans-serif'] }];
-    element!.requestUpdate();
-    await element!.updateComplete;
+  describe('error rendering', () => {
+    it('renders error messages when errors are present', async () => {
+      const element = await renderFontInput({ errors: [baseError] });
 
-    const optgroups = element?.shadowRoot?.querySelectorAll('optgroup');
-    const customOptgroup = Array.from(optgroups || []).find((optGroup) => optGroup.getAttribute('label') === 'Opties');
-    expect(customOptgroup).toBeDefined();
-    const customOptions = customOptgroup?.querySelectorAll('option');
-    expect(customOptions?.length).toBe(1);
-    expect(customOptions?.[0]?.textContent?.trim()).toBe('Custom Font');
-  });
+      const errorMessages = element.shadowRoot?.querySelectorAll('.utrecht-form-field-error-message');
+      expect(errorMessages?.length).toBeGreaterThan(0);
+    });
 
-  it('does not show custom options optgroup when no custom options are provided', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    element!.options = [];
-    element!.requestUpdate();
-    await element!.updateComplete;
+    it('applies error class to select when errors are present', async () => {
+      const element = await renderFontInput({ errors: [baseError] });
+      const select = getSelect(element);
 
-    const optgroups = element?.shadowRoot?.querySelectorAll('optgroup');
-    const customOptgroup = Array.from(optgroups || []).find((optGroup) => optGroup.getAttribute('label') === 'Opties');
-    expect(customOptgroup).toBeUndefined();
-  });
+      expect(select.classList.contains('theme-error')).toBe(true);
+    });
 
-  it('sets and gets value correctly', () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    const testValue: ModernFontFamilyToken['$value'] = ['Arial', 'sans-serif'];
-    element!.value = testValue;
-    expect(element!.value).toEqual(testValue);
-  });
+    it('removes error class from select when errors are cleared', async () => {
+      const element = await renderFontInput({ errors: [baseError] });
 
-  it('automatically adds new values to options when set', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    const newValue: ModernFontFamilyToken['$value'] = ['New Font', 'sans-serif'];
-    element!.value = newValue;
-    element!.requestUpdate();
-    await element!.updateComplete;
+      element.errors = [];
+      element.requestUpdate();
+      await element.updateComplete;
 
-    expect(element!.options.length).toBeGreaterThan(0);
-    const hasNewFont = element!.options.some(
-      (opt) => opt.label === 'New Font' && JSON.stringify(opt.value) === JSON.stringify(newValue),
-    );
-    expect(hasNewFont).toBe(true);
-  });
-
-  it('does not add default font values to custom options', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    const defaultValue = DEFAULT_FONT_OPTIONS[0].value;
-    element!.value = defaultValue;
-    element!.requestUpdate();
-    await element!.updateComplete;
-
-    const hasDefaultInCustom = element!.options.some((opt) =>
-      DEFAULT_FONT_OPTIONS.some((def) => JSON.stringify(def.value) === JSON.stringify(opt.value)),
-    );
-    expect(hasDefaultInCustom).toBe(false);
-  });
-
-  it('dispatches change event when select value changes', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    await element?.updateComplete;
-    const select = element?.shadowRoot?.querySelector('select') as HTMLSelectElement;
-    expect(select).toBeDefined();
-    const changeHandler = vi.fn();
-    element!.addEventListener('change', changeHandler);
-
-    const options = select.querySelectorAll('option');
-    expect(options.length).toBeGreaterThan(0);
-    const firstOption = options[0] as HTMLOptionElement;
-    select.value = firstOption.value;
-    select.dispatchEvent(new Event('change', { bubbles: true }));
-
-    expect(changeHandler).toHaveBeenCalled();
-  });
-
-  it('updates value when select changes', async () => {
-    const element = document.querySelector<WizardFontInput>(tag);
-    await element?.updateComplete;
-    const select = element?.shadowRoot?.querySelector('select') as HTMLSelectElement;
-    expect(select).toBeDefined();
-
-    const georgiaOption = Array.from(select.options).find((opt) => JSON.parse(opt.value)[0] === 'Georgia');
-    expect(georgiaOption).toBeDefined();
-    const newValue: ModernFontFamilyToken['$value'] = ['Georgia', 'serif'];
-
-    select.value = georgiaOption!.value;
-    select.dispatchEvent(new Event('change', { bubbles: true }));
-    await element!.updateComplete;
-
-    expect(element!.value).toEqual(newValue);
+      const select = getSelect(element);
+      expect(select.classList.contains('theme-error')).toBe(false);
+    });
   });
 });

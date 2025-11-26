@@ -51,15 +51,13 @@ export class WizardFontInput extends WizardTokenInput {
     this.requestUpdate('value', oldValue);
   }
 
-  readonly #handleChange = (event: Event) => {
-    if (event.target instanceof HTMLSelectElement) {
-      try {
-        this.value = JSON.parse(event.target.value);
-        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-      } catch {
-        // reset to previous version when parsing fails
-        event.target.value = WizardTokenInput.valueAsString(this.value);
-      }
+  readonly #handleChange = (select: HTMLSelectElement) => {
+    try {
+      this.value = JSON.parse(select.value);
+      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    } catch {
+      // reset to previous version when parsing fails
+      select.value = WizardTokenInput.valueAsString(this.value);
     }
   };
 
@@ -81,7 +79,7 @@ export class WizardFontInput extends WizardTokenInput {
         id=${this.id}
         name=${this.name}
         class=${this.hasErrors ? 'theme-error' : ''}
-        @change=${this.#handleChange}
+        @change=${(event: Event) => this.#handleChange(event.currentTarget as HTMLSelectElement)}
         aria-invalid=${this.hasErrors ? 'true' : nothing}
         aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
       >
