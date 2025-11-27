@@ -104,7 +104,6 @@ describe('messages', () => {
 
       it('compact returns TemplateResult with path in values', () => {
         const result = messages.validation.error[ERROR_CODES.INVALID_REF].compact(createInvalidRefIssue());
-        console.log(result);
         expect(result).toBeDefined();
         expect(result.strings).toBeDefined();
         expect(result.values.includes('test.path')).toBe(true);
