@@ -24,7 +24,7 @@ export type InvalidRefIssue = z.core.$ZodSuperRefineIssue & {
 
 export type ThemeValidationIssue =
   | (z.core.$ZodIssue & {
-      ERROR_CODE?: string;
+      ERROR_CODE?: keyof typeof ERROR_CODES;
     })
   | ContrastIssue
   | InvalidRefIssue;

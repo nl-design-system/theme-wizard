@@ -248,7 +248,7 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
   walkObject(
     root,
     // Find token with `original` (Style Dictionary convention)
-    (token): token is Record<string, unknown> & { original: { $value: string } } => {
+    (token): token is Record<string, unknown> & { original: { $value: TokenReference } } => {
       if (!isValueObject(token)) return false;
       if (!isValueObject(token['original'])) return false;
       if (!('$value' in token['original'])) return false;
