@@ -190,14 +190,13 @@ describe(`<${tag}>`, () => {
       expect(errorMessages?.length).toBeGreaterThan(0);
     });
 
-    it('applies error class to select when errors are present', async () => {
+    it('marks the select as invalid when errors are present', async () => {
       const element = await renderFontInput({ errors: [createInvalidRefIssue()] });
       const select = getSelect(element);
-
-      expect(select.classList.contains('theme-error')).toBe(true);
+      expect(select.getAttribute('aria-invalid')).toBe('true');
     });
 
-    it('removes error class from select when errors are cleared', async () => {
+    it('marks the select as valid when errors are cleared', async () => {
       const element = await renderFontInput({ errors: [createInvalidRefIssue()] });
 
       element.errors = [];
@@ -205,7 +204,8 @@ describe(`<${tag}>`, () => {
       await element.updateComplete;
 
       const select = getSelect(element);
-      expect(select.classList.contains('theme-error')).toBe(false);
+      // Not "true" is aria-valid
+      expect(select.getAttribute('aria-invalid')).not.toBe(true);
     });
   });
 });
