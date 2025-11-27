@@ -64,13 +64,15 @@ export class WizardTokenInput extends WizardTokenNavigator {
     return this.errors.length > 0;
   }
 
-  readonly #handleChange = (textarea: HTMLTextAreaElement) => {
-    try {
-      this.value = JSON.parse(textarea.value) as DesignToken;
-      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-    } catch {
-      // reset to previous version when parsing fails
-      textarea.value = WizardTokenInput.valueAsString(this.value);
+  readonly #handleChange = (event: Event) => {
+    if (event.target instanceof HTMLTextAreaElement) {
+      try {
+        this.value = JSON.parse(event.target.value) as DesignToken;
+        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      } catch {
+        // reset to previous version when parsing fails
+        event.target.value = WizardTokenInput.valueAsString(this.value);
+      }
     }
   };
 
@@ -88,7 +90,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
         name=${this.name}
         class=${hasErrors ? 'theme-error' : ''}
         .value=${WizardTokenInput.valueAsString(this.value)}
-        @change=${(event: Event) => this.#handleChange(event.currentTarget as HTMLTextAreaElement)}
+        @change=${this.#handleChange}
         aria-invalid=${this.hasErrors ? 'true' : nothing}
         aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
       ></textarea>`;
