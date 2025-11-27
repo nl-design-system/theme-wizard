@@ -28,7 +28,7 @@ export class ShadowDOMNavigator {
 
       // Recursively search this shadow root
       const found = this.findElement(element.shadowRoot, selector);
-      if (found) {
+      if (found instanceof HTMLElement) {
         return found;
       }
     }
