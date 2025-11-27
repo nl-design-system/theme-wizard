@@ -204,7 +204,7 @@ describe(`<${tag}>`, () => {
       await element.updateComplete;
 
       const select = getSelect(element);
-      // Not "true" is aria-valid
+      // Not "true" is aria valid
       expect(select.getAttribute('aria-invalid')).not.toBe(true);
     });
   });
