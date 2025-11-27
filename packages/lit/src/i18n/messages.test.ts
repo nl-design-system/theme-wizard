@@ -26,6 +26,7 @@ vi.mock('./index', () => ({
   }),
 }));
 
+import ValidationIssue from '../lib/ValidationIssue';
 import { en, nl } from './messages';
 
 describe('messages', () => {
@@ -86,6 +87,7 @@ describe('messages', () => {
       it('compact returns TemplateResult', () => {
         const result = messages.validation.error[ERROR_CODES.INSUFFICIENT_CONTRAST].compact(createContrastIssue());
         expect(result).toBeDefined();
+        expect(result.values.includes('test.path')).not.toBe(true);
         expect(result.strings).toBeDefined();
       });
 
