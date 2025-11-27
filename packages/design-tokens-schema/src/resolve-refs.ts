@@ -1,6 +1,7 @@
 import dlv from 'dlv';
 import { BaseDesignToken, type BaseDesignTokenValue } from './base-token';
-import { TokenReference, type TokenWithRefLike, isTokenWithRef } from './token-reference';
+import { legacyToModernColor } from './color-token';
+import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef } from './token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
@@ -24,10 +25,16 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
     const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
+    // Capture the resolved value, transforming legacy colors to modern format if needed
+    let resolvedValue = ref.$value;
+    if (ref.$type === 'color' && typeof resolvedValue === 'string' && !isRef(resolvedValue)) {
+      resolvedValue = legacyToModernColor.decode(resolvedValue);
+    }
+
     // Add an extension with the resolved ref's value
     token.$extensions = {
       ...(token.$extensions || Object.create(null)),
-      [EXTENSION_RESOLVED_AS]: structuredClone(ref.$value),
+      [EXTENSION_RESOLVED_AS]: structuredClone(resolvedValue),
     } satisfies ResolvedToken['$extensions'];
   });
 };

@@ -7,13 +7,15 @@ import {
 } from '@nl-design-system-community/design-tokens-schema';
 import { createHelperElement, getCSSColorComponents, limitColorComponents, toHSL, toHWB } from './lib';
 
-type MinimalColorToken = Omit<ColorTokenType, '$type'> & { $type?: ColorTokenType['$type'] };
+type MinimalColorToken = Pick<ColorTokenType, '$value' | '$description' | '$deprecated' | '$extensions'> & {
+  $type?: ColorTokenType['$type'];
+};
 export type ColorComponents = ColorTokenType['$value']['components'];
 
 export default class ColorToken {
-  #$type = 'color' as const;
-  #$extensions: ColorTokenType['$extensions'];
-  static #helperElement = createHelperElement();
+  readonly #$type = 'color' as const;
+  readonly #$extensions: ColorTokenType['$extensions'];
+  static readonly #helperElement = createHelperElement();
   $value: ColorTokenType['$value'];
 
   constructor(token: MinimalColorToken) {

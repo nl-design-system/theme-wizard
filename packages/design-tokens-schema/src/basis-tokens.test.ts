@@ -14,6 +14,7 @@ import {
   StrictThemeSchema,
   ERROR_CODES,
   ThemeValidationIssue,
+  ThemeSchema,
 } from './basis-tokens';
 import { ColorToken, parseColor } from './color-token';
 
@@ -497,6 +498,63 @@ describe('theme', () => {
     });
   });
 
+  describe('Style Dictionary specifics', () => {
+    const config = {
+      basis: {
+        color: {
+          'accent-1': {
+            'bg-default': {
+              $type: 'color',
+              $value: '#ffffff',
+              original: {
+                $type: 'color',
+                $value: '{ma.color.white}',
+              },
+            },
+          },
+        },
+      },
+      ma: {
+        color: {
+          white: {
+            $type: 'color',
+            $value: '#ffffff',
+          },
+        },
+      },
+    };
+
+    it('replaces token.$value with token.original.$value', () => {
+      const result = ThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+      expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
+    });
+
+    it('ignores incomplete `original` objects', () => {
+      const incompleteConfig = structuredClone(config);
+      // @ts-expect-error what we're doing here is unexpeced, type-wise
+      delete incompleteConfig.basis.color['accent-1']['bg-default'].original.$value;
+      const result = ThemeSchema.safeParse(incompleteConfig);
+      expect(result.success).toBe(true);
+      expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      });
+    });
+
+    it('adds resolved-as extension in StrictTheme', () => {
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
+      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$extensions?.[EXTENSION_RESOLVED_AS]).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      });
+    });
+  });
+
   describe('validating color contrast', () => {
     // parseColor() because it's shorter than writing color tokens and the IDE shows a small color preview
     const black = { $type: 'color', $value: parseColor('#000') } satisfies ColorToken;
@@ -659,7 +717,7 @@ describe('theme', () => {
     });
   });
 
-  it('finding both ref and contrast issues at once', () => {
+  it('finds both ref and contrast issues at once', () => {
     // This test case exists because previous versions would bail out after the validation found an invalid ref and skipped checking contrast
     const white = parseColor('#ffffff');
     const lightGray = parseColor('#cccccc');

@@ -4,8 +4,8 @@ import { BaseDesignTokenIdentifierSchema } from './base-token';
 import { ColorTokenValidationSchema, ColorValue, compareContrast, type ColorToken } from './color-token';
 import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
-import { TokenReference } from './token-reference';
-import { walkColors } from './walker';
+import { TokenReference, isValueObject, isRef } from './token-reference';
+import { walkColors, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
@@ -33,6 +33,7 @@ export const BrandsSchema = z.record(
   BaseDesignTokenIdentifierSchema, // ex.: "ma", "utrecht", "denhaag"
   BrandSchema,
 );
+
 export type Brands = z.infer<typeof BrandsSchema>;
 
 const FOREGROUND_COLOR_KEYS = [
@@ -183,7 +184,7 @@ export const BasisTokensSchema = z.looseObject({
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  resolveRefs(rootConfig.basis, rootConfig);
+  resolveRefs(rootConfig['basis'], rootConfig);
   return rootConfig;
 };
 
@@ -196,7 +197,7 @@ type ContrastExtension = {
   expectedRatio: number;
 };
 
-export const addContrastExtensions = (rootConfig: Theme) => {
+export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
     const lastPath = path.at(-1)! as ForegroundColorKey;
 
@@ -242,6 +243,22 @@ export const addContrastExtensions = (rootConfig: Theme) => {
   return rootConfig;
 };
 
+export const useRefAsValue = (root: Record<string, unknown>) => {
+  walkObject(
+    root,
+    // Find token with `original` (Style Dictionary convention)
+    (token): token is Record<string, unknown> & { original: { $value: string } } => {
+      if (!isValueObject(token)) return false;
+      if (!isValueObject(token['original'])) return false;
+      if (!('$value' in token['original'])) return false;
+      return isRef(token['original']['$value']);
+    },
+    // Place `original.$value` in `$value`
+    (token) => (token['$value'] = token.original.$value),
+  );
+  return root;
+};
+
 export const ERROR_CODES = {
   INSUFFICIENT_CONTRAST: 'insufficient_contrast',
   INVALID_REF: 'invalid_ref',
@@ -257,7 +274,7 @@ export const ERROR_CODES = {
  * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
-export const ThemeSchema = z.looseObject({
+const _ThemeSchema = z.looseObject({
   basis: BasisTokensSchema.optional(),
   // $metadata: z.strictObject({
   //   tokensSetOrder: z.array(z.string()),
@@ -267,13 +284,15 @@ export const ThemeSchema = z.looseObject({
   // 'components/*': {},
 });
 
+export const ThemeSchema = _ThemeSchema.transform(useRefAsValue);
+
+export type Theme = z.infer<typeof _ThemeSchema>;
+
 export type ThemeValidationIssue = z.core.$ZodIssue & {
   actual?: number;
   ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
   tokens?: string[];
 };
-
-export type Theme = z.infer<typeof ThemeSchema>;
 
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
@@ -303,8 +322,11 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
       const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH];
       const baseColor = getActualValue<ColorValue>(token);
 
+      if (typeof baseColor === 'string') return;
+
       for (const { color: background, expectedRatio } of comparisons) {
         const compareColor = getActualValue<ColorValue>(background);
+
         const contrast = compareContrast(baseColor, compareColor);
         const tokenAPath = path.join('.');
         const tokenBPathRaw = background.$extensions?.[EXTENSION_RESOLVED_FROM] as string | undefined;

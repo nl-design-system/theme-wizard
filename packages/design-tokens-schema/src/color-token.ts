@@ -59,7 +59,7 @@ export const ColorValueSchema = z.strictObject({
 export type ColorValue = z.infer<typeof ColorValueSchema>;
 
 export const LegacyColorTokenSchema = z
-  .object({
+  .looseObject({
     ...BaseDesignTokenValueSchema.shape,
     $type: z.literal('color'),
     // Color must be parseable in order to upgrade it
@@ -80,7 +80,7 @@ export const LegacyColorTokenSchema = z
     };
   });
 
-export const ColorTokenSchema = z.object({
+export const ColorTokenSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('color'),
   $value: ColorValueSchema,
@@ -125,7 +125,7 @@ export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
   encode: (value) => stringifyColor(value),
 });
 
-const ColorReferenceSchema = z.object({
+const ColorReferenceSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('color'),
   $value: TokenReferenceSchema,
