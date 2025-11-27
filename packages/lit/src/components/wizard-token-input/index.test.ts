@@ -194,7 +194,7 @@ describe(`<${tag}>`, () => {
     it('applies error class to textarea when errors are present', async () => {
       const element = await renderTokenInput({ errors: [baseError] });
       const textarea = getTextarea(element);
-      expect(textarea.classList.contains('theme-error')).toBe(true);
+      expect(textarea.getAttribute('aria-invalid')).toBe('true');
     });
 
     it('removes error class from textarea when errors are cleared', async () => {
@@ -204,7 +204,7 @@ describe(`<${tag}>`, () => {
       await element.updateComplete;
 
       const textarea = getTextarea(element);
-      expect(textarea.classList.contains('theme-error')).toBe(false);
+      expect(textarea.getAttribute('aria-invalid')).not.toBe(true);
     });
   });
 
