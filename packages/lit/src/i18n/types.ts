@@ -2,15 +2,7 @@ import { TemplateResult } from 'lit';
 import type { ObjectPath } from '../utils/types';
 import ValidationIssue from '../lib/ValidationIssue';
 
-/**
- * Function or object that can render token links
- * Can be either a function that renders token links, or an object with a renderTokenLink function
- */
-export type TokenLinkRenderer =
-  | ((tokenPath: string, displayText?: string) => TemplateResult)
-  | {
-      renderTokenLink?: (tokenPath: string, displayText?: string) => TemplateResult;
-    };
+export type TokenLinkRenderer = (tokenPath: string, displayText?: string) => TemplateResult;
 
 /**
  * Define the structure of i18n messages
