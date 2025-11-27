@@ -5,10 +5,12 @@ export class ThemeWizardPage {
   readonly sidebar: Locator;
   readonly templateSelect: Locator;
   readonly downloadButton: Locator;
+  readonly scrapedTokensContainer: Locator;
 
   constructor(public readonly page: Page) {
     this.preview = this.page.getByTestId('preview');
     this.sidebar = this.page.locator('theme-wizard-sidebar');
+    this.scrapedTokensContainer = this.page.getByRole('group', { name: 'Basiskleuren' });
     this.templateSelect = this.page.getByLabel('Voorvertoning');
     this.downloadButton = this.page.getByRole('button', { name: 'Download tokens als JSON' });
   }
@@ -16,6 +18,15 @@ export class ThemeWizardPage {
   async goto() {
     await this.page.goto('/');
     await expect(this.preview).toBeVisible();
+  }
+
+  async scrapeUrl(url: string) {
+    await this.sidebar.getByLabel('Website URL').fill(url);
+    await this.sidebar.getByRole('button', { name: 'Analyseer' }).click();
+    // TODO: implement a more user-friendly way to determine if the form is idle, pending or ready
+    // By lack of a visual/accessible indicator that the form is done working, we check that the first input appears
+    const firstColor = this.scrapedTokensContainer.locator('input').first();
+    await firstColor.waitFor({ state: 'attached' });
   }
 
   async selectTemplate(templateName: string) {
