@@ -4,3 +4,4 @@ export * from './dimension-token';
 export * from './fontfamily-token';
 export * from './basis-tokens';
 export * from './token-reference';
+export * from './validation-issue';

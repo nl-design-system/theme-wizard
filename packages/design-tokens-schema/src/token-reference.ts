@@ -21,7 +21,8 @@ export const TokenReferenceSchema = z
   // Join them back together
   .transform((value) => `{${value.join('.')}}`);
 
-export type TokenReference = z.infer<typeof TokenReferenceSchema>;
+// Not inferring the type from the zod schema because that would be a plain string
+export type TokenReference = `{${string}}`;
 
 export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj !== null && typeof obj === 'object';
@@ -46,7 +47,7 @@ export type TokenWithRefLike = {
   $extensions?: Record<string, unknown>;
 };
 
-export const isRef = (value: unknown): boolean => {
+export const isRef = (value: unknown): value is TokenReference => {
   return typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
 };
 

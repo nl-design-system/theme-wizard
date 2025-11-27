@@ -12,11 +12,10 @@ import {
   EXTENSION_RESOLVED_AS,
   Theme,
   StrictThemeSchema,
-  ERROR_CODES,
-  ThemeValidationIssue,
   ThemeSchema,
 } from './basis-tokens';
 import { ColorToken, parseColor } from './color-token';
+import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 
 describe('brand', () => {
   it('no brands present', () => {
