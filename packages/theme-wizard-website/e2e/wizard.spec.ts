@@ -1,19 +1,35 @@
 import { test, expect } from './fixtures/fixtures';
 
-test('can change heading font to Courier New on preview', async ({ previewPage }) => {
-  const heading = previewPage.getHeading(2);
+test.describe('scraping css design tokens', () => {
+  test('does not show scraped tokens before submitting the form', async ({ themeWizard }) => {
+    expect(themeWizard.scrapedTokensContainer).toBeVisible();
+    const scrapedTokens = themeWizard.scrapedTokensContainer.locator('input');
+    await expect(scrapedTokens).toHaveCount(0);
+  });
 
-  await expect(heading).not.toHaveFont('Courier New');
-  await previewPage.changeHeadingFont('Courier New');
-  await expect(heading).toHaveFont('Courier New');
+  test('shows scraped colors after scrape is successful', async ({ themeWizard }) => {
+    await themeWizard.scrapeUrl('https://example.com');
+    const scrapedColorsCount = await themeWizard.scrapedTokensContainer.locator('input').count();
+    expect(scrapedColorsCount).toBeGreaterThan(0);
+  });
 });
 
-test('can change body font to Arial', async ({ previewPage }) => {
-  const paragraph = previewPage.getParagraph();
+test.describe('change fonts', () => {
+  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
+    const heading = previewPage.getHeading(2);
 
-  await expect(paragraph).not.toHaveFont('Arial');
-  await previewPage.changeBodyFont('Arial');
-  await expect(paragraph).toHaveFont('Arial');
+    await expect(heading).not.toHaveFont('Courier New');
+    await previewPage.changeHeadingFont('Courier New');
+    await expect(heading).toHaveFont('Courier New');
+  });
+
+  test('can change body font to Arial', async ({ previewPage }) => {
+    const paragraph = previewPage.getParagraph();
+
+    await expect(paragraph).not.toHaveFont('Arial');
+    await previewPage.changeBodyFont('Arial');
+    await expect(paragraph).toHaveFont('Arial');
+  });
 });
 
 test.describe('Download tokens as JSON', () => {

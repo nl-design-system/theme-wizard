@@ -142,7 +142,11 @@ export class App extends LitElement {
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
     return html`
       <div class="theme-app ma-theme">
-        <theme-wizard-sidebar .sourceUrl="" .scrapedTokens=${this.scrapedTokens} @change=${this.#handleSourceUrlChange}>
+        <theme-wizard-sidebar
+          .sourceUrl=""
+          .scrapedTokens=${this.scrapedTokens}
+          @config-change=${this.#handleSourceUrlChange}
+        >
           <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
             <fieldset>
               <legend>Lettertypes</legend>
