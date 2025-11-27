@@ -7,6 +7,7 @@ import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_
 import { TokenReference, isValueObject, isRef } from './token-reference';
 import { walkColors, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
+import { ERROR_CODES, type InvalidRefIssue, createContrastIssue } from './validation-issue';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 
@@ -259,11 +260,6 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
   return root;
 };
 
-export const ERROR_CODES = {
-  INSUFFICIENT_CONTRAST: 'insufficient_contrast',
-  INVALID_REF: 'invalid_ref',
-} as const;
-
 /**
  * Validate a full theme
  * If you want to replace all tokens refs with their actual value, tag on a `.transform(resolveConfigRefs)`
@@ -274,7 +270,7 @@ export const ERROR_CODES = {
  * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
-const _ThemeSchema = z.looseObject({
+const ThemeShapeSchema = z.looseObject({
   basis: BasisTokensSchema.optional(),
   // $metadata: z.strictObject({
   //   tokensSetOrder: z.array(z.string()),
@@ -284,15 +280,9 @@ const _ThemeSchema = z.looseObject({
   // 'components/*': {},
 });
 
-export const ThemeSchema = _ThemeSchema.transform(useRefAsValue);
+export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
 
-export type Theme = z.infer<typeof _ThemeSchema>;
-
-export type ThemeValidationIssue = z.core.$ZodIssue & {
-  actual?: number;
-  ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
-  tokens?: string[];
-};
+export type Theme = z.infer<typeof ThemeShapeSchema>;
 
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
@@ -312,7 +302,7 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
         // The next line is type-safe, but because of that we don't cover all branches
         /* v8 ignore next */
         message: error instanceof Error ? error.message : 'Invalid token reference',
-      });
+      } satisfies InvalidRefIssue);
     }
 
     // Validation 2: Check that colors have sufficient contrast
@@ -333,27 +323,23 @@ export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
         const tokenBPath = tokenBPathRaw?.replaceAll(/(^\{)|(\}$)/g, '');
 
         if (contrast < expectedRatio) {
-          ctx.addIssue({
-            actual: contrast,
-            code: 'too_small',
-            ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
-            message: 'Insufficient contrast',
-            minimum: expectedRatio,
-            origin: 'number',
-            path: [...path, '$value'],
-            tokens: [tokenAPath, tokenBPath].filter(Boolean),
-          });
+          ctx.addIssue(
+            createContrastIssue({
+              actual: contrast,
+              minimum: expectedRatio,
+              path: [...path, '$value'],
+              tokens: tokenBPath ? [tokenAPath, tokenBPath] : [tokenAPath],
+            }),
+          );
 
-          ctx.addIssue({
-            actual: contrast,
-            code: 'too_small',
-            ERROR_CODE: ERROR_CODES.INSUFFICIENT_CONTRAST,
-            message: 'Insufficient contrast',
-            minimum: expectedRatio,
-            origin: 'number',
-            path: [...(tokenBPath?.split('.') || []), '$value'],
-            tokens: [tokenBPath, tokenAPath].filter(Boolean),
-          });
+          ctx.addIssue(
+            createContrastIssue({
+              actual: contrast,
+              minimum: expectedRatio,
+              path: [...(tokenBPath?.split('.') || []), '$value'],
+              tokens: tokenBPath ? [tokenBPath, tokenAPath] : [tokenAPath],
+            }),
+          );
         }
       }
     });
