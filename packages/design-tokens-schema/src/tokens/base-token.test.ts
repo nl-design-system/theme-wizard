@@ -5,7 +5,7 @@ import {
   BaseDesignTokenSchema,
   type BaseDesignToken,
   BaseDesignTokenValueSchema,
-} from './index';
+} from './base-token';
 
 describe('BaseDesignTokenNameSchema', () => {
   it('accepts simple strings', () => {

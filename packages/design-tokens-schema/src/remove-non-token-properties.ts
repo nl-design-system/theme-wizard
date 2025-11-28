@@ -1,5 +1,5 @@
-import { BASE_DESIGN_TOKEN_PROPERTIES } from './base-token';
-import { isTokenLike } from './token-reference';
+import { BASE_DESIGN_TOKEN_PROPERTIES } from './tokens/base-token';
+import { isTokenLike } from './tokens/token-reference';
 
 const knownKeys = new Set<string>(BASE_DESIGN_TOKEN_PROPERTIES);
 

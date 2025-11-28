@@ -1,10 +1,10 @@
 import dlv from 'dlv';
 import * as z from 'zod';
-import { BaseDesignTokenIdentifierSchema } from './base-token';
-import { ColorTokenValidationSchema, ColorValue, compareContrast, type ColorToken } from './color-token';
-import { FontFamilyTokenSchema } from './fontfamily-token';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
-import { TokenReference, isValueObject, isRef } from './token-reference';
+import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
+import { ColorTokenValidationSchema, ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
+import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
+import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
 import { walkColors, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { removeNonTokenProperties } from './remove-non-token-properties';

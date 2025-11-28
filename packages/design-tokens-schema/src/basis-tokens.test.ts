@@ -15,7 +15,7 @@ import {
   ThemeSchema,
   type ContrastExtension,
 } from './basis-tokens';
-import { ColorToken, parseColor } from './color-token';
+import { ColorToken, parseColor } from './tokens/color-token';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 
 describe('brand', () => {
