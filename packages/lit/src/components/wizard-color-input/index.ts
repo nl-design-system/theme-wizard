@@ -1,4 +1,4 @@
-import { ColorSpace, parseColor } from '@nl-design-system-community/design-tokens-schema';
+import { ColorSpace, EXTENSION_RESOLVED_AS, parseColor } from '@nl-design-system-community/design-tokens-schema';
 import formFieldError from '@utrecht/form-field-error-message-css?inline';
 import { html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
