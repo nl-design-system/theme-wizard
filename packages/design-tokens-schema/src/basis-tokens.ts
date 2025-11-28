@@ -7,6 +7,7 @@ import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_
 import { TokenReference, isValueObject, isRef } from './token-reference';
 import { walkColors, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
+import { removeNonTokenProperties } from './remove-non-token-properties';
 import { ERROR_CODES, type InvalidRefIssue, createContrastIssue } from './validation-issue';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
@@ -189,7 +190,7 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   return rootConfig;
 };
 
-type ContrastExtension = {
+export type ContrastExtension = {
   color: ColorToken & {
     $extensions: {
       [EXTENSION_RESOLVED_FROM]: TokenReference;
@@ -288,7 +289,8 @@ const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<st
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
-export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
+export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
+  .transform(addContrastExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid

@@ -39,6 +39,10 @@ export const BaseDesignTokenValueSchema = z.strictObject({
 });
 export type BaseDesignTokenValue = z.infer<typeof BaseDesignTokenValueSchema>;
 
+const BaseDesignTokenPropertiesEnum = BaseDesignTokenValueSchema.keyof();
+export type BaseDesignTokenProperty = z.infer<typeof BaseDesignTokenPropertiesEnum>;
+export const BASE_DESIGN_TOKEN_PROPERTIES = BaseDesignTokenPropertiesEnum.options;
+
 export const BaseDesignTokenSchema = z.record(BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema);
 
 /** @see https://www.designtokens.org/tr/drafts/format/#design-token-0 */

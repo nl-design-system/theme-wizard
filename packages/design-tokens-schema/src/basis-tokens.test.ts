@@ -13,6 +13,7 @@ import {
   Theme,
   StrictThemeSchema,
   ThemeSchema,
+  type ContrastExtension,
 } from './basis-tokens';
 import { ColorToken, parseColor } from './color-token';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
@@ -766,6 +767,114 @@ describe('theme', () => {
 
     expect(refErrors.length).toBeGreaterThan(0);
     expect(contrastErrors.length).toBeGreaterThan(0);
+  });
+
+  describe('remove non-token properties', () => {
+    it('removes Style Dictionary metadata', () => {
+      const theme = {
+        basis: {
+          color: {
+            default: {
+              'bg-document': {
+                $type: 'color',
+                $value: {
+                  colorSpace: 'srgb',
+                  components: [0, 0, 0],
+                },
+                // object
+                attributes: {
+                  category: 'basis',
+                  item: 'default',
+                  type: 'color',
+                },
+                // string
+                filePath: 'tokens.json',
+                // boolean
+                isSource: true,
+                // object with tokens inside
+                original: {
+                  $type: 'color',
+                  $value: {
+                    colorSpace: 'srgb',
+                    components: [0, 0, 0],
+                  },
+                },
+              },
+            },
+          },
+        },
+      } satisfies Theme;
+      const result = StrictThemeSchema.safeParse(theme);
+      expect(result.success).toBeTruthy();
+      const actual = result.data?.basis?.color?.default?.['bg-document'];
+      expect(actual?.$type).toBe('color');
+      expect(actual?.$value).toEqual({
+        colorSpace: 'srgb',
+        components: [0, 0, 0],
+      });
+      const actualAsRecord = actual as Record<string, unknown>;
+      expect(actualAsRecord?.['attributes']).toBeUndefined();
+      expect(actualAsRecord?.['filePath']).toBeUndefined();
+      expect(actualAsRecord?.['isSource']).toBeUndefined();
+      expect(actualAsRecord?.['original']).toBeUndefined();
+    });
+
+    it('does not remove information from $extensions (which could hold any sort of data)', () => {
+      const theme = {
+        basis: {
+          color: {
+            default: {
+              'bg-document': {
+                $extensions: {
+                  [EXTENSION_CONTRAST_WITH]: [
+                    {
+                      color: {
+                        $type: 'color',
+                        $value: parseColor('#fff'),
+                      },
+                      expectedRatio: 4.5,
+                    },
+                  ],
+                },
+                $type: 'color',
+                $value: {
+                  colorSpace: 'srgb',
+                  components: [0, 0, 0],
+                },
+              },
+            },
+          },
+        },
+      } satisfies Theme;
+      const result = StrictThemeSchema.safeParse(theme);
+      expect(result.success).toBeTruthy();
+      const extensions = result.data?.basis?.color?.default?.['bg-document']?.$extensions;
+      expect(Array.isArray(extensions?.[EXTENSION_CONTRAST_WITH])).toBeTruthy();
+      expect(extensions?.[EXTENSION_CONTRAST_WITH]).toHaveLength(1);
+      const extension = (extensions?.[EXTENSION_CONTRAST_WITH] as ContrastExtension[])[0];
+      expect(extension).toBeDefined();
+      expect(extension.color.$type).toBe('color');
+      expect(extension.expectedRatio).toBe(4.5);
+    });
+
+    it('Should not remove top-level non-tokens (like brands)', () => {
+      const theme = {
+        ams: {
+          heading: {
+            color: {
+              $type: 'color',
+              $value: {
+                colorSpace: 'srgb',
+                components: [0, 0, 0],
+              },
+            },
+          },
+        },
+      } satisfies Theme;
+      const result = StrictThemeSchema.safeParse(theme);
+      expect(result.success).toBeTruthy();
+      expect(result.data).toEqual(theme);
+    });
   });
 });
 

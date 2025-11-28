@@ -33,7 +33,7 @@ type TokenLike = {
   $value: unknown;
 };
 
-const isTokenLike = (obj: unknown): obj is TokenLike => {
+export const isTokenLike = (obj: unknown): obj is TokenLike => {
   if (!isValueObject(obj)) return false;
   // Must have a `$type: string`
   if (!('$type' in obj) || typeof obj['$type'] !== 'string') return false;
