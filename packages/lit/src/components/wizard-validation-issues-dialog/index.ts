@@ -10,9 +10,6 @@ const tag = 'theme-wizard-validation-issues-dialog';
 
 @customElement(tag)
 export class WizardValidationIssuesDialog extends LitElement {
-  @property({ attribute: 'title' })
-  titleAttr = t('tokenDownloadDialog.title');
-
   @property({ attribute: 'issues' })
   issues: GroupedIssues = {};
 
@@ -36,7 +33,7 @@ export class WizardValidationIssuesDialog extends LitElement {
   override render() {
     return html`
       <template-modal-dialog
-        .title=${this.titleAttr}
+        .title=${t('tokenDownloadDialog.title')}
         .showConfirmButton=${true}
         .showCancelButton=${true}
         .confirmLabel=${t('tokenDownloadDialog.downloadAnyway')}
