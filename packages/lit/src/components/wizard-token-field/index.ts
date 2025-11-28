@@ -1,4 +1,4 @@
-import { isRef } from '@nl-design-system-community/design-tokens-schema';
+import { EXTENSION_RESOLVED_AS, isRef } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../wizard-color-input';
@@ -81,18 +81,16 @@ export class WizardTokenField extends WizardTokenNavigator {
   renderField(type: typeof this.type, label: string) {
     const key = this.path.split('.').pop();
 
-    if (isRef(this.value)) {
-      return html`
-        <span>${label}</span>
-        <span>&rarr; ${this.value}</span>
-      `;
-    }
+    const disabled = isRef(this.token.$value);
+    const refValue = this.token.$extensions?.[EXTENSION_RESOLVED_AS];
 
+    console.log(this.path, this.token.$value, refValue);
     switch (type) {
       case 'color':
         return html` <wizard-color-input
           .errors=${this.#pathErrors}
-          .value=${this.token.$value}
+          .value=${refValue || this.token.$value}
+          ?disabled=${disabled}
           id=${this.#id}
           key=${key}
           label=${label}
@@ -103,7 +101,8 @@ export class WizardTokenField extends WizardTokenNavigator {
       case 'font':
         return html` <wizard-font-input
           .errors=${this.#pathErrors}
-          .value=${this.token.$value}
+          .value=${refValue || this.token.$value}
+          ?disabled=${disabled}
           id=${this.#id}
           key=${key}
           label=${label}
@@ -114,7 +113,8 @@ export class WizardTokenField extends WizardTokenNavigator {
       default:
         return html` <wizard-token-input
           .errors=${this.#pathErrors}
-          .value=${this.token}
+          .value=${refValue || this.token.$value}
+          ?disabled=${disabled}
           id=${this.#id}
           key=${key}
           label=${label}
@@ -132,22 +132,25 @@ export class WizardTokenField extends WizardTokenNavigator {
     const errorClass = this.#hasErrors ? 'theme-error' : '';
     return html`
       ${type
-        ? this.renderField(type, label)
+        ? html` <div>
+            <wizard-ref-select value=""></wizard-ref-select>
+            ${this.renderField(type, label)}
+          </div>`
         : html`<details>
             <summary><span class=${errorClass}>${label}</span></summary>
-              ${this.entries.map(([key, token]) => {
-                const path = `${this.path}.${key}`;
-                const depth = this.depth + 1;
-                return html`
-                    <wizard-token-field
-                      .token=${token}
-                      .errors=${this.#getChildPathErrors(path)}
-                      path=${path}
-                      depth=${depth}
-                    ></wizard-token-field>
-                `;
-              })}
-        </details>`}
+            ${this.entries.map(([key, token]) => {
+              const path = `${this.path}.${key}`;
+              const depth = this.depth + 1;
+              return html`
+                <wizard-token-field
+                  .token=${token}
+                  .errors=${this.#getChildPathErrors(path)}
+                  path=${path}
+                  depth=${depth}
+                ></wizard-token-field>
+              `;
+            })}
+          </details>`}
     `;
   }
 

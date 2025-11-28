@@ -88,6 +88,7 @@ export class WizardColorInput extends WizardTokenInput {
         aria-invalid=${this.hasErrors ? 'true' : nothing}
         aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
         colorSpace=${this.colorSpace}
+        ?disabled=${this.disabled}
         @change=${this.#handleChange}
       />
     `;

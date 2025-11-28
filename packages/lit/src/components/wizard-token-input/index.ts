@@ -24,6 +24,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
   @property() label = '';
   @property() name = '';
   @property() errors: ValidationIssue[] = [];
+  @property({ type: Boolean }) disabled = false;
   internals_ = this.attachInternals();
   #token: Token = {};
 
@@ -90,6 +91,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
         name=${this.name}
         class=${hasErrors ? 'theme-error' : ''}
         .value=${WizardTokenInput.valueAsString(this.value)}
+        ?disabled=${this.disabled}
         @change=${this.#handleChange}
         aria-invalid=${this.hasErrors ? 'true' : nothing}
         aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
