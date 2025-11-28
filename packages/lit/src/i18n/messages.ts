@@ -10,6 +10,16 @@ const formatNumber = (value: number | undefined, locale: string): string => {
 };
 
 export const nl = {
+  back: 'Terug',
+  cancel: 'Annuleren',
+  close: 'Sluiten',
+  continue: 'Doorgaan',
+  tokenDownloadDialog: {
+    body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',
+    cancel: () => t('cancel'),
+    downloadAnyway: 'Toch downloaden',
+    title: 'Thema bevat nog fouten',
+  },
   unknown: 'Onbekende fout opgetreden',
   validation: {
     error: {
@@ -59,6 +69,16 @@ export const nl = {
 } as const satisfies I18nMessages;
 
 export const en = {
+  back: 'Back',
+  cancel: 'Cancel',
+  close: 'Close',
+  continue: 'Continue',
+  tokenDownloadDialog: {
+    body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
+    cancel: () => t('cancel'),
+    downloadAnyway: 'Download anyway',
+    title: 'Theme contains errors',
+  },
   unknown: 'Unknown error',
   validation: {
     error: {

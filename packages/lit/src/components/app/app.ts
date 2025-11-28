@@ -3,8 +3,9 @@ import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-com
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, state, query } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
+import type { WizardValidationIssuesDialog } from '../wizard-validation-issues-dialog';
 import { EVENT_NAMES } from '../../constants';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Scraper from '../../lib/Scraper';
@@ -12,10 +13,10 @@ import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import '../sidebar/sidebar';
 import '../wizard-preview';
-import '../wizard-preview-picker';
-import { WizardTokenInput } from '../wizard-token-input';
 import '../wizard-token-field';
+import '../wizard-validation-issues-dialog';
 import '../wizard-validation-issues-alert';
+import { WizardTokenInput } from '../wizard-token-input';
 import appStyles from './app.css';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -30,6 +31,9 @@ export class App extends LitElement {
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
+
+  @query('theme-wizard-validation-issues-dialog')
+  private readonly dialogElement?: WizardValidationIssuesDialog;
 
   // Template list provided by the host application (JSON string attribute)
   @property({ attribute: 'templates' }) templatesAttr?: string;
@@ -137,11 +141,31 @@ export class App extends LitElement {
     anchor.remove();
   };
 
+  readonly #handleDownloadClick = () => {
+    if (this.#theme.errorCount > 0) {
+      this.dialogElement?.open();
+      return;
+    }
+
+    this.#downloadJSON();
+  };
+
+  readonly #handleDialogClose = (event: Event) => {
+    const dialog = event.currentTarget as WizardValidationIssuesDialog;
+    if (dialog.returnValue === 'confirm') {
+      this.#downloadJSON();
+    }
+  };
+
   override render() {
     const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
     return html`
       <div class="theme-app ma-theme">
+        <theme-wizard-validation-issues-dialog
+          .data=${this.#theme.groupedIssues}
+          @close=${this.#handleDialogClose}
+        ></theme-wizard-validation-issues-dialog>
         <theme-wizard-sidebar
           .sourceUrl=""
           .scrapedTokens=${this.scrapedTokens}
@@ -176,8 +200,8 @@ export class App extends LitElement {
             <utrecht-button
               appearance="primary-action-button"
               type="button"
-              ?disabled=${!this.#theme.modified || this.#theme.errorCount > 0}
-              @click=${this.#downloadJSON}
+              ?disabled=${!this.#theme.modified}
+              @click=${this.#handleDownloadClick}
               >Download tokens als JSON</utrecht-button
             >
             <utrecht-button appearance="secondary-action-button" type="reset">Reset tokens</utrecht-button>

@@ -8,6 +8,16 @@ export type TokenLinkRenderer = (tokenPath: string, displayText?: string) => Tem
  * Define the structure of i18n messages
  */
 export type I18nMessages = {
+  back: string;
+  cancel: string;
+  close: string;
+  continue: string;
+  tokenDownloadDialog: {
+    body: string;
+    cancel: () => TemplateResult | string;
+    downloadAnyway: string;
+    title: string;
+  };
   unknown: string;
   validation: {
     title: string;
