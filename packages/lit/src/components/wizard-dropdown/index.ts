@@ -23,14 +23,24 @@ declare global {
 export class WizardDropdown extends LitElement {
   @property() name = '';
   @property() label = 'Selecteer een optie';
-  @property() options: DropdownOption[] = [];
   @property() isOptgroup = false;
   @property({ reflect: true }) value = '';
+  #options: DropdownOption[] = [];
 
   static override readonly styles = [unsafeCSS(selectStyles)];
 
   static readonly formAssociated = true;
   readonly #internals = this.attachInternals();
+
+  @property()
+  get options() {
+    const optionForValue = this.#options.find(({ value }) => value === this.value);
+    return optionForValue ? this.#options : [{ name: this.value, value: this.value }, ...this.#options];
+  }
+
+  set options(value: DropdownOption[]) {
+    this.#options = value;
+  }
 
   override connectedCallback() {
     super.connectedCallback();
