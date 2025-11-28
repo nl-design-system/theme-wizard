@@ -133,23 +133,21 @@ export class WizardTokenField extends WizardTokenNavigator {
     return html`
       ${type
         ? this.renderField(type, label)
-        : html`<p class=${errorClass}>${label}</p>
-            <ul>
+        : html`<details>
+            <summary><span class=${errorClass}>${label}</span></summary>
               ${this.entries.map(([key, token]) => {
                 const path = `${this.path}.${key}`;
                 const depth = this.depth + 1;
                 return html`
-                  <li>
                     <wizard-token-field
                       .token=${token}
                       .errors=${this.#getChildPathErrors(path)}
                       path=${path}
                       depth=${depth}
                     ></wizard-token-field>
-                  </li>
                 `;
               })}
-            </ul>`}
+        </details>`}
     `;
   }
 
