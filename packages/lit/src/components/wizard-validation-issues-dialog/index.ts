@@ -10,8 +10,11 @@ const tag = 'theme-wizard-validation-issues-dialog';
 
 @customElement(tag)
 export class WizardValidationIssuesDialog extends LitElement {
-  @property({ attribute: 'title' }) titleAttr = t('tokenDownloadDialog.title');
-  @property({ attribute: 'data' }) data: GroupedIssues = {};
+  @property({ attribute: 'title' })
+  titleAttr = t('tokenDownloadDialog.title');
+
+  @property({ attribute: 'issues' })
+  issues: GroupedIssues = {};
 
   @query('template-modal-dialog')
   private readonly modalDialog!: TemplateModalDialog;
@@ -42,7 +45,7 @@ export class WizardValidationIssuesDialog extends LitElement {
       >
         <p id="theme-wizard-validation-issues-dialog-description" tabindex="-1">${t('tokenDownloadDialog.body')}</p>
         <div class="wizard-validation-issues-dialog__issues">
-          ${Object.entries(this.data).map(([errorCode, errors]) => {
+          ${Object.entries(this.issues).map(([errorCode, errors]) => {
             if (!errors || errors.length === 0) return nothing;
 
             return html`

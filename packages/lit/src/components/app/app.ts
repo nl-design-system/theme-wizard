@@ -163,7 +163,7 @@ export class App extends LitElement {
     return html`
       <div class="theme-app ma-theme">
         <theme-wizard-validation-issues-dialog
-          .data=${this.#theme.groupedIssues}
+          .issues=${this.#theme.groupedIssues}
           @close=${this.#handleDialogClose}
         ></theme-wizard-validation-issues-dialog>
         <theme-wizard-sidebar
