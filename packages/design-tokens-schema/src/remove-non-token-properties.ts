@@ -44,5 +44,7 @@ export const removeNonTokenProperties = (obj: Record<string, unknown>): Record<s
   if (isRecord(result)) {
     return result satisfies Record<string, unknown>;
   }
+  // This should never be reached but here for type-safety.
+  // There's an exlusion rule in vitest.config.ts because of this line
   return Object.create(null);
 };

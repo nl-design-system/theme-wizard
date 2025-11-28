@@ -828,7 +828,6 @@ describe('theme', () => {
                 $extensions: {
                   [EXTENSION_CONTRAST_WITH]: [
                     {
-                      // Background color without EXTENSION_RESOLVED_FROM
                       color: {
                         $type: 'color',
                         $value: parseColor('#fff'),
