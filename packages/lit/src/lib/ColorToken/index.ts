@@ -77,7 +77,16 @@ export default class ColorToken {
    * @returns hex string, ie. #FF9900;
    */
   toHex(): string {
-    return stringifyColor(this.$value);
+    return ColorToken.getHex(this.$value);
+  }
+
+  toObject() {
+    return {
+      // make sure that $extensions is not in the object when it has no value.
+      ...(this.$extensions && Object.keys(this.$extensions).length ? { $extensions: this.$extensions } : {}),
+      $type: this.$type,
+      $value: this.$value,
+    };
   }
 
   static getCSSColorFunction({
@@ -120,13 +129,8 @@ export default class ColorToken {
     }
   }
 
-  toObject() {
-    return {
-      // make sure that $extensions is not in the object when it has no value.
-      ...(this.$extensions && Object.keys(this.$extensions).length ? { $extensions: this.$extensions } : {}),
-      $type: this.$type,
-      $value: this.$value,
-    };
+  static getHex({ colorSpace, components }: { colorSpace: ColorSpace; components: ColorComponents }) {
+    return stringifyColor({ colorSpace, components });
   }
 
   static getRelativeColorFunction(
