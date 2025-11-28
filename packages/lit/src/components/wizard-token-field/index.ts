@@ -154,6 +154,8 @@ export class WizardTokenField extends WizardTokenNavigator {
   }
 
   static entries(token: Token) {
-    return Object.entries(token).filter((entry): entry is [string, Token] => !entry[0].startsWith('$'));
+    return typeof token !== 'string'
+      ? Object.entries(token).filter((entry): entry is [string, Token] => !entry[0].startsWith('$'))
+      : [];
   }
 }
