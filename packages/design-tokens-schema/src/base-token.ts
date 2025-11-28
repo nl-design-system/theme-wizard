@@ -41,7 +41,7 @@ export type BaseDesignTokenValue = z.infer<typeof BaseDesignTokenValueSchema>;
 
 const BaseDesignTokenPropertiesEnum = BaseDesignTokenValueSchema.keyof();
 export type BaseDesignTokenProperty = z.infer<typeof BaseDesignTokenPropertiesEnum>;
-export const BaseDesignTokenProperties = BaseDesignTokenPropertiesEnum.options;
+export const BASE_DESIGN_TOKEN_PROPERTIES = BaseDesignTokenPropertiesEnum.options;
 
 export const BaseDesignTokenSchema = z.record(BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema);
 

@@ -1,7 +1,7 @@
-import { BaseDesignTokenProperties } from './base-token';
+import { BASE_DESIGN_TOKEN_PROPERTIES } from './base-token';
 import { isTokenLike } from './token-reference';
 
-const knownKeys = new Set<string>(BaseDesignTokenProperties);
+const knownKeys = new Set<string>(BASE_DESIGN_TOKEN_PROPERTIES);
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -11,7 +11,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> => {
  * Internal function that handles non-record inputs
  */
 const processValue = (value: unknown): unknown => {
-  if (typeof value !== 'object' || value === null) {
+  if (!isRecord(value)) {
     return value;
   }
 
