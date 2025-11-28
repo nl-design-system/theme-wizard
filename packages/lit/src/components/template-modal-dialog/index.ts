@@ -7,7 +7,7 @@ import { dialogStyles } from './styles';
 
 let dialogInstanceCounter = 0;
 
-export const BUTTON_VALUES = {
+export const DIALOG_BUTTON_VALUES = {
   cancel: 'cancel',
   confirm: 'confirm',
 };
@@ -92,15 +92,15 @@ export class TemplateModalDialog extends LitElement {
     // Prevent the native <dialog> from closing itself so we can
     // dispatch our own close event and restore focus consistently.
     event.preventDefault();
-    this.close(BUTTON_VALUES.cancel);
+    this.close(DIALOG_BUTTON_VALUES.cancel);
   };
 
   private readonly onCloseClick = () => {
-    this.close(BUTTON_VALUES.cancel);
+    this.close(DIALOG_BUTTON_VALUES.cancel);
   };
 
   get returnValue(): string {
-    return this.dialogElement?.returnValue ?? '';
+    return this.dialogElement?.returnValue ?? 'No return value.';
   }
 
   override render() {
@@ -134,14 +134,14 @@ export class TemplateModalDialog extends LitElement {
             <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
             ${this.showConfirmButton
               ? html`
-                  <button class="utrecht-button utrecht-button--primary-action" value=${BUTTON_VALUES.confirm}>
+                  <button class="utrecht-button utrecht-button--primary-action" value=${DIALOG_BUTTON_VALUES.confirm}>
                     ${this.confirmLabel}
                   </button>
                 `
               : null}
             ${this.showCancelButton
               ? html`
-                  <button class="utrecht-button utrecht-button--secondary-action" value=${BUTTON_VALUES.cancel}>
+                  <button class="utrecht-button utrecht-button--secondary-action" value=${DIALOG_BUTTON_VALUES.cancel}>
                     ${this.cancelLabel}
                   </button>
                 `
