@@ -52,7 +52,8 @@ export default class Theme {
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
     this.#tokens = values;
-    this.#validateTheme(values);
+    this.#list = new Map(flattenTokens(this.#tokens));
+    this.validate();
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replace(css);
@@ -86,17 +87,10 @@ export default class Theme {
     this.tokens = tokens;
   }
 
-  #validateTheme(theme: DesignTokens): ValidationIssue[] {
-    const result = StrictThemeSchema.safeParse(theme as ThemeType);
-
-    if (result.success) {
-      this.#validationIssues = [];
-      return [];
-    }
-
-    const issues = (result.error.issues || []).map((issue) => new ValidationIssue(issue));
+  validate() {
+    const result = StrictThemeSchema.safeParse(this.tokens as ThemeType);
+    const issues = (result.error?.issues || []).map((issue) => new ValidationIssue(issue));
     this.#validationIssues = issues;
-    return issues;
   }
 
   reset() {
