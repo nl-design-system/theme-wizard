@@ -58,7 +58,7 @@ export class TemplateModalDialog extends LitElement {
     if (!this.dialogElement) return;
 
     const root = this.getRootNode() as Document | ShadowRoot;
-    this.previouslyFocusedElement = (root as Document | ShadowRoot).activeElement as HTMLElement | null;
+    this.previouslyFocusedElement = root.activeElement as HTMLElement | null;
 
     this.dialogElement.showModal();
   };

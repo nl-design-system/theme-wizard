@@ -2,8 +2,8 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import type { GroupedIssues } from '../../lib/ValidationIssue';
 import { t } from '../../i18n';
-import { TemplateModalDialog } from '../template-modal-dialog';
-import '../template-modal-dialog';
+import { TemplateModalDialog } from '../wizard-modal-dialog';
+import '../wizard-modal-dialog';
 import { dialogStyles } from './styles';
 
 const tag = 'theme-wizard-validation-issues-dialog';
