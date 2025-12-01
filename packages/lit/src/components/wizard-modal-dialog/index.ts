@@ -95,7 +95,7 @@ export class TemplateModalDialog extends LitElement {
     // Prevent the native <dialog> from closing itself so we can
     // dispatch our own close event and restore focus consistently.
     event.preventDefault();
-    this.close(DIALOG_BUTTON_VALUES.cancel);
+    this.close();
   };
 
   private readonly onCloseClick = () => {

@@ -35,7 +35,7 @@ export class WizardDownloadConfirmation extends LitElement {
     return html`
       <template-modal-dialog
         .title=${t('tokenDownloadDialog.title')}
-        actions="confirm"
+        actions="both"
         .confirmLabel=${t('tokenDownloadDialog.downloadAnyway')}
         .cancelLabel=${t('tokenDownloadDialog.cancel')}
         aria-describedby=${ariaDescribedby}
