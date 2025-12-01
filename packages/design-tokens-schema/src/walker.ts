@@ -1,5 +1,5 @@
-import { ColorToken } from './color-token';
-import { isTokenWithRef, type TokenWithRefLike } from './token-reference';
+import { ColorToken } from './tokens/color-token';
+import { isTokenWithRef, type TokenWithRefLike } from './tokens/token-reference';
 
 /**
  * @param root The object you want to traverse

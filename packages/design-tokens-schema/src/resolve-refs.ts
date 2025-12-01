@@ -1,7 +1,7 @@
 import dlv from 'dlv';
-import { BaseDesignToken, type BaseDesignTokenValue } from './base-token';
-import { legacyToModernColor } from './color-token';
-import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef } from './token-reference';
+import { BaseDesignToken, type BaseDesignTokenValue } from './tokens/base-token';
+import { legacyToModernColor } from './tokens/color-token';
+import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef } from './tokens/token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
