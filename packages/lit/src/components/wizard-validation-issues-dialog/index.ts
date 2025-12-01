@@ -40,7 +40,7 @@ export class WizardValidationIssuesDialog extends LitElement {
         .cancelLabel=${t('tokenDownloadDialog.cancel')}
         aria-describedby="theme-wizard-validation-issues-dialog-description"
       >
-        <p id="theme-wizard-validation-issues-dialog-description" tabindex="-1">${t('tokenDownloadDialog.body')}</p>
+        <p id="theme-wizard-validation-issues-dialog-description">${t('tokenDownloadDialog.body')}</p>
         <div class="theme-wizard-validation-issues-dialog__issues">
           ${Object.entries(this.issues).map(([errorCode, errors]) => {
             if (!errors || errors.length === 0) return nothing;
