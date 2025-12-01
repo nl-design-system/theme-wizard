@@ -24,7 +24,7 @@ describe('Theme', () => {
   it('can update token at a specific path', async () => {
     const theme = new Theme();
     const initialTokens = structuredClone(theme.tokens);
-    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    theme.updateToken('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     const updatedTokens = structuredClone(theme.tokens);
     return expect(updatedTokens).not.toMatchObject(initialTokens);
   });
@@ -32,7 +32,7 @@ describe('Theme', () => {
   it('has a different CSS output after token update', async () => {
     const theme = new Theme();
     const initialCSS = await theme.toCSS();
-    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    theme.updateToken('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     const updatedCSS = await theme.toCSS();
     expect(updatedCSS).toMatchSnapshot();
     return expect(initialCSS).not.toMatch(updatedCSS);
@@ -41,7 +41,7 @@ describe('Theme', () => {
   it('has a different JSON output after token update', async () => {
     const theme = new Theme();
     const initialJSON = await theme.toTokensJSON();
-    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    theme.updateToken('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     const updatedJSON = await theme.toTokensJSON();
     expect(updatedJSON).toMatchSnapshot();
     return expect(initialJSON).not.toMatch(updatedJSON);
@@ -81,13 +81,13 @@ describe('Theme', () => {
 
   it('indicates modified state as true on update', () => {
     const theme = new Theme();
-    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    theme.updateToken('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     expect(theme.modified).toBe(true);
   });
 
   it('indicates modified state as false on reset', () => {
     const theme = new Theme();
-    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    theme.updateToken('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     theme.reset();
     expect(theme.modified).toBe(false);
   });

@@ -87,7 +87,7 @@ export class App extends LitElement {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
     if (target instanceof WizardTokenInput) {
       const value = target.value;
-      this.#theme.updateAt(target.name, value);
+      this.#theme.updateToken(target.name, value);
       // Request update to reflect any new validation issues
       this.requestUpdate();
       this.#storage.setJSON(this.#theme.tokens);
@@ -158,8 +158,10 @@ export class App extends LitElement {
   };
 
   override render() {
-    const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
-    const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
+    const bodyFontToken = this.#theme.getToken(BODY_FONT_TOKEN_REF);
+    const headingFontToken = this.#theme.getToken(HEADING_FONT_TOKEN_REF);
+    const colorTokens = this.#theme.getToken(COLOR_TOKENS_REF);
+
     return html`
       <div class="theme-app ma-theme">
         <wizard-download-confirmation

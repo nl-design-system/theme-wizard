@@ -63,17 +63,6 @@ export default class Theme {
     return this.#stylesheet;
   }
 
-  updateAt(path: string, value: DesignToken['$value']) {
-    this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
-    const tokens = structuredClone(this.tokens);
-    dset(tokens, `${path}.$value`, value);
-    this.tokens = tokens;
-  }
-
-  at(path: string): DesignToken | undefined {
-    return dlv(this.tokens, path);
-  }
-
   get errorCount(): number {
     return this.#validationIssues.length;
   }
@@ -84,6 +73,17 @@ export default class Theme {
 
   get issues(): ValidationIssue[] {
     return this.#validationIssues;
+  }
+
+  getToken(path: string): DesignToken | undefined {
+    return dlv(this.tokens, path);
+  }
+
+  updateToken(path: string, value: DesignToken['$value']) {
+    this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
+    const tokens = structuredClone(this.tokens);
+    dset(tokens, `${path}.$value`, value);
+    this.tokens = tokens;
   }
 
   #validateTheme(theme: DesignTokens): ValidationIssue[] {
