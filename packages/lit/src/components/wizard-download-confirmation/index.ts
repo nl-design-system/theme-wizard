@@ -6,10 +6,11 @@ import { TemplateModalDialog } from '../wizard-modal-dialog';
 import '../wizard-modal-dialog';
 import { dialogStyles } from './styles';
 
-const tag = 'theme-wizard-validation-issues-dialog';
+const tag = 'wizard-download-confirmation';
+const ariaDescribedby = 'wizard-download-confirmation-description';
 
 @customElement(tag)
-export class WizardValidationIssuesDialog extends LitElement {
+export class WizardDownloadConfirmation extends LitElement {
   @property({ attribute: 'issues' })
   issues: GroupedIssues = {};
 
@@ -34,14 +35,13 @@ export class WizardValidationIssuesDialog extends LitElement {
     return html`
       <template-modal-dialog
         .title=${t('tokenDownloadDialog.title')}
-        .showConfirmButton=${true}
-        .showCancelButton=${true}
+        actions="confirm"
         .confirmLabel=${t('tokenDownloadDialog.downloadAnyway')}
         .cancelLabel=${t('tokenDownloadDialog.cancel')}
-        aria-describedby="theme-wizard-validation-issues-dialog-description"
+        aria-describedby=${ariaDescribedby}
       >
-        <p id="theme-wizard-validation-issues-dialog-description">${t('tokenDownloadDialog.body')}</p>
-        <div class="theme-wizard-validation-issues-dialog__issues">
+        <p id=${ariaDescribedby}>${t('tokenDownloadDialog.body')}</p>
+        <div class="wizard-download-confirmation__issues">
           ${Object.entries(this.issues).map(([errorCode, errors]) => {
             if (!errors || errors.length === 0) return nothing;
 

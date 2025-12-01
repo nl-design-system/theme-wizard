@@ -11,5 +11,5 @@ import './src/components/template-page-header';
 import './src/components/template-paragraph';
 import './src/components/template-side-nav';
 import './src/components/template-skip-link';
-import './src/components/wizard-validation-issues-dialog';
+import './src/components/wizard-download-confirmation';
 import './src/components/wizard-preview';

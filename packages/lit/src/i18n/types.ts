@@ -1,45 +1,16 @@
-import { TemplateResult } from 'lit';
-import type { ObjectPath } from '../utils/types';
-import ValidationIssue from '../lib/ValidationIssue';
+import type { TemplateResult } from 'lit';
+import type { en } from './messages';
 
 export type TokenLinkRenderer = (tokenPath: string, displayText?: string) => TemplateResult;
 
-/**
- * Define the structure of i18n messages
- */
-export type I18nMessages = {
-  back: string;
-  cancel: string;
-  close: string;
-  continue: string;
-  tokenDownloadDialog: {
-    body: string;
-    cancel: () => TemplateResult | string;
-    downloadAnyway: string;
-    title: string;
-  };
-  unknown: string;
-  validation: {
-    title: string;
-    error: {
-      [key: string]: {
-        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }) => TemplateResult;
-        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }) => TemplateResult;
-        label: string;
-      };
-    };
-    issue: {
-      contrastValue: string;
-      invalidContrastWith: (params: { context?: TokenLinkRenderer; token: string }) => TemplateResult;
-      minimalNeeded: (params: { value: string }) => TemplateResult;
-    };
-    token_link: {
-      aria_label: string;
-    };
-  };
-};
+type LocalizedMessagesOf<T> = T extends string
+  ? string
+  : T extends (...args: infer A) => infer R
+    ? (...args: A) => R
+    : T extends TemplateResult
+      ? TemplateResult
+      : T extends object
+        ? { [K in keyof T]: LocalizedMessagesOf<T[K]> }
+        : T;
 
-/**
- * All possible message paths, automatically generated from I18nMessages
- */
-export type I18nMessagePaths = ObjectPath<I18nMessages>;
+export type LocalizedMessages = LocalizedMessagesOf<typeof en>;

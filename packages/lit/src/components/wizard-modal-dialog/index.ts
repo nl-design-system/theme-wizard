@@ -28,11 +28,14 @@ export class TemplateModalDialog extends LitElement {
   @property({ type: String }) override title = '';
   @property({ type: String }) closedBy = 'any';
   /**
-   * Control whether the primary (confirm) and secondary (cancel) buttons
-   * in the footer are rendered.
+   * Control which footer actions are rendered.
+   * - "none": no footer actions
+   * - "cancel": only cancel button
+   * - "confirm": only confirm button
+   * - "both": both confirm and cancel buttons
    */
-  @property({ type: Boolean }) showConfirmButton = false;
-  @property({ type: Boolean }) showCancelButton = true;
+  @property({ type: String })
+  actions: 'none' | 'cancel' | 'confirm' | 'both' = 'cancel';
   /**
    * Button labels for confirm/cancel actions. Consumers can override these,
    * e.g. with localized strings.
@@ -132,14 +135,14 @@ export class TemplateModalDialog extends LitElement {
           </div>
           <footer class="ams-dialog__footer">
             <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
-            ${this.showConfirmButton
+            ${this.actions === 'confirm' || this.actions === 'both'
               ? html`
                   <button class="utrecht-button utrecht-button--primary-action" value=${DIALOG_BUTTON_VALUES.confirm}>
                     ${this.confirmLabel}
                   </button>
                 `
               : null}
-            ${this.showCancelButton
+            ${this.actions === 'cancel' || this.actions === 'both'
               ? html`
                   <button class="utrecht-button utrecht-button--secondary-action" value=${DIALOG_BUTTON_VALUES.cancel}>
                     ${this.cancelLabel}

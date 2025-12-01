@@ -5,7 +5,7 @@ import { defineCustomElements } from '@utrecht/web-component-library-stencil/loa
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { SidebarConfig } from '../../utils/types';
-import type { WizardValidationIssuesDialog } from '../wizard-validation-issues-dialog';
+import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { EVENT_NAMES } from '../../constants';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Scraper from '../../lib/Scraper';
@@ -14,7 +14,7 @@ import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import '../sidebar/sidebar';
 import '../wizard-preview';
 import '../wizard-token-field';
-import '../wizard-validation-issues-dialog';
+import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import { WizardTokenInput } from '../wizard-token-input';
 import appStyles from './app.css';
@@ -32,8 +32,8 @@ export class App extends LitElement {
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
 
-  @query('theme-wizard-validation-issues-dialog')
-  private readonly dialogElement?: WizardValidationIssuesDialog;
+  @query('wizard-download-confirmation')
+  private readonly dialogElement?: WizardDownloadConfirmation;
 
   // Template list provided by the host application (JSON string attribute)
   @property({ attribute: 'templates' }) templatesAttr?: string;
@@ -151,7 +151,7 @@ export class App extends LitElement {
   };
 
   readonly #handleDialogClose = (event: Event) => {
-    const dialog = event.currentTarget as WizardValidationIssuesDialog;
+    const dialog = event.currentTarget as WizardDownloadConfirmation;
     if (dialog.returnValue === 'confirm') {
       this.#downloadJSON();
     }
@@ -162,10 +162,10 @@ export class App extends LitElement {
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
     return html`
       <div class="theme-app ma-theme">
-        <theme-wizard-validation-issues-dialog
+        <wizard-download-confirmation
           .issues=${this.#theme.groupedIssues}
           @close=${this.#handleDialogClose}
-        ></theme-wizard-validation-issues-dialog>
+        ></wizard-download-confirmation>
         <theme-wizard-sidebar
           .sourceUrl=""
           .scrapedTokens=${this.scrapedTokens}
