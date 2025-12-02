@@ -289,6 +289,9 @@ importers:
         specifier: 4.1.12
         version: 4.1.12
     devDependencies:
+      '@hono/node-server':
+        specifier: 1.19.6
+        version: 1.19.6(hono@4.10.4)
       '@hono/vite-dev-server':
         specifier: 0.23.0
         version: 0.23.0(hono@4.10.4)

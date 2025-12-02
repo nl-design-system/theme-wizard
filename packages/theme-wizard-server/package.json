@@ -8,25 +8,33 @@
     "expertteam-digitale-toegankelijkheid",
     "nl-design-system"
   ],
-  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
+  "bin": {
+    "theme-wizard-server": "./dist/server.js"
+  },
   "files": [
     "dist/"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "repository": {
     "type": "git+ssh",
     "url": "git@github.com:nl-design-system/theme-wizard.git",
     "directory": "packages/theme-wizard-server"
   },
   "scripts": {
+    "start": "node dist/server.js",
     "dev": "vite",
     "test-build": "vitest run --coverage",
-    "build": "vite build",
+    "build": "tsc",
     "clean": "rimraf dist/"
   },
   "devDependencies": {
+    "@hono/node-server": "1.19.6",
     "@hono/vite-dev-server": "0.23.0",
     "@vitest/coverage-v8": "4.0.8",
     "rimraf": "6.1.0",
