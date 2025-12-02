@@ -41,7 +41,7 @@ export class WizardDownloadConfirmation extends LitElement {
         aria-describedby=${ariaDescribedby}
       >
         <p id=${ariaDescribedby}>${t('tokenDownloadDialog.body')}</p>
-        <div class="wizard-download-confirmation__issues">
+        <div class="theme-wizard-download-confirmation__issues">
           ${Object.entries(this.issues).map(([errorCode, errors]) => {
             if (!errors || errors.length === 0) return nothing;
 
