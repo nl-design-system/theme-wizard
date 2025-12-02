@@ -1,7 +1,7 @@
 import type { TemplateResult } from 'lit';
 import { ERROR_CODES } from '@nl-design-system-community/design-tokens-schema';
 import { html } from 'lit';
-import type { LocalizedMessages, TokenLinkRenderer } from './types';
+import type { TokenLinkRenderer } from './types';
 import ValidationIssue from '../lib/ValidationIssue';
 import { t } from './';
 
@@ -68,7 +68,7 @@ export const en = {
       aria_label: 'Jump to {{token}}',
     },
   },
-} as const;
+};
 
 export const nl = {
   back: 'Terug',
@@ -102,10 +102,10 @@ export const nl = {
         label: 'Onvoldoende contrast',
       },
       [ERROR_CODES.INVALID_REF]: {
-        compact(issue): TemplateResult {
+        compact(issue: ValidationIssue): TemplateResult {
           return html`<p>Ongeldige referentie: ${issue.path}</p>`;
         },
-        detailed(issue): TemplateResult {
+        detailed(issue: ValidationIssue): TemplateResult {
           return html`<p>${issue.path}</p>`;
         },
         label: 'Ongeldige referentie',
@@ -127,4 +127,4 @@ export const nl = {
       aria_label: 'Spring naar {{token}}',
     },
   },
-} as const satisfies LocalizedMessages;
+} satisfies typeof en;

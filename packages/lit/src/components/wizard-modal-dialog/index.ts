@@ -1,7 +1,7 @@
 import amsDialogStyles from '@amsterdam/design-system-css/dist/dialog/dialog.css?inline';
 import amsVisuallyHiddenStyles from '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css?inline';
 import utrechtButtonStyles from '@utrecht/button-css/dist/index.css?inline';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { dialogStyles } from './styles';
 
@@ -141,14 +141,14 @@ export class TemplateModalDialog extends LitElement {
                     ${this.confirmLabel}
                   </button>
                 `
-              : null}
+              : nothing}
             ${this.actions === 'cancel' || this.actions === 'both'
               ? html`
                   <button class="utrecht-button utrecht-button--secondary-action" value=${DIALOG_BUTTON_VALUES.cancel}>
                     ${this.cancelLabel}
                   </button>
                 `
-              : null}
+              : nothing}
           </footer>
         </form>
       </dialog>
