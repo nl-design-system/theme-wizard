@@ -27,12 +27,12 @@
     "@nl-design-system-community/theme-wizard-lit-components": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@vercel/related-projects": "1.0.0",
-    "astro": "5.15.4"
+    "astro": "5.16.3"
   },
   "devDependencies": {
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.57.0",
     "postcss-html": "1.8.0",
-    "stylelint": "16.25.0",
+    "stylelint": "16.26.1",
     "stylelint-config-astro": "2.0.0"
   }
 }
