@@ -2,7 +2,7 @@
 import { serve } from '@hono/node-server';
 import app from './index.js';
 
-const port = process.env['PORT'] ? parseInt(process.env['PORT'], 10) : 8080;
+const port = process.env['PORT'] ? Number.parseInt(process.env['PORT'], 10) : 8080;
 
 console.log(`Starting Theme Wizard server on http://localhost:${port}/ ...`);
 

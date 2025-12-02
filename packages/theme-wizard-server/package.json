@@ -29,7 +29,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "vite",
-    "test-build": "vitest run --coverage",
+    "test-build": "npm run build && vitest run --coverage",
     "build": "tsc",
     "clean": "rimraf dist/"
   },
