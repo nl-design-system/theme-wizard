@@ -21,7 +21,10 @@ const startServer = async (
     env['PORT'] = String(port);
   }
 
-  const testProcess = spawn('node', [serverPath], { env });
+  // Use process.execPath to get the absolute path to the Node.js executable
+  // This satisfies security requirements by avoiding PATH lookup while remaining
+  // cross-platform compatible (works with nvm, system Node, Docker, etc.)
+  const testProcess = spawn(process.execPath, [serverPath], { env });
   let stdoutData = '';
   let started = false;
 
