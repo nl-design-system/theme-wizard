@@ -59,13 +59,14 @@ test.describe('Download tokens as JSON', () => {
       await expect(themeWizard.downloadButton).toBeDisabled();
     });
 
-    test('Button is disabled when validation errors are found', async ({ themeWizard }) => {
+    test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
       // Make sure the color inputs are visible so we can interact with them
       await themeWizard.sidebar.locator('summary').click();
       // Trigger a contrast warning
       await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
 
-      await expect(themeWizard.downloadButton).toBeDisabled();
+      // The button should stay enabled, but show a confirmation dialog on click.
+      await expect(themeWizard.downloadButton).toBeEnabled();
     });
 
     test('Button is enabled when user made changes in previous session', async ({ page, themeWizard }) => {
