@@ -2,6 +2,7 @@ import {
   stringifyColor,
   StrictThemeSchema,
   type Theme as ThemeType,
+  type TokenLike,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -29,7 +30,7 @@ export default class Theme {
   readonly #stylesheet: CSSStyleSheet = new CSSStyleSheet();
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
-  #list: Map<string, DesignToken> = new Map();
+  #list: Map<string, TokenLike> = new Map();
   #validationIssues: ValidationIssue[] = [];
   name = 'wizard';
 
@@ -49,6 +50,10 @@ export default class Theme {
 
   get tokens() {
     return this.#tokens;
+  }
+
+  get tokenList() {
+    return this.#list;
   }
 
   set tokens(values: DesignTokens) {
