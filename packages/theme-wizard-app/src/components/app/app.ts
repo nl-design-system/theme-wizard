@@ -19,15 +19,13 @@ import '../wizard-validation-issues-alert';
 import { WizardTokenInput } from '../wizard-token-input';
 import appStyles from './app.css';
 
-const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
-const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 /**
  * Main application component - Orchestrator coordinator
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
-  #storage = new PersistentStorage({ prefix: 'theme-wizard' });
-  #theme = new Theme();
+  readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
+  readonly #theme = new Theme();
   private readonly scraper: Scraper = new Scraper(
     document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
   );
@@ -158,8 +156,6 @@ export class App extends LitElement {
   };
 
   override render() {
-    const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
-    const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
     return html`
       <div class="theme-app ma-theme">
         <wizard-download-confirmation
@@ -172,22 +168,6 @@ export class App extends LitElement {
           @config-change=${this.#handleSourceUrlChange}
         >
           <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
-            <fieldset>
-              <legend>Lettertypes</legend>
-              <wizard-token-field
-                .errors=${this.#theme.issues}
-                .token=${headingFontToken}
-                label="Koppen"
-                path=${HEADING_FONT_TOKEN_REF}
-              ></wizard-token-field>
-              <wizard-token-field
-                .errors=${this.#theme.issues}
-                .token=${bodyFontToken}
-                label="Lopende tekst"
-                path=${BODY_FONT_TOKEN_REF}
-              ></wizard-token-field>
-            </fieldset>
-
             <details>
               <summary>Alle tokens</summary>
               <wizard-token-field

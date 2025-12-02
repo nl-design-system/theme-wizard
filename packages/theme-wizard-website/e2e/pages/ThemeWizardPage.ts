@@ -33,14 +33,6 @@ export class ThemeWizardPage {
     await this.templateSelect.selectOption({ label: templateName });
   }
 
-  async changeHeadingFont(fontName: string) {
-    await this.page.getByLabel('Koppen').selectOption({ label: fontName });
-  }
-
-  async changeBodyFont(fontName: string) {
-    await this.page.getByLabel('Lopende tekst').selectOption({ label: fontName });
-  }
-
   /** @param colorHexValue A 6-digit hex value */
   async changeColor(label: string, colorHexValue: string) {
     const input = this.page.getByLabel(label);
