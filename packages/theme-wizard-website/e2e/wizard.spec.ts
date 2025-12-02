@@ -38,6 +38,60 @@ test.describe('Download tokens as JSON', () => {
     await expect(themeWizard.downloadButton).toBeDisabled();
   });
 
+  test('does not show confirmation modal when there are no validation errors', async ({ page, themeWizard }) => {
+    await themeWizard.changeBodyFont('Arial');
+    await expect(themeWizard.downloadButton).toBeEnabled();
+
+    const downloadPromise = page.waitForEvent('download');
+    await themeWizard.downloadButton.click();
+
+    // Confirmation dialog for errors should not appear.
+    const dialog = themeWizard.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+    await expect(dialog).toHaveCount(0);
+
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toBe('tokens.json');
+  });
+
+  test.describe('download confirmation modal', () => {
+    test.beforeEach(async ({ themeWizard }) => {
+      await themeWizard.sidebar.locator('summary').click();
+      await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+      await expect(themeWizard.downloadButton).toBeEnabled();
+    });
+
+    test('opens when downloading with validation errors', async ({ themeWizard }) => {
+      await themeWizard.downloadButton.click();
+
+      const dialog = themeWizard.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+      await expect(dialog).toBeVisible();
+    });
+
+    test('can cancel download from the modal', async ({ themeWizard }) => {
+      await themeWizard.downloadButton.click();
+
+      const dialog = themeWizard.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+      await expect(dialog).toBeVisible();
+
+      await themeWizard.page.getByRole('button', { name: 'Annuleren' }).click();
+      await expect(dialog).not.toBeVisible();
+    });
+
+    test('can confirm download from the modal', async ({ page, themeWizard }) => {
+      await themeWizard.downloadButton.click();
+
+      const dialog = themeWizard.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+      await expect(dialog).toBeVisible();
+
+      const downloadPromise = page.waitForEvent('download');
+      await themeWizard.page.getByRole('button', { name: 'Toch downloaden' }).click();
+      const download = await downloadPromise;
+
+      expect(download.suggestedFilename()).toBe('tokens.json');
+      await expect(dialog).not.toBeVisible();
+    });
+  });
+
   test.describe('after changing a token', () => {
     test.beforeEach(async ({ themeWizard }) => {
       await themeWizard.changeBodyFont('Arial');
@@ -59,13 +113,14 @@ test.describe('Download tokens as JSON', () => {
       await expect(themeWizard.downloadButton).toBeDisabled();
     });
 
-    test('Button is disabled when validation errors are found', async ({ themeWizard }) => {
+    test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
       // Make sure the color inputs are visible so we can interact with them
       await themeWizard.sidebar.locator('summary').click();
       // Trigger a contrast warning
       await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
 
-      await expect(themeWizard.downloadButton).toBeDisabled();
+      // The button should stay enabled, but show a confirmation dialog on click.
+      await expect(themeWizard.downloadButton).toBeEnabled();
     });
 
     test('Button is enabled when user made changes in previous session', async ({ page, themeWizard }) => {

@@ -38,6 +38,7 @@
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-unstable/start-design-tokens": "1.2.0",
+    "@utrecht/button-css": "3.0.1",
     "@utrecht/form-field-error-message-css": "2.0.1",
     "@utrecht/link-list-css": "3.0.1",
     "@utrecht/select-css": "2.0.1",

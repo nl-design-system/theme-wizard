@@ -200,6 +200,9 @@ importers:
       '@nl-design-system-unstable/start-design-tokens':
         specifier: 1.2.0
         version: 1.2.0
+      '@utrecht/button-css':
+        specifier: 3.0.1
+        version: 3.0.1
       '@utrecht/form-field-error-message-css':
         specifier: 2.0.1
         version: 2.0.1
@@ -1898,6 +1901,9 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@utrecht/button-css@3.0.1':
+    resolution: {integrity: sha512-yHJazkFSA99H4IKCaKLvq9pptZ9oZBeAzx1l01JQwt3x12aoZ21M5pRRaTP6V7otjfjcvz/A4sRRrROZJJ3wZw==}
 
   '@utrecht/focus-ring-css@2.3.1':
     resolution: {integrity: sha512-mmZeNnp2VeYVrnG0uhgkLcX2nVuMW0+oZjJ7lCI1FFODpj3ORmtTi7N5UNjhM3Pyppg5LdDwqMM6jF9clPg5Yg==}
@@ -7621,6 +7627,8 @@ snapshots:
       eslint-visitor-keys: 4.2.1
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@utrecht/button-css@3.0.1': {}
 
   '@utrecht/focus-ring-css@2.3.1': {}
 
