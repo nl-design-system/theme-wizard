@@ -17,6 +17,11 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     <meta name="generator" content={Astro.generator} />
     {scraperUrl ? <meta name="scraper-api" content={scraperUrl} /> : null}
     <title>{title}</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <slot />

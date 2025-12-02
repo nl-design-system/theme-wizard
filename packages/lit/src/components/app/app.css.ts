@@ -9,6 +9,7 @@ export default css`
 
     display: flex;
     min-block-size: 100vh;
+    font-family: var(--basis-text-font-family-default);
   }
 
   /* ============================================
@@ -19,6 +20,8 @@ export default css`
     display: flex;
     flex-direction: column;
     inline-size: 100%;
+    padding-block: var(--basis-space-block-lg);
+    padding-inline: var(--basis-space-inline-lg);
   }
 
   .theme-preview-main__title {

@@ -128,7 +128,7 @@ export class WizardTokenField extends WizardTokenNavigator {
   override render() {
     if (this.depth > WizardTokenField.maxDepth) return nothing;
     const type = this.type;
-    const label = this.label || `{${this.path}}`;
+    const label = this.label || `${this.path.split('.').at(-1)}`;
     const errorClass = this.#hasErrors ? 'theme-error' : '';
     return html`
       ${type

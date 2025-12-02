@@ -5,55 +5,52 @@ export default css`
    COMPONENT BASE
    ============================================ */
   :host {
-    font-family: var(--theme-font-family);
-    min-inline-size: var(--theme-sidebar-width);
+    inline-size: 36rem;
   }
 
   /* ============================================
    SIDEBAR LAYOUT & STRUCTURE
    ============================================ */
   .theme-sidebar {
-    background: var(--theme-gray-100);
+    background: var(--basis-color-accent-1-bg-subtle);
+    color: var(--basis-color-default-color-document);
     block-size: 100%;
-    border-inline-end: 1px solid var(--theme-gray-400);
-    inline-size: 320px;
     inset-block-start: 0;
     max-block-size: 100vh;
     overflow-y: auto;
-    padding-block: var(--theme-space-6);
-    padding-inline: var(--theme-space-6);
     position: sticky;
+    scrollbar-color: var(--basis-color-accent-1-color-default) var(--basis-color-accent-1-bg-subtle);
   }
 
   .theme-sidebar__form {
     display: flex;
     flex-direction: column;
-    gap: var(--theme-space-2);
+    column-gap: var(--basis-space-inline-md);
   }
 
   .theme-sidebar__section {
-    margin-block-end: var(--theme-space-6);
-    padding-block-end: var(--theme-space-6);
-  }
-
-  .theme-sidebar__section:not(:last-of-type) {
-    border-block-end: 1px solid var(--theme-gray-200);
+    padding-block: var(--basis-space-block-lg);
+    padding-inline: var(--basis-space-inline-lg);
   }
 
   .theme-sidebar__actions {
     display: flex;
     flex-direction: column;
-    gap: var(--theme-space-3);
+    gap: var(--basis-space-inline-md);
   }
 
   /* ============================================
    SIDEBAR TYPOGRAPHY
    ============================================ */
   .theme-sidebar__title {
-    color: var(--theme-gray-900);
     font-size: var(--theme-font-size-lg);
-    font-weight: var(--theme-font-weight-bold);
+    font-weight: var(--basis-text-font-weight-bold);
+    margin-block-start: 0;
     margin-block-end: var(--theme-space-1);
+    background-color: var(--basis-color-accent-1-inverse-bg-default);
+    color: var(--basis-color-accent-1-inverse-color-default);
+    padding-block: var(--basis-space-block-lg);
+    padding-inline: var(--basis-space-inline-lg);
   }
 
   .theme-sidebar__subtitle {
@@ -61,15 +58,6 @@ export default css`
     font-size: var(--theme-font-size-base);
     letter-spacing: 0.05em;
     margin-block-end: var(--theme-space-8);
-    text-transform: uppercase;
-  }
-
-  .theme-sidebar__heading {
-    color: var(--theme-gray-700);
-    font-size: var(--theme-font-size-base);
-    font-weight: var(--theme-font-weight-bold);
-    letter-spacing: 0.025em;
-    margin-block-end: var(--theme-space-4);
     text-transform: uppercase;
   }
 
@@ -84,43 +72,19 @@ export default css`
     margin-block-end: var(--theme-space-4);
   }
 
+  .theme-sidebar__form--single-line {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr max-content;
+    gap: var(--basis-space-inline-sm);
+
+    & .theme-form-field__label {
+      grid-row: 1;
+      grid-column: 1/ -1;
+    }
+  }
+
   .theme-form-field__label {
-    color: var(--theme-gray-700);
-    display: block;
-    font-size: var(--theme-font-size-base);
-    font-weight: var(--theme-font-weight-semibold);
-    margin-block-end: 0.375rem;
-  }
-
-  .theme-form-field__help {
-    color: var(--theme-gray-600);
-    display: block;
-    font-size: var(--theme-font-size-sm);
-    font-style: italic;
-    margin-block-start: 0.25rem;
-  }
-
-  .theme-form-field__input,
-  .theme-css-input {
-    border: 1px solid var(--theme-gray-400, #999);
-    border-radius: var(--theme-border-radius);
-    font-family: inherit;
-    font-size: var(--theme-font-size-base);
-    padding-block: var(--theme-space-2);
-    padding-inline: var(--theme-space-3);
-    transition:
-      border-color 200ms ease,
-      box-shadow 200ms ease;
-  }
-
-  .theme-css-input {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  }
-
-  .theme-form-field__input:focus,
-  .theme-css-input:focus {
-    border-color: var(--theme-primary);
-    box-shadow: 0 0 0 2px rgb(0 123 255 / 25%);
-    outline: none;
+    font-weight: var(--basis-text-font-weight-bold);
   }
 `;

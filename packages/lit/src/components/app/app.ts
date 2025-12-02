@@ -18,8 +18,6 @@ import '../wizard-token-field';
 import '../wizard-validation-issues-alert';
 import appStyles from './app.css';
 
-const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
-const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 /**
  * Main application component - Orchestrator coordinator
  */
@@ -59,6 +57,7 @@ export class App extends LitElement {
     super.connectedCallback();
     defineCustomElements();
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
+    this.addEventListener(EVENT_NAMES.SCRAPE_COMPLETE, this.#handleScrapeComplete);
 
     const previousTokens = this.#storage.getJSON();
     if (previousTokens) {
@@ -114,6 +113,13 @@ export class App extends LitElement {
     }
   };
 
+  readonly #handleScrapeComplete = async (event: Event) => {
+    if (!(event instanceof CustomEvent)) return;
+
+    this.scrapedTokens = event.detail;
+    this.requestUpdate();
+  };
+
   readonly #handleTemplateChange = (event: Event) => {
     if (!(event instanceof CustomEvent)) return;
 
@@ -138,8 +144,6 @@ export class App extends LitElement {
   };
 
   override render() {
-    const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
-    const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
     return html`
       <div class="theme-app ma-theme">
         <theme-wizard-sidebar
@@ -147,41 +151,28 @@ export class App extends LitElement {
           .scrapedTokens=${this.scrapedTokens}
           @config-change=${this.#handleSourceUrlChange}
         >
-          <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
-            <fieldset>
-              <legend>Lettertypes</legend>
-              <wizard-token-field
-                .errors=${this.#theme.issues}
-                .token=${headingFontToken}
-                label="Koppen"
-                path=${HEADING_FONT_TOKEN_REF}
-              ></wizard-token-field>
-              <wizard-token-field
-                .errors=${this.#theme.issues}
-                .token=${bodyFontToken}
-                label="Lopende tekst"
-                path=${BODY_FONT_TOKEN_REF}
-              ></wizard-token-field>
-            </fieldset>
+          <section class="theme-sidebar__section">
+            <h2>3. Download je thema</h2>
+            <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
+              <details>
+                <summary>Alle tokens</summary>
+                <wizard-token-field
+                  .errors=${this.#theme.issues}
+                  .token=${this.#theme.tokens['basis']['color']}
+                  path=${`basis.color`}
+                ></wizard-token-field>
+              </details>
 
-            <details>
-              <summary>Alle tokens</summary>
-              <wizard-token-field
-                .errors=${this.#theme.issues}
-                .token=${this.#theme.tokens['basis']}
-                path=${`basis`}
-              ></wizard-token-field>
-            </details>
-
-            <utrecht-button
-              appearance="primary-action-button"
-              type="button"
-              ?disabled=${!this.#theme.modified || this.#theme.errorCount > 0}
-              @click=${this.#downloadJSON}
-              >Download tokens als JSON</utrecht-button
-            >
-            <utrecht-button appearance="secondary-action-button" type="reset">Reset tokens</utrecht-button>
-          </form>
+              <utrecht-button
+                appearance="primary-action-button"
+                type="button"
+                ?disabled=${!this.#theme.modified || this.#theme.errorCount > 0}
+                @click=${this.#downloadJSON}
+                >Download tokens als JSON</utrecht-button
+              >
+              <utrecht-button appearance="secondary-action-button" type="reset">Reset tokens</utrecht-button>
+            </form>
+          </section>
         </theme-wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
