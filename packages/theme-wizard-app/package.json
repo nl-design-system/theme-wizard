@@ -1,12 +1,12 @@
 {
-  "name": "@nl-design-system-community/theme-wizard-lit-components",
+  "name": "@nl-design-system-community/theme-wizard-app",
   "private": true,
   "version": "0.0.2",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/nl-design-system/theme-wizard.git",
-    "directory": "packages/lit"
+    "directory": "packages/theme-wizard-app"
   },
   "scripts": {
     "dev": "vite",
