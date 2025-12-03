@@ -3,14 +3,15 @@ import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import './styles.css';
 import logo from '../assets/logo.svg';
 import ClientInit from '../components/ClientInit.astro';
+import '@utrecht/component-library-css/dist/index.css';
 
 export interface Props {
   title?: string;
 }
 ---
 
-<html lang="nl" class="ma-theme">
-  <body>
+<html lang="nl" class="ma-theme utrecht-root">
+  <body class="utrecht-root">
     <template-page-header>
       <skip-link>Direct naar de hoofdinhoud</skip-link>
 

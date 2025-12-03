@@ -1,5 +1,7 @@
 ---
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import '@utrecht/component-library-css/dist/index.css';
+
 import ClientInit from '../components/ClientInit.astro';
 
 export interface Props {
@@ -7,18 +9,19 @@ export interface Props {
 }
 ---
 
-<style>
-  @media print {
-    @page {
-      size: landscape;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-    }
-  }
-</style>
-
-<html lang="nl" class="ma-theme">
-  <body>
+<html lang="nl" class="ma-theme utrecht-root">
+  <head>
+    <style>
+      @media print {
+        @page {
+          size: landscape;
+          margin-inline-start: 0;
+          margin-inline-end: 0;
+        }
+      }
+    </style>
+  </head>
+  <body class="utrecht-body">
     <slot />
     <ClientInit />
   </body>
