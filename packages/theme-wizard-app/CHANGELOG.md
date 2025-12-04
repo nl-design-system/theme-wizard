@@ -1,5 +1,12 @@
 # @nl-design-system-community/theme-wizard-lit-components
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [05adfae]
+  - @nl-design-system-community/css-scraper@1.0.2
+
 ## 0.0.2
 
 ### Patch Changes
