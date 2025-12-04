@@ -6,7 +6,7 @@ export default {
     'keyframes-name-pattern': '^(ams|basis|theme|utrecht|todo)-[a-z0-9-]+$',
     'scss/dollar-variable-pattern': '^(ams|basis|theme|utrecht|todo)-[a-z0-9-]+$',
     'scss/percent-placeholder-pattern': '^(ams|basis|theme|utrecht|todo)-[a-z0-9-]+$',
-    'selector-class-pattern': '^(ams|basis|theme|denhaag|utrecht|todo)-[a-z0-9_-]+$',
+    'selector-class-pattern': '^(ams|basis|theme|denhaag|utrecht|todo|wizard)-[a-z0-9_-]+$',
   },
   overrides: [
     {

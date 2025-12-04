@@ -1,17 +1,15 @@
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
-import { ScrapedDesignToken, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import type { SidebarConfig } from '../../utils/types';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { EVENT_NAMES } from '../../constants';
 import PersistentStorage from '../../lib/PersistentStorage';
-import Scraper from '../../lib/Scraper';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import '../sidebar/sidebar';
+import '../wizard-scraper';
 import '../wizard-preview';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
@@ -26,9 +24,6 @@ import appStyles from './app.css';
 export class App extends LitElement {
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
   readonly #theme = new Theme();
-  private readonly scraper: Scraper = new Scraper(
-    document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '',
-  );
 
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
@@ -48,9 +43,6 @@ export class App extends LitElement {
     }
     return [];
   }
-
-  @state()
-  private scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
   private selectedTemplatePath: string = '/my-environment/overview';
@@ -90,29 +82,6 @@ export class App extends LitElement {
       this.requestUpdate();
       this.#storage.setJSON(this.#theme.tokens);
       this.requestUpdate();
-    }
-  };
-
-  /**
-   * Handle source URL changes - scrape tokens
-   */
-  readonly #handleSourceUrlChange = async (e: Event) => {
-    if (!(e instanceof CustomEvent)) return;
-
-    const { sourceUrl }: Partial<SidebarConfig> = e.detail || {};
-
-    if (sourceUrl) {
-      try {
-        const tokens = await this.scraper.getTokens(new URL(sourceUrl));
-        const sortedTokens = [...tokens].sort(
-          (a, b) => b.$extensions[EXTENSION_USAGE_COUNT] - a.$extensions[EXTENSION_USAGE_COUNT],
-        );
-        this.scrapedTokens = sortedTokens;
-
-        this.requestUpdate();
-      } catch (error) {
-        console.error('Failed to analyze website:', error);
-      }
     }
   };
 
@@ -162,11 +131,9 @@ export class App extends LitElement {
           .issues=${this.#theme.groupedIssues}
           @close=${this.#handleDialogClose}
         ></wizard-download-confirmation>
-        <theme-wizard-sidebar
-          .sourceUrl=""
-          .scrapedTokens=${this.scrapedTokens}
-          @config-change=${this.#handleSourceUrlChange}
-        >
+        <wizard-sidebar>
+          <wizard-scraper></wizard-scraper>
+
           <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
             <details>
               <summary>Alle tokens</summary>
@@ -186,7 +153,7 @@ export class App extends LitElement {
             >
             <utrecht-button appearance="secondary-action-button" type="reset">Reset tokens</utrecht-button>
           </form>
-        </theme-wizard-sidebar>
+        </wizard-sidebar>
 
         <main class="theme-preview-main" id="main-content" role="main">
           <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
