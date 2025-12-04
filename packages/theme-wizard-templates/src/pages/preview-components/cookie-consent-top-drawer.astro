@@ -1,0 +1,32 @@
+---
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import CollageLayout from '../../layouts/CollageLayout.astro';
+import cookieConsentTopDrawerPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/top-drawer.html?raw';
+
+export const detail = {
+  name: 'Cookie consent (top drawer)',
+  module: 'Voorvertoning losse componenten',
+  value: 'cookie-consent-top-drawer',
+};
+---
+
+<CollageLayout>
+  <div class="theme-wizard-collage-component">
+    <div class="ma-theme theme-wizard-collage-component-header">
+      <template-heading level="2">Cookiemelding (bovenaan pagina)</template-heading>
+
+      <template-paragraph>
+        Dit patroon toont een cookiemelding als drawer aan de bovenzijde van de pagina, met progressive enhancement via
+        een web component.
+      </template-paragraph>
+    </div>
+
+    <div set:html={cookieConsentTopDrawerPattern} />
+
+    <noscript>
+      <div>
+        <p>Zet JavaScript aan om de progressive enhancements te bekijken</p>
+      </div>
+    </noscript>
+  </div>
+</CollageLayout>
