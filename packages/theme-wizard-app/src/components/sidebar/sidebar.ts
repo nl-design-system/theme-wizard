@@ -17,8 +17,6 @@ import '../color-scale-picker';
 @customElement('theme-wizard-sidebar')
 export class LitSidebar extends LitElement {
   @property() sourceUrl = DEFAULT_CONFIG.sourceUrl;
-  @property() headingFont = DEFAULT_CONFIG.headingFont;
-  @property() bodyFont = DEFAULT_CONFIG.bodyFont;
   @property({ attribute: false }) onResetTheme?: () => void;
 
   @state() brandColors: ColorToken[] = [];
@@ -58,8 +56,6 @@ export class LitSidebar extends LitElement {
 
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
-    const headingFont = formData.get('heading-font');
-    const bodyFont = formData.get('body-font');
     const brandColors = formData.get('brand-colors');
     // @TODO: Use defined color scales
     // const colorScales = formData.getAll('color-scale');
@@ -67,25 +63,7 @@ export class LitSidebar extends LitElement {
     this.brandColors = this.colorOptions
       .filter(({ value }) => (typeof brandColors === 'string' ? brandColors : '').split(',').includes(value))
       .map(({ token }) => token);
-
-    this.notifyConfigChange({
-      bodyFont: typeof bodyFont === 'string' ? bodyFont : '',
-      headingFont: typeof headingFont === 'string' ? headingFont : '',
-    });
   };
-
-  get fontOptions() {
-    return this.scrapedTokens
-      .filter((token) => token.$type === 'fontFamily')
-      .map((token) => {
-        const { $extensions, $value } = token;
-        const value = $value.join(', ');
-        return {
-          label: $extensions[EXTENSION_AUTHORED_AS],
-          value,
-        };
-      });
-  }
 
   get colorOptions() {
     return this.scrapedTokens
@@ -119,32 +97,18 @@ export class LitSidebar extends LitElement {
                 placeholder="https://example.com"
                 .value=${this.sourceUrl || ''}
               />
-
               <utrecht-button appearance="primary-action-button" type="submit">Analyseer</utrecht-button>
             </div>
           </section>
         </form>
 
         <form class="theme-sidebar__form" @change=${this.handleThemeForm} @submit=${this.handleThemeForm}>
-          <fieldset>
-            <legend>Kleuren</legend>
-            <color-select
-              id="color-select"
-              name="brand-colors"
-              label="Basiskleuren"
-              .options=${this.colorOptions}
-            ></color-select>
-
-            <fieldset>
-              <legend>Kleurverlopen</legend>
-              <color-scale-picker name="color-scale"></color-scale-picker>
-              <output for="color-select">
-                ${this.brandColors.map(
-                  (token) => html` <color-scale-picker .from=${token} name="color-scale"></color-scale-picker>`,
-                )}
-              </output>
-            </fieldset>
-          </fieldset>
+          <color-select
+            id="color-select"
+            name="brand-colors"
+            label="Basiskleuren"
+            .options=${this.colorOptions}
+          ></color-select>
         </form>
 
         <slot></slot>

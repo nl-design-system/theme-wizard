@@ -14,24 +14,6 @@ test.describe('scraping css design tokens', () => {
   });
 });
 
-test.describe('change fonts', () => {
-  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
-    const heading = previewPage.getHeading(2);
-
-    await expect(heading).not.toHaveFont('Courier New');
-    await previewPage.changeHeadingFont('Courier New');
-    await expect(heading).toHaveFont('Courier New');
-  });
-
-  test('can change body font to Arial', async ({ previewPage }) => {
-    const paragraph = previewPage.getParagraph();
-
-    await expect(paragraph).not.toHaveFont('Arial');
-    await previewPage.changeBodyFont('Arial');
-    await expect(paragraph).toHaveFont('Arial');
-  });
-});
-
 test.describe('Download tokens as JSON', () => {
   test('initial button state is correct', async ({ themeWizard }) => {
     await expect(themeWizard.downloadButton).toBeVisible();
@@ -39,7 +21,8 @@ test.describe('Download tokens as JSON', () => {
   });
 
   test('does not show confirmation modal when there are no validation errors', async ({ page, themeWizard }) => {
-    await themeWizard.changeBodyFont('Arial');
+    await themeWizard.sidebar.locator('summary').click();
+    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#cccccc');
     await expect(themeWizard.downloadButton).toBeEnabled();
 
     const downloadPromise = page.waitForEvent('download');
@@ -94,7 +77,8 @@ test.describe('Download tokens as JSON', () => {
 
   test.describe('after changing a token', () => {
     test.beforeEach(async ({ themeWizard }) => {
-      await themeWizard.changeBodyFont('Arial');
+      await themeWizard.sidebar.locator('summary').click();
+      await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#f1f1f1');
     });
 
     test('Button becomes active after changes made', async ({ themeWizard }) => {
@@ -114,8 +98,6 @@ test.describe('Download tokens as JSON', () => {
     });
 
     test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
-      // Make sure the color inputs are visible so we can interact with them
-      await themeWizard.sidebar.locator('summary').click();
       // Trigger a contrast warning
       await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
 
