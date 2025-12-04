@@ -35,6 +35,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   static readonly formAssociated = true;
   static override readonly styles = [unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
 
+  @state() selectedIndex = -1;
   @state() query = ''; // Query is what the user types to filter options.
   @state() get filteredOptions(): T[] {
     if (this.query.length === 0) {
@@ -126,8 +127,47 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     const index = Number(target.dataset['index']);
     if (Number.isNaN(index)) return;
 
-    this.value = this.filteredOptions.at(index).value;
+    this.#commitSelection(index);
   };
+
+  readonly #handleKeydown = ({ key }: KeyboardEvent) => {
+    const index = this.selectedIndex;
+    const count = this.filteredOptions.length;
+    switch (key) {
+      case 'ArrowDown':
+        return this.#setSelection(index + 1, true);
+      case 'ArrowUp':
+        return this.#setSelection(index - 1, true);
+      case 'Enter':
+        return this.#commitSelection(index);
+      case 'Escape':
+        return this.#setSelection(-1);
+      case 'Home':
+        return this.#setSelection(0);
+      case 'End':
+        return this.#setSelection(count - 1);
+      default:
+        return undefined;
+    }
+  };
+
+  #setSelection(index: number, open: boolean = false) {
+    this.open = open;
+    this.selectedIndex = index > -1 ? index % this.filteredOptions.length : -1;
+  }
+
+  #commitSelection(index: number) {
+    const { label, value } = this.filteredOptions.at(index) ?? {};
+    if (index < 0 || !label) return;
+
+    this.query = label.toString();
+
+    if (this.value !== value) {
+      this.value = value;
+      this.#handleChange();
+    }
+    this.open = false;
+  }
 
   /**
    * Override this function to customize the rendering of combobox options and selected value.
@@ -141,7 +181,6 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
       [`utrecht-combobox__popover--${this.position}`]: this.position,
       'utrecht-combobox__popover--hidden': !this.open,
     };
-
     return html`
       <div class="utrecht-combobox" role="combobox">
         <input
@@ -157,13 +196,19 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           @focus=${this.#handleFocus}
           @blur=${this.#handleBlur}
           @change=${this.#handleChange}
+          @keydown=${this.#handleKeydown}
         />
         <div class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
           <ul class="utrecht-listbox__list" role="none" @mousedown=${this.#handleOptionsClick}>
             ${this.filteredOptions.map((option, index) => {
+              const selected = index === this.selectedIndex;
+              const selectedClass = {
+                'utrecht-listbox__option--selected': selected,
+              };
               return html`<li
-                class="utrecht-listbox__option utrecht-listbox__option--html-li"
+                class="utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(selectedClass)}"
                 role="option"
+                aria-selected=${selected}
                 data-index=${index}
               >
                 ${this.renderEntry(option, index)}
