@@ -1,28 +1,13 @@
 ---
-import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
-import ClientInit from '../components/ClientInit.astro';
+import BaseLayout from './BaseLayout.astro';
 
 export interface Props {
   title?: string;
 }
 ---
 
-<html lang="nl" class="ma-theme utrecht-page-layout">
-  <head>
-    <style>
-      @media print {
-        @page {
-          size: landscape;
-          margin-inline-start: 0;
-          margin-inline-end: 0;
-        }
-      }
-    </style>
-  </head>
-  <body class="utrecht-page-body">
-    <div class="utrecht-page-body__content clippy-theme">
-      <slot />
-    </div>
-    <ClientInit />
-  </body>
-</html>
+<BaseLayout>
+  <div class="utrecht-page-body__content clippy-theme">
+    <slot />
+  </div>
+</BaseLayout>
