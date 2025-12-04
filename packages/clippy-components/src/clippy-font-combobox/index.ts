@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
 
@@ -18,7 +19,10 @@ declare global {
 }
 
 @customElement(tag)
-export class ClippyFontCombobox extends ClippyCombobox {
+export class ClippyFontCombobox extends ClippyCombobox<Option> {
+  #additional?: Option[];
+  #intersectionObserver?: IntersectionObserver;
+
   override readonly filter = (option: Option) => {
     const label = `${option.label}`; // Use as string
     return label.toLowerCase().includes(this.query.toLowerCase());

@@ -41,7 +41,11 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     if (this.query.length === 0) {
       return this.options;
     }
-    return this.options.filter(this.filter);
+    const options = this.options.filter(this.filter);
+    if (options.length === 0) {
+      this.addAdditionalOptions(this.query);
+    }
+    return options;
   }
 
   @property({ attribute: false })
