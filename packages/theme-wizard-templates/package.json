@@ -23,6 +23,7 @@
     "clean": "rm -rf dist .astro build"
   },
   "dependencies": {
+    "@utrecht/component-library-css": "8.2.1",
     "astro": "5.15.4"
   },
   "devDependencies": {
