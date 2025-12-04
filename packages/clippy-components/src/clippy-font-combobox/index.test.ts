@@ -92,4 +92,14 @@ describe(`<${tag}>`, () => {
     await userEvent.keyboard([...sequence, 'Enter'].map((k) => `{${k}}`).join(''));
     expect(component.value).toStrictEqual(selection.value);
   });
+
+  it('dynamically adds fonts from google fonts', async () => {
+    const query = 'Noto S';
+    const expectedValue = ['Noto Sans', 'sans-serif'];
+    const component: ClippyFontCombobox = document.querySelector(tag)!;
+    const input = page.getByRole('textbox');
+    await input.fill(query);
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    expect(component.value).toStrictEqual(expectedValue);
+  });
 });

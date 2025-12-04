@@ -33,6 +33,12 @@ export default defineConfig({
       ],
       input: getFiles('src/**/index.ts'),
       output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.names.every((name) => name.endsWith('.json'))) {
+            return '[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
         entryFileNames: '[name].js',
       },
     },
