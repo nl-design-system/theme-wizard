@@ -29,7 +29,8 @@
   "dependencies": {
     "@astrojs/check": "0.9.6",
     "astro": "5.16.6",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "@utrecht/component-library-css": "8.2.1"
   },
   "devDependencies": {
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
