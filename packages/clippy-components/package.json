@@ -37,6 +37,9 @@
   "dependencies": {
     "@amsterdam/design-system-css": "2.1.0",
     "@utrecht/button-css": "3.0.1",
+    "@utrecht/combobox-css": "2.0.1",
+    "@utrecht/listbox-css": "2.0.1",
+    "@utrecht/textbox-css": "3.0.1",
     "lit": "3.3.1"
   },
   "devDependencies": {
