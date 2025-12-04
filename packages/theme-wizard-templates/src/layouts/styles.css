@@ -1,18 +1,5 @@
-.layout {
-  display: flex;
-  flex-direction: column;
-}
-
 .layout-main {
   display: flex;
-}
-
-.layout-main > theme-wizard-side-nav {
-  flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
-}
-
-.layout-main > utrecht-page-content {
-  flex: 1;
 }
 
 .todo-card-layout {
@@ -72,7 +59,7 @@
   flex-wrap: wrap;
 }
 
-.theme-wizard-collage-component-content.theme-wizard-collage-component-content--stacked {
+.theme-wizard-collage-component-content--stacked {
   flex-direction: column;
   gap: var(--theme-wizard-collage-component-content-gap);
 }
