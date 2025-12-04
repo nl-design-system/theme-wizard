@@ -23,7 +23,7 @@
     "test-e2e": "playwright test"
   },
   "dependencies": {
-    "@nl-design-system-community/ma-design-tokens": "2.5.0",
+    "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@vercel/related-projects": "1.0.0",
