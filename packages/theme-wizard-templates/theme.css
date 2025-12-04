@@ -29,13 +29,12 @@
   --clippy-breadcrumb-nav-arrows-link-background-color: var(--basis-color-default-bg-default);
   --clippy-breadcrumb-nav-arrows-link-focus-background-color: var(--basis-focus-background-color);
 
-  --clippy-drawer-border-color: var(--ma-color-white);
-
   --clippy-paragraph-margin-block-start: var(--basis-space-inline-sm, 4px);
   --clippy-paragraph-margin-block-end: var(--basis-space-inline-sm, 4px);
 
   --clippy-space-around: var(--basis-space-inline-sm, 4px);
   --clippy-space-block-xs: var(--basis-space-block-xs);
+  --clippy-space-block-md: var(--basis-space-block-md);
   --clippy-space-block-lg: var(--basis-space-block-lg);
   --clippy-space-block-xl: var(--basis-space-block-xl);
   --clippy-space-column-md: var(--basis-space-column-md);
@@ -105,8 +104,6 @@
   --utrecht-breadcrumb-nav-arrows-link-focus-background-color: var(
     --clippy-breadcrumb-nav-arrows-link-focus-background-color
   );
-
-  --utrecht-drawer-border-color: var(--clippy-drawer-border-color);
 
   --utrecht-paragraph-margin-block-start: var(--clippy-paragraph-margin-block-start);
   --utrecht-paragraph-margin-block-end: var(--clippy-paragraph-margin-block-end);
