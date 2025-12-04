@@ -21,23 +21,23 @@ declare global {
 }
 
 @customElement(tag)
-export class WizardCombobox extends LitElement {
+export class WizardCombobox<T extends Option = Option> extends LitElement {
   @property() name = '';
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) readonly = false;
   @property({ type: Boolean }) private open = false;
-  @property({ type: Array }) private readonly options: Option[] = [];
+  @property({ type: Array }) private readonly options: T[] = [];
   @property() readonly position: Position = 'block-end';
   internals_ = this.attachInternals();
 
-  #value: unknown;
+  #value: T['value'] | undefined;
 
   static readonly formAssociated = true;
   static override readonly styles = [unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
 
   @state() selectedIndex = -1;
   @state() query = ''; // Query is what the user types to filter options.
-  @state() get filteredOptions(): Option[] {
+  @state() get filteredOptions(): T[] {
     if (this.query.length === 0) {
       return this.options;
     }
@@ -45,7 +45,7 @@ export class WizardCombobox extends LitElement {
   }
 
   @property({ attribute: false })
-  set value(value: unknown) {
+  set value(value: T['value'] | undefined) {
     this.#value = value;
     this.internals_.setFormValue(`${value}`);
   }
@@ -57,9 +57,37 @@ export class WizardCombobox extends LitElement {
   /**
    * Override this function to customize how options are filtered when typing
    */
-  readonly filter = (option: Option) => {
+  readonly filter = (option: T) => {
     const label = `${option.label}`; // Use as string
     return label.toLowerCase().includes(this.query.toLowerCase());
+  };
+
+  /**
+   * Override this function to customize an external data source
+   */
+  fetchAdditionalOptions(_query: string) {
+    const empty: T[] = [];
+    return Promise.resolve(empty);
+  }
+
+  /**
+   * Override this function to customize how the user input is resolved to a value.
+   * This runs on input.
+   */
+  inputToValue(query: string): T['value'] | undefined {
+    return query;
+  }
+
+  async addAdditionalOptions(query: string) {
+    const additions = await this.fetchAdditionalOptions(query);
+    this.options.push(...additions);
+  }
+
+  /**
+   * Override this function to customize setting a value from the query
+   */
+  readonly handleChange = () => {
+    this.value = this.query;
   };
 
   readonly #handleBlur = () => {
@@ -75,6 +103,7 @@ export class WizardCombobox extends LitElement {
     if (!(target instanceof HTMLInputElement)) return;
     this.open = true;
     this.query = target.value;
+    this.value = this.inputToValue(this.query);
   };
 
   readonly #handleOptionsClick = (event: Event) => {
@@ -84,7 +113,7 @@ export class WizardCombobox extends LitElement {
     const index = Number(target.dataset['index']);
     if (Number.isNaN(index)) return;
 
-    this.commitSelection(index);
+    this.#commitSelection(index);
   };
 
   readonly #handleKeydown = ({ key }: KeyboardEvent) => {
@@ -92,28 +121,30 @@ export class WizardCombobox extends LitElement {
     const count = this.filteredOptions.length;
     switch (key) {
       case 'ArrowDown':
-        return this.setSelection(index + 1, true);
+        return this.#setSelection(index + 1, true);
       case 'ArrowUp':
-        return this.setSelection(index - 1, true);
+        return this.#setSelection(index - 1, true);
       case 'Enter':
-        return this.commitSelection(index);
+        return this.#commitSelection(index);
       case 'Escape':
-        return this.setSelection(-1);
+        return this.#setSelection(-1);
       case 'Home':
-        return this.setSelection(0);
+        return this.#setSelection(0);
       case 'End':
-        return this.setSelection(count - 1);
+        return this.#setSelection(count - 1);
+      default:
+        return undefined;
     }
   };
 
-  setSelection(index: number, open: boolean = false) {
+  #setSelection(index: number, open: boolean = false) {
     this.open = open;
     this.selectedIndex = index > -1 ? index % this.filteredOptions.length : -1;
   }
 
-  commitSelection(index: number) {
-    const { value, label } = this.filteredOptions.at(index) || {};
-    if (!label) return;
+  #commitSelection(index: number) {
+    const { label, value } = this.filteredOptions.at(index) ?? {};
+    if (index < 0 || !label) return;
 
     this.query = label.toString();
 
@@ -132,8 +163,8 @@ export class WizardCombobox extends LitElement {
 
   override render() {
     const popoverClasses = {
-      'utrecht-combobox__popover--hidden': !this.open,
       [`utrecht-combobox__popover--${this.position}`]: this.position,
+      'utrecht-combobox__popover--hidden': !this.open,
     };
     return html`
       <div class="utrecht-combobox" role="combobox">
@@ -150,6 +181,7 @@ export class WizardCombobox extends LitElement {
           @focus=${this.#handleFocus}
           @blur=${this.#handleBlur}
           @keydown=${this.#handleKeydown}
+          @change=${this.handleChange}
         />
         <div class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
           <ul class="utrecht-listbox__list" role="none" @mousedown=${this.#handleOptionsClick}>
