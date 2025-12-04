@@ -18,14 +18,16 @@
     "directory": "packages/theme-wizard-templates"
   },
   "scripts": {
-    "dev": "astro dev --port 9493",
+    "start": "astro dev --port 9493",
     "build": "astro build",
     "clean": "rm -rf dist .astro build"
   },
   "dependencies": {
+    "@utrecht/component-library-css": "8.2.1",
     "astro": "5.15.4"
   },
   "devDependencies": {
+    "@nl-design-system-community/clippy-components": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@utrecht/web-component-library-stencil": "3.7.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
