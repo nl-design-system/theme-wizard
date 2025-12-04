@@ -1,22 +1,27 @@
 ---
 import { TEMPLATES } from '../templates';
-
+import ClientInit from '../components/ClientInit.astro';
 const items = TEMPLATES.map(({ name, pages }) => ({ title: name, pages }));
 ---
 
-<h1>Templates</h1>
+<html>
+  <body>
+    <h1>Templates</h1>
 
-{
-  items.map(({ title, pages }) => (
-    <>
-      <h2>{title}</h2>
-      <ul>
-        {pages.map(({ name, value }) => (
-          <li>
-            <a href={value}>{name}</a>
-          </li>
-        ))}
-      </ul>
-    </>
-  ))
-}
+    {
+      items.map(({ title, pages }) => (
+        <>
+          <h2>{title}</h2>
+          <ul>
+            {pages.map(({ name, value }) => (
+              <li>
+                <a href={value}>{name}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ))
+    }
+    <ClientInit />
+  </body>
+</html>

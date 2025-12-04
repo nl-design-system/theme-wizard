@@ -1,0 +1,23 @@
+---
+import '@utrecht/component-library-css/dist/index.css';
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import ClientInit from '../components/ClientInit.astro';
+---
+
+<html lang="nl" class="ma-theme utrecht-page-layout clippy-theme">
+  <head>
+    <style>
+      @media print {
+        @page {
+          size: landscape;
+          margin-inline-start: 0;
+          margin-inline-end: 0;
+        }
+      }
+    </style>
+  </head>
+  <body class="utrecht-page-body ma-theme clippy-theme">
+    <slot />
+    <ClientInit />
+  </body>
+</html>
