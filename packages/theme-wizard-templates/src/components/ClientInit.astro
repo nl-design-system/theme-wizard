@@ -4,10 +4,8 @@ import '../../theme.css';
 ---
 
 <script>
-  if (typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__) {
-    import('@nl-design-system-community/theme-wizard-app');
-    import('@utrecht/web-component-library-stencil/loader/index.js').then(({ defineCustomElements }) => {
-      defineCustomElements();
-    });
-  }
+  import('@nl-design-system-community/theme-wizard-app');
+  import('@utrecht/web-component-library-stencil/loader/index.js').then(({ defineCustomElements }) => {
+    defineCustomElements();
+  });
 </script>

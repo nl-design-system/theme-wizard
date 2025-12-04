@@ -1,7 +1,7 @@
 ---
 import logo from '../assets/logo.svg';
-import CookieTop from '../components/CookieTop.astro';
 import BaseLayout from './BaseLayout.astro';
+import cookieConsentTopDrawerPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/top-drawer.html?raw';
 
 export interface Props {
   title?: string;
@@ -10,7 +10,7 @@ export interface Props {
 
 <BaseLayout>
   <div class="utrecht-page-body__content clippy-theme">
-    <CookieTop />
+    <div set:html={cookieConsentTopDrawerPattern} />
 
     <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
 
