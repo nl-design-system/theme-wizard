@@ -15,6 +15,15 @@ export const en = {
   cancel: 'Cancel',
   close: 'Close',
   continue: 'Continue',
+  scraper: {
+    input: {
+      label: 'Website URL',
+    },
+    invalidUrl: 'Please fill in a valid URL',
+    scrapeFailed: `Failed to scrape "{{url}}"`,
+    submit: 'Analyze',
+    success: 'Done! Found {{tokenCount}} tokens.',
+  },
   tokenDownloadDialog: {
     body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
     cancel: () => t('cancel'),
@@ -75,6 +84,15 @@ export const nl = {
   cancel: 'Annuleren',
   close: 'Sluiten',
   continue: 'Doorgaan',
+  scraper: {
+    input: {
+      label: 'Website URL',
+    },
+    invalidUrl: 'Vul een valide URL in',
+    scrapeFailed: `Kan "{{url}}" niet aanalyseren`,
+    submit: 'Analyseer',
+    success: 'Gereed, {{tokenCount}} tokens gevonden',
+  },
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',
     cancel: () => t('cancel'),
