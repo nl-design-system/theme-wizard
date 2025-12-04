@@ -1,16 +1,25 @@
 import { test, expect } from './fixtures/fixtures';
 
 test.describe('scraping css design tokens', () => {
-  test('does not show scraped tokens before submitting the form', async ({ themeWizard }) => {
-    expect(themeWizard.scrapedTokensContainer).toBeVisible();
-    const scrapedTokens = themeWizard.scrapedTokensContainer.locator('input');
-    await expect(scrapedTokens).toHaveCount(0);
+  test('scrapes a valid URL', async ({ themeWizard }) => {
+    await themeWizard.scrapeUrl('https://www.example.com');
+    const input = themeWizard.sidebar.getByLabel('Website URL');
+    await expect(input).not.toHaveAttribute('aria-invalid');
+    await expect(themeWizard.sidebar.getByText(/Gereed/)).toBeVisible();
   });
 
-  test('shows scraped colors after scrape is successful', async ({ themeWizard }) => {
-    await themeWizard.scrapeUrl('https://example.com');
-    const scrapedColorsCount = await themeWizard.scrapedTokensContainer.locator('input').count();
-    expect(scrapedColorsCount).toBeGreaterThan(0);
+  test('errors on an invalid URL', async ({ themeWizard }) => {
+    await themeWizard.scrapeUrl('https://.com');
+    const input = themeWizard.sidebar.getByLabel('Website URL');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(input).toHaveAccessibleErrorMessage('Kan "https://.com" niet analyseren');
+  });
+
+  test('errors when no URL is entered', async ({ themeWizard }) => {
+    await themeWizard.scrapeUrl('');
+    const input = themeWizard.sidebar.getByLabel('Website URL');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(input).toHaveAccessibleErrorMessage('Vul een valide URL in');
   });
 });
 

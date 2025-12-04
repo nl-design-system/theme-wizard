@@ -72,8 +72,9 @@ export class WizardScraper extends LitElement {
     const urlLike = formData.get(this.#id)?.toString();
 
     if (!urlLike || urlLike.length === 0) {
-      this.#state = 'error';
       this.error = t(`scraper.invalidUrl`);
+      this.#state = 'error';
+      this.requestUpdate();
       return;
     }
 
@@ -116,13 +117,14 @@ export class WizardScraper extends LitElement {
             placeholder="gemeentevoorbeeld.nl"
             value=${this.src}
             aria-invalid=${this.#state === 'error' ? 'true' : nothing}
-            aria-describedby=${this.#state === 'error' ? this.#errorMessageId : nothing}
+            aria-errormessage=${this.#state === 'error' ? this.#errorMessageId : nothing}
+            data-state=${this.#state}
           />
           <utrecht-button appearance="primary-action-button" type="submit"> ${t('scraper.submit')} </utrecht-button>
         </div>
         ${this.#state === 'error'
           ? html`
-              <div class="utrecht-form-field__error-message">
+              <div id=${this.#errorMessageId} class="utrecht-form-field__error-message">
                 <div class="utrecht-form-field-error-message">${this.error}</div>
               </div>
             `

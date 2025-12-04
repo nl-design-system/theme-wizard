@@ -89,7 +89,7 @@ export const nl = {
       label: 'Website URL',
     },
     invalidUrl: 'Vul een valide URL in',
-    scrapeFailed: `Kan "{{url}}" niet aanalyseren`,
+    scrapeFailed: `Kan "{{url}}" niet analyseren`,
     submit: 'Analyseer',
     success: 'Gereed, {{tokenCount}} tokens gevonden',
   },
