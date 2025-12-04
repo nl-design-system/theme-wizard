@@ -1,5 +1,19 @@
-.layout-main {
+.layout {
   display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  background-color: red;
+  display: flex;
+}
+
+.layout-main > theme-wizard-side-nav {
+  flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
+}
+
+.layout-main > utrecht-page-content {
+  flex: 1;
 }
 
 .todo-card-layout {

@@ -102,3 +102,47 @@
 
   --utrecht-drawer-border-color: var(--theme-wizard-drawer-border-color);
 }
+
+.theme-wizard-collage-component {
+  display: flex;
+  flex-direction: column;
+  padding: var(--basis-space-block-xl) var(--basis-space-inline-lg);
+  border-block-end: 1px solid var(--basis-color-default-border-default);
+}
+
+.theme-wizard-collage-component-header {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-sm);
+  margin-block-end: var(--basis-space-block-lg);
+}
+
+.theme-wizard-collage-component-header h2 {
+  margin: 0;
+  font-size: var(--basis-text-font-size-lg);
+  font-weight: var(--basis-text-font-weight-bold);
+  line-height: var(--basis-text-line-height-md);
+  color: var(--basis-color-default-color-default);
+}
+
+.theme-wizard-collage-component-header p {
+  font-family: "Roboto", sans-serif;
+  margin-block: 0;
+  margin-inline: 0;
+  font-size: var(--basis-text-font-size-md);
+  font-weight: var(--basis-text-font-weight-regular);
+  line-height: var(--basis-text-line-height-md);
+  color: var(--basis-color-default-color-subtle);
+}
+
+.theme-wizard-collage-component-content {
+  display: flex;
+  gap: var(--basis-space-block-sm);
+  flex-wrap: wrap;
+}
+
+.theme-wizard-collage-component-content.theme-wizard-collage-component-content--stacked {
+  flex-direction: column;
+  gap: var(--basis-space-block-sm);
+}
