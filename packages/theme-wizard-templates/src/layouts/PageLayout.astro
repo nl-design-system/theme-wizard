@@ -4,13 +4,16 @@ import BaseLayout from './BaseLayout.astro';
 import cookieConsentTopDrawerPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/top-drawer.html?raw';
 
 export interface Props {
+  showCookieConsent?: boolean;
   title?: string;
+  sideNav?: boolean;
 }
+const { sideNav = true, showCookieConsent = true } = Astro.props;
 ---
 
 <BaseLayout>
   <div class="utrecht-page-body__content clippy-theme">
-    <div set:html={cookieConsentTopDrawerPattern} />
+    {showCookieConsent && <div set:html={cookieConsentTopDrawerPattern} />}
 
     <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
 
@@ -42,11 +45,12 @@ export interface Props {
       </span>
     </template-page-header>
 
-    <utrecht-breadcrumb-nav json='[{"href":"#","title":"Home"},{"href":"#","title":"Gemeente Voorbeeld"}]' lang="nl-NL"
-    ></utrecht-breadcrumb-nav>
+    <utrecht-breadcrumb-nav
+      json='[{"href":"/templates/my-environment/overview","title":"Mijn omgeving"},{"href":"#","title":"Gemeente Voorbeeld"}]'
+      lang="nl-NL"></utrecht-breadcrumb-nav>
 
     <div class="layout-main">
-      <template-side-nav> </template-side-nav>
+      {sideNav && <template-side-nav> </template-side-nav>}
 
       <utrecht-page-content>
         <utrecht-root>
@@ -80,7 +84,7 @@ export interface Props {
 
         <div>
           <template-link-list
-            link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"}]'
+            link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"},  {"href":"/templates/cookies", "text":"Cookies"}]'
           >
           </template-link-list>
         </div>
