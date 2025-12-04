@@ -1,6 +1,8 @@
 ---
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import '@utrecht/component-library-css/dist/index.css';
+import '../theme.css';
+import './styles.css';
 
 import ClientInit from '../components/ClientInit.astro';
 
@@ -9,7 +11,7 @@ export interface Props {
 }
 ---
 
-<html lang="nl" class="ma-theme utrecht-root">
+<html lang="nl" class="ma-theme preview-template-theme utrecht-page-layout">
   <head>
     <style>
       @media print {
@@ -21,8 +23,10 @@ export interface Props {
       }
     </style>
   </head>
-  <body class="utrecht-body">
-    <slot />
+  <body class="utrecht-page-body">
+    <div class="utrecht-page-body__content">
+      <slot />
+    </div>
     <ClientInit />
   </body>
 </html>
