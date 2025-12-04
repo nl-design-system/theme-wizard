@@ -82,6 +82,15 @@ importers:
         specifier: 8.46.3
         version: 8.46.3(eslint@9.39.1)(typescript@5.9.3)
 
+  packages/clippy-components:
+    devDependencies:
+      rimraf:
+        specifier: 6.1.0
+        version: 6.1.0
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
   packages/css-scraper:
     dependencies:
       '@nl-design-system-community/design-tokens-schema':
@@ -329,6 +338,9 @@ importers:
         specifier: 5.15.4
         version: 5.15.4(@types/node@22.19.0)(@vercel/blob@1.0.2)(rollup@4.53.1)(tsx@4.19.2)(typescript@5.9.3)(yaml@2.8.1)
     devDependencies:
+      '@nl-design-system-community/clippy-components':
+        specifier: workspace:*
+        version: link:../clippy-components
       '@nl-design-system-community/design-tokens-schema':
         specifier: workspace:*
         version: link:../design-tokens-schema

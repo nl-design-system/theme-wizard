@@ -1,0 +1,20 @@
+{
+  "name": "@nl-design-system-community/clippy-components",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nl-design-system/theme-wizard.git",
+    "directory": "packages/clippy-components"
+  },
+  "files": [
+    "patterns/"
+  ],
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "rimraf": "6.1.0",
+    "typescript": "5.9.3"
+  }
+}
