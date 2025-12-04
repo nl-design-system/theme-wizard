@@ -5,11 +5,9 @@ export default css`
    APP LAYOUT
    ============================================ */
   .theme-app {
-    --basis-form-control-max-inline-size: unset;
-
     display: flex;
     min-block-size: 100vh;
-  }
+    font-family: var(--basis-text-font-family-default, inherit);
 
   /* ============================================
    MAIN CONTENT AREA
