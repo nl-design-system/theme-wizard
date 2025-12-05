@@ -75,4 +75,17 @@ describe(`<${tag}>`, () => {
     const formData = new FormData(form);
     expect(formData.get(tag)).toContain(query);
   });
+
+  it.each([
+    [['ArrowDown'], OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown'], OPTIONS[1]],
+    [['ArrowDown', 'ArrowDown', 'ArrowDown'], OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown', 'ArrowUp'], OPTIONS[0]],
+  ])('changes the selected option with arrow keys', async (sequence, selection) => {
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    const input = page.getByRole('textbox');
+    await input.fill('');
+    await userEvent.keyboard([...sequence, 'Enter'].map((k) => `{${k}}`).join(''));
+    expect(component.value).toBe(selection.value);
+  });
 });
