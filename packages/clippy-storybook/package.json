@@ -1,0 +1,43 @@
+{
+  "name": "@nl-design-system-community/clippy-storybook",
+  "version": "1.0.0",
+  "author": "Community for NL Design System",
+  "description": "Web server with REST API for scraping websites to extract design tokens",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "expertteam-digitale-toegankelijkheid",
+    "nl-design-system"
+  ],
+  "private": true,
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/example.git",
+    "directory": "packages/clippy-storybook"
+  },
+  "scripts": {
+    "build": "storybook build --config-dir ./config/ --output-dir ./dist/",
+    "clean": "rimraf ./dist/",
+    "storybook": "storybook dev --config-dir ./config/ --port 6006"
+  },
+  "devDependencies": {
+    "@nl-design-system-community/theme-wizard-app": "workspace:*",
+    "@nl-design-system/tsconfig": "1.0.5",
+    "@rijkshuisstijl-community/storybook-tooling": "1.1.1",
+    "@storybook/addon-a11y": "9.1.5",
+    "@storybook/addon-docs": "9.1.5",
+    "@storybook/react": "9.1.5",
+    "@storybook/react-vite": "9.1.5",
+    "@tabler/icons-react": "3.34.1",
+    "@types/lodash-es": "4.17.12",
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
+    "@whitespace/storybook-addon-html": "8.0.2",
+    "lodash-es": "4.17.21",
+    "prettier": "3.6.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "storybook": "9.1.5",
+    "vite": "7.1.5",
+    "vitest": "3.2.4"
+  }
+}
