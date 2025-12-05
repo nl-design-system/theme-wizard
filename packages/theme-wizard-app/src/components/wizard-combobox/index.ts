@@ -47,7 +47,7 @@ export class WizardCombobox<T extends Option = Option> extends LitElement {
   @property({ attribute: false })
   set value(value: T['value'] | undefined) {
     this.#value = value;
-    this.internals_.setFormValue(`${value}`);
+    this.internals_.setFormValue(this.valueToFormValue(value));
   }
 
   get value() {
@@ -78,6 +78,13 @@ export class WizardCombobox<T extends Option = Option> extends LitElement {
     return query;
   }
 
+  /**
+   * Override this function to customize how the value is converted to a form value;
+   */
+  valueToFormValue(value?: T['value']): string {
+    return value ? `${value}` : '';
+  }
+
   async addAdditionalOptions(query: string) {
     const additions = await this.fetchAdditionalOptions(query);
     this.options.push(...additions);
@@ -101,6 +108,7 @@ export class WizardCombobox<T extends Option = Option> extends LitElement {
   readonly #handleInput = (event: InputEvent) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
+    this.selectedIndex = -1;
     this.open = true;
     this.query = target.value;
     this.value = this.inputToValue(this.query);
