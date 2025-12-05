@@ -1,4 +1,4 @@
-# @nl-design-system-community/theme-wizard-lit-components
+# @nl-design-system-community/theme-wizard-app
 
 ## 0.0.2
 

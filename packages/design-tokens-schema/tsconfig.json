@@ -2,10 +2,19 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2022", "dom"],
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2024", "DOM"],
+    "strict": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
     "outDir": "dist",
+    "types": ["vite/client"],
+    "importHelpers": false,
+    "useDefineForClassFields": false,
     "skipLibCheck": true,
-    "moduleResolution": "bundler"
+    "experimentalDecorators": true
   },
   "include": ["src"],
   "exclude": ["**/*.test.ts"]
