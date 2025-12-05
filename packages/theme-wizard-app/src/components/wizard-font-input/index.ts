@@ -1,8 +1,9 @@
 import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { t } from '../../i18n';
 import { WizardTokenInput } from '../wizard-token-input';
+import '../wizard-combobox';
 
 export type FontOption = { label: string; value: ModernFontFamilyToken['$value'] };
 
@@ -27,7 +28,7 @@ declare global {
 export class WizardFontInput extends WizardTokenInput {
   @property() defaultOptionsLabel = 'Standaardopties';
   @property() optionsLabel = 'Opties';
-  @property() options: FontOption[] = [];
+  @property({ type: Array }) options: FontOption[] = [];
   readonly #token: ModernFontFamilyToken = {
     $type: 'fontFamily',
     $value: '',
@@ -70,46 +71,16 @@ export class WizardFontInput extends WizardTokenInput {
 
   override render() {
     return html`
-      <label for=${this.id}>${this.label}</label>
+    <div class="utrecht-form-field__input"></div>
+      <label id=$>${this.label}</label>
       ${this.errors.map(
         (error) =>
           html`<div class="utrecht-form-field-error-message" id=${error.id}>
             ${t(`validation.error.${error.code}.compact`, error)}
           </div>`,
       )}
-      <select
-        id=${this.id}
-        name=${this.name}
-        class=${this.hasErrors ? 'theme-error' : ''}
-        @change=${this.#handleChange}
-        aria-invalid=${this.hasErrors ? 'true' : nothing}
-        aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
-      >
-        ${this.options.length
-          ? html`<optgroup label=${this.optionsLabel}>
-              ${this.options.map(
-                (option) =>
-                  html`<option
-                    value=${WizardTokenInput.valueAsString(option.value)}
-                    ?selected=${this.valueComparator(this.value)(option)}
-                  >
-                    ${option.label}
-                  </option>`,
-              )}
-            </optgroup>`
-          : nothing}
-        <optgroup label=${this.defaultOptionsLabel}>
-          ${DEFAULT_FONT_OPTIONS.map(
-            (option) =>
-              html`<option
-                value=${WizardTokenInput.valueAsString(option.value)}
-                ?selected=${this.valueComparator(this.value)(option)}
-              >
-                ${option.label}
-              </option>`,
-          )}
-        </optgroup>
-      </select>
+      <wizard-combobox name=${this.name} .options=${DEFAULT_FONT_OPTIONS}></wizard-combobox>
+    </div>
     `;
   }
 }

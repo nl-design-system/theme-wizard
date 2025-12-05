@@ -203,6 +203,9 @@ importers:
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/combobox-css':
+        specifier: 2.0.1
+        version: 2.0.1
       '@utrecht/form-field-css':
         specifier: 2.0.1
         version: 2.0.1
@@ -212,6 +215,9 @@ importers:
       '@utrecht/link-list-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/listbox-css':
+        specifier: 2.0.1
+        version: 2.0.1
       '@utrecht/select-css':
         specifier: 2.0.1
         version: 2.0.1
@@ -1901,6 +1907,9 @@ packages:
   '@utrecht/button-css@3.0.1':
     resolution: {integrity: sha512-yHJazkFSA99H4IKCaKLvq9pptZ9oZBeAzx1l01JQwt3x12aoZ21M5pRRaTP6V7otjfjcvz/A4sRRrROZJJ3wZw==}
 
+  '@utrecht/combobox-css@2.0.1':
+    resolution: {integrity: sha512-BUpeg4RNO/MezKQLMVdCIGCYlBvq9piKbsLwAROtQtEiGLWJlDqPL39OtCp2vZo1sesDUphVdXaYG9NiOrk8og==}
+
   '@utrecht/focus-ring-css@2.3.1':
     resolution: {integrity: sha512-mmZeNnp2VeYVrnG0uhgkLcX2nVuMW0+oZjJ7lCI1FFODpj3ORmtTi7N5UNjhM3Pyppg5LdDwqMM6jF9clPg5Yg==}
 
@@ -1912,6 +1921,9 @@ packages:
 
   '@utrecht/link-list-css@3.0.1':
     resolution: {integrity: sha512-/+pNmHFGadl/zVy0I3G6TVNWB3EuqRLvjsoBL7ue9+wJeye4LqDcweYgdFKm7wFcN4Tci479j21fZ63IK4KlXA==}
+
+  '@utrecht/listbox-css@2.0.1':
+    resolution: {integrity: sha512-oBn1E2EGeQWkFHFryJx+NPLyiwlUP2qJ8CslQsmYMbiBjo7c9W9lx+e9OZn7ZJ/f5kviimZ9mkbwpJ6EjHPvcw==}
 
   '@utrecht/select-css@2.0.1':
     resolution: {integrity: sha512-Cile0O+ks3lve3l8hRvmkreHemHmV/LAwjnbvT7pY4rbpvDe7FwiC4fxC9Jsm+CTruCnmK253W6XV3jQSyjMxg==}
@@ -7617,6 +7629,8 @@ snapshots:
 
   '@utrecht/button-css@3.0.1': {}
 
+  '@utrecht/combobox-css@2.0.1': {}
+
   '@utrecht/focus-ring-css@2.3.1': {}
 
   '@utrecht/form-field-css@2.0.1': {}
@@ -7624,6 +7638,8 @@ snapshots:
   '@utrecht/form-field-error-message-css@2.0.1': {}
 
   '@utrecht/link-list-css@3.0.1': {}
+
+  '@utrecht/listbox-css@2.0.1': {}
 
   '@utrecht/select-css@2.0.1': {}
 
