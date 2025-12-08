@@ -1,6 +1,7 @@
 import { isRef } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
@@ -128,28 +129,32 @@ export class WizardTokenField extends WizardTokenNavigator {
   override render() {
     if (this.depth > WizardTokenField.maxDepth) return nothing;
     const type = this.type;
-    const label = this.label || `{${this.path}}`;
-    const errorClass = this.#hasErrors ? 'theme-error' : '';
+    const label = this.label || `${this.path.split('.').at(-1)}`;
+
     return html`
-      ${type
-        ? this.renderField(type, label)
-        : html`<p class=${errorClass}>${label}</p>
-            <ul>
-              ${this.entries.map(([key, token]) => {
-                const path = `${this.path}.${key}`;
-                const depth = this.depth + 1;
-                return html`
-                  <li>
-                    <wizard-token-field
-                      .token=${token}
-                      .errors=${this.#getChildPathErrors(path)}
-                      path=${path}
-                      depth=${depth}
-                    ></wizard-token-field>
-                  </li>
-                `;
-              })}
-            </ul>`}
+      <div
+        class="wizard-token-field ${classMap({ 'wizard-token-field--invalid': this.#hasErrors && type !== undefined })}"
+      >
+        ${type
+          ? this.renderField(type, label)
+          : html`<utrecht-paragraph class=${classMap({ 'theme-error': this.#hasErrors })}>${label}</utrecht-paragraph>
+              <ul>
+                ${this.entries.map(([key, token]) => {
+                  const path = `${this.path}.${key}`;
+                  const depth = this.depth + 1;
+                  return html`
+                    <li>
+                      <wizard-token-field
+                        .token=${token}
+                        .errors=${this.#getChildPathErrors(path)}
+                        path=${path}
+                        depth=${depth}
+                      ></wizard-token-field>
+                    </li>
+                  `;
+                })}
+              </ul>`}
+      </div>
     `;
   }
 

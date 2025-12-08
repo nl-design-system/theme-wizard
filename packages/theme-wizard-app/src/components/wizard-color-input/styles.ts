@@ -3,10 +3,16 @@ import { tokenLinkStyles } from '../wizard-token-navigator/styles';
 
 export default css`
   :host {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-block-end: 0.5rem;
+    align-items: center;
+    display: grid;
+    gap: var(--basis-space-column-md);
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+  }
+
+  ul {
+    margin-block: 0;
+    padding-inline: 0;
   }
 
   ${tokenLinkStyles}

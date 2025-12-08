@@ -264,6 +264,12 @@ importers:
       '@amsterdam/design-system-css':
         specifier: 2.1.0
         version: 2.1.0
+      '@fontsource/fira-sans':
+        specifier: 5.2.7
+        version: 5.2.7
+      '@fontsource/source-sans-pro':
+        specifier: 5.2.5
+        version: 5.2.5
       '@gemeente-denhaag/action':
         specifier: 4.0.1
         version: 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -310,6 +316,12 @@ importers:
         specifier: 2.0.1
         version: 2.0.1
       '@utrecht/form-field-error-message-css':
+        specifier: 2.0.1
+        version: 2.0.1
+      '@utrecht/form-label-css':
+        specifier: 2.0.1
+        version: 2.0.1
+      '@utrecht/link-button-css':
         specifier: 2.0.1
         version: 2.0.1
       '@utrecht/link-list-css':
@@ -453,6 +465,12 @@ importers:
       '@nl-design-system-community/theme-wizard-templates':
         specifier: workspace:*
         version: link:../theme-wizard-templates
+      '@utrecht/body-css':
+        specifier: 2.0.1
+        version: 2.0.1
+      '@utrecht/root-css':
+        specifier: 2.0.1
+        version: 2.0.1
       '@vercel/related-projects':
         specifier: 1.0.0
         version: 1.0.0
@@ -1068,6 +1086,12 @@ packages:
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
+
+  '@fontsource/fira-sans@5.2.7':
+    resolution: {integrity: sha512-5DE4AealD/VnbwdzMgnpWfCttMQBbteNiK9DCJE7cVwZEbDTPLUoFDMMvxNQ498nZc5in7Mta9c/s+3Ehh0BAg==}
+
+  '@fontsource/source-sans-pro@5.2.5':
+    resolution: {integrity: sha512-ypendqc4pYUc+EgF7qqPY9iVYEz1t/Qr03VojKxG/2g3dnpHa1B6DOlDxWQjQXDj5QrG6inEqGT0g+edjALZyg==}
 
   '@gemeente-denhaag/action@4.0.1':
     resolution: {integrity: sha512-RXljQOoOeX98+yjSpLHecc8BNZ3m1/CZ5BNhA2K4O2SWCKYJe5jJ2dGbLq6AzD6sWYexWF0X1yI+0Ihxdbw3zA==}
@@ -2107,6 +2131,9 @@ packages:
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 
+  '@utrecht/body-css@2.0.1':
+    resolution: {integrity: sha512-WQjaF2Ii0eERCnTGYI32Jpjts5ydJpCAQUTtLjVs/jGF2+wHBz7XRDN6SFd8S0xIgp6llMQjHB9rdVp8JxieWA==}
+
   '@utrecht/button-css@3.0.1':
     resolution: {integrity: sha512-yHJazkFSA99H4IKCaKLvq9pptZ9oZBeAzx1l01JQwt3x12aoZ21M5pRRaTP6V7otjfjcvz/A4sRRrROZJJ3wZw==}
 
@@ -2119,8 +2146,17 @@ packages:
   '@utrecht/form-field-error-message-css@2.0.1':
     resolution: {integrity: sha512-4Oe5aIgMNkKXHcCZ86z+/ClSbaDxZ4atxdqgFPU1mi1L7P07QK2yatUGvjOlV1h4dwXMyl2zcNkxCn62wPhJvw==}
 
+  '@utrecht/form-label-css@2.0.1':
+    resolution: {integrity: sha512-ghkVY1auCGoKaaFzAIPGetXjJE1H1ZXPYnW39xZfhIQjKiUh4NW0uvLHj9sZC24YHGwuuiJmtKGJwTER0X45EA==}
+
+  '@utrecht/link-button-css@2.0.1':
+    resolution: {integrity: sha512-7HxgKyp7IkV0PAZb90ASvr9Iz+BPMw4yqpiN3IiD5HdPzTwQY8CjW7k4/hFZXrh/MMwnRUwcrDLJsbCLSfyKrw==}
+
   '@utrecht/link-list-css@3.0.1':
     resolution: {integrity: sha512-/+pNmHFGadl/zVy0I3G6TVNWB3EuqRLvjsoBL7ue9+wJeye4LqDcweYgdFKm7wFcN4Tci479j21fZ63IK4KlXA==}
+
+  '@utrecht/root-css@2.0.1':
+    resolution: {integrity: sha512-mhEyFaHhWHmwxu3HFR1+HpQDdQfGCfETBRKDP9QsGFwxX1t8FDUmL570+0LH3VqBA7db6gz8/krh8MUzCRp8yw==}
 
   '@utrecht/select-css@2.0.1':
     resolution: {integrity: sha512-Cile0O+ks3lve3l8hRvmkreHemHmV/LAwjnbvT7pY4rbpvDe7FwiC4fxC9Jsm+CTruCnmK253W6XV3jQSyjMxg==}
@@ -7176,6 +7212,10 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
+  '@fontsource/fira-sans@5.2.7': {}
+
+  '@fontsource/source-sans-pro@5.2.5': {}
+
   '@gemeente-denhaag/action@4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@gemeente-denhaag/button': 3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -8197,6 +8237,8 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
+  '@utrecht/body-css@2.0.1': {}
+
   '@utrecht/button-css@3.0.1': {}
 
   '@utrecht/focus-ring-css@2.3.1': {}
@@ -8205,7 +8247,13 @@ snapshots:
 
   '@utrecht/form-field-error-message-css@2.0.1': {}
 
+  '@utrecht/form-label-css@2.0.1': {}
+
+  '@utrecht/link-button-css@2.0.1': {}
+
   '@utrecht/link-list-css@3.0.1': {}
+
+  '@utrecht/root-css@2.0.1': {}
 
   '@utrecht/select-css@2.0.1': {}
 

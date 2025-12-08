@@ -9,7 +9,7 @@ export class ThemeWizardPage {
   constructor(public readonly page: Page) {
     this.preview = this.page.getByTestId('preview');
     this.sidebar = this.page.locator('wizard-sidebar');
-    this.templateSelect = this.page.getByLabel('Voorvertoning');
+    this.templateSelect = this.page.getByLabel('Weergave');
     this.downloadButton = this.page.getByRole('button', { name: 'Download tokens als JSON' });
   }
 
@@ -31,7 +31,7 @@ export class ThemeWizardPage {
 
   /** @param colorHexValue A 6-digit hex value */
   async changeColor(label: string, colorHexValue: string) {
-    const input = this.page.getByLabel(label);
+    const input = this.page.getByLabel(label).first();
     await input.fill(colorHexValue);
     // Need to trigger blur so that the color input fires a change event
     await input.blur();

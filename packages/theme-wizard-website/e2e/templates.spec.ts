@@ -22,7 +22,7 @@ test('can select different templates from the selector', async ({ themeWizard })
   await themeWizard.selectTemplate('Overzichtspagina');
 
   // Verify the select element is visible
-  const templateSelect = themeWizard.page.getByLabel('Voorvertoning');
+  const templateSelect = themeWizard.page.getByLabel('Weergave');
   await expect(templateSelect).toBeVisible();
 
   // Get initial option count

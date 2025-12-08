@@ -4,47 +4,94 @@ export default css`
   /* ============================================
    APP LAYOUT
    ============================================ */
-  .theme-app {
+  .wizard-app {
     --basis-form-control-max-inline-size: unset;
+    --utrecht-button-primary-action-focus-background-color: var(--utrecht-button-primary-action-background-color);
+    --utrecht-heading-1-font-weight: 700;
 
-    display: flex;
-    min-block-size: 100vh;
+    block-size: 100vh;
+    display: grid;
+    font-family: var(--basis-text-font-family-default, inherit);
+    grid-template-areas: 'logo nav' 'sidebar preview';
+    grid-template-columns: minmax(20rem, 24rem) 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .wizard-app__logo {
+    grid-area: logo;
+  }
+
+  .wizard-app__sidebar {
+    --utrecht-heading-2-font-size: var(--basis-text-font-size-lg);
+    --utrecht-heading-2-margin-block-end: var(--basis-space-block-lg);
+    --utrecht-heading-3-font-size: var(--basis-text-font-size-md);
+
+    grid-area: sidebar;
+
+    section:last-of-type {
+      margin-block-start: auto;
+    }
+
+    utrecht-heading-2 {
+      display: block;
+      margin-block-end: var(--basis-space-block-md);
+    }
+  }
+
+  .wizard-app__nav {
+    background-color: var(--basis-color-accent-1-inverse-bg-default);
+    color: var(--basis-color-accent-1-inverse-color-default);
+    display: grid;
+    grid-area: nav;
+    justify-content: end;
+    padding-block: var(--basis-space-block-md);
+    padding-inline: var(--basis-space-inline-lg);
+  }
+
+  .wizard-app__root-token-field {
+    max-block-size: 50vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+
+    @media (pointer: fine) {
+      scrollbar-color: var(--basis-color-accent-1-color-default) transparent;
+      scrollbar-width: thin;
+    }
+  }
+
+  [type='reset'] {
+    margin-block: var(--basis-space-block-md);
+    min-block-size: auto;
+    padding-block: 0;
+    padding-inline: 0;
   }
 
   /* ============================================
    MAIN CONTENT AREA
    ============================================ */
 
-  .theme-preview-main {
+  .wizard-app__preview {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    grid-area: preview;
     inline-size: 100%;
-  }
-
-  .theme-preview-main__title {
-    display: block;
-  }
-
-  .theme-preview-main__description {
-    color: var(--theme-gray-600);
-    display: block;
-    font-size: var(--theme-font-size-base);
-    margin-block-end: var(--theme-space-6);
+    max-block-size: 100%;
+    min-block-size: 100%;
+    overflow: auto;
   }
 
   /* ============================================
    PREVIEW CONTAINER
    ============================================ */
-  .theme-preview {
-    overflow: auto;
-  }
 
   @media print {
     /* Hide all app descendants, except those that are needed to show the preview content */
-    .theme-app *:not(
-      :has(.theme-preview), /* any parent of .theme-preview */
-      .theme-preview, /* .theme-preview itself */
-      .theme-preview * /* any child of .theme-preview */
+    .wizard-app *:not(
+      :has(.wizard-preview), /* any parent of .wizard-preview */
+      .wizard-preview, /* .wizard-preview itself */
+      .wizard-preview * /* any child of .wizard-preview */
     ) {
       display: none;
     }

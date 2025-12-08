@@ -56,7 +56,7 @@ export default class Theme {
     this.#validateTheme(values);
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
-      sheet.replace(css);
+      sheet.replaceSync(css);
     });
   }
 
