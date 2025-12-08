@@ -1,8 +1,9 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import cookieConsentInfoPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookies-info.html?raw';
+import checkboxCookieConsentInfo from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookies-info.html?raw';
+import radioCookieConsentInfo from '@nl-design-system-community/clippy-components/patterns/cookie-consent/form-checkboxes.html?raw';
 ---
 
 <PageLayout sideNav={false} showCookieConsent={false}>
-  <div slot="content" set:html={cookieConsentInfoPattern} />
+  <div slot="content" set:html={radioCookieConsentInfo} />
 </PageLayout>

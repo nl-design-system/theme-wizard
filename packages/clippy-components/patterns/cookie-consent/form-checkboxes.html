@@ -1,0 +1,246 @@
+<clippy-cookie-consent-form hidden>
+  <style>
+    .clippy-cookie-consent-form__dialog--static {
+      position: static;
+    }
+
+    .clippy-cookie-consent-form__dialog {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .clippy-cookie-consent-form__dialog > h2 {
+      margin-block-end: var(--clippy-space-block-lg);
+    }
+
+    .clippy-cookie-consent-form__intro {
+      margin-block-end: var(--clippy-space-block-xl);
+    }
+
+    .clippy-cookie-consent-form__intro > p {
+      margin-block-end: var(--clippy-space-block-md);
+    }
+
+    .clippy-cookie-consent-form__intro > p:last-child {
+      margin-block-end: 0;
+    }
+
+    .clippy-cookie-consent-form__form .utrecht-form-fieldset {
+      margin-block-end: var(--clippy-space-block-xl);
+    }
+
+    .clippy-cookie-consent-form__form .utrecht-form-fieldset__legend > h3 {
+      margin-block-end: var(--clippy-space-block-md);
+    }
+
+    .clippy-cookie-consent-form__form .utrecht-form-fieldset__legend > p:first-of-type {
+      margin-block-end: var(--clippy-space-block-lg);
+    }
+
+    .clippy-cookie-consent-form__form .utrecht-form-field {
+      margin-block-end: var(--clippy-space-block-md);
+    }
+
+    .clippy-cookie-consent-form__form .utrecht-form-field:last-of-type {
+      margin-block-end: var(--clippy-space-block-xl);
+    }
+
+    .clippy-cookie-consent-form__button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--clippy-space-column-md);
+      align-items: center;
+      margin-block-start: var(--clippy-space-block-xl);
+    }
+
+    .clippy-cookie-consent-form__footer {
+      margin-block-start: var(--clippy-space-block-xl);
+      padding-block-start: var(--clippy-space-block-lg);
+    }
+
+    .clippy-cookie-consent-form__success {
+      margin-block-start: var(--clippy-space-block-xl);
+    }
+
+    .clippy-cookie-consent-form__success[hidden] {
+      display: none;
+    }
+  </style>
+
+  <dialog
+    open
+    class="utrecht-drawer utrecht-drawer--block-start clippy-cookie-consent-form__dialog clippy-cookie-consent-form__dialog--static"
+    aria-labelledby="cookie-consent-form-title"
+  >
+    <h2 id="cookie-consent-form-title" class="utrecht-heading-2">Cookie-instellingen</h2>
+
+    <div class="clippy-cookie-consent-form__intro">
+      <p class="utrecht-paragraph">
+        Kies welke cookies je wilt accepteren. Je kunt je keuze op elk moment wijzigen.
+      </p>
+    </div>
+
+    <form method="dialog" class="clippy-cookie-consent-form__form">
+      <!-- Gebruik utrecht-form-fieldset voor formulier groepen -->
+      <div class="utrecht-form-fieldset">
+        <fieldset class="utrecht-form-fieldset__fieldset utrecht-form-fieldset--html-fieldset">
+          <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend">
+            <h3 class="utrecht-heading-3">Analytics cookies</h3>
+            <p class="utrecht-paragraph">Deze cookies helpen ons te begrijpen hoe bezoekers de website gebruiken.</p>
+          </legend>
+
+          <!-- Gebruik utrecht-checkbox voor checkbox inputs -->
+          <div class="utrecht-form-field">
+            <label class="utrecht-form-label utrecht-form-label--checkbox">
+              <input
+                type="checkbox"
+                name="analytics"
+                class="utrecht-checkbox utrecht-checkbox--html-input utrecht-form-field__input"
+                value="on"
+              />
+              Analytics cookies gebruiken
+            </label>
+            <div class="utrecht-form-field-description">
+              Deze cookies meten website gebruik en helpen ons de website te verbeteren.
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="utrecht-form-fieldset">
+        <fieldset class="utrecht-form-fieldset__fieldset utrecht-form-fieldset--html-fieldset">
+          <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend">
+            <h3 class="utrecht-heading-3">Preference cookies</h3>
+            <p class="utrecht-paragraph">Deze cookies onthouden je voorkeuren en instellingen.</p>
+          </legend>
+
+          <div class="utrecht-form-field">
+            <label class="utrecht-form-label utrecht-form-label--checkbox">
+              <input
+                type="checkbox"
+                name="preferences"
+                class="utrecht-checkbox utrecht-checkbox--html-input utrecht-form-field__input"
+                value="on"
+              />
+              Preference cookies gebruiken
+            </label>
+            <div class="utrecht-form-field-description">
+              Deze cookies onthouden je taalvoorkeur en andere instellingen.
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="utrecht-form-fieldset">
+        <fieldset class="utrecht-form-fieldset__fieldset utrecht-form-fieldset--html-fieldset">
+          <legend class="utrecht-form-fieldset__legend utrecht-form-fieldset__legend--html-legend">
+            <h3 class="utrecht-heading-3">Strikt noodzakelijke cookies</h3>
+            <p class="utrecht-paragraph">
+              Deze essentiële cookies zijn nodig om deze website te laten werken. Ze onthouden bijvoorbeeld je
+              voortgang in een meerstapsformulier.
+            </p>
+            <p class="utrecht-paragraph">Omdat ze essentieel zijn, staan deze cookies altijd aan.</p>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="utrecht-button-group clippy-cookie-consent-form__button-group">
+        <button type="submit" class="utrecht-button utrecht-button--primary-action" value="save">
+          Instellingen opslaan
+        </button>
+      </div>
+    </form>
+
+    <div class="clippy-cookie-consent-form__footer">
+      <a
+        href="https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners"
+        rel="noreferrer"
+        class="utrecht-link utrecht-link--html-a"
+      >
+        Meer informatie over cookies en jouw rechten (Autoriteit Persoonsgegevens)
+      </a>
+    </div>
+
+    <div class="utrecht-alert utrecht-alert--success clippy-cookie-consent-form__success" role="alert" hidden>
+      <p class="utrecht-paragraph">Je cookie-instellingen zijn opgeslagen.</p>
+    </div>
+  </dialog>
+  </clippy-cookie-consent-form>
+
+  <script type="module">
+    const STORAGE_KEY = 'cookie-consent-preferences';
+
+    class ClippyCookieConsentForm extends HTMLElement {
+      connectedCallback() {
+        // Only show the form if JavaScript is enabled
+        this.removeAttribute('hidden');
+
+        const dialog = this.querySelector('dialog');
+        if (!dialog) return;
+
+        const form = dialog.querySelector('form');
+        if (!form) return;
+        // Load saved preferences from localStorage and set checkboxes accordingly
+        try {
+          const saved = globalThis.localStorage?.getItem(STORAGE_KEY);
+          if (saved) {
+            const { preferences = [] } = JSON.parse(saved);
+            // Restore checkbox states based on saved preferences
+            const analyticsInput = form.querySelector('input[name="analytics"]');
+            const preferencesInput = form.querySelector('input[name="preferences"]');
+
+            if (analyticsInput) {
+              analyticsInput.checked = preferences.includes('analytics');
+            }
+            if (preferencesInput) {
+              preferencesInput.checked = preferences.includes('preferences');
+            }
+          }
+        } catch {
+          // localStorage not available or invalid data: continue without restoring state
+        }
+
+        const savePreferences = (preferences) => {
+          try {
+            globalThis.localStorage?.setItem(
+              STORAGE_KEY,
+              JSON.stringify({
+                preferences,
+                timestamp: new Date().toISOString(),
+              }),
+            );
+          } catch {}
+
+          const successMessage = document.querySelector('.clippy-cookie-consent-form__success');
+          if (successMessage) {
+            successMessage.removeAttribute('hidden');
+          }
+        };
+
+        // Handle form submit
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const preferences = [];
+
+          if (formData.get('analytics') === 'on') {
+            preferences.push('analytics');
+          }
+          if (formData.get('preferences') === 'on') {
+            preferences.push('preferences');
+          }
+
+          savePreferences(preferences);
+        });
+      }
+    }
+
+    if (typeof globalThis !== 'undefined' && 'customElements' in globalThis) {
+      const tagName = 'clippy-cookie-consent-form';
+      if (!customElements.get(tagName)) {
+        customElements.define(tagName, ClippyCookieConsentForm);
+      }
+    }
+  </script>
+</clippy-cookie-consent-form>
+
