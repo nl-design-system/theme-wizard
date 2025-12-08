@@ -1,0 +1,41 @@
+{
+  "name": "@nl-design-system-community/clippy-components",
+  "private": true,
+  "version": "0.0.2",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nl-design-system/theme-wizard.git",
+    "directory": "packages/clippy-components"
+  },
+  "scripts": {
+    "dev": "vite",
+    "types": "tsc -p tsconfig.json --emitDeclarationOnly",
+    "type-check": "tsc --noEmit --project tsconfig.json",
+    "build": "pnpm run type-check && pnpm run types && vite build",
+    "clean": "rimraf dist/",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:css": "stylelint .",
+    "lint-fix:css": "pnpm run lint:css --fix",
+    "lint-build": "tsc --noEmit --project tsconfig.json",
+    "test": "pnpm run '/^test:.+$/'",
+    "test-build": "vitest --run --coverage",
+    "test-install-browsers": "playwright install chromium",
+    "test:unit": "vitest --run",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "3.3.1"
+  },
+  "devDependencies": {
+    "@types/dlv": "1.1.5",
+    "@vitest/browser-playwright": "4.0.8",
+    "@vitest/coverage-v8": "4.0.8",
+    "playwright": "1.56.1",
+    "postcss-lit": "1.3.1",
+    "rimraf": "6.1.0",
+    "typescript": "5.9.3",
+    "vite": "7.2.2",
+    "vitest": "4.0.8"
+  }
+}
