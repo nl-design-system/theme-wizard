@@ -3,6 +3,9 @@ import '@utrecht/component-library-css/dist/index.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import ClientInit from '../components/ClientInit.astro';
 import DevTools from '../components/DevTools.astro';
+
+// Check if we're in standalone mode (defined in astro.config.mjs)
+const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__ === true;
 ---
 
 <html lang="nl" class="ma-theme utrecht-page-layout clippy-theme">
@@ -17,6 +20,16 @@ import DevTools from '../components/DevTools.astro';
         }
       }
     </style>
+    {isStandalone && (
+      <style>
+        html {
+          scroll-padding-top: calc(var(--basis-space-block-md) * 2 + 3rem);
+        }
+        body {
+          padding-top: calc(var(--basis-space-block-md) * 2 + 3rem);
+        }
+      </style>
+    )}
   </head>
   <body class="utrecht-page-body ma-theme clippy-theme">
     <DevTools />
