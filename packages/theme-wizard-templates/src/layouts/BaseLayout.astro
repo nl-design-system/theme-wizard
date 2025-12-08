@@ -2,6 +2,7 @@
 import '@utrecht/component-library-css/dist/index.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import ClientInit from '../components/ClientInit.astro';
+import DevTools from '../components/DevTools.astro';
 ---
 
 <html lang="nl" class="ma-theme utrecht-page-layout clippy-theme">
@@ -18,6 +19,7 @@ import ClientInit from '../components/ClientInit.astro';
     </style>
   </head>
   <body class="utrecht-page-body ma-theme clippy-theme">
+    <DevTools />
     <slot />
     <ClientInit />
   </body>
