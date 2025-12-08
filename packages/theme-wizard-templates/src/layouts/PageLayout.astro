@@ -1,7 +1,8 @@
 ---
 import logo from '../assets/logo.svg';
 import BaseLayout from './BaseLayout.astro';
-import cookieConsentTopDrawerPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/top-drawer.html?raw';
+import cookieConsentDrawerPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookie-drawer.html?raw';
+import cookieModalPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookie-modal.html?raw';
 
 export interface Props {
   showCookieConsent?: boolean;
@@ -13,7 +14,8 @@ const { sideNav = true, showCookieConsent = true } = Astro.props;
 
 <BaseLayout>
   <div class="utrecht-page-body__content clippy-theme">
-    {showCookieConsent && <div set:html={cookieConsentTopDrawerPattern} />}
+    {showCookieConsent && <div set:html={cookieModalPattern} />}
+    <!-- {showCookieConsent && <div set:html={cookieConsentDrawerPattern} />} -->
 
     <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
 
