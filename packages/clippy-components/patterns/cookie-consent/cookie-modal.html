@@ -140,7 +140,16 @@
 
       dialog.addEventListener('close', originalClose, { once: true });
 
-      const savePreferencesAndHide = (preferences) => {
+      dialog.addEventListener('close', () => {
+        const action = dialog.returnValue;
+        if (!action) {
+          // Closed via Esc: no choice saved
+          this.hidden = true;
+          return;
+        }
+
+        // Save preferences to localStorage
+        const preferences = action === 'accept' ? ['analytics', 'preferences'] : [];
         try {
           globalThis.localStorage?.setItem(
             STORAGE_KEY,
@@ -151,22 +160,7 @@
           );
         } catch {}
 
-        dialog.close();
         this.hidden = true;
-      };
-
-      dialog.addEventListener('close', () => {
-        const action = dialog.returnValue;
-        if (!action) {
-          // Closed via Esc: no choice saved
-          return;
-        }
-
-        if (action === 'accept') {
-          savePreferencesAndHide(['analytics', 'preferences']);
-        } else if (action === 'reject') {
-          savePreferencesAndHide([]);
-        }
       });
     }
   }
