@@ -1,7 +1,10 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import checkboxCookieConsentInfo from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookies-info.html?raw';
-import radioCookieConsentInfo from '@nl-design-system-community/clippy-components/patterns/cookie-consent/form-checkboxes.html?raw';
+import cookiesPage from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookies-page.html?raw';
+import cookieForm from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookie-form.html?raw';
+
+// Replace the <clippy-cookie-form> placeholder with the actual form content
+const pageWithForm = cookiesPage.replace('<clippy-cookie-form></clippy-cookie-form>', cookieForm);
 
 export const detail = {
   name: 'Cookie settings page',
@@ -11,5 +14,5 @@ export const detail = {
 ---
 
 <PageLayout sideNav={false} showCookieConsent={false}>
-  <div slot="content" set:html={radioCookieConsentInfo} />
+  <div slot="content" set:html={pageWithForm} />
 </PageLayout>
