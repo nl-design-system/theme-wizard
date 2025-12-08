@@ -1,0 +1,195 @@
+<clippy-cookie-consent-modal hidden>
+  <style>
+    .clippy-cookie-consent-modal__dialog {
+      max-height: 90vh;
+      max-width: 40rem;
+      overflow-y: auto;
+    }
+
+    .clippy-cookie-consent-modal__dialog > h2 {
+      margin-block-end: var(--basis-space-block-lg);
+    }
+
+    .clippy-cookie-consent-modal__intro {
+      margin-block-end: var(--basis-space-block-xl);
+    }
+
+    .clippy-cookie-consent-modal__intro > p {
+      margin-block-end: var(--basis-space-block-md);
+    }
+
+    .clippy-cookie-consent-modal__intro > p:last-child {
+      margin-block-end: 0;
+    }
+
+    .clippy-cookie-consent-modal__button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--basis-space-column-md);
+      align-items: center;
+      margin-block-start: var(--basis-space-block-xl);
+    }
+
+    .clippy-cookie-consent-modal__button-group > a {
+      margin-inline-start: var(--basis-space-inline-md);
+    }
+
+    .clippy-cookie-consent-modal__footer {
+      margin-block-start: var(--basis-space-block-xl);
+      padding-block-start: var(--basis-space-block-lg);
+    }
+  </style>
+
+  <dialog class="clippy-cookie-consent-modal__dialog" aria-labelledby="cookie-consent-modal-title">
+    <h2 id="cookie-consent-modal-title" class="utrecht-heading-2">Cookies op deze website</h2>
+
+    <div class="clippy-cookie-consent-modal__intro">
+      <p class="utrecht-paragraph">We gebruiken enkele essentiële cookies om deze website goed te laten werken.</p>
+      <p class="utrecht-paragraph">
+        We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
+        onthouden en onze diensten te verbeteren.
+      </p>
+      <p class="utrecht-paragraph">
+        We gebruiken ook cookies die door andere sites zijn geplaatst om ons te helpen content van hun diensten te
+        leveren.
+      </p>
+    </div>
+
+    <form method="dialog" class="clippy-cookie-consent-modal__form">
+      <div class="clippy-cookie-consent-modal__button-group">
+        <button class="utrecht-button utrecht-button--primary-action" value="accept" autofocus>
+          Aanvullende cookies accepteren
+        </button>
+        <button class="utrecht-button utrecht-button--secondary-action" value="reject">
+          Aanvullende cookies weigeren
+        </button>
+        <a href="/cookies" class="utrecht-link utrecht-link--html-a">Cookie-instellingen</a>
+      </div>
+
+      <div class="clippy-cookie-consent-modal__footer">
+        <a
+          href="https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners"
+          rel="noreferrer"
+          class="utrecht-link utrecht-link--html-a"
+        >
+          Meer informatie over cookies en jouw rechten (Autoriteit Persoonsgegevens)
+        </a>
+      </div>
+    </form>
+  </dialog>
+</clippy-cookie-consent-modal>
+
+<script type="module">
+  const STORAGE_KEY = 'cookie-consent-preferences';
+
+  class ClippyCookieConsentModal extends HTMLElement {
+    static get observedAttributes() {
+      return ['organization'];
+    }
+
+    connectedCallback() {
+      // Only show the modal if JavaScript is enabled
+      this.removeAttribute('hidden');
+
+      const dialog = this.querySelector('dialog');
+      if (!dialog) return;
+
+      // Handle organization attribute for identifying the sender
+      const organization = this.getAttribute('organization');
+      if (organization) {
+        const title = dialog.querySelector('h2');
+        if (title) {
+          title.textContent = `Cookies op de website van ${organization}`;
+        }
+        const introParagraphs = dialog.querySelectorAll('.clippy-cookie-consent-modal__intro p');
+        if (introParagraphs.length > 0) {
+          const firstParagraph = introParagraphs[0];
+          firstParagraph.textContent = `${organization} gebruikt enkele essentiële cookies om deze website goed te laten werken.`;
+        }
+      }
+
+      const form = dialog.querySelector('form');
+      if (!form) return;
+
+      // Check if the user has already made a choice
+      try {
+        const saved = globalThis.localStorage?.getItem(STORAGE_KEY);
+        if (saved) {
+          this.hidden = true;
+          return;
+        }
+      } catch {}
+
+      // Always show as modal (blocking with focus trap)
+      dialog.showModal();
+
+      // Implement focus trap: cycle through focusable elements
+      const focusableElements = dialog.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      const trapFocus = (e) => {
+        if (e.key !== 'Tab') return;
+
+        if (e.shiftKey) {
+          // Shift + Tab: moving backwards
+          if (document.activeElement === firstFocusable) {
+            e.preventDefault();
+            lastFocusable.focus();
+          }
+        } else if (document.activeElement === lastFocusable) {
+          // Tab: moving forwards
+          e.preventDefault();
+          firstFocusable.focus();
+        }
+      };
+
+      dialog.addEventListener('keydown', trapFocus);
+
+      // Clean up event listener when dialog closes
+      const originalClose = () => {
+        dialog.removeEventListener('keydown', trapFocus);
+      };
+
+      dialog.addEventListener('close', originalClose, { once: true });
+
+      const savePreferencesAndHide = (preferences) => {
+        try {
+          globalThis.localStorage?.setItem(
+            STORAGE_KEY,
+            JSON.stringify({
+              preferences,
+              timestamp: new Date().toISOString(),
+            }),
+          );
+        } catch {}
+
+        dialog.close();
+        this.hidden = true;
+      };
+
+      dialog.addEventListener('close', () => {
+        const action = dialog.returnValue;
+        if (!action) {
+          // Closed via Esc: no choice saved
+          return;
+        }
+
+        if (action === 'accept') {
+          savePreferencesAndHide(['analytics', 'preferences']);
+        } else if (action === 'reject') {
+          savePreferencesAndHide([]);
+        }
+      });
+    }
+  }
+
+  if (typeof globalThis !== 'undefined' && 'customElements' in globalThis) {
+    const tagName = 'clippy-cookie-consent-modal';
+    if (!customElements.get(tagName)) {
+      customElements.define(tagName, ClippyCookieConsentModal);
+    }
+  }
+</script>
