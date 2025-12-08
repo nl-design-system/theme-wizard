@@ -29,10 +29,6 @@
       align-items: center;
       margin-block-start: var(--clippy-space-block-xl);
     }
-
-    .clippy-cookie-consent-drawer__button-group > a {
-      margin-inline-start: var(--clippy-space-inline-md);
-    }
   </style>
 
   <dialog
@@ -56,13 +52,9 @@
 
     <form method="dialog" class="clippy-cookie-consent-drawer__form">
       <div class="clippy-cookie-consent-drawer__button-group">
-        <button class="utrecht-button utrecht-button--primary-action" value="accept" autofocus>
-          Aanvullende cookies accepteren
-        </button>
-        <button class="utrecht-button utrecht-button--secondary-action" value="reject">
-          Aanvullende cookies weigeren
-        </button>
-        <a href="/templates/cookies" class="utrecht-link utrecht-link--html-a">Cookie-instellingen</a>
+        <button class="utrecht-button utrecht-button--primary-action" value="accept" autofocus>Accepteren</button>
+        <button class="utrecht-button utrecht-button--secondary-action" value="reject">Weigeren</button>
+        <a href="/templates/cookies" class="utrecht-button utrecht-button--secondary-action">Zelf instellen</a>
       </div>
     </form>
   </dialog>
