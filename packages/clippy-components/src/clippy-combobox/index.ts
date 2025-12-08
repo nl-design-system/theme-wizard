@@ -46,6 +46,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   @property({ attribute: false })
   set value(value: T['value'] | undefined) {
     this.#value = value;
+    this.query = this.valueToQuery(value);
     this.internals_.setFormValue(this.valueToFormValue(value));
   }
 
@@ -73,8 +74,16 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
    * Override this function to customize how the user input is resolved to a value.
    * This runs on input.
    */
-  inputToValue(query: string): T['value'] | undefined {
+  queryToValue(query: string): T['value'] | undefined {
     return query;
+  }
+
+  /**
+   * Override this function to customize how a value is converted to a .
+   * This runs on setting the value.
+   */
+  valueToQuery(value: T['value'] | undefined): string {
+    return (value ?? '').toString();
   }
 
   /**
@@ -107,7 +116,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     this.selectedIndex = -1;
     this.open = true;
     this.query = target.value;
-    this.value = this.inputToValue(this.query);
+    this.value = this.queryToValue(this.query);
   };
 
   readonly #handleOptionsClick = (event: Event) => {
