@@ -1,7 +1,13 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
 import checkboxCookieConsentInfo from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookies-info.html?raw';
 import radioCookieConsentInfo from '@nl-design-system-community/clippy-components/patterns/cookie-consent/form-checkboxes.html?raw';
+
+export const detail = {
+  name: 'Cookie settings page',
+  module: 'Preview components',
+  value: 'cookies',
+};
 ---
 
 <PageLayout sideNav={false} showCookieConsent={false}>
