@@ -150,12 +150,12 @@ export class App extends LitElement {
 
         <wizard-sidebar class="wizard-app__sidebar">
           <section>
-            <utrecht-heading-2>1. Analyseer website</utrecht-heading-2>
+            <utrecht-heading-2>Analyseer website</utrecht-heading-2>
             <wizard-scraper @change=${this.#handleScrapeDone}></wizard-scraper>
           </section>
 
           <section>
-            <utrecht-heading-2>2. Maak design keuzes</utrecht-heading-2>
+            <utrecht-heading-2>Maak design keuzes</utrecht-heading-2>
             <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
               <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
               <details>
@@ -171,7 +171,7 @@ export class App extends LitElement {
           </section>
 
           <section>
-            <utrecht-heading-2>3. Download thema</utrecht-heading-2>
+            <utrecht-heading-2>Download thema</utrecht-heading-2>
 
             <wizard-download-confirmation
               .issues=${this.#theme.groupedIssues}
