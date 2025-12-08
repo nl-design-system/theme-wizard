@@ -25,7 +25,7 @@ declare global {
 @customElement(tag)
 export class WizardPreviewPicker extends LitElement {
   @property({ attribute: 'templates' }) templates?: TemplateGroup[];
-  enhanced: boolean = false;
+  #enhanced: boolean = false;
 
   static override readonly styles = [styles];
 
@@ -44,7 +44,7 @@ export class WizardPreviewPicker extends LitElement {
     // Hide the submit button when enhanced, the behavior will be handled by a change event.
     // This roundabout way is meant to make the progressive enhancement explicit.
     // When moving to a server-rendered interface this will make more sense.
-    this.enhanced = true;
+    this.#enhanced = true;
   }
 
   readonly #handleChange = (event: Event) => {
@@ -66,16 +66,16 @@ export class WizardPreviewPicker extends LitElement {
 
     return html`<form method="GET" id="preview-form" @change=${this.#handleChange}>
       <wizard-dropdown
+        label="Weergave"
         name=${PREVIEW_PICKER_NAME}
-        label="Voorvertoning"
         .options=${this.dropdownOptions}
         .isOptgroup=${true}
         .value=${current}
       ></wizard-dropdown>
 
-      <utrecht-button appearance="primary-action-button" type="submit" ?hidden=${this.enhanced}
-        >Voorvertonen</utrecht-button
-      >
+      <utrecht-button appearance="primary-action-button" type="submit" ?hidden=${this.#enhanced}>
+        Voorvertonen
+      </utrecht-button>
     </form>`;
   }
 }

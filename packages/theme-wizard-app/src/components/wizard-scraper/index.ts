@@ -1,5 +1,11 @@
-import { ScrapedColorToken, ScrapedDesignToken, ScrapedFontFamilyToken } from '@nl-design-system-community/css-scraper';
+import {
+  ScrapedColorToken,
+  ScrapedDesignToken,
+  ScrapedFontFamilyToken,
+  resolveUrl,
+} from '@nl-design-system-community/css-scraper';
 import formFieldStyles from '@utrecht/form-field-css?inline';
+import formLabelStyles from '@utrecht/form-label-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, LitElement, unsafeCSS, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -25,8 +31,14 @@ export class WizardScraper extends LitElement {
   #src: string = '';
   #state: 'idle' | 'pending' | 'error' | 'success' = 'idle';
   readonly #errorMessageId = 'scraper-error-message';
+  readonly #statusMessageId = 'scraper-status-message';
 
-  static override readonly styles = [styles, unsafeCSS(formFieldStyles), unsafeCSS(textboxStyles)];
+  static override readonly styles = [
+    styles,
+    unsafeCSS(formFieldStyles),
+    unsafeCSS(textboxStyles),
+    unsafeCSS(formLabelStyles),
+  ];
 
   constructor() {
     super();
@@ -69,9 +81,9 @@ export class WizardScraper extends LitElement {
     const form = event.target;
     if (!(form instanceof HTMLFormElement)) return;
     const formData = new FormData(form);
-    const urlLike = formData.get(this.#id)?.toString();
+    const urlLike = resolveUrl(formData.get(this.#id)?.toString() || '');
 
-    if (!urlLike || urlLike.length === 0) {
+    if (!urlLike) {
       this.error = t(`scraper.invalidUrl`);
       this.#state = 'error';
       this.requestUpdate();
@@ -104,7 +116,7 @@ export class WizardScraper extends LitElement {
           'utrecht-form-field--invalid': this.#state === 'error',
         })}"
       >
-        <div class="utrecht-form-field__label">
+        <div class="utrecht-form-label">
           <label for=${this.#id} class="utrecht-form-label">${t('scraper.input.label')}</label>
         </div>
         <div class="wizard-scraper__input utrecht-form-field__input">
@@ -118,19 +130,24 @@ export class WizardScraper extends LitElement {
             value=${this.src}
             aria-invalid=${this.#state === 'error' ? 'true' : nothing}
             aria-errormessage=${this.#state === 'error' ? this.#errorMessageId : nothing}
+            aria-describedby=${this.#state === 'success' ? this.#statusMessageId : nothing}
             data-state=${this.#state}
           />
           <utrecht-button appearance="primary-action-button" type="submit"> ${t('scraper.submit')} </utrecht-button>
         </div>
         ${this.#state === 'error'
           ? html`
-              <div id=${this.#errorMessageId} class="utrecht-form-field__error-message">
-                <div class="utrecht-form-field-error-message">${this.error}</div>
-              </div>
+              <utrecht-form-field-error-message id=${this.#errorMessageId} class="utrecht-form-field__error-message">
+                <utrecht-paragraph class="utrecht-form-field-error-message">${this.error}</utrecht-paragraph>
+              </utrecht-form-field-error-message>
             `
           : nothing}
         ${this.#state === 'success'
-          ? html`<div>${t('scraper.success', { tokenCount: this.colors.length + this.fonts.length })}</div>`
+          ? html`
+              <utrecht-paragraph role="status" id="#statusMessageId">
+                ${t('scraper.success', { tokenCount: this.colors.length + this.fonts.length })}
+              </utrecht-paragraph>
+            `
           : nothing}
       </form>
     `;

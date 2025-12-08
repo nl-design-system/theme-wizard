@@ -1,19 +1,30 @@
+// TODO: import this when new version of MA is released
+// import 'node_modules/@nl-design-system-community/ma-design-tokens/src/font.js';
+// Then: remove these when importing from MA theme works
+import '@fontsource/fira-sans/400.css';
+import '@fontsource/fira-sans/700.css';
+import '@fontsource/source-sans-pro/400.css';
+import '@fontsource/source-sans-pro/700.css';
+// <End TODO>
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
+import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, unsafeCSS, nothing } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { EVENT_NAMES } from '../../constants';
-import PersistentStorage from '../../lib/PersistentStorage';
-import Theme from '../../lib/Theme';
-import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import '../sidebar/sidebar';
 import '../wizard-scraper';
 import '../wizard-preview';
+import '../wizard-logo';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
+import PersistentStorage from '../../lib/PersistentStorage';
+import Theme from '../../lib/Theme';
+import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
+import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
 import appStyles from './app.css';
 
@@ -47,7 +58,7 @@ export class App extends LitElement {
   @state()
   private selectedTemplatePath: string = '/my-environment/overview';
 
-  static override readonly styles = [unsafeCSS(maTheme), appStyles];
+  static override readonly styles = [unsafeCSS(maTheme), unsafeCSS(buttonLinkStyles), appStyles];
 
   override connectedCallback() {
     super.connectedCallback();
@@ -87,7 +98,6 @@ export class App extends LitElement {
 
   readonly #handleTemplateChange = (event: Event) => {
     if (!(event instanceof CustomEvent)) return;
-
     this.selectedTemplatePath = event.detail as string;
   };
 
@@ -124,25 +134,49 @@ export class App extends LitElement {
     }
   };
 
+  // This is a temporary handler that will be replaced with proper handling when we have new dropdowns
+  readonly #handleScrapeDone = (event: Event) => {
+    const target = event.target;
+    if (!(target instanceof WizardScraper)) return;
+    this.requestUpdate();
+  };
+
   override render() {
     return html`
-      <div class="theme-app ma-theme">
-        <wizard-download-confirmation
-          .issues=${this.#theme.groupedIssues}
-          @close=${this.#handleDialogClose}
-        ></wizard-download-confirmation>
-        <wizard-sidebar>
-          <wizard-scraper></wizard-scraper>
+      <div class="wizard-app ma-theme">
+        <div class="wizard-app__logo">
+          <wizard-logo></wizard-logo>
+        </div>
 
-          <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
-            <details>
-              <summary>Alle tokens</summary>
-              <wizard-token-field
-                .errors=${this.#theme.issues}
-                .token=${this.#theme.tokens['basis']}
-                path=${`basis`}
-              ></wizard-token-field>
-            </details>
+        <wizard-sidebar class="wizard-app__sidebar">
+          <section>
+            <utrecht-heading-2>Analyseer website</utrecht-heading-2>
+            <wizard-scraper @change=${this.#handleScrapeDone}></wizard-scraper>
+          </section>
+
+          <section>
+            <utrecht-heading-2>Maak design keuzes</utrecht-heading-2>
+            <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
+              <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
+              <details>
+                <summary>Alle tokens</summary>
+                <wizard-token-field
+                  .errors=${this.#theme.issues}
+                  .token=${this.#theme.tokens['basis']}
+                  path=${`basis`}
+                  class="wizard-app__root-token-field"
+                ></wizard-token-field>
+              </details>
+            </form>
+          </section>
+
+          <section>
+            <utrecht-heading-2>Download thema</utrecht-heading-2>
+
+            <wizard-download-confirmation
+              .issues=${this.#theme.groupedIssues}
+              @close=${this.#handleDialogClose}
+            ></wizard-download-confirmation>
 
             <utrecht-button
               appearance="primary-action-button"
@@ -151,24 +185,16 @@ export class App extends LitElement {
               @click=${this.#handleDownloadClick}
               >Download tokens als JSON</utrecht-button
             >
-            <utrecht-button appearance="secondary-action-button" type="reset">Reset tokens</utrecht-button>
-          </form>
+          </section>
         </wizard-sidebar>
 
-        <main class="theme-preview-main" id="main-content" role="main">
+        <div class="wizard-app__nav">
           <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
-          ${this.#theme.errorCount > 0
-            ? html`<wizard-validation-issues-alert
-                .errors=${this.#theme.groupedIssues}
-              ></wizard-validation-issues-alert>`
-            : nothing}
-          <section class="theme-preview" aria-label="Live voorbeeld van toegepaste huisstijl">
-            <wizard-preview
-              .url=${this.selectedTemplatePath}
-              .themeStylesheet=${this.#theme.stylesheet}
-            ></wizard-preview>
-          </section>
-        </main>
+        </div>
+
+        <section class="wizard-app__preview" aria-label="Live voorbeeld van toegepaste huisstijl">
+          <wizard-preview .url=${this.selectedTemplatePath} .themeStylesheet=${this.#theme.stylesheet}></wizard-preview>
+        </section>
       </div>
     `;
   }

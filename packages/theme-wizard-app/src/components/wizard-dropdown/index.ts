@@ -54,7 +54,8 @@ export class WizardDropdown extends LitElement {
       <label for=${this.name}>${this.label}</label>
       <select
         id=${this.name}
-        class="utrecht-select utrecht-select--html-select"
+        name=${this.name}
+        class="utrecht-select utrecht-select--html-input"
         .value=${this.value}
         @change=${this.#handleChange}
       >

@@ -5,14 +5,14 @@ test.describe('scraping css design tokens', () => {
     await themeWizard.scrapeUrl('https://www.example.com');
     const input = themeWizard.sidebar.getByLabel('Website URL');
     await expect(input).not.toHaveAttribute('aria-invalid');
-    await expect(themeWizard.sidebar.getByText(/Gereed/)).toBeVisible();
+    await expect(themeWizard.sidebar.getByRole('status')).toBeVisible();
   });
 
   test('errors on an invalid URL', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('https://.com');
     const input = themeWizard.sidebar.getByLabel('Website URL');
     await expect(input).toHaveAttribute('aria-invalid', 'true');
-    await expect(input).toHaveAccessibleErrorMessage('Kan "https://.com" niet analyseren');
+    await expect(input).toHaveAccessibleErrorMessage('Kan "https://.com/" niet analyseren');
   });
 
   test('errors when no URL is entered', async ({ themeWizard }) => {
@@ -31,7 +31,7 @@ test.describe('Download tokens as JSON', () => {
 
   test('does not show confirmation modal when there are no validation errors', async ({ page, themeWizard }) => {
     await themeWizard.sidebar.locator('summary').click();
-    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#cccccc');
+    await themeWizard.changeColor('bg-active', '#cccccc');
     await expect(themeWizard.downloadButton).toBeEnabled();
 
     const downloadPromise = page.waitForEvent('download');
@@ -48,7 +48,7 @@ test.describe('Download tokens as JSON', () => {
   test.describe('download confirmation modal', () => {
     test.beforeEach(async ({ themeWizard }) => {
       await themeWizard.sidebar.locator('summary').click();
-      await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+      await themeWizard.changeColor('bg-active', '#000000');
       await expect(themeWizard.downloadButton).toBeEnabled();
     });
 
@@ -87,7 +87,7 @@ test.describe('Download tokens as JSON', () => {
   test.describe('after changing a token', () => {
     test.beforeEach(async ({ themeWizard }) => {
       await themeWizard.sidebar.locator('summary').click();
-      await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#f1f1f1');
+      await themeWizard.changeColor('bg-active', '#f1f1f1');
     });
 
     test('Button becomes active after changes made', async ({ themeWizard }) => {
@@ -108,7 +108,7 @@ test.describe('Download tokens as JSON', () => {
 
     test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
       // Trigger a contrast warning
-      await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+      await themeWizard.changeColor('bg-active', '#000000');
 
       // The button should stay enabled, but show a confirmation dialog on click.
       await expect(themeWizard.downloadButton).toBeEnabled();
@@ -131,46 +131,31 @@ test.describe('color contrast warnings', () => {
     const errorAlert = themeWizard.getErrorAlert();
     await expect(errorAlert).not.toBeVisible();
 
-    const input = themeWizard.sidebar.getByLabel('{basis.color.accent-1.bg-active}');
+    const input = themeWizard.sidebar.getByLabel('bg-active').first();
     await expect(input).not.toHaveAttribute('aria-invalid');
   });
 
-  test('shows an error alert when contrast is insufficient', async ({ themeWizard }) => {
-    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
-
-    const errorAlert = themeWizard.getErrorAlert();
-    await expect(errorAlert).toBeVisible();
-
-    // Make sure the actual errors are visible by opening the details
-    await errorAlert.locator('summary').click();
-    const errors = errorAlert.getByRole('listitem');
-    await expect(errors).toHaveCount(12);
-  });
-
   test('shows in-place error message with the input when contrast is insufficient', async ({ themeWizard }) => {
-    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+    await themeWizard.changeColor('bg-active', '#000000');
 
     // Input itself is marked as invalid
-    const input = themeWizard.sidebar.getByLabel('{basis.color.accent-1.bg-active}');
+    const input = themeWizard.sidebar.getByLabel('bg-active').first();
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(input).toHaveAccessibleErrorMessage(/Onvoldoende contrast/);
   });
 
   test('remove errors when contrast issues are fixed', async ({ themeWizard }) => {
-    const input = themeWizard.sidebar.getByLabel('{basis.color.accent-1.bg-active}');
-    const errorAlert = themeWizard.getErrorAlert();
+    const input = themeWizard.sidebar.getByLabel('bg-active').first();
 
     // Set invalid state
-    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#000000');
+    await themeWizard.changeColor('bg-active', '#000000');
 
     await expect(input).toHaveAttribute('aria-invalid', 'true');
-    await expect(errorAlert).toBeVisible();
 
     // Restore to valid state
-    await themeWizard.changeColor('{basis.color.accent-1.bg-active}', '#ffffff');
+    await themeWizard.changeColor('bg-active', '#ffffff');
 
     await expect(input).not.toHaveAttribute('aria-invalid');
     await expect(input).not.toHaveAccessibleErrorMessage(/Onvoldoende contrast/);
-    await expect(errorAlert).not.toBeVisible();
   });
 });

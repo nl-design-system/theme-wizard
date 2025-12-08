@@ -2,12 +2,8 @@ import { css } from 'lit';
 
 export default css`
   form {
-    align-items: end;
+    align-items: center;
+    column-gap: var(--basis-space-column-sm);
     display: flex;
-    gap: 1em;
-    justify-content: stretch;
-  }
-  wizard-dropdown {
-    flex-grow: 1;
   }
 `;

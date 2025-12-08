@@ -2,8 +2,8 @@ import { css } from 'lit';
 
 export default css`
   :host {
-    border-radius: 4px;
     display: block;
+    overflow: auto;
   }
 
   :host(.theme-validation-highlight) {
@@ -23,8 +23,36 @@ export default css`
     }
   }
 
+  .wizard-token-field {
+    border-inline-start: 3px solid transparent;
+    padding-inline-start: var(--basis-space-inline-md);
+  }
+
+  .wizard-token-field--invalid {
+    border-inline-start-color: var(--basis-color-negative-color-default);
+  }
+
   .theme-error {
-    background: #ffe5e5;
-    color: #850000;
+    text-decoration: wavy underline;
+    text-decoration-color: var(--basis-color-negative-color-default);
+  }
+
+  /* Acts as the label */
+  p {
+    margin-block: 0;
+  }
+
+  ul {
+    margin-block: 0;
+    margin-inline-start: 0;
+    padding-inline-start: var(--basis-space-inline-md);
+  }
+
+  li {
+    list-style-type: none;
+
+    &:not(:last-child) {
+      margin-block-end: var(--basis-space-block-sm);
+    }
   }
 `;
