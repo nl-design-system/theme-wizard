@@ -9,7 +9,7 @@
     "directory": "packages/clippy-components"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite build --watch",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "type-check": "tsc --noEmit --project tsconfig.json",
     "build": "pnpm run type-check && pnpm run types && vite build",
