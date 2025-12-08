@@ -1,1 +1,1 @@
-import './src/clippy-combobox';
+import './src/clippy-modal';
