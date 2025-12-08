@@ -1,28 +1,25 @@
 /* @license CC0-1.0 */
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import readme from '@nl-design-system-community/theme-wizard-app/src/components/template-code/README.md?raw';
-import { PropsWithChildren } from 'react';
-
-const Code = ({ children }: PropsWithChildren) => <template-code>{children}</template-code>;
+import { html } from 'lit';
 
 const meta = {
   id: 'web-component-code',
   args: {
-    children: 'Opslaan en verder',
+    content: 'Opslaan en verder',
   },
   argTypes: {
-    children: {
+    content: {
       name: 'Content',
       defaultValue: '',
-      description: 'Code',
+      description: 'Text',
       type: {
         name: 'string',
         required: true,
       },
     },
   },
-  component: Code,
   parameters: {
     docs: {
       description: {
@@ -30,9 +27,10 @@ const meta = {
       },
     },
   },
+  render: ({ content }) => html`<template-code>${content}</template-code>`,
   tags: ['autodocs'],
   title: 'Web Component/Code',
-} satisfies Meta<typeof Code>;
+} satisfies Meta;
 
 export default meta;
 
