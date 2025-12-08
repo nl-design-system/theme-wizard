@@ -1,5 +1,10 @@
 <clippy-cookie-consent-info>
   <style>
+    .clippy-cookie-consent-info__main {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
     .clippy-cookie-consent-info__main > h1 {
       margin-block-end: var(--basis-space-block-lg);
     }
@@ -66,6 +71,14 @@
 
     .clippy-cookie-consent-info__section--about > p:last-of-type {
       margin-block-end: 0;
+    }
+
+    .clippy-cookie-consent-info__success {
+      margin-block-start: var(--basis-space-block-xl);
+    }
+
+    .clippy-cookie-consent-info__success[hidden] {
+      display: none;
     }
   </style>
 
@@ -194,6 +207,10 @@
         <div class="utrecht-button-group clippy-cookie-consent-info__button-group">
           <button type="submit" class="utrecht-button utrecht-button--primary-action">Wijzigingen opslaan</button>
         </div>
+
+        <div class="utrecht-alert utrecht-alert--success clippy-cookie-consent-info__success" role="alert" hidden>
+          <p class="utrecht-paragraph">Je cookie-instellingen zijn opgeslagen.</p>
+        </div>
       </form>
     </section>
 
@@ -312,8 +329,11 @@
           // localStorage not available or full: continue without crashing
         }
 
-        // Show success message or redirect
-        // You can customize this behavior based on your needs
+        // Show success message for settings page
+        const successMessage = form.querySelector('.clippy-cookie-consent-info__success');
+        if (successMessage) {
+          successMessage.removeAttribute('hidden');
+        }
       };
 
       if (saveButton) {
