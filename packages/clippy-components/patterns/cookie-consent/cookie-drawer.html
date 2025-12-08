@@ -109,7 +109,15 @@
         }
       } catch {}
 
-      const savePreferencesAndHide = (preferences) => {
+      dialog.addEventListener('close', () => {
+        const action = dialog.returnValue;
+        if (!action) {
+          // Closed without choice
+          return;
+        }
+
+        // Save preferences to localStorage
+        const preferences = action === 'accept' ? ['analytics', 'preferences'] : [];
         try {
           globalThis.localStorage?.setItem(
             STORAGE_KEY,
@@ -121,20 +129,6 @@
         } catch {}
 
         this.hidden = true;
-      };
-
-      dialog.addEventListener('close', () => {
-        const action = dialog.returnValue;
-        if (!action) {
-          // Closed without choice
-          return;
-        }
-
-        if (action === 'accept') {
-          savePreferencesAndHide(['analytics', 'preferences']);
-        } else if (action === 'reject') {
-          savePreferencesAndHide([]);
-        }
       });
     }
   }
