@@ -112,6 +112,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: 4.0.8
         version: 4.0.8(@vitest/browser@4.0.8(vite@7.2.2(@types/node@22.19.0)(tsx@4.19.2)(yaml@2.8.1))(vitest@4.0.8))(vitest@4.0.8)
+      glob:
+        specifier: 13.0.0
+        version: 13.0.0
       playwright:
         specifier: 1.56.1
         version: 1.56.1
@@ -127,6 +130,9 @@ importers:
       vite:
         specifier: 7.2.2
         version: 7.2.2(@types/node@22.19.0)(tsx@4.19.2)(yaml@2.8.1)
+      vite-plugin-dts:
+        specifier: 4.5.4
+        version: 4.5.4(@types/node@22.19.0)(rollup@4.53.1)(typescript@5.9.3)(vite@7.2.2(@types/node@22.19.0)(tsx@4.19.2)(yaml@2.8.1))
       vitest:
         specifier: 4.0.8
         version: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.0)(@vitest/browser-playwright@4.0.8)(tsx@4.19.2)(yaml@2.8.1)
@@ -3719,6 +3725,10 @@ packages:
     engines: {node: 20 || >=22}
     hasBin: true
 
+  glob@13.0.0:
+    resolution: {integrity: sha512-tvZgpqk6fz4BaNZ66ZsRaZnbHvP/jG3uKJvAZOwEVUL4RTA5nJeeLYfyN9/VA8NX/V3IBG+hkeuGpKjvELkVhA==}
+    engines: {node: 20 || >=22}
+
   global-modules@2.0.0:
     resolution: {integrity: sha512-NGbfmJBp9x8IxyJSd1P+otYK8vonoJactOogrVfFRIAEY1ukil8RSKDz2Yo7wh1oihl51l/r6W4epkeKJHqL8A==}
     engines: {node: '>=6'}
@@ -4409,9 +4419,6 @@ packages:
   lru-cache@6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
-
-  magic-string@0.30.19:
-    resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -10268,6 +10275,12 @@ snapshots:
       package-json-from-dist: 1.0.1
       path-scurry: 2.0.1
 
+  glob@13.0.0:
+    dependencies:
+      minimatch: 10.1.1
+      minipass: 7.1.2
+      path-scurry: 2.0.1
+
   global-modules@2.0.0:
     dependencies:
       global-prefix: 3.0.0
@@ -10995,10 +11008,6 @@ snapshots:
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
-
-  magic-string@0.30.19:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.5
 
   magic-string@0.30.21:
     dependencies:
@@ -13268,10 +13277,10 @@ snapshots:
       '@volar/typescript': 2.4.23
       '@vue/language-core': 2.2.0(typescript@5.9.3)
       compare-versions: 6.1.1
-      debug: 4.4.1
+      debug: 4.4.3
       kolorist: 1.8.0
       local-pkg: 1.1.2
-      magic-string: 0.30.19
+      magic-string: 0.30.21
       typescript: 5.9.3
     optionalDependencies:
       vite: 7.2.2(@types/node@22.19.0)(tsx@4.19.2)(yaml@2.8.1)

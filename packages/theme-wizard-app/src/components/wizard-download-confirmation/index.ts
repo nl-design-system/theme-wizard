@@ -1,5 +1,5 @@
-import '@nl-design-system-community/clippy-components';
-import { ClippyModal } from '@nl-design-system-community/clippy-components';
+import '@nl-design-system-community/clippy-components/clippy-modal';
+import { ClippyModal } from '@nl-design-system-community/clippy-components/clippy-modal';
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import type { GroupedIssues } from '../../lib/ValidationIssue';
