@@ -56,9 +56,7 @@ export default class Theme {
     this.#validateTheme(values);
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
-      // Using `replaceSync` instead of `replace` to prevent this runtime error:
-      // "Uncaught (in promise) DOMException: This method can only be called on modifiable style sheets"
-      sheet.replaceSync(css);
+      sheet.replace(css);
     });
   }
 
