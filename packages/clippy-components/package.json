@@ -15,7 +15,8 @@
     }
   },
   "files": [
-    "dist/"
+    "dist/",
+    "patterns/"
   ],
   "repository": {
     "type": "git",
