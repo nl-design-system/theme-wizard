@@ -1,0 +1,63 @@
+---
+// Check if we're in standalone mode (defined in astro.config.mjs)
+const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__ === true;
+---
+
+{isStandalone && (
+  <div class="dev-tools">
+    <a href="/">Back to home</a>
+    <button id="clear-localstorage" type="button">Clear localStorage</button>
+  </div>
+)}
+
+<style>
+  .dev-tools {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--basis-space-block-md) var(--basis-space-inline-lg);
+    background-color: var(--utrecht-alert-warning-background-color);
+    border: 1px solid var(--utrecht-alert-warning-border-color);
+    border-radius: var(--utrecht-alert-border-radius);
+    margin: var(--basis-space-block-md);
+    z-index: 9999;
+    display: flex;
+    gap: var(--clippy-space-column-md, var(--basis-space-column-md));
+    align-items: center;
+  }
+
+  .dev-tools a,
+  .dev-tools button {
+    font-size: var(--basis-text-font-size-sm);
+    font-family: var(--basis-text-font-family-default);
+    line-height: var(--basis-text-line-height-sm);
+    padding: var(--basis-space-inline-sm) var(--basis-space-inline-md);
+  }
+
+  .dev-tools button {
+    background-color: var(--utrecht-button-secondary-action-background-color);
+    border: 1px solid var(--utrecht-button-secondary-action-border-color);
+    color: var(--utrecht-button-secondary-action-color);
+    font-weight: var(--basis-text-font-weight-regular);
+    cursor: pointer;
+    border-radius: var(--utrecht-button-border-radius);
+  }
+</style>
+
+{isStandalone && (
+  <script>
+    const clearButton = document.getElementById('clear-localstorage');
+    if (clearButton) {
+      clearButton.addEventListener('click', () => {
+        const STORAGE_KEY = 'cookie-consent-preferences';
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+          window.location.reload();
+        } catch (error) {
+          console.error('Fout bij verwijderen van localStorage:', error);
+        }
+      });
+    }
+  </script>
+)}
