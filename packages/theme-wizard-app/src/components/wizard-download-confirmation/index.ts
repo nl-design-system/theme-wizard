@@ -1,9 +1,9 @@
+import '@nl-design-system-community/clippy-components';
+import { ClippyModal } from '@nl-design-system-community/clippy-components';
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import type { GroupedIssues } from '../../lib/ValidationIssue';
 import { t } from '../../i18n';
-import { TemplateModalDialog } from '../wizard-modal-dialog';
-import '../wizard-modal-dialog';
 import { dialogStyles } from './styles';
 
 const tag = 'wizard-download-confirmation';
@@ -14,8 +14,8 @@ export class WizardDownloadConfirmation extends LitElement {
   @property({ attribute: 'issues' })
   issues: GroupedIssues = {};
 
-  @query('template-modal-dialog')
-  private readonly modalDialog!: TemplateModalDialog;
+  @query('clippy-modal')
+  private readonly modalDialog!: ClippyModal;
 
   static override readonly styles = dialogStyles;
 
@@ -33,7 +33,7 @@ export class WizardDownloadConfirmation extends LitElement {
 
   override render() {
     return html`
-      <template-modal-dialog
+      <clippy-modal
         .title=${t('tokenDownloadDialog.title')}
         actions="both"
         .confirmLabel=${t('tokenDownloadDialog.downloadAnyway')}
@@ -62,7 +62,7 @@ export class WizardDownloadConfirmation extends LitElement {
             `;
           })}
         </div>
-      </template-modal-dialog>
+      </clippy-modal>
     `;
   }
 }

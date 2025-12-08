@@ -12,8 +12,8 @@ export const DIALOG_BUTTON_VALUES = {
   confirm: 'confirm',
 };
 
-@customElement('template-modal-dialog')
-export class TemplateModalDialog extends LitElement {
+@customElement('clippy-modal')
+export class ClippyModal extends LitElement {
   /**
    * Id of an element that describes the dialog, used for aria-describedby.
    * Consumers are responsible for rendering that element in the light DOM.
@@ -46,7 +46,7 @@ export class TemplateModalDialog extends LitElement {
   @query('dialog')
   readonly dialogElement!: HTMLDialogElement;
 
-  private readonly titleId = `template-modal-dialog-title-${++dialogInstanceCounter}`;
+  private readonly titleId = `clippy-modal-title-${++dialogInstanceCounter}`;
 
   private previouslyFocusedElement: HTMLElement | null = null;
 
