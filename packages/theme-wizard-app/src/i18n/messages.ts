@@ -30,6 +30,12 @@ export const en = {
     downloadAnyway: 'Download anyway',
     title: 'Theme contains errors',
   },
+  tokens: {
+    fieldLabels: {
+      bodyFont: 'Running text',
+      headingFont: 'Headings',
+    },
+  },
   unknown: 'Unknown error',
   validation: {
     error: {
@@ -98,6 +104,13 @@ export const nl = {
     cancel: () => t('cancel'),
     downloadAnyway: 'Toch downloaden',
     title: 'Thema bevat nog fouten',
+  },
+
+  tokens: {
+    fieldLabels: {
+      bodyFont: 'Lopende tekst',
+      headingFont: 'Koppen',
+    },
   },
   unknown: 'Onbekende fout opgetreden',
   validation: {

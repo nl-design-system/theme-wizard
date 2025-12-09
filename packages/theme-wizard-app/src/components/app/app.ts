@@ -14,6 +14,7 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { EVENT_NAMES } from '../../constants';
+import { t } from '../../i18n';
 import '../sidebar/sidebar';
 import '../wizard-scraper';
 import '../wizard-preview';
@@ -166,13 +167,13 @@ export class App extends LitElement {
               <wizard-token-field
                 .errors=${this.#theme.issues}
                 .token=${headingFontToken}
-                label="Koppen"
+                label="${t('tokens.fieldLabels.headingFont')}"
                 path=${HEADING_FONT_TOKEN_REF}
               ></wizard-token-field>
               <wizard-token-field
                 .errors=${this.#theme.issues}
                 .token=${bodyFontToken}
-                label="Lopende tekst"
+                label="${t('tokens.fieldLabels.bodyFont')}"
                 path=${BODY_FONT_TOKEN_REF}
               ></wizard-token-field>
               <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
