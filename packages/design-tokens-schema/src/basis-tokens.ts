@@ -88,35 +88,40 @@ export const CONTRAST: ContrastRequirement = {
 } as const;
 export const SKIP_CONTRAST_EXTENSION = new Set(['disabled', 'disabled-inverse']);
 
-export const BasisColorSchema = z.strictObject({
-  'accent-1': ColorNameSchema.optional(),
-  'accent-1-inverse': ColorNameSchema.optional(),
-  'accent-2': ColorNameSchema.optional(),
-  'accent-2-inverse': ColorNameSchema.optional(),
-  'accent-3': ColorNameSchema.optional(),
-  'accent-3-inverse': ColorNameSchema.optional(),
-  'action-1': ColorNameSchema.optional(),
-  'action-1-inverse': ColorNameSchema.optional(),
-  'action-2': ColorNameSchema.optional(),
-  'action-2-inverse': ColorNameSchema.optional(),
-  default: ColorNameSchema.optional(),
-  'default-inverse': ColorNameSchema.optional(),
-  disabled: ColorNameSchema.optional(),
-  'disabled-inverse': ColorNameSchema.optional(),
-  highlight: ColorNameSchema.optional(),
-  'highlight-inverse': ColorNameSchema.optional(),
-  info: ColorNameSchema.optional(),
-  'info-inverse': ColorNameSchema.optional(),
-  negative: ColorNameSchema.optional(),
-  'negative-inverse': ColorNameSchema.optional(),
-  positive: ColorNameSchema.optional(),
-  'positive-inverse': ColorNameSchema.optional(),
-  selected: ColorNameSchema.optional(),
-  'selected-inverse': ColorNameSchema.optional(),
-  transparent: ColorTokenValidationSchema.optional(),
-  warning: ColorNameSchema.optional(),
-  'warning-inverse': ColorNameSchema.optional(),
-});
+export const BASIS_COLOR_NAMES = [
+  'accent-1',
+  'accent-1-inverse',
+  'accent-2',
+  'accent-2-inverse',
+  'accent-3',
+  'accent-3-inverse',
+  'action-1',
+  'action-1-inverse',
+  'action-2',
+  'action-2-inverse',
+  'default',
+  'default-inverse',
+  'disabled',
+  'disabled-inverse',
+  'highlight',
+  'highlight-inverse',
+  'info',
+  'info-inverse',
+  'negative',
+  'negative-inverse',
+  'positive',
+  'positive-inverse',
+  'selected',
+  'selected-inverse',
+  'warning',
+  'warning-inverse',
+];
+
+export const BasisColorSchema = z
+  .strictObject(Object.fromEntries(BASIS_COLOR_NAMES.map((key) => [key, ColorNameSchema.optional()])))
+  .extend({
+    transparent: ColorTokenValidationSchema.optional(),
+  });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
 export const BasisTextSchema = z.looseObject({

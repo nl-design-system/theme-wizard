@@ -62,7 +62,7 @@ export class WizardTokenField extends WizardTokenNavigator {
   }
 
   get type() {
-    switch (this.token?.$type) {
+    switch (this.token.$type) {
       case 'color':
         return 'color';
       case 'dimension':
@@ -71,6 +71,15 @@ export class WizardTokenField extends WizardTokenNavigator {
       case 'fontFamilies':
         return 'font';
       default:
+        if (
+          !this.token.$type &&
+          typeof this.token === 'object' &&
+          Object.values(this.token).every((token) => token?.$type === 'color')
+          // TODO: this should also check if every value has an extension for color-scale-position
+        ) {
+          return 'color-scale';
+        }
+        // TODO: check if all children aree type=color -> render color scale
         return undefined;
     }
   }
@@ -90,6 +99,12 @@ export class WizardTokenField extends WizardTokenNavigator {
     }
 
     switch (type) {
+      case 'color-scale': {
+        return html`
+          <p>color-scale</p>
+          <pre>${JSON.stringify(this.token, null, 2)}</pre>
+        `;
+      }
       case 'color':
         return html` <wizard-color-input
           .errors=${this.#pathErrors}
