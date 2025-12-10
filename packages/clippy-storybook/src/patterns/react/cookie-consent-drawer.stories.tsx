@@ -1,7 +1,7 @@
 /* @license CC0-1.0 */
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { CookieConsentDrawer } from './CookieConsentDrawer';
+import { CookieConsentDrawer } from '@nl-design-system-community/clippy-components';
 import '@utrecht/component-library-css';
 
 const meta = {
@@ -9,12 +9,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Een non-blocking cookie consent drawer die bovenaan de pagina verschijnt.',
+        component: 'Een non-blocking cookie con sent drawer die bovenaan de pagina verschijnt.',
       },
     },
   },
   tags: ['autodocs'],
-  title: 'Patterns/Cookie Consent/React/Drawer',
+  title: 'Patterns/Cookie Consent/Drawer',
 } satisfies Meta<typeof CookieConsentDrawer>;
 
 export default meta;

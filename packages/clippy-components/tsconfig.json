@@ -18,5 +18,5 @@
       "@lib/*": ["./src/lib/*"]
     }
   },
-  "include": ["src/**/*", "test/**/*", "patterns/**/*", "vite-env.d.ts"]
+  "include": ["index.ts", "src/**/*", "test/**/*", "patterns/**/*", "vite-env.d.ts"]
 }
