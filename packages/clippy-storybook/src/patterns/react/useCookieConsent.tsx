@@ -86,10 +86,12 @@ export const getDefaultCookieContent = (organization?: string): React.ReactNode 
           ? `${organization} gebruikt enkele essentiële cookies om deze website goed te laten werken.`
           : 'We gebruiken enkele essentiële cookies om deze website goed te laten werken.'}
       </Paragraph>
+
       <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
         We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
         onthouden en onze diensten te verbeteren.
       </Paragraph>
+
       <Paragraph>
         We gebruiken ook cookies die door andere sites zijn geplaatst om ons te helpen content van hun diensten te
         leveren.
