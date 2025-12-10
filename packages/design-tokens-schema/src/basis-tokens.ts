@@ -49,12 +49,10 @@ export const isForegroundColor = (key: string) => FOREGROUND_COLOR_KEYS.includes
 // Ordered list of background color names
 export const BACKGROUND_COLOR_KEYS = ['bg-document', 'bg-subtle', 'bg-default', 'bg-hover', 'bg-active'] as const;
 export type BackgroundColorKey = (typeof BACKGROUND_COLOR_KEYS)[number];
-export const isBackgroundColor = (key: string) => BACKGROUND_COLOR_KEYS.includes(key as BackgroundColorKey);
 
 // Ordered list of all color keys
 export const COLOR_KEYS = [...BACKGROUND_COLOR_KEYS, ...BORDER_COLOR_KEYS, ...FOREGROUND_COLOR_KEYS] as const;
 export type ColorNameKey = (typeof COLOR_KEYS)[number];
-export const isColorKey = (key: string) => COLOR_KEYS.includes(key as ColorNameKey);
 
 export const ColorNameSchema = z.strictObject(
   Object.fromEntries(COLOR_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
