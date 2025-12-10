@@ -3,12 +3,13 @@ import type { Preview } from '@storybook/web-components-vite';
 import { formatHtml } from '@rijkshuisstijl-community/storybook-tooling/formatHtml';
 // import { DocsPage } from '../src/DocsPage';
 import '@nl-design-system-community/theme-wizard-app';
+import '@nl-design-system-community/theme-wizard-templates/theme.css';
+import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import '@utrecht/component-library-css';
+import { html } from 'lit';
 
 const preview: Preview = {
-  // decorators: [StoryRootDecorator],
-  initialGlobals: {
-    storyRootClassname: 'voorbeeld-theme',
-  },
+  decorators: [(story) => html`<div class="ma-theme clippy-theme">${story()}</div>`],
   parameters: {
     controls: { expanded: false },
     docs: {
