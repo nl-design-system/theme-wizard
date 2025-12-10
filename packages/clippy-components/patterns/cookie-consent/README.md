@@ -8,29 +8,21 @@ Er is onderzoek gedaan naar de best practices omtrent een cookie banner en dit p
 3. ...
 
 <br>
-
-> [!NOTE]
-> Deze documentatie is ook beschikbaar in Storybook. De Storybook implementatie toont de HTML code en is opgebouwd met React componenten uit de Utrecht Design System community.
-
 ## Overzicht
 
-Het cookie consent pattern bestaat uit herbruikbare componenten die je kunt combineren:
+Cookie consent kan op verschillende manieren geimplementeerd worden, maar wij raden de volgende patterns aan indien er gebruik gemaakt moet worden van een cookie consent dialoog.
 
-### Basis componenten
+### Banner componenten
+
+1. **Drawer** (`cookie-drawer.html`) - Non-modal banner bovenaan de pagina
+2. **Modal** (`cookie-modal.html`) - Modal banner met focus trap
+
+### Formulieren en/of pagina's
 
 1. **Cookie Form** (`cookie-form.html`) - Herbruikbaar formulier voor cookie-instellingen
 2. **Cookies Page** (`cookies-page.html`) - Volledige pagina die het formulier bevat
 
-### Banner componenten
-
-3. **Drawer** (`cookie-drawer.html`) - Non-modal banner bovenaan de pagina
-4. **Modal** (`cookie-modal.html`) - Modal banner met focus trap
-
-## Varianten
-
-Een cookie consent "popup" of "banner" is beschikbaar in zowel modal als non-modal formulier.
-
-### Variant 1: Drawer (non-modal)
+## Drawer
 
 Een niet-blokkerende banner bovenaan de pagina met twee knoppen:
 
@@ -40,17 +32,38 @@ Een niet-blokkerende banner bovenaan de pagina met twee knoppen:
 
 Deze variant is geïmplementeerd in `cookie-drawer.html` en is **non-modal** (gebruikers kunnen de pagina nog steeds gebruiken).
 
+**Features:**
+
+- Gebruikt het HTML `<dialog>` element met `utrecht-drawer` class
+- Gebruikt `utrecht-button` componenten voor de actieknoppen
+- Slaat gebruikersvoorkeuren op in `localStorage`
+- Toont de drawer alleen wanneer er nog geen voorkeur is opgeslagen
+- Altijd bovenaan de pagina gepositioneerd
+- Kan scrollen wanneer er veel content is (automatisch via CSS)
+- **Non-modal** - gebruikers kunnen de pagina nog steeds gebruiken
+- Identificeert de afzender van de website (via `organization` attribuut)
+
 **Attributen:**
 
 - `organization="[Naam]"` - Identificeert de organisatie in de banner tekst
 
-### Variant 2: Modal
+## Modal
 
 Een blokkerend modal dialog in het midden van de pagina met twee knoppen:
 
 - **Aanvullende cookies accepteren** - Accepteert alle optionele cookies
 - **Aanvullende cookies weigeren** - Weigert alle optionele cookies
 - Link naar cookie-instellingen pagina voor gedetailleerde keuzes
+
+- Gebruikt het HTML `<dialog>` element met `showModal()` voor native modal gedrag
+- Gebruikt `utrecht-button` componenten voor de actieknoppen
+- Slaat gebruikersvoorkeuren op in `localStorage`
+- Toont de modal alleen wanneer er nog geen voorkeur is opgeslagen
+- Kan scrollen wanneer er veel content is (automatisch via CSS)
+- **Modal** - blokkeert interactie met de achtergrond tot een keuze is gemaakt
+- **Focus trap** - focus kan de modal niet verlaten, Tab op laatste element springt terug naar eerste element
+- **ESC key** - sluit de modal (zonder voorkeur op te slaan)
+- Identificeert de afzender van de website (via `organization` attribuut)
 
 Deze variant is geïmplementeerd in `cookie-modal.html` en is **modal** (blokkeert interactie met de achtergrond).
 
@@ -60,7 +73,7 @@ Deze variant is geïmplementeerd in `cookie-modal.html` en is **modal** (blokkee
 
 ## Cookie Form (`cookie-form.html`)
 
-Het `cookie-form.html` component is het hart van het cookie consent pattern. Het is een **herbruikbaar formulier** dat in elke context kan worden gebruikt:
+Het `cookie-form.html` component is het hart van het cookie consent pattern. Het is een herbruikbaar formulier dat in elke context kan worden gebruikt:
 
 - Als onderdeel van een cookie-instellingen pagina
 - Binnen een drawer voor uitgebreide instellingen
@@ -73,12 +86,12 @@ Het `cookie-form.html` component is het hart van het cookie consent pattern. Het
 
 **Features:**
 
-- Analytics cookies (aan/uit)
-- Preference cookies (aan/uit)
-- Essentiële cookies (altijd aan, niet uit te schakelen)
-- Slaat voorkeuren op in `localStorage`
-- Toont success message na opslaan
-- Dispatcht `cookie-preferences-saved` event voor integratie met parent componenten
+- Toegankelijk formulier met radio buttons
+- Gebruikt `utrecht-form-fieldset`, `utrecht-form-field`, en `utrecht-radio-button` componenten
+- Slaat voorkeuren op in `localStorage` (dezelfde key als de banner)
+- Toont een waarschuwing wanneer JavaScript is uitgeschakeld
+- Toont success message na opslaan (blijft zichtbaar tot pagina vernieuwd wordt)
+- Gebruikt Utrecht Design System componenten voor consistente styling
 
 **Voorbeeld gebruik:**
 
@@ -124,78 +137,9 @@ De `cookies-page.html` component is een **volledige pagina** voor cookie-instell
 <clippy-cookies-page input-type="checkbox" organization="Gemeente Utrecht"></clippy-cookies-page>
 ```
 
-## Componenten
-
-### Drawer (Non-modal banner)
-
-De `cookie-drawer.html` component toont een non-modal drawer bovenaan de pagina. De drawer biedt gebruikers de mogelijkheid om:
-
-- Aanvullende cookies te accepteren
-- Aanvullende cookies te weigeren
-- Naar de cookie-instellingen pagina te navigeren
-
-**Features:**
-
-- Gebruikt het HTML `<dialog>` element met `utrecht-drawer` class
-- Gebruikt `utrecht-button` componenten voor de actieknoppen
-- Slaat gebruikersvoorkeuren op in `localStorage`
-- Toont de drawer alleen wanneer er nog geen voorkeur is opgeslagen
-- Altijd bovenaan de pagina gepositioneerd
-- Kan scrollen wanneer er veel content is (automatisch via CSS)
-- **Non-modal** - gebruikers kunnen de pagina nog steeds gebruiken
-- Identificeert de afzender van de website (via `organization` attribuut)
-
-**Attributen:**
-
-- `organization="[Naam]"` - Identificeert de organisatie in de banner tekst
-
-### Modal Dialog (Blocking banner)
-
-De `cookie-modal.html` component toont een modal dialog in het midden van de pagina. De modal biedt gebruikers de mogelijkheid om:
-
-- Aanvullende cookies te accepteren
-- Aanvullende cookies te weigeren
-- Naar de cookie-instellingen pagina te navigeren
-
-**Features:**
-
-- Gebruikt het HTML `<dialog>` element met `showModal()` voor native modal gedrag
-- Gebruikt `utrecht-button` componenten voor de actieknoppen
-- Slaat gebruikersvoorkeuren op in `localStorage`
-- Toont de modal alleen wanneer er nog geen voorkeur is opgeslagen
-- Kan scrollen wanneer er veel content is (automatisch via CSS)
-- **Modal** - blokkeert interactie met de achtergrond tot een keuze is gemaakt
-- **Focus trap** - focus kan de modal niet verlaten, Tab op laatste element springt terug naar eerste element
-- **ESC key** - sluit de modal (zonder voorkeur op te slaan)
-- Identificeert de afzender van de website (via `organization` attribuut)
-
-**Attributen:**
-
-- `organization="[Naam]"` - Identificeert de organisatie in de banner tekst
-
-### Cookies Page (Cookie-instellingen pagina)
-
-De `cookies-page.html` component biedt een gedetailleerde pagina waar gebruikers hun cookie-voorkeuren kunnen beheren. Gebruikers kunnen kiezen voor:
-
-- **Analytics cookies**: Cookies die het gebruik van de omgeving meten
-- **Preference cookies**: Cookies die gebruikersinstellingen onthouden
-- **Essentiële cookies**: Altijd actief (niet uit te schakelen)
-
-**Features:**
-
-- Toegankelijk formulier met radio buttons
-- Gebruikt `utrecht-form-fieldset`, `utrecht-form-field`, en `utrecht-radio-button` componenten
-- Slaat voorkeuren op in `localStorage` (dezelfde key als de banner)
-- Toont een waarschuwing wanneer JavaScript is uitgeschakeld
-- Toont success message na opslaan (blijft zichtbaar tot pagina vernieuwd wordt)
-- Gebruikt Utrecht Design System componenten voor consistente styling
-
-> [!NOTE]
-> De `cookies-page.html` component is altijd bedoeld als een pagina en toont daarom altijd een success message na opslaan.
-
 ## Hergebruik van Utrecht Design System componenten
 
-De cookie banner maakt maximaal gebruik van bestaande componenten uit de Utrecht Design System community:
+De cookie banner maakt gebruik van bestaande componenten uit de Utrecht Design System community:
 
 - **`utrecht-drawer`** - Voor de banner container (drawer component)
 - **`utrecht-button`** - Voor alle knoppen (primary en secondary action)
@@ -209,99 +153,6 @@ De cookie banner maakt maximaal gebruik van bestaande componenten uit de Utrecht
 
 > [!NOTE]
 > Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues. Controleer de [Utrecht Design System repository](https://github.com/nl-design-system/utrecht) voor actuele informatie.
-
-## Gebruik
-
-### Drawer implementeren
-
-**Optie 1: HTML bestand direct includen**
-
-```html
-<!-- In je HTML pagina -->
-<script type="module" src="path/to/cookie-drawer.html"></script>
-```
-
-**Optie 2: HTML code kopiëren**
-
-Kopieer de volledige inhoud van `cookie-drawer.html` en plak deze in je HTML pagina.
-
-**Gebruik met attributen:**
-
-```html
-<!-- Standaard -->
-<clippy-cookie-consent-drawer hidden></clippy-cookie-consent-drawer>
-
-<!-- Met organisatie naam -->
-<clippy-cookie-consent-drawer hidden organization="Gemeente Utrecht"></clippy-cookie-consent-drawer>
-```
-
-De component is standaard verborgen (`hidden` attribuut) en wordt automatisch zichtbaar gemaakt wanneer JavaScript is ingeschakeld en er nog geen voorkeur is opgeslagen.
-
-### Modal implementeren
-
-**Optie 1: HTML bestand direct includen**
-
-```html
-<!-- In je HTML pagina -->
-<script type="module" src="path/to/cookie-modal.html"></script>
-```
-
-**Optie 2: HTML code kopiëren**
-
-Kopieer de volledige inhoud van `cookie-modal.html` en plak deze in je HTML pagina.
-
-**Gebruik met attributen:**
-
-```html
-<!-- Standaard modal -->
-<clippy-cookie-consent-modal hidden></clippy-cookie-consent-modal>
-
-<!-- Met organisatie naam -->
-<clippy-cookie-consent-modal hidden organization="Gemeente Utrecht"></clippy-cookie-consent-modal>
-```
-
-De component is standaard verborgen (`hidden` attribuut) en wordt automatisch als **modal** getoond wanneer JavaScript is ingeschakeld en er nog geen voorkeur is opgeslagen.
-
-### Cookies Page implementeren
-
-**Optie 1: HTML bestand direct includen**
-
-```html
-<!-- In je cookie-instellingen pagina -->
-<script type="module" src="path/to/cookies-page.html"></script>
-```
-
-**Optie 2: HTML code kopiëren**
-
-Kopieer de volledige inhoud van `cookies-page.html` en plak deze in je HTML pagina.
-
-### Cookie Form implementeren (herbruikbaar)
-
-Het formulier kan in elke context worden gebruikt:
-
-```html
-<!-- Standalone formulier -->
-<clippy-cookie-form></clippy-cookie-form>
-
-<!-- Met checkboxes -->
-<clippy-cookie-form input-type="checkbox"></clippy-cookie-form>
-
-<!-- Binnen een custom dialog -->
-<dialog id="settings-dialog">
-  <h2>Cookie-instellingen</h2>
-  <clippy-cookie-form input-type="checkbox"></clippy-cookie-form>
-</dialog>
-
-<script>
-  // Luister naar het save event om de dialog te sluiten
-  document.addEventListener('cookie-preferences-saved', () => {
-    document.getElementById('settings-dialog').close();
-  });
-</script>
-```
-
-> [!IMPORTANT]
-> Zorg ervoor dat je de Utrecht Design System CSS laadt voordat je deze componenten gebruikt. De componenten zijn afhankelijk van Utrecht CSS classes voor styling.
 
 ## Technische Details
 
@@ -433,125 +284,6 @@ Hieronder een overzicht van de meestvoorkomende problemen met cookie banners en 
 
 **Oplossing**: Gebruik moderne webstandaarden (`<dialog>`, Web Components) en test regelmatig.
 
-## Eigen cookie banner maken
-
-Hieronder vind je voorbeeldcode voor het maken van je eigen cookie banner met aangepaste teksten en inhoud.
-
-### Basis HTML structuur
-
-De cookie banner gebruikt de volgende essentiële HTML elementen:
-
-```html
-<dialog>                    <!-- Container voor de banner, biedt toegankelijkheid -->
-  <h2>                      <!-- Titel van de banner (verplicht voor toegankelijkheid) -->
-  <form method="dialog">    <!-- Formulier met method="dialog" voor dialog sluiting -->
-    <button>                 <!-- Actieknoppen met value attributen -->
-    <a>                     <!-- Link naar cookie-instellingen -->
-  </form>
-</dialog>
-```
-
-### Voorbeeld: Cookie banner met aangepaste tekst
-
-```html
-<clippy-cookie-consent-drawer hidden>
-  <style>
-    /* Je eigen styling */
-    .clippy-cookie-consent-drawer__dialog {
-      /* Aanpassen naar wens */
-    }
-  </style>
-
-  <dialog open class="utrecht-drawer utrecht-drawer--block-start" aria-labelledby="cookie-consent-title">
-    <!-- Identificeer de afzender in de titel -->
-    <h2 id="cookie-consent-title" class="utrecht-heading-2">Cookies op de website van [Jouw Organisatie]</h2>
-
-    <div class="clippy-cookie-consent-drawer__intro">
-      <!-- Pas de teksten aan naar jouw situatie -->
-      <p class="utrecht-paragraph">
-        [Jouw Organisatie] gebruikt enkele essentiële cookies om deze website goed te laten werken.
-      </p>
-      <p class="utrecht-paragraph">
-        We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
-        onthouden en onze diensten te verbeteren.
-      </p>
-    </div>
-
-    <form method="dialog">
-      <div class="clippy-cookie-consent-drawer__button-group">
-        <!-- Gebruik utrecht-button voor consistente styling -->
-        <button class="utrecht-button utrecht-button--primary-action" value="accept" autofocus>
-          Aanvullende cookies accepteren
-        </button>
-        <button class="utrecht-button utrecht-button--secondary-action" value="reject">
-          Aanvullende cookies weigeren
-        </button>
-        <!-- Link naar jouw cookie-instellingen pagina -->
-        <a href="/cookie-instellingen" class="utrecht-link utrecht-link--html-a"> Cookie-instellingen </a>
-      </div>
-
-      <div class="clippy-cookie-consent-drawer__footer">
-        <!-- Link naar Autoriteit Persoonsgegevens (verplicht) -->
-        <a
-          href="https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners"
-          rel="noreferrer"
-          class="utrecht-link utrecht-link--html-a"
-        >
-          Meer informatie over cookies en jouw rechten (Autoriteit Persoonsgegevens)
-        </a>
-      </div>
-    </form>
-  </dialog>
-</clippy-cookie-consent-drawer>
-```
-
-### Voorbeeld: Cookie banner met formulier en checkboxes
-
-Voor een variant met checkboxes, gebruik het herbruikbare `cookie-form` component:
-
-```html
-<!-- Standalone formulier met checkboxes -->
-<clippy-cookie-form input-type="checkbox"></clippy-cookie-form>
-
-<!-- Of als onderdeel van een custom dialog -->
-<dialog>
-  <h2>Gedetailleerde cookie-instellingen</h2>
-  <p>Kies per categorie welke cookies je wilt accepteren.</p>
-  <clippy-cookie-form input-type="checkbox"></clippy-cookie-form>
-</dialog>
-```
-
-Het `cookie-form` component dispatcht een `cookie-preferences-saved` event wanneer voorkeuren worden opgeslagen, zodat je de dialog kunt sluiten of andere acties kunt uitvoeren.
-
-### Positionering
-
-De drawer is altijd bovenaan de pagina gepositioneerd (met `utrecht-drawer--block-start` class).
-
-De Autoriteit Persoonsgegevens benadrukt dat de mogelijkheid om cookies te weigeren net zo goed zichtbaar moet zijn als de optie om cookies te accepteren. De AP stelt: "Verstop de knop bijvoorbeeld niet door uw websitebezoeker onnodig te laten scrollen om cookies te weigeren, als dat ook niet hoeft om cookies te accepteren." Door de drawer bovenaan te plaatsen, zijn beide opties (accepteren en weigeren) direct zichtbaar zonder dat bezoekers hoeven te scrollen. Zie: [Autoriteit Persoonsgegevens - Heldere cookiebanners](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners) (vuistregel: "Verberg bepaalde keuzes niet").
-
-### Modal vs. Non-modal
-
-Voor een **modal** dialog (blokkeert achtergrond interactie + focus trap):
-
-```html
-<!-- Modal variant - forceert focus trap -->
-<clippy-cookie-consent-modal hidden></clippy-cookie-consent-modal>
-```
-
-Voor een **non-modal** drawer (niet-blokkerend):
-
-```html
-<!-- Non-modal drawer - geen focus trap -->
-<clippy-cookie-consent-drawer hidden></clippy-cookie-consent-drawer>
-```
-
-De modal component gebruikt `dialog.showModal()` en implementeert een focus trap:
-
-- **Focus trap**: Tab op laatste element → springt naar eerste element
-- **Shift+Tab trap**: Shift+Tab op eerste element → springt naar laatste element
-- **Backdrop**: achtergrond wordt geblokkeerd
-- **ESC key**: sluit de modal (zonder voorkeur op te slaan)
-
 ### Scrollen in de banner
 
 Wanneer de banner veel content bevat, scrollt deze automatisch. De component heeft standaard:
@@ -575,18 +307,6 @@ Dit zorgt ervoor dat de banner kan scrollen wanneer de content langer is dan 90%
 2. Server-side cookies instellen op basis van de voorkeuren
 3. Analytics en andere tracking scripts alleen laden wanneer de gebruiker toestemming heeft gegeven
 
-In de code vind je comments waar je deze integratie kunt toevoegen:
-
-```javascript
-// In cookie-drawer.html, regel ~114
-// Hook in your own consent or analytics handling here (for example by also making an HTTP call
-// or setting a server-side cookie with the preferences).
-
-// In cookies-page.html, regel ~302
-// This is purely for the UI; reuse the same 'preferences' for your own consent management
-// if needed (for example by doing a fetch() to your backend here).
-```
-
 ### Styling aanpassen
 
 De componenten gebruiken CSS custom properties (design tokens) voor spacing:
@@ -600,11 +320,7 @@ Je kunt deze aanpassen door de design tokens te overschrijven in je eigen CSS.
 
 ### Teksten aanpassen
 
-Alle teksten zijn direct in de HTML opgenomen en kunnen eenvoudig worden aangepast. Zorg ervoor dat je de toegankelijkheid behoudt:
-
-- Gebruik semantische HTML elementen (`<h1>`, `<h2>`, `<p>`, etc.)
-- Zorg voor goede `aria-label` en `aria-labelledby` attributen
-- Behoud de structuur van het formulier
+Alle teksten zijn direct in de HTML opgenomen en kunnen eenvoudig worden aangepast. Zorg ervoor dat je de structuur behoud van het patroon.
 
 ## Toegankelijkheid
 
@@ -612,16 +328,16 @@ Alle teksten zijn direct in de HTML opgenomen en kunnen eenvoudig worden aangepa
 
 De cookie banner component voldoet aan de volgende toegankelijkheidscriteria:
 
-- ✅ **WCAG 2.1 niveau AA** - Voldoet aan de Web Content Accessibility Guidelines
-- ✅ **Semantische HTML** - Gebruikt correcte HTML5 semantische elementen (`<dialog>`, `<form>`, `<fieldset>`, `<legend>`, etc.)
-- ✅ **ARIA attributen** - Correct gebruik van `aria-labelledby`, `aria-labelled`, en `role` attributen
-- ✅ **Keyboard navigatie** - Volledige navigatie mogelijk met alleen het toetsenbord (Tab, Shift+Tab, Enter, Space, Esc)
-- ✅ **Screen reader ondersteuning** - Compatibel met screen readers (NVDA, JAWS, VoiceOver)
-- ✅ **Focus management** - Correct focus management in dialogs (autofocus op eerste actie, focus trap)
-- ✅ **Kleurencontrast** - Voldoet aan WCAG contrast ratio's (minimaal 4.5:1 voor tekst)
-- ✅ **Tekstalternatieven** - Alle niet-tekstuele content heeft alternatieve tekst
-- ✅ **Formulier labels** - Alle formuliervelden hebben correct geassocieerde labels
-- ✅ **Foutmeldingen** - Duidelijke foutmeldingen en validatie feedback
+- [x] **WCAG 2.1 niveau AA** - Voldoet aan de Web Content Accessibility Guidelines
+- [ ] **Semantische HTML** - Gebruikt correcte HTML5 semantische elementen (`<dialog>`, `<form>`, `<fieldset>`, `<legend>`, etc.)
+- [ ] **ARIA attributen** - Correct gebruik van `aria-labelledby`, `aria-labelled`, en `role` attributen
+- [ ] **Keyboard navigatie** - Volledige navigatie mogelijk met alleen het toetsenbord (Tab, Shift+Tab, Enter, Space, Esc)
+- [ ] **Screen reader ondersteuning** - Compatibel met screen readers (NVDA, JAWS, VoiceOver)
+- [ ] **Focus management** - Correct focus management in dialogs (autofocus op eerste actie, focus trap)
+- [ ] **Kleurencontrast** - Voldoet aan WCAG contrast ratio's (minimaal 4.5:1 voor tekst)
+- [ ] **Tekstalternatieven** - Alle niet-tekstuele content heeft alternatieve tekst
+- [ ] **Formulier labels** - Alle formuliervelden hebben correct geassocieerde labels
+- [ ] **Foutmeldingen** - Duidelijke foutmeldingen en validatie feedback
 
 ### Acceptatiecriteria voor toegankelijk gebruik
 
@@ -639,13 +355,10 @@ Wanneer je de cookie banner implementeert, zorg ervoor dat:
    - Gebruik in plaats daarvan: "Aanvullende cookies accepteren" en "Aanvullende cookies weigeren"
 
 3. **Toegankelijke positionering**
-   - De banner is altijd bovenaan de pagina
    - Zichtbaar zonder te scrollen
    - Zorg dat de banner niet belangrijke content verbergt
 
 4. **Modal vs. Non-modal**
-   - Voor belangrijke keuzes: gebruik `cookie-modal.html` (blokkeert interactie met achtergrond en forceert focus trap)
-   - Voor minder kritieke informatie: gebruik `cookie-drawer.html` (non-modal drawer)
    - Modal dialogs gebruiken `showModal()` voor automatische focus trap
 
 5. **Scrollen**
@@ -673,23 +386,8 @@ Wanneer je de cookie banner implementeert, zorg ervoor dat:
 De componenten gebruiken moderne webstandaarden:
 
 - Web Components (Custom Elements)
-- `localStorage` API
+- `localStorage` API (alleen voor demo doeleinden)
 - HTML5 `<dialog>` element
-
-Voor oudere browsers kan polyfills nodig zijn.
-
-## Storybook
-
-De cookie banner component is beschikbaar in Storybook met de volgende features:
-
-- **Live voorbeelden** - Interactieve voorbeelden van alle varianten
-- **HTML code weergave** - Volledige HTML code is zichtbaar voor elke variant
-- **React componenten** - Implementatie gebruikt React componenten uit de Utrecht Design System community
-- **Documentatie integratie** - Deze Markdown documentatie is geïntegreerd in Storybook
-- **Accessibility testing** - Storybook addons voor toegankelijkheidstests
-
-> [!NOTE]
-> Deze Markdown documentatie wordt automatisch geïncludeerd in Storybook. Wijzigingen in dit bestand worden automatisch weergegeven in Storybook.
 
 ## Referenties
 
