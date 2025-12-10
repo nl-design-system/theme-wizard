@@ -21,7 +21,6 @@ export default defineConfig({
     lib: {
       entry: {
         index: 'index.ts',
-        'patterns/cookie-consent/index': 'patterns/cookie-consent/index.ts',
       },
       formats: ['es'],
     },

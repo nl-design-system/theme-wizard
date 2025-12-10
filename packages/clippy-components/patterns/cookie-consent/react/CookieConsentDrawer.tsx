@@ -2,7 +2,7 @@
 
 import { Button, ButtonGroup, Drawer, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
 import React from 'react';
-import { getConsentTitle, getDefaultCookieContent, useCookieConsent } from './useCookieConsent';
+import { getConsentTitle, getDefaultCookieContent, useCookieConsent } from './hooks/useCookieConsent';
 
 export interface CookieConsentDrawerProps {
   buttonAccept?: string;
