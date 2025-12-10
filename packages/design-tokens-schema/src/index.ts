@@ -6,3 +6,4 @@ export * from './tokens/token-reference';
 export * from './validation-issue';
 export * from './basis-tokens';
 export * from './theme';
+export * from './remove-non-token-properties';

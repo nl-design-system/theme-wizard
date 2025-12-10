@@ -1,6 +1,5 @@
 import {
   stringifyColor,
-  ThemeSchema,
   StrictThemeSchema,
   type Theme as ThemeType,
 } from '@nl-design-system-community/design-tokens-schema';
@@ -24,7 +23,7 @@ const STYLE_DICTIONARY_SETTINGS = {
 } as const;
 
 export default class Theme {
-  static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
+  static readonly defaults = StrictThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
@@ -52,8 +51,8 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
-    this.#tokens = values;
     this.#validateTheme(values);
+    this.#tokens = values;
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replace(css);
@@ -64,12 +63,17 @@ export default class Theme {
     return this.#stylesheet;
   }
 
+  // TODO? accept unknown and replace entire subtree instead of only $value
   updateAt(path: string, value: DesignToken['$value']) {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
     dset(tokens, `${path}.$value`, value);
     this.tokens = tokens;
   }
+
+  // resetAt(path: string) {
+  //   // TODO: implement
+  // }
 
   at(path: string): DesignToken {
     return dlv(this.tokens, path);

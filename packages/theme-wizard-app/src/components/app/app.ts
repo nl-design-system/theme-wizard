@@ -7,14 +7,19 @@ import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/700.css';
 // <End TODO>
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
+import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
+import {
+  legacyToModernColor,
+  BASIS_COLOR_NAMES,
+  isRef,
+  EXTENSION_RESOLVED_AS,
+} from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
-import { EVENT_NAMES } from '../../constants';
-import { t } from '../../i18n';
 import '../sidebar/sidebar';
 import '../wizard-scraper';
 import '../wizard-preview';
@@ -22,6 +27,10 @@ import '../wizard-logo';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
+import '../color-scale-picker';
+import { EVENT_NAMES } from '../../constants';
+import { t } from '../../i18n';
+import ColorToken from '../../lib/ColorToken';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
@@ -39,6 +48,7 @@ const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 export class App extends LitElement {
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
   readonly #theme = new Theme();
+  #scrapedColors: ScrapedColorToken[] = [];
 
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
@@ -142,6 +152,7 @@ export class App extends LitElement {
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
+    this.#scrapedColors = target.colors;
     this.requestUpdate();
   };
 
@@ -177,6 +188,38 @@ export class App extends LitElement {
                 path=${BODY_FONT_TOKEN_REF}
               ></wizard-token-field>
               <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
+
+              ${this.#scrapedColors.length === 0
+                ? nothing
+                : html`
+                    <datalist id="preset-colors">
+                      ${this.#scrapedColors.map(
+                        (color) => html`<option>${legacyToModernColor.encode(color.$value)}</option>`,
+                      )}
+                    </datalist>
+                  `}
+              ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
+                const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
+                const val = token?.$value;
+                const hex = val && !isRef(val) ? legacyToModernColor.encode(val) : null;
+                const color = token.$extensions[EXTENSION_RESOLVED_AS]
+                  ? { $type: 'color', $value: token.$extensions[EXTENSION_RESOLVED_AS] }
+                  : token;
+                return html`
+                  <div>
+                    <label for=${`basis.color.${colorKey}`}>${colorKey}</label>
+                    <color-scale-picker .from=${color ? new ColorToken(color) : undefined}></color-scale-picker>
+                    <!--<input
+                      type="color"
+                      name=${`basis.color.${colorKey}`}
+                      id=${`basis.color.${colorKey}`}
+                      list=${this.#scrapedColors.length === 0 ? nothing : 'preset-colors'}
+                      value=${hex}
+                    />-->
+                  </div>
+                `;
+              })}
+
               <details>
                 <summary>Alle tokens</summary>
                 <wizard-token-field

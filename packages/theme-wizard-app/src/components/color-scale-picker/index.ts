@@ -46,7 +46,7 @@ export class ColorScalePicker extends LitElement {
   readonly supportsCSSColorValues = getSupportsCSSColorValues();
 
   static override readonly styles = [styles];
-  static formAssociated = true;
+  static readonly formAssociated = true;
 
   @property()
   get value() {
@@ -100,33 +100,37 @@ export class ColorScalePicker extends LitElement {
     }
   };
 
-  readonly handleNameChange = (event: Event) => {
-    if (event.target instanceof HTMLInputElement) {
-      this.#name = event.target.value;
-      this.value = {
-        [this.#name]: this.#scale.toObject(),
-      };
-      this.dispatchEvent(new Event('change', { bubbles: true }));
-    }
-  };
+  // readonly handleNameChange = (event: Event) => {
+  //   if (event.target instanceof HTMLInputElement) {
+  //     this.#name = event.target.value;
+  //     this.value = {
+  //       [this.#name]: this.#scale.toObject(),
+  //     };
+  //     this.dispatchEvent(new Event('change', { bubbles: true }));
+  //   }
+  // };
+
+  // TODO: This component should trigger a change event with it's value and the subtree for all child color leafs
+  // app.ts will then listen for the change (as it does now) and replace the subtree in Theme's updateAt()
 
   override render() {
+    // TODO: allow `list` attribute for color suggestions
     return html`
-      <div>
-        <label for=${this.#idName}>Naam</label>
-        <input id=${this.#idName} type="text" value=${this.#nameInputValue} @change=${this.handleNameChange} />
-        <label for=${this.#idColor}>Basiskleur</label>
+      <div class="color-scale-picker">
+        <!--<label for=${this.#idName}>Naam</label>
+        <input id=${this.#idName} type="text" value=${this.#nameInputValue} @change=${this.handleNameChange} />-->
+        <!--<label for=${this.#idColor}>Basiskleur</label>-->
         <input
           id=${this.#idColor}
           type="color"
           value=${this.supportsCSSColorValues ? this.from.toCSSColorFunction() : this.from.toHex()}
           colorSpace=${this.colorSpace}
-          @change=${this.handleColorChange}
+          @input=${this.handleColorChange}
         />
         <output
           for=${this.#idColor}
           class="theme-color-scale__list"
-          style=${`background-color: ${this.from?.toCSSColorFunction()}`}
+          style=${`color: ${this.from?.toCSSColorFunction()}`}
         >
           ${this.#scale
             .list()
