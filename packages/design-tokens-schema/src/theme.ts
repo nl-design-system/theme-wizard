@@ -6,20 +6,41 @@ import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
 import { walkColors, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
-  FOREGROUND_COLOR_KEYS,
   type ForegroundColorKey,
+  type BorderColorKey,
   CONTRAST,
   SKIP_CONTRAST_EXTENSION,
   BrandsSchema,
   BasisTokensSchema,
+  isForegroundColor,
+  isBorderColor,
+  COLOR_KEYS,
 } from './basis-tokens';
 import { removeNonTokenProperties } from './remove-non-token-properties';
 import { ERROR_CODES, type InvalidRefIssue, createContrastIssue } from './validation-issue';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
+export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
   resolveRefs(rootConfig['basis'], rootConfig);
+  return rootConfig;
+};
+
+export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
+  walkColors(rootConfig, (color, path) => {
+    const lastPath = path.at(-1) as string;
+
+    // Find if the token name ends with any COLOR_KEYS value
+    const matchingColorKeyIndex = COLOR_KEYS.findIndex((colorKey) => lastPath.endsWith(colorKey));
+
+    // If no match found, skip this token
+    if (matchingColorKeyIndex === -1) return;
+
+    // Add the extension with the index
+    color.$extensions ??= {};
+    color.$extensions[EXTENSION_COLOR_SCALE_POSITION] = matchingColorKeyIndex + 1;
+  });
   return rootConfig;
 };
 
@@ -34,10 +55,12 @@ export type ContrastExtension = {
 
 export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
-    const lastPath = path.at(-1)! as ForegroundColorKey;
+    const lastPath = path.at(-1)! as ForegroundColorKey | BorderColorKey;
 
     // Check that we have listed this color to have a known contrast counterpart
-    if (!FOREGROUND_COLOR_KEYS.includes(lastPath) || !(lastPath in CONTRAST) || !CONTRAST[lastPath]) return;
+    if ((!isForegroundColor(lastPath) && !isBorderColor(lastPath)) || !(lastPath in CONTRAST) || !CONTRAST[lastPath]) {
+      return;
+    }
 
     // WARNING: we currently skip contrast checking for disabled colors because start-theme and ma-theme do not comply
     const parentPath = path.at(-2);
@@ -124,6 +147,7 @@ const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<st
 
 export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
   .transform(addContrastExtensions)
+  .transform(addColorScalePositionExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid
