@@ -27,7 +27,7 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   return rootConfig;
 };
 
-export const addColorScalePositionExtension = (rootConfig: Record<string, unknown>) => {
+export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
     const lastPath = path.at(-1) as string;
 
@@ -147,7 +147,7 @@ const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<st
 
 export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
   .transform(addContrastExtensions)
-  .transform(addColorScalePositionExtension)
+  .transform(addColorScalePositionExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid
