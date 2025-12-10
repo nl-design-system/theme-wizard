@@ -53,9 +53,11 @@ export const CookieConsentDrawer: React.FC<CookieConsentDrawerProps> = ({
           <Button appearance="primary-action-button" onClick={handleAccept} type="submit" value="accept">
             {buttonAccept}
           </Button>
+
           <Button appearance="secondary-action-button" onClick={handleReject} type="submit" value="reject">
             {buttonReject}
           </Button>
+
           <Link href={customizeHref}>{buttonCustomize}</Link>
         </ButtonGroup>
       </form>
