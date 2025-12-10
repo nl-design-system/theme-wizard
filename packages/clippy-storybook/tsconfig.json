@@ -5,6 +5,8 @@
     "lib": ["ES2024", "DOM"],
     "module": "esnext",
     "moduleResolution": "bundler",
-    "jsx": "react"
-  }
+    "jsx": "react",
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*", "config/**/*"]
 }
