@@ -6,7 +6,6 @@ import '@nl-design-system-community/theme-wizard-app';
 import '@nl-design-system-community/theme-wizard-templates/theme.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import '@utrecht/component-library-css';
-import { html } from 'lit';
 
 const preview: Preview = {
   parameters: {
@@ -15,7 +14,6 @@ const preview: Preview = {
       canvas: {
         sourceState: 'shown',
       },
-      codePanel: true,
     },
     // @whitespace/storybook-addon-html
     html: {
