@@ -2,6 +2,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CookieConsentDrawer } from '@nl-design-system-community/clippy-components';
+import readme from '@nl-design-system-community/clippy-components/patterns/cookie-consent/react/README.md?raw';
 import '@utrecht/component-library-css';
 
 const meta = {
@@ -9,7 +10,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Een non-blocking cookie con sent drawer die bovenaan de pagina verschijnt.',
+        component: readme,
       },
     },
   },
