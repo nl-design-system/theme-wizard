@@ -3,13 +3,14 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
 import { it, describe, expect } from 'vitest';
 import * as z from 'zod';
-import { BrandSchema } from './basis-tokens';
+import { BrandSchema, COLOR_KEYS } from './basis-tokens';
 import {
   ThemeSchema,
   type Theme,
   StrictThemeSchema,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_RESOLVED_AS,
+  EXTENSION_COLOR_SCALE_POSITION,
   type ContrastExtension,
 } from './theme';
 import { parseColor, type ColorToken } from './tokens/color-token';
@@ -175,12 +176,13 @@ describe('resolving Design Token refs', () => {
     it('returns the schema with the ref value added to an extension and the $value left intact', () => {
       const result = StrictThemeSchema.safeParse(config);
       const expectedColor = brandConfig.ma.color.indigo[5];
-      expect.soft(result.data?.basis?.color?.default?.['bg-document']).toEqual({
-        ...config.basis.color.default['bg-document'],
-        $extensions: {
-          [EXTENSION_RESOLVED_AS]: expectedColor.$value,
-        },
-      });
+      expect
+        .soft(result.data?.basis?.color?.default?.['bg-document'])
+        .toMatchObject(config.basis.color.default['bg-document']);
+
+      expect
+        .soft(result.data?.basis?.color?.default?.['bg-document']?.$extensions?.[EXTENSION_RESOLVED_AS])
+        .toEqual(expectedColor.$value);
     });
   });
 
@@ -633,6 +635,95 @@ describe('remove non-token properties', () => {
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
     expect(result.data).toEqual(theme);
+  });
+});
+
+describe('color scale position extension', () => {
+  it('adds color-scale-position extensions for tokens with known color names', () => {
+    const config = {
+      basis: {
+        color: {
+          default: {
+            'bg-document': {
+              $type: 'color',
+              $value: parseColor('#ffffff'),
+            },
+            'border-default': {
+              $type: 'color',
+              $value: parseColor('#cccccc'),
+            },
+            'color-hover': {
+              $type: 'color',
+              $value: parseColor('#000000'),
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+
+    const bgDocToken = result.data?.basis?.color?.default?.['bg-document'];
+    const colorHoverToken = result.data?.basis?.color?.default?.['color-hover'];
+    const borderDefaultToken = result.data?.basis?.color?.default?.['border-default'];
+
+    // Verify extensions are added for all known color names
+    expect(bgDocToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
+    expect(borderDefaultToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
+
+    // Verify the indices are valid numbers
+    expect(typeof bgDocToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBe('number');
+    expect(typeof colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBe('number');
+    expect(typeof borderDefaultToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBe('number');
+
+    // Verify the indices are within the valid range
+    const positionCount = COLOR_KEYS.length;
+    expect(bgDocToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeGreaterThanOrEqual(0);
+    expect(bgDocToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeLessThan(positionCount);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeGreaterThanOrEqual(0);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeLessThan(positionCount);
+  });
+
+  it('only adds extensions to tokens with names in COLOR_KEYS', () => {
+    const config = {
+      basis: {
+        color: {
+          default: {
+            'bg-active': {
+              $type: 'color',
+              $value: parseColor('#ffffff'),
+            },
+            'color-hover': {
+              $type: 'color',
+              $value: parseColor('#000000'),
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+
+    const bgActiveToken = result.data?.basis?.color?.default?.['bg-active'];
+    const colorHoverToken = result.data?.basis?.color?.default?.['color-hover'];
+
+    // Both tokens should have the extension since they're both in COLOR_KEYS
+    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
+
+    // Verify the extensions contain valid indices
+    expect(typeof bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBe('number');
+    expect(typeof colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBe('number');
+
+    // Both indices should be within the COLOR_KEYS range
+    const positionCount = COLOR_KEYS.length;
+    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeGreaterThanOrEqual(0);
+    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeGreaterThanOrEqual(0);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
   });
 });
 

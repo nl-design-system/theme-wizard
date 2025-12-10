@@ -30,31 +30,40 @@ export const BrandsSchema = z.record(
 
 export type Brands = z.infer<typeof BrandsSchema>;
 
+// Ordered list of border color names
+export const BORDER_COLOR_KEYS = ['border-subtle', 'border-default', 'border-hover', 'border-active'] as const;
+export type BorderColorKey = (typeof BORDER_COLOR_KEYS)[number];
+export const isBorderColor = (key: string) => BORDER_COLOR_KEYS.includes(key as BorderColorKey);
+
+// Ordered list of foreground color names
 export const FOREGROUND_COLOR_KEYS = [
-  'border-active',
-  'border-default',
-  'border-hover',
-  'border-subtle',
-  'color-active',
   'color-default',
-  'color-document',
   'color-hover',
+  'color-active',
   'color-subtle',
+  'color-document',
 ] as const;
 export type ForegroundColorKey = (typeof FOREGROUND_COLOR_KEYS)[number];
+export const isForegroundColor = (key: string) => FOREGROUND_COLOR_KEYS.includes(key as ForegroundColorKey);
 
-export const BACKGROUND_COLOR_KEYS = ['bg-active', 'bg-default', 'bg-document', 'bg-hover', 'bg-subtle'] as const;
+// Ordered list of background color names
+export const BACKGROUND_COLOR_KEYS = ['bg-document', 'bg-subtle', 'bg-default', 'bg-hover', 'bg-active'] as const;
 export type BackgroundColorKey = (typeof BACKGROUND_COLOR_KEYS)[number];
+export const isBackgroundColor = (key: string) => BACKGROUND_COLOR_KEYS.includes(key as BackgroundColorKey);
 
-export const COLOR_KEYS = [...BACKGROUND_COLOR_KEYS, ...FOREGROUND_COLOR_KEYS] as const;
+// Ordered list of all color keys
+export const COLOR_KEYS = [...BACKGROUND_COLOR_KEYS, ...BORDER_COLOR_KEYS, ...FOREGROUND_COLOR_KEYS] as const;
 export type ColorNameKey = (typeof COLOR_KEYS)[number];
+export const isColorKey = (key: string) => COLOR_KEYS.includes(key as ColorNameKey);
 
 export const ColorNameSchema = z.strictObject(
   Object.fromEntries(COLOR_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
 );
 export type ColorName = z.infer<typeof ColorNameSchema>;
 
-export type ContrastRequirement = Partial<Record<ForegroundColorKey, Partial<Record<BackgroundColorKey, number>>>>;
+export type ContrastRequirement = Partial<
+  Record<ForegroundColorKey | BorderColorKey, Partial<Record<BackgroundColorKey, number>>>
+>;
 /** @see https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#as-2-toepassing */
 export const CONTRAST: ContrastRequirement = {
   'border-active': {
