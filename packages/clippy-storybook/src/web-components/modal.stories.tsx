@@ -5,8 +5,8 @@ import readme from '@nl-design-system-community/clippy-components/src/clippy-mod
 import { html } from 'lit';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+import { LitTemplateWrapper } from '../utils/LitTemplateWrapper';
 import { templateToHtml } from '../utils/templateToHtml';
-import { LitTemplateWrapper } from './LitTemplateWrapper';
 
 interface ModalStoryArgs {
   title: string;
