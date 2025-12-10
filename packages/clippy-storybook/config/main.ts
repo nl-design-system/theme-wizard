@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/web-components-vite';
+import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@whitespace/storybook-addon-html'],
@@ -10,10 +10,18 @@ const config: StorybookConfig = {
     defaultName: 'Documentatie',
   },
   framework: {
-    name: '@storybook/web-components-vite',
+    name: '@storybook/react-vite',
     options: {},
   },
   stories: ['../src/**/*stories.@(ts|tsx)', '../docs/**/*.mdx'],
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      // Only scan React component files, exclude web components
+      exclude: ['../src/web-components/**'],
+      include: ['../src/patterns/react/**/*.tsx'],
+    },
+  },
 };
 
 export default config;
