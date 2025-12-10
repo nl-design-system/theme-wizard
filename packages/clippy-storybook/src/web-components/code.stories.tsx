@@ -5,8 +5,8 @@ import readme from '@nl-design-system-community/theme-wizard-app/src/components/
 import { html } from 'lit';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+import { LitTemplateWrapper } from '../utils/LitTemplateWrapper';
 import { templateToHtml } from '../utils/templateToHtml';
-import { LitTemplateWrapper } from './LitTemplateWrapper';
 
 interface CodeStoryArgs {
   content: string;
