@@ -40,6 +40,7 @@
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
     "@utrecht/component-library-css": "8.2.1",
+    "@utrecht/component-library-react": "10.3.10",
     "@whitespace/storybook-addon-html": "8.0.2",
     "lit": "3.3.2",
     "lodash-es": "4.17.22",
@@ -48,7 +49,6 @@
     "react-dom": "18.3.1",
     "storybook": "10.1.11",
     "vite": "7.3.0",
-    "vitest": "4.0.16",
-    "@utrecht/component-library-react": "10.3.10"
+    "vitest": "4.0.16"
   }
 }
