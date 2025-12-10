@@ -19,8 +19,10 @@ export function getFiles(pattern: string, relativeTo = 'src') {
 export default defineConfig({
   build: {
     lib: {
-      entry: 'index.ts',
-      fileName: 'index',
+      entry: {
+        index: 'index.ts',
+        'patterns/cookie-consent/index': 'patterns/cookie-consent/index.ts',
+      },
       formats: ['es'],
     },
     rollupOptions: {
