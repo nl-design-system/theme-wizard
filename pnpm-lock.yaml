@@ -90,13 +90,22 @@ importers:
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/component-library-react':
+        specifier: 10.3.10
+        version: 10.3.10(@babel/runtime@7.28.4)(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lit:
         specifier: 3.3.1
         version: 3.3.1
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
     devDependencies:
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
+      '@types/react':
+        specifier: 18.3.23
+        version: 18.3.23
       '@vitest/browser-playwright':
         specifier: 4.0.8
         version: 4.0.8(playwright@1.56.1)(vite@7.2.2(@types/node@22.19.0)(tsx@4.19.2)(yaml@2.8.1))(vitest@4.0.8)

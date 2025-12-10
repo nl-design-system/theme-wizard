@@ -21,12 +21,11 @@ export default defineConfig({
     lib: {
       entry: {
         index: 'index.ts',
-        'patterns/cookie-consent/index': 'patterns/cookie-consent/index.ts',
       },
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['lit', 'lit/directives/class-map.js'],
+      external: ['lit', 'lit/directives/class-map.js', 'react', '@utrecht/component-library-react'],
       input: getFiles('src/**/index.ts'),
       output: {
         entryFileNames: '[name].js',
