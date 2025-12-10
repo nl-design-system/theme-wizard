@@ -9,7 +9,6 @@ import '@utrecht/component-library-css';
 import { html } from 'lit';
 
 const preview: Preview = {
-  decorators: [(story) => html`<div class="ma-theme clippy-theme">${story()}</div>`],
   parameters: {
     controls: { expanded: false },
     docs: {
@@ -20,7 +19,7 @@ const preview: Preview = {
     },
     // @whitespace/storybook-addon-html
     html: {
-      root: '[data-story-root]',
+      root: '#storybook-root',
       transform: formatHtml,
     },
   },
