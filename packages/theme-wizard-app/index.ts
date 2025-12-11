@@ -2,7 +2,6 @@ import './src/components/app/app';
 import './src/components/sidebar/sidebar';
 import './src/components/template-action';
 import './src/components/template-case-card';
-import './src/components/template-code';
 import './src/components/template-color-swatch';
 import './src/components/template-heading';
 import './src/components/template-link-list';

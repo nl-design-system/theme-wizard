@@ -1,6 +1,7 @@
 /* @license CC0-1.0 */
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import '@nl-design-system-community/clippy-components/clippy-modal';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-modal/README.md?raw';
 import { html } from 'lit';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
