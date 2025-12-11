@@ -1,18 +1,22 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
-import { ClippyCombobox } from './index';
+import { ClippyFontCombobox } from './index';
 import './index';
 
-const tag = 'clippy-combobox';
+const tag = 'clippy-font-combobox';
 
 const OPTIONS = [
   {
-    label: 'Bert',
-    value: 'bert',
+    label: 'Arial',
+    value: ['Arial', 'sans-serif'],
   },
   {
-    label: 'Ernie',
-    value: 'ernie',
+    label: 'Courier New',
+    value: ['Courier New', 'monospace'],
+  },
+  {
+    label: 'Zapf Dingbats',
+    value: 'Zapf Dingbats',
   },
 ];
 
@@ -20,7 +24,7 @@ describe(`<${tag}>`, () => {
   beforeEach(() => {
     document.body.innerHTML = `
     <form>
-      <${tag} name="${tag}" options=${JSON.stringify(OPTIONS)}></${tag}>
+      <${tag} name="${tag}" options='${JSON.stringify(OPTIONS)}'></${tag}>
     </form>`;
   });
 
@@ -45,7 +49,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('selects an option when clicking it', async () => {
-    const component: ClippyCombobox = document.querySelector(tag)!;
+    const component: ClippyFontCombobox = document.querySelector(tag)!;
     const input = page.getByRole('textbox');
     await input.click();
     const option = page.getByRole('option').last();
@@ -54,7 +58,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('uses query as value', async () => {
-    const component: ClippyCombobox = document.querySelector(tag)!;
+    const component: ClippyFontCombobox = document.querySelector(tag)!;
     const query = 'Elmo';
     const input = page.getByRole('textbox');
     await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
@@ -62,7 +66,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('shows up as a form element', async () => {
-    const component: ClippyCombobox = document.querySelector(tag)!;
+    const component: ClippyFontCombobox = document.querySelector(tag)!;
     const form: HTMLFormElement = document.querySelector('form')!;
     expect(form.elements).toContain(component);
   });
@@ -79,13 +83,13 @@ describe(`<${tag}>`, () => {
   it.each([
     [['ArrowDown'], OPTIONS[0]],
     [['ArrowDown', 'ArrowDown'], OPTIONS[1]],
-    [['ArrowDown', 'ArrowDown', 'ArrowDown'], OPTIONS[0]],
-    [['ArrowDown', 'ArrowDown', 'ArrowUp'], OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown'], OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowUp'], OPTIONS[0]],
   ])('changes the selected option with arrow keys', async (sequence, selection) => {
-    const component: ClippyCombobox = document.querySelector(tag)!;
+    const component: ClippyFontCombobox = document.querySelector(tag)!;
     const input = page.getByRole('textbox');
     await input.fill('');
     await userEvent.keyboard([...sequence, 'Enter'].map((k) => `{${k}}`).join(''));
-    expect(component.value).toBe(selection.value);
+    expect(component.value).toStrictEqual(selection.value);
   });
 });
