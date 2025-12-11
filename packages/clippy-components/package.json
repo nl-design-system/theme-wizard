@@ -9,7 +9,7 @@
       "import": "./dist/*/index.js",
       "types": "./dist/*/index.d.ts"
     },
-    "./src/clippy-modal/README.md": "./src/clippy-modal/README.md"
+    "./src/*": "./src/*"
   },
   "files": [
     "dist/"
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@amsterdam/design-system-css": "2.2.0",
+    "@nl-design-system-candidate/code-css": "2.0.3",
     "@utrecht/button-css": "3.0.1",
     "@utrecht/combobox-css": "2.0.1",
     "@utrecht/component-library-react": "10.3.10",
