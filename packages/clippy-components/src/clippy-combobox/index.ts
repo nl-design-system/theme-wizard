@@ -4,6 +4,7 @@ import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import memoize from 'memoize';
 
 type Option = {
   label: string;
@@ -26,11 +27,11 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) readonly = false;
   @property({ type: Boolean }) private open = false;
-  @property({ type: Array }) private readonly options: T[] = [];
   @property() readonly position: Position = 'block-end';
   internals_ = this.attachInternals();
 
   #value: T['value'] | undefined;
+  #options: Map<T['label'], T> = new Map();
 
   static readonly formAssociated = true;
   static override readonly styles = [unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
@@ -43,9 +44,19 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     }
     const options = this.options.filter(this.filter);
     if (options.length === 0) {
-      this.addAdditionalOptions(this.query);
+      this.#addAdditionalOptions(this.query);
     }
     return options;
+  }
+
+
+  @property({ type: Array })
+  set options(value: T[]) {
+    this.#options = new Map(value.map((option) => ([option.label, option])));
+  }
+
+  get options(): T[] {
+    return [...this.#options.values()]
   }
 
   @property({ attribute: false })
@@ -98,10 +109,12 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     return value ? `${value}` : '';
   }
 
-  async addAdditionalOptions(query: string) {
+  readonly #addAdditionalOptions = memoize(async (query: string) => {
     const additions = await this.fetchAdditionalOptions(query);
-    this.options.push(...additions);
-  }
+    for (const addition of additions) {
+      this.#options.set(addition.label, addition);
+    }
+  });
 
   readonly #handleBlur = () => {
     this.open = false;
