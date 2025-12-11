@@ -32,6 +32,9 @@
   "scripts": {
     "start": "vite preview",
     "dev": "vite",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:js": "eslint",
+    "lint-fix:js": "eslint --fix",
     "test-build": "vitest run --coverage",
     "build": "vite build",
     "clean": "rimraf dist/"
