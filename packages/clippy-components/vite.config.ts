@@ -20,7 +20,6 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: 'index.ts',
         ...getFiles('src/**/*.ts'),
         ...getFiles('src/**/*.tsx'),
       },
