@@ -14,6 +14,7 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { EVENT_NAMES } from '../../constants';
+import { t } from '../../i18n';
 import '../sidebar/sidebar';
 import '../wizard-scraper';
 import '../wizard-preview';
@@ -27,6 +28,9 @@ import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
 import appStyles from './app.css';
+
+const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
+const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 
 /**
  * Main application component - Orchestrator coordinator
@@ -142,6 +146,9 @@ export class App extends LitElement {
   };
 
   override render() {
+    const bodyFontToken = this.#theme.at(BODY_FONT_TOKEN_REF);
+    const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
+
     return html`
       <div class="wizard-app ma-theme">
         <div class="wizard-app__logo">
@@ -157,6 +164,18 @@ export class App extends LitElement {
           <section>
             <utrecht-heading-2>Maak design keuzes</utrecht-heading-2>
             <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
+              <wizard-token-field
+                .errors=${this.#theme.issues}
+                .token=${headingFontToken}
+                label="${t('tokens.fieldLabels.headingFont')}"
+                path=${HEADING_FONT_TOKEN_REF}
+              ></wizard-token-field>
+              <wizard-token-field
+                .errors=${this.#theme.issues}
+                .token=${bodyFontToken}
+                label="${t('tokens.fieldLabels.bodyFont')}"
+                path=${BODY_FONT_TOKEN_REF}
+              ></wizard-token-field>
               <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
               <details>
                 <summary>Alle tokens</summary>

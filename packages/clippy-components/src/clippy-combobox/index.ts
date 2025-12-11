@@ -1,0 +1,222 @@
+import comboboxStyles from '@utrecht/combobox-css?inline';
+import listboxStyles from '@utrecht/listbox-css?inline';
+import textboxStyles from '@utrecht/textbox-css?inline';
+import { html, LitElement, unsafeCSS } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+
+type Option = {
+  label: string;
+  value: string | Array<string>;
+};
+
+type Position = 'block-start' | 'block-end';
+
+const tag = 'clippy-combobox';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: ClippyCombobox;
+  }
+}
+
+@customElement(tag)
+export class ClippyCombobox<T extends Option = Option> extends LitElement {
+  @property() name = '';
+  @property({ type: Boolean }) disabled = false;
+  @property({ type: Boolean }) readonly = false;
+  @property({ type: Boolean }) private open = false;
+  @property({ type: Array }) private readonly options: T[] = [];
+  @property() readonly position: Position = 'block-end';
+  internals_ = this.attachInternals();
+
+  #value: T['value'] | undefined;
+
+  static readonly formAssociated = true;
+  static override readonly styles = [unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
+
+  @state() selectedIndex = -1;
+  @state() query = ''; // Query is what the user types to filter options.
+  @state() get filteredOptions(): T[] {
+    if (this.query.length === 0) {
+      return this.options;
+    }
+    return this.options.filter(this.filter);
+  }
+
+  @property({ attribute: false })
+  set value(value: T['value'] | undefined) {
+    this.#value = value;
+    this.query = this.valueToQuery(value);
+    this.internals_.setFormValue(this.valueToFormValue(value));
+  }
+
+  get value() {
+    return this.#value;
+  }
+
+  /**
+   * Override this function to customize how options are filtered when typing
+   */
+  readonly filter = (option: T) => {
+    const label = `${option.label}`; // Use as string
+    return label.toLowerCase().includes(this.query.toLowerCase());
+  };
+
+  /**
+   * Override this function to customize an external data source
+   */
+  fetchAdditionalOptions(_query: string) {
+    const empty: T[] = [];
+    return Promise.resolve(empty);
+  }
+
+  /**
+   * Override this function to customize how the user input is resolved to a value.
+   * This runs on input.
+   */
+  queryToValue(query: string): T['value'] | undefined {
+    return query;
+  }
+
+  /**
+   * Override this function to customize how a value is converted to a .
+   * This runs on setting the value.
+   */
+  valueToQuery(value: T['value'] | undefined): string {
+    return (value ?? '').toString();
+  }
+
+  /**
+   * Override this function to customize how the value is converted to a form value;
+   */
+  valueToFormValue(value?: T['value']): string {
+    return value ? `${value}` : '';
+  }
+
+  async addAdditionalOptions(query: string) {
+    const additions = await this.fetchAdditionalOptions(query);
+    this.options.push(...additions);
+  }
+
+  readonly #handleBlur = () => {
+    this.open = false;
+  };
+
+  readonly #handleChange = () => {
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  };
+
+  readonly #handleFocus = () => {
+    this.open = true;
+  };
+
+  readonly #handleInput = (event: InputEvent) => {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) return;
+    this.selectedIndex = -1;
+    this.open = true;
+    this.query = target.value;
+    this.value = this.queryToValue(this.query);
+  };
+
+  readonly #handleOptionsClick = (event: Event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+
+    const index = Number(target.dataset['index']);
+    if (Number.isNaN(index)) return;
+
+    this.#commitSelection(index);
+  };
+
+  readonly #handleKeydown = ({ key }: KeyboardEvent) => {
+    const index = this.selectedIndex;
+    const count = this.filteredOptions.length;
+    switch (key) {
+      case 'ArrowDown':
+        return this.#setSelection(index + 1, true);
+      case 'ArrowUp':
+        return this.#setSelection(index - 1, true);
+      case 'Enter':
+        return this.#commitSelection(index);
+      case 'Escape':
+        return this.#setSelection(-1);
+      case 'Home':
+        return this.#setSelection(0);
+      case 'End':
+        return this.#setSelection(count - 1);
+      default:
+        return undefined;
+    }
+  };
+
+  #setSelection(index: number, open: boolean = false) {
+    this.open = open;
+    this.selectedIndex = index > -1 ? index % this.filteredOptions.length : -1;
+  }
+
+  #commitSelection(index: number) {
+    const { label, value } = this.filteredOptions.at(index) ?? {};
+    if (index < 0 || !label) return;
+
+    this.query = label.toString();
+
+    if (this.value !== value) {
+      this.value = value;
+      this.#handleChange();
+    }
+    this.open = false;
+  }
+
+  /**
+   * Override this function to customize the rendering of combobox options and selected value.
+   */
+  renderEntry(option: Option, _index: number) {
+    return html`${option?.label}`;
+  }
+
+  override render() {
+    const popoverClasses = {
+      [`utrecht-combobox__popover--${this.position}`]: this.position,
+      'utrecht-combobox__popover--hidden': !this.open,
+    };
+    return html`
+      <div class="utrecht-combobox" role="combobox">
+        <input
+          name=${this.name}
+          autocomplete="off"
+          aria-autocomplete="list"
+          aria-haspopup="listbox"
+          type="text"
+          class="utrecht-textbox utrecht-combobox__input"
+          dir="auto"
+          .value=${this.query}
+          @input=${this.#handleInput}
+          @focus=${this.#handleFocus}
+          @blur=${this.#handleBlur}
+          @change=${this.#handleChange}
+          @keydown=${this.#handleKeydown}
+        />
+        <div class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
+          <ul class="utrecht-listbox__list" role="none" @mousedown=${this.#handleOptionsClick}>
+            ${this.filteredOptions.map((option, index) => {
+              const selected = index === this.selectedIndex;
+              const selectedClass = {
+                'utrecht-listbox__option--selected': selected,
+              };
+              return html`<li
+                class="utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(selectedClass)}"
+                role="option"
+                aria-selected=${selected}
+                data-index=${index}
+              >
+                ${this.renderEntry(option, index)}
+              </li>`;
+            })}
+          </ul>
+        </div>
+      </div>
+    `;
+  }
+}

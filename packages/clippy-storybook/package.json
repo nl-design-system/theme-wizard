@@ -17,6 +17,9 @@
   "scripts": {
     "build": "storybook build --config-dir ./config/ --output-dir ./dist/",
     "clean": "rimraf ./dist/",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:js": "eslint",
+    "lint-fix:js": "eslint --fix",
     "storybook": "storybook dev --config-dir ./config/ --port 6006"
   },
   "devDependencies": {

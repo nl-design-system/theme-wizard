@@ -3,7 +3,6 @@ import { css } from 'lit';
 export default css`
   :host {
     display: block;
-    overflow: auto;
   }
 
   :host(.theme-validation-highlight) {

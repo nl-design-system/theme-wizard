@@ -29,6 +29,9 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "vite",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:js": "eslint",
+    "lint-fix:js": "eslint --fix",
     "test-build": "vitest run --coverage",
     "build": "tsc",
     "clean": "rimraf dist/"
