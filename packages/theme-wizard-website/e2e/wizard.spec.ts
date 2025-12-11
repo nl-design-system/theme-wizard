@@ -23,6 +23,23 @@ test.describe('scraping css design tokens', () => {
   });
 });
 
+test.describe('change fonts', () => {
+  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
+    const heading = previewPage.getHeading(2);
+    await expect(heading).not.toHaveFont('Courier New');
+    await previewPage.changeHeadingFont('Courier New');
+    await expect(heading).toHaveFont('Courier New');
+  });
+
+  test('can change body font to Arial', async ({ previewPage }) => {
+    const paragraph = previewPage.getParagraph();
+    await expect(paragraph).not.toHaveFont('Arial');
+    await previewPage.changeBodyFont('Arial');
+    await expect(paragraph).toHaveFont('Arial');
+  });
+});
+
+
 test.describe('Download tokens as JSON', () => {
   test('initial button state is correct', async ({ themeWizard }) => {
     await expect(themeWizard.downloadButton).toBeVisible();
