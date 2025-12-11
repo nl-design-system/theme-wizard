@@ -105,7 +105,9 @@ export class App extends LitElement {
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
     if (target instanceof WizardTokenInput) {
-      console.log(target);
+      console.log(event.target, target);
+      console.log(target.value);
+      console.log(target.constructor);
       const value = target.value;
       this.#theme.updateAt(target.name, value);
       // Request update to reflect any new validation issues
