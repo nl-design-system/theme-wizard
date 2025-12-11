@@ -7,6 +7,7 @@ import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/700.css';
 // <End TODO>
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
+import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import {
   legacyToModernColor,
@@ -29,6 +30,7 @@ import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import '../color-scale-picker';
 import { EVENT_NAMES } from '../../constants';
+import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { t } from '../../i18n';
 import ColorToken from '../../lib/ColorToken';
 import PersistentStorage from '../../lib/PersistentStorage';
@@ -48,7 +50,6 @@ const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 export class App extends LitElement {
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
   readonly #theme = new Theme();
-  #scrapedColors: ScrapedColorToken[] = [];
 
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
@@ -68,6 +69,10 @@ export class App extends LitElement {
     }
     return [];
   }
+
+  @provide({ context: scrapedColorsContext })
+  @state()
+  scrapedColors: ScrapedColorToken[] = [];
 
   @state()
   private selectedTemplatePath: string = '/my-environment/overview';
@@ -101,6 +106,7 @@ export class App extends LitElement {
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
     if (target instanceof WizardTokenInput) {
+      console.log(target);
       const value = target.value;
       this.#theme.updateAt(target.name, value);
       // Request update to reflect any new validation issues
@@ -152,8 +158,7 @@ export class App extends LitElement {
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
-    this.#scrapedColors = target.colors;
-    this.requestUpdate();
+    this.scrapedColors = target.colors;
   };
 
   override render() {
@@ -189,33 +194,21 @@ export class App extends LitElement {
               ></wizard-token-field>
               <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
 
-              ${this.#scrapedColors.length === 0
-                ? nothing
-                : html`
-                    <datalist id="preset-colors">
-                      ${this.#scrapedColors.map(
-                        (color) => html`<option>${legacyToModernColor.encode(color.$value)}</option>`,
-                      )}
-                    </datalist>
-                  `}
               ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
                 const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
                 const val = token?.$value;
                 const hex = val && !isRef(val) ? legacyToModernColor.encode(val) : null;
-                const color = token.$extensions[EXTENSION_RESOLVED_AS]
-                  ? { $type: 'color', $value: token.$extensions[EXTENSION_RESOLVED_AS] }
+                const color = token['$extensions']?.[EXTENSION_RESOLVED_AS]
+                  ? { $type: 'color', $value: token['$extensions'][EXTENSION_RESOLVED_AS] }
                   : token;
                 return html`
                   <div>
-                    <label for=${`basis.color.${colorKey}`}>${colorKey}</label>
-                    <color-scale-picker .from=${color ? new ColorToken(color) : undefined}></color-scale-picker>
-                    <!--<input
-                      type="color"
-                      name=${`basis.color.${colorKey}`}
+                    <color-scale-picker
+                      label=${colorKey}
                       id=${`basis.color.${colorKey}`}
-                      list=${this.#scrapedColors.length === 0 ? nothing : 'preset-colors'}
-                      value=${hex}
-                    />-->
+                      name=${`basis.color.${colorKey}`}
+                      .initialFrom=${color ? new ColorToken(color) : undefined}
+                    ></color-scale-picker>
                   </div>
                 `;
               })}
