@@ -244,8 +244,8 @@ importers:
         version: 4.1.12
     devDependencies:
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 2.5.0
-        version: 2.5.0
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
         specifier: 1.2.0
         version: 1.2.0
@@ -478,8 +478,8 @@ importers:
   packages/theme-wizard-website:
     dependencies:
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 2.5.0
-        version: 2.5.0
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -1559,9 +1559,6 @@ packages:
 
   '@nl-design-system-candidate/skip-link-css@1.0.3':
     resolution: {integrity: sha512-1cj/9LIm2NMphL7sq1SBsD2G9DYtXSKKETmHP4/yvuT/qw0xP93HLNam8n5gWQmoFCc8h4K6JsQJY/bxudxOMQ==}
-
-  '@nl-design-system-community/ma-design-tokens@2.5.0':
-    resolution: {integrity: sha512-3TYzzbo0C5br42SiS6jISScUL7u4hxgDvU2DZVBv6gJ40jBZPpXIgLI1T/JESQj79+nY2AddGm6l8xg2o2WLFA==}
 
   '@nl-design-system-community/ma-design-tokens@3.0.0':
     resolution: {integrity: sha512-95uF6BODj/RldOGIdB0i4L8ISoJ4CauQVzZb6sgD8GBA4btEdX3Cdc6VOKncKbknads5WePeNFap7lo7YrlRGg==}
@@ -7891,8 +7888,6 @@ snapshots:
   '@nl-design-system-candidate/paragraph-css@2.1.1': {}
 
   '@nl-design-system-candidate/skip-link-css@1.0.3': {}
-
-  '@nl-design-system-community/ma-design-tokens@2.5.0': {}
 
   '@nl-design-system-community/ma-design-tokens@3.0.0': {}
 
