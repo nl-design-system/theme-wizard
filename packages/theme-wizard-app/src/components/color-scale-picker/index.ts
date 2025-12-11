@@ -1,6 +1,7 @@
 import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { consume } from '@lit/context';
 import {
+  COLOR_KEYS,
   legacyToModernColor,
   parseColor,
   type ColorSpace,
@@ -33,6 +34,15 @@ const getSupportsCSSColorValues = () => {
   return hasSupport;
 };
 
+/**
+ * Transform ColorScale output (numeric keys "1"-"14") to COLOR_KEYS format
+ */
+const transformScaleToColorKeys = (scaleObject: Record<string, ColorTokenType>) => {
+  return Object.fromEntries(
+    COLOR_KEYS.map((key, index) => [key, scaleObject[String(index + 1)]])
+  );
+};
+
 @customElement('color-scale-picker')
 export class ColorScalePicker extends WizardTokenInput {
   readonly #scale = new ColorScale(DEFAULT_FROM);
@@ -44,12 +54,21 @@ export class ColorScalePicker extends WizardTokenInput {
   static override readonly styles = [styles];
 
   override get value(): ColorScaleObject {
-    return this.#value;
+    return transformScaleToColorKeys(this.#value);
   }
 
   override set value(val) {
     const oldValue = this.#value;
-    this.#value = val;
+    // Store the transformed value (with COLOR_KEYS)
+    let transformedVal: Record<string, ColorTokenType>;
+    if (typeof val === 'object' && val !== null && 'bg-document' in val) {
+      transformedVal = Object.fromEntries(
+        COLOR_KEYS.map((key, index) => [String(index + 1), (val as Record<string, ColorTokenType>)[key]])
+      ) as Record<string, ColorTokenType>;
+    } else {
+      transformedVal = val as Record<string, ColorTokenType>;
+    }
+    this.#value = transformedVal;
     this.internals_.setFormValue(JSON.stringify(val));
     this.requestUpdate('value', oldValue);
   }
@@ -70,7 +89,8 @@ export class ColorScalePicker extends WizardTokenInput {
         });
         // Reset the internal value to match the new color
         this.#value = this.#scale.toObject();
-        this.internals_.setFormValue(JSON.stringify(this.#value));
+        // Set form value using COLOR_KEYS format for consistency
+        this.internals_.setFormValue(JSON.stringify(transformScaleToColorKeys(this.#value)));
       } catch {
         // If parsing fails, keep the default
       }
