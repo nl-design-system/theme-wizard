@@ -1,7 +1,7 @@
 import '@nl-design-system-community/clippy-components/clippy-combobox';
 import { ClippyCombobox } from '@nl-design-system-community/clippy-components/clippy-combobox';
 import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { t } from '../../i18n';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -71,6 +71,7 @@ export class WizardFontInput extends WizardTokenInput {
           @change=${this.#handleChange}
           .value=${this.value.toString()}
           .options=${DEFAULT_FONT_OPTIONS}
+          aria-errormessage=${this.errors.length === 0 ? nothing : this.errors.map(({ id }) => id).join(' ')}
         ></clippy-combobox>
       </div>
     `;
