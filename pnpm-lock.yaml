@@ -87,6 +87,9 @@ importers:
       '@amsterdam/design-system-css':
         specifier: 2.1.0
         version: 2.1.0
+      '@nl-design-system-candidate/code-css':
+        specifier: 2.0.3
+        version: 2.0.3
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -324,9 +327,6 @@ importers:
       '@gemeente-denhaag/side-navigation':
         specifier: 4.0.2
         version: 4.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@nl-design-system-candidate/code-css':
-        specifier: 2.0.3
-        version: 2.0.3
       '@nl-design-system-candidate/heading-css':
         specifier: 1.1.1
         version: 1.1.1
