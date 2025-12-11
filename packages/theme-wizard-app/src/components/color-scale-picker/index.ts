@@ -1,9 +1,12 @@
-import { EXTENSION_TOKEN_ID } from '@nl-design-system-community/css-scraper';
-import { parseColor, type ColorSpace } from '@nl-design-system-community/design-tokens-schema';
-import { LitElement, html } from 'lit';
+import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
+import { consume } from '@lit/context';
+import { legacyToModernColor, parseColor, type ColorSpace } from '@nl-design-system-community/design-tokens-schema';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
+import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
 
 // @TODO: get from design tokens schema
@@ -14,8 +17,6 @@ type ColorScaleObject = {
 const DEFAULT_FROM = new ColorToken({
   $value: parseColor('black'),
 });
-
-const DEFAULT_NAME = 'zwart';
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/color
@@ -31,14 +32,10 @@ const getSupportsCSSColorValues = () => {
 };
 
 @customElement('color-scale-picker')
-export class ColorScalePicker extends LitElement {
-  @property() name = '';
+export class ColorScalePicker extends WizardTokenInput {
   #from = DEFAULT_FROM;
   #scale = new ColorScale(DEFAULT_FROM);
-  internals_ = this.attachInternals();
-  #idName = 'color-scale-name';
   #idColor = 'color-scale-color';
-  #name = '';
   #value: ColorScaleObject = {
     ['']: this.#scale.toObject(),
   };
@@ -46,14 +43,12 @@ export class ColorScalePicker extends LitElement {
   readonly supportsCSSColorValues = getSupportsCSSColorValues();
 
   static override readonly styles = [styles];
-  static readonly formAssociated = true;
 
-  @property()
-  get value() {
+  override get value(): ColorScaleObject {
     return this.#value;
   }
 
-  set value(val: ColorScaleObject) {
+  override set value(val: ColorScaleObject) {
     const oldValue = this.#value;
     this.#value = val;
     this.internals_.setFormValue(JSON.stringify(val));
@@ -61,54 +56,75 @@ export class ColorScalePicker extends LitElement {
   }
 
   @property()
+  initialFrom?: ColorToken;
+
+  @consume({ context: scrapedColorsContext, subscribe: true })
+  @property({ attribute: false })
+  scrapedColors: ScrapedColorToken[] = [];
+
+  #lastUserColor?: string;
+
   get from() {
+    // If initialFrom is set and from hasn't been changed by user, use initialFrom
+    if (this.initialFrom && this.#from === DEFAULT_FROM) {
+      // Sync the scale with the initial value
+      this.#scale.from = this.initialFrom;
+      return this.initialFrom;
+    }
     return this.#from;
   }
 
-  set from(value: ColorToken) {
-    this.#from = value;
-    this.#scale.from = value;
+  override updated(changedProperties: Map<string, unknown>) {
+    super.updated(changedProperties);
+    // Update from initial value only if this is a new external change (not our own user change)
+    if (changedProperties.has('initialFrom') && this.initialFrom) {
+      const newColor = this.initialFrom.toHex();
+      // Only update if it's different from the last color we set
+      if (newColor !== this.#lastUserColor) {
+        this.#from = this.initialFrom;
+        this.#scale.from = this.initialFrom;
+        this.#lastUserColor = undefined; // Reset when accepting external update
+      }
+    }
   }
 
   get colorSpace(): ColorSpace {
     return this.from.$value.colorSpace;
   }
 
-  get #nameInputValue(): string {
-    const tokenId = this.#from.$extensions?.[EXTENSION_TOKEN_ID];
-    const defaultName = tokenId ? `${tokenId}` : DEFAULT_NAME;
-    return this.#name || defaultName;
-  }
-
   override connectedCallback() {
     super.connectedCallback();
-    const name = this.#nameInputValue;
     this.value = {
-      [name]: this.#scale.toObject(),
+      [this.name]: this.#scale.toObject(),
     };
   }
 
-  readonly handleColorChange = (event: Event) => {
+  readonly handleColorInput = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
-      this.from = new ColorToken({
+      const newToken = new ColorToken({
         $value: parseColor(event.target.value),
       });
-      this.value = {
-        [this.#name]: this.#scale.toObject(),
-      };
-      this.dispatchEvent(new Event('change', { bubbles: true }));
+      this.#from = newToken;
+      this.#scale.from = newToken;
+      this.requestUpdate();
     }
   };
 
-  // readonly handleNameChange = (event: Event) => {
-  //   if (event.target instanceof HTMLInputElement) {
-  //     this.#name = event.target.value;
-  //     this.value = {
-  //       [this.#name]: this.#scale.toObject(),
-  //     };
-  //     this.dispatchEvent(new Event('change', { bubbles: true }));
-  //   }
-  // };
+  readonly handleColorChange = (event: Event) => {
+    if (event.target instanceof HTMLInputElement) {
+      const newToken = new ColorToken({
+        $value: parseColor(event.target.value),
+      });
+      this.#from = newToken;
+      this.#scale.from = newToken;
+      this.#lastUserColor = newToken.toHex();
+      this.value = {
+        [this.name]: this.#scale.toObject(),
+      };
+      this.requestUpdate();
+      this.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  };
 
   // TODO: This component should trigger a change event with it's value and the subtree for all child color leafs
   // app.ts will then listen for the change (as it does now) and replace the subtree in Theme's updateAt()
@@ -117,15 +133,23 @@ export class ColorScalePicker extends LitElement {
     // TODO: allow `list` attribute for color suggestions
     return html`
       <div class="color-scale-picker">
-        <!--<label for=${this.#idName}>Naam</label>
-        <input id=${this.#idName} type="text" value=${this.#nameInputValue} @change=${this.handleNameChange} />-->
-        <!--<label for=${this.#idColor}>Basiskleur</label>-->
+        <label for=${this.#idColor}>${this.label}</label>
+        ${this.scrapedColors.length === 0
+          ? nothing
+          : html`<datalist id="preset-colors">
+              ${this.scrapedColors.map(
+                (color: ScrapedColorToken) => html`<option>${legacyToModernColor.encode(color.$value)}</option>`,
+              )}
+            </datalist>`}
         <input
           id=${this.#idColor}
+          name=${this.#idColor}
           type="color"
           value=${this.supportsCSSColorValues ? this.from.toCSSColorFunction() : this.from.toHex()}
           colorSpace=${this.colorSpace}
-          @input=${this.handleColorChange}
+          @input=${this.handleColorInput}
+          @change=${this.handleColorChange}
+          list="preset-colors"
         />
         <output
           for=${this.#idColor}
@@ -135,11 +159,11 @@ export class ColorScalePicker extends LitElement {
           ${this.#scale
             .list()
             .map(
-              (stop) => html`
+              (stop, index) => html`
                 <div
                   class="theme-color-scale__stop"
                   style=${`background-color: ${stop.toCSSColorFunction()}`}
-                  title=${stop.$value.components.join(', ')}
+                  title=${`${index + 1}: ${stop.$value.components.join(', ')}`}
                 ></div>
               `,
             )}

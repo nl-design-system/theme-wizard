@@ -2,9 +2,14 @@ import { css } from 'lit';
 
 export default css`
   .color-scale-picker {
-    display: flex;
-    gap: var(--basis-space-inline-md);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--basis-space-inline-md);
     align-items: center;
+  }
+
+  label {
+    grid-column: 1 / -1;
   }
 
   .theme-color-scale__list {
