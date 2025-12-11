@@ -55,7 +55,7 @@ export default class Theme {
     this.#tokens = values;
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
-      sheet.replace(css);
+      sheet.replaceSync(css);
     });
   }
 
@@ -68,6 +68,14 @@ export default class Theme {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
     dset(tokens, `${path}.$value`, value);
+    this.tokens = tokens;
+  }
+
+  updateMany(values: { path: string; value: DesignToken['$value'] }[]) {
+    const tokens = structuredClone(this.#tokens);
+    for (const { path, value } of values) {
+      dset(tokens, `${path}.$value`, value);
+    }
     this.tokens = tokens;
   }
 

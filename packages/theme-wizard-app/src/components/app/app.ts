@@ -10,10 +10,12 @@ import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-tem
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import {
+  COLOR_KEYS,
   legacyToModernColor,
   BASIS_COLOR_NAMES,
-  isRef,
   EXTENSION_RESOLVED_AS,
+  type ColorValue,
+  EXTENSION_COLOR_SCALE_POSITION,
 } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
@@ -34,6 +36,7 @@ import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
+import { ColorScalePicker } from '../color-scale-picker';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -49,6 +52,7 @@ const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 export class App extends LitElement {
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
   readonly #theme = new Theme();
+  #storageSaveTimeout: ReturnType<typeof setTimeout> | null = null;
 
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
@@ -104,17 +108,42 @@ export class App extends LitElement {
 
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
+
+    if (target instanceof ColorScalePicker) {
+      const updates = Object.entries(target.value).map(([colorKey, value]) => {
+        return {
+          path: `${target.name}.${colorKey}`,
+          value: value.$value,
+        };
+      });
+      this.#theme.updateMany(updates);
+    } else if (target instanceof WizardTokenInput) {
+      this.#theme.updateAt(target.name, target.value);
+    }
+
     if (target instanceof WizardTokenInput) {
-      console.log(event.target, target);
-      console.log(target.value);
-      console.log(target.constructor);
-      const value = target.value;
-      this.#theme.updateAt(target.name, value);
       // Request update to reflect any new validation issues
       this.requestUpdate();
-      this.#storage.setJSON(this.#theme.tokens);
-      this.requestUpdate();
+      // Debounce storage saves to avoid excessive writes
+      this.#scheduleSave();
     }
+  };
+
+  readonly #scheduleSave = () => {
+    // Clear any pending save
+    if (this.#storageSaveTimeout !== null) {
+      clearTimeout(this.#storageSaveTimeout);
+    }
+
+    // Schedule a new save after 500ms of inactivity
+    this.#storageSaveTimeout = setTimeout(() => {
+      try {
+        this.#storage.setJSON(this.#theme.tokens);
+        this.#storageSaveTimeout = null;
+      } catch (error) {
+        console.error('Failed to save tokens to storage:', error);
+      }
+    }, 500);
   };
 
   readonly #handleTemplateChange = (event: Event) => {
@@ -124,7 +153,16 @@ export class App extends LitElement {
 
   readonly #handleReset = () => {
     this.#theme.reset();
-    this.#storage.removeJSON();
+    try {
+      this.#storage.removeJSON();
+    } catch (error) {
+      console.error('Failed to clear storage:', error);
+    }
+    // Cancel any pending saves since we're resetting
+    if (this.#storageSaveTimeout !== null) {
+      clearTimeout(this.#storageSaveTimeout);
+      this.#storageSaveTimeout = null;
+    }
     this.requestUpdate();
   };
 
@@ -198,10 +236,31 @@ export class App extends LitElement {
 
               ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
                 const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
-                const resolvedToken = token['$extensions']?.[EXTENSION_RESOLVED_AS] || token?.$value;
-                const colorValue = isRef(resolvedToken) ? undefined : legacyToModernColor.encode(resolvedToken);
+                let colorValue: string | undefined;
+
+                // Get the resolved color value from extensions or fallback to token's $value
+                if (token && typeof token === 'object' && '$value' in token) {
+                  const tokenRecord = token as Record<string, unknown>;
+                  const extensions = tokenRecord['$extensions'] as Record<string, unknown> | undefined;
+                  const actualColorValue = extensions?.[EXTENSION_RESOLVED_AS] ?? tokenRecord['$value'];
+
+                  // If the token's $value is an object (not a ref string), check if it's a valid ColorValue
+                  if (
+                    typeof actualColorValue === 'object' &&
+                    actualColorValue !== null &&
+                    'colorSpace' in actualColorValue
+                  ) {
+                    try {
+                      colorValue = legacyToModernColor.encode(actualColorValue as ColorValue);
+                    } catch {
+                      // If encoding fails, leave colorValue undefined
+                    }
+                  }
+                }
+
                 return html`
                   <color-scale-picker
+                    key=${colorKey}
                     label=${colorKey}
                     id=${`basis.color.${colorKey}`}
                     name=${`basis.color.${colorKey}`}

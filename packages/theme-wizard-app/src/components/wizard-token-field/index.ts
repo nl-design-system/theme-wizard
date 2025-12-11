@@ -143,7 +143,7 @@ export class WizardTokenField extends WizardTokenNavigator {
                   const path = `${this.path}.${key}`;
                   const depth = this.depth + 1;
                   return html`
-                    <li>
+                    <li key=${key}>
                       <wizard-token-field
                         .token=${token}
                         .errors=${this.#getChildPathErrors(path)}
