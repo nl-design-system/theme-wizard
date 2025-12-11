@@ -1,7 +1,7 @@
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import memoize from 'memoize';
@@ -70,6 +70,9 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     return this.#value;
   }
 
+  emit(type: 'blur' | 'change' | 'focus' | 'input') {
+    this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
+  }
   /**
    * Override this function to customize how options are filtered when typing
    */
@@ -118,14 +121,16 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
 
   readonly #handleBlur = () => {
     this.open = false;
+    this.emit('blur');
   };
 
   readonly #handleChange = () => {
-    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    this.emit('change');
   };
 
   readonly #handleFocus = () => {
     this.open = true;
+    this.emit('focus');
   };
 
   readonly #handleInput = (event: InputEvent) => {
@@ -135,6 +140,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     this.open = true;
     this.query = target.value;
     this.value = this.queryToValue(this.query);
+    this.emit('input');
   };
 
   readonly #handleOptionsClick = (event: Event) => {

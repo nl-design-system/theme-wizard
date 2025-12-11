@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 import { ClippyCombobox } from './index';
 import './index';
@@ -87,5 +87,14 @@ describe(`<${tag}>`, () => {
     await input.fill('');
     await userEvent.keyboard([...sequence, 'Enter'].map((k) => `{${k}}`).join(''));
     expect(component.value).toBe(selection.value);
+  });
+
+  it.each([['focus'], ['blur'], ['change'], ['input']])('emits $0 event', async (event) => {
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    const listener = vi.fn();
+    component.addEventListener(event, listener);
+    const input = page.getByRole('textbox')
+    await input.click().then(() => userEvent.keyboard('abc{Enter}')).then(() => userEvent.keyboard('{Tab}'));
+    expect(listener).toBeCalled();
   });
 });
