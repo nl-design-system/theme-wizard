@@ -5,16 +5,12 @@
   "type": "module",
   "module": "./dist/index.js",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
     "./*": {
       "import": "./dist/*/index.js",
       "types": "./dist/*/index.d.ts"
     },
     "./src/clippy-modal/README.md": "./src/clippy-modal/README.md",
-    "./patterns/cookie-consent/react/README.md": "./patterns/cookie-consent/react/README.md"
+    "./patterns/cookie-consent/README.md": "./src/patterns/cookie-consent/README.md"
   },
   "files": [
     "dist/",
