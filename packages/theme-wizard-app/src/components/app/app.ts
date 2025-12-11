@@ -110,12 +110,10 @@ export class App extends LitElement {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 
     if (target instanceof ColorScalePicker) {
-      const updates = Object.entries(target.value).map(([colorKey, value]) => {
-        return {
-          path: `${target.name}.${colorKey}`,
-          value: value.$value,
-        };
-      });
+      const updates = Object.entries(target.value).map(([colorKey, value]) => ({
+        path: `${target.name}.${colorKey}`,
+        value: value.$value,
+      }));
       this.#theme.updateMany(updates);
     } else if (target instanceof WizardTokenInput) {
       this.#theme.updateAt(target.name, target.value);
@@ -124,26 +122,8 @@ export class App extends LitElement {
     if (target instanceof WizardTokenInput) {
       // Request update to reflect any new validation issues
       this.requestUpdate();
-      // Debounce storage saves to avoid excessive writes
-      this.#scheduleSave();
+      this.#storage.setJSON(this.#theme.tokens);
     }
-  };
-
-  readonly #scheduleSave = () => {
-    // Clear any pending save
-    if (this.#storageSaveTimeout !== null) {
-      clearTimeout(this.#storageSaveTimeout);
-    }
-
-    // Schedule a new save after 500ms of inactivity
-    this.#storageSaveTimeout = setTimeout(() => {
-      try {
-        this.#storage.setJSON(this.#theme.tokens);
-        this.#storageSaveTimeout = null;
-      } catch (error) {
-        console.error('Failed to save tokens to storage:', error);
-      }
-    }, 500);
   };
 
   readonly #handleTemplateChange = (event: Event) => {
@@ -235,14 +215,13 @@ export class App extends LitElement {
               ></wizard-token-field>
 
               ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
+                console.log(colorKey);
                 const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
                 let colorValue: string | undefined;
 
                 // Get the resolved color value from extensions or fallback to token's $value
                 if (token && typeof token === 'object' && '$value' in token) {
-                  const tokenRecord = token as Record<string, unknown>;
-                  const extensions = tokenRecord['$extensions'] as Record<string, unknown> | undefined;
-                  const actualColorValue = extensions?.[EXTENSION_RESOLVED_AS] ?? tokenRecord['$value'];
+                  const actualColorValue = token['$extensions']?.[EXTENSION_RESOLVED_AS] ?? token['$value'];
 
                   // If the token's $value is an object (not a ref string), check if it's a valid ColorValue
                   if (
@@ -250,18 +229,14 @@ export class App extends LitElement {
                     actualColorValue !== null &&
                     'colorSpace' in actualColorValue
                   ) {
-                    try {
-                      colorValue = legacyToModernColor.encode(actualColorValue as ColorValue);
-                    } catch {
-                      // If encoding fails, leave colorValue undefined
-                    }
+                    colorValue = legacyToModernColor.encode(actualColorValue as ColorValue);
                   }
                 }
 
                 return html`
                   <color-scale-picker
                     key=${colorKey}
-                    label=${colorKey}
+                    label=${t(`tokens.fieldLabels.basis.color.${colorKey}`)}
                     id=${`basis.color.${colorKey}`}
                     name=${`basis.color.${colorKey}`}
                     .colorValue=${colorValue}
