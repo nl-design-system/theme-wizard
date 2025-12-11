@@ -1,7 +1,6 @@
 /* @license CC0-1.0 */
 
-import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const STORAGE_KEY = 'cookie-consent-preferences';
 
@@ -73,36 +72,4 @@ export const useCookieConsent = (options: UseCookieConsentOptions = {}): UseCook
     isVisible,
     savePreferences,
   };
-};
-
-/**
- * Helper function to get default content
- */
-export const getDefaultCookieContent = (organization?: string): React.ReactNode => {
-  return (
-    <>
-      <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-        {organization
-          ? `${organization} gebruikt enkele essentiële cookies om deze website goed te laten werken.`
-          : 'We gebruiken enkele essentiële cookies om deze website goed te laten werken.'}
-      </Paragraph>
-
-      <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-        We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
-        onthouden en onze diensten te verbeteren.
-      </Paragraph>
-
-      <Paragraph>
-        We gebruiken ook cookies die door andere sites zijn geplaatst om ons te helpen content van hun diensten te
-        leveren.
-      </Paragraph>
-    </>
-  );
-};
-
-/**
- * Helper function to get consent title
- */
-export const getConsentTitle = (title?: string, organization?: string): string => {
-  return title || (organization ? `Cookies op de website van ${organization}` : 'Cookies op deze website');
 };
