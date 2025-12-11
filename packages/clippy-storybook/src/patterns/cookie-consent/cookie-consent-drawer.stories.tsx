@@ -2,7 +2,6 @@
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
-import '@utrecht/component-library-css';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import { CookieConsentDrawer } from './Drawer';

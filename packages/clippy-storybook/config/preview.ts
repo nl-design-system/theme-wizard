@@ -4,7 +4,6 @@ import { formatHtml } from '@rijkshuisstijl-community/storybook-tooling/formatHt
 // import { DocsPage } from '../src/DocsPage';
 import '@nl-design-system-community/theme-wizard-app/theme.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
-import '@utrecht/component-library-css';
 
 const preview: Preview = {
   parameters: {
