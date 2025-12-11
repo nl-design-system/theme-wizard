@@ -20,14 +20,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: 'index.ts',
         ...getFiles('src/**/*.ts'),
         ...getFiles('src/**/*.tsx'),
       },
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['lit', 'lit/directives/class-map.js', 'react', '@utrecht/component-library-react'],
+      external: ['lit', 'lit/directives/class-map.js'],
       output: {
         entryFileNames: '[name].js',
         preserveModules: false,

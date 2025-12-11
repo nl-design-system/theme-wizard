@@ -15,5 +15,5 @@
     "useDefineForClassFields": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "../clippy-storybook/src/patterns/cookie-consent"]
+  "include": ["src/**/*"]
 }
