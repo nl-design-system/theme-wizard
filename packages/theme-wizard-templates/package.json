@@ -8,12 +8,8 @@
     "expertteam-digitale-toegankelijkheid",
     "nl-design-system"
   ],
-  "exports": {
-    "./theme.css": "./theme.css"
-  },
   "files": [
-    "dist/",
-    "theme.css"
+    "dist/"
   ],
   "private": true,
   "repository": {
