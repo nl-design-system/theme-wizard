@@ -18,7 +18,7 @@ import {
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, unsafeCSS, nothing } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import '../sidebar/sidebar';
@@ -32,7 +32,6 @@ import '../color-scale-picker';
 import { EVENT_NAMES } from '../../constants';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { t } from '../../i18n';
-import ColorToken from '../../lib/ColorToken';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
@@ -180,6 +179,8 @@ export class App extends LitElement {
           <section>
             <utrecht-heading-2>Maak design keuzes</utrecht-heading-2>
             <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
+              <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
+
               <wizard-token-field
                 .errors=${this.#theme.issues}
                 .token=${headingFontToken}
@@ -192,24 +193,18 @@ export class App extends LitElement {
                 label="${t('tokens.fieldLabels.bodyFont')}"
                 path=${BODY_FONT_TOKEN_REF}
               ></wizard-token-field>
-              <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
 
               ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
                 const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
-                const val = token?.$value;
-                const hex = val && !isRef(val) ? legacyToModernColor.encode(val) : null;
-                const color = token['$extensions']?.[EXTENSION_RESOLVED_AS]
-                  ? { $type: 'color', $value: token['$extensions'][EXTENSION_RESOLVED_AS] }
-                  : token;
+                const resolvedToken = token['$extensions']?.[EXTENSION_RESOLVED_AS] || token?.$value;
+                const colorValue = isRef(resolvedToken) ? undefined : legacyToModernColor.encode(resolvedToken);
                 return html`
-                  <div>
-                    <color-scale-picker
-                      label=${colorKey}
-                      id=${`basis.color.${colorKey}`}
-                      name=${`basis.color.${colorKey}`}
-                      .initialFrom=${color ? new ColorToken(color) : undefined}
-                    ></color-scale-picker>
-                  </div>
+                  <color-scale-picker
+                    label=${colorKey}
+                    id=${`basis.color.${colorKey}`}
+                    name=${`basis.color.${colorKey}`}
+                    .colorValue=${colorValue}
+                  ></color-scale-picker>
                 `;
               })}
 
