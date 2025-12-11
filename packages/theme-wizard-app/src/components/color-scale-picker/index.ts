@@ -56,36 +56,44 @@ export class ColorScalePicker extends WizardTokenInput {
   }
 
   @property()
-  initialFrom?: ColorToken;
+  colorValue?: string;
 
   @consume({ context: scrapedColorsContext, subscribe: true })
   @property({ attribute: false })
   scrapedColors: ScrapedColorToken[] = [];
 
-  #lastUserColor?: string;
-
-  get from() {
-    // If initialFrom is set and from hasn't been changed by user, use initialFrom
-    if (this.initialFrom && this.#from === DEFAULT_FROM) {
-      // Sync the scale with the initial value
-      this.#scale.from = this.initialFrom;
-      return this.initialFrom;
+  override willUpdate(changedProperties: Map<string, unknown>) {
+    // Initialize from the colorValue attribute if changed (before render)
+    if (changedProperties.has('colorValue') && this.colorValue) {
+      try {
+        this.#from = new ColorToken({
+          $value: parseColor(this.colorValue),
+        });
+        this.#scale.from = this.#from;
+        // Reset the internal value to match the new color
+        this.#value = {
+          [this.name]: this.#scale.toObject(),
+        };
+        this.internals_.setFormValue(JSON.stringify(this.#value));
+      } catch {
+        // If parsing fails, keep the default
+      }
     }
-    return this.#from;
   }
 
   override updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties);
-    // Update from initial value only if this is a new external change (not our own user change)
-    if (changedProperties.has('initialFrom') && this.initialFrom) {
-      const newColor = this.initialFrom.toHex();
-      // Only update if it's different from the last color we set
-      if (newColor !== this.#lastUserColor) {
-        this.#from = this.initialFrom;
-        this.#scale.from = this.initialFrom;
-        this.#lastUserColor = undefined; // Reset when accepting external update
+    // Update the input element's value after render
+    if (changedProperties.has('colorValue')) {
+      const input = this.shadowRoot?.querySelector('input[type="color"]') as HTMLInputElement;
+      if (input && this.colorValue) {
+        input.value = this.colorValue;
       }
     }
+  }
+
+  get from() {
+    return this.#from;
   }
 
   get colorSpace(): ColorSpace {
@@ -117,7 +125,6 @@ export class ColorScalePicker extends WizardTokenInput {
       });
       this.#from = newToken;
       this.#scale.from = newToken;
-      this.#lastUserColor = newToken.toHex();
       this.value = {
         [this.name]: this.#scale.toObject(),
       };
