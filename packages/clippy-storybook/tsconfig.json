@@ -8,5 +8,5 @@
     "jsx": "react",
     "types": ["vite/client"]
   },
-  "include": ["src/**/*", "config/**/*", "../clippy-components/patterns/cookie-consent/react/CookieConsentDrawer.tsx"]
+  "include": ["src/**/*", "config/**/*"]
 }

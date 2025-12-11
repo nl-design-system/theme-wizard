@@ -1,8 +1,8 @@
 /* @license CC0-1.0 */
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { CookieConsentDrawer } from '@nl-design-system-community/clippy-components';
-import readme from '@nl-design-system-community/clippy-components/patterns/cookie-consent/react/README.md?raw';
+import { CookieConsentDrawer } from '@nl-design-system-community/clippy-components/patterns/cookie-consent/Drawer';
+import readme from '@nl-design-system-community/clippy-components/patterns/cookie-consent/README.md?raw';
 import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import '@utrecht/component-library-css';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
