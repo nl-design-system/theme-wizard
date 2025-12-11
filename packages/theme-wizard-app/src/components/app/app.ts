@@ -14,6 +14,7 @@ import {
   BASIS_COLOR_NAMES,
   EXTENSION_RESOLVED_AS,
   type ColorValue,
+  isRef,
 } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
@@ -218,7 +219,10 @@ export class App extends LitElement {
 
                 // Get the resolved color value from extensions or fallback to token's $value
                 if (token && typeof token === 'object' && '$value' in token) {
-                  const actualColorValue = token['$extensions']?.[EXTENSION_RESOLVED_AS] ?? token['$value'];
+                  const actualColorValue =
+                    isRef(token['$value']) && token['$extensions']?.[EXTENSION_RESOLVED_AS]
+                      ? token['$extensions']?.[EXTENSION_RESOLVED_AS]
+                      : token['$value'];
 
                   // If the token's $value is an object (not a ref string), check if it's a valid ColorValue
                   if (
