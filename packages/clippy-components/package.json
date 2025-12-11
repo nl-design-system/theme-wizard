@@ -42,11 +42,9 @@
     "@nl-design-system-candidate/code-css": "2.0.3",
     "@utrecht/button-css": "3.0.1",
     "@utrecht/combobox-css": "2.0.1",
-    "@utrecht/component-library-react": "10.3.10",
     "@utrecht/listbox-css": "2.0.1",
     "@utrecht/textbox-css": "3.0.1",
-    "lit": "3.3.1",
-    "react": "18.3.1"
+    "lit": "3.3.1"
   },
   "devDependencies": {
     "@types/dlv": "1.1.5",
