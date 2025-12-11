@@ -1,12 +1,12 @@
 /* @license CC0-1.0 */
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { CookieConsentDrawer } from '@nl-design-system-community/clippy-components/patterns/cookie-consent/Drawer';
-import readme from '@nl-design-system-community/clippy-components/patterns/cookie-consent/README.md?raw';
 import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import '@utrecht/component-library-css';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+import { CookieConsentDrawer } from './Drawer';
+import readme from './README.md?raw';
 
 const meta = {
   argTypes: {
