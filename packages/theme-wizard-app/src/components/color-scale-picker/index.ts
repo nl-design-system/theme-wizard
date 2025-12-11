@@ -1,6 +1,11 @@
 import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { consume } from '@lit/context';
-import { legacyToModernColor, parseColor, type ColorSpace } from '@nl-design-system-community/design-tokens-schema';
+import {
+  legacyToModernColor,
+  parseColor,
+  type ColorSpace,
+  type ColorToken as ColorTokenType,
+} from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
@@ -9,10 +14,7 @@ import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
 
-// @TODO: get from design tokens schema
-type ColorScaleObject = {
-  [x: string]: ReturnType<ColorScale['toObject']>;
-};
+type ColorScaleObject = Record<string, ColorTokenType>;
 
 const DEFAULT_FROM = new ColorToken({
   $value: parseColor('black'),
@@ -33,12 +35,9 @@ const getSupportsCSSColorValues = () => {
 
 @customElement('color-scale-picker')
 export class ColorScalePicker extends WizardTokenInput {
-  #from = DEFAULT_FROM;
-  #scale = new ColorScale(DEFAULT_FROM);
-  #idColor = 'color-scale-color';
-  #value: ColorScaleObject = {
-    ['']: this.#scale.toObject(),
-  };
+  readonly #scale = new ColorScale(DEFAULT_FROM);
+  readonly #idColor = 'color-scale-color';
+  #value = this.#scale.toObject();
 
   readonly supportsCSSColorValues = getSupportsCSSColorValues();
 
@@ -48,7 +47,7 @@ export class ColorScalePicker extends WizardTokenInput {
     return this.#value;
   }
 
-  override set value(val: ColorScaleObject) {
+  override set value(val) {
     const oldValue = this.#value;
     this.#value = val;
     this.internals_.setFormValue(JSON.stringify(val));
@@ -66,14 +65,11 @@ export class ColorScalePicker extends WizardTokenInput {
     // Initialize from the colorValue attribute if changed (before render)
     if (changedProperties.has('colorValue') && this.colorValue) {
       try {
-        this.#from = new ColorToken({
+        this.#scale.from = new ColorToken({
           $value: parseColor(this.colorValue),
         });
-        this.#scale.from = this.#from;
         // Reset the internal value to match the new color
-        this.#value = {
-          [this.name]: this.#scale.toObject(),
-        };
+        this.#value = this.#scale.toObject();
         this.internals_.setFormValue(JSON.stringify(this.#value));
       } catch {
         // If parsing fails, keep the default
@@ -92,27 +88,21 @@ export class ColorScalePicker extends WizardTokenInput {
     }
   }
 
-  get from() {
-    return this.#from;
-  }
-
   get colorSpace(): ColorSpace {
-    return this.from.$value.colorSpace;
+    return this.#scale.from.$value.colorSpace;
   }
 
   override connectedCallback() {
     super.connectedCallback();
-    this.value = {
-      [this.name]: this.#scale.toObject(),
-    };
+    this.value = this.#scale.toObject();
   }
 
   readonly handleColorInput = (event: Event) => {
+    // Optionally throttle this if it turns out to be a performance issue
     if (event.target instanceof HTMLInputElement) {
       const newToken = new ColorToken({
         $value: parseColor(event.target.value),
       });
-      this.#from = newToken;
       this.#scale.from = newToken;
       this.requestUpdate();
     }
@@ -123,11 +113,8 @@ export class ColorScalePicker extends WizardTokenInput {
       const newToken = new ColorToken({
         $value: parseColor(event.target.value),
       });
-      this.#from = newToken;
       this.#scale.from = newToken;
-      this.value = {
-        [this.name]: this.#scale.toObject(),
-      };
+      this.value = this.#scale.toObject();
       this.requestUpdate();
       this.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -137,7 +124,6 @@ export class ColorScalePicker extends WizardTokenInput {
   // app.ts will then listen for the change (as it does now) and replace the subtree in Theme's updateAt()
 
   override render() {
-    // TODO: allow `list` attribute for color suggestions
     return html`
       <div class="color-scale-picker">
         <label for=${this.#idColor}>${this.label}</label>
@@ -152,7 +138,7 @@ export class ColorScalePicker extends WizardTokenInput {
           id=${this.#idColor}
           name=${this.#idColor}
           type="color"
-          value=${this.supportsCSSColorValues ? this.from.toCSSColorFunction() : this.from.toHex()}
+          value=${this.supportsCSSColorValues ? this.#scale.from.toCSSColorFunction() : this.#scale.from.toHex()}
           colorSpace=${this.colorSpace}
           @input=${this.handleColorInput}
           @change=${this.handleColorChange}
@@ -161,7 +147,7 @@ export class ColorScalePicker extends WizardTokenInput {
         <output
           for=${this.#idColor}
           class="theme-color-scale__list"
-          style=${`color: ${this.from?.toCSSColorFunction()}`}
+          style=${`color: ${this.#scale.from?.toCSSColorFunction()}`}
         >
           ${this.#scale
             .list()
