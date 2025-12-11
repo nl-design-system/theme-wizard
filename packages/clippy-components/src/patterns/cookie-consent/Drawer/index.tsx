@@ -1,20 +1,10 @@
 /* @license CC0-1.0 */
 
 import { Button, ButtonGroup, Drawer, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
-import React from 'react';
-import { useCookieConsent } from './hooks/useCookieConsent';
-
-export interface CookieConsentDrawerProps {
-  buttonAccept?: string;
-  buttonReject?: string;
-  customizeLink?: {
-    href: string;
-    text: string;
-  };
-  children?: React.ReactNode;
-  clearStorageOnMount?: boolean;
-  title?: string;
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { FC } from 'react';
+import { useCookieConsent } from '../hooks/useCookieConsent';
+import { CookieConsentDrawerProps } from './types';
 
 /**
  * CookieConsentDrawer React Component
@@ -22,7 +12,7 @@ export interface CookieConsentDrawerProps {
  * This component builds a non-blocking cookie consent drawer using Utrecht React components.
  * It appears at the top of the page and allows users to accept, reject, or customize cookies.
  */
-export const CookieConsentDrawer: React.FC<CookieConsentDrawerProps> = ({
+export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
   buttonAccept = 'Aanvullende cookies accepteren',
   buttonReject = 'Aanvullende cookies weigeren',
   children,
