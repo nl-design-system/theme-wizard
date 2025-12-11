@@ -59,10 +59,22 @@ export class ColorScalePicker extends WizardTokenInput {
     const oldValue = this.#value;
     // Store the transformed value (with COLOR_KEYS)
     let transformedVal: Record<string, ColorTokenType>;
-    if (typeof val === 'object' && val !== null && 'bg-document' in val) {
-      transformedVal = Object.fromEntries(
-        COLOR_KEYS.map((key, index) => [String(index + 1), (val as Record<string, ColorTokenType>)[key]]),
-      ) as Record<string, ColorTokenType>;
+    const valObj = val as Record<string, ColorTokenType>;
+
+    // Check if this looks like a COLOR_KEYS formatted object (has color-default key)
+    if (typeof val === 'object' && val !== null && 'color-default' in valObj) {
+      transformedVal = Object.fromEntries(COLOR_KEYS.map((key, index) => [String(index + 1), valObj[key]])) as Record<
+        string,
+        ColorTokenType
+      >;
+      // When restoring from persisted data, extract the base color to update the input
+      const baseColorToken = valObj['color-default'];
+      if (baseColorToken && typeof baseColorToken === 'object' && '$value' in baseColorToken) {
+        const colorValue = baseColorToken.$value;
+        if (colorValue && typeof colorValue === 'object') {
+          this.#scale.from = new ColorToken({ $value: colorValue });
+        }
+      }
     } else {
       transformedVal = val as Record<string, ColorTokenType>;
     }
@@ -79,6 +91,22 @@ export class ColorScalePicker extends WizardTokenInput {
   scrapedColors: ScrapedColorToken[] = [];
 
   override willUpdate(changedProperties: Map<string, unknown>) {
+    // If the full value is being set, restore from it (takes precedence)
+    if (changedProperties.has('value')) {
+      // The value setter will handle updating #value
+      // But we need to also update #scale.from from colorValue if it's available
+      if (this.colorValue) {
+        try {
+          this.#scale.from = new ColorToken({
+            $value: parseColor(this.colorValue),
+          });
+        } catch {
+          // If parsing fails, keep the current scale
+        }
+      }
+      return;
+    }
+
     // Initialize from the colorValue attribute if changed (before render)
     if (changedProperties.has('colorValue') && this.colorValue) {
       try {
@@ -115,18 +143,6 @@ export class ColorScalePicker extends WizardTokenInput {
     this.value = this.#scale.toObject();
   }
 
-  readonly handleColorInput = (event: Event) => {
-    // Optionally throttle this if it turns out to be a performance issue
-    if (event.target instanceof HTMLInputElement) {
-      const newToken = new ColorToken({
-        $value: parseColor(event.target.value),
-      });
-      this.#scale.from = newToken;
-      this.value = this.#scale.toObject();
-      this.requestUpdate();
-    }
-  };
-
   readonly handleColorChange = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
       const newToken = new ColorToken({
@@ -142,7 +158,10 @@ export class ColorScalePicker extends WizardTokenInput {
   override render() {
     return html`
       <div class="color-scale-picker">
-        <label for=${this.#idColor}>${this.label}</label>
+        <div class="label">
+          <label for=${this.#idColor}>${this.label}</label>
+          <slot name="extra-label"></slot>
+        </div>
         ${this.scrapedColors.length === 0
           ? nothing
           : html`<datalist id="preset-colors">
@@ -171,7 +190,7 @@ export class ColorScalePicker extends WizardTokenInput {
                 <div
                   class="theme-color-scale__stop"
                   style=${`background-color: ${stop.toCSSColorFunction()}`}
-                  title=${`${index + 1}: ${stop.$value.components.join(', ')}`}
+                  title=${`${COLOR_KEYS.at(index)}: ${stop.$value.components.join(', ')}`}
                 ></div>
               `,
             )}
