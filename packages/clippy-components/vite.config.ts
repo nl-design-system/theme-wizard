@@ -24,7 +24,13 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['lit', 'lit/directives/class-map.js'],
+      external: [
+        'lit',
+        'lit/decorators.js',
+        'lit/directives/class-map.js',
+        'lit/directives/style-map.js',
+        'lit/directives/ref.js',
+      ],
       input: getFiles('src/**/index.ts'),
       output: {
         entryFileNames: '[name].js',
