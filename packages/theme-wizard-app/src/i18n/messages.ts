@@ -32,6 +32,23 @@ export const en = {
   },
   tokens: {
     fieldLabels: {
+      basis: {
+        color: {
+          'accent-1': 'Accent 1',
+          'accent-2': 'Accent 2',
+          'accent-3': 'Accent 3',
+          'action-1': 'Action 1',
+          'action-2': 'Action 2',
+          default: 'Default',
+          disabled: 'Disabled',
+          highlight: 'Highlight',
+          info: 'Info',
+          negative: 'Negative',
+          positive: 'Positive',
+          selected: 'Selected',
+          warning: 'Warning',
+        },
+      },
       bodyFont: 'Running text',
       headingFont: 'Headings',
     },
@@ -108,6 +125,23 @@ export const nl = {
 
   tokens: {
     fieldLabels: {
+      basis: {
+        color: {
+          'accent-1': 'Accent 1',
+          'accent-2': 'Accent 2',
+          'accent-3': 'Accent 3',
+          'action-1': 'Actie 1',
+          'action-2': 'Actie 2',
+          default: 'Standaard',
+          disabled: 'Uitgeschakeld',
+          highlight: 'Markering',
+          info: 'Info',
+          negative: 'Negatief',
+          positive: 'Positief',
+          selected: 'Geselecteerd',
+          warning: 'Waarschuwing',
+        },
+      },
       bodyFont: 'Lopende tekst',
       headingFont: 'Koppen',
     },

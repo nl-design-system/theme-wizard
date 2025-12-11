@@ -38,9 +38,7 @@ const getSupportsCSSColorValues = () => {
  * Transform ColorScale output (numeric keys "1"-"14") to COLOR_KEYS format
  */
 const transformScaleToColorKeys = (scaleObject: Record<string, ColorTokenType>) => {
-  return Object.fromEntries(
-    COLOR_KEYS.map((key, index) => [key, scaleObject[String(index + 1)]])
-  );
+  return Object.fromEntries(COLOR_KEYS.map((key, index) => [key, scaleObject[String(index + 1)]]));
 };
 
 @customElement('color-scale-picker')
@@ -63,7 +61,7 @@ export class ColorScalePicker extends WizardTokenInput {
     let transformedVal: Record<string, ColorTokenType>;
     if (typeof val === 'object' && val !== null && 'bg-document' in val) {
       transformedVal = Object.fromEntries(
-        COLOR_KEYS.map((key, index) => [String(index + 1), (val as Record<string, ColorTokenType>)[key]])
+        COLOR_KEYS.map((key, index) => [String(index + 1), (val as Record<string, ColorTokenType>)[key]]),
       ) as Record<string, ColorTokenType>;
     } else {
       transformedVal = val as Record<string, ColorTokenType>;
@@ -124,6 +122,7 @@ export class ColorScalePicker extends WizardTokenInput {
         $value: parseColor(event.target.value),
       });
       this.#scale.from = newToken;
+      this.value = this.#scale.toObject();
       this.requestUpdate();
     }
   };
@@ -140,9 +139,6 @@ export class ColorScalePicker extends WizardTokenInput {
     }
   };
 
-  // TODO: This component should trigger a change event with it's value and the subtree for all child color leafs
-  // app.ts will then listen for the change (as it does now) and replace the subtree in Theme's updateAt()
-
   override render() {
     return html`
       <div class="color-scale-picker">
@@ -158,9 +154,8 @@ export class ColorScalePicker extends WizardTokenInput {
           id=${this.#idColor}
           name=${this.#idColor}
           type="color"
-          value=${this.supportsCSSColorValues ? this.#scale.from.toCSSColorFunction() : this.#scale.from.toHex()}
+          value=${this.colorValue}
           colorSpace=${this.colorSpace}
-          @input=${this.handleColorInput}
           @change=${this.handleColorChange}
           list="preset-colors"
         />
