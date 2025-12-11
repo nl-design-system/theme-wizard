@@ -8,7 +8,7 @@ export default css`
     align-items: center;
   }
 
-  label {
+  .label {
     grid-column: 1 / -1;
   }
 

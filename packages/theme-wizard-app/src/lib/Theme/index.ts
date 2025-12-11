@@ -63,7 +63,6 @@ export default class Theme {
     return this.#stylesheet;
   }
 
-  // TODO? accept unknown and replace entire subtree instead of only $value
   updateAt(path: string, value: DesignToken['$value']) {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
@@ -74,7 +73,6 @@ export default class Theme {
   updateMany(values: { path: string; value: DesignToken['$value'] }[]) {
     const tokens = structuredClone(this.#tokens);
     this.#modified = true;
-    console.log('updateMany', values);
     for (const { path, value } of values) {
       dset(tokens, `${path}.$value`, value);
     }

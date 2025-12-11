@@ -10,12 +10,10 @@ import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-tem
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import {
-  COLOR_KEYS,
   legacyToModernColor,
   BASIS_COLOR_NAMES,
   EXTENSION_RESOLVED_AS,
   type ColorValue,
-  EXTENSION_COLOR_SCALE_POSITION,
 } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
@@ -215,7 +213,6 @@ export class App extends LitElement {
               ></wizard-token-field>
 
               ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
-                console.log(colorKey);
                 const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
                 let colorValue: string | undefined;
 
@@ -236,11 +233,13 @@ export class App extends LitElement {
                 return html`
                   <color-scale-picker
                     key=${colorKey}
-                    label=${t(`tokens.fieldLabels.basis.color.${colorKey}`)}
+                    label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
                     id=${`basis.color.${colorKey}`}
                     name=${`basis.color.${colorKey}`}
                     .colorValue=${colorValue}
-                  ></color-scale-picker>
+                  >
+                    <a href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} slot="extra-label">docs</a>
+                  </color-scale-picker>
                 `;
               })}
 
