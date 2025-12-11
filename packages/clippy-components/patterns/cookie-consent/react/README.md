@@ -37,7 +37,6 @@ Dit pattern bevat een voorbeeld implementatie (`CookieConsentDrawer`) die laat z
 - `localStorage` voor het opslaan van gebruikersvoorkeuren
 - Automatische weergave alleen wanneer er nog geen voorkeur is opgeslagen
 - Altijd bovenaan de pagina gepositioneerd
-- Identificatie van de afzender van de website (via `organization` prop)
 
 ## Gebruik als referentie
 
@@ -52,16 +51,14 @@ Dit pattern is bedoeld als referentie implementatie. Je kunt:
 
 De voorbeeld implementatie (`CookieConsentDrawer`) toont een mogelijke implementatie met de volgende props:
 
-| Prop                  | Type              | Default                | Beschrijving                                                                   |
-| --------------------- | ----------------- | ---------------------- | ------------------------------------------------------------------------------ |
-| `buttonAccept`        | `string`          | `'Accepteren'`         | Label voor de accepteer knop                                                   |
-| `buttonReject`        | `string`          | `'Weigeren'`           | Label voor de weiger knop                                                      |
-| `buttonCustomize`     | `string`          | `'Zelf instellen'`     | Label voor de link naar cookie-instellingen                                    |
-| `customizeHref`       | `string`          | `'/templates/cookies'` | URL naar de cookie-instellingen pagina                                         |
-| `children`            | `React.ReactNode` | -                      | Custom content voor de drawer (optioneel)                                      |
-| `clearStorageOnMount` | `boolean`         | `false`                | Of de localStorage moet worden gewist bij mount (voor testen)                  |
-| `organization`        | `string`          | -                      | Naam van de organisatie (wordt gebruikt in de titel en content)                |
-| `title`               | `string`          | -                      | Custom titel voor de drawer (optioneel, wordt gecombineerd met `organization`) |
+| Prop                  | Type                             | Default                                                  | Beschrijving                                                                   |
+| --------------------- | -------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `buttonAccept`        | `string`                         | `'Aanvullende cookies accepteren'`                       | Label voor de accepteer knop                                                   |
+| `buttonReject`        | `string`                         | `'Aanvullende cookies weigeren'`                         | Label voor de weiger knop                                                      |
+| `customizeLink`       | `{ href: string, text: string }` | `{ href: '/templates/cookies', text: 'Zelf instellen' }` | Link naar cookie-instellingen met href en text                                 |
+| `children`            | `React.ReactNode`                | -                                                        | Custom content voor de drawer (heeft voorrang op `content` en default content) |
+| `clearStorageOnMount` | `boolean`                        | `false`                                                  | Of de localStorage moet worden gewist bij mount (voor testen)                  |
+| `title`               | `string`                         | -                                                        | Custom titel voor de drawer (optioneel)                                        |
 
 **Let op**: Dit is een voorbeeld implementatie. Pas de code aan aan je eigen behoeften en requirements.
 
@@ -153,9 +150,9 @@ Hieronder een overzicht van de meestvoorkomende problemen met cookie banners en 
 
 ### 5. Geen identificatie van afzender
 
-**Probleem**: Gebruikers weten niet wie de website beheert.
+**Probleem**: Gebruikers weten niet wie de website beheert en wie verantwoordelijk is voor de cookies en dataverwerking.
 
-**Oplossing**: Identificeer duidelijk de organisatie in de banner tekst.
+**Oplossing**: Identificeer duidelijk de organisatie in de banner tekst. De afzender van de cookies moet expliciet worden beschreven, bijvoorbeeld door de organisatienaam te vermelden in de titel of intro tekst van de banner.
 
 ### 6. Toegankelijkheidsproblemen
 
@@ -335,8 +332,10 @@ Wanneer je de cookie drawer implementeert, zorg ervoor dat:
 
 1. **Afzender identificatie**
    - De drawer identificeert duidelijk wie de website beheert
-   - Identificeer de organisatie in de banner tekst
-   - De component past automatisch de titel en intro tekst aan
+   - De afzender van de cookies moet duidelijk worden beschreven in de banner tekst
+   - Identificeer de organisatie expliciet in de banner tekst (bijvoorbeeld: "Cookies op de website van [organisatienaam]")
+   - De component past automatisch de titel en intro tekst aan wanneer een organisatienaam wordt opgegeven
+   - Gebruikers moeten kunnen zien welke organisatie verantwoordelijk is voor de cookies en de dataverwerking
 
 2. **Duidelijke acties**
    - Gebruik duidelijke, actiegerichte button teksten

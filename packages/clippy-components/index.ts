@@ -6,8 +6,6 @@ export const CookieConsentDrawer = _CookieConsentDrawer;
 
 export type { CookieConsentDrawerProps } from './patterns/cookie-consent/react/CookieConsentDrawer';
 export {
-  getConsentTitle,
-  getDefaultCookieContent,
   useCookieConsent,
   type UseCookieConsentOptions,
   type UseCookieConsentReturn,
