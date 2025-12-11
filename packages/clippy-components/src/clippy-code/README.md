@@ -1,4 +1,4 @@
-# `<template-code>`
+# `<clippy-code>`
 
 Computercode die onderdeel is van lopende tekst.
 

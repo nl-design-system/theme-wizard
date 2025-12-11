@@ -19,15 +19,17 @@ export function getFiles(pattern: string, relativeTo = 'src') {
 export default defineConfig({
   build: {
     lib: {
-      entry: 'index.ts',
-      fileName: 'index',
+      entry: {
+        ...getFiles('src/**/*.ts'),
+        ...getFiles('src/**/*.tsx'),
+      },
       formats: ['es'],
     },
     rollupOptions: {
       external: ['lit', 'lit/directives/class-map.js'],
-      input: getFiles('src/**/index.ts'),
       output: {
         entryFileNames: '[name].js',
+        preserveModules: false,
       },
     },
   },

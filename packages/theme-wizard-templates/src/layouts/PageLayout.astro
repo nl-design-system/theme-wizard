@@ -1,19 +1,29 @@
 ---
-import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
-import './styles.css';
 import logo from '../assets/logo.svg';
-import ClientInit from '../components/ClientInit.astro';
+import BaseLayout from './BaseLayout.astro';
+import cookieConsentDrawerPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookie-drawer.html?raw';
+import cookieModalPattern from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookie-modal.html?raw';
+import cookieForm from '@nl-design-system-community/clippy-components/patterns/cookie-consent/cookie-form.html?raw';
+
+// Inject cookie-form component into cookie-modal
+const modalWithForm = cookieModalPattern.replace('<clippy-cookie-form></clippy-cookie-form>', cookieForm);
 
 export interface Props {
+  showCookieConsent?: boolean;
   title?: string;
+  sideNav?: boolean;
 }
+const { sideNav = true, showCookieConsent = true } = Astro.props;
 ---
 
-<html lang="nl" class="ma-theme">
-  <body>
-    <template-page-header>
-      <skip-link>Direct naar de hoofdinhoud</skip-link>
+<BaseLayout>
+  <div class="utrecht-page-body__content clippy-theme">
+    {showCookieConsent && <div set:html={modalWithForm} />}
+    <!-- {showCookieConsent && <div set:html={cookieConsentDrawerPattern} />} -->
 
+    <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
+
+    <template-page-header>
       <template-link href="/" slot="logo">
         <span id=":r0:" hidden="">homepage</span>
         <img src={logo.src} alt="Gemeente Voorbeeld" />
@@ -41,11 +51,12 @@ export interface Props {
       </span>
     </template-page-header>
 
-    <utrecht-breadcrumb-nav json='[{"href":"#","title":"Home"},{"href":"#","title":"Gemeente Voorbeeld"}]' lang="nl-NL"
-    ></utrecht-breadcrumb-nav>
+    <utrecht-breadcrumb-nav
+      json='[{"href":"/templates/my-environment/overview","title":"Mijn omgeving"},{"href":"#","title":"Gemeente Voorbeeld"}]'
+      lang="nl-NL"></utrecht-breadcrumb-nav>
 
     <div class="layout-main">
-      <template-side-nav> </template-side-nav>
+      {sideNav && <template-side-nav> </template-side-nav>}
 
       <utrecht-page-content>
         <utrecht-root>
@@ -79,13 +90,11 @@ export interface Props {
 
         <div>
           <template-link-list
-            link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"}]'
+            link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"},  {"href":"/templates/cookies", "text":"Cookies"}]'
           >
           </template-link-list>
         </div>
       </div>
     </utrecht-page-footer>
-
-    <ClientInit />
-  </body>
-</html>
+  </div>
+</BaseLayout>
