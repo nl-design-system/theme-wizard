@@ -2,6 +2,8 @@ import {
   stringifyColor,
   StrictThemeSchema,
   type Theme as ThemeType,
+  isRef,
+  EXTENSION_RESOLVED_AS,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -66,7 +68,9 @@ export default class Theme {
   updateAt(path: string, value: DesignToken['$value']) {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
-    dset(tokens, `${path}.$value`, value);
+    const fullPath = `${path}.$value`;
+    dset(tokens, fullPath, value);
+    dset(tokens, `${path}.$extensions.${EXTENSION_RESOLVED_AS}`, undefined);
     this.tokens = tokens;
   }
 
@@ -74,7 +78,9 @@ export default class Theme {
     const tokens = structuredClone(this.#tokens);
     this.#modified = true;
     for (const { path, value } of values) {
-      dset(tokens, `${path}.$value`, value);
+      const fullPath = `${path}.$value`;
+      dset(tokens, fullPath, value);
+      dset(tokens, `${path}.$extensions.${EXTENSION_RESOLVED_AS}`, undefined);
     }
     this.tokens = tokens;
   }
