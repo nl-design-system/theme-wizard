@@ -9,13 +9,10 @@
       "import": "./dist/*/index.js",
       "types": "./dist/*/index.d.ts"
     },
-    "./src/clippy-modal/README.md": "./src/clippy-modal/README.md",
-    "./patterns/cookie-consent/README.md": "./src/patterns/cookie-consent/README.md"
+    "./src/clippy-modal/README.md": "./src/clippy-modal/README.md"
   },
   "files": [
-    "dist/",
-    "src/",
-    "patterns/"
+    "dist/"
   ],
   "repository": {
     "type": "git",
