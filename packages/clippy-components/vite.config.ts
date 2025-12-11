@@ -21,6 +21,8 @@ export default defineConfig({
     lib: {
       entry: {
         index: 'index.ts',
+        ...getFiles('src/**/*.ts'),
+        ...getFiles('src/**/*.tsx'),
       },
       formats: ['es'],
     },
@@ -41,6 +43,7 @@ export default defineConfig({
           return 'assets/[name]-[hash][extname]';
         },
         entryFileNames: '[name].js',
+        preserveModules: false,
       },
     },
   },
