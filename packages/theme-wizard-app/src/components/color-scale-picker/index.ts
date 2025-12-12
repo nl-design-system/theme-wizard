@@ -2,6 +2,7 @@ import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper'
 import { consume } from '@lit/context';
 import {
   COLOR_KEYS,
+  ColorValue,
   legacyToModernColor,
   parseColor,
   type ColorSpace,
@@ -84,7 +85,7 @@ export class ColorScalePicker extends WizardTokenInput {
   }
 
   @property()
-  colorValue?: string;
+  colorValue?: ColorValue;
 
   @consume({ context: scrapedColorsContext, subscribe: true })
   @property({ attribute: false })
@@ -98,7 +99,7 @@ export class ColorScalePicker extends WizardTokenInput {
       if (this.colorValue) {
         try {
           this.#scale.from = new ColorToken({
-            $value: parseColor(this.colorValue),
+            $value: this.colorValue,
           });
         } catch {
           // If parsing fails, keep the current scale
@@ -111,7 +112,7 @@ export class ColorScalePicker extends WizardTokenInput {
     if (changedProperties.has('colorValue') && this.colorValue) {
       try {
         this.#scale.from = new ColorToken({
-          $value: parseColor(this.colorValue),
+          $value: this.colorValue,
         });
         // Reset the internal value to match the new color
         this.#value = this.#scale.toObject();
@@ -163,7 +164,7 @@ export class ColorScalePicker extends WizardTokenInput {
             id=${this.#idColor}
             name=${this.#idColor}
             type="color"
-            value=${this.colorValue}
+            value=${this.colorValue ? legacyToModernColor.encode(this.colorValue) : ''}
             colorSpace=${this.colorSpace}
             @change=${this.handleColorChange}
             list="preset-colors"
