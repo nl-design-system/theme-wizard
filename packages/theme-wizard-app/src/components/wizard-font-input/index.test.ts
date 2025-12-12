@@ -14,8 +14,8 @@ describe(`<${tag}>`, () => {
   });
 
   it.each(DEFAULT_FONT_OPTIONS)('renders a list of common fonts including $label', async ({ label }) => {
-    const textbox = page.getByRole('textbox');
-    await textbox.click();
+    const combobox = page.getByRole('combobox');
+    await combobox.click();
     const option = page.getByText(label);
     expect(option).toBeInTheDocument();
   });
@@ -33,7 +33,7 @@ describe(`<${tag}>`, () => {
     const component: WizardFontInput = document.querySelector(tag)!;
     const changeHandler = vi.fn();
     component.addEventListener('change', changeHandler);
-    const input = page.getByRole('textbox');
+    const input = page.getByRole('combobox');
     await input.fill('Arial').then(() => userEvent.keyboard('{Enter}'));
     expect(changeHandler).toHaveBeenCalled();
   });

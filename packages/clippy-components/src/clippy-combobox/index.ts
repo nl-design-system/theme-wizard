@@ -205,10 +205,11 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
       'utrecht-combobox__popover--hidden': !this.open,
     };
     return html`
-      <div class="utrecht-combobox" role="combobox">
+      <div class="utrecht-combobox">
         <input
           name=${this.name}
           autocomplete="off"
+          role="combobox"
           aria-autocomplete="list"
           aria-haspopup="listbox"
           type="text"
