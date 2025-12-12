@@ -9,7 +9,12 @@ import '@fontsource/source-sans-pro/700.css';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
-import { BASIS_COLOR_NAMES, EXTENSION_RESOLVED_AS, isRef } from '@nl-design-system-community/design-tokens-schema';
+import {
+  BASIS_COLOR_NAMES,
+  ColorValue,
+  EXTENSION_RESOLVED_AS,
+  isRef,
+} from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
@@ -200,19 +205,13 @@ export class App extends LitElement {
               <ul class="wizard-app__basis-colors">
                 ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
                   const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
-                  let colorValue: string | undefined;
+                  let colorValue: ColorValue | undefined;
 
                   // Get the resolved color value from extensions or fallback to token's $value
-                  if (token && typeof token === 'object' && '$value' in token) {
-                    const actualColorValue =
-                      isRef(token['$value']) && token['$extensions']?.[EXTENSION_RESOLVED_AS]
-                        ? token['$extensions']?.[EXTENSION_RESOLVED_AS]
-                        : token['$value'];
-
-                    // If the token's $value is an object (not a ref string), check if it's a valid ColorValue
-                    if (typeof actualColorValue === 'object' && 'colorSpace' in actualColorValue) {
-                      colorValue = actualColorValue;
-                    }
+                  if (isRef(token['$value']) && token['$extensions']?.[EXTENSION_RESOLVED_AS]) {
+                    colorValue = token['$extensions']?.[EXTENSION_RESOLVED_AS];
+                  } else {
+                    colorValue = token['$value'];
                   }
 
                   return html`
