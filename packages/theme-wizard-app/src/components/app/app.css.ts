@@ -48,6 +48,17 @@ export default css`
     padding-inline: var(--basis-space-inline-lg);
   }
 
+  .wizard-app__basis-colors {
+    padding-inline-start: 0;
+    margin-block: 0;
+    display: grid;
+    row-gap: var(--basis-space-block-md);
+
+    > li {
+      list-style-type: none;
+    }
+  }
+
   .wizard-app__root-token-field {
     max-block-size: 50vh;
     overflow-y: auto;
