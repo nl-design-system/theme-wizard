@@ -31,7 +31,7 @@ export default defineConfig({
         'lit/directives/style-map.js',
         'lit/directives/ref.js',
       ],
-      input: getFiles('src/**/index.ts'),
+      input: getFiles('src/[!lib]**/index.ts'),
       output: {
         assetFileNames: (assetInfo) => {
           if (assetInfo.names.every((name) => name.endsWith('.json'))) {

@@ -12,7 +12,11 @@
     "types": ["vite/client"],
     "importHelpers": false,
     "useDefineForClassFields": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@src/*": ["./src/*"],
+      "@lib/*": ["./src/lib/*"]
+    }
   },
   "include": ["src/**/*", "test/**/*"]
 }
