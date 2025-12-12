@@ -162,22 +162,24 @@ export class ColorScalePicker extends WizardTokenInput {
           <label for=${this.#idColor}>${this.label}</label>
           <slot name="extra-label"></slot>
         </div>
-        ${this.scrapedColors.length === 0
-          ? nothing
-          : html`<datalist id="preset-colors">
-              ${this.scrapedColors.map(
-                (color: ScrapedColorToken) => html`<option>${legacyToModernColor.encode(color.$value)}</option>`,
-              )}
-            </datalist>`}
-        <input
-          id=${this.#idColor}
-          name=${this.#idColor}
-          type="color"
-          value=${this.colorValue}
-          colorSpace=${this.colorSpace}
-          @change=${this.handleColorChange}
-          list="preset-colors"
-        />
+        <div class="input">
+          ${this.scrapedColors.length === 0
+            ? nothing
+            : html`<datalist id="preset-colors">
+                ${this.scrapedColors.map(
+                  (color: ScrapedColorToken) => html`<option>${legacyToModernColor.encode(color.$value)}</option>`,
+                )}
+              </datalist>`}
+          <input
+            id=${this.#idColor}
+            name=${this.#idColor}
+            type="color"
+            value=${this.colorValue}
+            colorSpace=${this.colorSpace}
+            @change=${this.handleColorChange}
+            list="preset-colors"
+          />
+        </div>
         <output
           for=${this.#idColor}
           class="theme-color-scale__list"

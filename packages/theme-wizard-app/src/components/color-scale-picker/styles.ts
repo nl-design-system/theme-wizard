@@ -3,24 +3,27 @@ import { css } from 'lit';
 export default css`
   .color-scale-picker {
     display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: var(--basis-space-inline-md);
-    align-items: center;
+    row-gap: var(--basis-space-block-xs);
   }
 
   .label {
-    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .input input {
+    inline-size: 100%;
   }
 
   .theme-color-scale__list {
     display: flex;
     justify-content: stretch;
     width: 100%;
-    border-bottom: 3px solid currentColor;
+    border-bottom: 2px solid currentColor;
   }
 
   .theme-color-scale__stop {
-    block-size: 1em;
+    block-size: 0.75em;
     inline-size: 100%;
   }
 `;

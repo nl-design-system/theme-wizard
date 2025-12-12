@@ -213,39 +213,48 @@ export class App extends LitElement {
                 path=${BODY_FONT_TOKEN_REF}
               ></wizard-token-field>
 
-              ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
-                const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
-                let colorValue: string | undefined;
+              <ul class="wizard-app__basis-colors">
+                ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
+                  const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
+                  let colorValue: string | undefined;
 
-                // Get the resolved color value from extensions or fallback to token's $value
-                if (token && typeof token === 'object' && '$value' in token) {
-                  const actualColorValue =
-                    isRef(token['$value']) && token['$extensions']?.[EXTENSION_RESOLVED_AS]
-                      ? token['$extensions']?.[EXTENSION_RESOLVED_AS]
-                      : token['$value'];
+                  // Get the resolved color value from extensions or fallback to token's $value
+                  if (token && typeof token === 'object' && '$value' in token) {
+                    const actualColorValue =
+                      isRef(token['$value']) && token['$extensions']?.[EXTENSION_RESOLVED_AS]
+                        ? token['$extensions']?.[EXTENSION_RESOLVED_AS]
+                        : token['$value'];
 
-                  // If the token's $value is an object (not a ref string), check if it's a valid ColorValue
-                  if (
-                    typeof actualColorValue === 'object' &&
-                    actualColorValue !== null &&
-                    'colorSpace' in actualColorValue
-                  ) {
-                    colorValue = legacyToModernColor.encode(actualColorValue as ColorValue);
+                    // If the token's $value is an object (not a ref string), check if it's a valid ColorValue
+                    if (
+                      typeof actualColorValue === 'object' &&
+                      actualColorValue !== null &&
+                      'colorSpace' in actualColorValue
+                    ) {
+                      colorValue = legacyToModernColor.encode(actualColorValue as ColorValue);
+                    }
                   }
-                }
 
-                return html`
-                  <color-scale-picker
-                    key=${colorKey}
-                    label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
-                    id=${`basis.color.${colorKey}`}
-                    name=${`basis.color.${colorKey}`}
-                    .colorValue=${colorValue}
-                  >
-                    <a href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} slot="extra-label">docs</a>
-                  </color-scale-picker>
-                `;
-              })}
+                  return html`
+                    <li>
+                      <color-scale-picker
+                        key=${colorKey}
+                        label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
+                        id=${`basis.color.${colorKey}`}
+                        name=${`basis.color.${colorKey}`}
+                        .colorValue=${colorValue}
+                      >
+                        <a
+                          href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
+                          target="_blank"
+                          slot="extra-label"
+                          >docs</a
+                        >
+                      </color-scale-picker>
+                    </li>
+                  `;
+                })}
+              </ul>
 
               <details>
                 <summary>Alle tokens</summary>
