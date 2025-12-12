@@ -30,6 +30,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   @property() readonly position: Position = 'block-end';
   internals_ = this.attachInternals();
 
+  #id = tag;
   #value: T['value'] | undefined;
   #options: Map<T['label'], T> = new Map();
 
@@ -73,6 +74,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   emit(type: 'blur' | 'change' | 'focus' | 'input') {
     this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
   }
+
   /**
    * Override this function to customize how options are filtered when typing
    */
@@ -192,6 +194,16 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     this.open = false;
   }
 
+  get #listId() {
+    return `list-${this.#id}`
+  }
+
+  #getOptionId(index: number = this.selectedIndex) {
+    return (index !== -1)
+      ? `option-${index}-${this.#id}`
+      : nothing;
+  }
+
   /**
    * Override this function to customize the rendering of combobox options and selected value.
    */
@@ -212,6 +224,8 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           role="combobox"
           aria-autocomplete="list"
           aria-haspopup="listbox"
+          aria-controls=${this.#listId}
+          aria-activedescendant=${this.#getOptionId()}
           type="text"
           class="utrecht-textbox utrecht-combobox__input"
           dir="auto"
@@ -222,7 +236,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           @change=${this.#handleChange}
           @keydown=${this.#handleKeydown}
         />
-        <div class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
+        <div id=${this.#listId} class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
           <ul class="utrecht-listbox__list" role="none" @mousedown=${this.#handleOptionsClick}>
             ${this.filteredOptions.map((option, index) => {
               const selected = index === this.selectedIndex;
@@ -232,6 +246,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
               return html`<li
                 class="utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(selectedClass)}"
                 role="option"
+                id=${this.#getOptionId(index)}
                 aria-selected=${selected}
                 data-index=${index}
               >
