@@ -51,7 +51,6 @@ const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
 export class App extends LitElement {
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
   readonly #theme = new Theme();
-  #storageSaveTimeout: ReturnType<typeof setTimeout> | null = null;
 
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
@@ -132,16 +131,7 @@ export class App extends LitElement {
 
   readonly #handleReset = () => {
     this.#theme.reset();
-    try {
-      this.#storage.removeJSON();
-    } catch (error) {
-      console.error('Failed to clear storage:', error);
-    }
-    // Cancel any pending saves since we're resetting
-    if (this.#storageSaveTimeout !== null) {
-      clearTimeout(this.#storageSaveTimeout);
-      this.#storageSaveTimeout = null;
-    }
+    this.#storage.removeJSON();
     this.requestUpdate();
   };
 
