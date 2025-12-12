@@ -2,7 +2,6 @@ import {
   stringifyColor,
   StrictThemeSchema,
   type Theme as ThemeType,
-  isRef,
   EXTENSION_RESOLVED_AS,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
