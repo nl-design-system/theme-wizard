@@ -123,17 +123,6 @@ export class ColorScalePicker extends WizardTokenInput {
     }
   }
 
-  override updated(changedProperties: Map<string, unknown>) {
-    super.updated(changedProperties);
-    // Update the input element's value after render
-    if (changedProperties.has('colorValue')) {
-      const input = this.shadowRoot?.querySelector('input[type="color"]') as HTMLInputElement;
-      if (input && this.colorValue) {
-        input.value = this.colorValue;
-      }
-    }
-  }
-
   get colorSpace(): ColorSpace {
     return this.#scale.from.$value.colorSpace;
   }
@@ -192,7 +181,7 @@ export class ColorScalePicker extends WizardTokenInput {
                 <div
                   class="theme-color-scale__stop"
                   style=${`background-color: ${stop.toCSSColorFunction()}`}
-                  title=${`${COLOR_KEYS.at(index)}: ${stop.$value.components.join(', ')}`}
+                  title=${`${COLOR_KEYS.at(index)}: ${stop.toCSSColorFunction()}`}
                 ></div>
               `,
             )}
