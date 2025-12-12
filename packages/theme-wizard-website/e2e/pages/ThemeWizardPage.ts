@@ -37,6 +37,18 @@ export class ThemeWizardPage {
     await input.blur();
   }
 
+  async changeHeadingFont(fontName: string) {
+    const input = this.page.getByLabel('Koppen').locator('input');
+    await input.fill(fontName);
+    await input.blur();
+  }
+
+  async changeBodyFont(fontName: string) {
+    const input = this.page.getByLabel('Lopende tekst').locator('input');
+    await input.fill(fontName)
+    await input.blur();
+  }
+
   getPreviewChild(): Locator {
     return this.preview.locator(':first-child').first();
   }

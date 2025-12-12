@@ -1,9 +1,10 @@
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import memoize from 'memoize';
 
 type Option = {
   label: string;
@@ -26,11 +27,12 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) readonly = false;
   @property({ type: Boolean }) private open = false;
-  @property({ type: Array }) private readonly options: T[] = [];
   @property() readonly position: Position = 'block-end';
   internals_ = this.attachInternals();
 
+  #id = tag;
   #value: T['value'] | undefined;
+  #options: Map<T['label'], T> = new Map();
 
   static readonly formAssociated = true;
   static override readonly styles = [unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
@@ -41,7 +43,21 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     if (this.query.length === 0) {
       return this.options;
     }
-    return this.options.filter(this.filter);
+    const options = this.options.filter(this.filter);
+    if (options.length === 0) {
+      this.#addAdditionalOptions(this.query);
+    }
+    return options;
+  }
+
+
+  @property({ type: Array })
+  set options(value: T[]) {
+    this.#options = new Map(value.map((option) => ([option.label, option])));
+  }
+
+  get options(): T[] {
+    return [...this.#options.values()]
   }
 
   @property({ attribute: false })
@@ -53,6 +69,10 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
 
   get value() {
     return this.#value;
+  }
+
+  emit(type: 'blur' | 'change' | 'focus' | 'input') {
+    this.dispatchEvent(new Event(type, { bubbles: true, composed: true }));
   }
 
   /**
@@ -94,21 +114,25 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     return value ? `${value}` : '';
   }
 
-  async addAdditionalOptions(query: string) {
+  readonly #addAdditionalOptions = memoize(async (query: string) => {
     const additions = await this.fetchAdditionalOptions(query);
-    this.options.push(...additions);
-  }
+    for (const addition of additions) {
+      this.#options.set(addition.label, addition);
+    }
+  });
 
   readonly #handleBlur = () => {
     this.open = false;
+    this.emit('blur');
   };
 
   readonly #handleChange = () => {
-    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    this.emit('change');
   };
 
   readonly #handleFocus = () => {
     this.open = true;
+    this.emit('focus');
   };
 
   readonly #handleInput = (event: InputEvent) => {
@@ -118,6 +142,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     this.open = true;
     this.query = target.value;
     this.value = this.queryToValue(this.query);
+    this.emit('input');
   };
 
   readonly #handleOptionsClick = (event: Event) => {
@@ -169,6 +194,16 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     this.open = false;
   }
 
+  get #listId() {
+    return `list-${this.#id}`
+  }
+
+  #getOptionId(index: number = this.selectedIndex) {
+    return (index !== -1)
+      ? `option-${index}-${this.#id}`
+      : nothing;
+  }
+
   /**
    * Override this function to customize the rendering of combobox options and selected value.
    */
@@ -182,12 +217,15 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
       'utrecht-combobox__popover--hidden': !this.open,
     };
     return html`
-      <div class="utrecht-combobox" role="combobox">
+      <div class="utrecht-combobox">
         <input
           name=${this.name}
           autocomplete="off"
+          role="combobox"
           aria-autocomplete="list"
           aria-haspopup="listbox"
+          aria-controls=${this.#listId}
+          aria-activedescendant=${this.#getOptionId()}
           type="text"
           class="utrecht-textbox utrecht-combobox__input"
           dir="auto"
@@ -198,7 +236,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           @change=${this.#handleChange}
           @keydown=${this.#handleKeydown}
         />
-        <div class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
+        <div id=${this.#listId} class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
           <ul class="utrecht-listbox__list" role="none" @mousedown=${this.#handleOptionsClick}>
             ${this.filteredOptions.map((option, index) => {
               const selected = index === this.selectedIndex;
@@ -208,6 +246,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
               return html`<li
                 class="utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(selectedClass)}"
                 role="option"
+                id=${this.#getOptionId(index)}
                 aria-selected=${selected}
                 data-index=${index}
               >
