@@ -9,13 +9,7 @@ import '@fontsource/source-sans-pro/700.css';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
-import {
-  legacyToModernColor,
-  BASIS_COLOR_NAMES,
-  EXTENSION_RESOLVED_AS,
-  type ColorValue,
-  isRef,
-} from '@nl-design-system-community/design-tokens-schema';
+import { BASIS_COLOR_NAMES, EXTENSION_RESOLVED_AS, isRef } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
@@ -216,12 +210,8 @@ export class App extends LitElement {
                         : token['$value'];
 
                     // If the token's $value is an object (not a ref string), check if it's a valid ColorValue
-                    if (
-                      typeof actualColorValue === 'object' &&
-                      actualColorValue !== null &&
-                      'colorSpace' in actualColorValue
-                    ) {
-                      colorValue = legacyToModernColor.encode(actualColorValue as ColorValue);
+                    if (typeof actualColorValue === 'object' && 'colorSpace' in actualColorValue) {
+                      colorValue = actualColorValue;
                     }
                   }
 
@@ -238,8 +228,9 @@ export class App extends LitElement {
                           href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
                           target="_blank"
                           slot="extra-label"
-                          >docs</a
                         >
+                          docs
+                        </a>
                       </color-scale-picker>
                     </li>
                   `;
@@ -271,8 +262,9 @@ export class App extends LitElement {
               type="button"
               ?disabled=${!this.#theme.modified}
               @click=${this.#handleDownloadClick}
-              >Download tokens als JSON</utrecht-button
             >
+              Download tokens als JSON
+            </utrecht-button>
           </section>
         </wizard-sidebar>
 
