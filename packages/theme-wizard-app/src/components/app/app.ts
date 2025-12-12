@@ -9,7 +9,6 @@ import '@fontsource/source-sans-pro/700.css';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
-import { BASIS_COLOR_NAMES } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
@@ -17,13 +16,11 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import '../sidebar/sidebar';
-import '../wizard-scraper';
 import '../wizard-preview';
 import '../wizard-logo';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
-import '../color-scale-picker';
 import { EVENT_NAMES } from '../../constants';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { t } from '../../i18n';
@@ -198,27 +195,34 @@ export class App extends LitElement {
               ></wizard-token-field>
 
               <ul class="wizard-app__basis-colors">
-                ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map(
-                  (colorKey) => html`
-                    <li>
-                      <color-scale-picker
-                        key=${colorKey}
-                        label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
-                        id=${`basis.color.${colorKey}`}
-                        name=${`basis.color.${colorKey}`}
-                        .colorToken=${this.#theme.at(`basis.color.${colorKey}.color-default`)}
-                      >
-                        <a
-                          href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
-                          target="_blank"
-                          slot="extra-label"
-                        >
-                          docs
-                        </a>
-                      </color-scale-picker>
-                    </li>
-                  `,
-                )}
+                ${(() => {
+                  const basis = this.#theme.tokens['basis'];
+                  const color = typeof basis === 'object' && basis !== null && 'color' in basis ? basis['color'] : undefined;
+                  const colorKeys = typeof color === 'object' && color !== null ? Object.keys(color) : [];
+                  return colorKeys
+                    .filter((name) => !name.endsWith('inverse') && name !== 'transparent')
+                    .map(
+                      (colorKey) => html`
+                        <li>
+                          <color-scale-picker
+                            key=${colorKey}
+                            label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
+                            id=${`basis.color.${colorKey}`}
+                            name=${`basis.color.${colorKey}`}
+                            .colorToken=${this.#theme.at(`basis.color.${colorKey}.color-default`)}
+                          >
+                          <a
+                            href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
+                            target="_blank"
+                            slot="extra-label"
+                          >
+                            docs
+                          </a>
+                        </color-scale-picker>
+                      </li>
+                    `,
+                    );
+                })()}
               </ul>
 
               <details>
