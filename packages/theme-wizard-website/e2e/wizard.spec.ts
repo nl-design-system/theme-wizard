@@ -39,7 +39,6 @@ test.describe('change fonts', () => {
   });
 });
 
-
 test.describe('Download tokens as JSON', () => {
   test('initial button state is correct', async ({ themeWizard }) => {
     await expect(themeWizard.downloadButton).toBeVisible();

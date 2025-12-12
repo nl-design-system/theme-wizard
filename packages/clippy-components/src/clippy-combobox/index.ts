@@ -5,6 +5,7 @@ import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import memoize from 'memoize';
+import srOnly from '../lib/sr-only/styles';
 
 type Option = {
   label: string;
@@ -24,18 +25,19 @@ declare global {
 @customElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends LitElement {
   @property() name = '';
+  @property({ attribute: 'hidden-label'}) hiddenLabel = '';
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) readonly = false;
   @property({ type: Boolean }) private open = false;
   @property() readonly position: Position = 'block-end';
   internals_ = this.attachInternals();
 
-  #id = tag;
+  readonly #id = `${tag}-${this.name}`;
   #value: T['value'] | undefined;
   #options: Map<T['label'], T> = new Map();
 
   static readonly formAssociated = true;
-  static override readonly styles = [unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
+  static override readonly styles = [srOnly, unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
 
   @state() selectedIndex = -1;
   @state() query = ''; // Query is what the user types to filter options.
@@ -218,7 +220,9 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     };
     return html`
       <div class="utrecht-combobox">
+        <label for="${this.#id}" class="sr-only">${this.hiddenLabel}</label>
         <input
+          id=${this.#id}
           name=${this.name}
           autocomplete="off"
           role="combobox"

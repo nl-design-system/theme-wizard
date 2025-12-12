@@ -1,10 +1,11 @@
 import { css } from 'lit';
 
 export default css`
+  /* stylelint-disable */
   .sr-only {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    inline-size: 1px;
+    block-size: 1px;
     padding: 0;
     margin: -1px;
     overflow: hidden;

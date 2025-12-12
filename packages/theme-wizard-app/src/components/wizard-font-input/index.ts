@@ -64,7 +64,7 @@ export class WizardFontInput extends WizardTokenInput {
             </div>`,
         )}
         <clippy-font-combobox
-          aria-labelledby="label-${this.name}"
+          hidden-label="${this.label}"
           name=${this.name}
           @change=${this.#handleChange}
           .value=${this.value.toString()}

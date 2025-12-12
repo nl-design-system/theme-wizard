@@ -38,14 +38,14 @@ export class ThemeWizardPage {
   }
 
   async changeHeadingFont(fontName: string) {
-    const input = this.page.getByLabel('Koppen').locator('input');
+    const input = this.page.getByLabel('Koppen');
     await input.fill(fontName);
     await input.blur();
   }
 
   async changeBodyFont(fontName: string) {
-    const input = this.page.getByLabel('Lopende tekst').locator('input');
-    await input.fill(fontName)
+    const input = this.page.getByLabel('Lopende tekst');
+    await input.fill(fontName);
     await input.blur();
   }
 
