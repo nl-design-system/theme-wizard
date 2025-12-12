@@ -30,7 +30,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('shows list of options on focus', async () => {
-    const input = page.getByRole('textbox');
+    const input = page.getByRole('combobox');
     await input.click();
     const options = page.getByRole('option').elements();
     expect(options.length).toBe(OPTIONS.length);
@@ -38,7 +38,7 @@ describe(`<${tag}>`, () => {
 
   it('filters list of options based on text input', async () => {
     const query = OPTIONS[0].label.slice(0, -1);
-    const input = page.getByRole('textbox');
+    const input = page.getByRole('combobox');
     await input.fill(query);
     const options = page.getByRole('option').elements();
     expect(options.length).toBe(1);
@@ -46,7 +46,7 @@ describe(`<${tag}>`, () => {
 
   it('selects an option when clicking it', async () => {
     const component: ClippyCombobox = document.querySelector(tag)!;
-    const input = page.getByRole('textbox');
+    const input = page.getByRole('combobox');
     await input.click();
     const option = page.getByRole('option').last();
     await option.click();
@@ -56,7 +56,7 @@ describe(`<${tag}>`, () => {
   it('uses query as value', async () => {
     const component: ClippyCombobox = document.querySelector(tag)!;
     const query = 'Elmo';
-    const input = page.getByRole('textbox');
+    const input = page.getByRole('combobox');
     await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
     expect(component.value).toBe(query);
   });
@@ -69,7 +69,7 @@ describe(`<${tag}>`, () => {
 
   it('holds a form value', async () => {
     const query = 'Elmo';
-    const input = page.getByRole('textbox');
+    const input = page.getByRole('combobox');
     await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
     const form: HTMLFormElement = document.querySelector('form')!;
     const formData = new FormData(form);
@@ -83,7 +83,7 @@ describe(`<${tag}>`, () => {
     [['ArrowDown', 'ArrowDown', 'ArrowUp'], OPTIONS[0]],
   ])('changes the selected option with arrow keys', async (sequence, selection) => {
     const component: ClippyCombobox = document.querySelector(tag)!;
-    const input = page.getByRole('textbox');
+    const input = page.getByRole('combobox');
     await input.fill('');
     await userEvent.keyboard([...sequence, 'Enter'].map((k) => `{${k}}`).join(''));
     expect(component.value).toBe(selection.value);
@@ -93,7 +93,7 @@ describe(`<${tag}>`, () => {
     const component: ClippyCombobox = document.querySelector(tag)!;
     const listener = vi.fn();
     component.addEventListener(event, listener);
-    const input = page.getByRole('textbox')
+    const input = page.getByRole('combobox')
     await input.click().then(() => userEvent.keyboard('abc{Enter}')).then(() => userEvent.keyboard('{Tab}'));
     expect(listener).toBeCalled();
   });
