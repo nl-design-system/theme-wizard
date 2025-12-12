@@ -9,12 +9,7 @@ import '@fontsource/source-sans-pro/700.css';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
-import {
-  BASIS_COLOR_NAMES,
-  ColorValue,
-  EXTENSION_RESOLVED_AS,
-  isRef,
-} from '@nl-design-system-community/design-tokens-schema';
+import { BASIS_COLOR_NAMES } from '@nl-design-system-community/design-tokens-schema';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
@@ -203,25 +198,15 @@ export class App extends LitElement {
               ></wizard-token-field>
 
               <ul class="wizard-app__basis-colors">
-                ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map((colorKey) => {
-                  const token = this.#theme.at(`basis.color.${colorKey}.color-default`);
-                  let colorValue: ColorValue | undefined;
-
-                  // Get the resolved color value from extensions or fallback to token's $value
-                  if (isRef(token['$value']) && token['$extensions']?.[EXTENSION_RESOLVED_AS]) {
-                    colorValue = token['$extensions']?.[EXTENSION_RESOLVED_AS];
-                  } else {
-                    colorValue = token['$value'];
-                  }
-
-                  return html`
+                ${BASIS_COLOR_NAMES.filter((name) => !name.endsWith('inverse')).map(
+                  (colorKey) => html`
                     <li>
                       <color-scale-picker
                         key=${colorKey}
                         label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
                         id=${`basis.color.${colorKey}`}
                         name=${`basis.color.${colorKey}`}
-                        .colorValue=${colorValue}
+                        .colorToken=${this.#theme.at(`basis.color.${colorKey}.color-default`)}
                       >
                         <a
                           href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
@@ -232,8 +217,8 @@ export class App extends LitElement {
                         </a>
                       </color-scale-picker>
                     </li>
-                  `;
-                })}
+                  `,
+                )}
               </ul>
 
               <details>

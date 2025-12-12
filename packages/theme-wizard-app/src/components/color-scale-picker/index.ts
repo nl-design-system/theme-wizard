@@ -3,6 +3,8 @@ import { consume } from '@lit/context';
 import {
   COLOR_KEYS,
   ColorValue,
+  EXTENSION_RESOLVED_AS,
+  isRef,
   legacyToModernColor,
   parseColor,
   type ColorSpace,
@@ -40,6 +42,24 @@ const getSupportsCSSColorValues = () => {
  */
 const transformScaleToColorKeys = (scaleObject: Record<string, ColorTokenType>) => {
   return Object.fromEntries(COLOR_KEYS.map((key, index) => [key, scaleObject[String(index + 1)]]));
+};
+
+/**
+ * Extract the resolved color value from a token
+ */
+const resolveColorValue = (token: ColorTokenType): ColorValue | undefined => {
+  // Get the resolved color value from extensions or fallback to token's $value
+  if (isRef(token['$value'])) {
+    const resolved = token['$extensions']?.[EXTENSION_RESOLVED_AS] as ColorValue | undefined;
+    if (resolved && 'colorSpace' in resolved) {
+      return resolved;
+    }
+  }
+  const value = token['$value'];
+  if (value && typeof value === 'object' && 'colorSpace' in value) {
+    return value as ColorValue;
+  }
+  return undefined;
 };
 
 @customElement('color-scale-picker')
@@ -84,8 +104,8 @@ export class ColorScalePicker extends WizardTokenInput {
     this.requestUpdate('value', oldValue);
   }
 
-  @property()
-  colorValue?: ColorValue;
+  @property({ attribute: false })
+  colorToken?: ColorTokenType;
 
   @consume({ context: scrapedColorsContext, subscribe: true })
   @property({ attribute: false })
@@ -95,12 +115,15 @@ export class ColorScalePicker extends WizardTokenInput {
     // If the full value is being set, restore from it (takes precedence)
     if (changedProperties.has('value')) {
       // The value setter will handle updating #value
-      // But we need to also update #scale.from from colorValue if it's available
-      if (this.colorValue) {
+      // But we need to also update #scale.from from colorToken if it's available
+      if (this.colorToken) {
         try {
-          this.#scale.from = new ColorToken({
-            $value: this.colorValue,
-          });
+          const colorValue = resolveColorValue(this.colorToken);
+          if (colorValue) {
+            this.#scale.from = new ColorToken({
+              $value: colorValue,
+            });
+          }
         } catch {
           // If parsing fails, keep the current scale
         }
@@ -108,16 +131,19 @@ export class ColorScalePicker extends WizardTokenInput {
       return;
     }
 
-    // Initialize from the colorValue attribute if changed (before render)
-    if (changedProperties.has('colorValue') && this.colorValue) {
+    // Initialize from the colorToken property if changed (before render)
+    if (changedProperties.has('colorToken') && this.colorToken) {
       try {
-        this.#scale.from = new ColorToken({
-          $value: this.colorValue,
-        });
-        // Reset the internal value to match the new color
-        this.#value = this.#scale.toObject();
-        // Set form value using COLOR_KEYS format for consistency
-        this.internals_.setFormValue(JSON.stringify(transformScaleToColorKeys(this.#value)));
+        const colorValue = resolveColorValue(this.colorToken);
+        if (colorValue) {
+          this.#scale.from = new ColorToken({
+            $value: colorValue,
+          });
+          // Reset the internal value to match the new color
+          this.#value = this.#scale.toObject();
+          // Set form value using COLOR_KEYS format for consistency
+          this.internals_.setFormValue(JSON.stringify(transformScaleToColorKeys(this.#value)));
+        }
       } catch {
         // If parsing fails, keep the default
       }
@@ -164,7 +190,9 @@ export class ColorScalePicker extends WizardTokenInput {
             id=${this.#idColor}
             name=${this.#idColor}
             type="color"
-            value=${this.colorValue ? legacyToModernColor.encode(this.colorValue) : ''}
+            value=${this.colorToken
+              ? legacyToModernColor.encode(resolveColorValue(this.colorToken) ?? parseColor('black'))
+              : ''}
             colorSpace=${this.colorSpace}
             @change=${this.handleColorChange}
             list="preset-colors"
