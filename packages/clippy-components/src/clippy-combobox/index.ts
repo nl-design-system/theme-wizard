@@ -148,12 +148,11 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   };
 
   readonly #handleOptionsClick = (event: Event) => {
-    const target = event.target;
+    const target = event.currentTarget;
     if (!(target instanceof HTMLElement)) return;
 
     const index = Number(target.dataset['index']);
     if (Number.isNaN(index)) return;
-
     this.#commitSelection(index);
   };
 
@@ -241,7 +240,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           @keydown=${this.#handleKeydown}
         />
         <div id=${this.#listId} class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
-          <ul class="utrecht-listbox__list" role="none" @mousedown=${this.#handleOptionsClick}>
+          <ul class="utrecht-listbox__list" role="none">
             ${this.filteredOptions.map((option, index) => {
               const selected = index === this.selectedIndex;
               const selectedClass = {
@@ -253,6 +252,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
                 id=${this.#getOptionId(index)}
                 aria-selected=${selected}
                 data-index=${index}
+                @mousedown=${this.#handleOptionsClick}
               >
                 ${this.renderEntry(option, index)}
               </li>`;
