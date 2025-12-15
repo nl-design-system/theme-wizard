@@ -9,6 +9,12 @@
     "nl-design-system"
   ],
   "private": true,
+  "exports": {
+    "./patterns/*": {
+      "import": "./dist/patterns/*/index.js",
+      "types": "./dist/patterns/*/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git+ssh",
     "url": "git@github.com:nl-design-system/example.git",
@@ -17,6 +23,7 @@
   "scripts": {
     "dev": "pnpm run storybook --no-open",
     "build": "storybook build --config-dir ./config/ --output-dir ./dist/",
+    "build:components": "vite build",
     "clean": "rimraf ./dist/",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
     "lint:js": "eslint",
@@ -46,6 +53,8 @@
     "react-dom": "18.3.1",
     "storybook": "10.1.11",
     "vite": "7.3.0",
-    "vitest": "4.0.16"
+    "vitest": "4.0.16",
+    "vite-plugin-dts": "4.5.4",
+    "glob": "13.0.0"
   }
 }

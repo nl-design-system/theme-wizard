@@ -9,9 +9,11 @@
     "directory": "packages/theme-wizard-app"
   },
   "exports": {
+    ".": "./dist/index.js",
     "./theme.css": "./theme.css"
   },
   "files": [
+    "dist",
     "theme.css"
   ],
   "scripts": {

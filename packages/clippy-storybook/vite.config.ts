@@ -7,7 +7,7 @@ import dts from 'vite-plugin-dts';
 //@see https://rollupjs.org/configuration-options/#input
 export function getFiles(pattern: string, relativeTo = 'src') {
   return Object.fromEntries(
-    globSync(pattern).map((file) => {
+    globSync(pattern).map((file: string) => {
       return [
         relative(relativeTo, file.slice(0, file.length - extname(file).length)),
         fileURLToPath(new URL(file, import.meta.url)),
@@ -20,27 +20,14 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        ...getFiles('src/**/*.ts'),
-        ...getFiles('src/**/*.tsx'),
+        ...getFiles('src/patterns/**/*.tsx'),
+        ...getFiles('src/patterns/**/*.ts'),
       },
       formats: ['es'],
     },
     rollupOptions: {
-      external: [
-        'lit',
-        'lit/decorators.js',
-        'lit/directives/class-map.js',
-        'lit/directives/style-map.js',
-        'lit/directives/ref.js',
-      ],
-      input: getFiles('src/[!lib]**/index.ts'),
+      external: ['react', 'react-dom', '@utrecht/component-library-react'],
       output: {
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.names.every((name) => name.endsWith('.json'))) {
-            return '[name]-[hash][extname]';
-          }
-          return 'assets/[name]-[hash][extname]';
-        },
         entryFileNames: '[name].js',
       },
     },
@@ -48,7 +35,7 @@ export default defineConfig({
   plugins: [
     dts({
       entryRoot: 'src',
-      exclude: ['**/*.test.*', '**/styles.ts'],
+      exclude: ['**/*.stories.*', '**/*.test.*'],
     }),
   ],
 });
