@@ -1,8 +1,15 @@
 import { test, expect } from './fixtures/fixtures';
 
 test.describe('scraping css design tokens', () => {
-  test('scrapes a valid URL', async ({ themeWizard }) => {
+  test('scrapes a valid, absolute URL', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('https://www.example.com');
+    const input = themeWizard.sidebar.getByLabel('Website URL');
+    await expect(input).not.toHaveAttribute('aria-invalid');
+    await expect(themeWizard.sidebar.getByRole('status')).toBeVisible();
+  });
+
+  test('scrapes a valid, non-absolute URL', async ({ themeWizard }) => {
+    await themeWizard.scrapeUrl('example.com');
     const input = themeWizard.sidebar.getByLabel('Website URL');
     await expect(input).not.toHaveAttribute('aria-invalid');
     await expect(themeWizard.sidebar.getByRole('status')).toBeVisible();
@@ -190,4 +197,54 @@ test.describe('printing the webpage', () => {
     await expect(page.locator('.wizard-app__logo')).not.toBeVisible();
     await expect(page.locator('.wizard-app__nav')).not.toBeVisible();
   });
+});
+
+test.describe('colorscale inputs', () => {
+  const INITIAL_COLOR = '#1b59a4';
+
+  // Initial value matches Start Thema
+  test('Initial value matches Start Thema', async ({ themeWizard }) => {
+    const input = themeWizard.page.getByLabel('Accent 1');
+    await expect(input).toHaveValue(INITIAL_COLOR);
+  });
+
+  test('Changing a scale updates the preview', async ({ themeWizard }) => {
+    // The 'Home' link in the the breadcrumb of the preview
+    const breadcrumbLink = themeWizard.preview.getByRole('navigation').getByRole('link').first();
+    const beforeColor = await breadcrumbLink.evaluate((element) =>
+      globalThis.getComputedStyle(element).getPropertyValue('color'),
+    );
+    await themeWizard.changeColor('Actie 2', '#ff0000');
+    const afterColor = await breadcrumbLink.evaluate((element) =>
+      globalThis.getComputedStyle(element).getPropertyValue('color'),
+    );
+    expect(beforeColor).not.toBe(afterColor);
+  });
+
+  test('Reset restores value to initial value', async ({ themeWizard }) => {
+    const input = themeWizard.page.getByLabel('Accent 1');
+    await themeWizard.changeColor('Accent 1', '#ff0000');
+    await themeWizard.reset();
+    expect(input).toHaveValue(INITIAL_COLOR);
+  });
+
+  test('Uses value from storage after refresh', async ({ themeWizard }) => {
+    const input = themeWizard.page.getByLabel('Accent 1');
+    await themeWizard.changeColor('Accent 1', '#ff0000');
+    await themeWizard.page.reload();
+    // This is the mid-range darker red that the input stores (it does not store the user's actual picked color)
+    await expect(input).toHaveValue('#a20000');
+  });
+
+  test('Changing value updates individual color inputs ("All tokens")', async ({ themeWizard }) => {
+    // Make sure "all tokens" is visible
+    await themeWizard.sidebar.locator('summary').click();
+    const input = themeWizard.sidebar.getByLabel('color-default').first();
+    await expect(input).toHaveValue(INITIAL_COLOR);
+    await themeWizard.changeColor('Accent 1', '#ff0000');
+    await expect(input).not.toHaveValue(INITIAL_COLOR);
+  });
+
+  // This does not work yet
+  test.skip('Changing an individual token updates the attached colorscale input', () => {});
 });

@@ -11,7 +11,7 @@ import {
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
@@ -111,6 +111,9 @@ export class WizardColorscaleInput extends WizardTokenInput {
   @property({ attribute: false })
   scrapedColors: ScrapedColorToken[] = [];
 
+  @state()
+  private currentColorValue: string = '';
+
   override willUpdate(changedProperties: Map<string, unknown>) {
     // If the full value is being set, restore from it (takes precedence)
     if (changedProperties.has('value')) {
@@ -123,6 +126,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
             this.#scale.from = new ColorToken({
               $value: colorValue,
             });
+            this.currentColorValue = legacyToModernColor.encode(colorValue);
           }
         } catch {
           // If parsing fails, keep the current scale
@@ -143,6 +147,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
           this.#value = this.#scale.toObject();
           // Set form value using COLOR_KEYS format for consistency
           this.internals_.setFormValue(JSON.stringify(transformScaleToColorKeys(this.#value)));
+          this.currentColorValue = legacyToModernColor.encode(colorValue);
         }
       } catch {
         // If parsing fails, keep the default
@@ -157,6 +162,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
   override connectedCallback() {
     super.connectedCallback();
     this.value = this.#scale.toObject();
+    this.currentColorValue = legacyToModernColor.encode(this.#scale.from.$value);
   }
 
   readonly handleColorChange = (event: Event) => {
@@ -166,6 +172,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
       });
       this.#scale.from = newToken;
       this.value = this.#scale.toObject();
+      this.currentColorValue = event.target.value;
       this.requestUpdate();
       this.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -190,16 +197,14 @@ export class WizardColorscaleInput extends WizardTokenInput {
             id=${this.#idColor}
             name=${this.#idColor}
             type="color"
-            value=${this.colorToken
-              ? legacyToModernColor.encode(resolveColorValue(this.colorToken) ?? parseColor('black'))
-              : ''}
+            .value=${this.currentColorValue}
             colorSpace=${this.colorSpace}
             @change=${this.handleColorChange}
             list="preset-colors"
           />
         </div>
-        <output
-          for=${this.#idColor}
+        <div
+          role="presentation"
           class="theme-color-scale__list"
           style=${`color: ${this.#scale.from?.toCSSColorFunction()}`}
         >
@@ -213,7 +218,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
               ></div>
             `;
           })}
-        </output>
+        </div>
       </div>
     `;
   }

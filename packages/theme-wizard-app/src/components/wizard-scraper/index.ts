@@ -144,7 +144,7 @@ export class WizardScraper extends LitElement {
           : nothing}
         ${this.#state === 'success'
           ? html`
-              <utrecht-paragraph role="status" id="#statusMessageId">
+              <utrecht-paragraph role="status" id=${this.#statusMessageId}>
                 ${t('scraper.success', { tokenCount: this.colors.length + this.fonts.length })}
               </utrecht-paragraph>
             `
