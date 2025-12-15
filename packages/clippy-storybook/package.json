@@ -15,6 +15,7 @@
     "directory": "packages/clippy-storybook"
   },
   "scripts": {
+    "dev": "pnpm run storybook",
     "build": "storybook build --config-dir ./config/ --output-dir ./dist/",
     "clean": "rimraf ./dist/",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
@@ -23,6 +24,7 @@
     "storybook": "storybook dev --config-dir ./config/ --port 6006"
   },
   "devDependencies": {
+    "@nl-design-system-community/clippy-components": "workspace:*",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system/tsconfig": "1.0.5",
     "@rijkshuisstijl-community/storybook-tooling": "1.1.1",

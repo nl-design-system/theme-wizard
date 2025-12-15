@@ -142,6 +142,9 @@ importers:
 
   packages/clippy-storybook:
     devDependencies:
+      '@nl-design-system-community/clippy-components':
+        specifier: workspace:*
+        version: link:../clippy-components
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
