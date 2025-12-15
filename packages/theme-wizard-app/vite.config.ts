@@ -8,7 +8,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['lit'],
+      external: ['lit', 'lit/directives/class-map.js', 'lit/directives/unsafe-svg.js'],
     },
   },
 });
