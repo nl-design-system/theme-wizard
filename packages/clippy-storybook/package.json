@@ -24,7 +24,8 @@
     "storybook": "storybook dev --config-dir ./config/ --port 6006"
   },
   "dependencies": {
-    "@nl-design-system-community/clippy-components": "workspace:*"
+    "@nl-design-system-community/clippy-components": "workspace:*",
+    "@nl-design-system-community/ma-design-tokens": "3.0.0"
   },
   "devDependencies": {
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
