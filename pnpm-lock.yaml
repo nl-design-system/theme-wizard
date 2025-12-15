@@ -87,6 +87,9 @@ importers:
       '@amsterdam/design-system-css':
         specifier: 2.1.0
         version: 2.1.0
+      '@nl-design-system-candidate/color-sample-css':
+        specifier: 1.0.4
+        version: 1.0.4
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -1553,6 +1556,9 @@ packages:
 
   '@nl-design-system-candidate/code-css@2.0.3':
     resolution: {integrity: sha512-7cuwem+GDRBGT4/4h4QFZesr6l2ruRG4AAULhvPuyvmvftTMzb7Q8G5O2cmNzBt/VuQKO789Qe3w79UcXRjxNw==}
+
+  '@nl-design-system-candidate/color-sample-css@1.0.4':
+    resolution: {integrity: sha512-zDQKBqdWnxKg+y08WMOc2FKTCbKYM+IVLgzWd044sAo2U+q3XKREP+VZDUKAmSDEPcaDn2hia1QFO6eJkhMFAQ==}
 
   '@nl-design-system-candidate/heading-css@1.1.1':
     resolution: {integrity: sha512-DcIIHvbFnjuJ/iC+zNnjI0oaTLF7NiLJDEuxWMHXfZNNDTGnBvcKJxWRuDDMswkWyX9C3lSnwMxfQqjMh0jglQ==}
@@ -7893,6 +7899,8 @@ snapshots:
     optional: true
 
   '@nl-design-system-candidate/code-css@2.0.3': {}
+
+  '@nl-design-system-candidate/color-sample-css@1.0.4': {}
 
   '@nl-design-system-candidate/heading-css@1.1.1': {}
 
