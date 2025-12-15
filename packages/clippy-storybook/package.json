@@ -15,7 +15,7 @@
     "directory": "packages/clippy-storybook"
   },
   "scripts": {
-    "dev": "pnpm run storybook",
+    "dev": "pnpm run storybook --no-open",
     "build": "storybook build --config-dir ./config/ --output-dir ./dist/",
     "clean": "rimraf ./dist/",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
