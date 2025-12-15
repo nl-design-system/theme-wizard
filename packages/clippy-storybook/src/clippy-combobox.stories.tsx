@@ -20,7 +20,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "`<clippy-combobox>`",
+        component: '`<clippy-combobox>`',
       },
     },
   },

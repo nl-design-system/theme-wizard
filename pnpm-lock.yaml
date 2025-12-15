@@ -144,10 +144,11 @@ importers:
         version: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.0)(@vitest/browser-playwright@4.0.8)(tsx@4.19.2)(yaml@2.8.1)
 
   packages/clippy-storybook:
-    devDependencies:
+    dependencies:
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
+    devDependencies:
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
