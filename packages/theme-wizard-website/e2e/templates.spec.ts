@@ -4,7 +4,7 @@ test('preview template shows correct content and structure', async ({ previewPag
   const previewChild = previewPage.getPreviewChild();
 
   await expect(previewPage.preview).toContainText('Mijn omgeving');
-  await expect(previewChild).not.toHaveClass('theme-wizard-collage-component');
+  await expect(previewChild).not.toHaveAttribute('data-test-id', 'theme-wizard-collage');
   await expect(previewPage.getCollageComponents()).not.toBeVisible();
 });
 
@@ -14,7 +14,7 @@ test('collage template shows correct content and structure', async ({ collagePag
   await expect(collagePage.preview).toContainText(
     "Breadcrumb navigation wordt gebruikt om naar andere pagina's in een gebruikersinterface te navigeren.",
   );
-  await expect(previewChild).toHaveClass('theme-wizard-collage-component');
+  await expect(previewChild).toHaveAttribute('data-test-id', 'theme-wizard-collage');
   await expect(collagePage.getCollageComponents()).toHaveCount(6);
 });
 

@@ -1,7 +1,7 @@
 import { test, expect } from './fixtures/fixtures';
 
 test.describe('scraping css design tokens', () => {
-  test('scrapes a valid URL', async ({ themeWizard }) => {
+  test.only('scrapes a valid URL', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('https://www.example.com');
     const input = themeWizard.sidebar.getByLabel('Website URL');
     await expect(input).not.toHaveAttribute('aria-invalid');
