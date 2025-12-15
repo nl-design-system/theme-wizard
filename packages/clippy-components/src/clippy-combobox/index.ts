@@ -25,7 +25,7 @@ declare global {
 @customElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends LitElement {
   @property() name = '';
-  @property({ attribute: 'hidden-label'}) hiddenLabel = '';
+  @property({ attribute: 'hidden-label' }) hiddenLabel = '';
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) readonly = false;
   @property({ type: Boolean }) private open = false;
@@ -37,7 +37,12 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   #options: Map<T['label'], T> = new Map();
 
   static readonly formAssociated = true;
-  static override readonly styles = [srOnly, unsafeCSS(comboboxStyles), unsafeCSS(listboxStyles), unsafeCSS(textboxStyles)];
+  static override readonly styles = [
+    srOnly,
+    unsafeCSS(comboboxStyles),
+    unsafeCSS(listboxStyles),
+    unsafeCSS(textboxStyles),
+  ];
 
   @state() selectedIndex = -1;
   @state() query = ''; // Query is what the user types to filter options.
@@ -52,14 +57,13 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     return options;
   }
 
-
   @property({ type: Array })
   set options(value: T[]) {
-    this.#options = new Map(value.map((option) => ([option.label, option])));
+    this.#options = new Map(value.map((option) => [option.label, option]));
   }
 
   get options(): T[] {
-    return [...this.#options.values()]
+    return [...this.#options.values()];
   }
 
   @property({ attribute: false })
@@ -196,13 +200,11 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   }
 
   get #listId() {
-    return `list-${this.#id}`
+    return `list-${this.#id}`;
   }
 
   #getOptionId(index: number = this.selectedIndex) {
-    return (index !== -1)
-      ? `option-${index}-${this.#id}`
-      : nothing;
+    return index !== -1 ? `option-${index}-${this.#id}` : nothing;
   }
 
   /**
@@ -239,7 +241,12 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           @change=${this.#handleChange}
           @keydown=${this.#handleKeydown}
         />
-        <div id=${this.#listId} class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}" role="listbox" tabindex="-1">
+        <div
+          id=${this.#listId}
+          class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}"
+          role="listbox"
+          tabindex="-1"
+        >
           <ul class="utrecht-listbox__list" role="none">
             ${this.filteredOptions.map((option, index) => {
               const selected = index === this.selectedIndex;

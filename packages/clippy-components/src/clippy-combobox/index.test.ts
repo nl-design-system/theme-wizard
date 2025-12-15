@@ -93,8 +93,11 @@ describe(`<${tag}>`, () => {
     const component: ClippyCombobox = document.querySelector(tag)!;
     const listener = vi.fn();
     component.addEventListener(event, listener);
-    const input = page.getByRole('combobox')
-    await input.click().then(() => userEvent.keyboard('abc{Enter}')).then(() => userEvent.keyboard('{Tab}'));
+    const input = page.getByRole('combobox');
+    await input
+      .click()
+      .then(() => userEvent.keyboard('abc{Enter}'))
+      .then(() => userEvent.keyboard('{Tab}'));
     expect(listener).toBeCalled();
   });
 });
