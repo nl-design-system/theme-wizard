@@ -105,6 +105,9 @@ importers:
       '@utrecht/textbox-css':
         specifier: 3.0.1
         version: 3.0.1
+      colorjs.io:
+        specifier: 0.6.0-beta.3
+        version: 0.6.0-beta.3
       lit:
         specifier: 3.3.2
         version: 3.3.2
@@ -3985,8 +3988,8 @@ packages:
   colorjs.io@0.6.0:
     resolution: {integrity: sha512-NgaccdK0ajJ9DPfa5OrIFRfTm4XILboOuqKV6tu9UonREcve+RUilZR3cdo7BbG+xIHFbDv4CxTE4M2vsj7nqw==}
 
-  colorjs.io@0.6.0-alpha.1:
-    resolution: {integrity: sha512-c/h/8uAmPydQcriRdX8UTAFHj6SpSHFHBA8LvMikvYWAVApPTwg/pyOXNsGmaCBd6L/EeDlRHSNhTtnIFp/qsg==}
+  colorjs.io@0.6.0-beta.3:
+    resolution: {integrity: sha512-LuZuWmlCc3oeGnZ9IdH6Uo0OOf1wBfLCedZEoaNsO8VYqTbsqkFp9QHcd9Yt2KilpCHJArOM3kHmG43arZ7OHw==}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -9260,7 +9263,7 @@ snapshots:
     dependencies:
       '@projectwallace/css-analyzer': 7.6.0
       color-sorter: 7.0.0
-      colorjs.io: 0.6.0-alpha.1
+      colorjs.io: 0.6.0
       css-time-sort: 3.0.0
       css-tree: 3.1.0
 
@@ -11658,7 +11661,7 @@ snapshots:
 
   colorjs.io@0.6.0: {}
 
-  colorjs.io@0.6.0-alpha.1: {}
+  colorjs.io@0.6.0-beta.3: {}
 
   combined-stream@1.0.8:
     dependencies:

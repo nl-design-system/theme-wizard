@@ -92,4 +92,16 @@ describe(`<${tag}>`, () => {
     await userEvent.keyboard([...sequence, 'Enter'].map((k) => `{${k}}`).join(''));
     expect(component.value).toStrictEqual(selection.value);
   });
+
+  it.each([
+    ['Orange', OPTIONS[0]],
+    ['green', OPTIONS[1]],
+    ['purple', OPTIONS[2]],
+  ])('filters on color name $0', async (query, selection) => {
+    const component: ClippyColorCombobox = document.querySelector(tag)!;
+    const input = page.getByRole('combobox');
+    await input.fill(query);
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    expect(component.value).toStrictEqual(selection.value);
+  });
 });
