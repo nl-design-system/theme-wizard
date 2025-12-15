@@ -18,6 +18,14 @@ import styles from './styles';
 const OPTIONS_STORAGE_KEY = 'options';
 const SRC_STORAGE_KEY = 'src';
 
+const tag = 'wizard-scraper';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: WizardScraper;
+  }
+}
+
 @customElement('wizard-scraper')
 export class WizardScraper extends LitElement {
   @property() tokens: ScrapedDesignToken[] = [];
