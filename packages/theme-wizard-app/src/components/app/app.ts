@@ -26,7 +26,7 @@ import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
-import { ColorScalePicker } from '../color-scale-picker';
+import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -98,7 +98,7 @@ export class App extends LitElement {
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 
-    if (target instanceof ColorScalePicker) {
+    if (target instanceof WizardColorscaleInput) {
       const updates = Object.entries(target.value).map(([colorKey, value]) => ({
         path: `${target.name}.${colorKey}`,
         value: value.$value,
@@ -197,30 +197,31 @@ export class App extends LitElement {
               <ul class="wizard-app__basis-colors">
                 ${(() => {
                   const basis = this.#theme.tokens['basis'];
-                  const color = typeof basis === 'object' && basis !== null && 'color' in basis ? basis['color'] : undefined;
+                  const color =
+                    typeof basis === 'object' && basis !== null && 'color' in basis ? basis['color'] : undefined;
                   const colorKeys = typeof color === 'object' && color !== null ? Object.keys(color) : [];
                   return colorKeys
                     .filter((name) => !name.endsWith('inverse') && name !== 'transparent')
                     .map(
                       (colorKey) => html`
                         <li>
-                          <color-scale-picker
+                          <wizard-colorscale-input
                             key=${colorKey}
                             label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
                             id=${`basis.color.${colorKey}`}
                             name=${`basis.color.${colorKey}`}
                             .colorToken=${this.#theme.at(`basis.color.${colorKey}.color-default`)}
                           >
-                          <a
-                            href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
-                            target="_blank"
-                            slot="extra-label"
-                          >
-                            docs
-                          </a>
-                        </color-scale-picker>
-                      </li>
-                    `,
+                            <a
+                              href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
+                              target="_blank"
+                              slot="extra-label"
+                            >
+                              docs
+                            </a>
+                          </wizard-colorscale-input>
+                        </li>
+                      `,
                     );
                 })()}
               </ul>

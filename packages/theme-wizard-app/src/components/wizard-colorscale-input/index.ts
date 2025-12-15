@@ -40,7 +40,7 @@ const getSupportsCSSColorValues = () => {
 /**
  * Transform ColorScale output (numeric keys "1"-"14") to COLOR_KEYS format
  */
-const transformScaleToColorKeys = (scaleObject: Record<string, ColorTokenType>) => {
+const transformScaleToColorKeys = (scaleObject: ColorScaleObject) => {
   return Object.fromEntries(COLOR_KEYS.map((key, index) => [key, scaleObject[String(index + 1)]]));
 };
 
@@ -62,8 +62,8 @@ const resolveColorValue = (token: ColorTokenType): ColorValue | undefined => {
   return undefined;
 };
 
-@customElement('color-scale-picker')
-export class ColorScalePicker extends WizardTokenInput {
+@customElement('wizard-colorscale-input')
+export class WizardColorscaleInput extends WizardTokenInput {
   readonly #scale = new ColorScale(DEFAULT_FROM);
   readonly #idColor = 'color-scale-color';
   #value = this.#scale.toObject();
@@ -79,8 +79,8 @@ export class ColorScalePicker extends WizardTokenInput {
   override set value(val) {
     const oldValue = this.#value;
     // Store the transformed value (with COLOR_KEYS)
-    let transformedVal: Record<string, ColorTokenType>;
-    const valObj = val as Record<string, ColorTokenType>;
+    let transformedVal: ColorScaleObject;
+    const valObj = val;
 
     // Check if this looks like a COLOR_KEYS formatted object (has color-default key)
     if (typeof val === 'object' && val !== null && 'color-default' in valObj) {
@@ -97,7 +97,7 @@ export class ColorScalePicker extends WizardTokenInput {
         }
       }
     } else {
-      transformedVal = val as Record<string, ColorTokenType>;
+      transformedVal = val;
     }
     this.#value = transformedVal;
     this.internals_.setFormValue(JSON.stringify(val));
@@ -203,17 +203,16 @@ export class ColorScalePicker extends WizardTokenInput {
           class="theme-color-scale__list"
           style=${`color: ${this.#scale.from?.toCSSColorFunction()}`}
         >
-          ${this.#scale
-            .list()
-            .map(
-              (stop, index) => html`
-                <div
-                  class="theme-color-scale__stop"
-                  style=${`background-color: ${stop.toCSSColorFunction()}`}
-                  title=${`${COLOR_KEYS.at(index)}: ${stop.toCSSColorFunction()}`}
-                ></div>
-              `,
-            )}
+          ${this.#scale.list().map((stop, index) => {
+            const cssColor = stop.toCSSColorFunction();
+            return html`
+              <div
+                class="theme-color-scale__stop"
+                style=${`background-color: ${cssColor}`}
+                title=${`${COLOR_KEYS.at(index)}: ${cssColor}`}
+              ></div>
+            `;
+          })}
         </output>
       </div>
     `;
@@ -222,6 +221,6 @@ export class ColorScalePicker extends WizardTokenInput {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'color-scale-picker': ColorScalePicker;
+    'wizard-colorscale-input': WizardColorscaleInput;
   }
 }

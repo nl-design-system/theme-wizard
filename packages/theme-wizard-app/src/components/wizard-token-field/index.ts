@@ -62,7 +62,7 @@ export class WizardTokenField extends WizardTokenNavigator {
   }
 
   get type() {
-    switch (this.token.$type) {
+    switch (this.token?.$type) {
       case 'color':
         return 'color';
       case 'dimension':

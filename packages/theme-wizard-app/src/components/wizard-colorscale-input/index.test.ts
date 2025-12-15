@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { page } from 'vitest/browser';
 import './index';
 
-const tag = 'color-scale-picker';
+const tag = 'wizard-colorscale-input';
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
