@@ -90,6 +90,9 @@ importers:
       '@nl-design-system-candidate/code-css':
         specifier: 2.0.3
         version: 2.0.3
+      '@nl-design-system-candidate/color-sample-css':
+        specifier: 1.0.4
+        version: 1.0.4
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1

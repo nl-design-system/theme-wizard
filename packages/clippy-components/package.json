@@ -43,6 +43,7 @@
   "dependencies": {
     "@amsterdam/design-system-css": "2.2.0",
     "@nl-design-system-candidate/code-css": "2.0.3",
+    "@nl-design-system-candidate/color-sample-css": "1.0.4",
     "@utrecht/button-css": "3.0.1",
     "@utrecht/combobox-css": "2.0.1",
     "@utrecht/listbox-css": "2.0.1",
