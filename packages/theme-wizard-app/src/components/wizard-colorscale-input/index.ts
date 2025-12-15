@@ -180,12 +180,12 @@ export class WizardColorscaleInput extends WizardTokenInput {
 
   override render() {
     return html`
-      <div class="color-scale-picker">
-        <div class="label">
+      <div class="wizard-colorscale-input">
+        <div class="wizard-colorscale-input__label">
           <label for=${this.#idColor}>${this.label}</label>
           <slot name="extra-label"></slot>
         </div>
-        <div class="input">
+        <div class="wizard-colorscale-input__input">
           ${this.scrapedColors.length === 0
             ? nothing
             : html`<datalist id="preset-colors">
@@ -205,14 +205,14 @@ export class WizardColorscaleInput extends WizardTokenInput {
         </div>
         <div
           role="presentation"
-          class="theme-color-scale__list"
+          class="wizard-colorscale-input__list"
           style=${`color: ${this.#scale.from?.toCSSColorFunction()}`}
         >
           ${this.#scale.list().map((stop, index) => {
             const cssColor = stop.toCSSColorFunction();
             return html`
               <div
-                class="theme-color-scale__stop"
+                class="wizard-colorscale-input__stop"
                 style=${`background-color: ${cssColor}`}
                 title=${`${COLOR_KEYS.at(index)}: ${cssColor}`}
               ></div>

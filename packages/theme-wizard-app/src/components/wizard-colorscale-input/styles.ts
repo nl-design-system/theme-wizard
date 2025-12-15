@@ -1,28 +1,28 @@
 import { css } from 'lit';
 
 export default css`
-  .color-scale-picker {
+  .wizard-colorscale-input {
     display: grid;
     row-gap: var(--basis-space-block-xs);
   }
 
-  .label {
+  .wizard-colorscale-input__label {
     display: flex;
     justify-content: space-between;
   }
 
-  .input input {
+  .wizard-colorscale-input__input input {
     inline-size: 100%;
   }
 
-  .theme-color-scale__list {
+  .wizard-colorscale-input__list {
+    border-block-end: 2px solid currentColor;
     display: flex;
+    inline-size: 100%;
     justify-content: stretch;
-    width: 100%;
-    border-bottom: 2px solid currentColor;
   }
 
-  .theme-color-scale__stop {
+  .wizard-colorscale-input__stop {
     block-size: 0.75em;
     inline-size: 100%;
   }

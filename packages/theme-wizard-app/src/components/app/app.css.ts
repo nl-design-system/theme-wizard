@@ -49,9 +49,9 @@ export default css`
   }
 
   .wizard-app__basis-colors {
-    padding-inline-start: 0;
-    margin-block: 0;
     display: grid;
+    margin-block: 0;
+    padding-inline-start: 0;
     row-gap: var(--basis-space-block-md);
 
     > li {
