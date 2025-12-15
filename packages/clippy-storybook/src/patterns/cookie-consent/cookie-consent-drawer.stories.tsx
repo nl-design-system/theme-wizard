@@ -82,6 +82,8 @@ type Story = StoryObj<typeof meta>;
 export const ReactDrawer: Story = {
   name: 'Cookie Drawer',
   args: {
+    buttonAccept: 'Aanvullende cookies accepteren',
+    buttonReject: 'Aanvullende cookies weigeren',
     children: (
       <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
         We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
@@ -89,6 +91,10 @@ export const ReactDrawer: Story = {
       </Paragraph>
     ),
     clearStorageOnMount: true,
-    title: 'Cookies op deze website',
+    customizeLink: {
+      href: '#',
+      text: 'Zelf instellen',
+    },
+    title: 'Cookies op de website van [Organisatie]',
   },
 };

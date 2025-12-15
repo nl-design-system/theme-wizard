@@ -31,6 +31,19 @@ of voor css only implementatie
 npm install @utrecht/component-library-css
 ```
 
+### Componenten uit Utrecht Design System
+
+Het pattern gebruikt bestaande componenten uit de Utrecht Design System community:
+
+- **`Drawer`** - Voor de banner container
+- **`Button`** - Voor alle knoppen (primary en secondary action)
+- **`ButtonGroup`** - Voor het groeperen van knoppen
+- **`Link`** - Voor links naar cookie-instellingen
+- **`Heading2`** - Voor de titel
+
+> [!NOTE]
+> Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues. Controleer de [Utrecht Design System repository](https://github.com/nl-design-system/utrecht) voor actuele informatie.
+
 ### Basis implementatie
 
 ```tsx
@@ -64,7 +77,6 @@ function CookieConsentDrawer() {
 Zie voor meer details:
 
 - **Broncode**: `src/patterns/cookie-consent/Drawer/index.tsx`
-- **Storybook**: [Cookie Consent Drawer stories](http://localhost:6006/?path=/docs/patterns-cookie-consent-drawer)
 - **Demo hook**: `src/patterns/cookie-consent/hooks/useCookieConsent.tsx` (localStorage, alleen voor demo)
 
 ## API Reference
@@ -89,32 +101,6 @@ Het pattern vereist dat je zelf implementeert hoe consent voorkeuren worden opge
 **Client-side (alleen voor demo/testing):**
 
 De repository bevat een `useCookieConsent` hook met localStorage (`src/patterns/cookie-consent/hooks/useCookieConsent.tsx`). Dit is **niet aanbevolen voor productie**.
-
-## Hoe dit pattern te gebruiken
-
-Dit is een **referentie implementatie** (geen npm package).
-
-**Stappen:**
-
-1. Bekijk de broncode in `src/patterns/cookie-consent/Drawer/` of de statische HTML in de Storybook omgeving voor een community compositie van componenten voor de cookie banner.
-2. Kopieer de code naar je eigen project
-3. Pas aan voor je eigen behoeften
-4. Gebruik de best practices als richtlijn
-
-## Best Practices & Technische Details
-
-### Componenten uit Utrecht Design System
-
-Het pattern gebruikt bestaande componenten uit de Utrecht Design System community:
-
-- **`Drawer`** - Voor de banner container
-- **`Button`** - Voor alle knoppen (primary en secondary action)
-- **`ButtonGroup`** - Voor het groeperen van knoppen
-- **`Link`** - Voor links naar cookie-instellingen
-- **`Heading2`** - Voor de titel
-
-> [!NOTE]
-> Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues. Controleer de [Utrecht Design System repository](https://github.com/nl-design-system/utrecht) voor actuele informatie.
 
 ### Opslag van consent voorkeuren
 
@@ -231,7 +217,7 @@ Hieronder een overzicht van de meestvoorkomende problemen met cookie banners en 
 Voor productie-gebruik:
 
 1. **Implementeer server-side state management** - Zie "State management" sectie voor details
-2. **Stel server-side cookies in** - Zie "Bewaartermijn van consent cookies" voor aanbevelingen (12-13 maanden)
+2. **Stel server-side cookies in** - Zie "Bewaartermijn van consent cookies" voor aanbevelingen (12 maanden)
 3. **HTML-only variant voor progressive enhancement** - Zie `static/cookie-drawer.html` voor een voorbeeld dat werkt zonder JavaScript
 
 ## Browser ondersteuning
@@ -368,7 +354,7 @@ Volgens [Business.gov.nl](https://business.gov.nl/regulations/cookies/) en [ePri
 
 Je cookiebeleid moet:
 
-- Toegankelijk zijn via footer of cookie banner
+- Toegankelijk zijn via een element dat op elke pagina staat (bijv. een footer).
 - Altijd beschikbaar zijn
 - Up-to-date zijn
 - Begrijpelijk zijn (heldere taal, geen juridisch jargon)
