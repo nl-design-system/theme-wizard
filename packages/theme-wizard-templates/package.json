@@ -28,13 +28,13 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.6",
+    "@utrecht/component-library-css": "8.2.1",
     "astro": "5.15.4",
-    "typescript": "5.9.3",
-    "@utrecht/component-library-css": "8.2.1"
+    "typescript": "5.9.3"
   },
   "devDependencies": {
-    "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/clippy-components": "workspace:*",
+    "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@utrecht/web-component-library-stencil": "3.7.0"

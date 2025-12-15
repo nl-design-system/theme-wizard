@@ -30,7 +30,7 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
   }
 
   return (
-    <Drawer align="block-start" open>
+    <Drawer align="block-start" open style={{ position: 'static' }}>
       {title && (
         <Heading2 id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
           {title}
