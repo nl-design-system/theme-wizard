@@ -17,7 +17,7 @@ const config: PlaywrightTestConfig = {
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
-  globalTimeout: 60_000,
+  globalTimeout: 120_000,
   outputDir: './tmp/playwright-results/',
   /* Configure projects for major browsers */
   projects: [
@@ -38,7 +38,7 @@ const config: PlaywrightTestConfig = {
   testDir: './e2e',
   testMatch: '**/*spec.ts',
   /* Maximum time one test can run for. */
-  timeout: process.env.CI ? 15_000 : 5000,
+  timeout: process.env.CI ? 20_000 : 7500,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */

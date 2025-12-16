@@ -1,5 +1,5 @@
-import '@nl-design-system-community/clippy-components/clippy-combobox';
-import { ClippyCombobox } from '@nl-design-system-community/clippy-components/clippy-combobox';
+import '@nl-design-system-community/clippy-components/clippy-font-combobox';
+import { ClippyFontCombobox } from '@nl-design-system-community/clippy-components/clippy-font-combobox';
 import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -35,7 +35,6 @@ export class WizardFontInput extends WizardTokenInput {
     $value: '',
   };
 
-  @property({ reflect: true })
   override get value() {
     return this.#token.$value;
   }
@@ -49,7 +48,7 @@ export class WizardFontInput extends WizardTokenInput {
 
   readonly #handleChange = (event: Event) => {
     const target = event.target;
-    if (!(target instanceof ClippyCombobox)) return;
+    if (!(target instanceof ClippyFontCombobox)) return;
     this.value = `${target.value}`;
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   };
@@ -64,15 +63,15 @@ export class WizardFontInput extends WizardTokenInput {
               ${t(`validation.error.${error.code}.compact`, error)}
             </div>`,
         )}
-        <clippy-combobox
-          aria-labelledby="label-${this.name}"
+        <clippy-font-combobox
+          hidden-label="${this.label}"
           name=${this.name}
-          ?aria-invalid=${this.errors.length !== 0}
           @change=${this.#handleChange}
           .value=${this.value.toString()}
           .options=${DEFAULT_FONT_OPTIONS}
-          aria-errormessage=${this.errors.length === 0 ? nothing : this.errors.map(({ id }) => id).join(' ')}
-        ></clippy-combobox>
+          aria-invalid=${this.hasErrors ? 'true' : nothing}
+          aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
+        ></clippy-font-combobox>
       </div>
     `;
   }

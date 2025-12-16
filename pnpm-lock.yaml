@@ -102,6 +102,9 @@ importers:
       lit:
         specifier: 3.3.1
         version: 3.3.1
+      memoize:
+        specifier: 10.2.0
+        version: 10.2.0
     devDependencies:
       '@types/dlv':
         specifier: 1.1.5
@@ -139,6 +142,9 @@ importers:
 
   packages/clippy-storybook:
     devDependencies:
+      '@nl-design-system-community/clippy-components':
+        specifier: workspace:*
+        version: link:../clippy-components
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -4612,6 +4618,10 @@ packages:
 
   memfs@4.50.0:
     resolution: {integrity: sha512-N0LUYQMUA1yS5tJKmMtU9yprPm6ZIg24yr/OVv/7t6q0kKDIho4cBbXRi1XKttUmNYDYgF/q45qrKE/UhGO0CA==}
+
+  memoize@10.2.0:
+    resolution: {integrity: sha512-DeC6b7QBrZsRs3Y02A6A7lQyzFbsQbqgjI6UW0GigGWV+u1s25TycMr0XHZE4cJce7rY/vyw2ctMQqfDkIhUEA==}
+    engines: {node: '>=18'}
 
   meow@13.2.0:
     resolution: {integrity: sha512-pxQJQzB6djGPXh08dacEloMFopsOqGVRKFPYvPOt9XDZ1HasbgDZA74CJGreSU4G3Ak7EFJGoiH2auq+yXISgA==}
@@ -11562,6 +11572,10 @@ snapshots:
       thingies: 2.5.0(tslib@2.8.1)
       tree-dump: 1.1.0(tslib@2.8.1)
       tslib: 2.8.1
+
+  memoize@10.2.0:
+    dependencies:
+      mimic-function: 5.0.1
 
   meow@13.2.0: {}
 

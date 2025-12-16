@@ -24,9 +24,21 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['lit', 'lit/directives/class-map.js'],
-      input: getFiles('src/**/index.ts'),
+      external: [
+        'lit',
+        'lit/decorators.js',
+        'lit/directives/class-map.js',
+        'lit/directives/style-map.js',
+        'lit/directives/ref.js',
+      ],
+      input: getFiles('src/[!lib]**/index.ts'),
       output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.names.every((name) => name.endsWith('.json'))) {
+            return '[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
         entryFileNames: '[name].js',
       },
     },
