@@ -175,3 +175,19 @@ test.describe('color contrast warnings', () => {
     await expect(input).not.toHaveAccessibleErrorMessage(/Onvoldoende contrast/);
   });
 });
+
+test.describe('printing the webpage', () => {
+  test.beforeEach(({ page }) => {
+    page.emulateMedia({ media: 'print' });
+  });
+
+  test('prints the preview area', async ({ themeWizard }) => {
+    await expect(themeWizard.preview).toBeVisible();
+  });
+
+  test('does not print the header and sidebar', async ({ page, themeWizard }) => {
+    await expect(themeWizard.sidebar).not.toBeVisible();
+    await expect(page.locator('.wizard-app__logo')).not.toBeVisible();
+    await expect(page.locator('.wizard-app__nav')).not.toBeVisible();
+  });
+});

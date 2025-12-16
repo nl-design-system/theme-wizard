@@ -87,11 +87,16 @@ export default css`
    ============================================ */
 
   @media print {
+    .wizard-app {
+      /* Undo the grid template, making sure the preview has all room available */
+      grid-template-columns: auto;
+    }
+
     /* Hide all app descendants, except those that are needed to show the preview content */
     .wizard-app *:not(
-      :has(.wizard-preview), /* any parent of .wizard-preview */
-      .wizard-preview, /* .wizard-preview itself */
-      .wizard-preview * /* any child of .wizard-preview */
+      :has(.wizard-app__preview), /* any parent of .wizard-preview */
+      .wizard-app__preview, /* .wizard-preview itself */
+      .wizard-app__preview * /* any child of .wizard-preview */
     ) {
       display: none;
     }
