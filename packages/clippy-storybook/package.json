@@ -2,7 +2,7 @@
   "name": "@nl-design-system-community/clippy-storybook",
   "version": "1.0.0",
   "author": "Community for NL Design System",
-  "description": "Web server with REST API for scraping websites to extract design tokens",
+  "description": "Demo viewer for Clippy Components",
   "license": "EUPL-1.2",
   "keywords": [
     "expertteam-digitale-toegankelijkheid",
@@ -15,7 +15,7 @@
     "directory": "packages/clippy-storybook"
   },
   "scripts": {
-    "dev": "pnpm run storybook",
+    "dev": "pnpm run storybook --no-open",
     "build": "storybook build --config-dir ./config/ --output-dir ./dist/",
     "clean": "rimraf ./dist/",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
@@ -23,8 +23,11 @@
     "lint-fix:js": "eslint --fix",
     "storybook": "storybook dev --config-dir ./config/ --port 6006"
   },
-  "devDependencies": {
+  "dependencies": {
     "@nl-design-system-community/clippy-components": "workspace:*",
+    "@nl-design-system-community/ma-design-tokens": "3.0.0"
+  },
+  "devDependencies": {
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system/tsconfig": "1.0.5",
     "@rijkshuisstijl-community/storybook-tooling": "1.1.1",
