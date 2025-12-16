@@ -30,6 +30,8 @@
     "@astrojs/check": "0.9.6",
     "@utrecht/component-library-css": "8.2.1",
     "astro": "5.16.6",
+    "@astrojs/react": "^4.4.2",
+    "@utrecht/component-library-react": "10.3.10",
     "typescript": "5.9.3"
   },
   "devDependencies": {
@@ -37,6 +39,10 @@
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
-    "@utrecht/web-component-library-stencil": "4.0.0"
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@utrecht/web-component-library-stencil": "3.7.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   }
 }
