@@ -37,6 +37,17 @@ const OPTIONS = [
 
 const meta = {
   id: 'clippy-color-combobox',
+  args: {
+    lang: '',
+  },
+  argTypes: {
+    lang: {
+      name: 'lang',
+      defaultValue: '',
+      description: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/lang',
+      type: 'string',
+    },
+  },
   parameters: {
     docs: {
       description: {
@@ -44,7 +55,7 @@ const meta = {
       },
     },
   },
-  render: () => html`<clippy-color-combobox options=${JSON.stringify(OPTIONS, null, 2)}></clippy-color-combobox>`,
+  render: ({ lang }) => html`<clippy-color-combobox lang=${lang} options=${JSON.stringify(OPTIONS, null, 2)}></clippy-color-combobox>`,
   tags: ['autodocs'],
   title: 'Clippy/Combobox/Color Combobox',
 } satisfies Meta;
