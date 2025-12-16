@@ -85,7 +85,7 @@ const config: PlaywrightTestConfig = {
   ],
 
   /* Let GitHub Actions use 4 workers; Locally let Playwright figure out how many to use. */
-  workers: process.env.CI ? 4 : undefined,
+  workers: process.env.CI ? 4 : 1,
 };
 
 export default config;
