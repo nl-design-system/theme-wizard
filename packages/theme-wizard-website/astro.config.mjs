@@ -1,5 +1,6 @@
 import vercel from '@astrojs/vercel';
 // @ts-check
+import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
 import { readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -23,6 +24,7 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+  integrations: [react()],
   server: {
     port: 9492, // (T9 for WIZ)2
   },
