@@ -4,15 +4,14 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-code';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-code/README.md?raw';
 import { html } from 'lit';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
-import { LitTemplateWrapper } from '../utils/LitTemplateWrapper';
 import { templateToHtml } from '../utils/templateToHtml';
 
 interface CodeStoryArgs {
   content: string;
 }
 
+// Docs template builds a full <clippy-code> element for the Source block.
 const createTemplate = (content: string) => html`<clippy-code>${content}</clippy-code>`;
 
 const meta = {
@@ -38,9 +37,9 @@ const meta = {
       },
     },
   },
-  render: ({ content }: CodeStoryArgs) => <LitTemplateWrapper template={createTemplate(content)} />,
+  render: ({ content }: CodeStoryArgs) => React.createElement('clippy-code', null, content),
   tags: ['autodocs'],
-  title: 'Web Component/Code',
+  title: 'Clippy/Code',
 } satisfies Meta<CodeStoryArgs>;
 
 export default meta;
