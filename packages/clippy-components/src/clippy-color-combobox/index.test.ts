@@ -104,4 +104,20 @@ describe(`<${tag}>`, () => {
     await userEvent.keyboard('{ArrowDown}{Enter}');
     expect(component.value).toStrictEqual(selection.value);
   });
+
+  it.each([
+    ['oranje', OPTIONS[0]],
+    ['groen', OPTIONS[1]],
+    ['paars', OPTIONS[2]],
+  ])('filters on localized color name $0', async (query, selection) => {
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" lang="nl" options='${JSON.stringify(OPTIONS)}'></${tag}>
+      </form>`;
+    const component: ClippyColorCombobox = document.querySelector(tag)!;
+    const input = page.getByRole('combobox');
+    await input.fill(query);
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    expect(component.value).toStrictEqual(selection.value);
+  });
 });
