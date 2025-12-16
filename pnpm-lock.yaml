@@ -105,6 +105,9 @@ importers:
       lit:
         specifier: 3.3.1
         version: 3.3.1
+      memoize:
+        specifier: 10.2.0
+        version: 10.2.0
     devDependencies:
       '@types/dlv':
         specifier: 1.1.5
