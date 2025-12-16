@@ -37,10 +37,10 @@ export const isBorderColor = (key: string) => BORDER_COLOR_KEYS.includes(key as 
 
 // Ordered list of foreground color names
 export const FOREGROUND_COLOR_KEYS = [
+  'color-subtle',
   'color-default',
   'color-hover',
   'color-active',
-  'color-subtle',
   'color-document',
 ] as const;
 export type ForegroundColorKey = (typeof FOREGROUND_COLOR_KEYS)[number];
