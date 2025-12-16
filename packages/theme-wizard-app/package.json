@@ -8,6 +8,14 @@
     "url": "https://github.com/nl-design-system/theme-wizard.git",
     "directory": "packages/theme-wizard-app"
   },
+  "exports": {
+    ".": "./dist/index.js",
+    "./theme.css": "./theme.css"
+  },
+  "files": [
+    "dist",
+    "theme.css"
+  ],
   "scripts": {
     "dev": "vite",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
@@ -33,7 +41,6 @@
     "@gemeente-denhaag/action": "4.0.1",
     "@gemeente-denhaag/card": "5.0.1",
     "@gemeente-denhaag/side-navigation": "4.0.2",
-    "@nl-design-system-candidate/code-css": "2.0.3",
     "@nl-design-system-candidate/heading-css": "1.1.1",
     "@nl-design-system-candidate/link-css": "2.0.1",
     "@nl-design-system-candidate/paragraph-css": "2.1.1",

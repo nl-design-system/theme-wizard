@@ -2,8 +2,8 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('template-code')
-export class TemplateCode extends LitElement {
+@customElement('clippy-code')
+export class ClippyCode extends LitElement {
   static override readonly styles = [unsafeCSS(codeCss)];
 
   override render() {
@@ -13,6 +13,6 @@ export class TemplateCode extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'template-code': TemplateCode;
+    'clippy-code': ClippyCode;
   }
 }

@@ -19,8 +19,10 @@ export function getFiles(pattern: string, relativeTo = 'src') {
 export default defineConfig({
   build: {
     lib: {
-      entry: 'index.ts',
-      fileName: 'index',
+      entry: {
+        ...getFiles('src/**/*.ts'),
+        ...getFiles('src/**/*.tsx'),
+      },
       formats: ['es'],
     },
     rollupOptions: {
