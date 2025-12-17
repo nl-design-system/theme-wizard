@@ -14,7 +14,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: isBuildDesignTokens ? ['linkedom', '@projectwallace/css-design-tokens'] : ['linkedom'],
+      external: isBuildDesignTokens ? ['linkedom', '@projectwallace/css-design-tokens', 'zod'] : ['linkedom'],
     },
   },
   plugins: [dts({ outDir: 'dist', rollupTypes: !isBuildDesignTokens, tsconfigPath: './tsconfig.json' })],
