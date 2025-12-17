@@ -15,6 +15,10 @@
     ".": {
       "types": "./dist/get-css.d.ts",
       "import": "./dist/css-scraper.js"
+    },
+    "./design-tokens": {
+      "types": "./dist/design-tokens.d.ts",
+      "import": "./dist/design-tokens.js"
     }
   },
   "files": [
@@ -36,7 +40,7 @@
     "lint:js": "eslint",
     "lint-fix:js": "eslint --fix",
     "test-build": "vitest run --coverage",
-    "build": "vite build",
+    "build": "vite build && VITE_BUILD_DESIGN_TOKENS=true vite build",
     "clean": "rimraf dist/"
   },
   "devDependencies": {

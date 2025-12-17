@@ -1,4 +1,4 @@
-import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
+import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper/design-tokens';
 
 const DEFAULT_SCRAPER_URL = '';
 const CSS_ENDPOINT = '/api/v1/css';

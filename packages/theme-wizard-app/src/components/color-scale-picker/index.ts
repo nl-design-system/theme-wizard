@@ -1,4 +1,4 @@
-import { EXTENSION_TOKEN_ID } from '@nl-design-system-community/css-scraper';
+import { EXTENSION_TOKEN_ID } from '@nl-design-system-community/css-scraper/design-tokens';
 import { parseColor, type ColorSpace } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';

@@ -1,9 +1,9 @@
-import {
+import type {
   ScrapedColorToken,
   ScrapedDesignToken,
   ScrapedFontFamilyToken,
-  resolveUrl,
-} from '@nl-design-system-community/css-scraper';
+} from '@nl-design-system-community/css-scraper/design-tokens';
+import { resolveUrl } from '@nl-design-system-community/css-scraper/design-tokens';
 import formFieldStyles from '@utrecht/form-field-css?inline';
 import formLabelStyles from '@utrecht/form-label-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';

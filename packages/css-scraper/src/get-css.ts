@@ -315,4 +315,3 @@ export const getCss = async (url: string): Promise<string> => {
 };
 
 export * from './design-tokens.js';
-export { resolveUrl } from './resolve-url.js';

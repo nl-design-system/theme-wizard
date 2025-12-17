@@ -13,6 +13,7 @@ import {
 } from './design-tokens.types';
 
 export * from './design-tokens.types';
+export { resolveUrl } from './resolve-url';
 
 export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
   const tokens = cssToTokens(css);
