@@ -27,6 +27,9 @@
     "clean": "rm -rf dist .astro build"
   },
   "dependencies": {
+    "@amsterdam/design-system-css": "2.1.0",
+    "@amsterdam/design-system-react": "2.2.0",
+    "@amsterdam/design-system-tokens": "2.2.0",
     "@astrojs/check": "0.9.6",
     "@utrecht/component-library-css": "8.2.1",
     "astro": "5.16.6",
@@ -39,8 +42,11 @@
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
+    "@nl-design-system-unstable/start-design-tokens": "2.1.0",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
+    "@utrecht/component-library-css": "8.2.1",
+    "@utrecht/web-component-library-react": "3.0.12",
     "@utrecht/web-component-library-stencil": "3.7.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"

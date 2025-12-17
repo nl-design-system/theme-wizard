@@ -85,14 +85,8 @@ importers:
   packages/clippy-components:
     dependencies:
       '@amsterdam/design-system-css':
-        specifier: 2.2.0
-        version: 2.2.0
-      '@nl-design-system-candidate/code-css':
-        specifier: 2.0.3
-        version: 2.0.3
-      '@nl-design-system-candidate/color-sample-css':
-        specifier: 1.0.4
-        version: 1.0.4
+        specifier: 2.1.0
+        version: 2.1.0(@amsterdam/design-system-tokens@2.2.0)
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -307,8 +301,8 @@ importers:
   packages/theme-wizard-app:
     dependencies:
       '@amsterdam/design-system-css':
-        specifier: 2.2.0
-        version: 2.2.0
+        specifier: 2.1.0
+        version: 2.1.0(@amsterdam/design-system-tokens@2.2.0)
       '@fontsource/fira-sans':
         specifier: 5.2.7
         version: 5.2.7
@@ -485,6 +479,15 @@ importers:
 
   packages/theme-wizard-templates:
     dependencies:
+      '@amsterdam/design-system-css':
+        specifier: 2.1.0
+        version: 2.1.0(@amsterdam/design-system-tokens@2.2.0)
+      '@amsterdam/design-system-react':
+        specifier: 2.2.0
+        version: 2.2.0(@amsterdam/design-system-css@2.1.0(@amsterdam/design-system-tokens@2.2.0))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@amsterdam/design-system-tokens':
+        specifier: 2.2.0
+        version: 2.2.0
       '@astrojs/check':
         specifier: 0.9.6
         version: 0.9.6(prettier@3.6.2)(typescript@5.9.3)
@@ -513,12 +516,21 @@ importers:
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
+      '@nl-design-system-unstable/start-design-tokens':
+        specifier: 2.1.0
+        version: 2.1.0
       '@types/react':
         specifier: 19.2.7
         version: 19.2.7
       '@types/react-dom':
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.7)
+      '@utrecht/component-library-css':
+        specifier: 8.2.1
+        version: 8.2.1
+      '@utrecht/web-component-library-react':
+        specifier: 3.0.12
+        version: 3.0.12(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@utrecht/web-component-library-stencil':
         specifier: 3.7.0
         version: 3.7.0
@@ -608,8 +620,24 @@ packages:
       '@amsterdam/design-system-assets': 1.1.0
       '@amsterdam/design-system-tokens': 2.2.0
 
-  '@asteasolutions/zod-to-openapi@8.2.0':
-    resolution: {integrity: sha512-u05zNUirlukJAf9oEHmxSF31L1XQhz9XdpVILt7+xhrz65oQqBpiOWFkGvRWL0IpjOUJ878idKoNmYPxrFnkeg==}
+  '@amsterdam/design-system-react-icons@1.1.1':
+    resolution: {integrity: sha512-rUKLixkTvjHBNJ20azAIbxaTEMCQHSPTsIgeQNx2yrZJbgQF6OhDeW7cBjbfNZ79GNX7VNqU1sZjzO/Blrbiuw==}
+    peerDependencies:
+      react: 16 - 19
+      react-dom: 16 - 19
+
+  '@amsterdam/design-system-react@2.2.0':
+    resolution: {integrity: sha512-dzXCdCv6gq0AWVpuaXUojUWcrEEGUzDvIjQ/utUqVPnoUNohl4NPi7Qw/TNlj/Jt4/YUJj9qW8fLU84vrgK9Gg==}
+    peerDependencies:
+      '@amsterdam/design-system-css': 2.2.0
+      react: 16 - 19
+      react-dom: 16 - 19
+
+  '@amsterdam/design-system-tokens@2.2.0':
+    resolution: {integrity: sha512-ldmCtQPvDEZ6y9Oc94UMrg4aba7zQ9sNPVOGxaYqsxSG3gW1LgWDltUoajuzXcPnU/WpRXGwtOTtxwJuUuH1aw==}
+
+  '@asteasolutions/zod-to-openapi@8.1.0':
+    resolution: {integrity: sha512-tQFxVs05J/6QXXqIzj6rTRk3nj1HFs4pe+uThwE95jL5II2JfpVXkK+CqkO7aT0Do5AYqO6LDrKpleLUFXgY+g==}
     peerDependencies:
       zod: ^4.0.0
 
@@ -2044,8 +2072,11 @@ packages:
   '@nl-design-system-unstable/start-design-tokens@2.4.0':
     resolution: {integrity: sha512-gf/1X1SY+Zm4N1xKl4Cg+DJNonM+Mli+IcEc6j11Xi+W++eonQzVW0hm+C2GNckuFlSkvWQXXdCeMHJvB+esBA==}
 
-  '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0':
-    resolution: {integrity: sha512-WiI8AbCM7pWiM50WRYoU9fqBx2sf0qvc8H51yi/vGyakfAnQwbkKlq1RdDLfM6UKki2BbqypY37j23GMs5Vb/w==}
+  '@nl-design-system-unstable/start-design-tokens@2.1.0':
+    resolution: {integrity: sha512-kaBbZZk6ASwPoBKaCnPhv39dg4P2huln1gE+J6jsfXGz2he/JkhDLpx0MBMt3lzzpvkOEUK3fV5hCR2dmnRIEA==}
+
+  '@nl-design-system-unstable/voorbeeld-design-tokens@6.2.0':
+    resolution: {integrity: sha512-qAWMqpD7UNgL2H5or48rycoVax55dgK4nHTqT8gnpxqJa6qZBJ+k++EpTh3mSR66xL6rb8Wx5SOZR8xJ8V29fg==}
 
   '@nl-design-system/eslint-config@2.2.0':
     resolution: {integrity: sha512-vZVbEkOQviJoiOdQT5zOi0GuSCaFrcz9/Awg/iXsmaNoXLkD5WOPVXR7RNlqeP4fPRmrHUvnVPsTDKLeIwbn2w==}
@@ -2934,6 +2965,9 @@ packages:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
+  '@utrecht/component-library-css@8.2.1':
+    resolution: {integrity: sha512-4nvNX8Mb0CGNVL+9IIj6tiykfUFUw2FZG++0Ufbgn5iAvYQi+BNALNQPq7o9aX+cG4WCjOZEbeHBSaopZhU4Hg==}
+
   '@utrecht/component-library-react@10.3.10':
     resolution: {integrity: sha512-hvpTeDR+hgZ5mU+4OnkcoOtOIQWQ/16hN3qSGjSXHpXGDSYTxONzHDj8n/7SwK8YzfQ4k+EWZMosh3tPmVfLvA==}
     peerDependencies:
@@ -3001,6 +3035,9 @@ packages:
   '@utrecht/focus-ring-css@3.0.1':
     resolution: {integrity: sha512-0dVPsdbc2glPNJe6rYl7DwSXUkohcdR5zLrObk2WY3DzSvHgKZGliHy2PBYg2LoZrPXrTaLEsttivtGt68tjww==}
 
+  '@utrecht/form-css@2.0.1':
+    resolution: {integrity: sha512-Y5dwtumAxu2/GYT79FFOBsc4o7vYkPSNsNLxN6CbT/P8/9sEHjrlalnEMDin3RReSdt9+ldP0nDIxWaNrNN3VQ==}
+
   '@utrecht/form-field-checkbox-react@1.1.3':
     resolution: {integrity: sha512-HEdP/qFXCZLT7zoNrR+e4mbezNNGePKqbgk4IEWoOkee8bAEKQtKgeOlGL0NDFJRPSB2e/yEoc+uenSdRXwrGQ==}
     peerDependencies:
@@ -3053,6 +3090,9 @@ packages:
 
   '@utrecht/form-toggle-css@2.0.1':
     resolution: {integrity: sha512-VHa8KXKfAo3gr53ZCxYute0GPACDTrM9fdSmtakmS9Iu9s6niJgkkZmhFfNY+X5N75rEQiI+aTmFyA5TM/xh+g==}
+
+  '@utrecht/grid-css@1.0.0':
+    resolution: {integrity: sha512-sTlSirSD3BWjmjiUtIWkmYLDa9D6bjOWCYsddbXIsaiPwAd5Djy54JiBNZ26KJ/ARZLmc2TIrmsHkFi8Ln9Huw==}
 
   '@utrecht/heading-1-css@2.0.1':
     resolution: {integrity: sha512-P040ieAAdOi/hjQYfwzywS1Jbi4LgR1we4vpAYMIK63WUtozvs+9GPDvBsRYxQXBcLD4FOkkvkNZbDHnIzTkzQ==}
@@ -3149,6 +3189,9 @@ packages:
   '@utrecht/nav-list-css@1.3.2':
     resolution: {integrity: sha512-1VGVeIuLgz4N9aJ0DpTHbwRwxeOQSylIdeJ3Gm8sbL2NVIx4N05heEqi3lZKMulgv35ptCROdH/LBnn0Jd41Mw==}
 
+  '@utrecht/navigation-css@1.1.0':
+    resolution: {integrity: sha512-2dOXz7RyCNgkouRiIsPYZoa6zPI0PrQP905ym8g9gNvUDu5yJ3qUucRyAS04hF+vatfUp0eKIKghDvUNoKbmyw==}
+
   '@utrecht/number-badge-css@3.0.1':
     resolution: {integrity: sha512-t1HwU+bRlerdFicFZa4w5xyZh00ihITUb2kxU11e9Vxb2D32VU1jBOMW8qtKpuiya5mPZJjGF0uc6ZyGPAdXTw==}
 
@@ -3168,6 +3211,9 @@ packages:
   '@utrecht/ordered-list-css@3.0.1':
     resolution: {integrity: sha512-FTLzofVJlkl4ypJz2QoWTwepXN+yX3Y3exL+69SpiwjAXSkRYkJ1agd0W6BZVH+JQ60u8+uApOKQpgx2Bh3ImQ==}
 
+  '@utrecht/page-body-css@1.0.1':
+    resolution: {integrity: sha512-0keuwgUACGo52SA7Nvd31STGirZ/A1dkR/at5z8SpEXYdfMyRpPK1odH5MgB19Ig1Nie1Ke5oi+h++HcVg5Ksg==}
+
   '@utrecht/page-content-css@2.0.1':
     resolution: {integrity: sha512-Hgx63BEUbaGJyBQXpa97EN8ng0M9LTX3ddu9IQM+ar/rA2OGIM5oiGbwXUYhLwQp/HnhkFm/gpPGGTtQjpXC6w==}
 
@@ -3179,6 +3225,9 @@ packages:
 
   '@utrecht/page-header-css@2.0.1':
     resolution: {integrity: sha512-HxONNJxBNwqEY/qDkx3U0wAVvirc/1l04i9L4dPscjf+Le6UWkJb4pfxXVO8b8yIT+wyj2YY0k8aeBUEIJPKjA==}
+
+  '@utrecht/page-layout-css@2.0.1':
+    resolution: {integrity: sha512-FXLvM6A4Lex+Miz9cuDjFuoC+HeFBu78oMvFU88c4D01Jnso2gKaZHRy3XT8UqKJbE8z0rNzRTwoztOlBVqFIw==}
 
   '@utrecht/pagination-css@2.0.3':
     resolution: {integrity: sha512-LXXWZXEgiOacCHljs9jm9Nm2MQW7dmNtq5Ck4PENOA62oT/HVCXbiviWeT+dYLsv8Nwv+JCFYWm4CA1UGY7MOw==}
@@ -3251,6 +3300,9 @@ packages:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
 
+  '@utrecht/tooltip-css@2.0.1':
+    resolution: {integrity: sha512-UK/UWNlTDRbvEMsmu7Hv50uL1ljehn1babeNXxcEscYpiapDa/xZO5W3VSyOPQGkrQnlKzjuFda5Oro6aOO1sA==}
+
   '@utrecht/top-task-link-css@2.0.1':
     resolution: {integrity: sha512-SYO6xr4Q1ipaw1xXT1UZMCnjm0MwtKzdgE9NX7ahfBv4wWKiUnLF8yoykYgFTHQIGhIiiV6VW6L6gazFLx3f+w==}
 
@@ -3266,34 +3318,17 @@ packages:
   '@utrecht/vega-visualization-css@1.4.2':
     resolution: {integrity: sha512-JTTx1DsKIeYZz95+H34HGfocKjDpbVOsFdPK1f/b3U3C5ivdC75fTkzU1+tVp6ijPwKnWPNr6eiIXTY9tHj5Kg==}
 
+  '@utrecht/web-component-library-react@3.0.12':
+    resolution: {integrity: sha512-MrnnMCg9NZxFWoBjOH4jxduhX96H+QqfwogNlldy8xqJtUXmO21TZY8T29Q1y7DHQT5by+Br0IDIMuarWsY0AQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
   '@utrecht/web-component-library-stencil@3.7.0':
     resolution: {integrity: sha512-JvJ6rQAJlRtVbQApFODOMC25FgGsiLkTOs773VZo3u/rvvL4GhpXdri5Zap1yn0oD9dfjC4VWLq9LM+dPsLTDQ==}
 
-  '@vercel/analytics@1.6.1':
-    resolution: {integrity: sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==}
-    peerDependencies:
-      '@remix-run/react': ^2
-      '@sveltejs/kit': ^1 || ^2
-      next: '>= 13'
-      react: ^18 || ^19 || ^19.0.0-rc
-      svelte: '>= 4'
-      vue: ^3
-      vue-router: ^4
-    peerDependenciesMeta:
-      '@remix-run/react':
-        optional: true
-      '@sveltejs/kit':
-        optional: true
-      next:
-        optional: true
-      react:
-        optional: true
-      svelte:
-        optional: true
-      vue:
-        optional: true
-      vue-router:
-        optional: true
+  '@utrecht/youtube-video-css@2.0.1':
+    resolution: {integrity: sha512-h4wGXrIDLUevryoUvPsAj8C6dSo23KkN7M0BgQxAhlOy6KB59aUOGBlmY+xhZtsIgL/XrHPctjwlZKw8crd3IA==}
 
   '@vercel/backends@0.0.17':
     resolution: {integrity: sha512-T1wTYvBbOuSStMM3GO2YK39YOZaCsT8GpkSOP0+3Ya9MO7qkOsOTIkzIzMY4SRO1e1CiVqqlbkGgwsGirgc6mA==}
@@ -7976,7 +8011,25 @@ snapshots:
 
   '@adobe/css-tools@4.4.4': {}
 
-  '@amsterdam/design-system-css@2.2.0': {}
+  '@amsterdam/design-system-css@2.1.0(@amsterdam/design-system-tokens@2.2.0)':
+    dependencies:
+      '@amsterdam/design-system-tokens': 2.2.0
+
+  '@amsterdam/design-system-react-icons@1.1.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
+  '@amsterdam/design-system-react@2.2.0(@amsterdam/design-system-css@2.1.0(@amsterdam/design-system-tokens@2.2.0))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@amsterdam/design-system-css': 2.1.0(@amsterdam/design-system-tokens@2.2.0)
+      '@amsterdam/design-system-react-icons': 1.1.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@babel/runtime': 7.28.4
+      clsx: 2.1.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
+  '@amsterdam/design-system-tokens@2.2.0': {}
 
   '@asteasolutions/zod-to-openapi@8.2.0(zod@4.3.4)':
     dependencies:
@@ -9296,7 +9349,9 @@ snapshots:
 
   '@nl-design-system-unstable/start-design-tokens@2.4.0': {}
 
-  '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0': {}
+  '@nl-design-system-unstable/start-design-tokens@2.1.0': {}
+
+  '@nl-design-system-unstable/voorbeeld-design-tokens@6.2.0': {}
 
   '@nl-design-system/eslint-config@2.2.0(eslint@9.39.2)(typescript@5.9.3)':
     dependencies:
@@ -10172,6 +10227,109 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
+  '@utrecht/component-library-css@8.2.1':
+    dependencies:
+      '@utrecht/accordion-css': 3.0.1
+      '@utrecht/action-group-css': 3.0.1
+      '@utrecht/alert-css': 3.0.1
+      '@utrecht/alert-dialog-css': 2.0.1
+      '@utrecht/alternate-lang-nav-css': 2.0.1
+      '@utrecht/article-css': 2.0.1
+      '@utrecht/backdrop-css': 2.0.1
+      '@utrecht/badge-counter-css': 2.0.1
+      '@utrecht/badge-list-css': 3.0.1
+      '@utrecht/badge-status-css': 2.0.1
+      '@utrecht/blockquote-css': 2.0.1
+      '@utrecht/body-css': 2.0.1
+      '@utrecht/breadcrumb-nav-css': 2.1.0
+      '@utrecht/button-css': 3.0.1
+      '@utrecht/button-group-css': 2.0.1
+      '@utrecht/button-link-css': 2.0.1
+      '@utrecht/calendar-css': 2.0.1
+      '@utrecht/checkbox-css': 2.0.1
+      '@utrecht/code-block-css': 2.0.1
+      '@utrecht/code-css': 2.0.1
+      '@utrecht/color-sample-css': 2.0.1
+      '@utrecht/column-layout-css': 2.0.1
+      '@utrecht/combobox-css': 2.0.1
+      '@utrecht/currency-data-css': 2.0.1
+      '@utrecht/custom-checkbox-css': 2.0.1
+      '@utrecht/data-badge-css': 2.0.1
+      '@utrecht/data-list-css': 2.0.1
+      '@utrecht/data-placeholder-css': 2.0.1
+      '@utrecht/digid-button-css': 1.4.2
+      '@utrecht/document-css': 2.0.1
+      '@utrecht/drawer-css': 2.0.1
+      '@utrecht/emphasis-css': 2.0.1
+      '@utrecht/figure-css': 2.0.1
+      '@utrecht/form-css': 2.0.1
+      '@utrecht/form-field-css': 2.0.1
+      '@utrecht/form-field-description-css': 2.0.1
+      '@utrecht/form-field-error-message-css': 2.0.1
+      '@utrecht/form-fieldset-css': 2.0.1
+      '@utrecht/form-label-css': 2.0.1
+      '@utrecht/form-toggle-css': 2.0.1
+      '@utrecht/grid-css': 1.0.0
+      '@utrecht/heading-1-css': 2.0.1
+      '@utrecht/heading-2-css': 2.0.1
+      '@utrecht/heading-3-css': 2.0.1
+      '@utrecht/heading-4-css': 2.0.1
+      '@utrecht/heading-5-css': 2.0.1
+      '@utrecht/heading-6-css': 2.0.1
+      '@utrecht/heading-group-css': 2.0.1
+      '@utrecht/html-content-css': 2.0.1
+      '@utrecht/iban-data-css': 2.0.1
+      '@utrecht/icon-css': 3.0.1
+      '@utrecht/img-css': 2.0.1
+      '@utrecht/index-char-nav-css': 2.0.1
+      '@utrecht/link-button-css': 2.0.1
+      '@utrecht/link-css': 2.0.1
+      '@utrecht/link-list-css': 3.0.1
+      '@utrecht/link-social-css': 2.0.1
+      '@utrecht/list-social-css': 2.0.1
+      '@utrecht/listbox-css': 2.0.1
+      '@utrecht/logo-button-css': 1.4.2
+      '@utrecht/logo-css': 2.0.1
+      '@utrecht/logo-image-css': 1.4.2
+      '@utrecht/map-marker-css': 2.0.1
+      '@utrecht/mark-css': 2.0.1
+      '@utrecht/multiline-data-css': 2.0.1
+      '@utrecht/nav-bar-css': 2.0.1
+      '@utrecht/nav-list-css': 1.3.2
+      '@utrecht/navigation-css': 1.1.0
+      '@utrecht/number-badge-css': 3.0.1
+      '@utrecht/number-data-css': 2.0.1
+      '@utrecht/ordered-list-css': 3.0.1
+      '@utrecht/page-body-css': 1.0.1
+      '@utrecht/page-content-css': 2.0.1
+      '@utrecht/page-css': 2.0.1
+      '@utrecht/page-footer-css': 3.0.1
+      '@utrecht/page-header-css': 2.0.1
+      '@utrecht/page-layout-css': 2.0.1
+      '@utrecht/pagination-css': 2.0.3
+      '@utrecht/paragraph-css': 3.0.1
+      '@utrecht/pre-heading-css': 2.0.1
+      '@utrecht/preserve-data-css': 2.0.1
+      '@utrecht/radio-button-css': 2.0.1
+      '@utrecht/rich-text-css': 2.0.1
+      '@utrecht/root-css': 2.0.1
+      '@utrecht/search-bar-css': 3.0.1
+      '@utrecht/select-css': 2.0.1
+      '@utrecht/separator-css': 2.0.1
+      '@utrecht/skip-link-css': 2.0.1
+      '@utrecht/spotlight-section-css': 2.0.1
+      '@utrecht/surface-css': 2.0.1
+      '@utrecht/table-css': 2.0.1
+      '@utrecht/table-of-contents-css': 1.0.1
+      '@utrecht/textarea-css': 3.0.1
+      '@utrecht/textbox-css': 3.0.1
+      '@utrecht/tooltip-css': 2.0.1
+      '@utrecht/top-task-link-css': 2.0.1
+      '@utrecht/top-task-nav-css': 1.3.2
+      '@utrecht/unordered-list-css': 2.0.1
+      '@utrecht/url-data-css': 2.0.1
+      '@utrecht/youtube-video-css': 2.0.1
+
   '@utrecht/component-library-react@10.3.10(@babel/runtime@7.28.4)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -10324,6 +10482,8 @@ snapshots:
 
   '@utrecht/focus-ring-css@3.0.1': {}
 
+  '@utrecht/form-css@2.0.1': {}
+
   '@utrecht/form-field-checkbox-react@1.1.3(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -10379,6 +10539,8 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
 
   '@utrecht/form-toggle-css@2.0.1': {}
+
+  '@utrecht/grid-css@1.0.0': {}
 
   '@utrecht/heading-1-css@2.0.1': {}
 
@@ -10450,6 +10612,8 @@ snapshots:
 
   '@utrecht/nav-list-css@1.3.2': {}
 
+  '@utrecht/navigation-css@1.1.0': {}
+
   '@utrecht/number-badge-css@3.0.1': {}
 
   '@utrecht/number-data-css@2.0.1': {}
@@ -10469,6 +10633,8 @@ snapshots:
 
   '@utrecht/ordered-list-css@3.0.1': {}
 
+  '@utrecht/page-body-css@1.0.1': {}
+
   '@utrecht/page-content-css@2.0.1': {}
 
   '@utrecht/page-css@2.0.1': {}
@@ -10476,6 +10642,8 @@ snapshots:
   '@utrecht/page-footer-css@3.0.1': {}
 
   '@utrecht/page-header-css@2.0.1': {}
+
+  '@utrecht/page-layout-css@2.0.1': {}
 
   '@utrecht/pagination-css@2.0.3': {}
 
@@ -10531,6 +10699,8 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
+  '@utrecht/tooltip-css@2.0.1': {}
+
   '@utrecht/top-task-link-css@2.0.1': {}
 
   '@utrecht/top-task-nav-css@1.3.2': {}
@@ -10541,17 +10711,19 @@ snapshots:
 
   '@utrecht/vega-visualization-css@1.4.2': {}
 
+  '@utrecht/web-component-library-react@3.0.12(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@utrecht/web-component-library-stencil': 3.7.0
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
   '@utrecht/web-component-library-stencil@3.7.0':
     dependencies:
       '@stencil/core': 4.18.3
 
   '@utrecht/youtube-video-css@2.0.1': {}
 
-  '@vercel/analytics@1.6.1(react@18.3.1)':
-    optionalDependencies:
-      react: 18.3.1
-
-  '@vercel/backends@0.0.17(rollup@4.53.5)(typescript@5.9.3)':
+  '@vercel/backends@0.0.5(rollup@4.53.1)(typescript@5.9.3)':
     dependencies:
       '@vercel/cervel': 0.0.7(typescript@5.9.3)
       '@vercel/introspection': 0.0.7
