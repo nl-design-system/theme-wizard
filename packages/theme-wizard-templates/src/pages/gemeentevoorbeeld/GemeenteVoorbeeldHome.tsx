@@ -2,12 +2,17 @@ import type { FC } from 'react';
 import {
   Accordion,
   AccordionSection,
+  Link,
+  Heading1,
   Heading2,
   Heading3,
   LinkList,
   LinkListLink,
   Paragraph,
+  PageContent,
+  PageHeader,
 } from '@utrecht/component-library-react/dist/css-module';
+import NavigationBar from './components/NavigationBar';
 import OpeningHoursCard from './components/OpeningHoursCard';
 import QuickTasks from './components/QuickTasks';
 
@@ -23,7 +28,23 @@ const GemeenteVoorbeeldHome: FC = () => {
 
   return (
     <div>
-      {/* Quick tasks + Opening hours section */}
+      <PageHeader>
+        <PageContent>
+          <Heading1>Gemeente Voorbeeld</Heading1>
+          <Link>Contact</Link>
+          <Link>Mijn Omgeving</Link>
+        </PageContent>
+      </PageHeader>
+
+      <NavigationBar
+        items={[
+          { href: '#', label: 'Home' },
+          { href: '#', label: 'Wonen en leven' },
+          { href: '#', label: 'Zorg en onderwijs' },
+          { href: '#', label: 'Werk en inkomen' },
+          { href: '#', label: 'Contact' },
+        ]}
+      />
       <section className="voorbeeld-toptask">
         <div className="voorbeeld-toptask__layout">
           <QuickTasks tasks={quickTasks} />
