@@ -1,19 +1,15 @@
 import './src/components/app/app';
 import './src/components/sidebar/sidebar';
+import './src/components/template-action';
+import './src/components/template-case-card';
+import './src/components/template-code';
+import './src/components/template-color-swatch';
+import './src/components/template-heading';
+import './src/components/template-link-list';
+import './src/components/template-link';
+import './src/components/template-page-header';
+import './src/components/template-paragraph';
+import './src/components/template-side-nav';
+import './src/components/template-skip-link';
 import './src/components/wizard-download-confirmation';
 import './src/components/wizard-preview';
-
-// Lazy-load template components - they're only used in preview templates
-Promise.all([
-  import('./src/components/template-action'),
-  import('./src/components/template-case-card'),
-  import('./src/components/template-code'),
-  import('./src/components/template-color-swatch'),
-  import('./src/components/template-heading'),
-  import('./src/components/template-link-list'),
-  import('./src/components/template-link'),
-  import('./src/components/template-page-header'),
-  import('./src/components/template-paragraph'),
-  import('./src/components/template-side-nav'),
-  import('./src/components/template-skip-link'),
-]).catch(console.error);
