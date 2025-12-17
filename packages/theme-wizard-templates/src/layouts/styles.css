@@ -68,3 +68,14 @@
   background-color: var(--basis-color-accent-1-bg-subtle);
   min-inline-size: min(320px, 100%);
 }
+
+.voorbeeld-page-header__content {
+  inline-size: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-inline: auto;
+  padding-inline: var(--voorbeeld-space-inline-mouse);
+  padding-block: var(--voorbeeld-space-block-mouse);
+  max-inline-size: var(--example-page-header-content-max-inline-size);
+}
