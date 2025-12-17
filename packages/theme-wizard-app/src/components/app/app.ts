@@ -7,10 +7,10 @@ import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/700.css';
 // <End TODO>
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
-import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
-import buttonLinkStyles from '@utrecht/link-button-css?inline';
+// Import Utrecht link-button CSS as fallback (small file)
+import buttonLinkStyles from '@utrecht/link-button-css?raw';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import '../sidebar/sidebar';
@@ -62,11 +62,12 @@ export class App extends LitElement {
   @state()
   private selectedTemplatePath: string = '/my-environment/overview';
 
-  static override readonly styles = [unsafeCSS(maTheme), unsafeCSS(buttonLinkStyles), appStyles];
+  static override readonly styles = [appStyles];
 
   override connectedCallback() {
     super.connectedCallback();
     defineCustomElements();
+    this.#loadExternalStyles();
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
 
     const previousTokens = this.#storage.getJSON();
@@ -82,6 +83,29 @@ export class App extends LitElement {
       // ignore parsing errors
     }
   }
+
+  readonly #loadExternalStyles = async () => {
+    if (!this.shadowRoot) return;
+
+    // Load Utrecht link-button CSS (static import - small file)
+    try {
+      const buttonLinkSheet = new CSSStyleSheet();
+      buttonLinkSheet.replaceSync(buttonLinkStyles);
+      this.shadowRoot.adoptedStyleSheets.push(buttonLinkSheet);
+    } catch (error) {
+      console.warn('Failed to load button link stylesheet', error);
+    }
+
+    // Dynamically import ma-design-tokens CSS to keep it out of the main bundle
+    try {
+      const { default: maThemeCss } = await import('@nl-design-system-community/ma-design-tokens/dist/theme.css?raw');
+      const maThemeSheet = new CSSStyleSheet();
+      maThemeSheet.replaceSync(maThemeCss);
+      this.shadowRoot.adoptedStyleSheets.push(maThemeSheet);
+    } catch (error) {
+      console.warn('Failed to load maTheme stylesheet', error);
+    }
+  };
 
   override disconnectedCallback() {
     super.disconnectedCallback();
