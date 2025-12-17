@@ -31,6 +31,8 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
+  /* Verbose logging in CI */
+  quiet: !process.env.CI,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
   /* Retry on CI only */
@@ -53,8 +55,8 @@ const config: PlaywrightTestConfig = {
       mode: 'on-first-failure',
     },
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'retain-on-failure',
+    /* Collect trace for all tests in CI for better debugging. See https://playwright.dev/docs/trace-viewer */
+    trace: 'off',
 
     // WCAG 100% dimensions
     viewport: {
