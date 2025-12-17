@@ -21,24 +21,16 @@ interface QuickTasksProps {
   tasks: QuickTask[];
 }
 
-const renderIcon = (iconName: string): ReactElement | null => {
-  switch (iconName) {
-    case 'paspoort':
-      return <UtrechtIconPaspoort />;
-    case 'melding-klacht':
-      return <UtrechtIconMeldingKlacht />;
-    case 'verhuizen':
-      return <UtrechtIconVerhuizen />;
-    case 'werken':
-      return <UtrechtIconWerken />;
-    case 'nummerbord':
-      return <UtrechtIconNummerbord />;
-    case 'afval-scheiden':
-      return <UtrechtIconAfvalScheiden />;
-    default:
-      return null;
-  }
+const ICON_COMPONENTS: Record<string, ReactElement> = {
+  'afval-scheiden': <UtrechtIconAfvalScheiden />,
+  'melding-klacht': <UtrechtIconMeldingKlacht />,
+  nummerbord: <UtrechtIconNummerbord />,
+  paspoort: <UtrechtIconPaspoort />,
+  verhuizen: <UtrechtIconVerhuizen />,
+  werken: <UtrechtIconWerken />,
 };
+
+const renderIcon = (iconName: string): ReactElement | null => ICON_COMPONENTS[iconName] ?? null;
 
 const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
   <nav className="voorbeeld-toptask__nav" aria-label="Snelle taken">
