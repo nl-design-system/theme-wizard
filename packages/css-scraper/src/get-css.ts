@@ -1,4 +1,13 @@
-import { parseHTML } from 'linkedom';
+// Lazy-load linkedom to avoid bundling it when not needed
+let parseHTML: ((html: string) => { document: HTMLDocument }) | null = null;
+
+async function initLinkedom() {
+  if (!parseHTML) {
+    const mod = await import('linkedom');
+    parseHTML = mod.parseHTML;
+  }
+  return parseHTML;
+}
 import type {
   CSSImportResource,
   CSSInlineStyleResource,
@@ -121,12 +130,13 @@ export const getCssFile = async (url: string | URL, abortSignal: AbortSignal) =>
   }
 };
 
-export const getCssFromHtml = (
+export const getCssFromHtml = async (
   html: string,
   url: string | URL,
-): (CSSStyleTagResource | CSSInlineStyleResource | PartialCSSLinkResource | CSSLinkResource)[] => {
+): Promise<(CSSStyleTagResource | CSSInlineStyleResource | PartialCSSLinkResource | CSSLinkResource)[]> => {
   // if we want this to run client-side we can use DOMParser and avoid linkedom
-  const { document } = parseHTML(html);
+  const ph = await initLinkedom();
+  const { document } = ph(html);
 
   const nodes = document.querySelectorAll<HTMLLinkElement | HTMLStyleElement | HTMLElement>(
     'link[rel*="stylesheet"][href], style, [style]',
@@ -285,8 +295,8 @@ export const getCssResources = async (url: string, { timeout = 10000 } = {}): Pr
       body = removeWaybackToolbar(body);
     }
 
-    const resources = getCssFromHtml(body, resolvedUrl);
-    const result = processResources(resources, abortController.signal);
+    const resources = await getCssFromHtml(body, resolvedUrl);
+    const result = await processResources(resources, abortController.signal);
 
     clearTimeout(timeoutId);
     return result;

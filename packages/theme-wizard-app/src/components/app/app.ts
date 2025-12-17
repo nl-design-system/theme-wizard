@@ -7,12 +7,12 @@ import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/700.css';
 // <End TODO>
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
+import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
+import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
-import { EVENT_NAMES } from '../../constants';
-import { t } from '../../i18n';
 import '../sidebar/sidebar';
 import '../wizard-scraper';
 import '../wizard-preview';
@@ -20,6 +20,8 @@ import '../wizard-logo';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
+import { EVENT_NAMES } from '../../constants';
+import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
@@ -60,59 +62,11 @@ export class App extends LitElement {
   @state()
   private selectedTemplatePath: string = '/my-environment/overview';
 
-  @state()
-  private maThemeCSS: string | null = null;
-
-  static override readonly styles = [unsafeCSS(buttonLinkStyles), appStyles];
-
-  get styles() {
-    // Include ma-design-tokens CSS if loaded, otherwise just the base styles
-    if (this.maThemeCSS) {
-      return [unsafeCSS(this.maThemeCSS), unsafeCSS(buttonLinkStyles), appStyles];
-    }
-    return [unsafeCSS(buttonLinkStyles), appStyles];
-  }
-
-  async #loadMaTheme() {
-    // Lazy-load ma-design-tokens CSS
-    try {
-      const module = await import('@nl-design-system-community/ma-design-tokens/dist/theme.css?inline');
-      this.maThemeCSS = module.default;
-    } catch (error) {
-      console.error('Failed to load ma-design-tokens theme:', error);
-    }
-  }
-
-  async #loadUtrechtComponents() {
-    // Dynamically load only the specific Utrecht web components we actually use
-    // instead of loading all 200+ components via defineCustomElements()
-    const components = [
-      'utrecht-alert',
-      'utrecht-button',
-      'utrecht-form-field',
-      'utrecht-form-field-error-message',
-      'utrecht-heading-2',
-      'utrecht-icon-chevron-right',
-      'utrecht-link-button',
-      'utrecht-paragraph',
-      'utrecht-select',
-      'utrecht-textbox',
-      'utrecht-textarea',
-    ];
-
-    // Import each component's entry point
-    const imports = components.map((name) =>
-      import(`@utrecht/web-component-library-stencil/dist/esm/${name}.entry.js`).catch(() => undefined),
-    );
-
-    await Promise.all(imports).catch(console.error);
-  }
+  static override readonly styles = [unsafeCSS(maTheme), unsafeCSS(buttonLinkStyles), appStyles];
 
   override connectedCallback() {
     super.connectedCallback();
-    // Lazy-load design system resources
-    void this.#loadMaTheme();
-    void this.#loadUtrechtComponents();
+    defineCustomElements();
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
 
     const previousTokens = this.#storage.getJSON();

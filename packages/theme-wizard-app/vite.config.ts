@@ -8,7 +8,11 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['lit'],
+      external: [
+        'lit',
+        '@nl-design-system-community/css-scraper', // Lazy-loaded via wizard-scraper
+        'linkedom', // Dependency of css-scraper, only used when scraping
+      ],
     },
   },
 });
