@@ -8,7 +8,6 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import { dequal } from 'dequal';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
 
@@ -22,6 +21,15 @@ const STYLE_DICTIONARY_SETTINGS = {
     verbosity: 'silent', // ignore logging since it goes to browser console
   },
 } as const;
+
+let styleDictionaryModule: typeof import('style-dictionary') | null = null;
+
+async function getStyleDictionary() {
+  if (!styleDictionaryModule) {
+    styleDictionaryModule = await import('style-dictionary');
+  }
+  return styleDictionaryModule;
+}
 
 export default class Theme {
   static readonly defaults = ThemeSchema.parse(startTokens); // Start tokens are default for all Themes
@@ -152,6 +160,7 @@ export default class Theme {
     const platform = 'css';
     // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
     const tokens = this.toLegacyTokens();
+    const StyleDictionary = (await getStyleDictionary()).default;
     const sd = new StyleDictionary({
       ...STYLE_DICTIONARY_SETTINGS,
       platforms: {
@@ -178,6 +187,7 @@ export default class Theme {
   async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
     const platform = 'json';
     const tokens = format === 'legacy' ? this.toLegacyTokens() : this.tokens;
+    const StyleDictionary = (await getStyleDictionary()).default;
     const sd = new StyleDictionary({
       ...STYLE_DICTIONARY_SETTINGS,
       platforms: {
