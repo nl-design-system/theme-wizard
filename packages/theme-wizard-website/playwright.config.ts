@@ -31,8 +31,6 @@ const config: PlaywrightTestConfig = {
       },
     },
   ],
-  /* Verbose logging in CI */
-  quiet: !process.env.CI,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
   /* Retry on CI only */
@@ -46,16 +44,14 @@ const config: PlaywrightTestConfig = {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: process.env.CI
-      ? 'https://theme-wizard-git-chore-pw-slowness-nl-design-system.vercel.app/'
-      : 'http://localhost:9492',
+    baseURL: 'http://localhost:9492',
 
     screenshot: {
       fullPage: true,
       mode: 'on-first-failure',
     },
 
-    /* Collect trace for all tests in CI for better debugging. See https://playwright.dev/docs/trace-viewer */
+    /* Collect trace for failed tests in CI for better debugging. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
     // WCAG 100% dimensions
