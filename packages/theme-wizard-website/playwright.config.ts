@@ -56,7 +56,7 @@ const config: PlaywrightTestConfig = {
     },
 
     /* Collect trace for all tests in CI for better debugging. See https://playwright.dev/docs/trace-viewer */
-    trace: 'off',
+    trace: 'on-first-retry',
 
     // WCAG 100% dimensions
     viewport: {
