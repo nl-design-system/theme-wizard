@@ -23,7 +23,7 @@ const greenOKLCH = new ColorToken({
   $value: {
     ...greenSRGB.$value,
     colorSpace: COLOR_SPACES.OKLCH,
-    components: [0.524144, 0.165652, 144.827],
+    components: [0.524186, 0.165667, 144.826],
   },
 });
 
@@ -31,7 +31,7 @@ const orangeOKLCH = new ColorToken({
   $value: {
     ...orangeSRGB.$value,
     colorSpace: COLOR_SPACES.OKLCH,
-    components: [0.705249, 0.17366, 55.4715],
+    components: [0.7053, 0.173678, 55.4692],
   },
 });
 
