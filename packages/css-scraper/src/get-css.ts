@@ -1,3 +1,4 @@
+import { parse, walk } from '@projectwallace/css-parser';
 import { parseHTML } from 'linkedom';
 import type {
   CSSImportResource,
@@ -24,34 +25,8 @@ export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 // and remove this ignore file comment
 /* v8 ignore file -- @preserve */
 
-const getUrlFromImportRule = (importRule: string): string => {
-  const href: string[] = [];
-
-  /* v8 ignore else -- @preserve */
-  if (/^['"]/.test(importRule)) {
-    const quote = importRule.charCodeAt(0);
-    for (let x = 1; x < importRule.length; x++) {
-      // Do not make the quotes part of the url
-      if (importRule.charCodeAt(x) === quote) {
-        break;
-      }
-      href.push(importRule[x]);
-    }
-  } else if (importRule.startsWith('url(')) {
-    for (let x = 4; x < importRule.length; x++) {
-      const character = importRule.charAt(x);
-      // End of url() reached
-      if (character === ')') {
-        break;
-      }
-      // Do not include quotes as part uf the url
-      if (/['"]/.test(character)) {
-        continue;
-      }
-      href.push(character);
-    }
-  }
-  return href.join('');
+const unquote = (input: string): string => {
+  return input.replaceAll(/(^['"])|(['"]$)/g, '');
 };
 
 /**
@@ -59,20 +34,22 @@ const getUrlFromImportRule = (importRule: string): string => {
  */
 export const getImportUrls = (css: string): string[] => {
   const urls: string[] = [];
-
-  for (let i = 0; i < css.length; i++) {
-    if (!css.startsWith('@import', i)) {
-      continue;
+  const ast = parse(css, {
+    parse_atrule_preludes: true,
+    parse_selectors: false,
+    parse_values: false,
+  });
+  walk(ast, (node) => {
+    if (node.type_name === 'Atrule' && node.name === 'import') {
+      for (const child of node.children) {
+        if (child.type_name === 'Url') {
+          const url = unquote(child.value as string);
+          urls.push(url);
+          break;
+        }
+      }
     }
-
-    // The first semicolon after @import ends the atrule
-    const semicolonIndex = css.indexOf(';', i + `@import`.length);
-    const importRule = css.substring(i + '@import'.length, semicolonIndex).trim();
-    const url = getUrlFromImportRule(importRule);
-    urls.push(url);
-
-    i += importRule.length;
-  }
+  });
 
   return urls;
 };

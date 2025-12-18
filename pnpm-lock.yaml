@@ -211,6 +211,9 @@ importers:
       '@projectwallace/css-design-tokens':
         specifier: 0.10.0
         version: 0.10.0
+      '@projectwallace/css-parser':
+        specifier: 0.7.2
+        version: 0.7.2
       linkedom:
         specifier: 0.18.12
         version: 0.18.12
@@ -1635,6 +1638,9 @@ packages:
   '@projectwallace/css-design-tokens@0.10.0':
     resolution: {integrity: sha512-lfX997iC+pH1G++mdIhcXMfVfS4Zt8v9kJbLVq8XQoHzhe5PqSjHyFN/hA/aOK2fDYyQ8S6F4Ff6sGYTPM6x5w==}
     engines: {node: '>=22'}
+
+  '@projectwallace/css-parser@0.7.2':
+    resolution: {integrity: sha512-rccoWn3vVyiBU/4bFDD/k1La8vS9uN3tNfRgCg3+1HXkK1piMypFFlpeQ6twnHfH/EuTCp66mCRY2wF5vujbxQ==}
 
   '@rijkshuisstijl-community/storybook-tooling@1.1.1':
     resolution: {integrity: sha512-6XCape5xGLrZtXTMy5J5xMUFXx1NqxlRo2TM2s+htbfROVuUcA4mQJpWN98Ttr0FiGO5k6MJp/+SapxNnw0iyg==}
@@ -7977,6 +7983,8 @@ snapshots:
       colorjs.io: 0.6.0-alpha.1
       css-time-sort: 3.0.0
       css-tree: 3.1.0
+
+  '@projectwallace/css-parser@0.7.2': {}
 
   '@rijkshuisstijl-community/storybook-tooling@1.1.1':
     dependencies:
