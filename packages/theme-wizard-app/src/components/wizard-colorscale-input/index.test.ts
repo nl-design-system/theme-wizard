@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { page } from 'vitest/browser';
 import './index';
 
-const tag = 'color-scale-picker';
+const tag = 'wizard-colorscale-input';
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe(`<${tag}>`, () => {
 
   it('shows a list of colors', () => {
     const element = document.querySelector(tag);
-    const output = element?.shadowRoot?.querySelector('output');
+    const output = element?.shadowRoot?.querySelector('[role=presentation]');
     expect(output?.childNodes.length).toBeGreaterThan(1);
   });
 

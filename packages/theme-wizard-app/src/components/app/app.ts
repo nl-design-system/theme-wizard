@@ -7,23 +7,26 @@ import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/700.css';
 // <End TODO>
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
+import { provide } from '@lit/context';
+import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
-import { EVENT_NAMES } from '../../constants';
-import { t } from '../../i18n';
 import '../sidebar/sidebar';
-import '../wizard-scraper';
 import '../wizard-preview';
 import '../wizard-logo';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
+import { EVENT_NAMES } from '../../constants';
+import { scrapedColorsContext } from '../../contexts/scraped-colors';
+import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
+import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -59,6 +62,10 @@ export class App extends LitElement {
     return [];
   }
 
+  @provide({ context: scrapedColorsContext })
+  @state()
+  scrapedColors: ScrapedColorToken[] = [];
+
   @state()
   private selectedTemplatePath: string = '/my-environment/overview';
 
@@ -90,13 +97,21 @@ export class App extends LitElement {
 
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
+
+    if (target instanceof WizardColorscaleInput) {
+      const updates = Object.entries(target.value).map(([colorKey, value]) => ({
+        path: `${target.name}.${colorKey}`,
+        value: value.$value,
+      }));
+      this.#theme.updateMany(updates);
+    } else if (target instanceof WizardTokenInput) {
+      this.#theme.updateAt(target.name, target.value);
+    }
+
     if (target instanceof WizardTokenInput) {
-      const value = target.value;
-      this.#theme.updateAt(target.name, value);
       // Request update to reflect any new validation issues
       this.requestUpdate();
       this.#storage.setJSON(this.#theme.tokens);
-      this.requestUpdate();
     }
   };
 
@@ -142,7 +157,7 @@ export class App extends LitElement {
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
-    this.requestUpdate();
+    this.scrapedColors = target.colors;
   };
 
   override render() {
@@ -164,6 +179,8 @@ export class App extends LitElement {
           <section>
             <utrecht-heading-2>Maak design keuzes</utrecht-heading-2>
             <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
+              <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
+
               <wizard-token-field
                 .errors=${this.#theme.issues}
                 .token=${headingFontToken}
@@ -176,7 +193,39 @@ export class App extends LitElement {
                 label="${t('tokens.fieldLabels.bodyFont')}"
                 path=${BODY_FONT_TOKEN_REF}
               ></wizard-token-field>
-              <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
+
+              <ul class="wizard-app__basis-colors">
+                ${(() => {
+                  const basis = this.#theme.tokens['basis'];
+                  const color =
+                    typeof basis === 'object' && basis !== null && 'color' in basis ? basis['color'] : undefined;
+                  const colorKeys = typeof color === 'object' && color !== null ? Object.keys(color) : [];
+                  return colorKeys
+                    .filter((name) => !name.endsWith('inverse') && name !== 'transparent')
+                    .map(
+                      (colorKey) => html`
+                        <li>
+                          <wizard-colorscale-input
+                            key=${colorKey}
+                            label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
+                            id=${`basis.color.${colorKey}`}
+                            name=${`basis.color.${colorKey}`}
+                            .colorToken=${this.#theme.at(`basis.color.${colorKey}.color-default`)}
+                          >
+                            <a
+                              href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
+                              target="_blank"
+                              slot="extra-label"
+                            >
+                              docs
+                            </a>
+                          </wizard-colorscale-input>
+                        </li>
+                      `,
+                    );
+                })()}
+              </ul>
+
               <details>
                 <summary>Alle tokens</summary>
                 <wizard-token-field
@@ -202,8 +251,9 @@ export class App extends LitElement {
               type="button"
               ?disabled=${!this.#theme.modified}
               @click=${this.#handleDownloadClick}
-              >Download tokens als JSON</utrecht-button
             >
+              Download tokens als JSON
+            </utrecht-button>
           </section>
         </wizard-sidebar>
 
