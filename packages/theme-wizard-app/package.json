@@ -71,6 +71,6 @@
     "rimraf": "6.1.2",
     "typescript": "5.9.3",
     "vite": "7.3.0",
-    "vitest": "4.0.8"
+    "vitest": "4.0.16"
   }
 }
