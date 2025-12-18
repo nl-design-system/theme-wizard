@@ -31,12 +31,12 @@
     "@utrecht/body-css": "2.0.1",
     "@utrecht/root-css": "2.0.1",
     "@vercel/related-projects": "1.0.0",
-    "astro": "5.15.4"
+    "astro": "5.16.6"
   },
   "devDependencies": {
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.57.0",
     "postcss-html": "1.8.0",
-    "stylelint": "16.25.0",
+    "stylelint": "16.26.1",
     "stylelint-config-astro": "2.0.0"
   }
 }
