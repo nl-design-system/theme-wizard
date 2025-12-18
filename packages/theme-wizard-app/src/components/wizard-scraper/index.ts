@@ -18,7 +18,16 @@ import styles from './styles';
 const OPTIONS_STORAGE_KEY = 'options';
 const SRC_STORAGE_KEY = 'src';
 
-@customElement('wizard-scraper')
+const tag = 'wizard-scraper';
+
+// Declare the custom element for TypeScript
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: WizardScraper;
+  }
+}
+
+@customElement(tag)
 export class WizardScraper extends LitElement {
   @property() tokens: ScrapedDesignToken[] = [];
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard-scraper' });
