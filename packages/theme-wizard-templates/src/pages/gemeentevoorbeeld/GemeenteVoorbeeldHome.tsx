@@ -16,7 +16,11 @@ import NavigationBar from './components/NavigationBar';
 import OpeningHoursCard from './components/OpeningHoursCard';
 import QuickTasks from './components/QuickTasks';
 
-const GemeenteVoorbeeldHome: FC = () => {
+export interface GemeenteVoorbeeldHomeProps {
+  currentPath?: string;
+}
+
+const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) => {
   const quickTasks = [
     { href: '#', icon: 'paspoort', title: 'Paspoort of ID-kaart aanvragen' },
     { href: '/meldingen/', icon: 'melding-klacht', title: 'Meldingen openbare ruimte' },
@@ -44,6 +48,7 @@ const GemeenteVoorbeeldHome: FC = () => {
           { href: '#', label: 'Werk en inkomen' },
           { href: '#', label: 'Contact' },
         ]}
+        currentPath={currentPath}
       />
       <section className="voorbeeld-toptask">
         <div className="voorbeeld-toptask__layout">
