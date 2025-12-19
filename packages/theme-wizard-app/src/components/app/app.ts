@@ -9,15 +9,13 @@ import '@fontsource/source-sans-pro/700.css';
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
-import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
-import '../sidebar/sidebar';
+import '../wizard-layout';
 import '../wizard-preview';
-import '../wizard-logo';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
@@ -69,7 +67,7 @@ export class App extends LitElement {
   @state()
   private selectedTemplatePath: string = '/my-environment/overview';
 
-  static override readonly styles = [unsafeCSS(maTheme), unsafeCSS(buttonLinkStyles), appStyles];
+  static override readonly styles = [unsafeCSS(buttonLinkStyles), appStyles];
 
   override connectedCallback() {
     super.connectedCallback();
@@ -165,12 +163,8 @@ export class App extends LitElement {
     const headingFontToken = this.#theme.at(HEADING_FONT_TOKEN_REF);
 
     return html`
-      <div class="wizard-app ma-theme">
-        <div class="wizard-app__logo">
-          <wizard-logo></wizard-logo>
-        </div>
-
-        <wizard-sidebar class="wizard-app__sidebar">
+      <wizard-layout>
+        <div slot="sidebar" class="wizard-app__sidebar">
           <section>
             <utrecht-heading-2>Analyseer website</utrecht-heading-2>
             <wizard-scraper @change=${this.#handleScrapeDone}></wizard-scraper>
@@ -255,16 +249,16 @@ export class App extends LitElement {
               Download tokens als JSON
             </utrecht-button>
           </section>
-        </wizard-sidebar>
+        </div>
 
-        <div class="wizard-app__nav">
+        <div slot="nav" class="wizard-app__nav">
           <wizard-preview-picker .templates=${this.templates}></wizard-preview-picker>
         </div>
 
-        <section class="wizard-app__preview" aria-label="Live voorbeeld van toegepaste huisstijl">
+        <section slot="main" aria-label="Live voorbeeld van toegepaste huisstijl">
           <wizard-preview .url=${this.selectedTemplatePath} .themeStylesheet=${this.#theme.stylesheet}></wizard-preview>
         </section>
-      </div>
+      </wizard-layout>
     `;
   }
 }
