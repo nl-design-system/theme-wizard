@@ -1,4 +1,5 @@
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
+import linkCss from '@utrecht/link-css/dist/index.css?inline';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './styles';
@@ -16,7 +17,7 @@ declare global {
 
 @customElement(tag)
 export class WizardLayout extends LitElement {
-  static override readonly styles = [unsafeCSS(maTheme), styles];
+  static override readonly styles = [unsafeCSS(maTheme), unsafeCSS(linkCss), styles];
 
   override render() {
     return html`
@@ -30,7 +31,14 @@ export class WizardLayout extends LitElement {
         </wizard-sidebar>
 
         <div class="wizard-layout__nav">
-          <slot name="nav"></slot>
+          <nav>
+            <a href="/" class="utrecht-link utrecht-link--html-a wizard-layout__nav-item"> Configureer </a>
+            <a href="/style-guide" class="utrecht-link utrecht-link--html-a wizard-layout__nav-item"> Style Guide </a>
+          </nav>
+
+          <div class="wizard-layout__nav-slot">
+            <slot name="nav"></slot>
+          </div>
         </div>
 
         <section class="wizard-layout__main">

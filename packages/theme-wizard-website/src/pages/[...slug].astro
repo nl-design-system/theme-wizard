@@ -1,0 +1,27 @@
+---
+import { withRelatedProject } from '@vercel/related-projects';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
+
+// Allow server-side rendering for dynamic routes
+// The wizard app handles client-side routing for its internal routes
+export const prerender = false;
+
+const slug = Astro.params.slug;
+
+// Only serve the wizard app for routes that don't exist elsewhere
+// (templates route is handled by templates/[...template].astro)
+if (slug === 'templates' || slug?.startsWith('templates/')) {
+  return new Response('Not found', { status: 404 });
+}
+
+const scraperUrl = withRelatedProject({
+  projectName: 'theme-wizard-server',
+  // Fallback API host
+  defaultHost: process.env.API_HOST || '',
+});
+---
+
+<BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
+  <theme-wizard-app templates={TEMPLATES_JSON}></theme-wizard-app>
+</BaseLayout>

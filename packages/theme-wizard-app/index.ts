@@ -12,4 +12,6 @@ import './src/components/template-paragraph';
 import './src/components/template-side-nav';
 import './src/components/template-skip-link';
 import './src/components/wizard-download-confirmation';
+import './src/components/wizard-index-page';
 import './src/components/wizard-preview';
+import './src/components/wizard-style-guide';

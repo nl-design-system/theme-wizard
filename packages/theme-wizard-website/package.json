@@ -25,6 +25,7 @@
     "test-e2e": "playwright test"
   },
   "dependencies": {
+    "@astrojs/vercel": "9.0.2",
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
