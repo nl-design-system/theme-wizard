@@ -220,7 +220,7 @@ importers:
     devDependencies:
       '@vitest/coverage-v8':
         specifier: 4.0.16
-        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))
+        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))
       rimraf:
         specifier: 6.1.2
         version: 6.1.2
@@ -235,7 +235,7 @@ importers:
         version: 4.5.4(@types/node@22.19.3)(rollup@4.53.5)(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))
       vitest:
         specifier: 4.0.8
-        version: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)
+        version: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
 
   packages/design-tokens-schema:
     dependencies:
@@ -263,7 +263,7 @@ importers:
         version: 1.1.5
       '@vitest/coverage-v8':
         specifier: 4.0.16
-        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))
+        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))
       rimraf:
         specifier: 6.1.2
         version: 6.1.2
@@ -278,7 +278,7 @@ importers:
         version: 4.5.4(@types/node@22.19.3)(rollup@4.53.5)(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))
       vitest:
         specifier: 4.0.14
-        version: 4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)
+        version: 4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
 
   packages/theme-wizard-app:
     dependencies:
@@ -381,9 +381,6 @@ importers:
       rosetta:
         specifier: 1.1.0
         version: 1.1.0
-      router:
-        specifier: link:@lit/labs/router
-        version: link:@lit/labs/router
       style-dictionary:
         specifier: 5.1.1
         version: 5.1.1
@@ -451,7 +448,7 @@ importers:
         version: 0.23.0(hono@4.11.1)
       '@vitest/coverage-v8':
         specifier: 4.0.16
-        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))
+        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))
       rimraf:
         specifier: 6.1.2
         version: 6.1.2
@@ -466,7 +463,7 @@ importers:
         version: 7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2)
       vitest:
         specifier: 4.0.8
-        version: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)
+        version: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
 
   packages/theme-wizard-templates:
     dependencies:
@@ -9339,7 +9336,7 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))':
+  '@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))':
     dependencies:
       '@vitest/mocker': 4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))
       '@vitest/utils': 4.0.16
@@ -9348,7 +9345,7 @@ snapshots:
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.0.3
-      vitest: 4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)
+      vitest: 4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
       ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
@@ -9374,7 +9371,7 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))':
+  '@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))':
     dependencies:
       '@vitest/mocker': 4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))
       '@vitest/utils': 4.0.16
@@ -9383,7 +9380,7 @@ snapshots:
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.0.3
-      vitest: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)
+      vitest: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
       ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
@@ -9392,7 +9389,7 @@ snapshots:
       - vite
     optional: true
 
-  '@vitest/coverage-v8@4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))':
+  '@vitest/coverage-v8@4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.16
@@ -9405,9 +9402,9 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)
+      vitest: 4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
     optionalDependencies:
-      '@vitest/browser': 4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))
+      '@vitest/browser': 4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))
     transitivePeerDependencies:
       - supports-color
 
@@ -9430,7 +9427,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-v8@4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))':
+  '@vitest/coverage-v8@4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.16
@@ -9443,9 +9440,9 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2)
+      vitest: 4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
     optionalDependencies:
-      '@vitest/browser': 4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2))
+      '@vitest/browser': 4.0.16(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2))
     transitivePeerDependencies:
       - supports-color
 
@@ -14342,7 +14339,7 @@ snapshots:
       - tsx
       - yaml
 
-  vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2):
+  vitest@4.0.14(@edge-runtime/vm@3.2.0)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
       '@vitest/expect': 4.0.14
       '@vitest/mocker': 4.0.14(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))
@@ -14420,7 +14417,7 @@ snapshots:
       - tsx
       - yaml
 
-  vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(tsx@4.19.2)(yaml@2.8.2):
+  vitest@4.0.8(@edge-runtime/vm@3.2.0)(@types/debug@4.1.12)(@types/node@22.19.3)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
       '@vitest/expect': 4.0.8
       '@vitest/mocker': 4.0.8(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2))
