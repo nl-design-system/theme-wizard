@@ -7,8 +7,10 @@ export const detail = {
   value: 'page',
   module: 'Gemeentevoorbeeld',
 };
+
+const currentPath = Astro.url.pathname;
 ---
 
 <BaseLayout>
-  <GemeenteVoorbeeldHome client:load />
+  <GemeenteVoorbeeldHome client:load currentPath={currentPath} />
 </BaseLayout>

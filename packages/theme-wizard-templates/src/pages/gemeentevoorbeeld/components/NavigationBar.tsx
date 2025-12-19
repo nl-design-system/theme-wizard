@@ -1,4 +1,5 @@
-import type { FC, ReactElement } from 'react';
+import type { FC } from 'react';
+import { NavBar, NavList, NavListLink } from '@utrecht/component-library-react';
 
 export interface NavigationItem {
   href: string;
@@ -6,6 +7,7 @@ export interface NavigationItem {
 }
 
 export interface NavigationBarProps {
+  currentPath?: string;
   items?: NavigationItem[];
 }
 
@@ -16,22 +18,16 @@ const DEFAULT_ITEMS: NavigationItem[] = [
   { href: '#', label: 'Bestuur en organisatie' },
 ];
 
-const NavigationBar: FC<NavigationBarProps> = ({ items = DEFAULT_ITEMS }) => (
-  <nav className="utrecht-nav-bar" aria-label="Hoofdonderwerpen">
-    <div className="utrecht-nav-bar__content">
-      <ul className="utrecht-nav-list">
-        {items.map(
-          (item: NavigationItem): ReactElement => (
-            <li key={item.href} className="utrecht-nav-list__item">
-              <a href={item.href} className="utrecht-link utrecht-link--html-a utrecht-nav-list__link">
-                {item.label}
-              </a>
-            </li>
-          ),
-        )}
-      </ul>
-    </div>
-  </nav>
+const NavigationBar: FC<NavigationBarProps> = ({ currentPath, items = DEFAULT_ITEMS }) => (
+  <NavBar>
+    <NavList>
+      {items.map(({ href, label }) => (
+        <NavListLink key={href} href={href} aria-current={currentPath === href ? 'page' : undefined}>
+          {label}
+        </NavListLink>
+      ))}
+    </NavList>
+  </NavBar>
 );
 
 export default NavigationBar;
