@@ -11,12 +11,24 @@ import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
 import type Theme from '../../lib/Theme';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
+import { EVENT_NAMES } from '../../constants';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
+import '../template-action';
+import '../template-case-card';
+import '../template-code';
+import '../template-color-swatch';
+import '../template-heading';
+import '../template-link-list';
+import '../template-link';
+import '../template-page-header';
+import '../template-paragraph';
+import '../template-side-nav';
+import '../template-skip-link';
 import styles from './styles';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -38,7 +50,7 @@ export class WizardIndexPage extends LitElement {
 
   @consume({ context: themeContext, subscribe: true })
   @state()
-  private theme!: Theme;
+  private readonly theme!: Theme;
 
   @property({ attribute: false })
   templates: TemplateGroup[] = [];
@@ -51,7 +63,7 @@ export class WizardIndexPage extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('template-change', this.#handleTemplateChange);
+    this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
 
     // Parse template selection from query param: ?templatePath=/group/page (dynamic)
     try {
@@ -64,7 +76,7 @@ export class WizardIndexPage extends LitElement {
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('template-change', this.#handleTemplateChange);
+    this.removeEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
   }
 
   readonly #handleTokenChange = async (event: Event) => {

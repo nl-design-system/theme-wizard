@@ -55,8 +55,22 @@ export class App extends LitElement {
   static override readonly styles = [appStyles];
 
   readonly #router = new Router(this, [
-    { path: '/', render: () => html`<wizard-index-page .templates=${this.templates}></wizard-index-page>` },
-    { path: '/style-guide', render: () => html`<wizard-style-guide></wizard-style-guide>` },
+    {
+      enter: async () => {
+        await import('../wizard-index-page/index');
+        return true;
+      },
+      path: '/',
+      render: () => html`<wizard-index-page .templates=${this.templates}></wizard-index-page>`,
+    },
+    {
+      enter: async () => {
+        await import('../wizard-style-guide/index');
+        return true;
+      },
+      path: '/style-guide',
+      render: () => html`<wizard-style-guide></wizard-style-guide>`,
+    },
   ]);
 
   override connectedCallback() {

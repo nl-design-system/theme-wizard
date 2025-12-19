@@ -17,7 +17,7 @@ declare global {
 export class WizardStyleGuide extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   @state()
-  private theme!: Theme;
+  private readonly theme!: Theme;
 
   override render() {
     if (!this.theme) {
@@ -26,13 +26,7 @@ export class WizardStyleGuide extends LitElement {
 
     return html`
       <wizard-layout>
-        <div slot="sidebar">
-          <utrecht-heading-1>Style Guide</utrecht-heading-1>
-          <a href="/" class="utrecht-link-button">← Back to Wizard</a>
-        </div>
-
         <div slot="main">
-          <utrecht-paragraph> Style guide page placeholder. Features will be added later. </utrecht-paragraph>
           <utrecht-paragraph>
             Theme has ${Object.keys(this.theme.tokens).length} top-level token groups.
           </utrecht-paragraph>

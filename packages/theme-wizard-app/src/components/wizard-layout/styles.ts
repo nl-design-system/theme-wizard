@@ -51,12 +51,17 @@ export default css`
     line-height: 2;
     min-block-size: 100%;
     padding-block: var(--basis-space-block-md);
-    padding-inline: var(--basis-space-inline-sm);
+    padding-inline: var(--basis-space-inline-lg);
 
     &:hover {
       background-color: var(--ma-navigation-bar-item-hover-background-color);
       border-block-start-color: var(--ma-navigation-bar-item-hover-border-color);
       color: var(--ma-navigation-bar-item-hover-color);
+    }
+
+    &[aria-current='page'] {
+      background-color: var(--ma-navigation-bar-item-active-background-color);
+      border-block-start-color: var(--ma-navigation-bar-item-active-border-color);
     }
   }
 

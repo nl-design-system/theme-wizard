@@ -15,6 +15,10 @@ export const en = {
   cancel: 'Cancel',
   close: 'Close',
   continue: 'Continue',
+  nav: {
+    configure: 'Edit branding',
+    styleGuide: 'Style guide',
+  },
   scraper: {
     input: {
       label: 'Website URL',
@@ -146,6 +150,10 @@ export const nl = {
   cancel: 'Annuleren',
   close: 'Sluiten',
   continue: 'Doorgaan',
+  nav: {
+    configure: 'Huisstijl bewerken',
+    styleGuide: 'Stijlgids',
+  },
   scraper: {
     input: {
       label: 'Website URL',
