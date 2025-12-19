@@ -2,16 +2,21 @@ import { css } from 'lit';
 
 export default css`
   .wizard-layout {
-    block-size: 100vh;
+    --wizard-layout-nav-padding-block: var(--basis-space-block-md);
+    --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
+
     display: grid;
     font-family: var(--basis-text-font-family-default, inherit);
     grid-template-areas: 'logo nav' 'sidebar main';
     grid-template-columns: minmax(20rem, 24rem) 1fr;
     grid-template-rows: auto 1fr;
+    min-block-size: 100vh;
   }
 
   .wizard-layout__logo {
+    background-color: var(--wizard-layout-nav-background-color);
     grid-area: logo;
+    padding-block: var(--wizard-layout-nav-padding-block);
   }
 
   .wizard-layout__sidebar {
@@ -19,11 +24,45 @@ export default css`
   }
 
   .wizard-layout__nav {
-    background-color: var(--basis-color-accent-1-inverse-bg-default);
+    background-color: var(--wizard-layout-nav-background-color);
     color: var(--basis-color-accent-1-inverse-color-default);
+    display: flex;
     grid-area: nav;
+    justify-content: space-between;
+    padding-inline: var(--basis-space-inline-lg);
+  }
+
+  .wizard-layout__nav-slot {
+    display: grid;
+    justify-content: end;
+  }
+
+  .wizard-layout__nav-item {
+    --utrecht-link-color: #fff;
+    --utrecht-link-text-decoration: none;
+
+    align-content: center;
+    border-block-start-style: solid;
+    border-block-start-width: 4px;
+    border-color: #0000;
+    box-sizing: border-box;
+    display: inline-block;
+    font-weight: var(--basis-text-font-weight-bold);
+    line-height: 2;
+    min-block-size: 100%;
     padding-block: var(--basis-space-block-md);
     padding-inline: var(--basis-space-inline-lg);
+
+    &:hover {
+      background-color: var(--ma-navigation-bar-item-hover-background-color);
+      border-block-start-color: var(--ma-navigation-bar-item-hover-border-color);
+      color: var(--ma-navigation-bar-item-hover-color);
+    }
+
+    &[aria-current='page'] {
+      background-color: var(--ma-navigation-bar-item-active-background-color);
+      border-block-start-color: var(--ma-navigation-bar-item-active-border-color);
+    }
   }
 
   /* ============================================
@@ -36,9 +75,7 @@ export default css`
     flex-direction: column;
     grid-area: main;
     inline-size: 100%;
-    max-block-size: 100%;
     min-block-size: 100%;
-    overflow: auto;
   }
 
   @media print {
