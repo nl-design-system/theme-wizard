@@ -50,6 +50,7 @@
   "dependencies": {
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@projectwallace/css-design-tokens": "0.10.0",
+    "@projectwallace/css-parser": "0.7.2",
     "linkedom": "0.18.12",
     "zod": "4.2.1"
   }
