@@ -1,6 +1,7 @@
 import type { FC } from 'react';
-import { Button, Heading3, Heading4, Paragraph } from '@utrecht/component-library-react/dist/css-module';
-
+import { Icon } from '@utrecht/component-library-react';
+import { ButtonLink, Heading3, Heading4, Paragraph } from '@utrecht/component-library-react/dist/css-module';
+import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
 interface OpeningHoursCardProps {
   title?: string;
   subtitle?: string;
@@ -17,13 +18,16 @@ const OpeningHoursCard: FC<OpeningHoursCardProps> = ({
   title = 'Openingstijden',
 }) => {
   return (
-    <div className="voorbeeld-toptask__card">
+    <div className="voorbeeld__card">
+      <Icon>
+        <UtrechtIconAfspraakMaken />
+      </Icon>
       <Heading3>{title}</Heading3>
       <Heading4>{subtitle}</Heading4>
       <Paragraph className="voorbeeld-paragraph--opening-times">{hours}</Paragraph>
-      <Button appearance="secondary-action-button" onClick={onButtonClick}>
+      <ButtonLink appearance="secondary-action-button" onClick={onButtonClick}>
         {buttonLabel}
-      </Button>
+      </ButtonLink>
     </div>
   );
 };

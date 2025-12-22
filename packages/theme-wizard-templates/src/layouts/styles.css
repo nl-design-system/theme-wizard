@@ -2,6 +2,25 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Default paddings for Utrecht page & page-content */
+  --utrecht-page-content-padding-block-start: var(--basis-space-row-2xl);
+  --utrecht-page-content-padding-block-end: var(--basis-space-row-2xl);
+  --utrecht-page-padding-inline-start: var(--basis-space-inline-lg);
+  --utrecht-page-padding-inline-end: var(--basis-space-inline-lg);
+  --utrecht-page-header-padding-block-start: var(--basis-space-row-lg);
+  --utrecht-page-header-padding-block-end: var(--basis-space-row-lg);
+
+  /* Custom */
+  --utrecht-section-max-inline-size: calc(670px * 1.6);
+  --utrecht-page-background-secondary: var(--basis-color-default-bg-subtle);
+  --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
+}
+
+.utrecht-nav-bar {
+  --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
+}
+
 .layout {
   display: flex;
   flex-direction: column;
@@ -35,47 +54,4 @@
   flex-direction: column;
   flex: 1;
   gap: var(--basis-space-column-lg);
-}
-
-.voorbeeld-toptask {
-  margin-inline: auto;
-  inline-size: 100%;
-  max-inline-size: var(--basis-article-max-inline-size, 1200px);
-  padding-inline: var(--basis-space-inline-lg);
-}
-
-.voorbeeld-toptask__layout {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--basis-space-column-xl);
-}
-
-.voorbeeld-toptask__nav {
-  display: grid;
-  inline-size: 100%;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--basis-space-row-md);
-}
-
-.voorbeeld-toptask__link {
-  padding: var(--basis-space-inline-lg);
-  background-color: var(--basis-color-accent-1-bg-default);
-  color: var(--basis-color-accent-1-inverse-color-default);
-}
-
-.voorbeeld-toptask__card {
-  padding: var(--basis-space-inline-lg);
-  background-color: var(--basis-color-accent-1-bg-subtle);
-  min-inline-size: min(320px, 100%);
-}
-
-.voorbeeld-page-header__content {
-  inline-size: 100%;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-inline: auto;
-  padding-inline: var(--voorbeeld-space-inline-mouse);
-  padding-block: var(--voorbeeld-space-block-mouse);
-  max-inline-size: var(--example-page-header-content-max-inline-size);
 }

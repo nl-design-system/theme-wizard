@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import {
-  Accordion,
-  AccordionSection,
+  AccordionProvider,
+  ButtonLink,
   Link,
   Heading1,
   Heading2,
@@ -11,8 +11,12 @@ import {
   Paragraph,
   PageContent,
   PageHeader,
+  PageFooter,
 } from '@utrecht/component-library-react/dist/css-module';
+import { UtrechtIconChevronRight } from '@utrecht/web-component-library-react';
+import { Column, Row } from './components/Layout';
 import NavigationBar from './components/NavigationBar';
+import NewsCards from './components/NewsCards';
 import OpeningHoursCard from './components/OpeningHoursCard';
 import QuickTasks from './components/QuickTasks';
 
@@ -30,13 +34,50 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) 
     { href: '#', icon: 'afval-scheiden', title: 'Afval' },
   ];
 
+  const newsItems = [
+    {
+      body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
+      date: 'donderdag 15 februari 2024',
+      href: '',
+      title: 'Wijkraadsleden officieel beëdigd',
+    },
+    {
+      body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
+      date: 'donderdag 15 februari 2024',
+      href: '',
+      title: 'Wijkraadsleden officieel beëdigd',
+    },
+    {
+      body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
+      date: 'donderdag 15 februari 2024',
+      href: '',
+      title: 'Wijkraadsleden officieel beëdigd',
+    },
+    {
+      body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
+      date: 'donderdag 15 februari 2024',
+      href: '',
+      title: 'Wijkraadsleden officieel beëdigd',
+    },
+  ];
+
   return (
     <div>
       <PageHeader>
         <PageContent>
-          <Heading1>Gemeente Voorbeeld</Heading1>
-          <Link>Contact</Link>
-          <Link>Mijn Omgeving</Link>
+          <div className="section">
+            <Row justify="space-between" align="center">
+              <Column cols={6}>
+                <Heading1>Gemeente Voorbeeld</Heading1>
+              </Column>
+              <Row align="flex-end">
+                <Column cols={12}>
+                  <Link>Contact</Link>
+                  <Link>Mijn Omgeving</Link>
+                </Column>
+              </Row>
+            </Row>
+          </div>
         </PageContent>
       </PageHeader>
 
@@ -50,54 +91,124 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) 
         ]}
         currentPath={currentPath}
       />
-      <section className="voorbeeld-toptask">
-        <div className="voorbeeld-toptask__layout">
-          <QuickTasks tasks={quickTasks} />
-          <OpeningHoursCard />
-        </div>
-      </section>
+      <PageContent>
+        <section className="section">
+          <Row gap="var(--basis-space-column-xl)" justify="space-between">
+            <Column cols={9}>
+              <QuickTasks tasks={quickTasks} />
+            </Column>
 
-      <section aria-labelledby="zelf-regelen-heading">
-        <Heading2 id="zelf-regelen-heading">Zelf regelen</Heading2>
-        <Paragraph>Regel uw zaken online bij gemeente Voorbeeld. Kies een onderwerp om direct te starten.</Paragraph>
-      </section>
+            <Column cols={3}>
+              <OpeningHoursCard />
+            </Column>
+          </Row>
+        </section>
+      </PageContent>
 
-      <section aria-labelledby="veelgestelde-vragen-heading">
-        <Heading3 id="veelgestelde-vragen-heading">Veelgestelde vragen</Heading3>
+      <PageContent className="section--secondary">
+        <section className="section" aria-labelledby="zelf-regelen-heading">
+          <Row justify="space-between">
+            <Heading2 id="zelf-regelen-heading">Zelf regelen</Heading2>
 
-        <Accordion>
-          <AccordionSection
+            <ButtonLink appearance="primary-action-button">Meer bekijken</ButtonLink>
+          </Row>
+
+          <AccordionProvider
             headingLevel={3}
-            label="Hoe vraag ik een paspoort aan?"
-            body={
-              <Paragraph>
-                Maak online een afspraak en neem een pasfoto en uw huidige reisdocument mee naar het gemeentehuis.
-              </Paragraph>
-            }
+            sections={[
+              {
+                body: (
+                  <Row gap="var(--basis-space-column-6xl)" justify="space-between">
+                    <Column cols={8}>
+                      <Paragraph>
+                        Met een paspoort, identiteitskaart of rijbewijs kunt u zich identificeren en reizen. Onder
+                        voorwaarden kunt u de Nederlandse identiteit krijgen.
+                      </Paragraph>
+                    </Column>
+
+                    <Column cols={4}>
+                      <LinkList>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Paspoort aanvragen
+                        </LinkListLink>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          ID-kaart aanvragen
+                        </LinkListLink>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Rijbewijs aanvragen
+                        </LinkListLink>
+                      </LinkList>
+                    </Column>
+                  </Row>
+                ),
+                label: 'Hoe vraag ik een paspoort aan?',
+              },
+              {
+                body: (
+                  <Row gap="var(--basis-space-column-6xl)" justify="space-between">
+                    <Column cols={12}>
+                      <LinkList>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Verhuizing naar Gemeente voorbeeld
+                        </LinkListLink>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Verhuizing vanuit het buitenland naar Gemeente voorbeeld doorgeven
+                        </LinkListLink>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Verhuizing naar het buitenland doorgeven
+                        </LinkListLink>
+                      </LinkList>
+                    </Column>
+                  </Row>
+                ),
+                label: 'Verhuizen',
+              },
+              {
+                body: (
+                  <Row gap="var(--basis-space-column-6xl)" justify="space-between">
+                    <Column cols={9}>
+                      <Paragraph>
+                        Wilt u het kenteken aanpassen van uw parkeervergunning, garageabonnement of
+                        gehandicaptenparkeerplaats? Kies hier wat u wilt aanpassen.
+                      </Paragraph>
+                    </Column>
+                    <Column cols={12}>
+                      <LinkList>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Verhuizing naar Gemeente voorbeeld
+                        </LinkListLink>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Verhuizing vanuit het buitenland naar Gemeente voorbeeld doorgeven
+                        </LinkListLink>
+                        <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+                          Verhuizing naar het buitenland doorgeven
+                        </LinkListLink>
+                      </LinkList>
+                    </Column>
+                  </Row>
+                ),
+                label: 'Kentekenwijziging doorgeven',
+              },
+            ]}
           />
+        </section>
+      </PageContent>
 
-          <AccordionSection
-            headingLevel={3}
-            label="Waar vind ik informatie over afvalinzameling?"
-            body={
-              <Paragraph>
-                Bekijk de afvalkalender en locaties van milieustraten op de pagina Afval op gemeentevoorbeeld.nl.
-              </Paragraph>
-            }
-          />
-        </Accordion>
-      </section>
+      <PageContent>
+        <section className="section" aria-labelledby="nieuws-heading">
+          <Heading3 id="nieuws-heading">Nieuws en inzichten</Heading3>
+          <NewsCards cards={newsItems}></NewsCards>
+        </section>
+      </PageContent>
 
-      <section aria-labelledby="nieuws-heading">
-        <Heading3 id="nieuws-heading">Nieuws en inzichten</Heading3>
-
-        <LinkList>
-          <LinkListLink href="#">Wijkraadleden officieel beëdigd</LinkListLink>
-          <LinkListLink href="#">Huurteam geeft huurders gratis hulp</LinkListLink>
-          <LinkListLink href="#">Bijzonder beroep: specialist maatschappelijke ontwikkeling</LinkListLink>
-          <LinkListLink href="#">De Tegeltaxi gaat weer rijden!</LinkListLink>
-        </LinkList>
-      </section>
+      <PageFooter>
+        <PageContent>
+          <div className="section">
+            <Heading3>Footer</Heading3>
+            <Paragraph>Page Footer Area</Paragraph>
+          </div>
+        </PageContent>
+      </PageFooter>
     </div>
   );
 };
