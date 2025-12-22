@@ -39,7 +39,7 @@ export class WizardStyleGuide extends LitElement {
 
   override firstUpdated(): void {
     // Scroll to hash on page load
-    const hash = window.location.hash;
+    const hash = globalThis.location.hash;
     if (hash) {
       this.scrollToHash(hash);
     }
@@ -50,7 +50,7 @@ export class WizardStyleGuide extends LitElement {
     if (target) {
       // Use requestAnimationFrame to ensure element is rendered
       requestAnimationFrame(() => {
-        target.scrollIntoView({ behavior: 'smooth' });
+        target.scrollIntoView();
       });
     }
   }
@@ -63,7 +63,7 @@ export class WizardStyleGuide extends LitElement {
     if (!href) return;
 
     event.preventDefault();
-    window.location.hash = href;
+    globalThis.location.hash = href;
     this.scrollToHash(href);
   }
 
