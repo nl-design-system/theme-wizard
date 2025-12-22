@@ -10,36 +10,37 @@ import {
   UtrechtIconNummerbord,
   UtrechtIconAfvalScheiden,
 } from '@utrecht/web-component-library-react';
+import type { QuickTask } from '../types';
 import { Column, Row } from './Layout';
 
-interface QuickTask {
-  href: string;
-  title: string;
-  icon: string;
-}
-
-interface QuickTasksProps {
+export interface QuickTasksProps {
   tasks: QuickTask[];
 }
 
-const ICON_COMPONENTS: Record<string, ReactElement> = {
+type IconName = 'afval-scheiden' | 'melding-klacht' | 'nummerbord' | 'paspoort' | 'verhuizen' | 'werken';
+
+const ICON_COMPONENTS: Record<IconName, ReactElement> = {
   'afval-scheiden': <UtrechtIconAfvalScheiden />,
   'melding-klacht': <UtrechtIconMeldingKlacht />,
   nummerbord: <UtrechtIconNummerbord />,
   paspoort: <UtrechtIconPaspoort />,
   verhuizen: <UtrechtIconVerhuizen />,
   werken: <UtrechtIconWerken />,
-};
+} as const;
 
-const renderIcon = (iconName: string): ReactElement | null => ICON_COMPONENTS[iconName] ?? null;
+const renderIcon = (iconName: string): ReactElement | null => {
+  const icon = ICON_COMPONENTS[iconName as IconName];
+  return icon ?? null;
+};
 
 const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
   <nav aria-label="Snelle taken">
-    <Row columnGap="var(--basis-space-column-xl)" rowGap="var(--basis-space-row-md)" justify="flex-start" fullHeight>
-      {tasks.map((task, index) => (
-        <Column key={`${task.href}-${task.title}-${index}`} cols={4}>
-          <Card.Link href={task.href} className="voorbeeld__link voorbeeld__link--task">
+    <Row columnGap="var(--basis-space-column-xl)" fullHeight justify="flex-start" rowGap="var(--basis-space-row-md)">
+      {tasks.map((task) => (
+        <Column key={`${task.href}-${task.title}`} cols={4}>
+          <Card.Link className="voorbeeld__link voorbeeld__link--task" href={task.href}>
             <Icon>{renderIcon(task.icon)}</Icon>
+
             <Heading4>{task.title}</Heading4>
           </Card.Link>
         </Column>
