@@ -1,9 +1,10 @@
-// @ts-nocheck
-
 import { consume } from '@lit/context';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
-import { legacyToModernColor } from '@nl-design-system-community/design-tokens-schema';
+import {
+  legacyToModernColor,
+  type ColorToken as ColorTokenType,
+} from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import '../wizard-layout';
@@ -41,8 +42,15 @@ export class WizardStyleGuide extends LitElement {
       return t('loading');
     }
 
-    const basis = this.theme.tokens['basis'];
+    const basis = this.theme.tokens['basis'] as Record<string, unknown>;
+    if (typeof basis !== 'object' || basis === null) {
+      return t('loading');
+    }
+
     const colors = basis['color'];
+    if (typeof colors !== 'object' || colors === null) {
+      return t('loading');
+    }
 
     return html`
       <wizard-layout>
@@ -60,8 +68,9 @@ export class WizardStyleGuide extends LitElement {
           <section id="colors">
             <utrecht-heading-2>${t('styleGuide.sections.colors.title')}</utrecht-heading-2>
 
-            ${Object.entries(colors)
+            ${Object.entries(colors as Record<string, unknown>)
               .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
+              .filter(([, value]) => typeof value === 'object' && value !== null)
               .map(([key, value]) => {
                 return html`
                   <utrecht-heading-3>${t(`tokens.fieldLabels.basis.color.${key}.label`)}</utrecht-heading-3>
@@ -83,10 +92,14 @@ export class WizardStyleGuide extends LitElement {
                       </utrecht-table-row>
                     </utrecht-table-header>
                     <utrecht-table-body>
-                      ${Object.entries(value).map(([colorKey, token]) => {
-                        try {
-                          const color = resolveColorValue(token);
-                          const cssColor = color ? legacyToModernColor.encode(color) : '';
+                      ${Object.entries(value as Record<string, unknown>)
+                        .filter(([, token]) => typeof token === 'object' && token !== null && '$value' in token)
+                        .map(([colorKey, token]) => {
+                          const color = resolveColorValue(token as ColorTokenType, this.theme.tokens);
+                          if (!color) {
+                            return nothing;
+                          }
+                          const cssColor = legacyToModernColor.encode(color);
                           return html`
                             <utrecht-table-row>
                               <utrecht-table-cell>
@@ -102,7 +115,7 @@ export class WizardStyleGuide extends LitElement {
                               </utrecht-table-cell>
                               <utrecht-table-cell>
                                 <utrecht-button
-                                  apprearance="subtle"
+                                  appearance="subtle-button"
                                   @click=${() => navigator.clipboard.writeText(cssColor)}
                                 >
                                   <utrecht-code id="${`basis.color.${key}.${colorKey}`}">
@@ -112,7 +125,7 @@ export class WizardStyleGuide extends LitElement {
                               </utrecht-table-cell>
                               <utrecht-table-cell>
                                 <utrecht-button
-                                  apprearance="subtle"
+                                  appearance="subtle-button"
                                   @click=${() => navigator.clipboard.writeText(cssColor)}
                                 >
                                   <utrecht-code>${cssColor}</utrecht-code>
@@ -120,11 +133,7 @@ export class WizardStyleGuide extends LitElement {
                               </utrecht-table-cell>
                             </utrecht-table-row>
                           `;
-                        } catch {
-                          // TODO: figure out why this is breaking
-                          return nothing;
-                        }
-                      })}
+                        })}
                     </utrecht-table-body>
                   </utrecht-table>
                 `;
@@ -155,13 +164,13 @@ export class WizardStyleGuide extends LitElement {
                 </utrecht-table-row>
               </utrecht-table-header>
               <utrecht-table-body>
-                ${Object.entries(basis['text']['font-size'])
+                ${Object.entries((basis['text'] as Record<string, unknown>)['font-size'] as Record<string, unknown>)
                   .reverse()
                   .map(([name, tokenValue]) => {
                     const value = (tokenValue as DesignToken).$value;
                     return html`
                       <utrecht-table-row>
-                        <utrecht-table-header-cell>
+                        <utrecht-table-cell>
                           <!-- TODO: replace with <clippy-html-image> when ready -->
                           <div
                             role="img"
@@ -170,22 +179,25 @@ export class WizardStyleGuide extends LitElement {
                           >
                             <utrecht-paragraph>Abc</utrecht-paragraph>
                           </div>
-                        </utrecht-table-header-cell>
-                        <utrecht-table-header-cell>
+                        </utrecht-table-cell>
+                        <utrecht-table-cell>
                           <utrecht-button
-                            apprearance="subtle"
+                            appearance="subtle-button"
                             @click=${() => navigator.clipboard.writeText(`basis.text.font-size.${name}`)}
                           >
                             <utrecht-code id="${`basis.text.font-size.${name}`}">
                               ${`basis.text.font-size.${name}`}
                             </utrecht-code>
                           </utrecht-button>
-                        </utrecht-table-header-cell>
-                        <utrecht-table-header-cell>
-                          <utrecht-button apprearance="subtle" @click=${() => navigator.clipboard.writeText(value)}>
+                        </utrecht-table-cell>
+                        <utrecht-table-cell>
+                          <utrecht-button
+                            appearance="subtle-button"
+                            @click=${() => navigator.clipboard.writeText(value)}
+                          >
                             <utrecht-code>${value}</utrecht-code>
                           </utrecht-button>
-                        </utrecht-table-header-cell>
+                        </utrecht-table-cell>
                       </utrecht-table-row>
                     `;
                   })}
@@ -213,7 +225,7 @@ export class WizardStyleGuide extends LitElement {
                   const heading = staticHtml`<${tag} class="nl-heading nl-heading--level-${level}" style="line-clamp: 3; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Wijzigingswet Vreemdelingenwet 2000, enz. (vaststelling criteria en instrumenten ter bepaling van de verantwoordelijke lidstaat voor behandeling verzoek om internationale bescherming)</${tag}>`;
                   return html`
                     <utrecht-table-row>
-                      <utrecht-table-header-cell>
+                      <utrecht-table-cell>
                         <!-- TODO: replace with <clippy-html-image> when ready -->
                         <div
                           role="img"
@@ -222,17 +234,17 @@ export class WizardStyleGuide extends LitElement {
                         >
                           ${heading}
                         </div>
-                      </utrecht-table-header-cell>
-                      <utrecht-table-header-cell>
+                      </utrecht-table-cell>
+                      <utrecht-table-cell>
                         <utrecht-button
-                          apprearance="subtle"
+                          appearance="subtle-button"
                           @click=${() => navigator.clipboard.writeText(`basis.heading.level-${level}`)}
                         >
                           <utrecht-code id="${`basis.heading.level-${level}`}" style="white-space: nowrap">
                             ${`basis.heading.level-${level}`}
                           </utrecht-code>
                         </utrecht-button>
-                      </utrecht-table-header-cell>
+                      </utrecht-table-cell>
                     </utrecht-table-row>
                   `;
                 })}
@@ -264,14 +276,14 @@ export class WizardStyleGuide extends LitElement {
                     </utrecht-table-row>
                   </utrecht-table-header>
                   <utrecht-table-body>
-                    ${Object.entries(basis['space'][space])
+                    ${Object.entries((basis['space'] as Record<string, unknown>)[space] as Record<string, unknown>)
                       .filter(([name]) => !['min', 'max'].includes(name))
                       .reverse()
                       .map(([name, tokenValue]) => {
                         const value = (tokenValue as DesignToken).$value;
                         return html`
                           <utrecht-table-row>
-                            <utrecht-table-header-cell>
+                            <utrecht-table-cell>
                               <!-- TODO: replace with <clippy-html-image> when ready -->
                               <div
                                 role="img"
@@ -282,22 +294,25 @@ export class WizardStyleGuide extends LitElement {
                                   ? value
                                   : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
                               ></div>
-                            </utrecht-table-header-cell>
-                            <utrecht-table-header-cell>
+                            </utrecht-table-cell>
+                            <utrecht-table-cell>
                               <utrecht-button
-                                apprearance="subtle"
+                                appearance="subtle-button"
                                 @click=${() => navigator.clipboard.writeText(`basis.space.${space}.${name}`)}
                               >
                                 <utrecht-code id="${`basis.space.${space}.${name}`}">
                                   ${`basis.space.${space}.${name}`}
                                 </utrecht-code>
                               </utrecht-button>
-                            </utrecht-table-header-cell>
-                            <utrecht-table-header-cell>
-                              <utrecht-button apprearance="subtle" @click=${() => navigator.clipboard.writeText(value)}>
+                            </utrecht-table-cell>
+                            <utrecht-table-cell>
+                              <utrecht-button
+                                appearance="subtle-button"
+                                @click=${() => navigator.clipboard.writeText(value)}
+                              >
                                 <utrecht-code>${value}</utrecht-code>
                               </utrecht-button>
-                            </utrecht-table-header-cell>
+                            </utrecht-table-cell>
                           </utrecht-table-row>
                         `;
                       })}
