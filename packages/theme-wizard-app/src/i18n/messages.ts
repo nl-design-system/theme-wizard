@@ -75,6 +75,17 @@ export const en = {
         title: 'Spacing',
       },
       typography: {
+        families: {
+          sample: 'Example text rendere in corresponding font-family',
+          table: {
+            header: {
+              name: 'Name',
+              sample: 'Sample',
+              value: 'Value',
+            },
+          },
+          title: 'Font families',
+        },
         headings: {
           sample: 'Example heading to show size, line height and weight',
           table: {
@@ -283,6 +294,17 @@ export const nl = {
         title: 'Witruimte',
       },
       typography: {
+        families: {
+          sample: 'Voorbeeldtekst van de juiste font-family',
+          table: {
+            header: {
+              name: 'Naam',
+              sample: 'Voorbeeld',
+              value: 'Waarde',
+            },
+          },
+          title: 'Font families',
+        },
         headings: {
           sample: 'Voorbeeldtekst met juiste lettergrootte, regelafstand en spatiering',
           table: {
