@@ -95,11 +95,8 @@ export class WizardStyleGuide extends LitElement {
               .filter(([, value]) => typeof value === 'object' && value !== null)
               .map(([key, value]) => {
                 return html`
-                  <utrecht-heading-3>${t(`tokens.fieldLabels.basis.color.${key}.label`)}</utrecht-heading-3>
-                  <utrecht-paragraph>
-                    <a href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
-                  </utrecht-paragraph>
-                  <utrecht-table>
+                  <utrecht-table aria-label=${t(`tokens.fieldLabels.basis.color.${key}.label`)}>
+                    <utrecht-table-caption>${t(`tokens.fieldLabels.basis.color.${key}.label`)}</utrecht-table-caption>
                     <utrecht-table-header>
                       <utrecht-table-row>
                         <utrecht-table-header-cell scope="col">
@@ -122,6 +119,7 @@ export class WizardStyleGuide extends LitElement {
                             return nothing;
                           }
                           const cssColor = legacyToModernColor.encode(color);
+                          const colorId = `basis.color.${key}.${colorKey}`;
                           return html`
                             <utrecht-table-row>
                               <utrecht-table-cell>
@@ -130,7 +128,7 @@ export class WizardStyleGuide extends LitElement {
                                   xmlns="http://www.w3.org/2000/svg"
                                   class="nl-color-sample"
                                   style="color: ${cssColor};"
-                                  aria-labelledby="${`basis.color.${key}.${colorKey}`}"
+                                  aria-labelledby=${colorId}
                                 >
                                   <path d="M0 0H32V32H0Z" fill="currentcolor" />
                                 </svg>
@@ -138,11 +136,9 @@ export class WizardStyleGuide extends LitElement {
                               <utrecht-table-cell>
                                 <utrecht-button
                                   appearance="subtle-button"
-                                  @click=${() => navigator.clipboard.writeText(cssColor)}
+                                  @click=${() => navigator.clipboard.writeText(colorId)}
                                 >
-                                  <utrecht-code id="${`basis.color.${key}.${colorKey}`}">
-                                    ${`basis.color.${key}.${colorKey}`}
-                                  </utrecht-code>
+                                  <utrecht-code id=${colorId}>${colorId}</utrecht-code>
                                 </utrecht-button>
                               </utrecht-table-cell>
                               <utrecht-table-cell>
@@ -158,20 +154,17 @@ export class WizardStyleGuide extends LitElement {
                         })}
                     </utrecht-table-body>
                   </utrecht-table>
+                  <utrecht-paragraph>
+                    <a href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
+                  </utrecht-paragraph>
                 `;
               })}
           </section>
 
           <section id="typography">
             <utrecht-heading-2>${t('styleGuide.sections.typography.title')}</utrecht-heading-2>
-
-            <utrecht-heading-3>${t(`styleGuide.sections.typography.sizes.title`)}</utrecht-heading-3>
-            <utrecht-paragraph>
-              <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte" target="_blank">
-                docs
-              </a>
-            </utrecht-paragraph>
-            <utrecht-table>
+            <utrecht-table aria-label=${t(`styleGuide.sections.typography.sizes.title`)}>
+              <utrecht-table-caption>${t(`styleGuide.sections.typography.sizes.title`)}</utrecht-table-caption>
               <utrecht-table-header>
                 <utrecht-table-row>
                   <utrecht-table-header-cell scope="col">
@@ -225,12 +218,14 @@ export class WizardStyleGuide extends LitElement {
                   })}
               </utrecht-table-body>
             </utrecht-table>
-
-            <utrecht-heading-3>${t(`styleGuide.sections.typography.headings.title`)}</utrecht-heading-3>
             <utrecht-paragraph>
-              <a href="https://nldesignsystem.nl/heading/" target="_blank">docs</a>
+              <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte" target="_blank">
+                docs
+              </a>
             </utrecht-paragraph>
-            <utrecht-table>
+
+            <utrecht-table aria-label=${t(`styleGuide.sections.typography.headings.title`)}>
+              <utrecht-table-caption>${t(`styleGuide.sections.typography.headings.title`)}</utrecht-table-caption>
               <utrecht-table-header>
                 <utrecht-table-row>
                   <utrecht-table-header-cell scope="col">
@@ -272,6 +267,9 @@ export class WizardStyleGuide extends LitElement {
                 })}
               </utrecht-table-body>
             </utrecht-table>
+            <utrecht-paragraph>
+              <a href="https://nldesignsystem.nl/heading/" target="_blank">docs</a>
+            </utrecht-paragraph>
           </section>
 
           <section id="spacing">
@@ -282,8 +280,8 @@ export class WizardStyleGuide extends LitElement {
 
             ${['block', 'inline', 'text', 'column', 'row'].map(
               (space) => html`
-                <utrecht-heading-3>${t(`styleGuide.sections.space.${space}.title`)}</utrecht-heading-3>
-                <utrecht-table>
+                <utrecht-table aria-label=${t(`styleGuide.sections.space.${space}.title`)}>
+                  <utrecht-table-caption>${t(`styleGuide.sections.space.${space}.title`)}</utrecht-table-caption>
                   <utrecht-table-header>
                     <utrecht-table-row>
                       <utrecht-table-header-cell scope="col">
