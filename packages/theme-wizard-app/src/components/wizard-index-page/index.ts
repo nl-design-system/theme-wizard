@@ -62,6 +62,9 @@ export class WizardIndexPage extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
+
+    document.title = t('app.title').toString();
+
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
 
     // Parse template selection from query param: ?templatePath=/group/page (dynamic)

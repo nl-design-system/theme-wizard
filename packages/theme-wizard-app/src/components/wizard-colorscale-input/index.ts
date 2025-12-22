@@ -47,7 +47,12 @@ const transformScaleToColorKeys = (scaleObject: ColorScaleObject) => {
 /**
  * Extract the resolved color value from a token
  */
-const resolveColorValue = (token: ColorTokenType): ColorValue | undefined => {
+export const resolveColorValue = (token: ColorTokenType): ColorValue | undefined => {
+  // Guard against non-object tokens
+  if (!token || typeof token !== 'object') {
+    return undefined;
+  }
+
   // Get the resolved color value from extensions or fallback to token's $value
   if (isRef(token['$value'])) {
     const resolved = token['$extensions']?.[EXTENSION_RESOLVED_AS] as ColorValue | undefined;
