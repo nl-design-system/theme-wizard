@@ -11,10 +11,14 @@ const formatNumber = (value: number | undefined, locale: string): string => {
 };
 
 export const en = {
+  app: {
+    title: 'Theme Wizard',
+  },
   back: 'Back',
   cancel: 'Cancel',
   close: 'Close',
   continue: 'Continue',
+  loading: 'Loading...',
   nav: {
     configure: 'Edit branding',
     styleGuide: 'Style guide',
@@ -27,6 +31,75 @@ export const en = {
     scrapeFailed: `Failed to scrape "{{url}}"`,
     submit: 'Analyze',
     success: 'Done! Found {{tokenCount}} tokens.',
+  },
+  styleGuide: {
+    sections: {
+      colors: {
+        table: {
+          header: {
+            name: 'Name',
+            hexCode: 'Hex code',
+            sample: 'Sample',
+          },
+        },
+        title: 'Colors',
+      },
+      space: {
+        block: {
+          sample: 'Example element shown in complementary size',
+          title: 'Block',
+        },
+        column: {
+          sample: 'Example element shown in complementary size',
+          title: 'Inline',
+        },
+        inline: {
+          sample: 'Example element shown in complementary size',
+          title: 'Inline',
+        },
+        row: {
+          sample: 'Example element shown in complementary size',
+          title: 'Inline',
+        },
+        table: {
+          header: {
+            name: 'Name',
+            sample: 'Sample',
+            value: 'Value',
+          },
+        },
+        text: {
+          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
+          title: 'Inline',
+        },
+        title: 'Spacing',
+      },
+      typography: {
+        headings: {
+          sample: 'Example heading to show size, line height and weight',
+          table: {
+            header: {
+              name: 'Name',
+              sample: 'Sample',
+            },
+          },
+          title: 'Headings',
+        },
+        sizes: {
+          sample: 'Example text shown in one font size to demonstrate size',
+          table: {
+            header: {
+              name: 'Name',
+              sample: 'Sample',
+              value: 'Value',
+            },
+          },
+          title: 'Font sizes',
+        },
+        title: 'Typography',
+      },
+    },
+    title: 'Style guide',
   },
   tokenDownloadDialog: {
     body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
@@ -146,10 +219,14 @@ export const en = {
 };
 
 export const nl = {
+  app: {
+    title: 'Theme Wizard',
+  },
   back: 'Terug',
   cancel: 'Annuleren',
   close: 'Sluiten',
   continue: 'Doorgaan',
+  loading: 'Laden...',
   nav: {
     configure: 'Huisstijl bewerken',
     styleGuide: 'Stijlgids',
@@ -162,6 +239,75 @@ export const nl = {
     scrapeFailed: `Kan "{{url}}" niet analyseren`,
     submit: 'Analyseer',
     success: 'Gereed, {{tokenCount}} tokens gevonden',
+  },
+  styleGuide: {
+    sections: {
+      colors: {
+        table: {
+          header: {
+            name: 'Naam',
+            hexCode: 'Hex code',
+            sample: 'Voorbeeld',
+          },
+        },
+        title: 'Kleuren',
+      },
+      space: {
+        block: {
+          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
+          title: 'Block',
+        },
+        column: {
+          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
+          title: 'Inline',
+        },
+        inline: {
+          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
+          title: 'Inline',
+        },
+        row: {
+          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
+          title: 'Inline',
+        },
+        table: {
+          header: {
+            name: 'Naam',
+            sample: 'Voorbeeld',
+            value: 'Waarde',
+          },
+        },
+        text: {
+          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
+          title: 'Inline',
+        },
+        title: 'Witruimte',
+      },
+      typography: {
+        headings: {
+          sample: 'Voorbeeldtekst met juiste lettergrootte, regelafstand en spatiering',
+          table: {
+            header: {
+              name: 'Naam',
+              sample: 'Voorbeeld',
+            },
+          },
+          title: 'Headings',
+        },
+        sizes: {
+          sample: 'Voorbeeldtekst in een font-size ter demonstratie van de grootte',
+          table: {
+            header: {
+              name: 'Naam',
+              sample: 'Voorbeeld',
+              value: 'Waarde',
+            },
+          },
+          title: 'Lettergroottes',
+        },
+        title: 'Typografie',
+      },
+    },
+    title: 'Stijlgids',
   },
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',
