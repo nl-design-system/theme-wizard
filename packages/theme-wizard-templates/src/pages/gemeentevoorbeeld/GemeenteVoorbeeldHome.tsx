@@ -93,7 +93,7 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) 
       />
       <PageContent>
         <section className="section">
-          <Row gap="var(--basis-space-column-xl)" justify="space-between">
+          <Row rowGap="var(--basis-space-column-xl)" columnGap={'var(--basis-space-column-xl)'} justify="space-between">
             <Column cols={9}>
               <QuickTasks tasks={quickTasks} />
             </Column>
@@ -204,8 +204,27 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) 
       <PageFooter>
         <PageContent>
           <div className="section">
-            <Heading3>Footer</Heading3>
-            <Paragraph>Page Footer Area</Paragraph>
+            <Row rowGap={'var(--basis-space-column-xl)'} columnGap={'var(--basis-space-column-xl)'}>
+              <Column cols={6}>
+                <Heading3>Footer</Heading3>
+              </Column>
+              <Column cols={3}>
+                <LinkList>
+                  <LinkListLink href="">Contact</LinkListLink>
+                  <LinkListLink href="">RSS</LinkListLink>
+                </LinkList>
+              </Column>
+              <Column cols={3}>
+                <Row justify="flex-end">
+                  <LinkList>
+                    <LinkListLink href="">Bescherming persoonsgegevens</LinkListLink>
+                    <LinkListLink href="">Gebruikersvoorwaarden</LinkListLink>
+                    <LinkListLink href="">Proclaimer</LinkListLink>
+                    <LinkListLink href="">Cookieverklaring</LinkListLink>
+                  </LinkList>
+                </Row>
+              </Column>
+            </Row>
           </div>
         </PageContent>
       </PageFooter>
