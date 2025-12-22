@@ -1,25 +1,47 @@
 ---
 import '@nl-design-system-unstable/start-design-tokens/dist/theme.css';
 import '@utrecht/component-library-css';
-import './styles.css';
 import ClientInit from '../components/ClientInit.astro';
 
 export interface Props {
-  title?: string;
-  description?: string;
+  isCollage?: boolean;
 }
 
-const { title = 'Gemeente Voorbeeld', description = 'Gemeente Voorbeeld website' } = Astro.props;
+const { title = 'Gemeente Voorbeeld', description = 'Gemeente Voorbeeld website', isCollage = false } = Astro.props;
+
+// Check if we're in standalone mode (defined in astro.config.mjs)
+const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__ === true;
 ---
 
 <!doctype html>
-<html lang="nl-NL" class="utrecht-page-layout utrecht-root start-theme">
+<html lang="nl" class="utrecht-page-layout utrecht-root start-theme">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {isCollage && (
+      <style>
+        @media print {
+          @page {
+            size: landscape;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
+          }
+        }
+      </style>
+      )}
+      {isStandalone && (
+        <style>
+          html {
+            scroll-padding-top: calc(var(--basis-space-block-md) * 2 + 3rem);
+          }
+          body {
+            padding-top: calc(var(--basis-space-block-md) * 2 + 3rem);
+          }
+        </style>
+      )}
     <title>{title}</title>
   </head>
   <body class="utrecht-page-body">
