@@ -4,7 +4,9 @@ import '@nl-design-system-community/theme-wizard-app/theme.css';
 ---
 
 <script>
-  import('@utrecht/web-component-library-stencil/loader/index.js').then(({ defineCustomElements }) => {
-    defineCustomElements();
-  });
+  if (typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__) {
+    import('@utrecht/web-component-library-stencil/loader/index.js').then(({ defineCustomElements }) => {
+      defineCustomElements();
+    });
+  }
 </script>
