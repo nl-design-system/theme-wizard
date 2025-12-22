@@ -1,9 +1,9 @@
 ---
-import VNGLayout from '../../layouts/VNGLayout.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
 export const detail = { name: 'Overzichtspagina', value: 'overview', module: 'Mijn Omgeving' };
 ---
 
-<VNGLayout>
+<PageLayout>
   <main id="main" slot="content">
     <utrecht-alert type="info">
       <utrecht-icon-informatie slot="icon"></utrecht-icon-informatie>
@@ -53,4 +53,4 @@ export const detail = { name: 'Overzichtspagina', value: 'overview', module: 'Mi
       </div>
     </section>
   </main>
-</VNGLayout>
+</PageLayout>
