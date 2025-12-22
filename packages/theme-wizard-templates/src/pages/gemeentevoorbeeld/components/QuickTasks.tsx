@@ -26,9 +26,9 @@ const ICON_COMPONENTS: Record<IconName, ReactElement> = {
   paspoort: <UtrechtIconPaspoort />,
   verhuizen: <UtrechtIconVerhuizen />,
   werken: <UtrechtIconWerken />,
-} as const;
+};
 
-const renderIcon = (iconName: string): ReactElement | null => {
+const renderIcon = (iconName: string): JSX.Element | null => {
   const icon = ICON_COMPONENTS[iconName as IconName];
   return icon ?? null;
 };
