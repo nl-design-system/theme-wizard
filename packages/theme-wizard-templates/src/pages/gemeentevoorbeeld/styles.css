@@ -1,0 +1,53 @@
+/* Gemeentevoorbeeld specific styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  max-inline-size: var(--utrecht-section-max-inline-size);
+  margin-inline: auto;
+  margin-block-start: 2rem;
+  margin-block-end: 2rem;
+}
+
+.section--secondary {
+  background-color: var(--utrecht-page-background-secondary);
+}
+
+nav {
+  display: block;
+  height: 100%;
+}
+
+.voorbeeld__link--task {
+  background-color: var(--basis-color-accent-1-bg-default);
+}
+
+.voorbeeld__link--news {
+  outline: 2px solid var(--basis-color-accent-1-bg-default);
+  outline-style: solid;
+}
+
+.voorbeeld__link,
+.voorbeeld__card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--basis-space-inline-3xl);
+  row-gap: var(--basis-space-row-xl);
+}
+
+.voorbeeld__card {
+  background-color: var(--basis-color-accent-1-bg-subtle);
+}
+
+.page-header__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--basis-space-inline-md);
+}

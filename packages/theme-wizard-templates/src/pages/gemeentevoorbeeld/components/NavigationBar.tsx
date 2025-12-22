@@ -22,7 +22,7 @@ const NavigationBar: FC<NavigationBarProps> = ({ currentPath, items = DEFAULT_IT
   <NavBar>
     <NavList>
       {items.map(({ href, label }) => (
-        <NavListLink key={href} href={href} aria-current={currentPath === href ? 'page' : undefined}>
+        <NavListLink key={`${href}-${label}`} href={href} aria-current={currentPath === href ? 'page' : undefined}>
           {label}
         </NavListLink>
       ))}
