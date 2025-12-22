@@ -18,6 +18,7 @@ test('page uses values as stored by the configuration page', async ({ page }) =>
   await accent1Input.fill('#ff0000');
   await accent1Input.blur();
 
+<<<<<<< HEAD
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');
   await expect(page.getByRole('button', { name: '#ff0000' })).toBeVisible();
@@ -56,6 +57,46 @@ test.describe('interaction tests', () => {
     test('Token value can be copied to clipboard', async ({ page }) => {
       const tokenValue = '#fbfcfd';
       await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: tokenValue }).click();
+||||||| parent of 4ec4a92 (add PW tests)
+=======
+  // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.bg-document
+  await page.goto('/style-guide');
+  await expect(page.getByRole('button', { name: '#fff6f1' })).toBeVisible();
+});
+
+test.describe('interaction tests', () => {
+  test.beforeEach(async ({ context, page }) => {
+    // Enable clipboard access to we can test working of copy-to-clipboard buttons
+    await context.grantPermissions(['clipboard-write', 'clipboard-read']);
+    await page.goto('/style-guide');
+  });
+
+  test.describe('colors', () => {
+    test('Shows a colors section', async ({ page }) => {
+      const heading = page.getByRole('heading', { name: 'Kleuren', level: 2 });
+      await expect(heading).toBeVisible();
+
+      const table = page.getByRole('table', { name: 'Accent 1' });
+      await expect(table).toBeVisible();
+
+      const rows = table.getByRole('row');
+      expect(await rows.all()).toHaveLength(15); // 14 colors + 1 table header row
+    });
+
+    test('Token name can be copied to clipboard', async ({ page }) => {
+      const tokenName = 'basis.color.accent-1.bg-hover';
+      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: tokenName }).click();
+      const clipboardText = await page.evaluate(async () => {
+        return await navigator.clipboard.readText();
+      });
+      expect(clipboardText).toBe(tokenName);
+    });
+
+    test('Token value can be copied to clipboard', async ({ page }) => {
+      // highlight.bg-active because only one button with this value exists
+      const tokenValue = '#ffe57c';
+      await page.getByRole('table', { name: 'Markering' }).getByRole('button', { name: tokenValue }).click();
+>>>>>>> 4ec4a92 (add PW tests)
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
       });
