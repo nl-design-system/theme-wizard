@@ -163,6 +163,63 @@ export class WizardStyleGuide extends LitElement {
 
           <section id="typography">
             <utrecht-heading-2>${t('styleGuide.sections.typography.title')}</utrecht-heading-2>
+
+            <utrecht-table aria-label=${t(`styleGuide.sections.typography.families.title`)}>
+              <utrecht-table-caption>${t(`styleGuide.sections.typography.families.title`)}</utrecht-table-caption>
+              <utrecht-table-header>
+                <utrecht-table-row>
+                  <utrecht-table-header-cell scope="col">
+                    ${t('styleGuide.sections.typography.families.table.header.sample')}
+                  </utrecht-table-header-cell>
+                  <utrecht-table-header-cell scope="col">
+                    ${t('styleGuide.sections.typography.families.table.header.name')}
+                  </utrecht-table-header-cell>
+                  <utrecht-table-header-cell scope="col">
+                    ${t('styleGuide.sections.typography.families.table.header.value')}
+                  </utrecht-table-header-cell>
+                </utrecht-table-row>
+              </utrecht-table-header>
+              <utrecht-table-body>
+                ${Object.entries(text['font-family'] as Record<string, unknown>).map(([name, tokenValue]) => {
+                  const value = (tokenValue as DesignToken).$value;
+                  return html`
+                    <utrecht-table-row>
+                      <utrecht-table-cell>
+                        <!-- TODO: replace with <clippy-html-image> when ready -->
+                        <div
+                          role="img"
+                          aria-label=${t('styleGuide.sections.typography.families.sample')}
+                          style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${value}; cursor: default; forced-color-adjust: none; user-select: none;"
+                        >
+                          <utrecht-paragraph>Abc</utrecht-paragraph>
+                        </div>
+                      </utrecht-table-cell>
+                      <utrecht-table-cell>
+                        <utrecht-button
+                          appearance="subtle-button"
+                          @click=${() => navigator.clipboard.writeText(`basis.text.font-family.${name}`)}
+                        >
+                          <utrecht-code id="${`basis.text.font-family.${name}`}">
+                            ${`basis.text.font-family.${name}`}
+                          </utrecht-code>
+                        </utrecht-button>
+                      </utrecht-table-cell>
+                      <utrecht-table-cell>
+                        <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
+                          <utrecht-code>${value}</utrecht-code>
+                        </utrecht-button>
+                      </utrecht-table-cell>
+                    </utrecht-table-row>
+                  `;
+                })}
+              </utrecht-table-body>
+            </utrecht-table>
+            <utrecht-paragraph>
+              <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype" target="_blank">
+                docs
+              </a>
+            </utrecht-paragraph>
+
             <utrecht-table aria-label=${t(`styleGuide.sections.typography.sizes.title`)}>
               <utrecht-table-caption>${t(`styleGuide.sections.typography.sizes.title`)}</utrecht-table-caption>
               <utrecht-table-header>
