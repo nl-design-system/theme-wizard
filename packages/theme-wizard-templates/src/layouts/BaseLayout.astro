@@ -13,7 +13,7 @@ const { title = 'Gemeente Voorbeeld', description = 'Gemeente Voorbeeld website'
 ---
 
 <!doctype html>
-<html lang="nl-NL" class="start-theme">
+<html lang="nl-NL" class="utrecht-page-layout utrecht-root start-theme">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -22,9 +22,8 @@ const { title = 'Gemeente Voorbeeld', description = 'Gemeente Voorbeeld website'
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
-  <body class="utrecht-body">
+  <body class="utrecht-page-body">
     <slot />
-
     <ClientInit />
   </body>
 </html>
