@@ -91,7 +91,7 @@ export class WizardStyleGuide extends LitElement {
           <section id="colors">
             <utrecht-heading-2>${t('styleGuide.sections.colors.title')}</utrecht-heading-2>
 
-            ${Object.entries(colors as Record<string, unknown>)
+            ${Object.entries(colors)
               .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
               .filter(([, value]) => typeof value === 'object' && value !== null)
               .map(([key, value]) => {
