@@ -75,6 +75,7 @@
   .row {
     margin: 0;
     align-items: stretch;
+    justify-content: flex-start !important;
   }
 
   .row > .col {
