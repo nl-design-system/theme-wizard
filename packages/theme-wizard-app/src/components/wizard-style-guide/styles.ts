@@ -2,9 +2,9 @@ import { css } from 'lit';
 
 export default css`
   .wizard-styleguide__main {
+    display: grid;
     padding-block: var(--basis-space-block-xl);
     padding-inline: var(--basis-space-inline-xl);
-    display: grid;
     row-gap: var(--basis-space-row-5xl);
   }
 
@@ -20,13 +20,13 @@ export default css`
   }
 
   .wizard-styleguide__nav-item {
-    display: block;
     border-inline-start: 4px solid transparent;
-    padding-inline: var(--basis-space-inline-2xl);
-    padding-block: var(--basis-space-block-xl);
-    text-decoration: none;
-    font-weight: var(--basis-text-font-weight-bold);
+    display: block;
     font-size: var(--basis-text-font-size-lg);
+    font-weight: var(--basis-text-font-weight-bold);
+    padding-block: var(--basis-space-block-xl);
+    padding-inline: var(--basis-space-inline-2xl);
+    text-decoration: none;
 
     &:hover,
     &:focus-visible {
