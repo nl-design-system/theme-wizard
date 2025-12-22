@@ -51,7 +51,7 @@ export const en = {
         },
         column: {
           sample: 'Example element shown in complementary size',
-          title: 'Inline',
+          title: 'Column',
         },
         inline: {
           sample: 'Example element shown in complementary size',
@@ -59,7 +59,7 @@ export const en = {
         },
         row: {
           sample: 'Example element shown in complementary size',
-          title: 'Inline',
+          title: 'Row',
         },
         table: {
           header: {
@@ -70,7 +70,7 @@ export const en = {
         },
         text: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Inline',
+          title: 'Text',
         },
         title: 'Spacing',
       },
@@ -259,7 +259,7 @@ export const nl = {
         },
         column: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Inline',
+          title: 'Column',
         },
         inline: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
@@ -267,7 +267,7 @@ export const nl = {
         },
         row: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Inline',
+          title: 'Row',
         },
         table: {
           header: {
@@ -278,7 +278,7 @@ export const nl = {
         },
         text: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Inline',
+          title: 'Text',
         },
         title: 'Witruimte',
       },
