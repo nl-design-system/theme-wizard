@@ -51,7 +51,7 @@ export const en = {
         },
         column: {
           sample: 'Example element shown in complementary size',
-          title: 'Column',
+          title: 'Inline',
         },
         inline: {
           sample: 'Example element shown in complementary size',
@@ -59,7 +59,7 @@ export const en = {
         },
         row: {
           sample: 'Example element shown in complementary size',
-          title: 'Row',
+          title: 'Inline',
         },
         table: {
           header: {
@@ -70,22 +70,11 @@ export const en = {
         },
         text: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Text',
+          title: 'Inline',
         },
         title: 'Spacing',
       },
       typography: {
-        families: {
-          sample: 'Example text rendere in corresponding font-family',
-          table: {
-            header: {
-              name: 'Name',
-              sample: 'Sample',
-              value: 'Value',
-            },
-          },
-          title: 'Font families',
-        },
         headings: {
           sample: 'Example heading to show size, line height and weight',
           table: {
@@ -270,7 +259,7 @@ export const nl = {
         },
         column: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Column',
+          title: 'Inline',
         },
         inline: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
@@ -278,7 +267,7 @@ export const nl = {
         },
         row: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Row',
+          title: 'Inline',
         },
         table: {
           header: {
@@ -289,22 +278,11 @@ export const nl = {
         },
         text: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
-          title: 'Text',
+          title: 'Inline',
         },
         title: 'Witruimte',
       },
       typography: {
-        families: {
-          sample: 'Voorbeeldtekst van de juiste font-family',
-          table: {
-            header: {
-              name: 'Naam',
-              sample: 'Voorbeeld',
-              value: 'Waarde',
-            },
-          },
-          title: 'Font families',
-        },
         headings: {
           sample: 'Voorbeeldtekst met juiste lettergrootte, regelafstand en spatiering',
           table: {
