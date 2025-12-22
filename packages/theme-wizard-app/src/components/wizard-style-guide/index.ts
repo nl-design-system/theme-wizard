@@ -37,29 +37,51 @@ export class WizardStyleGuide extends LitElement {
     document.title = t('styleGuide.title').toString();
   }
 
+  override firstUpdated(): void {
+    // Scroll to hash on page load
+    const hash = window.location.hash;
+    if (hash) {
+      this.scrollToHash(hash);
+    }
+  }
+
+  private scrollToHash(hash: string): void {
+    const target = this.shadowRoot?.querySelector(hash) || document.querySelector(hash);
+    if (target) {
+      // Use requestAnimationFrame to ensure element is rendered
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  }
+
+  private handleNavClick(event: Event): void {
+    const link = (event.target as Element).closest('a[href^="#"]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    event.preventDefault();
+    window.location.hash = href;
+    this.scrollToHash(href);
+  }
+
   override render() {
     if (!this.theme) {
       return t('loading');
     }
 
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
-    if (typeof basis !== 'object' || basis === null) {
-      return t('loading');
-    }
-
-    const colors = basis['color'];
-    if (typeof colors !== 'object' || colors === null) {
-      return t('loading');
-    }
+    const colors = basis['color'] as Record<string, unknown>;
+    const text = basis['text'] as Record<string, unknown>;
 
     return html`
       <wizard-layout>
-        <nav slot="sidebar">
-          <a href="#colors">${t('styleGuide.sections.colors.title')}</a>
-          <br />
-          <a href="#typography">${t('styleGuide.sections.typography.title')}</a>
-          <br />
-          <a href="#spacing">${t('styleGuide.sections.space.title')}</a>
+        <nav slot="sidebar" class="wizard-styleguide__nav" @click=${this.handleNavClick}>
+          <a class="wizard-styleguide__nav-item" href="#colors">${t('styleGuide.sections.colors.title')}</a>
+          <a class="wizard-styleguide__nav-item" href="#typography">${t('styleGuide.sections.typography.title')}</a>
+          <a class="wizard-styleguide__nav-item" href="#spacing">${t('styleGuide.sections.space.title')}</a>
         </nav>
 
         <div slot="main" class="wizard-styleguide__main">
@@ -68,7 +90,7 @@ export class WizardStyleGuide extends LitElement {
           <section id="colors">
             <utrecht-heading-2>${t('styleGuide.sections.colors.title')}</utrecht-heading-2>
 
-            ${Object.entries(colors as Record<string, unknown>)
+            ${Object.entries(colors)
               .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
               .filter(([, value]) => typeof value === 'object' && value !== null)
               .map(([key, value]) => {
@@ -164,7 +186,7 @@ export class WizardStyleGuide extends LitElement {
                 </utrecht-table-row>
               </utrecht-table-header>
               <utrecht-table-body>
-                ${Object.entries((basis['text'] as Record<string, unknown>)['font-size'] as Record<string, unknown>)
+                ${Object.entries(text['font-size'] as Record<string, unknown>)
                   .reverse()
                   .map(([name, tokenValue]) => {
                     const value = (tokenValue as DesignToken).$value;
