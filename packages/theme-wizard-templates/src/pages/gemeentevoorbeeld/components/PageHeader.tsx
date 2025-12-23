@@ -1,5 +1,6 @@
 import type { FC } from 'react';
-import { Heading1, Link, PageContent } from '@utrecht/component-library-react/dist/css-module';
+import { Link, PageContent } from '@utrecht/component-library-react/dist/css-module';
+import logo from '../../../assets/logo.svg';
 import { Column, Row } from './Layout';
 
 export interface PageHeaderProps {
@@ -17,7 +18,9 @@ const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, tit
     <div className="section">
       <Row align="center" justify="space-between">
         <Column cols={6}>
-          <Heading1>{title}</Heading1>
+          <Link href="/" aria-label="home / logo">
+            <img src={logo.src} alt="Gemeente Voorbeeld" />
+          </Link>
         </Column>
 
         <Column cols={6} className="page-header__actions">
