@@ -13,6 +13,9 @@
   --utrecht-section-max-inline-size: calc(670px * 1.6);
   --utrecht-page-background-secondary: var(--basis-color-default-bg-subtle);
   --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
+
+  --voorbeeld-card-bg: var(--basis-color-default-bg-subtle);
+  --voorbeeld-card-outline: var(--basis-color-default-border-subtle);
 }
 
 * {
@@ -78,18 +81,16 @@ nav {
   height: 100%;
 }
 
-.voorbeeld__link--news {
-  outline: 2px solid var(--basis-color-accent-1-bg-default);
-  outline-style: solid;
-}
-
 .voorbeeld__link,
 .voorbeeld__card {
+  background-color: var(--voorbeeld-card-bg);
   display: flex;
   block-size: 100% !important;
   flex-direction: column;
   padding: var(--basis-space-inline-3xl) !important;
   row-gap: var(--basis-space-row-xl);
+  outline: 2px solid var(--voorbeeld-card-outline);
+  outline-style: solid;
 }
 
 .page-header__actions {
