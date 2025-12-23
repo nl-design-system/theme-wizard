@@ -14,25 +14,26 @@ export const NEWS_ITEMS: NewsItem[] = [
     body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
     date: 'donderdag 15 februari 2024',
     href: '',
+
     title: 'Wijkraadsleden officieel beëdigd',
   },
   {
-    body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
+    body: 'Alle huurders in Lenteveld die een woning, appartement of kamer huren van een particuliere verhuurder kunnen gratis gebruikmaken van de hulp van het Huurteam.',
     date: 'donderdag 15 februari 2024',
     href: '',
-    title: 'Wijkraadsleden officieel beëdigd',
+    title: 'Huurteam geeft huurders gratis hulp',
   },
   {
-    body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
+    body: 'De medewerkers van de gemeente doen van alles in de stad. Sommige beroepen zijn bekend, andere minder.',
     date: 'donderdag 15 februari 2024',
     href: '',
-    title: 'Wijkraadsleden officieel beëdigd',
+    title: 'Bijzonder beroep: specialist maatschappelijke ontwikkeling',
   },
   {
-    body: 'Burgemeester Pos heeft 273 wijkraadsleden officieel beëdigd. Ze hebben allemaal de eed afgelegd of een belofte gedaan op het stadhuis van gemeente Voorbeeld.',
+    body: 'Na het succes van de pilot vorig jaar, gaat de TegelTaxi weer in gemeente Voorbeeld rijden!',
     date: 'donderdag 15 februari 2024',
     href: '',
-    title: 'Wijkraadsleden officieel beëdigd',
+    title: 'De Tegeltaxi gaat weer rijden!',
   },
 ];
 
