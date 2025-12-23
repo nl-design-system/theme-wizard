@@ -1,8 +1,8 @@
-import type { FC } from 'react';
 import { Card } from '@amsterdam/design-system-react';
 import { Icon } from '@utrecht/component-library-react';
 import { Heading4, Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconChevronRight, UtrechtIconKalender } from '@utrecht/web-component-library-react';
+import React, { type FC } from 'react';
 import type { NewsItem } from '../types';
 import { Column, Row } from './Layout';
 

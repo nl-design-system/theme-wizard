@@ -1,10 +1,9 @@
-import type { FC } from 'react';
 import { Link, PageContent } from '@utrecht/component-library-react/dist/css-module';
+import React, { type FC } from 'react';
 import logo from '../../../assets/logo.svg';
 import { Column, Row } from './Layout';
 
 export interface PageHeaderProps {
-  title?: string;
   actions?: Array<{ href: string; label: string }>;
 }
 
@@ -13,7 +12,7 @@ const DEFAULT_ACTIONS = [
   { href: '#', label: 'Mijn Omgeving' },
 ] as const;
 
-const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, title = 'Gemeente Voorbeeld' }) => (
+const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS }) => (
   <PageContent>
     <div className="section">
       <Row align="center" justify="space-between">

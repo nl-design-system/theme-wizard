@@ -157,6 +157,9 @@ importers:
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
+      '@nl-design-system-community/theme-wizard-templates':
+        specifier: workspace:*
+        version: link:../theme-wizard-templates
       '@nl-design-system/tsconfig':
         specifier: 1.0.5
         version: 1.0.5(typescript@5.9.3)

@@ -1,5 +1,5 @@
-import type { FC, ReactNode } from 'react';
 import { Link, LinkList, LinkListLink, PageContent } from '@utrecht/component-library-react/dist/css-module';
+import React, { type FC, type ReactNode } from 'react';
 import logo from '../../../assets/logo.svg';
 import { Column, Row } from './Layout';
 

@@ -1,5 +1,5 @@
-import type { FC } from 'react';
 import { NavBar, NavList, NavListLink } from '@utrecht/component-library-react';
+import React, { type FC } from 'react';
 
 export interface NavigationItem {
   href: string;

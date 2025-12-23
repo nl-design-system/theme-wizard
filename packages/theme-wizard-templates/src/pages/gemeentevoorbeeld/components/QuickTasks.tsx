@@ -1,4 +1,3 @@
-import type { FC, ReactElement } from 'react';
 import { Card } from '@amsterdam/design-system-react';
 import { Icon } from '@utrecht/component-library-react';
 import { Heading4 } from '@utrecht/component-library-react/dist/css-module';
@@ -10,6 +9,7 @@ import {
   UtrechtIconNummerbord,
   UtrechtIconAfvalScheiden,
 } from '@utrecht/web-component-library-react';
+import React, { type FC, type ReactElement } from 'react';
 import type { QuickTask } from '../types';
 import { Column, Row } from './Layout';
 
