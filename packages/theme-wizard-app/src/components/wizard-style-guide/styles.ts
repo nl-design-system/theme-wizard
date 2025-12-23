@@ -21,6 +21,7 @@ export default css`
 
   .wizard-styleguide__nav-item {
     border-inline-start: 4px solid transparent;
+    color: var(--basis-color-accent-1-color-default);
     display: block;
     font-size: var(--basis-text-font-size-lg);
     font-weight: var(--basis-text-font-weight-bold);
