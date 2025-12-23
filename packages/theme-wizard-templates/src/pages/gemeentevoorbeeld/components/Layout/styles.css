@@ -1,6 +1,7 @@
 .row {
   margin-inline: calc(var(--row-column-gap, 0px) / -2);
   row-gap: var(--row-row-gap, 0px);
+  inline-size: calc(100% + var(--row-column-gap, 0px));
 }
 
 .row--full-height {
@@ -74,6 +75,7 @@
 @media (max-width: 768px) {
   .row {
     margin: 0;
+    inline-size: 100%;
     align-items: stretch;
     justify-content: flex-start !important;
   }
