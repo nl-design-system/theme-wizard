@@ -1,4 +1,5 @@
-import { Icon, Link, PageContent } from '@utrecht/component-library-react/dist/css-module';
+import { Link } from '@nl-design-system-candidate/link-react/css';
+import { Icon, PageContent, Image } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAlleen } from '@utrecht/web-component-library-react';
 import React, { type FC, type ReactNode } from 'react';
 import logo from '../../../assets/logo.svg';
@@ -21,8 +22,8 @@ const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, chi
         {children ?? (
           <>
             <Column cols={6}>
-              <Link href="/" aria-label="home / logo">
-                <img src={typeof logo === 'string' ? logo : logo.src} alt="Gemeente Voorbeeld" />
+              <Link href="/">
+                <Image src={typeof logo === 'string' ? logo : logo.src} alt="Gemeente Voorbeeld" />
               </Link>
             </Column>
 

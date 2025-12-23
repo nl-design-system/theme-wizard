@@ -1,3 +1,4 @@
+import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { PageContent, PageFooter, PageHeader } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC } from 'react';
 import { ACCORDION_SECTIONS } from './accordionSections';
@@ -23,29 +24,33 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) 
     </PageHeader>
 
     <NavigationBar currentPath={currentPath} items={NAVIGATION_ITEMS} />
+    <main>
+      <Heading id="page-title" level={1} className="section" appearance="level-1">
+        Gemeente Voorbeeld
+      </Heading>
+      <PageContent>
+        <section className="section" aria-labelledby="page-title">
+          <Row
+            align="stretch"
+            columnGap="var(--basis-space-column-xl)"
+            rowGap="var(--basis-space-column-xl)"
+            justify="space-between"
+          >
+            <Column cols={9}>
+              <QuickTasks tasks={QUICK_TASKS} />
+            </Column>
 
-    <PageContent>
-      <section className="section">
-        <Row
-          align="stretch"
-          columnGap="var(--basis-space-column-xl)"
-          rowGap="var(--basis-space-column-xl)"
-          justify="space-between"
-        >
-          <Column cols={9}>
-            <QuickTasks tasks={QUICK_TASKS} />
-          </Column>
+            <Column cols={3}>
+              <OpeningHoursCard />
+            </Column>
+          </Row>
+        </section>
+      </PageContent>
 
-          <Column cols={3}>
-            <OpeningHoursCard />
-          </Column>
-        </Row>
-      </section>
-    </PageContent>
+      <SelfServiceSection accordionSections={ACCORDION_SECTIONS} />
 
-    <SelfServiceSection accordionSections={ACCORDION_SECTIONS} />
-
-    <NewsSection cards={NEWS_ITEMS} />
+      <NewsSection cards={NEWS_ITEMS} />
+    </main>
 
     <PageFooter>
       <PageFooterSection />
