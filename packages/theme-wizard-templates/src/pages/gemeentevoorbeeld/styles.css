@@ -84,9 +84,11 @@ nav {
 .voorbeeld__link,
 .voorbeeld__card {
   background-color: var(--voorbeeld-card-bg);
+  align-items: start !important;
   display: flex;
   block-size: 100% !important;
   flex-direction: column;
+  justify-content: space-between;
   padding: var(--basis-space-inline-3xl) !important;
   row-gap: var(--basis-space-row-xl);
   outline: 2px solid var(--voorbeeld-card-outline);
