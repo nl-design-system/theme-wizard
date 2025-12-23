@@ -15,6 +15,7 @@ import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { resolveColorValue } from '../wizard-colorscale-input';
 import styles from './styles';
+import '@nl-design-system-community/clippy-components/clippy-html-image';
 
 const tag = 'wizard-style-guide';
 
@@ -185,14 +186,10 @@ export class WizardStyleGuide extends LitElement {
                   return html`
                     <utrecht-table-row>
                       <utrecht-table-cell>
-                        <!-- TODO: replace with <clippy-html-image> when ready -->
-                        <div
-                          role="img"
-                          aria-label=${t('styleGuide.sections.typography.families.sample')}
-                          style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${value}; cursor: default; forced-color-adjust: none; user-select: none;"
-                        >
-                          <utrecht-paragraph>Abc</utrecht-paragraph>
-                        </div>
+                        <clippy-html-image>
+                          <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
+                          <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${value};">Abc</utrecht-paragraph>
+                        <clippy-html-image>
                       </utrecht-table-cell>
                       <utrecht-table-cell>
                         <utrecht-button
@@ -243,14 +240,10 @@ export class WizardStyleGuide extends LitElement {
                     return html`
                       <utrecht-table-row>
                         <utrecht-table-cell>
-                          <!-- TODO: replace with <clippy-html-image> when ready -->
-                          <div
-                            role="img"
-                            aria-label=${t('styleGuide.sections.typography.sizes.sample')}
-                            style="--utrecht-paragraph-font-size: ${value}; cursor: default; forced-color-adjust: none; user-select: none;"
-                          >
-                            <utrecht-paragraph>Abc</utrecht-paragraph>
-                          </div>
+                          <clippy-html-image>
+                            <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
+                            <utrecht-paragraph style="--utrecht-paragraph-font-size: ${value};">Abc</utrecht-paragraph>
+                          </clippy-html-image>
                         </utrecht-table-cell>
                         <utrecht-table-cell>
                           <utrecht-button
@@ -300,14 +293,10 @@ export class WizardStyleGuide extends LitElement {
                   return html`
                     <utrecht-table-row>
                       <utrecht-table-cell>
-                        <!-- TODO: replace with <clippy-html-image> when ready -->
-                        <div
-                          role="img"
-                          aria-label=${t('styleGuide.sections.typography.headings.sample')}
-                          style="cursor: default; forced-color-adjust: none; user-select: none;"
-                        >
+                        <clippy-html-image>
+                          <span slot="label">${t('styleGuide.sections.typography.headings.sample')}</span>
                           ${heading}
-                        </div>
+                        </clippy-html-image>
                       </utrecht-table-cell>
                       <utrecht-table-cell>
                         <utrecht-button
@@ -361,16 +350,16 @@ export class WizardStyleGuide extends LitElement {
                         return html`
                           <utrecht-table-row>
                             <utrecht-table-cell>
-                              <!-- TODO: replace with <clippy-html-image> when ready -->
-                              <div
-                                role="img"
-                                aria-label=${t(`styleGuide.sections.space.${space}.sample`)}
-                                style="block-size: ${['block', 'row'].includes(space)
-                                  ? value
-                                  : '2rem'}; inline-size: ${['inline', 'column', 'text'].includes(space)
-                                  ? value
-                                  : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
-                              ></div>
+                              <clippy-html-image>
+                                <span slot="label">${t(`styleGuide.sections.space.${space}.sample`)}</span>
+                                <div
+                                  style="block-size: ${['block', 'row'].includes(space)
+                                    ? value
+                                    : '2rem'}; inline-size: ${['inline', 'column', 'text'].includes(space)
+                                    ? value
+                                    : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
+                                ></div>
+                              </clippy-html-image>
                             </utrecht-table-cell>
                             <utrecht-table-cell>
                               <utrecht-button
