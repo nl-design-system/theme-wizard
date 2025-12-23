@@ -9,8 +9,8 @@ import {
   UtrechtIconAfvalScheiden,
 } from '@utrecht/web-component-library-react';
 import React, { type FC, type ReactElement } from 'react';
-import type { QuickTask } from '../types';
-import { Column, Row } from './Layout';
+import type { QuickTask } from './types';
+import { Column, Row } from '../Layout';
 
 export interface QuickTasksProps {
   tasks: QuickTask[];

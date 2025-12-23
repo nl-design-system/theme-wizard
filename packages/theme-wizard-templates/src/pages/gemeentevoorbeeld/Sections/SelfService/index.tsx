@@ -1,17 +1,15 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { AccordionProvider, ButtonLink, PageContent } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC } from 'react';
-import type { AccordionSection } from '../types';
-import { Row } from './Layout';
+import { ACCORDION_SECTIONS } from '../../components/AccordionSection';
+import { Row } from '../../components/Layout';
 
 export interface SelfServiceSectionProps {
-  accordionSections: AccordionSection[];
   heading?: string;
   moreButtonLabel?: string;
 }
 
 const SelfServiceSection: FC<SelfServiceSectionProps> = ({
-  accordionSections,
   heading = 'Zelf regelen',
   moreButtonLabel = 'Meer bekijken',
 }) => (
@@ -27,7 +25,7 @@ const SelfServiceSection: FC<SelfServiceSectionProps> = ({
         </ButtonLink>
       </Row>
 
-      <AccordionProvider headingLevel={3} sections={accordionSections} />
+      <AccordionProvider headingLevel={3} sections={ACCORDION_SECTIONS} />
     </section>
   </PageContent>
 );

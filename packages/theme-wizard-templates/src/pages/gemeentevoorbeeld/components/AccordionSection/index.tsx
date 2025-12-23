@@ -2,7 +2,7 @@ import { LinkList, LinkListLink, Paragraph } from '@utrecht/component-library-re
 import { UtrechtIconChevronRight } from '@utrecht/web-component-library-react';
 import * as React from 'react';
 import type { AccordionSection } from './types';
-import { Column, Row } from './components/Layout';
+import { Column, Row } from '../Layout';
 
 export const ACCORDION_SECTIONS: AccordionSection[] = [
   {

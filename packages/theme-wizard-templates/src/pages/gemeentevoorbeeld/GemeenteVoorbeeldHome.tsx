@@ -1,16 +1,10 @@
-import { Heading } from '@nl-design-system-candidate/heading-react/css';
-import { PageContent, PageFooter, PageHeader } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC } from 'react';
-import { ACCORDION_SECTIONS } from './accordionSections';
-import { Column, Row } from './components/Layout';
-import NavigationBar from './components/NavigationBar';
-import NewsSection from './components/NewsSection';
-import OpeningHoursCard from './components/OpeningHoursCard';
-import PageFooterSection from './components/PageFooter';
-import PageHeaderSection from './components/PageHeader';
-import QuickTasks from './components/QuickTasks';
-import SelfServiceSection from './components/SelfServiceSection';
-import { NAVIGATION_ITEMS, NEWS_ITEMS, QUICK_TASKS } from './constants';
+import MainIntroSection from './Sections/MainIntro';
+import Navigation from './Sections/Navigation';
+import NewsSection from './Sections/News';
+import PageFooterSection from './Sections/PageFooter';
+import PageHeaderSection from './Sections/PageHeader';
+import SelfServiceSection from './Sections/SelfService';
 import './styles.css';
 
 export interface GemeenteVoorbeeldHomeProps {
@@ -19,43 +13,19 @@ export interface GemeenteVoorbeeldHomeProps {
 
 const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) => (
   <>
-    <PageHeader>
-      <PageHeaderSection />
-    </PageHeader>
+    <PageHeaderSection />
 
-    <NavigationBar currentPath={currentPath} items={NAVIGATION_ITEMS} />
+    <Navigation currentPath={currentPath} />
+
     <main>
-      <Heading id="page-title" level={1} className="section" appearance="level-1">
-        Gemeente Voorbeeld
-      </Heading>
-      <PageContent>
-        <section className="section" aria-labelledby="page-title">
-          <Row
-            align="stretch"
-            columnGap="var(--basis-space-column-xl)"
-            rowGap="var(--basis-space-column-xl)"
-            justify="space-between"
-            reverseOnSmallScreen
-          >
-            <Column cols={9}>
-              <QuickTasks tasks={QUICK_TASKS} />
-            </Column>
+      <MainIntroSection />
 
-            <Column cols={3}>
-              <OpeningHoursCard />
-            </Column>
-          </Row>
-        </section>
-      </PageContent>
+      <SelfServiceSection />
 
-      <SelfServiceSection accordionSections={ACCORDION_SECTIONS} />
-
-      <NewsSection cards={NEWS_ITEMS} />
+      <NewsSection />
     </main>
 
-    <PageFooter>
-      <PageFooterSection />
-    </PageFooter>
+    <PageFooterSection />
   </>
 );
 
