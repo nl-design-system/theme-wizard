@@ -31,7 +31,7 @@ const meta = {
     },
     layout: 'fullscreen',
   },
-  title: 'Templates/Gemeente Voorbeeld/Home',
+  title: 'Templates/Gemeente Voorbeeld',
 } satisfies Meta<GemeenteVoorbeeldHomeProps>;
 
 export default meta;
@@ -39,5 +39,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  name: 'Gemeente Voorbeeld Home',
+  name: 'Home',
 };
