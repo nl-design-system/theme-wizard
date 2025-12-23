@@ -49,5 +49,11 @@ nav {
 .page-header__actions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--basis-space-inline-md);
+  gap: var(--basis-space-row-4xl);
+}
+
+.page-header__action-link {
+  display: inline-flex;
+  align-items: center;
+  column-gap: var(--basis-space-inline-xs);
 }
