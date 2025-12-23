@@ -1,6 +1,5 @@
-import { Card } from '@amsterdam/design-system-react';
+import { Link } from '@nl-design-system-candidate/link-react';
 import { Icon } from '@utrecht/component-library-react';
-import { Heading4 } from '@utrecht/component-library-react/dist/css-module';
 import {
   UtrechtIconPaspoort,
   UtrechtIconMeldingKlacht,
@@ -35,14 +34,16 @@ const renderIcon = (iconName: string): JSX.Element | null => {
 
 const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
   <nav aria-label="Snelle taken">
-    <Row columnGap="var(--basis-space-column-xl)" fullHeight justify="flex-start" rowGap="var(--basis-space-row-md)">
+    <Row columnGap="var(--basis-space-column-xl)" fullHeight justify="flex-start" rowGap="var(--basis-space-row-xl)">
       {tasks.map((task) => (
         <Column key={`${task.href}-${task.title}`} cols={4}>
-          <Card.Link className="voorbeeld__link voorbeeld__link--task" href={task.href}>
+          <Link
+            href={task.href}
+            className="utrecht-button utrecht-button--subtle utrecht-accordion__button voorbeeld__link"
+          >
             <Icon>{renderIcon(task.icon)}</Icon>
-
-            <Heading4>{task.title}</Heading4>
-          </Card.Link>
+            <span>{task.title}</span>
+          </Link>
         </Column>
       ))}
     </Row>

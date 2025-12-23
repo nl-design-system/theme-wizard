@@ -78,10 +78,6 @@ nav {
   height: 100%;
 }
 
-.voorbeeld__link--task {
-  background-color: var(--basis-color-accent-1-bg-default);
-}
-
 .voorbeeld__link--news {
   outline: 2px solid var(--basis-color-accent-1-bg-default);
   outline-style: solid;
@@ -90,14 +86,10 @@ nav {
 .voorbeeld__link,
 .voorbeeld__card {
   display: flex;
+  block-size: 100% !important;
   flex-direction: column;
-  height: 100%;
-  padding: var(--basis-space-inline-3xl);
+  padding: var(--basis-space-inline-3xl) !important;
   row-gap: var(--basis-space-row-xl);
-}
-
-.voorbeeld__card {
-  background-color: var(--basis-color-accent-1-bg-subtle);
 }
 
 .page-header__actions {

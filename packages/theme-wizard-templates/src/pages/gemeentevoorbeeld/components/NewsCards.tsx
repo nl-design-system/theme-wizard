@@ -1,6 +1,8 @@
 import { Card } from '@amsterdam/design-system-react';
+import { Heading } from '@nl-design-system-candidate/heading-react/css';
+import { Link } from '@nl-design-system-candidate/link-react';
 import { Icon } from '@utrecht/component-library-react';
-import { Heading4, Paragraph } from '@utrecht/component-library-react/dist/css-module';
+import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconChevronRight, UtrechtIconKalender } from '@utrecht/web-component-library-react';
 import React, { type FC } from 'react';
 import type { NewsItem } from '../types';
@@ -15,7 +17,9 @@ const NewsCards: FC<NewsCardsProps> = ({ cards }) => (
     {cards.map((card) => (
       <Column key={`${card.href}-${card.title}`} cols={6}>
         <Card className="voorbeeld__link voorbeeld__link--news">
-          <Heading4>{card.title}</Heading4>
+          <Heading level={3} appearance="level-3">
+            {card.title}
+          </Heading>
 
           <Icon>
             <UtrechtIconKalender />
@@ -26,9 +30,12 @@ const NewsCards: FC<NewsCardsProps> = ({ cards }) => (
           <Paragraph>{card.body}</Paragraph>
 
           <Row justify="flex-end">
-            <Icon>
-              <UtrechtIconChevronRight />
-            </Icon>
+            {/* https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA8 */}
+            <Link href={card.href} aria-label={`Lees meer over ${card.title}`}>
+              <Icon aria-hidden="true">
+                <UtrechtIconChevronRight />
+              </Icon>
+            </Link>
           </Row>
         </Card>
       </Column>
