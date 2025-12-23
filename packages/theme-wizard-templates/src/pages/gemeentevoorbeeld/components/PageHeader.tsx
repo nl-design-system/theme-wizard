@@ -18,7 +18,7 @@ const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS }) =
       <Row align="center" justify="space-between">
         <Column cols={6}>
           <Link href="/" aria-label="home / logo">
-            <img src={logo.src} alt="Gemeente Voorbeeld" />
+            <img src={typeof logo === 'string' ? logo : logo.src} alt="Gemeente Voorbeeld" />
           </Link>
         </Column>
 
