@@ -113,7 +113,7 @@
   --utrecht-page-header-padding-block-end: var(--basis-space-row-lg);
 
   --utrecht-section-max-inline-size: calc(670px * 1.6);
-  --utrecht-page-background-secondary: var(--basis-color-default-bg-subtle);
+  --utrecht-page-background-secondary: var(--basis-color-default-border-subtle);
   --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
 
   --utrecht-paragraph-margin-block-start: var(--clippy-paragraph-margin-block-start);
