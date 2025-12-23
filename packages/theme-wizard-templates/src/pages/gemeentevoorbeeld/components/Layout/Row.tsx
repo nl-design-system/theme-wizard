@@ -8,6 +8,7 @@ export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   gap?: CSSProperties['columnGap'];
   justify?: CSSProperties['justifyContent'];
   fullHeight?: boolean;
+  reverseOnSmallScreen?: boolean;
 }
 
 export const Row: FC<PropsWithChildren<RowProps>> = ({
@@ -18,11 +19,14 @@ export const Row: FC<PropsWithChildren<RowProps>> = ({
   fullHeight,
   gap,
   justify,
+  reverseOnSmallScreen,
   rowGap,
   style,
   ...rest
 }) => {
-  const classes = ['row', fullHeight && 'row--full-height', className].filter(Boolean).join(' ');
+  const classes = ['row', fullHeight && 'row--full-height', reverseOnSmallScreen && 'row--reverse-small', className]
+    .filter(Boolean)
+    .join(' ');
 
   const rowStyle: CSSProperties = {
     alignItems: align,

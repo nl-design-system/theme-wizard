@@ -80,6 +80,10 @@
     justify-content: flex-start !important;
   }
 
+  .row--reverse-small {
+    flex-direction: column-reverse;
+  }
+
   .row > .col {
     flex: 0 0 100%;
     max-width: 100%;
