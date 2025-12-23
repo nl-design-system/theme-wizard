@@ -5,6 +5,8 @@ import ClientInit from '../components/ClientInit.astro';
 
 export interface Props {
   isCollage?: boolean;
+  title?: string;
+  description?: string;
 }
 
 const { title = 'Gemeente Voorbeeld', description = 'Gemeente Voorbeeld website', isCollage = false } = Astro.props;
