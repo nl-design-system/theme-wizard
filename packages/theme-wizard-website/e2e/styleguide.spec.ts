@@ -28,6 +28,8 @@ test.describe('interaction tests', () => {
     // Enable clipboard access to we can test working of copy-to-clipboard buttons
     await context.grantPermissions(['clipboard-write', 'clipboard-read']);
     await page.goto('/style-guide');
+    // Make sure to wait for page to be fully rendered
+    await expect(page.getByRole('heading', { name: 'Stijlgids' })).toBeVisible();
   });
 
   test.describe('colors', () => {
