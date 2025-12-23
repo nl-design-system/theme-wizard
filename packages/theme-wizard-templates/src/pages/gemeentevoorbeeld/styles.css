@@ -1,8 +1,62 @@
 /* Gemeentevoorbeeld specific styles */
 
+:root {
+  /* Default paddings for Utrecht page & page-content */
+  --utrecht-page-content-padding-block-start: var(--basis-space-row-2xl);
+  --utrecht-page-content-padding-block-end: var(--basis-space-row-2xl);
+  --utrecht-page-padding-inline-start: var(--basis-space-inline-lg);
+  --utrecht-page-padding-inline-end: var(--basis-space-inline-lg);
+  --utrecht-page-header-padding-block-start: var(--basis-space-row-lg);
+  --utrecht-page-header-padding-block-end: var(--basis-space-row-lg);
+
+  /* Custom */
+  --utrecht-section-max-inline-size: calc(670px * 1.6);
+  --utrecht-page-background-secondary: var(--basis-color-default-bg-subtle);
+  --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
+}
+
+.utrecht-nav-bar {
+  --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  display: flex;
+}
+
+.layout-main > theme-wizard-side-nav {
+  flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
+}
+
+.layout-main > utrecht-page-content {
+  flex: 1;
+}
+
+.todo-card-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-column-xl);
+}
+
+.footer-grid {
+  display: flex;
+  gap: var(--basis-space-column-md);
+}
+
+.footer-grid > * {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--basis-space-column-lg);
 }
 
 .section {
