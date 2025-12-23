@@ -135,7 +135,7 @@ app.openapi(
 
 app.openapi(
   createRoute({
-    description: 'Scrape all CSS from a URL',
+    description: 'Scrape all design tokens from a URL',
     method: 'get',
     path: '/api/v1/css-design-tokens',
     request: {
