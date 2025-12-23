@@ -24,7 +24,7 @@ const NewsCards: FC<NewsCardsProps> = ({ cards }) => (
             <UtrechtIconKalender />
           </Icon>
 
-          <Paragraph>{card.date}</Paragraph>
+          <time dateTime={card.dateTime}>{card.date}</time>
 
           <Paragraph>{card.body}</Paragraph>
 
