@@ -1,23 +1,4 @@
 /* Gemeentevoorbeeld specific styles */
-
-:root {
-  /* Default paddings for Utrecht page & page-content */
-  --utrecht-page-content-padding-block-start: var(--basis-space-row-2xl);
-  --utrecht-page-content-padding-block-end: var(--basis-space-row-2xl);
-  --utrecht-page-padding-inline-start: var(--basis-space-inline-lg);
-  --utrecht-page-padding-inline-end: var(--basis-space-inline-lg);
-  --utrecht-page-header-padding-block-start: var(--basis-space-row-lg);
-  --utrecht-page-header-padding-block-end: var(--basis-space-row-lg);
-
-  /* Custom */
-  --utrecht-section-max-inline-size: calc(670px * 1.6);
-  --utrecht-page-background-secondary: var(--basis-color-default-bg-subtle);
-  --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
-
-  --voorbeeld-card-bg: var(--basis-color-default-bg-subtle);
-  --voorbeeld-card-outline: var(--basis-color-default-border-subtle);
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
