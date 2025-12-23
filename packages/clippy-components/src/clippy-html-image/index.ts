@@ -60,8 +60,11 @@ export class ClippyHtmlImage extends LitElement {
   }
 
   override render() {
-    return html`<div role="img" inert>
-        <slot></slot>
+    // `inert` is on a nested element to prevent the accessibility tree from marking this element as generic
+    return html`<div role="img">
+        <div inert>
+          <slot></slot>
+        </div>
       </div>
       <slot id=${this.labelId} name="label" @slotchange=${this.onLabelSlotChange}></slot>`;
   }
