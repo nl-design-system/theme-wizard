@@ -1,4 +1,4 @@
-import type { FC, HTMLAttributes, PropsWithChildren } from 'react';
+import React, { type FC, type HTMLAttributes, type PropsWithChildren } from 'react';
 import './styles.css';
 
 export interface ColumnProps extends HTMLAttributes<HTMLDivElement> {

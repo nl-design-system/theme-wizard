@@ -34,6 +34,7 @@
     "@nl-design-system-community/clippy-components": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
+    "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@nl-design-system/tsconfig": "1.0.5",
     "@rijkshuisstijl-community/storybook-tooling": "1.1.1",
     "@storybook/addon-a11y": "10.1.11",

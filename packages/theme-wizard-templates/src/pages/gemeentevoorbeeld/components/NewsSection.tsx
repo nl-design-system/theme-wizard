@@ -1,5 +1,5 @@
-import type { FC } from 'react';
 import { Heading3, PageContent } from '@utrecht/component-library-react/dist/css-module';
+import React, { type FC } from 'react';
 import type { NewsItem } from '../types';
 import NewsCards from './NewsCards';
 
