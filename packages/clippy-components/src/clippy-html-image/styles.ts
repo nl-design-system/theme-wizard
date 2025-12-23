@@ -6,4 +6,8 @@ export default css`
     forced-color-adjust: none;
     user-select: none;
   }
+
+  slot[name='label'] {
+    display: none;
+  }
 `;
