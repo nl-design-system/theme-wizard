@@ -1,5 +1,5 @@
-import type { FC } from 'react';
 import { AccordionProvider, ButtonLink, Heading2, PageContent } from '@utrecht/component-library-react/dist/css-module';
+import React, { type FC } from 'react';
 import type { AccordionSection } from '../types';
 import { Row } from './Layout';
 

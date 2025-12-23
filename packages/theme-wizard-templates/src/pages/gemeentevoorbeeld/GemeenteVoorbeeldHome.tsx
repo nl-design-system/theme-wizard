@@ -1,5 +1,5 @@
-import type { FC } from 'react';
 import { PageContent, PageFooter, PageHeader } from '@utrecht/component-library-react/dist/css-module';
+import React, { type FC } from 'react';
 import { ACCORDION_SECTIONS } from './accordionSections';
 import { Column, Row } from './components/Layout';
 import NavigationBar from './components/NavigationBar';
@@ -10,6 +10,7 @@ import PageHeaderSection from './components/PageHeader';
 import QuickTasks from './components/QuickTasks';
 import SelfServiceSection from './components/SelfServiceSection';
 import { NAVIGATION_ITEMS, NEWS_ITEMS, QUICK_TASKS } from './constants';
+import './styles.css';
 
 export interface GemeenteVoorbeeldHomeProps {
   currentPath?: string;

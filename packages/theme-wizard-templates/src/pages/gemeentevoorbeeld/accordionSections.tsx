@@ -1,5 +1,6 @@
 import { LinkList, LinkListLink, Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconChevronRight } from '@utrecht/web-component-library-react';
+import * as React from 'react';
 import type { AccordionSection } from './types';
 import { Column, Row } from './components/Layout';
 

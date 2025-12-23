@@ -1,4 +1,4 @@
-import type { CSSProperties, FC, HTMLAttributes, PropsWithChildren } from 'react';
+import React, { type FC, type CSSProperties, type HTMLAttributes, type PropsWithChildren } from 'react';
 import './styles.css';
 
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {

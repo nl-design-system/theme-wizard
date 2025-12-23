@@ -1,7 +1,7 @@
-import type { FC } from 'react';
 import { Icon } from '@utrecht/component-library-react';
 import { ButtonLink, Heading3, Heading4, Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
+import React, { type FC } from 'react';
 
 export interface OpeningHoursCardProps {
   buttonLabel?: string;
