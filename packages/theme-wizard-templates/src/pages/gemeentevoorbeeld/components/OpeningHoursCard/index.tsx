@@ -6,23 +6,23 @@ import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
 import React from 'react';
 
 const OpeningHoursCard = () => (
-  <div className="voorbeeld__card">
+  <div className="voorbeeld__card" itemScope itemType="https://schema.org/GovernmentOffice">
     <Icon>
       <UtrechtIconAfspraakMaken />
     </Icon>
-    <Heading level={2} appearance="level-2">
-      Openingstijden
+    <Heading level={2} appearance="level-2" itemProp="name">
+      Gemeente Voorbeeld
     </Heading>
     <Heading level={3} appearance="level-3">
       Openingstijden Gemeentehuis
     </Heading>
     <Paragraph className="nl-paragraph nl-paragraph--lead">Vandaag:</Paragraph>
 
-    <span>
-      <time dateTime="08:30">08:30</time> - <time dateTime="17:30">17:30</time>
+    <span itemProp="openingHours" content="Mo-Fr 08:30-17:30">
+      <time dateTime="08:30">08:30</time> tot <time dateTime="17:30">17:30</time>
     </span>
-    <span>
-      <time dateTime="18:00">18:00</time> - <time dateTime="20:00">20:00</time>
+    <span itemProp="openingHours" content="Th 18:00-20:00">
+      <time dateTime="18:00">18:00</time> tot <time dateTime="20:00">20:00</time>
     </span>
     <ButtonLink appearance="secondary-action-button" href="/">
       Contact
