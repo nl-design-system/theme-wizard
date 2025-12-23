@@ -35,6 +35,7 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) 
             columnGap="var(--basis-space-column-xl)"
             rowGap="var(--basis-space-column-xl)"
             justify="space-between"
+            reverseOnSmallScreen
           >
             <Column cols={9}>
               <QuickTasks tasks={QUICK_TASKS} />
