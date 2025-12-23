@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import logoSvg from '../../assets/nl-design-system-beeldmerk.svg?raw';
 import styles from './styles';
 
@@ -19,7 +19,7 @@ export class WizardLogo extends LitElement {
   override render() {
     return html`
       <div class="wizard-logo">
-        ${unsafeHTML(logoSvg)}
+        ${unsafeSVG(logoSvg)}
         <utrecht-heading-1>
           <span>Theme</span>
           <span>Wizard</span>

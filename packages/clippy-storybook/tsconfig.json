@@ -3,6 +3,10 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
-    "moduleResolution": "bundler"
-  }
+    "moduleResolution": "bundler",
+    "jsx": "react",
+    "types": ["vite/client"],
+    "lib": ["ESNext", "DOM"]
+  },
+  "include": ["src/**/*", "config/**/*"]
 }

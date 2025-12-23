@@ -8,6 +8,13 @@
     "url": "https://github.com/nl-design-system/theme-wizard.git",
     "directory": "packages/theme-wizard-app"
   },
+  "exports": {
+    ".": "./dist/index.js",
+    "./theme.css": "./theme.css"
+  },
+  "files": [
+    "theme.css"
+  ],
   "scripts": {
     "dev": "vite",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",

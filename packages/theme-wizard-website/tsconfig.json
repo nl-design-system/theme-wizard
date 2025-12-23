@@ -3,10 +3,22 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@templates/*": ["../theme-wizard-templates/src/*", "../../theme-wizard-templates/src/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "@templates/*": [
+        "../theme-wizard-templates/src/*",
+        "../../theme-wizard-templates/src/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "include": [
+    ".astro/types.d.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "dist"
+  ]
 }
