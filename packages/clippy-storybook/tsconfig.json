@@ -5,7 +5,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "jsx": "react",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "lib": ["ESNext", "DOM"]
   },
   "include": ["src/**/*", "config/**/*"]
 }
