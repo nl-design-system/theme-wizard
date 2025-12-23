@@ -1,12 +1,12 @@
+import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { Icon } from '@utrecht/component-library-react';
-import { ButtonLink, Heading3, Heading4, Paragraph } from '@utrecht/component-library-react/dist/css-module';
+import { ButtonLink, Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
 import React, { type FC } from 'react';
 
 export interface OpeningHoursCardProps {
   buttonLabel?: string;
   hours?: string;
-  onButtonClick?: () => void;
   subtitle?: string;
   title?: string;
 }
@@ -19,7 +19,6 @@ const DEFAULT_BUTTON_LABEL = 'Contact';
 const OpeningHoursCard: FC<OpeningHoursCardProps> = ({
   buttonLabel = DEFAULT_BUTTON_LABEL,
   hours = DEFAULT_HOURS,
-  onButtonClick,
   subtitle = DEFAULT_SUBTITLE,
   title = DEFAULT_TITLE,
 }) => (
@@ -28,13 +27,17 @@ const OpeningHoursCard: FC<OpeningHoursCardProps> = ({
       <UtrechtIconAfspraakMaken />
     </Icon>
 
-    <Heading3>{title}</Heading3>
+    <Heading level={2} appearance="level-2">
+      {title}
+    </Heading>
 
-    <Heading4>{subtitle}</Heading4>
+    <Heading level={3} appearance="level-3">
+      {subtitle}
+    </Heading>
 
     <Paragraph className="voorbeeld-paragraph--opening-times">{hours}</Paragraph>
 
-    <ButtonLink appearance="secondary-action-button" onClick={onButtonClick}>
+    <ButtonLink appearance="secondary-action-button" href="/">
       {buttonLabel}
     </ButtonLink>
   </div>
