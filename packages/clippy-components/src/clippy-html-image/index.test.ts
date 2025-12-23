@@ -61,4 +61,28 @@ describe(`<${tag}>`, () => {
     const imgElement = page.getByRole('img');
     expect(imgElement).not.toHaveAccessibleName();
   });
+
+  it('Sets labels correctly when rendering more than 1 html-image', async () => {
+    document.body.innerHTML = `
+      <${tag}>
+        <span slot="label">my first label</span>
+      </${tag}>
+
+      <${tag}>
+        <span slot="label">my second label</span>
+      </${tag}>
+    `;
+
+    // Wait for component to finish updating
+    const component = document.querySelector(tag) as unknown as { updateComplete: Promise<void> };
+    await component?.updateComplete;
+
+    // First image
+    const imgElement1 = page.getByRole('img').first();
+    expect(imgElement1).toHaveAccessibleName('my first label');
+
+    // Second image
+    const imgElement2 = page.getByRole('img').last();
+    expect(imgElement2).toHaveAccessibleName('my second label');
+  });
 });

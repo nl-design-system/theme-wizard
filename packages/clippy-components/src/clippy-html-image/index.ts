@@ -1,13 +1,12 @@
 import { LitElement, html } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
-import srOnly from '../lib/sr-only/styles';
 import styles from './styles';
 
 let labelCounter = 0;
 
 @customElement('clippy-html-image')
 export class ClippyHtmlImage extends LitElement {
-  static override readonly styles = [srOnly, styles];
+  static override readonly styles = [styles];
 
   @query('slot[name="label"]')
   private readonly labelSlot?: HTMLSlotElement;
@@ -61,9 +60,9 @@ export class ClippyHtmlImage extends LitElement {
   }
 
   override render() {
-    return html`<div role="img">
+    return html`<div role="img" inert>
         <slot></slot>
       </div>
-      <slot class="sr-only" id=${this.labelId} name="label" @slotchange=${this.onLabelSlotChange}></slot>`;
+      <slot id=${this.labelId} name="label" @slotchange=${this.onLabelSlotChange}></slot>`;
   }
 }
