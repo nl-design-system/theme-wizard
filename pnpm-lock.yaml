@@ -256,8 +256,8 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 2.4.0
+        version: 2.4.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 6.2.0
         version: 6.2.0
@@ -337,8 +337,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 2.4.0
+        version: 2.4.0
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -1934,8 +1934,8 @@ packages:
   '@nl-design-system-community/ma-design-tokens@3.0.0':
     resolution: {integrity: sha512-95uF6BODj/RldOGIdB0i4L8ISoJ4CauQVzZb6sgD8GBA4btEdX3Cdc6VOKncKbknads5WePeNFap7lo7YrlRGg==}
 
-  '@nl-design-system-unstable/start-design-tokens@1.2.0':
-    resolution: {integrity: sha512-GBkDttpJz7seQK/PfEyb9WHd4SYXglJ95mfoy1i5IrHWbG6mw1mY+Kj50jAhpnSYErWAefpZ90yoTupcoOR2Lg==}
+  '@nl-design-system-unstable/start-design-tokens@2.4.0':
+    resolution: {integrity: sha512-gf/1X1SY+Zm4N1xKl4Cg+DJNonM+Mli+IcEc6j11Xi+W++eonQzVW0hm+C2GNckuFlSkvWQXXdCeMHJvB+esBA==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@6.2.0':
     resolution: {integrity: sha512-qAWMqpD7UNgL2H5or48rycoVax55dgK4nHTqT8gnpxqJa6qZBJ+k++EpTh3mSR66xL6rb8Wx5SOZR8xJ8V29fg==}
@@ -8573,7 +8573,7 @@ snapshots:
 
   '@nl-design-system-community/ma-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@1.2.0': {}
+  '@nl-design-system-unstable/start-design-tokens@2.4.0': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@6.2.0': {}
 
