@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@hono/node-server": "1.19.7",
-    "@hono/vite-dev-server": "0.23.0",
+    "@hono/vite-dev-server": "0.24.0",
     "@vitest/coverage-v8": "4.0.16",
     "rimraf": "6.1.2",
     "typescript": "5.9.3",
@@ -47,11 +47,11 @@
     "vitest": "4.0.8"
   },
   "dependencies": {
-    "@hono/swagger-ui": "0.5.2",
-    "@hono/zod-openapi": "1.1.5",
+    "@hono/swagger-ui": "0.5.3",
+    "@hono/zod-openapi": "1.2.0",
     "@nl-design-system-community/css-scraper": "workspace:*",
     "@vercel/related-projects": "1.0.0",
-    "hono": "4.11.1",
-    "zod": "4.2.1"
+    "hono": "4.11.3",
+    "zod": "4.3.4"
   }
 }
