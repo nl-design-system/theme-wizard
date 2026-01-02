@@ -40,6 +40,7 @@ export const en = {
             name: 'Name',
             hexCode: 'Hex code',
             sample: 'Sample',
+            usageCount: 'Usage',
           },
         },
         title: 'Colors',
@@ -65,6 +66,7 @@ export const en = {
           header: {
             name: 'Name',
             sample: 'Sample',
+            usageCount: 'Usage',
             value: 'Value',
           },
         },
@@ -81,6 +83,7 @@ export const en = {
             header: {
               name: 'Name',
               sample: 'Sample',
+              usageCount: 'Usage',
               value: 'Value',
             },
           },
@@ -102,6 +105,7 @@ export const en = {
             header: {
               name: 'Name',
               sample: 'Sample',
+              usageCount: 'Usage',
               value: 'Value',
             },
           },
@@ -111,6 +115,7 @@ export const en = {
       },
     },
     title: 'Style guide',
+    unusedTokenWarning: 'This token is defined but never used in acomponent.',
   },
   tokenDownloadDialog: {
     body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
@@ -259,6 +264,7 @@ export const nl = {
             name: 'Naam',
             hexCode: 'Hex code',
             sample: 'Voorbeeld',
+            usageCount: 'Gebruik',
           },
         },
         title: 'Kleuren',
@@ -284,6 +290,7 @@ export const nl = {
           header: {
             name: 'Naam',
             sample: 'Voorbeeld',
+            usageCount: 'Gebruik',
             value: 'Waarde',
           },
         },
@@ -300,6 +307,7 @@ export const nl = {
             header: {
               name: 'Naam',
               sample: 'Voorbeeld',
+              usageCount: 'Gebruik',
               value: 'Waarde',
             },
           },
@@ -321,6 +329,7 @@ export const nl = {
             header: {
               name: 'Naam',
               sample: 'Voorbeeld',
+              usageCount: 'Gebruik',
               value: 'Waarde',
             },
           },
@@ -330,6 +339,7 @@ export const nl = {
       },
     },
     title: 'Stijlgids',
+    unusedTokenWarning: 'Token is gedefinieerd maar wordt nooit toegepast op een component.',
   },
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',

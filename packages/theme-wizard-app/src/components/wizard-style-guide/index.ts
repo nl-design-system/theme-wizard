@@ -1,21 +1,23 @@
 import { consume } from '@lit/context';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
+import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
+import '@nl-design-system-community/clippy-components/clippy-html-image';
 import {
   legacyToModernColor,
   type ColorToken as ColorTokenType,
+  walkTokensWithRef,
 } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import '../wizard-layout';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
+import '../wizard-layout';
 import { DesignToken } from 'style-dictionary/types';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { resolveColorValue } from '../wizard-colorscale-input';
 import styles from './styles';
-import '@nl-design-system-community/clippy-components/clippy-html-image';
 
 const tag = 'wizard-style-guide';
 
@@ -31,7 +33,7 @@ export class WizardStyleGuide extends LitElement {
   @state()
   private readonly theme!: Theme;
 
-  static override readonly styles = [unsafeCSS(colorSampleCss), unsafeCSS(headingCss), styles];
+  static override readonly styles = [unsafeCSS(colorSampleCss), unsafeCSS(headingCss), unsafeCSS(dataBadgeCss), styles];
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -68,6 +70,15 @@ export class WizardStyleGuide extends LitElement {
     this.scrollToHash(href);
   }
 
+  private countUsagePerToken(tokens: typeof this.theme.tokens): Map<string, number> {
+    const tokenUsage = new Map<string, number>();
+    walkTokensWithRef(tokens, tokens, (token) => {
+      const tokenId = token.$value.slice(1, -1);
+      tokenUsage.set(tokenId, (tokenUsage.get(tokenId) || 0) + 1);
+    });
+    return tokenUsage;
+  }
+
   override render() {
     if (!this.theme) {
       return t('loading');
@@ -76,6 +87,8 @@ export class WizardStyleGuide extends LitElement {
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const colors = basis['color'] as Record<string, unknown>;
     const text = basis['text'] as Record<string, unknown>;
+
+    const tokenUsage = this.countUsagePerToken(this.theme.tokens);
 
     return html`
       <wizard-layout>
@@ -112,6 +125,9 @@ export class WizardStyleGuide extends LitElement {
                         <utrecht-table-header-cell scope="col">
                           ${t('styleGuide.sections.colors.table.header.hexCode')}
                         </utrecht-table-header-cell>
+                        <utrecht-table-header-cell scope="col">
+                          ${t('styleGuide.sections.colors.table.header.usageCount')}
+                        </utrecht-table-header-cell>
                       </utrecht-table-row>
                     </utrecht-table-header>
                     <utrecht-table-body>
@@ -123,16 +139,22 @@ export class WizardStyleGuide extends LitElement {
                             return nothing;
                           }
                           const cssColor = legacyToModernColor.encode(color);
-                          const colorId = `basis.color.${key}.${colorKey}`;
+                          const tokenId = `basis.color.${key}.${colorKey}`;
+                          const isUsed = tokenUsage.has(tokenId);
                           return html`
-                            <utrecht-table-row>
+                            <utrecht-table-row
+                              aria-describedby=${isUsed ? nothing : 'basis-color-${key}-unused-warning'}
+                            >
                               <utrecht-table-cell>
                                 <svg
                                   role="img"
                                   xmlns="http://www.w3.org/2000/svg"
                                   class="nl-color-sample"
                                   style="color: ${cssColor};"
-                                  aria-labelledby=${colorId}
+                                  aria-labelledby=${tokenId}
+                                  width="32"
+                                  height="32"
+                                  viewBox="0 0 32 32"
                                 >
                                   <path d="M0 0H32V32H0Z" fill="currentcolor" />
                                 </svg>
@@ -140,9 +162,9 @@ export class WizardStyleGuide extends LitElement {
                               <utrecht-table-cell>
                                 <utrecht-button
                                   appearance="subtle-button"
-                                  @click=${() => navigator.clipboard.writeText(colorId)}
+                                  @click=${() => navigator.clipboard.writeText(tokenId)}
                                 >
-                                  <utrecht-code id=${colorId}>${colorId}</utrecht-code>
+                                  <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
                                 </utrecht-button>
                               </utrecht-table-cell>
                               <utrecht-table-cell>
@@ -153,6 +175,9 @@ export class WizardStyleGuide extends LitElement {
                                   <utrecht-code>${cssColor}</utrecht-code>
                                 </utrecht-button>
                               </utrecht-table-cell>
+                              <utrecht-table-cell>
+                                <span class="nl-data-badge">${tokenUsage.get(tokenId) ?? 0}</span>
+                              </utrecht-table-cell>
                             </utrecht-table-row>
                           `;
                         })}
@@ -160,6 +185,9 @@ export class WizardStyleGuide extends LitElement {
                   </utrecht-table>
                   <utrecht-paragraph>
                     <a href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
+                  </utrecht-paragraph>
+                  <utrecht-paragraph id="basis-color-${key}-unused-warning" class="unused">
+                    ${t('styleGuide.unusedTokenWarning')}
                   </utrecht-paragraph>
                 `;
               })}
@@ -183,26 +211,33 @@ export class WizardStyleGuide extends LitElement {
                   <utrecht-table-header-cell scope="col">
                     ${t('styleGuide.sections.typography.families.table.header.value')}
                   </utrecht-table-header-cell>
+                  <utrecht-table-header-cell scope="col">
+                    ${t('styleGuide.sections.typography.families.table.header.usageCount')}
+                  </utrecht-table-header-cell>
                 </utrecht-table-row>
               </utrecht-table-header>
               <utrecht-table-body>
                 ${Object.entries(text['font-family'] as Record<string, unknown>).map(([name, tokenValue]) => {
                   const value = (tokenValue as DesignToken).$value;
+                  const tokenId = `basis.text.font-family.${name}`;
+                  const isUsed = tokenUsage.has(tokenId);
                   return html`
-                    <utrecht-table-row>
+                    <utrecht-table-row aria-describedby=${isUsed ? nothing : 'basis-color-typography-font-family-unused-warning'}>
                       <utrecht-table-cell>
                         <clippy-html-image>
                           <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
-                          <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${value};">Abc</utrecht-paragraph>
+                          <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${value}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
+                            Op brute wijze ving de schooljuf de quasi-kalme lynx.
+                          </utrecht-paragraph>
                         <clippy-html-image>
                       </utrecht-table-cell>
                       <utrecht-table-cell>
                         <utrecht-button
                           appearance="subtle-button"
-                          @click=${() => navigator.clipboard.writeText(`basis.text.font-family.${name}`)}
+                          @click=${() => navigator.clipboard.writeText(tokenId)}
                         >
-                          <utrecht-code id="${`basis.text.font-family.${name}`}">
-                            ${`basis.text.font-family.${name}`}
+                          <utrecht-code id="${`basis-text-font-family-${name}`}">
+                            ${tokenId}
                           </utrecht-code>
                         </utrecht-button>
                       </utrecht-table-cell>
@@ -210,6 +245,9 @@ export class WizardStyleGuide extends LitElement {
                         <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
                           <utrecht-code>${value}</utrecht-code>
                         </utrecht-button>
+                      </utrecht-table-cell>
+                      <utrecht-table-cell>
+                        <span class="nl-data-badge">${tokenUsage.get(tokenId) ?? 0}</span>
                       </utrecht-table-cell>
                     </utrecht-table-row>
                   `;
@@ -220,6 +258,9 @@ export class WizardStyleGuide extends LitElement {
               <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype" target="_blank">
                 docs
               </a>
+            </utrecht-paragraph>
+            <utrecht-paragraph id="basis-color-typography-font-family-unused-warning" class="unused">
+              ${t('styleGuide.unusedTokenWarning')}
             </utrecht-paragraph>
 
             <utrecht-table aria-labelledby="styleGuide-sections-typography-sizes-title">
@@ -237,6 +278,9 @@ export class WizardStyleGuide extends LitElement {
                   <utrecht-table-header-cell scope="col">
                     ${t('styleGuide.sections.typography.sizes.table.header.value')}
                   </utrecht-table-header-cell>
+                  <utrecht-table-header-cell scope="col">
+                    ${t('styleGuide.sections.typography.sizes.table.header.usageCount')}
+                  </utrecht-table-header-cell>
                 </utrecht-table-row>
               </utrecht-table-header>
               <utrecht-table-body>
@@ -244,22 +288,28 @@ export class WizardStyleGuide extends LitElement {
                   .reverse()
                   .map(([name, tokenValue]) => {
                     const value = (tokenValue as DesignToken).$value;
+                    const tokenId = `basis.text.font-size.${name}`;
+                    const isUsed = tokenUsage.has(tokenId);
                     return html`
-                      <utrecht-table-row>
+                      <utrecht-table-row
+                        aria-describedby=${isUsed ? nothing : 'basis-color-typography-sizes-unused-warning'}
+                      >
                         <utrecht-table-cell>
                           <clippy-html-image>
                             <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
-                            <utrecht-paragraph style="--utrecht-paragraph-font-size: ${value};">Abc</utrecht-paragraph>
+                            <utrecht-paragraph
+                              style="--utrecht-paragraph-font-size: ${value}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+                            >
+                              Op brute wijze ving de schooljuf de quasi-kalme lynx.
+                            </utrecht-paragraph>
                           </clippy-html-image>
                         </utrecht-table-cell>
                         <utrecht-table-cell>
                           <utrecht-button
                             appearance="subtle-button"
-                            @click=${() => navigator.clipboard.writeText(`basis.text.font-size.${name}`)}
+                            @click=${() => navigator.clipboard.writeText(tokenId)}
                           >
-                            <utrecht-code id="${`basis.text.font-size.${name}`}">
-                              ${`basis.text.font-size.${name}`}
-                            </utrecht-code>
+                            <utrecht-code id="${`basis-text-font-size-${name}`}"> ${tokenId} </utrecht-code>
                           </utrecht-button>
                         </utrecht-table-cell>
                         <utrecht-table-cell>
@@ -270,6 +320,9 @@ export class WizardStyleGuide extends LitElement {
                             <utrecht-code>${value}</utrecht-code>
                           </utrecht-button>
                         </utrecht-table-cell>
+                        <utrecht-table-cell>
+                          <span class="nl-data-badge">${tokenUsage.get(tokenId) ?? 0}</span>
+                        </utrecht-table-cell>
                       </utrecht-table-row>
                     `;
                   })}
@@ -279,6 +332,9 @@ export class WizardStyleGuide extends LitElement {
               <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte" target="_blank">
                 docs
               </a>
+            </utrecht-paragraph>
+            <utrecht-paragraph id="basis-color-typography-sizes-unused-warning" class="unused">
+              ${t('styleGuide.unusedTokenWarning')}
             </utrecht-paragraph>
 
             <utrecht-table aria-labelledby="styleGuide-sections-typography-headings-title">
@@ -351,6 +407,9 @@ export class WizardStyleGuide extends LitElement {
                       <utrecht-table-header-cell scope="col">
                         ${t('styleGuide.sections.space.table.header.value')}
                       </utrecht-table-header-cell>
+                      <utrecht-table-header-cell scope="col">
+                        ${t('styleGuide.sections.space.table.header.usageCount')}
+                      </utrecht-table-header-cell>
                     </utrecht-table-row>
                   </utrecht-table-header>
                   <utrecht-table-body>
@@ -359,8 +418,12 @@ export class WizardStyleGuide extends LitElement {
                       .reverse()
                       .map(([name, tokenValue]) => {
                         const value = (tokenValue as DesignToken).$value;
+                        const tokenId = `basis.space.${space}.${name}`;
+                        const isUsed = tokenUsage.has(tokenId);
                         return html`
-                          <utrecht-table-row>
+                          <utrecht-table-row
+                            aria-describedby=${isUsed ? nothing : `basis-space-${space}-unused-warning`}
+                          >
                             <utrecht-table-cell>
                               <clippy-html-image>
                                 <span slot="label">${t(`styleGuide.sections.space.${space}.sample`)}</span>
@@ -376,11 +439,9 @@ export class WizardStyleGuide extends LitElement {
                             <utrecht-table-cell>
                               <utrecht-button
                                 appearance="subtle-button"
-                                @click=${() => navigator.clipboard.writeText(`basis.space.${space}.${name}`)}
+                                @click=${() => navigator.clipboard.writeText(tokenId)}
                               >
-                                <utrecht-code id="${`basis.space.${space}.${name}`}">
-                                  ${`basis.space.${space}.${name}`}
-                                </utrecht-code>
+                                <utrecht-code id="${`basis-space-${space}-${name}`}"> ${tokenId} </utrecht-code>
                               </utrecht-button>
                             </utrecht-table-cell>
                             <utrecht-table-cell>
@@ -391,11 +452,27 @@ export class WizardStyleGuide extends LitElement {
                                 <utrecht-code>${value}</utrecht-code>
                               </utrecht-button>
                             </utrecht-table-cell>
+                            <utrecht-table-cell>
+                              <span class="nl-data-badge">${tokenUsage.get(tokenId) ?? 0}</span>
+                            </utrecht-table-cell>
                           </utrecht-table-row>
                         `;
                       })}
                   </utrecht-table-body>
                 </utrecht-table>
+
+                <utrecht-paragraph>
+                  <a
+                    href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/#${space}"
+                    target="_blank"
+                  >
+                    docs
+                  </a>
+                </utrecht-paragraph>
+
+                <utrecht-paragraph id="basis-space-${space}-unused-warning" class="unused">
+                  ${t('styleGuide.unusedTokenWarning')}
+                </utrecht-paragraph>
               `;
             })}
           </section>
