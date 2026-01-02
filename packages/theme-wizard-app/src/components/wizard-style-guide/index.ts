@@ -186,7 +186,7 @@ export class WizardStyleGuide extends LitElement {
                   <utrecht-paragraph>
                     <a href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
                   </utrecht-paragraph>
-                  <utrecht-paragraph id="basis-color-${key}-unused-warning" class="unused">
+                  <utrecht-paragraph id="basis-color-${key}-unused-warning" class="wizard-token-unused">
                     ${t('styleGuide.unusedTokenWarning')}
                   </utrecht-paragraph>
                 `;
@@ -259,7 +259,7 @@ export class WizardStyleGuide extends LitElement {
                 docs
               </a>
             </utrecht-paragraph>
-            <utrecht-paragraph id="basis-color-typography-font-family-unused-warning" class="unused">
+            <utrecht-paragraph id="basis-color-typography-font-family-unused-warning" class="wizard-token-unused">
               ${t('styleGuide.unusedTokenWarning')}
             </utrecht-paragraph>
 
@@ -333,7 +333,7 @@ export class WizardStyleGuide extends LitElement {
                 docs
               </a>
             </utrecht-paragraph>
-            <utrecht-paragraph id="basis-color-typography-sizes-unused-warning" class="unused">
+            <utrecht-paragraph id="basis-color-typography-sizes-unused-warning" class="wizard-token-unused">
               ${t('styleGuide.unusedTokenWarning')}
             </utrecht-paragraph>
 
@@ -470,7 +470,7 @@ export class WizardStyleGuide extends LitElement {
                   </a>
                 </utrecht-paragraph>
 
-                <utrecht-paragraph id="basis-space-${space}-unused-warning" class="unused">
+                <utrecht-paragraph id="basis-space-${space}-unused-warning" class="wizard-token-unused">
                   ${t('styleGuide.unusedTokenWarning')}
                 </utrecht-paragraph>
               `;
