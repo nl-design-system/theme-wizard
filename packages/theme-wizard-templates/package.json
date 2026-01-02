@@ -35,6 +35,6 @@
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
-    "@utrecht/web-component-library-stencil": "3.7.0"
+    "@utrecht/web-component-library-stencil": "4.0.0"
   }
 }

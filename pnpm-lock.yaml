@@ -367,8 +367,8 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
       '@utrecht/web-component-library-stencil':
-        specifier: 3.7.0
-        version: 3.7.0
+        specifier: 4.0.0
+        version: 4.0.0
       dequal:
         specifier: 2.0.3
         version: 2.0.3
@@ -490,8 +490,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@utrecht/web-component-library-stencil':
-        specifier: 3.7.0
-        version: 3.7.0
+        specifier: 4.0.0
+        version: 4.0.0
 
   packages/theme-wizard-website:
     dependencies:
@@ -2711,8 +2711,8 @@ packages:
   '@utrecht/textbox-css@3.0.1':
     resolution: {integrity: sha512-SP3CFpTd/6CffvSBcpBQ+uKzYusgDB/ri0vmEA/uYfWnRyen1ETQkeCoDJeSUR/D8g24NMdFu7xmOniiwGpRQg==}
 
-  '@utrecht/web-component-library-stencil@3.7.0':
-    resolution: {integrity: sha512-JvJ6rQAJlRtVbQApFODOMC25FgGsiLkTOs773VZo3u/rvvL4GhpXdri5Zap1yn0oD9dfjC4VWLq9LM+dPsLTDQ==}
+  '@utrecht/web-component-library-stencil@4.0.0':
+    resolution: {integrity: sha512-rN1F01RRCnGbP5bvjfoD1HZzNX/YAElFjzlkmLMFxkvOVaxq/Qo/FSxrbnzpH5UsgtVM6qx/tQAA9fOkIgit9Q==}
 
   '@vercel/analytics@1.6.1':
     resolution: {integrity: sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==}
@@ -9303,7 +9303,7 @@ snapshots:
 
   '@utrecht/textbox-css@3.0.1': {}
 
-  '@utrecht/web-component-library-stencil@3.7.0':
+  '@utrecht/web-component-library-stencil@4.0.0':
     dependencies:
       '@stencil/core': 4.18.3
 
