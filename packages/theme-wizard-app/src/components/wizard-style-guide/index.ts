@@ -95,9 +95,12 @@ export class WizardStyleGuide extends LitElement {
               .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
               .filter(([, value]) => typeof value === 'object' && value !== null)
               .map(([key, value]) => {
+                const captionId = `tokens-basis-color-${key}-caption`;
                 return html`
-                  <utrecht-table aria-label=${t(`tokens.fieldLabels.basis.color.${key}.label`)}>
-                    <utrecht-table-caption>${t(`tokens.fieldLabels.basis.color.${key}.label`)}</utrecht-table-caption>
+                  <utrecht-table aria-labelledby=${captionId}>
+                    <utrecht-table-caption id=${captionId}>
+                      ${t(`tokens.fieldLabels.basis.color.${key}.label`)}
+                    </utrecht-table-caption>
                     <utrecht-table-header>
                       <utrecht-table-row>
                         <utrecht-table-header-cell scope="col">
@@ -165,8 +168,10 @@ export class WizardStyleGuide extends LitElement {
           <section id="typography">
             <utrecht-heading-2>${t('styleGuide.sections.typography.title')}</utrecht-heading-2>
 
-            <utrecht-table aria-label=${t(`styleGuide.sections.typography.families.title`)}>
-              <utrecht-table-caption>${t(`styleGuide.sections.typography.families.title`)}</utrecht-table-caption>
+            <utrecht-table aria-labelledby="styleGuide-sections-typography-families-title">
+              <utrecht-table-caption id="styleGuide-sections-typography-families-title">
+                ${t(`styleGuide.sections.typography.families.title`)}
+              </utrecht-table-caption>
               <utrecht-table-header>
                 <utrecht-table-row>
                   <utrecht-table-header-cell scope="col">
@@ -217,8 +222,10 @@ export class WizardStyleGuide extends LitElement {
               </a>
             </utrecht-paragraph>
 
-            <utrecht-table aria-label=${t(`styleGuide.sections.typography.sizes.title`)}>
-              <utrecht-table-caption>${t(`styleGuide.sections.typography.sizes.title`)}</utrecht-table-caption>
+            <utrecht-table aria-labelledby="styleGuide-sections-typography-sizes-title">
+              <utrecht-table-caption id="styleGuide-sections-typography-sizes-title">
+                ${t(`styleGuide.sections.typography.sizes.title`)}
+              </utrecht-table-caption>
               <utrecht-table-header>
                 <utrecht-table-row>
                   <utrecht-table-header-cell scope="col">
@@ -274,8 +281,10 @@ export class WizardStyleGuide extends LitElement {
               </a>
             </utrecht-paragraph>
 
-            <utrecht-table aria-label=${t(`styleGuide.sections.typography.headings.title`)}>
-              <utrecht-table-caption>${t(`styleGuide.sections.typography.headings.title`)}</utrecht-table-caption>
+            <utrecht-table aria-labelledby="styleGuide-sections-typography-headings-title">
+              <utrecht-table-caption id="styleGuide-sections-typography-headings-title">
+                ${t(`styleGuide.sections.typography.headings.title`)}
+              </utrecht-table-caption>
               <utrecht-table-header>
                 <utrecht-table-row>
                   <utrecht-table-header-cell scope="col">
@@ -324,10 +333,13 @@ export class WizardStyleGuide extends LitElement {
               <a href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/" target="_blank"> docs </a>
             </utrecht-paragraph>
 
-            ${['block', 'inline', 'text', 'column', 'row'].map(
-              (space) => html`
-                <utrecht-table aria-label=${t(`styleGuide.sections.space.${space}.title`)}>
-                  <utrecht-table-caption>${t(`styleGuide.sections.space.${space}.title`)}</utrecht-table-caption>
+            ${['block', 'inline', 'text', 'column', 'row'].map((space) => {
+              const captionId = `styleguide-section-space-${space}-title`;
+              return html`
+                <utrecht-table aria-labelledby=${captionId}>
+                  <utrecht-table-caption id=${captionId}>
+                    ${t(`styleGuide.sections.space.${space}.title`)}
+                  </utrecht-table-caption>
                   <utrecht-table-header>
                     <utrecht-table-row>
                       <utrecht-table-header-cell scope="col">
@@ -384,8 +396,8 @@ export class WizardStyleGuide extends LitElement {
                       })}
                   </utrecht-table-body>
                 </utrecht-table>
-              `,
-            )}
+              `;
+            })}
           </section>
         </div>
       </wizard-layout>
