@@ -29,7 +29,7 @@
     "@nl-design-system/tsconfig": "1.0.5",
     "@rijkshuisstijl-community/storybook-tooling": "1.1.1",
     "@storybook/addon-a11y": "10.1.11",
-    "@storybook/addon-docs": "9.1.5",
+    "@storybook/addon-docs": "10.1.11",
     "@storybook/web-components-vite": "9.1.5",
     "@tabler/icons-react": "3.36.0",
     "@types/lodash-es": "4.17.12",
