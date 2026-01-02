@@ -21000,6 +21000,171 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
 exports[`strictly validate known basis themes > Start theme 1`] = `
 {
   "ams": {
+    "avatar": {
+      "aspect-ratio": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": 1,
+      },
+      "background-color": {
+        "$type": "color",
+        "$value": "{basis.color.accent-1-inverse.bg-default}",
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": "{basis.color.transparent}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "color": {
+        "$type": "color",
+        "$value": "{basis.color.accent-1-inverse.color-default}",
+      },
+      "font-family": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": "{basis.text.font-family.default}",
+      },
+      "font-size": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontSizes",
+          },
+        },
+        "$type": "fontSize",
+        "$value": "{basis.text.font-size.md}",
+      },
+      "has-image": {
+        "inline-size": {
+          "$type": "dimension",
+          "$value": "{basis.pointer-target.min-inline-size}",
+        },
+      },
+      "inline-size": {
+        "$type": "dimension",
+        "$value": "{basis.pointer-target.min-inline-size}",
+      },
+      "line-height": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "lineHeights",
+          },
+        },
+        "$type": "lineHeight",
+        "$value": "{basis.text.line-height.md}",
+      },
+      "padding-block": {
+        "$type": "dimension",
+        "$value": "0px",
+      },
+      "padding-inline": {
+        "$type": "dimension",
+        "$value": "0px",
+      },
+    },
+    "breadcrumb": {
+      "font-family": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": "{basis.text.font-family.default}",
+      },
+      "font-size": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontSizes",
+          },
+        },
+        "$type": "fontSize",
+        "$value": "{basis.text.font-size.md}",
+      },
+      "font-weight": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontWeights",
+          },
+        },
+        "$type": "fontWeight",
+        "$value": "{basis.text.font-weight.default}",
+      },
+      "line-height": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "lineHeights",
+          },
+        },
+        "$type": "lineHeight",
+        "$value": "{basis.text.line-height.md}",
+      },
+      "link": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.action-2.color-default}",
+        },
+        "hover": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.action-2.color-hover}",
+          },
+          "text-decoration-line": {
+            "$type": "textDecoration",
+            "$value": "None",
+          },
+        },
+        "outline-offset": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "auto",
+        },
+        "text-decoration-line": {
+          "$type": "textDecoration",
+          "$value": "underline",
+        },
+        "text-decoration-thickness": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "auto",
+        },
+        "text-underline-offset": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "auto",
+        },
+      },
+      "separator": {
+        "background-image": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path fill='%23000000' fill-rule='evenodd' d='m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z'/></svg>")",
+        },
+        "block-size": {
+          "$type": "dimension",
+          "$value": "0.75rem",
+        },
+        "inline-size": {
+          "$type": "dimension",
+          "$value": "0.75rem",
+        },
+        "margin-inline": {
+          "$type": "dimension",
+          "$value": "{basis.space.column.lg}",
+        },
+      },
+    },
     "card": {
       "heading": {
         "margin-block-end": {
@@ -21060,6 +21225,224 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         "$description": "[code-only]",
         "$type": "other",
         "$value": "auto",
+      },
+    },
+    "figure": {
+      "caption": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
+        },
+        "font-family": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "fontSize",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.default}",
+        },
+        "inverse": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.default-inverse.color-document}",
+          },
+        },
+        "line-height": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
+        },
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{basis.space.row.md}",
+      },
+    },
+    "file-input": {
+      "background-color": {
+        "$type": "color",
+        "$value": "{basis.form-control.background-color}",
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": "{basis.form-control.border-color}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "dashed",
+      },
+      "border-width": {
+        "$type": "dimension",
+        "$value": "{basis.form-control.border-width}",
+      },
+      "button": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.border-default}",
+        },
+        "border-style": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "solid",
+        },
+        "border-width": {
+          "$type": "dimension",
+          "$value": "{basis.border-width.sm}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.color-default}",
+        },
+        "cursor": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "default",
+        },
+        "disabled": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.disabled.color-subtle}",
+          },
+          "cursor": {
+            "$description": "[code-only]",
+            "$type": "other",
+            "$value": "disabled",
+          },
+        },
+        "hover": {
+          "box-shadow": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "boxShadow",
+              },
+            },
+            "$type": "shadow",
+            "$value": "None",
+          },
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.color-hover}",
+          },
+        },
+        "line-height": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
+        },
+        "margin-inline-end": {
+          "$description": "[code-only]",
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+        "padding-block": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "padding-inline": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "color": {
+        "$type": "color",
+        "$value": "{basis.form-control.color}",
+      },
+      "cursor": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "default",
+      },
+      "disabled": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.form-control.disabled.color}",
+        },
+        "cursor": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "disabled",
+        },
+      },
+      "font-family": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": "{basis.form-control.font-family}",
+      },
+      "font-size": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontSizes",
+          },
+        },
+        "$type": "fontSize",
+        "$value": "{basis.form-control.font-size}",
+      },
+      "font-weight": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontWeights",
+          },
+        },
+        "$type": "fontWeight",
+        "$value": "{basis.form-control.font-weight}",
+      },
+      "line-height": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "lineHeights",
+          },
+        },
+        "$type": "lineHeight",
+        "$value": "{basis.form-control.line-height}",
+      },
+      "outline-offset": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "auto",
+      },
+      "padding-block": {
+        "$type": "dimension",
+        "$value": "{basis.space.block.xl}",
+      },
+      "padding-inline": {
+        "$type": "dimension",
+        "$value": "{basis.space.inline.xl}",
       },
     },
     "heading": {
@@ -21510,6 +21893,129 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         "padding-inline": {
           "$type": "dimension",
           "$value": "96px",
+        },
+      },
+    },
+    "tabs": {
+      "button": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.action-2.color-default}",
+        },
+        "cursor": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "pointer",
+        },
+        "disabled": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.disabled.color-subtle}",
+          },
+          "cursor": {
+            "$description": "[code-only]",
+            "$type": "other",
+            "$value": "not-allowed",
+          },
+        },
+        "font-family": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "fontSize",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.default}",
+        },
+        "hover": {
+          "box-shadow": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "boxShadow",
+              },
+            },
+            "$type": "shadow",
+            "$value": "inset 0 -0.25rem 0 0 #1b59a4",
+          },
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.action-2.color-hover}",
+          },
+        },
+        "line-height": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
+        },
+        "outline-offset": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "0px",
+        },
+        "padding-block": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "padding-inline": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+        "selected": {
+          "box-shadow": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "boxShadow",
+              },
+            },
+            "$type": "shadow",
+            "$value": "inset 0 -0.25rem 0 0 #1b59a4",
+          },
+          "font-weight": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "fontWeights",
+              },
+            },
+            "$type": "fontWeight",
+            "$value": "{basis.text.font-weight.bold}",
+          },
+        },
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{basis.space.row.3xl}",
+      },
+      "list": {
+        "box-shadow": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "boxShadow",
+            },
+          },
+          "$type": "shadow",
+          "$value": "inset 0 -0.0625rem 0 0 #c4c4c4",
         },
       },
     },
@@ -33214,6 +33720,163 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
       },
     },
+    "tabs": {
+      "border-color": {
+        "$type": "color",
+        "$value": "{basis.color.default.border-subtle}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "tab": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.action-2.color-default}",
+        },
+        "cursor": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "pointer",
+        },
+        "focus": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.focus.color}",
+          },
+        },
+        "font-family": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "fontSize",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.default}",
+        },
+        "hover": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.action-2.color-hover}",
+          },
+        },
+        "line-height": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
+        },
+        "outline": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "0px",
+        },
+        "padding-block-end": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "padding-block-start": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "padding-inline-end": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+        "padding-inline-start": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+        "selected": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.default.color-document}",
+          },
+          "font-weight": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "fontWeights",
+              },
+            },
+            "$type": "fontWeight",
+            "$value": "{basis.text.font-weight.bold}",
+          },
+        },
+      },
+      "tab-indicator": {
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.default.border-active}",
+        },
+        "border-width": {
+          "$type": "dimension",
+          "$value": "{basis.border-width.lg}",
+        },
+        "bottom": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "0px",
+        },
+      },
+      "tab-panel": {
+        "outline": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "0px",
+        },
+        "padding-block-end": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.3xl}",
+        },
+        "padding-block-start": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.3xl}",
+        },
+        "padding-inline-end": {
+          "$type": "dimension",
+          "$value": "0px",
+        },
+        "padding-inline-start": {
+          "$type": "dimension",
+          "$value": "0px",
+        },
+      },
+      "width": {
+        "$description": "[code-only]",
+        "$type": "dimension",
+        "$value": "100%",
+      },
+    },
   },
   "lux": {
     "login-link": {
@@ -33371,11 +34034,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.color.default.border-default}",
         },
         "border-width": {
-          "$extensions": {
-            "studio.tokens": {
-              "originalType": "borderWidth",
-            },
-          },
           "$type": "dimension",
           "$value": "{basis.border-width.sm}",
         },
@@ -33439,9 +34097,23 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.text.line-height.md}",
         },
         "pressed": {
+          "active": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.default-inverse.bg-active}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.default-inverse.color-active}",
+            },
+          },
           "background-color": {
             "$type": "color",
-            "$value": "{basis.color.default-inverse.bg-active}",
+            "$value": "{basis.color.default-inverse.bg-default}",
           },
           "border-color": {
             "$type": "color",
@@ -33449,7 +34121,35 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "color": {
             "$type": "color",
-            "$value": "{basis.color.default-inverse.color-active}",
+            "$value": "{basis.color.default-inverse.color-default}",
+          },
+          "disabled": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled-inverse.bg-default}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled-inverse.color-subtle}",
+            },
+          },
+          "hover": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.default-inverse.bg-hover}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.default-inverse.color-hover}",
+            },
           },
         },
       },
@@ -33482,6 +34182,24 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.size.icon.md}",
         },
       },
+      "icon-only": {
+        "padding-block-end": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.md}",
+        },
+        "padding-block-start": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.md}",
+        },
+        "padding-inline-end": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.md}",
+        },
+        "padding-inline-start": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.md}",
+        },
+      },
       "min-block-size": {
         "$type": "dimension",
         "$value": "{basis.pointer-target.min-block-size}",
@@ -33497,11 +34215,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "padding-block-end": {
         "$type": "dimension",
-        "$value": "{basis.space.block.lg}",
+        "$value": "{basis.space.block.md}",
       },
       "padding-block-start": {
         "$type": "dimension",
-        "$value": "{basis.space.block.lg}",
+        "$value": "{basis.space.block.md}",
       },
       "padding-inline-end": {
         "$type": "dimension",
@@ -33535,11 +34253,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.color.transparent}",
         },
         "border-width": {
-          "$extensions": {
-            "studio.tokens": {
-              "originalType": "borderWidth",
-            },
-          },
           "$type": "dimension",
           "$value": "{nl.button.default.border-width}",
         },
@@ -33644,17 +34357,45 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
           },
           "pressed": {
+            "active": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative.bg-active}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative.border-active}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.negative.color-active}",
+              },
+            },
             "background-color": {
               "$type": "color",
-              "$value": "{basis.color.negative.bg-active}",
+              "$value": "{basis.color.transparent}",
             },
             "border-color": {
               "$type": "color",
-              "$value": "{basis.color.negative.border-active}",
+              "$value": "{basis.color.negative.border-default}",
             },
             "color": {
               "$type": "color",
-              "$value": "{basis.color.negative.color-active}",
+              "$value": "{basis.color.negative.color-default}",
+            },
+            "hover": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative.bg-hover}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative.border-hover}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.negative.color-hover}",
+              },
             },
           },
         },
@@ -33700,32 +34441,102 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
           },
           "pressed": {
+            "active": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive.bg-active}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive.border-active}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.positive.color-active}",
+              },
+            },
             "background-color": {
               "$type": "color",
-              "$value": "{basis.color.positive.bg-active}",
+              "$value": "{basis.color.transparent}",
             },
             "border-color": {
               "$type": "color",
-              "$value": "{basis.color.positive.border-active}",
+              "$value": "{basis.color.positive.border-default}",
             },
             "color": {
               "$type": "color",
-              "$value": "{basis.color.positive.color-active}",
+              "$value": "{basis.color.positive.color-default}",
+            },
+            "hover": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive.bg-hover}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive.border-hover}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.positive.color-hover}",
+              },
             },
           },
         },
         "pressed": {
+          "active": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1.bg-active}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1.border-active}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1.color-active}",
+            },
+          },
           "background-color": {
             "$type": "color",
-            "$value": "{basis.color.action-1.bg-active}",
+            "$value": "{basis.color.transparent}",
           },
           "border-color": {
             "$type": "color",
-            "$value": "{basis.color.action-1.border-active}",
+            "$value": "{basis.color.action-1.border-default}",
           },
           "color": {
             "$type": "color",
-            "$value": "{basis.color.action-1.color-active}",
+            "$value": "{basis.color.action-1.color-default}",
+          },
+          "disabled": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled.bg-default}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled.border-subtle}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled.color-subtle}",
+            },
+          },
+          "hover": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1.bg-hover}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1.border-hover}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1.color-hover}",
+            },
           },
         },
       },
@@ -33753,11 +34564,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.color.action-1.border-default}",
         },
         "border-width": {
-          "$extensions": {
-            "studio.tokens": {
-              "originalType": "borderWidth",
-            },
-          },
           "$type": "dimension",
           "$value": "{nl.button.default.border-width}",
         },
@@ -33862,9 +34668,23 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
           },
           "pressed": {
+            "active": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.bg-active}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.color-active}",
+              },
+            },
             "background-color": {
               "$type": "color",
-              "$value": "{basis.color.negative-inverse.bg-active}",
+              "$value": "{basis.color.negative-inverse.bg-default}",
             },
             "border-color": {
               "$type": "color",
@@ -33872,7 +34692,21 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
             "color": {
               "$type": "color",
-              "$value": "{basis.color.negative-inverse.color-active}",
+              "$value": "{basis.color.negative-inverse.color-default}",
+            },
+            "hover": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.bg-hover}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.color-hover}",
+              },
             },
           },
         },
@@ -33918,9 +34752,23 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
           },
           "pressed": {
+            "active": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.bg-active}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.color-active}",
+              },
+            },
             "background-color": {
               "$type": "color",
-              "$value": "{basis.color.positive-inverse.bg-active}",
+              "$value": "{basis.color.positive-inverse.bg-default}",
             },
             "border-color": {
               "$type": "color",
@@ -33928,14 +34776,42 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
             "color": {
               "$type": "color",
-              "$value": "{basis.color.positive-inverse.color-active}",
+              "$value": "{basis.color.positive-inverse.color-default}",
+            },
+            "hover": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.bg-hover}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.color-hover}",
+              },
             },
           },
         },
         "pressed": {
+          "active": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.bg-active}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.color-active}",
+            },
+          },
           "background-color": {
             "$type": "color",
-            "$value": "{basis.color.action-1-inverse.bg-active}",
+            "$value": "{basis.color.action-1-inverse.bg-default}",
           },
           "border-color": {
             "$type": "color",
@@ -33943,7 +34819,35 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "color": {
             "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
+            "$value": "{basis.color.action-1-inverse.color-default}",
+          },
+          "disabled": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled-inverse.bg-default}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled-inverse.color-subtle}",
+            },
+          },
+          "hover": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.bg-hover}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.color-hover}",
+            },
           },
         },
       },
@@ -33971,13 +34875,8 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.color.transparent}",
         },
         "border-width": {
-          "$extensions": {
-            "studio.tokens": {
-              "originalType": "borderWidth",
-            },
-          },
           "$type": "dimension",
-          "$value": "{nl.button.default.border-width}",
+          "$value": "0px",
         },
         "color": {
           "$type": "color",
@@ -34080,9 +34979,23 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
           },
           "pressed": {
+            "active": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.bg-active}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.color-active}",
+              },
+            },
             "background-color": {
               "$type": "color",
-              "$value": "{basis.color.negative-inverse.bg-active}",
+              "$value": "{basis.color.negative-inverse.bg-default}",
             },
             "border-color": {
               "$type": "color",
@@ -34090,7 +35003,21 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
             "color": {
               "$type": "color",
-              "$value": "{basis.color.negative-inverse.color-active}",
+              "$value": "{basis.color.negative-inverse.color-default}",
+            },
+            "hover": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.bg-hover}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.negative-inverse.color-hover}",
+              },
             },
           },
         },
@@ -34136,9 +35063,23 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
           },
           "pressed": {
+            "active": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.bg-active}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.color-active}",
+              },
+            },
             "background-color": {
               "$type": "color",
-              "$value": "{basis.color.positive-inverse.bg-active}",
+              "$value": "{basis.color.positive-inverse.bg-default}",
             },
             "border-color": {
               "$type": "color",
@@ -34146,14 +35087,42 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
             "color": {
               "$type": "color",
-              "$value": "{basis.color.positive-inverse.color-active}",
+              "$value": "{basis.color.positive-inverse.color-default}",
+            },
+            "hover": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.bg-hover}",
+              },
+              "border-color": {
+                "$type": "color",
+                "$value": "{basis.color.transparent}",
+              },
+              "color": {
+                "$type": "color",
+                "$value": "{basis.color.positive-inverse.color-hover}",
+              },
             },
           },
         },
         "pressed": {
+          "active": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.bg-active}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.color-active}",
+            },
+          },
           "background-color": {
             "$type": "color",
-            "$value": "{basis.color.action-1-inverse.bg-active}",
+            "$value": "{basis.color.action-1-inverse.bg-default}",
           },
           "border-color": {
             "$type": "color",
@@ -34161,7 +35130,35 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "color": {
             "$type": "color",
-            "$value": "{basis.color.action-1-inverse.color-active}",
+            "$value": "{basis.color.action-1-inverse.color-default}",
+          },
+          "disabled": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled-inverse.bg-default}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.disabled-inverse.color-subtle}",
+            },
+          },
+          "hover": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.bg-hover}",
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.color-hover}",
+            },
           },
         },
       },
@@ -34336,7 +35333,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "padding-block": {
         "$type": "dimension",
-        "$value": "None",
+        "$value": "0px",
       },
       "padding-inline": {
         "$type": "dimension",
@@ -34942,6 +35939,186 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
     },
   },
+  "rhc": {
+    "dot-badge": {
+      "block-size": {
+        "$type": "dimension",
+        "$value": "{basis.size.3xs}",
+      },
+      "border-radius": {
+        "$type": "dimension",
+        "$value": "{basis.border-radius.round}",
+      },
+      "color": {
+        "$type": "color",
+        "$value": "{basis.color.accent-1-inverse.bg-default}",
+      },
+      "inline-size": {
+        "$type": "dimension",
+        "$value": "{basis.size.3xs}",
+      },
+    },
+    "navigation-list": {
+      "item": {
+        "active": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.default.bg-active}",
+          },
+        },
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.default.border-subtle}",
+        },
+        "border-width": {
+          "$type": "dimension",
+          "$value": "{basis.border-width.sm}",
+        },
+        "column-gap": {
+          "$type": "dimension",
+          "$value": "{basis.space.column.xl}",
+        },
+        "content": {
+          "column-gap": {
+            "$description": "[code-only]",
+            "$type": "dimension",
+            "$value": "{basis.space.column.md}",
+          },
+          "row-gap": {
+            "$description": "[code-only]",
+            "$type": "dimension",
+            "$value": "{basis.space.row.sm}",
+          },
+        },
+        "description": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.default.color-subtle}",
+          },
+          "font-size": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "fontSizes",
+              },
+            },
+            "$type": "fontSize",
+            "$value": "{basis.text.font-size.md}",
+          },
+          "line-height": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "lineHeights",
+              },
+            },
+            "$type": "lineHeight",
+            "$value": "{basis.text.line-height.md}",
+          },
+        },
+        "focus": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+        },
+        "hover": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.default.bg-hover}",
+          },
+        },
+        "icon-end": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.action-2.color-default}",
+          },
+        },
+        "icon-start": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.accent-1-inverse.bg-default}",
+          },
+          "border-radius": {
+            "$type": "dimension",
+            "$value": "{basis.border-radius.round}",
+          },
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.accent-1-inverse.color-default}",
+          },
+          "padding-block": {
+            "$type": "dimension",
+            "$value": "{basis.space.block.md}",
+          },
+          "padding-inline": {
+            "$type": "dimension",
+            "$value": "{basis.space.inline.md}",
+          },
+          "size": {
+            "$type": "dimension",
+            "$value": "{basis.size.icon.md}",
+          },
+        },
+        "label": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.heading.color}",
+          },
+          "font-family": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "fontFamilies",
+              },
+            },
+            "$type": "fontFamily",
+            "$value": "{basis.text.font-family.default}",
+          },
+          "font-size": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "fontSizes",
+              },
+            },
+            "$type": "fontSize",
+            "$value": "{basis.text.font-size.md}",
+          },
+          "font-weight": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "fontWeights",
+              },
+            },
+            "$type": "fontWeight",
+            "$value": "{basis.text.font-weight.bold}",
+          },
+          "line-height": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "lineHeights",
+              },
+            },
+            "$type": "lineHeight",
+            "$value": "{basis.text.line-height.md}",
+          },
+        },
+        "min-height": {
+          "$type": "dimension",
+          "$value": "{basis.pointer-target.min-block-size}",
+        },
+        "padding-block": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "padding-inline": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+    },
+  },
   "todo": {
     "accordion": {
       "button": {
@@ -34981,78 +36158,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
         },
-      },
-    },
-    "avatar": {
-      "background-color": {
-        "$type": "color",
-        "$value": "{basis.color.action-1-inverse.bg-default}",
-      },
-      "border-color": {
-        "$type": "color",
-        "$value": "{basis.color.transparent}",
-      },
-      "border-radius": {
-        "$type": "dimension",
-        "$value": "{basis.border-radius.round}",
-      },
-      "border-width": {
-        "$type": "dimension",
-        "$value": "{basis.border-width.sm}",
-      },
-      "color": {
-        "$type": "color",
-        "$value": "{basis.color.action-1-inverse.color-default}",
-      },
-      "font-family": {
-        "$extensions": {
-          "studio.tokens": {
-            "originalType": "fontFamilies",
-          },
-        },
-        "$type": "fontFamily",
-        "$value": "{basis.text.font-family.default}",
-      },
-      "font-size": {
-        "$extensions": {
-          "studio.tokens": {
-            "originalType": "fontSizes",
-          },
-        },
-        "$type": "fontSize",
-        "$value": "{basis.text.font-size.md}",
-      },
-      "font-weight": {
-        "$extensions": {
-          "studio.tokens": {
-            "originalType": "fontWeights",
-          },
-        },
-        "$type": "fontWeight",
-        "$value": "{basis.text.font-weight.bold}",
-      },
-      "icon": {
-        "icon-size": {
-          "$type": "dimension",
-          "$value": "{basis.size.icon.md}",
-        },
-      },
-      "line-height": {
-        "$extensions": {
-          "studio.tokens": {
-            "originalType": "lineHeights",
-          },
-        },
-        "$type": "lineHeight",
-        "$value": "{basis.text.line-height.md}",
-      },
-      "size": {
-        "$type": "dimension",
-        "$value": "{basis.pointer-target.min-block-size}",
-      },
-      "text-transform": {
-        "$type": "textCase",
-        "$value": "uppercase",
       },
     },
     "breadcrumb-nav": {
@@ -35196,6 +36301,66 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.color.action-2.bg-active}",
         },
       },
+      "archived": {
+        "active": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.default.bg-active}",
+          },
+        },
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.default.bg-default}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
+        },
+        "decoration": {
+          "folder": {
+            "active": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.default.bg-active}",
+              },
+            },
+            "background-color": {
+              "$type": "color",
+              "$value": "{basis.color.default.bg-active}",
+            },
+            "hover": {
+              "background-color": {
+                "$type": "color",
+                "$value": "{basis.color.default.bg-active}",
+              },
+            },
+          },
+        },
+        "description": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.default.color-document}",
+          },
+        },
+        "heading": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.heading.color}",
+          },
+        },
+        "hover": {
+          "background-color": {
+            "$type": "color",
+            "$value": "{basis.color.default.bg-hover}",
+          },
+        },
+        "metadata": {
+          "color": {
+            "$type": "color",
+            "$value": "{basis.color.default.color-document}",
+          },
+        },
+      },
       "background-color": {
         "$type": "color",
         "$value": "{basis.color.action-2.bg-default}",
@@ -35220,7 +36385,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "$type": "color",
             "$value": "{basis.color.action-2.bg-active}",
           },
-          "focus-visible": {
+          "focus": {
             "background-color": {
               "$type": "color",
               "$value": "{basis.focus.background-color}",
@@ -35232,24 +36397,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "$value": "{basis.color.action-2.bg-active}",
             },
           },
-          "read-only": {
-            "active": {
-              "background-color": {
-                "$type": "color",
-                "$value": "{basis.color.default.bg-active}",
-              },
-            },
-            "background-color": {
-              "$type": "color",
-              "$value": "{basis.color.default.bg-active}",
-            },
-            "hover": {
-              "background-color": {
-                "$type": "color",
-                "$value": "{basis.color.default.bg-active}",
-              },
-            },
-          },
         },
         "paper": {
           "background-color": {
@@ -35258,7 +36405,49 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
         },
       },
-      "focus-visible": {
+      "description": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
+        },
+        "font-family": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "fontSize",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.default}",
+        },
+        "line-height": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
+        },
+      },
+      "focus": {
         "background-color": {
           "$type": "color",
           "$value": "{basis.focus.background-color}",
@@ -35309,12 +36498,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$type": "lineHeight",
           "$value": "{basis.text.line-height.xl}",
         },
-        "read-only": {
-          "color": {
-            "$type": "color",
-            "$value": "{basis.heading.color}",
-          },
-        },
       },
       "hover": {
         "background-color": {
@@ -35332,6 +36515,48 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "$value": "{basis.size.icon.md}",
         },
       },
+      "metadata": {
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
+        },
+        "font-family": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "fontSize",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.default}",
+        },
+        "line-height": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
+        },
+      },
       "min-block-size": {
         "$type": "dimension",
         "$value": "192px",
@@ -35347,28 +36572,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       "padding-inline": {
         "$type": "dimension",
         "$value": "{basis.space.inline.3xl}",
-      },
-      "read-only": {
-        "active": {
-          "background-color": {
-            "$type": "color",
-            "$value": "{basis.color.default.bg-active}",
-          },
-        },
-        "background-color": {
-          "$type": "color",
-          "$value": "{basis.color.default.bg-default}",
-        },
-        "color": {
-          "$type": "color",
-          "$value": "{basis.color.default.color-document}",
-        },
-        "hover": {
-          "background-color": {
-            "$type": "color",
-            "$value": "{basis.color.default.bg-hover}",
-          },
-        },
       },
       "row-gap": {
         "$type": "dimension",
@@ -37684,6 +38887,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
     "components/avatar",
     "components/backdrop",
     "components/blockquote",
+    "components/breadcrumb-nav/amsterdam",
     "components/breadcrumb-nav/utrecht",
     "components/breadcrumb-nav/todo",
     "components/button/nl",
@@ -37704,8 +38908,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
     "components/data-list",
     "components/drawer/utrecht",
     "components/drawer/todo",
-    "components/figure",
+    "components/dot-badge",
+    "components/figure/amsterdam",
+    "components/figure/utrecht",
     "components/file",
+    "components/file-input",
     "components/form-field",
     "components/form-field-checkbox-option",
     "components/form-field-description",
@@ -37736,6 +38943,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
     "components/mark/utrecht",
     "components/modal-dialog",
     "components/navigation-bar",
+    "components/navigation-list",
     "components/note",
     "components/number-badge/nl",
     "components/number-badge/utrecht",
@@ -37754,10 +38962,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
     "components/side-navigation",
     "components/skip-link/nl",
     "components/skip-link/utrecht",
-    "components/status-badge",
+    "components/status-badge/utrecht",
+    "components/status-badge/todo",
     "components/step-marker",
     "components/switch",
     "components/table",
+    "components/tabs/amsterdam",
+    "components/tabs/den-haag",
     "components/task-card",
     "components/task-list",
     "components/task-navigation",
@@ -39290,7 +40501,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "padding-block": {
         "$type": "dimension",
-        "$value": "None",
+        "$value": "0px",
       },
       "padding-inline": {
         "$type": "dimension",
@@ -40585,7 +41796,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "color": {
             "$type": "color",
-            "$value": "basis.color.disabled.color-subtle",
+            "$value": "{basis.color.disabled.color-subtle}",
           },
         },
         "font-weight": {
@@ -41373,6 +42584,233 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "$type": "color",
             "$value": "{basis.color.warning.color-default}",
           },
+        },
+      },
+    },
+    "status-badge": {
+      "active": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.color-default}",
+        },
+      },
+      "background-color": {
+        "$type": "color",
+        "$value": "{basis.color.default.bg-default}",
+      },
+      "border-color": {
+        "$type": "color",
+        "$value": "{basis.color.transparent}",
+      },
+      "border-radius": {
+        "$type": "dimension",
+        "$value": "{basis.border-radius.sm}",
+      },
+      "border-width": {
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "color": {
+        "$type": "color",
+        "$value": "{basis.color.default.color-default}",
+      },
+      "danger": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.negative.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.negative.color-default}",
+        },
+      },
+      "error": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.negative.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.negative.color-default}",
+        },
+      },
+      "font-family": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": "{basis.text.font-family.default}",
+      },
+      "font-size": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontSizes",
+          },
+        },
+        "$type": "fontSize",
+        "$value": "{basis.text.font-size.md}",
+      },
+      "font-weight": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontWeights",
+          },
+        },
+        "$type": "fontWeight",
+        "$value": "{basis.text.font-weight.bold}",
+      },
+      "inactive": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.default.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.default.color-default}",
+        },
+      },
+      "invalid": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.negative.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.negative.color-default}",
+        },
+      },
+      "letter-spacing": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "letterSpacing",
+          },
+        },
+        "$type": "dimension",
+        "$value": "0px",
+      },
+      "line-height": {
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "lineHeights",
+          },
+        },
+        "$type": "lineHeight",
+        "$value": "{basis.text.line-height.md}",
+      },
+      "min-block-size": {
+        "$type": "dimension",
+        "$value": "{basis.size.xs}",
+      },
+      "min-inline-size": {
+        "$type": "dimension",
+        "$value": "{basis.size.sm}",
+      },
+      "neutral": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.info.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.info.color-default}",
+        },
+      },
+      "padding-block": {
+        "$type": "dimension",
+        "$value": "0px",
+      },
+      "padding-inline": {
+        "$type": "dimension",
+        "$value": "{basis.space.inline.sm}",
+      },
+      "safe": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.color-default}",
+        },
+      },
+      "success": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.color-default}",
+        },
+      },
+      "text-transform": {
+        "$type": "textCase",
+        "$value": "None",
+      },
+      "valid": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.positive.color-default}",
+        },
+      },
+      "warning": {
+        "background-color": {
+          "$type": "color",
+          "$value": "{basis.color.warning.bg-default}",
+        },
+        "border-color": {
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$type": "color",
+          "$value": "{basis.color.warning.color-default}",
         },
       },
     },
