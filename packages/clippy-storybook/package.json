@@ -36,7 +36,7 @@
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
     "@whitespace/storybook-addon-html": "8.0.2",
-    "lit": "3.3.1",
+    "lit": "3.3.2",
     "lodash-es": "4.17.22",
     "prettier": "3.7.4",
     "react": "18.3.1",
