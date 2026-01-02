@@ -24,7 +24,7 @@ export default defineConfig([
         'error',
         {
           ignoreCase: false,
-          newlinesBetween: 'never',
+          newlinesBetween: 0,
         },
       ],
       // Sort objects sensibly, allow `id` and `name` properties to go first and `overrides` to go last
