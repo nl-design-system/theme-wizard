@@ -155,8 +155,8 @@ importers:
         specifier: 1.1.1
         version: 1.1.1
       '@storybook/addon-a11y':
-        specifier: 9.1.5
-        version: 9.1.5(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: 10.1.11
+        version: 10.1.11(storybook@9.1.5(prettier@3.7.4)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2)))
       '@storybook/addon-docs':
         specifier: 9.1.5
         version: 9.1.5(@types/react@18.3.23)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -2357,10 +2357,10 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
-  '@storybook/addon-a11y@9.1.5':
-    resolution: {integrity: sha512-IMS325fT/3sAOwSl285Wl7gBKd4NK58ebsIUZytyzLJ7Bv6BgxUdRBZ2E0822WP6zofYTkOk7/PDmBfzEWgY2g==}
+  '@storybook/addon-a11y@10.1.11':
+    resolution: {integrity: sha512-3sr6HmcDgW1+TQAV9QtWBE3HlGyfFXVZY3RECTNLNH6fRC+rYQCItisvQIVxQpyftLSQ8EAMN9JQzs495MjWNg==}
     peerDependencies:
-      storybook: ^9.1.5
+      storybook: ^10.1.11
 
   '@storybook/addon-docs@9.1.5':
     resolution: {integrity: sha512-q1j5RRElxFSnHOh60eS3dS2TAyAHzcQeH/2B9UXo6MUHu7HmhNpw3qt2YibIw0zEogHCvZhLNx6TNzSy+7wRUw==}
@@ -8867,7 +8867,7 @@ snapshots:
 
   '@stencil/core@4.18.3': {}
 
-  '@storybook/addon-a11y@9.1.5(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@storybook/addon-a11y@10.1.11(storybook@9.1.5(prettier@3.7.4)(vite@7.3.0(@types/node@22.19.3)(tsx@4.19.2)(yaml@2.8.2)))':
     dependencies:
       '@storybook/global': 5.0.0
       axe-core: 4.11.0
