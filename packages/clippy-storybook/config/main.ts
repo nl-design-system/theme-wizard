@@ -17,8 +17,8 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
-      // Only scan React component files, exclude web components
-      exclude: ['../src/web-components/**'],
+      // Only scan component files in the patterns folder
+      include: ['../src/pattterns/**'],
     },
   },
 };
