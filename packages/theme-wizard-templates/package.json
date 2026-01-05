@@ -28,9 +28,9 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.6",
+    "@utrecht/component-library-css": "8.2.1",
     "astro": "5.16.6",
-    "typescript": "5.9.3",
-    "@utrecht/component-library-css": "8.2.1"
+    "typescript": "5.9.3"
   },
   "devDependencies": {
     "@nl-design-system-community/clippy-components": "workspace:*",

@@ -18,7 +18,6 @@ import PersistentStorage from '../../lib/PersistentStorage';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
-import '@nl-design-system-community/clippy-components/clippy-code';
 import '../template-action';
 import '../template-case-card';
 import '../template-color-swatch';
