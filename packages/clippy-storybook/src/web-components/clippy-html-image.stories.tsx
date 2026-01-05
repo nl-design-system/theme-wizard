@@ -30,7 +30,7 @@ const meta = {
       },
     },
   },
-  render: () => React.createElement('clippy-html-image', null),
+  render: () => React.createElement('clippy-html-image', null) as unknown as string,
   tags: ['autodocs'],
   title: 'Clippy/HTML Image',
 } satisfies Meta<HTMLImageStoryArgs>;
@@ -60,7 +60,7 @@ export const Default: Story = {
       React.createElement('h1', { style: { fontSize: '24px' } }, '24px: Example text'),
       React.createElement('h1', { style: { fontSize: '32px' } }, '32px: Example text'),
       React.createElement('h1', { style: { fontSize: '48px' } }, '48px: Example text'),
-    ),
+    ) as unknown as string,
 };
 
 export const WithHidden: Story = {
@@ -82,5 +82,5 @@ export const WithHidden: Story = {
       { hidden: true },
       React.createElement('span', { slot: 'label' }, 'System architecture diagram'),
       React.createElement('h1', null, 'clippy-html-image with label'),
-    ),
+    ) as unknown as string,
 };
