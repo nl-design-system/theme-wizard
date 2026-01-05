@@ -1,5 +1,11 @@
 # @nl-design-system-community/css-scraper
 
+## 1.0.2
+
+### Patch Changes
+
+- 05adfae: Publish CSS scraper on npm.
+
 ## 1.0.1
 
 ### Patch Changes

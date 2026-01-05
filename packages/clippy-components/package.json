@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/clippy-components",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "type": "module",
   "module": "./dist/index.js",
   "exports": {

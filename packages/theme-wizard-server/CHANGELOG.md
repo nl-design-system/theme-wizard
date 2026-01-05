@@ -1,5 +1,16 @@
 # @nl-design-system-community/theme-wizard-server
 
+## 1.1.0
+
+### Minor Changes
+
+- 05adfae: Add server that can be started from the command line with `theme-wizard-server`.
+
+### Patch Changes
+
+- Updated dependencies [05adfae]
+  - @nl-design-system-community/css-scraper@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
