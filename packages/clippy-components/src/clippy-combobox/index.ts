@@ -230,6 +230,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           aria-autocomplete="list"
           aria-haspopup="listbox"
           aria-controls=${this.#listId}
+          aria-expanded=${this.open}
           aria-activedescendant=${this.#getOptionId()}
           type="text"
           class="utrecht-textbox utrecht-combobox__input"
