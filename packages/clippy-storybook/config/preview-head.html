@@ -1,18 +1,1 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-
-<script>
-  const addThemeClasses = () => {
-    const rootInner = document.getElementById('storybook-root');
-    if (rootInner) {
-      rootInner.classList.add('ma-theme', 'clippy-theme');
-    } else {
-      setTimeout(addThemeClasses, 100);
-    }
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', addThemeClasses);
-  } else {
-    addThemeClasses();
-  }
-</script>
