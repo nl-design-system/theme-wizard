@@ -5,6 +5,7 @@ import GemeenteVoorbeeldHome, {
   type GemeenteVoorbeeldHomeProps,
 } from '@nl-design-system-community/theme-wizard-templates/src/pages/gemeentevoorbeeld/GemeenteVoorbeeldHome';
 import * as React from 'react';
+import documentation from '../docs/templates/gemeente-voorbeeld-documentatie.md?raw';
 
 const meta = {
   component: GemeenteVoorbeeldHome as React.ComponentType<GemeenteVoorbeeldHomeProps>,
@@ -26,7 +27,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Gemeente Voorbeeld homepage op basis van Utrecht componenten.',
+        component: documentation,
       },
     },
     layout: 'fullscreen',
