@@ -1,7 +1,6 @@
 /* @license CC0-1.0 */
 
 import { Button, ButtonGroup, Drawer, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { FC } from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieConsentDrawerProps } from './types';
