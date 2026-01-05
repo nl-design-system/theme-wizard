@@ -40,11 +40,11 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
 
       <form method="dialog">
         <ButtonGroup style={{ marginBlockStart: 'var(--basis-space-block-xl, 2rem)' }}>
-          <Button appearance="primary-action-button" onClick={handleAccept} type="submit" value="accept">
+          <Button appearance="secondary-action-button" onClick={handleAccept} type="submit" value="accept">
             {buttonAccept}
           </Button>
 
-          <Button appearance="primary-action-button" onClick={handleReject} type="submit" value="reject">
+          <Button appearance="secondary-action-button" onClick={handleReject} type="submit" value="reject">
             {buttonReject}
           </Button>
 

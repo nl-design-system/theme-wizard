@@ -36,7 +36,7 @@ npm install @utrecht/component-library-css
 Het pattern gebruikt bestaande componenten uit de Utrecht Design System community:
 
 - **`Drawer`** - Voor de banner container
-- **`Button`** - Voor alle knoppen (primary en secondary action)
+- **`Button`** - Voor alle knoppen (beide als secondary action voor gelijkwaardige opties)
 - **`ButtonGroup`** - Voor het groeperen van knoppen
 - **`Link`** - Voor links naar cookie-instellingen
 - **`Heading2`** - Voor de titel
@@ -59,7 +59,7 @@ function CookieConsentDrawer() {
         We gebruiken cookies om deze website goed te laten werken en om gebruik van de website te analyseren.
       </Paragraph>
       <ButtonGroup>
-        <Button appearance="primary-action-button" onClick={handleAccept}>
+        <Button appearance="secondary-action-button" onClick={handleAccept}>
           Aanvullende cookies accepteren
         </Button>
         <Button appearance="secondary-action-button" onClick={handleReject}>
