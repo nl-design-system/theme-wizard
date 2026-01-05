@@ -18,9 +18,9 @@ test('page uses values as stored by the configuration page', async ({ page }) =>
   await accent1Input.fill('#ff0000');
   await accent1Input.blur();
 
-  // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.bg-document
+  // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');
-  await expect(page.getByRole('button', { name: '#fff6f1' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '#ff0000' })).toBeVisible();
 });
 
 test.describe('interaction tests', () => {
@@ -54,9 +54,8 @@ test.describe('interaction tests', () => {
     });
 
     test('Token value can be copied to clipboard', async ({ page }) => {
-      // highlight.bg-active because only one button with this value exists
-      const tokenValue = '#ffe57c';
-      await page.getByRole('table', { name: 'Markering' }).getByRole('button', { name: tokenValue }).click();
+      const tokenValue = '#fbfcfd';
+      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: tokenValue }).click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
       });
