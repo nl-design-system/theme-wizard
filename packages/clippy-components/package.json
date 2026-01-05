@@ -1,6 +1,5 @@
 {
   "name": "@nl-design-system-community/clippy-components",
-  "private": true,
   "version": "0.0.2",
   "type": "module",
   "module": "./dist/index.js",
@@ -17,6 +16,10 @@
   "files": [
     "dist/"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/nl-design-system/theme-wizard.git",
