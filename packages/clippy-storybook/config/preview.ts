@@ -6,6 +6,18 @@ import '@nl-design-system-community/theme-wizard-app/theme.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 
 const preview: Preview = {
+  decorators: [
+    (story) => {
+      // Add theme classes to storybook-root when story renders
+      if (typeof document !== 'undefined') {
+        const root = document.getElementById('storybook-root');
+        if (root) {
+          root.classList.add('ma-theme', 'clippy-theme');
+        }
+      }
+      return story();
+    },
+  ],
   parameters: {
     controls: { expanded: false },
     docs: {
