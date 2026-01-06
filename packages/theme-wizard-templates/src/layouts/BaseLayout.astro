@@ -6,12 +6,20 @@ import ClientInit from '../components/ClientInit.astro';
 import DevTools from '../components/DevTools.astro';
 
 export interface Props {
-  isCollage?: boolean;
   title?: string;
   description?: string;
+  lang?: string;
+  htmlClasses?: string;
+  bodyClasses?: string;
 }
 
-const { title = 'Gemeente Voorbeeld', description = 'Gemeente Voorbeeld website', isCollage = false } = Astro.props;
+const {
+  title = 'Gemeente Voorbeeld',
+  description = 'Gemeente Voorbeeld website',
+  lang = 'nl',
+  htmlClasses = 'utrecht-page-layout utrecht-root start-theme preview-theme',
+  bodyClasses = 'utrecht-page-body',
+} = Astro.props;
 
 // Check if we're in standalone mode (defined in astro.config.mjs)
 const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__ === true;
@@ -19,7 +27,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
 
 <!doctype html>
 
-<html lang="nl" class="utrecht-page-layout utrecht-root start-theme preview-theme">
+<html lang={lang} class={htmlClasses}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -27,35 +35,24 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    {isCollage && (
+    {isStandalone && (
       <style>
-        @media print {
-          @page {
-            size: landscape;
-            margin-inline-start: 0;
-            margin-inline-end: 0;
-          }
+        html {
+          scroll-padding-block-start: calc(var(--basis-space-block-md) * 2 + 3rem);
+        }
+        body {
+          padding-block-start: calc(var(--basis-space-block-md) * 2 + 3rem);
         }
       </style>
-      )}
+    )}
 
-      {isStandalone && (
-        <style>
-          html {
-            scroll-padding-block-start: calc(var(--basis-space-block-md) * 2 + 3rem);
-          }
-          body {
-            padding-block-start: calc(var(--basis-space-block-md) * 2 + 3rem);
-          }
-        </style>
-      )}
+    <slot name="head" />
     <title>{title}</title>
   </head>
 
-  <body class="utrecht-page-body">
+  <body class={bodyClasses}>
     <DevTools />
     <slot />
-
     <ClientInit />
   </body>
 </html>

@@ -4,11 +4,14 @@ import BaseLayout from './BaseLayout.astro';
 
 export interface Props {
   sideNav?: boolean;
+  title?: string;
+  description?: string;
 }
-const { sideNav = true } = Astro.props;
+
+const { sideNav = true, title, description } = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout title={title} description={description}>
   <div class="utrecht-page-body__content">
     <dialog open="true" class="utrecht-drawer utrecht-drawer--block-start" style="position: static;">
       <h2
