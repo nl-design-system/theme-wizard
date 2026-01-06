@@ -1,3 +1,4 @@
+import type { PropertyValues } from 'lit';
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import Scraper from '../../lib/Scraper';
@@ -35,14 +36,25 @@ export class ThemePreview extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.#loadContent();
+    // Only load if url is already set
+    if (this.url) {
+      this.#loadContent();
+    }
 
     // Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview
     this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
+  override updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+    // Reload content when url changes
+    if (changedProperties.has('url') && this.url) {
+      this.#loadContent();
+    }
+  }
+
   get previewUrl() {
-    return `/templates${this.url}`;
+    return `/templates${this.url || ''}`;
   }
 
   readonly #loadContent = async () => {
