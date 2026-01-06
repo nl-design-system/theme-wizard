@@ -11,6 +11,7 @@ const MainIntroSection: FC = () => (
     <Heading id="page-title" level={1} className="section" appearance="level-1">
       Gemeente Voorbeeld
     </Heading>
+
     <PageContent>
       <section className="section">
         <Row

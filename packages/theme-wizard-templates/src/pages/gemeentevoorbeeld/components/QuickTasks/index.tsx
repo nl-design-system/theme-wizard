@@ -42,6 +42,7 @@ const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
             className="utrecht-button utrecht-button--subtle utrecht-accordion__button voorbeeld__link"
           >
             <Icon>{renderIcon(task.icon)}</Icon>
+
             <span>{task.title}</span>
           </Link>
         </Column>
