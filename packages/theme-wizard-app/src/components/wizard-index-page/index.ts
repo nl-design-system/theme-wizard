@@ -1,4 +1,5 @@
 import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
+import type { PropertyValues } from 'lit';
 import { consume } from '@lit/context';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
@@ -55,10 +56,19 @@ export class WizardIndexPage extends LitElement {
   templates: TemplateGroup[] = [];
 
   @state()
-  private selectedTemplatePath: string = '/my-environment/overview';
+  private selectedTemplatePath: string = '';
 
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
+
+  /**
+   * Get fallback template path using same logic as wizard-preview-picker
+   */
+  #getFallbackTemplatePath(): string {
+    const firstGroup = this.templates?.[0];
+    const firstOption = firstGroup?.pages?.[0];
+    return firstOption?.value ?? '';
+  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -70,9 +80,23 @@ export class WizardIndexPage extends LitElement {
     // Parse template selection from query param: ?templatePath=/group/page (dynamic)
     try {
       const templatePath = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME);
-      if (templatePath) this.selectedTemplatePath = templatePath;
+      if (templatePath) {
+        this.selectedTemplatePath = templatePath;
+      } else if (this.templates.length > 0) {
+        // If templates are already available, use fallback
+        this.selectedTemplatePath = this.#getFallbackTemplatePath();
+      }
     } catch {
       // ignore parsing errors
+    }
+  }
+
+  override updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+
+    // When templates become available and selectedTemplatePath is empty, use fallback
+    if (changedProperties.has('templates') && !this.selectedTemplatePath) {
+      this.selectedTemplatePath = this.#getFallbackTemplatePath();
     }
   }
 
