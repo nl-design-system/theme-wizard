@@ -184,6 +184,14 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   #setSelection(index: number, open: boolean = false) {
     this.open = open;
     this.selectedIndex = index > -1 ? index % this.filteredOptions.length : -1;
+    if (this.selectedIndex > -1) {
+      const element = this.shadowRoot?.querySelector(`#${String(this.#getOptionId())}`);
+      element?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
   }
 
   #commitSelection(index: number) {
