@@ -1,7 +1,9 @@
 ---
 import '@nl-design-system-unstable/start-design-tokens/dist/theme.css';
+import '@nl-design-system-community/theme-wizard-app/theme.css';
 import '@utrecht/component-library-css';
 import ClientInit from '../components/ClientInit.astro';
+import DevTools from '../components/DevTools.astro';
 
 export interface Props {
   isCollage?: boolean;
@@ -51,6 +53,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
   </head>
 
   <body class="utrecht-page-body">
+    <DevTools />
     <slot />
 
     <ClientInit />

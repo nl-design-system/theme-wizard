@@ -1,5 +1,4 @@
 ---
-import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
 import BaseLayout from './BaseLayout.astro';
 
 export interface Props {
@@ -8,7 +7,7 @@ export interface Props {
 ---
 
 <BaseLayout isCollage={true}>
-  <div class="utrecht-page-body__content clippy-theme" data-test-id="theme-wizard-collage">
+  <div class="utrecht-page-body__content" data-test-id="theme-wizard-collage">
     <slot />
   </div>
 </BaseLayout>
