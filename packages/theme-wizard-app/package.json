@@ -9,7 +9,10 @@
     "directory": "packages/theme-wizard-app"
   },
   "exports": {
-    ".": "./dist/index.js",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "./theme.css": "./theme.css"
   },
   "files": [
@@ -17,7 +20,7 @@
     "theme.css"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite build --watch",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "type-check": "tsc --noEmit --project tsconfig.json",
     "build": "pnpm run type-check && pnpm run types && vite build",
