@@ -25,11 +25,6 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
   @query('[role=listbox]')
   readonly listboxElement?: Element;
 
-  override readonly filter = (option: Option) => {
-    const label = `${option.label}`; // Use as string
-    return label.toLowerCase().includes(this.query.toLowerCase());
-  };
-
   override async fetchAdditionalOptions(query: string): Promise<Option[]> {
     this.#additional = this.#additional ?? (await import('./external').then(({ default: items }) => items));
     const options = this.#additional.filter((option) => option.label.includes(query));
