@@ -45,14 +45,46 @@ const transformScaleToColorKeys = (scaleObject: ColorScaleObject) => {
 };
 
 /**
+ * Look up a token by its reference path
+ */
+const resolveTokenRef = (refString: string, allTokens: Record<string, unknown>): unknown => {
+  const refPath = refString.replaceAll(/[{}]/g, '').split('.');
+  let current: unknown = allTokens;
+  for (const key of refPath) {
+    if (typeof current === 'object' && current !== null && key in current) {
+      current = (current as Record<string, unknown>)[key];
+    } else {
+      return undefined;
+    }
+  }
+  return current;
+};
+
+/**
  * Extract the resolved color value from a token
  */
-const resolveColorValue = (token: ColorTokenType): ColorValue | undefined => {
+export const resolveColorValue = (
+  token: ColorTokenType,
+  allTokens?: Record<string, unknown>,
+): ColorValue | undefined => {
+  // Guard against non-object tokens
+  if (!token || typeof token !== 'object') {
+    return undefined;
+  }
+
   // Get the resolved color value from extensions or fallback to token's $value
   if (isRef(token['$value'])) {
-    const resolved = token['$extensions']?.[EXTENSION_RESOLVED_AS] as ColorValue | undefined;
-    if (resolved && 'colorSpace' in resolved) {
-      return resolved;
+    const resolved = token['$extensions']?.[EXTENSION_RESOLVED_AS];
+    // If resolved value is an object with colorSpace, return it
+    if (resolved && typeof resolved === 'object' && 'colorSpace' in resolved) {
+      return resolved as ColorValue;
+    }
+    // If resolved value is a string ref and we have allTokens, recursively resolve it
+    if (typeof resolved === 'string' && allTokens) {
+      const refToken = resolveTokenRef(resolved, allTokens);
+      if (refToken && typeof refToken === 'object') {
+        return resolveColorValue(refToken as ColorTokenType, allTokens);
+      }
     }
   }
   const value = token['$value'];
