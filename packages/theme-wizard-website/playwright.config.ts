@@ -33,8 +33,7 @@ const config: PlaywrightTestConfig = {
   ],
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? [['github'], ['list']] : 'list',
-  /* Retry on CI only */
-  retries: process.env.CI ? 1 : 0,
+  retries: 1,
   testDir: './e2e',
   testMatch: '**/*spec.ts',
   /* Maximum time one test can run for. */
