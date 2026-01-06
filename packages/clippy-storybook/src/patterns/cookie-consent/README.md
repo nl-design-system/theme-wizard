@@ -137,6 +137,35 @@ Het pattern gebruikt CSS custom properties (design tokens) voor spacing:
 
 Je kunt deze aanpassen door de design tokens te overschrijven in je eigen CSS.
 
+#### Scrollbare content sectie
+
+De content sectie (waar de `children` worden weergegeven) heeft een maximale hoogte van 200px en wordt automatisch scrollbaar wanneer de content deze hoogte overschrijdt. Dit voorkomt dat de cookie banner te hoog wordt en de pagina blokkeert.
+
+**Belangrijk voor toegankelijkheid:**
+
+- De scrollbare sectie is volledig toegankelijk met keyboard navigatie
+- Screen readers kunnen de volledige content lezen, ook wanneer deze scrollbaar is
+- Zorg dat belangrijke informatie zichtbaar is zonder te scrollen wanneer mogelijk
+
+**Aanpassen van de maximale hoogte:**
+
+Als je de maximale hoogte wilt aanpassen, kun je de styling overschrijven:
+
+```css
+.cookie-consent-content {
+  max-height: 300px; /* Pas aan naar je voorkeur */
+  overflow-y: auto;
+}
+```
+
+Of in React met inline styles:
+
+```tsx
+<CookieConsentDrawer>
+  <div style={{ maxHeight: '300px', overflowY: 'auto' }}>{/* Je content */}</div>
+</CookieConsentDrawer>
+```
+
 ## Toegankelijkheid
 
 ### Acceptatiecriteria voor toegankelijkheid

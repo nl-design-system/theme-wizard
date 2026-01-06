@@ -49,7 +49,15 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
         </Heading2>
       )}
 
-      <div style={{ marginBlockEnd: 'var(--basis-space-block-xl, 2rem)' }}>{children}</div>
+      <div
+        style={{
+          marginBlockEnd: 'var(--basis-space-block-xl, 2rem)',
+          maxHeight: '200px',
+          overflowY: 'auto',
+        }}
+      >
+        {children}
+      </div>
 
       <form method="dialog">
         <ButtonGroup style={{ marginBlockStart: 'var(--basis-space-block-xl, 2rem)' }}>
