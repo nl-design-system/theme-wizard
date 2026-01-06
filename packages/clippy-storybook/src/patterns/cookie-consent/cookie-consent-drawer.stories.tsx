@@ -53,6 +53,14 @@ const meta = {
         },
       },
     },
+    showLogo: {
+      name: 'Logo',
+      description: 'Show the logo in the cookie consent banner',
+      type: {
+        name: 'boolean',
+        required: false,
+      },
+    },
     title: {
       name: 'Title',
       description: 'Custom titel voor de drawer',
@@ -94,6 +102,7 @@ export const ReactDrawer: Story = {
       href: '#',
       text: 'Zelf instellen',
     },
+    showLogo: true,
     title: 'Cookies op de website van [Organisatie]',
   },
 };

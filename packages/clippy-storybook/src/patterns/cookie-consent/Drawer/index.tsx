@@ -20,6 +20,7 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
     href: '/templates/cookies',
     text: 'Zelf instellen',
   },
+  showLogo,
   title,
 }) => {
   const { handleAccept, handleReject, isVisible } = useCookieConsent({ clearStorageOnMount });
@@ -30,6 +31,18 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
 
   return (
     <Drawer align="block-start" open style={{ position: 'static' }}>
+      {showLogo && (
+        <div style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
+          <Link href="#" style={{ display: 'inline-block', textDecoration: 'none' }}>
+            <img
+              src="/src/patterns/cookie-consent/assets/logo.svg"
+              alt="Organisatie logo"
+              style={{ maxHeight: '50px', width: 'auto' }}
+            />
+          </Link>
+        </div>
+      )}
+
       {title && (
         <Heading2 id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
           {title}

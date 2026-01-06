@@ -7,5 +7,6 @@ export interface CookieConsentDrawerProps {
   };
   children?: React.ReactNode;
   clearStorageOnMount?: boolean;
+  showLogo: boolean;
   title?: string;
 }

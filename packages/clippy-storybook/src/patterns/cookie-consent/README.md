@@ -153,8 +153,11 @@ Wanneer je dit pattern implementeert, zorg ervoor dat je voldoet aan:
 ### Acceptatiecriteria voor toegankelijk gebruik
 
 1. **Afzender identificatie** - Vermeld duidelijk de organisatienaam (bijv. "Cookies op de website van [organisatienaam]")
+   - Een logo kan helpen bij de visuele identificatie van de organisatie
+   - Het logo moet boven de titel staan, voor de skip links
+   - Zorg dat het logo toegankelijk is (zie "Logo's in cookie banners" hieronder)
 2. **Duidelijke acties** - Gebruik actiegerichte button teksten, geen vage teksten zoals "OK"
-3. **Toegankelijke positionering** - Zichtbaar zonder te scrollen, verberg geen belangrijke content
+3. **Toegankelijke positionering** - Zichtbaar zonder te scrollen, verberg geen belangrijke content. De cookie banner moet **voor** (boven) de skip links staan in de DOM volgorde en tab order, zodat gebruikers eerst de cookie banner tegenkomen voordat ze naar de skip links kunnen navigeren.
 4. **Link naar meer informatie** - Voeg altijd een link toe naar de cookie-instellingen pagina
 5. **Wettelijke plichten** - Gebruikers kunnen hun keuze wijzigen, voorkeuren worden opgeslagen
 
@@ -219,6 +222,73 @@ Voor productie-gebruik:
 1. **Implementeer server-side state management** - Zie "State management" sectie voor details
 2. **Stel server-side cookies in** - Zie "Bewaartermijn van consent cookies" voor aanbevelingen (12 maanden)
 3. **HTML-only variant voor progressive enhancement** - Zie `static/cookie-drawer.html` voor een voorbeeld dat werkt zonder JavaScript
+
+## Logo's in cookie banners
+
+Het gebruik van een logo in een cookie banner kan helpen bij de visuele identificatie van de organisatie en verhoogt het vertrouwen van gebruikers. Hieronder vind je richtlijnen voor het correct gebruik van logo's.
+
+### Waarom een logo gebruiken?
+
+- **Visuele identificatie** - Gebruikers herkennen de organisatie sneller
+- **Vertrouwen** - Een bekend logo verhoogt het vertrouwen in de cookie banner
+- **Consistentie** - Het logo zorgt voor visuele consistentie met de rest van de website
+- **Professionaliteit** - Een goed geplaatst logo verhoogt de professionaliteit van de banner
+
+### Toegankelijkheidsvereisten voor logo's
+
+Wanneer je een logo toevoegt aan je cookie banner, zorg ervoor dat:
+
+1. **Alt-tekst** - Gebruik altijd een beschrijvende `alt` tekst voor het logo:
+
+   ```tsx
+   <img src="/logo.svg" alt="Logo van [Organisatienaam]" />
+   ```
+
+2. **SVG logo's** - Voor SVG logo's, gebruik `aria-label` of `aria-labelledby`:
+
+   ```tsx
+   <svg aria-label="Logo van [Organisatienaam]">{/* SVG content */}</svg>
+   ```
+
+3. **Decoratief logo** - Als het logo puur decoratief is en de organisatienaam al in de tekst staat, gebruik `alt=""`:
+
+   ```tsx
+   <img src="/logo.svg" alt="" />
+   ```
+
+4. **Link functionaliteit** - Het logo kan optioneel linken naar de homepage:
+   - Gebruik `href="/"` om naar de homepage te linken
+   - Zorg dat de link toegankelijk is voor screen readers
+
+5. **Grootte** - Houd het logo compact:
+   - Maximaal ~50-60px hoog wordt aanbevolen
+   - Zorg dat het logo niet te groot is en de banner niet domineert
+   - Het logo moet proportioneel zijn ten opzichte van de tekst
+
+6. **Positionering** - Het logo moet:
+   - Boven de titel staan
+   - Voldoende spacing hebben voor leesbaarheid
+
+### Best practices
+
+- **Consistentie** - Gebruik hetzelfde logo als op de rest van de website
+- **Kwaliteit** - Zorg voor een scherp logo in hoge resolutie (voor retina displays)
+- **Formaat** - Gebruik SVG voor schaalbaarheid, of PNG/JPG met voldoende resolutie
+- **Kleuren** - Zorg dat het logo goed zichtbaar is op de achtergrondkleur van de banner
+- **Responsive** - Test het logo op verschillende schermformaten
+
+### Voorbeeld implementatie
+
+```tsx
+<CookieConsentDrawer title="Cookies op de website van [Organisatie]">
+  <div style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
+    <Link href="/">
+      <img src="/logo.svg" alt="Logo van [Organisatienaam]" style={{ maxHeight: '50px', width: 'auto' }} />
+    </Link>
+  </div>
+  <Paragraph>We gebruiken cookies om deze website goed te laten werken...</Paragraph>
+</CookieConsentDrawer>
+```
 
 ## Browser ondersteuning
 
