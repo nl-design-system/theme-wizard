@@ -93,6 +93,9 @@ importers:
       '@nl-design-system-candidate/color-sample-css':
         specifier: 1.0.4
         version: 1.0.4
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.0.0
+        version: 1.0.0
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -399,6 +402,9 @@ importers:
       '@utrecht/web-component-library-stencil':
         specifier: 4.0.0
         version: 4.0.0
+      colorjs.io:
+        specifier: 0.6.0
+        version: 0.6.0
       dequal:
         specifier: 2.0.3
         version: 2.0.3
@@ -408,9 +414,15 @@ importers:
       dset:
         specifier: 3.1.4
         version: 3.1.4
+      i:
+        specifier: 0.3.7
+        version: 0.3.7
       lit:
         specifier: 3.3.2
         version: 3.3.2
+      npm:
+        specifier: 11.7.0
+        version: 11.7.0
       rosetta:
         specifier: 1.1.0
         version: 1.1.0
@@ -2107,6 +2119,9 @@ packages:
 
   '@nl-design-system-candidate/code-css@2.0.3':
     resolution: {integrity: sha512-7cuwem+GDRBGT4/4h4QFZesr6l2ruRG4AAULhvPuyvmvftTMzb7Q8G5O2cmNzBt/VuQKO789Qe3w79UcXRjxNw==}
+
+  '@nl-design-system-candidate/button-css@1.0.0':
+    resolution: {integrity: sha512-TjXFCCeCrSfxBRwcdKWFO/gLAZDfeBAnxC3DuCNvu53JwYIA30++GOivFgeRmDyXDhJysoG19/SVq1r1jfUP5Q==}
 
   '@nl-design-system-candidate/code-css@2.0.5':
     resolution: {integrity: sha512-KYRoiv389rTyGEb1xK1jFkzmQ4v3H6B82OOMafVqm3L5+ntr2f3tbJNYBkep3XYjAEq8VmNLkkJQYJZHiEo2ng==}
@@ -5329,6 +5344,10 @@ packages:
     resolution: {integrity: sha512-Y93lCzHYgGWdrJ66yIktxiaGULYc6oGiABxhcO5AufBeOyoIdZF7bIfLaOrbM0iGIOXQQgxxRrFEnb+Y6w1n4A==}
     engines: {node: '>=10.18'}
 
+  i@0.3.7:
+    resolution: {integrity: sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==}
+    engines: {node: '>=0.4'}
+
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -6248,6 +6267,78 @@ packages:
   npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
+
+  npm@11.7.0:
+    resolution: {integrity: sha512-wiCZpv/41bIobCoJ31NStIWKfAxxYyD1iYnWCtiyns8s5v3+l8y0HCP/sScuH6B5+GhIfda4HQKiqeGZwJWhFw==}
+    engines: {node: ^20.17.0 || >=22.9.0}
+    hasBin: true
+    bundledDependencies:
+      - '@isaacs/string-locale-compare'
+      - '@npmcli/arborist'
+      - '@npmcli/config'
+      - '@npmcli/fs'
+      - '@npmcli/map-workspaces'
+      - '@npmcli/metavuln-calculator'
+      - '@npmcli/package-json'
+      - '@npmcli/promise-spawn'
+      - '@npmcli/redact'
+      - '@npmcli/run-script'
+      - '@sigstore/tuf'
+      - abbrev
+      - archy
+      - cacache
+      - chalk
+      - ci-info
+      - cli-columns
+      - fastest-levenshtein
+      - fs-minipass
+      - glob
+      - graceful-fs
+      - hosted-git-info
+      - ini
+      - init-package-json
+      - is-cidr
+      - json-parse-even-better-errors
+      - libnpmaccess
+      - libnpmdiff
+      - libnpmexec
+      - libnpmfund
+      - libnpmorg
+      - libnpmpack
+      - libnpmpublish
+      - libnpmsearch
+      - libnpmteam
+      - libnpmversion
+      - make-fetch-happen
+      - minimatch
+      - minipass
+      - minipass-pipeline
+      - ms
+      - node-gyp
+      - nopt
+      - npm-audit-report
+      - npm-install-checks
+      - npm-package-arg
+      - npm-pick-manifest
+      - npm-profile
+      - npm-registry-fetch
+      - npm-user-validate
+      - p-map
+      - pacote
+      - parse-conflict-json
+      - proc-log
+      - qrcode-terminal
+      - read
+      - semver
+      - spdx-expression-parse
+      - ssri
+      - supports-color
+      - tar
+      - text-table
+      - tiny-relative-date
+      - treeverse
+      - validate-npm-package-name
+      - which
 
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
@@ -9491,6 +9582,7 @@ snapshots:
       react: 19.2.3
 
   '@nl-design-system-candidate/code-css@2.0.3': {}
+  '@nl-design-system-candidate/button-css@1.0.0': {}
 
   '@nl-design-system-candidate/code-css@2.0.5': {}
 
@@ -13611,6 +13703,8 @@ snapshots:
 
   hyperdyperid@1.2.0: {}
 
+  i@0.3.7: {}
+
   iconv-lite@0.4.24:
     dependencies:
       safer-buffer: 2.1.2
@@ -14702,6 +14796,8 @@ snapshots:
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
+
+  npm@11.7.0: {}
 
   nth-check@2.1.1:
     dependencies:

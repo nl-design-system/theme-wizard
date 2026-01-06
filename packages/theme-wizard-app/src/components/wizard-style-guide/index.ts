@@ -1,17 +1,19 @@
 import { consume } from '@lit/context';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@nl-design-system-community/clippy-components/clippy-copy-to-clipboard-button';
+import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import {
   legacyToModernColor,
   type ColorToken as ColorTokenType,
   walkTokensWithRef,
 } from '@nl-design-system-community/design-tokens-schema';
+import Color from 'colorjs.io';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 import '../wizard-layout';
+import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 import { DesignToken } from 'style-dictionary/types';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
@@ -32,6 +34,13 @@ export class WizardStyleGuide extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
+  private activeColor?: {
+    tokenId: string;
+    tokenIdAsCss: string;
+    usage: string[];
+    isUsed: boolean;
+    hexCode: string;
+  } = undefined;
 
   static override readonly styles = [unsafeCSS(colorSampleCss), unsafeCSS(headingCss), unsafeCSS(dataBadgeCss), styles];
 
@@ -70,16 +79,19 @@ export class WizardStyleGuide extends LitElement {
     this.scrollToHash(href);
   }
 
-  private countUsagePerToken(tokens: typeof this.theme.tokens): Map<string, number> {
-    const tokenUsage = new Map<string, number>();
-    walkTokensWithRef(tokens, tokens, (token) => {
+  private countUsagePerToken(tokens: typeof this.theme.tokens): Map<string, string[]> {
+    const tokenUsage = new Map<string, string[]>();
+    walkTokensWithRef(tokens, tokens, (token, path) => {
       const tokenId = token.$value.slice(1, -1);
-      tokenUsage.set(tokenId, (tokenUsage.get(tokenId) || 0) + 1);
+      if (path.includes('$extensions')) return; // ignore contrast-with etc.
+      const stored = tokenUsage.get(tokenId) || [];
+      stored.push(path.join('.'));
+      tokenUsage.set(tokenId, stored);
     });
     return tokenUsage;
   }
 
-  private prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, number>) {
+  private prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>) {
     return Object.entries(colors)
       .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
       .filter(([, value]) => typeof value === 'object' && value !== null)
@@ -91,37 +103,38 @@ export class WizardStyleGuide extends LitElement {
             const cssColor = color ? legacyToModernColor.encode(color) : null;
             const tokenId = `basis.color.${key}.${colorKey}`;
             const isUsed = tokenUsage.has(tokenId);
-            const usageCount = tokenUsage.get(tokenId) ?? 0;
-            return { colorKey, cssColor, isUsed, tokenId, usageCount };
+            const usage = tokenUsage.get(tokenId);
+            const usageCount = usage?.length || 0;
+            return { colorKey, cssColor, isUsed, tokenId, usage, usageCount };
           })
           .filter(({ cssColor }) => cssColor !== null);
         return { colorEntries, isUsed: colorEntries.some((color) => color.isUsed), key };
       });
   }
 
-  private prepareFontFamilies(text: Record<string, unknown>, tokenUsage: Map<string, number>) {
+  private prepareFontFamilies(text: Record<string, unknown>, tokenUsage: Map<string, string[]>) {
     return Object.entries(text['font-family'] as Record<string, unknown>).map(([name, tokenValue]) => {
       const value = (tokenValue as DesignToken).$value;
       const tokenId = `basis.text.font-family.${name}`;
       const isUsed = tokenUsage.has(tokenId);
-      const usageCount = tokenUsage.get(tokenId) ?? 0;
+      const usageCount = tokenUsage.get(tokenId)?.length ?? 0;
       return { name, isUsed, tokenId, usageCount, value };
     });
   }
 
-  private prepareFontSizes(text: Record<string, unknown>, tokenUsage: Map<string, number>) {
+  private prepareFontSizes(text: Record<string, unknown>, tokenUsage: Map<string, string[]>) {
     return Object.entries(text['font-size'] as Record<string, unknown>)
       .reverse()
       .map(([name, tokenValue]) => {
         const value = (tokenValue as DesignToken).$value;
         const tokenId = `basis.text.font-size.${name}`;
         const isUsed = tokenUsage.has(tokenId);
-        const usageCount = tokenUsage.get(tokenId) ?? 0;
+        const usageCount = tokenUsage.get(tokenId)?.length ?? 0;
         return { name, isUsed, tokenId, usageCount, value };
       });
   }
 
-  private prepareSpaceTokens(basis: Record<string, unknown>, space: string, tokenUsage: Map<string, number>) {
+  private prepareSpaceTokens(basis: Record<string, unknown>, space: string, tokenUsage: Map<string, string[]>) {
     return Object.entries((basis['space'] as Record<string, unknown>)[space] as Record<string, unknown>)
       .filter(([name]) => !['min', 'max'].includes(name))
       .reverse()
@@ -129,7 +142,7 @@ export class WizardStyleGuide extends LitElement {
         const value = (tokenValue as DesignToken).$value;
         const tokenId = `basis.space.${space}.${name}`;
         const isUsed = tokenUsage.has(tokenId);
-        const usageCount = tokenUsage.get(tokenId) ?? 0;
+        const usageCount = tokenUsage.get(tokenId)?.length ?? 0;
         return { name, isUsed, tokenId, usageCount, value };
       });
   }
@@ -188,11 +201,12 @@ export class WizardStyleGuide extends LitElement {
                       <utrecht-table-header-cell scope="col">
                         ${t('styleGuide.sections.colors.table.header.usageCount')}
                       </utrecht-table-header-cell>
+                      <utrecht-table-header-cell scope="col"> Details </utrecht-table-header-cell>
                     </utrecht-table-row>
                   </utrecht-table-header>
                   <utrecht-table-body>
                     ${colorEntries.map(
-                      ({ cssColor, isUsed, tokenId, usageCount }) => html`
+                      ({ cssColor, isUsed, tokenId, usage, usageCount }) => html`
                         <utrecht-table-row aria-describedby=${isUsed ? nothing : `basis-color-${key}-unused-warning`}>
                           <utrecht-table-cell>
                             <svg
@@ -209,23 +223,40 @@ export class WizardStyleGuide extends LitElement {
                             </svg>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
-                            <utrecht-button
-                              appearance="subtle-button"
-                              @click=${() => navigator.clipboard.writeText(tokenId)}
+                            <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
+                            <clippy-copy-to-clipboard-button
+                              content=${tokenId}
+                              label=${`Copy "${tokenId}" to clipboard`}
                             >
-                              <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
-                            </utrecht-button>
+                            </clippy-copy-to-clipboard-button>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
-                            <utrecht-button
-                              appearance="subtle-button"
-                              @click=${() => navigator.clipboard.writeText(cssColor!)}
+                            <utrecht-code>${cssColor}</utrecht-code>
+                            <clippy-copy-to-clipboard-button
+                              content=${cssColor}
+                              label=${`Copy "${cssColor}" to clipboard`}
                             >
-                              <utrecht-code>${cssColor}</utrecht-code>
-                            </utrecht-button>
+                            </clippy-copy-to-clipboard-button>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
                             <span class="nl-data-badge">${usageCount}</span>
+                          </utrecht-table-cell>
+                          <utrecht-table-cell>
+                            <utrecht-button
+                              @click=${() => {
+                                this.activeColor = {
+                                  hexCode: cssColor!,
+                                  isUsed,
+                                  tokenId,
+                                  tokenIdAsCss: `--${tokenId.replaceAll('.', '-')}`,
+                                  usage: usage || [],
+                                };
+                                this.requestUpdate();
+                                (this.renderRoot.querySelector('#color-dialog') as HTMLDialogElement)!.showModal();
+                              }}
+                            >
+                              Details
+                            </utrecht-button>
                           </utrecht-table-cell>
                         </utrecht-table-row>
                       `,
@@ -242,6 +273,76 @@ export class WizardStyleGuide extends LitElement {
                     </utrecht-paragraph>`}
               `;
             })}
+
+            <dialog id="color-dialog" closedby="any" aria-labelledby="color-dialog-title">
+              ${
+                this.activeColor
+                  ? html`
+                      <utrecht-heading-2 id="color-dialog-title"> ${this.activeColor.tokenId} </utrecht-heading-2>
+                      <svg
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="nl-color-sample"
+                        style="color: ${this.activeColor.hexCode};"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                      >
+                        <path d="M0 0H32V32H0Z" fill="currentcolor" />
+                      </svg>
+                      <dl>
+                        <dt>Token ID</dt>
+                        <dd>
+                          <utrecht-code>${this.activeColor.tokenId}</utrecht-code>
+                        </dd>
+                        <dt>Token type</dt>
+                        <dd>Color</dd>
+                        <dt>CSS Variable</dt>
+                        <dd>
+                          <utrecht-code>${this.activeColor.tokenIdAsCss}</utrecht-code>
+                        </dd>
+                        <dt>Hexcode</dt>
+                        <dd>
+                          <utrecht-code>${this.activeColor.hexCode}</utrecht-code>
+                        </dd>
+                        <dt>RGB</dt>
+                        <dd>
+                          <utrecht-code>
+                            ${new Color(this.activeColor.hexCode).toString({ format: 'rgb' })}
+                          </utrecht-code>
+                        </dd>
+                        <dt>OKLCH</dt>
+                        <dd>
+                          <utrecht-code>
+                            ${new Color(this.activeColor.hexCode).toString({ format: 'oklch' })}
+                          </utrecht-code>
+                        </dd>
+                        <dt>P3 color</dt>
+                        <dd>
+                          <utrecht-code>
+                            ${new Color(this.activeColor.hexCode).toString({ format: 'color' })}
+                          </utrecht-code>
+                        </dd>
+                      </dl>
+
+                      <utrecht-heading-3>
+                        Where is this token used? (${this.activeColor.usage.length})
+                      </utrecht-heading-3>
+                      ${this.activeColor.usage.length === 0
+                        ? html`<utrecht-paragraph>No references found</utrecht-paragraph>`
+                        : html`<ul>
+                            ${this.activeColor.usage.map(
+                              (referrer) => html`
+                                <li>
+                                  <utrecht-code>${referrer}</utrecht-code>
+                                </li>
+                              `,
+                            )}
+                          </ul>`}
+                    `
+                  : nothing
+              }
+            </dialog>
           </section>
 
           <section id="typography">
@@ -368,7 +469,7 @@ export class WizardStyleGuide extends LitElement {
                         </utrecht-button>
                       </utrecht-table-cell>
                       <utrecht-table-cell>
-                        <span class="nl-data-badge">${tokenUsage.get(tokenId) ?? 0}</span>
+                        <span class="nl-data-badge">${tokenUsage.get(tokenId)?.length ?? 0}</span>
                       </utrecht-table-cell>
                     </utrecht-table-row>
                   `,
@@ -496,7 +597,7 @@ export class WizardStyleGuide extends LitElement {
                             </utrecht-button>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
-                            <span class="nl-data-badge">${tokenUsage.get(tokenId) ?? 0}</span>
+                            <span class="nl-data-badge">${tokenUsage.get(tokenId)?.length ?? 0}</span>
                           </utrecht-table-cell>
                         </utrecht-table-row>
                       `,
