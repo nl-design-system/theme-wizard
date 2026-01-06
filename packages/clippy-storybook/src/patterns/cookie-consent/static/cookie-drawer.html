@@ -1,0 +1,134 @@
+<clippy-cookie-consent-drawer hidden>
+  <style>
+    .clippy-cookie-consent-drawer__dialog {
+      position: static;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .clippy-cookie-consent-drawer__dialog > h2 {
+      margin-block-end: var(--clippy-space-block-lg);
+    }
+
+    .clippy-cookie-consent-drawer__intro {
+      margin-block-end: var(--clippy-space-block-xl);
+    }
+
+    .clippy-cookie-consent-drawer__intro > p {
+      margin-block-end: var(--clippy-space-block-md);
+    }
+
+    .clippy-cookie-consent-drawer__intro > p:last-child {
+      margin-block-end: 0;
+    }
+
+    .clippy-cookie-consent-drawer__button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--clippy-space-column-md);
+      align-items: center;
+      margin-block-start: var(--clippy-space-block-xl);
+    }
+  </style>
+
+  <dialog
+    open
+    class="utrecht-drawer utrecht-drawer--block-start clippy-cookie-consent-drawer__dialog"
+    aria-labelledby="cookie-consent-title"
+  >
+    <h2 id="cookie-consent-title" class="utrecht-heading-2">Cookies op deze website</h2>
+
+    <div class="clippy-cookie-consent-drawer__intro">
+      <p class="utrecht-paragraph">We gebruiken enkele essentiële cookies om deze website goed te laten werken.</p>
+      <p class="utrecht-paragraph">
+        We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
+        onthouden en onze diensten te verbeteren.
+      </p>
+      <p class="utrecht-paragraph">
+        We gebruiken ook cookies die door andere sites zijn geplaatst om ons te helpen content van hun diensten te
+        leveren.
+      </p>
+    </div>
+
+    <form method="dialog" class="clippy-cookie-consent-drawer__form">
+      <div class="clippy-cookie-consent-drawer__button-group">
+        <button class="utrecht-button utrecht-button--secondary-action" value="accept" autofocus>Accepteren</button>
+        <button class="utrecht-button utrecht-button--secondary-action" value="reject">Weigeren</button>
+        <a href="/templates/cookies" class="utrecht-button utrecht-button--secondary-action">Zelf instellen</a>
+      </div>
+    </form>
+  </dialog>
+</clippy-cookie-consent-drawer>
+
+<script type="module">
+  const STORAGE_KEY = 'cookie-consent-preferences';
+
+  class ClippyCookieConsentDrawer extends HTMLElement {
+    static get observedAttributes() {
+      return ['organization'];
+    }
+
+    connectedCallback() {
+      // Only show the drawer if JavaScript is enabled
+      this.removeAttribute('hidden');
+
+      const dialog = this.querySelector('dialog');
+      if (!dialog) return;
+
+      // Handle organization attribute for identifying the sender
+      const organization = this.getAttribute('organization');
+      if (organization) {
+        const title = dialog.querySelector('h2');
+        if (title) {
+          title.textContent = `Cookies op de website van ${organization}`;
+        }
+        const introParagraphs = dialog.querySelectorAll('.clippy-cookie-consent-drawer__intro p');
+        if (introParagraphs.length > 0) {
+          const firstParagraph = introParagraphs[0];
+          firstParagraph.textContent = `${organization} gebruikt enkele essentiële cookies om deze website goed te laten werken.`;
+        }
+      }
+
+      const form = dialog.querySelector('form');
+      if (!form) return;
+
+      // Check if the user has already made a choice
+      try {
+        const saved = globalThis.localStorage?.getItem(STORAGE_KEY);
+        if (saved) {
+          this.hidden = true;
+          return;
+        }
+      } catch {}
+
+      dialog.addEventListener('close', () => {
+        const action = dialog.returnValue;
+        if (!action) {
+          // Closed without choice
+          return;
+        }
+
+        // Save preferences to localStorage
+        const preferences = action === 'accept' ? ['analytics', 'preferences'] : [];
+        try {
+          globalThis.localStorage?.setItem(
+            STORAGE_KEY,
+            JSON.stringify({
+              preferences,
+              timestamp: new Date().toISOString(),
+            }),
+          );
+        } catch {}
+
+        this.hidden = true;
+      });
+    }
+  }
+
+  if (typeof globalThis !== 'undefined' && 'customElements' in globalThis) {
+    const tagName = 'clippy-cookie-consent-drawer';
+    if (!customElements.get(tagName)) {
+      customElements.define(tagName, ClippyCookieConsentDrawer);
+    }
+  }
+</script>

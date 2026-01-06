@@ -1,25 +1,13 @@
 ---
-import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
-import ClientInit from '../components/ClientInit.astro';
+import BaseLayout from './BaseLayout.astro';
 
 export interface Props {
   title?: string;
 }
 ---
 
-<style>
-  @media print {
-    @page {
-      size: landscape;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-    }
-  }
-</style>
-
-<html lang="nl" class="ma-theme">
-  <body>
+<BaseLayout isCollage={true}>
+  <div class="utrecht-page-body__content clippy-theme" data-test-id="theme-wizard-collage">
     <slot />
-    <ClientInit />
-  </body>
-</html>
+  </div>
+</BaseLayout>

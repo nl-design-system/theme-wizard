@@ -20,7 +20,6 @@ import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
 import '../template-action';
 import '../template-case-card';
-import '../template-code';
 import '../template-color-swatch';
 import '../template-heading';
 import '../template-link-list';

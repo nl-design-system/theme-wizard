@@ -10,5 +10,7 @@ export default defineConfig({
       provider: playwright(),
       screenshotDirectory: new URL('./tmp/__screenshots__', import.meta.url).pathname,
     },
+    exclude: ['dist/**', 'node_modules/**'],
+    include: ['src/**/*.{test,spec}.ts'],
   },
 });

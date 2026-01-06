@@ -1,0 +1,190 @@
+.clippy-theme {
+  --clippy-breadcrumb-nav-arrows-link-background-color: var(--basis-color-default-bg-default);
+  --clippy-breadcrumb-nav-min-block-size: var(--basis-pointer-target-min-block-size);
+  --clippy-breadcrumb-nav-font-family: var(--basis-text-font-family-default);
+  --clippy-breadcrumb-nav-font-size: var(--basis-text-font-size-md);
+  --clippy-breadcrumb-nav-line-height: var(--basis-text-line-height-md);
+  --clippy-breadcrumb-nav-text-decoration: none;
+  --clippy-breadcrumb-nav-text-transform: inherit;
+
+  --clippy-breadcrumb-nav-item-first-padding-inline-start: 0;
+  --clippy-breadcrumb-nav-item-padding-block-start: var(--basis-space-block-lg);
+  --clippy-breadcrumb-nav-item-padding-block-end: var(--basis-space-block-lg);
+  --clippy-breadcrumb-nav-item-padding-inline-end: var(--basis-space-inline-md);
+  --clippy-breadcrumb-nav-item-padding-inline-start: var(--basis-space-inline-md);
+
+  --clippy-breadcrumb-nav-link-color: var(--basis-color-action-2-color-default);
+  --clippy-breadcrumb-nav-link-focus-background-color: var(--basis-focus-background-color);
+  --clippy-breadcrumb-nav-link-focus-color: var(--basis-focus-color);
+  --clippy-breadcrumb-nav-link-focus-text-decoration: underline;
+  --clippy-breadcrumb-nav-link-hover-color: var(--basis-color-action-2-color-hover);
+  --clippy-breadcrumb-nav-link-hover-text-decoration: underline;
+  --clippy-breadcrumb-nav-link-current-font-weight: var(--basis-text-font-weight-bold);
+  --clippy-breadcrumb-nav-link-disabled-color: var(--basis-color-disabled-color-subtle);
+  --clippy-breadcrumb-nav-link-icon-size: var(--basis-size-icon-md);
+
+  --clippy-breadcrumb-nav-separator-color: var(--basis-color-default-color-subtle);
+  --clippy-breadcrumb-nav-separator-icon-size: var(--basis-size-icon-sm);
+
+  --clippy-breadcrumb-nav-arrows-link-background-color: var(--basis-color-default-bg-default);
+  --clippy-breadcrumb-nav-arrows-link-focus-background-color: var(--basis-focus-background-color);
+
+  --clippy-paragraph-margin-block-start: var(--basis-space-inline-sm, 4px);
+  --clippy-paragraph-margin-block-end: var(--basis-space-inline-sm, 4px);
+
+  --clippy-space-around: var(--basis-space-inline-sm, 4px);
+  --clippy-space-block-xs: var(--basis-space-block-xs);
+  --clippy-space-block-md: var(--basis-space-block-md);
+  --clippy-space-block-lg: var(--basis-space-block-lg);
+  --clippy-space-block-xl: var(--basis-space-block-xl);
+  --clippy-space-column-md: var(--basis-space-column-md);
+  --clippy-space-inline-md: var(--basis-space-inline-md);
+
+  /* Theme Wizard collage component tokens */
+  --clippy-collage-component-padding-block: var(--basis-space-block-xl);
+  --clippy-collage-component-padding-inline: var(--basis-space-inline-lg);
+  --clippy-collage-component-border-color: var(--basis-color-default-border-default);
+
+  --clippy-collage-component-header-font-family: "Roboto", sans-serif;
+  --clippy-collage-component-header-gap: var(--basis-space-block-sm);
+  --clippy-collage-component-header-margin-block-end: var(--basis-space-block-lg);
+
+  --clippy-collage-component-header-heading-font-size: var(--basis-text-font-size-lg);
+  --clippy-collage-component-header-heading-font-weight: var(--basis-text-font-weight-bold);
+  --clippy-collage-component-header-heading-line-height: var(--basis-text-line-height-md);
+  --clippy-collage-component-header-heading-color: var(--basis-color-default-color-default);
+
+  --clippy-collage-component-header-paragraph-font-size: var(--basis-text-font-size-md);
+  --clippy-collage-component-header-paragraph-font-weight: var(--basis-text-font-weight-regular);
+  --clippy-collage-component-header-paragraph-line-height: var(--basis-text-line-height-md);
+  --clippy-collage-component-header-paragraph-color: var(--basis-color-default-color-subtle);
+
+  --clippy-collage-component-content-gap: var(--basis-space-block-sm);
+
+  --clippy-side-navigation-display: flex;
+  --clippy-side-navigation-flex-direction: column;
+  --clippy-side-navigation-row-gap: var(--basis-space-row-3xl);
+  --clippy-side-navigation-min-width: 240px;
+
+  --denhaag-side-navigation-display: var(--clippy-side-navigation-display);
+  --denhaag-side-navigation-flex-direction: var(--clippy-side-navigation-flex-direction);
+  --denhaag-side-navigation-row-gap: var(--clippy-side-navigation-row-gap);
+  --denhaag-side-navigation-min-width: var(--clippy-side-navigation-min-width);
+
+  --utrecht-breadcrumb-nav-arrows-link-background-color: var(--clippy-breadcrumb-nav-arrows-link-background-color);
+  --utrecht-breadcrumb-nav-min-block-size: var(--clippy-breadcrumb-nav-min-block-size);
+  --utrecht-breadcrumb-nav-font-family: var(--clippy-breadcrumb-nav-font-family);
+  --utrecht-breadcrumb-nav-font-size: var(--clippy-breadcrumb-nav-font-size);
+  --utrecht-breadcrumb-nav-line-height: var(--clippy-breadcrumb-nav-line-height);
+  --utrecht-breadcrumb-nav-text-decoration: var(--clippy-breadcrumb-nav-text-decoration);
+  --utrecht-breadcrumb-nav-text-transform: var(--clippy-breadcrumb-nav-text-transform);
+
+  --utrecht-breadcrumb-nav-item-first-padding-inline-start: var(
+    --clippy-breadcrumb-nav-item-first-padding-inline-start
+  );
+  --utrecht-breadcrumb-nav-item-padding-block-start: var(--clippy-breadcrumb-nav-item-padding-block-start);
+  --utrecht-breadcrumb-nav-item-padding-block-end: var(--clippy-breadcrumb-nav-item-padding-block-end);
+  --utrecht-breadcrumb-nav-item-padding-inline-end: var(--clippy-breadcrumb-nav-item-padding-inline-end);
+  --utrecht-breadcrumb-nav-item-padding-inline-start: var(--clippy-breadcrumb-nav-item-padding-inline-start);
+
+  --utrecht-breadcrumb-nav-link-color: var(--clippy-breadcrumb-nav-link-color);
+  --utrecht-breadcrumb-nav-link-focus-background-color: var(--clippy-breadcrumb-nav-link-focus-background-color);
+  --utrecht-breadcrumb-nav-link-focus-color: var(--clippy-breadcrumb-nav-link-focus-color);
+  --utrecht-breadcrumb-nav-link-focus-text-decoration: var(--clippy-breadcrumb-nav-link-focus-text-decoration);
+  --utrecht-breadcrumb-nav-link-hover-color: var(--clippy-breadcrumb-nav-link-hover-color);
+  --utrecht-breadcrumb-nav-link-hover-text-decoration: var(--clippy-breadcrumb-nav-link-hover-text-decoration);
+  --utrecht-breadcrumb-nav-link-current-font-weight: var(--clippy-breadcrumb-nav-link-current-font-weight);
+  --utrecht-breadcrumb-nav-link-disabled-color: var(--clippy-breadcrumb-nav-link-disabled-color);
+  --utrecht-breadcrumb-nav-link-icon-size: var(--clippy-breadcrumb-nav-link-icon-size);
+
+  --utrecht-breadcrumb-nav-separator-color: var(--clippy-breadcrumb-nav-separator-color);
+  --utrecht-breadcrumb-nav-separator-icon-size: var(--clippy-breadcrumb-nav-separator-icon-size);
+
+  --utrecht-breadcrumb-nav-arrows-link-background-color: var(--clippy-breadcrumb-nav-arrows-link-background-color);
+  --utrecht-breadcrumb-nav-arrows-link-focus-background-color: var(
+    --clippy-breadcrumb-nav-arrows-link-focus-background-color
+  );
+
+  --utrecht-paragraph-margin-block-start: var(--clippy-paragraph-margin-block-start);
+  --utrecht-paragraph-margin-block-end: var(--clippy-paragraph-margin-block-end);
+  --utrecht-space-around: var(--clippy-space-around);
+}
+
+.theme-wizard-collage-component {
+  display: flex;
+  flex-direction: column;
+  padding: var(--basis-space-block-xl) var(--basis-space-inline-lg);
+  border-block-end: 1px solid var(--basis-color-default-border-default);
+}
+
+.theme-wizard-collage-component-header {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-sm);
+  margin-block-end: var(--basis-space-block-lg);
+}
+
+.theme-wizard-collage-component-header h2 {
+  margin: 0;
+  font-size: var(--basis-text-font-size-lg);
+  font-weight: var(--basis-text-font-weight-bold);
+  line-height: var(--basis-text-line-height-md);
+  color: var(--basis-color-default-color-default);
+}
+
+.theme-wizard-collage-component-header p {
+  font-family: "Roboto", sans-serif;
+  margin-block: 0;
+  margin-inline: 0;
+  font-size: var(--basis-text-font-size-md);
+  font-weight: var(--basis-text-font-weight-regular);
+  line-height: var(--basis-text-line-height-md);
+  color: var(--basis-color-default-color-subtle);
+}
+
+.theme-wizard-collage-component-content {
+  display: flex;
+  gap: var(--basis-space-block-sm);
+  flex-wrap: wrap;
+}
+
+.theme-wizard-collage-component-content.theme-wizard-collage-component-content--stacked {
+  flex-direction: column;
+  gap: var(--basis-space-block-sm);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  display: flex;
+}
+
+.layout-main > theme-wizard-side-nav {
+  flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
+}
+
+.layout-main > utrecht-page-content {
+  flex: 1;
+}
+
+.todo-card-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-column-xl);
+}
+
+.footer-grid {
+  display: flex;
+  gap: var(--basis-space-column-md);
+}
+
+.footer-grid > * {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--basis-space-column-lg);
+}

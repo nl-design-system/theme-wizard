@@ -1,0 +1,123 @@
+---
+import logo from '../assets/logo.svg';
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  sideNav?: boolean;
+}
+const { sideNav = true } = Astro.props;
+---
+
+<BaseLayout>
+  <div class="utrecht-page-body__content clippy-theme">
+    <dialog open="true" class="utrecht-drawer utrecht-drawer--block-start" style="position: static;">
+      <h2
+        id="cookie-consent-title"
+        class="utrecht-heading-2"
+        style="margin-block-end: var(--basis-space-block-lg, 1.5rem);"
+      >
+        Cookies op deze website
+      </h2>
+      <div style="margin-block-end: var(--basis-space-block-xl, 2rem);">
+        <p class="utrecht-paragraph" style="margin-block-end: var(--basis-space-block-md, 1rem);">
+          We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
+          onthouden en onze diensten te verbeteren.
+        </p>
+      </div>
+      <form method="dialog">
+        <p role="group" class="utrecht-button-group" style="margin-block-start: var(--basis-space-block-xl, 2rem);">
+          <button
+            class="utrecht-button utrecht-button--submit utrecht-button--primary-action"
+            type="submit"
+            value="accept"
+          >
+            Aanvullende cookies accepteren
+          </button>
+          <button
+            class="utrecht-button utrecht-button--submit utrecht-button--primary-action"
+            type="submit"
+            value="reject"
+          >
+            Aanvullende cookies weigeren
+          </button>
+          <a href="/templates/cookies" class="utrecht-link utrecht-link--html-a"> Zelf instellen </a>
+        </p>
+      </form>
+    </dialog>
+    <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
+
+    <template-page-header>
+      <template-link href="/" slot="logo">
+        <span id=":r0:" hidden="">homepage</span>
+        <img src={logo.src} alt="Gemeente Voorbeeld" />
+      </template-link>
+
+      <!-- Menu items -->
+      <template-link href="#" slot="menu-links">Contact</template-link>
+
+      <template-link href="#" slot="menu-links">
+        Jeroen van Drouwen
+        <span
+          style="
+            --utrecht-icon-color: var(--basis-color-action-2-color-default);
+            --utrecht-icon-size: 14px;
+            margin-inline-start: var(--basis-space-inline-sm);
+          "
+        >
+          <utrecht-icon-chevron-down></utrecht-icon-chevron-down>
+        </span>
+      </template-link>
+
+      <span slot="menu-links" style="display: inline-flex; gap: 0.5rem; align-items: center">
+        <utrecht-textbox placeholder="Bijvoorbeeld zwembad of grofvuil"></utrecht-textbox>
+        <utrecht-button appearance="secondary-action-button">Zoeken</utrecht-button>
+      </span>
+    </template-page-header>
+
+    <utrecht-breadcrumb-nav
+      json='[{"href":"/templates/my-environment/overview","title":"Mijn omgeving"},{"href":"#","title":"Gemeente Voorbeeld"}]'
+      lang="nl-NL"></utrecht-breadcrumb-nav>
+
+    <div class="layout-main">
+      {sideNav && <template-side-nav> </template-side-nav>}
+
+      <utrecht-page-content>
+        <utrecht-root>
+          <slot name="content" />
+        </utrecht-root>
+      </utrecht-page-content>
+    </div>
+
+    <utrecht-page-footer>
+      <div class="footer-grid">
+        <div>
+          <utrecht-link href="/">
+            <span id=":r0:" hidden="">homepage</span>
+            <img src={logo.src} alt="Gemeente Voorbeeld" />
+          </utrecht-link>
+
+          <div>
+            <template-heading level="4">Contact</template-heading>
+
+            <address class="todo-address">
+              Bel
+              <template-link href="tel:453453">453 453</template-link>
+              (maandag tot en met vrijdag van 09.00 tot 17.00 uur) of stuur een e-mail naar
+              <template-link href="mailto:vragen@gemeentevoorbeeld.nl">
+                <span class="utrecht-url-data">vragen@gemeentevoorbeeld.nl</span>
+              </template-link>
+              .
+            </address>
+          </div>
+        </div>
+
+        <div>
+          <template-link-list
+            link-items='[{"href":"#","text":"Over gemeente voorbeeld"},{"href":"#","text":"Nieuwsbrief"},{"href":"#","text":"Social media"},{"href":"#","text":"Werken bij gemeente Voorbeeld"},{"href":"#","text":"Bescherming persoonsgegevens"},{"href":"#","text":"Gebruikersvoorwaarden"},{"href":"#","text":"Proclaimer"},{"href":"#","text":"Toegankelijkheidsverklaring"},  {"href":"/templates/cookies", "text":"Cookies"}]'
+          >
+          </template-link-list>
+        </div>
+      </div>
+    </utrecht-page-footer>
+  </div>
+</BaseLayout>
