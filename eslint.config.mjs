@@ -75,21 +75,6 @@ export default defineConfig([
     ...react.configs.flat['jsx-runtime'],
   },
   {
-    // Allow importing React for JSX runtimes (e.g. Storybook) without triggering no-unused-vars
-    name: 'eslint/no-unused-vars-allow-react',
-    files: ['**/*.{jsx,tsx}'],
-    rules: {
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^React$',
-        },
-      ],
-      'no-unused-vars': 'off',
-    },
-  },
-  {
     // NL Design System specific rules
     extends: [nlDesignSystemConfig],
     files: ['**/*.{js,cjs,mjs,jsx,ts,tsx}'],

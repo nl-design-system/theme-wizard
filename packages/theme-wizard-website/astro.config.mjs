@@ -1,6 +1,5 @@
-import vercel from '@astrojs/vercel';
-// @ts-check
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 import { defineConfig } from 'astro/config';
 import { readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';

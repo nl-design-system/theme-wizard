@@ -14,6 +14,7 @@ const NewsSection: FC<NewsSectionProps> = ({ heading = 'Nieuws en inzichten' }) 
       <Heading id="nieuws-heading" level={2} appearance="level-2">
         {heading}
       </Heading>
+
       <NewsCards cards={NEWS_ITEMS} />
     </section>
   </PageContent>

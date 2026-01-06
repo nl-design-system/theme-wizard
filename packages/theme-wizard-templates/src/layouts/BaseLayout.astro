@@ -16,6 +16,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
 ---
 
 <!doctype html>
+
 <html lang="nl" class="utrecht-page-layout utrecht-root start-theme preview-theme">
   <head>
     <meta charset="utf-8" />
@@ -23,6 +24,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     {isCollage && (
       <style>
         @media print {
@@ -34,6 +36,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
         }
       </style>
       )}
+
       {isStandalone && (
         <style>
           html {
@@ -46,8 +49,10 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
       )}
     <title>{title}</title>
   </head>
+
   <body class="utrecht-page-body">
     <slot />
+
     <ClientInit />
   </body>
 </html>

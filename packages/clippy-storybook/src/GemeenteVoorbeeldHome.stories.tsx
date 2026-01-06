@@ -1,5 +1,3 @@
-/* @license CC0-1.0 */
-
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import GemeenteVoorbeeldHome, {
   type GemeenteVoorbeeldHomeProps,
