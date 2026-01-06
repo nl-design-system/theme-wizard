@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-font-combobox';
 import { html } from 'lit';
 import React from 'react';
@@ -17,7 +17,7 @@ const meta = {
       },
     },
   },
-  render: () => React.createElement('clippy-font-combobox', null) as unknown as string,
+  render: () => React.createElement('clippy-font-combobox', null),
   tags: ['autodocs'],
   title: 'Clippy/Combobox/Font Combobox',
 } satisfies Meta<FontComboboxStoryArgs>;

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-code';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-code/README.md?raw';
 import { html } from 'lit';
@@ -35,7 +35,7 @@ const meta = {
       },
     },
   },
-  render: ({ content }: CodeStoryArgs) => React.createElement('clippy-code', null, content) as unknown as string,
+  render: ({ content }: CodeStoryArgs) => React.createElement('clippy-code', null, content),
   tags: ['autodocs'],
   title: 'Clippy/Code',
 } satisfies Meta<CodeStoryArgs>;

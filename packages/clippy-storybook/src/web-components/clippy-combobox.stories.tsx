@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-combobox';
 import { html } from 'lit';
 import React from 'react';
@@ -37,7 +37,7 @@ const meta = {
   render: ({ options }: ComboboxStoryArgs) =>
     React.createElement('clippy-combobox', {
       options: JSON.stringify(options, null, 2),
-    }) as unknown as string,
+    }),
   tags: ['autodocs'],
   title: 'Clippy/Combobox',
 } satisfies Meta<ComboboxStoryArgs>;
