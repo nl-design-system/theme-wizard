@@ -1,0 +1,88 @@
+[
+  {
+    "id": "analytics",
+    "label": "Analytische cookies",
+    "description": "Helpen ons begrijpen hoe bezoekers onze website gebruiken",
+    "required": false,
+    "cookies": [
+      {
+        "name": "_ga",
+        "type": "http-cookie",
+        "description": "Google Analytics gebruikt deze cookie om bezoekers, sessies en campagnegegevens te berekenen en het gebruik van de site te volgen voor het analyticsrapport van de site.",
+        "duration": "1 jaar 1 maand 4 dagen"
+      },
+      {
+        "name": "_gid",
+        "type": "http-cookie",
+        "description": "Google Analytics gebruikt deze cookie om gebruikers te onderscheiden.",
+        "duration": "1 dag"
+      }
+    ]
+  },
+  {
+    "id": "marketing",
+    "label": "Marketing cookies",
+    "description": "Gebruikt om relevante advertenties te tonen",
+    "required": false,
+    "cookies": [
+      {
+        "name": "_fbp",
+        "type": "http-cookie",
+        "description": "Facebook Pixel gebruikt deze cookie om advertentie-effectiviteit te meten door gebruikers te identificeren die van de website naar Facebook komen en daar een actie uitvoeren.",
+        "duration": "3 maanden"
+      },
+      {
+        "name": "_gcl_au",
+        "type": "http-cookie",
+        "description": "Google Ads gebruikt deze cookie om conversies te meten en advertentie-effectiviteit te bepalen voor gebruikers die via Google-advertenties op de website komen.",
+        "duration": "3 maanden"
+      },
+      {
+        "name": "IDE",
+        "type": "http-cookie",
+        "description": "Google DoubleClick gebruikt deze cookie om gebruikers te identificeren en relevante advertenties te tonen op basis van hun surfgedrag.",
+        "duration": "1 jaar 1 maand 4 dagen"
+      }
+    ]
+  },
+  {
+    "id": "preferences",
+    "label": "Voorkeurs cookies",
+    "description": "Onthouden je voorkeuren zoals taal en regio",
+    "required": false,
+    "cookies": [
+      {
+        "name": "language",
+        "type": "local-storage",
+        "description": "Slaat de taalvoorkeur van de gebruiker op, zodat de website automatisch in de juiste taal wordt weergegeven bij volgende bezoeken.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "region",
+        "type": "local-storage",
+        "description": "Slaat de regio- of locatievoorkeur op, zodat relevante informatie voor de regio wordt getoond.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "display_preferences",
+        "type": "local-storage",
+        "description": "Slaat weergavevoorkeuren op, zoals fontgrootte, kleurschema of layout-keuzes die de gebruiker heeft gemaakt.",
+        "duration": "1 jaar"
+      }
+    ]
+  },
+  {
+    "id": "functional",
+    "label": "Functionele cookies",
+    "description": "Noodzakelijk voor de basisfunctionaliteit van de website",
+    "required": true,
+    "cookies": [
+      {
+        "name": "cookieyes-consent",
+        "type": "http-cookie",
+        "description": "CookieYes stelt deze cookie in om de toestemmingsvoorkeuren van gebruikers te onthouden, zodat hun voorkeuren bij volgende bezoeken aan deze site worden gerespecteerd.",
+        "duration": "1 jaar"
+      }
+    ]
+  }
+]

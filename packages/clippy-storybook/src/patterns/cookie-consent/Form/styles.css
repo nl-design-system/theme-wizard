@@ -1,0 +1,39 @@
+/**
+ * CSS Custom Properties for Utrecht Data List Design Tokens
+ * These tokens customize the appearance of DataList components used in the cookie consent form
+ */
+
+:root {
+  /* Data List base tokens */
+  --utrecht-data-list-margin-block-end: var(--basis-space-block-md, 1rem);
+  --utrecht-data-list-margin-block-start: var(--basis-space-block-md, 1rem);
+
+  /* Data List item key tokens */
+  --utrecht-data-list-item-key-color: var(--basis-color-default-color-default, currentColor);
+  --utrecht-data-list-item-key-font-size: var(--basis-text-font-size-md, 1rem);
+  --utrecht-data-list-item-key-font-weight: var(--basis-text-font-weight-bold, 700);
+  --utrecht-data-list-item-key-line-height: var(--basis-text-line-height-md, 1.5);
+
+  /* Data List item value tokens */
+  --utrecht-data-list-item-value-color: var(--basis-color-default-color-default, currentColor);
+  --utrecht-data-list-item-value-font-size: var(--basis-text-font-size-md, 1rem);
+  --utrecht-data-list-item-value-font-weight: var(--basis-text-font-weight-regular, 400);
+  --utrecht-data-list-item-value-line-height: var(--basis-text-line-height-md, 1.5);
+
+  /* Data List rows appearance tokens */
+  --utrecht-data-list-rows-border-bottom-color: var(--basis-color-default-border-subtle, #e5e5e5);
+  --utrecht-data-list-rows-border-bottom-width: var(--basis-border-width-sm, 1px);
+  --utrecht-data-list-rows-gap: var(--basis-space-block-md, 1rem);
+
+  /* Data List rows column tokens */
+  --utrecht-data-list-rows-column-min-inline-size: 0;
+  --utrecht-data-list-rows-column-inline-size: auto;
+
+  /* Data List rows item tokens */
+  --utrecht-data-list-rows-item-margin-block-start: 0;
+  --utrecht-data-list-rows-item-padding-block-end: var(--basis-space-block-md, 1rem);
+  --utrecht-data-list-rows-item-padding-block-start: var(--basis-space-block-md, 1rem);
+
+  /* Data List rows item value tokens */
+  --utrecht-data-list-rows-item-value-margin-block-start: 0;
+}
