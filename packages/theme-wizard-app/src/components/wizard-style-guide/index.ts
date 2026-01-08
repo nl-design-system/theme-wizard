@@ -224,18 +224,18 @@ export class WizardStyleGuide extends LitElement {
                           <utrecht-table-cell>
                             <utrecht-button
                               appearance="subtle-button"
-                              click=${() => navigator.clipboard.writeText(tokenId)}
+                              @click=${() => navigator.clipboard.writeText(tokenId)}
                             >
                               <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
                             </utrecht-button>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
-                            <utrecht-code>${cssColor}</utrecht-code>
-                            <clippy-copy-to-clipboard-button
-                              content=${cssColor}
-                              label=${`Copy "${cssColor}" to clipboard`}
+                            <utrecht-button
+                              appearance="subtle-button"
+                              @click=${() => navigator.clipboard.writeText(cssColor)}
                             >
-                            </clippy-copy-to-clipboard-button>
+                              <utrecht-code id=${cssColor}>${cssColor}</utrecht-code>
+                            </utrecht-button>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
                             <span class="nl-data-badge">${usageCount}</span>
