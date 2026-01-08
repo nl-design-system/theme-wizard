@@ -2,6 +2,11 @@
 import '@nl-design-system-unstable/start-design-tokens/dist/theme.css';
 import '@nl-design-system-community/theme-wizard-app/theme.css';
 import '@utrecht/component-library-css';
+import '@nl-design-system-candidate/link-css/link.css';
+import '@nl-design-system-candidate/heading-css/heading.css';
+import '@nl-design-system-candidate/link-css/link.css';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import '@nl-design-system-candidate/skip-link-css/skip-link.css';
 import ClientInit from '../components/ClientInit.astro';
 import DevTools from '../components/DevTools.astro';
 
@@ -20,9 +25,6 @@ const {
   htmlClasses = 'utrecht-page-layout utrecht-root start-theme preview-theme',
   bodyClasses = 'utrecht-page-body',
 } = Astro.props;
-
-// Check if we're in standalone mode (defined in astro.config.mjs)
-const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__ === true;
 ---
 
 <!doctype html>
