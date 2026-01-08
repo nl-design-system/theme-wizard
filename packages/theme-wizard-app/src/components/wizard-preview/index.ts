@@ -47,9 +47,20 @@ export class ThemePreview extends LitElement {
 
   override updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
+
     // Reload content when url changes
     if (changedProperties.has('url') && this.url) {
       this.#loadContent();
+    }
+
+    // Execute scripts after content is rendered
+    if (changedProperties.has('htmlContent') && this.htmlContent) {
+      requestAnimationFrame(() => {
+        const container = this.shadowRoot?.querySelector(`[data-testid="preview"]`) as HTMLElement;
+        if (container) {
+          this.#executeScripts(container);
+        }
+      });
     }
   }
 
@@ -85,6 +96,29 @@ export class ThemePreview extends LitElement {
       console.error('Failed to fetch CSS:', err);
       return undefined;
     }
+  };
+
+  /**
+   * Execute scripts from the fetched HTML
+   */
+  readonly #executeScripts = (container: HTMLElement) => {
+    const scripts = container.querySelectorAll('script');
+    scripts.forEach((oldScript) => {
+      const newScript = document.createElement('script');
+
+      // Copy attributes
+      Array.from(oldScript.attributes).forEach((attr) => {
+        newScript.setAttribute(attr.name, attr.value);
+      });
+
+      // Copy inline script content
+      if (oldScript.textContent) {
+        newScript.textContent = oldScript.textContent;
+      }
+
+      // Replace old script with new one (this makes it execute)
+      oldScript.parentNode?.replaceChild(newScript, oldScript);
+    });
   };
 
   /**
