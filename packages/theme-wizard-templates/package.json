@@ -39,7 +39,7 @@
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-unstable/start-design-tokens": "2.1.0",
     "@utrecht/component-library-css": "8.2.1",
-    "@utrecht/component-library-react": "10.3.10",
+    "@utrecht/component-library-react": "12.0.0",
     "@utrecht/web-component-library-react": "3.0.12",
     "@utrecht/web-component-library-stencil": "3.7.0",
     "react-dom": "19.2.3",
