@@ -119,9 +119,27 @@ const css = `
 
 const tokens = getDesignTokens(css);
 console.log(tokens);
-// {
-//   "color-primary": "#0066cc",
-//   "color-text": "#333",
-//   "spacing-unit": "8px"
-// }
+// [
+//   {
+//     "$type": "color",
+//     "$value": { alpha: 1, components: [1, 0, 0], colorSpace: 'srgb' },
+//     "$extensions": {
+//       "nl.nldesignsystem.theme-wizard.css-authored-as": "red",
+//       "nl.nldesignsystem.theme-wizard.css-properties": ["color"],
+//       "nl.nldesignsystem.theme-wizard.token-id": "color-123",
+//       "nl.nldesignsystem.theme-wizard.usage-count": 5
+//     }
+//   },
+//   {
+//     "$type": "dimension",
+//     "$value": { unit: 'rem', value: 1.2 },
+//     "$extensions": {
+//       "nl.nldesignsystem.theme-wizard.css-authored-as": "1.2rem",
+//       "nl.nldesignsystem.theme-wizard.css-properties": ["font-size"],
+//       "nl.nldesignsystem.theme-wizard.token-id": "font-size-123",
+//       "nl.nldesignsystem.theme-wizard.usage-count": 1
+//     }
+//   },
+//   ...
+// ]
 ```
