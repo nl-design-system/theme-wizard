@@ -26,7 +26,6 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
 ---
 
 <!doctype html>
-
 <html lang={lang} class={htmlClasses}>
   <head>
     <meta charset="utf-8" />
@@ -35,23 +34,12 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    {isStandalone && (
-      <style>
-        html {
-          scroll-padding-block-start: calc(var(--basis-space-block-md) * 2 + 3rem);
-        }
-        body {
-          padding-block-start: calc(var(--basis-space-block-md) * 2 + 3rem);
-        }
-      </style>
-    )}
-
     <slot name="head" />
     <title>{title}</title>
   </head>
 
   <body class={bodyClasses}>
-    <DevTools />
+    <!-- <DevTools /> -->
     <slot />
     <ClientInit />
   </body>

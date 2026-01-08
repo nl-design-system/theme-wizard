@@ -1,38 +1,69 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
-import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
 import { Icon } from '@utrecht/component-library-react';
 import { ButtonLink } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
-import React from 'react';
+import React, { type FC, useMemo } from 'react';
+import type { OpeningHoursCardProps } from './types';
 
-const OpeningHoursCard = () => (
-  <div className="voorbeeld__card" itemScope itemType="https://schema.org/GovernmentOffice">
-    <Icon>
-      <UtrechtIconAfspraakMaken />
-    </Icon>
+const formatTime = (time: string): string => time.substring(0, 5);
 
-    <Heading level={2} appearance="level-2" itemProp="name">
-      Gemeente Voorbeeld
-    </Heading>
+const OpeningHoursCard: FC<OpeningHoursCardProps> = ({ openingHoursSummary = [] }) => {
+  useMemo(() => {
+    const today = new Date();
+    return {
+      dayName: today.toLocaleDateString('nl-NL', { weekday: 'long' }),
+      formattedDate: today.toLocaleDateString('nl-NL', {
+        day: 'numeric',
+        month: 'long',
+      }),
+    };
+  }, []);
 
-    <Heading level={3} appearance="level-3">
-      Openingstijden Gemeentehuis
-    </Heading>
+  return (
+    <div className="voorbeeld__card">
+      <Icon>
+        <UtrechtIconAfspraakMaken />
+      </Icon>
 
-    <Paragraph className="nl-paragraph nl-paragraph--lead">Vandaag:</Paragraph>
+      <section aria-labelledby="openingstijden">
+        <Heading level={2} appearance="level-3" id="openingstijden">
+          Openingstijden Gemeentehuis
+        </Heading>
 
-    <span itemProp="openingHours" content="Mo-Fr 08:30-17:30">
-      <time dateTime="08:30">08:30</time> tot <time dateTime="17:30">17:30</time>
-    </span>
+        {openingHoursSummary && openingHoursSummary.length > 0 && (
+          <div className="opening-hours-summary">
+            {openingHoursSummary.map((item) => (
+              <>
+                <p key={item.label} className="opening-hours-item">
+                  <strong>{item.label}:</strong>{' '}
+                  <p>
+                    {item.hours ? (
+                      item.hours.map((hour, index) => (
+                        <span key={`${hour.opens}-${hour.closes}`}>
+                          {index > 0 && ', '}
+                          <time dateTime={formatTime(hour.opens)}>{formatTime(hour.opens)}</time>
+                          {' tot '}
+                          <time dateTime={formatTime(hour.closes)}>{formatTime(hour.closes)}</time>
+                        </span>
+                      ))
+                    ) : (
+                      <span>gesloten</span>
+                    )}
+                  </p>
+                </p>
 
-    <span itemProp="openingHours" content="Th 18:00-20:00">
-      <time dateTime="18:00">18:00</time> tot <time dateTime="20:00">20:00</time>
-    </span>
+                <br />
+              </>
+            ))}
+          </div>
+        )}
+      </section>
 
-    <ButtonLink appearance="secondary-action-button" href="/">
-      Contact
-    </ButtonLink>
-  </div>
-);
+      <ButtonLink appearance="secondary-action-button" className="contact-button" href="/">
+        Contact
+      </ButtonLink>
+    </div>
+  );
+};
 
 export default OpeningHoursCard;

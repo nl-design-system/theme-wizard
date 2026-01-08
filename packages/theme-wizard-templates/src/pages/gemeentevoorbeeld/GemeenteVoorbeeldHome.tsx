@@ -1,4 +1,5 @@
 import React, { type FC } from 'react';
+import type { SummaryItem } from './components/OpeningHoursCard/types';
 import MainIntroSection from './Sections/MainIntro';
 import Navigation from './Sections/Navigation';
 import NewsSection from './Sections/News';
@@ -9,16 +10,17 @@ import './styles.css';
 
 export interface GemeenteVoorbeeldHomeProps {
   currentPath?: string;
+  openingHoursSummary?: SummaryItem[];
 }
 
-const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath }) => (
+const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath, openingHoursSummary }) => (
   <>
     <PageHeaderSection />
 
     <Navigation currentPath={currentPath} />
 
     <main>
-      <MainIntroSection />
+      <MainIntroSection openingHoursSummary={openingHoursSummary} />
 
       <SelfServiceSection />
 

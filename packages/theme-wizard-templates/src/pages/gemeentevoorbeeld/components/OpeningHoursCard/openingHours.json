@@ -1,0 +1,108 @@
+{
+  "@context": [
+    "https://schema.org",
+    {
+      "@language": "nl-NL"
+    }
+  ],
+  "@type": "GovernmentOffice",
+  "name": "Gemeentehuis Voorbeeld",
+  "address": {
+    "@id": "_:gemeentehuis_voorbeeld",
+    "@type": "PostalAddress",
+    "addressCountry": "NL",
+    "addressLocality": "Voorbeeld",
+    "addressRegion": "Noord-Holland",
+    "contactType": "Bezoekadres",
+    "postalCode": "1234 AB",
+    "streetAddress": "Gemeenteplein 1"
+  },
+  "email": "mailto:info@gemeentevoorbeeld.nl",
+  "telephone": "+31 (0)20 123 4567",
+  "location": {
+    "@id": "_:gemeentehuis_voorbeeld"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "17:30:00",
+      "dayOfWeek": "https://schema.org/Monday",
+      "opens": "08:30:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "17:30:00",
+      "dayOfWeek": "https://schema.org/Tuesday",
+      "opens": "08:30:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "17:30:00",
+      "dayOfWeek": "https://schema.org/Wednesday",
+      "opens": "08:30:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "17:30:00",
+      "dayOfWeek": "https://schema.org/Thursday",
+      "opens": "08:30:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "20:00:00",
+      "dayOfWeek": "https://schema.org/Thursday",
+      "opens": "18:00:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "17:30:00",
+      "dayOfWeek": "https://schema.org/Friday",
+      "opens": "08:30:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "17:00:00",
+      "dayOfWeek": "https://schema.org/Saturday",
+      "opens": "08:00:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "closes": "00:00:00",
+      "dayOfWeek": "https://schema.org/Sunday",
+      "opens": "00:00:00"
+    }
+  ],
+  "summary": [
+    {
+      "label": "Maandag tot en met vrijdag",
+      "hours": [
+        {
+          "opens": "08:30:00",
+          "closes": "17:30:00"
+        }
+      ]
+    },
+    {
+      "label": "Donderdag 's avonds",
+      "hours": [
+        {
+          "opens": "18:00:00",
+          "closes": "20:00:00"
+        }
+      ]
+    },
+    {
+      "label": "Zaterdag",
+      "hours": [
+        {
+          "opens": "08:00:00",
+          "closes": "17:00:00"
+        }
+      ]
+    },
+    {
+      "label": "Zondag",
+      "hours": null
+    }
+  ]
+}

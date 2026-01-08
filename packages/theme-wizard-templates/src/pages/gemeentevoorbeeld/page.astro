@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GemeenteVoorbeeldHome from './GemeenteVoorbeeldHome';
+import openingHoursData from './components/OpeningHoursCard/openingHours.json';
 
 export const detail = {
   name: 'Homepagina',
@@ -9,8 +10,12 @@ export const detail = {
 };
 
 const currentPath = Astro.url.pathname;
+
+const openingHoursSummary = openingHoursData.summary;
 ---
 
 <BaseLayout>
-  <GemeenteVoorbeeldHome client:load currentPath={currentPath} />
+  <GemeenteVoorbeeldHome client:load currentPath={currentPath} openingHoursSummary={openingHoursSummary} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(openingHoursData)} />
 </BaseLayout>
