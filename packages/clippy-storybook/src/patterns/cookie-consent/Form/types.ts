@@ -6,7 +6,7 @@ export interface Cookie {
   description: string;
   duration: string;
   name: string;
-  type?: 'http-cookie' | 'local-storage' | 'session-storage';
+  type?: string;
 }
 
 export interface CookieOption {

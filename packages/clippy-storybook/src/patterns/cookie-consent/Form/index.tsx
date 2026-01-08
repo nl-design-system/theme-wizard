@@ -3,16 +3,18 @@ import {
   AccordionProvider,
   Button,
   ButtonGroup,
-  DataList,
-  DataListItem,
-  DataListKey,
-  DataListValue,
   Fieldset,
   FieldsetLegend,
   FormFieldCheckbox,
   Heading2,
   Link,
   Paragraph,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
 } from '@utrecht/component-library-react/dist/css-module';
 import React, { FC, useCallback, useMemo, useState } from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
@@ -202,66 +204,34 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
                           padding: 'var(--basis-space-block-md, 1rem)',
                         }}
                       >
-                        <div
-                          style={{
-                            display: 'grid',
-                            gap: 'var(--basis-space-inline-md, 1rem)',
-                            gridTemplateColumns: '1fr 2fr',
-                          }}
-                        >
-                          <DataList appearance="rows">
-                            <DataListItem>
-                              <DataListKey>Cookie</DataListKey>
-                            </DataListItem>
-                          </DataList>
-                          <DataList appearance="rows">
-                            <DataListItem>
-                              <DataListKey>Details</DataListKey>
-                            </DataListItem>
-                          </DataList>
-                        </div>
-                        {option.cookies.map((cookie) => (
-                          <div
-                            key={cookie.name}
-                            style={{
-                              alignItems: 'flex-start',
-                              display: 'grid',
-                              gap: 'var(--basis-space-inline-md, 1rem)',
-                              gridTemplateColumns: '1fr 2fr',
-                              paddingBlockStart: 'var(--basis-space-block-md, 1rem)',
-                            }}
-                          >
-                            <div style={{ height: '100%' }}>
-                              <DataList appearance="rows" style={{ height: '100%' }}>
-                                <DataListItem style={{ height: '100%', padding: '0' }}>
-                                  <DataListValue>{cookie.name}</DataListValue>
-                                </DataListItem>
-                              </DataList>
-                            </div>
-                            <div>
-                              <DataList appearance="rows">
-                                <DataListItem>
-                                  <DataListKey>Cookie type</DataListKey>
-                                  <DataListValue>
-                                    {cookie.type === 'local-storage'
-                                      ? 'Lokale HTML opslag'
-                                      : cookie.type === 'session-storage'
-                                        ? 'Sessie opslag'
-                                        : 'HTTP cookie'}
-                                  </DataListValue>
-                                </DataListItem>
-                                <DataListItem>
-                                  <DataListKey>Looptijd</DataListKey>
-                                  <DataListValue>{cookie.duration}</DataListValue>
-                                </DataListItem>
-                                <DataListItem>
-                                  <DataListKey>Beschrijving</DataListKey>
-                                  <DataListValue>{cookie.description}</DataListValue>
-                                </DataListItem>
-                              </DataList>
-                            </div>
-                          </div>
-                        ))}
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
+                                Cookie
+                              </TableHeaderCell>
+                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
+                                Cookie type
+                              </TableHeaderCell>
+                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
+                                Looptijd
+                              </TableHeaderCell>
+                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
+                                Beschrijving
+                              </TableHeaderCell>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {option.cookies.map((cookie) => (
+                              <TableRow key={cookie.name}>
+                                <TableHeaderCell scope="row">{cookie.name}</TableHeaderCell>
+                                <TableCell>{cookie.type}</TableCell>
+                                <TableCell>{cookie.duration}</TableCell>
+                                <TableCell>{cookie.description}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
                       </div>
                     )}
                   </div>
