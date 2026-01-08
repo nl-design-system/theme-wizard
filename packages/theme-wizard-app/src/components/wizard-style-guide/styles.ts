@@ -28,13 +28,6 @@ export default css`
     padding-block: var(--basis-space-block-xl);
     padding-inline: var(--basis-space-inline-2xl);
     text-decoration: none;
-    border-inline-start: 4px solid transparent;
-    display: block;
-    font-size: var(--basis-text-font-size-lg);
-    font-weight: var(--basis-text-font-weight-bold);
-    padding-block: var(--basis-space-block-xl);
-    padding-inline: var(--basis-space-inline-2xl);
-    text-decoration: none;
 
     &:hover,
     &:focus-visible {

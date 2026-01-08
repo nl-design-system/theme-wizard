@@ -33,43 +33,31 @@ export const en = {
     success: 'Done! Found {{tokenCount}} tokens.',
   },
   styleGuide: {
+    details: 'Details',
+    sample: 'Sample',
     sections: {
       colors: {
         table: {
           header: {
-            name: 'Name',
             hexCode: 'Hex code',
-            sample: 'Sample',
-            usageCount: 'Usage',
           },
         },
         title: 'Colors',
       },
       space: {
         block: {
-          sample: 'Example element shown in complementary size',
           title: 'Block',
         },
         column: {
-          sample: 'Example element shown in complementary size',
           title: 'Column',
         },
         inline: {
-          sample: 'Example element shown in complementary size',
           title: 'Inline',
         },
         row: {
-          sample: 'Example element shown in complementary size',
           title: 'Row',
         },
-        table: {
-          header: {
-            name: 'Name',
-            sample: 'Sample',
-            usageCount: 'Usage',
-            value: 'Value',
-          },
-        },
+        sample: 'Example element shown in complementary size',
         text: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
           title: 'Text',
@@ -78,44 +66,25 @@ export const en = {
       },
       typography: {
         families: {
-          sample: 'Example text rendere in corresponding font-family',
-          table: {
-            header: {
-              name: 'Name',
-              sample: 'Sample',
-              usageCount: 'Usage',
-              value: 'Value',
-            },
-          },
+          sample: 'Example text rendered in corresponding font-family',
           title: 'Font families',
         },
         headings: {
           sample: 'Example heading to show size, line height and weight',
-          table: {
-            header: {
-              name: 'Name',
-              sample: 'Sample',
-            },
-          },
           title: 'Headings',
         },
         sizes: {
           sample: 'Example text shown in one font size to demonstrate size',
-          table: {
-            header: {
-              name: 'Name',
-              sample: 'Sample',
-              usageCount: 'Usage',
-              value: 'Value',
-            },
-          },
           title: 'Font sizes',
         },
         title: 'Typography',
       },
     },
+    showDetails: 'Show details',
     title: 'Style guide',
+    tokenName: 'Name',
     unusedTokenWarning: 'This token is defined but never used in acomponent.',
+    value: 'Value',
   },
   tokenDownloadDialog: {
     body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
@@ -257,43 +226,31 @@ export const nl = {
     success: 'Gereed, {{tokenCount}} tokens gevonden',
   },
   styleGuide: {
+    details: 'Details',
+    sample: 'Voorbeeld',
     sections: {
       colors: {
         table: {
           header: {
-            name: 'Naam',
             hexCode: 'Hex code',
-            sample: 'Voorbeeld',
-            usageCount: 'Gebruik',
           },
         },
         title: 'Kleuren',
       },
       space: {
         block: {
-          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
           title: 'Block',
         },
         column: {
-          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
           title: 'Column',
         },
         inline: {
-          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
           title: 'Inline',
         },
         row: {
-          sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
           title: 'Row',
         },
-        table: {
-          header: {
-            name: 'Naam',
-            sample: 'Voorbeeld',
-            usageCount: 'Gebruik',
-            value: 'Waarde',
-          },
-        },
+        sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
         text: {
           sample: 'Voorbeeldelement getoond in de bijbehorende afmeting',
           title: 'Text',
@@ -303,43 +260,24 @@ export const nl = {
       typography: {
         families: {
           sample: 'Voorbeeldtekst van de juiste font-family',
-          table: {
-            header: {
-              name: 'Naam',
-              sample: 'Voorbeeld',
-              usageCount: 'Gebruik',
-              value: 'Waarde',
-            },
-          },
           title: 'Font families',
         },
         headings: {
           sample: 'Voorbeeldtekst met juiste lettergrootte, regelafstand en spatiering',
-          table: {
-            header: {
-              name: 'Naam',
-              sample: 'Voorbeeld',
-            },
-          },
           title: 'Headings',
         },
         sizes: {
           sample: 'Voorbeeldtekst in een font-size ter demonstratie van de grootte',
-          table: {
-            header: {
-              name: 'Naam',
-              sample: 'Voorbeeld',
-              usageCount: 'Gebruik',
-              value: 'Waarde',
-            },
-          },
           title: 'Lettergroottes',
         },
         title: 'Typografie',
       },
     },
+    showDetails: 'Details',
     title: 'Stijlgids',
+    tokenName: 'Naam',
     unusedTokenWarning: 'Token is gedefinieerd maar wordt nooit toegepast op een component.',
+    value: 'Waarde',
   },
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',

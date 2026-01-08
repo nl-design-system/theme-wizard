@@ -45,12 +45,6 @@ export class WizardStyleGuide extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
-  private activeColor?: {
-    tokenId: string;
-    usage: string[];
-    isUsed: boolean;
-    hexCode: string;
-  } = undefined;
 
   #activeToken?: DisplayToken;
 
@@ -121,8 +115,8 @@ export class WizardStyleGuide extends LitElement {
             const cssColor = color ? legacyToModernColor.encode(color) : '#000';
             const tokenId = `basis.color.${key}.${colorKey}`;
             const isUsed = tokenUsage.has(tokenId);
-            const usage = tokenUsage.get(tokenId);
-            const usageCount = usage?.length || 0;
+            const usage = tokenUsage.get(tokenId) || [];
+            const usageCount = usage.length;
             return { colorKey, cssColor, isUsed, tokenId, usage, usageCount };
           })
           .filter(({ cssColor }) => cssColor !== null);
@@ -135,8 +129,9 @@ export class WizardStyleGuide extends LitElement {
       const value = (tokenValue as DesignToken).$value;
       const tokenId = `basis.text.font-family.${name}`;
       const isUsed = tokenUsage.has(tokenId);
-      const usageCount = tokenUsage.get(tokenId)?.length ?? 0;
-      return { name, isUsed, tokenId, usageCount, value };
+      const usage = tokenUsage.get(tokenId) || [];
+      const usageCount = usage.length;
+      return { name, isUsed, tokenId, usage, usageCount, value };
     });
   }
 
@@ -147,8 +142,9 @@ export class WizardStyleGuide extends LitElement {
         const value = (tokenValue as DesignToken).$value;
         const tokenId = `basis.text.font-size.${name}`;
         const isUsed = tokenUsage.has(tokenId);
-        const usageCount = tokenUsage.get(tokenId)?.length ?? 0;
-        return { name, isUsed, tokenId, usageCount, value };
+        const usage = tokenUsage.get(tokenId) || [];
+        const usageCount = usage.length;
+        return { name, isUsed, tokenId, usage, usageCount, value };
       });
   }
 
@@ -160,8 +156,9 @@ export class WizardStyleGuide extends LitElement {
         const value = (tokenValue as DesignToken).$value;
         const tokenId = `basis.space.${space}.${name}`;
         const isUsed = tokenUsage.has(tokenId);
-        const usageCount = tokenUsage.get(tokenId)?.length ?? 0;
-        return { name, isUsed, tokenId, usageCount, value };
+        const usage = tokenUsage.get(tokenId) || [];
+        const usageCount = usage.length ?? 0;
+        return { name, isUsed, tokenId, usage, usageCount, value };
       });
   }
 
@@ -170,7 +167,12 @@ export class WizardStyleGuide extends LitElement {
 
     if (token !== undefined) {
       this.requestUpdate();
-      (this.renderRoot.querySelector('#color-dialog')! as ClippyModal).open();
+      const dialog = this.renderRoot.querySelector('#token-dialog')! as ClippyModal;
+
+      dialog.addEventListener('close', () => {
+        this.#activeToken = undefined;
+      });
+      dialog.open();
     }
   }
 
@@ -225,10 +227,10 @@ export class WizardStyleGuide extends LitElement {
                         <th scope="col" class="utrecht-table__header-cell">
                           ${t('styleGuide.sections.colors.table.header.hexCode')}
                         </th>
-                        <th scope="col" class="utrecht-table__header-cell">Details</th>
+                        <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.details')}</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="utrecht-table__body">
                       ${colorEntries.map(
                         ({ cssColor, isUsed, tokenId, usage }) => html`
                           <tr
@@ -271,7 +273,7 @@ export class WizardStyleGuide extends LitElement {
                                   const color = new Color(cssColor);
                                   this.setActiveToken({
                                     displayValue: cssColor,
-                                    isUsed: (usage?.length ?? 0) > 0,
+                                    isUsed,
                                     metadata: {
                                       OKLCH: color.toString({ format: 'oklch' }),
                                       'P3 Color': color.toString({ format: 'color' }),
@@ -279,11 +281,11 @@ export class WizardStyleGuide extends LitElement {
                                     },
                                     tokenId,
                                     tokenType: 'color',
-                                    usage: usage || [],
+                                    usage,
                                   });
                                 }}
                               >
-                                Details
+                                ${t('styleGuide.showDetails')}
                               </utrecht-button>
                             </td>
                           </tr>
@@ -302,123 +304,75 @@ export class WizardStyleGuide extends LitElement {
                     </utrecht-paragraph>`}
               `;
             })}
-
-            <clippy-modal id="color-dialog" title=${this.#activeToken?.tokenId} open=${this.#activeToken !== undefined} actions="none">
-              ${
-                this.#activeToken
-                  ? html`
-                      ${this.#activeToken.tokenType === 'color'
-                        ? html`
-                            <svg
-                              role="img"
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="nl-color-sample"
-                              style="color: ${this.#activeToken.displayValue};"
-                              width="32"
-                              height="32"
-                              viewBox="0 0 32 32"
-                            >
-                              <path d="M0 0H32V32H0Z" fill="currentcolor" />
-                            </svg>
-                          `
-                        : nothing}
-                      <dl>
-                        <dt>Token type</dt>
-                        <dd>
-                          <utrecht-code>${this.#activeToken.tokenType}</utrecht-code>
-                        </dd>
-                        <dt>Token ID</dt>
-                        <dd>
-                          <utrecht-code>${this.#activeToken.tokenId}</utrecht-code>
-                        </dd>
-                        <dt>CSS Variable</dt>
-                        <dd>
-                          <utrecht-code>${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</utrecht-code>
-                        </dd>
-                        ${this.#activeToken.metadata === undefined
-                          ? nothing
-                          : Object.entries(this.#activeToken.metadata).map(
-                              ([key, value]) => html`
-                                <dt>${key}</dt>
-                                <dd>
-                                  <utrecht-code>${value} </utrecht-code>
-                                </dd>
-                              `,
-                            )}
-                      </dl>
-
-                      <utrecht-heading-3>
-                        Where is this token used? (${this.#activeToken.usage.length})
-                      </utrecht-heading-3>
-                      ${this.#activeToken.usage.length === 0
-                        ? html`<utrecht-paragraph>No references found</utrecht-paragraph>`
-                        : html`<ul>
-                            ${this.#activeToken.usage.map(
-                              (referrer) => html`
-                                <li>
-                                  <utrecht-code>${referrer}</utrecht-code>
-                                </li>
-                              `,
-                            )}
-                          </ul>`}
-                    `
-                  : nothing
-              }
-            </clippy-modal>
           </section>
 
           <section id="typography">
             <utrecht-heading-2>${t('styleGuide.sections.typography.title')}</utrecht-heading-2>
 
-            <utrecht-table aria-labelledby="styleGuide-sections-typography-families-title">
-              <utrecht-table-caption id="styleGuide-sections-typography-families-title">
-                ${t(`styleGuide.sections.typography.families.title`)}
-              </utrecht-table-caption>
-              <utrecht-table-header>
-                <utrecht-table-row>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.families.table.header.sample')}
-                  </utrecht-table-header-cell>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.families.table.header.name')}
-                  </utrecht-table-header-cell>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.families.table.header.value')}
-                  </utrecht-table-header-cell>
-                </utrecht-table-row>
-              </utrecht-table-header>
-              <utrecht-table-body>
+            <table class="utrecht-table">
+              <caption class="utrecht-table__caption">${t(`styleGuide.sections.typography.families.title`)}</caption>
+              <thead class="utrecht-table__header">
+                <tr class="utrecht-table__row">
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.sample')}
+                  </th>
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.tokenName')}
+                  </th>
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.value')}
+                  </th>
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.details')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="utrecht-table__body">
                 ${fontFamilies.map(
-                  ({ name, isUsed, tokenId, value }) => html`
-                  <utrecht-table-row aria-describedby=${isUsed ? nothing : 'basis-color-typography-font-family-unused-warning'}>
-                    <utrecht-table-cell>
+                  ({ name, isUsed, tokenId, usage, value }) => html`
+                  <tr aria-describedby=${isUsed ? nothing : 'basis-color-typography-font-family-unused-warning'} class="utrecht-table__row">
+                    <td class="utrecht-table__cell">
                       <clippy-html-image>
                         <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
                         <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${value}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
                           Op brute wijze ving de schooljuf de quasi-kalme lynx.
                         </utrecht-paragraph>
                       <clippy-html-image>
-                    </utrecht-table-cell>
-                    <utrecht-table-cell>
+                    </td>
+                    <td class="utrecht-table__cell">
                       <utrecht-button
                         appearance="subtle-button"
                         @click=${() => navigator.clipboard.writeText(tokenId)}
                       >
-                        <utrecht-code id="${`basis-text-font-family-${name}`}">
-                          ${tokenId}
-                        </utrecht-code>
+                        <utrecht-code id="${`basis-text-font-family-${name}`}">${tokenId}</utrecht-code>
                       </utrecht-button>
-                    </utrecht-table-cell>
-                    <utrecht-table-cell>
+                    </td>
+                    <td class="utrecht-table__cell">
                       <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
                         <utrecht-code>${value}</utrecht-code>
                       </utrecht-button>
-                    </utrecht-table-cell>
-                  </utrecht-table-row>
+                    </td>
+                    <td class="utrecht-table__cell">
+                      <utrecht-button
+                        @click=${() => {
+                          this.setActiveToken({
+                            displayValue: value,
+                            isUsed,
+                            tokenId,
+                            tokenType: 'fontFamily',
+                            usage,
+                          });
+                        }}
+                      >
+                        ${t('styleguide.showDetails')}
+                      </utrecht-button>
+                    </td>
+                  </tr>
                 `,
                 )}
-              </utrecht-table-body>
-            </utrecht-table>
+              </tbody>
+            </table>
+
             <utrecht-paragraph>
               <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype" target="_blank">
                 docs
@@ -435,30 +389,32 @@ export class WizardStyleGuide extends LitElement {
                   </utrecht-paragraph>`
             }
 
-            <utrecht-table aria-labelledby="styleGuide-sections-typography-sizes-title">
-              <utrecht-table-caption id="styleGuide-sections-typography-sizes-title">
-                ${t(`styleGuide.sections.typography.sizes.title`)}
-              </utrecht-table-caption>
-              <utrecht-table-header>
-                <utrecht-table-row>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.sizes.table.header.sample')}
-                  </utrecht-table-header-cell>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.sizes.table.header.name')}
-                  </utrecht-table-header-cell>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.sizes.table.header.value')}
-                  </utrecht-table-header-cell>
-                </utrecht-table-row>
-              </utrecht-table-header>
-              <utrecht-table-body>
+            <table class="utrecht-table">
+              <caption class="utrecht-table__caption">${t(`styleGuide.sections.typography.sizes.title`)}</caption>
+              <thead class="utrecht-table__header">
+                <tr class="utrecht-table__row">
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.sample')}
+                  </th>
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.tokenName')}
+                  </th>
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.value')}
+                  </th>
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.details')}
+                  </th>
+                </thead>
+              </header>
+              <tbody class="utrecht-table__body">
                 ${fontSizes.map(
-                  ({ name, isUsed, tokenId, value }) => html`
-                    <utrecht-table-row
+                  ({ name, isUsed, tokenId, usage, value }) => html`
+                    <tr
+                      class="utrecht-table__row"
                       aria-describedby=${isUsed ? nothing : 'basis-color-typography-sizes-unused-warning'}
                     >
-                      <utrecht-table-cell>
+                      <td class="utrecht-table__cell">
                         <clippy-html-image>
                           <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
                           <utrecht-paragraph
@@ -467,25 +423,40 @@ export class WizardStyleGuide extends LitElement {
                             Op brute wijze ving de schooljuf de quasi-kalme lynx.
                           </utrecht-paragraph>
                         </clippy-html-image>
-                      </utrecht-table-cell>
-                      <utrecht-table-cell>
+                      </td>
+                      <td class="utrecht-table__cell">
                         <utrecht-button
                           appearance="subtle-button"
                           @click=${() => navigator.clipboard.writeText(tokenId)}
                         >
                           <utrecht-code id="${`basis-text-font-size-${name}`}"> ${tokenId} </utrecht-code>
                         </utrecht-button>
-                      </utrecht-table-cell>
-                      <utrecht-table-cell>
+                      </td>
+                      <td class="utrecht-table__cell">
                         <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
                           <utrecht-code>${value}</utrecht-code>
                         </utrecht-button>
-                      </utrecht-table-cell>
-                    </utrecht-table-row>
+                      </td>
+                      <td class="utrecht-table__cell">
+                        <utrecht-button
+                          @click=${() => {
+                            this.setActiveToken({
+                              displayValue: value,
+                              isUsed,
+                              tokenId,
+                              tokenType: 'fontSize',
+                              usage,
+                            });
+                          }}
+                        >
+                          ${t('styleGuide.showDetails')}
+                        </utrecht-button>
+                      </td>
+                    </tr>
                   `,
                 )}
               </tbody>
-            </utrecht-table>
+            </table>
             <utrecht-paragraph>
               <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte" target="_blank">
                 docs
@@ -499,33 +470,33 @@ export class WizardStyleGuide extends LitElement {
                   </utrecht-paragraph>`
             }
 
-            <utrecht-table aria-labelledby="styleGuide-sections-typography-headings-title">
-              <utrecht-table-caption id="styleGuide-sections-typography-headings-title">
+            <table class="utrecht-table">
+              <caption class="utrecht-table__caption">
                 ${t(`styleGuide.sections.typography.headings.title`)}
-              </utrecht-table-caption>
-              <utrecht-table-header>
-                <utrecht-table-row>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.headings.table.header.sample')}
-                  </utrecht-table-header-cell>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.headings.table.header.name')}
-                  </utrecht-table-header-cell>
-                </utrecht-table-row>
-              </utrecht-table-header>
-              <utrecht-table-body>
+              </caption>
+              <thead class="utrecht-table__header">
+                <tr class="utrecht-table__row">
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.sample')}
+                  </th>
+                  <th scope="col" class="utrecht-table__header-cell">
+                    ${t('styleGuide.tokenName')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="utrecht-table__body">
                 ${[1, 2, 3, 4, 5, 6].map((level) => {
                   const tag = unsafeStatic(`h${level}`);
                   const heading = staticHtml`<${tag} class="nl-heading nl-heading--level-${level}" style="line-clamp: 3; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Wijzigingswet Vreemdelingenwet 2000, enz. (vaststelling criteria en instrumenten ter bepaling van de verantwoordelijke lidstaat voor behandeling verzoek om internationale bescherming)</${tag}>`;
                   return html`
-                    <utrecht-table-row>
-                      <utrecht-table-cell>
+                    <tr class="utrecht-table__row">
+                      <td class="utrecht-table__cell">
                         <clippy-html-image>
                           <span slot="label">${t('styleGuide.sections.typography.headings.sample')}</span>
                           ${heading}
                         </clippy-html-image>
-                      </utrecht-table-cell>
-                      <utrecht-table-cell>
+                      </td>
+                      <td class="utrecht-table__cell">
                         <utrecht-button
                           appearance="subtle-button"
                           @click=${() => navigator.clipboard.writeText(`basis.heading.level-${level}`)}
@@ -534,12 +505,12 @@ export class WizardStyleGuide extends LitElement {
                             ${`basis.heading.level-${level}`}
                           </utrecht-code>
                         </utrecht-button>
-                      </utrecht-table-cell>
-                    </utrecht-table-row>
+                      </td>
+                    </tr>
                   `;
                 })}
               </tbody>
-            </utrecht-table>
+            </table>
             <utrecht-paragraph>
               <a href="https://nldesignsystem.nl/heading/" target="_blank">docs</a>
             </utrecht-paragraph>
@@ -554,28 +525,26 @@ export class WizardStyleGuide extends LitElement {
             ${spacingData.map(({ space, tokens }) => {
               const captionId = `styleguide-section-space-${space}-title`;
               return html`
-                <utrecht-table aria-labelledby=${captionId}>
-                  <utrecht-table-caption id=${captionId}>
+                <table class="utrecht-table" aria-labelledby=${captionId}>
+                  <caption class="utrecht-table__caption" id=${captionId}>
                     ${t(`styleGuide.sections.space.${space}.title`)}
-                  </utrecht-table-caption>
-                  <utrecht-table-header>
-                    <utrecht-table-row>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.space.table.header.sample')}
-                      </utrecht-table-header-cell>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.space.table.header.name')}
-                      </utrecht-table-header-cell>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.space.table.header.value')}
-                      </utrecht-table-header-cell>
-                    </utrecht-table-row>
-                  </utrecht-table-header>
-                  <utrecht-table-body>
+                  </caption>
+                  <thead class="utrecht-table__header">
+                    <tr class="utrecht-table__row">
+                      <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
+                      <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
+                      <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
+                      <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.details')}</th>
+                    </tr>
+                  </thead>
+                  <tbody class="utrecht-table__body">
                     ${tokens.map(
-                      ({ name, isUsed, tokenId, value }) => html`
-                        <utrecht-table-row aria-describedby=${isUsed ? nothing : `basis-space-${space}-unused-warning`}>
-                          <utrecht-table-cell>
+                      ({ name, isUsed, tokenId, usage, value }) => html`
+                        <tr
+                          class="utrecht-table__row"
+                          aria-describedby=${isUsed ? nothing : `basis-space-${space}-unused-warning`}
+                        >
+                          <td class="utrecht-table__cell">
                             <clippy-html-image>
                               <span slot="label">${t(`styleGuide.sections.space.${space}.sample`)}</span>
                               <div
@@ -586,28 +555,44 @@ export class WizardStyleGuide extends LitElement {
                                   : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
                               ></div>
                             </clippy-html-image>
-                          </utrecht-table-cell>
-                          <utrecht-table-cell>
+                          </td>
+                          <td class="utrecht-table__cell">
                             <utrecht-button
                               appearance="subtle-button"
                               @click=${() => navigator.clipboard.writeText(tokenId)}
                             >
                               <utrecht-code id="${`basis-space-${space}-${name}`}"> ${tokenId} </utrecht-code>
                             </utrecht-button>
-                          </utrecht-table-cell>
-                          <utrecht-table-cell>
+                          </td>
+                          <td class="utrecht-table__cell">
                             <utrecht-button
                               appearance="subtle-button"
                               @click=${() => navigator.clipboard.writeText(value)}
                             >
                               <utrecht-code>${value}</utrecht-code>
                             </utrecht-button>
-                          </utrecht-table-cell>
-                        </utrecht-table-row>
+                          </td>
+
+                          <td class="utrecht-table__cell">
+                            <utrecht-button
+                              @click=${() => {
+                                this.setActiveToken({
+                                  displayValue: value,
+                                  isUsed,
+                                  tokenId,
+                                  tokenType: 'dimension',
+                                  usage,
+                                });
+                              }}
+                            >
+                              ${t('styleGuide.showDetails')}
+                            </utrecht-button>
+                          </td>
+                        </tr>
                       `,
                     )}
                   </tbody>
-                </utrecht-table>
+                </table>
 
                 <utrecht-paragraph>
                   <a
@@ -624,6 +609,102 @@ export class WizardStyleGuide extends LitElement {
               `;
             })}
           </section>
+
+        <clippy-modal id="token-dialog" title=${this.#activeToken?.tokenId} open=${this.#activeToken !== undefined} actions="none">
+          ${
+            this.#activeToken
+              ? html`
+                  ${this.#activeToken.tokenType === 'color'
+                    ? html`
+                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
+                        <svg
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="nl-color-sample"
+                          style="color: ${this.#activeToken.displayValue};"
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                        >
+                          <path d="M0 0H32V32H0Z" fill="currentcolor" />
+                        </svg>
+                      `
+                    : nothing}
+                  ${this.#activeToken.tokenType === 'fontSize'
+                    ? html`
+                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
+                        <clippy-html-image>
+                          <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
+                          <utrecht-paragraph
+                            style="--utrecht-paragraph-font-size: ${this.#activeToken
+                              .displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+                          >
+                            Op brute wijze ving de schooljuf de quasi-kalme lynx.
+                          </utrecht-paragraph>
+                        </clippy-html-image>
+                      `
+                    : nothing}
+                  ${this.#activeToken.tokenType === 'fontFamily'
+                    ? html`
+                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
+                        <clippy-html-image>
+                          <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
+                          <utrecht-paragraph
+                            style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${this
+                              .#activeToken
+                              .displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+                          >
+                            Op brute wijze ving de schooljuf de quasi-kalme lynx.
+                          </utrecht-paragraph>
+                        </clippy-html-image>
+                      `
+                    : nothing}
+                  <dl>
+                    <dt>Token type</dt>
+                    <dd>
+                      <utrecht-code>${this.#activeToken.tokenType}</utrecht-code>
+                    </dd>
+                    <dt>Token ID</dt>
+                    <dd>
+                      <utrecht-code>${this.#activeToken.tokenId}</utrecht-code>
+                    </dd>
+                    <dt>CSS Variable</dt>
+                    <dd>
+                      <utrecht-code>${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</utrecht-code>
+                    </dd>
+                    <dt>Value</dt>
+                    <dt></dt>
+                    <dd>
+                      <utrecht-code>${this.#activeToken.displayValue}</utrecht-code>
+                    </dd>
+                    ${this.#activeToken.metadata === undefined
+                      ? nothing
+                      : Object.entries(this.#activeToken.metadata).map(
+                          ([key, value]) => html`
+                            <dt>${key}</dt>
+                            <dd>
+                              <utrecht-code>${value}</utrecht-code>
+                            </dd>
+                          `,
+                        )}
+                  </dl>
+
+                  <utrecht-heading-3>Where is this token used? (${this.#activeToken.usage.length})</utrecht-heading-3>
+                  ${this.#activeToken.usage.length === 0
+                    ? html`<utrecht-paragraph>No references found</utrecht-paragraph>`
+                    : html`<ul>
+                        ${this.#activeToken.usage.map(
+                          (referrer) => html`
+                            <li>
+                              <utrecht-code>${referrer}</utrecht-code>
+                            </li>
+                          `,
+                        )}
+                      </ul>`}
+                `
+              : nothing
+          }
+            </clippy-modal>
         </div>
       </wizard-layout>
     `;
