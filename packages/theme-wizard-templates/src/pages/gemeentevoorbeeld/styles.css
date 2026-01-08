@@ -76,6 +76,13 @@ nav {
   outline-style: solid;
 }
 
+.voorbeeld__link header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: var(--basis-space-row-xl);
+}
+
 .page-header__actions {
   display: flex;
   justify-content: flex-end;

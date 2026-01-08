@@ -1,3 +1,4 @@
+import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
 import { Link } from '@nl-design-system-candidate/link-react';
 import { Icon } from '@utrecht/component-library-react';
 import {
@@ -33,7 +34,7 @@ const renderIcon = (iconName: string): JSX.Element | null => {
 };
 
 const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
-  <nav aria-label="Snelle taken">
+  <nav>
     <Row columnGap="var(--basis-space-column-xl)" fullHeight justify="flex-start" rowGap="var(--basis-space-row-xl)">
       {tasks.map((task) => (
         <Column key={`${task.href}-${task.title}`} cols={4}>

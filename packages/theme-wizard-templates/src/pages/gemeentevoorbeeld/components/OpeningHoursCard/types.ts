@@ -5,8 +5,13 @@ export interface OpeningHoursSpec {
   opens: string;
 }
 
+export interface SummaryHours {
+  closes: string;
+  opens: string;
+}
+
 export interface SummaryItem {
-  hours: OpeningHoursSpec[] | null;
+  hours: SummaryHours[] | null;
   label: string;
 }
 
