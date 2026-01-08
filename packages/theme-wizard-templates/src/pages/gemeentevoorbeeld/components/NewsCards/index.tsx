@@ -1,7 +1,8 @@
 import { Card } from '@amsterdam/design-system-react';
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
+import { Link } from '@nl-design-system-candidate/link-react/css';
 import { Icon } from '@utrecht/component-library-react';
-import { ButtonLink, Paragraph } from '@utrecht/component-library-react/dist/css-module';
+import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconKalender } from '@utrecht/web-component-library-react';
 import React, { type FC } from 'react';
 import type { NewsItem } from './types';
@@ -31,15 +32,9 @@ const NewsCards: FC<NewsCardsProps> = ({ cards }) => (
           <Paragraph>{card.body}</Paragraph>
 
           <footer>
-            <Row justify="flex-end">
-              <ButtonLink
-                appearance="secondary-action-button"
-                href={card.href}
-                aria-label={`Lees meer over ${card.title}`}
-              >
-                Meer lezen
-              </ButtonLink>
-            </Row>
+            <Link href={card.href} aria-label={`Lees meer over ${card.title}`}>
+              Meer lezen
+            </Link>
           </footer>
         </Card>
       </Column>
