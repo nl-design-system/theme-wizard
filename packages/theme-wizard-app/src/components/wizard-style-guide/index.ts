@@ -36,7 +36,6 @@ export class WizardStyleGuide extends LitElement {
   private readonly theme!: Theme;
   private activeColor?: {
     tokenId: string;
-    tokenIdAsCss: string;
     usage: string[];
     isUsed: boolean;
     hexCode: string;
@@ -223,12 +222,12 @@ export class WizardStyleGuide extends LitElement {
                             </svg>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
-                            <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
-                            <clippy-copy-to-clipboard-button
-                              content=${tokenId}
-                              label=${`Copy "${tokenId}" to clipboard`}
+                            <utrecht-button
+                              appearance="subtle-button"
+                              click=${() => navigator.clipboard.writeText(tokenId)}
                             >
-                            </clippy-copy-to-clipboard-button>
+                              <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
+                            </utrecht-button>
                           </utrecht-table-cell>
                           <utrecht-table-cell>
                             <utrecht-code>${cssColor}</utrecht-code>
@@ -248,7 +247,6 @@ export class WizardStyleGuide extends LitElement {
                                   hexCode: cssColor!,
                                   isUsed,
                                   tokenId,
-                                  tokenIdAsCss: `--${tokenId.replaceAll('.', '-')}`,
                                   usage: usage || [],
                                 };
                                 this.requestUpdate();
@@ -299,7 +297,7 @@ export class WizardStyleGuide extends LitElement {
                         <dd>Color</dd>
                         <dt>CSS Variable</dt>
                         <dd>
-                          <utrecht-code>${this.activeColor.tokenIdAsCss}</utrecht-code>
+                          <utrecht-code>${`--${this.activeColor.tokenId.replaceAll('.', '-')}`}</utrecht-code>
                         </dd>
                         <dt>Hexcode</dt>
                         <dd>
