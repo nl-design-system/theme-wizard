@@ -503,6 +503,9 @@ importers:
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.1
         version: 2.2.1(@babel/runtime@7.28.4)(react@19.2.3)
+      '@nl-design-system-candidate/skip-link-react':
+        specifier: 1.1.7
+        version: 1.1.7(@babel/runtime@7.28.4)(react@19.2.3)
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
@@ -2098,6 +2101,12 @@ packages:
 
   '@nl-design-system-candidate/skip-link-css@1.0.5':
     resolution: {integrity: sha512-0Bq6yDPgz6sCGrd5EuV8CfL9m78he1a914sJPeZ+Cqr4WTqN0m1qf3LPJ2YVpOP0fYgk5GX2UqwTKIDhSLg5GA==}
+
+  '@nl-design-system-candidate/skip-link-react@1.1.7':
+    resolution: {integrity: sha512-ighFoR2uniRpR/Cd0sj6ppxZ1OeHZ2sNOD6lxFvfgPVJInC3fd2Qi/4qHZDUhte5PIlej2HcFzqzTgieK3OBwQ==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
 
   '@nl-design-system-community/ma-design-tokens@2.5.0':
     resolution: {integrity: sha512-3TYzzbo0C5br42SiS6jISScUL7u4hxgDvU2DZVBv6gJ40jBZPpXIgLI1T/JESQj79+nY2AddGm6l8xg2o2WLFA==}
@@ -9450,6 +9459,12 @@ snapshots:
       react: 19.2.3
 
   '@nl-design-system-candidate/skip-link-css@1.0.5': {}
+
+  '@nl-design-system-candidate/skip-link-react@1.1.7(@babel/runtime@7.28.4)(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      clsx: 2.1.1
+      react: 19.2.3
 
   '@nl-design-system-community/ma-design-tokens@2.5.0': {}
 
