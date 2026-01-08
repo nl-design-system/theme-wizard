@@ -1,20 +1,22 @@
+import type { ClippyModal } from '@nl-design-system-community/clippy-components/clippy-modal';
+import type { DesignToken } from 'style-dictionary/types';
 import { consume } from '@lit/context';
+import '@nl-design-system-community/clippy-components/clippy-html-image';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import '@nl-design-system-community/clippy-components/clippy-html-image';
-import '@nl-design-system-community/clippy-components/clippy-copy-to-clipboard-button';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
+import '@nl-design-system-community/clippy-components/clippy-modal';
 import {
   legacyToModernColor,
   type ColorToken as ColorTokenType,
   walkTokensWithRef,
 } from '@nl-design-system-community/design-tokens-schema';
+import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import Color from 'colorjs.io';
+import '../wizard-layout';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import '../wizard-layout';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
-import { DesignToken } from 'style-dictionary/types';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
@@ -29,6 +31,15 @@ declare global {
   }
 }
 
+type DisplayToken = {
+  tokenId: string;
+  usage: string[];
+  isUsed: boolean;
+  tokenType: DesignToken['$type'];
+  displayValue: string;
+  metadata?: Record<string, string>;
+};
+
 @customElement(tag)
 export class WizardStyleGuide extends LitElement {
   @consume({ context: themeContext, subscribe: true })
@@ -41,7 +52,15 @@ export class WizardStyleGuide extends LitElement {
     hexCode: string;
   } = undefined;
 
-  static override readonly styles = [unsafeCSS(colorSampleCss), unsafeCSS(headingCss), unsafeCSS(dataBadgeCss), styles];
+  #activeToken?: DisplayToken;
+
+  static override readonly styles = [
+    unsafeCSS(tableCss),
+    unsafeCSS(colorSampleCss),
+    unsafeCSS(headingCss),
+    unsafeCSS(dataBadgeCss),
+    styles,
+  ];
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -146,6 +165,15 @@ export class WizardStyleGuide extends LitElement {
       });
   }
 
+  private setActiveToken(token: DisplayToken | undefined) {
+    this.#activeToken = token;
+
+    if (token !== undefined) {
+      this.requestUpdate();
+      (this.renderRoot.querySelector('#color-dialog')! as ClippyModal).open();
+    }
+  }
+
   override render() {
     if (!this.theme) {
       return t('loading');
@@ -180,86 +208,89 @@ export class WizardStyleGuide extends LitElement {
             <utrecht-heading-2>${t('styleGuide.sections.colors.title')}</utrecht-heading-2>
 
             ${colorGroups.map(({ colorEntries, isUsed, key }) => {
-              const captionId = `tokens-basis-color-${key}-caption`;
               return html`
-                <utrecht-table aria-labelledby=${captionId}>
-                  <utrecht-table-caption id=${captionId}>
-                    ${t(`tokens.fieldLabels.basis.color.${key}.label`)}
-                  </utrecht-table-caption>
-                  <utrecht-table-header>
-                    <utrecht-table-row>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.colors.table.header.sample')}
-                      </utrecht-table-header-cell>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.colors.table.header.name')}
-                      </utrecht-table-header-cell>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.colors.table.header.hexCode')}
-                      </utrecht-table-header-cell>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.colors.table.header.usageCount')}
-                      </utrecht-table-header-cell>
-                      <utrecht-table-header-cell scope="col"> Details </utrecht-table-header-cell>
-                    </utrecht-table-row>
-                  </utrecht-table-header>
-                  <utrecht-table-body>
-                    ${colorEntries.map(
-                      ({ cssColor, isUsed, tokenId, usage, usageCount }) => html`
-                        <utrecht-table-row aria-describedby=${isUsed ? nothing : `basis-color-${key}-unused-warning`}>
-                          <utrecht-table-cell>
-                            <svg
-                              role="img"
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="nl-color-sample"
-                              style="color: ${cssColor!};"
-                              aria-labelledby=${tokenId}
-                              width="32"
-                              height="32"
-                              viewBox="0 0 32 32"
-                            >
-                              <path d="M0 0H32V32H0Z" fill="currentcolor" />
-                            </svg>
-                          </utrecht-table-cell>
-                          <utrecht-table-cell>
-                            <utrecht-button
-                              appearance="subtle-button"
-                              @click=${() => navigator.clipboard.writeText(tokenId)}
-                            >
-                              <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
-                            </utrecht-button>
-                          </utrecht-table-cell>
-                          <utrecht-table-cell>
-                            <utrecht-button
-                              appearance="subtle-button"
-                              @click=${() => navigator.clipboard.writeText(cssColor)}
-                            >
-                              <utrecht-code id=${cssColor}>${cssColor}</utrecht-code>
-                            </utrecht-button>
-                          </utrecht-table-cell>
-                          <utrecht-table-cell>
-                            <span class="nl-data-badge">${usageCount}</span>
-                          </utrecht-table-cell>
-                          <utrecht-table-cell>
-                            <utrecht-button
-                              @click=${() => {
-                                this.activeColor = {
-                                  hexCode: cssColor,
-                                  isUsed,
-                                  tokenId,
-                                  usage: usage || [],
-                                };
-                                this.requestUpdate();
-                                (this.renderRoot.querySelector('#color-dialog') as HTMLDialogElement)!.showModal();
-                              }}
-                            >
-                              Details
-                            </utrecht-button>
-                          </utrecht-table-cell>
-                        </utrecht-table-row>
-                      `,
-                    )}
-                  </utrecht-table-body>
+                <utrecht-table>
+                  <table class="utrecht-table">
+                    <caption class="utrecht-table__caption">
+                      ${t(`tokens.fieldLabels.basis.color.${key}.label`)}
+                    </caption>
+                    <thead class="utrecht-table__header">
+                      <tr class="utrecht-table__row">
+                        <th scope="col" class="utrecht-table__header-cell">
+                          ${t('styleGuide.sections.colors.table.header.sample')}
+                        </th>
+                        <th scope="col" class="utrecht-table__header-cell">
+                          ${t('styleGuide.sections.colors.table.header.name')}
+                        </th>
+                        <th scope="col" class="utrecht-table__header-cell">
+                          ${t('styleGuide.sections.colors.table.header.hexCode')}
+                        </th>
+                        <th scope="col" class="utrecht-table__header-cell">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${colorEntries.map(
+                        ({ cssColor, isUsed, tokenId, usage }) => html`
+                          <tr
+                            aria-describedby=${isUsed ? nothing : `basis-color-${key}-unused-warning`}
+                            class="utrecht-table__row"
+                          >
+                            <td class="utrecht-table__cell">
+                              <svg
+                                role="img"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="nl-color-sample"
+                                style="color: ${cssColor!};"
+                                aria-labelledby=${tokenId}
+                                width="32"
+                                height="32"
+                                viewBox="0 0 32 32"
+                              >
+                                <path d="M0 0H32V32H0Z" fill="currentcolor" />
+                              </svg>
+                            </td>
+                            <td class="utrecht-table__cell">
+                              <utrecht-button
+                                appearance="subtle-button"
+                                @click=${() => navigator.clipboard.writeText(tokenId)}
+                              >
+                                <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
+                              </utrecht-button>
+                            </td>
+                            <td class="utrecht-table__cell">
+                              <utrecht-button
+                                appearance="subtle-button"
+                                @click=${() => navigator.clipboard.writeText(cssColor)}
+                              >
+                                <utrecht-code id=${cssColor}>${cssColor}</utrecht-code>
+                              </utrecht-button>
+                            </td>
+                            <td class="utrecht-table__cell">
+                              <utrecht-button
+                                @click=${() => {
+                                  const color = new Color(cssColor);
+                                  this.setActiveToken({
+                                    displayValue: cssColor,
+                                    isUsed: (usage?.length ?? 0) > 0,
+                                    metadata: {
+                                      OKLCH: color.toString({ format: 'oklch' }),
+                                      'P3 Color': color.toString({ format: 'color' }),
+                                      RGB: color.toString({ format: 'rgb' }),
+                                    },
+                                    tokenId,
+                                    tokenType: 'color',
+                                    usage: usage || [],
+                                  });
+                                }}
+                              >
+                                Details
+                              </utrecht-button>
+                            </td>
+                          </tr>
+                        `,
+                      )}
+                    </tbody>
+                  </table>
                 </utrecht-table>
                 <utrecht-paragraph>
                   <a target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
@@ -272,64 +303,57 @@ export class WizardStyleGuide extends LitElement {
               `;
             })}
 
-            <dialog id="color-dialog" closedby="any" aria-labelledby="color-dialog-title">
+            <clippy-modal id="color-dialog" title=${this.#activeToken?.tokenId} open=${this.#activeToken !== undefined} actions="none">
               ${
-                this.activeColor
+                this.#activeToken
                   ? html`
-                      <utrecht-heading-2 id="color-dialog-title"> ${this.activeColor.tokenId} </utrecht-heading-2>
-                      <svg
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="nl-color-sample"
-                        style="color: ${this.activeColor.hexCode};"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 32 32"
-                      >
-                        <path d="M0 0H32V32H0Z" fill="currentcolor" />
-                      </svg>
+                      ${this.#activeToken.tokenType === 'color'
+                        ? html`
+                            <svg
+                              role="img"
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="nl-color-sample"
+                              style="color: ${this.#activeToken.displayValue};"
+                              width="32"
+                              height="32"
+                              viewBox="0 0 32 32"
+                            >
+                              <path d="M0 0H32V32H0Z" fill="currentcolor" />
+                            </svg>
+                          `
+                        : nothing}
                       <dl>
+                        <dt>Token type</dt>
+                        <dd>
+                          <utrecht-code>${this.#activeToken.tokenType}</utrecht-code>
+                        </dd>
                         <dt>Token ID</dt>
                         <dd>
-                          <utrecht-code>${this.activeColor.tokenId}</utrecht-code>
+                          <utrecht-code>${this.#activeToken.tokenId}</utrecht-code>
                         </dd>
-                        <dt>Token type</dt>
-                        <dd>Color</dd>
                         <dt>CSS Variable</dt>
                         <dd>
-                          <utrecht-code>${`--${this.activeColor.tokenId.replaceAll('.', '-')}`}</utrecht-code>
+                          <utrecht-code>${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</utrecht-code>
                         </dd>
-                        <dt>Hexcode</dt>
-                        <dd>
-                          <utrecht-code>${this.activeColor.hexCode}</utrecht-code>
-                        </dd>
-                        <dt>RGB</dt>
-                        <dd>
-                          <utrecht-code>
-                            ${new Color(this.activeColor.hexCode).toString({ format: 'rgb' })}
-                          </utrecht-code>
-                        </dd>
-                        <dt>OKLCH</dt>
-                        <dd>
-                          <utrecht-code>
-                            ${new Color(this.activeColor.hexCode).toString({ format: 'oklch' })}
-                          </utrecht-code>
-                        </dd>
-                        <dt>P3 color</dt>
-                        <dd>
-                          <utrecht-code>
-                            ${new Color(this.activeColor.hexCode).toString({ format: 'color' })}
-                          </utrecht-code>
-                        </dd>
+                        ${this.#activeToken.metadata === undefined
+                          ? nothing
+                          : Object.entries(this.#activeToken.metadata).map(
+                              ([key, value]) => html`
+                                <dt>${key}</dt>
+                                <dd>
+                                  <utrecht-code>${value} </utrecht-code>
+                                </dd>
+                              `,
+                            )}
                       </dl>
 
                       <utrecht-heading-3>
-                        Where is this token used? (${this.activeColor.usage.length})
+                        Where is this token used? (${this.#activeToken.usage.length})
                       </utrecht-heading-3>
-                      ${this.activeColor.usage.length === 0
+                      ${this.#activeToken.usage.length === 0
                         ? html`<utrecht-paragraph>No references found</utrecht-paragraph>`
                         : html`<ul>
-                            ${this.activeColor.usage.map(
+                            ${this.#activeToken.usage.map(
                               (referrer) => html`
                                 <li>
                                   <utrecht-code>${referrer}</utrecht-code>
@@ -340,7 +364,7 @@ export class WizardStyleGuide extends LitElement {
                     `
                   : nothing
               }
-            </dialog>
+            </clippy-modal>
           </section>
 
           <section id="typography">
@@ -361,14 +385,11 @@ export class WizardStyleGuide extends LitElement {
                   <utrecht-table-header-cell scope="col">
                     ${t('styleGuide.sections.typography.families.table.header.value')}
                   </utrecht-table-header-cell>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.families.table.header.usageCount')}
-                  </utrecht-table-header-cell>
                 </utrecht-table-row>
               </utrecht-table-header>
               <utrecht-table-body>
                 ${fontFamilies.map(
-                  ({ name, isUsed, tokenId, usageCount, value }) => html`
+                  ({ name, isUsed, tokenId, value }) => html`
                   <utrecht-table-row aria-describedby=${isUsed ? nothing : 'basis-color-typography-font-family-unused-warning'}>
                     <utrecht-table-cell>
                       <clippy-html-image>
@@ -392,9 +413,6 @@ export class WizardStyleGuide extends LitElement {
                       <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
                         <utrecht-code>${value}</utrecht-code>
                       </utrecht-button>
-                    </utrecht-table-cell>
-                    <utrecht-table-cell>
-                      <span class="nl-data-badge">${usageCount}</span>
                     </utrecht-table-cell>
                   </utrecht-table-row>
                 `,
@@ -432,9 +450,6 @@ export class WizardStyleGuide extends LitElement {
                   <utrecht-table-header-cell scope="col">
                     ${t('styleGuide.sections.typography.sizes.table.header.value')}
                   </utrecht-table-header-cell>
-                  <utrecht-table-header-cell scope="col">
-                    ${t('styleGuide.sections.typography.sizes.table.header.usageCount')}
-                  </utrecht-table-header-cell>
                 </utrecht-table-row>
               </utrecht-table-header>
               <utrecht-table-body>
@@ -465,9 +480,6 @@ export class WizardStyleGuide extends LitElement {
                         <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
                           <utrecht-code>${value}</utrecht-code>
                         </utrecht-button>
-                      </utrecht-table-cell>
-                      <utrecht-table-cell>
-                        <span class="nl-data-badge">${tokenUsage.get(tokenId)?.length ?? 0}</span>
                       </utrecht-table-cell>
                     </utrecht-table-row>
                   `,
@@ -557,9 +569,6 @@ export class WizardStyleGuide extends LitElement {
                       <utrecht-table-header-cell scope="col">
                         ${t('styleGuide.sections.space.table.header.value')}
                       </utrecht-table-header-cell>
-                      <utrecht-table-header-cell scope="col">
-                        ${t('styleGuide.sections.space.table.header.usageCount')}
-                      </utrecht-table-header-cell>
                     </utrecht-table-row>
                   </utrecht-table-header>
                   <utrecht-table-body>
@@ -593,9 +602,6 @@ export class WizardStyleGuide extends LitElement {
                             >
                               <utrecht-code>${value}</utrecht-code>
                             </utrecht-button>
-                          </utrecht-table-cell>
-                          <utrecht-table-cell>
-                            <span class="nl-data-badge">${tokenUsage.get(tokenId)?.length ?? 0}</span>
                           </utrecht-table-cell>
                         </utrecht-table-row>
                       `,

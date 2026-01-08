@@ -396,6 +396,9 @@ importers:
       '@utrecht/select-css':
         specifier: 2.0.1
         version: 2.0.1
+      '@utrecht/table-css':
+        specifier: 2.0.1
+        version: 2.0.1
       '@utrecht/textbox-css':
         specifier: 3.0.1
         version: 3.0.1

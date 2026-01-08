@@ -110,7 +110,7 @@ export class ClippyModal extends LitElement {
     return html`
       <dialog
         class="ams-dialog"
-        closedBy=${this.closedBy}
+        closedby=${this.closedBy}
         aria-modal="true"
         aria-labelledby=${this.titleId}
         aria-describedby=${this.ariaDescribedby || undefined}
