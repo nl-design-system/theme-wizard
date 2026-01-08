@@ -99,7 +99,7 @@ export class WizardStyleGuide extends LitElement {
           .filter(([, token]) => typeof token === 'object' && token !== null && '$value' in token)
           .map(([colorKey, token]) => {
             const color = resolveColorValue(token as ColorTokenType, this.theme.tokens);
-            const cssColor = color ? legacyToModernColor.encode(color) : null;
+            const cssColor = color ? legacyToModernColor.encode(color) : '#000';
             const tokenId = `basis.color.${key}.${colorKey}`;
             const isUsed = tokenUsage.has(tokenId);
             const usage = tokenUsage.get(tokenId);
@@ -244,7 +244,7 @@ export class WizardStyleGuide extends LitElement {
                             <utrecht-button
                               @click=${() => {
                                 this.activeColor = {
-                                  hexCode: cssColor!,
+                                  hexCode: cssColor,
                                   isUsed,
                                   tokenId,
                                   usage: usage || [],
@@ -262,7 +262,7 @@ export class WizardStyleGuide extends LitElement {
                   </utrecht-table-body>
                 </utrecht-table>
                 <utrecht-paragraph>
-                  <a href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
+                  <a target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
                 </utrecht-paragraph>
                 ${isUsed
                   ? nothing
