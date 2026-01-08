@@ -254,11 +254,109 @@ describe('getCssResources', () => {
 });
 
 describe('getCss', () => {
+  globalThis.fetch = vi.fn();
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('concatenates resources', async () => {
     const mockCss = 'a { color: blue; }';
     (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
     const result = await getCss('example.com/style.css');
     expect(result).toBe(mockCss);
+  });
+
+  it('accepts custom user agent option', async () => {
+    const mockCss = 'body { margin: 0; }';
+    const customUserAgent = 'Custom Bot/1.0';
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => mockCss,
+    });
+
+    await getCss('https://example.com/style.css', { userAgent: customUserAgent });
+
+    const callArgs = (fetch as Mock).mock.calls[0];
+    expect((callArgs[0] as URL).href).toBe('https://example.com/style.css');
+    expect(callArgs[1].headers['User-Agent']).toBe(customUserAgent);
+  });
+
+  it('accepts custom timeout option', async () => {
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
+    await getCss('https://example.com/style.css', { timeout: 5000 });
+    expect(fetch).toHaveBeenCalled();
+  });
+
+  it('custom timeout with TimeoutError', async () => {
+    (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
+    await expect(getCss('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
+  });
+
+  it('accepts both custom user agent and timeout options', async () => {
+    const mockCss = 'body { color: red; }';
+    const customUserAgent = 'My Custom Bot/2.0';
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => mockCss,
+    });
+
+    await getCss('https://example.com/style.css', {
+      timeout: 3000,
+      userAgent: customUserAgent,
+    });
+
+    const callArgs = (fetch as Mock).mock.calls[0];
+    expect((callArgs[0] as URL).href).toBe('https://example.com/style.css');
+    expect(callArgs[1].headers['User-Agent']).toBe(customUserAgent);
+  });
+
+  it('uses default user agent when no custom option is provided', async () => {
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
+    await getCss('https://example.com/style.css');
+
+    const callArgs = (fetch as Mock).mock.calls[0];
+    expect((callArgs[0] as URL).href).toBe('https://example.com/style.css');
+    expect(callArgs[1].headers['User-Agent']).toBe('NL Design System CSS Scraper/1.0');
+  });
+
+  it('respects custom user agent in linked stylesheets', async () => {
+    const customUserAgent = 'Custom Agent/1.0';
+    const mockHtml = `
+      <html>
+        <head>
+          <link rel="stylesheet" href="https://example.com/style.css">
+        </head>
+      </html>
+    `;
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/html' }),
+      ok: true,
+      status: 200,
+      text: async () => mockHtml,
+    });
+
+    const mockCss = 'a { color: blue; }';
+    (fetch as Mock).mockResolvedValueOnce({
+      headers: new Headers({ 'Content-Type': 'text/css' }),
+      ok: true,
+      status: 200,
+      text: async () => mockCss,
+    });
+
+    await getCss('https://example.com', { userAgent: customUserAgent });
+
+    // First call should be the HTML fetch with custom user agent
+    const firstCall = (fetch as Mock).mock.calls[0];
+    expect(firstCall[1].headers['User-Agent']).toBe(customUserAgent);
+
+    // Second call should be the CSS file fetch with custom user agent
+    const secondCall = (fetch as Mock).mock.calls[1];
+    expect(secondCall[1].headers['User-Agent']).toBe(customUserAgent);
   });
 });
 

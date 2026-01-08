@@ -78,12 +78,12 @@ const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number)
   }
 };
 
-export const getCssFile = async (url: string | URL, abortSignal: AbortSignal) => {
+export const getCssFile = async (url: string | URL, abortSignal: AbortSignal, userAgent: string = USER_AGENT) => {
   try {
     const response = await fetch(url, {
       headers: {
         Accept: 'text/css,*/*;q=0.1',
-        'User-Agent': USER_AGENT,
+        'User-Agent': userAgent,
       },
       // If aborted early try to return an empty string so we can continue with just the content we have
       signal: abortSignal,
@@ -185,11 +185,11 @@ export const getCssFromHtml = (
   return resources;
 };
 
-const fetchHtml = async (url: string | URL, signal: AbortSignal) => {
+const fetchHtml = async (url: string | URL, signal: AbortSignal, userAgent: string = USER_AGENT) => {
   const response = await fetch(url, {
     headers: {
       Accept: 'text/html,*/*;q=0.1',
-      'User-Agent': USER_AGENT,
+      'User-Agent': userAgent,
     },
     signal,
   });
@@ -207,19 +207,20 @@ const fetchHtml = async (url: string | URL, signal: AbortSignal) => {
 const processResources = async (
   resources: (PartialCSSLinkResource | CSSLinkResource | CSSStyleTagResource | CSSInlineStyleResource)[],
   abortSignal: AbortSignal,
+  userAgent: string = USER_AGENT,
 ) => {
   const result: (CSSLinkResource | CSSImportResource | CSSStyleTagResource | CSSInlineStyleResource)[] = [];
 
   for (const resource of resources) {
     if (resource.type === 'link' && !resource.css) {
-      resource.css = await getCssFile(resource.url, abortSignal);
+      resource.css = await getCssFile(resource.url, abortSignal, userAgent);
       result.push(resource as CSSLinkResource);
     } else {
       result.push(resource);
     }
 
     for (const importUrl of getImportUrls(resource.css as string)) {
-      const css = await getCssFile(importUrl, abortSignal);
+      const css = await getCssFile(importUrl, abortSignal, userAgent);
       result.push({
         css,
         href: importUrl,
@@ -232,7 +233,7 @@ const processResources = async (
   return result;
 };
 
-export const getCssResources = async (url: string, { timeout = 10000 } = {}): Promise<CSSResource[]> => {
+export const getCssResources = async (url: string, { timeout = 10000, userAgent = USER_AGENT } = {}): Promise<CSSResource[]> => {
   const resolvedUrl = resolveUrl(url);
 
   if (resolvedUrl === undefined) {
@@ -244,7 +245,7 @@ export const getCssResources = async (url: string, { timeout = 10000 } = {}): Pr
   const timeoutId = setTimeout(() => abortController.abort(), timeout);
 
   try {
-    const response = await fetchHtml(resolvedUrl, abortController.signal);
+    const response = await fetchHtml(resolvedUrl, abortController.signal, userAgent);
     let body = response.body;
 
     if (response.contentType?.includes('text/css')) {
@@ -263,7 +264,7 @@ export const getCssResources = async (url: string, { timeout = 10000 } = {}): Pr
     }
 
     const resources = getCssFromHtml(body, resolvedUrl);
-    const result = processResources(resources, abortController.signal);
+    const result = processResources(resources, abortController.signal, userAgent);
 
     clearTimeout(timeoutId);
     return result;
@@ -276,8 +277,8 @@ export const getCssResources = async (url: string, { timeout = 10000 } = {}): Pr
 
 export { ScrapingError } from './errors.js';
 
-export const getCss = async (url: string): Promise<string> => {
-  const resources = await getCssResources(url);
+export const getCss = async (url: string, { timeout, userAgent }: { timeout?: number; userAgent?: string } = {}): Promise<string> => {
+  const resources = await getCssResources(url, { timeout, userAgent });
   return resources.map(({ css }) => css).join('');
 };
 
