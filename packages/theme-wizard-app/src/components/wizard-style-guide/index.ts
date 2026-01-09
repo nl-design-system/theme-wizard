@@ -188,6 +188,47 @@ export class WizardStyleGuide extends LitElement {
     `;
   }
 
+  private renderFontSizeExample(displayValue: string) {
+    return html`
+      <clippy-html-image>
+        <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
+        <utrecht-paragraph
+          style="--utrecht-paragraph-font-size: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+        >
+          Op brute wijze ving de schooljuf de quasi-kalme lynx.
+        </utrecht-paragraph>
+      </clippy-html-image>
+    `;
+  }
+
+  private renderFontFamilyExample(displayValue: string) {
+    return html`
+      <clippy-html-image>
+        <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
+        <utrecht-paragraph
+          style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+        >
+          Op brute wijze ving de schooljuf de quasi-kalme lynx.
+        </utrecht-paragraph>
+      </clippy-html-image>
+    `;
+  }
+
+  private renderSpacingExample(value: string, space: string) {
+    return html`
+      <clippy-html-image>
+        <span slot="label">${t(`styleGuide.sections.space.${space}.sample`)}</span>
+        <div
+          style="block-size: ${['block', 'row'].includes(space)
+            ? value
+            : '2rem'}; inline-size: ${['inline', 'column', 'text'].includes(space)
+            ? value
+            : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
+        ></div>
+      </clippy-html-image>
+    `;
+  }
+
   private renderColorSection(colorGroups: ReturnType<typeof this.prepareColorGroups>) {
     return html`
       <section id="colors">
@@ -305,12 +346,7 @@ export class WizardStyleGuide extends LitElement {
               ({ name, displayValue, isUsed, tokenId, usage }) => html`
               <tr aria-describedby=${isUsed ? nothing : 'basis-color-typography-font-family-unused-warning'} class="utrecht-table__row">
                 <td class="utrecht-table__cell">
-                  <clippy-html-image>
-                    <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
-                    <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
-                      Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                    </utrecht-paragraph>
-                  </clippy-html-image>
+                  ${this.renderFontFamilyExample(displayValue)}
                 </td>
                 <td class="utrecht-table__cell">
                   <utrecht-button
@@ -387,14 +423,7 @@ export class WizardStyleGuide extends LitElement {
                   aria-describedby=${isUsed ? nothing : 'basis-color-typography-sizes-unused-warning'}
                 >
                   <td class="utrecht-table__cell">
-                    <clippy-html-image>
-                      <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
-                      <utrecht-paragraph
-                        style="--utrecht-paragraph-font-size: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-                      >
-                        Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                      </utrecht-paragraph>
-                    </clippy-html-image>
+                    ${this.renderFontSizeExample(displayValue)}
                   </td>
                   <td class="utrecht-table__cell">
                     <utrecht-button
@@ -524,16 +553,7 @@ export class WizardStyleGuide extends LitElement {
                       aria-describedby=${isUsed ? nothing : `basis-space-${space}-unused-warning`}
                     >
                       <td class="utrecht-table__cell">
-                        <clippy-html-image>
-                          <span slot="label">${t(`styleGuide.sections.space.${space}.sample`)}</span>
-                          <div
-                            style="block-size: ${['block', 'row'].includes(space)
-                              ? value
-                              : '2rem'}; inline-size: ${['inline', 'column', 'text'].includes(space)
-                              ? value
-                              : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
-                          ></div>
-                        </clippy-html-image>
+                        ${this.renderSpacingExample(value, space)}
                       </td>
                       <td class="utrecht-table__cell">
                         <utrecht-button
@@ -558,6 +578,7 @@ export class WizardStyleGuide extends LitElement {
                             this.setActiveToken({
                               displayValue: value,
                               isUsed,
+                              metadata: { space },
                               tokenId,
                               tokenType: 'dimension',
                               usage,
@@ -640,30 +661,19 @@ export class WizardStyleGuide extends LitElement {
                   ${this.#activeToken.tokenType === 'fontSize'
                     ? html`
                         <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
-                        <clippy-html-image>
-                          <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
-                          <utrecht-paragraph
-                            style="--utrecht-paragraph-font-size: ${this.#activeToken
-                              .displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-                          >
-                            Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                          </utrecht-paragraph>
-                        </clippy-html-image>
+                        ${this.renderFontSizeExample(this.#activeToken.displayValue)}
                       `
                     : nothing}
                   ${this.#activeToken.tokenType === 'fontFamily'
                     ? html`
                         <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
-                        <clippy-html-image>
-                          <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
-                          <utrecht-paragraph
-                            style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${this
-                              .#activeToken
-                              .displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-                          >
-                            Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                          </utrecht-paragraph>
-                        </clippy-html-image>
+                        ${this.renderFontFamilyExample(this.#activeToken.displayValue)}
+                      `
+                    : nothing}
+                  ${this.#activeToken.tokenType === 'dimension' && this.#activeToken.metadata?.['space']
+                    ? html`
+                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
+                        ${this.renderSpacingExample(this.#activeToken.displayValue, this.#activeToken.metadata['space'])}
                       `
                     : nothing}
                   <dl>
