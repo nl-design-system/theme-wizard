@@ -19,8 +19,7 @@ test('page uses values as stored by the configuration page', async ({ page }) =>
   await accent1Input.blur();
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
-  await page.goto('/style-guide');
-  await page.waitForLoadState('networkidle');
+  await page.goto('/style-guide', { waitUntil: 'load' });
   await expect(page.getByRole('button', { name: '#ff0000' })).toBeVisible();
 });
 
@@ -28,9 +27,7 @@ test.describe('interaction tests', () => {
   test.beforeEach(async ({ context, page }) => {
     // Enable clipboard access to we can test working of copy-to-clipboard buttons
     await context.grantPermissions(['clipboard-write', 'clipboard-read']);
-    await page.goto('/style-guide');
-    // Wait for the page to fully load before checking for content
-    await page.waitForLoadState('networkidle');
+    await page.goto('/style-guide', { waitUntil: 'load' });
     // Make sure to wait for page to be fully rendered
     await expect(page.getByRole('heading', { name: 'Stijlgids' })).toBeVisible();
   });

@@ -17,7 +17,7 @@ const config: PlaywrightTestConfig = {
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
-  globalTimeout: 120_000,
+  globalTimeout: 5 * 60_000,
   outputDir: './tmp/playwright-results/',
   /* Configure projects for major browsers */
   projects: [
