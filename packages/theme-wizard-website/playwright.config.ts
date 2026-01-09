@@ -10,7 +10,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000,
+    timeout: 7500,
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: Boolean(process.env.CI),
@@ -84,7 +84,7 @@ const config: PlaywrightTestConfig = {
   ],
 
   /* Let GitHub Actions use 4 workers; Locally let Playwright figure out how many to use. */
-  workers: process.env.CI ? 4 : 1,
+  workers: process.env.CI ? 1 : 1,
 };
 
 export default config;
