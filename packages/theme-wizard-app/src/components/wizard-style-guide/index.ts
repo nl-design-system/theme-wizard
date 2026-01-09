@@ -3,7 +3,6 @@ import type { DesignToken } from 'style-dictionary/types';
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
-import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import {
@@ -48,13 +47,7 @@ export class WizardStyleGuide extends LitElement {
 
   #activeToken?: DisplayToken;
 
-  static override readonly styles = [
-    unsafeCSS(tableCss),
-    unsafeCSS(colorSampleCss),
-    unsafeCSS(headingCss),
-    unsafeCSS(dataBadgeCss),
-    styles,
-  ];
+  static override readonly styles = [unsafeCSS(tableCss), unsafeCSS(colorSampleCss), unsafeCSS(headingCss), styles];
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -218,12 +211,8 @@ export class WizardStyleGuide extends LitElement {
                     </caption>
                     <thead class="utrecht-table__header">
                       <tr class="utrecht-table__row">
-                        <th scope="col" class="utrecht-table__header-cell">
-                          ${t('styleGuide.sections.colors.table.header.sample')}
-                        </th>
-                        <th scope="col" class="utrecht-table__header-cell">
-                          ${t('styleGuide.sections.colors.table.header.name')}
-                        </th>
+                        <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
+                        <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
                         <th scope="col" class="utrecht-table__header-cell">
                           ${t('styleGuide.sections.colors.table.header.hexCode')}
                         </th>
@@ -672,8 +661,7 @@ export class WizardStyleGuide extends LitElement {
                     <dd>
                       <utrecht-code>${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</utrecht-code>
                     </dd>
-                    <dt>Value</dt>
-                    <dt></dt>
+                    <dt>${t('styleGuide.value')}</dt>
                     <dd>
                       <utrecht-code>${this.#activeToken.displayValue}</utrecht-code>
                     </dd>
@@ -689,9 +677,14 @@ export class WizardStyleGuide extends LitElement {
                         )}
                   </dl>
 
-                  <utrecht-heading-3>Where is this token used? (${this.#activeToken.usage.length})</utrecht-heading-3>
+                  <utrecht-heading-3>
+                    ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
+                    <data>(${this.#activeToken.usage.length}&times;)</data>
+                  </utrecht-heading-3>
                   ${this.#activeToken.usage.length === 0
-                    ? html`<utrecht-paragraph>No references found</utrecht-paragraph>`
+                    ? html`<utrecht-paragraph>
+                        ${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
+                      </utrecht-paragraph>`
                     : html`<ul>
                         ${this.#activeToken.usage.map(
                           (referrer) => html`

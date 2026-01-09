@@ -34,6 +34,12 @@ export const en = {
   },
   styleGuide: {
     details: 'Details',
+    detailsDialog: {
+      tokenReferenceList: {
+        empty: 'This token is unused',
+        title: 'Where is this token used?',
+      },
+    },
     sample: 'Sample',
     sections: {
       colors: {
@@ -227,6 +233,12 @@ export const nl = {
   },
   styleGuide: {
     details: 'Details',
+    detailsDialog: {
+      tokenReferenceList: {
+        empty: 'Deze token wordt niet gebruikt',
+        title: 'Waar wordt deze token gebruikt?',
+      },
+    },
     sample: 'Voorbeeld',
     sections: {
       colors: {
@@ -273,7 +285,7 @@ export const nl = {
         title: 'Typografie',
       },
     },
-    showDetails: 'Details',
+    showDetails: 'Toon details',
     title: 'Stijlgids',
     tokenName: 'Naam',
     unusedTokenWarning: 'Token is gedefinieerd maar wordt nooit toegepast op een component.',
