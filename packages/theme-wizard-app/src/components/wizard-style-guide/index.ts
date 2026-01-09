@@ -166,9 +166,26 @@ export class WizardStyleGuide extends LitElement {
 
       dialog.addEventListener('close', () => {
         this.#activeToken = undefined;
-      });
+      }, { once: true });
       dialog.open();
     }
+  }
+
+  private renderColorSample(displayValue: string, tokenId?: string) {
+    return html`
+      <svg
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        class="nl-color-sample"
+        style="color: ${displayValue};"
+        aria-labelledby=${tokenId}
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+      >
+        <path d="M0 0H32V32H0Z" fill="currentcolor" />
+      </svg>
+    `;
   }
 
   override render() {
@@ -229,18 +246,7 @@ export class WizardStyleGuide extends LitElement {
                             class="utrecht-table__row"
                           >
                             <td class="utrecht-table__cell">
-                              <svg
-                                role="img"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="nl-color-sample"
-                                style="color: ${displayValue};"
-                                aria-labelledby=${tokenId}
-                                width="32"
-                                height="32"
-                                viewBox="0 0 32 32"
-                              >
-                                <path d="M0 0H32V32H0Z" fill="currentcolor" />
-                              </svg>
+                              ${this.renderColorSample(displayValue, tokenId)}
                             </td>
                             <td class="utrecht-table__cell">
                               <utrecht-button
@@ -328,7 +334,7 @@ export class WizardStyleGuide extends LitElement {
                         <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
                           Op brute wijze ving de schooljuf de quasi-kalme lynx.
                         </utrecht-paragraph>
-                      <clippy-html-image>
+                      </clippy-html-image>
                     </td>
                     <td class="utrecht-table__cell">
                       <utrecht-button
@@ -397,7 +403,6 @@ export class WizardStyleGuide extends LitElement {
                     ${t('styleGuide.details')}
                   </th>
                 </thead>
-              </header>
               <tbody class="utrecht-table__body">
                 ${fontSizes.map(
                   ({ name, displayValue, isUsed, tokenId, usage }) => html`
@@ -611,17 +616,7 @@ export class WizardStyleGuide extends LitElement {
                   ${this.#activeToken.tokenType === 'color'
                     ? html`
                         <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
-                        <svg
-                          role="img"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="nl-color-sample"
-                          style="color: ${this.#activeToken.displayValue};"
-                          width="32"
-                          height="32"
-                          viewBox="0 0 32 32"
-                        >
-                          <path d="M0 0H32V32H0Z" fill="currentcolor" />
-                        </svg>
+                        ${this.renderColorSample(this.#activeToken.displayValue)}
                       `
                     : nothing}
                   ${this.#activeToken.tokenType === 'fontSize'
