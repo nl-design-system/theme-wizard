@@ -2,7 +2,7 @@ import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { Icon } from '@utrecht/component-library-react';
 import { ButtonLink } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
-import React, { type FC, useMemo } from 'react';
+import React, { type FC, Fragment, useMemo } from 'react';
 import type { OpeningHoursCardProps } from './types';
 
 const formatTime = (time: string): string => time.substring(0, 5);
@@ -33,8 +33,8 @@ const OpeningHoursCard: FC<OpeningHoursCardProps> = ({ openingHoursSummary = [] 
         {openingHoursSummary && openingHoursSummary.length > 0 && (
           <div className="opening-hours-summary">
             {openingHoursSummary.map((item) => (
-              <>
-                <p key={item.label} className="opening-hours-item">
+              <Fragment key={item.label}>
+                <p className="opening-hours-item">
                   <strong>{item.label}:</strong>{' '}
                   <p>
                     {item.hours ? (
@@ -53,7 +53,7 @@ const OpeningHoursCard: FC<OpeningHoursCardProps> = ({ openingHoursSummary = [] 
                 </p>
 
                 <br />
-              </>
+              </Fragment>
             ))}
           </div>
         )}
