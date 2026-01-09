@@ -39,6 +39,8 @@ type DisplayToken = {
   metadata?: Record<string, string>;
 };
 
+type TokenTableRow = Pick<DisplayToken, 'tokenId' | 'displayValue' | 'isUsed' | 'usage'>;
+
 @customElement(tag)
 export class WizardStyleGuide extends LitElement {
   @consume({ context: themeContext, subscribe: true })
@@ -105,40 +107,40 @@ export class WizardStyleGuide extends LitElement {
           .filter(([, token]) => typeof token === 'object' && token !== null && '$value' in token)
           .map(([colorKey, token]) => {
             const color = resolveColorValue(token as ColorTokenType, this.theme.tokens);
-            const cssColor = color ? legacyToModernColor.encode(color) : '#000';
+            const displayValue = color ? legacyToModernColor.encode(color) : '#000';
             const tokenId = `basis.color.${key}.${colorKey}`;
             const isUsed = tokenUsage.has(tokenId);
             const usage = tokenUsage.get(tokenId) || [];
             const usageCount = usage.length;
-            return { colorKey, cssColor, isUsed, tokenId, usage, usageCount };
+            return { colorKey, displayValue, isUsed, tokenId, usage, usageCount };
           })
-          .filter(({ cssColor }) => cssColor !== null);
+          .filter(({ displayValue }) => displayValue !== null) satisfies TokenTableRow[];
         return { colorEntries, isUsed: colorEntries.some((color) => color.isUsed), key };
       });
   }
 
   private prepareFontFamilies(text: Record<string, unknown>, tokenUsage: Map<string, string[]>) {
     return Object.entries(text['font-family'] as Record<string, unknown>).map(([name, tokenValue]) => {
-      const value = (tokenValue as DesignToken).$value;
+      const displayValue = (tokenValue as DesignToken).$value;
       const tokenId = `basis.text.font-family.${name}`;
       const isUsed = tokenUsage.has(tokenId);
       const usage = tokenUsage.get(tokenId) || [];
       const usageCount = usage.length;
-      return { name, isUsed, tokenId, usage, usageCount, value };
-    });
+      return { name, displayValue, isUsed, tokenId, usage, usageCount };
+    }) satisfies TokenTableRow[];
   }
 
   private prepareFontSizes(text: Record<string, unknown>, tokenUsage: Map<string, string[]>) {
     return Object.entries(text['font-size'] as Record<string, unknown>)
       .reverse()
       .map(([name, tokenValue]) => {
-        const value = (tokenValue as DesignToken).$value;
+        const displayValue = (tokenValue as DesignToken).$value;
         const tokenId = `basis.text.font-size.${name}`;
         const isUsed = tokenUsage.has(tokenId);
         const usage = tokenUsage.get(tokenId) || [];
         const usageCount = usage.length;
-        return { name, isUsed, tokenId, usage, usageCount, value };
-      });
+        return { name, displayValue, isUsed, tokenId, usage, usageCount };
+      }) satisfies TokenTableRow[];
   }
 
   private prepareSpaceTokens(basis: Record<string, unknown>, space: string, tokenUsage: Map<string, string[]>) {
@@ -221,7 +223,7 @@ export class WizardStyleGuide extends LitElement {
                     </thead>
                     <tbody class="utrecht-table__body">
                       ${colorEntries.map(
-                        ({ cssColor, isUsed, tokenId, usage }) => html`
+                        ({ displayValue, isUsed, tokenId, usage }) => html`
                           <tr
                             aria-describedby=${isUsed ? nothing : `basis-color-${key}-unused-warning`}
                             class="utrecht-table__row"
@@ -231,7 +233,7 @@ export class WizardStyleGuide extends LitElement {
                                 role="img"
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="nl-color-sample"
-                                style="color: ${cssColor!};"
+                                style="color: ${displayValue};"
                                 aria-labelledby=${tokenId}
                                 width="32"
                                 height="32"
@@ -251,17 +253,17 @@ export class WizardStyleGuide extends LitElement {
                             <td class="utrecht-table__cell">
                               <utrecht-button
                                 appearance="subtle-button"
-                                @click=${() => navigator.clipboard.writeText(cssColor)}
+                                @click=${() => navigator.clipboard.writeText(displayValue)}
                               >
-                                <utrecht-code id=${cssColor}>${cssColor}</utrecht-code>
+                                <utrecht-code id=${displayValue}>${displayValue}</utrecht-code>
                               </utrecht-button>
                             </td>
                             <td class="utrecht-table__cell">
                               <utrecht-button
                                 @click=${() => {
-                                  const color = new Color(cssColor);
+                                  const color = new Color(displayValue);
                                   this.setActiveToken({
-                                    displayValue: cssColor,
+                                    displayValue,
                                     isUsed,
                                     metadata: {
                                       OKLCH: color.toString({ format: 'oklch' }),
@@ -318,12 +320,12 @@ export class WizardStyleGuide extends LitElement {
               </thead>
               <tbody class="utrecht-table__body">
                 ${fontFamilies.map(
-                  ({ name, isUsed, tokenId, usage, value }) => html`
+                  ({ name, displayValue, isUsed, tokenId, usage }) => html`
                   <tr aria-describedby=${isUsed ? nothing : 'basis-color-typography-font-family-unused-warning'} class="utrecht-table__row">
                     <td class="utrecht-table__cell">
                       <clippy-html-image>
                         <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
-                        <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${value}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
+                        <utrecht-paragraph style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
                           Op brute wijze ving de schooljuf de quasi-kalme lynx.
                         </utrecht-paragraph>
                       <clippy-html-image>
@@ -337,15 +339,15 @@ export class WizardStyleGuide extends LitElement {
                       </utrecht-button>
                     </td>
                     <td class="utrecht-table__cell">
-                      <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
-                        <utrecht-code>${value}</utrecht-code>
+                      <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(displayValue)}>
+                        <utrecht-code>${displayValue}</utrecht-code>
                       </utrecht-button>
                     </td>
                     <td class="utrecht-table__cell">
                       <utrecht-button
                         @click=${() => {
                           this.setActiveToken({
-                            displayValue: value,
+                            displayValue,
                             isUsed,
                             tokenId,
                             tokenType: 'fontFamily',
@@ -398,7 +400,7 @@ export class WizardStyleGuide extends LitElement {
               </header>
               <tbody class="utrecht-table__body">
                 ${fontSizes.map(
-                  ({ name, isUsed, tokenId, usage, value }) => html`
+                  ({ name, displayValue, isUsed, tokenId, usage }) => html`
                     <tr
                       class="utrecht-table__row"
                       aria-describedby=${isUsed ? nothing : 'basis-color-typography-sizes-unused-warning'}
@@ -407,7 +409,7 @@ export class WizardStyleGuide extends LitElement {
                         <clippy-html-image>
                           <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
                           <utrecht-paragraph
-                            style="--utrecht-paragraph-font-size: ${value}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+                            style="--utrecht-paragraph-font-size: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
                           >
                             Op brute wijze ving de schooljuf de quasi-kalme lynx.
                           </utrecht-paragraph>
@@ -422,15 +424,18 @@ export class WizardStyleGuide extends LitElement {
                         </utrecht-button>
                       </td>
                       <td class="utrecht-table__cell">
-                        <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
-                          <utrecht-code>${value}</utrecht-code>
+                        <utrecht-button
+                          appearance="subtle-button"
+                          @click=${() => navigator.clipboard.writeText(displayValue)}
+                        >
+                          <utrecht-code>${displayValue}</utrecht-code>
                         </utrecht-button>
                       </td>
                       <td class="utrecht-table__cell">
                         <utrecht-button
                           @click=${() => {
                             this.setActiveToken({
-                              displayValue: value,
+                              displayValue,
                               isUsed,
                               tokenId,
                               tokenType: 'fontSize',
