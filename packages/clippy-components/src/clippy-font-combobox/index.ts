@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, query } from 'lit/decorators.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
@@ -22,11 +22,8 @@ declare global {
 export class ClippyFontCombobox extends ClippyCombobox<Option> {
   #additional?: Option[];
   #intersectionObserver?: IntersectionObserver;
-
-  override readonly filter = (option: Option) => {
-    const label = `${option.label}`; // Use as string
-    return label.toLowerCase().includes(this.query.toLowerCase());
-  };
+  @query('[role=listbox]')
+  readonly listboxElement?: Element;
 
   override async fetchAdditionalOptions(query: string): Promise<Option[]> {
     this.#additional = this.#additional ?? (await import('./external').then(({ default: items }) => items));
@@ -36,7 +33,7 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
       this.#intersectionObserver =
         this.#intersectionObserver ??
         new IntersectionObserver(this.#loadFontsInView, {
-          root: this.querySelector('[role=listbox]'),
+          root: this.listboxElement,
         });
     }
 
@@ -49,7 +46,7 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
       if (intersectionRatio > 0 && target instanceof HTMLElement) {
         const cssUrl = target.dataset['cssUrl'] || '';
         const stylesheets = document.querySelector(`[href="${cssUrl}"]`);
-        if (cssUrl || !stylesheets) {
+        if (cssUrl && !stylesheets) {
           const link = document.createElement('link');
           link.setAttribute('rel', 'stylesheet');
           link.setAttribute('href', cssUrl);

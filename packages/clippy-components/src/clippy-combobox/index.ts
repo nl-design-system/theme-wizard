@@ -28,7 +28,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   @property({ attribute: 'hidden-label' }) hiddenLabel = '';
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) readonly = false;
-  @property({ type: Boolean }) private open = false;
+  @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';
   internals_ = this.attachInternals();
 
@@ -127,14 +127,26 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     }
   });
 
-  readonly #handleBlur = () => {
-    this.open = false;
-    this.emit('blur');
+  readonly #handleBlur = (event: FocusEvent) => {
+    if (event.relatedTarget && !this.shadowRoot?.contains(event.relatedTarget as Node)) {
+      // Only when the focus moves outside of the component, treat it as a blur for outside
+      this.open = false;
+      this.emit('blur');
+    }
   };
 
   readonly #handleChange = () => {
     this.emit('change');
   };
+
+  readonly #handleDocumentClick = (event: MouseEvent) => {
+    const path = event.composedPath();
+    if (!path.some((element) => element instanceof Node && this.contains(element))) {
+      // When a click happens outside of this web-component, treat it as a blur.
+      this.open = false;
+      this.emit('blur');
+    }
+  }
 
   readonly #handleFocus = () => {
     this.open = true;
@@ -184,6 +196,14 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   #setSelection(index: number, open: boolean = false) {
     this.open = open;
     this.selectedIndex = index > -1 ? index % this.filteredOptions.length : -1;
+    if (this.selectedIndex > -1) {
+      const element = this.shadowRoot?.querySelector(`#${String(this.#getOptionId())}`);
+      element?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
   }
 
   #commitSelection(index: number) {
@@ -214,6 +234,16 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     return html`${option?.label}`;
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener('click', this.#handleDocumentClick);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener('click', this.#handleDocumentClick);
+  }
+
   override render() {
     const popoverClasses = {
       [`utrecht-combobox__popover--${this.position}`]: this.position,
@@ -230,6 +260,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
           aria-autocomplete="list"
           aria-haspopup="listbox"
           aria-controls=${this.#listId}
+          aria-expanded=${this.open}
           aria-activedescendant=${this.#getOptionId()}
           type="text"
           class="utrecht-textbox utrecht-combobox__input"
@@ -259,7 +290,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
                 id=${this.#getOptionId(index)}
                 aria-selected=${selected}
                 data-index=${index}
-                @mousedown=${this.#handleOptionsClick}
+                @click=${this.#handleOptionsClick}
               >
                 ${this.renderEntry(option, index)}
               </li>`;
