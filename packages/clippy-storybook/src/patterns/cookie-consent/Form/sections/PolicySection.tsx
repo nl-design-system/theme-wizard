@@ -10,7 +10,7 @@ interface PolicySectionProps {
  */
 export const PolicySection: FC<PolicySectionProps> = ({ privacyPolicyUrl }) => (
   <>
-    <Heading2 className="utrecht-cookie-consent__section-title">Cookieverklaring</Heading2>
+    <Heading2>Cookieverklaring</Heading2>
 
     <Paragraph>
       Op deze website gebruiken wij cookies en vergelijkbare technieken. Cookies zijn kleine tekstbestanden die door een
@@ -19,7 +19,7 @@ export const PolicySection: FC<PolicySectionProps> = ({ privacyPolicyUrl }) => (
 
     <Paragraph>Wij gebruiken cookies om:</Paragraph>
 
-    <ul className="utrecht-cookie-consent__list">
+    <ul>
       <li>de functionaliteit van de website te garanderen;</li>
       <li>de website te verbeteren en te analyseren;</li>
       <li>voorkeuren te onthouden;</li>

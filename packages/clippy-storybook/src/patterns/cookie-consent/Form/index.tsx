@@ -1,11 +1,6 @@
 import type { AccordionSectionProps } from '@utrecht/component-library-react';
-import {
-  AccordionProvider,
-  Button,
-  ButtonGroup,
-  Heading2,
-  Link,
-} from '@utrecht/component-library-react/dist/css-module';
+import { Button } from '@nl-design-system-candidate/button-react/css';
+import { AccordionProvider, ButtonGroup, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
@@ -158,52 +153,41 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
       </div>
 
       {showLogo && (
-        <div className="utrecht-cookie-consent__logo">
-          <Link href="/">
-            <img
-              alt={LABELS.logoAlt}
-              className="utrecht-cookie-consent__logo-image"
-              src="/src/patterns/cookie-consent/assets/logo.svg"
-            />
-          </Link>
-        </div>
+        <Link href="/">
+          <img alt={LABELS.logoAlt} src="/src/patterns/cookie-consent/assets/logo.svg" />
+        </Link>
       )}
 
-      <div className="utrecht-cookie-consent__header">
-        {title && (
-          <Heading2 className="utrecht-cookie-consent__title" id="cookie-consent-title">
-            {title}
-          </Heading2>
-        )}
+      {title && <Heading2 id="cookie-consent-title">{title}</Heading2>}
 
-        {customizeLink && (
-          <div className="utrecht-cookie-consent__header-links">
-            <Link href={customizeLink.href} rel="noopener noreferrer" target="_blank">
-              {LABELS.privacyPolicy}
-            </Link>
-            <span aria-hidden="true">|</span>
-            <Link href="/contact">{LABELS.contact}</Link>
-          </div>
-        )}
-      </div>
+      {customizeLink && (
+        <>
+          <Link href={customizeLink.href} rel="noopener noreferrer" target="_blank">
+            {LABELS.privacyPolicy}
+          </Link>
+
+          <span aria-hidden="true">|</span>
+          <Link href="/contact">{LABELS.contact}</Link>
+        </>
+      )}
 
       <AccordionProvider headingLevel={2} sections={accordionSections} />
 
-      <div className="utrecht-cookie-consent__footer">
-        <form onSubmit={handleSubmit}>
-          <ButtonGroup>
-            <Button appearance="secondary-action-button" onClick={handleAcceptAll} type="button">
-              {buttonAccept}
-            </Button>
-            <Button appearance="secondary-action-button" onClick={handleRejectAll} type="button">
-              {buttonReject}
-            </Button>
-            <Button appearance="primary-action-button" type="submit">
-              {buttonSave}
-            </Button>
-          </ButtonGroup>
-        </form>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <ButtonGroup>
+          <Button onClick={handleAcceptAll} purpose="secondary" type="button">
+            {buttonAccept}
+          </Button>
+
+          <Button onClick={handleRejectAll} purpose="secondary" type="button">
+            {buttonReject}
+          </Button>
+
+          <Button purpose="secondary" type="submit">
+            {buttonSave}
+          </Button>
+        </ButtonGroup>
+      </form>
     </section>
   );
 };

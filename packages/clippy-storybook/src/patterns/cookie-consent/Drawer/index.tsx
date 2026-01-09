@@ -1,6 +1,7 @@
 /* @license CC0-1.0 */
 
-import { Button, ButtonGroup, Drawer, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
+import { Button } from '@nl-design-system-candidate/button-react';
+import { ButtonGroup, Drawer, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
 import React, { FC } from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieConsentDrawerProps } from './types';
@@ -61,11 +62,11 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
 
       <form method="dialog">
         <ButtonGroup style={{ marginBlockStart: 'var(--basis-space-block-xl, 2rem)' }}>
-          <Button appearance="secondary-action-button" onClick={handleAccept} type="submit" value="accept">
+          <Button onClick={handleAccept} purpose="secondary" type="submit" value="accept">
             {buttonAccept}
           </Button>
 
-          <Button appearance="secondary-action-button" onClick={handleReject} type="submit" value="reject">
+          <Button onClick={handleReject} purpose="secondary" type="submit" value="reject">
             {buttonReject}
           </Button>
 

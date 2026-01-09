@@ -27,55 +27,12 @@
   padding-inline: 1.5rem;
 }
 
-.utrecht-cookie-consent__header {
-  align-items: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--basis-space-block-md, 1rem);
-  justify-content: space-between;
-  margin-block-end: var(--basis-space-block-lg, 1.5rem);
-}
-
-.utrecht-cookie-consent__header-links {
-  align-items: center;
-  display: flex;
-  gap: var(--basis-space-inline-sm, 0.5rem);
-}
-
-.utrecht-cookie-consent__logo {
-  margin-block-end: var(--basis-space-block-lg, 1.5rem);
-}
-
-.utrecht-cookie-consent__logo-image {
-  block-size: auto;
-  max-block-size: 50px;
-}
-
-.utrecht-cookie-consent__title {
-  margin-block: 0;
-  margin-inline: 0;
-}
-
-.utrecht-cookie-consent__intro {
-  margin-block-end: var(--basis-space-block-xl, 2rem);
-  max-block-size: 200px;
-  overflow-y: auto;
-}
-
-.utrecht-cookie-consent__footer {
-  border-block-start: 1px solid var(--utrecht-color-border, #ccc);
-  margin-block-start: var(--basis-space-block-lg, 1.5rem);
-  padding-block-start: var(--basis-space-block-lg, 1.5rem);
-}
-
 /* ==========================================================================
    Cookie Option Card
    ========================================================================== */
 
 .utrecht-cookie-option {
   border: 1px solid var(--utrecht-color-border, #ccc);
-  border-radius: 4px;
-  overflow: hidden;
 }
 
 .utrecht-cookie-option__header {
@@ -87,49 +44,6 @@
   padding-inline: var(--basis-space-block-md, 1rem);
 }
 
-.utrecht-cookie-option__checkbox-wrapper {
-  flex: 1;
-  position: relative;
-}
-
-.utrecht-cookie-option__checkbox {
-  display: block;
-  inline-size: 100%;
-  position: relative;
-}
-
-.utrecht-cookie-option__badge {
-  inset-inline-end: 0;
-  position: absolute;
-}
-
-.utrecht-cookie-option__toggle {
-  align-items: center;
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  flex-shrink: 0;
-  justify-content: center;
-  padding-block: 0.25rem;
-  padding-inline: 0.25rem;
-}
-
-.utrecht-cookie-option__toggle:focus-visible {
-  outline: 2px solid var(--utrecht-focus-outline-color, #0077b6);
-  outline-offset: 2px;
-}
-
-.utrecht-cookie-option__toggle-icon {
-  display: inline-block;
-  transition: transform 200ms ease;
-}
-
-.utrecht-cookie-option__toggle-icon--expanded {
-  transform: rotate(180deg);
-}
-
 .utrecht-cookie-option__details {
   border-block-start: 1px solid var(--utrecht-color-border, #ccc);
 }
@@ -138,10 +52,6 @@
 .utrecht-cookie-option__details tbody tr:last-child th {
   border-block-end: 0;
 }
-
-/* ==========================================================================
-   Cookie Options List
-   ========================================================================== */
 
 .utrecht-cookie-options {
   display: flex;

@@ -20,16 +20,15 @@ export const SettingsSection: FC<SettingsSectionProps> = ({
   selectedCookies,
 }) => (
   <>
-    <div className="utrecht-cookie-consent__intro">
-      {children ?? (
-        <Paragraph>Wij willen graag uw toestemming om uw gegevens te gebruiken voor de volgende doeleinden:</Paragraph>
-      )}
-    </div>
+    {children ?? (
+      <Paragraph>Wij willen graag uw toestemming om uw gegevens te gebruiken voor de volgende doeleinden:</Paragraph>
+    )}
 
     <Fieldset>
       <FieldsetLegend>
         <strong>Kies welke cookies je wilt accepteren:</strong>
       </FieldsetLegend>
+
       <div className="utrecht-cookie-options">
         {cookieOptions.map((option) => (
           <CookieOptionCard

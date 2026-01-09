@@ -1,7 +1,8 @@
 import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
-import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css';
 import { Button } from '@nl-design-system-candidate/button-react/css';
-import { FormFieldCheckbox } from '@utrecht/component-library-react/dist/css-module';
+import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css';
+import { FormFieldCheckbox, Icon } from '@utrecht/component-library-react/dist/css-module';
+import { UtrechtIconChevronDown } from '@utrecht/web-component-library-react';
 import React, { memo, useCallback, useState, type ChangeEvent, type FC } from 'react';
 import type { CookieOption, CookieType } from './types';
 import { CookieDetailsTable } from './CookieDetailsTable';
@@ -40,7 +41,7 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
   const label = (
     <>
       {option.label}{' '}
-      <span aria-hidden="true" className="utrecht-cookie-option__badge">
+      <span aria-hidden="true">
         <NumberBadge>{cookieCount}</NumberBadge>
       </span>
       <span className="ams-visually-hidden">
@@ -52,36 +53,31 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
   return (
     <div className="utrecht-cookie-option">
       <div className="utrecht-cookie-option__header">
-        <div className="utrecht-cookie-option__checkbox-wrapper">
-          <FormFieldCheckbox
-            checked={isSelected}
-            className="utrecht-cookie-option__checkbox"
-            description={description}
-            disabled={option.required}
-            id={`cookie-option-${option.id}`}
-            label={label}
-            name={`cookie-option-${option.id}`}
-            onChange={handleCheckboxChange}
-            value={option.id}
-          />
-        </div>
+        <FormFieldCheckbox
+          checked={isSelected}
+          description={description}
+          disabled={option.required}
+          id={`cookie-option-${option.id}`}
+          label={label}
+          name={`cookie-option-${option.id}`}
+          onChange={handleCheckboxChange}
+          value={option.id}
+        />
 
         {hasCookies && (
           <Button
             iconOnly
-            aria-expanded={isExpanded}
+            iconStart={
+              <Icon size="16px" style={{ '--utrecht-icon-size': '10px' }}>
+                <UtrechtIconChevronDown />
+              </Icon>
+            }
             label={`${isExpanded ? 'Verberg' : 'Toon'} cookie details voor ${option.label} (${cookieCount} ${cookieCountLabel})`}
-            className="utrecht-cookie-option__toggle"
+            purpose="subtle"
+            toggle
             onClick={handleToggle}
-            type="button"
-          >
-            <span
-              aria-hidden="true"
-              className={`utrecht-cookie-option__toggle-icon ${isExpanded ? 'utrecht-cookie-option__toggle-icon--expanded' : ''}`}
-            >
-              ▼
-            </span>
-          </Button>
+            aria-expanded={isExpanded}
+          ></Button>
         )}
       </div>
 
