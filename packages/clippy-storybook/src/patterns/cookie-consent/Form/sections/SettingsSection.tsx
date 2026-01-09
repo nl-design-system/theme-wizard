@@ -20,9 +20,7 @@ export const SettingsSection: FC<SettingsSectionProps> = ({
   selectedCookies,
 }) => (
   <>
-    {children ?? (
-      <Paragraph>Wij willen graag uw toestemming om uw gegevens te gebruiken voor de volgende doeleinden:</Paragraph>
-    )}
+    {children}
 
     <Fieldset>
       <FieldsetLegend>

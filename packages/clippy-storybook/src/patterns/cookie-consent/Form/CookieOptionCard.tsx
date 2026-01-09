@@ -45,7 +45,7 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
         <NumberBadge>{cookieCount}</NumberBadge>
       </span>
       <span className="ams-visually-hidden">
-        , {cookieCount} {cookieCountLabel}
+        , bevat {cookieCount} {cookieCountLabel}
       </span>
     </>
   );
