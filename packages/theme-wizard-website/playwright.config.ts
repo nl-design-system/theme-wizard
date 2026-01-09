@@ -83,8 +83,8 @@ const config: PlaywrightTestConfig = {
     },
   ],
 
-  /* Let GitHub Actions use 4 workers; Locally let Playwright figure out how many to use. */
-  workers: process.env.CI ? 4 : 1,
+  /* Always use 1 worker. Doing more causes CI to be very slow and fail often. */
+  workers: 1,
 };
 
 export default config;
