@@ -355,7 +355,7 @@ export class WizardStyleGuide extends LitElement {
                           });
                         }}
                       >
-                        ${t('styleguide.showDetails')}
+                        ${t('styleGuide.showDetails')}
                       </utrecht-button>
                     </td>
                   </tr>
