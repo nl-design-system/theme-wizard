@@ -3,37 +3,51 @@ import {
   AccordionProvider,
   Button,
   ButtonGroup,
-  Fieldset,
-  FieldsetLegend,
-  FormFieldCheckbox,
   Heading2,
   Link,
-  Paragraph,
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
 } from '@utrecht/component-library-react/dist/css-module';
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react';
+import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import defaultCookieOptionsData from './defaultCookieOptions.json';
-import { CookieConsentFormProps, CookieOption, CookieType } from './types';
+import { DataSection, PolicySection, SettingsSection } from './sections';
 import './styles.css';
 
 const DEFAULT_COOKIE_OPTIONS: CookieOption[] = defaultCookieOptionsData as CookieOption[];
 
+const LABELS = {
+  acceptAll: 'Alle cookies accepteren',
+  contact: 'Contact',
+  dataTab: 'Mijn gegevens',
+  logoAlt: 'Terug naar homepage',
+  policyTab: 'Cookieverklaring',
+  preferencesSaved: 'Je cookievoorkeuren zijn opgeslagen.',
+  privacyPolicy: 'Privacybeleid',
+  rejectAll: 'Geen cookies',
+  save: 'Selectie opslaan',
+  settingsTab: 'Instellingen',
+} as const;
+
 /**
- * CookieConsentForm React Component
+ * CookieConsentForm Component
  *
- * This component builds a non-blocking cookie consent form with checkboxes
- * allowing users to select which cookie types to accept.
+ * A comprehensive, accessible cookie consent form that allows users to:
+ * - View and select cookie preferences by category
+ * - See detailed information about each cookie
+ * - Accept all, reject all, or save custom preferences
+ *
+ * @example
+ * ```tsx
+ * <CookieConsentForm
+ *   title="Cookie-instellingen"
+ *   customizeLink={{ href: "/privacy", text: "Privacybeleid" }}
+ * />
+ * ```
  */
 export const CookieConsentForm: FC<CookieConsentFormProps> = ({
-  buttonAccept = 'Alle cookies accepteren',
-  buttonReject = 'Geen cookies',
-  buttonSave = 'Selectie opslaan',
+  buttonAccept = LABELS.acceptAll,
+  buttonReject = LABELS.rejectAll,
+  buttonSave = LABELS.save,
   children,
   clearStorageOnMount = false,
   cookieOptions = DEFAULT_COOKIE_OPTIONS,
@@ -42,18 +56,24 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   title,
 }) => {
   const { isVisible: hookIsVisible, savePreferences } = useCookieConsent({ clearStorageOnMount });
+
   const [isVisible, setIsVisible] = useState(hookIsVisible);
+  const [statusMessage, setStatusMessage] = useState('');
   const [selectedCookies, setSelectedCookies] = useState<Set<CookieType>>(
-    new Set(cookieOptions.filter((opt) => opt.required).map((opt) => opt.id)),
+    () => new Set(cookieOptions.filter((opt) => opt.required).map((opt) => opt.id)),
   );
-  const [expandedCookieDetails, setExpandedCookieDetails] = useState<Set<CookieType>>(new Set());
+
+  // Sync visibility with hook
+  useEffect(() => {
+    setIsVisible(hookIsVisible);
+  }, [hookIsVisible]);
 
   const handleCheckboxChange = useCallback(
     (cookieId: CookieType, checked: boolean) => {
       const option = cookieOptions.find((opt) => opt.id === cookieId);
-      if (option?.required) {
-        return; // Don't allow unchecking required cookies
-      }
+
+      // Prevent unchecking required cookies
+      if (option?.required) return;
 
       setSelectedCookies((prev) => {
         const next = new Set(prev);
@@ -68,358 +88,109 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
     [cookieOptions],
   );
 
-  const handleAcceptAll = () => {
+  const handleSaveAndClose = useCallback(
+    (preferences: CookieType[]) => {
+      savePreferences(preferences);
+      setStatusMessage(LABELS.preferencesSaved);
+      setIsVisible(false);
+    },
+    [savePreferences],
+  );
+
+  const handleAcceptAll = useCallback(() => {
     const allCookieIds = cookieOptions.map((opt) => opt.id);
-    savePreferences(allCookieIds);
-    setIsVisible(false);
-  };
+    handleSaveAndClose(allCookieIds);
+  }, [cookieOptions, handleSaveAndClose]);
 
-  const handleRejectAll = () => {
+  const handleRejectAll = useCallback(() => {
     const requiredOnly = cookieOptions.filter((opt) => opt.required).map((opt) => opt.id);
-    savePreferences(requiredOnly);
-    setIsVisible(false);
-  };
+    handleSaveAndClose(requiredOnly);
+  }, [cookieOptions, handleSaveAndClose]);
 
-  const handleSave = () => {
-    savePreferences(Array.from(selectedCookies));
-    setIsVisible(false);
-  };
+  const handleSave = useCallback(() => {
+    handleSaveAndClose(Array.from(selectedCookies));
+  }, [selectedCookies, handleSaveAndClose]);
 
-  const toggleCookieDetails = useCallback((cookieId: CookieType) => {
-    setExpandedCookieDetails((prev) => {
-      const next = new Set(prev);
-      if (next.has(cookieId)) {
-        next.delete(cookieId);
-      } else {
-        next.add(cookieId);
-      }
-      return next;
-    });
-  }, []);
+  const handleSubmit = useCallback(
+    (event: React.FormEvent) => {
+      event.preventDefault();
+      handleSave();
+    },
+    [handleSave],
+  );
 
-  const accordionSections: AccordionSectionProps[] = useMemo(() => {
-    const settingsBody = (
-      <>
-        <div
-          style={{
-            marginBlockEnd: 'var(--basis-space-block-xl, 2rem)',
-            maxHeight: '200px',
-            overflowY: 'auto',
-          }}
-        >
-          {children || (
-            <Paragraph>
-              Wij willen graag uw toestemming om uw gegevens te gebruiken voor de volgende doeleinden:
-            </Paragraph>
-          )}
-        </div>
-
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            savePreferences(Array.from(selectedCookies));
-            setIsVisible(false);
-          }}
-        >
-          <Fieldset style={{ marginBlockEnd: 'var(--basis-space-block-xl, 2rem)' }}>
-            <FieldsetLegend>
-              <strong>Kies welke cookies je wilt accepteren:</strong>
-            </FieldsetLegend>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--basis-space-block-md, 1rem)' }}>
-              {cookieOptions.map((option) => {
-                const isExpanded = expandedCookieDetails.has(option.id);
-                const hasCookies = option.cookies && option.cookies.length > 0;
-                const cookieCount = option.cookies?.length || 0;
-                const labelWithCount = `${option.label} (${cookieCount})`;
-                const accessibleLabel = `${option.label}, ${cookieCount} ${cookieCount === 1 ? 'cookie' : 'cookies'}`;
-
-                return (
-                  <div
-                    key={option.id}
-                    style={{
-                      border: '1px solid var(--utrecht-color-border, #ccc)',
-                      borderRadius: '4px',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <div style={{ padding: 'var(--basis-space-block-md, 1rem)' }}>
-                      <div
-                        style={{
-                          alignItems: 'flex-start',
-                          display: 'flex',
-                          gap: 'var(--basis-space-inline-sm, 0.5rem)',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <div style={{ flex: 1 }}>
-                          <FormFieldCheckbox
-                            aria-label={accessibleLabel}
-                            defaultChecked={selectedCookies.has(option.id)}
-                            description={option.description}
-                            disabled={option.required}
-                            id={`cookie-option-${option.id}`}
-                            label={labelWithCount}
-                            name={`cookie-option-${option.id}`}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              handleCheckboxChange(option.id, e.target.checked);
-                            }}
-                            required={option.required}
-                            value={option.id}
-                          />
-                        </div>
-                        {hasCookies && (
-                          <button
-                            aria-expanded={isExpanded}
-                            aria-label={`${isExpanded ? 'Verberg' : 'Toon'} cookie details voor ${option.label} (${cookieCount} ${cookieCount === 1 ? 'cookie' : 'cookies'})`}
-                            onClick={() => toggleCookieDetails(option.id)}
-                            style={{
-                              appearance: 'none',
-                              backgroundColor: 'transparent',
-                              border: 'none',
-                              cursor: 'pointer',
-                              display: 'inline-flex',
-                              flexShrink: 0,
-                              padding: '0.25rem',
-                            }}
-                            type="button"
-                          >
-                            <span
-                              style={{
-                                display: 'inline-block',
-                                rotate: isExpanded ? '180deg' : '0deg',
-                                transition: 'rotate 0.2s ease',
-                              }}
-                            >
-                              ▼
-                            </span>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                    {hasCookies && isExpanded && option.cookies && (
-                      <div
-                        style={{
-                          backgroundColor: 'var(--utrecht-color-background-alt, #f4f4f4)',
-                          borderTop: '1px solid var(--utrecht-color-border, #ccc)',
-                          padding: 'var(--basis-space-block-md, 1rem)',
-                        }}
-                      >
-                        <Table>
-                          <TableHeader>
-                            <TableRow>
-                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
-                                Cookie
-                              </TableHeaderCell>
-                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
-                                Cookie type
-                              </TableHeaderCell>
-                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
-                                Looptijd
-                              </TableHeaderCell>
-                              <TableHeaderCell style={{ verticalAlign: 'baseline' }} scope="col">
-                                Beschrijving
-                              </TableHeaderCell>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {option.cookies.map((cookie) => (
-                              <TableRow key={cookie.name}>
-                                <TableHeaderCell scope="row">{cookie.name}</TableHeaderCell>
-                                <TableCell>{cookie.type}</TableCell>
-                                <TableCell>{cookie.duration}</TableCell>
-                                <TableCell>{cookie.description}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </Fieldset>
-        </form>
-      </>
-    );
-
-    const policyBody = (
-      <>
-        <Heading2 style={{ fontSize: '1.5rem', marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Cookieverklaring
-        </Heading2>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Op deze website gebruiken wij cookies en vergelijkbare technieken. Cookies zijn kleine tekstbestanden die door
-          een internetpagina op een pc, tablet of mobiele telefoon worden geplaatst.
-        </Paragraph>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>Wij gebruiken cookies om:</Paragraph>
-        <ul style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)', paddingInlineStart: '1.5rem' }}>
-          <li>de functionaliteit van de website te garanderen;</li>
-          <li>de website te verbeteren en te analyseren;</li>
-          <li>voorkeuren te onthouden;</li>
-          <li>relevante content en advertenties te tonen.</li>
-        </ul>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Je kunt zelf kiezen welke cookies je accepteert. Je kunt je keuze altijd weer aanpassen via de
-          cookie-instellingen.
-        </Paragraph>
-        {customizeLink && (
-          <Paragraph>
-            <Link href={customizeLink.href} target="_blank" rel="noopener noreferrer">
-              Lees meer in ons privacybeleid
-            </Link>
-          </Paragraph>
-        )}
-      </>
-    );
-
-    const dataBody = (
-      <>
-        <Heading2 style={{ fontSize: '1.5rem', marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Mijn gegevens
-        </Heading2>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Je hebt het recht om je gegevens in te zien, te corrigeren, te verwijderen of over te dragen. Ook kun je
-          bezwaar maken tegen het gebruik van je gegevens.
-        </Paragraph>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Je huidige cookievoorkeuren:
-        </Paragraph>
-        <div
-          style={{
-            background: 'var(--utrecht-color-background-alt, #f5f5f5)',
-            border: '1px solid var(--utrecht-color-border, #ccc)',
-            borderRadius: '4px',
-            marginBlockEnd: 'var(--basis-space-block-md, 1rem)',
-            padding: 'var(--basis-space-block-md, 1rem)',
-          }}
-        >
-          <ul style={{ margin: 0, paddingInlineStart: '1.5rem' }}>
-            {cookieOptions.map((option) => (
-              <li key={option.id} style={{ marginBlockEnd: '0.5rem' }}>
-                {option.label}: {selectedCookies.has(option.id) ? 'Geaccepteerd' : 'Geweigerd'}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Om je cookievoorkeuren te wijzigen, ga naar het tabblad &quot;Instellingen&quot;.
-        </Paragraph>
-        <Paragraph>
-          Voor vragen over je privacyrechten kun je contact opnemen via{' '}
-          <Link href="mailto:privacy@example.nl">privacy@example.nl</Link>
-        </Paragraph>
-      </>
-    );
-
-    return [
+  const accordionSections: AccordionSectionProps[] = useMemo(
+    () => [
       {
-        body: settingsBody,
+        body: (
+          <SettingsSection
+            cookieOptions={cookieOptions}
+            onCheckboxChange={handleCheckboxChange}
+            selectedCookies={selectedCookies}
+          >
+            {children}
+          </SettingsSection>
+        ),
         expanded: true,
-        label: 'Instellingen',
+        label: LABELS.settingsTab,
       },
       {
-        body: policyBody,
-        label: 'Cookieverklaring',
+        body: <PolicySection privacyPolicyUrl={customizeLink?.href} />,
+        label: LABELS.policyTab,
       },
       {
-        body: dataBody,
-        label: 'Mijn gegevens',
+        body: <DataSection cookieOptions={cookieOptions} selectedCookies={selectedCookies} />,
+        label: LABELS.dataTab,
       },
-    ];
-  }, [
-    children,
-    cookieOptions,
-    selectedCookies,
-    Array.from(expandedCookieDetails).join(','),
-    customizeLink,
-    savePreferences,
-    setIsVisible,
-    handleCheckboxChange,
-    toggleCookieDetails,
-  ]);
-
-  // Sync with hook visibility
-  React.useEffect(() => {
-    setIsVisible(hookIsVisible);
-  }, [hookIsVisible]);
+    ],
+    [children, cookieOptions, customizeLink?.href, handleCheckboxChange, selectedCookies],
+  );
 
   if (!isVisible) {
     return null;
   }
 
   return (
-    <section
-      aria-labelledby="cookie-consent-title"
-      style={{
-        marginInline: 'auto',
-        maxWidth: '48rem',
-        padding: 'var(--basis-space-block-xl, 2rem) 1.5rem',
-      }}
-    >
+    <section aria-labelledby="cookie-consent-title" className="utrecht-cookie-consent">
+      {/* Live region for screen reader announcements */}
+      <div aria-live="polite" aria-atomic="true" className="utrecht-cookie-consent__status">
+        {statusMessage}
+      </div>
+
       {showLogo && (
-        <div style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
-          <Link href="#" style={{ display: 'inline-block', textDecoration: 'none' }}>
+        <div className="utrecht-cookie-consent__logo">
+          <Link href="/">
             <img
+              alt={LABELS.logoAlt}
+              className="utrecht-cookie-consent__logo-image"
               src="/src/patterns/cookie-consent/assets/logo.svg"
-              alt="Organisatie logo"
-              style={{ maxHeight: '50px', width: 'auto' }}
             />
           </Link>
         </div>
       )}
 
-      <div
-        style={{
-          alignItems: 'flex-start',
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 'var(--basis-space-block-md, 1rem)',
-          justifyContent: 'space-between',
-          marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)',
-        }}
-      >
+      <div className="utrecht-cookie-consent__header">
         {title && (
-          <Heading2 id="cookie-consent-title" style={{ margin: 0 }}>
+          <Heading2 className="utrecht-cookie-consent__title" id="cookie-consent-title">
             {title}
           </Heading2>
         )}
-        <div style={{ alignItems: 'center', display: 'flex', gap: 'var(--basis-space-inline-sm, 0.5rem)' }}>
-          {customizeLink && (
-            <>
-              <Link href={customizeLink.href} target="_blank" rel="noopener noreferrer">
-                Privacybeleid
-              </Link>
-              <span>|</span>
-              <Link href="#" target="_blank" rel="noopener noreferrer">
-                Contact
-              </Link>
-            </>
-          )}
-        </div>
+
+        {customizeLink && (
+          <div className="utrecht-cookie-consent__header-links">
+            <Link href={customizeLink.href} rel="noopener noreferrer" target="_blank">
+              {LABELS.privacyPolicy}
+            </Link>
+            <span aria-hidden="true">|</span>
+            <Link href="/contact">{LABELS.contact}</Link>
+          </div>
+        )}
       </div>
 
-      {/* Accordion */}
-      <AccordionProvider
-        key={Array.from(expandedCookieDetails).join(',')}
-        sections={accordionSections}
-        headingLevel={2}
-      />
+      <AccordionProvider headingLevel={2} sections={accordionSections} />
 
-      {/* Footer Actions */}
-      <div
-        style={{
-          borderTop: '1px solid var(--utrecht-color-border, #ccc)',
-          marginBlockStart: 'var(--basis-space-block-lg, 1.5rem)',
-          paddingBlockStart: 'var(--basis-space-block-lg, 1.5rem)',
-        }}
-      >
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSave();
-          }}
-        >
+      <div className="utrecht-cookie-consent__footer">
+        <form onSubmit={handleSubmit}>
           <ButtonGroup>
             <Button appearance="secondary-action-button" onClick={handleAcceptAll} type="button">
               {buttonAccept}
@@ -427,7 +198,7 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
             <Button appearance="secondary-action-button" onClick={handleRejectAll} type="button">
               {buttonReject}
             </Button>
-            <Button appearance="secondary-action-button" type="submit">
+            <Button appearance="primary-action-button" type="submit">
               {buttonSave}
             </Button>
           </ButtonGroup>

@@ -156,6 +156,16 @@ importers:
         version: 4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
 
   packages/clippy-storybook:
+    dependencies:
+      '@amsterdam/design-system-css':
+        specifier: 2.2.0
+        version: 2.2.0
+      '@nl-design-system-candidate/button-react':
+        specifier: 1.0.0
+        version: 1.0.0(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/number-badge-react':
+        specifier: 1.3.2
+        version: 1.3.2(@babel/runtime@7.28.4)(react@18.3.1)
     devDependencies:
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
@@ -2108,9 +2118,6 @@ packages:
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
 
-  '@nl-design-system-candidate/button-css@1.0.0':
-    resolution: {integrity: sha512-TjXFCCeCrSfxBRwcdKWFO/gLAZDfeBAnxC3DuCNvu53JwYIA30++GOivFgeRmDyXDhJysoG19/SVq1r1jfUP5Q==}
-
   '@nl-design-system-candidate/button-react@1.0.0':
     resolution: {integrity: sha512-vJgms4HPQlOzHUAcddRgZFpJgmHYGZ1JCxO9rboITME8wV31aZw8NSWxRWo4sGYcn4BxrxZ8qZ7o2cQp4t9wng==}
     peerDependencies:
@@ -2138,11 +2145,11 @@ packages:
   '@nl-design-system-candidate/link-css@2.0.3':
     resolution: {integrity: sha512-NpRIm9YDCK1bihslc9UD3OvV5hmm91Dc7v2oBIllqlZZyS1THFmPsyi+sJ1Vd7ZDa54GgqjuzUJOzAoQDJOFzQ==}
 
-  '@nl-design-system-candidate/link-react@1.1.7':
-    resolution: {integrity: sha512-gGOWFih3kNpLFRsFUfFyCXoXCL/u7aSsCJ+lHkBhnWUsnlQRmUxm/bWDrnaiRN72i4rp2bDU4wLFMGljoshfUQ==}
+  '@nl-design-system-candidate/number-badge-react@1.3.2':
+    resolution: {integrity: sha512-inGt+cWeM3THcE+tTjzTazo/bwfTxf2F3/16yyEUCwxY/We7rL0KNW9nyZ3pYZuIxebRKSsRtCh7Z4fELKMJYA==}
     peerDependencies:
       '@babel/runtime': ^7
-      react: ^18
+      react: ^18 || ^19
 
   '@nl-design-system-candidate/paragraph-css@2.1.3':
     resolution: {integrity: sha512-f3GHiSpisUZAcn4gSNpSX2C3Mhl7y9dg1TfTe+jGMtHAqau/tztrtE3H27FlwrZeVEtsUtvssRCYUA3UO/GDpQ==}
@@ -9487,13 +9494,11 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
-  '@nl-design-system-candidate/button-css@1.0.0': {}
-
-  '@nl-design-system-candidate/button-react@1.0.0(@babel/runtime@7.28.4)(react@19.2.3)':
+  '@nl-design-system-candidate/button-react@1.0.0(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
       clsx: 2.1.1
-      react: 19.2.3
+      react: 18.3.1
 
   '@nl-design-system-candidate/code-css@2.0.3': {}
 
@@ -9510,11 +9515,10 @@ snapshots:
 
   '@nl-design-system-candidate/link-css@2.0.3': {}
 
-  '@nl-design-system-candidate/link-react@1.1.7(@babel/runtime@7.28.4)(react@19.2.3)':
+  '@nl-design-system-candidate/number-badge-react@1.3.2(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
-      clsx: 2.1.1
-      react: 19.2.3
+      react: 18.3.1
 
   '@nl-design-system-candidate/paragraph-css@2.1.3': {}
 

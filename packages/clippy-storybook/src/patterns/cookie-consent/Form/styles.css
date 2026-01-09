@@ -1,39 +1,168 @@
-/**
- * CSS Custom Properties for Utrecht Data List Design Tokens
- * These tokens customize the appearance of DataList components used in the cookie consent form
- */
-
 :root {
-  /* Data List base tokens */
   --utrecht-data-list-margin-block-end: var(--basis-space-block-md, 1rem);
   --utrecht-data-list-margin-block-start: var(--basis-space-block-md, 1rem);
-
-  /* Data List item key tokens */
   --utrecht-data-list-item-key-color: var(--basis-color-default-color-default, currentColor);
   --utrecht-data-list-item-key-font-size: var(--basis-text-font-size-md, 1rem);
   --utrecht-data-list-item-key-font-weight: var(--basis-text-font-weight-bold, 700);
   --utrecht-data-list-item-key-line-height: var(--basis-text-line-height-md, 1.5);
-
-  /* Data List item value tokens */
   --utrecht-data-list-item-value-color: var(--basis-color-default-color-default, currentColor);
   --utrecht-data-list-item-value-font-size: var(--basis-text-font-size-md, 1rem);
   --utrecht-data-list-item-value-font-weight: var(--basis-text-font-weight-regular, 400);
   --utrecht-data-list-item-value-line-height: var(--basis-text-line-height-md, 1.5);
-
-  /* Data List rows appearance tokens */
   --utrecht-data-list-rows-border-bottom-color: var(--basis-color-default-border-subtle, #e5e5e5);
   --utrecht-data-list-rows-border-bottom-width: var(--basis-border-width-sm, 1px);
   --utrecht-data-list-rows-gap: var(--basis-space-block-md, 1rem);
-
-  /* Data List rows column tokens */
   --utrecht-data-list-rows-column-min-inline-size: 0;
   --utrecht-data-list-rows-column-inline-size: auto;
-
-  /* Data List rows item tokens */
   --utrecht-data-list-rows-item-margin-block-start: 0;
   --utrecht-data-list-rows-item-padding-block-end: var(--basis-space-block-md, 1rem);
   --utrecht-data-list-rows-item-padding-block-start: var(--basis-space-block-md, 1rem);
-
-  /* Data List rows item value tokens */
   --utrecht-data-list-rows-item-value-margin-block-start: 0;
+}
+
+.utrecht-cookie-consent {
+  margin-inline: auto;
+  max-inline-size: 48rem;
+  padding-block: var(--basis-space-block-xl, 2rem);
+  padding-inline: 1.5rem;
+}
+
+.utrecht-cookie-consent__header {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-block-md, 1rem);
+  justify-content: space-between;
+  margin-block-end: var(--basis-space-block-lg, 1.5rem);
+}
+
+.utrecht-cookie-consent__header-links {
+  align-items: center;
+  display: flex;
+  gap: var(--basis-space-inline-sm, 0.5rem);
+}
+
+.utrecht-cookie-consent__logo {
+  margin-block-end: var(--basis-space-block-lg, 1.5rem);
+}
+
+.utrecht-cookie-consent__logo-image {
+  block-size: auto;
+  max-block-size: 50px;
+}
+
+.utrecht-cookie-consent__title {
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+.utrecht-cookie-consent__intro {
+  margin-block-end: var(--basis-space-block-xl, 2rem);
+  max-block-size: 200px;
+  overflow-y: auto;
+}
+
+.utrecht-cookie-consent__footer {
+  border-block-start: 1px solid var(--utrecht-color-border, #ccc);
+  margin-block-start: var(--basis-space-block-lg, 1.5rem);
+  padding-block-start: var(--basis-space-block-lg, 1.5rem);
+}
+
+/* ==========================================================================
+   Cookie Option Card
+   ========================================================================== */
+
+.utrecht-cookie-option {
+  border: 1px solid var(--utrecht-color-border, #ccc);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.utrecht-cookie-option__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--basis-space-inline-sm, 0.5rem);
+  justify-content: space-between;
+  padding-block: var(--basis-space-block-md, 1rem);
+  padding-inline: var(--basis-space-block-md, 1rem);
+}
+
+.utrecht-cookie-option__checkbox-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.utrecht-cookie-option__checkbox {
+  display: block;
+  inline-size: 100%;
+  position: relative;
+}
+
+.utrecht-cookie-option__badge {
+  inset-inline-end: 0;
+  position: absolute;
+}
+
+.utrecht-cookie-option__toggle {
+  align-items: center;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  justify-content: center;
+  padding-block: 0.25rem;
+  padding-inline: 0.25rem;
+}
+
+.utrecht-cookie-option__toggle:focus-visible {
+  outline: 2px solid var(--utrecht-focus-outline-color, #0077b6);
+  outline-offset: 2px;
+}
+
+.utrecht-cookie-option__toggle-icon {
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+
+.utrecht-cookie-option__toggle-icon--expanded {
+  transform: rotate(180deg);
+}
+
+.utrecht-cookie-option__details {
+  border-block-start: 1px solid var(--utrecht-color-border, #ccc);
+}
+
+.utrecht-cookie-option__details tbody tr:last-child td,
+.utrecht-cookie-option__details tbody tr:last-child th {
+  border-block-end: 0;
+}
+
+/* ==========================================================================
+   Cookie Options List
+   ========================================================================== */
+
+.utrecht-cookie-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-md, 1rem);
+}
+
+/* ==========================================================================
+   Status Announcement (Screen Reader Only)
+   ========================================================================== */
+
+.utrecht-cookie-consent__status {
+  block-size: 1px;
+  border: 0;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  margin-block: -1px;
+  margin-inline: -1px;
+  overflow: hidden;
+  padding-block: 0;
+  padding-inline: 0;
+  position: absolute;
+  white-space: nowrap;
 }
