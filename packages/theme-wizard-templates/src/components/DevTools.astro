@@ -71,11 +71,12 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     border: 1px solid var(--utrecht-color-grey-40, #ccc);
     border-radius: var(--utrecht-alert-border-radius);
     font-size: var(--basis-text-font-size-xs);
-    margin-top: var(--basis-space-block-sm);
-    max-height: 200px;
+    margin-block-start: var(--basis-space-block-sm);
+    max-block-size: 200px;
     overflow-wrap: break-word;
     overflow-y: auto;
-    padding: var(--basis-space-block-sm) var(--basis-space-inline-sm);
+    padding-block: var(--basis-space-block-sm);
+    padding-inline: var(--basis-space-inline-sm);
     white-space: pre-wrap;
   }
 </style>
