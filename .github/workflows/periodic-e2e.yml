@@ -49,6 +49,22 @@ jobs:
       - name: End-to-end tests
         run: pnpm run test-e2e
 
+  notify-slack:
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    needs: test-e2e
+
+    steps:
+      - name: Post message on Slack
+        id: post-message
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a #v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ vars.SLACK_CHANNEL_ID }}
+            text: "Probleem op productie!\n [Bekijk de laatste periodieke e2e-test](https://github.com/nl-design-system/theme-wizard/actions/workflows/periodic-e2e.yml)" en los deze op.
+
   create-issue:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
