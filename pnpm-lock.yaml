@@ -159,7 +159,7 @@ importers:
     devDependencies:
       '@amsterdam/design-system-css':
         specifier: 2.2.0
-        version: 2.2.0
+        version: 2.2.0(@amsterdam/design-system-tokens@2.2.0)
       '@nl-design-system-candidate/button-react':
         specifier: 1.0.0
         version: 1.0.0(@babel/runtime@7.28.4)(react@18.3.1)
@@ -190,6 +190,9 @@ importers:
       '@storybook/addon-docs':
         specifier: 10.1.11
         version: 10.1.11(@types/react@18.3.23)(esbuild@0.27.2)(rollup@4.53.5)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
+      '@storybook/react':
+        specifier: 10.1.11
+        version: 10.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)
       '@storybook/react-vite':
         specifier: 10.1.11
         version: 10.1.11(esbuild@0.27.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.53.5)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
@@ -2120,6 +2123,9 @@ packages:
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
 
+  '@nl-design-system-candidate/button-css@1.0.0':
+    resolution: {integrity: sha512-TjXFCCeCrSfxBRwcdKWFO/gLAZDfeBAnxC3DuCNvu53JwYIA30++GOivFgeRmDyXDhJysoG19/SVq1r1jfUP5Q==}
+
   '@nl-design-system-candidate/button-react@1.0.0':
     resolution: {integrity: sha512-vJgms4HPQlOzHUAcddRgZFpJgmHYGZ1JCxO9rboITME8wV31aZw8NSWxRWo4sGYcn4BxrxZ8qZ7o2cQp4t9wng==}
     peerDependencies:
@@ -2146,6 +2152,12 @@ packages:
 
   '@nl-design-system-candidate/link-css@2.0.3':
     resolution: {integrity: sha512-NpRIm9YDCK1bihslc9UD3OvV5hmm91Dc7v2oBIllqlZZyS1THFmPsyi+sJ1Vd7ZDa54GgqjuzUJOzAoQDJOFzQ==}
+
+  '@nl-design-system-candidate/link-react@1.1.7':
+    resolution: {integrity: sha512-gGOWFih3kNpLFRsFUfFyCXoXCL/u7aSsCJ+lHkBhnWUsnlQRmUxm/bWDrnaiRN72i4rp2bDU4wLFMGljoshfUQ==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18
 
   '@nl-design-system-candidate/number-badge-react@1.3.2':
     resolution: {integrity: sha512-inGt+cWeM3THcE+tTjzTazo/bwfTxf2F3/16yyEUCwxY/We7rL0KNW9nyZ3pYZuIxebRKSsRtCh7Z4fELKMJYA==}
@@ -3459,11 +3471,20 @@ packages:
   '@utrecht/vega-visualization-css@1.4.2':
     resolution: {integrity: sha512-JTTx1DsKIeYZz95+H34HGfocKjDpbVOsFdPK1f/b3U3C5ivdC75fTkzU1+tVp6ijPwKnWPNr6eiIXTY9tHj5Kg==}
 
+  '@utrecht/web-component-library-react@3.0.12':
+    resolution: {integrity: sha512-MrnnMCg9NZxFWoBjOH4jxduhX96H+QqfwogNlldy8xqJtUXmO21TZY8T29Q1y7DHQT5by+Br0IDIMuarWsY0AQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
   '@utrecht/web-component-library-react@4.0.0':
     resolution: {integrity: sha512-JjFWJUeltOoL5/d+MY/tl5lM2TVQZQmhtkKMCVWh4+5hVwE6jTqHyJn7v4DLaMaL9SyGBXFNXCIaBOzj7ROYbw==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
+
+  '@utrecht/web-component-library-stencil@3.7.0':
+    resolution: {integrity: sha512-JvJ6rQAJlRtVbQApFODOMC25FgGsiLkTOs773VZo3u/rvvL4GhpXdri5Zap1yn0oD9dfjC4VWLq9LM+dPsLTDQ==}
 
   '@utrecht/web-component-library-stencil@4.0.0':
     resolution: {integrity: sha512-rN1F01RRCnGbP5bvjfoD1HZzNX/YAElFjzlkmLMFxkvOVaxq/Qo/FSxrbnzpH5UsgtVM6qx/tQAA9fOkIgit9Q==}
@@ -9493,11 +9514,19 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
+  '@nl-design-system-candidate/button-css@1.0.0': {}
+
   '@nl-design-system-candidate/button-react@1.0.0(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
       clsx: 2.1.1
       react: 18.3.1
+
+  '@nl-design-system-candidate/button-react@1.0.0(@babel/runtime@7.28.4)(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      clsx: 2.1.1
+      react: 19.2.3
 
   '@nl-design-system-candidate/code-css@2.0.3': {}
 
@@ -9513,6 +9542,12 @@ snapshots:
       react: 19.2.3
 
   '@nl-design-system-candidate/link-css@2.0.3': {}
+
+  '@nl-design-system-candidate/link-react@1.1.7(@babel/runtime@7.28.4)(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      clsx: 2.1.1
+      react: 19.2.3
 
   '@nl-design-system-candidate/number-badge-react@1.3.2(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
@@ -11190,11 +11225,21 @@ snapshots:
 
   '@utrecht/vega-visualization-css@1.4.2': {}
 
+  '@utrecht/web-component-library-react@3.0.12(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@utrecht/web-component-library-stencil': 3.7.0
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
   '@utrecht/web-component-library-react@4.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@utrecht/web-component-library-stencil': 4.0.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  '@utrecht/web-component-library-stencil@3.7.0':
+    dependencies:
+      '@stencil/core': 4.18.3
 
   '@utrecht/web-component-library-stencil@4.0.0':
     dependencies:
