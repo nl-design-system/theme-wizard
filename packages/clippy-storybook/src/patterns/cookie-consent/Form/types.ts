@@ -25,18 +25,22 @@ export interface CookieOption {
   required?: boolean;
 }
 
+export interface InfoSection {
+  body: React.ReactNode;
+  expanded?: boolean;
+  label: string;
+}
+
 export interface CookieConsentFormProps {
   buttonAccept?: string;
   buttonReject?: string;
   buttonSave?: string;
-  children?: React.ReactNode;
   clearStorageOnMount?: boolean;
   cookieOptions?: CookieOption[];
   customizeLink?: {
     href: string;
     text: string;
   };
+  infoSections?: InfoSection[];
   showLegitimateInterest?: boolean;
-  showLogo?: boolean;
-  title?: string;
 }

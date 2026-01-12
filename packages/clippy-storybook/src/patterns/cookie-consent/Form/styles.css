@@ -27,6 +27,13 @@
   padding-inline: 1.5rem;
 }
 
+.utrecht-cookie-fieldset--legitimate-interest {
+  background-color: var(--basis-color-accent-1-bg-subtle);
+  border: 1px solid var(--basis-color-accent-1-bg-subtle);
+  padding-block: var(--basis-space-block-lg);
+  padding-inline: var(--basis-space-inline-lg);
+}
+
 /* ==========================================================================
    Cookie Option Card
    ========================================================================== */
@@ -79,4 +86,36 @@
   padding-inline: 0;
   position: absolute;
   white-space: nowrap;
+}
+
+/* ==========================================================================
+   Cookie Reset Section
+   ========================================================================== */
+
+.utrecht-cookie-reset {
+  border-block-start: 1px solid var(--basis-color-default-border-subtle, #e5e5e5);
+  margin-block-start: var(--basis-space-block-lg, 1.5rem);
+  padding-block-start: var(--basis-space-block-lg, 1.5rem);
+}
+
+.utrecht-cookie-reset__description {
+  color: var(--basis-color-default-color-subtle, #666);
+  font-size: var(--basis-text-font-size-sm, 0.875rem);
+  margin-block-end: var(--basis-space-block-sm, 0.5rem);
+}
+
+/* ==========================================================================
+   Cookie Actions (Accept/Reject/Save buttons)
+   ========================================================================== */
+
+/* ==========================================================================
+   Cookie Settings Section (outside accordion)
+   ========================================================================== */
+
+.utrecht-cookie-settings {
+  margin-block-end: var(--basis-space-block-lg, 1.5rem);
+}
+
+.utrecht-cookie-actions {
+  margin-block-end: var(--basis-space-block-xl, 2rem);
 }
