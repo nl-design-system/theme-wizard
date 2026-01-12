@@ -230,7 +230,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
             name=${this.#idColor}
             type="color"
             .value=${this.currentColorValue}
-            colorSpace=${this.colorSpace}
+            colorspace=${this.colorSpace}
             @change=${this.handleColorChange}
             list="preset-colors"
           />

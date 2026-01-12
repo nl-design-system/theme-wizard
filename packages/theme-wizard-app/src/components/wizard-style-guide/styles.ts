@@ -35,4 +35,15 @@ export default css`
       border-inline-start-color: var(--basis-color-accent-1-border-hover);
     }
   }
+
+  utrecht-table-cell {
+    vertical-align: middle;
+  }
+
+  .wizard-token-unused,
+  utrecht-table-row[aria-describedby*='unused-warning'] utrecht-code {
+    text-decoration-color: var(--basis-color-warning-border-default);
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+  }
 `;

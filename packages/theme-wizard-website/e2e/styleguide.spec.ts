@@ -61,6 +61,12 @@ test.describe('interaction tests', () => {
       });
       expect(clipboardText).toBe(tokenValue);
     });
+
+    test('Token detail dialog is shown', async ({ page }) => {
+      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: 'Toon details' }).first().click();
+      const modal = page.getByRole('dialog', { name: 'basis.color.accent-1.bg-document' });
+      await expect(modal).toBeVisible();
+    });
   });
 
   test.describe('Typography', () => {
@@ -86,6 +92,16 @@ test.describe('interaction tests', () => {
           return await navigator.clipboard.readText();
         });
         expect(clipboardText).toBe(tokenValue);
+      });
+
+      test('Token detail dialog is shown', async ({ page }) => {
+        await page
+          .getByRole('table', { name: 'Lettergroottes' })
+          .getByRole('button', { name: 'Toon details' })
+          .nth(1)
+          .click();
+        const modal = page.getByRole('dialog', { name: 'basis.text.font-size.3xl' });
+        await expect(modal).toBeVisible();
       });
     });
 
@@ -119,6 +135,12 @@ test.describe('interaction tests', () => {
         return await navigator.clipboard.readText();
       });
       expect(clipboardText).toBe(tokenValue);
+    });
+
+    test('Token detail dialog is shown', async ({ page }) => {
+      await page.getByRole('table', { name: 'Block' }).getByRole('button', { name: 'Toon details' }).nth(3).click();
+      const modal = page.getByRole('dialog', { name: 'basis.space.block.3xl' });
+      await expect(modal).toBeVisible();
     });
   });
 });

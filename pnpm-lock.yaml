@@ -87,6 +87,9 @@ importers:
       '@amsterdam/design-system-css':
         specifier: 2.2.0
         version: 2.2.0(@amsterdam/design-system-tokens@2.2.0)
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.0.0
+        version: 1.0.0
       '@nl-design-system-candidate/code-css':
         specifier: 2.0.3
         version: 2.0.3
@@ -390,12 +393,18 @@ importers:
       '@utrecht/select-css':
         specifier: 2.0.1
         version: 2.0.1
+      '@utrecht/table-css':
+        specifier: 2.0.1
+        version: 2.0.1
       '@utrecht/textbox-css':
         specifier: 3.0.1
         version: 3.0.1
       '@utrecht/web-component-library-stencil':
         specifier: 4.0.0
         version: 4.0.0
+      colorjs.io:
+        specifier: 0.6.0
+        version: 0.6.0
       dequal:
         specifier: 2.0.3
         version: 2.0.3
@@ -2095,6 +2104,9 @@ packages:
 
   '@napi-rs/wasm-runtime@1.1.1':
     resolution: {integrity: sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A==}
+
+  '@nl-design-system-candidate/button-css@1.0.0':
+    resolution: {integrity: sha512-TjXFCCeCrSfxBRwcdKWFO/gLAZDfeBAnxC3DuCNvu53JwYIA30++GOivFgeRmDyXDhJysoG19/SVq1r1jfUP5Q==}
 
   '@nl-design-system-candidate/button-react@1.0.0':
     resolution: {integrity: sha512-vJgms4HPQlOzHUAcddRgZFpJgmHYGZ1JCxO9rboITME8wV31aZw8NSWxRWo4sGYcn4BxrxZ8qZ7o2cQp4t9wng==}
@@ -9471,6 +9483,8 @@ snapshots:
       '@emnapi/runtime': 1.7.1
       '@tybys/wasm-util': 0.10.1
     optional: true
+
+  '@nl-design-system-candidate/button-css@1.0.0': {}
 
   '@nl-design-system-candidate/button-react@1.0.0(@babel/runtime@7.28.4)(react@19.2.3)':
     dependencies:
