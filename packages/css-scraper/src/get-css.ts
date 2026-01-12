@@ -25,7 +25,7 @@ export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 // and remove this ignore file comment
 /* v8 ignore file -- @preserve */
 
-const unquote = (input: string): string => {
+const unquote = (input: string = ''): string => {
   return input.replaceAll(/(^['"])|(['"]$)/g, '');
 };
 
@@ -41,12 +41,9 @@ export const getImportUrls = (css: string): string[] => {
   });
   walk(ast, (node) => {
     if (node.type_name === 'Atrule' && node.name === 'import') {
-      for (const child of node.children) {
-        if (child.type_name === 'Url') {
-          const url = unquote(child.value as string);
-          urls.push(url);
-          break;
-        }
+      const urlNode = node.children.find((child) => child.type_name === 'Url');
+      if (typeof urlNode?.value === 'string') {
+        urls.push(unquote(urlNode.value));
       }
     }
   });
@@ -233,7 +230,10 @@ const processResources = async (
   return result;
 };
 
-export const getCssResources = async (url: string, { timeout = 10000, userAgent = USER_AGENT } = {}): Promise<CSSResource[]> => {
+export const getCssResources = async (
+  url: string,
+  { timeout = 10000, userAgent = USER_AGENT } = {},
+): Promise<CSSResource[]> => {
   const resolvedUrl = resolveUrl(url);
 
   if (resolvedUrl === undefined) {
@@ -277,7 +277,10 @@ export const getCssResources = async (url: string, { timeout = 10000, userAgent 
 
 export { ScrapingError } from './errors.js';
 
-export const getCss = async (url: string, { timeout, userAgent }: { timeout?: number; userAgent?: string } = {}): Promise<string> => {
+export const getCss = async (
+  url: string,
+  { timeout, userAgent }: { timeout?: number; userAgent?: string } = {},
+): Promise<string> => {
   const resources = await getCssResources(url, { timeout, userAgent });
   return resources.map(({ css }) => css).join('');
 };
