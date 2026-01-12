@@ -41,7 +41,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: var(--basis-space-column-lg);
+  gap: var(--basis-space-row-lg);
 }
 
 .clippy-section {
