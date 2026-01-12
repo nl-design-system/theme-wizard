@@ -8,7 +8,8 @@
       "import": "./dist/*/index.js",
       "types": "./dist/*/index.d.ts"
     },
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./assets/*": "./assets/*"
   },
   "files": [
     "dist/"

@@ -5,19 +5,19 @@ import '@nl-design-system-community/clippy-components/clippy-html-image';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-modal';
+import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
 import {
   legacyToModernColor,
   type ColorToken as ColorTokenType,
   walkTokensWithRef,
 } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import Color from 'colorjs.io';
 import '../wizard-layout';
+import Color from 'colorjs.io';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 import type Theme from '../../lib/Theme';
-import googleFonts from '../../../../clippy-components/assets/google-fonts.json' with { type: 'json' };
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { unquote } from '../../utils/string-utils';
