@@ -8,8 +8,8 @@ on:
     # Add `workflow_dispatch` so this can be run manually in case it was not run as scheduled
 
 env:
-  issue_title_prefix: 'Production Issue:'
-
+  issue_title_prefix: "Probleem op productie:"
+  MAINTAINERS: "matijs,eslook,Robbert"
 
 jobs:
   test-e2e:
@@ -48,3 +48,43 @@ jobs:
 
       - name: End-to-end tests
         run: pnpm run test-e2e
+
+  create-issue:
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    needs: test-e2e
+
+    steps:
+      - name: Create GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # 2.2.1
+        with:
+          app-id: ${{ vars.NL_DESIGN_SYSTEM_BOT_APP_ID }}
+          private-key: ${{ secrets.NL_DESIGN_SYSTEM_BOT_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Setup nl_NL locale
+        run: |
+          sudo locale-gen nl_NL.UTF-8
+          sudo update-locale LC_TIME=nl_NL.UTF-8 LC_ALL
+
+      - name: Find existing issue
+        id: find-existing-issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          ISSUE=$(gh issue list --author "${{ steps.app-token.outputs.app-slug }}[bot]" --state open --search "${{ env.issue_title_prefix }}" --limit 1 --json number --jq first.number)
+          echo "issue=${ISSUE}" | tee -a $GITHUB_OUTPUT
+
+      - name: Close existing issue
+        if: ${{ steps.find-existing-issue.outputs.issue != '' }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: gh issue close ${{ steps.find-existing-issue.outputs.issue }}
+
+      - name: Create new issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: gh issue create --title "${{ env.issue_title_prefix }} Falende test op $(LC_TIME=nl_NL.UTF-8 date -u +'%e %B %Y om %H:%M')" --assignee "${MAINTAINERS}" --body-file .github/workflows/periodic-e2e.md
