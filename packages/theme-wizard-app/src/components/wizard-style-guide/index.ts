@@ -17,7 +17,7 @@ import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 import type Theme from '../../lib/Theme';
-import googleFonts from '../../../../clippy-components/src/clippy-font-combobox/google-fonts.json' with { type: 'json' };
+import googleFonts from '../../../../clippy-components/assets/google-fonts.json' with { type: 'json' };
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { resolveColorValue } from '../wizard-colorscale-input';
@@ -104,12 +104,11 @@ export class WizardStyleGuide extends LitElement {
   }
 
   private createGoogleFontUrl(family: string): string | null {
-    const googleFont = googleFonts.items.find((font) => {
-      return font.family === family;
+    const googleFont = googleFonts.find((font) => {
+      return font.label === family;
     });
     if (!googleFont) return null;
-
-    return `https://fonts.google.com/noto/specimen/${googleFont.family.replaceAll(/\s+/g, '+')}`;
+    return `https://fonts.google.com/noto/specimen/${googleFont.label.replaceAll(/\s+/g, '+')}`;
   }
 
   private prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>) {
