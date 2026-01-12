@@ -26,10 +26,12 @@ export const Row: FC<PropsWithChildren<RowProps>> = ({
   ...rest
 }) => {
   const classes = clsx(
-    'clippy-row',
-    fullHeight && 'clippy-row--full-height',
-    reverseOnSmallScreen && 'clippy-row--reverse-small',
     className,
+    'clippy-row',
+    {
+      fullHeight: 'clippy-row--full-height',
+      reverseOnSmallScreen: 'clippy-row--reverse-small',
+    },
   );
 
   const rowStyle: CSSProperties = {
