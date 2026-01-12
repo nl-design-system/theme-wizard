@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { type FC, type CSSProperties, type HTMLAttributes, type PropsWithChildren } from 'react';
 import './styles.css';
 
@@ -24,14 +25,12 @@ export const Row: FC<PropsWithChildren<RowProps>> = ({
   style,
   ...rest
 }) => {
-  const classes = [
+  const classes = clsx(
     'clippy-row',
     fullHeight && 'clippy-row--full-height',
     reverseOnSmallScreen && 'clippy-row--reverse-small',
     className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  );
 
   const rowStyle: CSSProperties = {
     alignItems: align,

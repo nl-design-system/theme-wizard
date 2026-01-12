@@ -560,6 +560,9 @@ importers:
       '@utrecht/web-component-library-stencil':
         specifier: 3.7.0
         version: 3.7.0
+      clsx:
+        specifier: 2.1.1
+        version: 2.1.1
       react:
         specifier: 19.2.3
         version: 19.2.3
