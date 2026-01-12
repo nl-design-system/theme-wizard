@@ -29,19 +29,19 @@
 .clippy-todo-card-layout {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--clippy-space-column-xl);
+  gap: var(--basis-space-column-xl);
 }
 
 .clippy-footer-grid {
   display: flex;
-  gap: var(--clippy-space-column-md);
+  gap: var(--basis-space-column-md);
 }
 
 .clippy-footer-grid > * {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: var(--clippy-space-column-lg);
+  gap: var(--basis-space-column-lg);
 }
 
 .clippy-section {
@@ -73,27 +73,27 @@ nav {
   justify-content: space-between;
   outline: 2px solid var(--clippy-voorbeeld-card-outline);
   outline-style: solid;
-  padding-block: var(--clippy-space-inline-3xl) !important;
-  padding-inline: var(--clippy-space-inline-3xl) !important;
-  row-gap: var(--clippy-space-row-xl);
+  padding-block: var(--basis-space-inline-3xl) !important;
+  padding-inline: var(--basis-space-inline-3xl) !important;
+  row-gap: var(--basis-space-row-xl);
 }
 
 .clippy-voorbeeld__link header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  row-gap: var(--clippy-space-row-xl);
+  row-gap: var(--basis-space-row-xl);
 }
 
 .clippy-page-header__actions {
   display: flex;
-  gap: var(--clippy-space-row-4xl);
+  gap: var(--basis-space-row-4xl);
   justify-content: flex-end;
 }
 
 .clippy-page-header__action-link {
   align-items: center;
-  column-gap: var(--clippy-space-inline-xs);
+  column-gap: var(--basis-space-inline-xs);
   display: inline-flex;
 }
 
