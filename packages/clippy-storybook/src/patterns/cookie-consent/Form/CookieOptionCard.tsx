@@ -54,7 +54,7 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
     <div className="utrecht-cookie-option">
       <div className="utrecht-cookie-option__header">
         <FormFieldCheckbox
-          checked={isSelected}
+          defaultChecked={isSelected}
           description={description}
           disabled={option.required}
           id={`cookie-option-${option.id}`}
@@ -68,7 +68,7 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
           <Button
             iconOnly
             iconStart={
-              <Icon size="16px" style={{ '--utrecht-icon-size': '10px' }}>
+              <Icon style={{ '--utrecht-icon-size': '1rem' }}>
                 <UtrechtIconChevronDown />
               </Icon>
             }
