@@ -515,6 +515,9 @@ importers:
       '@amsterdam/design-system-tokens':
         specifier: 2.2.0
         version: 2.2.0
+      '@astrojs/react':
+        specifier: 4.4.2
+        version: 4.4.2(@types/node@24.10.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tsx@4.19.2)(yaml@2.8.2)
       '@nl-design-system-candidate/button-react':
         specifier: 1.0.0
         version: 1.0.0(@babel/runtime@7.28.4)(react@19.2.3)
@@ -569,6 +572,9 @@ importers:
       '@utrecht/web-component-library-stencil':
         specifier: 3.7.0
         version: 3.7.0
+      clsx:
+        specifier: 2.1.1
+        version: 2.1.1
       react:
         specifier: 19.2.3
         version: 19.2.3
@@ -579,9 +585,6 @@ importers:
       '@astrojs/check':
         specifier: 0.9.6
         version: 0.9.6(prettier@3.7.4)(typescript@5.9.3)
-      '@astrojs/react':
-        specifier: 4.4.2
-        version: 4.4.2(@types/node@24.10.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tsx@4.19.2)(yaml@2.8.2)
       '@types/react':
         specifier: 19.2.7
         version: 19.2.7

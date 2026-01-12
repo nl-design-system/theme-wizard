@@ -4,75 +4,80 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
 ---
 
 {isStandalone && (
-  <div class="dev-tools">
+  <div class="clippy-dev-tools">
     <a href="/">Back to home</a>
     <utrecht-button id="clear-localstorage" type="button">Clear localStorage</utrecht-button>
-    <details class="dev-tools__details" hidden>
+    <details class="clippy-dev-tools__details" hidden>
       <summary>cookies</summary>
-      <pre id="localstorage-content" class="dev-tools__content"></pre>
+      <pre id="localstorage-content" class="clippy-dev-tools__content"></pre>
     </details>
   </div>
 )}
 
 <style>
-  .dev-tools {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: var(--basis-space-block-md) var(--basis-space-inline-lg);
+  .clippy-dev-tools {
+    align-items: center;
     background-color: var(--utrecht-alert-warning-background-color);
     border: 1px solid var(--utrecht-alert-warning-border-color);
     border-radius: var(--utrecht-alert-border-radius);
-    margin: var(--basis-space-block-md);
-    z-index: 9999;
     display: flex;
-    gap: var(--clippy-space-column-md, var(--basis-space-column-md));
-    align-items: center;
+    gap: var(--basis-space-column-md);
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    margin-block: var(--basis-space-block-md);
+    margin-inline: var(--basis-space-block-md);
+    padding-block: var(--basis-space-block-md);
+    padding-inline: var(--basis-space-inline-lg);
+    position: fixed;
+    transform: translateX(-50%);
+    z-index: 9999;
   }
 
-  .dev-tools a,
-  .dev-tools button {
-    font-size: var(--basis-text-font-size-sm);
+  .clippy-dev-tools a,
+  .clippy-dev-tools button {
     font-family: var(--basis-text-font-family-default);
+    font-size: var(--basis-text-font-size-sm);
     line-height: var(--basis-text-line-height-sm);
-    padding: var(--basis-space-inline-sm) var(--basis-space-inline-md);
+    padding-block: var(--basis-space-inline-sm);
+    padding-inline: var(--basis-space-inline-md);
   }
 
-  .dev-tools button {
+  .clippy-dev-tools button {
     background-color: var(--utrecht-button-secondary-action-background-color);
     border: 1px solid var(--utrecht-button-secondary-action-border-color);
-    color: var(--utrecht-button-secondary-action-color);
-    font-weight: var(--basis-text-font-weight-regular);
-    cursor: pointer;
     border-radius: var(--utrecht-button-border-radius);
+    color: var(--utrecht-button-secondary-action-color);
+    cursor: pointer;
+    font-weight: var(--basis-text-font-weight-regular);
   }
 
-  .dev-tools__details {
+  .clippy-dev-tools__details {
     font-size: var(--basis-text-font-size-sm);
   }
 
-  .dev-tools__details[hidden] {
+  .clippy-dev-tools__details[hidden] {
     display: none;
   }
 
-  .dev-tools__details summary {
+  .clippy-dev-tools__details summary {
     cursor: pointer;
     font-weight: var(--basis-text-font-weight-medium);
-    padding: var(--basis-space-inline-sm) 0;
+    padding-block: var(--basis-space-inline-sm) 0;
+    padding-inline: 0;
   }
 
-  .dev-tools__content {
-    margin-top: var(--basis-space-block-sm);
-    padding: var(--basis-space-block-sm) var(--basis-space-inline-sm);
+  .clippy-dev-tools__content {
     background-color: var(--utrecht-document-background-color, #fff);
     border: 1px solid var(--utrecht-color-grey-40, #ccc);
     border-radius: var(--utrecht-alert-border-radius);
     font-size: var(--basis-text-font-size-xs);
-    max-height: 200px;
+    margin-block-start: var(--basis-space-block-sm);
+    max-block-size: 200px;
+    overflow-wrap: break-word;
     overflow-y: auto;
+    padding-block: var(--basis-space-block-sm);
+    padding-inline: var(--basis-space-inline-sm);
     white-space: pre-wrap;
-    word-wrap: break-word;
   }
 </style>
 
@@ -82,7 +87,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     
     // Function to read and display localStorage content
     function updateLocalStorageDisplay() {
-      const detailsElement = document.querySelector('.dev-tools__details');
+      const detailsElement = document.querySelector('.clippy-dev-tools__details');
       const contentElement = document.getElementById('localstorage-content');
       
       if (!detailsElement || !contentElement) return;
@@ -115,7 +120,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     updateLocalStorageDisplay();
 
     // Update display when details is opened
-    const detailsElement = document.querySelector('.dev-tools__details') as HTMLDetailsElement | null;
+    const detailsElement = document.querySelector('.clippy-dev-tools__details') as HTMLDetailsElement | null;
     if (detailsElement) {
       detailsElement.addEventListener('toggle', () => {
         if (detailsElement?.open) {

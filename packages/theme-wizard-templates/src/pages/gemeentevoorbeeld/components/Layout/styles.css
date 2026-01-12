@@ -1,92 +1,93 @@
-.row {
-  margin-inline: calc(var(--row-column-gap, 0px) / -2);
-  row-gap: var(--row-row-gap, 0px);
-  inline-size: calc(100% + var(--row-column-gap, 0px));
+.clippy-row {
+  inline-size: calc(100% + var(--clippy-row-column-gap, 0));
+  margin-inline: calc(var(--clippy-row-column-gap, 0) / -2);
+  row-gap: var(--clippy-row-row-gap, 0);
 }
 
-.row--full-height {
-  height: 100%;
+.clippy-row--full-height {
+  block-size: 100%;
 }
 
-.col {
-  padding-inline: calc(var(--row-column-gap, 0px) / 2);
+.clippy-col {
+  padding-inline: calc(var(--clippy-row-column-gap, 0) / 2);
 }
 
-.col-12 {
+.clippy-col-12 {
   flex: 0 0 100%;
-  max-width: 100%;
+  max-inline-size: 100%;
 }
 
-.col-11 {
+.clippy-col-11 {
   flex: 0 0 91.6667%;
-  max-width: 91.6667%;
+  max-inline-size: 91.6667%;
 }
 
-.col-10 {
+.clippy-col-10 {
   flex: 0 0 83.3333%;
-  max-width: 83.3333%;
+  max-inline-size: 83.3333%;
 }
 
-.col-9 {
+.clippy-col-9 {
   flex: 0 0 75%;
-  max-width: 75%;
+  max-inline-size: 75%;
 }
 
-.col-8 {
+.clippy-col-8 {
   flex: 0 0 66.6667%;
-  max-width: 66.6667%;
+  max-inline-size: 66.6667%;
 }
 
-.col-7 {
+.clippy-col-7 {
   flex: 0 0 58.3333%;
-  max-width: 58.3333%;
+  max-inline-size: 58.3333%;
 }
 
-.col-6 {
+.clippy-col-6 {
   flex: 0 0 50%;
-  max-width: 50%;
+  max-inline-size: 50%;
 }
 
-.col-5 {
+.clippy-col-5 {
   flex: 0 0 41.6667%;
-  max-width: 41.6667%;
+  max-inline-size: 41.6667%;
 }
 
-.col-4 {
+.clippy-col-4 {
   flex: 0 0 33.3333%;
-  max-width: 33.3333%;
+  max-inline-size: 33.3333%;
 }
 
-.col-3 {
+.clippy-col-3 {
   flex: 0 0 25%;
-  max-width: 25%;
+  max-inline-size: 25%;
 }
 
-.col-2 {
+.clippy-col-2 {
   flex: 0 0 16.6667%;
-  max-width: 16.6667%;
+  max-inline-size: 16.6667%;
 }
 
-.col-1 {
+.clippy-col-1 {
   flex: 0 0 8.3333%;
-  max-width: 8.3333%;
+  max-inline-size: 8.3333%;
 }
 
-@media (max-width: 768px) {
-  .row {
-    margin: 0;
-    inline-size: 100%;
+@media (width <= 768px) {
+  .clippy-row {
     align-items: stretch;
+    inline-size: 100%;
     justify-content: flex-start !important;
+    margin-block: 0;
+    margin-inline: 0;
   }
 
-  .row--reverse-small {
+  .clippy-row--reverse-small {
     flex-direction: column-reverse;
   }
 
-  .row > .col {
+  .clippy-row > .clippy-col {
     flex: 0 0 100%;
-    max-width: 100%;
+    max-inline-size: 100%;
     padding-inline: 0;
   }
 }

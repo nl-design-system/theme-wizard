@@ -16,7 +16,7 @@ const NewsCards: FC<NewsCardsProps> = ({ cards }) => (
   <Row columnGap="var(--basis-space-column-xl)" justify="flex-start" rowGap="var(--basis-space-row-xl)" role="list">
     {cards.map((card) => (
       <Column key={`${card.href}-${card.title}`} cols={6} role="listitem">
-        <Card className="voorbeeld__link">
+        <Card className="clippy-voorbeeld__link">
           <header>
             <Heading level={3} appearance="level-3">
               {card.title}

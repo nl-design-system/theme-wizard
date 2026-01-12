@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { type FC, type HTMLAttributes, type PropsWithChildren } from 'react';
 import './styles.css';
 
@@ -5,13 +6,13 @@ export interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
   cols?: number;
 }
 
-export const Column: FC<PropsWithChildren<ColumnProps>> = ({ children, className, cols = 12, style, ...rest }) => {
-  const safeCols = Math.min(12, Math.max(1, cols));
-  const spanClass = `col-${safeCols}`;
-  const classes = ['col', spanClass, className].filter(Boolean).join(' ');
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+
+export const Column: FC<PropsWithChildren<ColumnProps>> = ({ children, className, cols = 12, ...rest }) => {
+  const clampedCols = clamp(cols, 1, 12);
 
   return (
-    <div className={classes} style={style} {...rest}>
+    <div className={clsx('clippy-col', `clippy-col-${clampedCols}`, className)} {...rest}>
       {children}
     </div>
   );

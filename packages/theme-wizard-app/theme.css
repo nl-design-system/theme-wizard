@@ -120,8 +120,8 @@
   --utrecht-paragraph-margin-block-end: var(--clippy-paragraph-margin-block-end);
   --utrecht-space-around: var(--clippy-space-around);
 
-  --voorbeeld-card-bg: var(--basis-color-default-bg-subtle);
-  --voorbeeld-card-outline: var(--basis-color-default-border-subtle);
+  --clippy-voorbeeld-card-bg: var(--basis-color-default-bg-subtle);
+  --clippy-voorbeeld-card-outline: var(--basis-color-default-border-subtle);
 }
 
 .theme-wizard-collage-component {

@@ -62,8 +62,10 @@ const { sideNav = true, title, description } = Astro.props;
         Jeroen van Drouwen
         <span
           style="
+
             --utrecht-icon-color: var(--basis-color-action-2-color-default);
             --utrecht-icon-size: 14px;
+
             margin-inline-start: var(--basis-space-inline-sm);
           "
         >
@@ -71,7 +73,7 @@ const { sideNav = true, title, description } = Astro.props;
         </span>
       </template-link>
 
-      <span slot="menu-links" style="display: inline-flex; gap: 0.5rem; align-items: center">
+      <span slot="menu-links" style=" align-items: center;display: inline-flex; gap: 0.5rem">
         <utrecht-textbox placeholder="Bijvoorbeeld zwembad of grofvuil"></utrecht-textbox>
         <utrecht-button appearance="secondary-action-button">Zoeken</utrecht-button>
       </span>
