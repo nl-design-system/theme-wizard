@@ -44,6 +44,10 @@
   padding-inline: var(--basis-space-block-md, 1rem);
 }
 
+.utrecht-cookie-option__toggle-icon {
+  --utrecht-icon-size: 1rem;
+}
+
 .utrecht-cookie-option__details {
   border-block-start: 1px solid var(--utrecht-color-border, #ccc);
 }

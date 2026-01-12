@@ -68,7 +68,7 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
           <Button
             iconOnly
             iconStart={
-              <Icon style={{ '--utrecht-icon-size': '1rem' }}>
+              <Icon className="utrecht-cookie-option__toggle-icon">
                 <UtrechtIconChevronDown />
               </Icon>
             }
