@@ -1,7 +1,7 @@
 .row {
-  margin-inline: calc(var(--row-column-gap, 0px) / -2);
-  row-gap: var(--row-row-gap, 0px);
   inline-size: calc(100% + var(--row-column-gap, 0px));
+  margin-inline: calc(var(--row-column-gap, 0px) / -2);
+  row-gap: var(--row-row-gap, 0);
 }
 
 .row--full-height {
@@ -72,12 +72,12 @@
   max-width: 8.3333%;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .row {
-    margin: 0;
-    inline-size: 100%;
     align-items: stretch;
+    inline-size: 100%;
     justify-content: flex-start !important;
+    margin: 0;
   }
 
   .row--reverse-small {

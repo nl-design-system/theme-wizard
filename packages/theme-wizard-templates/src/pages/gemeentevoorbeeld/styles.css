@@ -38,8 +38,8 @@
 
 .footer-grid > * {
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
   gap: var(--basis-space-column-lg);
 }
 
@@ -47,10 +47,10 @@
   display: flex;
   flex-direction: column;
   inline-size: 100%;
-  max-inline-size: var(--utrecht-section-max-inline-size);
-  margin-inline: auto;
-  margin-block-start: 2rem;
   margin-block-end: 2rem;
+  margin-block-start: 2rem;
+  margin-inline: auto;
+  max-inline-size: var(--utrecht-section-max-inline-size);
 }
 
 .section--secondary {
@@ -64,16 +64,16 @@ nav {
 
 .voorbeeld__link,
 .voorbeeld__card {
-  background-color: var(--voorbeeld-card-bg);
   align-items: start !important;
-  display: flex;
+  background-color: var(--voorbeeld-card-bg);
   block-size: 100% !important;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: var(--basis-space-inline-3xl) !important;
-  row-gap: var(--basis-space-row-xl);
   outline: 2px solid var(--voorbeeld-card-outline);
   outline-style: solid;
+  padding: var(--basis-space-inline-3xl) !important;
+  row-gap: var(--basis-space-row-xl);
 }
 
 .voorbeeld__link header {
@@ -85,28 +85,28 @@ nav {
 
 .page-header__actions {
   display: flex;
-  justify-content: flex-end;
   gap: var(--basis-space-row-4xl);
+  justify-content: flex-end;
 }
 
 .page-header__action-link {
-  display: inline-flex;
   align-items: center;
   column-gap: var(--basis-space-inline-xs);
+  display: inline-flex;
 }
 
 .voorbeeld-accordion__section .utrecht-accordion__button[aria-expanded="true"] {
-  border-start-start-radius: var(--utrecht-button-border-radius);
-  border-start-end-radius: var(--utrecht-button-border-radius);
-  border-end-start-radius: 0;
   border-end-end-radius: 0;
+  border-end-start-radius: 0;
+  border-start-end-radius: var(--utrecht-button-border-radius);
+  border-start-start-radius: var(--utrecht-button-border-radius);
 }
 
 .voorbeeld-accordion__section .utrecht-accordion__panel--expanded {
-  margin-block-end: -1px;
   background-color: var(--utrecht-accordion-button-background-color);
-  border-start-start-radius: 0;
-  border-start-end-radius: 0;
-  border-end-start-radius: var(--utrecht-button-border-radius);
   border-end-end-radius: var(--utrecht-button-border-radius);
+  border-end-start-radius: var(--utrecht-button-border-radius);
+  border-start-end-radius: 0;
+  border-start-start-radius: 0;
+  margin-block-end: -1px;
 }
