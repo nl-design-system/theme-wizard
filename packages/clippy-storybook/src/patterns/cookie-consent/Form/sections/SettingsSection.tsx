@@ -1,4 +1,4 @@
-import { Fieldset, FieldsetLegend, Paragraph } from '@utrecht/component-library-react/dist/css-module';
+import { Fieldset, FieldsetLegend } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC, type ReactNode } from 'react';
 import type { CookieOption, CookieType } from '../types';
 import { CookieOptionCard } from '../CookieOptionCard';
