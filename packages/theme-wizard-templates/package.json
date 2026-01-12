@@ -22,6 +22,7 @@
     "build": "astro build",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
     "lint:astro": "astro check",
+    "lint:css": "stylelint './src/**/*.{css,astro}'",
     "lint:js": "eslint",
     "lint-fix:js": "eslint --fix",
     "clean": "rm -rf dist .astro build"
