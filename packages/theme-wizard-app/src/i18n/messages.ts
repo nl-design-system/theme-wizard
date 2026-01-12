@@ -159,6 +159,7 @@ export const en = {
       bodyFont: 'Running text',
       headingFont: 'Headings',
     },
+    showOnGoogleFonts: 'Show on Google Fonts',
   },
   unknown: 'Unknown error',
   validation: {
@@ -359,6 +360,7 @@ export const nl = {
       bodyFont: 'Lopende tekst',
       headingFont: 'Koppen',
     },
+    showOnGoogleFonts: 'Toon op Google Fonts',
   },
   unknown: 'Onbekende fout opgetreden',
   validation: {
