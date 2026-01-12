@@ -1,0 +1,112 @@
+/* Gemeentevoorbeeld specific styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.utrecht-nav-bar {
+  --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  display: flex;
+}
+
+.layout-main > theme-wizard-side-nav {
+  flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
+}
+
+.layout-main > utrecht-page-content {
+  flex: 1;
+}
+
+.todo-card-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-column-xl);
+}
+
+.footer-grid {
+  display: flex;
+  gap: var(--basis-space-column-md);
+}
+
+.footer-grid > * {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--basis-space-column-lg);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  max-inline-size: var(--utrecht-section-max-inline-size);
+  margin-inline: auto;
+  margin-block-start: 2rem;
+  margin-block-end: 2rem;
+}
+
+.section--secondary {
+  background-color: var(--utrecht-page-background-secondary);
+}
+
+nav {
+  display: block;
+  height: 100%;
+}
+
+.voorbeeld__link,
+.voorbeeld__card {
+  background-color: var(--voorbeeld-card-bg);
+  align-items: start !important;
+  display: flex;
+  block-size: 100% !important;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--basis-space-inline-3xl) !important;
+  row-gap: var(--basis-space-row-xl);
+  outline: 2px solid var(--voorbeeld-card-outline);
+  outline-style: solid;
+}
+
+.voorbeeld__link header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: var(--basis-space-row-xl);
+}
+
+.page-header__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--basis-space-row-4xl);
+}
+
+.page-header__action-link {
+  display: inline-flex;
+  align-items: center;
+  column-gap: var(--basis-space-inline-xs);
+}
+
+.voorbeeld-accordion__section .utrecht-accordion__button[aria-expanded="true"] {
+  border-start-start-radius: var(--utrecht-button-border-radius);
+  border-start-end-radius: var(--utrecht-button-border-radius);
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.voorbeeld-accordion__section .utrecht-accordion__panel--expanded {
+  margin-block-end: -1px;
+  background-color: var(--utrecht-accordion-button-background-color);
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+  border-end-start-radius: var(--utrecht-button-border-radius);
+  border-end-end-radius: var(--utrecht-button-border-radius);
+}

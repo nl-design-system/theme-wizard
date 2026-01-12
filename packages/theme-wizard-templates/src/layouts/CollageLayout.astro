@@ -3,11 +3,23 @@ import BaseLayout from './BaseLayout.astro';
 
 export interface Props {
   title?: string;
+  description?: string;
 }
+
+const { title, description } = Astro.props;
 ---
 
-<BaseLayout isCollage={true}>
-  <div class="utrecht-page-body__content clippy-theme" data-test-id="theme-wizard-collage">
+<BaseLayout title={title} description={description}>
+  <style slot="head">
+    @media print {
+      @page {
+        size: landscape;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+      }
+    }
+  </style>
+  <div class="utrecht-page-body__content" data-test-id="theme-wizard-collage">
     <slot />
   </div>
 </BaseLayout>

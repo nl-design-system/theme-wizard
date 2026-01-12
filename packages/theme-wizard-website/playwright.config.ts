@@ -17,7 +17,7 @@ const config: PlaywrightTestConfig = {
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
-  globalTimeout: 120_000,
+  globalTimeout: 5 * 60_000,
   outputDir: './tmp/playwright-results/',
   /* Configure projects for major browsers */
   projects: [
@@ -83,8 +83,8 @@ const config: PlaywrightTestConfig = {
     },
   ],
 
-  /* Let GitHub Actions use 4 workers; Locally let Playwright figure out how many to use. */
-  workers: process.env.CI ? 4 : 1,
+  /* Always use 1 worker. Doing more causes CI to be very slow and fail often. */
+  workers: 1,
 };
 
 export default config;

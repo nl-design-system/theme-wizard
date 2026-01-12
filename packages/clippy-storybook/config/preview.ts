@@ -4,18 +4,18 @@ import { formatHtml } from '@rijkshuisstijl-community/storybook-tooling/formatHt
 // import { DocsPage } from '../src/DocsPage';
 import '@nl-design-system-community/theme-wizard-app/theme.css';
 import '@nl-design-system-community/ma-design-tokens/dist/theme.css';
+import { addThemeClasses } from './decorators';
 
 const preview: Preview = {
   decorators: [
-    (story) => {
-      // Add theme classes to storybook-root when story renders
+    (Story, context) => {
       if (typeof document !== 'undefined') {
         const root = document.getElementById('storybook-root');
         if (root) {
-          root.classList.add('ma-theme', 'clippy-theme');
+          addThemeClasses(root, context);
         }
       }
-      return story();
+      return Story();
     },
   ],
   parameters: {
