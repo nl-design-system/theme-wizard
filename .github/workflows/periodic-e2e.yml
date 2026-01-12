@@ -1,0 +1,106 @@
+name: Periodic End-to-End Test
+
+on:
+  schedule:
+    # Run this every hour to see if all is well
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    # Add `workflow_dispatch` so this can be run manually in case it was not run as scheduled
+
+env:
+  issue_title_prefix: "Probleem op productie:"
+  MAINTAINERS: "matijs,eslook,Robbert"
+
+jobs:
+  test-e2e:
+    runs-on: ubuntu-latest
+
+    env:
+      E2E_RETRIES: 3
+      E2E_TIMEOUT_GLOBAL: 250000
+      E2E_TIMEOUT_TEST: 30000
+      E2E_TIMEOUT_EXPECT: 10000
+      E2E_TARGET_URL: https://theme-wizard.nl-design-system-community.nl/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Install pnpm package manager
+        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
+
+      - name: Set up Node.js version and cache
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          cache: 'pnpm'
+          node-version-file: .nvmrc
+
+      - name: Check for known security issues with npm packages
+        run: |
+          echo "Auditing npm dependencies before installing them. For more information, see: https://nldesignsystem.nl/pnpm-audit"
+          pnpm audit --audit-level critical
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install headless browsers for end-to-end testing
+        run: pnpm run test-install-browsers
+
+      - name: End-to-end tests
+        run: pnpm run test-e2e
+
+  notify-slack:
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    needs: test-e2e
+
+    steps:
+      - name: Post message on Slack
+        id: post-message
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a #v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ vars.SLACK_CHANNEL_ID }}
+            text: "Probleem op productie!\n [Bekijk de laatste periodieke e2e-test](https://github.com/nl-design-system/theme-wizard/actions/workflows/periodic-e2e.yml)" en los deze op.
+
+  create-issue:
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    needs: test-e2e
+
+    steps:
+      - name: Create GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # 2.2.1
+        with:
+          app-id: ${{ vars.NL_DESIGN_SYSTEM_BOT_APP_ID }}
+          private-key: ${{ secrets.NL_DESIGN_SYSTEM_BOT_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Setup nl_NL locale
+        run: |
+          sudo locale-gen nl_NL.UTF-8
+          sudo update-locale LC_TIME=nl_NL.UTF-8 LC_ALL
+
+      - name: Find existing issue
+        id: find-existing-issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          ISSUE=$(gh issue list --author "${{ steps.app-token.outputs.app-slug }}[bot]" --state open --search "${{ env.issue_title_prefix }}" --limit 1 --json number --jq first.number)
+          echo "issue=${ISSUE}" | tee -a $GITHUB_OUTPUT
+
+      - name: Close existing issue
+        if: ${{ steps.find-existing-issue.outputs.issue != '' }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: gh issue close ${{ steps.find-existing-issue.outputs.issue }}
+
+      - name: Create new issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: gh issue create --title "${{ env.issue_title_prefix }} Falende test op $(LC_TIME=nl_NL.UTF-8 date -u +'%e %B %Y om %H:%M')" --assignee "${MAINTAINERS}" --body-file .github/workflows/periodic-e2e.md
