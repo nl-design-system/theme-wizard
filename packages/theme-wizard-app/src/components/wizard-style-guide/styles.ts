@@ -41,7 +41,7 @@ export default css`
   }
 
   .wizard-token-unused,
-  utrecht-table-row[aria-describedby*='unused-warning'] utrecht-code {
+  tr[aria-describedby*='unused-warning'] utrecht-code {
     text-decoration-color: var(--basis-color-warning-border-default);
     text-decoration-line: underline;
     text-decoration-style: wavy;

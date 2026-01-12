@@ -370,7 +370,9 @@ export class WizardStyleGuide extends LitElement {
                     ${this.renderFontFamilyExample(displayValue)}
                     ${googleFontUrl
                       ? html`<utrecht-paragraph>
-                          <a href=${googleFontUrl} rel="external noreferrer" target="_blank">View on Google Fonts</a>
+                          <a href=${googleFontUrl} rel="external noreferrer" target="_blank">
+                            ${t('tokens.showOnGoogleFonts')}
+                          </a>
                         </utrecht-paragraph>`
                       : nothing}
                   </td>
