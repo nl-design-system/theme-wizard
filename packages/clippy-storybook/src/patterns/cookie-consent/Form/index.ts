@@ -12,4 +12,4 @@ export type {
 } from './components';
 
 // Types
-export type { Cookie, CookieConsentFormProps, CookieOption as CookieOptionType, CookieType } from './types';
+export type { Cookie, CookieConsentFormProps, CookieOption as CookieOptionType, CookieType, LegalBasis } from './types';

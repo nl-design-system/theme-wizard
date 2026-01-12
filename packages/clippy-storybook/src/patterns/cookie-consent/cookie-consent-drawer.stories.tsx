@@ -10,7 +10,7 @@ const meta = {
   argTypes: {
     buttonAccept: {
       name: 'Button Accept',
-      description: 'Label voor de accepteer knop',
+      description: 'Label for the accept button',
       type: {
         name: 'string',
         required: false,
@@ -18,7 +18,7 @@ const meta = {
     },
     buttonReject: {
       name: 'Button Reject',
-      description: 'Label voor de weiger knop',
+      description: 'Label for the reject button',
       type: {
         name: 'string',
         required: false,
@@ -26,7 +26,7 @@ const meta = {
     },
     children: {
       name: 'Children',
-      description: 'Custom content voor de drawer',
+      description: 'Custom content to display in the drawer',
       type: {
         name: 'other',
         required: false,
@@ -35,7 +35,7 @@ const meta = {
     },
     clearStorageOnMount: {
       name: 'Clear Storage On Mount',
-      description: 'Of de localStorage moet worden gewist bij mount (voor testen)',
+      description: 'Whether to clear localStorage on mount (for testing purposes)',
       type: {
         name: 'boolean',
         required: false,
@@ -43,7 +43,7 @@ const meta = {
     },
     customizeLink: {
       name: 'Customize Link',
-      description: 'Link naar cookie-instellingen met href en text',
+      description: 'Link to cookie settings with href and text',
       type: {
         name: 'object',
         required: false,
@@ -63,7 +63,7 @@ const meta = {
     },
     title: {
       name: 'Title',
-      description: 'Custom titel voor de drawer',
+      description: 'Custom title for the drawer',
       type: {
         name: 'string',
         required: false,
@@ -108,7 +108,7 @@ export const ShortContent: Story = {
 };
 
 export const LongContent: Story = {
-  name: 'Cookie Drawer - scrollable content',
+  name: 'Cookie Drawer - Scrollable Content',
   args: {
     buttonAccept: 'Aanvullende cookies accepteren',
     buttonReject: 'Aanvullende cookies weigeren',

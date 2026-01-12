@@ -1,7 +1,8 @@
 /* @license CC0-1.0 */
 
 import { Button } from '@nl-design-system-candidate/button-react';
-import { ButtonGroup, Drawer, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
+import { Heading } from '@nl-design-system-candidate/heading-react';
+import { ButtonGroup, Drawer, Link } from '@utrecht/component-library-react/dist/css-module';
 import React, { FC } from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieConsentDrawerProps } from './types';
@@ -45,9 +46,9 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
       )}
 
       {title && (
-        <Heading2 id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
+        <Heading level={2} id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
           {title}
-        </Heading2>
+        </Heading>
       )}
 
       <div

@@ -1,16 +1,18 @@
-import { Heading2, Link, Paragraph } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC } from 'react';
+import { Link } from '@nl-design-system-candidate/link-react/css';
+import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
+import React, { type FC, type ReactNode } from 'react';
 
 export interface PolicyPanelProps {
+  children?: ReactNode;
   privacyPolicyUrl?: string;
 }
 
 /**
  * Cookie policy content explaining what cookies are and how they are used.
  */
-export const PolicyPanel: FC<PolicyPanelProps> = ({ privacyPolicyUrl }) => (
+export const PolicyPanel: FC<PolicyPanelProps> = ({ children, privacyPolicyUrl }) => (
   <>
-    <Heading2>Cookieverklaring</Heading2>
+    {children}
 
     <Paragraph>
       Op deze website gebruiken wij cookies en vergelijkbare technieken. Cookies zijn kleine tekstbestanden die door een
@@ -27,7 +29,8 @@ export const PolicyPanel: FC<PolicyPanelProps> = ({ privacyPolicyUrl }) => (
     </ul>
 
     <Paragraph>
-      Je kunt zelf kiezen welke cookies je accepteert. Je kunt je keuze altijd weer aanpassen via de cookie-instellingen.
+      Je kunt zelf kiezen welke cookies je accepteert. Je kunt je keuze altijd weer aanpassen via de
+      cookie-instellingen.
     </Paragraph>
 
     {privacyPolicyUrl && (

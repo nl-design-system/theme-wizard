@@ -1,10 +1,10 @@
 import type { AccordionSectionProps } from '@utrecht/component-library-react';
 import { Button } from '@nl-design-system-candidate/button-react/css';
-import { AccordionProvider, ButtonGroup, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
+import { AccordionProvider, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
-import { CookieOptionList, DataPanel, PolicyPanel } from './components';
+import { CookieOptionList } from './components';
 import defaultCookieOptionsData from './defaultCookieOptions.json';
 import './styles.css';
 
@@ -13,29 +13,45 @@ const DEFAULT_COOKIE_OPTIONS: CookieOption[] = defaultCookieOptionsData as Cooki
 const LABELS = {
   acceptAll: 'Alle cookies accepteren',
   contact: 'Contact',
-  dataTab: 'Mijn gegevens',
-  logoAlt: 'Terug naar homepage',
-  policyTab: 'Cookieverklaring',
   preferencesSaved: 'Je cookievoorkeuren zijn opgeslagen.',
   privacyPolicy: 'Privacybeleid',
   rejectAll: 'Cookies weigeren',
   save: 'Selectie opslaan',
-  settingsTab: 'Instellingen',
 } as const;
+
+/**
+ * Get the initial set of selected cookies based on legal basis:
+ * - Required cookies: always selected
+ * - Legitimate interest cookies: selected by default (opt-out)
+ * - Consent cookies: not selected by default (opt-in)
+ */
+const getInitialSelectedCookies = (options: CookieOption[]): Set<CookieType> => {
+  return new Set(
+    options.filter((opt) => opt.required || opt.legalBasis === 'legitimate-interest').map((opt) => opt.id),
+  );
+};
 
 /**
  * CookieConsentForm Component
  *
  * A comprehensive, accessible cookie consent form that allows users to:
  * - View and select cookie preferences by category
- * - See detailed information about each cookie
+ * - See detailed information about each cookie (via infoSections)
  * - Accept all, reject all, or save custom preferences
+ *
+ * Supports two legal bases:
+ * - Consent: opt-in (checkbox unchecked by default)
+ * - Legitimate interest: opt-out (checkbox checked by default)
  *
  * @example
  * ```tsx
  * <CookieConsentForm
- *   title="Cookie-instellingen"
  *   customizeLink={{ href: "/privacy", text: "Privacybeleid" }}
+ *   infoSections={[
+ *     { label: 'Wat zijn cookies?', body: <WhatAreCookiesPanel /> },
+ *     { label: 'Cookieverklaring', body: <PolicyPanel /> },
+ *   ]}
+ *   showLegitimateInterest
  * />
  * ```
  */
@@ -43,22 +59,20 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   buttonAccept = LABELS.acceptAll,
   buttonReject = LABELS.rejectAll,
   buttonSave = LABELS.save,
-  children,
   clearStorageOnMount = false,
   cookieOptions = DEFAULT_COOKIE_OPTIONS,
   customizeLink,
-  showLogo,
-  title,
+  infoSections = [],
+  showLegitimateInterest = true,
 }) => {
   const { isVisible: hookIsVisible, savePreferences } = useCookieConsent({ clearStorageOnMount });
 
   const [isVisible, setIsVisible] = useState(hookIsVisible);
   const [statusMessage, setStatusMessage] = useState('');
-  const [selectedCookies, setSelectedCookies] = useState<Set<CookieType>>(
-    () => new Set(cookieOptions.filter((opt) => opt.required).map((opt) => opt.id)),
+  const [selectedCookies, setSelectedCookies] = useState<Set<CookieType>>(() =>
+    getInitialSelectedCookies(cookieOptions),
   );
 
-  // Sync visibility with hook
   useEffect(() => {
     setIsVisible(hookIsVisible);
   }, [hookIsVisible]);
@@ -106,39 +120,14 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
     handleSaveAndClose(Array.from(selectedCookies));
   }, [selectedCookies, handleSaveAndClose]);
 
-  const handleSubmit = useCallback(
-    (event: React.FormEvent) => {
-      event.preventDefault();
-      handleSave();
-    },
-    [handleSave],
-  );
-
-  const accordionSections: AccordionSectionProps[] = useMemo(
-    () => [
-      {
-        body: (
-          <CookieOptionList
-            cookieOptions={cookieOptions}
-            onCheckboxChange={handleCheckboxChange}
-            selectedCookies={selectedCookies}
-          >
-            {children}
-          </CookieOptionList>
-        ),
-        expanded: true,
-        label: LABELS.settingsTab,
-      },
-      {
-        body: <PolicyPanel privacyPolicyUrl={customizeLink?.href} />,
-        label: LABELS.policyTab,
-      },
-      {
-        body: <DataPanel cookieOptions={cookieOptions} selectedCookies={selectedCookies} />,
-        label: LABELS.dataTab,
-      },
-    ],
-    [children, cookieOptions, customizeLink?.href, handleCheckboxChange, selectedCookies],
+  const infoAccordionSections: AccordionSectionProps[] = useMemo(
+    () =>
+      infoSections.map((section) => ({
+        body: section.body,
+        expanded: section.expanded,
+        label: section.label,
+      })),
+    [infoSections],
   );
 
   if (!isVisible) {
@@ -146,19 +135,11 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   }
 
   return (
-    <section aria-labelledby="cookie-consent-title" className="utrecht-cookie-consent">
+    <section aria-label="Cookie-instellingen" className="utrecht-cookie-consent">
       {/* Live region for screen reader announcements */}
       <div aria-atomic="true" aria-live="polite" className="utrecht-cookie-consent__status">
         {statusMessage}
       </div>
-
-      {showLogo && (
-        <Link href="/">
-          <img alt={LABELS.logoAlt} src="/src/patterns/cookie-consent/assets/logo.svg" />
-        </Link>
-      )}
-
-      {title && <Heading2 id="cookie-consent-title">{title}</Heading2>}
 
       {customizeLink && (
         <>
@@ -171,23 +152,30 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
         </>
       )}
 
-      <AccordionProvider headingLevel={2} sections={accordionSections} />
+      <div className="utrecht-cookie-settings">
+        <CookieOptionList
+          cookieOptions={cookieOptions}
+          onCheckboxChange={handleCheckboxChange}
+          selectedCookies={selectedCookies}
+          showLegitimateInterest={showLegitimateInterest}
+        />
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <ButtonGroup>
-          <Button onClick={handleAcceptAll} purpose="secondary" type="button">
-            {buttonAccept}
-          </Button>
+      <ButtonGroup className="utrecht-cookie-actions">
+        <Button onClick={handleAcceptAll} purpose="secondary" type="button">
+          {buttonAccept}
+        </Button>
 
-          <Button onClick={handleRejectAll} purpose="secondary" type="button">
-            {buttonReject}
-          </Button>
+        <Button onClick={handleRejectAll} purpose="secondary" type="button">
+          {buttonReject}
+        </Button>
 
-          <Button purpose="secondary" type="submit">
-            {buttonSave}
-          </Button>
-        </ButtonGroup>
-      </form>
+        <Button onClick={handleSave} purpose="secondary" type="button">
+          {buttonSave}
+        </Button>
+      </ButtonGroup>
+
+      <AccordionProvider headingLevel={2} sections={infoAccordionSections} />
     </section>
   );
 };
