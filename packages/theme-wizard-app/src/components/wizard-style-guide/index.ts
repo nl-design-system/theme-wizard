@@ -139,7 +139,7 @@ export class WizardStyleGuide extends LitElement {
       return font.label === family;
     });
     if (!googleFont) return null;
-    return `https://fonts.google.com/noto/specimen/${googleFont.label.replaceAll(/\s+/g, '+')}`;
+    return `https://fonts.google.com/specimen/${googleFont.label.replaceAll(/\s+/g, '+')}`;
   }
 
   #prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>): ColorGroup[] {
