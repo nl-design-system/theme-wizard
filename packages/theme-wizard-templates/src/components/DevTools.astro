@@ -4,42 +4,45 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
 ---
 
 {isStandalone && (
-  <div class="dev-tools">
+  <div class="clippy-dev-tools">
     <a href="/">Back to home</a>
     <utrecht-button id="clear-localstorage" type="button">Clear localStorage</utrecht-button>
-    <details class="dev-tools__details" hidden>
+    <details class="clippy-dev-tools__details" hidden>
       <summary>cookies</summary>
-      <pre id="localstorage-content" class="dev-tools__content"></pre>
+      <pre id="localstorage-content" class="clippy-dev-tools__content"></pre>
     </details>
   </div>
 )}
 
 <style>
-  .dev-tools {
+  .clippy-dev-tools {
     align-items: center;
     background-color: var(--utrecht-alert-warning-background-color);
     border: 1px solid var(--utrecht-alert-warning-border-color);
     border-radius: var(--utrecht-alert-border-radius);
     display: flex;
-    gap: var(--clippy-space-column-md, var(--basis-space-column-md));
-    left: 50%;
-    margin: var(--basis-space-block-md);
-    padding: var(--basis-space-block-md) var(--basis-space-inline-lg);
+    gap: var(--clippy-space-column-md);
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    margin-block: var(--basis-space-block-md);
+    margin-inline: var(--basis-space-block-md);
+    padding-block: var(--basis-space-block-md);
+    padding-inline: var(--basis-space-inline-lg);
     position: fixed;
-    top: 0;
     transform: translateX(-50%);
     z-index: 9999;
   }
 
-  .dev-tools a,
-  .dev-tools button {
+  .clippy-dev-tools a,
+  .clippy-dev-tools button {
     font-family: var(--basis-text-font-family-default);
     font-size: var(--basis-text-font-size-sm);
     line-height: var(--basis-text-line-height-sm);
-    padding: var(--basis-space-inline-sm) var(--basis-space-inline-md);
+    padding-block: var(--basis-space-inline-sm);
+    padding-inline: var(--basis-space-inline-md);
   }
 
-  .dev-tools button {
+  .clippy-dev-tools button {
     background-color: var(--utrecht-button-secondary-action-background-color);
     border: 1px solid var(--utrecht-button-secondary-action-border-color);
     border-radius: var(--utrecht-button-border-radius);
@@ -48,21 +51,22 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     font-weight: var(--basis-text-font-weight-regular);
   }
 
-  .dev-tools__details {
+  .clippy-dev-tools__details {
     font-size: var(--basis-text-font-size-sm);
   }
 
-  .dev-tools__details[hidden] {
+  .clippy-dev-tools__details[hidden] {
     display: none;
   }
 
-  .dev-tools__details summary {
+  .clippy-dev-tools__details summary {
     cursor: pointer;
     font-weight: var(--basis-text-font-weight-medium);
-    padding: var(--basis-space-inline-sm) 0;
+    padding-block: var(--basis-space-inline-sm) 0;
+    padding-inline: 0;
   }
 
-  .dev-tools__content {
+  .clippy-dev-tools__content {
     background-color: var(--utrecht-document-background-color, #fff);
     border: 1px solid var(--utrecht-color-grey-40, #ccc);
     border-radius: var(--utrecht-alert-border-radius);
@@ -82,7 +86,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     
     // Function to read and display localStorage content
     function updateLocalStorageDisplay() {
-      const detailsElement = document.querySelector('.dev-tools__details');
+      const detailsElement = document.querySelector('.clippy-dev-tools__details');
       const contentElement = document.getElementById('localstorage-content');
       
       if (!detailsElement || !contentElement) return;
@@ -115,7 +119,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     updateLocalStorageDisplay();
 
     // Update display when details is opened
-    const detailsElement = document.querySelector('.dev-tools__details') as HTMLDetailsElement | null;
+    const detailsElement = document.querySelector('.clippy-dev-tools__details') as HTMLDetailsElement | null;
     if (detailsElement) {
       detailsElement.addEventListener('toggle', () => {
         if (detailsElement?.open) {

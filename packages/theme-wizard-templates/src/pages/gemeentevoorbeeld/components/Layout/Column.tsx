@@ -7,8 +7,8 @@ export interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Column: FC<PropsWithChildren<ColumnProps>> = ({ children, className, cols = 12, style, ...rest }) => {
   const safeCols = Math.min(12, Math.max(1, cols));
-  const spanClass = `col-${safeCols}`;
-  const classes = ['col', spanClass, className].filter(Boolean).join(' ');
+  const spanClass = `clippy-col-${safeCols}`;
+  const classes = ['clippy-col', spanClass, className].filter(Boolean).join(' ');
 
   return (
     <div className={classes} style={style} {...rest}>

@@ -24,7 +24,12 @@ export const Row: FC<PropsWithChildren<RowProps>> = ({
   style,
   ...rest
 }) => {
-  const classes = ['row', fullHeight && 'row--full-height', reverseOnSmallScreen && 'row--reverse-small', className]
+  const classes = [
+    'clippy-row',
+    fullHeight && 'clippy-row--full-height',
+    reverseOnSmallScreen && 'clippy-row--reverse-small',
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 
@@ -39,12 +44,13 @@ export const Row: FC<PropsWithChildren<RowProps>> = ({
   const effectiveColumnGap = columnGap ?? gap;
 
   if (effectiveColumnGap) {
-    (rowStyle as CSSProperties & { '--row-column-gap'?: CSSProperties['columnGap'] })['--row-column-gap'] =
-      effectiveColumnGap;
+    (rowStyle as CSSProperties & { '--clippy-row-column-gap'?: CSSProperties['columnGap'] })[
+      '--clippy-row-column-gap'
+    ] = effectiveColumnGap;
   }
 
   if (rowGap) {
-    (rowStyle as CSSProperties & { '--row-row-gap'?: CSSProperties['rowGap'] })['--row-row-gap'] = rowGap;
+    (rowStyle as CSSProperties & { '--clippy-row-row-gap'?: CSSProperties['rowGap'] })['--clippy-row-row-gap'] = rowGap;
   }
 
   return (

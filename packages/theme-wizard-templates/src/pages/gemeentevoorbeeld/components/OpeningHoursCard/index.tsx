@@ -20,7 +20,7 @@ const OpeningHoursCard: FC<OpeningHoursCardProps> = ({ openingHoursSummary = [] 
   }, []);
 
   return (
-    <div className="voorbeeld__card">
+    <div className="clippy-voorbeeld__card">
       <Icon>
         <UtrechtIconAfspraakMaken />
       </Icon>

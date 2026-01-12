@@ -13,8 +13,8 @@ const SelfServiceSection: FC<SelfServiceSectionProps> = ({
   heading = 'Zelf regelen',
   moreButtonLabel = 'Meer bekijken',
 }) => (
-  <PageContent className="section--secondary">
-    <section aria-labelledby="zelf-regelen-heading" className="section voorbeeld-accordion__section">
+  <PageContent className="clippy-section--secondary">
+    <section aria-labelledby="zelf-regelen-heading" className="clippy-section clippy-voorbeeld-accordion__section">
       <Row justify="space-between">
         <Heading id="zelf-regelen-heading" level={2} appearance="level-2">
           {heading}

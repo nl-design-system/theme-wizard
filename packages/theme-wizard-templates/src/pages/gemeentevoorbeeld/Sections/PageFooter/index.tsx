@@ -11,7 +11,7 @@ export interface PageFooterProps {
 const PageFooterSection: FC<PageFooterProps> = ({ children }) => (
   <PageFooter>
     <PageContent>
-      <div className="section">
+      <div className="clippy-section">
         <Row columnGap="var(--basis-space-column-xl)" rowGap="var(--basis-space-column-xl)">
           {children ?? (
             <>

@@ -40,7 +40,7 @@ const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
         <Column key={`${task.href}-${task.title}`} cols={4}>
           <Link
             href={task.href}
-            className="utrecht-button utrecht-button--subtle utrecht-accordion__button voorbeeld__link"
+            className="utrecht-button utrecht-button--subtle utrecht-accordion__button clippy-voorbeeld__link"
           >
             <Icon>{renderIcon(task.icon)}</Icon>
 

@@ -1,49 +1,50 @@
 /* Gemeentevoorbeeld specific styles */
 * {
   box-sizing: border-box;
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 .utrecht-nav-bar {
   --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
 }
 
-.layout {
+.clippy-layout {
   display: flex;
   flex-direction: column;
 }
 
-.layout-main {
+.clippy-layout-main {
   display: flex;
 }
 
-.layout-main > theme-wizard-side-nav {
+.clippy-layout-main > theme-wizard-side-nav {
   flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
 }
 
-.layout-main > utrecht-page-content {
+.clippy-layout-main > utrecht-page-content {
   flex: 1;
 }
 
-.todo-card-layout {
+.clippy-todo-card-layout {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--basis-space-column-xl);
+  gap: var(--clippy-space-column-xl);
 }
 
-.footer-grid {
+.clippy-footer-grid {
   display: flex;
-  gap: var(--basis-space-column-md);
+  gap: var(--clippy-space-column-md);
 }
 
-.footer-grid > * {
+.clippy-footer-grid > * {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: var(--basis-space-column-lg);
+  gap: var(--clippy-space-column-lg);
 }
 
-.section {
+.clippy-section {
   display: flex;
   flex-direction: column;
   inline-size: 100%;
@@ -53,45 +54,46 @@
   max-inline-size: var(--utrecht-section-max-inline-size);
 }
 
-.section--secondary {
+.clippy-section--secondary {
   background-color: var(--utrecht-page-background-secondary);
 }
 
 nav {
   display: block;
-  height: 100%;
+  block-size: 100%;
 }
 
-.voorbeeld__link,
-.voorbeeld__card {
+.clippy-voorbeeld__link,
+.clippy-voorbeeld__card {
   align-items: start !important;
-  background-color: var(--voorbeeld-card-bg);
+  background-color: var(--clippy-voorbeeld-card-bg);
   block-size: 100% !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  outline: 2px solid var(--voorbeeld-card-outline);
+  outline: 2px solid var(--clippy-voorbeeld-card-outline);
   outline-style: solid;
-  padding: var(--basis-space-inline-3xl) !important;
-  row-gap: var(--basis-space-row-xl);
+  padding-block: var(--clippy-space-inline-3xl) !important;
+  padding-inline: var(--clippy-space-inline-3xl) !important;
+  row-gap: var(--clippy-space-row-xl);
 }
 
-.voorbeeld__link header {
+.clippy-voorbeeld__link header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  row-gap: var(--basis-space-row-xl);
+  row-gap: var(--clippy-space-row-xl);
 }
 
-.page-header__actions {
+.clippy-page-header__actions {
   display: flex;
-  gap: var(--basis-space-row-4xl);
+  gap: var(--clippy-space-row-4xl);
   justify-content: flex-end;
 }
 
-.page-header__action-link {
+.clippy-page-header__action-link {
   align-items: center;
-  column-gap: var(--basis-space-inline-xs);
+  column-gap: var(--clippy-space-inline-xs);
   display: inline-flex;
 }
 

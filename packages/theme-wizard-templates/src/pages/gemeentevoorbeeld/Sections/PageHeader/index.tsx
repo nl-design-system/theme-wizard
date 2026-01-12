@@ -18,7 +18,7 @@ const DEFAULT_ACTIONS = [
 const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, children }) => (
   <PageHeader>
     <PageContent>
-      <div className="section">
+      <div className="clippy-section">
         <Row align="center" justify="space-between">
           {children ?? (
             <>
@@ -28,9 +28,9 @@ const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, chi
                 </Link>
               </Column>
 
-              <Column cols={6} className="page-header__actions">
+              <Column cols={6} className="clippy-page-header__actions">
                 {actions.map(({ href, icon, label }) => (
-                  <Link key={`${href}-${label}`} className="page-header__action-link" href={href}>
+                  <Link key={`${href}-${label}`} className="clippy-page-header__action-link" href={href}>
                     {icon && (
                       <Icon>
                         <UtrechtIconAlleen />

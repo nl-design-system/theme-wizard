@@ -10,7 +10,7 @@ export interface NewsSectionProps {
 
 const NewsSection: FC<NewsSectionProps> = ({ heading = 'Nieuws en inzichten' }) => (
   <PageContent>
-    <section className="section">
+    <section className="clippy-section">
       <Heading id="nieuws-heading" level={2} appearance="level-2">
         {heading}
       </Heading>
