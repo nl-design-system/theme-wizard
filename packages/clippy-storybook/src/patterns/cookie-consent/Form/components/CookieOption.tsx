@@ -4,19 +4,19 @@ import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css'
 import { FormFieldCheckbox, Icon } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconChevronDown } from '@utrecht/web-component-library-react';
 import React, { memo, useCallback, useState, type ChangeEvent, type FC } from 'react';
-import type { CookieOption, CookieType } from './types';
-import { CookieDetailsTable } from './CookieDetailsTable';
+import type { CookieOption as CookieOptionType, CookieType } from '../types';
+import { CookieTable } from './CookieTable';
 
-interface CookieOptionCardProps {
+export interface CookieOptionProps {
   isSelected: boolean;
   onChange: (cookieId: CookieType, checked: boolean) => void;
-  option: CookieOption;
+  option: CookieOptionType;
 }
 
 /**
- * A single cookie option card with checkbox, expandable details, and accessibility features.
+ * A single cookie option with checkbox, expandable details, and accessibility features.
  */
-export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, onChange, option }) => {
+export const CookieOption: FC<CookieOptionProps> = memo(({ isSelected, onChange, option }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const cookieCount = option.cookies?.length ?? 0;
@@ -66,6 +66,7 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
 
         {hasCookies && (
           <Button
+            aria-expanded={isExpanded}
             iconOnly
             iconStart={
               <Icon className="utrecht-cookie-option__toggle-icon">
@@ -73,21 +74,20 @@ export const CookieOptionCard: FC<CookieOptionCardProps> = memo(({ isSelected, o
               </Icon>
             }
             label={`${isExpanded ? 'Verberg' : 'Toon'} cookie details voor ${option.label} (${cookieCount} ${cookieCountLabel})`}
+            onClick={handleToggle}
             purpose="subtle"
             toggle
-            onClick={handleToggle}
-            aria-expanded={isExpanded}
-          ></Button>
+          />
         )}
       </div>
 
       {hasCookies && isExpanded && option.cookies && (
         <div className="utrecht-cookie-option__details">
-          <CookieDetailsTable cookies={option.cookies} />
+          <CookieTable cookies={option.cookies} />
         </div>
       )}
     </div>
   );
 });
 
-CookieOptionCard.displayName = 'CookieOptionCard';
+CookieOption.displayName = 'CookieOption';

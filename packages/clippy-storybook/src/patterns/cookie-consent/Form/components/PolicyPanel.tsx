@@ -1,14 +1,14 @@
 import { Heading2, Link, Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC } from 'react';
 
-interface PolicySectionProps {
+export interface PolicyPanelProps {
   privacyPolicyUrl?: string;
 }
 
 /**
- * The cookie policy section explaining what cookies are and how they are used.
+ * Cookie policy content explaining what cookies are and how they are used.
  */
-export const PolicySection: FC<PolicySectionProps> = ({ privacyPolicyUrl }) => (
+export const PolicyPanel: FC<PolicyPanelProps> = ({ privacyPolicyUrl }) => (
   <>
     <Heading2>Cookieverklaring</Heading2>
 
@@ -27,8 +27,7 @@ export const PolicySection: FC<PolicySectionProps> = ({ privacyPolicyUrl }) => (
     </ul>
 
     <Paragraph>
-      Je kunt zelf kiezen welke cookies je accepteert. Je kunt je keuze altijd weer aanpassen via de
-      cookie-instellingen.
+      Je kunt zelf kiezen welke cookies je accepteert. Je kunt je keuze altijd weer aanpassen via de cookie-instellingen.
     </Paragraph>
 
     {privacyPolicyUrl && (

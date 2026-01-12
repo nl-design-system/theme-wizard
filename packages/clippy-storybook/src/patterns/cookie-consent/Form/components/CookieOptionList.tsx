@@ -1,21 +1,23 @@
 import { Fieldset, FieldsetLegend } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC, type ReactNode } from 'react';
-import type { CookieOption, CookieType } from '../types';
-import { CookieOptionCard } from '../CookieOptionCard';
+import type { CookieOption as CookieOptionType, CookieType } from '../types';
+import { CookieOption } from './CookieOption';
 
-interface SettingsSectionProps {
+export interface CookieOptionListProps {
   children?: ReactNode;
-  cookieOptions: CookieOption[];
+  cookieOptions: CookieOptionType[];
+  legend?: string;
   onCheckboxChange: (cookieId: CookieType, checked: boolean) => void;
   selectedCookies: Set<CookieType>;
 }
 
 /**
- * The settings section of the cookie consent form where users can select their preferences.
+ * A fieldset containing a list of cookie options with checkboxes.
  */
-export const SettingsSection: FC<SettingsSectionProps> = ({
+export const CookieOptionList: FC<CookieOptionListProps> = ({
   children,
   cookieOptions,
+  legend = 'Kies welke cookies je wilt accepteren:',
   onCheckboxChange,
   selectedCookies,
 }) => (
@@ -24,12 +26,12 @@ export const SettingsSection: FC<SettingsSectionProps> = ({
 
     <Fieldset>
       <FieldsetLegend>
-        <strong>Kies welke cookies je wilt accepteren:</strong>
+        <strong>{legend}</strong>
       </FieldsetLegend>
 
       <div className="utrecht-cookie-options">
         {cookieOptions.map((option) => (
-          <CookieOptionCard
+          <CookieOption
             isSelected={selectedCookies.has(option.id)}
             key={option.id}
             onChange={onCheckboxChange}

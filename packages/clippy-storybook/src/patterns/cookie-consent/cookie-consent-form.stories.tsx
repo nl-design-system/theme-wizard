@@ -16,7 +16,7 @@ const meta = {
     },
     buttonReject: {
       name: 'Button Reject',
-      description: 'Label voor de "Geen cookies" knop',
+      description: 'Label voor de "Cookies weigeren" knop',
       type: {
         name: 'string',
         required: false,
@@ -105,7 +105,7 @@ export const Default: Story = {
   name: 'Cookie Formulier',
   args: {
     buttonAccept: 'Alle cookies accepteren',
-    buttonReject: 'Geen cookies',
+    buttonReject: 'Cookies weigeren',
     buttonSave: 'Selectie opslaan',
     children: (
       <>

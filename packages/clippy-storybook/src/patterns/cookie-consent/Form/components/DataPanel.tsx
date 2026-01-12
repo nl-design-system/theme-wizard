@@ -2,15 +2,15 @@ import { Heading2, Link, Paragraph } from '@utrecht/component-library-react/dist
 import React, { type FC } from 'react';
 import type { CookieOption, CookieType } from '../types';
 
-interface DataSectionProps {
+export interface DataPanelProps {
   cookieOptions: CookieOption[];
   selectedCookies: Set<CookieType>;
 }
 
 /**
- * The "My Data" section showing current cookie preferences and privacy rights information.
+ * "My data" panel showing current cookie preferences and privacy rights information.
  */
-export const DataSection: FC<DataSectionProps> = ({ cookieOptions, selectedCookies }) => (
+export const DataPanel: FC<DataPanelProps> = ({ cookieOptions, selectedCookies }) => (
   <>
     <Heading2 className="utrecht-cookie-consent__section-title">Mijn gegevens</Heading2>
 

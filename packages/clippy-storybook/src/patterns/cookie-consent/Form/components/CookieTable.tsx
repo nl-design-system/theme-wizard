@@ -7,17 +7,16 @@ import {
   TableRow,
 } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC } from 'react';
-import type { Cookie } from './types';
+import type { Cookie } from '../types';
 
-interface CookieDetailsTableProps {
+export interface CookieTableProps {
   cookies: Cookie[];
 }
 
 /**
  * Displays a table of cookie details including name, type, duration and description.
- * Used within the expandable cookie option cards.
  */
-export const CookieDetailsTable: FC<CookieDetailsTableProps> = ({ cookies }) => (
+export const CookieTable: FC<CookieTableProps> = ({ cookies }) => (
   <Table>
     <TableHeader>
       <TableRow>

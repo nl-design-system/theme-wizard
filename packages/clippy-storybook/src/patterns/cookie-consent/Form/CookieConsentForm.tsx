@@ -4,8 +4,8 @@ import { AccordionProvider, ButtonGroup, Heading2, Link } from '@utrecht/compone
 import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
+import { CookieOptionList, DataPanel, PolicyPanel } from './components';
 import defaultCookieOptionsData from './defaultCookieOptions.json';
-import { DataSection, PolicySection, SettingsSection } from './sections';
 import './styles.css';
 
 const DEFAULT_COOKIE_OPTIONS: CookieOption[] = defaultCookieOptionsData as CookieOption[];
@@ -18,7 +18,7 @@ const LABELS = {
   policyTab: 'Cookieverklaring',
   preferencesSaved: 'Je cookievoorkeuren zijn opgeslagen.',
   privacyPolicy: 'Privacybeleid',
-  rejectAll: 'Geen cookies',
+  rejectAll: 'Cookies weigeren',
   save: 'Selectie opslaan',
   settingsTab: 'Instellingen',
 } as const;
@@ -118,23 +118,23 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
     () => [
       {
         body: (
-          <SettingsSection
+          <CookieOptionList
             cookieOptions={cookieOptions}
             onCheckboxChange={handleCheckboxChange}
             selectedCookies={selectedCookies}
           >
             {children}
-          </SettingsSection>
+          </CookieOptionList>
         ),
         expanded: true,
         label: LABELS.settingsTab,
       },
       {
-        body: <PolicySection privacyPolicyUrl={customizeLink?.href} />,
+        body: <PolicyPanel privacyPolicyUrl={customizeLink?.href} />,
         label: LABELS.policyTab,
       },
       {
-        body: <DataSection cookieOptions={cookieOptions} selectedCookies={selectedCookies} />,
+        body: <DataPanel cookieOptions={cookieOptions} selectedCookies={selectedCookies} />,
         label: LABELS.dataTab,
       },
     ],
@@ -148,7 +148,7 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   return (
     <section aria-labelledby="cookie-consent-title" className="utrecht-cookie-consent">
       {/* Live region for screen reader announcements */}
-      <div aria-live="polite" aria-atomic="true" className="utrecht-cookie-consent__status">
+      <div aria-atomic="true" aria-live="polite" className="utrecht-cookie-consent__status">
         {statusMessage}
       </div>
 
