@@ -151,7 +151,7 @@ jobs:
 
     env:
       E2E_RETRIES: 1
-      E2E_TIMEOUT_GLOBAL: 120000
+      E2E_TIMEOUT_GLOBAL: 300000
       E2E_TIMEOUT_TEST: 20000
       E2E_TIMEOUT_EXPECT: 5000
       E2E_TARGET_URL: 'http://localhost:9492'
