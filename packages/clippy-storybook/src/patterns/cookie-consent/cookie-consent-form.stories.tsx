@@ -102,7 +102,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  name: 'Cookie Formulier - Standaard',
+  name: 'Cookie Formulier',
   args: {
     buttonAccept: 'Alle cookies accepteren',
     buttonReject: 'Geen cookies',
@@ -124,54 +124,5 @@ export const Default: Story = {
     clearStorageOnMount: true,
     showLogo: true,
     title: 'Cookievoorkeuren',
-  },
-};
-
-export const CustomOptions: Story = {
-  name: 'Cookie Formulier - Aangepaste opties',
-  args: {
-    buttonAccept: 'Alle cookies accepteren',
-    buttonReject: 'Alleen noodzakelijke cookies',
-    buttonSave: 'Mijn keuze opslaan',
-    children: (
-      <>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Wij gebruiken cookies om je de beste ervaring te bieden op onze website. Je kunt hieronder kiezen welke
-          cookies je wilt accepteren. Noodzakelijke cookies zijn altijd actief en kunnen niet worden uitgeschakeld,
-          omdat ze essentieel zijn voor de werking van de website.
-        </Paragraph>
-        <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
-          Analytische cookies helpen ons te begrijpen hoe bezoekers onze website gebruiken door informatie te verzamelen
-          en te rapporteren. Voorkeurscookies slaan je instellingen op, zoals je taalvoorkeur, zodat je deze niet bij
-          elk bezoek opnieuw hoeft in te stellen.
-        </Paragraph>
-      </>
-    ),
-    clearStorageOnMount: true,
-    cookieOptions: [
-      {
-        id: 'functional',
-        description:
-          'Deze cookies zijn noodzakelijk voor het functioneren van de website en kunnen niet worden uitgeschakeld. Ze worden meestal alleen ingesteld als reactie op acties die je uitvoert, zoals het instellen van je privacyvoorkeuren, inloggen of het invullen van formulieren.',
-        label: 'Strict noodzakelijke cookies',
-        required: true,
-      },
-      {
-        id: 'analytics',
-        description:
-          "Deze cookies stellen ons in staat om het aantal bezoekers en de bronnen van het verkeer te tellen, zodat we de prestaties van onze site kunnen meten en verbeteren. Ze helpen ons te weten welke pagina's het meest en het minst populair zijn en hoe bezoekers zich door de site bewegen.",
-        label: 'Statistiek cookies',
-        required: false,
-      },
-      {
-        id: 'preferences',
-        description:
-          'Deze cookies maken het mogelijk om functionaliteiten te bieden en persoonlijke voorkeuren op te slaan, zoals je taal, regio of gebruikersnaam. Ze kunnen ook worden gebruikt om diensten te leveren die je hebt aangevraagd, zoals het bekijken van een video of het plaatsen van een reactie op een blog.',
-        label: 'Functionele cookies',
-        required: false,
-      },
-    ],
-    showLogo: true,
-    title: 'Cookie-instellingen',
   },
 };
