@@ -1,7 +1,7 @@
 import type { AccordionSectionProps } from '@utrecht/component-library-react';
 import { Button } from '@nl-design-system-candidate/button-react/css';
 import { AccordionProvider, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { type FC, useCallback, useMemo, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieOptionList } from './components';
@@ -13,10 +13,15 @@ const DEFAULT_COOKIE_OPTIONS: CookieOption[] = defaultCookieOptionsData as Cooki
 const LABELS = {
   acceptAll: 'Alle cookies accepteren',
   contact: 'Contact',
-  preferencesSaved: 'Je cookievoorkeuren zijn opgeslagen.',
   privacyPolicy: 'Privacybeleid',
   rejectAll: 'Cookies weigeren',
   save: 'Selectie opslaan',
+} as const;
+
+const STATUS_MESSAGES = {
+  acceptAll: 'Alle cookies zijn geaccepteerd. Je voorkeuren zijn opgeslagen.',
+  rejectAll: 'Alle cookies zijn geweigerd. Alleen noodzakelijke cookies zijn toegestaan.',
+  save: 'Je cookievoorkeuren zijn opgeslagen.',
 } as const;
 
 /**
@@ -34,7 +39,8 @@ const getInitialSelectedCookies = (options: CookieOption[]): Set<CookieType> => 
 /**
  * CookieConsentForm Component
  *
- * A comprehensive, accessible cookie consent form that allows users to:
+ * A comprehensive, accessible cookie consent form for a dedicated settings page.
+ * Allows users to:
  * - View and select cookie preferences by category
  * - See detailed information about each cookie (via infoSections)
  * - Accept all, reject all, or save custom preferences
@@ -42,6 +48,9 @@ const getInitialSelectedCookies = (options: CookieOption[]): Set<CookieType> => 
  * Supports two legal bases:
  * - Consent: opt-in (checkbox unchecked by default)
  * - Legitimate interest: opt-out (checkbox checked by default)
+ *
+ * Note: This component is intended for standalone pages (e.g. /cookies),
+ * not for use in modals or drawers. For initial consent, use the Drawer pattern.
  *
  * @example
  * ```tsx
@@ -65,17 +74,12 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   infoSections = [],
   showLegitimateInterest = true,
 }) => {
-  const { isVisible: hookIsVisible, savePreferences } = useCookieConsent({ clearStorageOnMount });
+  const { savePreferences } = useCookieConsent({ clearStorageOnMount });
 
-  const [isVisible, setIsVisible] = useState(hookIsVisible);
-  const [statusMessage, setStatusMessage] = useState('');
   const [selectedCookies, setSelectedCookies] = useState<Set<CookieType>>(() =>
     getInitialSelectedCookies(cookieOptions),
   );
-
-  useEffect(() => {
-    setIsVisible(hookIsVisible);
-  }, [hookIsVisible]);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handleCheckboxChange = useCallback(
     (cookieId: CookieType, checked: boolean) => {
@@ -97,28 +101,22 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
     [cookieOptions],
   );
 
-  const handleSaveAndClose = useCallback(
-    (preferences: CookieType[]) => {
-      savePreferences(preferences);
-      setStatusMessage(LABELS.preferencesSaved);
-      setIsVisible(false);
-    },
-    [savePreferences],
-  );
-
   const handleAcceptAll = useCallback(() => {
     const allCookieIds = cookieOptions.map((opt) => opt.id);
-    handleSaveAndClose(allCookieIds);
-  }, [cookieOptions, handleSaveAndClose]);
+    savePreferences(allCookieIds);
+    setStatusMessage(STATUS_MESSAGES.acceptAll);
+  }, [cookieOptions, savePreferences]);
 
   const handleRejectAll = useCallback(() => {
     const requiredOnly = cookieOptions.filter((opt) => opt.required).map((opt) => opt.id);
-    handleSaveAndClose(requiredOnly);
-  }, [cookieOptions, handleSaveAndClose]);
+    savePreferences(requiredOnly);
+    setStatusMessage(STATUS_MESSAGES.rejectAll);
+  }, [cookieOptions, savePreferences]);
 
   const handleSave = useCallback(() => {
-    handleSaveAndClose(Array.from(selectedCookies));
-  }, [selectedCookies, handleSaveAndClose]);
+    savePreferences(Array.from(selectedCookies));
+    setStatusMessage(STATUS_MESSAGES.save);
+  }, [selectedCookies, savePreferences]);
 
   const infoAccordionSections: AccordionSectionProps[] = useMemo(
     () =>
@@ -130,14 +128,17 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
     [infoSections],
   );
 
-  if (!isVisible) {
-    return null;
-  }
-
   return (
     <section aria-label="Cookie-instellingen" className="utrecht-cookie-consent">
-      {/* Live region for screen reader announcements */}
-      <div aria-atomic="true" aria-live="polite" className="utrecht-cookie-consent__status">
+      {/* Visible status message for all users */}
+      {statusMessage && (
+        <div className="utrecht-cookie-consent__status-message" role="status">
+          {statusMessage}
+        </div>
+      )}
+
+      {/* Screen reader announcement (visually hidden) */}
+      <div aria-atomic="true" aria-live="polite" className="ams-visually-hidden">
         {statusMessage}
       </div>
 
