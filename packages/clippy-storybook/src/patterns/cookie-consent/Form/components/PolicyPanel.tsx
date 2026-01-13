@@ -8,6 +8,7 @@ export interface PolicyPanelProps {
 }
 
 /**
+ * Demo Panel component - this is just an example of how to implement an accordion section on the cookie page
  * Cookie policy content explaining what cookies are and how they are used.
  */
 export const PolicyPanel: FC<PolicyPanelProps> = ({ children, privacyPolicyUrl }) => (

@@ -9,6 +9,9 @@ export interface DataPanelProps {
   selectedCookies: Set<CookieType>;
 }
 
+/*
+ * Demo Panel component - this is just an example of how to implement an accordion section on the cookie page
+ */
 export const DataPanel: FC<DataPanelProps> = ({ cookieOptions, selectedCookies }) => (
   <>
     <Heading level={2}>Mijn gegevens</Heading>

@@ -4,6 +4,7 @@ import { UnorderedList, UnorderedListItem } from '@utrecht/component-library-rea
 import React, { type FC } from 'react';
 
 /**
+ * Demo Panel component - this is just an example of how to implement an accordion section on the cookie page
  * Panel explaining what cookies are and why websites use them.
  */
 export const WhatAreCookiesPanel: FC = () => (
