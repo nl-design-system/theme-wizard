@@ -3,7 +3,7 @@ import { Heading } from '@nl-design-system-candidate/heading-react';
 import React from 'react';
 import CookieConsentForm from './Form';
 import { DataPanel, PolicyPanel, WhatAreCookiesPanel } from './Form/components';
-import readme from './README.md?raw';
+import readme from './Form/README.md?raw';
 
 const meta = {
   argTypes: {
@@ -115,7 +115,7 @@ export const Default: Story = {
         label: 'Cookieverklaring',
       },
       {
-        body: <DataPanel buttonResetLabel="Cookies resetten" cookieOptions={[]} selectedCookies={new Set()} />,
+        body: <DataPanel cookieOptions={[]} selectedCookies={new Set()} />,
         label: 'Mijn gegevens',
       },
     ],
