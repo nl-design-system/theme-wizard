@@ -27,16 +27,6 @@
   padding-inline: 1.5rem;
 }
 
-.utrecht-cookie-consent__status-message {
-  background-color: var(--basis-color-success-bg-subtle, #e6ffed);
-  border: 1px solid var(--basis-color-success-border-default, #2ecc71);
-  border-radius: var(--basis-border-radius-md, 0.25rem);
-  color: var(--basis-color-success-color-default, #155724);
-  margin-block-end: var(--basis-space-block-lg, 1.5rem);
-  padding-block: var(--basis-space-block-md, 1rem);
-  padding-inline: var(--basis-space-inline-md, 1rem);
-}
-
 .utrecht-cookie-fieldset--legitimate-interest {
   background-color: var(--basis-color-accent-1-bg-subtle);
   border: 1px solid var(--basis-color-accent-1-bg-subtle);
@@ -49,16 +39,16 @@
    ========================================================================== */
 
 .utrecht-cookie-option {
-  border: 1px solid var(--utrecht-color-border, #ccc);
+  border: 1px solid var(--basis-color-default-border-subtle);
 }
 
 .utrecht-cookie-option__header {
   align-items: flex-start;
   display: flex;
-  gap: var(--basis-space-inline-sm, 0.5rem);
+  gap: var(--basis-space-inline-sm);
   justify-content: space-between;
-  padding-block: var(--basis-space-block-md, 1rem);
-  padding-inline: var(--basis-space-block-md, 1rem);
+  padding-block: var(--basis-space-block-md);
+  padding-inline: var(--basis-space-block-md);
 }
 
 .utrecht-cookie-option__toggle-icon {
@@ -66,7 +56,7 @@
 }
 
 .utrecht-cookie-option__details {
-  border-block-start: 1px solid var(--utrecht-color-border, #ccc);
+  border-block-start: 1px solid var(--basis-color-default-border-subtle);
 }
 
 .utrecht-cookie-option__details tbody tr:last-child td,
@@ -77,7 +67,7 @@
 .utrecht-cookie-options {
   display: flex;
   flex-direction: column;
-  gap: var(--basis-space-block-md, 1rem);
+  gap: var(--basis-space-block-md);
 }
 
 /* ==========================================================================
@@ -85,11 +75,11 @@
    ========================================================================== */
 
 .utrecht-cookie-settings {
-  margin-block-end: var(--basis-space-block-lg, 1.5rem);
+  margin-block-end: var(--basis-space-block-lg);
 }
 
 .utrecht-cookie-actions {
-  margin-block-end: var(--basis-space-block-xl, 2rem);
+  margin-block-end: var(--basis-space-block-xl);
 }
 
 /* ==========================================================================
@@ -97,13 +87,13 @@
    ========================================================================== */
 
 .utrecht-cookie-reset {
-  border-block-start: 1px solid var(--basis-color-default-border-subtle, #e5e5e5);
-  margin-block-start: var(--basis-space-block-lg, 1.5rem);
-  padding-block-start: var(--basis-space-block-lg, 1.5rem);
+  border-block-start: 1px solid var(--basis-color-default-border-subtle);
+  margin-block-start: var(--basis-space-block-lg);
+  padding-block-start: var(--basis-space-block-lg);
 }
 
 .utrecht-cookie-reset__description {
-  color: var(--basis-color-default-color-subtle, #666);
-  font-size: var(--basis-text-font-size-sm, 0.875rem);
-  margin-block-end: var(--basis-space-block-sm, 0.5rem);
+  color: var(--basis-color-default-color-subtle);
+  font-size: var(--basis-text-font-size-sm);
+  margin-block-end: var(--basis-space-block-sm);
 }

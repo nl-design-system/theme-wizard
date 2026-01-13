@@ -1,6 +1,6 @@
 import type { AccordionSectionProps } from '@utrecht/component-library-react';
 import { Button } from '@nl-design-system-candidate/button-react/css';
-import { AccordionProvider, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
+import { AccordionProvider, Alert, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC, useCallback, useMemo, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
@@ -131,11 +131,7 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   return (
     <section aria-label="Cookie-instellingen" className="utrecht-cookie-consent">
       {/* Visible status message for all users */}
-      {statusMessage && (
-        <div className="utrecht-cookie-consent__status-message" role="status">
-          {statusMessage}
-        </div>
-      )}
+      {statusMessage && <Alert type="ok">{statusMessage}</Alert>}
 
       {/* Screen reader announcement (visually hidden) */}
       <div aria-atomic="true" aria-live="polite" className="ams-visually-hidden">

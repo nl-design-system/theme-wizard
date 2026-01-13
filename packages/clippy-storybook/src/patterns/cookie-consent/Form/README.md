@@ -61,6 +61,7 @@ Het pattern gebruikt bestaande componenten uit de Utrecht en NL Design System co
 
 **Utrecht Design System:**
 
+- **`Alert`** - Voor status feedback na het opslaan van voorkeuren
 - **`Fieldset` & `FieldsetLegend`** - Voor groeperen van cookie opties
 - **`FormFieldCheckbox`** - Voor cookie selectie
 - **`ButtonGroup`** - Voor groeperen van actieknoppen
@@ -332,9 +333,29 @@ Wanneer je dit pattern implementeert, zorg ervoor dat je voldoet aan:
 1. **Fieldset & Legend** - Logische groepering van gerelateerde checkboxes
 2. **Visueel verborgen tekst** - Cookie aantallen worden voorgelezen maar zijn niet zichtbaar
 3. **Uitgebreide beschrijvingen** - Elke cookie optie heeft een duidelijke beschrijving
-4. **Aria-live region** - Statusmeldingen voor screen readers bij opslaan
+4. **Status feedback** - Zowel zichtbare als screen reader feedback na elke actie (zie hieronder)
 5. **Accessible toggle buttons** - Voor uitklappen van cookie details met aria-expanded
 6. **Accordion** - Info secties zijn toegankelijk via keyboard en screen readers
+
+### Status feedback na acties
+
+Het pattern geeft duidelijke feedback wanneer een gebruiker zijn voorkeuren opslaat:
+
+**Voor visuele gebruikers:**
+
+- Een Utrecht `Alert` component met `type="ok"` (groene success styling) verschijnt bovenaan het formulier
+- Het Alert component heeft ingebouwde toegankelijkheidsfeatures
+- Styling via Utrecht design tokens (`--utrecht-alert-ok-*`) zorgt voor consistente appearance
+- De message blijft zichtbaar (verdwijnt niet automatisch)
+
+**Voor screen reader gebruikers:**
+
+- Een `aria-live="polite"` region kondigt de status aan
+- `aria-atomic="true"` zorgt dat het hele bericht wordt voorgelezen
+- Aankondiging gebeurt tijdens een natuurlijke pauze in de spraakuitvoer
+- De region is altijd aanwezig in de DOM maar visueel verborgen
+
+Dit zorgt ervoor dat alle gebruikers, ongeacht hun visuele capaciteiten of hulpmiddelen, weten dat hun actie succesvol was.
 
 ### Belangrijke toegankelijkheidsoverwegingen
 
@@ -348,9 +369,23 @@ Wanneer je dit pattern implementeert, zorg ervoor dat je voldoet aan:
 Het pattern gebruikt CSS custom properties (design tokens) voor spacing:
 
 ```css
---basis-space-block-* /* Verticale spacing */
---basis-space-inline-* /* Horizontale spacing */
---basis-color-accent-1-bg-subtle /* Achtergrondkleur voor legitimate interest sectie */
+/* Spacing tokens */
+--basis-space-block-xl
+--basis-space-block-lg
+--basis-space-block-md
+--basis-space-block-sm
+--basis-space-inline-sm
+
+/* Color tokens */
+--basis-color-default-border-subtle
+--basis-color-default-color-subtle
+--basis-color-accent-1-bg-subtle
+
+/* Typography tokens */
+--basis-text-font-size-sm
+
+/* Icon tokens */
+--utrecht-icon-size
 ```
 
 ### Styling voor legitimate interest sectie
