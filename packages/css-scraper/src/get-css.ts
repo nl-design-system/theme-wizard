@@ -41,7 +41,7 @@ export const getImportUrls = (css: string): string[] => {
   });
   walk(ast, (node) => {
     if (node.type_name === 'Atrule' && node.name === 'import' && node.prelude) {
-      const urlNode = node.children?.find((child) => child.type_name === 'Url');
+      const urlNode = node.prelude.children?.find((child) => child.type_name === 'Url');
       if (typeof urlNode?.value === 'string') {
         urls.push(unquote(urlNode.value));
       }
