@@ -13,11 +13,13 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./theme.css": "./theme.css"
+    "./theme.css": "./theme.css",
+    "./clippy-tokens.css": "./clippy-tokens.css"
   },
   "files": [
     "dist",
-    "theme.css"
+    "theme.css",
+    "clippy-tokens.css"
   ],
   "scripts": {
     "dev": "vite build --watch",

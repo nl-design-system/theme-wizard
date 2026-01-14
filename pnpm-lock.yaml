@@ -194,9 +194,6 @@ importers:
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
-      '@nl-design-system-community/ma-design-tokens':
-        specifier: 3.0.0
-        version: 3.0.0
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
