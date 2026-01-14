@@ -5,45 +5,6 @@
   margin-inline: 0;
 }
 
-.utrecht-nav-bar {
-  --utrecht-nav-bar-content-max-inline-size: var(--utrecht-section-max-inline-size);
-}
-
-.clippy-layout {
-  display: flex;
-  flex-direction: column;
-}
-
-.clippy-layout-main {
-  display: flex;
-}
-
-.clippy-layout-main > theme-wizard-side-nav {
-  flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
-}
-
-.clippy-layout-main > utrecht-page-content {
-  flex: 1;
-}
-
-.clippy-todo-card-layout {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--basis-space-column-xl);
-}
-
-.clippy-footer-grid {
-  display: flex;
-  gap: var(--basis-space-column-md);
-}
-
-.clippy-footer-grid > * {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: var(--basis-space-row-lg);
-}
-
 .clippy-section {
   display: flex;
   flex-direction: column;
@@ -71,11 +32,9 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  outline: 2px solid var(--clippy-voorbeeld-card-outline);
-  outline-style: solid;
-  padding-block: var(--basis-space-inline-3xl) !important;
-  padding-inline: var(--basis-space-inline-3xl) !important;
-  row-gap: var(--basis-space-row-xl);
+  padding-block: var(--clippy-voorbeeld-card-padding-block) !important;
+  padding-inline: var(--clippy-voorbeeld-card-padding-inline) !important;
+  row-gap: var(--clippy-voorbeeld-card-row-gap);
 }
 
 .clippy-voorbeeld__link header {
