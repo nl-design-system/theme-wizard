@@ -728,7 +728,7 @@ describe('color scale position extension', () => {
 });
 
 describe('validate unitless line-height preference', () => {
-  it('Does not report lin-heights that use a unit-less number', () => {
+  it('Does not report line-heights that use a unitless number', () => {
     const config = {
       basis: {
         text: {
