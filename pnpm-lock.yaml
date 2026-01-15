@@ -179,6 +179,9 @@ importers:
       '@amsterdam/design-system-css':
         specifier: 2.2.0
         version: 2.2.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.0.0
+        version: 1.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.0.0
         version: 1.0.0(@babel/runtime@7.28.4)(react@18.3.1)
