@@ -30,7 +30,6 @@
   "dependencies": {
     "@amsterdam/design-system-css": "2.1.0",
     "@amsterdam/design-system-react": "2.2.0",
-    "@amsterdam/design-system-tokens": "2.2.0",
     "@astrojs/react": "4.4.2",
     "@nl-design-system-candidate/button-react": "1.0.0",
     "@nl-design-system-candidate/heading-css": "1.1.3",
