@@ -1,5 +1,5 @@
 import { Link } from '@nl-design-system-candidate/link-react/css';
-import { Icon, PageHeader, Image } from '@utrecht/component-library-react/dist/css-module';
+import { Icon, PageHeader, PageContent, Image } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAlleen } from '@utrecht/web-component-library-react';
 import React, { type FC, type ReactNode } from 'react';
 import logo from '../../../../assets/logo.svg';
@@ -17,7 +17,7 @@ const DEFAULT_ACTIONS = [
 
 const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, children }) => (
   <PageHeader>
-    <div className="utrecht-page-header__content">
+    <PageContent className="utrecht-page-header__content">
       <Row align="center" justify="space-between">
         {children ?? (
           <>
@@ -42,7 +42,7 @@ const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, chi
           </>
         )}
       </Row>
-    </div>
+    </PageContent>
   </PageHeader>
 );
 
