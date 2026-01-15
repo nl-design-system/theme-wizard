@@ -14,6 +14,12 @@ export type ResolvedToken = BaseDesignTokenValue & {
   };
 };
 
+export const resolveRef = (root: object, path: string) => {
+  const refPath = path.slice(1, -1);
+  // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
+  return dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+};
+
 /**
  * @description
  * Recursively loop over `config` to look for {ma.color.indigo.5} -like token refs
@@ -21,9 +27,10 @@ export type ResolvedToken = BaseDesignTokenValue & {
  */
 export const resolveRefs = (config: unknown, root: Record<string, unknown>): void => {
   walkTokensWithRef(config, root, (token) => {
-    const refPath = token.$value.slice(1, -1);
-    // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
-    const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+    // const refPath = token.$value.slice(1, -1);
+    // // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
+    // const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+    const ref = resolveRef(root, token.$value);
 
     // Capture the resolved value, transforming legacy colors to modern format if needed
     let resolvedValue = ref.$value;
