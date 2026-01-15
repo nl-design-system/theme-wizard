@@ -14,6 +14,10 @@ const preview: Preview = {
         if (root) {
           addThemeClasses(root, context);
         }
+        const docs = document.getElementById('storybook-docs');
+        if (docs) {
+          addThemeClasses(docs, context);
+        }
       }
       return Story();
     },

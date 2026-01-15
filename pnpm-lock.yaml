@@ -157,6 +157,9 @@ importers:
 
   packages/clippy-storybook:
     devDependencies:
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.0.0
+        version: 1.0.0
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
@@ -4830,6 +4833,7 @@ packages:
   eslint-plugin-zod-x@2.0.0:
     resolution: {integrity: sha512-Lh+3neHBMD+VSibHvelTZelf0Nlqi0tzKqy+KkEdfAKsdJYj06gzyjVr+wwV64brF4gNlpJGMYxa6FKdOsjyNw==}
     engines: {node: ^20 || ^22 || >=24}
+    deprecated: eslint-plugin-zod-x is deprecated. Use eslint-plugin-zod >=3. See https://github.com/marcalexiei/eslint-plugin-zod/releases/tag/v3.0.0
     peerDependencies:
       eslint: ^9
       zod: ^4
