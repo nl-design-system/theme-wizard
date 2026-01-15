@@ -395,7 +395,6 @@ De legitimate interest sectie heeft een subtiele achtergrondkleur:
 ```css
 .utrecht-cookie-fieldset--legitimate-interest {
   background-color: var(--basis-color-accent-1-bg-subtle);
-  border: 1px solid var(--basis-color-accent-1-bg-subtle);
   padding-block: var(--basis-space-block-lg);
   padding-inline: var(--basis-space-inline-lg);
 }
