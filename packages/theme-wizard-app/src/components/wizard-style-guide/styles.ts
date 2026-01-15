@@ -49,7 +49,7 @@ export default css`
 
   clippy-html-image {
     display: block;
-    max-width: 24rem;
+    max-inline-size: 24rem;
     overflow: clip;
   }
 `;
