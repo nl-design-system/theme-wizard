@@ -70,9 +70,7 @@ export const CookieOptionList: FC<CookieOptionListProps> = ({
 
       {hasConsentOptions && (
         <Fieldset aria-describedby="consent-description" className="utrecht-cookie-fieldset">
-          <FieldsetLegend>
-            <strong>{legendConsent}</strong>
-          </FieldsetLegend>
+          <FieldsetLegend>{legendConsent}</FieldsetLegend>
 
           <Paragraph className="utrecht-cookie-fieldset__description" id="consent-description">
             {CONSENT_DESCRIPTION}
