@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
-import { walkColors, walkObject } from './walker';
+import { walkColors, walkLineHeights, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
   type ForegroundColorKey,
@@ -201,5 +201,21 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
           );
         }
       }
+    });
+
+    // Validation 3: check that line-heights are unit-less numbers
+    walkLineHeights(root, (token, path) => {
+      // Refs are OK
+      if (isRef(token.$value)) return;
+      // Numbers are OK
+      if (typeof token.$value === 'number') return;
+
+      ctx.addIssue({
+        code: 'invalid_type',
+        expected: 'number',
+        input: token.$value,
+        message: `Line-height should be a unitless number (got: "${token.$value}")`,
+        path: [...path, '$value'],
+      });
     });
   });

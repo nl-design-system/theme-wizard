@@ -727,6 +727,52 @@ describe('color scale position extension', () => {
   });
 });
 
+describe('validate unitless line-height preference', () => {
+  it('Does not report lin-heights that use a unit-less number', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1.5,
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
+  it('flags line-heights that use units', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: '20px',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      {
+        code: 'invalid_type',
+        expected: 'number',
+        message: 'Line-height should be a unitless number (got: "20px")',
+        path: ['basis', 'text', 'line-height', 'md', '$value'],
+      },
+    ]);
+  });
+});
+
 describe('strictly validate known basis themes', () => {
   it('Mooi & Anders theme', () => {
     const result = StrictThemeSchema.safeParse(maTokens);
