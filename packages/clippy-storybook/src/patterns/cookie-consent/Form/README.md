@@ -46,13 +46,13 @@ De `CookieConsentForm` moet altijd op een **dedicated pagina** staan (bijv. `/co
 Dit pattern gebruikt componenten uit Utrecht Design System, NL Design System en Amsterdam Design System:
 
 ```bash
-npm install @utrecht/component-library-react @nl-design-system-candidate/button-react @nl-design-system-candidate/number-badge-react @nl-design-system-candidate/paragraph-react @nl-design-system-candidate/heading-react @nl-design-system-candidate/link-react @amsterdam/design-system-css
+npm install @utrecht/component-library-react @nl-design-system-candidate/button-react @nl-design-system-candidate/number-badge-react @nl-design-system-candidate/paragraph-react @nl-design-system-candidate/heading-react @nl-design-system-candidate/link-react @amsterdam/design-system-react @amsterdam/design-system-css @amsterdam/design-system-tokens
 ```
 
 of voor css only implementatie
 
 ```bash
-npm install @utrecht/component-library-css @amsterdam/design-system-css
+npm install @utrecht/component-library-css @amsterdam/design-system-css @amsterdam/design-system-tokens
 ```
 
 ### Componenten uit Design Systems
@@ -77,6 +77,7 @@ Het pattern gebruikt bestaande componenten uit de Utrecht en NL Design System co
 
 **Amsterdam Design System:**
 
+- **`DescriptionList`** - Voor weergave van cookie details in een gestructureerde lijst
 - **`visually-hidden`** - Voor screen reader-only tekst (CSS utility)
 
 > Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues. Controleer de [Utrecht Design System repository](https://github.com/nl-design-system/utrecht) voor actuele informatie.
@@ -118,6 +119,10 @@ Zie voor meer details:
 - **Broncode**: `src/patterns/cookie-consent/Form/CookieConsentForm.tsx`
 - **Demo hook**: `src/patterns/cookie-consent/hooks/useCookieConsent.tsx` (localStorage, alleen voor demo)
 - **Componenten**: `src/patterns/cookie-consent/Form/components/`
+  - `CookieDescriptionList` - Weergave van cookie details
+  - `CookieOption` - Individuele cookie categorie met checkbox
+  - `CookieOptionList` - Lijst met cookie categorieën
+  - `DataPanel`, `PolicyPanel`, `WhatAreCookiesPanel` - Info panelen voor accordion
 
 ## API Reference
 
@@ -366,26 +371,89 @@ Dit zorgt ervoor dat alle gebruikers, ongeacht hun visuele capaciteiten of hulpm
 
 ## Styling aanpassen
 
-Het pattern gebruikt CSS custom properties (design tokens) voor spacing:
+Het pattern gebruikt CSS custom properties (design tokens)
+
+### Token architectuur
+
+**Drie lagen:**
+
+1. **Basis tokens** - Algemene design system tokens
+2. **Clippy tokens** - Component system tokens (gekoppeld aan basis)
+3. **AMS tokens** - Amsterdam Design System tokens (gekoppeld aan clippy)
+
+### Gebruikte design tokens
+
+**Spacing tokens:**
 
 ```css
-/* Spacing tokens */
 --basis-space-block-xl
 --basis-space-block-lg
 --basis-space-block-md
 --basis-space-block-sm
+--basis-space-inline-lg
+--basis-space-inline-md
 --basis-space-inline-sm
+```
 
-/* Color tokens */
+**Color tokens:**
+
+```css
 --basis-color-default-border-subtle
+--basis-color-default-color-default
 --basis-color-default-color-subtle
 --basis-color-accent-1-bg-subtle
+```
 
-/* Typography tokens */
+**Typography tokens:**
+
+```css
+/* Via clippy laag */
+--clippy-description-list-color
+--clippy-description-list-font-family
+--clippy-description-list-font-size
+--clippy-description-list-line-height
+--clippy-typography-hyphenate-limit-chars
+
+/* Basis tokens */
+--basis-color-default-color-default
+--basis-text-font-family-default
+--basis-text-font-size-md
 --basis-text-font-size-sm
+--basis-text-line-height-md
+--basis-text-font-weight-bold
+```
 
-/* Icon tokens */
+**Icon tokens:**
+
+```css
+/* Via clippy laag */
+--clippy-icon-size
+
+/* Utrecht tokens */
 --utrecht-icon-size
+```
+
+### Gelaagde token mapping
+
+De tokens zijn als volgt met elkaar verbonden:
+
+```css
+:root {
+  /* Clippy variables linked to basis tokens */
+  --clippy-description-list-color: var(--basis-color-default-color-default);
+  --clippy-description-list-font-family: var(--basis-text-font-family-default);
+  --clippy-description-list-font-size: var(--basis-text-font-size-md);
+  --clippy-description-list-line-height: var(--basis-text-line-height-md);
+  --clippy-typography-hyphenate-limit-chars: 6 3 2;
+  --clippy-icon-size: 1rem;
+
+  /* AMS variables linked to clippy variables */
+  --ams-description-list-color: var(--clippy-description-list-color);
+  --ams-description-list-font-family: var(--clippy-description-list-font-family);
+  --ams-description-list-font-size: var(--clippy-description-list-font-size);
+  --ams-description-list-line-height: var(--clippy-description-list-line-height);
+  --ams-typography-hyphenate-limit-chars: var(--clippy-typography-hyphenate-limit-chars);
+}
 ```
 
 ### Styling voor legitimate interest sectie
@@ -393,14 +461,42 @@ Het pattern gebruikt CSS custom properties (design tokens) voor spacing:
 De legitimate interest sectie heeft een subtiele achtergrondkleur:
 
 ```css
-.utrecht-cookie-fieldset--legitimate-interest {
+.clippy-cookie-fieldset--legitimate-interest {
   background-color: var(--basis-color-accent-1-bg-subtle);
   padding-block: var(--basis-space-block-lg);
   padding-inline: var(--basis-space-inline-lg);
 }
 ```
 
-Je kunt deze aanpassen door de design tokens te overschrijven in je eigen CSS.
+### Tokens aanpassen
+
+Je kunt de styling op verschillende niveaus aanpassen:
+
+**Op basis niveau** (beïnvloedt hele design system):
+
+```css
+:root {
+  --basis-text-font-family-default: 'Custom Font', sans-serif;
+  --basis-text-font-size-md: 1.125rem;
+}
+```
+
+**Op clippy niveau** (beïnvloedt alleen clippy componenten of overrides van clippy componenten op andere design system componenten):
+
+```css
+:root {
+  --clippy-description-list-font-size: 1rem;
+  --clippy-description-list-line-height: 1.5;
+}
+```
+
+**Op AMS niveau** (beïnvloedt alleen AMS componenten):
+
+```css
+:root {
+  --ams-description-list-font-size: 0.875rem;
+}
+```
 
 ## Real-life cookie voorbeelden
 

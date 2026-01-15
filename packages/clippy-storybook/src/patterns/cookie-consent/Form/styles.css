@@ -5,6 +5,7 @@
   --clippy-description-list-font-size: var(--basis-text-font-size-md);
   --clippy-description-list-line-height: var(--basis-text-line-height-md);
   --clippy-typography-hyphenate-limit-chars: 6 3 2;
+  --clippy-icon-size: 1rem;
 
   /* AMS variables linked to clippy variables */
   --ams-description-list-color: var(--clippy-description-list-color);
@@ -45,7 +46,6 @@
 }
 
 .clippy-cookie-option__toggle-icon {
-  --clippy-icon-size: 1rem;
   --utrecht-icon-size: var(--clippy-icon-size);
 }
 
