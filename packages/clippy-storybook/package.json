@@ -26,7 +26,7 @@
     "build:components": "vite build",
     "clean": "rimraf ./dist/",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
-    "lint:css": "stylelint \"**/*.{css,scss}\"",
+    "lint:css": "stylelint \"**/*.css\"",
     "lint:js": "eslint",
     "lint-fix:js": "eslint --fix",
     "storybook": "storybook dev --config-dir ./config/ --port 6006"
