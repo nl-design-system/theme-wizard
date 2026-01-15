@@ -19,8 +19,6 @@
   /* Utrecht page tokens (mapping) */
   --utrecht-page-content-padding-block-start: var(--clippy-page-content-padding-block-start);
   --utrecht-page-content-padding-block-end: var(--clippy-page-content-padding-block-end);
-  --utrecht-page-padding-inline-start: var(--clippy-page-padding-inline-start);
-  --utrecht-page-padding-inline-end: var(--clippy-page-padding-inline-end);
   --utrecht-page-header-padding-block-start: var(--clippy-page-header-padding-block-start);
   --utrecht-page-header-padding-block-end: var(--clippy-page-header-padding-block-end);
   --utrecht-section-max-inline-size: var(--clippy-section-max-inline-size);
