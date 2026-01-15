@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
-import { walkColors, walkObject } from './walker';
+import { walkColors, walkLineHeights, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
   type ForegroundColorKey,
@@ -17,7 +17,7 @@ import {
   COLOR_KEYS,
 } from './basis-tokens';
 import { removeNonTokenProperties } from './remove-non-token-properties';
-import { ERROR_CODES, type InvalidRefIssue, createContrastIssue } from './validation-issue';
+import { ERROR_CODES, type InvalidRefIssue, LineHeightUnitIssue, createContrastIssue } from './validation-issue';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -201,5 +201,22 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
           );
         }
       }
+    });
+
+    // Validation 3: check that line-heights are unit-less numbers
+    walkLineHeights(root, (token, path) => {
+      // Refs are OK
+      if (isRef(token.$value)) return;
+      // Numbers are OK
+      if (typeof token.$value === 'number') return;
+
+      ctx.addIssue({
+        code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+        expected: 'number',
+        input: token.$value,
+        message: `Line-height should be a unitless number (got: "${token.$value}")`,
+        path: [...path, '$value'],
+      } satisfies LineHeightUnitIssue);
     });
   });

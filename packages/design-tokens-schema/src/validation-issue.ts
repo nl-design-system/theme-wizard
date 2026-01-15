@@ -3,6 +3,7 @@ import * as z from 'zod';
 export const ERROR_CODES = {
   INSUFFICIENT_CONTRAST: 'insufficient_contrast',
   INVALID_REF: 'invalid_ref',
+  UNEXPECTED_UNIT: 'unexpected_unit',
 } as const;
 
 export type ContrastIssue = z.core.$ZodSuperRefineIssue & {
@@ -20,6 +21,12 @@ export type InvalidRefIssue = z.core.$ZodSuperRefineIssue & {
   ERROR_CODE: typeof ERROR_CODES.INVALID_REF;
   code: 'custom';
   message?: string;
+};
+
+export type LineHeightUnitIssue = z.core.$ZodSuperRefineIssue & {
+  ERROR_CODE: typeof ERROR_CODES.UNEXPECTED_UNIT;
+  code: 'invalid_type';
+  message: string;
 };
 
 export type ThemeValidationIssue =

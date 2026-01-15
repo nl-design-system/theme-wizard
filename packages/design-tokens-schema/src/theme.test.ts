@@ -67,7 +67,7 @@ describe('adding contrast-with extensions', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(result.data?.basis?.color?.default?.['color-document']?.$extensions).toMatchObject({
+    expect(result.data?.basis?.color?.['default']?.['color-document']?.$extensions).toMatchObject({
       [EXTENSION_CONTRAST_WITH]: [
         {
           color: {
@@ -115,9 +115,9 @@ describe('adding contrast-with extensions', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(result.data?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH]).toHaveLength(
-      2,
-    );
+    expect(
+      result.data?.basis?.color?.['default']?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
+    ).toHaveLength(2);
   });
 
   it('does not add extension when corresponding token does not exist', () => {
@@ -137,7 +137,7 @@ describe('adding contrast-with extensions', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(result.data?.basis?.color?.default?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH]).toEqual(
+    expect(result.data?.basis?.color?.['default']?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH]).toEqual(
       undefined,
     );
   });
@@ -177,11 +177,11 @@ describe('resolving Design Token refs', () => {
       const result = StrictThemeSchema.safeParse(config);
       const expectedColor = brandConfig.ma.color.indigo[5];
       expect
-        .soft(result.data?.basis?.color?.default?.['bg-document'])
+        .soft(result.data?.basis?.color?.['default']?.['bg-document'])
         .toMatchObject(config.basis.color.default['bg-document']);
 
       expect
-        .soft(result.data?.basis?.color?.default?.['bg-document']?.$extensions?.[EXTENSION_RESOLVED_AS])
+        .soft(result.data?.basis?.color?.['default']?.['bg-document']?.$extensions?.[EXTENSION_RESOLVED_AS])
         .toEqual(expectedColor.$value);
     });
   });
@@ -567,7 +567,7 @@ describe('remove non-token properties', () => {
     } satisfies Theme;
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
-    const actual = result.data?.basis?.color?.default?.['bg-document'];
+    const actual = result.data?.basis?.color?.['default']?.['bg-document'];
     expect(actual?.$type).toBe('color');
     expect(actual?.$value).toEqual({
       colorSpace: 'srgb',
@@ -609,7 +609,7 @@ describe('remove non-token properties', () => {
     } satisfies Theme;
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
-    const extensions = result.data?.basis?.color?.default?.['bg-document']?.$extensions;
+    const extensions = result.data?.basis?.color?.['default']?.['bg-document']?.$extensions;
     expect(Array.isArray(extensions?.[EXTENSION_CONTRAST_WITH])).toBeTruthy();
     expect(extensions?.[EXTENSION_CONTRAST_WITH]).toHaveLength(1);
     const extension = (extensions?.[EXTENSION_CONTRAST_WITH] as ContrastExtension[])[0];
@@ -664,9 +664,9 @@ describe('color scale position extension', () => {
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
 
-    const bgDocToken = result.data?.basis?.color?.default?.['bg-document'];
-    const colorHoverToken = result.data?.basis?.color?.default?.['color-hover'];
-    const borderDefaultToken = result.data?.basis?.color?.default?.['border-default'];
+    const bgDocToken = result.data?.basis?.color?.['default']?.['bg-document'];
+    const colorHoverToken = result.data?.basis?.color?.['default']?.['color-hover'];
+    const borderDefaultToken = result.data?.basis?.color?.['default']?.['border-default'];
 
     // Verify extensions are added for all known color names
     expect(bgDocToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
@@ -707,8 +707,8 @@ describe('color scale position extension', () => {
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
 
-    const bgActiveToken = result.data?.basis?.color?.default?.['bg-active'];
-    const colorHoverToken = result.data?.basis?.color?.default?.['color-hover'];
+    const bgActiveToken = result.data?.basis?.color?.['default']?.['bg-active'];
+    const colorHoverToken = result.data?.basis?.color?.['default']?.['color-hover'];
 
     // Both tokens should have the extension since they're both in COLOR_KEYS
     expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
@@ -724,6 +724,53 @@ describe('color scale position extension', () => {
     expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
     expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeGreaterThanOrEqual(0);
     expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
+  });
+});
+
+describe('validate unitless line-height preference', () => {
+  it('Does not report line-heights that use a unitless number', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1.5,
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
+  it('flags line-heights that use units', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: '20px',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      {
+        code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+        expected: 'number',
+        message: 'Line-height should be a unitless number (got: "20px")',
+        path: ['basis', 'text', 'line-height', 'md', '$value'],
+      },
+    ]);
   });
 });
 
