@@ -171,8 +171,6 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
       const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH];
       const baseColor = getActualValue<ColorValue>(token);
 
-      if (typeof baseColor === 'string') return;
-
       for (const { color: background, expectedRatio } of comparisons) {
         const compareColor = getActualValue<ColorValue>(background);
 
