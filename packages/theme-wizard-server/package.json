@@ -37,7 +37,6 @@
     "clean": "rimraf dist/"
   },
   "devDependencies": {
-    "@hono/node-server": "1.19.7",
     "@hono/vite-dev-server": "0.24.0",
     "@vitest/coverage-v8": "4.0.16",
     "rimraf": "6.1.2",
@@ -47,6 +46,7 @@
     "vitest": "4.0.16"
   },
   "dependencies": {
+    "@hono/node-server": "1.19.7",
     "@hono/swagger-ui": "0.5.3",
     "@hono/zod-openapi": "1.2.0",
     "@nl-design-system-community/css-scraper": "workspace:*",
