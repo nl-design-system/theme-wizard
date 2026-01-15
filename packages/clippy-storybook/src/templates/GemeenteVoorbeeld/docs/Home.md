@@ -44,7 +44,7 @@ Deze template combineert componenten uit meerdere (NLDS) libraries:
 - **Utrecht component library – React**:
   - Paginastructuur: `PageHeader`, `NavBar`/`NavList`/`NavListLink`, `PageContent`, `PageFooter`
   - Interactie: `AccordionProvider`, `ButtonLink`
-  - Content: `Image`, `Paragraph`, `LinkList`/`LinkListLink`, `Icon`
+  - Content: `Image`, `Paragraph`, `LinkList`/`LinkListLink`, `Icon`, `PageContent`
   - Icons: `@utrecht/web-component-library-react` (o.a. `UtrechtIconAlleen`, `UtrechtIconKalender`, `UtrechtIconChevronRight`, `UtrechtIconAfspraakMaken`, etc.)
 - **Amsterdam Design System**:
   - `Card` (`@amsterdam/design-system-react`) voor de nieuwskaarten
@@ -54,9 +54,11 @@ Deze template combineert componenten uit meerdere (NLDS) libraries:
 
 - **Layout & structuur (Utrecht + NLDS)**:
   - De pagina gebruikt Utrecht “page” structuur (`utrecht-page-body`, `PageHeader`, `PageContent`, `PageFooter`) en vult die met NLDS `Heading`/`Link`.
+  - `PageContent` wordt gebruikt om de hoofdinhoud te wrappen in verschillende secties (MainIntro, SelfService, News) en zorgt voor consistente padding en max-width styling.
   - De navigatie is een Utrecht `NavBar` met `NavListLink` items; de huidige pagina wordt aangegeven via `aria-current="page"`.
 - **Contentblokken (Utrecht + Amsterdam)**:
-  - De “Veelgebruikte diensten” en “Zelf regelen” secties gebruiken Utrecht componenten (o.a. `ButtonLink`, `AccordionProvider`) en eigen layout helpers (`Row`/`Column`).
+  - De “Veelgebruikte diensten” en “Zelf regelen” secties gebruiken Utrecht componenten (o.a. `ButtonLink`, `AccordionProvider`, `PageContent`) en eigen layout helpers (`Row`/`Column`).
+  - `PageContent` wordt gebruikt om individuele secties te wrappen voor consistente content styling en max-width beperking.
   - De nieuwslijst gebruikt Amsterdam `Card` componenten (die semantisch als `<article>` renderen) en is daarnaast als lijst gemarkeerd (`role="list"` en `role="listitem"`).
 - **Styling (Thema + tokens)**:
   - De Voorbeeld-theme tokens leveren de basis (kleuren/typografie/spacing).
