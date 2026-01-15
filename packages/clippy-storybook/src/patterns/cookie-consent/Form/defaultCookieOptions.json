@@ -1,0 +1,269 @@
+[
+  {
+    "id": "functional",
+    "label": "Functionele cookies",
+    "description": "Noodzakelijk voor de basisfunctionaliteit van de website",
+    "required": true,
+    "legalBasis": "legitimate-interest",
+    "cookies": [
+      {
+        "name": "PHPSESSID",
+        "type": "HTTP cookie",
+        "description": "Sessiecookie die nodig is om de gebruiker te identificeren tijdens het browsen op de website.",
+        "duration": "Sessie"
+      },
+      {
+        "name": "csrf_token",
+        "type": "HTTP cookie",
+        "description": "Beveiligingscookie die beschermt tegen Cross-Site Request Forgery aanvallen.",
+        "duration": "Sessie"
+      },
+      {
+        "name": "cookie_consent",
+        "type": "Lokale HTML opslag",
+        "description": "Slaat de cookievoorkeuren van de gebruiker op zodat de cookiebanner niet opnieuw wordt getoond.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "AWSALB",
+        "type": "HTTP cookie",
+        "description": "Amazon Web Services load balancer cookie die zorgt voor een stabiele serververbinding.",
+        "duration": "7 dagen"
+      }
+    ]
+  },
+  {
+    "id": "analytics",
+    "label": "Analytische cookies",
+    "description": "Helpen ons begrijpen hoe bezoekers onze website gebruiken door anoniem statistieken te verzamelen",
+    "required": false,
+    "legalBasis": "consent",
+    "cookies": [
+      {
+        "name": "_ga",
+        "type": "HTTP cookie",
+        "description": "Google Analytics gebruikt deze cookie om bezoekers, sessies en campagnegegevens te berekenen en het gebruik van de site te volgen.",
+        "duration": "2 jaar"
+      },
+      {
+        "name": "_ga_*",
+        "type": "HTTP cookie",
+        "description": "Google Analytics 4 cookie die wordt gebruikt om de sessiestatus te behouden.",
+        "duration": "2 jaar"
+      },
+      {
+        "name": "_gid",
+        "type": "HTTP cookie",
+        "description": "Google Analytics gebruikt deze cookie om gebruikers te onderscheiden.",
+        "duration": "24 uur"
+      },
+      {
+        "name": "_pk_id.*",
+        "type": "HTTP cookie",
+        "description": "Matomo Analytics cookie die wordt gebruikt om unieke bezoekers te identificeren.",
+        "duration": "13 maanden"
+      },
+      {
+        "name": "_pk_ses.*",
+        "type": "HTTP cookie",
+        "description": "Matomo Analytics sessiecookie die wordt gebruikt om paginaweergaven binnen een bezoek te volgen.",
+        "duration": "30 minuten"
+      },
+      {
+        "name": "_hjSessionUser_*",
+        "type": "HTTP cookie",
+        "description": "Hotjar cookie die een unieke gebruikers-ID instelt om terugkerende bezoekers te herkennen.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "_hjSession_*",
+        "type": "HTTP cookie",
+        "description": "Hotjar sessiecookie die wordt gebruikt om sessiegegevens te verzamelen voor heatmaps en opnames.",
+        "duration": "30 minuten"
+      },
+      {
+        "name": "_clck",
+        "type": "HTTP cookie",
+        "description": "Microsoft Clarity cookie die wordt gebruikt om unieke gebruikers te identificeren.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "_clsk",
+        "type": "HTTP cookie",
+        "description": "Microsoft Clarity sessiecookie die klikpatronen en scrollgedrag bijhoudt.",
+        "duration": "1 dag"
+      }
+    ]
+  },
+  {
+    "id": "external-content",
+    "label": "Externe content",
+    "description": "Voor het tonen van video's, kaarten en content van externe platforms",
+    "required": false,
+    "legalBasis": "consent",
+    "cookies": [
+      {
+        "name": "VISITOR_INFO1_LIVE",
+        "type": "HTTP cookie",
+        "description": "YouTube gebruikt deze cookie om de bandbreedte van de gebruiker te schatten voor het optimaal afspelen van video's.",
+        "duration": "6 maanden"
+      },
+      {
+        "name": "YSC",
+        "type": "HTTP cookie",
+        "description": "YouTube gebruikt deze cookie om weergaven van ingesloten video's bij te houden.",
+        "duration": "Sessie"
+      },
+      {
+        "name": "PREF",
+        "type": "HTTP cookie",
+        "description": "YouTube/Google cookie voor gebruikersvoorkeuren zoals videokwaliteit en autoplay.",
+        "duration": "8 maanden"
+      },
+      {
+        "name": "vuid",
+        "type": "HTTP cookie",
+        "description": "Vimeo cookie die wordt gebruikt om de gebruiker te identificeren voor ingesloten video's.",
+        "duration": "2 jaar"
+      },
+      {
+        "name": "player",
+        "type": "HTTP cookie",
+        "description": "Vimeo cookie die videospelervoorkeuren opslaat.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "NID",
+        "type": "HTTP cookie",
+        "description": "Google Maps cookie die voorkeuren en informatie opslaat voor het weergeven van kaarten.",
+        "duration": "6 maanden"
+      },
+      {
+        "name": "1P_JAR",
+        "type": "HTTP cookie",
+        "description": "Google cookie die wordt gebruikt voor het verzamelen van websitestatistieken en het bijhouden van conversies.",
+        "duration": "1 maand"
+      },
+      {
+        "name": "sp_t",
+        "type": "HTTP cookie",
+        "description": "Spotify cookie die wordt gebruikt voor het afspelen van ingesloten muziek.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "sc_anonymous_id",
+        "type": "HTTP cookie",
+        "description": "SoundCloud cookie die wordt gebruikt om ingesloten audio-content te kunnen afspelen.",
+        "duration": "10 jaar"
+      }
+    ]
+  },
+  {
+    "id": "preferences",
+    "label": "Voorkeurs cookies",
+    "description": "Onthouden je voorkeuren zoals taal, regio en weergave-instellingen",
+    "required": false,
+    "legalBasis": "legitimate-interest",
+    "cookies": [
+      {
+        "name": "language",
+        "type": "Lokale HTML opslag",
+        "description": "Slaat de taalvoorkeur van de gebruiker op zodat de website in de juiste taal wordt weergegeven.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "region",
+        "type": "Lokale HTML opslag",
+        "description": "Slaat de regio- of locatievoorkeur op voor relevante lokale informatie.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "theme",
+        "type": "Lokale HTML opslag",
+        "description": "Onthoudt of de gebruiker de voorkeur heeft voor een licht of donker thema.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "font_size",
+        "type": "Lokale HTML opslag",
+        "description": "Slaat de gewenste lettergrootte op voor toegankelijkheid.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "sidebar_collapsed",
+        "type": "Lokale HTML opslag",
+        "description": "Onthoudt of de zijbalk is in- of uitgeklapt.",
+        "duration": "1 jaar"
+      }
+    ]
+  },
+  {
+    "id": "marketing",
+    "label": "Marketing cookies",
+    "description": "Gebruikt om relevante advertenties te tonen en de effectiviteit van campagnes te meten",
+    "required": false,
+    "legalBasis": "consent",
+    "cookies": [
+      {
+        "name": "_fbp",
+        "type": "HTTP cookie",
+        "description": "Facebook/Meta Pixel cookie om advertentie-effectiviteit te meten en doelgroepen op te bouwen.",
+        "duration": "3 maanden"
+      },
+      {
+        "name": "_fbc",
+        "type": "HTTP cookie",
+        "description": "Facebook/Meta cookie die de laatste klik op een advertentie opslaat.",
+        "duration": "3 maanden"
+      },
+      {
+        "name": "_gcl_au",
+        "type": "HTTP cookie",
+        "description": "Google Ads cookie om conversies te meten voor gebruikers die via Google-advertenties komen.",
+        "duration": "3 maanden"
+      },
+      {
+        "name": "IDE",
+        "type": "HTTP cookie",
+        "description": "Google DoubleClick cookie om advertenties te personaliseren op basis van surfgedrag.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "li_fat_id",
+        "type": "HTTP cookie",
+        "description": "LinkedIn Insight Tag cookie voor het meten van advertentie-effectiviteit en websiteanalyse.",
+        "duration": "1 maand"
+      },
+      {
+        "name": "UserMatchHistory",
+        "type": "HTTP cookie",
+        "description": "LinkedIn cookie voor het synchroniseren van advertentie-ID's tussen LinkedIn en adverteerders.",
+        "duration": "1 maand"
+      },
+      {
+        "name": "_ttp",
+        "type": "HTTP cookie",
+        "description": "TikTok Pixel cookie om de effectiviteit van TikTok-advertenties te meten.",
+        "duration": "13 maanden"
+      },
+      {
+        "name": "_pin_unauth",
+        "type": "HTTP cookie",
+        "description": "Pinterest Tag cookie om conversies en advertentie-interacties bij te houden.",
+        "duration": "1 jaar"
+      },
+      {
+        "name": "_scid",
+        "type": "HTTP cookie",
+        "description": "Snapchat Pixel cookie voor het meten van advertentiecampagnes.",
+        "duration": "13 maanden"
+      },
+      {
+        "name": "test_cookie",
+        "type": "HTTP cookie",
+        "description": "Google DoubleClick testcookie om te controleren of de browser cookies accepteert.",
+        "duration": "15 minuten"
+      }
+    ]
+  }
+]

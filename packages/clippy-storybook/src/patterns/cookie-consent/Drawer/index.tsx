@@ -1,6 +1,8 @@
 /* @license CC0-1.0 */
 
-import { Button, ButtonGroup, Drawer, Heading2, Link } from '@utrecht/component-library-react/dist/css-module';
+import { Button } from '@nl-design-system-candidate/button-react';
+import { Heading } from '@nl-design-system-candidate/heading-react';
+import { ButtonGroup, Drawer, Link } from '@utrecht/component-library-react/dist/css-module';
 import React, { FC } from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieConsentDrawerProps } from './types';
@@ -20,6 +22,7 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
     href: '/templates/cookies',
     text: 'Zelf instellen',
   },
+  showLogo,
   title,
 }) => {
   const { handleAccept, handleReject, isVisible } = useCookieConsent({ clearStorageOnMount });
@@ -30,21 +33,41 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
 
   return (
     <Drawer align="block-start" open style={{ position: 'static' }}>
-      {title && (
-        <Heading2 id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
-          {title}
-        </Heading2>
+      {showLogo && (
+        <div style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
+          <Link href="#" style={{ display: 'inline-block', textDecoration: 'none' }}>
+            <img
+              src="/src/patterns/cookie-consent/assets/logo.svg"
+              alt="Organisatie logo"
+              style={{ maxHeight: '50px', width: 'auto' }}
+            />
+          </Link>
+        </div>
       )}
 
-      <div style={{ marginBlockEnd: 'var(--basis-space-block-xl, 2rem)' }}>{children}</div>
+      {title && (
+        <Heading level={2} id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
+          {title}
+        </Heading>
+      )}
+
+      <div
+        style={{
+          marginBlockEnd: 'var(--basis-space-block-xl, 2rem)',
+          maxHeight: '200px',
+          overflowY: 'auto',
+        }}
+      >
+        {children}
+      </div>
 
       <form method="dialog">
         <ButtonGroup style={{ marginBlockStart: 'var(--basis-space-block-xl, 2rem)' }}>
-          <Button appearance="secondary-action-button" onClick={handleAccept} type="submit" value="accept">
+          <Button onClick={handleAccept} purpose="secondary" type="submit" value="accept">
             {buttonAccept}
           </Button>
 
-          <Button appearance="secondary-action-button" onClick={handleReject} type="submit" value="reject">
+          <Button onClick={handleReject} purpose="secondary" type="submit" value="reject">
             {buttonReject}
           </Button>
 

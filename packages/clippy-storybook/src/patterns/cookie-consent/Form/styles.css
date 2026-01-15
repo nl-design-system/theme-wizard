@@ -1,0 +1,166 @@
+.clippy-cookie-consent {
+  /* Clippy variables linked to basis tokens */
+  --clippy-description-list-color: var(--basis-color-default-color-document);
+  --clippy-description-list-font-family: var(--basis-text-font-family-default);
+  --clippy-description-list-font-size: var(--basis-text-font-size-md);
+  --clippy-description-list-line-height: var(--basis-text-line-height-md);
+  --clippy-document-default-body-font-family: var(--basis-text-font-family-default);
+  --clippy-typography-hyphenate-limit-chars: 6 3 2;
+  --clippy-icon-size: 1rem;
+
+  /* AMS variables linked to clippy variables */
+  --ams-description-list-color: var(--clippy-description-list-color);
+  --ams-description-list-font-family: var(--clippy-description-list-font-family);
+  --ams-description-list-font-size: var(--clippy-description-list-font-size);
+  --ams-description-list-line-height: var(--clippy-description-list-line-height);
+  --ams-typography-hyphenate-limit-chars: var(--clippy-typography-hyphenate-limit-chars);
+
+  /* Utrecht variables linked to clippy variables */
+  --utrecht-document-font-family: var(--clippy-document-default-body-font-family);
+
+  margin-inline: auto;
+  max-inline-size: 48rem;
+  padding-block: var(--basis-space-block-xl, 2rem);
+  padding-inline: 1.5rem;
+}
+
+.clippy-cookie-fieldset--legitimate-interest {
+  background-color: var(--basis-color-accent-1-bg-subtle);
+  padding-block: var(--basis-space-block-lg);
+  padding-inline: var(--basis-space-inline-lg);
+}
+
+/* ==========================================================================
+   Cookie Option Card
+   ========================================================================== */
+
+.clippy-cookie-option {
+  border: 1px solid var(--basis-color-default-border-subtle);
+}
+
+.clippy-cookie-option__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--basis-space-inline-sm);
+  justify-content: space-between;
+  padding-block: var(--basis-space-block-md);
+  padding-inline: var(--basis-space-block-md);
+}
+
+.clippy-cookie-option__toggle-icon {
+  --utrecht-icon-size: var(--clippy-icon-size);
+}
+
+.clippy-cookie-option__details {
+  border-block-start: 1px solid var(--basis-color-default-border-subtle);
+}
+
+/* ==========================================================================
+   Description List
+   ========================================================================== */
+
+.clippy-description-list {
+  --_term-column-width: 12rem;
+
+  margin-block: 0;
+}
+
+/* Variant: nested structure for cookie details */
+.clippy-description-list--nested {
+  --_term-column-width: 10rem;
+}
+
+.clippy-description-list__section {
+  margin-block: var(--basis-space-block-md);
+}
+
+/* Variant: cookie item with borders */
+.clippy-description-list__section--cookie {
+  border-block-end: 1px solid var(--basis-color-default-border-subtle);
+  margin-block: 0;
+  padding-block: var(--basis-space-block-md);
+  padding-inline: var(--basis-space-inline-md, 1rem);
+}
+
+.clippy-description-list__section--cookie:last-child {
+  border-block-end: 0;
+}
+
+.clippy-description-list__term {
+  font-weight: var(--basis-text-font-weight-bold, 700);
+}
+
+.clippy-description-list__description {
+  margin-inline: 0;
+}
+
+/* Inner grid for nested details */
+.clippy-description-list__grid {
+  margin-block: var(--basis-space-block-sm) 0;
+}
+
+/* Wider screens: two-column grid */
+@media (width >= 48rem) {
+  .clippy-description-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--basis-space-block-md);
+  }
+
+  /* Shared grid setup for sections and rows */
+  .clippy-description-list__section,
+  .clippy-description-list__row {
+    column-gap: var(--basis-space-inline-lg);
+    display: grid;
+    grid-template-columns: var(--_term-column-width) 1fr;
+  }
+
+  /* Variant: cookie item keeps its grid but adds borders/padding */
+  .clippy-description-list__section--cookie {
+    column-gap: var(--basis-space-inline-lg);
+    display: grid;
+    grid-template-columns: var(--_term-column-width) 1fr;
+  }
+
+  .clippy-description-list__term {
+    grid-column: 1;
+  }
+
+  .clippy-description-list__description {
+    grid-column: 2;
+  }
+}
+
+.clippy-cookie-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-md);
+}
+
+/* ==========================================================================
+   Layout Sections
+   ========================================================================== */
+
+.clippy-cookie-settings {
+  margin-block-end: var(--basis-space-block-lg);
+}
+
+.clippy-cookie-actions {
+  margin-block-end: var(--basis-space-block-xl);
+}
+
+/* ==========================================================================
+   Data Panel - Cookie Reset Section
+   ========================================================================== */
+
+.clippy-cookie-reset {
+  border-block-start: 1px solid var(--basis-color-default-border-subtle);
+  margin-block-start: var(--basis-space-block-lg);
+  padding-block-start: var(--basis-space-block-lg);
+}
+
+.clippy-cookie-reset__description {
+  color: var(--basis-color-default-color-subtle);
+  font-size: var(--basis-text-font-size-sm);
+  margin-block-end: var(--basis-space-block-sm);
+}
