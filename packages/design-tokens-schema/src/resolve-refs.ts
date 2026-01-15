@@ -14,10 +14,20 @@ export type ResolvedToken = BaseDesignTokenValue & {
   };
 };
 
-export const resolveRef = (root: object, path: string) => {
+export const resolveRef = (root: object, path: string): unknown => {
   const refPath = path.slice(1, -1);
   // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
-  return dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+  const resolved = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+
+  // If the resolved value is a token object with a $value that is itself a reference, recursively resolve it
+  if (resolved && typeof resolved === 'object' && '$value' in resolved) {
+    const tokenValue = (resolved as { $value: unknown }).$value;
+    if (typeof tokenValue === 'string' && isRef(tokenValue)) {
+      return resolveRef(root, tokenValue);
+    }
+  }
+
+  return resolved;
 };
 
 /**
@@ -27,14 +37,17 @@ export const resolveRef = (root: object, path: string) => {
  */
 export const resolveRefs = (config: unknown, root: Record<string, unknown>): void => {
   walkTokensWithRef(config, root, (token) => {
-    // const refPath = token.$value.slice(1, -1);
-    // // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
-    // const ref = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
     const ref = resolveRef(root, token.$value);
 
+    // Ensure ref is a token object with $value and $type
+    if (!ref || typeof ref !== 'object' || !('$value' in ref)) {
+      return;
+    }
+
     // Capture the resolved value, transforming legacy colors to modern format if needed
-    let resolvedValue = ref.$value;
-    if (ref.$type === 'color' && typeof resolvedValue === 'string' && !isRef(resolvedValue)) {
+    let resolvedValue = (ref as { $value: unknown; $type?: string }).$value;
+    const refType = (ref as { $value: unknown; $type?: string }).$type;
+    if (refType === 'color' && typeof resolvedValue === 'string' && !isRef(resolvedValue)) {
       resolvedValue = legacyToModernColor.decode(resolvedValue);
     }
 

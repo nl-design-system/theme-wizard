@@ -28,7 +28,7 @@ export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj !== null && typeof obj === 'object';
 };
 
-type TokenLike = {
+export type TokenLike = {
   $type: string;
   $value: unknown;
 };

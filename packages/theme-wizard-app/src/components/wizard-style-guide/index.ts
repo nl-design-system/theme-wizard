@@ -3,6 +3,7 @@ import type { DesignToken } from 'style-dictionary/types';
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
+import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
@@ -10,9 +11,13 @@ import {
   legacyToModernColor,
   type ColorToken as ColorTokenType,
   walkTokensWithRef,
+  walkObject,
   isRef,
   resolveRef,
   isValueObject,
+  isTokenLike,
+  type TokenLike,
+  ColorValue,
 } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import '../wizard-layout';
@@ -88,7 +93,13 @@ export class WizardStyleGuide extends LitElement {
 
   #activeToken?: DisplayToken;
 
-  static override readonly styles = [unsafeCSS(tableCss), unsafeCSS(colorSampleCss), unsafeCSS(headingCss), styles];
+  static override readonly styles = [
+    unsafeCSS(dataBadgeCss),
+    unsafeCSS(tableCss),
+    unsafeCSS(colorSampleCss),
+    unsafeCSS(headingCss),
+    styles,
+  ];
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -286,6 +297,32 @@ export class WizardStyleGuide extends LitElement {
     `;
   }
 
+  #renderFontWeightExample(displayValue: string | number) {
+    return html`
+      <clippy-html-image>
+        <span slot="label">${t('styleGuide.sections.typography.fontWeight.sample')}</span>
+        <utrecht-paragraph
+          style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-weight: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+        >
+          Op brute wijze ving de schooljuf de quasi-kalme lynx.
+        </utrecht-paragraph>
+      </clippy-html-image>
+    `;
+  }
+
+  #renderLineHeightExample(displayValue: string | number) {
+    return html`
+      <clippy-html-image>
+        <span slot="label">${t('styleGuide.sections.typography.fontWeight.sample')}</span>
+        <utrecht-paragraph
+          style="--utrecht-paragraph-font-size: var(--basis-text-font-size-xl); --utrecht-paragraph-line-height: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; outline: 1px solid"
+        >
+          Op brute wijze ving de schooljuf de quasi-kalme lynx.
+        </utrecht-paragraph>
+      </clippy-html-image>
+    `;
+  }
+
   #renderTokenExample(token: Omit<DisplayToken, 'usage' | 'isUsed'>) {
     return html`
       ${token.tokenType === 'color' ? html` ${this.#renderColorSample(token.displayValue)} ` : nothing}
@@ -294,6 +331,8 @@ export class WizardStyleGuide extends LitElement {
       ${token.tokenType === 'dimension'
         ? html` ${this.#renderSpacingExample(token.displayValue, token.metadata?.['space'])} `
         : nothing}
+      ${token.tokenType === 'fontWeight' ? this.#renderFontWeightExample(token.displayValue) : nothing}
+      ${token.tokenType === 'lineHeight' ? this.#renderLineHeightExample(token.displayValue) : nothing}
     `;
   }
 
@@ -658,63 +697,80 @@ export class WizardStyleGuide extends LitElement {
     `;
   }
 
+  #collectComponentTokens(
+    componentConfig: Record<string, unknown>,
+    componentId: string,
+  ): {
+    fullPath: string;
+    tokenConfig: TokenLike;
+  }[] {
+    const tokens: {
+      fullPath: string;
+      tokenConfig: TokenLike;
+    }[] = [];
+
+    // Use walkObject to recursively find all tokens
+    walkObject<TokenLike>(componentConfig, isTokenLike, (tokenConfig: TokenLike, path: string[]) => {
+      const tokenId = path.join('.');
+      const fullPath = `nl.${componentId}.${tokenId}`;
+      tokens.push({
+        fullPath,
+        tokenConfig,
+      });
+    });
+
+    return tokens;
+  }
+
   #renderComponentsSection() {
-    const nlComponents = this.theme.tokens['nl'];
-    if (!nlComponents) return nothing;
+    // We only render Candidtae (`nl.`) components for now
+    const components = this.theme.tokens['nl'];
+    if (!components) return nothing;
 
     return html`
       <section id="components">
         <utrecht-heading-2>${t('styleGuide.sections.components.title')}</utrecht-heading-2>
         <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/componenten/" target="_blank"> docs </a>
+          <a href="https://nldesignsystem.nl/componenten/" target="_blank">docs</a>
         </utrecht-paragraph>
 
-        ${Object.entries(nlComponents).map(
+        ${Object.entries(components).map(
           ([componentId, componentConfig]) => html`
             <table class="utrecht-table">
               <caption class="utrecht-table__caption">
-                ${componentId}
+                ${`nl.${componentId}`}
               </caption>
               <thead class="utrecht-table__header">
                 <tr class="utrecht-table__row">
                   <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenType')}</th>
                   <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
                   <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.reference')}</th>
                   <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
                 </tr>
               </thead>
               <tbody class="utrecht-table__body">
-                ${Object.entries(componentConfig).map(([tokenId, tokenConfig]) => {
-                  if (
-                    typeof tokenConfig === 'object' &&
-                    tokenConfig !== null &&
-                    '$type' in tokenConfig &&
-                    typeof tokenConfig.$type === 'string' &&
-                    '$value' in tokenConfig
-                  ) {
+                ${this.#collectComponentTokens(componentConfig as Record<string, unknown>, componentId).map(
+                  ({ fullPath, tokenConfig }) => {
                     const resolvedValue = isRef(tokenConfig.$value)
                       ? resolveRef(this.theme.tokens, tokenConfig.$value)
                       : tokenConfig.$value;
                     const displayValue = this.#stringifyTokenValue(resolvedValue);
+
                     return html`
                       <tr class="utrecht-table__row">
                         <td class="utrecht-table__cell">
                           ${this.#renderTokenExample({
                             displayValue: displayValue,
-                            tokenId: tokenId,
+                            tokenId: fullPath,
                             tokenType: tokenConfig.$type,
                           })}
                         </td>
                         <td class="utrecht-table__cell">
-                          <utrecht-code>${tokenConfig.$type}</utrecht-code>
-                        </td>
-                        <td class="utrecht-table__cell">
-                          <utrecht-code>${`nl.${componentId}.${tokenId}`}</utrecht-code>
+                          <utrecht-code>${fullPath}</utrecht-code>
                         </td>
                         <td class="utrecht-table__cell">
                           ${isRef(tokenConfig.$value)
-                            ? html`<utrecht-code>${tokenConfig.$value}</utrecht-code>`
+                            ? html`<span class="nl-data-badge">${tokenConfig.$value.slice(1, -1)}</span>`
                             : nothing}
                         </td>
                         <td class="utrecht-table__cell">
@@ -722,10 +778,8 @@ export class WizardStyleGuide extends LitElement {
                         </td>
                       </tr>
                     `;
-                  }
-                  console.log(componentId, tokenId, tokenConfig);
-                  return nothing;
-                })}
+                  },
+                )}
               </tbody>
             </table>
           `,
@@ -742,9 +796,8 @@ export class WizardStyleGuide extends LitElement {
         open=${this.#activeToken !== undefined}
         actions="none"
       >
-        ${!this.#activeToken
-          ? nothing
-          : html`
+        ${this.#activeToken
+          ? html`
               <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
               ${this.#renderTokenExample(this.#activeToken)}
               <dl>
@@ -764,55 +817,80 @@ export class WizardStyleGuide extends LitElement {
                 <dd>
                   <utrecht-code>${this.#activeToken.displayValue}</utrecht-code>
                 </dd>
-                ${this.#activeToken.metadata === undefined
-                  ? nothing
-                  : Object.entries(this.#activeToken.metadata).map(
+                ${this.#activeToken.metadata
+                  ? Object.entries(this.#activeToken.metadata).map(
                       ([key, value]) => html`
                         <dt>${key}</dt>
                         <dd>
                           <utrecht-code>${value}</utrecht-code>
                         </dd>
                       `,
-                    )}
+                    )
+                  : nothing}
               </dl>
 
               <utrecht-heading-3>
                 ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
                 <data>(${this.#activeToken.usage.length}&times;)</data>
               </utrecht-heading-3>
-              ${this.#activeToken.usage.length === 0
-                ? html`<utrecht-paragraph>
-                    ${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
-                  </utrecht-paragraph>`
-                : html`<ul>
-                    ${this.#activeToken.usage.map(
-                      (referrer) => html`
-                        <li>
-                          <utrecht-code>${referrer}</utrecht-code>
-                        </li>
-                      `,
-                    )}
-                  </ul>`}
-            `}
+              ${this.#activeToken.usage.length > 0
+                ? html`
+                    <ul>
+                      ${this.#activeToken.usage.map(
+                        (referrer) => html`
+                          <li>
+                            <span class="nl-data-badge">${referrer}</span>
+                          </li>
+                        `,
+                      )}
+                    </ul>
+                  `
+                : html`
+                    <utrecht-paragraph>${t('styleGuide.detailsDialog.tokenReferenceList.empty')}</utrecht-paragraph>
+                  `}
+            `
+          : nothing}
       </clippy-modal>
     `;
   }
 
+  /**
+   * TODO: we probably want/need a sort of DesignToken class where we can call .toString()
+   */
   #stringifyTokenValue(token: unknown): string {
+    // Handle string primitives
     if (typeof token === 'string') return token;
 
-    if (isValueObject(token)) {
-      if ('$value' in token && isValueObject(token['$value'])) {
-        if ('$type' in token && typeof token['$type'] === 'string') {
-          if (token['$type'] === 'color') {
-            return legacyToModernColor.encode(token.$value);
-          }
-        }
-        return JSON.stringify(token.$value);
-      }
-      return token.$value;
+    // Must be an object to have $value
+    if (!isValueObject(token)) {
+      return JSON.stringify(token);
     }
-    return JSON.stringify(token);
+
+    const tokenObj = token as Record<string, unknown>;
+    const value = tokenObj['$value'];
+
+    // No $value property
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    // Handle array values: stringify each element
+    if (Array.isArray(value)) {
+      return value.map((v) => this.#stringifyTokenValue(v)).join(', ');
+    }
+
+    // Handle object values
+    if (isValueObject(value)) {
+      // Special handling for color tokens
+      if (tokenObj['$type'] === 'color') {
+        return legacyToModernColor.encode(value as ColorValue);
+      }
+      // Other object values: stringify
+      return JSON.stringify(value);
+    }
+
+    // Handle primitive values (number, boolean, etc.)
+    return value.toString();
   }
 
   override render() {
@@ -846,10 +924,8 @@ export class WizardStyleGuide extends LitElement {
         <div slot="main" class="wizard-styleguide__main">
           <utrecht-heading-1>${t('styleGuide.title')}</utrecht-heading-1>
 
-          <!--${this.#renderColorSection(colorGroups)}
-          ${this.#renderTypographySection(fontFamilies, fontSizes)}
-          ${this.#renderSpacingSection(spacingData)} -->
-          ${this.#renderComponentsSection()} ${this.#renderTokenDialog()}
+          ${this.#renderColorSection(colorGroups)} ${this.#renderTypographySection(fontFamilies, fontSizes)}
+          ${this.#renderSpacingSection(spacingData)} ${this.#renderComponentsSection()} ${this.#renderTokenDialog()}
         </div>
       </wizard-layout>
     `;

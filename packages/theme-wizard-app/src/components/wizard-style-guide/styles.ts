@@ -46,4 +46,10 @@ export default css`
     text-decoration-line: underline;
     text-decoration-style: wavy;
   }
+
+  clippy-html-image {
+    display: block;
+    max-width: 24rem;
+    overflow: clip;
+  }
 `;

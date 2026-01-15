@@ -40,6 +40,7 @@ export const en = {
         title: 'Where is this token used?',
       },
     },
+    reference: 'Reference',
     sample: 'Sample',
     sections: {
       colors: {
@@ -49,6 +50,9 @@ export const en = {
           },
         },
         title: 'Colors',
+      },
+      components: {
+        title: 'Components',
       },
       space: {
         block: {
@@ -240,6 +244,7 @@ export const nl = {
         title: 'Waar wordt deze token gebruikt?',
       },
     },
+    reference: 'Referentie',
     sample: 'Voorbeeld',
     sections: {
       colors: {
@@ -249,6 +254,9 @@ export const nl = {
           },
         },
         title: 'Kleuren',
+      },
+      components: {
+        title: 'Componenten',
       },
       space: {
         block: {
