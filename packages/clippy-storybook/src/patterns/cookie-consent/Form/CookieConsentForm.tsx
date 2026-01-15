@@ -129,7 +129,7 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   );
 
   return (
-    <section aria-label="Cookie-instellingen" className="utrecht-cookie-consent">
+    <section aria-label="Cookie-instellingen" className="clippy-cookie-consent">
       {/* Visible status message for all users */}
       {statusMessage && <Alert type="ok">{statusMessage}</Alert>}
 
@@ -149,7 +149,7 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
         </>
       )}
 
-      <div className="utrecht-cookie-settings">
+      <div className="clippy-cookie-settings">
         <CookieOptionList
           cookieOptions={cookieOptions}
           onCheckboxChange={handleCheckboxChange}
@@ -158,7 +158,7 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
         />
       </div>
 
-      <ButtonGroup className="utrecht-cookie-actions">
+      <ButtonGroup className="clippy-cookie-actions">
         <Button onClick={handleAcceptAll} purpose="secondary" type="button">
           {buttonAccept}
         </Button>

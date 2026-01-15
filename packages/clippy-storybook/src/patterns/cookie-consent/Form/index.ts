@@ -2,11 +2,11 @@
 export { CookieConsentForm, CookieConsentForm as default } from './CookieConsentForm';
 
 // Dumb/presentational components for custom compositions
-export { CookieOption, CookieOptionList, CookieTable, DataPanel, PolicyPanel } from './components';
+export { CookieOption, CookieOptionList, CookieDescriptionList, DataPanel, PolicyPanel } from './components';
 export type {
   CookieOptionListProps,
   CookieOptionProps,
-  CookieTableProps,
+  CookieDescriptionListProps,
   DataPanelProps,
   PolicyPanelProps,
 } from './components';

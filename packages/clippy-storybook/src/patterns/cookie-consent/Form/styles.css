@@ -1,33 +1,27 @@
 :root {
-  --utrecht-data-list-margin-block-end: var(--basis-space-block-md, 1rem);
-  --utrecht-data-list-margin-block-start: var(--basis-space-block-md, 1rem);
-  --utrecht-data-list-item-key-color: var(--basis-color-default-color-default, currentColor);
-  --utrecht-data-list-item-key-font-size: var(--basis-text-font-size-md, 1rem);
-  --utrecht-data-list-item-key-font-weight: var(--basis-text-font-weight-bold, 700);
-  --utrecht-data-list-item-key-line-height: var(--basis-text-line-height-md, 1.5);
-  --utrecht-data-list-item-value-color: var(--basis-color-default-color-default, currentColor);
-  --utrecht-data-list-item-value-font-size: var(--basis-text-font-size-md, 1rem);
-  --utrecht-data-list-item-value-font-weight: var(--basis-text-font-weight-regular, 400);
-  --utrecht-data-list-item-value-line-height: var(--basis-text-line-height-md, 1.5);
-  --utrecht-data-list-rows-border-bottom-color: var(--basis-color-default-border-subtle, #e5e5e5);
-  --utrecht-data-list-rows-border-bottom-width: var(--basis-border-width-sm, 1px);
-  --utrecht-data-list-rows-gap: var(--basis-space-block-md, 1rem);
-  --utrecht-data-list-rows-column-min-inline-size: 0;
-  --utrecht-data-list-rows-column-inline-size: auto;
-  --utrecht-data-list-rows-item-margin-block-start: 0;
-  --utrecht-data-list-rows-item-padding-block-end: var(--basis-space-block-md, 1rem);
-  --utrecht-data-list-rows-item-padding-block-start: var(--basis-space-block-md, 1rem);
-  --utrecht-data-list-rows-item-value-margin-block-start: 0;
+  /* Clippy variables linked to basis tokens */
+  --clippy-description-list-color: var(--basis-color-default-color-default);
+  --clippy-description-list-font-family: var(--basis-text-font-family-default);
+  --clippy-description-list-font-size: var(--basis-text-font-size-md);
+  --clippy-description-list-line-height: var(--basis-text-line-height-md);
+  --clippy-typography-hyphenate-limit-chars: 6 3 2;
+
+  /* AMS variables linked to clippy variables */
+  --ams-description-list-color: var(--clippy-description-list-color);
+  --ams-description-list-font-family: var(--clippy-description-list-font-family);
+  --ams-description-list-font-size: var(--clippy-description-list-font-size);
+  --ams-description-list-line-height: var(--clippy-description-list-line-height);
+  --ams-typography-hyphenate-limit-chars: var(--clippy-typography-hyphenate-limit-chars);
 }
 
-.utrecht-cookie-consent {
+.clippy-cookie-consent {
   margin-inline: auto;
   max-inline-size: 48rem;
   padding-block: var(--basis-space-block-xl, 2rem);
   padding-inline: 1.5rem;
 }
 
-.utrecht-cookie-fieldset--legitimate-interest {
+.clippy-cookie-fieldset--legitimate-interest {
   background-color: var(--basis-color-accent-1-bg-subtle);
   padding-block: var(--basis-space-block-lg);
   padding-inline: var(--basis-space-inline-lg);
@@ -37,11 +31,11 @@
    Cookie Option Card
    ========================================================================== */
 
-.utrecht-cookie-option {
+.clippy-cookie-option {
   border: 1px solid var(--basis-color-default-border-subtle);
 }
 
-.utrecht-cookie-option__header {
+.clippy-cookie-option__header {
   align-items: flex-start;
   display: flex;
   gap: var(--basis-space-inline-sm);
@@ -50,20 +44,98 @@
   padding-inline: var(--basis-space-block-md);
 }
 
-.utrecht-cookie-option__toggle-icon {
-  --utrecht-icon-size: 1rem;
+.clippy-cookie-option__toggle-icon {
+  --clippy-icon-size: 1rem;
+  --utrecht-icon-size: var(--clippy-icon-size);
 }
 
-.utrecht-cookie-option__details {
+.clippy-cookie-option__details {
   border-block-start: 1px solid var(--basis-color-default-border-subtle);
 }
 
-.utrecht-cookie-option__details tbody tr:last-child td,
-.utrecht-cookie-option__details tbody tr:last-child th {
+/* ==========================================================================
+   Cookie details (Description List)
+   ========================================================================== */
+
+.clippy-cookie-details {
+  margin-block: 0;
+}
+
+.clippy-cookie-details__cookie {
+  border-block-end: 1px solid var(--basis-color-default-border-subtle);
+  padding-block: var(--basis-space-block-md);
+  padding-inline: var(--basis-space-inline-md, 1rem);
+}
+
+.clippy-cookie-details__cookie:last-child {
   border-block-end: 0;
 }
 
-.utrecht-cookie-options {
+/* Cookie name styling */
+.clippy-cookie-details__cookie-name {
+  font-weight: var(--basis-text-font-weight-bold, 700);
+}
+
+/* Inner grid for (Type / Looptijd / Beschrijving) */
+.clippy-cookie-details__grid {
+  margin-block: var(--basis-space-block-sm) 0;
+}
+
+/* Default: stacked (mobile-first) */
+.clippy-cookie-details__term {
+  font-weight: var(--basis-text-font-weight-bold, 700);
+}
+
+.clippy-cookie-details__value {
+  margin-inline: 0;
+}
+
+/* Wider screens: two-column grid */
+@media (width >= 48rem) {
+  .clippy-cookie-details {
+    /* Fixed cookie name column width */
+    --clippy-cookie-name-column-width: 12rem;
+  }
+
+  .clippy-cookie-details__cookie {
+    column-gap: var(--basis-space-inline-lg);
+    display: grid;
+    grid-template-columns: var(--clippy-cookie-name-column-width) 1fr;
+  }
+
+  .clippy-cookie-details__cookie-name {
+    grid-column: 1;
+  }
+
+  .clippy-cookie-details__cookie-details {
+    grid-column: 2;
+  }
+
+  .clippy-cookie-details__grid {
+    /* Fixed column widths (term + value) */
+    --clippy-cookie-details-term-column-width: 10rem;
+    --clippy-cookie-details-value-column-width: 1fr;
+  }
+
+  .clippy-cookie-details__row {
+    column-gap: var(--basis-space-inline-lg);
+    display: grid;
+    grid-template-columns: var(--clippy-cookie-details-term-column-width) var(
+        --clippy-cookie-details-value-column-width
+      );
+    row-gap: var(--basis-space-block-sm);
+  }
+
+  .clippy-cookie-details__term {
+    grid-column: 1;
+  }
+
+  .clippy-cookie-details__value {
+    grid-column: 2;
+  }
+}
+
+.clippy-cookie-options {
   display: flex;
   flex-direction: column;
   gap: var(--basis-space-block-md);
@@ -73,11 +145,11 @@
    Layout Sections
    ========================================================================== */
 
-.utrecht-cookie-settings {
+.clippy-cookie-settings {
   margin-block-end: var(--basis-space-block-lg);
 }
 
-.utrecht-cookie-actions {
+.clippy-cookie-actions {
   margin-block-end: var(--basis-space-block-xl);
 }
 
@@ -85,13 +157,13 @@
    Data Panel - Cookie Reset Section
    ========================================================================== */
 
-.utrecht-cookie-reset {
+.clippy-cookie-reset {
   border-block-start: 1px solid var(--basis-color-default-border-subtle);
   margin-block-start: var(--basis-space-block-lg);
   padding-block-start: var(--basis-space-block-lg);
 }
 
-.utrecht-cookie-reset__description {
+.clippy-cookie-reset__description {
   color: var(--basis-color-default-color-subtle);
   font-size: var(--basis-text-font-size-sm);
   margin-block-end: var(--basis-space-block-sm);

@@ -5,7 +5,7 @@ import { FormFieldCheckbox, Icon } from '@utrecht/component-library-react/dist/c
 import { UtrechtIconChevronDown } from '@utrecht/web-component-library-react';
 import React, { memo, useCallback, useState, type ChangeEvent, type FC } from 'react';
 import type { CookieOption as CookieOptionType, CookieType, LegalBasis } from '../types';
-import { CookieTable } from './CookieTable';
+import { CookieDescriptionList } from './CookieDescriptionList';
 
 export interface CookieOptionProps {
   isSelected: boolean;
@@ -68,8 +68,8 @@ export const CookieOption: FC<CookieOptionProps> = memo(({ isSelected, onChange,
   );
 
   return (
-    <div className="utrecht-cookie-option">
-      <div className="utrecht-cookie-option__header">
+    <div className="clippy-cookie-option">
+      <div className="clippy-cookie-option__header">
         <FormFieldCheckbox
           defaultChecked={isSelected}
           description={description}
@@ -86,7 +86,7 @@ export const CookieOption: FC<CookieOptionProps> = memo(({ isSelected, onChange,
             aria-expanded={isExpanded}
             iconOnly
             iconStart={
-              <Icon className="utrecht-cookie-option__toggle-icon">
+              <Icon className="clippy-cookie-option__toggle-icon">
                 <UtrechtIconChevronDown />
               </Icon>
             }
@@ -99,8 +99,8 @@ export const CookieOption: FC<CookieOptionProps> = memo(({ isSelected, onChange,
       </div>
 
       {hasCookies && isExpanded && option.cookies && (
-        <div className="utrecht-cookie-option__details">
-          <CookieTable cookies={option.cookies} />
+        <div className="clippy-cookie-option__details">
+          <CookieDescriptionList cookies={option.cookies} />
         </div>
       )}
     </div>

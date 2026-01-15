@@ -23,8 +23,8 @@ export const DataPanel: FC<DataPanelProps> = ({ cookieOptions, selectedCookies }
 
     <Paragraph>Je huidige cookievoorkeuren:</Paragraph>
 
-    <div className="utrecht-cookie-consent__preferences-box">
-      <ul className="utrecht-cookie-consent__preferences-list">
+    <div className="clippy-cookie-consent__preferences-box">
+      <ul className="clippy-cookie-consent__preferences-list">
         {cookieOptions.map((option) => (
           <li key={option.id}>
             {option.label}: {selectedCookies.has(option.id) ? 'Geaccepteerd' : 'Geweigerd'}

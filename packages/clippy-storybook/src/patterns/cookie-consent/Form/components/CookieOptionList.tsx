@@ -69,14 +69,14 @@ export const CookieOptionList: FC<CookieOptionListProps> = ({
       {children}
 
       {hasConsentOptions && (
-        <Fieldset aria-describedby="consent-description" className="utrecht-cookie-fieldset">
+        <Fieldset aria-describedby="consent-description" className="clippy-cookie-fieldset">
           <FieldsetLegend>{legendConsent}</FieldsetLegend>
 
-          <Paragraph className="utrecht-cookie-fieldset__description" id="consent-description">
+          <Paragraph className="clippy-cookie-fieldset__description" id="consent-description">
             {CONSENT_DESCRIPTION}
           </Paragraph>
 
-          <div className="utrecht-cookie-options">
+          <div className="clippy-cookie-options">
             {consentOptions.map((option) => (
               <CookieOption
                 isSelected={selectedCookies.has(option.id)}
@@ -92,17 +92,17 @@ export const CookieOptionList: FC<CookieOptionListProps> = ({
       {hasLegitimateInterestOptions && (
         <Fieldset
           aria-describedby="legitimate-interest-description"
-          className="utrecht-cookie-fieldset utrecht-cookie-fieldset--legitimate-interest"
+          className="clippy-cookie-fieldset clippy-cookie-fieldset--legitimate-interest"
         >
           <FieldsetLegend>
             <strong>{legendLegitimateInterest}</strong>
           </FieldsetLegend>
 
-          <Paragraph className="utrecht-cookie-fieldset__description" id="legitimate-interest-description">
+          <Paragraph className="clippy-cookie-fieldset__description" id="legitimate-interest-description">
             {LEGITIMATE_INTEREST_DESCRIPTION}
           </Paragraph>
 
-          <div className="utrecht-cookie-options">
+          <div className="clippy-cookie-options">
             {legitimateInterestOptions.map((option) => (
               <CookieOption
                 isSelected={selectedCookies.has(option.id)}
