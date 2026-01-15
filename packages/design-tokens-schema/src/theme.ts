@@ -17,7 +17,7 @@ import {
   COLOR_KEYS,
 } from './basis-tokens';
 import { removeNonTokenProperties } from './remove-non-token-properties';
-import { ERROR_CODES, type InvalidRefIssue, createContrastIssue } from './validation-issue';
+import { ERROR_CODES, type InvalidRefIssue, LineHeightUnitIssue, createContrastIssue } from './validation-issue';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -212,10 +212,11 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
 
       ctx.addIssue({
         code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
         expected: 'number',
         input: token.$value,
         message: `Line-height should be a unitless number (got: "${token.$value}")`,
         path: [...path, '$value'],
-      });
+      } satisfies LineHeightUnitIssue);
     });
   });

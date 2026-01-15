@@ -765,6 +765,7 @@ describe('validate unitless line-height preference', () => {
     expect(result.error?.issues).toEqual([
       {
         code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
         expected: 'number',
         message: 'Line-height should be a unitless number (got: "20px")',
         path: ['basis', 'text', 'line-height', 'md', '$value'],
