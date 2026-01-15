@@ -1,5 +1,5 @@
 import { Link } from '@nl-design-system-candidate/link-react/css';
-import { Icon, PageContent, PageHeader, Image } from '@utrecht/component-library-react/dist/css-module';
+import { Icon, PageHeader, PageContent, Image } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAlleen } from '@utrecht/web-component-library-react';
 import React, { type FC, type ReactNode } from 'react';
 import logo from '../../../../assets/logo.svg';
@@ -17,33 +17,31 @@ const DEFAULT_ACTIONS = [
 
 const PageHeaderSection: FC<PageHeaderProps> = ({ actions = DEFAULT_ACTIONS, children }) => (
   <PageHeader>
-    <PageContent>
-      <div className="clippy-section">
-        <Row align="center" justify="space-between">
-          {children ?? (
-            <>
-              <Column cols={6}>
-                <Link href="/">
-                  <Image src={typeof logo === 'string' ? logo : logo.src} alt="Gemeente Voorbeeld" />
-                </Link>
-              </Column>
+    <PageContent className="utrecht-page-header__content">
+      <Row align="center" justify="space-between">
+        {children ?? (
+          <>
+            <Column cols={6}>
+              <Link href="/">
+                <Image src={typeof logo === 'string' ? logo : logo.src} alt="Gemeente Voorbeeld" />
+              </Link>
+            </Column>
 
-              <Column cols={6} className="clippy-page-header__actions">
-                {actions.map(({ href, icon, label }) => (
-                  <Link key={`${href}-${label}`} className="clippy-page-header__action-link" href={href}>
-                    {icon && (
-                      <Icon>
-                        <UtrechtIconAlleen />
-                      </Icon>
-                    )}
-                    {label}
-                  </Link>
-                ))}
-              </Column>
-            </>
-          )}
-        </Row>
-      </div>
+            <Column cols={6} className="clippy-page-header__actions">
+              {actions.map(({ href, icon, label }) => (
+                <Link key={`${href}-${label}`} className="clippy-page-header__action-link" href={href}>
+                  {icon && (
+                    <Icon>
+                      <UtrechtIconAlleen />
+                    </Icon>
+                  )}
+                  {label}
+                </Link>
+              ))}
+            </Column>
+          </>
+        )}
+      </Row>
     </PageContent>
   </PageHeader>
 );
