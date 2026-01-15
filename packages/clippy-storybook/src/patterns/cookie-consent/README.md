@@ -153,7 +153,7 @@ Als je de maximale hoogte wilt aanpassen, kun je de styling overschrijven:
 
 ```css
 .cookie-consent-content {
-  max-height: 300px; /* Pas aan naar je voorkeur */
+  max-height: 200px; /* Pas aan naar je voorkeur */
   overflow-y: auto;
 }
 ```
