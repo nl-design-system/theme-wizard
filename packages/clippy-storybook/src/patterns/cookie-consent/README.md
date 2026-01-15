@@ -162,7 +162,7 @@ Of in React met inline styles:
 
 ```tsx
 <CookieConsentDrawer>
-  <div style={{ maxHeight: '300px', overflowY: 'auto' }}>{/* Je content */}</div>
+  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>{/* Je content */}</div>
 </CookieConsentDrawer>
 ```
 
