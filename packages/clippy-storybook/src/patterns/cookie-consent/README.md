@@ -162,7 +162,7 @@ Of in React met inline styles:
 
 ```tsx
 <CookieConsentDrawer>
-  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>{/* Je content */}</div>
+  <div style={{ maxBlockSize: '200px', overflowBlock: 'auto' }}>{/* Je content */}</div>
 </CookieConsentDrawer>
 ```
 
@@ -312,7 +312,7 @@ Wanneer je een logo toevoegt aan je cookie banner, zorg ervoor dat:
 <CookieConsentDrawer title="Cookies op de website van [Organisatie]">
   <div style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
     <Link href="/">
-      <img src="/logo.svg" alt="Logo van [Organisatienaam]" style={{ maxHeight: '50px', width: 'auto' }} />
+      <img src="/logo.svg" alt="Logo van [Organisatienaam]" style={{ maxBlockSize: '50px', inlineSize: 'auto' }} />
     </Link>
   </div>
   <Paragraph>We gebruiken cookies om deze website goed te laten werken...</Paragraph>
