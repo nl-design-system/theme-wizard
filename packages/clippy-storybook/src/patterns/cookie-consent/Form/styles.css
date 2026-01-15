@@ -1,9 +1,10 @@
-:root {
+.clippy-cookie-consent {
   /* Clippy variables linked to basis tokens */
-  --clippy-description-list-color: var(--basis-color-default-color-default);
+  --clippy-description-list-color: var(--basis-color-default-color-document);
   --clippy-description-list-font-family: var(--basis-text-font-family-default);
   --clippy-description-list-font-size: var(--basis-text-font-size-md);
   --clippy-description-list-line-height: var(--basis-text-line-height-md);
+  --clippy-document-default-body-font-family: var(--basis-text-font-family-default);
   --clippy-typography-hyphenate-limit-chars: 6 3 2;
   --clippy-icon-size: 1rem;
 
@@ -13,9 +14,10 @@
   --ams-description-list-font-size: var(--clippy-description-list-font-size);
   --ams-description-list-line-height: var(--clippy-description-list-line-height);
   --ams-typography-hyphenate-limit-chars: var(--clippy-typography-hyphenate-limit-chars);
-}
 
-.clippy-cookie-consent {
+  /* Utrecht variables linked to clippy variables */
+  --utrecht-document-font-family: var(--clippy-document-default-body-font-family);
+
   margin-inline: auto;
   max-inline-size: 48rem;
   padding-block: var(--basis-space-block-xl, 2rem);
@@ -54,83 +56,77 @@
 }
 
 /* ==========================================================================
-   Cookie details (Description List)
+   Description List
    ========================================================================== */
 
-.clippy-cookie-details {
+.clippy-description-list {
+  --_term-column-width: 12rem;
+
   margin-block: 0;
 }
 
-.clippy-cookie-details__cookie {
+/* Variant: nested structure for cookie details */
+.clippy-description-list--nested {
+  --_term-column-width: 10rem;
+}
+
+.clippy-description-list__section {
+  margin-block: var(--basis-space-block-md);
+}
+
+/* Variant: cookie item with borders */
+.clippy-description-list__section--cookie {
   border-block-end: 1px solid var(--basis-color-default-border-subtle);
+  margin-block: 0;
   padding-block: var(--basis-space-block-md);
   padding-inline: var(--basis-space-inline-md, 1rem);
 }
 
-.clippy-cookie-details__cookie:last-child {
+.clippy-description-list__section--cookie:last-child {
   border-block-end: 0;
 }
 
-/* Cookie name styling */
-.clippy-cookie-details__cookie-name {
+.clippy-description-list__term {
   font-weight: var(--basis-text-font-weight-bold, 700);
 }
 
-/* Inner grid for (Type / Looptijd / Beschrijving) */
-.clippy-cookie-details__grid {
-  margin-block: var(--basis-space-block-sm) 0;
-}
-
-/* Default: stacked (mobile-first) */
-.clippy-cookie-details__term {
-  font-weight: var(--basis-text-font-weight-bold, 700);
-}
-
-.clippy-cookie-details__value {
+.clippy-description-list__description {
   margin-inline: 0;
+}
+
+/* Inner grid for nested details */
+.clippy-description-list__grid {
+  margin-block: var(--basis-space-block-sm) 0;
 }
 
 /* Wider screens: two-column grid */
 @media (width >= 48rem) {
-  .clippy-cookie-details {
-    /* Fixed cookie name column width */
-    --clippy-cookie-name-column-width: 12rem;
+  .clippy-description-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--basis-space-block-md);
   }
 
-  .clippy-cookie-details__cookie {
+  /* Shared grid setup for sections and rows */
+  .clippy-description-list__section,
+  .clippy-description-list__row {
     column-gap: var(--basis-space-inline-lg);
     display: grid;
-    grid-template-columns: var(--clippy-cookie-name-column-width) 1fr;
+    grid-template-columns: var(--_term-column-width) 1fr;
   }
 
-  .clippy-cookie-details__cookie-name {
+  /* Variant: cookie item keeps its grid but adds borders/padding */
+  .clippy-description-list__section--cookie {
+    column-gap: var(--basis-space-inline-lg);
+    display: grid;
+    grid-template-columns: var(--_term-column-width) 1fr;
+  }
+
+  .clippy-description-list__term {
     grid-column: 1;
   }
 
-  .clippy-cookie-details__cookie-details {
-    grid-column: 2;
-  }
-
-  .clippy-cookie-details__grid {
-    /* Fixed column widths (term + value) */
-    --clippy-cookie-details-term-column-width: 10rem;
-    --clippy-cookie-details-value-column-width: 1fr;
-  }
-
-  .clippy-cookie-details__row {
-    column-gap: var(--basis-space-inline-lg);
-    display: grid;
-    grid-template-columns: var(--clippy-cookie-details-term-column-width) var(
-        --clippy-cookie-details-value-column-width
-      );
-    row-gap: var(--basis-space-block-sm);
-  }
-
-  .clippy-cookie-details__term {
-    grid-column: 1;
-  }
-
-  .clippy-cookie-details__value {
+  .clippy-description-list__description {
     grid-column: 2;
   }
 }

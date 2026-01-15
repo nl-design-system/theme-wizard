@@ -1,7 +1,9 @@
+import { DescriptionList } from '@amsterdam/design-system-react';
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
-import { UnorderedList, UnorderedListItem } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC } from 'react';
+import '@amsterdam/design-system-css/dist/index.css';
+import '@amsterdam/design-system-tokens/dist/index.css';
 
 /**
  * Demo Panel component - this is just an example of how to implement an accordion section on the cookie page
@@ -19,25 +21,41 @@ export const WhatAreCookiesPanel: FC = () => (
 
     <Paragraph>Er zijn verschillende soorten cookies:</Paragraph>
 
-    <UnorderedList>
-      <UnorderedListItem>
-        <strong>Noodzakelijke cookies</strong> – Deze zijn essentieel voor het functioneren van de website. Zonder deze
-        cookies werken bepaalde functies niet.
-      </UnorderedListItem>
-      <UnorderedListItem>
-        <strong>Analytische cookies</strong> – Deze helpen ons te begrijpen hoe bezoekers de website gebruiken, zodat we
-        de website kunnen verbeteren.
-      </UnorderedListItem>
-      <UnorderedListItem>
-        <strong>Functionele cookies</strong> – Deze onthouden je voorkeuren, zoals taalinstellingen.
-      </UnorderedListItem>
-      <UnorderedListItem>
-        <strong>Marketing cookies</strong> – Deze worden gebruikt om advertenties relevanter te maken voor jou.
-      </UnorderedListItem>
-      <UnorderedListItem>
-        <strong>Externe content cookies</strong> – Deze worden geplaatst door externe diensten zoals YouTube of Google
-        Maps wanneer je embedded content bekijkt.
-      </UnorderedListItem>
-    </UnorderedList>
+    <DescriptionList className="clippy-description-list">
+      <DescriptionList.Section className="clippy-description-list__section">
+        <DescriptionList.Term className="clippy-description-list__term">Noodzakelijke cookies</DescriptionList.Term>
+        <DescriptionList.Description className="clippy-description-list__description">
+          Deze zijn essentieel voor het functioneren van de website. Zonder deze cookies werken bepaalde functies niet.
+        </DescriptionList.Description>
+      </DescriptionList.Section>
+
+      <DescriptionList.Section className="clippy-description-list__section">
+        <DescriptionList.Term className="clippy-description-list__term">Analytische cookies</DescriptionList.Term>
+        <DescriptionList.Description className="clippy-description-list__description">
+          Deze helpen ons te begrijpen hoe bezoekers de website gebruiken, zodat we de website kunnen verbeteren.
+        </DescriptionList.Description>
+      </DescriptionList.Section>
+
+      <DescriptionList.Section className="clippy-description-list__section">
+        <DescriptionList.Term className="clippy-description-list__term">Functionele cookies</DescriptionList.Term>
+        <DescriptionList.Description className="clippy-description-list__description">
+          Deze onthouden je voorkeuren, zoals taalinstellingen.
+        </DescriptionList.Description>
+      </DescriptionList.Section>
+
+      <DescriptionList.Section className="clippy-description-list__section">
+        <DescriptionList.Term className="clippy-description-list__term">Marketing cookies</DescriptionList.Term>
+        <DescriptionList.Description className="clippy-description-list__description">
+          Deze worden gebruikt om advertenties relevanter te maken voor jou.
+        </DescriptionList.Description>
+      </DescriptionList.Section>
+
+      <DescriptionList.Section className="clippy-description-list__section">
+        <DescriptionList.Term className="clippy-description-list__term">Externe content cookies</DescriptionList.Term>
+        <DescriptionList.Description className="clippy-description-list__description">
+          Deze worden geplaatst door externe diensten zoals YouTube of Google Maps wanneer je embedded content bekijkt.
+        </DescriptionList.Description>
+      </DescriptionList.Section>
+    </DescriptionList>
   </>
 );
