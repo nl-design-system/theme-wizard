@@ -3,6 +3,7 @@ import type { DesignToken } from 'style-dictionary/types';
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
+import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
@@ -10,6 +11,13 @@ import {
   legacyToModernColor,
   type ColorToken as ColorTokenType,
   walkTokensWithRef,
+  walkObject,
+  isRef,
+  resolveRef,
+  isValueObject,
+  isTokenLike,
+  type TokenLike,
+  ColorValue,
 } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import '../wizard-layout';
@@ -35,7 +43,7 @@ declare global {
 type DisplayToken = {
   tokenId: string;
   usage: string[];
-  isUsed: boolean;
+  isUsed?: boolean;
   tokenType: DesignToken['$type'];
   displayValue: string;
   metadata?: Record<string, string>;
@@ -85,7 +93,13 @@ export class WizardStyleGuide extends LitElement {
 
   #activeToken?: DisplayToken;
 
-  static override readonly styles = [unsafeCSS(tableCss), unsafeCSS(colorSampleCss), unsafeCSS(headingCss), styles];
+  static override readonly styles = [
+    unsafeCSS(dataBadgeCss),
+    unsafeCSS(tableCss),
+    unsafeCSS(colorSampleCss),
+    unsafeCSS(headingCss),
+    styles,
+  ];
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -266,7 +280,7 @@ export class WizardStyleGuide extends LitElement {
     `;
   }
 
-  #renderSpacingExample(value: string, space: string) {
+  #renderSpacingExample(value: string, space: string = 'block') {
     return html`
       <clippy-html-image>
         <span slot="label">${t(`styleGuide.sections.space.${space}.sample`)}</span>
@@ -280,6 +294,45 @@ export class WizardStyleGuide extends LitElement {
             : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
         ></div>
       </clippy-html-image>
+    `;
+  }
+
+  #renderFontWeightExample(displayValue: string | number) {
+    return html`
+      <clippy-html-image>
+        <span slot="label">${t('styleGuide.sections.typography.fontWeight.sample')}</span>
+        <utrecht-paragraph
+          style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-weight: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
+        >
+          Op brute wijze ving de schooljuf de quasi-kalme lynx.
+        </utrecht-paragraph>
+      </clippy-html-image>
+    `;
+  }
+
+  #renderLineHeightExample(displayValue: string | number) {
+    return html`
+      <clippy-html-image>
+        <span slot="label">${t('styleGuide.sections.typography.fontWeight.sample')}</span>
+        <utrecht-paragraph
+          style="--utrecht-paragraph-font-size: var(--basis-text-font-size-xl); --utrecht-paragraph-line-height: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; outline: 1px solid"
+        >
+          Op brute wijze ving de schooljuf de quasi-kalme lynx.
+        </utrecht-paragraph>
+      </clippy-html-image>
+    `;
+  }
+
+  #renderTokenExample(token: Omit<DisplayToken, 'usage' | 'isUsed'>) {
+    return html`
+      ${token.tokenType === 'color' ? html` ${this.#renderColorSample(token.displayValue)} ` : nothing}
+      ${token.tokenType === 'fontSize' ? html` ${this.#renderFontSizeExample(token.displayValue)} ` : nothing}
+      ${token.tokenType === 'fontFamily' ? html` ${this.#renderFontFamilyExample(token.displayValue)} ` : nothing}
+      ${token.tokenType === 'dimension'
+        ? html` ${this.#renderSpacingExample(token.displayValue, token.metadata?.['space'])} `
+        : nothing}
+      ${token.tokenType === 'fontWeight' ? this.#renderFontWeightExample(token.displayValue) : nothing}
+      ${token.tokenType === 'lineHeight' ? this.#renderLineHeightExample(token.displayValue) : nothing}
     `;
   }
 
@@ -644,6 +697,202 @@ export class WizardStyleGuide extends LitElement {
     `;
   }
 
+  #collectComponentTokens(
+    componentConfig: Record<string, unknown>,
+    componentId: string,
+  ): {
+    fullPath: string;
+    tokenConfig: TokenLike;
+  }[] {
+    const tokens: {
+      fullPath: string;
+      tokenConfig: TokenLike;
+    }[] = [];
+
+    // Use walkObject to recursively find all tokens
+    walkObject<TokenLike>(componentConfig, isTokenLike, (tokenConfig: TokenLike, path: string[]) => {
+      const tokenId = path.join('.');
+      const fullPath = `nl.${componentId}.${tokenId}`;
+      tokens.push({
+        fullPath,
+        tokenConfig,
+      });
+    });
+
+    return tokens;
+  }
+
+  #renderComponentsSection() {
+    // We only render Candidtae (`nl.`) components for now
+    const components = this.theme.tokens['nl'];
+    if (!components) return nothing;
+
+    return html`
+      <section id="components">
+        <utrecht-heading-2>${t('styleGuide.sections.components.title')}</utrecht-heading-2>
+        <utrecht-paragraph>
+          <a href="https://nldesignsystem.nl/componenten/" target="_blank">docs</a>
+        </utrecht-paragraph>
+
+        ${Object.entries(components).map(
+          ([componentId, componentConfig]) => html`
+            <table class="utrecht-table">
+              <caption class="utrecht-table__caption">
+                ${`nl.${componentId}`}
+              </caption>
+              <thead class="utrecht-table__header">
+                <tr class="utrecht-table__row">
+                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
+                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
+                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.reference')}</th>
+                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
+                </tr>
+              </thead>
+              <tbody class="utrecht-table__body">
+                ${this.#collectComponentTokens(componentConfig as Record<string, unknown>, componentId).map(
+                  ({ fullPath, tokenConfig }) => {
+                    const resolvedValue = isRef(tokenConfig.$value)
+                      ? resolveRef(this.theme.tokens, tokenConfig.$value)
+                      : tokenConfig.$value;
+                    const displayValue = this.#stringifyTokenValue(resolvedValue);
+
+                    return html`
+                      <tr class="utrecht-table__row">
+                        <td class="utrecht-table__cell">
+                          ${this.#renderTokenExample({
+                            displayValue: displayValue,
+                            tokenId: fullPath,
+                            tokenType: tokenConfig.$type,
+                          })}
+                        </td>
+                        <td class="utrecht-table__cell">
+                          <utrecht-code>${fullPath}</utrecht-code>
+                        </td>
+                        <td class="utrecht-table__cell">
+                          ${isRef(tokenConfig.$value)
+                            ? html`<span class="nl-data-badge">${tokenConfig.$value.slice(1, -1)}</span>`
+                            : nothing}
+                        </td>
+                        <td class="utrecht-table__cell">
+                          <utrecht-code>${displayValue}</utrecht-code>
+                        </td>
+                      </tr>
+                    `;
+                  },
+                )}
+              </tbody>
+            </table>
+          `,
+        )}
+      </section>
+    `;
+  }
+
+  #renderTokenDialog() {
+    return html`
+      <clippy-modal
+        id="token-dialog"
+        title=${this.#activeToken?.tokenId}
+        open=${this.#activeToken !== undefined}
+        actions="none"
+      >
+        ${this.#activeToken
+          ? html`
+              <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
+              ${this.#renderTokenExample(this.#activeToken)}
+              <dl>
+                <dt>Token type</dt>
+                <dd>
+                  <utrecht-code>${this.#activeToken.tokenType}</utrecht-code>
+                </dd>
+                <dt>Token ID</dt>
+                <dd>
+                  <utrecht-code>${this.#activeToken.tokenId}</utrecht-code>
+                </dd>
+                <dt>CSS Variable</dt>
+                <dd>
+                  <utrecht-code>${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</utrecht-code>
+                </dd>
+                <dt>${t('styleGuide.value')}</dt>
+                <dd>
+                  <utrecht-code>${this.#activeToken.displayValue}</utrecht-code>
+                </dd>
+                ${this.#activeToken.metadata
+                  ? Object.entries(this.#activeToken.metadata).map(
+                      ([key, value]) => html`
+                        <dt>${key}</dt>
+                        <dd>
+                          <utrecht-code>${value}</utrecht-code>
+                        </dd>
+                      `,
+                    )
+                  : nothing}
+              </dl>
+
+              <utrecht-heading-3>
+                ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
+                <data>(${this.#activeToken.usage.length}&times;)</data>
+              </utrecht-heading-3>
+              ${this.#activeToken.usage.length > 0
+                ? html`
+                    <ul>
+                      ${this.#activeToken.usage.map(
+                        (referrer) => html`
+                          <li>
+                            <span class="nl-data-badge">${referrer}</span>
+                          </li>
+                        `,
+                      )}
+                    </ul>
+                  `
+                : html`
+                    <utrecht-paragraph>${t('styleGuide.detailsDialog.tokenReferenceList.empty')}</utrecht-paragraph>
+                  `}
+            `
+          : nothing}
+      </clippy-modal>
+    `;
+  }
+
+  /**
+   * TODO: we probably want/need a sort of DesignToken class where we can call .toString()
+   */
+  #stringifyTokenValue(token: unknown): string {
+    // Handle string primitives
+    if (typeof token === 'string') return token;
+
+    // Must be an object to have $value
+    if (!isValueObject(token)) {
+      return JSON.stringify(token);
+    }
+
+    const tokenObj = token as Record<string, unknown>;
+    const value = tokenObj['$value'];
+
+    // No $value property
+    if (value === undefined || value === null) {
+      return '';
+    }
+
+    // Handle array values: stringify each element
+    if (Array.isArray(value)) {
+      return value.map((v) => this.#stringifyTokenValue(v)).join(', ');
+    }
+
+    // Handle object values
+    if (isValueObject(value)) {
+      // Special handling for color tokens
+      if (tokenObj['$type'] === 'color') {
+        return legacyToModernColor.encode(value as ColorValue);
+      }
+      // Other object values: stringify
+      return JSON.stringify(value);
+    }
+
+    // Handle primitive values (number, boolean, etc.)
+    return value.toString();
+  }
+
   override render() {
     if (!this.theme) {
       return t('loading');
@@ -669,98 +918,14 @@ export class WizardStyleGuide extends LitElement {
           <a class="wizard-styleguide__nav-item" href="#colors">${t('styleGuide.sections.colors.title')}</a>
           <a class="wizard-styleguide__nav-item" href="#typography">${t('styleGuide.sections.typography.title')}</a>
           <a class="wizard-styleguide__nav-item" href="#spacing">${t('styleGuide.sections.space.title')}</a>
+          <a class="wizard-styleguide__nav-item" href="#components">${t('styleGuide.sections.components.title')}</a>
         </nav>
 
         <div slot="main" class="wizard-styleguide__main">
           <utrecht-heading-1>${t('styleGuide.title')}</utrecht-heading-1>
 
           ${this.#renderColorSection(colorGroups)} ${this.#renderTypographySection(fontFamilies, fontSizes)}
-          ${this.#renderSpacingSection(spacingData)}
-
-          <clippy-modal
-            id="token-dialog"
-            title=${this.#activeToken?.tokenId}
-            open=${this.#activeToken !== undefined}
-            actions="none"
-          >
-            ${this.#activeToken
-              ? html`
-                  ${this.#activeToken.tokenType === 'color'
-                    ? html`
-                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
-                        ${this.#renderColorSample(this.#activeToken.displayValue)}
-                      `
-                    : nothing}
-                  ${this.#activeToken.tokenType === 'fontSize'
-                    ? html`
-                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
-                        ${this.#renderFontSizeExample(this.#activeToken.displayValue)}
-                      `
-                    : nothing}
-                  ${this.#activeToken.tokenType === 'fontFamily'
-                    ? html`
-                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
-                        ${this.#renderFontFamilyExample(this.#activeToken.displayValue)}
-                      `
-                    : nothing}
-                  ${this.#activeToken.tokenType === 'dimension' && this.#activeToken.metadata?.['space']
-                    ? html`
-                        <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
-                        ${this.#renderSpacingExample(
-                          this.#activeToken.displayValue,
-                          this.#activeToken.metadata['space'],
-                        )}
-                      `
-                    : nothing}
-                  <dl>
-                    <dt>Token type</dt>
-                    <dd>
-                      <utrecht-code>${this.#activeToken.tokenType}</utrecht-code>
-                    </dd>
-                    <dt>Token ID</dt>
-                    <dd>
-                      <utrecht-code>${this.#activeToken.tokenId}</utrecht-code>
-                    </dd>
-                    <dt>CSS Variable</dt>
-                    <dd>
-                      <utrecht-code>${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</utrecht-code>
-                    </dd>
-                    <dt>${t('styleGuide.value')}</dt>
-                    <dd>
-                      <utrecht-code>${this.#activeToken.displayValue}</utrecht-code>
-                    </dd>
-                    ${this.#activeToken.metadata === undefined
-                      ? nothing
-                      : Object.entries(this.#activeToken.metadata).map(
-                          ([key, value]) => html`
-                            <dt>${key}</dt>
-                            <dd>
-                              <utrecht-code>${value}</utrecht-code>
-                            </dd>
-                          `,
-                        )}
-                  </dl>
-
-                  <utrecht-heading-3>
-                    ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
-                    <data>(${this.#activeToken.usage.length}&times;)</data>
-                  </utrecht-heading-3>
-                  ${this.#activeToken.usage.length === 0
-                    ? html`<utrecht-paragraph>
-                        ${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
-                      </utrecht-paragraph>`
-                    : html`<ul>
-                        ${this.#activeToken.usage.map(
-                          (referrer) => html`
-                            <li>
-                              <utrecht-code>${referrer}</utrecht-code>
-                            </li>
-                          `,
-                        )}
-                      </ul>`}
-                `
-              : nothing}
-          </clippy-modal>
+          ${this.#renderSpacingSection(spacingData)} ${this.#renderComponentsSection()} ${this.#renderTokenDialog()}
         </div>
       </wizard-layout>
     `;

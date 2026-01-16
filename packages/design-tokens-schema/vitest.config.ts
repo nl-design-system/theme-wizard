@@ -7,6 +7,7 @@ export default defineConfig({
         // Temporary workaround to fix coverage reporting for this file,
         // there's a bug in coverage reporting and we value type-safety more than 100% coverage
         'src/remove-non-token-properties.ts',
+        'packages/design-tokens-schema/src/resolve-refs.ts',
       ],
       provider: 'v8',
       thresholds: {
