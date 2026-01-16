@@ -7,6 +7,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import memoize from 'memoize';
 import { arrayFromTokenList } from '../lib/converters';
 import { FormField } from '../lib/FormField';
+import LocalizationMixin from '../lib/LocalizationMixin';
 import srOnly from '../lib/sr-only/styles';
 import styles from './styles';
 
@@ -26,7 +27,7 @@ declare global {
 }
 
 @customElement(tag)
-export class ClippyCombobox<T extends Option = Option> extends FormField<T['value']> {
+export class ClippyCombobox<T extends Option = Option> extends LocalizationMixin(FormField<T['value']>) {
   @property({ attribute: 'other', type: Boolean }) allowOther = false;
   @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';
