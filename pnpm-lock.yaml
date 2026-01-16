@@ -303,6 +303,9 @@ importers:
 
   packages/design-tokens-schema:
     dependencies:
+      '@projectwallace/css-parser':
+        specifier: 0.11.4
+        version: 0.11.4
       colorjs.io:
         specifier: 0.6.0
         version: 0.6.0
@@ -2283,6 +2286,9 @@ packages:
 
   '@projectwallace/css-parser@0.11.3':
     resolution: {integrity: sha512-dD8+XzZTQfsOQMKk/qJWRKxOwcshzyUeT4PLKdXh6zXKI1u4FRzbXIxzSSkuvwYBIxiwOmFA5YvosOXFw5dM9g==}
+
+  '@projectwallace/css-parser@0.11.4':
+    resolution: {integrity: sha512-NWQFups5PWGT7b9yjvKi7YLbFS49zWtFnn9DM0CS2hzyQR/9puCaDf4qtntQoMOYCveWiLpPh0aBGW2Okcfvnw==}
 
   '@rijkshuisstijl-community/storybook-tooling@1.1.1':
     resolution: {integrity: sha512-6XCape5xGLrZtXTMy5J5xMUFXx1NqxlRo2TM2s+htbfROVuUcA4mQJpWN98Ttr0FiGO5k6MJp/+SapxNnw0iyg==}
@@ -9706,6 +9712,8 @@ snapshots:
       css-tree: 3.1.0
 
   '@projectwallace/css-parser@0.11.3': {}
+
+  '@projectwallace/css-parser@0.11.4': {}
 
   '@rijkshuisstijl-community/storybook-tooling@1.1.1':
     dependencies:
