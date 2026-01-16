@@ -1,16 +1,21 @@
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
-import { html, LitElement, nothing, unsafeCSS } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import memoize from 'memoize';
+import { FormField } from '../lib/FormField';
 import srOnly from '../lib/sr-only/styles';
 
+type Label = string;
+type Value = string | Array<string>
+
 type Option = {
-  label: string;
-  value: string | Array<string>;
+  label: Label;
+  value: Value;
 };
+
 
 type Position = 'block-start' | 'block-end';
 
@@ -23,20 +28,16 @@ declare global {
 }
 
 @customElement(tag)
-export class ClippyCombobox<T extends Option = Option> extends LitElement {
-  @property() name = '';
-  @property({ attribute: 'hidden-label' }) hiddenLabel = '';
-  @property({ type: Boolean }) disabled = false;
-  @property({ type: Boolean }) readonly = false;
+export class ClippyCombobox<T extends Option = Option> extends FormField<Value> {
   @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';
-  internals_ = this.attachInternals();
 
-  readonly #id = `${tag}-${this.name}`;
-  #value: T['value'] | undefined;
-  #options: Map<T['label'], T> = new Map();
+  get #id() {
+    return `${tag}-${this.name}`;
+  }
 
-  static readonly formAssociated = true;
+  #options: Map<Label, T> = new Map();
+
   static override readonly styles = [
     srOnly,
     unsafeCSS(comboboxStyles),
@@ -66,15 +67,14 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
     return [...this.#options.values()];
   }
 
-  @property({ attribute: false })
-  set value(value: T['value'] | undefined) {
-    this.#value = value;
+  @property()
+  override set value(value: Value | null) {
+    super.value = value;
     this.query = this.valueToQuery(value);
-    this.internals_.setFormValue(this.valueToFormValue(value));
   }
 
-  get value() {
-    return this.#value;
+  override get value(): Value | null {
+    return super.value;
   }
 
   emit(type: 'blur' | 'change' | 'focus' | 'input') {
@@ -84,8 +84,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   /**
    * Override this function to customize how options are filtered when typing
    */
-  readonly filter = (option: T) => {
-    const label = `${option.label}`; // Use as string
+  readonly filter = ({ label }: T) => {
     return label.toLowerCase().includes(this.query.toLowerCase());
   };
 
@@ -101,23 +100,16 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
    * Override this function to customize how the user input is resolved to a value.
    * This runs on input.
    */
-  queryToValue(query: string): T['value'] | undefined {
+  queryToValue(query: string): Value {
     return query;
   }
 
   /**
-   * Override this function to customize how a value is converted to a .
+   * Override this function to customize how a value is converted to a query.
    * This runs on setting the value.
    */
-  valueToQuery(value: T['value'] | undefined): string {
+  valueToQuery(value: Value | null): string {
     return (value ?? '').toString();
-  }
-
-  /**
-   * Override this function to customize how the value is converted to a form value;
-   */
-  valueToFormValue(value?: T['value']): string {
-    return value ? `${value}` : '';
   }
 
   readonly #addAdditionalOptions = memoize(async (query: string) => {
@@ -208,7 +200,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
 
   #commitSelection(index: number) {
     const { label, value } = this.filteredOptions.at(index) ?? {};
-    if (index < 0 || !label) return;
+    if (index < 0 || !label || !value) return;
 
     this.query = label.toString();
 
@@ -230,8 +222,8 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
   /**
    * Override this function to customize the rendering of combobox options and selected value.
    */
-  renderEntry(option: Option, _index: number) {
-    return html`${option?.label}`;
+  renderEntry({ label }: Option, _index: number) {
+    return html`${label}`;
   }
 
   override connectedCallback() {
