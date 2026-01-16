@@ -1,5 +1,6 @@
 import { ColorToken } from './tokens/color-token';
-import { isTokenWithRef, type TokenWithRefLike } from './tokens/token-reference';
+import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
+import { isTokenLike, isTokenWithRef, type TokenWithRefLike } from './tokens/token-reference';
 
 /**
  * @param root The object you want to traverse
@@ -78,4 +79,15 @@ const isLineHeightToken = (token: unknown): token is LineHeightToken => {
 
 export const walkLineHeights = (root: unknown, callback: (token: LineHeightToken, path: string[]) => void): void => {
   walkObject<LineHeightToken>(root, isLineHeightToken, callback);
+};
+
+const isDimensionToken = (token: unknown): token is DimensionToken => {
+  return isTokenLike(token) && DimensionTokenSchema.safeParse(token).success;
+};
+
+export const walkDimensions = (root: unknown, callback: (token: DimensionToken, path: string[]) => void): void => {
+  walkObject<DimensionToken>(root, isDimensionToken, (token, path) => {
+    const dimension = DimensionTokenSchema.safeParse(token);
+    callback(dimension.data!, path);
+  });
 };

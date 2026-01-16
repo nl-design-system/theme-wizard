@@ -1,6 +1,7 @@
 import * as z from 'zod';
 
 export const ERROR_CODES = {
+  FONT_SIZE_TOO_SMALL: 'font_size_too_small',
   INSUFFICIENT_CONTRAST: 'insufficient_contrast',
   INVALID_REF: 'invalid_ref',
   UNEXPECTED_UNIT: 'unexpected_unit',
@@ -27,6 +28,15 @@ export type LineHeightUnitIssue = z.core.$ZodSuperRefineIssue & {
   ERROR_CODE: typeof ERROR_CODES.UNEXPECTED_UNIT;
   code: 'invalid_type';
   message: string;
+  path: string[];
+};
+
+export type MinFontSizeIssue = z.core.$ZodSuperRefineIssue & {
+  ERROR_CODE: typeof ERROR_CODES.FONT_SIZE_TOO_SMALL;
+  code: 'custom';
+  message: string;
+  actual: string;
+  path: string[];
 };
 
 export type ThemeValidationIssue =
@@ -34,7 +44,9 @@ export type ThemeValidationIssue =
       ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
     })
   | ContrastIssue
-  | InvalidRefIssue;
+  | InvalidRefIssue
+  | LineHeightUnitIssue
+  | MinFontSizeIssue;
 
 export const createContrastIssue = ({
   actual,

@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
-import { walkColors, walkLineHeights, walkObject } from './walker';
+import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
   type ForegroundColorKey,
@@ -17,7 +17,14 @@ import {
   COLOR_KEYS,
 } from './basis-tokens';
 import { removeNonTokenProperties } from './remove-non-token-properties';
-import { ERROR_CODES, type InvalidRefIssue, LineHeightUnitIssue, createContrastIssue } from './validation-issue';
+import {
+  ERROR_CODES,
+  type InvalidRefIssue,
+  LineHeightUnitIssue,
+  MinFontSizeIssue,
+  createContrastIssue,
+} from './validation-issue';
+import { validateFontSize } from './validations';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -216,5 +223,25 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
         message: `Line-height should be a unitless number (got: "${token.$value}")`,
         path: [...path, '$value'],
       } satisfies LineHeightUnitIssue);
+    });
+
+    // Validation 4: font-size must be 16px minimum
+    walkDimensions(root, (token, path) => {
+      // MUST be a font-size token
+      if (!path.includes('font-size')) return;
+      // Refs are OK
+      if (isRef(token.$value)) return;
+
+      if (isValueObject(token.$value) && !validateFontSize(token.$value)) {
+        const actual = `${token.$value.value}${token.$value.unit}`;
+        ctx.addIssue({
+          actual,
+          code: 'custom',
+          ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
+          input: actual,
+          message: `Font-size should be 16px or 1rem minimum (got: "${actual}")`,
+          path: [...path, '$value'],
+        } satisfies MinFontSizeIssue);
+      }
     });
   });
