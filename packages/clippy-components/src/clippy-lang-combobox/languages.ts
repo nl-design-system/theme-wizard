@@ -19,7 +19,7 @@ const languages = {
   bi: 'Bislama',
   bm: 'bamanankan',
   bn: 'বাংলা',
-  bo: 'བོད་ཡིག',
+  bo: 'བོད་སྐད་',
   br: 'brezhoneg',
   bs: 'bosanski jezik',
   ca: 'català',
@@ -41,7 +41,7 @@ const languages = {
   eo: 'Esperanto',
   es: 'español',
   et: 'eesti',
-  eu: 'euskera',
+  eu: 'euskara',
   fa: 'فارسی',
   ff: 'Fulfulde',
   fi: 'suomi',
@@ -55,7 +55,7 @@ const languages = {
   gn: "Avañe'ẽ",
   gu: 'ગુજરાતી',
   gv: 'Gaelg',
-  ha: 'هَوُسَ',
+  ha: 'Hausa',
   he: 'עברית',
   hi: 'हिन्दी',
   ho: 'Hiri Motu',
@@ -91,7 +91,7 @@ const languages = {
   kv: 'коми кыв',
   kw: 'Kernewek',
   ky: 'Кыргызча',
-  la: 'latine',
+  la: 'lingua Latina',
   lb: 'Lëtzebuergesch',
   lg: 'Luganda',
   li: 'Limburgs',
@@ -127,7 +127,7 @@ const languages = {
   or: 'ଓଡ଼ିଆ',
   os: 'ирон æвзаг',
   pa: 'ਪੰਜਾਬੀ',
-  pi: 'पाऴि',
+  pi: 'पालि',
   pl: 'polski',
   ps: 'پښتو',
   pt: 'português',
@@ -139,7 +139,7 @@ const languages = {
   rw: 'Ikinyarwanda',
   sa: 'संस्कृतम्',
   sc: 'sardu',
-  sd: 'सिन्धी',
+  sd: 'سنڌي',
   se: 'Davvisámegiella',
   sg: 'yângâ tî sängö',
   si: 'සිංහල',
@@ -163,7 +163,7 @@ const languages = {
   tk: 'Türkmen',
   tl: 'Wikang Tagalog',
   tn: 'Setswana',
-  to: 'faka Tonga',
+  to: 'lea faka-Tonga',
   tr: 'Türkçe',
   ts: 'Xitsonga',
   tt: 'татар теле',
@@ -177,7 +177,7 @@ const languages = {
   vi: 'Tiếng Việt',
   vo: 'Volapük',
   wa: 'walon',
-  wo: 'Wollof',
+  wo: 'Wolof',
   xh: 'isiXhosa',
   yi: 'ייִדיש',
   yo: 'Yorùbá',
@@ -186,7 +186,7 @@ const languages = {
   zu: 'isiZulu',
 };
 
-export const rtlLanguages = ['ar', 'dv', 'fa', 'ha', 'he', 'ps', 'ug', 'ur', 'yi'];
+export const rtlLanguages = ['ar', 'dv', 'fa', 'ha', 'he', 'ps', 'sd', 'ug', 'ur', 'yi'];
 
 export type LangCode = keyof typeof languages;
 
