@@ -1,5 +1,15 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [168d321]
+- Updated dependencies [6fcf52a]
+- Updated dependencies [2f34c71]
+  - @nl-design-system-community/css-scraper@1.1.0
+  - @nl-design-system-community/design-tokens-schema@1.1.0
+
 ## 0.0.3
 
 ### Patch Changes

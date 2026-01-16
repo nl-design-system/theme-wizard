@@ -1,5 +1,13 @@
 # @nl-design-system-community/theme-wizard-server
 
+## 1.1.1
+
+### Patch Changes
+
+- 44b7cc2: Add missing dependency `@hono/node-server`.
+- Updated dependencies [168d321]
+  - @nl-design-system-community/css-scraper@1.1.0
+
 ## 1.1.0
 
 ### Minor Changes
