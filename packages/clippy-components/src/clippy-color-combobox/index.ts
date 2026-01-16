@@ -8,6 +8,7 @@ import { ClippyCombobox } from '../clippy-combobox';
 import { namedColors, type ColorName } from './lib';
 import messages from './messages/en';
 import colorComboboxStyles from './styles';
+import LocalizationMixin from '@src/lib/LocalizationMixin';
 
 type Option = {
   color: Color;
@@ -18,30 +19,25 @@ type Option = {
 
 const tag = 'clippy-color-combobox';
 
-const DEFAULT_LANG = 'en';
-
 declare global {
   interface HTMLElementTagNameMap {
     [tag]: ClippyColorCombobox;
   }
 }
 
+// Flatten the generic before applying the mixin to ensure type compatibility.
+class C extends ClippyCombobox<Option> {}
+
 @safeCustomElement(tag)
-export class ClippyColorCombobox extends ClippyCombobox<Option> {
+export class ClippyColorCombobox extends LocalizationMixin(C) {
   static override readonly styles = [...ClippyCombobox.styles, colorComboboxStyles, unsafeCSS(colorSampleStyles)];
   translations = messages;
-
   #options: Option[] = [];
 
-  #lang?: string;
-
-  @property()
-  override get lang() {
-    return this.#lang || DEFAULT_LANG;
-  }
-
   override set lang(value: string) {
-    this.loadLocalizations(value);
+    this.loadLocalizations(value).then(() => {
+      super.lang = value;
+    });
   }
 
   async loadLocalizations(lang: string) {
@@ -54,7 +50,7 @@ export class ClippyColorCombobox extends ClippyCombobox<Option> {
       try {
         translations = await import(`./messages/${code}.ts`).then((module) => module.default);
         this.translations = translations || this.translations;
-        this.#lang = code;
+        this.lang = code;
         break;
       } catch {
         // ignore failure, continue with next
@@ -95,24 +91,6 @@ export class ClippyColorCombobox extends ClippyCombobox<Option> {
 
   override valueToQuery(value: Option['value']): string {
     return Array.isArray(value) ? value[0] : value.split(',')[0];
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    // we need a language to use the correct translation, look for closest ancestor with lang attribute.
-    const LANG_ATTR = 'lang';
-    let lang = this.#lang || this.getAttribute(LANG_ATTR);
-    if (!lang) {
-      let element = this.parentElement;
-      while (element) {
-        if (element.hasAttribute(LANG_ATTR)) {
-          lang = element.getAttribute(LANG_ATTR) || lang;
-          break;
-        }
-        element = element.parentElement;
-      }
-    }
-    this.lang = lang || DEFAULT_LANG;
   }
 
   override renderEntry(option: Option) {
