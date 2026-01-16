@@ -19,9 +19,9 @@ export const resolveRef = (root: object, path: string): unknown => {
   // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
   const resolved = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
-  // If the resolved value is a token object with a $value that is itself a reference, recursively resolve it
   if (isTokenLike(resolved)) {
     const tokenValue = resolved.$value;
+    // If the resolved value is a token object with a $value that is itself a reference, recursively resolve it
     if (typeof tokenValue === 'string' && isRef(tokenValue)) {
       return resolveRef(root, tokenValue);
     }
