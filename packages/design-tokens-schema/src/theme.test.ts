@@ -775,10 +775,40 @@ describe('validate unitless line-height preference', () => {
 });
 
 describe('validate minimum font-size', () => {
-  it('Does not report font-sizes that are ok (modern syntax)', () => {
+  it('passes refs', () => {
     const config = {
       basis: {
         text: {
+          'font-size': {
+            md: {
+              $type: 'dimension',
+              $value: {
+                unit: 'px',
+                value: 18,
+              },
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+      nl: {
+        button: {
+          'font-size': {
+            $type: 'dimension',
+            $value: '{basis.text.font-size.md}',
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
+  it('Does not report font-sizes that are ok (modern syntax)', () => {
+    const config = {
+      brand: brandConfig,
+      nl: {
+        button: {
           'font-size': {
             lg: {
               $type: 'dimension',
@@ -797,7 +827,6 @@ describe('validate minimum font-size', () => {
           },
         },
       },
-      brand: brandConfig,
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
@@ -805,8 +834,9 @@ describe('validate minimum font-size', () => {
 
   it('Does not report font-sizes that are ok (legacy syntax)', () => {
     const config = {
-      basis: {
-        text: {
+      brand: brandConfig,
+      nl: {
+        button: {
           'font-size': {
             lg: {
               $type: 'dimension',
@@ -819,7 +849,6 @@ describe('validate minimum font-size', () => {
           },
         },
       },
-      brand: brandConfig,
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
