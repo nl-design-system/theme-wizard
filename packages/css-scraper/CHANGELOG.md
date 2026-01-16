@@ -1,5 +1,17 @@
 # @nl-design-system-community/css-scraper
 
+## 1.1.0
+
+### Minor Changes
+
+- 168d321: Feat: support custom User Agent string and timeout
+
+### Patch Changes
+
+- Updated dependencies [6fcf52a]
+- Updated dependencies [2f34c71]
+  - @nl-design-system-community/design-tokens-schema@1.1.0
+
 ## 1.0.2
 
 ### Patch Changes

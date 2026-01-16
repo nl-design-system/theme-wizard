@@ -1,5 +1,15 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 1.1.0
+
+### Minor Changes
+
+- 2f34c71: Feat: validate minimum font-size in design token schema
+
+### Patch Changes
+
+- 6fcf52a: Resolve design token references recursively
+
 ## 1.0.1
 
 ### Patch Changes
