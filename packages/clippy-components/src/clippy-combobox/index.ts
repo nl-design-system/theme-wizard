@@ -26,6 +26,7 @@ declare global {
 
 @customElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends FormField<T['value']> {
+  @property({ attribute: 'other', type: Boolean }) allowOther = false;
   @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';
 
@@ -48,7 +49,8 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
     if (this.query.length === 0) {
       return this.options;
     }
-    const options = this.options.filter(this.filter);
+    const filter = this.filter(this.query);
+    const options = this.options.filter(filter);
     if (options.length === 0) {
       this.#addAdditionalOptions(this.query);
     }
@@ -87,9 +89,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
   /**
    * Override this function to customize how options are filtered when typing
    */
-  readonly filter = ({ label }: T) => {
-    return label.toLowerCase().includes(this.query.toLowerCase());
-  };
+  readonly filter =
+    (query: string) =>
+    ({ label }: T) => {
+      return label.toLowerCase().includes(query.toLowerCase());
+    };
 
   /**
    * Override this function to customize an external data source
@@ -101,10 +105,13 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
 
   /**
    * Override this function to customize how the user input is resolved to a value.
-   * This runs on input.
    */
-  queryToValue(query: string): T['value'] {
-    return query;
+  queryToValue(query: string): T['value'] | null {
+    if (this.allowOther) {
+      return query;
+    }
+    const filter = this.filter(query);
+    return this.options.find(filter)?.value ?? null;
   }
 
   /**
@@ -125,6 +132,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
   readonly #handleBlur = (event: FocusEvent) => {
     if (event.relatedTarget && !this.shadowRoot?.contains(event.relatedTarget as Node)) {
       // Only when the focus moves outside of the component, treat it as a blur for outside
+      this.value = this.queryToValue(this.query);
       this.open = false;
       this.emit('blur');
     }
@@ -154,7 +162,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
     this.selectedIndex = -1;
     this.open = true;
     this.query = target.value;
-    this.value = this.queryToValue(this.query);
     this.emit('input');
   };
 
@@ -176,7 +183,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
       case 'ArrowUp':
         return this.#setSelection(index - 1, true);
       case 'Enter':
-        return this.#commitSelection(index);
+        if (index > -1) {
+          return this.#commitSelection(index);
+        } else if (count === 1) {
+          return this.#commitSelection(0);
+        } else if (this.allowOther) {
+          return this.#commitQuery();
+        }
+        return undefined;
       case 'Escape':
         return this.#setSelection(-1);
       case 'Home':
@@ -207,6 +221,15 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
 
     this.query = label.toString();
 
+    if (this.value !== value) {
+      this.value = value;
+      this.#handleChange();
+    }
+    this.open = false;
+  }
+
+  #commitQuery() {
+    const value = this.query;
     if (this.value !== value) {
       this.value = value;
       this.#handleChange();

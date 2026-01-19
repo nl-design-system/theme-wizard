@@ -13,6 +13,10 @@ const OPTIONS = [
     label: 'Ernie',
     value: 'ernie',
   },
+  {
+    label: 'Grover',
+    value: 'grover',
+  },
 ];
 
 interface ComboboxStoryArgs {
