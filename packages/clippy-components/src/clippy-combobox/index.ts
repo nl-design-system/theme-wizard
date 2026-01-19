@@ -8,12 +8,9 @@ import memoize from 'memoize';
 import { FormField } from '../lib/FormField';
 import srOnly from '../lib/sr-only/styles';
 
-type Label = string;
-type Value = string | Array<string>
-
 type Option = {
-  label: Label;
-  value: Value;
+  label: string;
+  value: unknown;
 };
 
 
@@ -28,7 +25,7 @@ declare global {
 }
 
 @customElement(tag)
-export class ClippyCombobox<T extends Option = Option> extends FormField<Value> {
+export class ClippyCombobox<T extends Option = Option> extends FormField<T['value']> {
   @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';
 
@@ -36,7 +33,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<Value> 
     return `${tag}-${this.name}`;
   }
 
-  #options: Map<Label, T> = new Map();
+  #options: Map<T['label'], T> = new Map();
 
   static override readonly styles = [
     srOnly,
@@ -68,12 +65,12 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<Value> 
   }
 
   @property()
-  override set value(value: Value | null) {
+  override set value(value: T['value'] | null) {
     super.value = value;
     this.query = this.valueToQuery(value);
   }
 
-  override get value(): Value | null {
+  override get value(): T['value'] | null {
     return super.value;
   }
 
@@ -100,7 +97,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<Value> 
    * Override this function to customize how the user input is resolved to a value.
    * This runs on input.
    */
-  queryToValue(query: string): Value {
+  queryToValue(query: string): T['value'] {
     return query;
   }
 
@@ -108,7 +105,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<Value> 
    * Override this function to customize how a value is converted to a query.
    * This runs on setting the value.
    */
-  valueToQuery(value: Value | null): string {
+  valueToQuery(value: T['value'] | null): string {
     return (value ?? '').toString();
   }
 
