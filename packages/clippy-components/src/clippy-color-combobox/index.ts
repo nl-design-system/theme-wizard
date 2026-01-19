@@ -62,11 +62,15 @@ export class ClippyColorCombobox extends ClippyCombobox<Option> {
     }
   }
 
-  override readonly filter = (option: Option) => {
-    const query = this.query.toLowerCase();
-    const label = `${option.label}`.toLowerCase();
-    const names = option.names;
-    return label.includes(query) || names.some((name) => this.translations[name]?.includes(query));
+  override readonly filter = (query: string) => {
+    const normalizedQuery = query.toLowerCase();
+    return (option: Option) => {
+      const label = option.label.toLowerCase();
+      const names = option.names;
+      return (
+        label.includes(normalizedQuery) || names.some((name) => this.translations[name]?.includes(normalizedQuery))
+      );
+    };
   };
 
   @property({ type: Array })
