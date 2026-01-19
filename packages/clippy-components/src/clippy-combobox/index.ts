@@ -13,7 +13,6 @@ type Option = {
   value: unknown;
 };
 
-
 type Position = 'block-start' | 'block-end';
 
 const tag = 'clippy-combobox';
@@ -56,8 +55,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
   }
 
   @property({ type: Array })
-  set options(value: T[]) {
-    this.#options = new Map(value.map((option) => [option.label, option]));
+  set options(options: T[] | string[]) {
+    this.#options = new Map(
+      options.map((option) =>
+        typeof option === 'string'
+          ? [option, { label: option, value: option } as T] // Note this means that subclassing with a different T means overriding this function as well
+          : [option.label, option],
+      ),
+    );
   }
 
   get options(): T[] {
@@ -135,7 +140,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
       this.open = false;
       this.emit('blur');
     }
-  }
+  };
 
   readonly #handleFocus = () => {
     this.open = true;
