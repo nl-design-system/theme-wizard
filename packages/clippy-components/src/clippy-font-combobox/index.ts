@@ -22,6 +22,7 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyFontCombobox extends ClippyCombobox<Option> {
+  override readonly allowOther = true;
   #additional?: Option[];
   #intersectionObserver?: IntersectionObserver;
   @query('[role=listbox]')
