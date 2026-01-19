@@ -3,7 +3,7 @@ name: Periodic End-to-End Test
 on:
   schedule:
     # Run this every hour to see if all is well
-    - cron: '0 * * * *'
+    - cron: "0 * * * *"
   workflow_dispatch:
     # Add `workflow_dispatch` so this can be run manually in case it was not run as scheduled
 
@@ -32,7 +32,7 @@ jobs:
       - name: Set up Node.js version and cache
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version-file: .nvmrc
 
       - name: Check for known security issues with npm packages
