@@ -1,5 +1,11 @@
 # @nl-design-system-community/clippy-components
 
+## 1.1.0
+
+### Minor Changes
+
+- e491549: clippy-button based on @nl-design-system-candidate/button-css
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,5 +1,12 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [e491549]
+  - @nl-design-system-community/clippy-components@1.1.0
+
 ## 0.0.4
 
 ### Patch Changes
