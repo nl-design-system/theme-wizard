@@ -52,6 +52,19 @@ describe(`<${tag}>`, () => {
     expect(component.options).toHaveLength(STRING_OPTIONS.length);
   });
 
+  it('accepts a string of options separated by spaces', async () => {
+    const separator = ' ';
+    // Explicitly set the body so that the string options are used
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options="${STRING_OPTIONS.join(separator)}"></${tag}>
+      </form>`;
+
+    // Wait for the custom element to be defined
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    expect(component.options).toHaveLength(STRING_OPTIONS.length);
+  });
+
   it('shows list of options on focus', async () => {
     const input = page.getByRole('combobox');
     await input.click();

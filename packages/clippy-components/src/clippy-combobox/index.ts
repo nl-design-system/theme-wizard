@@ -5,6 +5,7 @@ import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import memoize from 'memoize';
+import { arrayFromTokenList } from '../lib/converters';
 import { FormField } from '../lib/FormField';
 import srOnly from '../lib/sr-only/styles';
 
@@ -54,7 +55,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
     return options;
   }
 
-  @property({ type: Array })
+  @property({ converter: arrayFromTokenList })
   set options(options: T[] | string[]) {
     this.#options = new Map(
       options.map((option) =>
