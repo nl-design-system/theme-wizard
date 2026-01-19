@@ -146,7 +146,7 @@ export class ClippyCombobox<T extends Option = Option> extends LitElement {
       this.open = false;
       this.emit('blur');
     }
-  }
+  };
 
   readonly #handleFocus = () => {
     this.open = true;

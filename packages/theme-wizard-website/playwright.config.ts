@@ -59,30 +59,31 @@ const config: PlaywrightTestConfig = {
     },
   },
 
-  ...(process.env['E2E_TARGET_URL'] && !process.env['E2E_TARGET_URL']?.startsWith('http://localhost'))
+  ...(process.env['E2E_TARGET_URL'] && !process.env['E2E_TARGET_URL']?.startsWith('http://localhost')
     ? {}
-    : { webServer: [
-        {
-          name: 'API Server',
-          command: 'pnpm run dev',
-          cwd: '../theme-wizard-server',
-          port: 9491,
-          reuseExistingServer: !process.env['CI'],
-          // Log server errors directly to the main output for easier debugging in CI
-          stderr: 'pipe',
-          // How long the server can take to start up
-          timeout: 10_000,
-        },
-        {
-          name: 'Website',
-          command: 'pnpm run dev',
-          port: 9492,
-          reuseExistingServer: !process.env['CI'],
-          // How long the server can take to start up
-          timeout: 10_000,
-        },
-      ],
-    },
+    : {
+        webServer: [
+          {
+            name: 'API Server',
+            command: 'pnpm run dev',
+            cwd: '../theme-wizard-server',
+            port: 9491,
+            reuseExistingServer: !process.env['CI'],
+            // Log server errors directly to the main output for easier debugging in CI
+            stderr: 'pipe',
+            // How long the server can take to start up
+            timeout: 10_000,
+          },
+          {
+            name: 'Website',
+            command: 'pnpm run dev',
+            port: 9492,
+            reuseExistingServer: !process.env['CI'],
+            // How long the server can take to start up
+            timeout: 10_000,
+          },
+        ],
+      }),
 
   /* Always use 1 worker. Doing more causes CI to be very slow and fail often. */
   workers: 1,

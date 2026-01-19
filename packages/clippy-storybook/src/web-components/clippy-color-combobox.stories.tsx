@@ -44,8 +44,8 @@ interface ColorComboboxStoryArgs {
 
 const createTemplate = ({ lang, options }: ColorComboboxStoryArgs) =>
   lang
-    ? html`<clippy-color-combobox lang="${lang}" options='${JSON.stringify(options, null, 2)}'></clippy-color-combobox>`
-    : html`<clippy-color-combobox options='${JSON.stringify(options, null, 2)}'></clippy-color-combobox>`;
+    ? html`<clippy-color-combobox lang="${lang}" options="${JSON.stringify(options, null, 2)}"></clippy-color-combobox>`
+    : html`<clippy-color-combobox options="${JSON.stringify(options, null, 2)}"></clippy-color-combobox>`;
 
 const meta = {
   id: 'clippy-color-combobox',
