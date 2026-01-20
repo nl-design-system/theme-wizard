@@ -60,9 +60,34 @@ describe(`<${tag}>`, () => {
         <${tag} name="${tag}" options="${STRING_OPTIONS.join(separator)}"></${tag}>
       </form>`;
 
-    // Wait for the custom element to be defined
     const component: ClippyCombobox = document.querySelector(tag)!;
     expect(component.options).toHaveLength(STRING_OPTIONS.length);
+  });
+
+  it('gets a value from the component attribute', async () => {
+    const options = STRING_OPTIONS.join(' ');
+    const value = STRING_OPTIONS[0];
+    // Explicitly set the body so that the value is provided
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options="${options}" value="${value}"></${tag}>
+      </form>`;
+
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    expect(component.value).toBe(value);
+  });
+
+  it('renders value in presentational element when it is matching an option', async () => {
+    const options = JSON.stringify(OBJ_OPTIONS);
+    const { label, value } = OBJ_OPTIONS[0];
+    // Explicitly set the body so that the value is provided
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options='${options}' value='${value}'></${tag}>
+      </form>`;
+
+    const presentationNode = page.getByRole('presentation').getByText(label);
+    await expect.element(presentationNode).toBeInTheDocument();
   });
 
   it('shows list of options on focus', async () => {
