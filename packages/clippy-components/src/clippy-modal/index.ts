@@ -120,9 +120,9 @@ export class ClippyModal extends LitElement {
       >
         <form method="dialog" novalidate>
           <header class="ams-dialog__header">
-            <h1 id=${this.titleId}>
+            <clippy-heading level={1} id=${this.titleId}>
               <slot name="title">${this.title}</slot>
-            </h1>
+            </clippy-heading>
             <button class="utrecht-button utrecht-button--primary-action" type="button" @click=${this.onCloseClick}>
               <span class="ams-visually-hidden">Sluiten</span>
               <div style=" --utrecht-icon-size: 8px;">

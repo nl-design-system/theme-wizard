@@ -22,7 +22,7 @@ import { WizardTokenInput } from '../wizard-token-input';
 import '../template-action';
 import '../template-case-card';
 import '../template-color-swatch';
-import '../template-heading';
+import '@nl-design-system-community/clippy-components/src/clippy-heading/index.js';
 import '../template-link-list';
 import '../template-link';
 import '../template-page-header';
