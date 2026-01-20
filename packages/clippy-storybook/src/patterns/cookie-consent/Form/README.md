@@ -8,7 +8,7 @@ Dit pattern toont hoe je een volledige cookie consent form kunt implementeren wa
 
 - **Gedetailleerde cookie-instellingen** - Gebruikers kunnen per categorie kiezen
 - **Gerechtvaardigd belang** - Ondersteuning voor opt-in (toestemming) en opt-out (gerechtvaardigd belang) volgens AP-richtlijnen
-- **Configureerbare info secties** - Accordion met "Wat zijn cookies?", "Cookieverklaring", en "Mijn gegevens"
+- **Configureerbare info secties** - Secties met "Wat zijn cookies?", "Cookieverklaring", en "Mijn gegevens"
 - **Cookie details** - Uitklapbare tabellen met alle cookies per categorie
 - **Drie acties** - Accepteren, Weigeren, of Selectie opslaan
 
@@ -65,7 +65,7 @@ Het pattern gebruikt bestaande componenten uit de Utrecht en NL Design System co
 - **`Fieldset` & `FieldsetLegend`** - Voor groeperen van cookie opties
 - **`FormFieldCheckbox`** - Voor cookie selectie
 - **`ButtonGroup`** - Voor groeperen van actieknoppen
-- **`AccordionProvider`** - Voor uitklapbare info secties
+- **`UnorderedList` & `UnorderedListItem`** - Voor opsommingen in tekst (bijvoorbeeld in het cookiebeleid)
 
 **NL Design System:**
 
@@ -103,7 +103,7 @@ function App() {
         },
         {
           label: 'Mijn gegevens',
-          body: <DataPanel cookieOptions={[]} selectedCookies={new Set()} />,
+          body: <DataPanel />,
         },
       ]}
       showLegitimateInterest
@@ -122,7 +122,7 @@ Zie voor meer details:
   - `CookieDescriptionList` - Weergave van cookie details
   - `CookieOption` - Individuele cookie categorie met checkbox
   - `CookieOptionList` - Lijst met cookie categorieën
-  - `DataPanel`, `PolicyPanel`, `WhatAreCookiesPanel` - Info panelen voor accordion
+  - `DataPanel`, `PolicyPanel`, `WhatAreCookiesPanel` - Optionele secties
 
 ## API Reference
 
@@ -138,17 +138,16 @@ De volledige implementatie ondersteunt deze props:
 | `clearStorageOnMount`    | `boolean`        | `false`                     | Wis localStorage bij mount (testen)                      |
 | `cookieOptions`          | `CookieOption[]` | _default options_           | Array met cookie categorieën en hun cookies              |
 | `customizeLink`          | `object`         | -                           | Link naar privacybeleid `{ href: string, text: string }` |
-| `infoSections`           | `InfoSection[]`  | `[]`                        | Array met uitklapbare info secties voor accordion        |
+| `infoSections`           | `InfoSection[]`  | `[]`                        | Array met aanvullende info secties onder het formulier   |
 | `showLegitimateInterest` | `boolean`        | `true`                      | Toon aparte sectie voor gerechtvaardigd belang           |
 
 ### InfoSection Type
 
-Info secties worden gebruikt voor de accordion (en is naar eigen invulling) met aanvullende informatie:
+Info secties worden gebruikt voor aanvullende informatie onder het formulier (bijvoorbeeld uitleg over cookies of een cookiebeleid):
 
 ```typescript
 interface InfoSection {
   body: React.ReactNode;
-  expanded?: boolean;
   label: string;
 }
 ```
@@ -159,8 +158,7 @@ interface InfoSection {
 infoSections={[
   {
     label: 'Wat zijn cookies?',
-    body: <WhatAreCookiesPanel />,
-    expanded: true, // Optioneel: sectie standaard open
+    body: <WhatAreCookiesPanel />
   },
   {
     label: 'Cookieverklaring',
@@ -168,10 +166,9 @@ infoSections={[
   },
   {
     label: 'Mijn gegevens',
-    body: <DataPanel
-      cookieOptions={cookieOptions}
-      selectedCookies={selectedCookies}
-    />,
+    body: (
+      <DataPanel />
+    ),
   },
 ]}
 ```
@@ -340,7 +337,7 @@ Wanneer je dit pattern implementeert, zorg ervoor dat je voldoet aan:
 3. **Uitgebreide beschrijvingen** - Elke cookie optie heeft een duidelijke beschrijving
 4. **Status feedback** - Zowel zichtbare als screen reader feedback na elke actie (zie hieronder)
 5. **Accessible toggle buttons** - Voor uitklappen van cookie details met aria-expanded
-6. **Accordion** - Info secties zijn toegankelijk via keyboard en screen readers
+6. **Informatieve secties onder het formulier** - Aanvullende uitleg is toegankelijk via koppen en normale documentstructuur
 
 ### Status feedback na acties
 
@@ -364,7 +361,7 @@ Dit zorgt ervoor dat alle gebruikers, ongeacht hun visuele capaciteiten of hulpm
 
 ### Belangrijke toegankelijkheidsoverwegingen
 
-1. **Form structuur** - Settings zijn altijd zichtbaar, info secties zijn optioneel uitklapbaar
+1. **Form structuur** - Settings zijn altijd zichtbaar, info secties staan onder het formulier
 2. **Button hiërarchie** - Alle actieknoppen zijn gelijkwaardig (secondary) om geen voorkeur te suggereren
 3. **Cookie details** - Uitklapbare tabellen met volledige keyboard ondersteuning
 4. **Legal basis distinctie** - Duidelijke visuele en semantische scheiding tussen consent en legitimate interest
@@ -540,7 +537,7 @@ Voor productie-gebruik:
 1. **Implementeer server-side state management** - Zie "State management" sectie
 2. **Stel server-side cookies in** - Bewaartermijn van 12 maanden
 3. **Pas cookie voorbeelden aan** - Vervang default voorbeelden met je eigen cookies
-4. **Configureer info secties** - Pas de accordion secties aan naar je eigen content
+4. **Configureer info secties** - Pas de informatieve secties aan naar je eigen content
 5. **Valideer juridische basis** - Controleer of je legal basis klopt voor elke cookie volgens AP-richtlijnen
 
 ## Browser ondersteuning
