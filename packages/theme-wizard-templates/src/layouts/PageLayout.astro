@@ -13,37 +13,38 @@ const { sideNav = true, title, description } = Astro.props;
 
 <BaseLayout title={title} description={description}>
   <div class="utrecht-page-body__content">
-    <dialog open="true" class="utrecht-drawer utrecht-drawer--block-start" style="position: static;">
+    <dialog open="" style="position: static;" class="utrecht-drawer utrecht-drawer--block-start">
+      <div style="margin-block-end: var(--basis-space-block-lg, 1.5rem);">
+        <a href="#" class="utrecht-link utrecht-link--html-a" style="display: inline-block; text-decoration: none;">
+          <img
+            src="https://clippy-storybook-nl-design-system.vercel.app/assets/logo-CqnJ_--U.svg"
+            alt="Organisatie logo"
+            style="max-height: 50px; width: auto;"
+          />
+        </a>
+      </div>
       <h2
+        class="nl-heading nl-heading--level-2"
         id="cookie-consent-title"
-        class="utrecht-heading-2"
         style="margin-block-end: var(--basis-space-block-lg, 1.5rem);"
       >
-        Cookies op deze website
+        Cookies op de website van [Organisatie]
       </h2>
-      <div style="margin-block-end: var(--basis-space-block-xl, 2rem);">
-        <p class="utrecht-paragraph" style="margin-block-end: var(--basis-space-block-md, 1rem);">
-          We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
-          onthouden en onze diensten te verbeteren.
+      <div style="margin-block-end: var(--basis-space-block-xl, 2rem); max-height: 200px; overflow-y: auto;">
+        <p style="margin-block-end: var(--basis-space-block-md, 1rem);" class="utrecht-paragraph">
+          We gebruiken enkele essentiële cookies om deze website goed te laten werken. We willen graag aanvullende
+          cookies plaatsen om te begrijpen hoe je deze website gebruikt en onze diensten te verbeteren.
         </p>
       </div>
       <form method="dialog">
-        <p role="group" class="utrecht-button-group" style="margin-block-start: var(--basis-space-block-xl, 2rem);">
-          <button
-            class="utrecht-button utrecht-button--submit utrecht-button--primary-action"
-            type="submit"
-            value="accept"
-          >
+        <p role="group" style="margin-block-start: var(--basis-space-block-xl, 2rem);" class="utrecht-button-group">
+          <button type="submit" class="nl-button nl-button--secondary" value="accept">
             Aanvullende cookies accepteren
           </button>
-          <button
-            class="utrecht-button utrecht-button--submit utrecht-button--primary-action"
-            type="submit"
-            value="reject"
-          >
+          <button type="submit" class="nl-button nl-button--secondary" value="reject">
             Aanvullende cookies weigeren
           </button>
-          <a href="/templates/cookies" class="utrecht-link utrecht-link--html-a"> Zelf instellen </a>
+          <a href="#" class="utrecht-link utrecht-link--html-a"> Zelf instellen </a>
         </p>
       </form>
     </dialog>
