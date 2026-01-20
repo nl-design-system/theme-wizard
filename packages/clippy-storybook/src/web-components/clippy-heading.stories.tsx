@@ -14,7 +14,7 @@ interface HeadingStoryArgs {
 const createTemplate = (level: number, content: string) => html`<clippy-heading level="${level}">${content}</clippy-heading>`;
 
 const meta = {
-  id: 'web-component-heading',
+  id: 'clippy-heading',
   args: {
     content: 'Pagina titel',
     level: 1,
