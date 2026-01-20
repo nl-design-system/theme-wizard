@@ -8,6 +8,7 @@ import memoize from 'memoize';
 import { arrayFromTokenList } from '../lib/converters';
 import { FormField } from '../lib/FormField';
 import srOnly from '../lib/sr-only/styles';
+import styles from './styles';
 
 type Option = {
   label: string;
@@ -37,6 +38,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
   #options: Map<T['label'], T> = new Map();
 
   static override readonly styles = [
+    styles,
     srOnly,
     unsafeCSS(comboboxStyles),
     unsafeCSS(listboxStyles),
@@ -70,6 +72,16 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
 
   get options(): T[] {
     return [...this.#options.values()];
+  }
+
+  get currentOption(): T | undefined {
+    const valueIsNonNullObject = typeof this.value === 'object' && this.value !== null;
+    return this.options.find((option) => {
+      if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
+        return JSON.stringify(option.value) === JSON.stringify(this.value);
+      }
+      return option.value === this.value;
+    });
   }
 
   @property()
@@ -248,7 +260,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
   /**
    * Override this function to customize the rendering of combobox options and selected value.
    */
-  renderEntry({ label }: Option, _index: number) {
+  renderEntry({ label }: Option, _index?: number) {
     return html`${label}`;
   }
 
@@ -267,29 +279,40 @@ export class ClippyCombobox<T extends Option = Option> extends FormField<T['valu
       [`utrecht-combobox__popover--${this.position}`]: this.position,
       'utrecht-combobox__popover--hidden': !this.open,
     };
+    const currentOption = this.currentOption;
     return html`
       <div class="utrecht-combobox">
         <label for="${this.#id}" class="sr-only">${this.hiddenLabel}</label>
-        <input
-          id=${this.#id}
-          name=${this.name}
-          autocomplete="off"
-          role="combobox"
-          aria-autocomplete="list"
-          aria-haspopup="listbox"
-          aria-controls=${this.#listId}
-          aria-expanded=${this.open}
-          aria-activedescendant=${this.#getOptionId()}
-          type="text"
-          class="utrecht-textbox utrecht-combobox__input"
-          dir="auto"
-          .value=${this.query}
-          @input=${this.#handleInput}
-          @focus=${this.#handleFocus}
-          @blur=${this.#handleBlur}
-          @change=${this.#handleChange}
-          @keydown=${this.#handleKeydown}
-        />
+        <div class="clippy-combobox__input-container">
+          ${currentOption
+            ? html`<div
+                role="presentation"
+                class="clippy-combobox__current-option utrecht-textbox utrecht-combobox__input"
+              >
+                ${this.renderEntry(currentOption)}
+              </div>`
+            : nothing}
+          <input
+            id=${this.#id}
+            name=${this.name}
+            autocomplete="off"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
+            aria-controls=${this.#listId}
+            aria-expanded=${this.open}
+            aria-activedescendant=${this.#getOptionId()}
+            type="text"
+            class="utrecht-textbox utrecht-combobox__input"
+            dir="auto"
+            .value=${this.query}
+            @input=${this.#handleInput}
+            @focus=${this.#handleFocus}
+            @blur=${this.#handleBlur}
+            @change=${this.#handleChange}
+            @keydown=${this.#handleKeydown}
+          />
+        </div>
         <div
           id=${this.#listId}
           class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}"
