@@ -1,7 +1,7 @@
 import '.';
-import type { Category, TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { WizardPreviewPicker } from '.';
+import type { Category, TemplateGroup } from '../../types/templates';
 
 const tag = 'wizard-preview-picker';
 const category: Category = 'template';

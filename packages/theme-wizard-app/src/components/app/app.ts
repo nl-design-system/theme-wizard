@@ -6,13 +6,13 @@ import '@fontsource/fira-sans/700.css';
 import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/700.css';
 // <End TODO>
-import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import { Router } from '@lit-labs/router';
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import type { TemplateGroup } from '../../types/templates';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';

@@ -1,4 +1,3 @@
-import type { TemplateGroup } from '@nl-design-system-community/theme-wizard-templates';
 import type { PropertyValues } from 'lit';
 import { consume } from '@lit/context';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
@@ -11,6 +10,7 @@ import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
 import type Theme from '../../lib/Theme';
+import type { TemplateGroup } from '../../types/templates';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { EVENT_NAMES } from '../../constants';
 import { themeContext } from '../../contexts/theme';

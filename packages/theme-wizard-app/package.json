@@ -79,7 +79,6 @@
     "zod": "4.3.4"
   },
   "devDependencies": {
-    "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@types/dlv": "1.1.5",
     "@vitest/browser-playwright": "4.0.16",
     "@vitest/coverage-v8": "4.0.16",

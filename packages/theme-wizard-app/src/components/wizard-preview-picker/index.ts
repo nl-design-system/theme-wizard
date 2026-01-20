@@ -1,7 +1,7 @@
-import type { TemplateGroup, Category } from '@nl-design-system-community/theme-wizard-templates';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../wizard-dropdown';
+import type { TemplateGroup, Category } from '../../types/templates';
 import type { DropdownOption } from '../wizard-dropdown';
 import styles from './styles';
 
