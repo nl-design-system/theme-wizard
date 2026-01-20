@@ -4,6 +4,7 @@ import { Button } from '@nl-design-system-candidate/button-react';
 import { Heading } from '@nl-design-system-candidate/heading-react';
 import { ButtonGroup, Drawer, Link } from '@utrecht/component-library-react/dist/css-module';
 import React, { FC } from 'react';
+import logo from '../assets/logo.svg';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieConsentDrawerProps } from './types';
 
@@ -37,7 +38,7 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
         <div style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
           <Link href="#" style={{ display: 'inline-block', textDecoration: 'none' }}>
             <img
-              src="/src/patterns/cookie-consent/assets/logo.svg"
+              src={logo}
               alt="Organisatie logo"
               style={{ maxHeight: '50px', width: 'auto' }}
             />

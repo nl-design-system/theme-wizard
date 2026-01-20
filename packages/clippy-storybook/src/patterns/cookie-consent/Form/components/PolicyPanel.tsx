@@ -1,5 +1,6 @@
 import { Link } from '@nl-design-system-candidate/link-react/css';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
+import { UnorderedList, UnorderedListItem } from '@utrecht/component-library-react/css-module';
 import React, { type FC, type ReactNode } from 'react';
 
 export interface PolicyPanelProps {
@@ -8,7 +9,7 @@ export interface PolicyPanelProps {
 }
 
 /**
- * Demo Panel component - this is just an example of how to implement an accordion section on the cookie page
+ * Demo Panel component - this is just an example of how to implement a section on the cookie page
  * Cookie policy content explaining what cookies are and how they are used.
  */
 export const PolicyPanel: FC<PolicyPanelProps> = ({ children, privacyPolicyUrl }) => (
@@ -22,12 +23,12 @@ export const PolicyPanel: FC<PolicyPanelProps> = ({ children, privacyPolicyUrl }
 
     <Paragraph>Wij gebruiken cookies om:</Paragraph>
 
-    <ul>
-      <li>de functionaliteit van de website te garanderen;</li>
-      <li>de website te verbeteren en te analyseren;</li>
-      <li>voorkeuren te onthouden;</li>
-      <li>relevante content en advertenties te tonen.</li>
-    </ul>
+    <UnorderedList>
+      <UnorderedListItem>de functionaliteit van de website te garanderen;</UnorderedListItem>
+      <UnorderedListItem>de website te verbeteren en te analyseren;</UnorderedListItem>
+      <UnorderedListItem>voorkeuren te onthouden;</UnorderedListItem>
+      <UnorderedListItem>relevante content en advertenties te tonen.</UnorderedListItem>
+    </UnorderedList>
 
     <Paragraph>
       Je kunt zelf kiezen welke cookies je accepteert. Je kunt je keuze altijd weer aanpassen via de

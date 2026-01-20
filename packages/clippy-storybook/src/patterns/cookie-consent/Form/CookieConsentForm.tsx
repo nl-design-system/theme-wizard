@@ -1,7 +1,6 @@
-import type { AccordionSectionProps } from '@utrecht/component-library-react';
 import { Button } from '@nl-design-system-candidate/button-react/css';
-import { AccordionProvider, Alert, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC, useCallback, useMemo, useState } from 'react';
+import { Alert, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
+import React, { type FC, useCallback, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieOptionList } from './components';
@@ -118,16 +117,6 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
     setStatusMessage(STATUS_MESSAGES.save);
   }, [selectedCookies, savePreferences]);
 
-  const infoAccordionSections: AccordionSectionProps[] = useMemo(
-    () =>
-      infoSections.map((section) => ({
-        body: section.body,
-        expanded: section.expanded,
-        label: section.label,
-      })),
-    [infoSections],
-  );
-
   return (
     <section aria-label="Cookie-instellingen" className="clippy-cookie-consent">
       {/* Visible status message for all users */}
@@ -172,7 +161,15 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
         </Button>
       </ButtonGroup>
 
-      <AccordionProvider headingLevel={2} sections={infoAccordionSections} />
+      {infoSections.length > 0 && (
+        <div className="clippy-cookie-info-sections">
+          {infoSections.map((section, index) => (
+            <section key={section.label ?? index} className="clippy-cookie-info-section">
+              {section.body}
+            </section>
+          ))}
+        </div>
+      )}
     </section>
   );
 };
