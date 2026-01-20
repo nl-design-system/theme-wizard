@@ -6,7 +6,7 @@ import '@amsterdam/design-system-css/dist/index.css';
 import '@amsterdam/design-system-tokens/dist/index.css';
 
 /**
- * Demo Panel component - this is just an example of how to implement an accordion section on the cookie page
+ * Demo Panel component - this is just an example of how to implement a section on the cookie page
  * Panel explaining what cookies are and why websites use them.
  */
 export const WhatAreCookiesPanel: FC = () => (

@@ -70,7 +70,7 @@ export const CookieOptionList: FC<CookieOptionListProps> = ({
 
       {hasConsentOptions && (
         <Fieldset aria-describedby="consent-description" className="clippy-cookie-fieldset">
-          <FieldsetLegend>{legendConsent}</FieldsetLegend>
+          <FieldsetLegend className="clippy-cookie-fieldset__legend">{legendConsent}</FieldsetLegend>
 
           <Paragraph className="clippy-cookie-fieldset__description" id="consent-description">
             {CONSENT_DESCRIPTION}
