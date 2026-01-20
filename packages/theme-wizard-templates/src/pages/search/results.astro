@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResultsPage from './ResultsPage';
+
+export const detail = {
+  name: 'Homepagina',
+  value: 'page',
+  module: 'Gemeentevoorbeeld',
+};
+
+const currentPath = Astro.url.pathname;
+---
+
+<BaseLayout>
+  <ResultsPage client:load currentPath={currentPath} />
+</BaseLayout>
