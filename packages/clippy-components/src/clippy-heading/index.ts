@@ -4,7 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { html, unsafeStatic } from 'lit/static-html.js';
 
 @customElement('clippy-heading')
-export class TemplateHeading extends LitElement {
+export class ClippyHeading extends LitElement {
   @property({ type: Number }) level = 1;
 
   static override readonly styles = [unsafeCSS(headingCss)];
@@ -18,6 +18,6 @@ export class TemplateHeading extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'clippy-heading': TemplateHeading;
+    'clippy-heading': ClippyHeading;
   }
 }
