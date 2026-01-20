@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
@@ -25,6 +25,18 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
   #intersectionObserver?: IntersectionObserver;
   @query('[role=listbox]')
   readonly listboxElement?: Element;
+
+  @property()
+  override set value(value: Option['value'] | null) {
+    super.value = (typeof value === 'string')
+      ? value.split(/,/).map(s => s.trim())
+      : value;
+    this.query = this.valueToQuery(value ?? '');
+  }
+
+  override get value(): Option['value'] | null {
+    return super.value;
+  }
 
   override async fetchAdditionalOptions(query: string): Promise<Option[]> {
     this.#additional = this.#additional ?? (await import('./external').then(({ default: items }) => items));
