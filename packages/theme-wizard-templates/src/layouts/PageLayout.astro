@@ -23,6 +23,7 @@ const { sideNav = true, title, description } = Astro.props;
           />
         </a>
       </div>
+
       <h2
         class="nl-heading nl-heading--level-2"
         id="cookie-consent-title"
@@ -30,17 +31,20 @@ const { sideNav = true, title, description } = Astro.props;
       >
         Cookies op de website van [Organisatie]
       </h2>
+
       <div style="margin-block-end: var(--basis-space-block-xl, 2rem); max-height: 200px; overflow-y: auto;">
         <p style="margin-block-end: var(--basis-space-block-md, 1rem);" class="utrecht-paragraph">
           We gebruiken enkele essentiële cookies om deze website goed te laten werken. We willen graag aanvullende
           cookies plaatsen om te begrijpen hoe je deze website gebruikt en onze diensten te verbeteren.
         </p>
       </div>
+
       <form method="dialog">
         <p role="group" style="margin-block-start: var(--basis-space-block-xl, 2rem);" class="utrecht-button-group">
           <button type="submit" class="nl-button nl-button--secondary" value="accept">
             Aanvullende cookies accepteren
           </button>
+
           <button type="submit" class="nl-button nl-button--secondary" value="reject">
             Aanvullende cookies weigeren
           </button>
@@ -48,6 +52,7 @@ const { sideNav = true, title, description } = Astro.props;
         </p>
       </form>
     </dialog>
+
     <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
 
     <template-page-header>
