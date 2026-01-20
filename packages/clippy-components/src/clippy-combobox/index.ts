@@ -75,20 +75,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return [...this.#options.values()];
   }
 
-  get currentOption(): T | undefined {
-    const valueIsNonNullObject = typeof this.value === 'object' && this.value !== null;
-    return this.options.find((option) => {
-      if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
-        return JSON.stringify(option.value) === JSON.stringify(this.value);
-      }
-      return option.value === this.value;
-    });
-  }
-
   @property()
   override set value(value: T['value'] | null) {
     super.value = value;
-    this.query = this.valueToQuery(value);
+    this.query = this.valueToQuery(value) || this.query;
   }
 
   override get value(): T['value'] | null {
@@ -116,6 +106,16 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return Promise.resolve(empty);
   }
 
+  getOptionForValue(value: T['value']): T | undefined {
+    const valueIsNonNullObject = typeof value === 'object' && value !== null;
+    return this.options.find((option) => {
+      if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
+        return JSON.stringify(option.value) === JSON.stringify(value);
+      }
+      return option.value === value;
+    });
+  }
+
   /**
    * Override this function to customize how the user input is resolved to a value.
    */
@@ -131,8 +131,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how a value is converted to a query.
    * This runs on setting the value.
    */
-  valueToQuery(value: T['value'] | null): string {
-    return (value ?? '').toString();
+  valueToQuery(value: Option['value']): string | undefined {
+    const option = this.getOptionForValue(value);
+    return option?.label;
   }
 
   readonly #addAdditionalOptions = memoize(async (query: string) => {
@@ -283,7 +284,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       [`utrecht-combobox__popover--${this.position}`]: this.position,
       'utrecht-combobox__popover--hidden': !this.open,
     };
-    const currentOption = this.currentOption;
+    const currentOption = this.getOptionForValue(this.value);
     return html`
       <div class="utrecht-combobox">
         <label for="${this.#id}" class="sr-only">${this.hiddenLabel}</label>
