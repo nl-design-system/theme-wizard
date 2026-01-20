@@ -5,7 +5,9 @@ import './index';
 
 const tag = 'clippy-combobox';
 
-const OPTIONS = [
+const STRING_OPTIONS = ['Bert', 'Ernie'];
+
+const OBJ_OPTIONS = [
   {
     label: 'Bert',
     value: 'bert',
@@ -20,7 +22,7 @@ describe(`<${tag}>`, () => {
   beforeEach(() => {
     document.body.innerHTML = `
     <form>
-      <${tag} name="${tag}" options=${JSON.stringify(OPTIONS)}></${tag}>
+      <${tag} name="${tag}" options=${JSON.stringify(OBJ_OPTIONS)}></${tag}>
     </form>`;
   });
 
@@ -28,16 +30,50 @@ describe(`<${tag}>`, () => {
     const combobox = page.getByRole('combobox');
     await expect.element(combobox).toBeInTheDocument();
   });
+  it('accepts an array of option objects as options', async () => {
+    // Explicitly (re)-set the body so that the object options are used
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options=${JSON.stringify(OBJ_OPTIONS)}></${tag}>
+      </form>`;
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    expect(component.options).toHaveLength(OBJ_OPTIONS.length);
+  });
+
+  it('accepts an array of strings as options', async () => {
+    // Explicitly set the body so that the string options are used
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options=${JSON.stringify(STRING_OPTIONS)}></${tag}>
+      </form>`;
+
+    // Wait for the custom element to be defined
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    expect(component.options).toHaveLength(STRING_OPTIONS.length);
+  });
+
+  it('accepts a string of options separated by spaces', async () => {
+    const separator = ' ';
+    // Explicitly set the body so that the string options are used
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options="${STRING_OPTIONS.join(separator)}"></${tag}>
+      </form>`;
+
+    // Wait for the custom element to be defined
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    expect(component.options).toHaveLength(STRING_OPTIONS.length);
+  });
 
   it('shows list of options on focus', async () => {
     const input = page.getByRole('combobox');
     await input.click();
     const options = page.getByRole('option').elements();
-    expect(options.length).toBe(OPTIONS.length);
+    expect(options.length).toBe(OBJ_OPTIONS.length);
   });
 
   it('filters list of options based on text input', async () => {
-    const query = OPTIONS[0].label.slice(0, -1);
+    const query = OBJ_OPTIONS[0].label.slice(0, -1);
     const input = page.getByRole('combobox');
     await input.fill(query);
     const options = page.getByRole('option').elements();
@@ -50,7 +86,7 @@ describe(`<${tag}>`, () => {
     await input.click();
     const option = page.getByRole('option').last();
     await option.click();
-    expect(component.value).toBe(OPTIONS.at(-1)?.value);
+    expect(component.value).toBe(OBJ_OPTIONS.at(-1)?.value);
   });
 
   it('uses query as value', async () => {
@@ -77,10 +113,10 @@ describe(`<${tag}>`, () => {
   });
 
   it.each([
-    [['ArrowDown'], OPTIONS[0]],
-    [['ArrowDown', 'ArrowDown'], OPTIONS[1]],
-    [['ArrowDown', 'ArrowDown', 'ArrowDown'], OPTIONS[0]],
-    [['ArrowDown', 'ArrowDown', 'ArrowUp'], OPTIONS[0]],
+    [['ArrowDown'], OBJ_OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown'], OBJ_OPTIONS[1]],
+    [['ArrowDown', 'ArrowDown', 'ArrowDown'], OBJ_OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown', 'ArrowUp'], OBJ_OPTIONS[0]],
   ])('changes the selected option with arrow keys', async (sequence, selection) => {
     const component: ClippyCombobox = document.querySelector(tag)!;
     const input = page.getByRole('combobox');

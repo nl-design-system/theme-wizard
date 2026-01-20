@@ -33,7 +33,7 @@ jobs:
       - name: Set up Node.js version and cache
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version-file: .nvmrc
 
       - name: Check for known security issues with npm packages
@@ -58,7 +58,7 @@ jobs:
       - name: Set up Node.js version and cache
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version-file: .nvmrc
 
       - name: Check for known security issues with npm packages
@@ -86,7 +86,7 @@ jobs:
       - name: Set up Node.js version and cache
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version-file: .nvmrc
 
       - name: Check for known security issues with npm packages
@@ -117,7 +117,7 @@ jobs:
       - name: Set up Node.js version and cache
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version-file: .nvmrc
 
       - name: Check for known security issues with npm packages
@@ -154,7 +154,7 @@ jobs:
       E2E_TIMEOUT_GLOBAL: 300000
       E2E_TIMEOUT_TEST: 20000
       E2E_TIMEOUT_EXPECT: 5000
-      E2E_TARGET_URL: 'http://localhost:9492'
+      E2E_TARGET_URL: "http://localhost:9492"
 
     steps:
       - name: Checkout
