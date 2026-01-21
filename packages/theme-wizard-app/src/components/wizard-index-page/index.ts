@@ -24,7 +24,7 @@ import '../template-case-card';
 import '../template-color-swatch';
 import '../template-heading';
 import '../template-link-list';
-import '../template-link';
+import '@nl-design-system-community/clippy-components/src/template-link/index.js';
 import '../template-page-header';
 import '../template-paragraph';
 import '../template-side-nav';

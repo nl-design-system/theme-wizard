@@ -410,7 +410,7 @@ export class WizardStyleGuide extends LitElement {
               </table>
             </utrecht-table>
             <utrecht-paragraph>
-              <a target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
+              <clippy-link target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</clippy-link>
             </utrecht-paragraph>
             ${isUsed
               ? nothing
