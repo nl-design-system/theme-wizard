@@ -47,6 +47,7 @@ export class WizardIndexPage extends LitElement {
   static override readonly styles = [unsafeCSS(buttonLinkStyles), styles];
 
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
+  #themeListenerAttached = false;
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -76,6 +77,7 @@ export class WizardIndexPage extends LitElement {
     document.title = t('app.title').toString();
 
     this.addEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
+    this.#attachThemeListener();
 
     // Parse template selection from query param: ?templatePath=/group/page (dynamic)
     try {
@@ -98,12 +100,31 @@ export class WizardIndexPage extends LitElement {
     if (changedProperties.has('templates') && !this.selectedTemplatePath) {
       this.selectedTemplatePath = this.#getFallbackTemplatePath();
     }
+
+    // In some cases the theme is provided after connectedCallback; ensure we subscribe once.
+    this.#attachThemeListener();
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener(EVENT_NAMES.TEMPLATE_CHANGE, this.#handleTemplateChange);
+    if (this.#themeListenerAttached) {
+      this.theme.removeEventListener('csschange', this.#handleThemeCssChange);
+      this.#themeListenerAttached = false;
+    }
   }
+
+  readonly #handleThemeCssChange = () => {
+    // Re-render so wizard-preview receives updated `theme.cssText`
+    this.requestUpdate();
+  };
+
+  readonly #attachThemeListener = () => {
+    if (this.#themeListenerAttached) return;
+    if (!this.theme) return;
+    this.theme.addEventListener('csschange', this.#handleThemeCssChange);
+    this.#themeListenerAttached = true;
+  };
 
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
@@ -265,7 +286,7 @@ export class WizardIndexPage extends LitElement {
         </div>
 
         <section slot="main" aria-label="Live voorbeeld van toegepaste huisstijl">
-          <wizard-preview .url=${this.selectedTemplatePath} .themeStylesheet=${this.theme.stylesheet}></wizard-preview>
+          <wizard-preview .url=${this.selectedTemplatePath} .themeCssText=${this.theme.cssText}></wizard-preview>
         </section>
       </wizard-layout>
     `;

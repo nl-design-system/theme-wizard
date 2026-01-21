@@ -23,16 +23,18 @@ const STYLE_DICTIONARY_SETTINGS = {
   },
 } as const;
 
-export default class Theme {
+export default class Theme extends EventTarget {
   static readonly defaults = StrictThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   readonly #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  #cssText: string = '';
   name = 'wizard';
   #validationIssues: ValidationIssue[] = [];
 
   constructor(tokens?: DesignTokens) {
+    super();
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
     this.tokens = structuredClone(this.#defaults);
@@ -56,12 +58,18 @@ export default class Theme {
     this.#tokens = values;
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
+      this.#cssText = css;
       sheet.replaceSync(css);
+      this.dispatchEvent(new Event('csschange'));
     });
   }
 
   get stylesheet() {
     return this.#stylesheet;
+  }
+
+  get cssText() {
+    return this.#cssText;
   }
 
   updateAt(path: string, value: DesignToken['$value']) {

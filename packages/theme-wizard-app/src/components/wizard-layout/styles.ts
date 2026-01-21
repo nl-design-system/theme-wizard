@@ -78,6 +78,13 @@ export default css`
     min-block-size: 100%;
   }
 
+  .wizard-layout__main > slot[name='main']::slotted(*) {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-block-size: 0;
+  }
+
   @media print {
     .wizard-layout {
       /* Undo the grid template, making sure the main area has all room available */

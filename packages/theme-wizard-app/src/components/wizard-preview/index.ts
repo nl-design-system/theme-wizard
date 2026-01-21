@@ -1,9 +1,9 @@
 import type { PropertyValues } from 'lit';
-import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { LitElement, html, nothing } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
+import { keyed } from 'lit/directives/keyed.js';
 import Scraper from '../../lib/Scraper';
 import { PREVIEW_THEME_CLASS } from '../../lib/Theme';
-import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
 import styles from './styles';
 
 const tag = 'wizard-preview';
@@ -16,15 +16,18 @@ declare global {
 
 @customElement(tag)
 export class ThemePreview extends LitElement {
-  @property() themeStylesheet!: CSSStyleSheet;
+  @property({ attribute: false }) themeCssText = '';
   @property() url?: string;
 
-  @state() private htmlContent = '';
   @state() private isLoading = false;
+  @state() private iframeLoaded = false;
   @state() private error = '';
 
+  @query('iframe')
+  private readonly iframeElement?: HTMLIFrameElement;
+
   private readonly scraper: Scraper;
-  previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
+  #previewCssText = '';
 
   static override readonly styles = [styles];
 
@@ -40,9 +43,6 @@ export class ThemePreview extends LitElement {
     if (this.url) {
       this.#loadContent();
     }
-
-    // Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview
-    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
   }
 
   override updated(changedProperties: PropertyValues) {
@@ -50,17 +50,13 @@ export class ThemePreview extends LitElement {
 
     // Reload content when url changes
     if (changedProperties.has('url') && this.url) {
+      this.iframeLoaded = false;
       this.#loadContent();
     }
 
-    // Execute scripts after content is rendered
-    if (changedProperties.has('htmlContent') && this.htmlContent) {
-      requestAnimationFrame(() => {
-        const container = this.shadowRoot?.querySelector(`[data-testid="preview"]`) as HTMLElement;
-        if (container) {
-          this.#executeScripts(container);
-        }
-      });
+    if (changedProperties.has('themeCssText') || changedProperties.has('url')) {
+      // If the iframe is already loaded, re-apply styles (new doc on url change; new sheet on theme change)
+      this.#applyStylesToIframe();
     }
   }
 
@@ -68,18 +64,47 @@ export class ThemePreview extends LitElement {
     return `/templates${this.url || ''}`;
   }
 
+  readonly #handleIframeLoad = () => {
+    this.iframeLoaded = true;
+    this.#applyStylesToIframe();
+  };
+
+  readonly #applyStylesToIframe = () => {
+    const iframe = this.iframeElement;
+    const doc = iframe?.contentDocument;
+    if (!iframe || !doc) return;
+
+    // Ensure the theme scope class exists in the iframe document.
+    doc.documentElement.classList.add(PREVIEW_THEME_CLASS);
+
+    const head = doc.head ?? doc.getElementsByTagName('head')[0] ?? doc.documentElement;
+
+    const ensureStyleTag = (id: string) => {
+      const existing = doc.getElementById(id);
+      if (existing instanceof HTMLStyleElement) return existing;
+      const style = doc.createElement('style');
+      style.id = id;
+      head.appendChild(style);
+      return style;
+    };
+
+    // NOTE: constructed CSSStyleSheets cannot be adopted across documents (iframe boundary),
+    // so we inject CSS text instead.
+    ensureStyleTag('theme-wizard-preview-css').textContent = this.#previewCssText;
+    ensureStyleTag('theme-wizard-theme-css').textContent = this.themeCssText;
+  };
+
   readonly #loadContent = async () => {
     this.isLoading = true;
     this.error = '';
 
     try {
-      this.htmlContent = await this.#fetchHTML();
       const css = await this.#fetchCSS();
 
-      this.previewStylesheet?.replaceSync('');
-      if (css?.trim()) {
-        this.previewStylesheet.replaceSync(css);
-      }
+      this.#previewCssText = css?.trim() ? css : '';
+
+      // If the iframe is already loaded, make sure it sees the latest CSS.
+      this.#applyStylesToIframe();
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'Failed to load content';
     } finally {
@@ -98,56 +123,7 @@ export class ThemePreview extends LitElement {
     }
   };
 
-  /**
-   * Execute scripts from the fetched HTML
-   */
-  readonly #executeScripts = (container: HTMLElement) => {
-    const scripts = container.querySelectorAll('script');
-    scripts.forEach((oldScript) => {
-      const newScript = document.createElement('script');
-
-      // Copy attributes
-      Array.from(oldScript.attributes).forEach((attr) => {
-        newScript.setAttribute(attr.name, attr.value);
-      });
-
-      // Copy inline script content
-      if (oldScript.textContent) {
-        newScript.textContent = oldScript.textContent;
-      }
-
-      // Replace old script with new one (this makes it execute)
-      oldScript.parentNode?.replaceChild(newScript, oldScript);
-    });
-  };
-
-  /**
-   * Fetch and process HTML from the URL
-   */
-  readonly #fetchHTML = async (): Promise<string> => {
-    const response = await fetch(this.previewUrl);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${this.previewUrl}: ${response.statusText}`);
-    }
-
-    const html = await response.text();
-    const doc = parseHtml(html);
-
-    rewriteAttributeUrlsToAbsolute(doc.body, this.previewUrl);
-    rewriteSvgXlinkToAbsolute(doc.body, this.previewUrl);
-
-    return doc.body.innerHTML;
-  };
-
   override render() {
-    if (this.isLoading && !this.htmlContent) {
-      return html`
-        <div>
-          <p>Laden...</p>
-        </div>
-      `;
-    }
-
     if (this.error) {
       return html`
         <div>
@@ -156,6 +132,17 @@ export class ThemePreview extends LitElement {
       `;
     }
 
-    return html` <div class=${PREVIEW_THEME_CLASS} data-testid="preview" .innerHTML=${this.htmlContent}></div> `;
+    return html`
+      ${this.isLoading && !this.iframeLoaded ? html`<p>Laden...</p>` : nothing}
+      ${keyed(
+        this.previewUrl,
+        html`<iframe
+          data-testid="preview"
+          src=${this.previewUrl}
+          @load=${this.#handleIframeLoad}
+          title="Template preview"
+        ></iframe>`,
+      )}
+    `;
   }
 }
