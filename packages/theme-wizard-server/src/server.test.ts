@@ -1,7 +1,7 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { it, expect } from 'vitest';
+import { it, expect, afterEach } from 'vitest';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageDir = join(__dirname, '..');
@@ -64,8 +64,11 @@ const stopServer = async (testProcess: ChildProcessWithoutNullStreams): Promise<
   });
 };
 
+let runningProcess: ChildProcessWithoutNullStreams | null = null;
+
 it('should execute as a standalone file and start the server on custom port', async () => {
   const { output, process: testProcess, started } = await startServer(9999);
+  runningProcess = testProcess;
 
   expect(started).toBe(true);
   expect(output).toContain('Starting Theme Wizard server...');
@@ -76,10 +79,17 @@ it('should execute as a standalone file and start the server on custom port', as
 
 it('should execute with default port 8080 when PORT env is not set', async () => {
   const { output, process: testProcess, started } = await startServer();
+  runningProcess = testProcess;
 
   expect(started).toBe(true);
   expect(output).toContain('Starting Theme Wizard server...');
   expect(output).toContain('http://[::]:8080/');
 
   await stopServer(testProcess);
+});
+
+afterEach(() => {
+  if (runningProcess) {
+    stopServer(runningProcess);
+  }
 });
