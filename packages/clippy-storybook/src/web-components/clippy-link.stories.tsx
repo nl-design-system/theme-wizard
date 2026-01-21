@@ -5,61 +5,35 @@ import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 
-type ForwardAttributes = 'aria-data' | 'all';
-
 interface LinkStoryArgs {
-  ariaLabel: string;
   className: string;
   content: string;
   ariaCurrent: string;
-  dataTestid: string;
   disabled: boolean;
-  forwardAttributes: ForwardAttributes;
   href: string;
   inlineBox: boolean;
   rel: string;
   target: string;
-  restDownload: string;
-  restHreflang: string;
-  restPing: string;
-  restReferrerPolicy: string;
-  restType: string;
 }
 
 const createTemplate = (args: LinkStoryArgs) => {
   const inlineBox = args.inlineBox ? ' inline-box' : '';
   const disabled = args.disabled ? ' disabled' : '';
-  const forwardAttributes = args.forwardAttributes === 'all' ? ' forward-attributes="all"' : '';
   const href = args.href ? ` href="${args.href}"` : '';
   const target = args.target ? ` target="${args.target}"` : '';
   const rel = args.rel ? ` rel="${args.rel}"` : '';
   const ariaCurrent = args.ariaCurrent ? ` aria-current="${args.ariaCurrent}"` : '';
   const className = args.className ? ` class="${args.className}"` : '';
-  const ariaLabel = args.ariaLabel ? ` aria-label="${args.ariaLabel}"` : '';
-  const dataTestid = args.dataTestid ? ` data-testid="${args.dataTestid}"` : '';
-  const restDownload = args.restDownload ? ` rest-download="${args.restDownload}"` : '';
-  const restHreflang = args.restHreflang ? ` rest-hreflang="${args.restHreflang}"` : '';
-  const restPing = args.restPing ? ` rest-ping="${args.restPing}"` : '';
-  const restReferrerPolicy = args.restReferrerPolicy ? ` rest-referrer-policy="${args.restReferrerPolicy}"` : '';
-  const restType = args.restType ? ` rest-type="${args.restType}"` : '';
 
-  return html`<clippy-link${href}${target}${rel}${ariaCurrent}${inlineBox}${disabled}${forwardAttributes}${className}${ariaLabel}${dataTestid}${restDownload}${restHreflang}${restPing}${restReferrerPolicy}${restType}>${args.content}</clippy-link>`;
+  return html`<clippy-link${href}${target}${rel}${ariaCurrent}${inlineBox}${disabled}${className}>${args.content}</clippy-link>`;
 };
 
 type ClippyLinkElement = HTMLElement & {
-  ariaCurrent: string;
   disabled: boolean;
   href: string;
   rel: string;
   target: string;
   className: string;
-  restProps: {
-    download?: string;
-    hreflang?: string;
-    ping?: string;
-    referrerPolicy?: string;
-    type?: string;
-  };
 };
 
 const syncClippyLink = (el: ClippyLinkElement, args: LinkStoryArgs) => {
@@ -81,29 +55,10 @@ const syncClippyLink = (el: ClippyLinkElement, args: LinkStoryArgs) => {
   if (args.ariaCurrent) el.setAttribute('aria-current', args.ariaCurrent);
   else el.removeAttribute('aria-current');
 
-  if (args.className) el.setAttribute('class', args.className);
-  else el.removeAttribute('class');
-
   if (args.disabled) el.setAttribute('disabled', '');
   else el.removeAttribute('disabled');
 
   el.toggleAttribute('inline-box', args.inlineBox);
-  if (args.forwardAttributes === 'all') el.setAttribute('forward-attributes', 'all');
-  else el.removeAttribute('forward-attributes');
-
-  if (args.ariaLabel) el.setAttribute('aria-label', args.ariaLabel);
-  else el.removeAttribute('aria-label');
-
-  if (args.dataTestid) el.dataset['testid'] = args.dataTestid;
-  else delete el.dataset['testid'];
-
-  el.restProps = {
-    download: args.restDownload || undefined,
-    hreflang: args.restHreflang || undefined,
-    ping: args.restPing || undefined,
-    referrerPolicy: args.restReferrerPolicy || undefined,
-    type: args.restType || undefined,
-  };
 };
 
 const ClippyLinkStory = (args: LinkStoryArgs) => {
@@ -114,21 +69,13 @@ const ClippyLinkStory = (args: LinkStoryArgs) => {
     if (!el) return;
     syncClippyLink(el, args);
   }, [
-    args.ariaLabel,
     args.className,
     args.ariaCurrent,
-    args.dataTestid,
     args.disabled,
-    args.forwardAttributes,
     args.href,
     args.inlineBox,
     args.rel,
     args.target,
-    args.restDownload,
-    args.restHreflang,
-    args.restPing,
-    args.restReferrerPolicy,
-    args.restType,
   ]);
 
   return React.createElement('clippy-link', { ref }, args.content);
@@ -138,36 +85,19 @@ const meta = {
   id: 'clippy-link',
   args: {
     ariaCurrent: '',
-    ariaLabel: 'Meer info',
     className: '',
     content: 'Voorbeeldsite',
-    dataTestid: 'link',
     disabled: false,
-    forwardAttributes: 'aria-data',
     href: 'https://example.com',
     inlineBox: false,
     rel: 'noopener noreferrer',
-    restDownload: '',
-    restHreflang: '',
-    restPing: '',
-    restReferrerPolicy: '',
-    restType: '',
     target: '_blank',
   },
   argTypes: {
     ariaCurrent: {
       name: 'aria-current',
       defaultValue: '',
-      description: 'Marks the link as current; used for styling and forwarded to the inner <a>.',
-      type: {
-        name: 'string',
-        required: false,
-      },
-    },
-    ariaLabel: {
-      name: 'aria-label',
-      defaultValue: '',
-      description: 'Forwarded to the rendered <a> (when forward-attributes allows it)',
+      description: 'Marks the link as current; used for styling and set on the inner <a>.',
       type: {
         name: 'string',
         required: false,
@@ -176,7 +106,7 @@ const meta = {
     className: {
       name: 'class',
       defaultValue: '',
-      description: 'Extra class applied to the host element (forwarded to <a> via class attribute)',
+      description: 'Extra class applied to the host element and used for the inner <a> styling',
       type: { name: 'string', required: false },
     },
     content: {
@@ -188,15 +118,6 @@ const meta = {
         required: true,
       },
     },
-    dataTestid: {
-      name: 'data-testid',
-      defaultValue: '',
-      description: 'Forwarded to the rendered <a> (when forward-attributes allows it)',
-      type: {
-        name: 'string',
-        required: false,
-      },
-    },
     disabled: {
       name: 'Disabled',
       control: { type: 'boolean' },
@@ -204,17 +125,6 @@ const meta = {
       description: 'Disable link behavior (adds nl-link--disabled class)',
       type: {
         name: 'boolean',
-        required: false,
-      },
-    },
-    forwardAttributes: {
-      name: 'Forward attributes',
-      control: { type: 'select' },
-      defaultValue: 'aria-data',
-      description: 'Which host attributes are forwarded to the inner <a>',
-      options: ['aria-data', 'all'] satisfies ForwardAttributes[],
-      type: {
-        name: 'string',
         required: false,
       },
     },
@@ -241,51 +151,6 @@ const meta = {
       name: 'Rel',
       defaultValue: '',
       description: 'Relationship between the current document and the linked URL',
-      type: {
-        name: 'string',
-        required: false,
-      },
-    },
-    restDownload: {
-      name: 'restProps.download',
-      defaultValue: '',
-      description: 'Property-only forwarded to the inner <a> (download)',
-      type: {
-        name: 'string',
-        required: false,
-      },
-    },
-    restHreflang: {
-      name: 'restProps.hreflang',
-      defaultValue: '',
-      description: 'Property-only forwarded to the inner <a> (hreflang)',
-      type: {
-        name: 'string',
-        required: false,
-      },
-    },
-    restPing: {
-      name: 'restProps.ping',
-      defaultValue: '',
-      description: 'Property-only forwarded to the inner <a> (ping)',
-      type: {
-        name: 'string',
-        required: false,
-      },
-    },
-    restReferrerPolicy: {
-      name: 'restProps.referrerPolicy',
-      defaultValue: '',
-      description: 'Property-only forwarded to the inner <a> (referrerPolicy)',
-      type: {
-        name: 'string',
-        required: false,
-      },
-    },
-    restType: {
-      name: 'restProps.type',
-      defaultValue: '',
-      description: 'Property-only forwarded to the inner <a> (type)',
       type: {
         name: 'string',
         required: false,

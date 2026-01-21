@@ -22,7 +22,7 @@ describe(`<${tag}>`, () => {
     expect(a?.getAttribute('href')).toBe('/example');
   });
 
-  it('forwards anchor-specific attributes via host attributes', async () => {
+  it('does not forward arbitrary anchor-specific attributes from the host', async () => {
     document.body.innerHTML = `<${tag} download="file.pdf" hreflang="en" ping="https://example.com/ping" referrerpolicy="no-referrer" type="application/pdf"></${tag}>`;
     const el = document.querySelector(tag);
     expect(el).not.toBeNull();
@@ -32,11 +32,11 @@ describe(`<${tag}>`, () => {
 
     const a = el!.shadowRoot?.querySelector('a');
     expect(a).not.toBeNull();
-    expect(a?.getAttribute('download')).toBe('file.pdf');
-    expect(a?.getAttribute('hreflang')).toBe('en');
-    expect(a?.getAttribute('ping')).toBe('https://example.com/ping');
-    expect(a?.getAttribute('referrerpolicy')).toBe('no-referrer');
-    expect(a?.getAttribute('type')).toBe('application/pdf');
+    expect(a?.getAttribute('download')).toBeNull();
+    expect(a?.getAttribute('hreflang')).toBeNull();
+    expect(a?.getAttribute('ping')).toBeNull();
+    expect(a?.getAttribute('referrerpolicy')).toBeNull();
+    expect(a?.getAttribute('type')).toBeNull();
   });
 
   it('adds nl-link--current class when aria-current is set on the host', async () => {
@@ -84,7 +84,7 @@ describe(`<${tag}>`, () => {
     expect(a?.getAttribute('role')).toBe('link');
   });
 
-  it('forwards non-component attributes to the rendered anchor', async () => {
+  it('does not forward non-component aria/data attributes to the rendered anchor', async () => {
     document.body.innerHTML = `<${tag} href="/x" aria-label="Meer info" data-testid="link">Lees meer</${tag}>`;
     const el = document.querySelector(tag);
     expect(el).not.toBeNull();
@@ -94,43 +94,8 @@ describe(`<${tag}>`, () => {
 
     const a = el?.shadowRoot?.querySelector('a');
     expect(a).not.toBeNull();
-    expect(a?.getAttribute('aria-label')).toBe('Meer info');
-    expect(a?.dataset['testid']).toBe('link');
-
-    el?.removeAttribute('aria-label');
-    await el?.updateComplete;
-
     expect(a?.getAttribute('aria-label')).toBeNull();
-  });
-
-  it('forwards non aria/data attributes only when forward-attributes="all", and cleans up when switching back', async () => {
-    document.body.innerHTML = `<${tag} href="/x" title="Tooltip">Lees meer</${tag}>`;
-    const el = document.querySelector(tag);
-    expect(el).not.toBeNull();
-
-    await customElements.whenDefined(tag);
-    await el?.updateComplete;
-
-    const a = el!.shadowRoot?.querySelector('a');
-    expect(a).not.toBeNull();
-
-    // Not forwarded by default
-    expect(a?.getAttribute('title')).toBeNull();
-
-    // Forwarded when policy is "all"
-    el!.setAttribute('forward-attributes', 'all');
-    await el?.updateComplete;
-
-    // Forwarded when policy is "all"
-    expect(a?.getAttribute('title')).toBe('Tooltip');
-    // The policy attribute itself must never be forwarded
-    expect(a?.hasAttribute('forward-attributes')).toBe(false);
-
-    // Switch policy back to default and ensure cleanup happens.
-    el!.setAttribute('forward-attributes', 'aria-data');
-    await el?.updateComplete;
-
-    expect(a?.getAttribute('title')).toBeNull();
+    expect(a?.dataset['testid']).toBeUndefined();
   });
 
   it('forwards host class to inner anchor', async () => {
