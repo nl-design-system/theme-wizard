@@ -1,10 +1,8 @@
 import '.';
 import { beforeEach, describe, expect, it } from 'vitest';
-import type { WizardPreviewPicker } from '.';
-import type { Category, TemplateGroup } from '../../types/templates';
+import type { TemplateGroup, WizardPreviewPicker } from '.';
 
 const tag = 'wizard-preview-picker';
-const category: Category = 'template';
 
 const templates = {
   name: 'My Environment',
@@ -18,7 +16,6 @@ const templates = {
       value: '/another-beautiful-thing/another-beautiful-page',
     },
   ],
-  type: category,
 };
 
 const mount = async () => {

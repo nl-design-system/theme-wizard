@@ -12,7 +12,7 @@ import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { TemplateGroup } from '../../types/templates';
+import type { TemplateGroup } from '../wizard-preview-picker';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
