@@ -39,12 +39,6 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Log npm configuration
-        run: |
-          npm -v
-          pnpm whoami
-          pnpm config get registry
-
       - name: Publish to the npm Registry
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         env:
