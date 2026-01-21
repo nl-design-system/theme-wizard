@@ -6,13 +6,27 @@ This repository is based on the NL Design System architecture.
 
 For more info about the NL Design System and learn about things happening in our open source community, join the `#nl-design-system` Slack via [praatmee.codefor.nl](https://praatmee.codefor.nl)!
 
+## Running via `pnpx`
+
+When you have [installed pnpm](https://pnpm.io/installation), you can run the server using:
+
+```shell
+pnpx @nl-design-system-community/theme-wizard-server
+```
+
+Change the port using the `PORT` environment variable:
+
+```shell
+PORT=8081 pnpx @nl-design-system-community/theme-wizard-server
+```
+
 ## Install prerequisites
 
-You need to have the following tools installed to run Theme Wizard locally:
+You need to have the following things on your computer to run Theme Wizard development version:
 
-- Git
-- [Node.js and npm](https://nodejs.org/en/)
-- `pnpm`, `npm install -g pnpm`
+- [Clone the Git repository](https://github.com/nl-design-system/theme-wizard)
+- [Install Node.js](https://nodejs.org/en/)
+- [Installed pnpm](https://pnpm.io/installation)
 
 ## Code of Conduct
 
