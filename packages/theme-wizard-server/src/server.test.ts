@@ -31,7 +31,8 @@ const startServer = async (
   const startPromise = new Promise<void>((resolve) => {
     testProcess.stdout?.on('data', (data) => {
       stdoutData += data.toString();
-      if (stdoutData.includes('Starting Theme Wizard server')) {
+
+      if (stdoutData.includes('http:')) {
         started = true;
         resolve();
       }
@@ -67,8 +68,8 @@ it('should execute as a standalone file and start the server on custom port', as
   const { output, process: testProcess, started } = await startServer(9999);
 
   expect(started).toBe(true);
-  expect(output).toContain('Starting Theme Wizard server');
-  expect(output).toContain('http://localhost:9999');
+  expect(output).toContain('Starting Theme Wizard server...');
+  expect(output).toContain('http://[::]:9999');
 
   await stopServer(testProcess);
 });
@@ -77,8 +78,8 @@ it('should execute with default port 8080 when PORT env is not set', async () =>
   const { output, process: testProcess, started } = await startServer();
 
   expect(started).toBe(true);
-  expect(output).toContain('Starting Theme Wizard server');
-  expect(output).toContain('http://localhost:8080');
+  expect(output).toContain('Starting Theme Wizard server...');
+  expect(output).toContain('http://[::]:8080/');
 
   await stopServer(testProcess);
 });
