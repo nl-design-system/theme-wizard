@@ -10,7 +10,9 @@
   ],
   "exports": {
     ".": "./index.ts",
-    "./components": "./src/components/index.ts"
+    "./components": "./src/components/index.ts",
+    "./pages": "./src/pages/index.ts",
+    "./react": "./src/react/index.ts"
   },
   "files": [
     "dist/",
