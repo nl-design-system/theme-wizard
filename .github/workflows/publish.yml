@@ -6,10 +6,8 @@ on:
 
 permissions:
   contents: read # since GH_TOKEN is provided, we only need 'read'
-  id-token: write
+  id-token: write # https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
   pull-requests: write # Needed to create and update pull requests
-  # https://docs.npmjs.com/generating-provenance-statements#publishing-packages-with-provenance-via-github-actions
-  # id-token: write
 
 jobs:
   publish:
