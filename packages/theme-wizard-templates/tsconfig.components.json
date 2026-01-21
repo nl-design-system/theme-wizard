@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2024", "DOM"],
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "types": ["vite/client"],
+    "importHelpers": false,
+    "useDefineForClassFields": false,
+    "skipLibCheck": true
+  },
+  "include": ["src/components/**/*", "src/env.d.ts"]
+}
+

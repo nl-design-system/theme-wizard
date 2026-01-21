@@ -19,16 +19,7 @@ import PersistentStorage from '../../lib/PersistentStorage';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { PREVIEW_PICKER_NAME } from '../wizard-preview-picker';
 import { WizardTokenInput } from '../wizard-token-input';
-import '../template-action';
-import '../template-case-card';
-import '../template-color-swatch';
-import '@nl-design-system-community/clippy-components/src/clippy-heading/index.js';
-import '../template-link-list';
-import '../template-link';
-import '../template-page-header';
-import '../template-paragraph';
-import '../template-side-nav';
-import '../template-skip-link';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import styles from './styles';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
