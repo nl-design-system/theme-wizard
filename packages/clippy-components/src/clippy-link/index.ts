@@ -6,32 +6,28 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 type ForwardAttributes = 'aria-data' | 'all';
 
-type AnchorRestProps = Partial<Pick<HTMLAnchorElement, 'download' | 'hreflang' | 'referrerPolicy' | 'ping' | 'type'>>;
-
 @customElement('clippy-link')
 export class ClippyLink extends LitElement {
   private static readonly blockedAttributes = new Set([
     'href',
     'target',
     'rel',
-    'current',
+    'role',
+    'tabindex',
+    'aria-disabled',
     'inline-box',
     'disabled',
     'forward-attributes',
     'class',
     'style',
-    'download',
-    'hreflang',
-    'referrerPolicy',
-    'ping',
-    'type',
   ]);
+
+  private ariaCurrentValue = '';
 
   @property() href = '';
   @property() target = '';
   @property() rel = '';
 
-  @property() current = '';
   @property({ attribute: 'inline-box', type: Boolean }) inlineBox = false;
   @property({ type: Boolean }) disabled = false;
 
@@ -46,8 +42,6 @@ export class ClippyLink extends LitElement {
 
   @property({ attribute: false }) override className = '';
 
-  @property({ attribute: false }) restProps: AnchorRestProps = {};
-
   @query('a') private readonly anchorEl?: HTMLAnchorElement;
   private attributeObserver?: MutationObserver;
 
@@ -55,8 +49,12 @@ export class ClippyLink extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.attributeObserver = new MutationObserver(() => this.forwardNonComponentAttributes());
+    this.attributeObserver = new MutationObserver(() => {
+      this.syncAriaCurrent();
+      this.forwardNonComponentAttributes();
+    });
     this.attributeObserver.observe(this, { attributes: true });
+    this.syncAriaCurrent();
   }
 
   override disconnectedCallback() {
@@ -66,6 +64,7 @@ export class ClippyLink extends LitElement {
   }
 
   override firstUpdated() {
+    this.syncAriaCurrent();
     this.forwardNonComponentAttributes();
   }
 
@@ -73,11 +72,20 @@ export class ClippyLink extends LitElement {
     if (changedProperties.has('forwardAttributes')) {
       this.forwardNonComponentAttributes();
     }
+    this.syncAriaCurrent();
+  }
+
+  private syncAriaCurrent() {
+    this.ariaCurrentValue = this.getAttribute('aria-current') ?? '';
   }
 
   private isAllowedToForwardAttribute(name: string) {
     if (ClippyLink.blockedAttributes.has(name)) return false;
     if (this.forwardAttributes === 'all') return true;
+    const lowerName = name.toLowerCase();
+    if (lowerName === 'download' || lowerName === 'hreflang' || lowerName === 'referrerpolicy' || lowerName === 'ping' || lowerName === 'type') {
+      return true;
+    }
     return name.startsWith('aria-') || name.startsWith('data-');
   }
 
@@ -85,9 +93,10 @@ export class ClippyLink extends LitElement {
     const a = this.anchorEl;
     if (!a) return;
 
-    // Remove all forwarded attributes first
+    // Remove all previously forwarded attributes first (keep template-owned ones set via render()).
     for (const name of a.getAttributeNames()) {
       if (name === 'class' || name === 'style') continue;
+
       if (!ClippyLink.blockedAttributes.has(name)) {
         a.removeAttribute(name);
       }
@@ -102,34 +111,43 @@ export class ClippyLink extends LitElement {
   }
 
   override render() {
-    const enabled = !this.disabled;
+    const disabled = this.disabled;
+
+    const href = disabled ? undefined : this.href;
+    const target = disabled || !this.target ? undefined : this.target;
+    const rel = disabled || !this.rel ? undefined : this.rel;
+
+    const ariaDisabled = disabled ? 'true' : undefined;
+    const role = disabled ? 'link' : undefined;
+    console.log("disabled: ", disabled);
+    const tabIndex = disabled ? '0' : undefined;
 
     const classes = {
       'nl-link': true,
-      'nl-link--current': Boolean(this.current),
-      'nl-link--disabled': this.disabled,
+      'nl-link--current': Boolean(this.ariaCurrentValue),
+      'nl-link--disabled': disabled,
       'nl-link--inline-box': this.inlineBox,
     };
 
-    if (this.className) {
-      (classes as Record<string, boolean>)[this.className] = true;
-    }
+    const hostClasses = (this.className || '')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .reduce<Record<string, boolean>>((acc, name) => {
+        acc[name] = true;
+        return acc;
+      }, {});
+    const mergedClasses = { ...classes, ...hostClasses };
 
     return html`
       <a
-        class=${classMap(classes)}
-        href=${enabled ? this.href : undefined}
-        target=${enabled && this.target ? this.target : undefined}
-        rel=${enabled && this.rel ? this.rel : undefined}
-        aria-current=${this.current || undefined}
-        aria-disabled=${this.disabled ? 'true' : undefined}
-        role=${this.disabled ? 'link' : undefined}
-        tabindex=${this.disabled ? '0' : undefined}
-        .download=${ifDefined(this.restProps.download)}
-        .hreflang=${ifDefined(this.restProps.hreflang)}
-        .referrerPolicy=${ifDefined(this.restProps.referrerPolicy)}
-        .ping=${ifDefined(this.restProps.ping)}
-        .type=${ifDefined(this.restProps.type)}
+        class=${classMap(mergedClasses)}
+        href=${ifDefined(href)}
+        target=${ifDefined(target)}
+        rel=${ifDefined(rel)}
+        aria-disabled=${ifDefined(ariaDisabled)}
+        role=${ifDefined(role)}
+        tabindex=${ifDefined(tabIndex)}
       >
         <slot></slot>
       </a>

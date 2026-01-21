@@ -1,5 +1,6 @@
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import linkCss from '@utrecht/link-css/dist/index.css?inline';
+import '@nl-design-system-community/clippy-components/clippy-link';
 import { html, LitElement, unsafeCSS, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { t } from '../../i18n';
@@ -51,20 +52,22 @@ export class WizardLayout extends LitElement {
 
         <div class="wizard-layout__nav">
           <nav>
-            <a
-              href="/"
-              class="utrecht-link utrecht-link--html-a wizard-layout__nav-item"
+            <clippy-link
+              .href=${"/"}
+              inline-box
+              class="wizard-layout__nav-item"
               aria-current=${this.isCurrentPage('/') ? 'page' : nothing}
             >
               ${t('nav.configure')}
-            </a>
-            <a
-              href="/style-guide"
-              class="utrecht-link utrecht-link--html-a wizard-layout__nav-item"
+            </clippy-link>
+            <clippy-link
+              .href=${"/style-guide"}
+              inline-box
+              class="wizard-layout__nav-item"
               aria-current=${this.isCurrentPage('/style-guide') ? 'page' : nothing}
             >
               ${t('nav.styleGuide')}
-            </a>
+            </clippy-link>
           </nav>
 
           <div class="wizard-layout__nav-slot">

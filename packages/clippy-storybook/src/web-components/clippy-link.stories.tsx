@@ -11,7 +11,7 @@ interface LinkStoryArgs {
   ariaLabel: string;
   className: string;
   content: string;
-  current: string;
+  ariaCurrent: string;
   dataTestid: string;
   disabled: boolean;
   forwardAttributes: ForwardAttributes;
@@ -33,7 +33,7 @@ const createTemplate = (args: LinkStoryArgs) => {
   const href = args.href ? ` href="${args.href}"` : '';
   const target = args.target ? ` target="${args.target}"` : '';
   const rel = args.rel ? ` rel="${args.rel}"` : '';
-  const current = args.current ? ` current="${args.current}"` : '';
+  const ariaCurrent = args.ariaCurrent ? ` aria-current="${args.ariaCurrent}"` : '';
   const className = args.className ? ` class="${args.className}"` : '';
   const ariaLabel = args.ariaLabel ? ` aria-label="${args.ariaLabel}"` : '';
   const dataTestid = args.dataTestid ? ` data-testid="${args.dataTestid}"` : '';
@@ -43,11 +43,11 @@ const createTemplate = (args: LinkStoryArgs) => {
   const restReferrerPolicy = args.restReferrerPolicy ? ` rest-referrer-policy="${args.restReferrerPolicy}"` : '';
   const restType = args.restType ? ` rest-type="${args.restType}"` : '';
 
-  return html`<clippy-link${href}${target}${rel}${current}${inlineBox}${disabled}${forwardAttributes}${className}${ariaLabel}${dataTestid}${restDownload}${restHreflang}${restPing}${restReferrerPolicy}${restType}>${args.content}</clippy-link>`;
+  return html`<clippy-link${href}${target}${rel}${ariaCurrent}${inlineBox}${disabled}${forwardAttributes}${className}${ariaLabel}${dataTestid}${restDownload}${restHreflang}${restPing}${restReferrerPolicy}${restType}>${args.content}</clippy-link>`;
 };
 
 type ClippyLinkElement = HTMLElement & {
-  current: string;
+  ariaCurrent: string;
   disabled: boolean;
   href: string;
   rel: string;
@@ -66,7 +66,6 @@ const syncClippyLink = (el: ClippyLinkElement, args: LinkStoryArgs) => {
   el.href = args.href;
   el.target = args.target;
   el.rel = args.rel;
-  el.current = args.current;
   el.disabled = args.disabled;
   el.className = args.className;
 
@@ -79,8 +78,8 @@ const syncClippyLink = (el: ClippyLinkElement, args: LinkStoryArgs) => {
   if (args.rel) el.setAttribute('rel', args.rel);
   else el.removeAttribute('rel');
 
-  if (args.current) el.setAttribute('current', args.current);
-  else el.removeAttribute('current');
+  if (args.ariaCurrent) el.setAttribute('aria-current', args.ariaCurrent);
+  else el.removeAttribute('aria-current');
 
   if (args.className) el.setAttribute('class', args.className);
   else el.removeAttribute('class');
@@ -117,7 +116,7 @@ const ClippyLinkStory = (args: LinkStoryArgs) => {
   }, [
     args.ariaLabel,
     args.className,
-    args.current,
+    args.ariaCurrent,
     args.dataTestid,
     args.disabled,
     args.forwardAttributes,
@@ -138,10 +137,10 @@ const ClippyLinkStory = (args: LinkStoryArgs) => {
 const meta = {
   id: 'clippy-link',
   args: {
+    ariaCurrent: '',
     ariaLabel: 'Meer info',
     className: '',
     content: 'Voorbeeldsite',
-    current: '',
     dataTestid: 'link',
     disabled: false,
     forwardAttributes: 'aria-data',
@@ -156,6 +155,15 @@ const meta = {
     target: '_blank',
   },
   argTypes: {
+    ariaCurrent: {
+      name: 'aria-current',
+      defaultValue: '',
+      description: 'Marks the link as current; used for styling and forwarded to the inner <a>.',
+      type: {
+        name: 'string',
+        required: false,
+      },
+    },
     ariaLabel: {
       name: 'aria-label',
       defaultValue: '',
@@ -178,15 +186,6 @@ const meta = {
       type: {
         name: 'string',
         required: true,
-      },
-    },
-    current: {
-      name: 'Current',
-      defaultValue: '',
-      description: 'Alternative for aria-current (e.g. "page")',
-      type: {
-        name: 'string',
-        required: false,
       },
     },
     dataTestid: {

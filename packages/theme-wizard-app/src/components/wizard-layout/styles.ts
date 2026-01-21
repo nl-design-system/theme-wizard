@@ -38,8 +38,6 @@ export default css`
   }
 
   .wizard-layout__nav-item {
-    --utrecht-link-color: #fff;
-    --utrecht-link-text-decoration: none;
 
     align-content: center;
     border-block-start-style: solid;
