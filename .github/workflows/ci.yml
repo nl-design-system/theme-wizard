@@ -103,6 +103,12 @@ jobs:
       - name: "Continuous Integration: lint build"
         run: pnpm run --if-present lint-build
 
+      - name: Cleanup
+        run: pnpm run clean
+
+      - name: Test cleanup
+        run: test -z "$(git status --porcelain=v2)"
+
   test:
     runs-on: ubuntu-latest
     needs: install
