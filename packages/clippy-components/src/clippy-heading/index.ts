@@ -1,9 +1,10 @@
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import { LitElement, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { html, unsafeStatic } from 'lit/static-html.js';
 
-@customElement('clippy-heading')
+const tag = 'clippy-heading';
+
 export class ClippyHeading extends LitElement {
   @property({ type: Number }) level = 1;
 
@@ -16,8 +17,13 @@ export class ClippyHeading extends LitElement {
   }
 }
 
+const registry = globalThis.customElements;
+if (registry && !registry.get(tag)) {
+  registry.define(tag, ClippyHeading);
+}
+
 declare global {
   interface HTMLElementTagNameMap {
-    'clippy-heading': ClippyHeading;
+    [tag]: ClippyHeading;
   }
 }

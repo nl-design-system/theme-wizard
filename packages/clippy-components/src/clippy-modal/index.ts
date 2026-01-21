@@ -2,17 +2,18 @@ import amsDialogStyles from '@amsterdam/design-system-css/dist/dialog/dialog.css
 import amsVisuallyHiddenStyles from '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css?inline';
 import utrechtButtonStyles from '@utrecht/button-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import { dialogStyles } from './styles';
 
 let dialogInstanceCounter = 0;
+
+const tag = 'clippy-modal';
 
 export const DIALOG_BUTTON_VALUES = {
   cancel: 'cancel',
   confirm: 'confirm',
 };
 
-@customElement('clippy-modal')
 export class ClippyModal extends LitElement {
   /**
    * Id of an element that describes the dialog, used for aria-describedby.
@@ -154,4 +155,9 @@ export class ClippyModal extends LitElement {
       </dialog>
     `;
   }
+}
+
+const registry = globalThis.customElements;
+if (registry && !registry.get(tag)) {
+  registry.define(tag, ClippyModal);
 }
