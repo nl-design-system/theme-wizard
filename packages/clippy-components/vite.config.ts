@@ -1,5 +1,5 @@
 import { globSync } from 'glob';
-import { extname, relative } from 'node:path';
+import { extname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -16,7 +16,10 @@ export function getFiles(pattern: string, relativeTo = 'src') {
   );
 }
 
+const thisDir = fileURLToPath(new URL('.', import.meta.url));
+
 export default defineConfig({
+
   build: {
     lib: {
       entry: {
@@ -51,4 +54,10 @@ export default defineConfig({
       exclude: ['**/*.test.*', '**/styles.ts'],
     }),
   ],
+  resolve: {
+    alias: {
+      '@lib': resolve(thisDir, 'src/lib'),
+      '@src': resolve(thisDir, 'src'),
+    },
+  },
 });
