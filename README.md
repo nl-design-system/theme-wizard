@@ -26,7 +26,7 @@ You need to have the following things on your computer to run Theme Wizard devel
 
 - [Clone the Git repository](https://github.com/nl-design-system/theme-wizard)
 - [Install Node.js](https://nodejs.org/en/)
-- [Installed pnpm](https://pnpm.io/installation)
+- [Install pnpm](https://pnpm.io/installation)
 
 ## Code of Conduct
 
