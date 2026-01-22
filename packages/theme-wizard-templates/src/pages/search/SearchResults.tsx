@@ -1,6 +1,5 @@
 import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
 import React, { type FC } from 'react';
-import MainIntroSection from '../../sections/MainIntro';
 import Navigation from '../../sections/Navigation';
 import PageFooterSection from '../../sections/PageFooter';
 import PageHeaderSection from '../../sections/PageHeader';
@@ -18,7 +17,7 @@ const SearchResults: FC<SearchResultsProps> = ({ currentPath }) => (
     <Navigation currentPath={currentPath} />
 
     <main id="main">
-      <MainIntroSection />
+      
     </main>
 
     <PageFooterSection />
