@@ -2,12 +2,12 @@ import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
 import { PageBody } from '@utrecht/page-body-react';
 import React from 'react';
 import type { SummaryItem } from './components/OpeningHoursCard/types';
-import MainIntroSection from './Sections/MainIntro';
-import Navigation from './Sections/Navigation';
-import NewsSection from './Sections/News';
-import PageFooterSection from './Sections/PageFooter';
-import PageHeaderSection from './Sections/PageHeader';
-import SelfServiceSection from './Sections/SelfService';
+import MainIntroSection from './sections/MainIntro';
+import Navigation from './sections/Navigation';
+import NewsSection from './sections/News';
+import PageFooterSection from './sections/PageFooter';
+import PageHeaderSection from './sections/PageHeader';
+import SelfServiceSection from './sections/SelfService';
 import './styles.css';
 
 export interface GemeenteVoorbeeldHomeProps {
