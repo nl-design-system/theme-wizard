@@ -1,13 +1,3 @@
-import './template-action';
-import './template-case-card';
-import './template-color-swatch';
-import './template-link';
-import './template-link-list';
-import './template-page-header';
-import './template-paragraph';
-import './template-side-nav';
-import './template-skip-link';
-
 export * from './template-action';
 export * from './template-case-card';
 export * from './template-color-swatch';

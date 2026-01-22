@@ -655,6 +655,9 @@ importers:
       glob:
         specifier: 13.0.0
         version: 13.0.0
+      rimraf:
+        specifier: 6.1.2
+        version: 6.1.2
       typescript:
         specifier: 5.9.3
         version: 5.9.3
