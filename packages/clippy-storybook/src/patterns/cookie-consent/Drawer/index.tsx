@@ -40,7 +40,7 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
             <img
               src={logo}
               alt="Organisatie logo"
-              style={{ maxHeight: '50px', width: 'auto' }}
+              style={{ inlineSize: 'auto', maxBlockSize: '50px' }}
             />
           </Link>
         </div>
@@ -55,8 +55,8 @@ export const CookieConsentDrawer: FC<CookieConsentDrawerProps> = ({
       <div
         style={{
           marginBlockEnd: 'var(--basis-space-block-xl, 2rem)',
-          maxHeight: '200px',
-          overflowY: 'auto',
+          maxBlockSize: '200px',
+          overflowBlock: 'auto',
         }}
       >
         {children}

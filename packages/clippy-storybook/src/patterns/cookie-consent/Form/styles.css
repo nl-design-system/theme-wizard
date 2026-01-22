@@ -75,14 +75,14 @@
    ========================================================================== */
 
 .clippy-description-list {
-  --_term-column-width: 12rem;
+  --clippy-description-list-term-column-width: 12rem;
 
   margin-block: 0;
 }
 
 /* Variant: nested structure for cookie details */
 .clippy-description-list--nested {
-  --_term-column-width: 10rem;
+  --clippy-description-list-term-column-width: 10rem;
 }
 
 .clippy-description-list__section {
@@ -127,14 +127,14 @@
   .clippy-description-list__row {
     column-gap: var(--clippy-space-inline-lg);
     display: grid;
-    grid-template-columns: var(--_term-column-width) 1fr;
+    grid-template-columns: var(--clippy-description-list-term-column-width) 1fr;
   }
 
   /* Variant: cookie item keeps its grid but adds borders/padding */
   .clippy-description-list__section--cookie {
     column-gap: var(--clippy-space-inline-lg);
     display: grid;
-    grid-template-columns: var(--_term-column-width) 1fr;
+    grid-template-columns: var(--clippy-description-list-term-column-width) 1fr;
   }
 
   .clippy-description-list__term {
