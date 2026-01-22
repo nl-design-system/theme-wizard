@@ -2,6 +2,7 @@ import type { ClippyModal } from '@nl-design-system-community/clippy-components/
 import type { DesignToken } from 'style-dictionary/types';
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@nl-design-system-community/clippy-components/clippy-link';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
@@ -125,7 +126,7 @@ export class WizardStyleGuide extends LitElement {
   }
 
   #handleNavClick(event: Event): void {
-    const link = (event.target as Element).closest('a[href^="#"]');
+    const link = (event.target as Element).closest('clippy-link[href^="#"], a[href^="#"]');
     if (!link) return;
 
     const href = link.getAttribute('href');
@@ -410,7 +411,7 @@ export class WizardStyleGuide extends LitElement {
               </table>
             </utrecht-table>
             <utrecht-paragraph>
-              <a target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
+              <clippy-link target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</clippy-link>
             </utrecht-paragraph>
             ${isUsed
               ? nothing
@@ -451,9 +452,9 @@ export class WizardStyleGuide extends LitElement {
                     ${this.#renderFontFamilyExample(displayValue)}
                     ${googleFontsSpecimen
                       ? html`<utrecht-paragraph>
-                          <a href=${googleFontsSpecimen} rel="external noreferrer" target="_blank">
+                          <clippy-link href=${googleFontsSpecimen} rel="external noreferrer" target="_blank">
                             ${t('tokens.showOnGoogleFonts')}
-                          </a>
+                          </clippy-link>
                         </utrecht-paragraph>`
                       : nothing}
                   </td>
@@ -492,9 +493,9 @@ export class WizardStyleGuide extends LitElement {
         </table>
 
         <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype" target="_blank">
+          <clippy-link href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype" target="_blank">
             docs
-          </a>
+          </clippy-link>
         </utrecht-paragraph>
         ${fontFamilies.every((family) => family.isUsed)
           ? nothing
@@ -556,9 +557,9 @@ export class WizardStyleGuide extends LitElement {
           </tbody>
         </table>
         <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte" target="_blank">
+          <clippy-link href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte" target="_blank">
             docs
-          </a>
+          </clippy-link>
         </utrecht-paragraph>
         ${fontSizes.every((size) => size.isUsed)
           ? nothing
@@ -604,7 +605,7 @@ export class WizardStyleGuide extends LitElement {
           </tbody>
         </table>
         <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/heading/" target="_blank">docs</a>
+          <clippy-link href="https://nldesignsystem.nl/heading/" target="_blank">docs</clippy-link>
         </utrecht-paragraph>
       </section>
     `;
@@ -620,7 +621,9 @@ export class WizardStyleGuide extends LitElement {
       <section id="spacing">
         <utrecht-heading-2>${t('styleGuide.sections.space.title')}</utrecht-heading-2>
         <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/" target="_blank"> docs </a>
+          <clippy-link href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/" target="_blank">
+            docs
+          </clippy-link>
         </utrecht-paragraph>
 
         ${spacingData.map(({ space, tokens }) => {
@@ -683,9 +686,9 @@ export class WizardStyleGuide extends LitElement {
             </table>
 
             <utrecht-paragraph>
-              <a href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/#${space}" target="_blank">
+              <clippy-link href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/#${space}" target="_blank">
                 docs
-              </a>
+              </clippy-link>
             </utrecht-paragraph>
 
             <utrecht-paragraph id="basis-space-${space}-unused-warning" class="wizard-token-unused">
@@ -731,7 +734,7 @@ export class WizardStyleGuide extends LitElement {
       <section id="components">
         <utrecht-heading-2>${t('styleGuide.sections.components.title')}</utrecht-heading-2>
         <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/componenten/" target="_blank">docs</a>
+          <clippy-link href="https://nldesignsystem.nl/componenten/" target="_blank">docs</clippy-link>
         </utrecht-paragraph>
 
         ${Object.entries(components).map(
@@ -915,10 +918,10 @@ export class WizardStyleGuide extends LitElement {
     return html`
       <wizard-layout>
         <nav slot="sidebar" class="wizard-styleguide__nav" @click=${this.#handleNavClick}>
-          <a class="wizard-styleguide__nav-item" href="#colors">${t('styleGuide.sections.colors.title')}</a>
-          <a class="wizard-styleguide__nav-item" href="#typography">${t('styleGuide.sections.typography.title')}</a>
-          <a class="wizard-styleguide__nav-item" href="#spacing">${t('styleGuide.sections.space.title')}</a>
-          <a class="wizard-styleguide__nav-item" href="#components">${t('styleGuide.sections.components.title')}</a>
+          <clippy-link inline-box class="wizard-styleguide__nav-item" href="#colors">${t('styleGuide.sections.colors.title')}</clippy-link>
+          <clippy-link inline-box class="wizard-styleguide__nav-item" href="#typography">${t('styleGuide.sections.typography.title')}</clippy-link>
+          <clippy-link inline-box class="wizard-styleguide__nav-item" href="#spacing">${t('styleGuide.sections.space.title')}</clippy-link>
+          <clippy-link inline-box class="wizard-styleguide__nav-item" href="#components">${t('styleGuide.sections.components.title')}</clippy-link>
         </nav>
 
         <div slot="main" class="wizard-styleguide__main">

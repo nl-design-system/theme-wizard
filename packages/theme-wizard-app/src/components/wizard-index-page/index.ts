@@ -24,7 +24,7 @@ import '../template-case-card';
 import '../template-color-swatch';
 import '../template-heading';
 import '../template-link-list';
-import '../template-link';
+import '@nl-design-system-community/clippy-components/clippy-link';
 import '../template-page-header';
 import '../template-paragraph';
 import '../template-side-nav';
@@ -215,13 +215,13 @@ export class WizardIndexPage extends LitElement {
                             name=${`basis.color.${colorKey}`}
                             .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
                           >
-                            <a
-                              href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
-                              target="_blank"
+                            <clippy-link
+                              .href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}
+                              .target=${"_blank"}
                               slot="extra-label"
                             >
                               docs
-                            </a>
+                            </clippy-link>
                           </wizard-colorscale-input>
                         </li>
                       `,
