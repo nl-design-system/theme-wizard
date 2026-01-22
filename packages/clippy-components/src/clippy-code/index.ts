@@ -1,8 +1,7 @@
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+const tag = 'clippy-code';
 
-@customElement('clippy-code')
 export class ClippyCode extends LitElement {
   static override readonly styles = [unsafeCSS(codeCss)];
 
@@ -11,8 +10,13 @@ export class ClippyCode extends LitElement {
   }
 }
 
+const registry = globalThis.customElements;
+if (registry && !registry.get(tag)) {
+  registry.define(tag, ClippyCode);
+}
+
 declare global {
   interface HTMLElementTagNameMap {
-    'clippy-code': ClippyCode;
+    [tag]: ClippyCode;
   }
 }

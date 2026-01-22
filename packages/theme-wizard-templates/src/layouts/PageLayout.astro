@@ -1,6 +1,7 @@
 ---
 import logo from '../assets/logo.svg';
 import BaseLayout from './BaseLayout.astro';
+import Cookies from '../components/Cookies.astro';
 
 export interface Props {
   sideNav?: boolean;
@@ -13,40 +14,7 @@ const { sideNav = true, title, description } = Astro.props;
 
 <BaseLayout title={title} description={description}>
   <div class="utrecht-page-body__content">
-    <dialog open="true" class="utrecht-drawer utrecht-drawer--block-start" style="position: static;">
-      <h2
-        id="cookie-consent-title"
-        class="utrecht-heading-2"
-        style="margin-block-end: var(--basis-space-block-lg, 1.5rem);"
-      >
-        Cookies op deze website
-      </h2>
-      <div style="margin-block-end: var(--basis-space-block-xl, 2rem);">
-        <p class="utrecht-paragraph" style="margin-block-end: var(--basis-space-block-md, 1rem);">
-          We willen graag aanvullende cookies plaatsen om te begrijpen hoe je deze website gebruikt, je instellingen te
-          onthouden en onze diensten te verbeteren.
-        </p>
-      </div>
-      <form method="dialog">
-        <p role="group" class="utrecht-button-group" style="margin-block-start: var(--basis-space-block-xl, 2rem);">
-          <button
-            class="utrecht-button utrecht-button--submit utrecht-button--primary-action"
-            type="submit"
-            value="accept"
-          >
-            Aanvullende cookies accepteren
-          </button>
-          <button
-            class="utrecht-button utrecht-button--submit utrecht-button--primary-action"
-            type="submit"
-            value="reject"
-          >
-            Aanvullende cookies weigeren
-          </button>
-          <a href="/templates/cookies" class="utrecht-link utrecht-link--html-a"> Zelf instellen </a>
-        </p>
-      </form>
-    </dialog>
+    <Cookies />
     <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
 
     <template-page-header>
@@ -102,7 +70,7 @@ const { sideNav = true, title, description } = Astro.props;
           </utrecht-link>
 
           <div>
-            <template-heading level="4">Contact</template-heading>
+            <clippy-heading level="4">Contact</clippy-heading>
 
             <address class="todo-address">
               Bel

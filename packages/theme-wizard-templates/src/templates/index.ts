@@ -1,11 +1,11 @@
-export type Category = 'template' | 'collage';
+type Category = 'template' | 'collage';
 
-export type Page = {
+type Page = {
   name: string;
   value: string;
 };
 
-export type TemplateGroup = {
+type TemplateGroup = {
   name: string;
   type: Category;
   pages: Page[];

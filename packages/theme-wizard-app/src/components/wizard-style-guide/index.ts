@@ -4,8 +4,8 @@ import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-modal';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
 import {
   legacyToModernColor,
@@ -24,7 +24,7 @@ import '../wizard-layout';
 import Color from 'colorjs.io';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
+import { html as staticHtml } from 'lit/static-html.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
@@ -97,7 +97,6 @@ export class WizardStyleGuide extends LitElement {
     unsafeCSS(dataBadgeCss),
     unsafeCSS(tableCss),
     unsafeCSS(colorSampleCss),
-    unsafeCSS(headingCss),
     styles,
   ];
 
@@ -339,7 +338,7 @@ export class WizardStyleGuide extends LitElement {
   #renderColorSection(colorGroups: ColorGroup[]) {
     return html`
       <section id="colors">
-        <utrecht-heading-2>${t('styleGuide.sections.colors.title')}</utrecht-heading-2>
+        <clippy-heading level=${2}>${t('styleGuide.sections.colors.title')}</clippy-heading>
 
         ${colorGroups.map(({ colorEntries, isUsed, key }) => {
           return html`
@@ -426,7 +425,7 @@ export class WizardStyleGuide extends LitElement {
   #renderTypographySection(fontFamilies: FontFamilyToken[], fontSizes: FontSizeToken[]) {
     return html`
       <section id="typography">
-        <utrecht-heading-2>${t('styleGuide.sections.typography.title')}</utrecht-heading-2>
+        <clippy-heading level=${2}>${t('styleGuide.sections.typography.title')}</clippy-heading>
 
         <table class="utrecht-table">
           <caption class="utrecht-table__caption">
@@ -578,8 +577,7 @@ export class WizardStyleGuide extends LitElement {
           </thead>
           <tbody class="utrecht-table__body">
             ${[1, 2, 3, 4, 5, 6].map((level) => {
-              const tag = unsafeStatic(`h${level}`);
-              const heading = staticHtml`<${tag} class="nl-heading nl-heading--level-${level}" style="line-clamp: 3; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Wijzigingswet Vreemdelingenwet 2000, enz. (vaststelling criteria en instrumenten ter bepaling van de verantwoordelijke lidstaat voor behandeling verzoek om internationale bescherming)</${tag}>`;
+              const heading = staticHtml`<clippy-heading level=${level} style="line-clamp: 3; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Wijzigingswet Vreemdelingenwet 2000, enz. (vaststelling criteria en instrumenten ter bepaling van de verantwoordelijke lidstaat voor behandeling verzoek om internationale bescherming)</clippy-heading>`;
               return html`
                 <tr class="utrecht-table__row">
                   <td class="utrecht-table__cell">
@@ -618,7 +616,7 @@ export class WizardStyleGuide extends LitElement {
   ) {
     return html`
       <section id="spacing">
-        <utrecht-heading-2>${t('styleGuide.sections.space.title')}</utrecht-heading-2>
+        <clippy-heading level=${2}>${t('styleGuide.sections.space.title')}</clippy-heading>
         <utrecht-paragraph>
           <a href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/" target="_blank"> docs </a>
         </utrecht-paragraph>
@@ -729,7 +727,7 @@ export class WizardStyleGuide extends LitElement {
 
     return html`
       <section id="components">
-        <utrecht-heading-2>${t('styleGuide.sections.components.title')}</utrecht-heading-2>
+        <clippy-heading level=${2}>${t('styleGuide.sections.components.title')}</clippy-heading>
         <utrecht-paragraph>
           <a href="https://nldesignsystem.nl/componenten/" target="_blank">docs</a>
         </utrecht-paragraph>
@@ -798,7 +796,7 @@ export class WizardStyleGuide extends LitElement {
       >
         ${this.#activeToken
           ? html`
-              <utrecht-heading-3>${t('styleGuide.sample')}</utrecht-heading-3>
+              <clippy-heading level=${3}>${t('styleGuide.sample')}</clippy-heading>
               ${this.#renderTokenExample(this.#activeToken)}
               <dl>
                 <dt>Token type</dt>
@@ -829,10 +827,10 @@ export class WizardStyleGuide extends LitElement {
                   : nothing}
               </dl>
 
-              <utrecht-heading-3>
+              <clippy-heading level=${3}>
                 ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
                 <data>(${this.#activeToken.usage.length}&times;)</data>
-              </utrecht-heading-3>
+              </clippy-heading>
               ${this.#activeToken.usage.length > 0
                 ? html`
                     <ul>
@@ -922,7 +920,7 @@ export class WizardStyleGuide extends LitElement {
         </nav>
 
         <div slot="main" class="wizard-styleguide__main">
-          <utrecht-heading-1>${t('styleGuide.title')}</utrecht-heading-1>
+          <clippy-heading level=${1}>${t('styleGuide.title')}</clippy-heading>
 
           ${this.#renderColorSection(colorGroups)} ${this.#renderTypographySection(fontFamilies, fontSizes)}
           ${this.#renderSpacingSection(spacingData)} ${this.#renderComponentsSection()} ${this.#renderTokenDialog()}

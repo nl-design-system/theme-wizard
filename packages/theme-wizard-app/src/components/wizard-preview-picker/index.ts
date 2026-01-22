@@ -1,12 +1,20 @@
-import type { TemplateGroup, Category } from '@nl-design-system-community/theme-wizard-templates';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../wizard-dropdown';
 import type { DropdownOption } from '../wizard-dropdown';
 import styles from './styles';
 
+export type Page<TValue extends string = string> = {
+  name: string;
+  value: TValue;
+};
+
+export type TemplateGroup<TValue extends string = string> = {
+  name: string;
+  pages: Array<Page<TValue>>;
+};
+
 export interface DropdownChangeEvent {
-  type: Category;
   name: string;
   value: string;
   parent?: string;
@@ -34,7 +42,7 @@ export class WizardPreviewPicker extends LitElement {
       this.templates?.map((group: TemplateGroup) => ({
         name: group.name,
         detail: group.pages,
-        value: group.type,
+        value: group.name,
       })) ?? []
     );
   }
