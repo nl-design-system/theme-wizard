@@ -1,3 +1,4 @@
+import { safeCustomElement } from '@lib/decorators';
 import { LitElement, html } from 'lit';
 import { query } from 'lit/decorators.js';
 import styles from './styles';
@@ -6,6 +7,7 @@ let labelCounter = 0;
 
 const tag = 'clippy-html-image';
 
+@safeCustomElement(tag)
 export class ClippyHtmlImage extends LitElement {
   static override readonly styles = [styles];
 
@@ -69,9 +71,4 @@ export class ClippyHtmlImage extends LitElement {
       </div>
       <slot id=${this.labelId} name="label" @slotchange=${this.onLabelSlotChange}></slot>`;
   }
-}
-
-const registry = globalThis.customElements;
-if (registry && !registry.get(tag)) {
-  registry.define(tag, ClippyHtmlImage);
 }

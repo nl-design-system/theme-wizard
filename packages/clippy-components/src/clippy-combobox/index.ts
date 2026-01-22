@@ -1,8 +1,9 @@
+import { safeCustomElement } from '@lib/decorators';
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import memoize from 'memoize';
 import { arrayFromTokenList } from '../lib/converters';
@@ -24,7 +25,7 @@ declare global {
   }
 }
 
-@customElement(tag)
+@safeCustomElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends FormField<T['value']> {
   @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';

@@ -1,7 +1,8 @@
+import { safeCustomElement } from '@lib/decorators';
 import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import Color from 'colorjs.io';
 import { html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import { namedColors, type ColorName } from './lib';
@@ -25,7 +26,7 @@ declare global {
   }
 }
 
-@customElement(tag)
+@safeCustomElement(tag)
 export class ClippyColorCombobox extends ClippyCombobox<Option> {
   static override readonly styles = [...ClippyCombobox.styles, colorComboboxStyles, unsafeCSS(colorSampleStyles)];
   translations = messages;

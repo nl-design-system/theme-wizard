@@ -1,5 +1,5 @@
+import { safeCustomElement } from '@lib/decorators';
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
 import iconStyles from './styles';
 
 const tag = 'clippy-icon';
@@ -16,7 +16,7 @@ const tag = 'clippy-icon';
  * @cssprop --clippy-icon-color - Color of the icon
  * @cssprop --clippy-icon-inset-block-start - Vertical offset from baseline
  */
-@customElement(tag)
+@safeCustomElement(tag)
 export class ClippyIcon extends LitElement {
   static override readonly styles = [iconStyles];
 
