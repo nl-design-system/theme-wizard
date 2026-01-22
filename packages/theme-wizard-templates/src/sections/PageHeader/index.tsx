@@ -2,7 +2,7 @@ import { Link } from '@nl-design-system-candidate/link-react/css';
 import { Icon, PageHeader, PageContent, Image } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAlleen } from '@utrecht/web-component-library-react';
 import React, { type FC, type ReactNode } from 'react';
-import logo from '../../../../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 import { Column, Row } from '../../components/Layout';
 
 export interface PageHeaderProps {

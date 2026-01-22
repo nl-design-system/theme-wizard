@@ -1,6 +1,6 @@
-import type { NewsItem } from './components/NewsCards/types';
-import type { QuickTask } from './components/QuickTasks/types';
-import type { NavigationItem } from './sections/Navigation/types';
+import type { NewsItem } from '../../components/NewsCards/types';
+import type { QuickTask } from '../../components/QuickTasks/types';
+import type { NavigationItem } from '../../sections/Navigation/types';
 
 export const QUICK_TASKS: QuickTask[] = [
   { href: '#', icon: 'paspoort', title: 'Paspoort of ID-kaart aanvragen' },

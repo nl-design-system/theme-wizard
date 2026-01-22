@@ -1,7 +1,7 @@
 import { Link } from '@nl-design-system-candidate/link-react/css';
 import { LinkList, PageFooter, Image, PageContent } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC, type ReactNode } from 'react';
-import logo from '../../../../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 import { Column, Row } from '../../components/Layout';
 
 export interface PageFooterProps {
