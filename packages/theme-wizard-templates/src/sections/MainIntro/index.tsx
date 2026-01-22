@@ -6,7 +6,7 @@ import type { OpeningHoursCardProps } from '../../components/OpeningHoursCard/ty
 import { Column, Row } from '../../components/Layout';
 import OpeningHoursCard from '../../components/OpeningHoursCard';
 import QuickTasks from '../../components/QuickTasks';
-import { QUICK_TASKS } from '../../constants';
+import { QUICK_TASKS } from '../../pages/gemeentevoorbeeld/constants';
 
 const MainIntroSection = ({ openingHoursSummary }: OpeningHoursCardProps) => (
   <PageContent>

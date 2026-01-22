@@ -2,7 +2,7 @@ import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { PageContent } from '@utrecht/component-library-react/dist/css-module';
 import React from 'react';
 import NewsCards from '../../components/NewsCards';
-import { NEWS_ITEMS } from '../../constants';
+import { NEWS_ITEMS } from '../../pages/gemeentevoorbeeld/constants';
 
 export interface NewsSectionProps {
   heading?: string;
