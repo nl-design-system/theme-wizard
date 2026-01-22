@@ -1,1 +1,35 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<style>
+  #storybook-root.theme-loading::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.82);
+    backdrop-filter: blur(2px);
+    z-index: 9999;
+  }
+
+  #storybook-root.theme-loading::after {
+    content: 'Het thema wordt geladen. Een ogenblik geduld alstublieft.';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1.5rem 2rem;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    color: #111827;
+    box-shadow:
+      0 10px 15px rgba(0, 0, 0, 0.2),
+      0 4px 6px rgba(0, 0, 0, 0.15);
+    font:
+      600 1rem system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+    text-align: center;
+    max-width: 26rem;
+    z-index: 10000;
+  }
+</style>

@@ -15,23 +15,25 @@ export interface GemeenteVoorbeeldHomeProps {
 }
 
 const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath, openingHoursSummary }) => (
-  <>
+  <body className="utrecht-page-body">
     <SkipLink href="#main">Skip to main content</SkipLink>
 
     <PageHeaderSection />
 
     <Navigation currentPath={currentPath} />
 
-    <main id="main">
-      <MainIntroSection openingHoursSummary={openingHoursSummary} />
+    <div className="utrecht-page-body__content">
+      <main id="main">
+        <MainIntroSection openingHoursSummary={openingHoursSummary} />
 
-      <SelfServiceSection />
+        <SelfServiceSection />
 
-      <NewsSection />
-    </main>
+        <NewsSection />
+      </main>
+    </div>
 
     <PageFooterSection />
-  </>
+  </body>
 );
 
 export default GemeenteVoorbeeldHome;

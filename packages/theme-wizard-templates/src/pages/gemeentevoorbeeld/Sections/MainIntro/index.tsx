@@ -14,7 +14,7 @@ const MainIntroSection: FC<OpeningHoursCardProps> = ({ openingHoursSummary }) =>
       Welkom op de website van Gemeente Voorbeeld
     </Heading>
 
-    <section className="clippy-section">
+    <section>
       <Heading level={2} appearance="level-2">
         Veelgebruikte diensten
       </Heading>
