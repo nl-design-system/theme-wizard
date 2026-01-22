@@ -1,6 +1,7 @@
+import { safeCustomElement } from '@lib/decorators';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import buttonStyles from './styles';
 
@@ -18,7 +19,7 @@ type Hint = 'positive' | 'negative';
 type Size = 'small' | 'medium';
 const defaultSize: Size = 'medium';
 
-@customElement(tag)
+@safeCustomElement(tag)
 export class ToolbarButton extends LitElement {
   @property({ type: Boolean }) 'icon-only' = false;
   @property({ type: Boolean }) toggle = undefined;

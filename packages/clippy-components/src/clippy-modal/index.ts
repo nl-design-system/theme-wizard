@@ -1,5 +1,6 @@
 import amsDialogStyles from '@amsterdam/design-system-css/dist/dialog/dialog.css?inline';
 import amsVisuallyHiddenStyles from '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css?inline';
+import { safeCustomElement } from '@lib/decorators';
 import utrechtButtonStyles from '@utrecht/button-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
@@ -14,6 +15,7 @@ export const DIALOG_BUTTON_VALUES = {
   confirm: 'confirm',
 };
 
+@safeCustomElement(tag)
 export class ClippyModal extends LitElement {
   /**
    * Id of an element that describes the dialog, used for aria-describedby.
@@ -155,9 +157,4 @@ export class ClippyModal extends LitElement {
       </dialog>
     `;
   }
-}
-
-const registry = globalThis.customElements;
-if (registry && !registry.get(tag)) {
-  registry.define(tag, ClippyModal);
 }

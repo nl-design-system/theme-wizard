@@ -1,5 +1,6 @@
+import { safeCustomElement } from '@lib/decorators';
 import { html } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { query } from 'lit/decorators.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
@@ -18,7 +19,7 @@ declare global {
   }
 }
 
-@customElement(tag)
+@safeCustomElement(tag)
 export class ClippyFontCombobox extends ClippyCombobox<Option> {
   #additional?: Option[];
   #intersectionObserver?: IntersectionObserver;
