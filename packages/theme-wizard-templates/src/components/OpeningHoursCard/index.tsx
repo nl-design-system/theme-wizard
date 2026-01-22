@@ -4,6 +4,7 @@ import { Icon } from '@utrecht/component-library-react';
 import { ButtonLink } from '@utrecht/component-library-react/dist/css-module';
 import React, { Fragment, useMemo } from 'react';
 import type { OpeningHoursCardProps } from './types';
+import '../shared/card-styles.css';
 
 const formatTime = (time: string): string => time.substring(0, 5);
 

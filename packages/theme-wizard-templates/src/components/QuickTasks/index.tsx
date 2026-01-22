@@ -12,6 +12,8 @@ import {
 import React, { type ReactElement } from 'react';
 import type { QuickTask } from './types';
 import { Column, Row } from '../Layout';
+import '../shared/card-styles.css';
+import './styles.css';
 
 export interface QuickTasksProps {
   tasks: QuickTask[];

@@ -1,0 +1,15 @@
+.clippy-voorbeeld-accordion__section .utrecht-accordion__button[aria-expanded="true"] {
+  border-end-end-radius: 0;
+  border-end-start-radius: 0;
+  border-start-end-radius: var(--utrecht-button-border-radius);
+  border-start-start-radius: var(--utrecht-button-border-radius);
+}
+
+.clippy-voorbeeld-accordion__section .utrecht-accordion__panel--expanded {
+  background-color: var(--utrecht-accordion-button-background-color);
+  border-end-end-radius: var(--utrecht-button-border-radius);
+  border-end-start-radius: var(--utrecht-button-border-radius);
+  border-start-end-radius: 0;
+  border-start-start-radius: 0;
+  margin-block-end: -1px;
+}

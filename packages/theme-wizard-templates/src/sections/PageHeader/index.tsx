@@ -5,6 +5,7 @@ import { PageHeader } from '@utrecht/page-header-react';
 import React, { type ReactNode, type PropsWithChildren } from 'react';
 import logo from '../../../../assets/logo.svg';
 import { Column, Row } from '../../components/Layout';
+import './styles.css';
 
 export interface PageHeaderProps {
   actions?: Array<{ href: string; label: string; icon?: string }>;

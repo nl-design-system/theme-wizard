@@ -8,7 +8,6 @@ import NewsSection from '../../sections/News';
 import PageFooterSection from '../../sections/PageFooter';
 import PageHeaderSection from '../../sections/PageHeader';
 import SelfServiceSection from '../../sections/SelfService';
-import './styles.css';
 
 export interface GemeenteVoorbeeldHomeProps {
   currentPath?: string;

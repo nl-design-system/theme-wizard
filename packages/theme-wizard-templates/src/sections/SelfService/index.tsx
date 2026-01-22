@@ -3,6 +3,7 @@ import { AccordionProvider, ButtonLink, PageContent } from '@utrecht/component-l
 import React from 'react';
 import { ACCORDION_SECTIONS } from '../../components/AccordionSection';
 import { Row } from '../../components/Layout';
+import './styles.css';
 
 export interface SelfServiceSectionProps {
   heading?: string;

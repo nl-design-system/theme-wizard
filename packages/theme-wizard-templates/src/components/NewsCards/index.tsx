@@ -7,6 +7,8 @@ import { Icon } from '@utrecht/component-library-react';
 import React from 'react';
 import type { NewsItem } from './types';
 import { Column, Row } from '../Layout';
+import '../shared/card-styles.css';
+import './styles.css';
 
 export interface NewsCardsProps {
   cards: NewsItem[];

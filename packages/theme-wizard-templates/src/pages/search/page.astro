@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ResultsPage from './SearchResults';
+import SearchResults from './SearchResults';
 
 export const detail = {
   name: 'Resultaten',
@@ -11,6 +11,6 @@ export const detail = {
 const currentPath = Astro.url.pathname;
 ---
 
-<BaseLayout>
-  <ResultsPage client:load currentPath={currentPath} />
+<BaseLayout title="Zoekresultaten">
+  <SearchResults currentPath={currentPath} />
 </BaseLayout>
