@@ -4,6 +4,7 @@ import { UtrechtIconAlleen } from '@utrecht/web-component-library-react';
 import React, { type FC, type ReactNode } from 'react';
 import logo from '../../assets/logo.svg';
 import { Column, Row } from '../../components/Layout';
+import './styles.css';
 
 export interface PageHeaderProps {
   actions?: Array<{ href: string; label: string; icon?: string }>;

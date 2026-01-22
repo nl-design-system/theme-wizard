@@ -4,6 +4,7 @@ import { ButtonLink } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
 import React, { type FC, Fragment, useMemo } from 'react';
 import type { OpeningHoursCardProps } from './types';
+import '../shared/card-styles.css';
 
 const formatTime = (time: string): string => time.substring(0, 5);
 

@@ -1,0 +1,6 @@
+.clippy-voorbeeld__link header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: var(--basis-space-row-xl);
+}
