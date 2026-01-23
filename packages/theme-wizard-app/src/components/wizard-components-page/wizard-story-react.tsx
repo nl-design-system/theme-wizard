@@ -26,7 +26,14 @@ export class WizardStoryReact extends WizardStory {
       this._renderRoot = createRoot(container);
     }
 
-    this.shadowRoot?.adoptedStyleSheets.push(this.theme.stylesheet);
+    if (this.shadowRoot) {
+      this.shadowRoot.adoptedStyleSheets.push(this.theme.stylesheet);
+
+      // Apply story styles from property
+      if (this.storyStyleSheets) {
+        this.shadowRoot.adoptedStyleSheets.push(...this.storyStyleSheets);
+      }
+    }
   }
 
   override render() {

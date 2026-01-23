@@ -50,10 +50,14 @@ export const LinkInEenParagraph: Story = Stories.LinkInEenParagraph;
 const RenderButtonStates = ({ ...props }: LinkProps) => (
   <>
     <LinkComponent {...props} />
-    {' → hover → '}
+    {' → :hover → '}
     <LinkComponent {...props} className="nl-link--hover" />
-    {' → active → '}
+    {' → :active → '}
     <LinkComponent {...props} className="nl-link--active" />
+    {' → :focus → '}
+    <LinkComponent {...props} className="nl-link--focus" />
+    {' → :focus-visible → '}
+    <LinkComponent {...props} className="nl-link--focus-visible" />
   </>
 );
 
