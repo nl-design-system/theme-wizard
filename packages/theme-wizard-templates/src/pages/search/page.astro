@@ -12,5 +12,5 @@ const currentPath = Astro.url.pathname;
 ---
 
 <BaseLayout title="Zoekresultaten">
-  <SearchResults currentPath={currentPath} />
+  <SearchResults client:load currentPath={currentPath} />
 </BaseLayout>
