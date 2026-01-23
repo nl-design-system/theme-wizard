@@ -15,7 +15,7 @@ export interface GemeenteVoorbeeldHomeProps {
 }
 
 const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath, openingHoursSummary }) => (
-  <body className="utrecht-page-body">
+  <div className="utrecht-page-body">
     <SkipLink href="#main">Skip to main content</SkipLink>
 
     <PageHeaderSection />
@@ -33,7 +33,7 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath, op
     </div>
 
     <PageFooterSection />
-  </body>
+  </div>
 );
 
 export default GemeenteVoorbeeldHome;
