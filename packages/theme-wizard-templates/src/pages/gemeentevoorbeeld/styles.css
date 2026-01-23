@@ -19,7 +19,7 @@
   background-color: var(--utrecht-page-background-secondary);
 }
 
-nav {
+nav.clippy-top-tasks {
   block-size: 100%;
   display: block;
 }

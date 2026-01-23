@@ -34,7 +34,7 @@ const renderIcon = (iconName: string): JSX.Element | null => {
 };
 
 const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
-  <nav>
+  <nav className="clippy-top-tasks">
     <Row columnGap="var(--basis-space-column-xl)" fullHeight justify="flex-start" rowGap="var(--basis-space-row-xl)">
       {tasks.map((task) => (
         <Column key={`${task.href}-${task.title}`} cols={4}>

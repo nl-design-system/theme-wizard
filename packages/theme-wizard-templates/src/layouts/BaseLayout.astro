@@ -22,7 +22,7 @@ const {
   title = 'Gemeente Voorbeeld',
   description = 'Gemeente Voorbeeld website',
   lang = 'nl',
-  htmlClasses = 'utrecht-page-layout utrecht-root start-theme preview-theme',
+  htmlClasses = 'utrecht-root start-theme preview-theme',
 } = Astro.props;
 ---
 
@@ -39,7 +39,7 @@ const {
     <title>{title}</title>
   </head>
 
-  <body>
+  <body class="utrecht-body">
     <!-- <DevTools /> -->
     <slot />
     <ClientInit />
