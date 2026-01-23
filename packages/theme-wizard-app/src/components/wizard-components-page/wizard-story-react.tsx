@@ -10,11 +10,11 @@ import { createRoot, type Root } from 'react-dom/client';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 
-const tag = 'wizard-story-react-element';
+const tag = 'wizard-story-react';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: WizardStoryReactElement;
+    [tag]: WizardStoryReact;
   }
 }
 
@@ -23,7 +23,7 @@ declare global {
  * Accepts a .meta property (default export of CSF) and a .story property (a Story object).
  * Uses `any` for component types to support framework-agnostic story rendering.
  */
-export class WizardStoryReactElement extends LitElement {
+export class WizardStoryReact extends LitElement {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @property({ type: Object }) meta: Meta<any> | null = null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,4 +101,4 @@ export class WizardStoryReactElement extends LitElement {
   }
 }
 
-customElements.define(tag, WizardStoryReactElement);
+customElements.define(tag, WizardStoryReact);
