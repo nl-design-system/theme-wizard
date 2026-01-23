@@ -1,5 +1,8 @@
 import type { Meta } from '@storybook/react-vite';
 import '../wizard-layout';
+import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
+import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
+import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
 import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { t } from '../../i18n';
@@ -13,6 +16,12 @@ import './wizard-story-react';
 import './wizard-story-preview';
 import './wizard-code-block';
 import styles from './styles';
+
+const storyStyleSheets = [markCSS, linkCSS, codeCSS].map((css) => {
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(css);
+  return sheet;
+});
 
 const tag = 'wizard-components-page';
 
@@ -34,7 +43,9 @@ type StoryModule = {
   [key: string]: unknown;
 };
 
-const storyModules: StoryModule[] = [MarkStories, LinkStories, ColorSampleStories, CodeStories];
+const storyModules: StoryModule[] = [MarkStories, LinkStories, ColorSampleStories, CodeStories].sort((a, b) =>
+  (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''),
+);
 
 @customElement(tag)
 export class WizardComponentsPage extends LitElement {
@@ -87,7 +98,11 @@ export class WizardComponentsPage extends LitElement {
                       <utrecht-heading-4>${story?.name || story?.storyName}</utrecht-heading-4>
                       <!--<pre>${JSON.stringify(story?.parameters?.['tokens'], null, 2)}</pre>-->
                       <wizard-story-preview>
-                        <wizard-story-react .meta=${meta} .story=${story}></wizard-story-react>
+                        <wizard-story-react
+                          .meta=${meta}
+                          .story=${story}
+                          .storyStyleSheets=${storyStyleSheets}
+                        ></wizard-story-react>
                       </wizard-story-preview>
                     </section>
                   `,

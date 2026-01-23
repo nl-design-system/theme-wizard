@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { consume } from '@lit/context';
-import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
-import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
-import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
-import { LitElement, unsafeCSS } from 'lit';
+import { LitElement } from 'lit';
 import { state, property } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
@@ -27,11 +24,14 @@ export class WizardStory extends LitElement {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @property({ type: Object }) story: StoryObj<any> | null = null;
 
+  /**
+   * Stylesheets that we pass along to the component that does the actual rendering
+   */
+  @property({ type: Array }) storyStyleSheets: CSSStyleSheet[] | undefined;
+
   @consume({ context: themeContext, subscribe: true })
   @state()
   protected readonly theme!: Theme;
-
-  static override readonly styles = [unsafeCSS(markCSS), unsafeCSS(linkCSS), unsafeCSS(codeCSS)];
 }
 
 customElements.define(tag, WizardStory);
