@@ -47,17 +47,13 @@ export const Link: Story = Stories.Link;
 export const LinkInEenParagraph: Story = Stories.LinkInEenParagraph;
 
 // Copied from https://github.com/frameless/candidate/blob/main/packages/docs/link-docs/stories/link.stories.tsx#L46
-const RenderButtonStates = ({ ...props }: LinkProps) => (
+const RenderLinkStates = ({ ...props }: LinkProps) => (
   <>
     <LinkComponent {...props} />
     {' → :hover → '}
     <LinkComponent {...props} className="nl-link--hover" />
     {' → :active → '}
     <LinkComponent {...props} className="nl-link--active" />
-    {' → :focus → '}
-    <LinkComponent {...props} className="nl-link--focus" />
-    {' → :focus-visible → '}
-    <LinkComponent {...props} className="nl-link--focus-visible" />
   </>
 );
 
@@ -107,7 +103,7 @@ export const DesignLinkStates: Story = {
       },
     },
   },
-  render: RenderButtonStates,
+  render: RenderLinkStates,
 };
 export const DesignLinkDisabled: Story = {
   name: 'Design: Disabled Link',
