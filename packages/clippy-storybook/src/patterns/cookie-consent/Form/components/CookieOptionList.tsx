@@ -1,6 +1,6 @@
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
 import { Fieldset, FieldsetLegend } from '@utrecht/component-library-react/dist/css-module';
-import React, { type ReactNode, useMemo } from 'react';
+import React, { type ReactNode, type PropsWithChildren, useMemo } from 'react';
 import type { CookieOption as CookieOptionType, CookieType } from '../types';
 import { CookieOption } from './CookieOption';
 
@@ -38,7 +38,7 @@ export const CookieOptionList = ({
   onCheckboxChange,
   selectedCookies,
   showLegitimateInterest = true,
-}: CookieOptionListProps) => {
+}: PropsWithChildren<CookieOptionListProps>) => {
   const { consentOptions, legitimateInterestOptions } = useMemo(() => {
     if (!showLegitimateInterest) {
       return { consentOptions: cookieOptions, legitimateInterestOptions: [] };

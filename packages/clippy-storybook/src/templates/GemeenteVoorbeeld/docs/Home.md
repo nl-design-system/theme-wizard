@@ -33,7 +33,7 @@ Zie `@nl-design-system-community/theme-wizard-templates` voor de concrete implem
 
 ## Gebruikte componentbibliotheken (en rol in de pagina)
 
-Deze template combineert componenten uit meerdere (NLDS) libraries:
+Deze template combineert componenten uit meerdere (NL Design System) libraries:
 
 - **NL Design System (candidate) – React (CSS)**:
   - `SkipLink` (skiplink naar `#main`)
@@ -50,8 +50,8 @@ Deze template combineert componenten uit meerdere (NLDS) libraries:
 
 ## Hoe werken deze componenten samen?
 
-- **Layout & structuur (Utrecht + NLDS)**:
-  - De pagina gebruikt Utrecht “page” structuur (`utrecht-page-body`, `PageHeader`, `PageContent`, `PageFooter`) en vult die met NLDS `Heading`/`Link`.
+- **Layout & structuur (Utrecht + NL Design System)**:
+  - De pagina gebruikt Utrecht “page” structuur (`utrecht-page-body`, `PageHeader`, `PageContent`, `PageFooter`) en vult die met NL Design System `Heading`/`Link`.
   - `PageContent` wordt gebruikt om de hoofdinhoud te wrappen in verschillende secties (MainIntro, SelfService, News) en zorgt voor consistente padding en max-width styling.
   - De navigatie is een Utrecht `NavBar` met `NavListLink` items; de huidige pagina wordt aangegeven via `aria-current="page"`.
 - **Contentblokken (Utrecht + Amsterdam)**:
@@ -69,7 +69,7 @@ Deze startpagina gebruikt een **subset** van de Clippy design tokens (CSS custom
 De Clippy tokens die **direct** terugkomen in de Gemeentevoorbeeld styles zijn:
 
 - **Voorbeeld “card” styling** (gebruikt in `gemeentevoorbeeld/styles.css`)
-  - `--clippy-voorbeeld-card-bg`
+  - `--clippy-voorbeeld-card-background-color`
   - `--clippy-voorbeeld-card-outline`
   - `--clippy-voorbeeld-card-padding-block`
   - `--clippy-voorbeeld-card-padding-inline`
@@ -84,8 +84,7 @@ De Clippy tokens die **indirect** gebruikt worden (via mapping naar Utrecht toke
   - `--clippy-page-padding-inline-end`
   - `--clippy-page-header-padding-block-start`
   - `--clippy-page-header-padding-block-end`
-  - `--clippy-section-max-inline-size`
-  - `--clippy-page-background-secondary`
+  - `--clippy-page-secondary-background-color`
   - `--clippy-nav-bar-content-max-inline-size`
 
 NB: in `@nl-design-system-community/theme-wizard-app/theme.css` worden Clippy tokens **gemapt** naar `--utrecht-*` en `--denhaag-*` tokens, zodat componenten die die token-names verwachten dezelfde waarden gebruiken. Tokens voor breadcrumb/side-navigation staan wel in `clippy-tokens.css`, maar worden door de Gemeentevoorbeeld startpagina niet expliciet gebruikt.
