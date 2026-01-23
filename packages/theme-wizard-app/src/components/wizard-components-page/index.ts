@@ -10,7 +10,7 @@ import * as ColorSampleStories from './color-sample-react.stories';
 import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
 import styles from './styles';
-import './wizard-story-react-element';
+import './wizard-story-element';
 import './wizard-story-preview';
 import './wizard-code-block';
 
@@ -34,9 +34,6 @@ export class WizardComponentsPage extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
-
-  @state()
-  private renderKey = 0;
 
   static override readonly styles = [styles];
 
@@ -63,30 +60,6 @@ export class WizardComponentsPage extends LitElement {
     }
   }
 
-  override updated(): void {
-    // Trigger a re-render so preview HTML can be accessed
-    if (this.renderKey === 0 && this.shadowRoot?.querySelectorAll('wizard-story-preview').length) {
-      // Wait for React to finish rendering before triggering re-render
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          this.renderKey = 1;
-        }, 0);
-      });
-    }
-  }
-
-  #handleNavClick(event: Event): void {
-    const link = (event.target as Element).closest('a[href^="#"]');
-    if (!link) return;
-
-    const href = link.getAttribute('href');
-    if (!href) return;
-
-    event.preventDefault();
-    globalThis.location.hash = href;
-    this.#scrollToHash(href);
-  }
-
   override render() {
     if (!this.theme) {
       return t('loading');
@@ -94,7 +67,7 @@ export class WizardComponentsPage extends LitElement {
 
     return html`
       <wizard-layout>
-        <nav slot="sidebar" class="wizard-styleguide__nav" @click=${this.#handleNavClick}></nav>
+        <nav slot="sidebar" class="wizard-styleguide__nav"></nav>
 
         <div slot="main" class="wizard-styleguide__main">
           <utrecht-heading-1>${t('componentsPage.title')}</utrecht-heading-1>
@@ -112,11 +85,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-react-element
-                      .Component=${meta.component}
-                      .defaultArgs=${meta.args || {}}
-                      .story=${story}
-                    ></wizard-story-react-element>
+                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
                   </wizard-story-preview>
                 </section>
               `;
@@ -136,11 +105,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-react-element
-                      .Component=${meta.component}
-                      .defaultArgs=${meta.args || {}}
-                      .story=${story}
-                    ></wizard-story-react-element>
+                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
                   </wizard-story-preview>
                 </section>
               `;
@@ -162,11 +127,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-react-element
-                      .Component=${meta.component}
-                      .defaultArgs=${meta.args || {}}
-                      .story=${story}
-                    ></wizard-story-react-element>
+                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
                   </wizard-story-preview>
                 </section>
               `;
@@ -186,11 +147,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-react-element
-                      .Component=${meta.component}
-                      .defaultArgs=${meta.args || {}}
-                      .story=${story}
-                    ></wizard-story-react-element>
+                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
                   </wizard-story-preview>
                 </section>
               `;
