@@ -2,8 +2,6 @@
 
 Deze template toont een voorbeeld van een gemeentelijke startpagina, ontwikkeld met het **Voorbeeld Thema** en bestaande componenten uit de **NL Design System community**. De pagina is bedoeld als startpunt voor gemeenten die een toegankelijke, herkenbare en uitbreidbare homepage willen opzetten.
 
-De pagina is gecontroleerd met een **WCAG-audit**; gebruik deze template als referentie, maar voer altijd opnieuw een eigen toetsing uit in de context van je eigen content en implementatie.
-
 ## Doel en gebruik
 
 - **Doel**: laten zien hoe een gemeentelijke startpagina kan worden ingericht met heldere navigatie en snelle ingangen naar veelgebruikte diensten.
