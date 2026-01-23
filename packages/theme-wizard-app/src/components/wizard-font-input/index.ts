@@ -54,6 +54,7 @@ export class WizardFontInput extends WizardTokenInput {
   };
 
   override render() {
+    const value = Array.isArray(this.value) ? this.value : [this.value];
     return html`
       <div class="utrecht-form-field__input">
         <label id="label-${this.name}">${this.label}</label>
@@ -67,7 +68,7 @@ export class WizardFontInput extends WizardTokenInput {
           hidden-label="${this.label}"
           name=${this.name}
           @change=${this.#handleChange}
-          .value=${this.value.toString()}
+          .value=${value}
           .options=${DEFAULT_FONT_OPTIONS}
           aria-invalid=${this.hasErrors ? 'true' : nothing}
           aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}

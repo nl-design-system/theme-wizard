@@ -1,14 +1,15 @@
 import { safeCustomElement } from '@lib/decorators';
 import { html } from 'lit';
-import { query } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
+import { arrayFromCommaList } from '../lib/converters';
 
 type Option = {
   label: string;
-  value: string | Array<string>;
+  value: string[];
   cssUrl?: string;
 };
 
@@ -27,6 +28,16 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
   #intersectionObserver?: IntersectionObserver;
   @query('[role=listbox]')
   readonly listboxElement?: Element;
+
+  @property({ converter: arrayFromCommaList })
+  override set value(value: Option['value'] | null) {
+    super.value = value;
+    this.query = this.valueToQuery(value);
+  }
+
+  override get value(): Option['value'] | null {
+    return super.value;
+  }
 
   override async fetchAdditionalOptions(query: string): Promise<Option[]> {
     this.#additional = this.#additional ?? (await import('./external').then(({ default: items }) => items));
@@ -60,8 +71,11 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
     }
   };
 
-  override valueToQuery(value: Option['value']): string {
-    return Array.isArray(value) ? value[0] : value.split(',')[0];
+  override valueToQuery(value: Option['value'] | null): string {
+    if (value === null) {
+      return '';
+    }
+    return Array.isArray(value) ? value[0] : value;
   }
 
   override renderEntry(option: Option, _index: number) {
