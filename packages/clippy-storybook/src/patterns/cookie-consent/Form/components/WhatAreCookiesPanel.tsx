@@ -1,7 +1,7 @@
 import { DescriptionList } from '@amsterdam/design-system-react';
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
-import React, { type FC } from 'react';
+import React from 'react';
 import '@amsterdam/design-system-css/dist/index.css';
 import '@amsterdam/design-system-tokens/dist/index.css';
 
@@ -9,7 +9,7 @@ import '@amsterdam/design-system-tokens/dist/index.css';
  * Demo Panel component - this is just an example of how to implement a section on the cookie page
  * Panel explaining what cookies are and why websites use them.
  */
-export const WhatAreCookiesPanel: FC = () => (
+export const WhatAreCookiesPanel = () => (
   <>
     <Heading level={2}>Wat zijn cookies?</Heading>
 

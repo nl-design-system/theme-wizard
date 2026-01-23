@@ -1,5 +1,5 @@
 import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
-import React, { type FC } from 'react';
+import React from 'react';
 import type { SummaryItem } from './components/OpeningHoursCard/types';
 import MainIntroSection from './Sections/MainIntro';
 import Navigation from './Sections/Navigation';
@@ -14,7 +14,7 @@ export interface GemeenteVoorbeeldHomeProps {
   openingHoursSummary?: SummaryItem[];
 }
 
-const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath, openingHoursSummary }) => (
+const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoorbeeldHomeProps) => (
   <>
     <SkipLink href="#main">Skip to main content</SkipLink>
 

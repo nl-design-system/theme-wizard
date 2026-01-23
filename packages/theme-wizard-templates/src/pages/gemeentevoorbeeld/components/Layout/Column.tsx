@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { type FC, type HTMLAttributes, type PropsWithChildren } from 'react';
+import React, { type HTMLAttributes, type PropsWithChildren } from 'react';
 import './styles.css';
 
 export interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
@@ -8,7 +8,7 @@ export interface ColumnProps extends HTMLAttributes<HTMLDivElement> {
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-export const Column: FC<PropsWithChildren<ColumnProps>> = ({ children, className, cols = 12, ...rest }) => {
+export const Column = ({ children, className, cols = 12, ...rest }: PropsWithChildren<ColumnProps>) => {
   const clampedCols = clamp(cols, 1, 12);
 
   return (

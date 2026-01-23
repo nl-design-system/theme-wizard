@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { type FC, type CSSProperties, type HTMLAttributes, type PropsWithChildren } from 'react';
+import React, { type CSSProperties, type HTMLAttributes, type PropsWithChildren } from 'react';
 import './styles.css';
 
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {
@@ -12,7 +12,7 @@ export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   reverseOnSmallScreen?: boolean;
 }
 
-export const Row: FC<PropsWithChildren<RowProps>> = ({
+export const Row = ({
   align,
   children,
   className,
@@ -24,7 +24,7 @@ export const Row: FC<PropsWithChildren<RowProps>> = ({
   rowGap,
   style,
   ...rest
-}) => {
+}: PropsWithChildren<RowProps>) => {
   const classes = clsx(
     'clippy-row',
     {

@@ -4,7 +4,7 @@ import { Link } from '@nl-design-system-candidate/link-react/css';
 import { Icon } from '@utrecht/component-library-react';
 import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconKalender } from '@utrecht/web-component-library-react';
-import React, { type FC } from 'react';
+import React from 'react';
 import type { NewsItem } from './types';
 import { Column, Row } from '../Layout';
 
@@ -12,7 +12,7 @@ export interface NewsCardsProps {
   cards: NewsItem[];
 }
 
-const NewsCards: FC<NewsCardsProps> = ({ cards }) => (
+const NewsCards = ({ cards }: NewsCardsProps) => (
   <Row columnGap="var(--basis-space-column-xl)" justify="flex-start" rowGap="var(--basis-space-row-xl)" role="list">
     {cards.map((card) => (
       <Column key={`${card.href}-${card.title}`} cols={6} role="listitem">

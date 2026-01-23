@@ -1,6 +1,6 @@
 import { Link } from '@nl-design-system-candidate/link-react/css';
 import { LinkList, PageFooter, Image, PageContent } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC, type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import logo from '../../../../assets/logo.svg';
 import { Column, Row } from '../../components/Layout';
 
@@ -8,7 +8,7 @@ export interface PageFooterProps {
   children?: ReactNode;
 }
 
-const PageFooterSection: FC<PageFooterProps> = ({ children }) => (
+const PageFooterSection = ({ children }: PageFooterProps) => (
   <PageFooter>
     <PageContent className="utrecht-page-footer__content">
       <Row columnGap="var(--basis-space-column-xl)" rowGap="var(--basis-space-column-xl)">

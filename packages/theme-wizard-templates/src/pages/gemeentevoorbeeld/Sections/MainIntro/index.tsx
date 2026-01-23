@@ -1,14 +1,14 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
 import { PageContent } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC } from 'react';
+import React from 'react';
 import type { OpeningHoursCardProps } from '../../components/OpeningHoursCard/types';
 import { Column, Row } from '../../components/Layout';
 import OpeningHoursCard from '../../components/OpeningHoursCard';
 import QuickTasks from '../../components/QuickTasks';
 import { QUICK_TASKS } from '../../constants';
 
-const MainIntroSection: FC<OpeningHoursCardProps> = ({ openingHoursSummary }) => (
+const MainIntroSection = ({ openingHoursSummary }: OpeningHoursCardProps) => (
   <PageContent>
     <Heading id="page-title" level={1} className="ams-visually-hidden" appearance="level-1">
       Welkom op de website van Gemeente Voorbeeld

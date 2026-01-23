@@ -1,12 +1,12 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { Link } from '@nl-design-system-candidate/link-react/css';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
-import React, { type FC } from 'react';
+import React from 'react';
 
 /*
  * Demo Panel component - this is just an example of how to implement a section on the cookie page
  */
-export const DataPanel: FC = () => (
+export const DataPanel = () => (
   <>
     <Heading level={2}>Mijn gegevens</Heading>
 
