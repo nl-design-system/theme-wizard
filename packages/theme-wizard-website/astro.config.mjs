@@ -23,7 +23,9 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  integrations: [react()],
+  integrations: [
+    // react(), // For GemeenteVoorbeeld templates rendering
+  ],
   server: {
     port: 9492, // (T9 for WIZ)2
   },

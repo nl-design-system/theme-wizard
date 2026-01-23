@@ -13,7 +13,8 @@
     "types": ["vite/client"],
     "importHelpers": false,
     "useDefineForClassFields": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*", "test/**/*"]
 }

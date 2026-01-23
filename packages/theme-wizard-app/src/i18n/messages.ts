@@ -17,9 +17,13 @@ export const en = {
   back: 'Back',
   cancel: 'Cancel',
   close: 'Close',
+  componentsPage: {
+    title: 'Components',
+  },
   continue: 'Continue',
   loading: 'Loading...',
   nav: {
+    components: 'Components',
     configure: 'Edit branding',
     styleGuide: 'Style guide',
   },
@@ -221,9 +225,13 @@ export const nl = {
   back: 'Terug',
   cancel: 'Annuleren',
   close: 'Sluiten',
+  componentsPage: {
+    title: 'Componenten',
+  },
   continue: 'Doorgaan',
   loading: 'Laden...',
   nav: {
+    components: 'Componenten',
     configure: 'Huisstijl bewerken',
     styleGuide: 'Stijlgids',
   },

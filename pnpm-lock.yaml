@@ -385,18 +385,60 @@ importers:
       '@nl-design-system-candidate/code-css':
         specifier: 2.0.5
         version: 2.0.5
+      '@nl-design-system-candidate/code-docs':
+        specifier: 1.1.2
+        version: 1.1.2
+      '@nl-design-system-candidate/code-react':
+        specifier: 1.2.7
+        version: 1.2.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/code-tokens':
+        specifier: 2.0.4
+        version: 2.0.4
       '@nl-design-system-candidate/color-sample-css':
         specifier: 1.0.4
         version: 1.0.4
+      '@nl-design-system-candidate/color-sample-docs':
+        specifier: 1.2.2
+        version: 1.2.2
+      '@nl-design-system-candidate/color-sample-react':
+        specifier: 1.2.2
+        version: 1.2.2(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/color-sample-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
       '@nl-design-system-candidate/data-badge-css':
         specifier: 1.0.5
         version: 1.0.5
       '@nl-design-system-candidate/link-css':
         specifier: 2.0.3
         version: 2.0.3
+      '@nl-design-system-candidate/link-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/link-react':
+        specifier: 1.1.7
+        version: 1.1.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/link-tokens':
+        specifier: 3.0.3
+        version: 3.0.3
+      '@nl-design-system-candidate/mark-css':
+        specifier: 1.0.5
+        version: 1.0.5
+      '@nl-design-system-candidate/mark-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/mark-react':
+        specifier: 1.1.7
+        version: 1.1.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/mark-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
         specifier: 2.1.3
         version: 2.1.3
+      '@nl-design-system-candidate/paragraph-react':
+        specifier: 2.2.1
+        version: 2.2.1(@babel/runtime@7.28.4)(react@18.3.1)
       '@nl-design-system-candidate/skip-link-css':
         specifier: 1.0.5
         version: 1.0.5
@@ -463,6 +505,12 @@ importers:
       lit:
         specifier: 3.3.2
         version: 3.3.2
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       rosetta:
         specifier: 1.1.0
         version: 1.1.0
@@ -473,9 +521,21 @@ importers:
         specifier: 4.3.4
         version: 4.3.4
     devDependencies:
+      '@nl-design-system-community/theme-wizard-templates':
+        specifier: workspace:*
+        version: link:../theme-wizard-templates
+      '@storybook/react-vite':
+        specifier: 10.1.11
+        version: 10.1.11(esbuild@0.27.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.53.5)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
+      '@types/react':
+        specifier: 18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: 18.3.0
+        version: 18.3.0
       '@vitest/browser-playwright':
         specifier: 4.0.16
         version: 4.0.16(playwright@1.57.0)(vite@7.3.0)(vitest@4.0.16)
@@ -491,6 +551,9 @@ importers:
       rimraf:
         specifier: 6.1.2
         version: 6.1.2
+      storybook:
+        specifier: 10.1.11
+        version: 10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2205,8 +2268,32 @@ packages:
   '@nl-design-system-candidate/code-css@2.0.5':
     resolution: {integrity: sha512-KYRoiv389rTyGEb1xK1jFkzmQ4v3H6B82OOMafVqm3L5+ntr2f3tbJNYBkep3XYjAEq8VmNLkkJQYJZHiEo2ng==}
 
+  '@nl-design-system-candidate/code-docs@1.1.2':
+    resolution: {integrity: sha512-aJO9YuAV9bhqj/nv/pPI3oAY26ePC7a9OAxEEFPUL3w9Jpk7Qz3c97j9DYlDExtPUjSLksKpkDriL0bb8X9LTA==}
+
+  '@nl-design-system-candidate/code-react@1.2.7':
+    resolution: {integrity: sha512-ansOFc7d3Xla9RJO2OLRn0O5kwXYNUTStnQEzqZF/C8rq4ux63XyVSrhNf1rFjVCpD/cElX9mpHv/CnVRmWWdA==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/code-tokens@2.0.4':
+    resolution: {integrity: sha512-6RmljcilQog/IXmo+aLaqpe3cZ22GOE8HknmLgACK+b+NVmkhtdf+HwgtnEgg235Ucf2kbDpbERKppEHKfikUA==}
+
   '@nl-design-system-candidate/color-sample-css@1.0.4':
     resolution: {integrity: sha512-zDQKBqdWnxKg+y08WMOc2FKTCbKYM+IVLgzWd044sAo2U+q3XKREP+VZDUKAmSDEPcaDn2hia1QFO6eJkhMFAQ==}
+
+  '@nl-design-system-candidate/color-sample-docs@1.2.2':
+    resolution: {integrity: sha512-x0iLLaB8RQKXbBi+2/HA49+DGZx0cznofKr9GTB6OQ1lO4CD8AaSNzs1su+VscdRma1OFE9Zp5JRyLICVNWpQg==}
+
+  '@nl-design-system-candidate/color-sample-react@1.2.2':
+    resolution: {integrity: sha512-s4TUicUpaCtoIx7FQ/23AneQ6+23Lr2tUZWxtjTxXuGkSwQmta+S3/ED+dDaBGIH/NRqYre0jGc/p5mhiPZj2Q==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/color-sample-tokens@2.0.3':
+    resolution: {integrity: sha512-B3hIdU+bX70W5XbRpPjXrpi3F1JiNoMhNbsP0PauO0jhK2386uSFgBEqb4iDN0wruqX0qAiBhOcJuepy7vding==}
 
   '@nl-design-system-candidate/data-badge-css@1.0.5':
     resolution: {integrity: sha512-CDcXpGQDonWIw9omDL5O/rn1IaS0y8s4WprVDCZRwYKOgpIE6N3T4MwiuESzijldhT4lnYIxK1q3jdp2G8enFQ==}
@@ -2223,11 +2310,32 @@ packages:
   '@nl-design-system-candidate/link-css@2.0.3':
     resolution: {integrity: sha512-NpRIm9YDCK1bihslc9UD3OvV5hmm91Dc7v2oBIllqlZZyS1THFmPsyi+sJ1Vd7ZDa54GgqjuzUJOzAoQDJOFzQ==}
 
+  '@nl-design-system-candidate/link-docs@1.2.1':
+    resolution: {integrity: sha512-sCLgimS46bOt1gEgRElnVVETrv80YD3MnxY0NNrC2A0mg3ubnZR+C/dQ/NmDfGXmE2qXLlexzd5csk1qiRsapw==}
+
   '@nl-design-system-candidate/link-react@1.1.7':
     resolution: {integrity: sha512-gGOWFih3kNpLFRsFUfFyCXoXCL/u7aSsCJ+lHkBhnWUsnlQRmUxm/bWDrnaiRN72i4rp2bDU4wLFMGljoshfUQ==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18
+
+  '@nl-design-system-candidate/link-tokens@3.0.3':
+    resolution: {integrity: sha512-4CS7pyfBpCwCY9u2C1QbQg/sYBLcruB7ZHCprUCJR11NyjcdXGYVnxxnOU+uko/G7UZ6Vuy66bALIbro7Iy+aw==}
+
+  '@nl-design-system-candidate/mark-css@1.0.5':
+    resolution: {integrity: sha512-QIoqT5Rv27VaQc/HnCjw2kfb9wCt37Sb5O7geHysZfaSsAIMZx22lZ2Fzs2vUSxO7pdMT9MidKpipwWrusZ+5g==}
+
+  '@nl-design-system-candidate/mark-docs@1.2.1':
+    resolution: {integrity: sha512-Zk5rUbmEHrGlSTKTIJjXzQdfCNfDdeA0pGD7Vk8ixOeBom3IM4h6yiGNEV5bhuQostFIL6gHOXZ+OMc3L4nMvQ==}
+
+  '@nl-design-system-candidate/mark-react@1.1.7':
+    resolution: {integrity: sha512-sT9usI1k2Z5+BLaWqYz8zvJIvu2w3lbYI6KcUksaUlYpoJLZ79KzTrKmQNTq5fihCVZPvG0Me7itbD7A+L0thQ==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/mark-tokens@2.0.3':
+    resolution: {integrity: sha512-eA0Poy1qyoGSOAwJUirRHOm4nSzsL33fz1D585FKIucmQTV8EDrBLgLlysRDAdLriWAXPINsETaAkSQ9/EFq0A==}
 
   '@nl-design-system-candidate/number-badge-react@1.3.2':
     resolution: {integrity: sha512-inGt+cWeM3THcE+tTjzTazo/bwfTxf2F3/16yyEUCwxY/We7rL0KNW9nyZ3pYZuIxebRKSsRtCh7Z4fELKMJYA==}
@@ -2898,6 +3006,9 @@ packages:
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
 
+  '@types/react-dom@18.3.0':
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
+
   '@types/react-dom@18.3.7':
     resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
     peerDependencies:
@@ -2910,6 +3021,9 @@ packages:
 
   '@types/react@18.3.23':
     resolution: {integrity: sha512-/LDXMQh55EzZQ0uVAZmKKhfENivEvWz6E+EYzh+/MCjMhNsotd+ZHhBGIjFDTi6+fz0OhQQQLbTgdQIxxCsC0w==}
+
+  '@types/react@18.3.3':
+    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
 
   '@types/react@19.2.7':
     resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
@@ -9253,14 +9367,14 @@ snapshots:
 
   '@gemeente-denhaag/action@4.1.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      '@gemeente-denhaag/button': 3.0.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@gemeente-denhaag/icons': 4.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@gemeente-denhaag/link': 4.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@gemeente-denhaag/utils': 3.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@gemeente-denhaag/button': 3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/icons': 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/link': 4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/utils': 3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
       date-fns: 4.1.0
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/button@3.0.2':
     dependencies:
@@ -9269,10 +9383,10 @@ snapshots:
 
   '@gemeente-denhaag/button@3.0.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      '@gemeente-denhaag/icons': 4.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@gemeente-denhaag/icons': 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/card@5.0.6':
     dependencies:
@@ -9284,13 +9398,13 @@ snapshots:
 
   '@gemeente-denhaag/card@5.0.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      '@gemeente-denhaag/icons': 4.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@gemeente-denhaag/link': 4.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@gemeente-denhaag/paragraph': 2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@gemeente-denhaag/utils': 3.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@gemeente-denhaag/icons': 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/link': 4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/paragraph': 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/utils': 3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/icons@4.0.1':
     dependencies:
@@ -9299,29 +9413,29 @@ snapshots:
   '@gemeente-denhaag/icons@4.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       clsx: 2.1.1
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/link@4.1.0': {}
 
   '@gemeente-denhaag/link@4.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/number-badge@2.1.0': {}
 
   '@gemeente-denhaag/number-badge@2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/paragraph@2.1.0': {}
 
   '@gemeente-denhaag/paragraph@2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/side-navigation@4.0.3':
     dependencies:
@@ -9330,10 +9444,10 @@ snapshots:
 
   '@gemeente-denhaag/side-navigation@4.0.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      '@gemeente-denhaag/number-badge': 2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@gemeente-denhaag/number-badge': 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/utils@3.0.1':
     dependencies:
@@ -9342,8 +9456,8 @@ snapshots:
   '@gemeente-denhaag/utils@3.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       date-fns: 4.1.0
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@hono/node-server@1.19.7(hono@4.11.3)':
     dependencies:
@@ -9691,7 +9805,25 @@ snapshots:
 
   '@nl-design-system-candidate/code-css@2.0.5': {}
 
+  '@nl-design-system-candidate/code-docs@1.1.2': {}
+
+  '@nl-design-system-candidate/code-react@1.2.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/code-tokens@2.0.4': {}
+
   '@nl-design-system-candidate/color-sample-css@1.0.4': {}
+
+  '@nl-design-system-candidate/color-sample-docs@1.2.2': {}
+
+  '@nl-design-system-candidate/color-sample-react@1.2.2(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/color-sample-tokens@2.0.3': {}
 
   '@nl-design-system-candidate/data-badge-css@1.0.5': {}
 
@@ -9709,6 +9841,8 @@ snapshots:
 
   '@nl-design-system-candidate/link-css@2.0.3': {}
 
+  '@nl-design-system-candidate/link-docs@1.2.1': {}
+
   '@nl-design-system-candidate/link-react@1.1.7(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -9720,6 +9854,19 @@ snapshots:
       '@babel/runtime': 7.28.4
       clsx: 2.1.1
       react: 19.2.3
+
+  '@nl-design-system-candidate/link-tokens@3.0.3': {}
+
+  '@nl-design-system-candidate/mark-css@1.0.5': {}
+
+  '@nl-design-system-candidate/mark-docs@1.2.1': {}
+
+  '@nl-design-system-candidate/mark-react@1.1.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/mark-tokens@2.0.3': {}
 
   '@nl-design-system-candidate/number-badge-react@1.3.2(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
@@ -10329,6 +10476,10 @@ snapshots:
 
   '@types/prop-types@15.7.15': {}
 
+  '@types/react-dom@18.3.0':
+    dependencies:
+      '@types/react': 19.2.7
+
   '@types/react-dom@18.3.7(@types/react@18.3.23)':
     dependencies:
       '@types/react': 18.3.23
@@ -10338,6 +10489,11 @@ snapshots:
       '@types/react': 19.2.7
 
   '@types/react@18.3.23':
+    dependencies:
+      '@types/prop-types': 15.7.15
+      csstype: 3.2.3
+
+  '@types/react@18.3.3':
     dependencies:
       '@types/prop-types': 15.7.15
       csstype: 3.2.3
