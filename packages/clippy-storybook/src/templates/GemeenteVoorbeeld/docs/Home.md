@@ -43,7 +43,9 @@ Deze template combineert componenten uit meerdere (NL Design System) libraries:
   - Paginastructuur: `PageHeader`, `NavBar`/`NavList`/`NavListLink`, `PageContent`, `PageFooter`
   - Interactie: `AccordionProvider`, `ButtonLink`
   - Content: `Image`, `Paragraph`, `LinkList`/`LinkListLink`, `Icon`, `PageContent`
-  - Icons: `@utrecht/web-component-library-react` (o.a. `UtrechtIconAlleen`, `UtrechtIconKalender`, `UtrechtIconChevronRight`, `UtrechtIconAfspraakMaken`, etc.)
+- **Iconen**:
+  - **Toptask iconen** (inhoudelijke iconen voor diensten/taken): `@utrecht/web-component-library-react` (o.a. `UtrechtIconPaspoort`, `UtrechtIconMeldingKlacht`, `UtrechtIconVerhuizen`, `UtrechtIconWerken`, `UtrechtIconNummerbord`, `UtrechtIconAfvalScheiden`) – gebruikt in de "Veelgebruikte diensten" sectie
+  - **Functionele iconen** (UI-navigatie en acties): `@tabler/icons-react` (o.a. `IconUser` voor "Mijn Omgeving", `IconCalendar` voor datums, `IconChevronRight` voor navigatie-links, `IconCalendarEvent` voor afspraken) – gebruikt voor interface-elementen en navigatie
 - **Amsterdam Design System**:
   - `Card` (`@amsterdam/design-system-react`) voor de nieuwskaarten
   - `ams-visually-hidden` CSS utility (`@amsterdam/design-system-css`) voor “visueel verborgen, maar screenreader-zichtbare” koppen

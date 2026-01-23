@@ -1,9 +1,9 @@
 import { Card } from '@amsterdam/design-system-react';
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { Link } from '@nl-design-system-candidate/link-react/css';
+import { IconCalendar } from '@tabler/icons-react';
 import { Icon } from '@utrecht/component-library-react';
 import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
-import { UtrechtIconKalender } from '@utrecht/web-component-library-react';
 import React from 'react';
 import type { NewsItem } from './types';
 import { Column, Row } from '../Layout';
@@ -23,7 +23,7 @@ const NewsCards = ({ cards }: NewsCardsProps) => (
             </Heading>
 
             <Icon>
-              <UtrechtIconKalender />
+              <IconCalendar />
             </Icon>
 
             <time dateTime={card.dateTime}>{card.date}</time>

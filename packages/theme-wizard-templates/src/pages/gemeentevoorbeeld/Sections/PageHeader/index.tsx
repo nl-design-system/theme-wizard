@@ -1,6 +1,6 @@
 import { Link } from '@nl-design-system-candidate/link-react/css';
+import { IconUser } from '@tabler/icons-react';
 import { Icon, PageHeader, PageContent, Image } from '@utrecht/component-library-react/dist/css-module';
-import { UtrechtIconAlleen } from '@utrecht/web-component-library-react';
 import React, { type ReactNode, type PropsWithChildren } from 'react';
 import logo from '../../../../assets/logo.svg';
 import { Column, Row } from '../../components/Layout';
@@ -32,7 +32,7 @@ const PageHeaderSection = ({ actions = DEFAULT_ACTIONS, children }: PropsWithChi
                 <Link key={`${href}-${label}`} className="clippy-page-header__action-link" href={href}>
                   {icon && (
                     <Icon>
-                      <UtrechtIconAlleen />
+                      <IconUser />
                     </Icon>
                   )}
                   {label}
