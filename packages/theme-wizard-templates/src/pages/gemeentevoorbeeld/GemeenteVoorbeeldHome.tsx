@@ -1,4 +1,5 @@
 import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
+import { PageBody } from '@utrecht/page-body-react';
 import React from 'react';
 import type { SummaryItem } from './components/OpeningHoursCard/types';
 import MainIntroSection from './Sections/MainIntro';
@@ -22,17 +23,16 @@ const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoo
 
     <Navigation currentPath={currentPath} />
 
-    <div className="utrecht-page-body">
-      <div className="utrecht-page-body__content">
-        <main id="main">
-          <MainIntroSection openingHoursSummary={openingHoursSummary} />
+    {/* PageBody is not being exported in the @utrecht/component-library-react package, so for now we use this standalone PageBody from @utrecht/page-body-react. Styles are being loaded from the @utrecht/component-library-css */}
+    <PageBody>
+      <main id="main">
+        <MainIntroSection openingHoursSummary={openingHoursSummary} />
 
-          <SelfServiceSection />
+        <SelfServiceSection />
 
-          <NewsSection />
-        </main>
-      </div>
-    </div>
+        <NewsSection />
+      </main>
+    </PageBody>
     <PageFooterSection />
   </>
 );

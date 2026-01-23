@@ -40,7 +40,7 @@ Deze template combineert componenten uit meerdere (NL Design System) libraries:
   - `Heading` (koppen)
   - `Link` (links)
 - **Utrecht component library – React**:
-  - Paginastructuur: `PageHeader`, `NavBar`/`NavList`/`NavListLink`, `PageContent`, `PageFooter`
+  - Paginastructuur: `PageBody` (standalone uit `@utrecht/page-body-react`), `PageHeader`, `NavBar`/`NavList`/`NavListLink`, `PageContent`, `PageFooter` (deze laatste uit `@utrecht/component-library-react/dist/css-module`)
   - Interactie: `AccordionProvider`, `ButtonLink`
   - Content: `Image`, `Paragraph`, `LinkList`/`LinkListLink`, `Icon`, `PageContent`
 - **Iconen**:
@@ -53,12 +53,12 @@ Deze template combineert componenten uit meerdere (NL Design System) libraries:
 ## Hoe werken deze componenten samen?
 
 - **Layout & structuur (Utrecht + NL Design System)**:
-  - De pagina gebruikt Utrecht “page” structuur (`utrecht-page-body`, `PageHeader`, `PageContent`, `PageFooter`) en vult die met NL Design System `Heading`/`Link`.
-  - `PageContent` wordt gebruikt om de hoofdinhoud te wrappen in verschillende secties (MainIntro, SelfService, News) en zorgt voor consistente padding en max-width styling.
+  - De pagina gebruikt Utrecht “page” structuur (`PageBody`, `PageHeader`, `PageContent`, `PageFooter`) en vult die met NL Design System `Heading`/`Link`.
+  - `PageBody` wordt standalone geïmporteerd uit `@utrecht/page-body-react` (omdat deze niet beschikbaar is in de CSS Modules export van `@utrecht/component-library-react`). De CSS wordt globaal geladen via `@utrecht/component-library-css` in `BaseLayout.astro`.
+  - `PageContent` wordt geïmporteerd uit `@utrecht/component-library-react/dist/css-module` en wordt gebruikt om de hoofdinhoud te wrappen in verschillende secties (MainIntro, SelfService, News) en zorgt voor consistente padding en max-width styling.
   - De navigatie is een Utrecht `NavBar` met `NavListLink` items; de huidige pagina wordt aangegeven via `aria-current="page"`.
 - **Contentblokken (Utrecht + Amsterdam)**:
   - De “Veelgebruikte diensten” en “Zelf regelen” secties gebruiken Utrecht componenten (o.a. `ButtonLink`, `AccordionProvider`, `PageContent`) en eigen layout helpers (`Row`/`Column`).
-  - `PageContent` wordt gebruikt om individuele secties te wrappen voor consistente content styling en max-width beperking.
   - De nieuwslijst gebruikt Amsterdam `Card` componenten (die semantisch als `<article>` renderen) en is daarnaast als lijst gemarkeerd (`role="list"` en `role="listitem"`).
 - **Styling (Thema + tokens)**:
   - De Voorbeeld-theme tokens leveren de basis (kleuren/typografie/spacing).

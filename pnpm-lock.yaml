@@ -621,6 +621,9 @@ importers:
       '@utrecht/link-list-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/page-body-react':
+        specifier: 1.0.10
+        version: 1.0.10(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@utrecht/web-component-library-react':
         specifier: 3.0.12
         version: 3.0.12(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -3432,6 +3435,13 @@ packages:
 
   '@utrecht/page-body-css@1.0.1':
     resolution: {integrity: sha512-0keuwgUACGo52SA7Nvd31STGirZ/A1dkR/at5z8SpEXYdfMyRpPK1odH5MgB19Ig1Nie1Ke5oi+h++HcVg5Ksg==}
+
+  '@utrecht/page-body-react@1.0.10':
+    resolution: {integrity: sha512-HBWjRhNxchvykObDCbc7Vzouuig5gV3A7sz8LNxLrwxv0YA5HjX5HqsCCiP94ggCzGVWISNzFrMYcwEu1ut7lw==}
+    peerDependencies:
+      '@babel/runtime': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
 
   '@utrecht/page-content-css@2.0.1':
     resolution: {integrity: sha512-Hgx63BEUbaGJyBQXpa97EN8ng0M9LTX3ddu9IQM+ar/rA2OGIM5oiGbwXUYhLwQp/HnhkFm/gpPGGTtQjpXC6w==}
@@ -11246,6 +11256,14 @@ snapshots:
   '@utrecht/ordered-list-css@3.0.1': {}
 
   '@utrecht/page-body-css@1.0.1': {}
+
+  '@utrecht/page-body-react@1.0.10(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@utrecht/page-body-css': 1.0.1
+      clsx: 2.1.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
 
   '@utrecht/page-content-css@2.0.1': {}
 
