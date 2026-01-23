@@ -24,6 +24,7 @@ Gemeenten kunnen de stijl van dit voorbeeld **rebranden** door:
 
 De startpagina is opgebouwd uit herbruikbare NL Design System componenten, zoals:
 
+- **Banner**: voor gemeente logo en gebruikerssessie navigatie ("Mijn omgeving")
 - **Paginaheader**: voor gemeentenaam, merkidentiteit en hoofdnavigatie.
 - **Uitgelichte diensten / tegels**: voor snelle toegang tot veelgebruikte digitale diensten.
 - **Nieuwssectie**: voor actuele berichten.

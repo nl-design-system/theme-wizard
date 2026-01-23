@@ -10,10 +10,7 @@ export interface PageHeaderProps {
   children?: ReactNode;
 }
 
-const DEFAULT_ACTIONS = [
-  { href: '#', label: 'Contact' },
-  { href: '#', icon: 'utrecht-icon-alleen', label: 'Mijn Omgeving' },
-];
+const DEFAULT_ACTIONS = [{ href: '#', icon: 'utrecht-icon-alleen', label: 'Mijn Omgeving' }];
 
 const PageHeaderSection = ({ actions = DEFAULT_ACTIONS, children }: PropsWithChildren<PageHeaderProps>) => (
   <PageHeader>
