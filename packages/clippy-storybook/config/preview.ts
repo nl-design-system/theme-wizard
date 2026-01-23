@@ -4,7 +4,7 @@ import { formatHtml } from '@rijkshuisstijl-community/storybook-tooling/formatHt
 // import { DocsPage } from '../src/DocsPage';
 import '@nl-design-system-community/theme-wizard-app/theme.css';
 import { addThemeClasses } from './decorators';
-import { AVAILABLE_THEMES } from './themes/theme-data';
+import { THEMES } from './themes/theme-data';
 
 const preview: Preview = {
   decorators: [
@@ -29,7 +29,7 @@ const preview: Preview = {
       description: 'Kies een NL Design System thema',
       toolbar: {
         icon: 'paintbrush',
-        items: AVAILABLE_THEMES,
+        items: THEMES.map(({ className, title }) => ({ title, value: className })),
         showName: true,
       },
     },
