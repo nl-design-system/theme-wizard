@@ -1,6 +1,7 @@
 import type { Meta } from '@storybook/react-vite';
 import '../wizard-layout';
 import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
+import colorSampleCSS from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
 import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
 import { LitElement, html, nothing } from 'lit';
@@ -17,7 +18,7 @@ import './wizard-story-preview';
 import './wizard-code-block';
 import styles from './styles';
 
-const storyStyleSheets = [markCSS, linkCSS, codeCSS].map((css) => {
+const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS].map((css) => {
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(css);
   return sheet;
@@ -36,7 +37,6 @@ declare global {
  * Enforces that CSF modules have a default export (Meta),
  * and any number of story exports (various prop types).
  */
-
 type StoryModule = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: Meta<any>;
@@ -64,6 +64,18 @@ export class WizardComponentsPage extends LitElement {
     }
   }
 
+  #handleNavClick(event: Event): void {
+    const link = (event.target as Element).closest('a[href^="#"]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href) return;
+
+    event.preventDefault();
+    globalThis.location.hash = href;
+    this.#scrollToHash(href);
+  }
+
   #scrollToHash(hash: string): void {
     const target = this.shadowRoot?.querySelector(hash) || document.querySelector(hash);
     if (target) {
@@ -77,7 +89,12 @@ export class WizardComponentsPage extends LitElement {
   override render() {
     return html`
       <wizard-layout>
-        <nav slot="sidebar" class="wizard-styleguide__nav"></nav>
+        <nav slot="sidebar" class="wizard-styleguide__nav" @click=${this.#handleNavClick}>
+          ${storyModules.map((storyModule) => {
+            const hash = `#${storyModule.default.id}`;
+            return html`<a class="wizard-styleguide__nav-item" href=${hash}>${storyModule.default.id}</a>`;
+          })}
+        </nav>
 
         <div slot="main" class="wizard-styleguide__main">
           <utrecht-heading-1>${t('componentsPage.title')}</utrecht-heading-1>
@@ -86,17 +103,15 @@ export class WizardComponentsPage extends LitElement {
             const meta = stories.default;
             const description = meta.parameters?.['docs']?.description?.component;
             return html`
-              <article>
+              <article id=${meta.id}>
                 <utrecht-heading-2>${meta.id}</utrecht-heading-2>
                 ${description ? html`<utrecht-paragraph>${description}</utrecht-paragraph>` : nothing}
-                <!--<pre>${JSON.stringify(meta.parameters, null, 2)}</pre>-->
 
                 <utrecht-heading-3>Stories</utrecht-heading-3>
                 ${getStories(stories, meta).map(
                   (story) => html`
                     <section>
                       <utrecht-heading-4>${story?.name || story?.storyName}</utrecht-heading-4>
-                      <!--<pre>${JSON.stringify(story?.parameters?.['tokens'], null, 2)}</pre>-->
                       <wizard-story-preview>
                         <wizard-story-react
                           .meta=${meta}
