@@ -2,6 +2,7 @@ import type { Meta } from '@storybook/react-vite';
 import '../wizard-layout';
 import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
 import colorSampleCSS from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
+import headingCSS from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
 import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
 import { LitElement, html, nothing } from 'lit';
@@ -10,6 +11,7 @@ import { t } from '../../i18n';
 import { getStories } from '../../utils/csf-utils';
 import * as CodeStories from './code-react.stories';
 import * as ColorSampleStories from './color-sample-react.stories';
+import * as HeadingStories from './heading-react.stories';
 import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
 import styles from './styles';
@@ -25,7 +27,7 @@ import '../wizard-story-preview';
 // Paragraph
 // Skip Link
 
-const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS].map((css) => {
+const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS, headingCSS].map((css) => {
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(css);
   return sheet;
@@ -50,8 +52,8 @@ type StoryModule = {
   [key: string]: unknown;
 };
 
-const storyModules: StoryModule[] = [MarkStories, LinkStories, ColorSampleStories, CodeStories].sort((a, b) =>
-  (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''),
+const storyModules: StoryModule[] = [MarkStories, LinkStories, ColorSampleStories, CodeStories, HeadingStories].sort(
+  (a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''),
 );
 
 @customElement(tag)
