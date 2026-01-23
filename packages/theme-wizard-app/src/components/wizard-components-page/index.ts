@@ -10,7 +10,7 @@ import * as ColorSampleStories from './color-sample-react.stories';
 import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
 import styles from './styles';
-import './wizard-story-element';
+import './wizard-story';
 import './wizard-story-preview';
 import './wizard-code-block';
 
@@ -85,7 +85,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
+                    <wizard-story .meta=${meta} .story=${story}></wizard-story>
                   </wizard-story-preview>
                 </section>
               `;
@@ -105,7 +105,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
+                    <wizard-story .meta=${meta} .story=${story}></wizard-story>
                   </wizard-story-preview>
                 </section>
               `;
@@ -127,7 +127,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
+                    <wizard-story .meta=${meta} .story=${story}></wizard-story>
                   </wizard-story-preview>
                 </section>
               `;
@@ -147,7 +147,7 @@ export class WizardComponentsPage extends LitElement {
                   <utrecht-heading-4>${story?.name}</utrecht-heading-4>
                   <pre>${JSON.stringify(story?.parameters?.tokens, null, 2)}</pre>
                   <wizard-story-preview>
-                    <wizard-story-element .meta=${meta} .story=${story}></wizard-story-element>
+                    <wizard-story .meta=${meta} .story=${story}></wizard-story>
                   </wizard-story-preview>
                 </section>
               `;
