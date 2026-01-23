@@ -1,6 +1,6 @@
 import React, { createElement, type ComponentType, type ReactNode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
-import { WizardStory } from './wizard-story';
+import { WizardStory } from '../wizard-story';
 
 const tag = 'wizard-story-react';
 
@@ -21,7 +21,6 @@ export class WizardStoryReact extends WizardStory {
     super.connectedCallback();
     if (this.shadowRoot && !this._renderRoot) {
       const container = document.createElement('div');
-      container.classList.add('theme-preview');
       this.shadowRoot.appendChild(container);
       this._renderRoot = createRoot(container);
     }
