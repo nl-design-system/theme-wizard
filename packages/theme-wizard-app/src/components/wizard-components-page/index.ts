@@ -12,11 +12,10 @@ import * as CodeStories from './code-react.stories';
 import * as ColorSampleStories from './color-sample-react.stories';
 import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
+import styles from './styles';
 import './wizard-story';
 import './wizard-story-react';
-import './wizard-story-preview';
-import './wizard-code-block';
-import styles from './styles';
+import '../wizard-story-preview';
 
 // Button
 // Code Block
