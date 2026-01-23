@@ -1,7 +1,6 @@
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
-
 export class FormField<V = unknown> extends LitElement {
   @property() name = '';
   @property({ attribute: 'hidden-label' }) hiddenLabel = '';
