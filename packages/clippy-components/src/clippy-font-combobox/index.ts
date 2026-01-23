@@ -40,7 +40,7 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
         ? valueAsArray
         : valueAsArray[0];
     }
-    this.query = this.valueToQuery(value ?? '');
+    this.query = this.valueToQuery(value) || this.query;
   }
 
   override get value(): Option['value'] | null {
@@ -78,10 +78,6 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
       }
     }
   };
-
-  override valueToQuery(value: Option['value']): string {
-    return Array.isArray(value) ? value[0] : value.split(',')[0];
-  }
 
   override renderEntry(option: Option, _index: number) {
     const { cssUrl, label, value } = option;
