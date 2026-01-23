@@ -1,5 +1,6 @@
 import type { Meta } from '@storybook/react-vite';
 import '../wizard-layout';
+import codeBlockCSS from '@nl-design-system-candidate/code-block-css/code-block.css?inline';
 import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
 import colorSampleCSS from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import headingCSS from '@nl-design-system-candidate/heading-css/heading.css?inline';
@@ -9,6 +10,7 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { t } from '../../i18n';
 import { getStories } from '../../utils/csf-utils';
+import * as CodeBlockStories from './code-block-react.stories';
 import * as CodeStories from './code-react.stories';
 import * as ColorSampleStories from './color-sample-react.stories';
 import * as HeadingStories from './heading-react.stories';
@@ -22,12 +24,21 @@ import '../wizard-story-preview';
 // Button
 // Code Block
 // Data Badge
-// Heading
 // Number Badge
 // Paragraph
 // Skip Link
 
-const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS, headingCSS].map((css) => {
+// Steps to add a new component:
+// 1. pnpm add @nl-design-system-candidate/[component]-docs
+// 2. pnpm add @nl-design-system-candidate/[component]-css
+// 3. pnpm add @nl-design-system-candidate/[component]-react
+// 4. Create [component]-react.stories.ts(x)
+// 5. import [component]CSS from '@nl-design-system-candidate/[component]-css/[component].css?inline'
+// 6. add to `storyStyleSheets`
+// 7. import * as [Component]Stories from './[component]-react.stories';
+// 8. Add to `storyModules`
+
+const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS, headingCSS, codeBlockCSS].map((css) => {
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(css);
   return sheet;
@@ -52,9 +63,14 @@ type StoryModule = {
   [key: string]: unknown;
 };
 
-const storyModules: StoryModule[] = [MarkStories, LinkStories, ColorSampleStories, CodeStories, HeadingStories].sort(
-  (a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''),
-);
+const storyModules: StoryModule[] = [
+  MarkStories,
+  LinkStories,
+  ColorSampleStories,
+  CodeStories,
+  HeadingStories,
+  CodeBlockStories,
+].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
 
 @customElement(tag)
 export class WizardComponentsPage extends LitElement {
