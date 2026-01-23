@@ -7,9 +7,9 @@ import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
 import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { t } from '../../i18n';
+import { getStories } from '../../utils/csf-utils';
 import * as CodeStories from './code-react.stories';
 import * as ColorSampleStories from './color-sample-react.stories';
-import { getStories } from './csf-utils';
 import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
 import './wizard-story';
@@ -17,6 +17,14 @@ import './wizard-story-react';
 import './wizard-story-preview';
 import './wizard-code-block';
 import styles from './styles';
+
+// Button
+// Code Block
+// Data Badge
+// Heading
+// Number Badge
+// Paragraph
+// Skip Link
 
 const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS].map((css) => {
   const sheet = new CSSStyleSheet();
