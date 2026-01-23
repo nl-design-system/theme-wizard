@@ -1,12 +1,6 @@
-import type { ComponentType, ReactNode } from 'react';
-import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
-import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
-import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
-import { unsafeCSS } from 'lit';
-import React, { createElement } from 'react';
+import React, { createElement, type ComponentType, type ReactNode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { WizardStory } from './wizard-story';
-import './wizard-react-element';
 
 const tag = 'wizard-story-react';
 
@@ -22,9 +16,6 @@ declare global {
  */
 export class WizardStoryReact extends WizardStory {
   protected _renderRoot: Root | null = null;
-
-  // TODO: this is a hard to scale solution for the scoped styles
-  static override readonly styles = [unsafeCSS(markCSS), unsafeCSS(linkCSS), unsafeCSS(codeCSS)];
 
   override connectedCallback() {
     super.connectedCallback();
