@@ -23,14 +23,10 @@ export const LegacyFontFamilyTokenSchema = z
     $value: LegacyFontFamilyValueSchema,
   })
   // Transform to rename the $type to the modern format
-  .transform((token) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { $type, ...rest } = token;
-    return {
-      $type: 'fontFamily',
-      ...rest,
-    };
-  });
+  .transform((token) => ({
+    ...token,
+    $type: 'fontFamily', // override `$type` when it exists in `token`
+  }));
 export type LegacyFontFamilyToken = z.infer<typeof LegacyFontFamilyTokenSchema>;
 
 /** Sometimes legacy $value is mixed with modern $type */
