@@ -4,16 +4,49 @@ import { TokenReferenceSchema } from './token-reference';
 
 // 8.3 Font family
 
-const splitFamily = (str: string): string[] => {
-  return str.split(',').map((s) => s.trim());
+/**
+ * Generic family names are keywords and must not be quoted.
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-family
+ */
+const GENERICS = new Set([
+  'serif',
+  'sans-serif',
+  'monospace',
+  'cursive',
+  'fantasy',
+  'system-ui',
+  'ui-serif',
+  'ui-serif',
+  'ui-sans-serif',
+  'ui-monospace',
+  'ui-rounded',
+  'math',
+  'fangsong',
+]);
+
+export const parseFontFamily = (string: string): string[] => {
+  return string.split(',').map((s) => s.trim().replaceAll(/(^['"])|(['"]$)/, ''));
+};
+
+export const stringifyFontFamily = (value: FontFamilyValue): string => {
+  if (!Array.isArray(value)) {
+    return value;
+  }
+  const [generic, ...fontNames] = value.toReversed();
+  return [GENERICS.has(generic) ? generic : `"${generic}"`, ...fontNames.map((name) => `"${name}"`)]
+    .reverse()
+    .join(',');
 };
 
 export const LegacyFontFamilyValueSchema = z
   .string()
   .trim()
   .nonempty()
-  .refine((value) => splitFamily(value).every((s) => s.length > 0), 'Font-family names must have 1 or more characters')
-  .transform((value) => splitFamily(value));
+  .refine(
+    (value) => parseFontFamily(value).every((s) => s.length > 0),
+    'Font-family names must have 1 or more characters',
+  )
+  .transform((value) => parseFontFamily(value));
 export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
 
 export const LegacyFontFamilyTokenSchema = z
@@ -58,6 +91,22 @@ export const ModernFontFamilyTokenSchema = z.looseObject({
 
 /** @see https://www.designtokens.org/tr/drafts/format/#font-family */
 export type ModernFontFamilyToken = z.infer<typeof ModernFontFamilyTokenSchema>;
+
+/**
+ * @description Convert back and forth between a legacy font family value and a modern value
+ * @example
+ * ```ts
+ * legacyToModernFontFamily.decode(`"Roboto Sans", sans-serif`);
+ * //=> ['Roboto Sans', 'sans-serif']
+ *
+ * legacyToModernFontFamily.encode(['Roboto Sans', 'sans-serif'])
+ * //=> `"Roboto Sans", sans-serif`
+ * ```
+ */
+export const legacyToModernFontFamily = z.codec(z.string(), ModernFontFamilyValueSchema, {
+  decode: (value) => parseFontFamily(value),
+  encode: (value) => stringifyFontFamily(value),
+});
 
 export const FontFamilyWithRefSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,

@@ -11294,7 +11294,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "$type": "fontFamily",
         "$value": [
-          "'Source Sans Pro'",
+          "Source Sans Pro",
           "Helvetica",
           "Arial",
           "sans-serif",
@@ -11574,7 +11574,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "$type": "fontFamily",
         "$value": [
-          "'Fira Sans'",
+          "Fira Sans",
           "Helvetica",
           "Arial",
           "sans-serif",
@@ -12290,7 +12290,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "$type": "fontFamily",
           "$value": [
-            "'Source Sans Pro'",
+            "Source Sans Pro",
             "Helvetica",
             "Arial",
             "sans-serif",
@@ -12304,7 +12304,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "$type": "fontFamily",
           "$value": [
-            "'Fira Code'",
+            "Fira Code",
             "Monaco",
             "monospace",
           ],
@@ -33288,7 +33288,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "$type": "fontFamily",
         "$value": [
-          "'IBM Plex Sans'",
+          "IBM Plex Sans",
           "sans-serif",
         ],
       },
@@ -33566,7 +33566,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "$type": "fontFamily",
         "$value": [
-          "'IBM Plex Sans'",
+          "IBM Plex Sans",
           "sans-serif",
         ],
       },
@@ -34280,7 +34280,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "$type": "fontFamily",
           "$value": [
-            "'IBM Plex Sans'",
+            "IBM Plex Sans",
             "sans-serif",
           ],
         },
@@ -34292,7 +34292,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "$type": "fontFamily",
           "$value": [
-            "'IBM Plex Mono'",
+            "IBM Plex Mono",
             "monospace",
           ],
         },
@@ -56143,7 +56143,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "$type": "fontFamily",
         "$value": [
-          "'Noto Sans'",
+          "Noto Sans",
           "sans-serif",
         ],
       },
@@ -56421,7 +56421,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "$type": "fontFamily",
         "$value": [
-          "'Noto Serif'",
+          "Noto Serif",
           "serif",
         ],
       },
@@ -57135,7 +57135,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "$type": "fontFamily",
           "$value": [
-            "'Noto Sans'",
+            "Noto Sans",
             "sans-serif",
           ],
         },
@@ -57147,7 +57147,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "$type": "fontFamily",
           "$value": [
-            "'Noto Sans Mono'",
+            "Noto Sans Mono",
             "monospace",
           ],
         },
