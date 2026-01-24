@@ -28,7 +28,6 @@ import { html as staticHtml } from 'lit/static-html.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import { unquote } from '../../utils/string-utils';
 import { resolveColorValue } from '../wizard-colorscale-input';
 import styles from './styles';
 
@@ -179,7 +178,7 @@ export class WizardStyleGuide extends LitElement {
   #prepareFontFamilies(text: Record<string, unknown>, tokenUsage: Map<string, string[]>): FontFamilyToken[] {
     return Object.entries(text['font-family'] as Record<string, unknown>).map(([name, tokenValue]) => {
       const value = (tokenValue as DesignToken).$value;
-      const searchFamily = unquote(Array.isArray(value) ? value.at(0) : value);
+      const searchFamily = Array.isArray(value) ? value.at(0) : value;
       const googleFontsSpecimen = this.#linkToGoogleFontsSpecimen(searchFamily);
 
       const displayValue = Array.isArray(value) ? value.join(', ') : value;
