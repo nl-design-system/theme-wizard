@@ -4,42 +4,25 @@ import { TokenReferenceSchema } from './token-reference';
 
 // 8.3 Font family
 
-const splitFamily = (str: string): string[] => {
-  return str.split(',').map((s) => s.trim());
-};
-
-export const LegacyFontFamilyValueSchema = z
-  .string()
-  .trim()
-  .nonempty()
-  .refine((value) => splitFamily(value).every((s) => s.length > 0), 'Font-family names must have 1 or more characters')
-  .transform((value) => splitFamily(value));
-export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
-
-export const LegacyFontFamilyTokenSchema = z
-  .object({
-    ...BaseDesignTokenValueSchema.shape,
-    $type: z.literal('fontFamilies'), // plural
-    $value: LegacyFontFamilyValueSchema,
-  })
-  // Transform to rename the $type to the modern format
-  .transform((token) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { $type, ...rest } = token;
-    return {
-      $type: 'fontFamily',
-      ...rest,
-    };
-  });
-export type LegacyFontFamilyToken = z.infer<typeof LegacyFontFamilyTokenSchema>;
-
-/** Sometimes legacy $value is mixed with modern $type */
-export const MixedFontFamilyTokenSchema = z.object({
-  ...BaseDesignTokenValueSchema.shape,
-  $type: z.literal('fontFamily'),
-  $value: LegacyFontFamilyValueSchema,
-});
-export type MixedFontFamilyToken = z.infer<typeof MixedFontFamilyTokenSchema>;
+/**
+ * Generic family names are keywords and must not be quoted.
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-family
+ */
+const GENERICS = new Set([
+  'serif',
+  'sans-serif',
+  'monospace',
+  'cursive',
+  'fantasy',
+  'system-ui',
+  'ui-serif',
+  'ui-serif',
+  'ui-sans-serif',
+  'ui-monospace',
+  'ui-rounded',
+  'math',
+  'fangsong',
+]);
 
 // "The value MUST either be a string value containing a single font name or an array of strings, each being a single font name."
 export const ModernFontFamilyNameSchema = z.custom<string>((value) => {
@@ -62,6 +45,69 @@ export const ModernFontFamilyTokenSchema = z.looseObject({
 
 /** @see https://www.designtokens.org/tr/drafts/format/#font-family */
 export type ModernFontFamilyToken = z.infer<typeof ModernFontFamilyTokenSchema>;
+
+export const splitFontFamily = (string: string): string[] => {
+  return string.split(',').map((s) => s.trim().replaceAll(/(^['"])|(['"]$)/g, ''));
+};
+
+export const stringifyFontFamily = (value: FontFamilyValue): string => {
+  if (!Array.isArray(value)) {
+    return value;
+  }
+  const [last, ...names] = value.toReversed();
+  return [GENERICS.has(last) ? last : `"${last}"`, ...names.map((name) => `"${name}"`)].reverse().join(',');
+};
+
+/**
+ * @description Convert back and forth between a legacy font family value and a modern value
+ * @example
+ * ```ts
+ * legacyToModernFontFamily.decode(`"Roboto Sans", sans-serif`);
+ * //=> ['Roboto Sans', 'sans-serif']
+ *
+ * legacyToModernFontFamily.encode(['Roboto Sans', 'sans-serif'])
+ * //=> `"Roboto Sans", sans-serif`
+ * ```
+ */
+export const legacyToModernFontFamily = z.codec(z.string(), ModernFontFamilyValueSchema, {
+  decode: (value) => {
+    const array = splitFontFamily(value);
+    return array.length === 1 ? array[0] : array;
+  },
+  encode: (value) => stringifyFontFamily(value),
+});
+
+export const LegacyFontFamilyValueSchema = z
+  .string()
+  .trim()
+  .nonempty()
+  .refine(
+    (value) => splitFontFamily(value).every((s) => s.length > 1),
+    'Font-family names must have 1 or more characters',
+  )
+  .transform((value) => legacyToModernFontFamily.decode(value));
+export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
+
+export const LegacyFontFamilyTokenSchema = z
+  .object({
+    ...BaseDesignTokenValueSchema.shape,
+    $type: z.literal('fontFamilies'), // plural
+    $value: LegacyFontFamilyValueSchema,
+  })
+  // Transform to rename the $type to the modern format
+  .transform((token) => ({
+    ...token,
+    $type: 'fontFamily', // override `$type` when it exists in `token`
+  }));
+export type LegacyFontFamilyToken = z.infer<typeof LegacyFontFamilyTokenSchema>;
+
+/** Sometimes legacy $value is mixed with modern $type */
+export const MixedFontFamilyTokenSchema = z.object({
+  ...BaseDesignTokenValueSchema.shape,
+  $type: z.literal('fontFamily'),
+  $value: LegacyFontFamilyValueSchema,
+});
+export type MixedFontFamilyToken = z.infer<typeof MixedFontFamilyTokenSchema>;
 
 export const FontFamilyWithRefSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,

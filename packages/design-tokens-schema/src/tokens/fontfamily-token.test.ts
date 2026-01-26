@@ -6,6 +6,7 @@ import {
   type LegacyFontFamilyValue,
   FontFamilyTokenSchema,
   FontFamilyToken,
+  legacyToModernFontFamily,
 } from './fontfamily-token';
 
 describe('parsing values', () => {
@@ -61,5 +62,43 @@ describe('legacy token format', () => {
     const result = FontFamilyTokenSchema.safeParse(token);
     expect.soft(result.data?.$type).toEqual('fontFamily');
     expect.soft(result.data?.$value).toEqual(['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif']);
+  });
+});
+
+describe('encode/decode value', () => {
+  it('stringify array to CSS font-family declaration and back', () => {
+    const token = {
+      $type: 'fontFamily',
+      $value: ['IBM Plex Sans', 'Helvetica'],
+    };
+    const expected = '"IBM Plex Sans","Helvetica"';
+    const encodeResult = legacyToModernFontFamily.encode(token.$value);
+    expect.soft(encodeResult).toBe(expected);
+    const decodeResult = legacyToModernFontFamily.decode(encodeResult);
+    expect.soft(decodeResult).toEqual(token.$value);
+  });
+
+  it('omit quotation marks for generic font name', () => {
+    const token = {
+      $type: 'fontFamily',
+      $value: ['IBM Plex Sans', 'sans-serif'],
+    };
+    const expected = '"IBM Plex Sans",sans-serif';
+    const encodeResult = legacyToModernFontFamily.encode(token.$value);
+    expect.soft(encodeResult).toBe(expected);
+    const decodeResult = legacyToModernFontFamily.decode(encodeResult);
+    expect.soft(decodeResult).toEqual(token.$value);
+  });
+
+  it('leave string as is', () => {
+    const token = {
+      $type: 'fontFamily',
+      $value: 'sans-serif',
+    };
+    const expected = 'sans-serif';
+    const encodeResult = legacyToModernFontFamily.encode(token.$value);
+    expect.soft(encodeResult).toBe(expected);
+    const decodeResult = legacyToModernFontFamily.decode(encodeResult);
+    expect.soft(decodeResult).toBe(expected);
   });
 });

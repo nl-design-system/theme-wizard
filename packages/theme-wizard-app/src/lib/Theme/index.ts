@@ -3,6 +3,7 @@ import {
   StrictThemeSchema,
   type Theme as ThemeType,
   EXTENSION_RESOLVED_AS,
+  stringifyFontFamily,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -126,10 +127,10 @@ export default class Theme {
     // TODO: replace with a design-tokens-schema transform to make sure all token types have a legacy format
     const clonedTokens = structuredClone(this.tokens);
 
-    function convertColorTokens(obj: DesignToken): DesignToken {
+    function convertTokens(obj: DesignToken): DesignToken {
       if (obj && typeof obj === 'object') {
         if (Array.isArray(obj)) {
-          return obj?.map(convertColorTokens);
+          return obj?.map(convertTokens);
         }
 
         if (obj.$type === 'color' && obj.$value?.components) {
@@ -142,13 +143,13 @@ export default class Theme {
         if (obj.$type === 'fontFamily' && Array.isArray(obj.$value)) {
           return {
             ...obj,
-            $value: obj.$value.join(', '),
+            $value: stringifyFontFamily(obj.$value),
           };
         }
 
         const result: Record<string, DesignToken> = {};
         for (const [key, value] of Object.entries(obj)) {
-          result[key] = convertColorTokens(value);
+          result[key] = convertTokens(value);
         }
         return result;
       }
@@ -156,7 +157,7 @@ export default class Theme {
       return obj;
     }
 
-    return convertColorTokens(clonedTokens);
+    return convertTokens(clonedTokens);
   }
 
   async toCSS({
