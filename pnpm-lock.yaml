@@ -460,6 +460,18 @@ importers:
       '@nl-design-system-candidate/mark-tokens':
         specifier: 2.0.3
         version: 2.0.3
+      '@nl-design-system-candidate/number-badge-css':
+        specifier: 1.1.5
+        version: 1.1.5
+      '@nl-design-system-candidate/number-badge-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/number-badge-react':
+        specifier: 1.3.2
+        version: 1.3.2(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/number-badge-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
         specifier: 2.1.3
         version: 2.1.3
@@ -2397,11 +2409,20 @@ packages:
   '@nl-design-system-candidate/mark-tokens@2.0.3':
     resolution: {integrity: sha512-eA0Poy1qyoGSOAwJUirRHOm4nSzsL33fz1D585FKIucmQTV8EDrBLgLlysRDAdLriWAXPINsETaAkSQ9/EFq0A==}
 
+  '@nl-design-system-candidate/number-badge-css@1.1.5':
+    resolution: {integrity: sha512-H9/+72dHiuKZUk+xixykqpgoH7O70SUw1Ak71NIAscVcBbivWK4Hzj9fF4uNXpIXdERxVdiJxa1TIBhCdMRwAQ==}
+
+  '@nl-design-system-candidate/number-badge-docs@1.2.1':
+    resolution: {integrity: sha512-qv7zQEYfL1A1bc2CERvY23GRuSUdbiFoCFYUm85Sn7qsAIBtWbLJVK0aU5bzcTRd7N/PDj52RFcttS5CNrPXFw==}
+
   '@nl-design-system-candidate/number-badge-react@1.3.2':
     resolution: {integrity: sha512-inGt+cWeM3THcE+tTjzTazo/bwfTxf2F3/16yyEUCwxY/We7rL0KNW9nyZ3pYZuIxebRKSsRtCh7Z4fELKMJYA==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18 || ^19
+
+  '@nl-design-system-candidate/number-badge-tokens@2.0.3':
+    resolution: {integrity: sha512-LfJVX9ha486SMJ7laHy/yRy31mDdJHS5r8bczsuR4afll5F6xiwvhyxeJlzGv4z/Gsdoub3SWiz3apVObYJErg==}
 
   '@nl-design-system-candidate/paragraph-css@2.1.3':
     resolution: {integrity: sha512-f3GHiSpisUZAcn4gSNpSX2C3Mhl7y9dg1TfTe+jGMtHAqau/tztrtE3H27FlwrZeVEtsUtvssRCYUA3UO/GDpQ==}
@@ -9961,10 +9982,16 @@ snapshots:
 
   '@nl-design-system-candidate/mark-tokens@2.0.3': {}
 
+  '@nl-design-system-candidate/number-badge-css@1.1.5': {}
+
+  '@nl-design-system-candidate/number-badge-docs@1.2.1': {}
+
   '@nl-design-system-candidate/number-badge-react@1.3.2(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
       react: 18.3.1
+
+  '@nl-design-system-candidate/number-badge-tokens@2.0.3': {}
 
   '@nl-design-system-candidate/paragraph-css@2.1.3': {}
 
