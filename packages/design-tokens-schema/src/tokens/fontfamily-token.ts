@@ -24,8 +24,18 @@ const GENERICS = new Set([
   'fangsong',
 ]);
 
+// "The value MUST either be a string value containing a single font name or an array of strings, each being a single font name."
+export const ModernFontFamilyNameSchema = z.custom<string>((value) => {
+  if (typeof value !== 'string') return false;
+  if (value.includes(',')) return false;
+  return value.trim().length > 0;
+}, 'Invalid font family (family names must not include `,` and must not be empty)');
+export type ModernFontFamilyName = z.infer<typeof ModernFontFamilyNameSchema>;
+
+export const ModernFontFamilyValueSchema = z.union([ModernFontFamilyNameSchema, z.array(ModernFontFamilyNameSchema)]);
+
 export const parseFontFamily = (string: string): string[] => {
-  return string.split(',').map((s) => s.trim().replaceAll(/(^['"])|(['"]$)/, ''));
+  return string.split(',').map((s) => s.trim().replaceAll(/(^['"])|(['"]$)/g, ''));
 };
 
 export const stringifyFontFamily = (value: FontFamilyValue): string => {
@@ -38,15 +48,31 @@ export const stringifyFontFamily = (value: FontFamilyValue): string => {
     .join(',');
 };
 
+/**
+ * @description Convert back and forth between a legacy font family value and a modern value
+ * @example
+ * ```ts
+ * legacyToModernFontFamily.decode(`"Roboto Sans", sans-serif`);
+ * //=> ['Roboto Sans', 'sans-serif']
+ *
+ * legacyToModernFontFamily.encode(['Roboto Sans', 'sans-serif'])
+ * //=> `"Roboto Sans", sans-serif`
+ * ```
+ */
+export const legacyToModernFontFamily = z.codec(z.string(), ModernFontFamilyValueSchema, {
+  decode: (value) => parseFontFamily(value),
+  encode: (value) => stringifyFontFamily(value),
+});
+
 export const LegacyFontFamilyValueSchema = z
   .string()
   .trim()
   .nonempty()
+  .transform((value) => legacyToModernFontFamily.decode(value))
   .refine(
-    (value) => parseFontFamily(value).every((s) => s.length > 0),
+    (value) => (Array.isArray(value) ? value.every((s) => s.length > 0) : value.length > 0),
     'Font-family names must have 1 or more characters',
-  )
-  .transform((value) => parseFontFamily(value));
+  );
 export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
 
 export const LegacyFontFamilyTokenSchema = z
@@ -70,16 +96,6 @@ export const MixedFontFamilyTokenSchema = z.object({
 });
 export type MixedFontFamilyToken = z.infer<typeof MixedFontFamilyTokenSchema>;
 
-// "The value MUST either be a string value containing a single font name or an array of strings, each being a single font name."
-export const ModernFontFamilyNameSchema = z.custom<string>((value) => {
-  if (typeof value !== 'string') return false;
-  if (value.includes(',')) return false;
-  return value.trim().length > 0;
-}, 'Invalid font family (family names must not include `,` and must not be empty)');
-export type ModernFontFamilyName = z.infer<typeof ModernFontFamilyNameSchema>;
-
-export const ModernFontFamilyValueSchema = z.union([ModernFontFamilyNameSchema, z.array(ModernFontFamilyNameSchema)]);
-
 /** @see https://www.designtokens.org/tr/drafts/format/#font-family */
 export type FontFamilyValue = z.infer<typeof ModernFontFamilyValueSchema>;
 
@@ -91,22 +107,6 @@ export const ModernFontFamilyTokenSchema = z.looseObject({
 
 /** @see https://www.designtokens.org/tr/drafts/format/#font-family */
 export type ModernFontFamilyToken = z.infer<typeof ModernFontFamilyTokenSchema>;
-
-/**
- * @description Convert back and forth between a legacy font family value and a modern value
- * @example
- * ```ts
- * legacyToModernFontFamily.decode(`"Roboto Sans", sans-serif`);
- * //=> ['Roboto Sans', 'sans-serif']
- *
- * legacyToModernFontFamily.encode(['Roboto Sans', 'sans-serif'])
- * //=> `"Roboto Sans", sans-serif`
- * ```
- */
-export const legacyToModernFontFamily = z.codec(z.string(), ModernFontFamilyValueSchema, {
-  decode: (value) => parseFontFamily(value),
-  encode: (value) => stringifyFontFamily(value),
-});
 
 export const FontFamilyWithRefSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,
