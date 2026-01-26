@@ -382,6 +382,18 @@ importers:
       '@lit/context':
         specifier: 1.1.6
         version: 1.1.6
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.0.0
+        version: 1.0.0
+      '@nl-design-system-candidate/button-docs':
+        specifier: 1.0.2
+        version: 1.0.2
+      '@nl-design-system-candidate/button-react':
+        specifier: 1.0.0
+        version: 1.0.0(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/button-tokens':
+        specifier: 1.0.0
+        version: 1.0.0
       '@nl-design-system-candidate/code-block-css':
         specifier: 1.1.5
         version: 1.1.5
@@ -2310,11 +2322,17 @@ packages:
   '@nl-design-system-candidate/button-css@1.0.0':
     resolution: {integrity: sha512-TjXFCCeCrSfxBRwcdKWFO/gLAZDfeBAnxC3DuCNvu53JwYIA30++GOivFgeRmDyXDhJysoG19/SVq1r1jfUP5Q==}
 
+  '@nl-design-system-candidate/button-docs@1.0.2':
+    resolution: {integrity: sha512-G+UO66sr49bg1yMMV4Z2QAKKSCigFrECkejq46GNjgCCoKuSxgJcFHw89MhgXRxgMQuDGJSQhWpTKk/VOK1cAg==}
+
   '@nl-design-system-candidate/button-react@1.0.0':
     resolution: {integrity: sha512-vJgms4HPQlOzHUAcddRgZFpJgmHYGZ1JCxO9rboITME8wV31aZw8NSWxRWo4sGYcn4BxrxZ8qZ7o2cQp4t9wng==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18 || ^19
+
+  '@nl-design-system-candidate/button-tokens@1.0.0':
+    resolution: {integrity: sha512-2uxqqVUW9kyib/rPn1rvWI09auUVOkA5IUC+rBlYxUz9DVVn4UcXPeOe9KVgh0a1WuM2dzX3k/bpWRBINtKACw==}
 
   '@nl-design-system-candidate/code-block-css@1.1.5':
     resolution: {integrity: sha512-8NdWxqzNvShKOwRi+SwRHQ/BfdzQh6q4M7sui9t6GGiwgsgnmsltuVLujkkIxQIV2pG/ZXaueYq/u7i7X8ygdg==}
@@ -9897,6 +9915,8 @@ snapshots:
 
   '@nl-design-system-candidate/button-css@1.0.0': {}
 
+  '@nl-design-system-candidate/button-docs@1.0.2': {}
+
   '@nl-design-system-candidate/button-react@1.0.0(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -9908,6 +9928,8 @@ snapshots:
       '@babel/runtime': 7.28.4
       clsx: 2.1.1
       react: 19.2.3
+
+  '@nl-design-system-candidate/button-tokens@1.0.0': {}
 
   '@nl-design-system-candidate/code-block-css@1.1.5': {}
 
