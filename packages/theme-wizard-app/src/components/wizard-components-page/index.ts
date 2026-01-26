@@ -1,5 +1,6 @@
 import type { Meta } from '@storybook/react-vite';
 import '../wizard-layout';
+import buttonCSS from '@nl-design-system-candidate/button-css/button.css?inline';
 import codeBlockCSS from '@nl-design-system-candidate/code-block-css/code-block.css?inline';
 import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
 import colorSampleCSS from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
@@ -14,6 +15,7 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { t } from '../../i18n';
 import { getStories } from '../../utils/csf-utils';
+import * as ButtonStories from './button-react.stories';
 import * as CodeBlockStories from './code-block-react.stories';
 import * as CodeStories from './code-react.stories';
 import * as ColorSampleStories from './color-sample-react.stories';
@@ -55,6 +57,7 @@ const storyStyleSheets = [
   paragraphCSS,
   numberBadgeCSS,
   skipLinkCSS,
+  buttonCSS,
 ].map((css) => {
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(css);
@@ -73,6 +76,8 @@ declare global {
  * Component Story Format module structure.
  * Enforces that CSF modules have a default export (Meta),
  * and any number of story exports (various prop types).
+ * Uses `any` for the component type because each module has different component props,
+ * and we don't need to access component-specific type information.
  */
 type StoryModule = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,6 +96,7 @@ const storyModules: StoryModule[] = [
   DataBadgeStories,
   NumberBadgeStories,
   SkipLinkStories,
+  ButtonStories,
 ].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
 
 @customElement(tag)
