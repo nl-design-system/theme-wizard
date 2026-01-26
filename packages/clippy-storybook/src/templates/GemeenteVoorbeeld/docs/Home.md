@@ -1,24 +1,10 @@
-# Gemeente Voorbeeld – Startpagina template
+# Startpagina template
 
-Deze template toont een voorbeeld van een gemeentelijke startpagina, ontwikkeld met het **Voorbeeld Thema** en bestaande componenten uit de **NL Design System community**. De pagina is bedoeld als startpunt voor gemeenten die een toegankelijke, herkenbare en uitbreidbare homepage willen opzetten.
+Bied bezoekers een overzichtelijke toegang tot veelgebruikte diensten, actueel nieuws en contactinformatie. Deze homepage helpt bezoekers snel te vinden wat ze zoeken.
 
-## Doel en gebruik
+Gebruik deze template als basis voor je eigen website, in combinatie met de huisstijl die je maakt met de Theme Wizard. De template werkt met het **Start-thema** en past zich automatisch aan jouw huisstijl aan via design tokens.
 
-- **Doel**: laten zien hoe een gemeentelijke startpagina kan worden ingericht met heldere navigatie en snelle ingangen naar veelgebruikte diensten.
-- **Gebruik**: gebruik deze template als referentie of basis voor een eigen implementatie binnen de Theme Wizard omgeving.
-
-De template is volledig responsive en kan in verschillende thema-configuraties worden gebruikt, met het Voorbeeld Thema als uitgangspunt.
-
-## Relatie met het Start‑thema, basis‑tokens en gemeentethema’s
-
-In de Theme Wizard applicatie gaat deze template uit van het **Start‑thema** van NL Design System. De visuele stijl (typografie, kleuren, ruimte, iconen) is vastgelegd in de **basis‑tokens** (`basis.*`) op het Common‑niveau.
-
-In Storybook kun je daarnaast **verschillende gemeentelijke thema’s** aanzetten via de themaselector (toolbar). Die thema’s leveren hun eigen design tokens (bijvoorbeeld kleuren en typografie), die boven op dezelfde componentstructuur worden toegepast.
-
-Gemeenten kunnen de stijl van dit voorbeeld **rebranden** door:
-
-- in de eigen implementatie de waarden van basis‑tokens aan te passen (bijvoorbeeld `basis.text.*`, `basis.color.*`, `basis.space.*`), zonder dat de `GemeenteVoorbeeldHome` template of de onderliggende componenten zelf hoeven te worden gewijzigd; of
-- in Storybook een ander gemeentethema te kiezen om te zien hoe dezelfde template eruitziet met een andere huisstijl.
+> Meer over hoe templates en thema's samenwerken? Zie de [algemene template-documentatie](../../../docs/templates.md).
 
 ## Opbouw van de pagina
 
@@ -108,11 +94,11 @@ NB: in `@nl-design-system-community/theme-wizard-app/theme.css` worden Clippy to
 
 De toegankelijkheid komt hier vooral uit de combinatie van **structuur**, **semantiek** en **interactiepatronen** die de gebruikte componenten faciliteren:
 
-- **Skiplink + landmarks**:
+- **Skiplink naar de main landmark**:
   - Bovenaan staat een `SkipLink` naar `#main`, zodat toetsenbord- en screenreadergebruikers direct naar de hoofdinhoud kunnen springen.
   - De hoofdinhoud staat in een `<main id="main">…</main>`.
 - **Koppen en “visually hidden” labels**:
-  - De paginatitel is aanwezig als `h1`, maar visueel verborgen met `ams-visually-hidden` (wel beschikbaar voor screenreaders).
+  - De hoofdkop is aanwezig als `h1`, maar visueel verborgen met `ams-visually-hidden` (wel beschikbaar voor screenreaders).
   - De hoofdnavigatie krijgt een screenreader-label via een visueel verborgen `Heading` (“Hoofdnavigatie”).
 - **Navigatie feedback**:
   - Het actieve navigatie-item wordt aangeduid met `aria-current="page"`.
@@ -126,27 +112,21 @@ De toegankelijkheid komt hier vooral uit de combinatie van **structuur**, **sema
 
 ## Wanneer gebruik je deze template?
 
-- Voor de publieke homepage van een gemeente.
-- Voor demo- en testomgevingen waarin je wil laten zien hoe NL Design System componenten samenwerken in een realistische context.
+- Voor de publieke homepage van een gemeente of een andere (semi)-overheidsorganisatie.
 
 ## Aandachtspunten voor toegankelijkheid
 
-De template is ontworpen met toegankelijkheid als uitgangspunt, maar blijft afhankelijk van de content die je erin plaatst.
+De template is ontworpen met toegankelijkheid als uitgangspunt, maar blijft afhankelijk van de content die je erin plaatst. Door componenten uit NL Design System te gebruiken in combinatie met de Theme Wizard voorkom je tientallen soorten toegankelijkheidsfouten.
 
 - **Koppenstructuur**:
-  - Gebruik precies één `h1` voor de paginatitel.
-  - Bouw onderliggende koppen (`h2`, `h3`, …) logisch op per sectie (diensten, nieuws).
-- **Interactieve elementen**:
-  - Links, knoppen en tegels zijn met het toetsenbord te bedienen.
-  - Zorg voor voldoende zichtbare focus-states, ook bij thema-aanpassingen.
+  - Gebruik precies één `h1` voor de hoofdkop.
+  - Bouw onderliggende koppen logisch op: `h2` voor secties (diensten, nieuws), `h3` voor items binnen een sectie (nieuwstitels, accordion-onderdelen).
 - **Schermlezers**:
   - Controleer leesvolgorde en aankondigingen met VoiceOver (macOS) of NVDA (Windows).
-- **WCAG-audit**:
-  - De referentie-implementatie is getest; voer bij hergebruik altijd opnieuw een audit uit (bijvoorbeeld met browser tooling + handmatige tests) om te bevestigen dat contrast, responsiviteit en interactie in jouw context kloppen.
 
-## Cookiebanner component (HTML + CSS)
+## Cookie Banner component (HTML + CSS)
 
-Bij deze startpagina hoort een **cookiebanner component** (HTML + CSS) met aparte Storybook-documentatie. Dit component is bedoeld om bezoekers op een toegankelijke manier te informeren over cookies en een duidelijke keuze te bieden.
+Bij deze startpagina hoort een **Cookie Banner component** (HTML + CSS) met aparte Storybook-documentatie. Dit component is bedoeld om bezoekers op een toegankelijke manier te informeren over cookies en een duidelijke keuze te bieden.
 
 ### Doel en gedrag
 
@@ -170,10 +150,10 @@ Bij deze startpagina hoort een **cookiebanner component** (HTML + CSS) met apart
 - **Responsiveness**:
   - Zorg dat de banner op kleine schermen goed leesbaar blijft en niet de volledige pagina blokkeert.
 
-De concrete HTML- en CSS-implementatie van de cookiebanner is terug te vinden in de bijbehorende component-story. Gebruik deze als uitgangspunt en pas de teksten aan op jullie eigen beleid.
+De concrete HTML- en CSS-implementatie van de Cookie Banner is terug te vinden in de bijbehorende component-story. Gebruik deze als uitgangspunt en pas de teksten aan op jullie eigen beleid.
 
 ## Integratie in Theme Wizard
 
 - De Storybook story voor deze startpagina importeert het React component direct uit `@nl-design-system-community/theme-wizard-templates` en koppelt deze documentatie via de `docs.description.component` configuratie.
 - In de Theme Wizard applicatie wordt de template geregistreerd via de `detail`-export in de bijbehorende `page.astro` file, zodat deze zichtbaar is in de template selector.
-- Hergebruik deze template bij voorkeur als **referentie-implementatie**: kopieer componentopbouw, contentstructuur en toegankelijkheids­patronen, maar pas de inhoud en stijl aan op de huisstijl en eisen van de eigen gemeente.
+- Deze template dient bij voorkeur als **referentie-implementatie**: kopieer de componentopbouw, contentstructuur en toegankelijkheids­patronen, maar pas de inhoud en stijl aan op de huisstijl en eisen van de eigen gemeente.
