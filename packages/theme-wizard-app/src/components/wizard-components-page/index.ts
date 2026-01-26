@@ -20,6 +20,7 @@ import styles from './styles';
 import '../wizard-story';
 import '../wizard-story-react';
 import '../wizard-story-preview';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 
 // Button
 // Data Badge
@@ -121,21 +122,21 @@ export class WizardComponentsPage extends LitElement {
         </nav>
 
         <div slot="main" class="wizard-styleguide__main">
-          <utrecht-heading-1>${t('componentsPage.title')}</utrecht-heading-1>
+          <clippy-heading level="1">${t('componentsPage.title')}</clippy-heading>
 
           ${storyModules.map((stories) => {
             const meta = stories.default;
             const description = meta.parameters?.['docs']?.description?.component;
             return html`
               <article id=${meta.id}>
-                <utrecht-heading-2>${meta.id}</utrecht-heading-2>
+                <clippy-heading level="2">${meta.id}</clippy-heading>
                 ${description ? html`<utrecht-paragraph>${description}</utrecht-paragraph>` : nothing}
 
-                <utrecht-heading-3>Stories</utrecht-heading-3>
+                <clippy-heading level="3">Stories</clippy-heading>
                 ${getStories(stories, meta).map(
                   (story) => html`
                     <section>
-                      <utrecht-heading-4>${story?.name || story?.storyName}</utrecht-heading-4>
+                      <clippy-heading level="4">${story?.name || story?.storyName}</clippy-heading>
                       <wizard-story-preview>
                         <wizard-story-react
                           .meta=${meta}
