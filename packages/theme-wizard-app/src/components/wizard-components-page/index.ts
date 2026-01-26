@@ -6,6 +6,7 @@ import colorSampleCSS from '@nl-design-system-candidate/color-sample-css/color-s
 import headingCSS from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
 import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
+import paragraphCSS from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { t } from '../../i18n';
@@ -16,6 +17,7 @@ import * as ColorSampleStories from './color-sample-react.stories';
 import * as HeadingStories from './heading-react.stories';
 import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
+import * as ParagraphStories from './paragraph-react.stories';
 import styles from './styles';
 import '../wizard-story';
 import '../wizard-story-react';
@@ -32,17 +34,20 @@ import '@nl-design-system-community/clippy-components/clippy-heading';
 // 1. pnpm add @nl-design-system-candidate/[component]-docs
 // 2. pnpm add @nl-design-system-candidate/[component]-css
 // 3. pnpm add @nl-design-system-candidate/[component]-react
-// 4. Create [component]-react.stories.ts(x)
+// 4. pnpm add @nl-design-system-candidate/[component]-tokens
+// 4. Create [component]-react.stories.ts(x) (Copy via https://github.com/frameless/candidate/blob/main/packages/docs/)
 // 5. import [component]CSS from '@nl-design-system-candidate/[component]-css/[component].css?inline'
 // 6. add to `storyStyleSheets`
 // 7. import * as [Component]Stories from './[component]-react.stories';
 // 8. Add to `storyModules`
 
-const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS, headingCSS, codeBlockCSS].map((css) => {
-  const sheet = new CSSStyleSheet();
-  sheet.replaceSync(css);
-  return sheet;
-});
+const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS, headingCSS, codeBlockCSS, paragraphCSS].map(
+  (css) => {
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(css);
+    return sheet;
+  },
+);
 
 const tag = 'wizard-components-page';
 
@@ -70,6 +75,7 @@ const storyModules: StoryModule[] = [
   CodeStories,
   HeadingStories,
   CodeBlockStories,
+  ParagraphStories,
 ].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
 
 @customElement(tag)
@@ -105,9 +111,7 @@ export class WizardComponentsPage extends LitElement {
     const target = this.shadowRoot?.querySelector(hash) || document.querySelector(hash);
     if (target) {
       // Use requestAnimationFrame to ensure element is rendered
-      requestAnimationFrame(() => {
-        target.scrollIntoView();
-      });
+      requestAnimationFrame(() => target.scrollIntoView());
     }
   }
 
