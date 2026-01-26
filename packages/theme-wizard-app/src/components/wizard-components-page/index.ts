@@ -3,6 +3,7 @@ import '../wizard-layout';
 import codeBlockCSS from '@nl-design-system-candidate/code-block-css/code-block.css?inline';
 import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
 import colorSampleCSS from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
+import dataBadgeCSS from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import headingCSS from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
 import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
@@ -14,6 +15,7 @@ import { getStories } from '../../utils/csf-utils';
 import * as CodeBlockStories from './code-block-react.stories';
 import * as CodeStories from './code-react.stories';
 import * as ColorSampleStories from './color-sample-react.stories';
+import * as DataBadgeStories from './data-badge-react.stories';
 import * as HeadingStories from './heading-react.stories';
 import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
@@ -27,7 +29,6 @@ import '@nl-design-system-community/clippy-components/clippy-heading';
 // Button
 // Data Badge
 // Number Badge
-// Paragraph
 // Skip Link
 
 // Steps to add a new component:
@@ -41,13 +42,20 @@ import '@nl-design-system-community/clippy-components/clippy-heading';
 // 7. import * as [Component]Stories from './[component]-react.stories';
 // 8. Add to `storyModules`
 
-const storyStyleSheets = [markCSS, linkCSS, codeCSS, colorSampleCSS, headingCSS, codeBlockCSS, paragraphCSS].map(
-  (css) => {
-    const sheet = new CSSStyleSheet();
-    sheet.replaceSync(css);
-    return sheet;
-  },
-);
+const storyStyleSheets = [
+  markCSS,
+  linkCSS,
+  codeCSS,
+  colorSampleCSS,
+  dataBadgeCSS,
+  headingCSS,
+  codeBlockCSS,
+  paragraphCSS,
+].map((css) => {
+  const sheet = new CSSStyleSheet();
+  sheet.replaceSync(css);
+  return sheet;
+});
 
 const tag = 'wizard-components-page';
 
@@ -76,6 +84,7 @@ const storyModules: StoryModule[] = [
   HeadingStories,
   CodeBlockStories,
   ParagraphStories,
+  DataBadgeStories,
 ].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
 
 @customElement(tag)
