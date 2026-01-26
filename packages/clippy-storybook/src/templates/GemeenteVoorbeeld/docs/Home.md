@@ -18,50 +18,46 @@ De startpagina is opgebouwd uit herbruikbare NL Design System componenten, zoals
 
 Zie `@nl-design-system-community/theme-wizard-templates` voor de concrete implementatie van `GemeenteVoorbeeldHome` en de exacte prop-definities.
 
-## Gebruikte componentbibliotheken (en rol in de pagina)
+## Gebruikte componenten
 
-Deze template combineert componenten uit meerdere (NL Design System) libraries:
+Deze template combineert componenten uit meerdere NL Design System libraries:
 
-- **NL Design System (candidate) – React**:
-  - `SkipLink` – `@nl-design-system-candidate/skip-link-react/css`
-  - `Heading` – `@nl-design-system-candidate/heading-react/css`
-  - `Link` – `@nl-design-system-candidate/link-react/css`
-  - `Paragraph` – `@nl-design-system-candidate/paragraph-react`
-- **Utrecht component library – React (standalone packages)**:
-  - `PageBody` – `@utrecht/page-body-react`
-  - `PageHeader` – `@utrecht/page-header-react`
-  - `PageFooter` – `@utrecht/page-footer-react`
-  - `NavBar` – `@utrecht/nav-bar-react`
-- **Utrecht component library – React (CSS Modules)**:
-  - `PageContent` – `@utrecht/component-library-react/dist/css-module`
-  - `AccordionProvider` – `@utrecht/component-library-react/dist/css-module`
-  - `ButtonLink` – `@utrecht/component-library-react/dist/css-module`
-  - `LinkList`, `LinkListLink` – `@utrecht/component-library-react/dist/css-module`
-  - `Image` – `@utrecht/component-library-react/dist/css-module`
-- **Utrecht component library – React (reguliere export)**:
-  - `NavList`, `NavListLink` – `@utrecht/component-library-react`
-  - `Icon` – `@utrecht/component-library-react`
-- **Utrecht web component library – React (toptask iconen)**:
-  - `UtrechtIconPaspoort`, `UtrechtIconMeldingKlacht`, `UtrechtIconVerhuizen`, `UtrechtIconWerken`, `UtrechtIconNummerbord`, `UtrechtIconAfvalScheiden` – `@utrecht/web-component-library-react`
-- **Tabler Icons (functionele iconen)**:
-  - `IconUser`, `IconCalendar`, `IconChevronRight`, `IconCalendarEvent` – `@tabler/icons-react`
+- **NL Design System (candidate)**:
+  - Navigatie:
+    - [Skip Link](https://nldesignsystem.nl/skip-link)
+    - [Link](https://nldesignsystem.nl/link)
+  - Content:
+    - [Heading](https://nldesignsystem.nl/heading)
+    - [Paragraph](https://nldesignsystem.nl/paragraph)
+- **Utrecht Design System**:
+  - Paginastructuur:
+    - Page Body
+    - [Page Header](https://nldesignsystem.nl/page-header)
+    - Page Content
+    - [Page Footer](https://nldesignsystem.nl/page-footer)
+  - Navigatie:
+    - [Navigation Bar](https://nldesignsystem.nl/navigation-bar)
+    - Navigation List, Navigation List Link
+    - [Accordion](https://nldesignsystem.nl/accordion)
+    - ButtonLink
+  - Content:
+    - [Link List](https://nldesignsystem.nl/link-list), Link List Link
+    - [Image](https://nldesignsystem.nl/image)
+    - [Icon](https://nldesignsystem.nl/icon)
+  - Toptask iconen (web components): Utrecht Icon set
 - **Amsterdam Design System**:
-  - `Card` – `@amsterdam/design-system-react`
-  - `ams-visually-hidden` CSS utility – `@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css`
+  - [Card](https://nldesignsystem.nl/card-as-link)
+- **Tabler Icons** (functionele iconen):
+  - `IconUser`, `IconCalendar`, `IconCalendarEvent`, `IconChevronRight`
 
 ## Hoe werken deze componenten samen?
 
-- **Layout & structuur (Utrecht + NL Design System)**:
-  - De pagina gebruikt Utrecht “page” structuur (`PageBody`, `PageHeader`, `PageContent`, `PageFooter`) en vult die met NL Design System `Heading`/`Link`.
-  - `PageBody`, `PageHeader`, `PageFooter` en `NavBar` worden standalone geïmporteerd (resp. `@utrecht/page-body-react`, `@utrecht/page-header-react`, `@utrecht/page-footer-react`, `@utrecht/nav-bar-react`), omdat Utrecht Design System deze componenten naar losse npm-packages aan het migreren is.
-  - `PageContent` wordt geïmporteerd uit `@utrecht/component-library-react/dist/css-module` en wordt gebruikt om de hoofdinhoud te wrappen in verschillende secties (MainIntro, SelfService, News) en zorgt voor consistente padding en max-width styling.
-  - De navigatie is een Utrecht `NavBar` met `NavListLink` items; de huidige pagina wordt aangegeven via `aria-current="page"`.
-- **Contentblokken (Utrecht + Amsterdam)**:
-  - De “Veelgebruikte diensten” en “Zelf regelen” secties gebruiken Utrecht componenten (o.a. `ButtonLink`, `AccordionProvider`, `PageContent`) en eigen layout helpers (`Row`/`Column`).
-  - De nieuwslijst gebruikt Amsterdam `Card` componenten (die semantisch als `<article>` renderen) en is daarnaast als lijst gemarkeerd (`role="list"` en `role="listitem"`).
-- **Styling (Thema + tokens)**:
-  - De Voorbeeld-theme tokens leveren de basis (kleuren/typografie/spacing).
-  - Daarbovenop worden een paar Clippy tokens gebruikt om onderdelen als “cards” en pagina-breedte consistent te stylen in de Storybook preview.
+- **Layout & structuur**:
+  - De pagina gebruikt de "page" structuur ([Page Header](https://nldesignsystem.nl/page-header), [Page Footer](https://nldesignsystem.nl/page-footer)) en vult die met [Heading](https://nldesignsystem.nl/heading) en [Link](https://nldesignsystem.nl/link).
+  - De navigatie is een [Navigation Bar](https://nldesignsystem.nl/navigation-bar); de huidige pagina wordt aangegeven via `aria-current="page"`.
+- **Contentblokken**:
+  - De "Veelgebruikte diensten" en "Zelf regelen" secties gebruiken [Accordion](https://nldesignsystem.nl/accordion) en [Button](https://nldesignsystem.nl/button) componenten.
+  - De nieuwslijst gebruikt [Card](https://nldesignsystem.nl/card-as-link) componenten (semantisch als `<article>`) en is als lijst gemarkeerd (`role="list"` en `role="listitem"`). De kaarten kunnen optioneel een afbeelding bevatten; zorg dan voor een beschrijvende alt-tekst die de inhoud van de afbeelding uitlegt. Meer hierover bij [Content-richtlijnen](#content-richtlijnen).
 
 ## Clippy design tokens (gebruikt in deze template)
 
@@ -95,24 +91,23 @@ NB: in `@nl-design-system-community/theme-wizard-app/theme.css` worden Clippy to
 De toegankelijkheid komt hier vooral uit de combinatie van **structuur**, **semantiek** en **interactiepatronen** die de gebruikte componenten faciliteren:
 
 - **Skiplink naar de main landmark**:
-  - Bovenaan staat een `SkipLink` naar `#main`, zodat toetsenbord- en screenreadergebruikers direct naar de hoofdinhoud kunnen springen.
+  - Gebruik een [Skip Link](https://nldesignsystem.nl/skip-link) naar `#main`, zodat toetsenbord- en screenreadergebruikers direct naar de hoofdinhoud kunnen springen.
+  - Indien er gebruik wordt gemaakt van een Cookie Banner, moet de Cookie Banner voor de Skip Link geplaatst worden.
   - De hoofdinhoud staat in een `<main id="main">…</main>`.
 - **Koppen en “visually hidden” labels**:
-  - De hoofdkop is aanwezig als `h1`, maar visueel verborgen met `ams-visually-hidden` (wel beschikbaar voor screenreaders).
-  - De hoofdnavigatie krijgt een screenreader-label via een visueel verborgen `Heading` (“Hoofdnavigatie”).
+  - De hoofdkop (`h1`) is visueel verborgen met `ams-visually-hidden`, maar wel beschikbaar voor screenreaders. De tekst van de verborgen `h1` moet overeenkomen met de `<title>` van de pagina:
+    - **Homepage**: `<title>Gemeente Voorbeeld</title>` + `<h1>Gemeente Voorbeeld</h1>`
+    - **Andere pagina's**: `<title>Paspoort aanvragen - Gemeente Voorbeeld</title>` + `<h1>Paspoort aanvragen</h1>`
+  - De hoofdnavigatie krijgt een toegankelijke naam via een visueel verborgen Heading: (“Hoofdnavigatie”).
 - **Navigatie feedback**:
-  - Het actieve navigatie-item wordt aangeduid met `aria-current="page"`.
+  - Het actieve navigatie-item (Navigation List Link) wordt aangeduid met `aria-current="page"`.
 - **Gegroepeerde content**:
   - Secties gebruiken `<section>` en (waar relevant) `aria-labelledby`, zodat screenreaders context/sectietitels netjes koppelen.
-  - De nieuwskaarten zijn gemarkeerd als lijst (`role="list"` / `role="listitem"`), wat oriëntatie verbetert.
+  - De nieuwskaarten ([Card](https://nldesignsystem.nl/card-as-link)) zijn gemarkeerd als lijst (`role="list"` / `role="listitem"`), wat oriëntatie verbetert.
 - **Toegankelijke link- en knoplabels**:
-  - “Meer lezen” links in nieuws krijgen een expliciet `aria-label` (“Lees meer over …”), zodat meerdere gelijknamige links onderscheidbaar zijn.
+  - “Meer lezen” links ([Link](https://nldesignsystem.nl/link)) in nieuws krijgen een expliciet `aria-label` (“Lees meer over …”), zodat meerdere gelijknamige links onderscheidbaar zijn.
 - **Semantische elementen**:
   - Datums in nieuws worden gemarkeerd met `<time dateTime="…">`, zodat user agents dit kunnen interpreteren.
-
-## Wanneer gebruik je deze template?
-
-- Voor de publieke homepage van een gemeente of een andere (semi)-overheidsorganisatie.
 
 ## Aandachtspunten voor toegankelijkheid
 
@@ -121,8 +116,13 @@ De template is ontworpen met toegankelijkheid als uitgangspunt, maar blijft afha
 - **Koppenstructuur**:
   - Gebruik precies één `h1` voor de hoofdkop.
   - Bouw onderliggende koppen logisch op: `h2` voor secties (diensten, nieuws), `h3` voor items binnen een sectie (nieuwstitels, accordion-onderdelen).
-- **Schermlezers**:
-  - Controleer leesvolgorde en aankondigingen met VoiceOver (macOS) of NVDA (Windows).
+
+## Content-richtlijnen
+
+- Gebruik realistische content en vermijd placeholder tekst zoals "Lorem ipsum".
+- Zorg voor inclusieve voorbeelden, met diverse namen en situaties.
+- Afbeeldingen hebben een **beschrijvende alt-tekst** die uitlegt wat er te zien is. Bijvoorbeeld bij de nieuwskaart "Hoe moeten onze lammetjes heten?": `alt="Schaap met twee pasgeboren lammetjes"` in plaats van `alt="Nieuwsafbeelding"`. Zie [NL Design System](https://nldesignsystem.nl/richtlijnen/content/afbeeldingen/) voor meer informatie.
+- Plaats de belangrijkste taken zo hoog mogelijk op de pagina, zodat ze direct zichtbaar zijn. [Doe gebruikersonderzoek](https://gebruikersonderzoeken.nl/docs/onderzoek-doen/) om te weten wat de belangrijkste taken zijn, dat verschilt per organisatie.
 
 ## Cookie Banner component (HTML + CSS)
 
@@ -154,6 +154,4 @@ De concrete HTML- en CSS-implementatie van de Cookie Banner is terug te vinden i
 
 ## Integratie in Theme Wizard
 
-- De Storybook story voor deze startpagina importeert het React component direct uit `@nl-design-system-community/theme-wizard-templates` en koppelt deze documentatie via de `docs.description.component` configuratie.
-- In de Theme Wizard applicatie wordt de template geregistreerd via de `detail`-export in de bijbehorende `page.astro` file, zodat deze zichtbaar is in de template selector.
-- Deze template dient bij voorkeur als **referentie-implementatie**: kopieer de componentopbouw, contentstructuur en toegankelijkheids­patronen, maar pas de inhoud en stijl aan op de huisstijl en eisen van de eigen gemeente.
+Deze template dient als **referentie-implementatie**: kopieer de componentopbouw, contentstructuur en toegankelijkheidspatronen, maar pas de inhoud en stijl aan op de huisstijl en eisen van je eigen organisatie.
