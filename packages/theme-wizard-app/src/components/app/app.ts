@@ -65,6 +65,14 @@ export class App extends LitElement {
     },
     {
       enter: async () => {
+        await import('../wizard-components-page/index');
+        return true;
+      },
+      path: '/components',
+      render: () => html`<wizard-components-page></wizard-components-page>`,
+    },
+    {
+      enter: async () => {
         await import('../wizard-style-guide/index');
         return true;
       },
