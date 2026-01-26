@@ -144,14 +144,6 @@ De template is ontworpen met toegankelijkheid als uitgangspunt, maar blijft afha
 - **WCAG-audit**:
   - De referentie-implementatie is getest; voer bij hergebruik altijd opnieuw een audit uit (bijvoorbeeld met browser tooling + handmatige tests) om te bevestigen dat contrast, responsiviteit en interactie in jouw context kloppen.
 
-## Content-richtlijnen
-
-- Gebruik **realistische content** en vermijd placeholder tekst zoals "Lorem ipsum".
-- Zorg voor **inclusieve voorbeelden**, met diverse namen en situaties.
-- Houd teksten kort, taakgericht en begrijpelijk: de bezoeker moet snel zien wat hij of zij op de pagina kan doen.
-- Afbeeldingen (indien aanwezig) hebben een **beschrijvende alt-tekst** die uitlegt wat er te zien is of welk doel de afbeelding heeft. Kijk op [NL Design System](https://nldesignsystem.nl/richtlijnen/content/afbeeldingen/) voor meer informatie over alt teksten bij afbeeldingen.
-- Plaats de belangrijkste taken zo hoog mogelijk op de pagina, zodat ze direct zichtbaar zijn.
-
 ## Cookiebanner component (HTML + CSS)
 
 Bij deze startpagina hoort een **cookiebanner component** (HTML + CSS) met aparte Storybook-documentatie. Dit component is bedoeld om bezoekers op een toegankelijke manier te informeren over cookies en een duidelijke keuze te bieden.
