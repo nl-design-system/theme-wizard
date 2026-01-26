@@ -1,15 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { Decorator } from '@storybook/react-vite';
-// import { getExternalLinks } from '../src/helpers/external-links';
+import type { Meta, StoryObj, Decorator } from '@storybook/react-vite';
 import description from '@nl-design-system-candidate/link-docs/docs/description.md?raw';
-import linkMeta from '@nl-design-system-candidate/link-docs/stories/link.react.meta';
+// Commented out linkMeta import due to Storybook type conflict: @nl-design-system-candidate/link-docs
+// uses an unsupported 'rest' property in argTypes that causes TypeScript TS2353 error.
+// See: packages/theme-wizard-app/src/components/wizard-components-page/link-react.stories.tsx
+// import linkMeta from '@nl-design-system-candidate/link-docs/stories/link.react.meta';
 import * as Stories from '@nl-design-system-candidate/link-docs/stories/link.stories';
-// import packageJSON from '../../components-react/link-react/package.json';
 import { Link as LinkComponent, LinkProps } from '@nl-design-system-candidate/link-react';
-// import { ExampleBodyTextDecorator } from '@nl-design-system-candidate/storybook-shared/src/ExampleBodyTextDecorator';
-// import { ParagraphDecorator } from '@nl-design-system-candidate/storybook-shared/src/ParagraphDecorator';
-// const externalLinks = getExternalLinks('https://nldesignsystem.nl/link', packageJSON.homepage);
-// import '../../components-css/paragraph-css/src/paragraph.scss';
 import tokens from '@nl-design-system-candidate/link-tokens';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
 
@@ -26,7 +22,6 @@ const ExampleBodyTextDecorator: Decorator = (StoryEl) => (
 );
 
 const meta: Meta<typeof LinkComponent> = {
-  ...linkMeta,
   id: 'link',
   decorators: [ParagraphDecorator, ExampleBodyTextDecorator],
   parameters: {
