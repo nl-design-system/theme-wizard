@@ -55,7 +55,8 @@ export default class Theme {
     this.#modified = !dequal(this.#defaults, values);
     this.#validateTheme(values);
     this.#tokens = values;
-    this.toCSS({ selector: `:host, .${PREVIEW_THEME_CLASS}` as any }).then((css) => {
+    // Need :host so we can inject this CSS into our components
+    this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replaceSync(css);
     });

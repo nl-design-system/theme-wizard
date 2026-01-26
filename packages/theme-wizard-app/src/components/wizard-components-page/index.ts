@@ -22,7 +22,6 @@ import '../wizard-story-react';
 import '../wizard-story-preview';
 
 // Button
-// Code Block
 // Data Badge
 // Number Badge
 // Paragraph
