@@ -2,7 +2,8 @@
 
 import { Button } from '@nl-design-system-candidate/button-react';
 import { Heading } from '@nl-design-system-candidate/heading-react';
-import { ButtonGroup, Drawer, Link } from '@utrecht/component-library-react/dist/css-module';
+import { Link } from '@nl-design-system-candidate/link-react';
+import { ButtonGroup, Drawer } from '@utrecht/component-library-react/dist/css-module';
 import React from 'react';
 import logo from '../assets/logo.svg';
 import { useCookieConsent } from '../hooks/useCookieConsent';

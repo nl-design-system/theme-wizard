@@ -1,5 +1,6 @@
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
-import { Fieldset, FieldsetLegend } from '@utrecht/component-library-react/dist/css-module';
+import { FieldsetLegend } from '@utrecht/component-library-react/dist/css-module';
+import { Fieldset } from '@utrecht/fieldset-react';
 import React, { type ReactNode, type PropsWithChildren, useMemo } from 'react';
 import type { CookieOption as CookieOptionType, CookieType } from '../types';
 import { CookieOption } from './CookieOption';

@@ -1,5 +1,6 @@
 import { Button } from '@nl-design-system-candidate/button-react/css';
-import { Alert, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
+import { Link } from '@nl-design-system-candidate/link-react';
+import { Alert, ButtonGroup } from '@utrecht/component-library-react/dist/css-module';
 import React, { useCallback, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';

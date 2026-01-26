@@ -36,26 +36,38 @@ Zie `@nl-design-system-community/theme-wizard-templates` voor de concrete implem
 
 Deze template combineert componenten uit meerdere (NL Design System) libraries:
 
-- **NL Design System (candidate) – React (CSS)**:
-  - `SkipLink` (skiplink naar `#main`)
-  - `Heading` (koppen)
-  - `Link` (links)
-- **Utrecht component library – React**:
-  - Paginastructuur: `PageBody` (standalone uit `@utrecht/page-body-react`), `PageHeader`, `NavBar`/`NavList`/`NavListLink`, `PageContent`, `PageFooter` (deze laatste uit `@utrecht/component-library-react/dist/css-module`)
-  - Interactie: `AccordionProvider`, `ButtonLink`
-  - Content: `Image`, `Paragraph`, `LinkList`/`LinkListLink`, `Icon`, `PageContent`
-- **Iconen**:
-  - **Toptask iconen** (inhoudelijke iconen voor diensten/taken): `@utrecht/web-component-library-react` (o.a. `UtrechtIconPaspoort`, `UtrechtIconMeldingKlacht`, `UtrechtIconVerhuizen`, `UtrechtIconWerken`, `UtrechtIconNummerbord`, `UtrechtIconAfvalScheiden`) – gebruikt in de "Veelgebruikte diensten" sectie
-  - **Functionele iconen** (UI-navigatie en acties): `@tabler/icons-react` (o.a. `IconUser` voor "Mijn Omgeving", `IconCalendar` voor datums, `IconChevronRight` voor navigatie-links, `IconCalendarEvent` voor afspraken) – gebruikt voor interface-elementen en navigatie
+- **NL Design System (candidate) – React**:
+  - `SkipLink` – `@nl-design-system-candidate/skip-link-react/css`
+  - `Heading` – `@nl-design-system-candidate/heading-react/css`
+  - `Link` – `@nl-design-system-candidate/link-react/css`
+  - `Paragraph` – `@nl-design-system-candidate/paragraph-react`
+- **Utrecht component library – React (standalone packages)**:
+  - `PageBody` – `@utrecht/page-body-react`
+  - `PageHeader` – `@utrecht/page-header-react`
+  - `PageFooter` – `@utrecht/page-footer-react`
+  - `NavBar` – `@utrecht/nav-bar-react`
+- **Utrecht component library – React (CSS Modules)**:
+  - `PageContent` – `@utrecht/component-library-react/dist/css-module`
+  - `AccordionProvider` – `@utrecht/component-library-react/dist/css-module`
+  - `ButtonLink` – `@utrecht/component-library-react/dist/css-module`
+  - `LinkList`, `LinkListLink` – `@utrecht/component-library-react/dist/css-module`
+  - `Image` – `@utrecht/component-library-react/dist/css-module`
+- **Utrecht component library – React (reguliere export)**:
+  - `NavList`, `NavListLink` – `@utrecht/component-library-react`
+  - `Icon` – `@utrecht/component-library-react`
+- **Utrecht web component library – React (toptask iconen)**:
+  - `UtrechtIconPaspoort`, `UtrechtIconMeldingKlacht`, `UtrechtIconVerhuizen`, `UtrechtIconWerken`, `UtrechtIconNummerbord`, `UtrechtIconAfvalScheiden` – `@utrecht/web-component-library-react`
+- **Tabler Icons (functionele iconen)**:
+  - `IconUser`, `IconCalendar`, `IconChevronRight`, `IconCalendarEvent` – `@tabler/icons-react`
 - **Amsterdam Design System**:
-  - `Card` (`@amsterdam/design-system-react`) voor de nieuwskaarten
-  - `ams-visually-hidden` CSS utility (`@amsterdam/design-system-css`) voor “visueel verborgen, maar screenreader-zichtbare” koppen
+  - `Card` – `@amsterdam/design-system-react`
+  - `ams-visually-hidden` CSS utility – `@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css`
 
 ## Hoe werken deze componenten samen?
 
 - **Layout & structuur (Utrecht + NL Design System)**:
   - De pagina gebruikt Utrecht “page” structuur (`PageBody`, `PageHeader`, `PageContent`, `PageFooter`) en vult die met NL Design System `Heading`/`Link`.
-  - `PageBody` wordt standalone geïmporteerd uit `@utrecht/page-body-react` (omdat deze niet beschikbaar is in de CSS Modules export van `@utrecht/component-library-react`). De CSS wordt globaal geladen via `@utrecht/component-library-css` in `BaseLayout.astro`.
+  - `PageBody`, `PageHeader`, `PageFooter` en `NavBar` worden standalone geïmporteerd (resp. `@utrecht/page-body-react`, `@utrecht/page-header-react`, `@utrecht/page-footer-react`, `@utrecht/nav-bar-react`), omdat Utrecht Design System deze componenten naar losse npm-packages aan het migreren is.
   - `PageContent` wordt geïmporteerd uit `@utrecht/component-library-react/dist/css-module` en wordt gebruikt om de hoofdinhoud te wrappen in verschillende secties (MainIntro, SelfService, News) en zorgt voor consistente padding en max-width styling.
   - De navigatie is een Utrecht `NavBar` met `NavListLink` items; de huidige pagina wordt aangegeven via `aria-current="page"`.
 - **Contentblokken (Utrecht + Amsterdam)**:

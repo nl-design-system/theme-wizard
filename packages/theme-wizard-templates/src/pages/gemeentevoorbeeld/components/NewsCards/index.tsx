@@ -1,9 +1,9 @@
 import { Card } from '@amsterdam/design-system-react';
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { Link } from '@nl-design-system-candidate/link-react/css';
+import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
 import { IconCalendar } from '@tabler/icons-react';
 import { Icon } from '@utrecht/component-library-react';
-import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import React from 'react';
 import type { NewsItem } from './types';
 import { Column, Row } from '../Layout';

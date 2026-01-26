@@ -1,5 +1,6 @@
+import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
 import { IconChevronRight } from '@tabler/icons-react';
-import { LinkList, LinkListLink, Paragraph } from '@utrecht/component-library-react/dist/css-module';
+import { LinkList, LinkListLink } from '@utrecht/component-library-react/dist/css-module';
 import * as React from 'react';
 import type { AccordionSection } from './types';
 import { Column, Row } from '../Layout';
