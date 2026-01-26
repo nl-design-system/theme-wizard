@@ -9,7 +9,7 @@ const tag = 'clippy-button';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ToolbarButton;
+    [tag]: ClippyButton;
   }
 }
 
@@ -20,7 +20,7 @@ type Size = 'small' | 'medium';
 const defaultSize: Size = 'medium';
 
 @safeCustomElement(tag)
-export class ToolbarButton extends LitElement {
+export class ClippyButton extends LitElement {
   @property({ type: Boolean }) 'icon-only' = false;
   @property({ type: Boolean }) toggle = undefined;
   @property({ type: Boolean }) pressed = false;
