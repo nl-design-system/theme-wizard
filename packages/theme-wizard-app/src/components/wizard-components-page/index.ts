@@ -9,6 +9,7 @@ import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
 import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
 import numberBadgeCSS from '@nl-design-system-candidate/number-badge-css/number-badge.css?inline';
 import paragraphCSS from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
+import skipLinkCSS from '@nl-design-system-candidate/skip-link-css/skip-link.css?inline';
 import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { t } from '../../i18n';
@@ -22,6 +23,7 @@ import * as LinkStories from './link-react.stories';
 import * as MarkStories from './mark-react.stories';
 import * as NumberBadgeStories from './number-badge-react.stories';
 import * as ParagraphStories from './paragraph-react.stories';
+import * as SkipLinkStories from './skip-link-react.stories';
 import styles from './styles';
 import '../wizard-story';
 import '../wizard-story-react';
@@ -29,7 +31,6 @@ import '../wizard-story-preview';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 
 // Button
-// Number Badge
 // Skip Link
 
 // Steps to add a new component:
@@ -53,6 +54,7 @@ const storyStyleSheets = [
   codeBlockCSS,
   paragraphCSS,
   numberBadgeCSS,
+  skipLinkCSS,
 ].map((css) => {
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(css);
@@ -88,6 +90,7 @@ const storyModules: StoryModule[] = [
   ParagraphStories,
   DataBadgeStories,
   NumberBadgeStories,
+  SkipLinkStories,
 ].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
 
 @customElement(tag)
