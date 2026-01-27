@@ -23,7 +23,6 @@ const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoo
 
     <Navigation currentPath={currentPath} />
 
-    {/* PageBody is not being exported in the @utrecht/component-library-react package, so for now we use this standalone PageBody from @utrecht/page-body-react. Styles are being loaded from the @utrecht/component-library-css */}
     <PageBody>
       <main id="main">
         <MainIntroSection openingHoursSummary={openingHoursSummary} />
