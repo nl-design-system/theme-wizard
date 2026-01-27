@@ -329,8 +329,8 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.0
-        version: 2.4.0
+        specifier: 2.4.1
+        version: 2.4.1
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 7.4.0
         version: 7.4.0
@@ -413,8 +413,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.0
-        version: 2.4.0
+        specifier: 2.4.1
+        version: 2.4.1
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -551,13 +551,13 @@ importers:
     dependencies:
       '@amsterdam/design-system-css':
         specifier: 2.1.0
-        version: 2.1.0
+        version: 2.1.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)
       '@amsterdam/design-system-react':
         specifier: 2.2.0
-        version: 2.2.0(@amsterdam/design-system-css@2.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 2.2.0(@amsterdam/design-system-css@2.1.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@astrojs/react':
         specifier: 4.4.2
-        version: 4.4.2(@types/node@24.10.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yaml@2.8.2)
+        version: 4.4.2(@types/node@24.10.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(tsx@4.19.2)(yaml@2.8.2)
       '@gemeente-denhaag/action':
         specifier: 4.1.3
         version: 4.1.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -610,8 +610,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.1.0
-        version: 2.1.0
+        specifier: 2.4.1
+        version: 2.4.1
       '@tabler/icons-react':
         specifier: 3.36.1
         version: 3.36.1(react@19.2.3)
@@ -663,7 +663,7 @@ importers:
         version: 19.2.3(@types/react@19.2.7)
       astro:
         specifier: 5.16.6
-        version: 5.16.6(@types/node@24.10.4)(rollup@4.53.5)(typescript@5.9.3)(yaml@2.8.2)
+        version: 5.16.6(@types/node@24.10.4)(@vercel/blob@1.0.2)(@vercel/functions@2.2.13)(rollup@4.53.5)(tsx@4.19.2)(typescript@5.9.3)(yaml@2.8.2)
       glob:
         specifier: 13.0.0
         version: 13.0.0
@@ -675,10 +675,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 7.3.0
-        version: 7.3.0(@types/node@24.10.4)(yaml@2.8.2)
+        version: 7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
       vite-plugin-dts:
         specifier: 4.5.4
-        version: 4.5.4(@types/node@24.10.4)(rollup@4.53.5)(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(yaml@2.8.2))
+        version: 4.5.4(@types/node@24.10.4)(rollup@4.53.5)(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
 
   packages/theme-wizard-website:
     dependencies:
@@ -2262,11 +2262,8 @@ packages:
   '@nl-design-system-community/ma-design-tokens@3.0.0':
     resolution: {integrity: sha512-95uF6BODj/RldOGIdB0i4L8ISoJ4CauQVzZb6sgD8GBA4btEdX3Cdc6VOKncKbknads5WePeNFap7lo7YrlRGg==}
 
-  '@nl-design-system-unstable/start-design-tokens@2.1.0':
-    resolution: {integrity: sha512-kaBbZZk6ASwPoBKaCnPhv39dg4P2huln1gE+J6jsfXGz2he/JkhDLpx0MBMt3lzzpvkOEUK3fV5hCR2dmnRIEA==}
-
-  '@nl-design-system-unstable/start-design-tokens@2.4.0':
-    resolution: {integrity: sha512-gf/1X1SY+Zm4N1xKl4Cg+DJNonM+Mli+IcEc6j11Xi+W++eonQzVW0hm+C2GNckuFlSkvWQXXdCeMHJvB+esBA==}
+  '@nl-design-system-unstable/start-design-tokens@2.4.1':
+    resolution: {integrity: sha512-ZNj5bRH8WHA55xxUcl/Ih77BISVES2r2616qUTMlgHx4iOGi6bEbVI2D/uJysbIPaXzK1OfvI5aXowDahpG8aQ==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0':
     resolution: {integrity: sha512-WiI8AbCM7pWiM50WRYoU9fqBx2sf0qvc8H51yi/vGyakfAnQwbkKlq1RdDLfM6UKki2BbqypY37j23GMs5Vb/w==}
@@ -8300,7 +8297,10 @@ snapshots:
 
   '@amsterdam/design-system-assets@1.1.0': {}
 
-  '@amsterdam/design-system-css@2.1.0': {}
+  '@amsterdam/design-system-css@2.1.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)':
+    dependencies:
+      '@amsterdam/design-system-assets': 1.1.0
+      '@amsterdam/design-system-tokens': 2.2.0
 
   '@amsterdam/design-system-css@2.2.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)':
     dependencies:
@@ -8317,9 +8317,9 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@amsterdam/design-system-react@2.2.0(@amsterdam/design-system-css@2.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@amsterdam/design-system-react@2.2.0(@amsterdam/design-system-css@2.1.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
-      '@amsterdam/design-system-css': 2.1.0
+      '@amsterdam/design-system-css': 2.1.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)
       '@amsterdam/design-system-react-icons': 1.1.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@babel/runtime': 7.28.4
       clsx: 2.1.1
@@ -8421,29 +8421,6 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
       ultrahtml: 1.6.0
       vite: 6.4.1(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
-    transitivePeerDependencies:
-      - '@types/node'
-      - jiti
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - yaml
-
-  '@astrojs/react@4.4.2(@types/node@24.10.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yaml@2.8.2)':
-    dependencies:
-      '@types/react': 19.2.7
-      '@types/react-dom': 19.2.3(@types/react@19.2.7)
-      '@vitejs/plugin-react': 4.7.0(vite@6.4.1(@types/node@24.10.4)(yaml@2.8.2))
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-      ultrahtml: 1.6.0
-      vite: 6.4.1(@types/node@24.10.4)(yaml@2.8.2)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -9736,9 +9713,7 @@ snapshots:
 
   '@nl-design-system-community/ma-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@2.1.0': {}
-
-  '@nl-design-system-unstable/start-design-tokens@2.4.0': {}
+  '@nl-design-system-unstable/start-design-tokens@2.4.1': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0': {}
 
@@ -11766,18 +11741,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.7.0(vite@6.4.1(@types/node@24.10.4)(yaml@2.8.2))':
-    dependencies:
-      '@babel/core': 7.28.5
-      '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.5)
-      '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.28.5)
-      '@rolldown/pluginutils': 1.0.0-beta.27
-      '@types/babel__core': 7.20.5
-      react-refresh: 0.17.0
-      vite: 6.4.1(@types/node@24.10.4)(yaml@2.8.2)
-    transitivePeerDependencies:
-      - supports-color
-
   '@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)':
     dependencies:
       '@vitest/browser': 4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)
@@ -12256,108 +12219,6 @@ snapshots:
       vfile: 6.0.3
       vite: 6.4.1(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
       vitefu: 1.1.1(vite@6.4.1(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
-      xxhash-wasm: 1.1.0
-      yargs-parser: 21.1.1
-      yocto-spinner: 0.2.3
-      zod: 3.25.76
-      zod-to-json-schema: 3.25.0(zod@3.25.76)
-      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.76)
-    optionalDependencies:
-      sharp: 0.34.5
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@types/node'
-      - '@upstash/redis'
-      - '@vercel/blob'
-      - '@vercel/functions'
-      - '@vercel/kv'
-      - aws4fetch
-      - db0
-      - idb-keyval
-      - ioredis
-      - jiti
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - typescript
-      - uploadthing
-      - yaml
-
-  astro@5.16.6(@types/node@24.10.4)(rollup@4.53.5)(typescript@5.9.3)(yaml@2.8.2):
-    dependencies:
-      '@astrojs/compiler': 2.13.0
-      '@astrojs/internal-helpers': 0.7.5
-      '@astrojs/markdown-remark': 6.3.10
-      '@astrojs/telemetry': 3.3.0
-      '@capsizecss/unpack': 3.0.1
-      '@oslojs/encoding': 1.1.0
-      '@rollup/pluginutils': 5.3.0(rollup@4.53.5)
-      acorn: 8.15.0
-      aria-query: 5.3.2
-      axobject-query: 4.1.0
-      boxen: 8.0.1
-      ci-info: 4.3.1
-      clsx: 2.1.1
-      common-ancestor-path: 1.0.1
-      cookie: 1.1.1
-      cssesc: 3.0.0
-      debug: 4.4.3
-      deterministic-object-hash: 2.0.2
-      devalue: 5.6.1
-      diff: 5.2.0
-      dlv: 1.1.3
-      dset: 3.1.4
-      es-module-lexer: 1.7.0
-      esbuild: 0.25.12
-      estree-walker: 3.0.3
-      flattie: 1.1.1
-      fontace: 0.3.1
-      github-slugger: 2.0.0
-      html-escaper: 3.0.3
-      http-cache-semantics: 4.2.0
-      import-meta-resolve: 4.2.0
-      js-yaml: 4.1.1
-      magic-string: 0.30.21
-      magicast: 0.5.1
-      mrmime: 2.0.1
-      neotraverse: 0.6.18
-      p-limit: 6.2.0
-      p-queue: 8.1.1
-      package-manager-detector: 1.6.0
-      piccolore: 0.1.3
-      picomatch: 4.0.3
-      prompts: 2.4.2
-      rehype: 13.0.2
-      semver: 7.7.3
-      shiki: 3.20.0
-      smol-toml: 1.5.2
-      svgo: 4.0.0
-      tinyexec: 1.0.2
-      tinyglobby: 0.2.15
-      tsconfck: 3.1.6(typescript@5.9.3)
-      ultrahtml: 1.6.0
-      unifont: 0.6.0
-      unist-util-visit: 5.0.0
-      unstorage: 1.17.3
-      vfile: 6.0.3
-      vite: 6.4.1(@types/node@24.10.4)(yaml@2.8.2)
-      vitefu: 1.1.1(vite@6.4.1(@types/node@24.10.4)(yaml@2.8.2))
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
       yocto-spinner: 0.2.3
@@ -16669,17 +16530,6 @@ snapshots:
       picomatch: 4.0.3
       webpack-virtual-modules: 0.6.2
 
-  unstorage@1.17.3:
-    dependencies:
-      anymatch: 3.1.3
-      chokidar: 4.0.3
-      destr: 2.0.5
-      h3: 1.15.4
-      lru-cache: 10.4.3
-      node-fetch-native: 1.6.7
-      ofetch: 1.5.1
-      ufo: 1.6.1
-
   unstorage@1.17.3(@vercel/blob@1.0.2)(@vercel/functions@2.2.13):
     dependencies:
       anymatch: 3.1.3
@@ -16807,25 +16657,6 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-dts@4.5.4(@types/node@24.10.4)(rollup@4.53.5)(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(yaml@2.8.2)):
-    dependencies:
-      '@microsoft/api-extractor': 7.53.0(@types/node@24.10.4)
-      '@rollup/pluginutils': 5.3.0(rollup@4.53.5)
-      '@volar/typescript': 2.4.26
-      '@vue/language-core': 2.2.0(typescript@5.9.3)
-      compare-versions: 6.1.1
-      debug: 4.4.3
-      kolorist: 1.8.0
-      local-pkg: 1.1.2
-      magic-string: 0.30.21
-      typescript: 5.9.3
-    optionalDependencies:
-      vite: 7.3.0(@types/node@24.10.4)(yaml@2.8.2)
-    transitivePeerDependencies:
-      - '@types/node'
-      - rollup
-      - supports-color
-
   vite@6.4.1(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
       esbuild: 0.25.12
@@ -16838,19 +16669,6 @@ snapshots:
       '@types/node': 24.10.4
       fsevents: 2.3.3
       tsx: 4.19.2
-      yaml: 2.8.2
-
-  vite@6.4.1(@types/node@24.10.4)(yaml@2.8.2):
-    dependencies:
-      esbuild: 0.25.12
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.53.5
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      '@types/node': 24.10.4
-      fsevents: 2.3.3
       yaml: 2.8.2
 
   vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2):
@@ -16867,26 +16685,9 @@ snapshots:
       tsx: 4.19.2
       yaml: 2.8.2
 
-  vite@7.3.0(@types/node@24.10.4)(yaml@2.8.2):
-    dependencies:
-      esbuild: 0.27.2
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.53.5
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      '@types/node': 24.10.4
-      fsevents: 2.3.3
-      yaml: 2.8.2
-
   vitefu@1.1.1(vite@6.4.1(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)):
     optionalDependencies:
       vite: 6.4.1(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
-
-  vitefu@1.1.1(vite@6.4.1(@types/node@24.10.4)(yaml@2.8.2)):
-    optionalDependencies:
-      vite: 6.4.1(@types/node@24.10.4)(yaml@2.8.2)
 
   vitest@4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
