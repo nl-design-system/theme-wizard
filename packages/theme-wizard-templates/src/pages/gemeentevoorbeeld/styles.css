@@ -22,9 +22,12 @@ nav.clippy-top-tasks {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  row-gap: var(--clippy-voorbeeld-card-row-gap);
+}
+
+.clippy-voorbeeld__content {
   padding-block: var(--clippy-voorbeeld-card-padding-block) !important;
   padding-inline: var(--clippy-voorbeeld-card-padding-inline) !important;
-  row-gap: var(--clippy-voorbeeld-card-row-gap);
 }
 
 .clippy-voorbeeld__link header {
