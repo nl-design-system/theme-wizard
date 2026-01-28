@@ -1,6 +1,7 @@
 import { Button } from '@nl-design-system-candidate/button-react/css';
-import { Alert, ButtonGroup, Link } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC, useCallback, useState } from 'react';
+import { Link } from '@nl-design-system-candidate/link-react';
+import { Alert, ButtonGroup } from '@utrecht/component-library-react/dist/css-module';
+import React, { useCallback, useState } from 'react';
 import type { CookieConsentFormProps, CookieOption, CookieType } from './types';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 import { CookieOptionList } from './components';
@@ -63,7 +64,7 @@ const getInitialSelectedCookies = (options: CookieOption[]): Set<CookieType> => 
  * />
  * ```
  */
-export const CookieConsentForm: FC<CookieConsentFormProps> = ({
+export const CookieConsentForm = ({
   buttonAccept = LABELS.acceptAll,
   buttonReject = LABELS.rejectAll,
   buttonSave = LABELS.save,
@@ -72,7 +73,7 @@ export const CookieConsentForm: FC<CookieConsentFormProps> = ({
   customizeLink,
   infoSections = [],
   showLegitimateInterest = true,
-}) => {
+}: CookieConsentFormProps) => {
   const { savePreferences } = useCookieConsent({ clearStorageOnMount });
 
   const [selectedCookies, setSelectedCookies] = useState<Set<CookieType>>(() =>

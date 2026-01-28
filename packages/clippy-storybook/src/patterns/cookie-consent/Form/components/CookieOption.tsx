@@ -3,7 +3,7 @@ import { Button } from '@nl-design-system-candidate/button-react/css';
 import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css';
 import { FormFieldCheckbox, Icon } from '@utrecht/component-library-react/dist/css-module';
 import { UtrechtIconChevronDown } from '@utrecht/web-component-library-react';
-import React, { memo, useCallback, useState, type ChangeEvent, type FC } from 'react';
+import React, { memo, useCallback, useState, type ChangeEvent } from 'react';
 import type { CookieOption as CookieOptionType, CookieType, LegalBasis } from '../types';
 import { CookieDescriptionList } from './CookieDescriptionList';
 
@@ -33,7 +33,7 @@ const getDescriptionSuffix = (required: boolean, legalBasis: LegalBasis): string
  * - Distinction between consent (opt-in) and legitimate interest (opt-out)
  * - Accessible descriptions for screen readers
  */
-export const CookieOption: FC<CookieOptionProps> = memo(({ isSelected, onChange, option }) => {
+export const CookieOption = memo(({ isSelected, onChange, option }: CookieOptionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const cookieCount = option.cookies?.length ?? 0;

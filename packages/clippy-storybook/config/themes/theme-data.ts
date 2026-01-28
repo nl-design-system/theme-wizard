@@ -169,5 +169,3 @@ export const THEMES: ThemeConfig[] = [
     title: 'Gemeente Zwolle',
   },
 ];
-
-export const AVAILABLE_THEMES = THEMES.map(({ className, title }) => ({ title, value: className }));

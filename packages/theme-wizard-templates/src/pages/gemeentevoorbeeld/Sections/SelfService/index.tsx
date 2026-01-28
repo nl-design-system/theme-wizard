@@ -1,6 +1,6 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { AccordionProvider, ButtonLink, PageContent } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC } from 'react';
+import React from 'react';
 import { ACCORDION_SECTIONS } from '../../components/AccordionSection';
 import { Row } from '../../components/Layout';
 
@@ -9,10 +9,10 @@ export interface SelfServiceSectionProps {
   moreButtonLabel?: string;
 }
 
-const SelfServiceSection: FC<SelfServiceSectionProps> = ({
+const SelfServiceSection = ({
   heading = 'Zelf regelen',
   moreButtonLabel = 'Meer bekijken',
-}) => (
+}: SelfServiceSectionProps) => (
   <PageContent className="utrecht-page-body__content--secondary">
     <section aria-labelledby="zelf-regelen-heading" className="clippy-voorbeeld-accordion__section">
       <Row justify="space-between">

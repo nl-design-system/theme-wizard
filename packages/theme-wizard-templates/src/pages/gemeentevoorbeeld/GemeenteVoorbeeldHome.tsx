@@ -1,5 +1,6 @@
 import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
-import React, { type FC } from 'react';
+import { PageBody } from '@utrecht/page-body-react';
+import React from 'react';
 import type { SummaryItem } from './components/OpeningHoursCard/types';
 import MainIntroSection from './Sections/MainIntro';
 import Navigation from './Sections/Navigation';
@@ -14,7 +15,7 @@ export interface GemeenteVoorbeeldHomeProps {
   openingHoursSummary?: SummaryItem[];
 }
 
-const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath, openingHoursSummary }) => (
+const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoorbeeldHomeProps) => (
   <>
     <SkipLink href="#main">Skip to main content</SkipLink>
 
@@ -22,17 +23,15 @@ const GemeenteVoorbeeldHome: FC<GemeenteVoorbeeldHomeProps> = ({ currentPath, op
 
     <Navigation currentPath={currentPath} />
 
-    <div className="utrecht-page-body">
-      <div className="utrecht-page-body__content">
-        <main id="main">
-          <MainIntroSection openingHoursSummary={openingHoursSummary} />
+    <PageBody>
+      <main id="main">
+        <MainIntroSection openingHoursSummary={openingHoursSummary} />
 
-          <SelfServiceSection />
+        <SelfServiceSection />
 
-          <NewsSection />
-        </main>
-      </div>
-    </div>
+        <NewsSection />
+      </main>
+    </PageBody>
     <PageFooterSection />
   </>
 );

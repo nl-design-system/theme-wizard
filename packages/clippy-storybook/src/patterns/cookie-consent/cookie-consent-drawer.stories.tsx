@@ -1,7 +1,7 @@
 /* @license CC0-1.0 */
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
+import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
 import React from 'react';
 import { CookieConsentDrawer } from './Drawer';
 import readme from './README.md?raw';

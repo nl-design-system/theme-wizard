@@ -1,13 +1,13 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
+import { IconCalendarEvent } from '@tabler/icons-react';
 import { Icon } from '@utrecht/component-library-react';
 import { ButtonLink } from '@utrecht/component-library-react/dist/css-module';
-import { UtrechtIconAfspraakMaken } from '@utrecht/web-component-library-react';
-import React, { type FC, Fragment, useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import type { OpeningHoursCardProps } from './types';
 
 const formatTime = (time: string): string => time.substring(0, 5);
 
-const OpeningHoursCard: FC<OpeningHoursCardProps> = ({ openingHoursSummary = [] }) => {
+const OpeningHoursCard = ({ openingHoursSummary = [] }: OpeningHoursCardProps) => {
   useMemo(() => {
     const today = new Date();
     return {
@@ -22,7 +22,7 @@ const OpeningHoursCard: FC<OpeningHoursCardProps> = ({ openingHoursSummary = [] 
   return (
     <div className="clippy-voorbeeld__card">
       <Icon>
-        <UtrechtIconAfspraakMaken />
+        <IconCalendarEvent />
       </Icon>
 
       <section aria-labelledby="openingstijden">

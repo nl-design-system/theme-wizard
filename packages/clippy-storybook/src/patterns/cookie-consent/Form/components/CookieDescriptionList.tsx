@@ -1,5 +1,5 @@
 import { DescriptionList } from '@amsterdam/design-system-react';
-import React, { type FC } from 'react';
+import React from 'react';
 import type { Cookie } from '../types';
 import '@amsterdam/design-system-css/dist/index.css';
 import '@amsterdam/design-system-tokens/dist/index.css';
@@ -11,7 +11,7 @@ export interface CookieDescriptionListProps {
 /**
  * Displays cookie details as a (responsive) description list.
  */
-export const CookieDescriptionList: FC<CookieDescriptionListProps> = ({ cookies }) => (
+export const CookieDescriptionList = ({ cookies }: CookieDescriptionListProps) => (
   <DescriptionList className="clippy-description-list clippy-description-list--nested">
     {cookies.map((cookie) => (
       <DescriptionList.Section key={cookie.name} className="clippy-description-list__section--cookie">

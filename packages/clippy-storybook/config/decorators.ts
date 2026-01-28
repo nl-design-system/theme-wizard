@@ -1,5 +1,4 @@
 import { THEMES } from './themes/theme-data';
-import { AVAILABLE_THEMES } from './themes/theme-data';
 
 const stylesheetExists = (href: string): HTMLLinkElement | undefined =>
   Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')).find((link) => link.href === href);
@@ -35,7 +34,7 @@ const ensureThemeStylesheet = (root: HTMLElement, themeClassName: string) => {
  */
 export const addThemeClasses = (root: HTMLElement, context: { title?: string; globals?: { theme?: string } }) => {
   // Remove any previously applied theme classes
-  AVAILABLE_THEMES.forEach(({ value }) => root.classList.remove(value));
+  THEMES.forEach(({ className }) => root.classList.remove(className));
 
   const selectedTheme = context.globals?.theme ?? 'ma-theme';
   root.classList.add(selectedTheme);

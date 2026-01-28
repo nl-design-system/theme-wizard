@@ -1,10 +1,10 @@
 import { Card } from '@amsterdam/design-system-react';
-import { Heading } from '@nl-design-system-candidate/heading-react/css';
-import { Link } from '@nl-design-system-candidate/link-react/css';
+import { Heading } from '@nl-design-system-candidate/heading-react';
+import { Link } from '@nl-design-system-candidate/link-react';
+import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
+import { IconCalendar } from '@tabler/icons-react';
 import { Icon } from '@utrecht/component-library-react';
-import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
-import { UtrechtIconKalender } from '@utrecht/web-component-library-react';
-import React, { type FC } from 'react';
+import React from 'react';
 import type { NewsItem } from './types';
 import { Column, Row } from '../Layout';
 
@@ -12,30 +12,49 @@ export interface NewsCardsProps {
   cards: NewsItem[];
 }
 
-const NewsCards: FC<NewsCardsProps> = ({ cards }) => (
+const getImageSrc = (src: string | { src: string }): string => {
+  return typeof src === 'string' ? src : src.src;
+};
+
+const NewsCards = ({ cards }: NewsCardsProps) => (
   <Row columnGap="var(--basis-space-column-xl)" justify="flex-start" rowGap="var(--basis-space-row-xl)" role="list">
     {cards.map((card) => (
       <Column key={`${card.href}-${card.title}`} cols={6} role="listitem">
         <Card className="clippy-voorbeeld__link">
-          <header>
-            <Heading level={3} appearance="level-3">
-              {card.title}
-            </Heading>
+          {card.image && (
+            <div style={{ blockSize: '18rem', inlineSize: '100%', overflow: 'hidden' }}>
+              <Card.Image
+                src={getImageSrc(card.image.src)}
+                alt={card.image.alt}
+                style={{
+                  blockSize: '18rem',
+                  inlineSize: '100%',
+                  objectFit: 'cover',
+                  objectPosition: card.image.focalPoint || 'center center',
+                }}
+              />
+            </div>
+          )}
 
-            <Icon>
-              <UtrechtIconKalender />
-            </Icon>
+          <div className="clippy-voorbeeld__content">
+            <header>
+              <Card.HeadingGroup tagline="Nieuws">
+                <Heading level={3}>{card.title}</Heading>
+              </Card.HeadingGroup>
 
-            <time dateTime={card.dateTime}>{card.date}</time>
-          </header>
+              <Icon>
+                <IconCalendar />
+              </Icon>
+              <time dateTime={card.dateTime}>{card.date}</time>
+            </header>
 
-          <Paragraph>{card.body}</Paragraph>
-
-          <footer>
-            <Link href={card.href} aria-label={`Lees meer over ${card.title}`}>
-              Meer lezen
-            </Link>
-          </footer>
+            <Paragraph>{card.body}</Paragraph>
+            <footer>
+              <Link href={card.href} aria-label={`Lees meer over ${card.title}`}>
+                Meer lezen
+              </Link>
+            </footer>
+          </div>
         </Card>
       </Column>
     ))}

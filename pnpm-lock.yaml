@@ -178,6 +178,9 @@ importers:
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.1
         version: 2.2.1(@babel/runtime@7.28.4)(react@18.3.1)
+      '@utrecht/fieldset-react':
+        specifier: 1.0.10
+        version: 1.0.10(@babel/runtime@7.28.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@amsterdam/design-system-css':
         specifier: 2.2.0
@@ -326,8 +329,8 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.0
-        version: 2.4.0
+        specifier: 2.4.1
+        version: 2.4.1
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 7.4.0
         version: 7.4.0
@@ -410,8 +413,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.0
-        version: 2.4.0
+        specifier: 2.4.1
+        version: 2.4.1
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -607,8 +610,11 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.1.0
-        version: 2.1.0
+        specifier: 2.4.1
+        version: 2.4.1
+      '@tabler/icons-react':
+        specifier: 3.36.1
+        version: 3.36.1(react@19.2.3)
       '@utrecht/component-library-css':
         specifier: 8.2.1
         version: 8.2.1
@@ -618,6 +624,15 @@ importers:
       '@utrecht/link-list-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/page-body-react':
+        specifier: 1.0.10
+        version: 1.0.10(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@utrecht/page-footer-react':
+        specifier: 1.0.9
+        version: 1.0.9(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@utrecht/page-header-react':
+        specifier: 1.0.9
+        version: 1.0.9(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@utrecht/web-component-library-react':
         specifier: 3.0.12
         version: 3.0.12(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -2247,11 +2262,8 @@ packages:
   '@nl-design-system-community/ma-design-tokens@3.0.0':
     resolution: {integrity: sha512-95uF6BODj/RldOGIdB0i4L8ISoJ4CauQVzZb6sgD8GBA4btEdX3Cdc6VOKncKbknads5WePeNFap7lo7YrlRGg==}
 
-  '@nl-design-system-unstable/start-design-tokens@2.1.0':
-    resolution: {integrity: sha512-kaBbZZk6ASwPoBKaCnPhv39dg4P2huln1gE+J6jsfXGz2he/JkhDLpx0MBMt3lzzpvkOEUK3fV5hCR2dmnRIEA==}
-
-  '@nl-design-system-unstable/start-design-tokens@2.4.0':
-    resolution: {integrity: sha512-gf/1X1SY+Zm4N1xKl4Cg+DJNonM+Mli+IcEc6j11Xi+W++eonQzVW0hm+C2GNckuFlSkvWQXXdCeMHJvB+esBA==}
+  '@nl-design-system-unstable/start-design-tokens@2.4.1':
+    resolution: {integrity: sha512-ZNj5bRH8WHA55xxUcl/Ih77BISVES2r2616qUTMlgHx4iOGi6bEbVI2D/uJysbIPaXzK1OfvI5aXowDahpG8aQ==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0':
     resolution: {integrity: sha512-WiI8AbCM7pWiM50WRYoU9fqBx2sf0qvc8H51yi/vGyakfAnQwbkKlq1RdDLfM6UKki2BbqypY37j23GMs5Vb/w==}
@@ -2764,6 +2776,14 @@ packages:
 
   '@swc/helpers@0.5.17':
     resolution: {integrity: sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==}
+
+  '@tabler/icons-react@3.36.1':
+    resolution: {integrity: sha512-/8nOXeNeMoze9xY/QyEKG65wuvRhkT3q9aytaur6Gj8bYU2A98YVJyLc9MRmc5nVvpy+bRlrrwK/Ykr8WGyUWg==}
+    peerDependencies:
+      react: '>= 16'
+
+  '@tabler/icons@3.36.1':
+    resolution: {integrity: sha512-f4Jg3Fof/Vru5ioix/UO4GX+sdDsF9wQo47FbtvG+utIYYVQ/QVAC0QYgcBbAjQGfbdOh2CCf0BgiFOF9Ixtjw==}
 
   '@testing-library/jest-dom@6.9.1':
     resolution: {integrity: sha512-zIcONa+hVtVSSep9UT3jZ5rizo2BsxgyDYU7WFD5eICBE7no3881HGeb/QkGfsJs6JTkY1aQhT7rIPC7e+0nnA==}
@@ -3422,6 +3442,13 @@ packages:
   '@utrecht/page-body-css@1.0.1':
     resolution: {integrity: sha512-0keuwgUACGo52SA7Nvd31STGirZ/A1dkR/at5z8SpEXYdfMyRpPK1odH5MgB19Ig1Nie1Ke5oi+h++HcVg5Ksg==}
 
+  '@utrecht/page-body-react@1.0.10':
+    resolution: {integrity: sha512-HBWjRhNxchvykObDCbc7Vzouuig5gV3A7sz8LNxLrwxv0YA5HjX5HqsCCiP94ggCzGVWISNzFrMYcwEu1ut7lw==}
+    peerDependencies:
+      '@babel/runtime': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
   '@utrecht/page-content-css@2.0.1':
     resolution: {integrity: sha512-Hgx63BEUbaGJyBQXpa97EN8ng0M9LTX3ddu9IQM+ar/rA2OGIM5oiGbwXUYhLwQp/HnhkFm/gpPGGTtQjpXC6w==}
 
@@ -3431,8 +3458,22 @@ packages:
   '@utrecht/page-footer-css@3.0.1':
     resolution: {integrity: sha512-PEpyT+yIY7PCvzrjWFMMMmf4kIf5zg0tgnYWY/8f6IoJsVS7WZPU3V5bEzPRWaXXJRXk9b7JD6D2FR55GDn3Kw==}
 
+  '@utrecht/page-footer-react@1.0.9':
+    resolution: {integrity: sha512-774i5LhZy1fnsr0P0/3ObRu4zMiPxQWmU7lbyncdzyng8vDDhjHOBMo/E9g9499lYy8WgvDUCAwT+7x0pFFV3A==}
+    peerDependencies:
+      '@babel/runtime': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+
   '@utrecht/page-header-css@2.0.1':
     resolution: {integrity: sha512-HxONNJxBNwqEY/qDkx3U0wAVvirc/1l04i9L4dPscjf+Le6UWkJb4pfxXVO8b8yIT+wyj2YY0k8aeBUEIJPKjA==}
+
+  '@utrecht/page-header-react@1.0.9':
+    resolution: {integrity: sha512-sGc5UfjScNf+qDHnWSirpo32ceC5wfZgTnKaxi73KJ4dT9AIpMCNEdVWd3Pfrh2OgXrnzQmgKs0TwX1rED/FAw==}
+    peerDependencies:
+      '@babel/runtime': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
 
   '@utrecht/page-layout-css@2.0.1':
     resolution: {integrity: sha512-FXLvM6A4Lex+Miz9cuDjFuoC+HeFBu78oMvFU88c4D01Jnso2gKaZHRy3XT8UqKJbE8z0rNzRTwoztOlBVqFIw==}
@@ -9672,9 +9713,7 @@ snapshots:
 
   '@nl-design-system-community/ma-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@2.1.0': {}
-
-  '@nl-design-system-unstable/start-design-tokens@2.4.0': {}
+  '@nl-design-system-unstable/start-design-tokens@2.4.1': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0': {}
 
@@ -10124,6 +10163,13 @@ snapshots:
   '@swc/helpers@0.5.17':
     dependencies:
       tslib: 2.8.1
+
+  '@tabler/icons-react@3.36.1(react@19.2.3)':
+    dependencies:
+      '@tabler/icons': 3.36.1
+      react: 19.2.3
+
+  '@tabler/icons@3.36.1': {}
 
   '@testing-library/jest-dom@6.9.1':
     dependencies:
@@ -11229,13 +11275,37 @@ snapshots:
 
   '@utrecht/page-body-css@1.0.1': {}
 
+  '@utrecht/page-body-react@1.0.10(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@utrecht/page-body-css': 1.0.1
+      clsx: 2.1.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
   '@utrecht/page-content-css@2.0.1': {}
 
   '@utrecht/page-css@2.0.1': {}
 
   '@utrecht/page-footer-css@3.0.1': {}
 
+  '@utrecht/page-footer-react@1.0.9(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@utrecht/page-footer-css': 3.0.1
+      clsx: 2.1.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
   '@utrecht/page-header-css@2.0.1': {}
+
+  '@utrecht/page-header-react@1.0.9(@babel/runtime@7.28.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@utrecht/page-header-css': 2.0.1
+      clsx: 2.1.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
 
   '@utrecht/page-layout-css@2.0.1': {}
 

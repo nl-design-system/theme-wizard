@@ -16,7 +16,7 @@ export type ResolvedToken = BaseDesignTokenValue & {
 
 export const resolveRef = (root: object, path: string): unknown => {
   const refPath = path.slice(1, -1);
-  // Look up path.to.ref in root or in `brand` because NLDS tokens don't always include the `.brand` part
+  // Look up path.to.ref in root or in `brand` because NL Design System tokens don't always include the `.brand` part
   const resolved = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
   if (isTokenLike(resolved)) {

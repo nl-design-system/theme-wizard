@@ -9,7 +9,7 @@ import {
   UtrechtIconNummerbord,
   UtrechtIconAfvalScheiden,
 } from '@utrecht/web-component-library-react';
-import React, { type FC, type ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import type { QuickTask } from './types';
 import { Column, Row } from '../Layout';
 
@@ -33,7 +33,7 @@ const renderIcon = (iconName: string): JSX.Element | null => {
   return icon ?? null;
 };
 
-const QuickTasks: FC<QuickTasksProps> = ({ tasks }) => (
+const QuickTasks = ({ tasks }: QuickTasksProps) => (
   <nav className="clippy-top-tasks">
     <Row columnGap="var(--basis-space-column-xl)" fullHeight justify="flex-start" rowGap="var(--basis-space-row-xl)">
       {tasks.map((task) => (

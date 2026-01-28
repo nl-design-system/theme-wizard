@@ -5,25 +5,13 @@
   --denhaag-side-navigation-display: var(--clippy-side-navigation-display);
   --denhaag-side-navigation-flex-direction: var(--clippy-side-navigation-flex-direction);
   --denhaag-side-navigation-row-gap: var(--clippy-side-navigation-row-gap);
-  --denhaag-side-navigation-min-width: var(--clippy-side-navigation-min-width);
-
-  /* Utrecht breadcrumb navigation tokens (mapping) */
-  --utrecht-breadcrumb-nav-arrows-link-background-color: var(--clippy-breadcrumb-nav-arrows-link-background-color);
-  --utrecht-breadcrumb-nav-min-block-size: var(--clippy-breadcrumb-nav-min-block-size);
-  --utrecht-breadcrumb-nav-font-family: var(--clippy-breadcrumb-nav-font-family);
-  --utrecht-breadcrumb-nav-font-size: var(--clippy-breadcrumb-nav-font-size);
-  --utrecht-breadcrumb-nav-line-height: var(--clippy-breadcrumb-nav-line-height);
-  --utrecht-breadcrumb-nav-text-decoration: var(--clippy-breadcrumb-nav-text-decoration);
-  --utrecht-breadcrumb-nav-text-transform: var(--clippy-breadcrumb-nav-text-transform);
+  --denhaag-side-navigation-min-width: var(--clippy-side-navigation-min-inline-size);
 
   /* Utrecht page tokens (mapping) */
   --utrecht-page-content-padding-block-start: var(--clippy-page-content-padding-block-start);
   --utrecht-page-content-padding-block-end: var(--clippy-page-content-padding-block-end);
   --utrecht-page-header-padding-block-start: var(--clippy-page-header-padding-block-start);
   --utrecht-page-header-padding-block-end: var(--clippy-page-header-padding-block-end);
-  --utrecht-section-max-inline-size: var(--clippy-section-max-inline-size);
-  --utrecht-page-background-secondary: var(--clippy-page-background-secondary);
-  --utrecht-nav-bar-content-max-inline-size: var(--clippy-nav-bar-content-max-inline-size);
 
   /* Utrecht space tokens (mapping) */
   --utrecht-space-around: var(--clippy-space-around);

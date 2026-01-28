@@ -36208,11 +36208,6 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         "$type": "dimension",
         "$value": "{basis.pointer-target.min-inline-size}",
       },
-      "outline-offset": {
-        "$description": "[code-only]",
-        "$type": "other",
-        "$value": "0px",
-      },
       "padding-block-end": {
         "$type": "dimension",
         "$value": "{basis.space.block.md}",

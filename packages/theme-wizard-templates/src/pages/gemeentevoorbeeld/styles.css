@@ -5,18 +5,8 @@
   margin-inline: 0;
 }
 
-.clippy-section {
-  display: flex;
-  flex-direction: column;
-  inline-size: 100%;
-  margin-block-end: 2rem;
-  margin-block-start: 2rem;
-  margin-inline: auto;
-  max-inline-size: var(--utrecht-section-max-inline-size);
-}
-
 .clippy-section--secondary {
-  background-color: var(--utrecht-page-background-secondary);
+  background-color: var(--clippy-page-secondary-background-color);
 }
 
 nav.clippy-top-tasks {
@@ -27,14 +17,17 @@ nav.clippy-top-tasks {
 .clippy-voorbeeld__link,
 .clippy-voorbeeld__card {
   align-items: start !important;
-  background-color: var(--clippy-voorbeeld-card-bg);
+  background-color: var(--clippy-voorbeeld-card-background-color);
   block-size: 100% !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  row-gap: var(--clippy-voorbeeld-card-row-gap);
+}
+
+.clippy-voorbeeld__content {
   padding-block: var(--clippy-voorbeeld-card-padding-block) !important;
   padding-inline: var(--clippy-voorbeeld-card-padding-inline) !important;
-  row-gap: var(--clippy-voorbeeld-card-row-gap);
 }
 
 .clippy-voorbeeld__link header {

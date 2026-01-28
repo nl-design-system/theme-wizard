@@ -1,6 +1,7 @@
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
-import { Fieldset, FieldsetLegend } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC, type ReactNode, useMemo } from 'react';
+import { FieldsetLegend } from '@utrecht/component-library-react/dist/css-module';
+import { Fieldset } from '@utrecht/fieldset-react';
+import React, { type ReactNode, type PropsWithChildren, useMemo } from 'react';
 import type { CookieOption as CookieOptionType, CookieType } from '../types';
 import { CookieOption } from './CookieOption';
 
@@ -30,7 +31,7 @@ const LEGITIMATE_INTEREST_DESCRIPTION =
  * - Explains how to withdraw consent or object
  * - Makes clear what happens when clicking a checkbox
  */
-export const CookieOptionList: FC<CookieOptionListProps> = ({
+export const CookieOptionList = ({
   children,
   cookieOptions,
   legendConsent = 'Toestemming vereist',
@@ -38,7 +39,7 @@ export const CookieOptionList: FC<CookieOptionListProps> = ({
   onCheckboxChange,
   selectedCookies,
   showLegitimateInterest = true,
-}) => {
+}: PropsWithChildren<CookieOptionListProps>) => {
   const { consentOptions, legitimateInterestOptions } = useMemo(() => {
     if (!showLegitimateInterest) {
       return { consentOptions: cookieOptions, legitimateInterestOptions: [] };

@@ -1,26 +1,17 @@
 .preview-theme {
-  /* Clippy breadcrumb navigation tokens */
-  --clippy-breadcrumb-nav-arrows-link-background-color: var(--basis-color-default-bg-default);
-  --clippy-breadcrumb-nav-min-block-size: var(--basis-pointer-target-min-block-size);
-  --clippy-breadcrumb-nav-font-family: var(--basis-text-font-family-default);
-  --clippy-breadcrumb-nav-font-size: var(--basis-text-font-size-md);
-  --clippy-breadcrumb-nav-line-height: var(--basis-text-line-height-md);
-  --clippy-breadcrumb-nav-text-decoration: none;
-  --clippy-breadcrumb-nav-text-transform: inherit;
-
   /* Clippy side navigation tokens */
   --clippy-side-navigation-display: flex;
   --clippy-side-navigation-flex-direction: column;
   --clippy-side-navigation-row-gap: var(--basis-space-row-3xl);
-  --clippy-side-navigation-min-width: 240px;
+  --clippy-side-navigation-min-inline-size: 240px;
 
   /* Clippy space tokens */
   --clippy-space-around: var(--basis-space-inline-sm, 4px);
 
   /* Clippy voorbeeld card tokens */
-  --clippy-voorbeeld-card-bg: var(--basis-color-default-bg-subtle);
+  --clippy-voorbeeld-card-background-color: var(--basis-color-default-bg-subtle);
   --clippy-voorbeeld-card-outline: var(--basis-color-default-border-subtle);
-  --clippy-voorbeeld-card-padding-block: var(--basis-space-inline-3xl);
+  --clippy-voorbeeld-card-padding-block: var(--basis-space-block-3xl);
   --clippy-voorbeeld-card-padding-inline: var(--basis-space-inline-3xl);
   --clippy-voorbeeld-card-row-gap: var(--basis-space-row-xl);
 
@@ -33,7 +24,6 @@
   --clippy-page-header-padding-block-end: var(--basis-space-row-lg);
 
   /* Clippy section/page/nav-bar tokens */
-  --clippy-section-max-inline-size: calc(670px * 1.6);
-  --clippy-page-background-secondary: var(--basis-color-default-border-subtle);
-  --clippy-nav-bar-content-max-inline-size: var(--clippy-section-max-inline-size);
+  --clippy-page-secondary-background-color: var(--basis-color-default-border-subtle);
+  --clippy-nav-bar-content-max-inline-size: 1140px;
 }

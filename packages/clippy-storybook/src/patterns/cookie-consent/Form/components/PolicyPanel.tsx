@@ -1,7 +1,7 @@
 import { Link } from '@nl-design-system-candidate/link-react/css';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react/css';
 import { UnorderedList, UnorderedListItem } from '@utrecht/component-library-react/css-module';
-import React, { type FC, type ReactNode } from 'react';
+import React, { type ReactNode, type PropsWithChildren } from 'react';
 
 export interface PolicyPanelProps {
   children?: ReactNode;
@@ -12,7 +12,7 @@ export interface PolicyPanelProps {
  * Demo Panel component - this is just an example of how to implement a section on the cookie page
  * Cookie policy content explaining what cookies are and how they are used.
  */
-export const PolicyPanel: FC<PolicyPanelProps> = ({ children, privacyPolicyUrl }) => (
+export const PolicyPanel = ({ children, privacyPolicyUrl }: PropsWithChildren<PolicyPanelProps>) => (
   <>
     {children}
 

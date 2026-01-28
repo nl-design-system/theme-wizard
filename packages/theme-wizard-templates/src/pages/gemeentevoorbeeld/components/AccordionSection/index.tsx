@@ -1,5 +1,6 @@
-import { LinkList, LinkListLink, Paragraph } from '@utrecht/component-library-react/dist/css-module';
-import { UtrechtIconChevronRight } from '@utrecht/web-component-library-react';
+import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
+import { IconChevronRight } from '@tabler/icons-react';
+import { LinkList, LinkListLink } from '@utrecht/component-library-react/dist/css-module';
 import * as React from 'react';
 import type { AccordionSection } from './types';
 import { Column, Row } from '../Layout';
@@ -17,15 +18,15 @@ export const ACCORDION_SECTIONS: AccordionSection[] = [
 
         <Column cols={4}>
           <LinkList>
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Paspoort aanvragen
             </LinkListLink>
 
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               ID-kaart aanvragen
             </LinkListLink>
 
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Rijbewijs aanvragen
             </LinkListLink>
           </LinkList>
@@ -39,15 +40,15 @@ export const ACCORDION_SECTIONS: AccordionSection[] = [
       <Row gap="var(--basis-space-column-6xl)" justify="space-between">
         <Column cols={12}>
           <LinkList>
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Verhuizing naar Gemeente voorbeeld
             </LinkListLink>
 
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Verhuizing vanuit het buitenland naar Gemeente voorbeeld doorgeven
             </LinkListLink>
 
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Verhuizing naar het buitenland doorgeven
             </LinkListLink>
           </LinkList>
@@ -68,15 +69,15 @@ export const ACCORDION_SECTIONS: AccordionSection[] = [
 
         <Column cols={12}>
           <LinkList>
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Verhuizing naar Gemeente voorbeeld
             </LinkListLink>
 
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Verhuizing vanuit het buitenland naar Gemeente voorbeeld doorgeven
             </LinkListLink>
 
-            <LinkListLink href="#" icon={<UtrechtIconChevronRight />}>
+            <LinkListLink href="#" icon={<IconChevronRight />}>
               Verhuizing naar het buitenland doorgeven
             </LinkListLink>
           </LinkList>
