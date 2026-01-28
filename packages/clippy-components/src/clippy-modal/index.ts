@@ -1,9 +1,12 @@
 import amsDialogStyles from '@amsterdam/design-system-css/dist/dialog/dialog.css?inline';
-import amsVisuallyHiddenStyles from '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css?inline';
 import { safeCustomElement } from '@lib/decorators';
-import utrechtButtonStyles from '@utrecht/button-css/dist/index.css?inline';
-import { LitElement, html, unsafeCSS, nothing } from 'lit';
+import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
+import './../clippy-button'
+import './../clippy-icon'
+import CloseIcon from '@tabler/icons/outline/x.svg?raw';
+import { LitElement, html, unsafeCSS,  nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { dialogStyles } from './styles';
 
 let dialogInstanceCounter = 0;
@@ -56,8 +59,7 @@ export class ClippyModal extends LitElement {
   static override readonly styles = [
     dialogStyles,
     unsafeCSS(amsDialogStyles),
-    unsafeCSS(amsVisuallyHiddenStyles),
-    unsafeCSS(utrechtButtonStyles),
+    unsafeCSS(buttonStyles),
   ];
 
   readonly open = () => {
@@ -126,12 +128,10 @@ export class ClippyModal extends LitElement {
             <clippy-heading level={1} id=${this.titleId}>
               <slot name="title">${this.title}</slot>
             </clippy-heading>
-            <button class="utrecht-button utrecht-button--primary-action" type="button" @click=${this.onCloseClick}>
-              <span class="ams-visually-hidden">Sluiten</span>
-              <div style=" --utrecht-icon-size: 8px;">
-                <utrecht-icon-close></utrecht-icon-close>
-              </div>
-            </button>
+            <clippy-button icon-only @click=${this.onCloseClick} purpose="subtle">
+              <clippy-icon slot="iconStart">${unsafeSVG(CloseIcon)}</clippy-icon>
+              Sluiten
+            </clippy-button>
           </header>
           <div class="ams-dialog__body">
             <slot></slot>
@@ -140,14 +140,14 @@ export class ClippyModal extends LitElement {
             <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
             ${this.actions === 'confirm' || this.actions === 'both'
               ? html`
-                  <button class="utrecht-button utrecht-button--primary-action" value=${DIALOG_BUTTON_VALUES.confirm}>
+                  <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
                     ${this.confirmLabel}
                   </button>
                 `
               : nothing}
             ${this.actions === 'cancel' || this.actions === 'both'
               ? html`
-                  <button class="utrecht-button utrecht-button--secondary-action" value=${DIALOG_BUTTON_VALUES.cancel}>
+                  <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
                     ${this.cancelLabel}
                   </button>
                 `

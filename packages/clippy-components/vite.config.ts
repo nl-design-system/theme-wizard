@@ -33,6 +33,7 @@ export default defineConfig({
         'lit',
         'lit/decorators.js',
         'lit/directives/class-map.js',
+        'lit/directives/unsafe-svg.js',
         'lit/directives/style-map.js',
         'lit/directives/ref.js',
       ],
