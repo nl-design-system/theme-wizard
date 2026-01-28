@@ -15,7 +15,7 @@ declare global {
 
 type Purpose = 'primary' | 'secondary' | 'subtle';
 type Hint = 'positive' | 'negative';
-
+type ButtonType = 'button' | 'submit' | 'reset';
 type Size = 'small' | 'medium';
 const defaultSize: Size = 'medium';
 
@@ -65,12 +65,26 @@ export class ClippyButton extends LitElement {
     type: String,
   })
   purpose: Purpose | undefined;
+  @property({
+    converter: {
+      fromAttribute: (value: string | null): ButtonType => {
+        if (value === 'button' || value === 'submit' || value === 'reset') {
+          return value;
+        }
+        console.warn(`Invalid button type "${value}". Using default "button".`);
+        return 'button';
+      },
+    },
+    type: String,
+  })
+  type: ButtonType = 'button';
 
   static override readonly styles = [buttonStyles, unsafeCSS(buttonCss)];
 
   override render() {
     return html`
       <button
+        type=${this.type}
         aria-pressed=${this.toggle ? this.pressed : nothing}
         aria-disabled=${this.disabled || nothing}
         class=${classMap({
