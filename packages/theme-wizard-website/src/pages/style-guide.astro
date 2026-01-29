@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
+---
+
+<BaseLayout title="Style Guide - Theme Wizard" description="Preview and analyze website themes">
+  <theme-wizard-app templates={TEMPLATES_JSON}>
+    <wizard-layout>
+      <nav slot="sidebar">
+        <a href="">link</a>
+      </nav>
+      <wizard-style-guide slot="main"></wizard-style-guide>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>

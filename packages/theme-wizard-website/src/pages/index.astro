@@ -11,5 +11,14 @@ const scraperUrl = withRelatedProject({
 ---
 
 <BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
-  <theme-wizard-app templates={TEMPLATES_JSON}></theme-wizard-app>
+  <theme-wizard-app templates={TEMPLATES_JSON}>
+    <wizard-layout>
+      <div slot="sidebar">
+        <theme-wizard-tokens-form></theme-wizard-tokens-form>
+      </div>
+      <div slot="main">
+        <wizard-index-page></wizard-index-page>
+      </div>
+     </wizard-layout>
+  </theme-wizard-app>
 </BaseLayout>

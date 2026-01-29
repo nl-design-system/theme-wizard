@@ -360,7 +360,7 @@ importers:
     dependencies:
       '@amsterdam/design-system-css':
         specifier: 2.2.0
-        version: 2.2.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)
+        version: 2.2.0
       '@fontsource/fira-sans':
         specifier: 5.2.7
         version: 5.2.7
@@ -369,16 +369,13 @@ importers:
         version: 5.2.5
       '@gemeente-denhaag/action':
         specifier: 4.1.3
-        version: 4.1.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 4.1.3
       '@gemeente-denhaag/card':
         specifier: 5.0.6
-        version: 5.0.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 5.0.6
       '@gemeente-denhaag/side-navigation':
         specifier: 4.0.3
-        version: 4.0.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@lit-labs/router':
-        specifier: 0.1.4
-        version: 0.1.4
+        version: 4.0.3
       '@lit/context':
         specifier: 1.1.6
         version: 1.1.6
@@ -478,16 +475,16 @@ importers:
         version: 1.1.5
       '@vitest/browser-playwright':
         specifier: 4.0.16
-        version: 4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)
+        version: 4.0.16(playwright@1.57.0)(vite@7.3.0)(vitest@4.0.16)
       '@vitest/coverage-v8':
         specifier: 4.0.16
-        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(vitest@4.0.16)
+        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0)(vitest@4.0.16))(vitest@4.0.16)
       playwright:
         specifier: 1.57.0
         version: 1.57.0
       postcss-lit:
         specifier: 1.3.1
-        version: 1.3.1(postcss@8.5.6)(tsx@4.19.2)(yaml@2.8.2)
+        version: 1.3.1(postcss@8.5.6)
       rimraf:
         specifier: 6.1.2
         version: 6.1.2
@@ -496,10 +493,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 7.3.0
-        version: 7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
+        version: 7.3.0
       vitest:
         specifier: 4.0.16
-        version: 4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
+        version: 4.0.16(@vitest/browser-playwright@4.0.16)
 
   packages/theme-wizard-server:
     dependencies:
@@ -2147,9 +2144,6 @@ packages:
 
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
-
-  '@lit-labs/router@0.1.4':
-    resolution: {integrity: sha512-xURH6fOPE0MYfXa1nyl+qTIhZRVWkFa2oggTRodKAI2q/HjA2Va7HEKe7fMm8DdnFE+zEI2aUGnStawKpVh3lQ==}
 
   '@lit-labs/ssr-dom-shim@1.5.0':
     resolution: {integrity: sha512-HLomZXMmrCFHSRKESF5vklAKsDY7/fsT/ZhqCu3V0UoW/Qbv8wxmO4W9bx4KnCCF2Zak4yuk+AGraK/bPmI4kA==}
@@ -8302,6 +8296,8 @@ snapshots:
       '@amsterdam/design-system-assets': 1.1.0
       '@amsterdam/design-system-tokens': 2.2.0
 
+  '@amsterdam/design-system-css@2.2.0': {}
+
   '@amsterdam/design-system-css@2.2.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)':
     dependencies:
       '@amsterdam/design-system-assets': 1.1.0
@@ -9240,6 +9236,15 @@ snapshots:
 
   '@fontsource/source-sans-pro@5.2.5': {}
 
+  '@gemeente-denhaag/action@4.1.3':
+    dependencies:
+      '@gemeente-denhaag/button': 3.0.2
+      '@gemeente-denhaag/icons': 4.0.1
+      '@gemeente-denhaag/link': 4.1.0
+      '@gemeente-denhaag/utils': 3.0.1
+      clsx: 2.1.1
+      date-fns: 4.1.0
+
   '@gemeente-denhaag/action@4.1.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@gemeente-denhaag/button': 3.0.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -9251,12 +9256,25 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
+  '@gemeente-denhaag/button@3.0.2':
+    dependencies:
+      '@gemeente-denhaag/icons': 4.0.1
+      clsx: 2.1.1
+
   '@gemeente-denhaag/button@3.0.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@gemeente-denhaag/icons': 4.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       clsx: 2.1.1
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+
+  '@gemeente-denhaag/card@5.0.6':
+    dependencies:
+      '@gemeente-denhaag/icons': 4.0.1
+      '@gemeente-denhaag/link': 4.1.0
+      '@gemeente-denhaag/paragraph': 2.1.0
+      '@gemeente-denhaag/utils': 3.0.1
+      clsx: 2.1.1
 
   '@gemeente-denhaag/card@5.0.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9268,26 +9286,41 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
+  '@gemeente-denhaag/icons@4.0.1':
+    dependencies:
+      clsx: 2.1.1
+
   '@gemeente-denhaag/icons@4.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       clsx: 2.1.1
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
+  '@gemeente-denhaag/link@4.1.0': {}
+
   '@gemeente-denhaag/link@4.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+
+  '@gemeente-denhaag/number-badge@2.1.0': {}
 
   '@gemeente-denhaag/number-badge@2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
+  '@gemeente-denhaag/paragraph@2.1.0': {}
+
   '@gemeente-denhaag/paragraph@2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+
+  '@gemeente-denhaag/side-navigation@4.0.3':
+    dependencies:
+      '@gemeente-denhaag/number-badge': 2.1.0
+      clsx: 2.1.1
 
   '@gemeente-denhaag/side-navigation@4.0.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9295,6 +9328,10 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
+
+  '@gemeente-denhaag/utils@3.0.1':
+    dependencies:
+      date-fns: 4.1.0
 
   '@gemeente-denhaag/utils@3.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9542,10 +9579,6 @@ snapshots:
       keyv: 5.5.5
 
   '@keyv/serialize@1.1.1': {}
-
-  '@lit-labs/router@0.1.4':
-    dependencies:
-      lit: 3.3.2
 
   '@lit-labs/ssr-dom-shim@1.5.0': {}
 
@@ -11754,6 +11787,19 @@ snapshots:
       - utf-8-validate
       - vite
 
+  '@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0)(vitest@4.0.16)':
+    dependencies:
+      '@vitest/browser': 4.0.16(vite@7.3.0)(vitest@4.0.16)
+      '@vitest/mocker': 4.0.16(vite@7.3.0)
+      playwright: 1.57.0
+      tinyrainbow: 3.0.3
+      vitest: 4.0.16(@vitest/browser-playwright@4.0.16)
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+
   '@vitest/browser@4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)':
     dependencies:
       '@vitest/mocker': 4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
@@ -11764,6 +11810,23 @@ snapshots:
       sirv: 3.0.2
       tinyrainbow: 3.0.3
       vitest: 4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
+      ws: 8.18.3
+    transitivePeerDependencies:
+      - bufferutil
+      - msw
+      - utf-8-validate
+      - vite
+
+  '@vitest/browser@4.0.16(vite@7.3.0)(vitest@4.0.16)':
+    dependencies:
+      '@vitest/mocker': 4.0.16(vite@7.3.0)
+      '@vitest/utils': 4.0.16
+      magic-string: 0.30.21
+      pixelmatch: 7.1.0
+      pngjs: 7.0.0
+      sirv: 3.0.2
+      tinyrainbow: 3.0.3
+      vitest: 4.0.16(@vitest/browser-playwright@4.0.16)
       ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
@@ -11787,6 +11850,25 @@ snapshots:
       vitest: 4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
     optionalDependencies:
       '@vitest/browser': 4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@vitest/coverage-v8@4.0.16(@vitest/browser@4.0.16(vite@7.3.0)(vitest@4.0.16))(vitest@4.0.16)':
+    dependencies:
+      '@bcoe/v8-coverage': 1.0.2
+      '@vitest/utils': 4.0.16
+      ast-v8-to-istanbul: 0.3.9
+      istanbul-lib-coverage: 3.2.2
+      istanbul-lib-report: 3.0.1
+      istanbul-lib-source-maps: 5.0.6
+      istanbul-reports: 3.2.0
+      magicast: 0.5.1
+      obug: 2.1.1
+      std-env: 3.10.0
+      tinyrainbow: 3.0.3
+      vitest: 4.0.16(@vitest/browser-playwright@4.0.16)
+    optionalDependencies:
+      '@vitest/browser': 4.0.16(vite@7.3.0)(vitest@4.0.16)
     transitivePeerDependencies:
       - supports-color
 
@@ -11833,6 +11915,14 @@ snapshots:
       magic-string: 0.30.21
     optionalDependencies:
       vite: 7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
+
+  '@vitest/mocker@4.0.16(vite@7.3.0)':
+    dependencies:
+      '@vitest/spy': 4.0.16
+      estree-walker: 3.0.3
+      magic-string: 0.30.21
+    optionalDependencies:
+      vite: 7.3.0
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -15229,6 +15319,20 @@ snapshots:
       postcss: 8.5.6
       postcss-safe-parser: 6.0.0(postcss@8.5.6)
 
+  postcss-lit@1.3.1(postcss@8.5.6):
+    dependencies:
+      '@babel/generator': 7.28.5
+      '@babel/parser': 7.28.5
+      '@babel/traverse': 7.28.5
+      lilconfig: 3.1.3
+      postcss: 8.5.6
+      postcss-load-config: 6.0.1(postcss@8.5.6)
+    transitivePeerDependencies:
+      - jiti
+      - supports-color
+      - tsx
+      - yaml
+
   postcss-lit@1.3.1(postcss@8.5.6)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
       '@babel/generator': 7.28.5
@@ -15242,6 +15346,12 @@ snapshots:
       - supports-color
       - tsx
       - yaml
+
+  postcss-load-config@6.0.1(postcss@8.5.6):
+    dependencies:
+      lilconfig: 3.1.3
+    optionalDependencies:
+      postcss: 8.5.6
 
   postcss-load-config@6.0.1(postcss@8.5.6)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
@@ -16671,6 +16781,17 @@ snapshots:
       tsx: 4.19.2
       yaml: 2.8.2
 
+  vite@7.3.0:
+    dependencies:
+      esbuild: 0.27.2
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+      postcss: 8.5.6
+      rollup: 4.53.5
+      tinyglobby: 0.2.15
+    optionalDependencies:
+      fsevents: 2.3.3
+
   vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
       esbuild: 0.27.2
@@ -16715,6 +16836,43 @@ snapshots:
       '@edge-runtime/vm': 3.2.0
       '@types/node': 24.10.4
       '@vitest/browser-playwright': 4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)
+    transitivePeerDependencies:
+      - jiti
+      - less
+      - lightningcss
+      - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - yaml
+
+  vitest@4.0.16(@vitest/browser-playwright@4.0.16):
+    dependencies:
+      '@vitest/expect': 4.0.16
+      '@vitest/mocker': 4.0.16(vite@7.3.0)
+      '@vitest/pretty-format': 4.0.16
+      '@vitest/runner': 4.0.16
+      '@vitest/snapshot': 4.0.16
+      '@vitest/spy': 4.0.16
+      '@vitest/utils': 4.0.16
+      es-module-lexer: 1.7.0
+      expect-type: 1.3.0
+      magic-string: 0.30.21
+      obug: 2.1.1
+      pathe: 2.0.3
+      picomatch: 4.0.3
+      std-env: 3.10.0
+      tinybench: 2.9.0
+      tinyexec: 1.0.2
+      tinyglobby: 0.2.15
+      tinyrainbow: 3.0.3
+      vite: 7.3.0
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@vitest/browser-playwright': 4.0.16(playwright@1.57.0)(vite@7.3.0)(vitest@4.0.16)
     transitivePeerDependencies:
       - jiti
       - less

@@ -6,7 +6,6 @@ import '@fontsource/fira-sans/700.css';
 import '@fontsource/source-sans-pro/400.css';
 import '@fontsource/source-sans-pro/700.css';
 // <End TODO>
-import { Router } from '@lit-labs/router';
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
@@ -54,25 +53,6 @@ export class App extends LitElement {
 
   static override readonly styles = [appStyles];
 
-  readonly #router = new Router(this, [
-    {
-      enter: async () => {
-        await import('../wizard-index-page/index');
-        return true;
-      },
-      path: '/',
-      render: () => html`<wizard-index-page .templates=${this.templates}></wizard-index-page>`,
-    },
-    {
-      enter: async () => {
-        await import('../wizard-style-guide/index');
-        return true;
-      },
-      path: '/style-guide',
-      render: () => html`<wizard-style-guide></wizard-style-guide>`,
-    },
-  ]);
-
   override connectedCallback() {
     super.connectedCallback();
     defineCustomElements();
@@ -97,7 +77,7 @@ export class App extends LitElement {
   };
 
   override render() {
-    return this.#router.outlet();
+    return html`<slot></slot>`;
   }
 }
 

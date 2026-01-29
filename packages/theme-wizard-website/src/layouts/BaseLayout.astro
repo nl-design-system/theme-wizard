@@ -15,12 +15,12 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
 <html lang="nl-NL" class="utrecht-root">
   <head>
     <meta charset="utf-8" />
+    <title>{title}</title>
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="generator" content={Astro.generator} />
     {scraperUrl ? <meta name="scraper-api" content={scraperUrl} /> : null}
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <title>{title}</title>
+    <meta name="generator" content={Astro.generator} />
   </head>
   <body class="utrecht-body">
     <slot />

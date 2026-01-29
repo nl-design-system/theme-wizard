@@ -37,7 +37,8 @@ export default css`
     justify-content: end;
   }
 
-  .wizard-layout__nav-item {
+  .wizard-layout__nav-item,
+  .wizard-layout__nav ::slotted(a[href]) {
     --utrecht-link-color: #fff;
     --utrecht-link-text-decoration: none;
 
@@ -76,6 +77,8 @@ export default css`
     grid-area: main;
     inline-size: 100%;
     min-block-size: 100%;
+    padding-block: var(--basis-space-block-lg);
+    padding-inline: var(--basis-space-inline-lg);
   }
 
   @media print {
