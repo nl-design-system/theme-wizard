@@ -1,8 +1,9 @@
 import { safeCustomElement } from '@lib/decorators';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
-import { LitElement, html, unsafeCSS, nothing } from 'lit';
+import { html, unsafeCSS, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { FormElement } from './../lib/FormElement';
 import buttonStyles from './styles';
 
 const tag = 'clippy-button';
@@ -20,7 +21,7 @@ type Size = 'small' | 'medium';
 const defaultSize: Size = 'medium';
 
 @safeCustomElement(tag)
-export class ClippyButton extends LitElement {
+export class ClippyButton<T = unknown> extends FormElement<T> {
   @property({ type: Boolean }) 'icon-only' = false;
   @property({ type: Boolean }) toggle = undefined;
   @property({ type: Boolean }) pressed = false;
@@ -38,7 +39,6 @@ export class ClippyButton extends LitElement {
     type: String,
   })
   hint: Hint | undefined;
-  @property({ type: Boolean }) disabled = false;
   @property({
     converter: {
       fromAttribute: (value: string | null): Size => {
