@@ -10,8 +10,7 @@ import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import type { TemplateGroup } from '../wizard-preview-picker';
+import { customElement, state } from 'lit/decorators.js';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
@@ -26,22 +25,6 @@ import appStyles from './app.css';
 export class App extends LitElement {
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
   readonly #theme = new Theme();
-
-  // Template list provided by the host application (JSON string attribute)
-  @property({ attribute: 'templates' }) templatesAttr?: string;
-
-  // Parsed templates list (computed)
-  get templates(): TemplateGroup[] {
-    try {
-      if (this.templatesAttr) {
-        const parsed = JSON.parse(this.templatesAttr);
-        if (Array.isArray(parsed)) return parsed;
-      }
-    } catch {
-      console.error('Failed to parse templates:', this.templatesAttr);
-    }
-    return [];
-  }
 
   @provide({ context: themeContext })
   @state()

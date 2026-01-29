@@ -1,23 +1,56 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
+import { getStaticPaths } from './templates/[...template].astro';
+
+export const prerender = false; // enable SSR
 
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
   // Fallback API host
   defaultHost: process.env.API_HOST || '',
 });
+const templates = getStaticPaths()
+  .filter(t => t.params.template !== 'index')
+  .map(({params}) => params.template)
+const templatePath = Astro.url.searchParams.get('templatePath') || templates.at(0);
 ---
 
-<BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
-  <theme-wizard-app templates={TEMPLATES_JSON}>
+<style>
+  .sidebar {
+    display: grid;
+    gap: 2rem;
+  }
+</style>
+
+<BaseLayout title="Theme Wizard" scraperUrl={scraperUrl}>
+  <theme-wizard-app>
     <wizard-layout>
-      <div slot="sidebar">
-        <theme-wizard-tokens-form></theme-wizard-tokens-form>
+      <div slot="sidebar" class="sidebar">
+        <section>
+          <h2>Analyzeer website</h2>
+          <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
+        </section>
+        <section>
+          <h2>Maak design keuzes</h2>
+          <wizard-tokens-form></wizard-tokens-form>
+        </section>
       </div>
+
+      <div slot="nav">
+        <form action="">
+          <label for="templatePath">Weergave</label>
+          <select name="templatePath" id="templatePath">
+            {templates.map((template) => (
+              <option value={template}>{template}</option>
+            ))}
+          </select>
+          <button>Go</button>
+        </form>
+      </div>
+
       <div slot="main">
-        <wizard-index-page></wizard-index-page>
+        <wizard-preview url={`/${templatePath}`} scraperUrl={scraperUrl}></wizard-preview>
       </div>
      </wizard-layout>
   </theme-wizard-app>

@@ -35,6 +35,7 @@ export default css`
   .wizard-layout__nav-slot {
     display: grid;
     justify-content: end;
+    align-items: center;
   }
 
   .wizard-layout__nav-item,

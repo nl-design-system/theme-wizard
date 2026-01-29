@@ -30,13 +30,14 @@ declare global {
 @customElement(tag)
 export class WizardScraper extends LitElement {
   @property() tokens: ScrapedDesignToken[] = [];
+  @property() scraperUrl?: string;
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard-scraper' });
   #options: ScrapedDesignToken[] = [];
   #colors: ScrapedColorToken[] = [];
   #fonts: ScrapedFontFamilyToken[] = [];
   error: string | TemplateResult = '';
   readonly #id = 'target-id';
-  readonly #scraper = new Scraper(document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '');
+  #scraper?: Scraper;
   #src: string = '';
   #state: 'idle' | 'pending' | 'error' | 'success' = 'idle';
   readonly #errorMessageId = 'scraper-error-message';
@@ -53,6 +54,14 @@ export class WizardScraper extends LitElement {
     super();
     this.options = this.#storage.getJSON(OPTIONS_STORAGE_KEY) || [];
     this.src = this.#storage.getItem(SRC_STORAGE_KEY) || '';
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+
+    if (this.scraperUrl) {
+      this.#scraper = new Scraper(this.scraperUrl);
+    }
   }
 
   get options() {
@@ -98,6 +107,8 @@ export class WizardScraper extends LitElement {
       this.requestUpdate();
       return;
     }
+
+    if (!this.#scraper) return;
 
     try {
       this.#state = 'pending';

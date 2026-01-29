@@ -96,24 +96,15 @@ export class WizardTokensForm extends LitElement {
   };
 
   override render() {
-    console.log('render');
     if (!this.theme) {
       return html`<div>Loading...</div>`;
     }
-
-    console.log('testttt');
 
     const bodyFontToken = this.theme.at(BODY_FONT_TOKEN_REF);
     const headingFontToken = this.theme.at(HEADING_FONT_TOKEN_REF);
 
     return html`
       <section>
-        <utrecht-heading-2>Analyseer website</utrecht-heading-2>
-        <wizard-scraper></wizard-scraper>
-      </section>
-
-      <section>
-        <utrecht-heading-2>Maak design keuzes</utrecht-heading-2>
         <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
           <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
 
@@ -175,7 +166,7 @@ export class WizardTokensForm extends LitElement {
       </section>
 
       <section>
-        <utrecht-heading-2>Download thema</utrecht-heading-2>
+        <clippy-heading level="2">Download thema</clippy-heading-2>
 
         <wizard-download-confirmation
           .issues=${this.theme.groupedIssues}

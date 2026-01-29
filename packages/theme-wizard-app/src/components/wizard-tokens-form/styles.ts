@@ -1,6 +1,12 @@
 import { css } from 'lit';
 
 export default css`
+  clippy-heading {
+    display: block;
+    margin-block-end: var(--basis-space-block-md);
+    font-size: 100%;
+  }
+
   .wizard-app__basis-colors {
     display: grid;
     margin-block: 0;

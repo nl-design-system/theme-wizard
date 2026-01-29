@@ -5,9 +5,9 @@ const CSS_ENDPOINT = '/api/v1/css';
 const TOKEN_ENDPOINT = '/api/v1/css-design-tokens';
 
 export default class Scraper {
-  #scraperUrl: URL;
-  #requestCSSUrl: URL;
-  #requestTokenUrl: URL;
+  readonly #scraperUrl: URL;
+  readonly #requestCSSUrl: URL;
+  readonly #requestTokenUrl: URL;
 
   constructor(scraperURL = DEFAULT_SCRAPER_URL) {
     this.#scraperUrl = new URL(scraperURL);
