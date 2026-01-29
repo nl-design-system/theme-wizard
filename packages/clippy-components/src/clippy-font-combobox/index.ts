@@ -1,6 +1,7 @@
 import { safeCustomElement } from '@lib/decorators';
 import { html } from 'lit';
 import { query } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
@@ -71,6 +72,8 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
         this.#intersectionObserver.observe(element);
       }
     };
-    return html`<span ${ref(observeElement)} style=${styleMap(styles)} data-css-url=${cssUrl}> ${label} </span>`;
+    return html`<span ${ref(observeElement)} style=${styleMap(styles)} data-css-url=${ifDefined(cssUrl)}>
+      ${label}
+    </span>`;
   }
 }
