@@ -49,7 +49,7 @@ export class WizardFontInput extends WizardTokenInput {
   readonly #handleChange = (event: Event) => {
     const target = event.target;
     if (!(target instanceof ClippyFontCombobox)) return;
-    this.value = `${target.value}`;
+    this.value = target.value ?? '';
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   };
 
