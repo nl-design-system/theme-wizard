@@ -22,7 +22,7 @@
     "clippy-tokens.css"
   ],
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "vite build --watch --mode development",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "type-check": "tsc --noEmit --project tsconfig.json",
     "build": "pnpm run type-check && pnpm run types && vite build",

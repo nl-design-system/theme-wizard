@@ -24,7 +24,7 @@
     "directory": "packages/clippy-components"
   },
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "vite build --watch --mode development",
     "types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "type-check": "tsc --noEmit --project tsconfig.json",
     "prebuild": "node --env-file-if-exists=.env ./scripts/download-font-list.ts",
