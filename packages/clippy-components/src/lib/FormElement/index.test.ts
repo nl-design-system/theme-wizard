@@ -1,5 +1,5 @@
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { FormField } from './index';
+import { FormElement } from './index';
 
 const tag = 'form-field';
 
@@ -9,11 +9,11 @@ document.body.innerHTML = `
   </form>
 `;
 
-describe(`FormField`, () => {
+describe(`FormElement`, () => {
   beforeAll(() => {
-    // FormField is meant as a base class,
+    // FormElement is meant as a base class,
     // therefore it is not exported with a function to define it as a Custom Element.
-    customElements.define(tag, FormField);
+    customElements.define(tag, FormElement);
   });
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe(`FormField`, () => {
   });
 
   it('shows up as a form element', async () => {
-    const component: FormField = document.querySelector(tag)!;
+    const component: FormElement = document.querySelector(tag)!;
     const form: HTMLFormElement = document.querySelector('form')!;
     expect(form.elements).toContain(component);
   });
@@ -37,7 +37,7 @@ describe(`FormField`, () => {
 
   it('holds a form value', async () => {
     const value = 'changed';
-    const component: FormField = document.querySelector(tag)!;
+    const component: FormElement = document.querySelector(tag)!;
     component.value = value;
     const form: HTMLFormElement = document.querySelector('form')!;
     const formData = new FormData(form);

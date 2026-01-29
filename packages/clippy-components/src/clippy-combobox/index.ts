@@ -7,7 +7,7 @@ import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import memoize from 'memoize';
 import { arrayFromTokenList } from '../lib/converters';
-import { FormField } from '../lib/FormField';
+import { FormElement } from '../lib/FormElement';
 import srOnly from '../lib/sr-only/styles';
 
 type Option = {
@@ -26,7 +26,7 @@ declare global {
 }
 
 @safeCustomElement(tag)
-export class ClippyCombobox<T extends Option = Option> extends FormField<T['value']> {
+export class ClippyCombobox<T extends Option = Option> extends FormElement<T['value']> {
   @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';
 
