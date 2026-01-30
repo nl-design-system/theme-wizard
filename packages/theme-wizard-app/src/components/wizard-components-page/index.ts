@@ -13,7 +13,6 @@ import paragraphCSS from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import skipLinkCSS from '@nl-design-system-candidate/skip-link-css/skip-link.css?inline';
 import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { t } from '../../i18n';
 import { getStories } from '../../utils/csf-utils';
 import * as ButtonStories from './button-react.stories';
 import * as CodeBlockStories from './code-block-react.stories';
@@ -31,9 +30,6 @@ import '../wizard-story';
 import '../wizard-story-react';
 import '../wizard-story-preview';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-
-// Button
-// Skip Link
 
 // Steps to add a new component:
 // 1. pnpm add @nl-design-system-candidate/[component]-docs
@@ -103,80 +99,43 @@ const storyModules: StoryModule[] = [
 export class WizardComponentsPage extends LitElement {
   static override readonly styles = [styles];
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    document.title = t('componentsPage.title').toString();
-  }
-
-  override firstUpdated(): void {
-    // Scroll to hash on page load
-    const hash = globalThis.location.hash;
-    if (hash) {
-      this.#scrollToHash(hash);
-    }
-  }
-
-  #handleNavClick(event: Event): void {
-    const link = (event.target as Element).closest('a[href^="#"]');
-    if (!link) return;
-
-    const href = link.getAttribute('href');
-    if (!href) return;
-
-    event.preventDefault();
-    globalThis.location.hash = href;
-    this.#scrollToHash(href);
-  }
-
-  #scrollToHash(hash: string): void {
-    const target = this.shadowRoot?.querySelector(hash) || document.querySelector(hash);
-    if (target) {
-      // Use requestAnimationFrame to ensure element is rendered
-      requestAnimationFrame(() => target.scrollIntoView());
-    }
-  }
-
   override render() {
     return html`
-      <wizard-layout>
-        <nav slot="sidebar" class="wizard-styleguide__nav" @click=${this.#handleNavClick}>
-          ${storyModules.map((storyModule) => {
-            const hash = `#${storyModule.default.id}`;
-            return html`<a class="wizard-styleguide__nav-item" href=${hash}>${storyModule.default.id}</a>`;
-          })}
-        </nav>
+      <nav>
+        ${storyModules.map((storyModule) => {
+          const hash = `#${storyModule.default.id}`;
+          return html`<a class="wizard-styleguide__nav-item" href=${hash}>${storyModule.default.id}</a>`;
+        })}
+      </nav>
 
-        <div slot="main" class="wizard-styleguide__main">
-          <clippy-heading level="1">${t('componentsPage.title')}</clippy-heading>
+      <div>
+        ${storyModules.map((stories) => {
+          const meta = stories.default;
+          const description = meta.parameters?.['docs']?.description?.component;
+          return html`
+            <article id=${meta.id}>
+              <clippy-heading level="2">${meta.id}</clippy-heading>
+              ${description ? html`<utrecht-paragraph>${description}</utrecht-paragraph>` : nothing}
 
-          ${storyModules.map((stories) => {
-            const meta = stories.default;
-            const description = meta.parameters?.['docs']?.description?.component;
-            return html`
-              <article id=${meta.id}>
-                <clippy-heading level="2">${meta.id}</clippy-heading>
-                ${description ? html`<utrecht-paragraph>${description}</utrecht-paragraph>` : nothing}
-
-                <clippy-heading level="3">Stories</clippy-heading>
-                ${getStories(stories, meta).map(
-                  (story) => html`
-                    <section>
-                      <clippy-heading level="4">${story?.name || story?.storyName}</clippy-heading>
-                      <wizard-story-preview>
-                        <wizard-story-react
-                          .meta=${meta}
-                          .story=${story}
-                          .storyStyleSheets=${storyStyleSheets}
-                        ></wizard-story-react>
-                      </wizard-story-preview>
-                    </section>
-                  `,
-                )}
-              </article>
-            `;
-          })}
-        </div>
-      </wizard-layout>
+              <clippy-heading level="3">Stories</clippy-heading>
+              ${getStories(stories, meta).map(
+                (story) => html`
+                  <section>
+                    <clippy-heading level="4">${story?.name || story?.storyName}</clippy-heading>
+                    <wizard-story-preview>
+                      <wizard-story-react
+                        .meta=${meta}
+                        .story=${story}
+                        .storyStyleSheets=${storyStyleSheets}
+                      ></wizard-story-react>
+                    </wizard-story-preview>
+                  </section>
+                `,
+              )}
+            </article>
+          `;
+        })}
+      </div>
     `;
   }
 }
