@@ -39,7 +39,7 @@ describe(`<${tag}>`, () => {
     // Explicitly set the body so that the value is provided
     document.body.innerHTML = `
       <form>
-        <${tag} name="${tag}" options="${options}" value="${value}"></${tag}>
+        <${tag} name="${tag}" options='${options}' value="${value}"></${tag}>
       </form>`;
 
     const component: ClippyFontCombobox = document.querySelector(tag)!;
