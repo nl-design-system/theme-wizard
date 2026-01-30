@@ -363,7 +363,7 @@ importers:
     dependencies:
       '@amsterdam/design-system-css':
         specifier: 2.2.0
-        version: 2.2.0
+        version: 2.2.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)
       '@fontsource/fira-sans':
         specifier: 5.2.7
         version: 5.2.7
@@ -372,34 +372,142 @@ importers:
         version: 5.2.5
       '@gemeente-denhaag/action':
         specifier: 4.1.3
-        version: 4.1.3
+        version: 4.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@gemeente-denhaag/card':
         specifier: 5.0.6
-        version: 5.0.6
+        version: 5.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@gemeente-denhaag/side-navigation':
         specifier: 4.0.3
-        version: 4.0.3
+        version: 4.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@lit/context':
         specifier: 1.1.6
         version: 1.1.6
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.0.0
+        version: 1.0.0
+      '@nl-design-system-candidate/button-docs':
+        specifier: 1.0.2
+        version: 1.0.2
+      '@nl-design-system-candidate/button-react':
+        specifier: 1.0.0
+        version: 1.0.0(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/button-tokens':
+        specifier: 1.0.0
+        version: 1.0.0
+      '@nl-design-system-candidate/code-block-css':
+        specifier: 1.1.5
+        version: 1.1.5
+      '@nl-design-system-candidate/code-block-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/code-block-react':
+        specifier: 1.3.7
+        version: 1.3.7(@babel/runtime@7.28.4)(react@18.3.1)
       '@nl-design-system-candidate/code-css':
         specifier: 2.0.5
         version: 2.0.5
+      '@nl-design-system-candidate/code-docs':
+        specifier: 1.1.2
+        version: 1.1.2
+      '@nl-design-system-candidate/code-react':
+        specifier: 1.2.7
+        version: 1.2.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/code-tokens':
+        specifier: 2.0.4
+        version: 2.0.4
       '@nl-design-system-candidate/color-sample-css':
         specifier: 1.0.4
         version: 1.0.4
+      '@nl-design-system-candidate/color-sample-docs':
+        specifier: 1.2.2
+        version: 1.2.2
+      '@nl-design-system-candidate/color-sample-react':
+        specifier: 1.2.2
+        version: 1.2.2(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/color-sample-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
       '@nl-design-system-candidate/data-badge-css':
         specifier: 1.0.5
         version: 1.0.5
+      '@nl-design-system-candidate/data-badge-docs':
+        specifier: 1.2.0
+        version: 1.2.0
+      '@nl-design-system-candidate/data-badge-react':
+        specifier: 1.1.7
+        version: 1.1.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/data-badge-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/heading-css':
+        specifier: 1.1.3
+        version: 1.1.3
+      '@nl-design-system-candidate/heading-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/heading-react':
+        specifier: 1.1.6
+        version: 1.1.6(@babel/runtime@7.28.4)(react@18.3.1)
       '@nl-design-system-candidate/link-css':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/link-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/link-react':
+        specifier: 1.1.7
+        version: 1.1.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/link-tokens':
+        specifier: 3.0.3
+        version: 3.0.3
+      '@nl-design-system-candidate/mark-css':
+        specifier: 1.0.5
+        version: 1.0.5
+      '@nl-design-system-candidate/mark-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/mark-react':
+        specifier: 1.1.7
+        version: 1.1.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/mark-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/number-badge-css':
+        specifier: 1.1.5
+        version: 1.1.5
+      '@nl-design-system-candidate/number-badge-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/number-badge-react':
+        specifier: 1.3.2
+        version: 1.3.2(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/number-badge-tokens':
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/paragraph-css':
         specifier: 2.1.3
         version: 2.1.3
+      '@nl-design-system-candidate/paragraph-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/paragraph-react':
+        specifier: 2.2.1
+        version: 2.2.1(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/paragraph-tokens':
+        specifier: 1.1.3
+        version: 1.1.3
       '@nl-design-system-candidate/skip-link-css':
         specifier: 1.0.5
         version: 1.0.5
+      '@nl-design-system-candidate/skip-link-docs':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@nl-design-system-candidate/skip-link-react':
+        specifier: 1.1.7
+        version: 1.1.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/skip-link-tokens':
+        specifier: 1.0.4
+        version: 1.0.4
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
@@ -463,6 +571,12 @@ importers:
       lit:
         specifier: 3.3.2
         version: 3.3.2
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       rosetta:
         specifier: 1.1.0
         version: 1.1.0
@@ -473,33 +587,48 @@ importers:
         specifier: 4.3.4
         version: 4.3.4
     devDependencies:
+      '@nl-design-system-community/theme-wizard-templates':
+        specifier: workspace:*
+        version: link:../theme-wizard-templates
+      '@storybook/react-vite':
+        specifier: 10.1.11
+        version: 10.1.11(esbuild@0.27.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.53.5)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
+      '@types/react':
+        specifier: 18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: 18.3.0
+        version: 18.3.0
       '@vitest/browser-playwright':
         specifier: 4.0.16
-        version: 4.0.16(playwright@1.57.0)(vite@7.3.0)(vitest@4.0.16)
+        version: 4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)
       '@vitest/coverage-v8':
         specifier: 4.0.16
-        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0)(vitest@4.0.16))(vitest@4.0.16)
+        version: 4.0.16(@vitest/browser@4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16))(vitest@4.0.16)
       playwright:
         specifier: 1.57.0
         version: 1.57.0
       postcss-lit:
         specifier: 1.3.1
-        version: 1.3.1(postcss@8.5.6)
+        version: 1.3.1(postcss@8.5.6)(tsx@4.19.2)(yaml@2.8.2)
       rimraf:
         specifier: 6.1.2
         version: 6.1.2
+      storybook:
+        specifier: 10.1.11
+        version: 10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
         specifier: 7.3.0
-        version: 7.3.0
+        version: 7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
       vitest:
         specifier: 4.0.16
-        version: 4.0.16(@vitest/browser-playwright@4.0.16)
+        version: 4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
 
   packages/theme-wizard-server:
     dependencies:
@@ -2193,8 +2322,26 @@ packages:
   '@nl-design-system-candidate/button-css@1.0.0':
     resolution: {integrity: sha512-TjXFCCeCrSfxBRwcdKWFO/gLAZDfeBAnxC3DuCNvu53JwYIA30++GOivFgeRmDyXDhJysoG19/SVq1r1jfUP5Q==}
 
+  '@nl-design-system-candidate/button-docs@1.0.2':
+    resolution: {integrity: sha512-G+UO66sr49bg1yMMV4Z2QAKKSCigFrECkejq46GNjgCCoKuSxgJcFHw89MhgXRxgMQuDGJSQhWpTKk/VOK1cAg==}
+
   '@nl-design-system-candidate/button-react@1.0.0':
     resolution: {integrity: sha512-vJgms4HPQlOzHUAcddRgZFpJgmHYGZ1JCxO9rboITME8wV31aZw8NSWxRWo4sGYcn4BxrxZ8qZ7o2cQp4t9wng==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/button-tokens@1.0.0':
+    resolution: {integrity: sha512-2uxqqVUW9kyib/rPn1rvWI09auUVOkA5IUC+rBlYxUz9DVVn4UcXPeOe9KVgh0a1WuM2dzX3k/bpWRBINtKACw==}
+
+  '@nl-design-system-candidate/code-block-css@1.1.5':
+    resolution: {integrity: sha512-8NdWxqzNvShKOwRi+SwRHQ/BfdzQh6q4M7sui9t6GGiwgsgnmsltuVLujkkIxQIV2pG/ZXaueYq/u7i7X8ygdg==}
+
+  '@nl-design-system-candidate/code-block-docs@1.2.1':
+    resolution: {integrity: sha512-VmIKS1J0EwQrMyTrDbua4dR1nK2CuppqokyYCSdeD1/zHTst6zy6Y9H29mxhRVdHptULGyb+IOMNaZ8Akr1Yuw==}
+
+  '@nl-design-system-candidate/code-block-react@1.3.7':
+    resolution: {integrity: sha512-gpQySDLShzowkObZAf1WkTrKhT9KYas+ntq023IwT+86qdvIEc2BQQ38MBD6LZFdMCLE6WuVdh8R4BoWq5qNfA==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18 || ^19
@@ -2205,14 +2352,53 @@ packages:
   '@nl-design-system-candidate/code-css@2.0.5':
     resolution: {integrity: sha512-KYRoiv389rTyGEb1xK1jFkzmQ4v3H6B82OOMafVqm3L5+ntr2f3tbJNYBkep3XYjAEq8VmNLkkJQYJZHiEo2ng==}
 
+  '@nl-design-system-candidate/code-docs@1.1.2':
+    resolution: {integrity: sha512-aJO9YuAV9bhqj/nv/pPI3oAY26ePC7a9OAxEEFPUL3w9Jpk7Qz3c97j9DYlDExtPUjSLksKpkDriL0bb8X9LTA==}
+
+  '@nl-design-system-candidate/code-react@1.2.7':
+    resolution: {integrity: sha512-ansOFc7d3Xla9RJO2OLRn0O5kwXYNUTStnQEzqZF/C8rq4ux63XyVSrhNf1rFjVCpD/cElX9mpHv/CnVRmWWdA==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/code-tokens@2.0.4':
+    resolution: {integrity: sha512-6RmljcilQog/IXmo+aLaqpe3cZ22GOE8HknmLgACK+b+NVmkhtdf+HwgtnEgg235Ucf2kbDpbERKppEHKfikUA==}
+
   '@nl-design-system-candidate/color-sample-css@1.0.4':
     resolution: {integrity: sha512-zDQKBqdWnxKg+y08WMOc2FKTCbKYM+IVLgzWd044sAo2U+q3XKREP+VZDUKAmSDEPcaDn2hia1QFO6eJkhMFAQ==}
+
+  '@nl-design-system-candidate/color-sample-docs@1.2.2':
+    resolution: {integrity: sha512-x0iLLaB8RQKXbBi+2/HA49+DGZx0cznofKr9GTB6OQ1lO4CD8AaSNzs1su+VscdRma1OFE9Zp5JRyLICVNWpQg==}
+
+  '@nl-design-system-candidate/color-sample-react@1.2.2':
+    resolution: {integrity: sha512-s4TUicUpaCtoIx7FQ/23AneQ6+23Lr2tUZWxtjTxXuGkSwQmta+S3/ED+dDaBGIH/NRqYre0jGc/p5mhiPZj2Q==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/color-sample-tokens@2.0.3':
+    resolution: {integrity: sha512-B3hIdU+bX70W5XbRpPjXrpi3F1JiNoMhNbsP0PauO0jhK2386uSFgBEqb4iDN0wruqX0qAiBhOcJuepy7vding==}
 
   '@nl-design-system-candidate/data-badge-css@1.0.5':
     resolution: {integrity: sha512-CDcXpGQDonWIw9omDL5O/rn1IaS0y8s4WprVDCZRwYKOgpIE6N3T4MwiuESzijldhT4lnYIxK1q3jdp2G8enFQ==}
 
+  '@nl-design-system-candidate/data-badge-docs@1.2.0':
+    resolution: {integrity: sha512-NWNqXmAPi5gVx3yjNZl4ZE619h3sHq7AtdQDfcz2ifYf5SNXR4Z2duQYTOpIWge7y/aRUzibOHkirh3CjoDY4A==}
+
+  '@nl-design-system-candidate/data-badge-react@1.1.7':
+    resolution: {integrity: sha512-zjvhmz0vh55zP+VA+yHvyjAaKjhDvosbiMDAM1Bcyhu0Yau8vAPY8fJuZAN+EHNvCF+8RwQTttdtnEIKw9sRMw==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/data-badge-tokens@2.0.3':
+    resolution: {integrity: sha512-W2SB4PTND45OEJeXLSeYjA+RT2cyLRFXKcZu1rDTh5Q3n6EED65HsocFmOu6uRK7pAb6WwU6W14X4EAD47QOUA==}
+
   '@nl-design-system-candidate/heading-css@1.1.3':
     resolution: {integrity: sha512-s4ERGrHcsBkZlCc+qz8+XDB5rCpxvkxwxI2bg4OB2GDS0DU5LzjNMWhsV1I8IPOboTvWMabvrsscxVuj5Bijuw==}
+
+  '@nl-design-system-candidate/heading-docs@1.2.1':
+    resolution: {integrity: sha512-PP9GUfN8K0BcCYHjud20eTicylJkGsXObsaxYvTjg6L1lad0gcAFYr/QFDZ87HAntb3TB6gjO3LHVnuyh8Na9A==}
 
   '@nl-design-system-candidate/heading-react@1.1.6':
     resolution: {integrity: sha512-1FXimo26i3qlYZo7JOtQ+StS88ReaeaRLpqlhFcdEf2IKuuuh5I3zpisjkDW3mw0YraVVSrC1kE3tcLAfUw9Qg==}
@@ -2223,11 +2409,38 @@ packages:
   '@nl-design-system-candidate/link-css@2.0.3':
     resolution: {integrity: sha512-NpRIm9YDCK1bihslc9UD3OvV5hmm91Dc7v2oBIllqlZZyS1THFmPsyi+sJ1Vd7ZDa54GgqjuzUJOzAoQDJOFzQ==}
 
+  '@nl-design-system-candidate/link-docs@1.2.1':
+    resolution: {integrity: sha512-sCLgimS46bOt1gEgRElnVVETrv80YD3MnxY0NNrC2A0mg3ubnZR+C/dQ/NmDfGXmE2qXLlexzd5csk1qiRsapw==}
+
   '@nl-design-system-candidate/link-react@1.1.7':
     resolution: {integrity: sha512-gGOWFih3kNpLFRsFUfFyCXoXCL/u7aSsCJ+lHkBhnWUsnlQRmUxm/bWDrnaiRN72i4rp2bDU4wLFMGljoshfUQ==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18
+
+  '@nl-design-system-candidate/link-tokens@3.0.3':
+    resolution: {integrity: sha512-4CS7pyfBpCwCY9u2C1QbQg/sYBLcruB7ZHCprUCJR11NyjcdXGYVnxxnOU+uko/G7UZ6Vuy66bALIbro7Iy+aw==}
+
+  '@nl-design-system-candidate/mark-css@1.0.5':
+    resolution: {integrity: sha512-QIoqT5Rv27VaQc/HnCjw2kfb9wCt37Sb5O7geHysZfaSsAIMZx22lZ2Fzs2vUSxO7pdMT9MidKpipwWrusZ+5g==}
+
+  '@nl-design-system-candidate/mark-docs@1.2.1':
+    resolution: {integrity: sha512-Zk5rUbmEHrGlSTKTIJjXzQdfCNfDdeA0pGD7Vk8ixOeBom3IM4h6yiGNEV5bhuQostFIL6gHOXZ+OMc3L4nMvQ==}
+
+  '@nl-design-system-candidate/mark-react@1.1.7':
+    resolution: {integrity: sha512-sT9usI1k2Z5+BLaWqYz8zvJIvu2w3lbYI6KcUksaUlYpoJLZ79KzTrKmQNTq5fihCVZPvG0Me7itbD7A+L0thQ==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/mark-tokens@2.0.3':
+    resolution: {integrity: sha512-eA0Poy1qyoGSOAwJUirRHOm4nSzsL33fz1D585FKIucmQTV8EDrBLgLlysRDAdLriWAXPINsETaAkSQ9/EFq0A==}
+
+  '@nl-design-system-candidate/number-badge-css@1.1.5':
+    resolution: {integrity: sha512-H9/+72dHiuKZUk+xixykqpgoH7O70SUw1Ak71NIAscVcBbivWK4Hzj9fF4uNXpIXdERxVdiJxa1TIBhCdMRwAQ==}
+
+  '@nl-design-system-candidate/number-badge-docs@1.2.1':
+    resolution: {integrity: sha512-qv7zQEYfL1A1bc2CERvY23GRuSUdbiFoCFYUm85Sn7qsAIBtWbLJVK0aU5bzcTRd7N/PDj52RFcttS5CNrPXFw==}
 
   '@nl-design-system-candidate/number-badge-react@1.3.2':
     resolution: {integrity: sha512-inGt+cWeM3THcE+tTjzTazo/bwfTxf2F3/16yyEUCwxY/We7rL0KNW9nyZ3pYZuIxebRKSsRtCh7Z4fELKMJYA==}
@@ -2235,8 +2448,14 @@ packages:
       '@babel/runtime': ^7
       react: ^18 || ^19
 
+  '@nl-design-system-candidate/number-badge-tokens@2.0.3':
+    resolution: {integrity: sha512-LfJVX9ha486SMJ7laHy/yRy31mDdJHS5r8bczsuR4afll5F6xiwvhyxeJlzGv4z/Gsdoub3SWiz3apVObYJErg==}
+
   '@nl-design-system-candidate/paragraph-css@2.1.3':
     resolution: {integrity: sha512-f3GHiSpisUZAcn4gSNpSX2C3Mhl7y9dg1TfTe+jGMtHAqau/tztrtE3H27FlwrZeVEtsUtvssRCYUA3UO/GDpQ==}
+
+  '@nl-design-system-candidate/paragraph-docs@1.2.1':
+    resolution: {integrity: sha512-IXpd7MJp8f4d52u3xOB7qDAVGX+Zwx8sWAxuxoTLQiQY6yyyY7ahPMLFShGsnZpjn7KoQ6UExbTV2sihBODkyg==}
 
   '@nl-design-system-candidate/paragraph-react@2.2.1':
     resolution: {integrity: sha512-Qa+ewDnB8stLP2In/NIEMHxLGbumXjui1tLMzc8FnDcaKtArMmNbKfAiaOnAQpl5r67DDsqfsAkZc7GWL3tJBw==}
@@ -2244,14 +2463,23 @@ packages:
       '@babel/runtime': ^7
       react: ^18
 
+  '@nl-design-system-candidate/paragraph-tokens@1.1.3':
+    resolution: {integrity: sha512-EtFFQagTwkJYL5k9+h8xDQDh9GKzgo4CJnFrSuxWNzM3A3Hi+vAd6bIBAj4ECBZfW5IJBtsONAduSoCiPo5CbA==}
+
   '@nl-design-system-candidate/skip-link-css@1.0.5':
     resolution: {integrity: sha512-0Bq6yDPgz6sCGrd5EuV8CfL9m78he1a914sJPeZ+Cqr4WTqN0m1qf3LPJ2YVpOP0fYgk5GX2UqwTKIDhSLg5GA==}
+
+  '@nl-design-system-candidate/skip-link-docs@1.2.1':
+    resolution: {integrity: sha512-kNGtfmwI7iQVF0Bebpftjn/R/wHRaOFxNVOgoLlAQeRCimIu5t8zYJUGnJGguMgx2gwDFSRcOhn4/cwRI2LVNg==}
 
   '@nl-design-system-candidate/skip-link-react@1.1.7':
     resolution: {integrity: sha512-ighFoR2uniRpR/Cd0sj6ppxZ1OeHZ2sNOD6lxFvfgPVJInC3fd2Qi/4qHZDUhte5PIlej2HcFzqzTgieK3OBwQ==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18 || ^19
+
+  '@nl-design-system-candidate/skip-link-tokens@1.0.4':
+    resolution: {integrity: sha512-MD1+m55nRqkj2eATcBNOLE8N5jWfvjJg2ax+POX8zXm49wJcBGTS6B/kK4kzIPbMuivYnxVtNlmA+Cz/upFBZA==}
 
   '@nl-design-system-community/ma-design-tokens@2.5.0':
     resolution: {integrity: sha512-3TYzzbo0C5br42SiS6jISScUL7u4hxgDvU2DZVBv6gJ40jBZPpXIgLI1T/JESQj79+nY2AddGm6l8xg2o2WLFA==}
@@ -2898,6 +3126,9 @@ packages:
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
 
+  '@types/react-dom@18.3.0':
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
+
   '@types/react-dom@18.3.7':
     resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
     peerDependencies:
@@ -2910,6 +3141,9 @@ packages:
 
   '@types/react@18.3.23':
     resolution: {integrity: sha512-/LDXMQh55EzZQ0uVAZmKKhfENivEvWz6E+EYzh+/MCjMhNsotd+ZHhBGIjFDTi6+fz0OhQQQLbTgdQIxxCsC0w==}
+
+  '@types/react@18.3.3':
+    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
 
   '@types/react@19.2.7':
     resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
@@ -8302,8 +8536,6 @@ snapshots:
       '@amsterdam/design-system-assets': 1.1.0
       '@amsterdam/design-system-tokens': 2.2.0
 
-  '@amsterdam/design-system-css@2.2.0': {}
-
   '@amsterdam/design-system-css@2.2.0(@amsterdam/design-system-assets@1.1.0)(@amsterdam/design-system-tokens@2.2.0)':
     dependencies:
       '@amsterdam/design-system-assets': 1.1.0
@@ -9242,14 +9474,16 @@ snapshots:
 
   '@fontsource/source-sans-pro@5.2.5': {}
 
-  '@gemeente-denhaag/action@4.1.3':
+  '@gemeente-denhaag/action@4.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@gemeente-denhaag/button': 3.0.2
-      '@gemeente-denhaag/icons': 4.0.1
-      '@gemeente-denhaag/link': 4.1.0
-      '@gemeente-denhaag/utils': 3.0.1
+      '@gemeente-denhaag/button': 3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/icons': 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/link': 4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/utils': 3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
       date-fns: 4.1.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/action@4.1.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9262,10 +9496,12 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/button@3.0.2':
+  '@gemeente-denhaag/button@3.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@gemeente-denhaag/icons': 4.0.1
+      '@gemeente-denhaag/icons': 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/button@3.0.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9274,13 +9510,15 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/card@5.0.6':
+  '@gemeente-denhaag/card@5.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@gemeente-denhaag/icons': 4.0.1
-      '@gemeente-denhaag/link': 4.1.0
-      '@gemeente-denhaag/paragraph': 2.1.0
-      '@gemeente-denhaag/utils': 3.0.1
+      '@gemeente-denhaag/icons': 4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/link': 4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/paragraph': 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@gemeente-denhaag/utils': 3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/card@5.0.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9292,9 +9530,11 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/icons@4.0.1':
+  '@gemeente-denhaag/icons@4.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       clsx: 2.1.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/icons@4.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9302,31 +9542,42 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/link@4.1.0': {}
+  '@gemeente-denhaag/link@4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/link@4.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/number-badge@2.1.0': {}
+  '@gemeente-denhaag/number-badge@2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/number-badge@2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/paragraph@2.1.0': {}
+  '@gemeente-denhaag/paragraph@2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/paragraph@2.1.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/side-navigation@4.0.3':
+  '@gemeente-denhaag/side-navigation@4.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@gemeente-denhaag/number-badge': 2.1.0
+      '@gemeente-denhaag/number-badge': 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/side-navigation@4.0.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9335,9 +9586,11 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@gemeente-denhaag/utils@3.0.1':
+  '@gemeente-denhaag/utils@3.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       date-fns: 4.1.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@gemeente-denhaag/utils@3.0.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
@@ -9675,6 +9928,8 @@ snapshots:
 
   '@nl-design-system-candidate/button-css@1.0.0': {}
 
+  '@nl-design-system-candidate/button-docs@1.0.2': {}
+
   '@nl-design-system-candidate/button-react@1.0.0(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -9687,15 +9942,56 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.3
 
+  '@nl-design-system-candidate/button-tokens@1.0.0': {}
+
+  '@nl-design-system-candidate/code-block-css@1.1.5': {}
+
+  '@nl-design-system-candidate/code-block-docs@1.2.1': {}
+
+  '@nl-design-system-candidate/code-block-react@1.3.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      clsx: 2.1.1
+      react: 18.3.1
+
   '@nl-design-system-candidate/code-css@2.0.3': {}
 
   '@nl-design-system-candidate/code-css@2.0.5': {}
 
+  '@nl-design-system-candidate/code-docs@1.1.2': {}
+
+  '@nl-design-system-candidate/code-react@1.2.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/code-tokens@2.0.4': {}
+
   '@nl-design-system-candidate/color-sample-css@1.0.4': {}
+
+  '@nl-design-system-candidate/color-sample-docs@1.2.2': {}
+
+  '@nl-design-system-candidate/color-sample-react@1.2.2(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/color-sample-tokens@2.0.3': {}
 
   '@nl-design-system-candidate/data-badge-css@1.0.5': {}
 
+  '@nl-design-system-candidate/data-badge-docs@1.2.0': {}
+
+  '@nl-design-system-candidate/data-badge-react@1.1.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/data-badge-tokens@2.0.3': {}
+
   '@nl-design-system-candidate/heading-css@1.1.3': {}
+
+  '@nl-design-system-candidate/heading-docs@1.2.1': {}
 
   '@nl-design-system-candidate/heading-react@1.1.6(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
@@ -9709,6 +10005,8 @@ snapshots:
 
   '@nl-design-system-candidate/link-css@2.0.3': {}
 
+  '@nl-design-system-candidate/link-docs@1.2.1': {}
+
   '@nl-design-system-candidate/link-react@1.1.7(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -9721,12 +10019,33 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.3
 
+  '@nl-design-system-candidate/link-tokens@3.0.3': {}
+
+  '@nl-design-system-candidate/mark-css@1.0.5': {}
+
+  '@nl-design-system-candidate/mark-docs@1.2.1': {}
+
+  '@nl-design-system-candidate/mark-react@1.1.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/mark-tokens@2.0.3': {}
+
+  '@nl-design-system-candidate/number-badge-css@1.1.5': {}
+
+  '@nl-design-system-candidate/number-badge-docs@1.2.1': {}
+
   '@nl-design-system-candidate/number-badge-react@1.3.2(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.28.4
       react: 18.3.1
 
+  '@nl-design-system-candidate/number-badge-tokens@2.0.3': {}
+
   '@nl-design-system-candidate/paragraph-css@2.1.3': {}
+
+  '@nl-design-system-candidate/paragraph-docs@1.2.1': {}
 
   '@nl-design-system-candidate/paragraph-react@2.2.1(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
@@ -9740,13 +10059,25 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.3
 
+  '@nl-design-system-candidate/paragraph-tokens@1.1.3': {}
+
   '@nl-design-system-candidate/skip-link-css@1.0.5': {}
+
+  '@nl-design-system-candidate/skip-link-docs@1.2.1': {}
+
+  '@nl-design-system-candidate/skip-link-react@1.1.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      clsx: 2.1.1
+      react: 18.3.1
 
   '@nl-design-system-candidate/skip-link-react@1.1.7(@babel/runtime@7.28.4)(react@19.2.3)':
     dependencies:
       '@babel/runtime': 7.28.4
       clsx: 2.1.1
       react: 19.2.3
+
+  '@nl-design-system-candidate/skip-link-tokens@1.0.4': {}
 
   '@nl-design-system-community/ma-design-tokens@2.5.0': {}
 
@@ -10329,6 +10660,10 @@ snapshots:
 
   '@types/prop-types@15.7.15': {}
 
+  '@types/react-dom@18.3.0':
+    dependencies:
+      '@types/react': 19.2.7
+
   '@types/react-dom@18.3.7(@types/react@18.3.23)':
     dependencies:
       '@types/react': 18.3.23
@@ -10338,6 +10673,11 @@ snapshots:
       '@types/react': 19.2.7
 
   '@types/react@18.3.23':
+    dependencies:
+      '@types/prop-types': 15.7.15
+      csstype: 3.2.3
+
+  '@types/react@18.3.3':
     dependencies:
       '@types/prop-types': 15.7.15
       csstype: 3.2.3
@@ -11795,19 +12135,6 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser-playwright@4.0.16(playwright@1.57.0)(vite@7.3.0)(vitest@4.0.16)':
-    dependencies:
-      '@vitest/browser': 4.0.16(vite@7.3.0)(vitest@4.0.16)
-      '@vitest/mocker': 4.0.16(vite@7.3.0)
-      playwright: 1.57.0
-      tinyrainbow: 3.0.3
-      vitest: 4.0.16(@vitest/browser-playwright@4.0.16)
-    transitivePeerDependencies:
-      - bufferutil
-      - msw
-      - utf-8-validate
-      - vite
-
   '@vitest/browser@4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)':
     dependencies:
       '@vitest/mocker': 4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
@@ -11818,23 +12145,6 @@ snapshots:
       sirv: 3.0.2
       tinyrainbow: 3.0.3
       vitest: 4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
-      ws: 8.18.3
-    transitivePeerDependencies:
-      - bufferutil
-      - msw
-      - utf-8-validate
-      - vite
-
-  '@vitest/browser@4.0.16(vite@7.3.0)(vitest@4.0.16)':
-    dependencies:
-      '@vitest/mocker': 4.0.16(vite@7.3.0)
-      '@vitest/utils': 4.0.16
-      magic-string: 0.30.21
-      pixelmatch: 7.1.0
-      pngjs: 7.0.0
-      sirv: 3.0.2
-      tinyrainbow: 3.0.3
-      vitest: 4.0.16(@vitest/browser-playwright@4.0.16)
       ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
@@ -11858,25 +12168,6 @@ snapshots:
       vitest: 4.0.16(@edge-runtime/vm@3.2.0)(@types/node@24.10.4)(@vitest/browser-playwright@4.0.16)(tsx@4.19.2)(yaml@2.8.2)
     optionalDependencies:
       '@vitest/browser': 4.0.16(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vitest/coverage-v8@4.0.16(@vitest/browser@4.0.16(vite@7.3.0)(vitest@4.0.16))(vitest@4.0.16)':
-    dependencies:
-      '@bcoe/v8-coverage': 1.0.2
-      '@vitest/utils': 4.0.16
-      ast-v8-to-istanbul: 0.3.9
-      istanbul-lib-coverage: 3.2.2
-      istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 5.0.6
-      istanbul-reports: 3.2.0
-      magicast: 0.5.1
-      obug: 2.1.1
-      std-env: 3.10.0
-      tinyrainbow: 3.0.3
-      vitest: 4.0.16(@vitest/browser-playwright@4.0.16)
-    optionalDependencies:
-      '@vitest/browser': 4.0.16(vite@7.3.0)(vitest@4.0.16)
     transitivePeerDependencies:
       - supports-color
 
@@ -11923,14 +12214,6 @@ snapshots:
       magic-string: 0.30.21
     optionalDependencies:
       vite: 7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2)
-
-  '@vitest/mocker@4.0.16(vite@7.3.0)':
-    dependencies:
-      '@vitest/spy': 4.0.16
-      estree-walker: 3.0.3
-      magic-string: 0.30.21
-    optionalDependencies:
-      vite: 7.3.0
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -15327,20 +15610,6 @@ snapshots:
       postcss: 8.5.6
       postcss-safe-parser: 6.0.0(postcss@8.5.6)
 
-  postcss-lit@1.3.1(postcss@8.5.6):
-    dependencies:
-      '@babel/generator': 7.28.5
-      '@babel/parser': 7.28.5
-      '@babel/traverse': 7.28.5
-      lilconfig: 3.1.3
-      postcss: 8.5.6
-      postcss-load-config: 6.0.1(postcss@8.5.6)
-    transitivePeerDependencies:
-      - jiti
-      - supports-color
-      - tsx
-      - yaml
-
   postcss-lit@1.3.1(postcss@8.5.6)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
       '@babel/generator': 7.28.5
@@ -15354,12 +15623,6 @@ snapshots:
       - supports-color
       - tsx
       - yaml
-
-  postcss-load-config@6.0.1(postcss@8.5.6):
-    dependencies:
-      lilconfig: 3.1.3
-    optionalDependencies:
-      postcss: 8.5.6
 
   postcss-load-config@6.0.1(postcss@8.5.6)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
@@ -16789,17 +17052,6 @@ snapshots:
       tsx: 4.19.2
       yaml: 2.8.2
 
-  vite@7.3.0:
-    dependencies:
-      esbuild: 0.27.2
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.53.5
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      fsevents: 2.3.3
-
   vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2):
     dependencies:
       esbuild: 0.27.2
@@ -16844,43 +17096,6 @@ snapshots:
       '@edge-runtime/vm': 3.2.0
       '@types/node': 24.10.4
       '@vitest/browser-playwright': 4.0.16(playwright@1.57.0)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))(vitest@4.0.16)
-    transitivePeerDependencies:
-      - jiti
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
-
-  vitest@4.0.16(@vitest/browser-playwright@4.0.16):
-    dependencies:
-      '@vitest/expect': 4.0.16
-      '@vitest/mocker': 4.0.16(vite@7.3.0)
-      '@vitest/pretty-format': 4.0.16
-      '@vitest/runner': 4.0.16
-      '@vitest/snapshot': 4.0.16
-      '@vitest/spy': 4.0.16
-      '@vitest/utils': 4.0.16
-      es-module-lexer: 1.7.0
-      expect-type: 1.3.0
-      magic-string: 0.30.21
-      obug: 2.1.1
-      pathe: 2.0.3
-      picomatch: 4.0.3
-      std-env: 3.10.0
-      tinybench: 2.9.0
-      tinyexec: 1.0.2
-      tinyglobby: 0.2.15
-      tinyrainbow: 3.0.3
-      vite: 7.3.0
-      why-is-node-running: 2.3.0
-    optionalDependencies:
-      '@vitest/browser-playwright': 4.0.16(playwright@1.57.0)(vite@7.3.0)(vitest@4.0.16)
     transitivePeerDependencies:
       - jiti
       - less
