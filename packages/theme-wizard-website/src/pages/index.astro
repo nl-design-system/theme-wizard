@@ -21,7 +21,7 @@ if (!currentTemplate) {
 ---
 
 <style>
-  .sidebar {
+  .theme-sidebar {
     display: grid;
     gap: 2rem;
   }
@@ -30,7 +30,7 @@ if (!currentTemplate) {
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <div slot="sidebar" class="sidebar">
+      <div slot="sidebar" class="theme-sidebar">
         <section>
           <h2>Analyzeer website</h2>
           <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
