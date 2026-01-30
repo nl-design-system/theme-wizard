@@ -33,9 +33,10 @@ export default defineConfig(({ mode }) => ({
         'lit',
         'lit/decorators.js',
         'lit/directives/class-map.js',
-        'lit/directives/unsafe-svg.js',
-        'lit/directives/style-map.js',
+        'lit/directives/if-defined.js',
         'lit/directives/ref.js',
+        'lit/directives/style-map.js',
+        'lit/directives/unsafe-svg.js',
       ],
       input: getFiles('src/[!lib]**/index.ts'),
       output: {

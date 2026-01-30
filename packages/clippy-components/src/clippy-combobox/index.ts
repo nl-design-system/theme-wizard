@@ -9,6 +9,7 @@ import memoize from 'memoize';
 import { arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
 import srOnly from '../lib/sr-only/styles';
+import styles from './styles';
 
 type Option = {
   label: string;
@@ -27,6 +28,7 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends FormElement<T['value']> {
+  @property({ attribute: 'other', type: Boolean }) allowOther = false;
   @property({ reflect: true, type: Boolean }) open = false;
   @property() readonly position: Position = 'block-end';
 
@@ -37,6 +39,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   #options: Map<T['label'], T> = new Map();
 
   static override readonly styles = [
+    styles,
     srOnly,
     unsafeCSS(comboboxStyles),
     unsafeCSS(listboxStyles),
@@ -49,7 +52,8 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     if (this.query.length === 0) {
       return this.options;
     }
-    const options = this.options.filter(this.filter);
+    const filter = this.filter(this.query);
+    const options = this.options.filter(filter);
     if (options.length === 0) {
       this.#addAdditionalOptions(this.query);
     }
@@ -74,7 +78,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   @property()
   override set value(value: T['value'] | null) {
     super.value = value;
-    this.query = this.valueToQuery(value);
+    this.query = this.valueToQuery(value) || this.query;
   }
 
   override get value(): T['value'] | null {
@@ -88,9 +92,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   /**
    * Override this function to customize how options are filtered when typing
    */
-  readonly filter = ({ label }: T) => {
-    return label.toLowerCase().includes(this.query.toLowerCase());
-  };
+  readonly filter =
+    (query: string) =>
+    ({ label }: T) => {
+      return label.toLowerCase().includes(query.toLowerCase());
+    };
 
   /**
    * Override this function to customize an external data source
@@ -100,20 +106,34 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return Promise.resolve(empty);
   }
 
+  getOptionForValue(value: T['value'] | null): T | undefined {
+    const valueIsNonNullObject = typeof value === 'object' && value !== null;
+    return this.options.find((option) => {
+      if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
+        return JSON.stringify(option.value) === JSON.stringify(value);
+      }
+      return option.value === value;
+    });
+  }
+
   /**
    * Override this function to customize how the user input is resolved to a value.
-   * This runs on input.
    */
-  queryToValue(query: string): T['value'] {
-    return query;
+  queryToValue(query: string): T['value'] | null {
+    if (this.allowOther) {
+      return this.getOptionForValue(this.value)?.value || query;
+    }
+    const filter = this.filter(query);
+    return this.options.find(filter)?.value ?? null;
   }
 
   /**
    * Override this function to customize how a value is converted to a query.
    * This runs on setting the value.
    */
-  valueToQuery(value: T['value'] | null): string {
-    return (value ?? '').toString();
+  valueToQuery(value: Option['value']): string | undefined {
+    const option = this.getOptionForValue(value);
+    return option?.label;
   }
 
   readonly #addAdditionalOptions = memoize(async (query: string) => {
@@ -124,8 +144,16 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   });
 
   readonly #handleBlur = (event: FocusEvent) => {
-    if (event.relatedTarget && !this.shadowRoot?.contains(event.relatedTarget as Node)) {
-      // Only when the focus moves outside of the component, treat it as a blur for outside
+    const focusedRelatedElement = event.relatedTarget && this.shadowRoot?.contains(event.relatedTarget as Node);
+    // Only when the focus moves outside of the component, treat it as a blur for outside
+    if (!focusedRelatedElement) {
+      if (this.allowOther && this.query) {
+        const value = this.queryToValue(this.query);
+        if (value && this.value !== value) {
+          this.value = value;
+          this.#handleChange();
+        }
+      }
       this.open = false;
       this.emit('blur');
     }
@@ -155,7 +183,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.selectedIndex = -1;
     this.open = true;
     this.query = target.value;
-    this.value = this.queryToValue(this.query);
     this.emit('input');
   };
 
@@ -177,7 +204,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       case 'ArrowUp':
         return this.#setSelection(index - 1, true);
       case 'Enter':
-        return this.#commitSelection(index);
+        if (index > -1) {
+          return this.#commitSelection(index);
+        } else if (count === 1) {
+          return this.#commitSelection(0);
+        } else if (this.allowOther) {
+          return this.#commitQuery();
+        }
+        return undefined;
       case 'Escape':
         return this.#setSelection(-1);
       case 'Home':
@@ -215,6 +249,15 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.open = false;
   }
 
+  #commitQuery() {
+    const value = this.query;
+    if (this.value !== value) {
+      this.value = value;
+      this.#handleChange();
+    }
+    this.open = false;
+  }
+
   get #listId() {
     return `list-${this.#id}`;
   }
@@ -226,7 +269,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   /**
    * Override this function to customize the rendering of combobox options and selected value.
    */
-  renderEntry({ label }: Option, _index: number) {
+  renderEntry({ label }: Option, _index?: number) {
     return html`${label}`;
   }
 
@@ -245,29 +288,39 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       [`utrecht-combobox__popover--${this.position}`]: this.position,
       'utrecht-combobox__popover--hidden': !this.open,
     };
+    const currentOption = this.getOptionForValue(this.value);
     return html`
       <div class="utrecht-combobox">
         <label for="${this.#id}" class="sr-only">${this.hiddenLabel}</label>
-        <input
-          id=${this.#id}
-          name=${this.name}
-          autocomplete="off"
-          role="combobox"
-          aria-autocomplete="list"
-          aria-haspopup="listbox"
-          aria-controls=${this.#listId}
-          aria-expanded=${this.open}
-          aria-activedescendant=${this.#getOptionId()}
-          type="text"
-          class="utrecht-textbox utrecht-combobox__input"
-          dir="auto"
-          .value=${this.query}
-          @input=${this.#handleInput}
-          @focus=${this.#handleFocus}
-          @blur=${this.#handleBlur}
-          @change=${this.#handleChange}
-          @keydown=${this.#handleKeydown}
-        />
+        <div class="clippy-combobox__input-container">
+          ${currentOption
+            ? html`<div
+                role="presentation"
+                class="clippy-combobox__current-option utrecht-textbox utrecht-combobox__input"
+              >
+                ${this.renderEntry(currentOption)}
+              </div>`
+            : nothing}
+          <input
+            id=${this.#id}
+            name=${this.name}
+            autocomplete="off"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
+            aria-controls=${this.#listId}
+            aria-expanded=${this.open}
+            aria-activedescendant=${this.#getOptionId()}
+            type="text"
+            class="utrecht-textbox utrecht-combobox__input"
+            dir="auto"
+            .value=${this.query}
+            @input=${this.#handleInput}
+            @focus=${this.#handleFocus}
+            @blur=${this.#handleBlur}
+            @keydown=${this.#handleKeydown}
+          />
+        </div>
         <div
           id=${this.#listId}
           class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}"

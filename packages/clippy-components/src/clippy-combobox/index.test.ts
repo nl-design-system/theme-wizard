@@ -60,9 +60,34 @@ describe(`<${tag}>`, () => {
         <${tag} name="${tag}" options="${STRING_OPTIONS.join(separator)}"></${tag}>
       </form>`;
 
-    // Wait for the custom element to be defined
     const component: ClippyCombobox = document.querySelector(tag)!;
     expect(component.options).toHaveLength(STRING_OPTIONS.length);
+  });
+
+  it('gets a value from the component attribute', async () => {
+    const options = STRING_OPTIONS.join(' ');
+    const value = STRING_OPTIONS[0];
+    // Explicitly set the body so that the value is provided
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options="${options}" value="${value}"></${tag}>
+      </form>`;
+
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    expect(component.value).toBe(value);
+  });
+
+  it('renders value in presentational element when it is matching an option', async () => {
+    const options = JSON.stringify(OBJ_OPTIONS);
+    const { label, value } = OBJ_OPTIONS[0];
+    // Explicitly set the body so that the value is provided
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options='${options}' value='${value}'></${tag}>
+      </form>`;
+
+    const presentationNode = page.getByRole('presentation').getByText(label);
+    await expect.element(presentationNode).toBeInTheDocument();
   });
 
   it('shows list of options on focus', async () => {
@@ -89,14 +114,6 @@ describe(`<${tag}>`, () => {
     expect(component.value).toBe(OBJ_OPTIONS.at(-1)?.value);
   });
 
-  it('uses query as value', async () => {
-    const component: ClippyCombobox = document.querySelector(tag)!;
-    const query = 'Elmo';
-    const input = page.getByRole('combobox');
-    await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
-    expect(component.value).toBe(query);
-  });
-
   it('shows up as a form element', async () => {
     const component: ClippyCombobox = document.querySelector(tag)!;
     const form: HTMLFormElement = document.querySelector('form')!;
@@ -104,7 +121,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('holds a form value', async () => {
-    const query = 'Elmo';
+    const query = OBJ_OPTIONS[0].value;
     const input = page.getByRole('combobox');
     await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
     const form: HTMLFormElement = document.querySelector('form')!;
@@ -132,8 +149,23 @@ describe(`<${tag}>`, () => {
     const input = page.getByRole('combobox');
     await input
       .click()
-      .then(() => userEvent.keyboard('abc{Enter}'))
+      .then(() => userEvent.keyboard(`${OBJ_OPTIONS[0].label[0]}{Enter}`))
+      .then(() => userEvent.keyboard('{ArrowDown}'))
       .then(() => userEvent.keyboard('{Tab}'));
     expect(listener).toBeCalled();
+  });
+
+  it('allows other values than supplied options when `other` attribute is set', async () => {
+    // Explicitly set the body so that the string options are used
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options="${STRING_OPTIONS}" other></${tag}>
+      </form>`;
+
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    const query = 'Elmo';
+    const input = page.getByRole('combobox');
+    await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
+    expect(component.value).toBe(query);
   });
 });
