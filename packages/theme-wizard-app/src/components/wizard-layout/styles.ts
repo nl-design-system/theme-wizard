@@ -33,13 +33,12 @@ export default css`
   }
 
   .wizard-layout__nav-slot {
+    align-items: center;
     display: grid;
     justify-content: end;
-    align-items: center;
   }
 
-  .wizard-layout__nav-item,
-  .wizard-layout__nav ::slotted(a[href]) {
+  .wizard-layout__nav-item {
     --utrecht-link-color: #fff;
     --utrecht-link-text-decoration: none;
 

@@ -1,18 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
 ---
 
 <BaseLayout title="Style Guide - Theme Wizard" description="Preview and analyze website themes">
-  <theme-wizard-app templates={TEMPLATES_JSON}>
+  <theme-wizard-app>
     <wizard-layout>
       <nav slot="sidebar">
-        <a href="#colors">Kleuren</a>
-        <a href="#typography">Typografie</a>
-        <a href="#spacing">Witruimte</a>
-        <a href="#components">Componenten</a>
+        <!-- TODO: replace with <clippy-side-nav> when available -->
+        <wizard-sidebar-link href="#colors">Kleuren</wizard-sidebar-link>
+        <wizard-sidebar-link href="#typography">Typografie</wizard-sidebar-link>
+        <wizard-sidebar-link href="#spacing">Witruimte</wizard-sidebar-link>
+        <wizard-sidebar-link href="#components">Componenten</wizard-sidebar-link>
       </nav>
-      <wizard-style-guide slot="main"></wizard-style-guide>
+      <div slot="main">
+        <h1>Stijlgids</h1>
+        <wizard-style-guide></wizard-style-guide>
+      </div>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<script>
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement
+    if (target?.tagName !== 'WIZARD-SIDEBAR-LINK') return
+    const styleGuide = document.querySelector('wizard-style-guide')
+    if (!styleGuide) return
+    const elementId = target.getAttribute('href')?.slice(1)
+    if (!elementId) return
+    const scrollTarget = styleGuide.shadowRoot?.getElementById(elementId)
+    if (!scrollTarget) return
+    scrollTarget?.scrollIntoView()
+  })
+</script>

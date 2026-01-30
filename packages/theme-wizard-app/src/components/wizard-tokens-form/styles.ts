@@ -3,8 +3,8 @@ import { css } from 'lit';
 export default css`
   clippy-heading {
     display: block;
-    margin-block-end: var(--basis-space-block-md);
     font-size: 100%;
+    margin-block-end: var(--basis-space-block-md);
   }
 
   .wizard-app__basis-colors {

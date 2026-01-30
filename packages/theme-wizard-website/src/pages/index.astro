@@ -1,7 +1,6 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getStaticPaths } from './templates/[...template].astro';
 import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
 
 export const prerender = false; // enable SSR
@@ -28,7 +27,7 @@ if (!currentTemplate) {
   }
 </style>
 
-<BaseLayout title="Theme Wizard" scraperUrl={scraperUrl}>
+<BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
       <div slot="sidebar" class="sidebar">
@@ -42,13 +41,9 @@ if (!currentTemplate) {
         </section>
       </div>
 
-      <div slot="nav">
-        <wizard-preview-picker templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
-      </div>
+      <wizard-preview-picker slot="nav" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
 
-      <div slot="main">
-        <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
-      </div>
+      <wizard-preview slot="main" url={currentTemplate} scraperUrl={scraperUrl}></wizard-previewslot="main">
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>

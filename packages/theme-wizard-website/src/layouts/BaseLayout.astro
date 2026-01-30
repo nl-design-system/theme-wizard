@@ -5,10 +5,9 @@ import '@utrecht/body-css/dist/index.css';
 export interface Props {
   title?: string;
   description?: string;
-  scraperUrl?: string;
 }
 
-const { title = 'Theme Wizard', description = 'Preview and analyze website themes', scraperUrl } = Astro.props;
+const { title = 'Theme Wizard', description = 'Preview and analyze website themes' } = Astro.props;
 ---
 
 <!doctype html>
