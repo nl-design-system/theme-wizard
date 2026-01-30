@@ -145,7 +145,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   readonly #handleBlur = (event: FocusEvent) => {
     if (event.relatedTarget && !this.shadowRoot?.contains(event.relatedTarget as Node)) {
       // Only when the focus moves outside of the component, treat it as a blur for outside
-      this.value = this.queryToValue(this.query);
+      if (this.allowOther && this.query) {
+        this.value = this.queryToValue(this.query);
+        this.#handleChange();
+      }
       this.open = false;
       this.emit('blur');
     }
@@ -310,7 +313,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             @input=${this.#handleInput}
             @focus=${this.#handleFocus}
             @blur=${this.#handleBlur}
-            @change=${this.#handleChange}
             @keydown=${this.#handleKeydown}
           />
         </div>

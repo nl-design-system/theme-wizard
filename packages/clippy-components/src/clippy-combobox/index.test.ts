@@ -149,7 +149,8 @@ describe(`<${tag}>`, () => {
     const input = page.getByRole('combobox');
     await input
       .click()
-      .then(() => userEvent.keyboard('abc{Enter}'))
+      .then(() => userEvent.keyboard(`${OBJ_OPTIONS[0].label[0]}{Enter}`))
+      .then(() => userEvent.keyboard('{ArrowDown}'))
       .then(() => userEvent.keyboard('{Tab}'));
     expect(listener).toBeCalled();
   });
