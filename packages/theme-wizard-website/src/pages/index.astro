@@ -2,6 +2,7 @@
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getStaticPaths } from './templates/[...template].astro';
+import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
 
 export const prerender = false; // enable SSR
 
@@ -10,10 +11,14 @@ const scraperUrl = withRelatedProject({
   // Fallback API host
   defaultHost: process.env.API_HOST || '',
 });
-const templates = getStaticPaths()
-  .filter(t => t.params.template !== 'index')
-  .map(({params}) => params.template)
-const templatePath = Astro.url.searchParams.get('templatePath') || templates.at(0);
+
+const templates = JSON.parse(TEMPLATES_JSON)
+let currentTemplate = Astro.url.searchParams.get('templatePath')
+if (!currentTemplate) {
+  const firstGroup = templates?.[0];
+  const firstOption = firstGroup?.pages?.[0];
+  currentTemplate = firstOption?.value ?? '';
+}
 ---
 
 <style>
@@ -38,19 +43,11 @@ const templatePath = Astro.url.searchParams.get('templatePath') || templates.at(
       </div>
 
       <div slot="nav">
-        <form action="">
-          <label for="templatePath">Weergave</label>
-          <select name="templatePath" id="templatePath">
-            {templates.map((template) => (
-              <option value={template}>{template}</option>
-            ))}
-          </select>
-          <button>Go</button>
-        </form>
+        <wizard-preview-picker templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
       </div>
 
       <div slot="main">
-        <wizard-preview url={`/${templatePath}`} scraperUrl={scraperUrl}></wizard-preview>
+        <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
       </div>
      </wizard-layout>
   </theme-wizard-app>
