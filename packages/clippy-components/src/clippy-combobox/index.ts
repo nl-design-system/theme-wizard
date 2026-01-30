@@ -106,7 +106,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return Promise.resolve(empty);
   }
 
-  getOptionForValue(value: T['value']): T | undefined {
+  getOptionForValue(value: T['value'] | null): T | undefined {
     const valueIsNonNullObject = typeof value === 'object' && value !== null;
     return this.options.find((option) => {
       if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
@@ -144,11 +144,15 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   });
 
   readonly #handleBlur = (event: FocusEvent) => {
-    if (event.relatedTarget && !this.shadowRoot?.contains(event.relatedTarget as Node)) {
-      // Only when the focus moves outside of the component, treat it as a blur for outside
+    const focusedRelatedElement = event.relatedTarget && this.shadowRoot?.contains(event.relatedTarget as Node);
+    // Only when the focus moves outside of the component, treat it as a blur for outside
+    if (!focusedRelatedElement) {
       if (this.allowOther && this.query) {
-        this.value = this.queryToValue(this.query);
-        this.#handleChange();
+        const value = this.queryToValue(this.query);
+        if (value && this.value !== value) {
+          this.value = value;
+          this.#handleChange();
+        }
       }
       this.open = false;
       this.emit('blur');
