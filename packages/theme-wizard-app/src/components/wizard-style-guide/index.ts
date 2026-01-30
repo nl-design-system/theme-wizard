@@ -92,47 +92,7 @@ export class WizardStyleGuide extends LitElement {
 
   #activeToken?: DisplayToken;
 
-  static override readonly styles = [
-    unsafeCSS(dataBadgeCss),
-    unsafeCSS(tableCss),
-    unsafeCSS(colorSampleCss),
-    styles,
-  ];
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    document.title = t('styleGuide.title').toString();
-  }
-
-  override firstUpdated(): void {
-    // Scroll to hash on page load
-    const hash = globalThis.location.hash;
-    if (hash) {
-      this.#scrollToHash(hash);
-    }
-  }
-
-  #scrollToHash(hash: string): void {
-    const target = this.shadowRoot?.querySelector(hash) || document.querySelector(hash);
-    if (target) {
-      // Use requestAnimationFrame to ensure element is rendered
-      requestAnimationFrame(() => {
-        target.scrollIntoView();
-      });
-    }
-  }
-
-  #handleNavClick(event: Event): void {
-    const link = (event.target as Element).closest('a[href^="#"]');
-    if (!link) return;
-
-    const href = link.getAttribute('href');
-    if (!href) return;
-
-    event.preventDefault();
-    globalThis.location.hash = href;
-    this.#scrollToHash(href);
-  }
+  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(tableCss), unsafeCSS(colorSampleCss), styles];
 
   #countUsagePerToken(tokens: typeof this.theme.tokens): Map<string, string[]> {
     const tokenUsage = new Map<string, string[]>();
@@ -910,21 +870,15 @@ export class WizardStyleGuide extends LitElement {
     }));
 
     return html`
-      <wizard-layout>
-        <nav slot="sidebar" class="wizard-styleguide__nav" @click=${this.#handleNavClick}>
-          <a class="wizard-styleguide__nav-item" href="#colors">${t('styleGuide.sections.colors.title')}</a>
-          <a class="wizard-styleguide__nav-item" href="#typography">${t('styleGuide.sections.typography.title')}</a>
-          <a class="wizard-styleguide__nav-item" href="#spacing">${t('styleGuide.sections.space.title')}</a>
-          <a class="wizard-styleguide__nav-item" href="#components">${t('styleGuide.sections.components.title')}</a>
-        </nav>
+      <section id="color-groups">${this.#renderColorSection(colorGroups)}</section>
 
-        <div slot="main" class="wizard-styleguide__main">
-          <clippy-heading level=${1}>${t('styleGuide.title')}</clippy-heading>
+      <section id="typography">${this.#renderTypographySection(fontFamilies, fontSizes)}</section>
 
-          ${this.#renderColorSection(colorGroups)} ${this.#renderTypographySection(fontFamilies, fontSizes)}
-          ${this.#renderSpacingSection(spacingData)} ${this.#renderComponentsSection()} ${this.#renderTokenDialog()}
-        </div>
-      </wizard-layout>
+      <section id="spacing">${this.#renderSpacingSection(spacingData)}</section>
+
+      <section id="components">${this.#renderComponentsSection()}</section>
+
+      ${this.#renderTokenDialog()}
     `;
   }
 }

@@ -1,6 +1,9 @@
 import type { PropertyValues } from 'lit';
+import { consume } from '@lit/context';
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import type Theme from '../../lib/Theme';
+import { themeContext } from '../../contexts/theme';
 import Scraper from '../../lib/Scraper';
 import { PREVIEW_THEME_CLASS } from '../../lib/Theme';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
@@ -16,33 +19,36 @@ declare global {
 
 @customElement(tag)
 export class ThemePreview extends LitElement {
-  @property() themeStylesheet!: CSSStyleSheet;
+  @consume({ context: themeContext, subscribe: true })
+  @state()
+  private readonly theme!: Theme;
+
   @property() url?: string;
+  @property() scraperUrl?: string;
 
   @state() private htmlContent = '';
   @state() private isLoading = false;
   @state() private error = '';
 
-  private readonly scraper: Scraper;
+  private scraper?: Scraper;
   previewStylesheet: CSSStyleSheet = new CSSStyleSheet();
 
   static override readonly styles = [styles];
 
   constructor() {
     super();
-    const scraperURL = document.querySelector('meta[name=scraper-api]')?.getAttribute('content') || '';
-    this.scraper = new Scraper(scraperURL);
   }
 
   override connectedCallback() {
     super.connectedCallback();
     // Only load if url is already set
     if (this.url) {
+      this.scraper = new Scraper(this.scraperUrl);
       this.#loadContent();
     }
 
     // Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview
-    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.themeStylesheet);
+    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.theme.stylesheet);
   }
 
   override updated(changedProperties: PropertyValues) {
@@ -91,7 +97,7 @@ export class ThemePreview extends LitElement {
     try {
       // Internal template page: resolve to our templates route
       const targetUrl = new URL(this.previewUrl, globalThis.location.href);
-      return await this.scraper.getCSS(targetUrl);
+      return await this.scraper?.getCSS(targetUrl);
     } catch (err) {
       console.error('Failed to fetch CSS:', err);
       return undefined;

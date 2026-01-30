@@ -3,28 +3,28 @@ import { test, expect } from './fixtures/fixtures';
 test.describe('scraping css design tokens', () => {
   test('scrapes a valid, absolute URL', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('https://www.example.com');
-    const input = themeWizard.sidebar.getByLabel('Website URL');
+    const input = themeWizard.page.getByLabel('Website URL');
     await expect(input).not.toHaveAttribute('aria-invalid');
-    await expect(themeWizard.sidebar.getByRole('status')).toBeVisible();
+    await expect(themeWizard.page.getByRole('status')).toBeVisible();
   });
 
   test('scrapes a valid, non-absolute URL', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('example.com');
-    const input = themeWizard.sidebar.getByLabel('Website URL');
+    const input = themeWizard.page.getByLabel('Website URL');
     await expect(input).not.toHaveAttribute('aria-invalid');
-    await expect(themeWizard.sidebar.getByRole('status')).toBeVisible();
+    await expect(themeWizard.page.getByRole('status')).toBeVisible();
   });
 
   test('errors on an invalid URL', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('https://.com');
-    const input = themeWizard.sidebar.getByLabel('Website URL');
+    const input = themeWizard.page.getByLabel('Website URL');
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(input).toHaveAccessibleErrorMessage('Kan "https://.com/" niet analyseren');
   });
 
   test('errors when no URL is entered', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('');
-    const input = themeWizard.sidebar.getByLabel('Website URL');
+    const input = themeWizard.page.getByLabel('Website URL');
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(input).toHaveAccessibleErrorMessage('Vul een valide URL in');
   });

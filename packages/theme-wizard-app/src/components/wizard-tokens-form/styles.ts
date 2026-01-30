@@ -1,22 +1,10 @@
 import { css } from 'lit';
 
 export default css`
-  .wizard-app__sidebar {
-    --utrecht-heading-2-font-size: var(--basis-text-font-size-lg);
-    --utrecht-heading-2-margin-block-end: var(--basis-space-block-lg);
-    --utrecht-heading-3-font-size: var(--basis-text-font-size-md);
-
-    display: grid;
-    row-gap: var(--basis-space-block-3xl);
-
-    section:last-of-type {
-      margin-block-start: auto;
-    }
-
-    utrecht-heading-2 {
-      display: block;
-      margin-block-end: var(--basis-space-block-md);
-    }
+  clippy-heading {
+    display: block;
+    font-size: 100%;
+    margin-block-end: var(--basis-space-block-md);
   }
 
   .wizard-app__basis-colors {
@@ -47,10 +35,5 @@ export default css`
     min-block-size: auto;
     padding-block: 0;
     padding-inline: 0;
-  }
-
-  .wizard-app__nav {
-    display: grid;
-    justify-content: end;
   }
 `;

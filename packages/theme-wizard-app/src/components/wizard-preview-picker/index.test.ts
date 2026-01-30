@@ -51,20 +51,4 @@ describe(`<${tag}>`, () => {
     expect(allValues).toContain('/something-beautiful/some-beautiful-page');
     expect(allValues).toContain('/another-beautiful-thing/another-beautiful-page');
   });
-
-  it('defaults to first option when no templatePath param', async () => {
-    const el = await mount();
-    const dropdown = el.shadowRoot?.querySelector('wizard-dropdown');
-
-    expect(dropdown?.value).toBe('/something-beautiful/some-beautiful-page');
-  });
-
-  it('reads current value from ?templatePath query param', async () => {
-    const origin = globalThis.location.origin;
-    globalThis.history.pushState({}, '', `${origin}/?templatePath=/something-beautiful/some-beautiful-page`);
-    const el = await mount();
-    const dropdown = el.shadowRoot?.querySelector('wizard-dropdown');
-
-    expect(dropdown?.value).toBe('/something-beautiful/some-beautiful-page');
-  });
 });

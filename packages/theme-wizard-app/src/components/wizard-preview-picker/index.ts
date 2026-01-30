@@ -32,7 +32,13 @@ declare global {
 
 @customElement(tag)
 export class WizardPreviewPicker extends LitElement {
-  @property({ attribute: 'templates' }) templates?: TemplateGroup[];
+  @property({
+    attribute: 'templates',
+    converter: (value) => (value ? JSON.parse(value) : []),
+  })
+  templates?: TemplateGroup[];
+  @property() value?: string;
+
   #enhanced: boolean = false;
 
   static override readonly styles = [styles];
@@ -63,22 +69,13 @@ export class WizardPreviewPicker extends LitElement {
   };
 
   override render() {
-    // Determine current selection from URL (?templatePath=...), fallback to first option
-    let current = new URL(globalThis.location.href).searchParams.get(PREVIEW_PICKER_NAME) || '';
-
-    if (!current) {
-      const firstGroup = this.dropdownOptions?.[0];
-      const firstOption = firstGroup?.detail?.[0];
-      current = firstOption?.value ?? '';
-    }
-
     return html`<form method="GET" id="preview-form" @change=${this.#handleChange}>
       <wizard-dropdown
         label="Weergave"
         name=${PREVIEW_PICKER_NAME}
         .options=${this.dropdownOptions}
         .isOptgroup=${true}
-        .value=${current}
+        .value=${this.value}
       ></wizard-dropdown>
 
       <utrecht-button appearance="primary-action-button" type="submit" ?hidden=${this.#enhanced}>

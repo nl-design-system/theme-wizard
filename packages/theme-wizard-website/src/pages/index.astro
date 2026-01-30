@@ -3,13 +3,47 @@ import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
 
+export const prerender = false; // enable SSR
+
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
   // Fallback API host
   defaultHost: process.env.API_HOST || '',
 });
+
+const templates = JSON.parse(TEMPLATES_JSON)
+let currentTemplate = Astro.url.searchParams.get('templatePath')
+if (!currentTemplate) {
+  const firstGroup = templates?.[0];
+  const firstOption = firstGroup?.pages?.[0];
+  currentTemplate = firstOption?.value ?? '';
+}
 ---
 
-<BaseLayout title="Theme Wizard" description="Preview and analyze website themes" scraperUrl={scraperUrl}>
-  <theme-wizard-app templates={TEMPLATES_JSON}></theme-wizard-app>
+<style>
+  .theme-sidebar {
+    display: grid;
+    gap: 2rem;
+  }
+</style>
+
+<BaseLayout title="Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <div slot="sidebar" class="theme-sidebar">
+        <section>
+          <h2>Analyzeer website</h2>
+          <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
+        </section>
+        <section>
+          <h2>Maak design keuzes</h2>
+          <wizard-tokens-form></wizard-tokens-form>
+        </section>
+      </div>
+
+      <wizard-preview-picker slot="nav" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
+
+      <wizard-preview slot="main" url={currentTemplate} scraperUrl={scraperUrl}></wizard-previewslot="main">
+     </wizard-layout>
+  </theme-wizard-app>
 </BaseLayout>
