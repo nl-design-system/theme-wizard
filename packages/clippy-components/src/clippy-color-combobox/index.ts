@@ -1,5 +1,6 @@
 import { safeCustomElement } from '@lib/decorators';
 import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
+import LocalizationMixin from '@src/lib/LocalizationMixin';
 import Color from 'colorjs.io';
 import { html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
@@ -8,7 +9,6 @@ import { ClippyCombobox } from '../clippy-combobox';
 import { namedColors, type ColorName } from './lib';
 import messages from './messages/en';
 import colorComboboxStyles from './styles';
-import LocalizationMixin from '@src/lib/LocalizationMixin';
 
 type Option = {
   color: Color;

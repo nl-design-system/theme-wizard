@@ -1,10 +1,10 @@
+import { arrayFromTokenList } from '@src/lib/converters';
+import { safeCustomElement } from '@src/lib/decorators';
+import LocalizationMixin from '@src/lib/LocalizationMixin';
 import { html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import languages, { type LangCode } from './languages';
-import LocalizationMixin from '@src/lib/LocalizationMixin';
-import { arrayFromTokenList } from '@src/lib/converters';
-import { safeCustomElement } from '@src/lib/decorators';
 
 type Option = {
   value: string;
