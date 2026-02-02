@@ -101,16 +101,16 @@ export class WizardComponentsPage extends LitElement {
 
   override render() {
     return html`
-      <nav>
+      <!--<nav>
         ${storyModules.map((storyModule) => {
-          const hash = `#${storyModule.default.id}`;
-          return html`<a class="wizard-styleguide__nav-item" href=${hash}>${storyModule.default.id}</a>`;
-        })}
-      </nav>
+        const hash = `#${storyModule.default.id}`;
+        return html`<a class="wizard-styleguide__nav-item" href=${hash}>${storyModule.default.id}</a>`;
+      })}
+      </nav>-->
 
       <div>
-        ${storyModules.map((stories) => {
-          const meta = stories.default;
+        ${storyModules.map((component) => {
+          const meta = component.default;
           const description = meta.parameters?.['docs']?.description?.component;
           return html`
             <article id=${meta.id}>
@@ -118,7 +118,7 @@ export class WizardComponentsPage extends LitElement {
               ${description ? html`<utrecht-paragraph>${description}</utrecht-paragraph>` : nothing}
 
               <clippy-heading level="3">Stories</clippy-heading>
-              ${getStories(stories, meta).map(
+              ${getStories(component, meta).map(
                 (story) => html`
                   <section>
                     <clippy-heading level="4">${story?.name || story?.storyName}</clippy-heading>

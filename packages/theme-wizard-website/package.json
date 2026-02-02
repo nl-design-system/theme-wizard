@@ -25,8 +25,19 @@
     "test-e2e": "playwright test"
   },
   "dependencies": {
-    "@astrojs/vercel": "9.0.2",
     "@astrojs/react": "^4.4.2",
+    "@astrojs/vercel": "9.0.2",
+    "@nl-design-system-candidate/button-css": "1.0.0",
+    "@nl-design-system-candidate/code-block-css": "1.1.5",
+    "@nl-design-system-candidate/code-css": "2.0.5",
+    "@nl-design-system-candidate/color-sample-css": "1.0.4",
+    "@nl-design-system-candidate/data-badge-css": "1.0.5",
+    "@nl-design-system-candidate/heading-css": "1.1.3",
+    "@nl-design-system-candidate/link-css": "2.0.3",
+    "@nl-design-system-candidate/mark-css": "1.0.5",
+    "@nl-design-system-candidate/number-badge-css": "1.1.5",
+    "@nl-design-system-candidate/paragraph-css": "2.1.3",
+    "@nl-design-system-candidate/skip-link-css": "1.0.5",
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
@@ -36,11 +47,13 @@
     "@utrecht/root-css": "2.0.1",
     "@vercel/related-projects": "1.0.0",
     "astro": "5.16.6",
+    "limax": "4.2.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@playwright/test": "1.57.0",
+    "@storybook/react-vite": "10.1.11",
     "postcss-html": "1.8.0",
     "stylelint": "16.26.1",
     "stylelint-config-astro": "2.0.0"

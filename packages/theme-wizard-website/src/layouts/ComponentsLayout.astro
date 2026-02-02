@@ -1,0 +1,63 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { title = 'Theme Wizard', description = 'Preview and analyze website themes' } = Astro.props;
+import type { Meta } from '@storybook/react-vite';
+
+import * as ButtonStories from '../../../theme-wizard-app/src/components/wizard-components-page/button-react.stories.tsx';
+import * as CodeBlockStories from '../../../theme-wizard-app/src/components/wizard-components-page/code-block-react.stories';
+import * as CodeStories from '../../../theme-wizard-app/src/components/wizard-components-page/code-react.stories';
+import * as ColorSampleStories from '../../../theme-wizard-app/src/components/wizard-components-page/color-sample-react.stories';
+import * as DataBadgeStories from '../../../theme-wizard-app/src/components/wizard-components-page/data-badge-react.stories';
+import * as HeadingStories from '../../../theme-wizard-app/src/components/wizard-components-page/heading-react.stories';
+import * as LinkStories from '../../../theme-wizard-app/src/components/wizard-components-page/link-react.stories';
+import * as MarkStories from '../../../theme-wizard-app/src/components/wizard-components-page/mark-react.stories';
+import * as NumberBadgeStories from '../../../theme-wizard-app/src/components/wizard-components-page/number-badge-react.stories';
+import * as ParagraphStories from '../../../theme-wizard-app/src/components/wizard-components-page/paragraph-react.stories';
+import * as SkipLinkStories from '../../../theme-wizard-app/src/components/wizard-components-page/skip-link-react.stories';
+
+/**
+ * Component Story Format module structure.
+ * Enforces that CSF modules have a default export (Meta),
+ * and any number of story exports (various prop types).
+ * Uses `any` for the component type because each module has different component props,
+ * and we don't need to access component-specific type information.
+ */
+type StoryModule = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default: Meta<any>;
+  [key: string]: unknown;
+};
+
+const storyModules: StoryModule[] = [
+  MarkStories,
+  LinkStories,
+  ColorSampleStories,
+  CodeStories,
+  HeadingStories,
+  CodeBlockStories,
+  ParagraphStories,
+  DataBadgeStories,
+  NumberBadgeStories,
+  SkipLinkStories,
+  ButtonStories,
+].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
+---
+
+<BaseLayout title={title} description={description}>
+  <theme-wizard-app>
+    <wizard-layout>
+      <nav slot="sidebar">
+        <!-- TODO: replace with <clippy-side-nav> when available -->
+         <!-- TODO: implement -->
+        {storyModules.map((storyModule) => {
+          const id = storyModule.default.id
+          const href = `/components/${id}`;
+          return <wizard-sidebar-link class="wizard-styleguide__nav-item" href={href}>{id}</wizard-sidebar-link>
+        })}
+      </nav>
+      <div slot="main">
+        <slot></slot>
+      </div>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>

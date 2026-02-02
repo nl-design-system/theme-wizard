@@ -23,6 +23,7 @@ const meta: Meta<typeof MarkComponent> = {
 export default meta;
 
 type Story = StoryObj<MarkProps>;
+
 export const Mark: Story = {
   name: 'Mark',
   args: {
@@ -31,53 +32,53 @@ export const Mark: Story = {
 };
 
 // copied from https://github.com/frameless/candidate/blob/main/packages/docs/mark-docs/stories/mark.stories.tsx
-export const MarkInEenParagraph: Story = {
-  name: 'Mark in een Paragraph',
-  args: {
-    children: 'Gemarkeerde tekst',
-  },
-  parameters: {
-    tokens: {
-      nl: {
-        mark: {
-          'background-color': {
-            $value: '',
-          },
-          color: {
-            $value: '',
-          },
-        },
-      },
-    },
-  },
-  render: (_props, { component }) => {
-    const Mark = component as ComponentType<MarkProps>;
-    return (
-      <p className="nl-paragraph">
-        In deze paragraaf staat een stukje <Mark>gemarkeerde tekst</Mark>.
-      </p>
-    );
-  },
-};
+// export const MarkInEenParagraph: Story = {
+//   name: 'Mark in een Paragraph',
+//   args: {
+//     children: 'Gemarkeerde tekst',
+//   },
+//   parameters: {
+//     tokens: {
+//       nl: {
+//         mark: {
+//           'background-color': {
+//             $value: '',
+//           },
+//           color: {
+//             $value: '',
+//           },
+//         },
+//       },
+//     },
+//   },
+//   render: (_props, { component }) => {
+//     const Mark = component as ComponentType<MarkProps>;
+//     return (
+//       <p className="nl-paragraph">
+//         In deze paragraaf staat een stukje <Mark>gemarkeerde tekst</Mark>.
+//       </p>
+//     );
+//   },
+// };
 
-export const DesignMark: Story = {
-  name: 'Design: Mark',
-  args: {
-    children: 'Gemarkeerde tekst',
-  },
-  parameters: {
-    designStory: true,
-    tokens: {
-      nl: {
-        mark: {
-          'background-color': {
-            $value: '',
-          },
-          color: {
-            $value: '',
-          },
-        },
-      },
-    },
-  },
-};
+// export const DesignMark: Story = {
+//   name: 'Design: Mark',
+//   args: {
+//     children: 'Gemarkeerde tekst',
+//   },
+//   parameters: {
+//     designStory: true,
+//     tokens: {
+//       nl: {
+//         mark: {
+//           'background-color': {
+//             $value: '',
+//           },
+//           color: {
+//             $value: '',
+//           },
+//         },
+//       },
+//     },
+//   },
+// };
