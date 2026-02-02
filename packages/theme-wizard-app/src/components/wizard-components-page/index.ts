@@ -1,4 +1,3 @@
-import type { Meta } from '@storybook/react-vite';
 import '../wizard-layout';
 import buttonCSS from '@nl-design-system-candidate/button-css/button.css?inline';
 import codeBlockCSS from '@nl-design-system-candidate/code-block-css/code-block.css?inline';
@@ -14,17 +13,7 @@ import skipLinkCSS from '@nl-design-system-candidate/skip-link-css/skip-link.css
 import { LitElement, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { getStories } from '../../utils/csf-utils';
-import * as ButtonStories from './button-react.stories';
-import * as CodeBlockStories from './code-block-react.stories';
-import * as CodeStories from './code-react.stories';
-import * as ColorSampleStories from './color-sample-react.stories';
-import * as DataBadgeStories from './data-badge-react.stories';
-import * as HeadingStories from './heading-react.stories';
-import * as LinkStories from './link-react.stories';
-import * as MarkStories from './mark-react.stories';
-import * as NumberBadgeStories from './number-badge-react.stories';
-import * as ParagraphStories from './paragraph-react.stories';
-import * as SkipLinkStories from './skip-link-react.stories';
+import { storyModules } from './story-modules';
 import styles from './styles';
 import '../wizard-story';
 import '../wizard-story-react';
@@ -68,32 +57,7 @@ declare global {
   }
 }
 
-/**
- * Component Story Format module structure.
- * Enforces that CSF modules have a default export (Meta),
- * and any number of story exports (various prop types).
- * Uses `any` for the component type because each module has different component props,
- * and we don't need to access component-specific type information.
- */
-type StoryModule = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: Meta<any>;
-  [key: string]: unknown;
-};
-
-const storyModules: StoryModule[] = [
-  MarkStories,
-  LinkStories,
-  ColorSampleStories,
-  CodeStories,
-  HeadingStories,
-  CodeBlockStories,
-  ParagraphStories,
-  DataBadgeStories,
-  NumberBadgeStories,
-  SkipLinkStories,
-  ButtonStories,
-].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
+const sortedStoryModules = [...storyModules].sort((a, b) => (a.default.id || a.default.title || '').localeCompare(b.default.id || b.default.title || ''));
 
 @customElement(tag)
 export class WizardComponentsPage extends LitElement {
@@ -102,7 +66,7 @@ export class WizardComponentsPage extends LitElement {
   override render() {
     return html`
       <!--<nav>
-        ${storyModules.map((storyModule) => {
+        ${sortedStoryModules.map((storyModule) => {
         const hash = `#${storyModule.default.id}`;
         return html`<a class="wizard-styleguide__nav-item" href=${hash}>${storyModule.default.id}</a>`;
       })}

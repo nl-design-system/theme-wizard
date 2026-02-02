@@ -1,4 +1,3 @@
-import type { Meta } from '@storybook/react-vite';
 import '../wizard-layout';
 import buttonCSS from '@nl-design-system-candidate/button-css/button.css?inline';
 import codeBlockCSS from '@nl-design-system-candidate/code-block-css/code-block.css?inline';
@@ -12,19 +11,9 @@ import numberBadgeCSS from '@nl-design-system-candidate/number-badge-css/number-
 import paragraphCSS from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import skipLinkCSS from '@nl-design-system-candidate/skip-link-css/skip-link.css?inline';
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { getStories } from '../../utils/csf-utils';
-import * as ButtonStories from '../wizard-components-page/button-react.stories';
-import * as CodeBlockStories from '../wizard-components-page/code-block-react.stories';
-import * as CodeStories from '../wizard-components-page/code-react.stories';
-import * as ColorSampleStories from '../wizard-components-page/color-sample-react.stories';
-import * as DataBadgeStories from '../wizard-components-page/data-badge-react.stories';
-import * as HeadingStories from '../wizard-components-page/heading-react.stories';
-import * as LinkStories from '../wizard-components-page/link-react.stories';
-import * as MarkStories from '../wizard-components-page/mark-react.stories';
-import * as NumberBadgeStories from '../wizard-components-page/number-badge-react.stories';
-import * as ParagraphStories from '../wizard-components-page/paragraph-react.stories';
-import * as SkipLinkStories from '../wizard-components-page/skip-link-react.stories';
+import { storyModulesLazy, type StoryModule } from '../wizard-components-page/story-modules';
 import styles from '../wizard-components-page/styles';
 import '../wizard-story';
 import '../wizard-story-react';
@@ -54,25 +43,6 @@ function createStyleSheets() {
   });
 }
 
-type StoryModule = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: Meta<any>;
-  [key: string]: unknown;
-};
-
-const storyModules: StoryModule[] = [
-  MarkStories,
-  LinkStories,
-  ColorSampleStories,
-  CodeStories,
-  HeadingStories,
-  CodeBlockStories,
-  ParagraphStories,
-  DataBadgeStories,
-  NumberBadgeStories,
-  SkipLinkStories,
-  ButtonStories,
-];
 
 const tag = 'wizard-component-page';
 
@@ -91,22 +61,65 @@ export class WizardComponentPage extends LitElement {
   static override readonly styles = [styles];
 
   @property({ attribute: 'component-id', type: String }) componentId: string | null = null;
+  @state() private loadedComponent: StoryModule | null = null;
+  @state() private isLoading = false;
+  @state() private error: string | null = null;
+
+  override updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('componentId')) {
+      this.loadComponent();
+    }
+  }
+
+  private async loadComponent() {
+    if (!this.componentId) {
+      this.loadedComponent = null;
+      this.error = null;
+      return;
+    }
+
+    this.isLoading = true;
+    this.error = null;
+
+    try {
+      const loader = storyModulesLazy[this.componentId];
+      if (!loader) {
+        this.error = `Component not found: ${this.componentId}`;
+        this.loadedComponent = null;
+        return;
+      }
+
+      this.loadedComponent = await loader();
+    } catch (err) {
+      this.error = `Failed to load component: ${err instanceof Error ? err.message : String(err)}`;
+      this.loadedComponent = null;
+    } finally {
+      this.isLoading = false;
+    }
+  }
 
   override render() {
     if (!this.componentId) {
       return html`<p>No component specified</p>`;
     }
 
-    const component = storyModules.find((m) => m.default.id === this.componentId);
-    if (!component) {
+    if (this.isLoading) {
+      return html`<p>Loading component...</p>`;
+    }
+
+    if (this.error) {
+      return html`<p style="color: red;">${this.error}</p>`;
+    }
+
+    if (!this.loadedComponent) {
       return html`<p>Component not found: ${this.componentId}</p>`;
     }
 
-    const meta = component.default;
+    const meta = this.loadedComponent.default;
     const storyStyleSheets = createStyleSheets();
 
     return html`
-      ${getStories(component, meta).map(
+      ${getStories(this.loadedComponent, meta).map(
         (story) => html`
           <section>
             <clippy-heading level="4">${story?.name || story?.storyName}</clippy-heading>

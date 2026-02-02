@@ -1,19 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ComponentsLayout from "@/layouts/ComponentsLayout.astro"
 ---
 
-<BaseLayout title="Components - Theme Wizard" description="Preview and analyze website themes">
-  <theme-wizard-app>
-    <wizard-layout>
-      <nav slot="sidebar">
-        <!-- TODO: replace with <clippy-side-nav> when available -->
-         <!-- TODO: implement -->
-        <wizard-sidebar-link href="#">Component #</wizard-sidebar-link>
-      </nav>
-      <div slot="main">
-        <h1>Componenten</h1>
-        <wizard-components-page></wizard-components-page>
-      </div>
-    </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
+<ComponentsLayout title="Components - Theme Wizard" description="Preview and analyze website themes">
+  <h1>Componenten</h1>
+</ComponentsLayout>

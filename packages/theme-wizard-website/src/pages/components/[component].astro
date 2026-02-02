@@ -1,49 +1,12 @@
 ---
-import * as MarkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/mark-react.stories';
-import * as LinkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/link-react.stories';
-import * as CodeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/code-react.stories';
-import * as ColorSampleStories from '../../../../theme-wizard-app/src/components/wizard-components-page/color-sample-react.stories';
-import * as CodeBlockStories from '../../../../theme-wizard-app/src/components/wizard-components-page/code-block-react.stories';
-import * as HeadingStories from '../../../../theme-wizard-app/src/components/wizard-components-page/heading-react.stories';
-import * as DataBadgeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/data-badge-react.stories';
-import * as NumberBadgeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/number-badge-react.stories';
-import * as ParagraphStories from '../../../../theme-wizard-app/src/components/wizard-components-page/paragraph-react.stories';
-import * as SkipLinkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/skip-link-react.stories';
-import * as ButtonStories from '../../../../theme-wizard-app/src/components/wizard-components-page/button-react.stories';
+import { storyModules } from '../../../../theme-wizard-app/src/components/wizard-components-page/story-modules';
 import ComponentsLayout from '@/layouts/ComponentsLayout.astro';
 
 export function getStaticPaths() {
-  const storyModules = [
-    MarkStories,
-    LinkStories,
-    CodeStories,
-    ColorSampleStories,
-    CodeBlockStories,
-    HeadingStories,
-    DataBadgeStories,
-    NumberBadgeStories,
-    ParagraphStories,
-    SkipLinkStories,
-    ButtonStories
-  ];
   return storyModules.map(module => ({
     params: { component: module.default.id }
   }));
 }
-
-const storyModules = [
-  MarkStories,
-  LinkStories,
-  CodeStories,
-  ColorSampleStories,
-  CodeBlockStories,
-  HeadingStories,
-  DataBadgeStories,
-  NumberBadgeStories,
-  ParagraphStories,
-  SkipLinkStories,
-  ButtonStories
-];
 
 const { component } = Astro.params;
 const componentModule = storyModules.find(s => s.default.id === component)!
