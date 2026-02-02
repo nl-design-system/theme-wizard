@@ -1,5 +1,6 @@
 import './src/components/app/app';
 import './src/components/wizard-components-page/index';
+import './src/components/wizard-component-page/index';
 import './src/components/wizard-layout/index';
 import './src/components/wizard-style-guide/index';
 import './src/components/wizard-preview/index';

@@ -22,10 +22,9 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     <meta name="generator" content={Astro.generator} />
   </head>
   <body class="utrecht-body">
-    <slot />
-
     <script>
       import '@nl-design-system-community/theme-wizard-app';
     </script>
+    <slot />
   </body>
 </html>

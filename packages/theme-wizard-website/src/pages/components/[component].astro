@@ -1,194 +1,58 @@
 ---
-import ComponentsLayout from '../../layouts/ComponentsLayout.astro';
-import type { Meta } from '@storybook/react-vite';
-
-// import * as ButtonStories from '../../../../theme-wizard-app/src/components/wizard-components-page/button-react.stories.tsx';
-import * as CodeBlockStories from '../../../../theme-wizard-app/src/components/wizard-components-page/code-block-react.stories';
+import * as MarkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/mark-react.stories';
+import * as LinkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/link-react.stories';
 import * as CodeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/code-react.stories';
 import * as ColorSampleStories from '../../../../theme-wizard-app/src/components/wizard-components-page/color-sample-react.stories';
-import * as DataBadgeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/data-badge-react.stories';
+import * as CodeBlockStories from '../../../../theme-wizard-app/src/components/wizard-components-page/code-block-react.stories';
 import * as HeadingStories from '../../../../theme-wizard-app/src/components/wizard-components-page/heading-react.stories';
-import * as LinkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/link-react.stories';
-import * as MarkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/mark-react.stories';
+import * as DataBadgeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/data-badge-react.stories';
 import * as NumberBadgeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/number-badge-react.stories';
 import * as ParagraphStories from '../../../../theme-wizard-app/src/components/wizard-components-page/paragraph-react.stories';
 import * as SkipLinkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/skip-link-react.stories';
-
-
-/**
- * Component Story Format module structure.
- * Enforces that CSF modules have a default export (Meta),
- * and any number of story exports (various prop types).
- * Uses `any` for the component type because each module has different component props,
- * and we don't need to access component-specific type information.
- */
-type StoryModule = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default: Meta<any>;
-  [key: string]: unknown;
-};
-
-const storyModules: StoryModule[] = [
-  MarkStories,
-  LinkStories,
-  ColorSampleStories,
-  CodeStories,
-  HeadingStories,
-  CodeBlockStories,
-  ParagraphStories,
-  DataBadgeStories,
-  NumberBadgeStories,
-  SkipLinkStories,
-  // ButtonStories,
-];
+import * as ButtonStories from '../../../../theme-wizard-app/src/components/wizard-components-page/button-react.stories';
+import ComponentsLayout from '@/layouts/ComponentsLayout.astro';
 
 export function getStaticPaths() {
-  const storyModules: StoryModule[] = [
+  const storyModules = [
     MarkStories,
     LinkStories,
-    ColorSampleStories,
     CodeStories,
-    HeadingStories,
+    ColorSampleStories,
     CodeBlockStories,
-    ParagraphStories,
+    HeadingStories,
     DataBadgeStories,
     NumberBadgeStories,
+    ParagraphStories,
     SkipLinkStories,
-    // ButtonStories,
+    ButtonStories
   ];
-  return [
-    ...storyModules.map(component => {
-      return {
-        params: {
-          component: component.default.id
-        }
-      }
-    })
-  ]
+  return storyModules.map(module => ({
+    params: { component: module.default.id }
+  }));
 }
 
-const { component } = Astro.params;
+const storyModules = [
+  MarkStories,
+  LinkStories,
+  CodeStories,
+  ColorSampleStories,
+  CodeBlockStories,
+  HeadingStories,
+  DataBadgeStories,
+  NumberBadgeStories,
+  ParagraphStories,
+  SkipLinkStories,
+  ButtonStories
+];
 
-import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils.ts'
-const componentModule = storyModules.find(c => c.default.id === component)!
+const { component } = Astro.params;
+const componentModule = storyModules.find(s => s.default.id === component)!
 const meta = componentModule.default;
-import slugify from 'limax'
-const description = meta.parameters?.['docs']?.description?.component;
+const description = meta?.['parameters']?.['docs']?.description?.component;
 ---
 
-<!-- Help Vite (@vitejs/plugin-react-refresh) prevent "vite-plugin-react can't detect preamble. Something is wrong." error -->
-<!-- @see https://github.com/vitejs/vite/issues/1984#issuecomment-778289660 -->
-<script type="module">
-import RefreshRuntime from "/@react-refresh"
-RefreshRuntime.injectIntoGlobalHook(window)
-window.$RefreshReg$ = () => {}
-window.$RefreshSig$ = () => (type) => type
-window.__vite_plugin_react_preamble_installed__ = true
-</script>
-
-<script>
-
-  import type { Meta } from '@storybook/react-vite';
-  import React from 'react'
-
-  // import * as ButtonStories from '../../../../theme-wizard-app/src/components/wizard-components-page/button-react.stories.tsx';
-  import * as CodeBlockStories from '../../../../theme-wizard-app/src/components/wizard-components-page/code-block-react.stories';
-  import * as CodeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/code-react.stories';
-  import * as ColorSampleStories from '../../../../theme-wizard-app/src/components/wizard-components-page/color-sample-react.stories';
-  import * as DataBadgeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/data-badge-react.stories';
-  import * as HeadingStories from '../../../../theme-wizard-app/src/components/wizard-components-page/heading-react.stories';
-  import * as LinkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/link-react.stories';
-  import * as MarkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/mark-react.stories';
-  import * as NumberBadgeStories from '../../../../theme-wizard-app/src/components/wizard-components-page/number-badge-react.stories';
-  import * as ParagraphStories from '../../../../theme-wizard-app/src/components/wizard-components-page/paragraph-react.stories';
-  import * as SkipLinkStories from '../../../../theme-wizard-app/src/components/wizard-components-page/skip-link-react.stories';
-
-  // Component CSS imports
-  import dataBadgeCSS from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-  import buttonCSS from '@nl-design-system-candidate/button-css/button.css?inline';
-  import codeBlockCSS from '@nl-design-system-candidate/code-block-css/code-block.css?inline';
-  import codeCSS from '@nl-design-system-candidate/code-css/code.css?inline';
-  import colorSampleCSS from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
-  import headingCSS from '@nl-design-system-candidate/heading-css/heading.css?inline';
-  import linkCSS from '@nl-design-system-candidate/link-css/link.css?inline';
-  import markCSS from '@nl-design-system-candidate/mark-css/mark.css?inline';
-  import numberBadgeCSS from '@nl-design-system-candidate/number-badge-css/number-badge.css?inline';
-  import paragraphCSS from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-  import skipLinkCSS from '@nl-design-system-candidate/skip-link-css/skip-link.css?inline';
-
-  type StoryModule = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    default: Meta<any>;
-    [key: string]: unknown;
-  };
-
-  const storyModules: StoryModule[] = [
-    MarkStories,
-    LinkStories,
-    ColorSampleStories,
-    CodeStories,
-    HeadingStories,
-    CodeBlockStories,
-    ParagraphStories,
-    DataBadgeStories,
-    NumberBadgeStories,
-    SkipLinkStories,
-    // ButtonStories,
-  ]
-  import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils.ts'
-  import type { WizardStoryReact } from '../../../../theme-wizard-app/src/components/wizard-story-react/index'
-  import slugify from 'limax'
-
-  // Create stylesheet objects for the script context
-  const storyStyleSheets = [
-  markCSS,
-  linkCSS,
-  codeCSS,
-  colorSampleCSS,
-  dataBadgeCSS,
-  headingCSS,
-  codeBlockCSS,
-  paragraphCSS,
-  numberBadgeCSS,
-  skipLinkCSS,
-  buttonCSS,
-].map((css) => {
-  const sheet = new CSSStyleSheet();
-  sheet.replaceSync(css);
-  return sheet;
-});
-
-  const main = document.querySelector('[data-component]') as HTMLElement;
-  const componentModule = storyModules.find(c => c.default.id === main.dataset.component)!;
-  const meta = componentModule.default;
-  getStories(componentModule, meta).forEach(story => {
-    const storyContainer = document.getElementById(`story-${slugify(story.name || story.storyName || '')}`);
-    if (!storyContainer) return;
-    const storyElement = document.createElement('wizard-story-react') as WizardStoryReact;
-    storyElement.React = React
-    storyElement.story = story;
-    storyElement.meta = meta;
-    storyElement.storyStyleSheets = storyStyleSheets;
-    storyContainer.appendChild(storyElement);
-  })
-</script>
-
-<ComponentsLayout>
-  <div data-component={component}>
-    <h1>{component}</h1>
-    {description && <p>{description}</p>}
-
-    {getStories(componentModule, meta).map(
-      (story) => {
-        return (
-          <section>
-            <h2>{story?.name || story?.storyName}</h2>
-            <wizard-story-preview>
-              <div id={`story-${slugify(story.name || story.storyName || '')}`} ></div>
-            </wizard-story-preview>
-          </section>
-        )
-      }
-    )}
-  </div>
+<ComponentsLayout title="Components - Theme Wizard" description="Preview and analyze website themes">
+  <h1>{component}</h1>
+  {description && <p>{description}</p>}
+  <wizard-component-page component-id={component}></wizard-component-page>
 </ComponentsLayout>

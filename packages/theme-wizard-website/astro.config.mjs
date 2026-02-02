@@ -24,7 +24,7 @@ export default defineConfig({
     enabled: false,
   },
   integrations: [
-    react(), // For GemeenteVoorbeeld templates rendering
+    react({ jsxImportSource: 'react' }), // Handle JSX transform for story files
   ],
   server: {
     port: 9492, // (T9 for WIZ)2
