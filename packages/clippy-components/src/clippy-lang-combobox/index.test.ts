@@ -71,9 +71,12 @@ describe(`<${tag}>`, () => {
   });
 
   it('infers its language from context', async () => {
+    const lang = 'nl';
+    document.body.innerHTML = `<div lang="${lang}">
+      <div>${renderTag()}</div>
+    </div>`;
     const component: ClippyLangCombobox = document.querySelector(tag)!;
-    const form: HTMLFormElement = document.querySelector('form')!;
-    expect(form.elements).toContain(component);
+    expect(component.lang).toBe(lang);
   });
 
   it('allows options as a token list', async () => {
