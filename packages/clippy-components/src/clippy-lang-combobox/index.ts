@@ -58,6 +58,13 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
   override get lang() {
     return this.#lang || this.DEFAULT_LANG;
   }
+
+  override readonly filter =
+    (query: string) =>
+    ({ autonym, exonym }: Option) => {
+      return autonym.toLowerCase().includes(query.toLowerCase()) || exonym.toLowerCase().includes(query.toLowerCase());
+    };
+
   @property({ converter: arrayFromTokenList, type: Array })
   override set options(options: string[]) {
     this.#options = options.map((value) => {

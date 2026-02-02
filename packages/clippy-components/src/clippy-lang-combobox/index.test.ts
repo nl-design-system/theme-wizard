@@ -98,4 +98,24 @@ describe(`<${tag}>`, () => {
     const component: ClippyLangCombobox = document.querySelector(tag)!;
     expect(component.options.map(({ exonym }) => exonym)).toEqual(Object.values(EXONYM_TEST_CASES));
   });
+
+  it('filters by autonym even when only exonyms are shown', async () => {
+    document.body.innerHTML = renderTag({ format: 'exonym' });
+    const query = 'Nederlands';
+    const input = page.getByRole('combobox');
+    await input.fill(query);
+    const options = page.getByRole('option');
+    expect.soft(options.elements().length).toBe(1);
+    expect.soft(options.getByText(query)).not.toBeInTheDocument();
+  });
+
+  it('filters by exonym even when only autonyms are shown', async () => {
+    document.body.innerHTML = renderTag({ format: 'autonym' });
+    const query = 'Dutch';
+    const input = page.getByRole('combobox');
+    await input.fill(query);
+    const options = page.getByRole('option');
+    expect.soft(options.elements().length).toBe(1);
+    expect.soft(options.getByText(query)).not.toBeInTheDocument();
+  });
 });
