@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { page, userEvent } from 'vitest/browser';
+import { page } from 'vitest/browser';
 import { ClippyLangCombobox } from './index';
+import languages from './languages';
 import './index';
 
 const tag = 'clippy-lang-combobox';
@@ -32,12 +33,30 @@ const OPTIONS = [
   'sv',
 ];
 
+const EXONYM_TEST_CASES = {
+  de: 'German',
+  el: 'Greek',
+  es: 'Spanish',
+  fr: 'French',
+  nl: 'Dutch',
+};
+
+const renderTag = ({
+  format = 'autonym',
+  options = OPTIONS,
+}: {
+  options?: string[];
+  format?: 'autonym' | 'exonym' | 'both';
+} = {}) => {
+  return `
+    <form>
+      <${tag} name="${tag}" options='${options.join(' ')}' format="${format}"></${tag}>
+    </form>`;
+};
+
 describe(`<${tag}>`, () => {
   beforeEach(() => {
-    document.body.innerHTML = `
-    <form>
-      <${tag} name="${tag}" options='${OPTIONS}'></${tag}>
-    </form>`;
+    document.body.innerHTML = renderTag();
   });
 
   it('shows an element with role combobox', async () => {
@@ -49,5 +68,31 @@ describe(`<${tag}>`, () => {
     const component: ClippyLangCombobox = document.querySelector(tag)!;
     const form: HTMLFormElement = document.querySelector('form')!;
     expect(form.elements).toContain(component);
+  });
+
+  it('infers its language from context', async () => {
+    const component: ClippyLangCombobox = document.querySelector(tag)!;
+    const form: HTMLFormElement = document.querySelector('form')!;
+    expect(form.elements).toContain(component);
+  });
+
+  it('allows options as a token list', async () => {
+    const component: ClippyLangCombobox = document.querySelector(tag)!;
+    expect(component.options.length).toBe(OPTIONS.length);
+  });
+
+  it('adds language autonyms', async () => {
+    const component: ClippyLangCombobox = document.querySelector(tag)!;
+    // Check if every key has the expected autonym
+    expect(component.options.map(({ autonym }) => autonym)).toEqual(
+      OPTIONS.map((key) => languages[key as keyof typeof languages]),
+    );
+  });
+
+  it('translates language exonyms', async () => {
+    // Try a subset of exonyms in English
+    document.body.innerHTML = renderTag({ options: Object.keys(EXONYM_TEST_CASES) });
+    const component: ClippyLangCombobox = document.querySelector(tag)!;
+    expect(component.options.map(({ exonym }) => exonym)).toEqual(Object.values(EXONYM_TEST_CASES));
   });
 });
