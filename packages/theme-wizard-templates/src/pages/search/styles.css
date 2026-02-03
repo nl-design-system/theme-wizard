@@ -215,3 +215,15 @@
 .search-result-type {
   font-weight: var(--basis-text-font-weight-bold);
 }
+
+
+.clippy--visually-hidden:not(:active, :focus) .utrecht-form-label {
+  block-size:1px;
+  clip-path:inset(50%);
+  inline-size:1px;
+  overflow:hidden;
+  position:absolute;
+  -webkit-user-select:none;
+  user-select:none;
+  white-space:nowrap                                               
+}
