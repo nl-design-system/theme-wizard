@@ -13,7 +13,7 @@ export const SearchForm: FC<SearchFormProps> = ({
   label = 'Zoek binnen Gemeente Voorbeeld',
   onQueryChange,
   onSubmit,
-  placeholder = 'Bijvoorbeeld: afval, paspoort, verhuizing',
+  placeholder = 'Zoeken',
   query,
 }) => {
   const [error, setError] = useState<string | null>(null);
@@ -37,9 +37,9 @@ export const SearchForm: FC<SearchFormProps> = ({
         Zoekformulier
       </h2>
 
-      <form onSubmit={handleSubmit} className="search-form" role="search" noValidate>
+      <form onSubmit={handleSubmit} className="search-form" noValidate role="search">
         <div className="search-form__field">
-          <FormLabel htmlFor="search-query">
+          <FormLabel htmlFor="search-query" className="ams-visually-hidden">
             {label}
             <span className="ams-visually-hidden"> (verplicht veld)</span>
           </FormLabel>
@@ -59,6 +59,7 @@ export const SearchForm: FC<SearchFormProps> = ({
               value={query}
               onChange={(e) => onQueryChange(e.target.value)}
               placeholder={placeholder}
+              aria-description='Search results will appear below'
               aria-required="true"
               aria-describedby={error ? 'search-error' : undefined}
               required
@@ -66,7 +67,7 @@ export const SearchForm: FC<SearchFormProps> = ({
               aria-invalid={Boolean(error)}
             />
 
-            <clippy-button type="submit" class="search-form__submit" aria-label="Zoeken uitvoeren">
+            <clippy-button type="submit" class="search-form__submit" title="start-zoeken">
               Zoek
             </clippy-button>
           </div>

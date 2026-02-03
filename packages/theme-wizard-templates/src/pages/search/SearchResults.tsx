@@ -23,7 +23,11 @@ export interface SearchResultsProps {
   onSearch?: (query: string, filters: SearchResultsData['filters'], sortBy: SortOption) => void;
 }
 
-export const SearchResults: FC<SearchResultsProps> = ({ currentPath, initialData = MOCK_SEARCH_RESULTS, onSearch }) => {
+export const SearchResults = ({
+  currentPath,
+  initialData = MOCK_SEARCH_RESULTS,
+  onSearch,
+}: SearchResultsProps): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState(initialData.query);
   const [sortBy, setSortBy] = useState<SortOption>(initialData.sortBy);
   const { filters, updateFilter } = useSearchFilters(initialData.filters);
