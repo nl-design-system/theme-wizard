@@ -23,7 +23,7 @@ const defaultSize: Size = 'medium';
 @safeCustomElement(tag)
 export class ClippyButton<T = unknown> extends FormElement<T> {
   @property({ type: Boolean }) 'icon-only' = false;
-  @property({ type: Boolean }) toggle = undefined;
+  @property({ type: Boolean }) toggle = false;
   @property({ type: Boolean }) pressed = false;
   @property({ type: Boolean }) busy = false;
   @property({
