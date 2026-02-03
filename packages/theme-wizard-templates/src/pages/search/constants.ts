@@ -42,6 +42,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
     },
     {
       id: '2',
+      dateTime: '2026-01-15',
       description:
         'Klein chemisch afval (kca) kunt u inleveren bij een gemeentedepot, chemokar of kca-depot. Kijk voor meer informatie over afval op ...',
       title: 'Waar kan ik klein chemisch afval (kca) inleveren?',
@@ -50,10 +51,11 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
     },
     {
       id: '3',
+      dateTime: '2025-10-20',
       description:
         'Alle EU-lidstaten zijn verplicht iedere 10 jaar een nationaal programma te maken voor het beheer van radioactief afval en ...',
       title: 'Nationaal programma radioactief afval',
-      type: 'Onderwerp',
+      type: 'Publicatie',
       url: '/onderwerpen/afval/radioactief-afval',
     },
     {
@@ -65,6 +67,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
     },
     {
       id: '5',
+      dateTime: '2026-02-01',
       description: 'Op weetwatjedoorspoelt.nl leest u wat er wel en niet in het riool terecht mag komen.',
       title: 'Welk afval mag ik door de wc of gootsteen spoelen?',
       type: 'Vraag en antwoord',
@@ -80,10 +83,11 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
     },
     {
       id: '7',
-      description: 'Wat moet u doen met uw bedrijfsafval? Lees meer over inzameling en verwerking van bedrijfsafval.',
-      title: 'Afval buitenshuis scheiden en recyclen',
-      type: 'Onderwerp',
-      url: '/onderwerpen/afval/bedrijfsafval',
+      dateTime: '2026-01-28',
+      description: 'Nieuwe maatregelen voor het scheiden van bedrijfsafval per 2026.',
+      title: 'Nieuws: Bedrijfsafval scheiden wordt verplicht',
+      type: 'Nieuwsbericht',
+      url: '/nieuws/bedrijfsafval-scheiden',
     },
     {
       id: '8',
