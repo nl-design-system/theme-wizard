@@ -11,6 +11,10 @@ export class FormElement<V = unknown> extends LitElement {
 
   static readonly formAssociated = true;
 
+  get form() {
+    return this.internals_.form;
+  }
+
   @property()
   set value(value: V | null) {
     if (this.#value !== value) {
@@ -32,7 +36,7 @@ export class FormElement<V = unknown> extends LitElement {
       case value == null:
         return null;
       case typeof value === 'string' || value instanceof File:
-        return value as string | File;
+        return value;
       case typeof value === 'object':
         try {
           return JSON.stringify(value);
