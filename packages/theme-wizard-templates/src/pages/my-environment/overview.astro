@@ -1,58 +1,63 @@
 ---
+import { PageBody } from '@utrecht/page-body-react';
 import PageLayout from '../../layouts/PageLayout.astro';
 export const detail = { name: 'Overzichtspagina', value: 'overview', module: 'Mijn Omgeving' };
 ---
 
 <PageLayout>
-  <main id="main" slot="content">
-    <utrecht-alert type="info">
-      <utrecht-icon-informatie slot="icon"></utrecht-icon-informatie>
+  <PageBody>
+    <main id="main" slot="content">
+      <utrecht-alert type="info">
+        <utrecht-icon-informatie slot="icon"></utrecht-icon-informatie>
 
-      <utrecht-heading-2>Heading</utrecht-heading-2>
+        <utrecht-heading-2>Heading</utrecht-heading-2>
 
-      <utrecht-paragraph>Lorem ipsum dolor sit amet, consectetur ad * isicing elit, sed do eiusmod *</utrecht-paragraph>
-    </utrecht-alert>
+        <utrecht-paragraph
+          >Lorem ipsum dolor sit amet, consectetur ad * isicing elit, sed do eiusmod *</utrecht-paragraph
+        >
+      </utrecht-alert>
 
-    <clippy-heading level="2">Hallo Jeroen van Drouwen</clippy-heading>
+      <clippy-heading level="2">Hallo Jeroen van Drouwen</clippy-heading>
 
-    <template-paragraph
-      >In ‘Mijn omgeving’ kunt u zelf uw persoonlijke zaken regelen wanneer het u uitkomt. U kunt bijvoorbeeld uw
-      rekeningen betalen en zien wanneer uw aanvraag klaar is.</template-paragraph
-    >
-    <section>
-      <clippy-heading level="2"> Wat moet ik regelen </clippy-heading>
+      <template-paragraph
+        >In ‘Mijn omgeving’ kunt u zelf uw persoonlijke zaken regelen wanneer het u uitkomt. U kunt bijvoorbeeld uw
+        rekeningen betalen en zien wanneer uw aanvraag klaar is.</template-paragraph
+      >
+      <section>
+        <clippy-heading level="2"> Wat moet ik regelen </clippy-heading>
 
-      <template-action>Geef informatie voor uw aanvraag subsidie geluidisolatie</template-action>
+        <template-action>Geef informatie voor uw aanvraag subsidie geluidisolatie</template-action>
 
-      <template-action>Betaal uw parkeerbon van € 74,90 voor parkeren bij Valeriusplein</template-action>
+        <template-action>Betaal uw parkeerbon van € 74,90 voor parkeren bij Valeriusplein</template-action>
 
-      <template-action>Verleng uw identiteitskaart</template-action>
-    </section>
+        <template-action>Verleng uw identiteitskaart</template-action>
+      </section>
 
-    <section>
-      <clippy-heading level="2"> Lopende zaken </clippy-heading>
+      <section>
+        <clippy-heading level="2"> Lopende zaken </clippy-heading>
 
-      <div class="todo-card-layout">
-        <template-case-card>
-          <template-paragraph slot="title">Aanvraag subsidie geluidisolatie</template-paragraph>
-          <p slot="context">ZK-228402</p>
-        </template-case-card>
+        <div class="todo-card-layout">
+          <template-case-card>
+            <template-paragraph slot="title">Aanvraag subsidie geluidisolatie</template-paragraph>
+            <p slot="context">ZK-228402</p>
+          </template-case-card>
 
-        <template-case-card>
-          <template-paragraph slot="title">Aanvraag Parkeervergunning</template-paragraph>
-          <p slot="context">ZK-228402</p>
-        </template-case-card>
+          <template-case-card>
+            <template-paragraph slot="title">Aanvraag Parkeervergunning</template-paragraph>
+            <p slot="context">ZK-228402</p>
+          </template-case-card>
 
-        <template-case-card>
-          <template-paragraph slot="title">Aanvraag subsidie geluidisolatie</template-paragraph>
-          <p slot="context">ZK-228402</p>
-        </template-case-card>
+          <template-case-card>
+            <template-paragraph slot="title">Aanvraag subsidie geluidisolatie</template-paragraph>
+            <p slot="context">ZK-228402</p>
+          </template-case-card>
 
-        <template-case-card>
-          <template-paragraph slot="title">Aanvraag Parkeervergunning</template-paragraph>
-          <p slot="context">ZK-228402</p>
-        </template-case-card>
-      </div>
-    </section>
-  </main>
+          <template-case-card>
+            <template-paragraph slot="title">Aanvraag Parkeervergunning</template-paragraph>
+            <p slot="context">ZK-228402</p>
+          </template-case-card>
+        </div>
+      </section>
+    </main>
+  </PageBody>
 </PageLayout>
