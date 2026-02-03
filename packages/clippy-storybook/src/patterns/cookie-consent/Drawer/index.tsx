@@ -16,8 +16,8 @@ import { CookieConsentDrawerProps } from './types';
  * It appears at the top of the page and allows users to accept, reject, or customize cookies.
  */
 export const CookieConsentDrawer = ({
-  buttonAccept = 'Aanvullende cookies accepteren',
-  buttonReject = 'Aanvullende cookies weigeren',
+  buttonAccept = 'Alle cookies accepteren',
+  buttonReject = 'Cookies weigeren',
   children,
   clearStorageOnMount = false,
   customizeLink = {
@@ -44,7 +44,10 @@ export const CookieConsentDrawer = ({
       )}
 
       {title && (
-        <Heading level={2} id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
+        <Heading 
+          level={2} 
+          id="cookie-consent-title" 
+          style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
           {title}
         </Heading>
       )}
@@ -59,8 +62,17 @@ export const CookieConsentDrawer = ({
         {children}
       </div>
 
-      <form method="dialog">
-        <ButtonGroup style={{ marginBlockStart: 'var(--basis-space-block-xl, 2rem)' }}>
+      <form
+        method="dialog"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: 'var(--basis-space-block-lg, 1.5rem)',
+          marginBlockStart: 'var(--basis-space-block-xl, 2rem)',
+        }}
+      >
+        <ButtonGroup>
           <Button onClick={handleAccept} purpose="secondary" type="submit" value="accept">
             {buttonAccept}
           </Button>
@@ -68,9 +80,9 @@ export const CookieConsentDrawer = ({
           <Button onClick={handleReject} purpose="secondary" type="submit" value="reject">
             {buttonReject}
           </Button>
-
-          <Link href={customizeLink.href}>{customizeLink.text}</Link>
         </ButtonGroup>
+
+        <Link href={customizeLink.href}>{customizeLink.text}</Link>
       </form>
     </Drawer>
   );

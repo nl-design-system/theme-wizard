@@ -1,72 +1,92 @@
 # Cookie Consent Drawer Pattern
 
-Een pattern voor het implementeren van een toegankelijke en gebruiksvriendelijke non-blocking cookie consent drawer in React, conform de richtlijnen van de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners).
+Een pattern for het implementeren van een toegankelijke en gebruiksvriendelijke non-blocking cookie consent drawer in React, conform de richtlijnen van de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners).
 
 ## Overzicht
 
 Dit pattern toont hoe je een niet-blokkerende cookie consent drawer kunt implementeren die bovenaan de pagina verschijnt met drie acties:
 
-- **Aanvullende cookies accepteren** - Accepteert alle optionele cookies
-- **Aanvullende cookies weigeren** - Weigert alle optionele cookies
+- **Alle cookies accepteren** - Accepteert alle optionele cookies
+- **Cookies weigeren** - Weigert alle optionele cookies
 - **Link naar cookie-instellingen** - Voor gedetailleerde keuzes
 
-Het pattern is **non-modal** (gebruikers kunnen de pagina nog steeds gebruiken) en gebruikt Utrecht Design System componenten.
+Het pattern is **non-modal** (gebruikers kunnen de pagina nog steeds gebruiken) en gebruikt NL Design System componenten in combinatie met Utrecht Design System componenten.
 
 ## Quick Start
 
 > [!NOTE]
-> Dit is een **pattern** (geen installeerbaar component). Het toont een aanbevolen manier om Utrecht Design System componenten samen te gebruiken voor een cookie consent drawer. De code is bedoeld als voorbeeld om te kopiëren en aan te passen aan je eigen behoeften.
+> Dit is een **pattern** (geen installeerbaar component). Het toont een aanbevolen manier om NL Design System componenten samen te gebruiken for een cookie consent drawer. De code is bedoeld als voorbeeld om te kopiëren en aan te passen aan je eigen behoeften.
 
 ### Benodigde componenten
 
-Dit pattern gebruikt de volgende Utrecht Design System componenten:
+Dit pattern gebruikt de volgende componenten uit het NL Design System:
 
 ```bash
 npm install @utrecht/component-library-react
+npm install @nl-design-system-candidate/button-react
+npm install @nl-design-system-candidate/heading-react
+npm install @nl-design-system-candidate/link-react
 ```
 
-of voor css only implementatie
+of for css only implementatie
 
 ```bash
 npm install @utrecht/component-library-css
+npm install @nl-design-system-candidate/button-css
+npm install @nl-design-system-candidate/heading-css
+npm install @nl-design-system-candidate/link-css
 ```
 
 ### Componenten uit Utrecht Design System
 
-Het pattern gebruikt bestaande componenten uit de Utrecht Design System community:
+Het pattern gebruikt bestaande componenten uit de NL Design System community:
 
-- **`Drawer`** - Voor de banner container
-- **`Button`** - Voor alle knoppen (beide als secondary action voor gelijkwaardige opties)
-- **`ButtonGroup`** - Voor het groeperen van knoppen
-- **`Link`** - Voor links naar cookie-instellingen
-- **`Heading2`** - Voor de titel
+- **`Drawer`** (Utrecht) - Voor de banner container
+- **`Button`** (Candidate) - Voor alle knoppen (beide als secondary action for gelijkwaardige opties)
+- **`ButtonGroup`** (Utrecht) - Voor het groeperen van knoppen
+- **`Link`** (Candidate) - Voor links naar cookie-instellingen
+- **`Heading`** (Candidate) - Voor de titel
 
 > [!NOTE]
-> Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues. Controleer de [Utrecht Design System repository](https://github.com/nl-design-system/utrecht) voor actuele informatie.
+> Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues.
 
 ### Basis implementatie
 
 ```tsx
-import { Drawer, Button, ButtonGroup, Link, Heading2, Paragraph } from '@utrecht/component-library-react';
+import { Button } from '@nl-design-system-candidate/button-react';
+import { Heading } from '@nl-design-system-candidate/heading-react';
+import { Link } from '@nl-design-system-candidate/link-react';
+import { ButtonGroup, Drawer } from '@utrecht/component-library-react/dist/css-module';
 import { useState } from 'react';
 
 function CookieConsentDrawer() {
   ...
   return (
-    <Drawer>
-      <Heading2>Cookies op deze website</Heading2>
+    <Drawer align="block-start" open style={{ position: 'static' }}>
+      <Heading level={2}>Cookies op deze website</Heading>
       <Paragraph>
         We gebruiken cookies om deze website goed te laten werken en om gebruik van de website te analyseren.
       </Paragraph>
-      <ButtonGroup>
-        <Button appearance="secondary-action-button" onClick={handleAccept}>
-          Aanvullende cookies accepteren
-        </Button>
-        <Button appearance="secondary-action-button" onClick={handleReject}>
-          Aanvullende cookies weigeren
-        </Button>
-      </ButtonGroup>
-      <Link href="/cookies">Cookie-instellingen</Link>
+      <form
+        method="dialog"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: 'var(--basis-space-block-lg, 1.5rem)',
+          marginBlockStart: 'var(--basis-space-block-xl, 2rem)',
+        }}
+      >
+        <ButtonGroup>
+          <Button purpose="secondary" onClick={handleAccept}>
+            Alle cookies accepteren
+          </Button>
+          <Button purpose="secondary" onClick={handleReject}>
+            Cookies weigeren
+          </Button>
+        </ButtonGroup>
+        <Link href="/cookies">Cookie-instellingen</Link>
+      </form>
     </Drawer>
   );
 }
@@ -74,10 +94,10 @@ function CookieConsentDrawer() {
 
 ### Volledige implementatie
 
-Zie voor meer details:
+Zie for meer details:
 
 - **Broncode**: `src/patterns/cookie-consent/Drawer/index.tsx`
-- **Demo hook**: `src/patterns/cookie-consent/hooks/useCookieConsent.tsx` (localStorage, alleen voor demo)
+- **Demo hook**: `src/patterns/cookie-consent/hooks/useCookieConsent.tsx` (localStorage, alleen for demo)
 
 ## API Reference
 
@@ -85,28 +105,29 @@ Zie voor meer details:
 
 De volledige implementatie (`src/patterns/cookie-consent/Drawer/index.tsx`) ondersteunt deze props:
 
-| Prop                  | Type                             | Default                                                  | Beschrijving                        |
-| --------------------- | -------------------------------- | -------------------------------------------------------- | ----------------------------------- |
-| `buttonAccept`        | `string`                         | `'Aanvullende cookies accepteren'`                       | Label accepteer knop                |
-| `buttonReject`        | `string`                         | `'Aanvullende cookies weigeren'`                         | Label weiger knop                   |
-| `customizeLink`       | `{ href: string, text: string }` | `{ href: '/templates/cookies', text: 'Zelf instellen' }` | Link naar cookie-instellingen       |
-| `children`            | `React.ReactNode`                | -                                                        | Custom content                      |
-| `clearStorageOnMount` | `boolean`                        | `false`                                                  | Wis localStorage bij mount (testen) |
-| `title`               | `string`                         | -                                                        | Custom titel                        |
+| Prop                  | Type                             | Default                                                      | Beschrijving                        |
+| --------------------- | -------------------------------- | ------------------------------------------------------------ | ----------------------------------- |
+| `buttonAccept`        | `string`                         | `'Alle cookies accepteren'`                           | Label accepteer knop                |
+| `buttonReject`        | `string`                         | `'Cookies weigeren'`                             | Label weiger knop                   |
+| `customizeLink`       | `{ href: string, text: string }` | `{ href: '/templates/cookies', text: 'Zelf instellen' }`     | Link naar cookie-instellingen       |
+| `showLogo`            | `boolean`                        | -                                                            | Toon logo boven de titel            |
+| `children`            | `React.ReactNode`                | -                                                            | Custom content                      |
+| `clearStorageOnMount` | `boolean`                        | `false`                                                      | Wis localStorage bij mount (testen) |
+| `title`               | `string`                         | -                                                            | Custom titel                        |
 
 ### State management
 
 Het pattern vereist dat je zelf implementeert hoe consent voorkeuren worden opgeslagen en beheerd.
 
-**Client-side (alleen voor demo/testing):**
+**Client-side (alleen for demo/testing):**
 
-De repository bevat een `useCookieConsent` hook met localStorage (`src/patterns/cookie-consent/hooks/useCookieConsent.tsx`). Dit is **niet aanbevolen voor productie**.
+De repository bevat een `useCookieConsent` hook met localStorage (`src/patterns/cookie-consent/hooks/useCookieConsent.tsx`). Dit is **niet aanbevolen for productie**.
 
 ### Opslag van consent voorkeuren
 
-**Voor productie**: Implementeer server-side opslag van consent voorkeuren (zie "State management" sectie voor implementatiedetails).
+**Voor productie**: Implementeer server-side opslag van consent voorkeuren (zie "State management" sectie for implementatiedetails).
 
-**Voor demo/testing**: De repository bevat een `useCookieConsent` hook met localStorage. Dit is **niet geschikt voor productie**.
+**Voor demo/testing**: De repository bevat een `useCookieConsent` hook met localStorage. Dit is **niet geschikt for productie**.
 
 ### Bewaartermijn van consent cookies
 
@@ -131,7 +152,7 @@ De repository bevat een `useCookieConsent` hook met localStorage (`src/patterns/
 
 ### Styling aanpassen
 
-Het pattern gebruikt CSS custom properties (design tokens) voor spacing:
+Het pattern gebruikt CSS custom properties (design tokens) for spacing:
 
 - `--basis-space-block-*` - Voor verticale spacing
 
@@ -141,7 +162,7 @@ Je kunt deze aanpassen door de design tokens te overschrijven in je eigen CSS.
 
 De content sectie (waar de `children` worden weergegeven) heeft een maximale hoogte van 200px en wordt automatisch scrollbaar wanneer de content deze hoogte overschrijdt. Dit voorkomt dat de cookie banner te hoog wordt en de pagina blokkeert.
 
-**Belangrijk voor toegankelijkheid:**
+**Belangrijk for toegankelijkheid:**
 
 - De scrollbare sectie is volledig toegankelijk met keyboard navigatie
 - Screen readers kunnen de volledige content lezen, ook wanneer deze scrollbaar is
@@ -168,7 +189,7 @@ Of in React met inline styles:
 
 ## Toegankelijkheid
 
-### Acceptatiecriteria voor toegankelijkheid
+### Acceptatiecriteria for toegankelijkheid
 
 Wanneer je dit pattern implementeert, zorg ervoor dat je voldoet aan:
 
@@ -179,11 +200,11 @@ Wanneer je dit pattern implementeert, zorg ervoor dat je voldoet aan:
 - [x] **Screen reader ondersteuning** - Compatibel met screen readers
 - [x] **Kleurencontrast** - Voldoet aan WCAG contrast ratio's
 
-### Acceptatiecriteria voor toegankelijk gebruik
+### Acceptatiecriteria for toegankelijk gebruik
 
 1. **Afzender identificatie** - Vermeld duidelijk de organisatienaam (bijv. "Cookies op de website van [organisatienaam]")
    - Een logo kan helpen bij de visuele identificatie van de organisatie
-   - Het logo moet boven de titel staan, voor de skip links
+   - Het logo moet boven de titel staan, for de skip links
    - Zorg dat het logo toegankelijk is (zie "Logo's in cookie banners" hieronder)
 2. **Duidelijke acties** - Gebruik actiegerichte button teksten, geen vage teksten zoals "OK"
 3. **Toegankelijke positionering** - Zichtbaar zonder te scrollen, verberg geen belangrijke content. De cookie banner moet **voor** (boven) de skip links staan in de DOM volgorde en tab order, zodat gebruikers eerst de cookie banner tegenkomen voordat ze naar de skip links kunnen navigeren.
@@ -198,7 +219,7 @@ Hieronder een overzicht van de meestvoorkomende problemen met cookie banners en 
 
 **Probleem**: Banner heeft alleen een "Accepteren" knop, geen mogelijkheid om te weigeren.
 
-**Oplossing**: Zorg altijd voor minimaal twee opties:
+**Oplossing**: Zorg altijd for minimaal twee opties:
 
 - Accepteren
 - Weigeren
@@ -212,7 +233,7 @@ Hieronder een overzicht van de meestvoorkomende problemen met cookie banners en 
 - Moeilijk te vinden weiger optie
 - Automatisch accepteren na X seconden
 
-**Oplossing**: Gebruik gelijkwaardige styling voor beide opties. Geen automatische acceptatie.
+**Oplossing**: Gebruik gelijkwaardige styling for beide opties. Geen automatische acceptatie.
 
 ### 3. Geen mogelijkheid om voorkeuren te wijzigen
 
@@ -234,9 +255,9 @@ Hieronder een overzicht van de meestvoorkomende problemen met cookie banners en 
 
 ### 6. Toegankelijkheidsproblemen
 
-**Probleem**: Banner is niet toegankelijk voor screen readers of keyboard gebruikers.
+**Probleem**: Banner is niet toegankelijk for screen readers of keyboard gebruikers.
 
-**Oplossing**: Zie "Toegankelijkheid" sectie voor acceptatiecriteria.
+**Oplossing**: Zie "Toegankelijkheid" sectie for acceptatiecriteria.
 
 ### 7. Geen link naar meer informatie
 
@@ -244,30 +265,30 @@ Hieronder een overzicht van de meestvoorkomende problemen met cookie banners en 
 
 **Oplossing**: Voeg altijd een link toe naar de cookie-instellingen pagina.
 
-## Aanpassingen voor productie
+## Aanpassingen for productie
 
 Voor productie-gebruik:
 
-1. **Implementeer server-side state management** - Zie "State management" sectie voor details
-2. **Stel server-side cookies in** - Zie "Bewaartermijn van consent cookies" voor aanbevelingen (12 maanden)
-3. **HTML-only variant voor progressive enhancement** - Zie `static/cookie-drawer.html` voor een voorbeeld dat werkt zonder JavaScript
+1. **Implementeer server-side state management** - Zie "State management" sectie for details
+2. **Stel server-side cookies in** - Zie "Bewaartermijn van consent cookies" for aanbevelingen (12 maanden)
+3. **HTML-only variant for progressive enhancement** - Zie `static/cookie-drawer.html` for een voorbeeld dat werkt zonder JavaScript
 
 ## Logo's in cookie banners
 
-Het gebruik van een logo in een cookie banner kan helpen bij de visuele identificatie van de organisatie en verhoogt het vertrouwen van gebruikers. Hieronder vind je richtlijnen voor het correct gebruik van logo's.
+Het gebruik van een logo in een cookie banner kan helpen bij de visuele identificatie van de organisatie en verhoogt het vertrouwen van gebruikers. Hieronder vind je richtlijnen for het correct gebruik van logo's.
 
 ### Waarom een logo gebruiken?
 
 - **Visuele identificatie** - Gebruikers herkennen de organisatie sneller
 - **Vertrouwen** - Een bekend logo verhoogt het vertrouwen in de cookie banner
-- **Consistentie** - Het logo zorgt voor visuele consistentie met de rest van de website
+- **Consistentie** - Het logo zorgt for visuele consistentie met de rest van de website
 - **Professionaliteit** - Een goed geplaatst logo verhoogt de professionaliteit van de banner
 
-### Toegankelijkheidsvereisten voor logo's
+### Toegankelijkheidsvereisten for logo's
 
 Wanneer je een logo toevoegt aan je cookie banner, zorg ervoor dat:
 
-1. **Alt-tekst** - Gebruik altijd een beschrijvende `alt` tekst voor het logo:
+1. **Alt-tekst** - Gebruik altijd een beschrijvende `alt` tekst for het logo:
 
    ```tsx
    <img src="/logo.svg" alt="Logo van [Organisatienaam]" />
@@ -287,7 +308,7 @@ Wanneer je een logo toevoegt aan je cookie banner, zorg ervoor dat:
 
 4. **Link functionaliteit** - Het logo kan optioneel linken naar de homepage:
    - Gebruik `href="/"` om naar de homepage te linken
-   - Zorg dat de link toegankelijk is voor screen readers
+   - Zorg dat the link toegankelijk is for screen readers
 
 5. **Grootte** - Houd het logo compact:
    - Maximaal ~50-60px hoog wordt aanbevolen
@@ -296,13 +317,13 @@ Wanneer je een logo toevoegt aan je cookie banner, zorg ervoor dat:
 
 6. **Positionering** - Het logo moet:
    - Boven de titel staan
-   - Voldoende spacing hebben voor leesbaarheid
+   - Voldoende spacing hebben for leesbaarheid
 
 ### Best practices
 
 - **Consistentie** - Gebruik hetzelfde logo als op de rest van de website
-- **Kwaliteit** - Zorg voor een scherp logo in hoge resolutie (voor retina displays)
-- **Formaat** - Gebruik SVG voor schaalbaarheid, of PNG/JPG met voldoende resolutie
+- **Kwaliteit** - Zorg for een scherp logo in hoge resolutie (for retina displays)
+- **Formaat** - Gebruik SVG for schaalbaarheid, of PNG/JPG met voldoende resolutie
 - **Kleuren** - Zorg dat het logo goed zichtbaar is op de achtergrondkleur van de banner
 - **Responsive** - Test het logo op verschillende schermformaten
 
@@ -329,7 +350,7 @@ Het pattern gebruikt moderne webstandaarden:
 
 ## Juridische context en wetgeving
 
-Deze sectie bevat belangrijke juridische informatie over cookie consent. Deze informatie is relevant voor het opstellen van je cookiebeleid en het bepalen van je implementatiestrategie.
+Deze sectie bevat belangrijke juridische informatie over cookie consent. Deze informatie is relevant for het opstellen van je cookiebeleid en het bepalen van je implementatiestrategie.
 
 ### Inspiratiebronnen
 
@@ -337,15 +358,15 @@ Deze sectie bevat belangrijke juridische informatie over cookie consent. Deze in
 
 ### Officiële richtlijnen en wetgeving
 
-- **[Autoriteit Persoonsgegevens - Heldere cookiebanners](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners)** - Officiële richtlijnen voor cookie banners in Nederland
+- **[Autoriteit Persoonsgegevens - Heldere cookiebanners](https://www.autoriteitpersoonsgegevens.nl/themas/internet-slimme-apparaten/cookies/heldere-cookiebanners)** - Officiële richtlijnen for cookie banners in Nederland
 - **[Rijksoverheid - Mag een website ongevraagd cookies plaatsen?](https://www.rijksoverheid.nl/onderwerpen/telecommunicatie/vraag-en-antwoord/mag-een-website-ongevraagd-cookies-plaatsen)** - Nederlandse cookiewet en uitleg over wanneer toestemming nodig is
-- **[Business.gov.nl - Cookies on your website](https://business.gov.nl/regulations/cookies/)** - Officiële informatie over cookievereisten voor ondernemers in Nederland
+- **[Business.gov.nl - Cookies on your website](https://business.gov.nl/regulations/cookies/)** - Officiële informatie over cookievereisten for ondernemers in Nederland
 - **[GDPR.eu - Cookies, the GDPR, and the ePrivacy Directive](https://gdpr.eu/cookies/)** - Uitleg over cookies in relatie tot GDPR en ePrivacy Directive
 - **[AVG/GDPR](https://www.autoriteitpersoonsgegevens.nl/)** - Algemene Verordening Gegevensbescherming
 
 ### Wanneer is toestemming nodig?
 
-Volgens de [cookiewet](https://www.rijksoverheid.nl/onderwerpen/telecommunicatie/vraag-en-antwoord/mag-een-website-ongevraagd-cookies-plaatsen) moeten websites bezoekers toestemming vragen voor plaatsing van cookies, met uitzondering van cookies die niet privacygevoelig zijn.
+Volgens de [cookiewet](https://www.rijksoverheid.nl/onderwerpen/telecommunicatie/vraag-en-antwoord/mag-een-website-ongevraagd-cookies-plaatsen) moeten websites bezoekers toestemming vragen for plaatsing van cookies, met uitzondering van cookies die niet privacygevoelig zijn.
 
 #### Cookies waarvoor geen toestemming nodig is
 
@@ -354,17 +375,17 @@ Voor cookies die geen of weinig inbreuk op de privacy maken, is geen toestemming
 - **Functionele cookies** - Noodzakelijk om een dienst of webshop te laten functioneren, zoals bestanden die bijhouden wat er in een winkelwagentje zit.
 - **Analytische cookies** - Voor het verzamelen van anonieme informatie over het gebruik van je website. De informatie wordt alleen gebruikt om de kwaliteit en functionaliteit van je website te verbeteren. **Belangrijk**: Je moet bezoekers nog steeds informeren over deze cookies, ook al is geen toestemming nodig.
 - **A/B testing cookies** - Gebruikt om te bepalen welke versie van een advertentie of website meer gewaardeerd wordt door bezoekers.
-- **Affiliate cookies / performance cookies** - Gebruikt om te bepalen welke advertentie de aankoopbeslissing van de consument beïnvloedt.
+- **Affiliate cookies / performance cookies** - Gebruikt om te bepalen welke advertentie the aankoopbeslissing van de consument beïnvloedt.
 
 > [!NOTE]
-> Let op: Hoewel analytische cookies vaak geen toestemming vereisen, kan dit afhangen van de specifieke implementatie en of gegevens worden gedeeld met derden. Bij twijfel is het altijd beter om toestemming te vragen. Volgens de [ePrivacy Directive](https://gdpr.eu/cookies/) moet je voor alle cookies behalve strikt noodzakelijke cookies toestemming krijgen.
+> Let op: Hoewel analytische cookies vaak geen toestemming vereisen, kan dit afhangen van de specifieke implementatie en of gegevens worden gedeeld met derden. Bij twijfel is het altijd beter om toestemming te vragen. Volgens de [ePrivacy Directive](https://gdpr.eu/cookies/) moet je for alle cookies behalve strikt noodzakelijke cookies toestemming krijgen.
 
 #### Cookies waarvoor altijd toestemming nodig is
 
 **Tracking cookies** vereisen altijd expliciete toestemming ([Business.gov.nl](https://business.gov.nl/regulations/cookies/)). Deze cookies:
 
 - Houden individueel websitegedrag bij
-- Stellen profielen op voor bijvoorbeeld gerichte advertenties
+- Stellen profielen op for bijvoorbeeld gerichte advertenties
 - Maken inbreuk op de privacy
 - Kunnen gevoelige persoonsgegevens verzamelen en vallen daarom onder de privacyregels (GDPR)
 
@@ -389,7 +410,7 @@ Volgens de AVG/GDPR is een cookies pagina (cookiebeleid) verplicht wanneer je:
 
 ### Wat moet er in je cookiebeleid staan?
 
-Volgens [Business.gov.nl](https://business.gov.nl/regulations/cookies/) moet je bij het vragen om toestemming voor cookies de volgende informatie vermelden:
+Volgens [Business.gov.nl](https://business.gov.nl/regulations/cookies/) moet je bij het vragen om toestemming for cookies de volgende informatie vermelden:
 
 1. **Welke cookies worden gebruikt**
    - Essentiële cookies (altijd toegestaan)
@@ -412,7 +433,7 @@ Volgens [Business.gov.nl](https://business.gov.nl/regulations/cookies/) moet je 
    - Doeleinden van het delen
 
 5. **Hoe lang worden gegevens bewaard**
-   - Bewaartermijn van cookies (zie "Bewaartermijn van consent cookies" voor aanbevelingen)
+   - Bewaartermijn van cookies (zie "Bewaartermijn van consent cookies" for aanbevelingen)
    - Bewaartermijn van verzamelde gegevens
 
 6. **Rechten van gebruikers**
@@ -421,8 +442,8 @@ Volgens [Business.gov.nl](https://business.gov.nl/regulations/cookies/) moet je 
    - Hoe gebruikers hun voorkeuren kunnen wijzigen
 
 7. **Contactinformatie**
-   - Wie is verantwoordelijk voor de dataverwerking?
-   - Contactgegevens voor vragen over cookies
+   - Wie is verantwoordelijk for de dataverwerking?
+   - Contactgegevens for vragen over cookies
 
 ### Anonieme tracking en delen met derden
 
@@ -433,7 +454,7 @@ Ook bij anonieme tracking moet je dit vermelden als je gegevens deelt met derden
 - Vermeld alle derde partijen die gegevens ontvangen
 - Geef aan of anonieme gegevens kunnen worden gecombineerd om personen te identificeren
 
-### Vereisten voor toestemming
+### Vereisten for toestemming
 
 Volgens [Business.gov.nl](https://business.gov.nl/regulations/cookies/) en [ePrivacy Directive](https://gdpr.eu/cookies/):
 
@@ -469,4 +490,4 @@ Je cookiebeleid moet:
 ### Toegankelijkheid
 
 - **[WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)** - Web Content Accessibility Guidelines
-- **[ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)** - Best practices voor ARIA gebruik
+- **[ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)** - Best practices for ARIA gebruik
