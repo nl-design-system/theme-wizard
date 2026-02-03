@@ -47,9 +47,23 @@ export class ClippyButton<T = unknown> extends FormElement<T> {
 
   static override readonly styles = [buttonStyles, unsafeCSS(buttonCss)];
 
+  readonly #handleClick = () => {
+    switch (this.type) {
+      case 'reset':
+        // Mimic button[type=reset] behavior
+        return this.form?.reset();
+      case 'submit':
+        // Mimic button[type=submit] behavior
+        return this.form?.dispatchEvent(new SubmitEvent('submit', { submitter: this }));
+      default:
+        return undefined;
+    }
+  };
+
   override render() {
     return html`
       <button
+        @click=${this.#handleClick}
         type=${this.type}
         aria-pressed=${ifDefined(this.toggle && this.pressed)}
         aria-disabled=${ifDefined(this.disabled)}
