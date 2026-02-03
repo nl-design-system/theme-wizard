@@ -11,6 +11,10 @@ export class FormElement<V = unknown> extends LitElement {
 
   static readonly formAssociated = true;
 
+  get form() {
+    return this.internals_.form;
+  }
+
   @property()
   set value(value: V | null) {
     if (this.#value !== value) {
