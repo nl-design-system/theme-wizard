@@ -1,4 +1,7 @@
+import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
+import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import { PageContent } from '@utrecht/component-library-react/dist/css-module';
+import { PageBody } from '@utrecht/page-body-react';
 import React, { type FC, useState, useCallback } from 'react';
 import type { SortOption } from './components/SearchResultsHeader';
 import type { SearchResultsData } from './types';
@@ -12,6 +15,7 @@ import { SearchResultsList } from './components/SearchResultsList';
 import { MOCK_SEARCH_RESULTS } from './constants';
 import { useSearchFilters } from './hooks/useSearchFilters';
 import './styles.css';
+import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
 
 export interface SearchResultsProps {
   currentPath?: string;
@@ -49,39 +53,42 @@ export const SearchResults: FC<SearchResultsProps> = ({ currentPath, initialData
   );
 
   return (
-    <body className="utrecht-page-body">
-      <template-skip-link>Skip to main content</template-skip-link>
+    <>
+      <SkipLink href="#main">Skip to main content</SkipLink>
 
       <PageHeaderSection />
 
       <Navigation currentPath={currentPath} />
 
-      <div className="utrecht-page-body__content">
-        <main id="main">
+      <PageBody>
+        <main id="main" aria-label="Zoekresultaten">
           <PageContent>
-            <clippy-heading level={1}>Zoeken</clippy-heading>
+            <div className="search-page-container">
+              <SearchForm query={searchQuery} onQueryChange={setSearchQuery} onSubmit={handleSearch} />
 
-            <SearchForm query={searchQuery} onQueryChange={setSearchQuery} onSubmit={handleSearch} />
+              <div className="search-results-layout">
+                <aside className="search-results-sidebar" aria-label="Zoekfilters">
+                  <SearchFiltersComponent filters={filters} onFilterChange={handleFilterChange} />
+                </aside>
 
-            <div className="search-results-layout">
-              <SearchFiltersComponent filters={filters} onFilterChange={handleFilterChange} />
+                <div className="search-results-main">
+                  <SearchResultsHeader
+                    totalResults={initialData.totalResults}
+                    sortBy={sortBy}
+                    onSortChange={handleSortChange}
+                    query={searchQuery}
+                  />
 
-              <div className="search-results-content">
-                <SearchResultsHeader
-                  totalResults={initialData.totalResults}
-                  sortBy={sortBy}
-                  onSortChange={handleSortChange}
-                />
-
-                <SearchResultsList results={initialData.results} />
+                  <SearchResultsList results={initialData.results} query={searchQuery} />
+                </div>
               </div>
             </div>
           </PageContent>
         </main>
-      </div>
+      </PageBody>
 
       <PageFooterSection />
-    </body>
+    </>
   );
 };
 

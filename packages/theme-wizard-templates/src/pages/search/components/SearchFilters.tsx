@@ -1,18 +1,16 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import {
-  AccordionProvider,
   Fieldset,
   FieldsetLegend,
   FormField,
-  FormFieldCheckbox,
   FormLabel,
   Paragraph,
   RadioButton,
+  Textbox,
 } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC, useMemo } from 'react';
-import type { AccordionSection } from '../../../components/AccordionSection/types';
+import React, { type FC, useState } from 'react';
 import type { SearchFilters as SearchFiltersState } from '../types';
-import { SEARCH_FILTER_PERIODS, SEARCH_FILTER_MINISTRIES, SEARCH_FILTER_TYPES } from '../constants';
+import { SEARCH_FILTER_PERIODS } from '../constants';
 
 export interface SearchFiltersProps {
   filters: SearchFiltersState;
@@ -20,110 +18,97 @@ export interface SearchFiltersProps {
 }
 
 export const SearchFiltersComponent: FC<SearchFiltersProps> = ({ filters, onFilterChange }) => {
-  const filterSections: AccordionSection[] = useMemo(
-    () => [
-      {
-        body: (
-          <Fieldset id="search-filter-period" role="radiogroup">
-            <FieldsetLegend>
-              <span className="utrecht-visually-hidden">Selecteer periode</span>
-            </FieldsetLegend>
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const isCustomPeriod = filters.period === 'custom';
 
-            <div className="search-filter-options">
-              {SEARCH_FILTER_PERIODS.map((period) => {
-                const id = `search-filter-period-${period.value}`;
-                const checked = filters.period === period.value;
-
-                return (
-                  <FormField key={period.value} type="radio">
-                    <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
-                      <FormLabel htmlFor={id} type="radio">
-                        <RadioButton
-                          className="utrecht-form-field__input"
-                          id={id}
-                          name="period"
-                          value={period.value}
-                          defaultChecked={checked}
-                          onChange={() => onFilterChange('period', period.value)}
-                        />
-                        {period.label}
-                      </FormLabel>
-                    </Paragraph>
-                  </FormField>
-                );
-              })}
-            </div>
-          </Fieldset>
-        ),
-        label: 'Periode',
-      },
-      {
-        body: (
-          <Fieldset id="search-filter-ministry">
-            <FieldsetLegend>
-              <span className="utrecht-visually-hidden">Selecteer ministerie</span>
-            </FieldsetLegend>
-
-            <div className="search-filter-options">
-              {SEARCH_FILTER_MINISTRIES.map((ministry) => (
-                <FormFieldCheckbox
-                  key={ministry.value}
-                  id={`search-filter-ministry-${ministry.value}`}
-                  name="ministry"
-                  value={ministry.value}
-                  defaultChecked={
-                    ministry.value === 'all'
-                      ? !filters.ministry || filters.ministry === 'all'
-                      : filters.ministry === ministry.value
-                  }
-                  label={ministry.label}
-                  onChange={() => onFilterChange('ministry', ministry.value)}
-                />
-              ))}
-            </div>
-          </Fieldset>
-        ),
-        label: 'Ministerie',
-      },
-      {
-        body: (
-          <Fieldset id="search-filter-type">
-            <FieldsetLegend>
-              <span className="utrecht-visually-hidden">Selecteer documenttype</span>
-            </FieldsetLegend>
-
-            <div className="search-filter-options">
-              {SEARCH_FILTER_TYPES.map((type) => (
-                <FormFieldCheckbox
-                  key={type.value}
-                  id={`search-filter-type-${type.value}`}
-                  name="type"
-                  value={type.value}
-                  defaultChecked={
-                    type.value === 'all'
-                      ? !filters.documentType || filters.documentType === 'all'
-                      : filters.documentType === type.value
-                  }
-                  label={type.label}
-                  onChange={() => onFilterChange('documentType', type.value)}
-                />
-              ))}
-            </div>
-          </Fieldset>
-        ),
-        label: 'Type',
-      },
-    ],
-    [filters, onFilterChange],
-  );
+  const handleDateChange = () => {
+    if (dateFrom && dateTo) {
+      // Format: "YYYY-MM-DD to YYYY-MM-DD"
+      onFilterChange('period', `${dateFrom} to ${dateTo}`);
+    }
+  };
 
   return (
-    <aside aria-label="Zoekfilters">
-      <Heading level={2} appearance="level-3" className="utrecht-visually-hidden">
-        Vul zoekcriteria in
-      </Heading>
+    <aside className="search-filters" aria-label="Zoekfilters">
+      <section>
+        <Heading level={3} appearance="level-4">
+          Periode
+        </Heading>
+        <Fieldset id="search-filter-period" role="radiogroup">
+          <FieldsetLegend>
+            <span className="ams-visually-hidden">Selecteer periode</span>
+          </FieldsetLegend>
 
-      <AccordionProvider headingLevel={3} sections={filterSections} />
+          <div className="search-filter-options">
+            {SEARCH_FILTER_PERIODS.map((period) => {
+              const id = `search-filter-period-${period.value}`;
+              const checked = filters.period === period.value;
+
+              return (
+                <FormField key={period.value} type="radio">
+                  <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
+                    <FormLabel htmlFor={id} type="radio">
+                      <RadioButton
+                        className="utrecht-form-field__input"
+                        id={id}
+                        name="period"
+                        value={period.value}
+                        defaultChecked={checked}
+                        onChange={() => onFilterChange('period', period.value)}
+                      />
+                      {period.label}
+                    </FormLabel>
+                  </Paragraph>
+                </FormField>
+              );
+            })}
+          </div>
+
+          {isCustomPeriod && (
+            <div className="search-filter-date-range" role="group" aria-labelledby="date-range-label">
+              <span id="date-range-label" className="ams-visually-hidden">
+                Selecteer datumbereik
+              </span>
+              
+              <div className="search-filter-date-range__fields">
+                <FormField>
+                  <Paragraph className="utrecht-form-field__label">
+                    <FormLabel htmlFor="date-from">Van:</FormLabel>
+                  </Paragraph>
+                  <Textbox
+                    id="date-from"
+                    type="date"
+                    value={dateFrom}
+                    onChange={(e) => {
+                      setDateFrom(e.target.value);
+                      setTimeout(handleDateChange, 0);
+                    }}
+                    aria-label="Startdatum"
+                  />
+                </FormField>
+
+                <FormField>
+                  <Paragraph className="utrecht-form-field__label">
+                    <FormLabel htmlFor="date-to">Tot:</FormLabel>
+                  </Paragraph>
+                  <Textbox
+                    id="date-to"
+                    type="date"
+                    value={dateTo}
+                    min={dateFrom}
+                    onChange={(e) => {
+                      setDateTo(e.target.value);
+                      setTimeout(handleDateChange, 0);
+                    }}
+                    aria-label="Einddatum"
+                  />
+                </FormField>
+              </div>
+            </div>
+          )}
+        </Fieldset>
+      </section>
     </aside>
   );
 };

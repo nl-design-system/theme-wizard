@@ -32,17 +32,20 @@ export const SearchForm: FC<SearchFormProps> = ({
   };
 
   return (
-    <section aria-label="Zoekformulier" className="search-form-section">
-      <form onSubmit={handleSubmit} className="search-form" noValidate>
-        <div role="search" className="search-form__field">
-          <FormLabel htmlFor="search-query" className="utrecht-visually-hidden">
+    <section aria-labelledby="search-form-heading" className="search-form-section">
+      <h2 id="search-form-heading" className="ams-visually-hidden">
+        Zoekformulier
+      </h2>
+
+      <form onSubmit={handleSubmit} className="search-form" role="search" noValidate>
+        <div className="search-form__field">
+          <FormLabel htmlFor="search-query">
             {label}
-            <span className="utrecht-visually-hidden"> (verplicht veld)</span>
-            <span aria-hidden="true">*</span>
+            <span className="ams-visually-hidden"> (verplicht veld)</span>
           </FormLabel>
 
           {error && (
-            <p id="search-error" role="alert" className="search-form__error">
+            <p id="search-error" role="alert" className="search-form__error" aria-live="polite">
               {error}
             </p>
           )}
@@ -57,12 +60,13 @@ export const SearchForm: FC<SearchFormProps> = ({
               onChange={(e) => onQueryChange(e.target.value)}
               placeholder={placeholder}
               aria-required="true"
+              aria-describedby={error ? 'search-error' : undefined}
               required
               autoComplete="off"
               aria-invalid={Boolean(error)}
             />
 
-            <clippy-button type="submit" class="search-form__submit">
+            <clippy-button type="submit" class="search-form__submit" aria-label="Zoeken uitvoeren">
               Zoek
             </clippy-button>
           </div>

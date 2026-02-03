@@ -5,23 +5,40 @@ import { SearchResultItem } from './SearchResultItem';
 
 export interface SearchResultsListProps {
   results: SearchResult[];
+  query?: string;
 }
 
-export const SearchResultsList: FC<SearchResultsListProps> = ({ results }) => {
+export const SearchResultsList: FC<SearchResultsListProps> = ({ query, results }) => {
+  const queryText = query ? ` voor "${query}"` : '';
+
   if (results.length === 0) {
     return (
-      <section aria-label="Zoekresultaten" className="search-results-list">
-        <Paragraph>Geen resultaten gevonden. Probeer andere zoektermen.</Paragraph>
+      <section aria-labelledby="no-results-heading" className="search-results-list">
+        <h3 id="no-results-heading" className="ams-visually-hidden">
+          Geen zoekresultaten{queryText}
+        </h3>
+        <Paragraph role="status" aria-live="polite">
+          Geen resultaten gevonden{queryText}. Probeer andere zoektermen.
+        </Paragraph>
       </section>
     );
   }
 
   return (
-    <section aria-label="Zoekresultaten" className="search-results-list">
-      <ol className="search-results-list__items">
-        {results.map((result) => (
+    <section aria-labelledby="results-list-heading" className="search-results-list">
+      <h3 id="results-list-heading" className="ams-visually-hidden">
+        Lijst met zoekresultaten{queryText}
+      </h3>
+      
+      <ol className="search-results-list__items" aria-live="polite" aria-atomic="false">
+        {results.map((result, index) => (
           <li key={result.id}>
-            <SearchResultItem result={result} />
+            <SearchResultItem 
+              result={result} 
+              position={index + 1} 
+              totalResults={results.length}
+              query={query}
+            />
           </li>
         ))}
       </ol>

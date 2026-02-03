@@ -3,7 +3,7 @@ import { IconUser } from '@tabler/icons-react';
 import { Icon, PageContent, Image } from '@utrecht/component-library-react/dist/css-module';
 import { PageHeader } from '@utrecht/page-header-react';
 import React, { type ReactNode, type PropsWithChildren } from 'react';
-import logo from '../../../../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 import { Column, Row } from '../../components/Layout';
 import './styles.css';
 
