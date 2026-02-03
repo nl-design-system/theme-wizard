@@ -65,9 +65,9 @@ export const CookieConsentDrawer = ({
       <form
         method="dialog"
         style={{
+          alignItems: 'center',
           display: 'flex',
           flexWrap: 'wrap',
-          alignItems: 'center',
           gap: 'var(--basis-space-block-lg, 1.5rem)',
           marginBlockStart: 'var(--basis-space-block-xl, 2rem)',
         }}
