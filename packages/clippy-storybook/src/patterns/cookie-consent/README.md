@@ -6,67 +6,87 @@ Een pattern voor het implementeren van een toegankelijke en gebruiksvriendelijke
 
 Dit pattern toont hoe je een niet-blokkerende cookie consent drawer kunt implementeren die bovenaan de pagina verschijnt met drie acties:
 
-- **Aanvullende cookies accepteren** - Accepteert alle optionele cookies
-- **Aanvullende cookies weigeren** - Weigert alle optionele cookies
+- **Alle cookies accepteren** - Accepteert alle optionele cookies
+- **Cookies weigeren** - Weigert alle optionele cookies
 - **Link naar cookie-instellingen** - Voor gedetailleerde keuzes
 
-Het pattern is **non-modal** (gebruikers kunnen de pagina nog steeds gebruiken) en gebruikt Utrecht Design System componenten.
+Het pattern is **non-modal** (gebruikers kunnen de pagina nog steeds gebruiken) en gebruikt NL Design System componenten in combinatie met Utrecht Design System componenten.
 
 ## Quick Start
 
 > [!NOTE]
-> Dit is een **pattern** (geen installeerbaar component). Het toont een aanbevolen manier om Utrecht Design System componenten samen te gebruiken voor een cookie consent drawer. De code is bedoeld als voorbeeld om te kopiëren en aan te passen aan je eigen behoeften.
+> Dit is een **pattern** (geen installeerbaar component). Het toont een aanbevolen manier om NL Design System componenten samen te gebruiken voor een cookie consent drawer. De code is bedoeld als voorbeeld om te kopiëren en aan te passen aan je eigen behoeften.
 
 ### Benodigde componenten
 
-Dit pattern gebruikt de volgende Utrecht Design System componenten:
+Dit pattern gebruikt de volgende componenten uit het NL Design System:
 
 ```bash
 npm install @utrecht/component-library-react
+npm install @nl-design-system-candidate/button-react
+npm install @nl-design-system-candidate/heading-react
+npm install @nl-design-system-candidate/link-react
 ```
 
 of voor css only implementatie
 
 ```bash
 npm install @utrecht/component-library-css
+npm install @nl-design-system-candidate/button-css
+npm install @nl-design-system-candidate/heading-css
+npm install @nl-design-system-candidate/link-css
 ```
 
 ### Componenten uit Utrecht Design System
 
-Het pattern gebruikt bestaande componenten uit de Utrecht Design System community:
+Het pattern gebruikt bestaande componenten uit de NL Design System community:
 
-- **`Drawer`** - Voor de banner container
-- **`Button`** - Voor alle knoppen (beide als secondary action voor gelijkwaardige opties)
-- **`ButtonGroup`** - Voor het groeperen van knoppen
-- **`Link`** - Voor links naar cookie-instellingen
-- **`Heading2`** - Voor de titel
+- **`Drawer`** (Utrecht) - Voor de banner container
+- **`Button`** (Candidate) - Voor alle knoppen (beide als secondary action voor gelijkwaardige opties)
+- **`ButtonGroup`** (Utrecht) - Voor het groeperen van knoppen
+- **`Link`** (Candidate) - Voor links naar cookie-instellingen
+- **`Heading`** (Candidate) - Voor de titel
 
 > [!NOTE]
-> Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues. Controleer de [Utrecht Design System repository](https://github.com/nl-design-system/utrecht) voor actuele informatie.
+> Bekende tekortkomingen in community componenten worden vastgelegd in GitHub issues.
 
 ### Basis implementatie
 
 ```tsx
-import { Drawer, Button, ButtonGroup, Link, Heading2, Paragraph } from '@utrecht/component-library-react';
+import { Button } from '@nl-design-system-candidate/button-react';
+import { Heading } from '@nl-design-system-candidate/heading-react';
+import { Link } from '@nl-design-system-candidate/link-react';
+import { ButtonGroup, Drawer } from '@utrecht/component-library-react/dist/css-module';
 import { useState } from 'react';
 
 function CookieConsentDrawer() {
   ...
   return (
-    <Drawer>
-      <Heading2>Cookies op deze website</Heading2>
+    <Drawer align="block-start" open style={{ position: 'static' }}>
+      <Heading level={2}>Cookies op deze website</Heading>
       <Paragraph>
         We gebruiken cookies om deze website goed te laten werken en om gebruik van de website te analyseren.
       </Paragraph>
+      <form
+        method="dialog"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: 'var(--basis-space-block-lg, 1.5rem)',
+          marginBlockStart: 'var(--basis-space-block-xl, 2rem)',
+        }}
+      >
       <ButtonGroup>
-        <Button appearance="secondary-action-button" onClick={handleAccept}>
-          Aanvullende cookies accepteren
+        <Button purpose="secondary" onClick={handleAccept}>
+          Alle cookies accepteren
         </Button>
-        <Button appearance="secondary-action-button" onClick={handleReject}>
-          Aanvullende cookies weigeren
+        <Button purpose="secondary" onClick={handleReject}>
+          Cookies weigeren
         </Button>
       </ButtonGroup>
       <Link href="/cookies">Cookie-instellingen</Link>
+      </form>
     </Drawer>
   );
 }
@@ -85,14 +105,15 @@ Zie voor meer details:
 
 De volledige implementatie (`src/patterns/cookie-consent/Drawer/index.tsx`) ondersteunt deze props:
 
-| Prop                  | Type                             | Default                                                  | Beschrijving                        |
-| --------------------- | -------------------------------- | -------------------------------------------------------- | ----------------------------------- |
-| `buttonAccept`        | `string`                         | `'Aanvullende cookies accepteren'`                       | Label accepteer knop                |
-| `buttonReject`        | `string`                         | `'Aanvullende cookies weigeren'`                         | Label weiger knop                   |
-| `customizeLink`       | `{ href: string, text: string }` | `{ href: '/templates/cookies', text: 'Zelf instellen' }` | Link naar cookie-instellingen       |
-| `children`            | `React.ReactNode`                | -                                                        | Custom content                      |
-| `clearStorageOnMount` | `boolean`                        | `false`                                                  | Wis localStorage bij mount (testen) |
-| `title`               | `string`                         | -                                                        | Custom titel                        |
+| Prop                  | Type                             | Default                                                      | Beschrijving                        |
+| --------------------- | -------------------------------- | ------------------------------------------------------------ | ----------------------------------- |
+| `buttonAccept`        | `string`                         | `'Alle cookies accepteren'`                           | Label accepteer knop                |
+| `buttonReject`        | `string`                         | `'Cookies weigeren'`                             | Label weiger knop                   |
+| `customizeLink`       | `{ href: string, text: string }` | `{ href: '/templates/cookies', text: 'Zelf instellen' }`     | Link naar cookie-instellingen       |
+| `showLogo`            | `boolean`                        | -                                                            | Toon logo boven de titel            |
+| `children`            | `React.ReactNode`                | -                                                            | Custom content                      |
+| `clearStorageOnMount` | `boolean`                        | `false`                                                      | Wis localStorage bij mount (testen) |
+| `title`               | `string`                         | -                                                            | Custom titel                        |
 
 ### State management
 

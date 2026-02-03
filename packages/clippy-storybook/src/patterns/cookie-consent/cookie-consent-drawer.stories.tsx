@@ -89,8 +89,8 @@ type Story = StoryObj<typeof meta>;
 export const ShortContent: Story = {
   name: 'Cookie Drawer',
   args: {
-    buttonAccept: 'Aanvullende cookies accepteren',
-    buttonReject: 'Aanvullende cookies weigeren',
+    buttonAccept: 'Alle cookies accepteren',
+    buttonReject: 'Cookies weigeren',
     children: (
       <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
         We gebruiken enkele essentiële cookies om deze website goed te laten werken. We willen graag aanvullende cookies
@@ -110,8 +110,8 @@ export const ShortContent: Story = {
 export const LongContent: Story = {
   name: 'Cookie Drawer - Scrollable Content',
   args: {
-    buttonAccept: 'Aanvullende cookies accepteren',
-    buttonReject: 'Aanvullende cookies weigeren',
+    buttonAccept: 'Alle cookies accepteren',
+    buttonReject: 'Cookies weigeren',
     children: (
       <>
         <Paragraph style={{ marginBlockEnd: 'var(--basis-space-block-md, 1rem)' }}>
