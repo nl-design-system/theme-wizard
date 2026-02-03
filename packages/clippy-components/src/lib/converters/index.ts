@@ -23,3 +23,24 @@ const createArrayConverter =
 
 export const arrayFromTokenList: AttributeConverterFrom<Array<unknown> | null> = createArrayConverter(/\s+/);
 export const arrayFromCommaList: AttributeConverterFrom<Array<unknown> | null> = createArrayConverter(',');
+
+export const allowedValuesConverter = <T extends string, const AllowedValues extends readonly T[]>(
+  allowedValues: AllowedValues,
+  defaultValue?: AllowedValues[number],
+) => {
+  type ReturnType = typeof defaultValue extends undefined ? T | undefined : T;
+  return {
+    fromAttribute: (value: string | null): ReturnType => {
+      if (value && allowedValues.includes(value as T)) {
+        return value as T;
+      }
+      if (defaultValue !== undefined) {
+        console.warn(`Invalid value "${value}". Using default "${defaultValue}".`);
+        return defaultValue;
+      }
+      console.warn(`Invalid value "${value}".`);
+      return undefined as ReturnType;
+    },
+    toAttribute: (value: ReturnType): string => value ?? '',
+  } satisfies ComplexAttributeConverter<ReturnType>;
+};

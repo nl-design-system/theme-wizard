@@ -3,7 +3,9 @@ import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline'
 import { html, unsafeCSS, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { FormElement } from './../lib/FormElement';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { allowedValuesConverter } from '../lib/converters';
+import { FormElement } from '../lib/FormElement';
 import buttonStyles from './styles';
 
 const tag = 'clippy-button';
@@ -14,11 +16,16 @@ declare global {
   }
 }
 
-type Purpose = 'primary' | 'secondary' | 'subtle';
-type Hint = 'positive' | 'negative';
-type ButtonType = 'button' | 'submit' | 'reset';
-type Size = 'small' | 'medium';
-const defaultSize: Size = 'medium';
+const allowedButtonTypes = ['button', 'submit', 'reset'] as const;
+const allowedHints = ['positive', 'negative'] as const;
+const allowedPurposes = ['primary', 'secondary', 'subtle'] as const;
+const allowedSizes = ['small', 'medium'] as const;
+type ButtonType = (typeof allowedButtonTypes)[number];
+type Hint = (typeof allowedHints)[number];
+type Purpose = (typeof allowedButtonTypes)[number];
+type Size = (typeof allowedSizes)[number];
+const defaultButtonType = 'button' satisfies ButtonType;
+const defaultSize: Size = 'medium' satisfies Size;
 
 @safeCustomElement(tag)
 export class ClippyButton<T = unknown> extends FormElement<T> {
@@ -27,57 +34,16 @@ export class ClippyButton<T = unknown> extends FormElement<T> {
   @property({ type: Boolean }) pressed = false;
   @property({ type: Boolean }) busy = false;
   @property({
-    converter: {
-      fromAttribute: (value: string | null): Hint | undefined => {
-        if (value === 'positive' || value === 'negative') {
-          return value;
-        }
-        console.warn(`Invalid hint "${value}".`);
-        return undefined;
-      },
-    },
+    converter: allowedValuesConverter(allowedHints),
     type: String,
   })
-  hint: Hint | undefined;
-  @property({
-    converter: {
-      fromAttribute: (value: string | null): Size => {
-        if (value === 'small' || value === 'medium') {
-          return value;
-        }
-        console.warn(`Invalid size "${value}". Using default "medium".`);
-        return 'medium';
-      },
-    },
-    type: String,
-  })
+  hint?: Hint;
+  @property({ converter: allowedValuesConverter(allowedSizes, defaultSize) })
   size: Size = defaultSize;
-  @property({
-    converter: {
-      fromAttribute: (value: string | null): Purpose | undefined => {
-        if (value === 'primary' || value === 'secondary' || value === 'subtle') {
-          return value;
-        }
-        console.warn(`Invalid purpose "${value}".`);
-        return undefined;
-      },
-    },
-    type: String,
-  })
-  purpose: Purpose | undefined;
-  @property({
-    converter: {
-      fromAttribute: (value: string | null): ButtonType => {
-        if (value === 'button' || value === 'submit' || value === 'reset') {
-          return value;
-        }
-        console.warn(`Invalid button type "${value}". Using default "button".`);
-        return 'button';
-      },
-    },
-    type: String,
-  })
-  type: ButtonType = 'button';
+  @property({ converter: allowedValuesConverter(allowedPurposes) })
+  purpose?: Purpose;
+  @property({ converter: allowedValuesConverter(allowedButtonTypes, defaultButtonType) })
+  type: ButtonType = defaultButtonType;
 
   static override readonly styles = [buttonStyles, unsafeCSS(buttonCss)];
 
@@ -85,8 +51,8 @@ export class ClippyButton<T = unknown> extends FormElement<T> {
     return html`
       <button
         type=${this.type}
-        aria-pressed=${this.toggle ? this.pressed : nothing}
-        aria-disabled=${this.disabled || nothing}
+        aria-pressed=${ifDefined(this.toggle && this.pressed)}
+        aria-disabled=${ifDefined(this.disabled)}
         class=${classMap({
           [`clippy-button--${this.size}`]: this.size !== defaultSize,
           [`nl-button--${this.hint}`]: !!this.hint,
