@@ -16,7 +16,7 @@ const OPTIONS = [
   },
   {
     label: 'Zapf Dingbats',
-    value: 'Zapf Dingbats',
+    value: ['Zapf Dingbats'],
   },
 ];
 
@@ -31,6 +31,19 @@ describe(`<${tag}>`, () => {
   it('shows an element with role combobox', async () => {
     const combobox = page.getByRole('combobox');
     await expect.element(combobox).toBeInTheDocument();
+  });
+
+  it('gets a value from the component attribute', async () => {
+    const options = JSON.stringify(OPTIONS);
+    const value = OPTIONS[0].value;
+    // Explicitly set the body so that the value is provided
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options='${options}' value="${value}"></${tag}>
+      </form>`;
+
+    const component: ClippyFontCombobox = document.querySelector(tag)!;
+    expect(component.value).toEqual(value);
   });
 
   it('shows list of options on focus', async () => {
@@ -54,7 +67,7 @@ describe(`<${tag}>`, () => {
     await input.click();
     const option = page.getByRole('option').last();
     await option.click();
-    expect(component.value).toBe(OPTIONS.at(-1)?.value);
+    expect(component.value).toStrictEqual(OPTIONS.at(-1)?.value);
   });
 
   it('uses query as value', async () => {
