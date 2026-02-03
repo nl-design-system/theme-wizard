@@ -155,6 +155,20 @@ describe(`<${tag}>`, () => {
     expect(listener).toBeCalled();
   });
 
+  it('allows other no values than supplied options when `other` attribute is not set', async () => {
+    // Explicitly set the body so that the string options are used
+    document.body.innerHTML = `
+      <form>
+        <${tag} name="${tag}" options="${STRING_OPTIONS}"></${tag}>
+      </form>`;
+
+    const component: ClippyCombobox = document.querySelector(tag)!;
+    const query = 'Elmo';
+    const input = page.getByRole('combobox');
+    await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
+    expect(component.value).not.toBe(query);
+  });
+
   it('allows other values than supplied options when `other` attribute is set', async () => {
     // Explicitly set the body so that the string options are used
     document.body.innerHTML = `
