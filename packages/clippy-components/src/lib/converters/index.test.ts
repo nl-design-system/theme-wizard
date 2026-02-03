@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { arrayFromCommaList, arrayFromTokenList } from './index';
+import { arrayFromCommaList, arrayFromTokenList, allowedValuesConverter } from './index';
 
 describe('arrayFromTokenList', () => {
   it('should return null for null input', () => {
@@ -112,5 +112,38 @@ describe('arrayFromCommaList', () => {
   it('should fall back to splitting for invalid JSON', () => {
     const result = arrayFromCommaList('a,b');
     expect(result).toEqual(['a', 'b']);
+  });
+});
+
+describe('allowedValuesConverter', () => {
+  const simpleAllowedValues = ['foo', 'bar', 'baz'] as const;
+  it('should return `from` and `to` converters', () => {
+    const { fromAttribute, toAttribute } = allowedValuesConverter(simpleAllowedValues, simpleAllowedValues[0]);
+    expect.soft(typeof fromAttribute).toBe('function');
+    expect.soft(typeof toAttribute).toBe('function');
+  });
+
+  it('should return converters that can do a round-trip', () => {
+    const { fromAttribute, toAttribute } = allowedValuesConverter(simpleAllowedValues, simpleAllowedValues[0]);
+    const attribute = simpleAllowedValues[1];
+    const toResult = toAttribute(fromAttribute(attribute));
+    expect(toResult).toBe(attribute);
+  });
+
+  it('should snap to default value if value is not allowed', () => {
+    const defaultValue = simpleAllowedValues[0];
+    const { fromAttribute, toAttribute } = allowedValuesConverter(simpleAllowedValues, simpleAllowedValues[0]);
+    const attribute = 'bla';
+    const toResult = toAttribute(fromAttribute(attribute));
+    expect(toResult).toBe(defaultValue);
+  });
+
+  it('returns empty string when default value is not supplied', () => {
+    const { fromAttribute, toAttribute } = allowedValuesConverter(simpleAllowedValues);
+    const attribute = 'bla';
+    const fromResult = fromAttribute(attribute);
+    const toResult = toAttribute(fromResult);
+    expect.soft(fromResult).toBeUndefined();
+    expect.soft(toResult).toBe('');
   });
 });

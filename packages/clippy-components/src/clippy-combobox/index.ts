@@ -7,7 +7,7 @@ import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import memoize from 'memoize';
-import { arrayFromTokenList } from '../lib/converters';
+import { allowedValuesConverter, arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
 import srOnly from '../lib/sr-only/styles';
 import styles from './styles';
@@ -17,9 +17,11 @@ type Option = {
   value: unknown;
 };
 
-type Position = 'block-start' | 'block-end';
+const positions = ['block-start', 'block-end'] as const;
+const defaultPosition = 'block-end';
+type Position = (typeof positions)[number];
 
-const tag = 'clippy-combobox';
+const tag = 'clippy-combobox' as const;
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,9 +31,12 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends FormElement<T['value']> {
+  static readonly positions = positions;
+  static readonly defaultPosition = defaultPosition;
   @property({ attribute: 'other', type: Boolean }) allowOther = false;
   @property({ reflect: true, type: Boolean }) open = false;
-  @property() readonly position: Position = 'block-end';
+  @property({ converter: allowedValuesConverter(ClippyCombobox.positions, ClippyCombobox.defaultPosition) })
+  readonly position: Position = ClippyCombobox.defaultPosition;
 
   get #id() {
     return `${tag}-${this.name}`;
