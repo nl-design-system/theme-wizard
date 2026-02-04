@@ -4,6 +4,7 @@ import {
   Paragraph,
   Textbox,
 } from '@utrecht/component-library-react/dist/css-module';
+import { Heading } from '@nl-design-system-candidate/heading-react';
 import React, { type FC, useState } from 'react';
 import type { 
   SearchFilters as SearchFiltersState, 
@@ -16,12 +17,15 @@ import './styles.css';
 export const SearchFiltersComponent: FC<SearchFiltersProps> = ({
   filters,
   onFilterChange,
+  onResetFilters,
   currentQuery = '',
   currentSort = 'relevance',
 }) => {
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const isCustomPeriod = filters.period === 'custom';
+
+  const hasActiveFilters = Object.values(filters).some((v) => v && v !== 'all');
 
   // Clear local date states when filters are reset or period changes
   React.useEffect(() => {
@@ -39,7 +43,21 @@ export const SearchFiltersComponent: FC<SearchFiltersProps> = ({
   };
 
   return (
-    <aside className="clippy--search-filters" aria-label="Zoekfilters">
+    <aside className="clippy--search-filters" aria-labelledby='search-filters-heading'>
+      <div className="clippy--search-filters-header">
+        <Heading level={2} id="search-filters-heading">Filters </Heading>
+
+        {hasActiveFilters && (
+          <button
+            type="button"
+            className="clippy--search-filters-reset-button nl-button nl-button--subtle"
+            onClick={onResetFilters}
+          >
+            Filters wissen
+          </button>
+        )}
+      </div>
+
       <form method="get" action="" className="clippy--search-filters-form">
         <input type="hidden" name="search" value={currentQuery} />
         <input type="hidden" name="sort" value={currentSort} />

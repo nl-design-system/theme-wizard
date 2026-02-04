@@ -242,16 +242,6 @@ export const SearchResults = ({
               </div>
               
               <div className="clippy--search-results-sort">
-                {Object.values(filters).some(v => v && v !== 'all') && (
-                  <button 
-                    type="button" 
-                    className="clippy--search-results-reset-button nl-button nl-button--subtle"
-                    onClick={handleResetFilters}
-                  >
-                    Filters wissen
-                  </button>
-                )}
-
                 <label htmlFor="sort-by" className="clippy--search-results-sort__label">
                   Sorteren op:
                 </label>
@@ -278,6 +268,7 @@ export const SearchResults = ({
               <SearchFiltersComponent 
                 filters={filters} 
                 onFilterChange={handleFilterChange} 
+                onResetFilters={handleResetFilters}
                 currentQuery={appliedQuery}
                 currentSort={sortBy}
               />

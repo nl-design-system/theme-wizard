@@ -13,6 +13,12 @@
   row-gap: var(--basis-space-row-4xl);
 }
 
+.clippy--search-filters-header {
+  margin-block-end: var(--basis-space-block-lg);
+  display: flex;
+  justify-content: space-between;
+}
+
 .clippy--search-filter-date-range {
   margin-block-start: var(--basis-space-row-md);
   padding: var(--basis-space-row-md);
