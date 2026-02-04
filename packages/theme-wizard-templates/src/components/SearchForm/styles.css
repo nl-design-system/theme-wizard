@@ -7,24 +7,24 @@
 }
 
 .clippy--search-form__input-group .utrecht-textbox {
+  block-size: auto;
+  border-end-end-radius: 0;
+  border-end-start-radius: var(--basis-border-radius-sm);
+  border-inline-end: none;
+  border-start-end-radius: 0;
+  border-start-start-radius: var(--basis-border-radius-sm);
   flex: 1;
   min-inline-size: 0;
-  border-start-start-radius: var(--basis-border-radius-sm);
-  border-end-start-radius: var(--basis-border-radius-sm);
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
-  border-inline-end: none;
-  block-size: auto;
 }
 
 .clippy--search-form__input-group .nl-button {
-  border-start-start-radius: 0;
-  border-end-start-radius: 0;
-  border-start-end-radius: var(--basis-border-radius-sm);
-  border-end-end-radius: var(--basis-border-radius-sm);
-  margin: 0;
-  border-inline-start: 1px solid var(--utrecht-textbox-border-color);
   block-size: auto;
+  border-end-end-radius: var(--basis-border-radius-sm);
+  border-end-start-radius: 0;
+  border-inline-start: 1px solid var(--utrecht-textbox-border-color);
+  border-start-end-radius: var(--basis-border-radius-sm);
+  border-start-start-radius: 0;
+  margin: 0;
 }
 
 .clippy--search-form__submit {
@@ -32,15 +32,15 @@
 }
 
 .clippy--search-form .nl-button--icon-only {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0;
-  min-inline-size: 3rem;
-  border-start-start-radius: 0;
+  border-end-end-radius: var(--basis-border-radius-sm);
   border-end-start-radius: 0;
   border-start-end-radius: var(--basis-border-radius-sm);
-  border-end-end-radius: var(--basis-border-radius-sm);
+  border-start-start-radius: 0;
+  display: flex;
+  justify-content: center;
+  min-inline-size: 3rem;
+  padding: 0;
 }
 
 .clippy--search-form .nl-button--icon-only svg {
@@ -48,11 +48,11 @@
 }
 
 /* Responsive Design (Mobile) - Contextual styles when inside navigation */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   /* Search Wrapper (Header) */
   .clippy--navigation-search-wrapper .clippy--search-form-section {
-    margin-block: var(--basis-space-inline-xs);
     inline-size: 100%;
+    margin-block: var(--basis-space-inline-xs);
   }
 
   .clippy--navigation-search-wrapper .clippy--search-form {
@@ -73,7 +73,7 @@
   }
 
   .clippy--navigation-search-wrapper .clippy--search-form__input-group .utrecht-form-field {
-    min-inline-size: 0;
     flex: 1;
+    min-inline-size: 0;
   }
 }

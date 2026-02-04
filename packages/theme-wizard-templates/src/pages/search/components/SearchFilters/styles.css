@@ -2,9 +2,9 @@
    Filter Sidebar
    ========================================================================== */
 .clippy--search-filters {
+  border-radius: var(--basis-border-radius-sm);
   inline-size: 25%;
   padding-block-end: var(--basis-space-block-xl);
-  border-radius: var(--basis-border-radius-sm);
 }
 
 .clippy--search-filters-form {
@@ -14,17 +14,17 @@
 }
 
 .clippy--search-filters-header {
-  margin-block-end: var(--basis-space-block-lg);
   display: flex;
   justify-content: space-between;
+  margin-block-end: var(--basis-space-block-lg);
 }
 
 .clippy--search-filter-date-range {
+  background-color: var(--basis-color-accent-1-bg-default);
+  border: 1px solid var(--basis-color-accent-1-border-subtle);
+  border-radius: var(--basis-border-radius-sm);
   margin-block-start: var(--basis-space-row-md);
   padding: var(--basis-space-row-md);
-  background-color: var(--basis-color-accent-1-bg-default);
-  border-radius: var(--basis-border-radius-sm);
-  border: 1px solid var(--basis-color-accent-1-border-subtle);
 }
 
 .clippy--search-filter-date-range__fields {
@@ -58,7 +58,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .clippy--search-filters {
     flex: initial;
     inline-size: 100%;

@@ -37,7 +37,7 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     z-index: 9999;
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .clippy-dev-tools {
       display: none;
     }
@@ -91,18 +91,18 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
   }
 
   .clippy-dev-tools__toggle {
+    align-items: center;
+    display: flex;
     font-family: var(--basis-text-font-family-default);
     font-size: var(--basis-text-font-size-sm);
-    display: flex;
-    align-items: center;
     gap: var(--basis-space-inline-sm);
   }
 
   .clippy-dev-tools__toggle label {
-    display: flex;
     align-items: center;
-    gap: 0.5rem;
     cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
   }
 </style>
 

@@ -3,25 +3,25 @@
    ========================================================================== */
 .clippy--search-highlight {
   background-color: var(--basis-color-highlight-inverse-bg-default);
+  border-radius: 2px;
   color: var(--basis-color-highlight-inverse-color-default);
   padding-block: 0;
   padding-inline: 2px;
-  border-radius: 2px;
 }
 
 /* ==========================================================================
    Result Items
    ========================================================================== */
 .clippy--search-result-item__link {
+  border-radius: var(--basis-border-radius-sm);
+  color: inherit;
   display: flex;
   flex-direction: column;
   gap: var(--basis-space-row-lg);
-  text-decoration: none;
-  color: inherit;
-  padding: var(--basis-space-row-md);
   margin-block: calc(-1 * var(--basis-space-row-md));
   margin-inline: calc(-1 * var(--basis-space-row-md));
-  border-radius: var(--basis-border-radius-sm);
+  padding: var(--basis-space-row-md);
+  text-decoration: none;
   transition: background-color 0.2s ease;
 }
 
@@ -33,9 +33,9 @@
 }
 
 .clippy--search-result-item__title {
-  margin-block-start: 0;
-  margin-block-end: var(--basis-space-row-sm);
   color: var(--basis-color-accent-1-color-default);
+  margin-block-end: var(--basis-space-row-sm);
+  margin-block-start: 0;
   text-decoration: underline;
 }
 
@@ -44,16 +44,16 @@
 }
 
 .clippy--search-result-item__description {
+  color: var(--basis-color-default-color-document);
   margin: 0;
   margin-block-end: var(--basis-space-row-sm);
-  color: var(--basis-color-default-color-document);
 }
 
 .clippy--search-result-meta {
-  display: flex;
-  gap: var(--basis-space-inline-md);
-  font-size: var(--basis-text-font-size-sm);
   color: var(--basis-color-default-color-subtle);
+  display: flex;
+  font-size: var(--basis-text-font-size-sm);
+  gap: var(--basis-space-inline-md);
 }
 
 .clippy--search-result-type {
@@ -61,8 +61,8 @@
 }
 
 .clippy--search-result-item {
-  padding-block-end: var(--basis-space-row-lg);
   border-block-end: 1px solid var(--basis-color-default-border-default);
+  padding-block-end: var(--basis-space-row-lg);
 }
 
 .clippy--search-result-item:last-child {

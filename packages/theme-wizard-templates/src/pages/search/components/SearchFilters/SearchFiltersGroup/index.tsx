@@ -4,7 +4,6 @@ import {
   FieldsetLegend,
   FormField,
   FormLabel,
-  Paragraph,
   RadioButton,
 } from '@utrecht/component-library-react/dist/css-module';
 import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css';

@@ -89,9 +89,9 @@ export default css`
 
     /* Hide all app descendants, except those that are needed to show the preview content */
     .wizard-layout *:not(
-      :has(.wizard-layout__main), /* any parent of main */
-      .wizard-layout__main, /* main itself */
-      .wizard-layout__main * /* any child of main */
+      :has(.wizard-layout__main), 
+      .wizard-layout__main, 
+      .wizard-layout__main * 
     ) {
       display: none;
     }
