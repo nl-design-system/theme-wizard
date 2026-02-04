@@ -5,22 +5,21 @@ import {
   Textbox,
 } from '@utrecht/component-library-react/dist/css-module';
 import { Heading } from '@nl-design-system-candidate/heading-react';
-import React, { type FC, useState } from 'react';
-import type { 
-  SearchFilters as SearchFiltersState, 
-  SearchFiltersProps, 
-} from './types';
+import React, { useState } from 'react';
 import { SearchFilterGroup } from './SearchFiltersGroup';
 import { SEARCH_FILTER_PERIODS, SEARCH_FILTER_TYPES, SEARCH_FILTER_ORGANIZATIONS } from '../../constants';
 import './styles.css';
 
-export const SearchFiltersComponent: FC<SearchFiltersProps> = ({
+import type { SearchFiltersProps } from './types';
+export type { SearchFiltersProps };
+
+export const SearchFiltersComponent = ({
   filters,
   onFilterChange,
   onResetFilters,
   currentQuery = '',
   currentSort = 'relevance',
-}) => {
+}: SearchFiltersProps) => {
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const isCustomPeriod = filters.period === 'custom';

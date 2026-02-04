@@ -8,11 +8,11 @@ import {
   RadioButton,
 } from '@utrecht/component-library-react/dist/css-module';
 import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css';
-import type { FC } from 'react';
+import React from 'react';
 import type { SearchFilterGroupProps } from './types';
 import './styles.css';
 
-export const SearchFilterGroup: FC<SearchFilterGroupProps> = ({
+export const SearchFilterGroup = ({
   title,
   id,
   name,
@@ -20,7 +20,7 @@ export const SearchFilterGroup: FC<SearchFilterGroupProps> = ({
   selectedValue,
   onValueChange,
   children,
-}) => (
+}: SearchFilterGroupProps) => (
   <section className="clippy--search-filter-section">
     <div className="clippy--search-filter-heading">
       <Heading level={3} appearance="level-3">

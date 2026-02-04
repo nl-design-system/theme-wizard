@@ -1,4 +1,4 @@
-import React, { type FC, memo } from 'react';
+import React, { memo } from 'react';
 import { Mark } from '@utrecht/component-library-react/dist/css-module';
 import type { SearchResult } from './types';
 import './styles.css';
@@ -38,7 +38,7 @@ const highlightText = (text: string, query?: string) => {
   );
 };
 
-export const SearchResultItem: FC<SearchResultItemProps> = memo(({ position, result, totalResults, query }) => {
+export const SearchResultItem = memo(({ position, result, totalResults, query }: SearchResultItemProps) => {
   return (
     <article className="clippy--search-result-item">
       <a href={result.url} className="clippy--search-result-item__link">

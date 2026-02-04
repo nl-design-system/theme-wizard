@@ -1,6 +1,6 @@
 import { IconSearch } from '@tabler/icons-react';
 import { FormFieldTextbox } from '@utrecht/component-library-react';
-import React, { type FC, type FormEvent, useState } from 'react';
+import React, { type FormEvent, useState } from 'react';
 import './styles.css';
 
 export interface SearchFormProps {
@@ -11,12 +11,12 @@ export interface SearchFormProps {
   label?: string;
 }
 
-export const SearchForm: FC<SearchFormProps> = ({
+export const SearchForm = ({
   label = 'Zoek binnen Gemeente Voorbeeld',
   onQueryChange,
   onSubmit,
   query,
-}) => {
+}: SearchFormProps) => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

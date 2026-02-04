@@ -1,5 +1,5 @@
 import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
-import React, { type FC } from 'react';
+import React from 'react';
 import type { SearchResult } from '../SearchResultItem/types';
 import { SearchResultItem } from '../SearchResultItem';
 import './styles.css';
@@ -9,7 +9,7 @@ export interface SearchResultsListProps {
   query?: string;
 }
 
-export const SearchResultsList: FC<SearchResultsListProps> = ({ query, results }) => {
+export const SearchResultsList = ({ query, results }: SearchResultsListProps) => {
   const queryText = query ? ` voor "${query}"` : '';
 
   if (results.length === 0) {
