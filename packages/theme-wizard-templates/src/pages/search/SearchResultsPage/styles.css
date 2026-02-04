@@ -1,0 +1,259 @@
+/* ==========================================================================
+   Utilities & Component Overrides
+   ========================================================================== */
+.clippy--visually-hidden .utrecht-form-label {
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  overflow: hidden;
+  position: absolute;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Page Layout
+   ========================================================================== */
+.clippy--search-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-2xl);
+  margin-block-start: var(--basis-space-row-xl);
+}
+
+.clippy--search-results-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-column-2xl);
+  align-items: stretch;
+}
+
+.clippy--search-results-wrapper {
+  display: flex;
+  inline-size: 100%;
+  gap: 6rem;
+  align-items: flex-start;
+}
+
+.clippy--search-results-content {
+  padding-block-start: var(--basis-space-block-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-xl);
+  flex: 1;
+  min-inline-size: 0;
+}
+
+/* ==========================================================================
+   Navigation & Breadcrumbs
+   ========================================================================== */
+.clippy--navigation-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  inline-size: 100%;
+}
+
+.clippy--navigation-search-wrapper {
+  margin-inline-start: var(--basis-space-inline-xl);
+}
+
+.clippy--navigation-search-wrapper .clippy--search-form-section {
+  margin-block: var(--basis-space-inline-xl);
+}
+
+.clippy--navigation-search-wrapper .clippy--search-form__field {
+  margin: 0;
+}
+
+.clippy--navigation-search-wrapper .clippy--search-form__input-group .utrecht-textbox {
+  min-inline-size: 25ch;
+}
+
+.clippy--navigation-hamburger-button {
+  display: none;
+}
+
+/* Breadcrumbs */
+.clippy--navigation-breadcrumb-wrapper--desktop {
+  display: block;
+  margin-block-end: var(--basis-space-row-sm);
+  margin-block-start: var(--basis-space-row-md);
+}
+
+.clippy--navigation-breadcrumb-wrapper {
+  display: none;
+}
+
+.utrecht-breadcrumb-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--basis-font-size-sm);
+  align-items: center;
+}
+
+.utrecht-breadcrumb-nav__link {
+  color: var(--basis-color-action-link-color-default) !important;
+  text-decoration: none;
+}
+
+.utrecht-breadcrumb-nav__link:hover {
+  text-decoration: underline;
+}
+
+.clippy--breadcrumb-separator {
+  color: var(--basis-color-default-color-subtle);
+  margin-inline: var(--basis-space-inline-xs);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.utrecht-breadcrumb-nav__link[aria-current="page"] {
+  color: var(--basis-color-default-color-document) !important;
+  font-weight: var(--basis-font-weight-bold);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Search Results Area (Header & Layout)
+   ========================================================================== */
+/* Header & Controls */
+.clippy--search-results-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-md);
+}
+
+.clippy--search-results-summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0;
+  inline-size: 100%;
+  gap: var(--basis-space-inline-lg);
+  margin-block-end: var(--basis-space-block-2xl);
+}
+
+.clippy--search-results-heading-wrapper {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.clippy--search-results-sort {
+  display: flex;
+  align-items: center;
+  gap: var(--basis-space-inline-md);
+  flex: 0 0 auto;
+}
+
+.clippy--search-results-reset-button {
+  margin-inline-end: var(--basis-space-inline-md);
+}
+
+.clippy--search-results-sort__label {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: var(--basis-text-font-weight-bold);
+}
+
+.clippy--search-results-sort__control {
+  display: flex;
+  align-items: center;
+  gap: var(--basis-space-inline-md);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Responsive Design (Mobile)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Navigation & Header */
+  .clippy--navigation-content-wrapper {
+    flex-wrap: wrap;
+    gap: var(--basis-space-row-sm);
+    padding: var(--basis-space-row-sm);
+  }
+
+  .clippy--navigation-hamburger-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--basis-color-default-bg-subtle);
+    border: 1px solid var(--basis-color-default-border-subtle);
+    border-radius: var(--basis-border-radius-sm);
+    padding-block: var(--basis-space-inline-xs);
+    padding-inline: var(--basis-space-inline-sm);
+    cursor: pointer;
+    color: var(--basis-color-default-color-document);
+    z-index: 10;
+    order: 2;
+    flex: initial;
+    gap: var(--basis-space-inline-xs);
+    font-weight: var(--basis-font-weight-bold);
+    min-block-size: var(--basis-pointer-target-min-block-size);
+  }
+
+  .clippy--navigation-hamburger-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+  }
+
+  .clippy--navigation-hamburger-label {
+    font-size: var(--basis-font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Breadcrumbs */
+  .clippy--navigation-breadcrumb-wrapper--desktop {
+    display: none;
+  }
+
+  .clippy--navigation-breadcrumb-wrapper {
+    display: block;
+    flex: 1;
+    overflow: hidden;
+    order: 1;
+  }
+
+  .clippy--navigation-breadcrumb-wrapper .utrecht-breadcrumb-nav {
+    margin: 0;
+  }
+
+  /* Navigation Menu (Dropdown) */
+  .clippy--navigation-menu {
+    display: none;
+    inline-size: 100%;
+    background-color: var(--basis-color-default-bg-default);
+    border-block-start: 1px solid var(--basis-color-default-border-subtle);
+    order: 4;
+  }
+
+  .clippy--navigation-menu.is-open {
+    display: block;
+  }
+
+  .clippy--navigation-menu .utrecht-nav-list {
+    flex-direction: column;
+    padding: var(--basis-space-row-md);
+    margin: 0;
+  }
+
+  /* Search Wrapper (Header) - Navigation specific layout only */
+  .clippy--navigation-search-wrapper {
+    inline-size: 100%;
+    margin: 0;
+    order: 3;
+  }
+
+  /* Layout Adjustments */
+  .clippy--search-results-wrapper {
+    flex-direction: column;
+  }
+}

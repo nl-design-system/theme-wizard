@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Filter Sidebar
+   ========================================================================== */
+.clippy--search-filters {
+  inline-size: 25%;
+  padding-block-end: var(--basis-space-block-xl);
+  border-radius: var(--basis-border-radius-sm);
+}
+
+.clippy--search-filters-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--basis-space-row-4xl);
+}
+
+.clippy--search-filter-date-range {
+  margin-block-start: var(--basis-space-row-md);
+  padding: var(--basis-space-row-md);
+  background-color: var(--basis-color-accent-1-bg-default);
+  border-radius: var(--basis-border-radius-sm);
+  border: 1px solid var(--basis-color-accent-1-border-subtle);
+}
+
+.clippy--search-filter-date-range__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-md);
+}
+
+.clippy--search-filter-date-range__fields .utrecht-form-field {
+  margin: 0;
+}
+
+.clippy--search-filter-date-range__fields .utrecht-textbox {
+  inline-size: 100%;
+  max-inline-size: 12.5rem;
+}
+
+/* Progressive Enhancement */
+.clippy--filter-submit-wrapper {
+  margin-block-start: var(--basis-space-row-lg);
+  padding-block-start: var(--basis-space-row-md);
+}
+
+.clippy--pe-only {
+  display: block;
+}
+
+/* Hide PE-only elements when JavaScript is enabled */
+.js-enabled .clippy--pe-only {
+  display: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .clippy--search-filters {
+    flex: initial;
+    inline-size: 100%;
+  }
+}

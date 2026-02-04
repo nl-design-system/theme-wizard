@@ -1,5 +1,7 @@
+// import react from '@astrojs/react'; // This line seems to be outside the target content in the user's file based on previous read, checking context.
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
+// import node from '@astrojs/node';
 import { defineConfig } from 'astro/config';
 import { readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -19,6 +21,7 @@ const fontDirs = readdirSync(pnpmDir)
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
   adapter: vercel(),
   devToolbar: {
     enabled: false,

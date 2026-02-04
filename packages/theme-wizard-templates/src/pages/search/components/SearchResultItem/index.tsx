@@ -1,6 +1,7 @@
 import React, { type FC, memo } from 'react';
 import { Mark } from '@utrecht/component-library-react/dist/css-module';
-import type { SearchResult } from '../types';
+import type { SearchResult } from './types';
+import './styles.css';
 
 export interface SearchResultItemProps {
   result: SearchResult;
@@ -17,18 +18,18 @@ const highlightText = (text: string, query?: string) => {
     return text;
   }
 
-  const terms = query.trim().split(/\s+/);
-  const regex = new RegExp(`(${terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+  const escapedQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escapedQuery})`, 'gi');
   const parts = text.split(regex);
 
   return (
     <>
       {parts.map((part, index) => {
         const isMatch = regex.test(part);
-        regex.lastIndex = 0; // Reset regex state
+        regex.lastIndex = 0;
         
         return isMatch ? (
-          <Mark key={index}>{part}</Mark>
+          <Mark key={index} className="clippy--search-highlight">{part}</Mark>
         ) : (
           <React.Fragment key={index}>{part}</React.Fragment>
         );
@@ -39,18 +40,18 @@ const highlightText = (text: string, query?: string) => {
 
 export const SearchResultItem: FC<SearchResultItemProps> = memo(({ position, result, totalResults, query }) => {
   return (
-    <article className="search-result-item">
-      <a href={result.url} className="search-result-item__link">
-        <h3 className="search-result-item__title">
+    <article className="clippy--search-result-item">
+      <a href={result.url} className="clippy--search-result-item__link">
+        <h3 className="clippy--search-result-item__title">
           {highlightText(result.title, query)}
         </h3>
 
-        <p className="search-result-item__description">
+        <p className="clippy--search-result-item__description">
           {highlightText(result.description, query)}
         </p>
 
-        <div className="search-result-meta" aria-label="Metadata van zoekresultaat">
-          <span className="search-result-type" aria-label={`Type: ${result.type}`}>
+        <div className="clippy--search-result-meta" aria-label="Metadata van zoekresultaat">
+          <span className="clippy--search-result-type" aria-label={`Type: ${result.type}`}>
             {result.type}
           </span>
           {result.date && (

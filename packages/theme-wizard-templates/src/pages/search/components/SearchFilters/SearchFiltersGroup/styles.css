@@ -1,0 +1,50 @@
+/* ==========================================================================
+   Search Filter Group Component
+   ========================================================================== */
+
+.clippy--search-filter-heading {
+  margin-block-end: var(--basis-space-block-xl);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--basis-space-inline-md);
+  border-block-end: 1px solid var(--basis-color-accent-1-border-subtle)
+}
+
+.clippy--search-filter-heading h3 {
+  padding-block-start: var(--basis-space-block-lg);
+}
+
+.clippy--search-filter-options {
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-md);
+}
+
+.clippy--search-filter-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.clippy--search-filter-label {
+    flex-grow: 1;
+    display: flex;
+    min-inline-size: 0;
+    justify-content: space-between;
+}
+
+.clippy--radio-button {
+  display: flex;
+  flex-shrink: 0;
+  order: 0 !important;
+}
+
+.clippy--search-filter-item-text {
+    flex-shrink: 1;
+}
+
+.clippy--search-filter-item-count {
+    flex-shrink: 0;
+}

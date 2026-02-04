@@ -1,16 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SearchPage from './Search';
+import SearchPage from './SearchPage';
 
 export const detail = {
-  name: 'Resultaten',
-  value: 'page',
+  name: 'Zoeken',
+  value: 'search',
   module: 'Zoeken',
 };
 
 const currentPath = Astro.url.pathname;
 ---
 
-<BaseLayout title="Zoekresultaten">
+<BaseLayout title="Zoeken">
   <SearchPage client:load currentPath={currentPath} />
 </BaseLayout>

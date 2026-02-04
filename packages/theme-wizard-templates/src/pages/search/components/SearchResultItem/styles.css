@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Search Highlight
+   ========================================================================== */
+.clippy--search-highlight {
+  background-color: var(--basis-color-highlight-inverse-bg-default);
+  color: var(--basis-color-highlight-inverse-color-default);
+  padding-block: 0;
+  padding-inline: 2px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Result Items
+   ========================================================================== */
+.clippy--search-result-item__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-lg);
+  text-decoration: none;
+  color: inherit;
+  padding: var(--basis-space-row-md);
+  margin-block: calc(-1 * var(--basis-space-row-md));
+  margin-inline: calc(-1 * var(--basis-space-row-md));
+  border-radius: var(--basis-border-radius-sm);
+  transition: background-color 0.2s ease;
+}
+
+.clippy--search-result-item__link:hover,
+.clippy--search-result-item__link:focus {
+  background-color: var(--basis-color-default-bg-subtle);
+  outline: 2px solid var(--basis-color-accent-1-color-default);
+  outline-offset: 2px;
+}
+
+.clippy--search-result-item__title {
+  margin-block-start: 0;
+  margin-block-end: var(--basis-space-row-sm);
+  color: var(--basis-color-accent-1-color-default);
+  text-decoration: underline;
+}
+
+.clippy--search-result-item__link:visited .clippy--search-result-item__title {
+  color: var(--basis-color-accent-1-color-active);
+}
+
+.clippy--search-result-item__description {
+  margin: 0;
+  margin-block-end: var(--basis-space-row-sm);
+  color: var(--basis-color-default-color-document);
+}
+
+.clippy--search-result-meta {
+  display: flex;
+  gap: var(--basis-space-inline-md);
+  font-size: var(--basis-text-font-size-sm);
+  color: var(--basis-color-default-color-subtle);
+}
+
+.clippy--search-result-type {
+  font-weight: var(--basis-text-font-weight-bold);
+}
+
+.clippy--search-result-item {
+  padding-block-end: var(--basis-space-row-lg);
+  border-block-end: 1px solid var(--basis-color-default-border-default);
+}
+
+.clippy--search-result-item:last-child {
+  border-block-end: none;
+}

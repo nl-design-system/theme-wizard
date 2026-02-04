@@ -1,7 +1,8 @@
 import { Paragraph } from '@utrecht/component-library-react/dist/css-module';
 import React, { type FC } from 'react';
-import type { SearchResult } from '../types';
-import { SearchResultItem } from './SearchResultItem';
+import type { SearchResult } from '../SearchResultItem/types';
+import { SearchResultItem } from '../SearchResultItem';
+import './styles.css';
 
 export interface SearchResultsListProps {
   results: SearchResult[];
@@ -26,11 +27,11 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({ query, results }
 
   return (
     <section aria-labelledby="results-list-heading" className="search-results-list">
-      <h3 id="results-list-heading" className="ams-visually-hidden">
+      <h2 id="results-list-heading" className="ams-visually-hidden">
         Lijst met zoekresultaten{queryText}
-      </h3>
+      </h2>
       
-      <ol className="search-results-list__items" aria-live="polite" aria-atomic="false">
+      <ol className="clippy--search-results-list__items" aria-live="polite" aria-atomic="false">
         {results.map((result, index) => (
           <li key={result.id}>
             <SearchResultItem 
