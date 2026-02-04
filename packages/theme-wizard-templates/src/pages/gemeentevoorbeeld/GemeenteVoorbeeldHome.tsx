@@ -1,12 +1,8 @@
-import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
 import React from 'react';
-import { PageBody } from '@utrecht/page-body-react';
 import type { SummaryItem } from '../../components/OpeningHoursCard/types';
+import TemplateLayout from '../../layouts/TemplateLayout';
 import MainIntroSection from '../../sections/MainIntro';
-import Navigation from '../../sections/Navigation';
 import NewsSection from '../../sections/News';
-import PageFooterSection from '../../sections/PageFooter';
-import PageHeaderSection from '../../sections/PageHeader';
 import SelfServiceSection from '../../sections/SelfService';
 
 export interface GemeenteVoorbeeldHomeProps {
@@ -14,15 +10,22 @@ export interface GemeenteVoorbeeldHomeProps {
   openingHoursSummary?: SummaryItem[];
 }
 
-const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoorbeeldHomeProps) => (
-  <>
-    <SkipLink href="#main">Skip to main content</SkipLink>
+const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoorbeeldHomeProps) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
 
-    <PageHeaderSection />
+  const handleSearch = (query: string) => {
+    const params = new URLSearchParams();
+    params.set('search', query);
+    window.location.href = `/search/search-results?${params.toString()}`;
+  };
 
-    <Navigation currentPath={currentPath} />
-
-    <PageBody>
+  return (
+    <TemplateLayout
+      currentPath={currentPath}
+      searchQuery={searchQuery}
+      onSearchQueryChange={setSearchQuery}
+      onSearchSubmit={handleSearch}
+    >
       <main id="main">
         <MainIntroSection openingHoursSummary={openingHoursSummary} />
 
@@ -30,9 +33,8 @@ const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoo
 
         <NewsSection />
       </main>
-    </PageBody>
-    <PageFooterSection />
-  </>
-);
+    </TemplateLayout>
+  );
+};
 
 export default GemeenteVoorbeeldHome;

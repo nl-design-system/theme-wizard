@@ -9,7 +9,7 @@ import {
   UtrechtIconNummerbord,
   UtrechtIconAfvalScheiden,
 } from '@utrecht/web-component-library-react';
-import React, { type ReactElement } from 'react';
+import React, { type ReactNode } from 'react';
 import type { QuickTask } from './types';
 import { Column, Row } from '../Layout';
 import '../shared/card-styles.css';
@@ -21,7 +21,7 @@ export interface QuickTasksProps {
 
 type IconName = 'afval-scheiden' | 'melding-klacht' | 'nummerbord' | 'paspoort' | 'verhuizen' | 'werken';
 
-const ICON_COMPONENTS: Record<IconName, ReactElement> = {
+const ICON_COMPONENTS: Record<IconName, ReactNode> = {
   'afval-scheiden': <UtrechtIconAfvalScheiden />,
   'melding-klacht': <UtrechtIconMeldingKlacht />,
   nummerbord: <UtrechtIconNummerbord />,
@@ -30,7 +30,7 @@ const ICON_COMPONENTS: Record<IconName, ReactElement> = {
   werken: <UtrechtIconWerken />,
 };
 
-const renderIcon = (iconName: string): JSX.Element | null => {
+const renderIcon = (iconName: string): ReactNode => {
   const icon = ICON_COMPONENTS[iconName as IconName];
   return icon ?? null;
 };

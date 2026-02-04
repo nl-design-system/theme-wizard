@@ -30,6 +30,9 @@ const {
 <!doctype html>
 <html lang={lang} class={htmlClasses}>
   <head>
+    <script is:inline>
+      document.documentElement.classList.add('js-enabled');
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
@@ -41,7 +44,7 @@ const {
   </head>
 
   <body class="utrecht-body">
-    <DevTools />
+    <!-- <DevTools /> -->
     <slot />
     <ClientInit />
   </body>
