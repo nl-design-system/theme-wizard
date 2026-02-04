@@ -3,16 +3,20 @@
 const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALONE_PACKAGE__ === true;
 ---
 
-{isStandalone && (
-  <div class="clippy-dev-tools">
-    <a href="/">Back to home</a>
-    <utrecht-button id="clear-localstorage" type="button">Clear localStorage</utrecht-button>
-    <details class="clippy-dev-tools__details" hidden>
-      <summary>cookies</summary>
-      <pre id="localstorage-content" class="clippy-dev-tools__content"></pre>
-    </details>
+<div class="clippy-dev-tools" tabindex={-1} aria-hidden="true">
+  <a href="/">Back to home</a>
+  <utrecht-button id="clear-localstorage" type="button">Clear localStorage</utrecht-button>
+  <div class="clippy-dev-tools__toggle">
+    <label>
+      <input type="checkbox" id="search-reload-toggle" />
+      Search with page reload
+    </label>
   </div>
-)}
+  <details class="clippy-dev-tools__details" hidden>
+    <summary>cookies</summary>
+    <pre id="localstorage-content" class="clippy-dev-tools__content"></pre>
+  </details>
+</div>
 
 <style>
   .clippy-dev-tools {
@@ -31,6 +35,12 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     position: fixed;
     transform: translateX(-50%);
     z-index: 9999;
+  }
+
+  @media (max-width: 768px) {
+    .clippy-dev-tools {
+      display: none;
+    }
   }
 
   .clippy-dev-tools a,
@@ -79,67 +89,95 @@ const isStandalone = typeof __STANDALONE_PACKAGE__ !== 'undefined' && __STANDALO
     padding-inline: var(--basis-space-inline-sm);
     white-space: pre-wrap;
   }
+
+  .clippy-dev-tools__toggle {
+    font-family: var(--basis-text-font-family-default);
+    font-size: var(--basis-text-font-size-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--basis-space-inline-sm);
+  }
+
+  .clippy-dev-tools__toggle label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
 </style>
 
-{isStandalone && (
-  <script>
-    const STORAGE_KEY = 'cookie-consent-preferences';
-    
-    // Function to read and display localStorage content
-    function updateLocalStorageDisplay() {
-      const detailsElement = document.querySelector('.clippy-dev-tools__details');
-      const contentElement = document.getElementById('localstorage-content');
-      
-      if (!detailsElement || !contentElement) return;
+<script>
+  const STORAGE_KEY = 'cookie-consent-preferences';
 
-      try {
-        const storedData = localStorage.getItem(STORAGE_KEY);
-        if (storedData) {
-          // Show details if there's data
-          detailsElement.removeAttribute('hidden');
-          
-          // Try to parse and pretty-print JSON
-          try {
-            const parsed = JSON.parse(storedData);
-            contentElement.textContent = JSON.stringify(parsed, null, 2);
-          } catch {
-            // If not valid JSON, just show the raw value
-            contentElement.textContent = storedData;
-          }
-        } else {
-          // Hide details if there's no data
-          detailsElement.setAttribute('hidden', '');
-        }
-        } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : String(error);
-          contentElement.textContent = `Fout bij lezen van localStorage: ${errorMessage}`;
-        }
-    }
+  // Function to read and display localStorage content
+  function updateLocalStorageDisplay() {
+    const detailsElement = document.querySelector('.clippy-dev-tools__details');
+    const contentElement = document.getElementById('localstorage-content');
 
-    // Update display on page load
-    updateLocalStorageDisplay();
+    if (!detailsElement || !contentElement) return;
 
-    // Update display when details is opened
-    const detailsElement = document.querySelector('.clippy-dev-tools__details') as HTMLDetailsElement | null;
-    if (detailsElement) {
-      detailsElement.addEventListener('toggle', () => {
-        if (detailsElement?.open) {
-          updateLocalStorageDisplay();
-        }
-      });
-    }
+    try {
+      const storedData = localStorage.getItem(STORAGE_KEY);
+      if (storedData) {
+        // Show details if there's data
+        detailsElement.removeAttribute('hidden');
 
-    // Clear localStorage button
-    const clearButton = document.getElementById('clear-localstorage');
-    if (clearButton) {
-      clearButton.addEventListener('click', () => {
+        // Try to parse and pretty-print JSON
         try {
-          localStorage.removeItem(STORAGE_KEY);
-          window.location.reload();
-        } catch (error) {
-          console.error('Fout bij verwijderen van localStorage:', error);
+          const parsed = JSON.parse(storedData);
+          contentElement.textContent = JSON.stringify(parsed, null, 2);
+        } catch {
+          // If not valid JSON, just show the raw value
+          contentElement.textContent = storedData;
         }
-      });
+      } else {
+        // Hide details if there's no data
+        detailsElement.setAttribute('hidden', '');
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      contentElement.textContent = `Fout bij lezen van localStorage: ${errorMessage}`;
     }
-  </script>
-)}
+  }
+
+  // Update display on page load
+  updateLocalStorageDisplay();
+
+  // Update display when details is opened
+  const detailsElement = document.querySelector('.clippy-dev-tools__details') as HTMLDetailsElement | null;
+  if (detailsElement) {
+    detailsElement.addEventListener('toggle', () => {
+      if (detailsElement?.open) {
+        updateLocalStorageDisplay();
+      }
+    });
+  }
+
+  // Clear localStorage button
+  const clearButton = document.getElementById('clear-localstorage');
+  if (clearButton) {
+    clearButton.addEventListener('click', () => {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem('clippy-search-use-reload');
+        window.location.reload();
+      } catch (error) {
+        console.error('Fout bij verwijderen van localStorage:', error);
+      }
+    });
+  }
+
+  // Search reload toggle
+  const RELOAD_KEY = 'clippy-search-use-reload';
+  const reloadToggle = document.getElementById('search-reload-toggle') as HTMLInputElement | null;
+
+  if (reloadToggle) {
+    // Initialize from localStorage
+    const useReload = localStorage.getItem(RELOAD_KEY) === 'true';
+    reloadToggle.checked = useReload;
+
+    reloadToggle.addEventListener('change', () => {
+      localStorage.setItem(RELOAD_KEY, String(reloadToggle.checked));
+    });
+  }
+</script>
