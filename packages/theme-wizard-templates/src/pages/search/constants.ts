@@ -1,26 +1,27 @@
-import type { SearchResultsData } from './types';
+import type { SearchResultsData } from './SearchResultsPage/types';
 
 export const SEARCH_FILTER_PERIODS = [
-  { label: 'Afgelopen 7 dagen', value: '7' },
-  { label: 'Afgelopen 30 dagen', value: '30' },
-  { label: 'Afgelopen 365 dagen', value: '365' },
+  { label: 'Altijd', value: 'all', count: 471 },
+  { label: 'Afgelopen 7 dagen', value: '7', count: 12 },
+  { label: 'Afgelopen 30 dagen', value: '30', count: 45 },
+  { label: 'Afgelopen 365 dagen', value: '365', count: 120 },
   { label: 'Specifieke periode', value: 'custom' },
 ] as const;
 
-export const SEARCH_FILTER_MINISTRIES = [
-  { label: 'Alle ministeries', value: 'all' },
-  { label: 'Ministerie van Binnenlandse Zaken en Koninkrijksrelaties', value: 'bzk' },
-  { label: 'Ministerie van Volksgezondheid, Welzijn en Sport', value: 'vws' },
-  { label: 'Ministerie van Economische Zaken', value: 'ez' },
-  { label: 'Ministerie van Onderwijs, Cultuur en Wetenschap', value: 'ocw' },
+export const SEARCH_FILTER_ORGANIZATIONS = [
+  { label: 'Alle organisaties', value: 'all', count: 471 },
+  { label: 'Organisatie A', value: 'org-a', count: 156 },
+  { label: 'Organisatie B', value: 'org-b', count: 89 },
+  { label: 'Organisatie C', value: 'org-c', count: 124 },
+  { label: 'Organisatie D', value: 'org-d', count: 102 },
 ] as const;
 
 export const SEARCH_FILTER_TYPES = [
-  { label: 'Alle documenten', value: 'all' },
-  { label: 'Nieuwsbericht', value: 'news' },
-  { label: 'Vraag en antwoord', value: 'qa' },
-  { label: 'Publicatie', value: 'publication' },
-  { label: 'Rapport', value: 'report' },
+  { label: 'Alle documenten', value: 'all', count: 245 },
+  { label: 'Nieuwsbericht', value: 'news', count: 86 },
+  { label: 'Vraag en antwoord', value: 'qa', count: 54 },
+  { label: 'Publicatie', value: 'publication', count: 92 },
+  { label: 'Rapport', value: 'report', count: 13 },
 ] as const;
 
 export const SEARCH_SORT_OPTIONS = [
@@ -31,7 +32,7 @@ export const SEARCH_SORT_OPTIONS = [
 // Mock data - replace with actual data fetching
 export const MOCK_SEARCH_RESULTS: SearchResultsData = {
   filters: {},
-  query: 'afval',
+  query: '',
   results: [
     {
       id: '1',
