@@ -20,9 +20,10 @@
   gap: var(--basis-space-row-lg);
   margin-block: calc(-1 * var(--basis-space-row-md));
   margin-inline: calc(-1 * var(--basis-space-row-md));
-  padding: var(--basis-space-row-md);
+  padding-block: var(--basis-space-row-md);
+  padding-inline: var(--basis-space-row-md);
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  transition: background-color 200ms ease;
 }
 
 .clippy--search-result-item__link:hover,
@@ -45,8 +46,8 @@
 
 .clippy--search-result-item__description {
   color: var(--basis-color-default-color-document);
-  margin: 0;
-  margin-block-end: var(--basis-space-row-sm);
+  margin-block: 0 var(--basis-space-row-sm);
+  margin-inline: 0;
 }
 
 .clippy--search-result-meta {

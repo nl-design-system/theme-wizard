@@ -1,27 +1,27 @@
 import type { SearchResultsData } from './SearchResultsPage/types';
 
 export const SEARCH_FILTER_PERIODS = [
-  { label: 'Altijd', value: 'all', count: 471 },
-  { label: 'Afgelopen 7 dagen', value: '7', count: 12 },
-  { label: 'Afgelopen 30 dagen', value: '30', count: 45 },
-  { label: 'Afgelopen 365 dagen', value: '365', count: 120 },
+  { count: 471, label: 'Altijd', value: 'all' },
+  { count: 12, label: 'Afgelopen 7 dagen', value: '7' },
+  { count: 45, label: 'Afgelopen 30 dagen', value: '30' },
+  { count: 120, label: 'Afgelopen 365 dagen', value: '365' },
   { label: 'Specifieke periode', value: 'custom' },
 ] as const;
 
 export const SEARCH_FILTER_ORGANIZATIONS = [
-  { label: 'Alle organisaties', value: 'all', count: 471 },
-  { label: 'Organisatie A', value: 'org-a', count: 156 },
-  { label: 'Organisatie B', value: 'org-b', count: 89 },
-  { label: 'Organisatie C', value: 'org-c', count: 124 },
-  { label: 'Organisatie D', value: 'org-d', count: 102 },
+  { count: 471, label: 'Alle organisaties', value: 'all' },
+  { count: 156, label: 'Organisatie A', value: 'org-a' },
+  { count: 89, label: 'Organisatie B', value: 'org-b' },
+  { count: 124, label: 'Organisatie C', value: 'org-c' },
+  { count: 102, label: 'Organisatie D', value: 'org-d' },
 ] as const;
 
 export const SEARCH_FILTER_TYPES = [
-  { label: 'Alle documenten', value: 'all', count: 245 },
-  { label: 'Nieuwsbericht', value: 'news', count: 86 },
-  { label: 'Vraag en antwoord', value: 'qa', count: 54 },
-  { label: 'Publicatie', value: 'publication', count: 92 },
-  { label: 'Rapport', value: 'report', count: 13 },
+  { count: 245, label: 'Alle documenten', value: 'all' },
+  { count: 86, label: 'Nieuwsbericht', value: 'news' },
+  { count: 54, label: 'Vraag en antwoord', value: 'qa' },
+  { count: 92, label: 'Publicatie', value: 'publication' },
+  { count: 13, label: 'Rapport', value: 'report' },
 ] as const;
 
 export const SEARCH_SORT_OPTIONS = [

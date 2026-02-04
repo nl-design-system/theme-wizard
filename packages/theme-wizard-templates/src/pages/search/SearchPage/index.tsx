@@ -1,8 +1,8 @@
-import { PageContent } from '@utrecht/component-library-react/dist/css-module';
 import { Heading } from '@nl-design-system-candidate/heading-react';
+import { PageContent } from '@utrecht/component-library-react/dist/css-module';
 import React, { useState, useCallback } from 'react';
-import TemplateLayout from '../../../layouts/TemplateLayout';
 import { SearchForm } from '../../../components/SearchForm';
+import TemplateLayout from '../../../layouts/TemplateLayout';
 import './styles.css';
 import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
 

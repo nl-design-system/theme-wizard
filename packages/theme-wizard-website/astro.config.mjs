@@ -21,12 +21,12 @@ const fontDirs = readdirSync(pnpmDir)
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
   adapter: vercel(),
   devToolbar: {
     enabled: false,
   },
   integrations: [react()],
+  output: 'server',
   server: {
     port: 9492, // (T9 for WIZ)2
   },

@@ -24,7 +24,8 @@
   border: 1px solid var(--basis-color-accent-1-border-subtle);
   border-radius: var(--basis-border-radius-sm);
   margin-block-start: var(--basis-space-row-md);
-  padding: var(--basis-space-row-md);
+  padding-block: var(--basis-space-row-md);
+  padding-inline: var(--basis-space-row-md);
 }
 
 .clippy--search-filter-date-range__fields {
@@ -34,7 +35,8 @@
 }
 
 .clippy--search-filter-date-range__fields .utrecht-form-field {
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 .clippy--search-filter-date-range__fields .utrecht-textbox {
@@ -53,7 +55,7 @@
 }
 
 /* Hide PE-only elements when JavaScript is enabled */
-.js-enabled .clippy--pe-only {
+.clippy--js-enabled .clippy--pe-only {
   display: none !important;
 }
 

@@ -1,18 +1,18 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
+import { IconChevronRight } from '@tabler/icons-react';
 import { PageContent } from '@utrecht/component-library-react/dist/css-module';
+import { Select, SelectOption } from '@utrecht/component-library-react/dist/css-module';
+import { BreadcrumbNav, BreadcrumbNavLink, Icon } from '@utrecht/component-library-react/dist/css-module';
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import type { SearchResultsData } from './types';
+import TemplateLayout from '../../../layouts/TemplateLayout';
 import { SearchFiltersComponent } from '../components/SearchFilters';
 import { SearchResultsList } from '../components/SearchResultsList';
 import { MOCK_SEARCH_RESULTS } from '../constants';
-import { useSearchFilters } from '../hooks/useSearchFilters';
-import TemplateLayout from '../../../layouts/TemplateLayout';
-import { Select, SelectOption } from '@utrecht/component-library-react/dist/css-module';
-import { SEARCH_SORT_OPTIONS } from '../constants';
 import './styles.css';
 import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
-import { BreadcrumbNav, BreadcrumbNavLink, Icon } from '@utrecht/component-library-react/dist/css-module';
-import { IconChevronRight } from '@tabler/icons-react';
+import { SEARCH_SORT_OPTIONS } from '../constants';
+import { useSearchFilters } from '../hooks/useSearchFilters';
 
 // --- SERVER-SIDE & CLIENT-SIDE LOGIC ---
 // This component renders on the server (Astro SSR) to generate initial HTML (Progressive Enhancement)
@@ -32,8 +32,8 @@ export type SortOption = 'relevance' | 'date';
 export const SearchResults = ({
   currentPath,
   initialData = MOCK_SEARCH_RESULTS,
-  initialQuery = '',
   initialFilters = {},
+  initialQuery = '',
   initialSort = 'relevance',
   onSearch,
 }: SearchResultsProps): React.ReactElement => {
@@ -57,7 +57,7 @@ export const SearchResults = ({
     return hasInitialValues ? initialFilters : initialData.filters;
   }, [initialFilters, initialData.filters]);
 
-  const { filters, updateFilter, resetFilters } = useSearchFilters(effectiveInitialFilters);
+  const { filters, resetFilters, updateFilter } = useSearchFilters(effectiveInitialFilters);
 
   // --- SERVER-SIDE LOGGING ---
   if (typeof window === 'undefined') {
@@ -130,7 +130,7 @@ export const SearchResults = ({
   const handleResetFilters = useCallback(() => {
     console.log(`[SEARCH STRATEGY] 💻 CLIENT-SIDE Reset filters`);
     resetFilters();
-    const defaultFilters = { period: 'all', documentType: 'all', organization: 'all' };
+    const defaultFilters = { documentType: 'all', organization: 'all', period: 'all' };
     syncUrl(appliedQuery, defaultFilters, sortBy);
     onSearch?.(appliedQuery, defaultFilters, sortBy);
   }, [appliedQuery, sortBy, resetFilters, syncUrl, onSearch]);
@@ -149,10 +149,10 @@ export const SearchResults = ({
     // Filter by documentType
     if (filters.documentType && filters.documentType !== 'all') {
       const typeMap: Record<string, string> = {
-        qa: 'Vraag en antwoord',
-        publication: 'Publicatie',
-        report: 'Rapport',
         news: 'Nieuwsbericht',
+        publication: 'Publicatie',
+        qa: 'Vraag en antwoord',
+        report: 'Rapport',
       };
       const typeLabel = typeMap[filters.documentType];
       if (typeLabel) {

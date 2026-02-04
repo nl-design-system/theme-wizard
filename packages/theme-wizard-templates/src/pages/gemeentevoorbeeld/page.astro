@@ -17,5 +17,5 @@ const openingHoursSummary = openingHoursData.summary;
 <BaseLayout>
   <GemeenteVoorbeeldHome client:load currentPath={currentPath} openingHoursSummary={openingHoursSummary} />
 
-  <script type="application/ld+json" set:html={JSON.stringify(openingHoursData)} />
+  <script is:inline set:html={JSON.stringify(openingHoursData)} />
 </BaseLayout>

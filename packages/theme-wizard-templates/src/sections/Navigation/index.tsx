@@ -1,10 +1,10 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
 import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
+import { IconMenu2, IconX } from '@tabler/icons-react';
 import { Icon, NavBar, NavList, NavListLink } from '@utrecht/component-library-react';
 import React, { useState } from 'react';
-import { NAVIGATION_ITEMS } from '../../pages/gemeentevoorbeeld/constants';
-import { IconMenu2, IconX } from '@tabler/icons-react';
 import { SearchForm } from '../../components/SearchForm';
+import { NAVIGATION_ITEMS } from '../../pages/gemeentevoorbeeld/constants';
 
 export interface NavigationProps {
   currentPath?: string;
@@ -18,18 +18,18 @@ export interface NavigationProps {
 }
 
 const Navigation = ({ 
-  currentPath, 
+  breadcrumb, 
   children, 
-  breadcrumb,
-  showSearch, 
-  searchQuery = '', 
+  currentPath,
   onSearchQueryChange, 
-  onSearchSubmit 
+  onSearchSubmit, 
+  searchQuery = '', 
+  showSearch 
 }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <NavBar className={`navigation-container ${isOpen ? 'is-open' : ''}`}>
+    <NavBar className={`navigation-container ${isOpen ? 'clippy--is-open' : ''}`}>
       <div className="clippy--navigation-content-wrapper">
         <Heading level={2} className="ams-visually-hidden">
           Hoofdnavigatie
@@ -51,7 +51,7 @@ const Navigation = ({
           <span className="clippy--navigation-hamburger-label">Menu</span>
         </button>
 
-        <div id="navigation-list" className={`clippy--navigation-menu ${isOpen ? 'is-open' : ''}`}>
+        <div id="navigation-list" className={`clippy--navigation-menu ${isOpen ? 'clippy--is-open' : ''}`}>
           <NavList>
             {NAVIGATION_ITEMS.map(({ href, label }) => (
               <NavListLink key={`${href}-${label}`} href={href} aria-current={currentPath === href ? 'page' : undefined}>

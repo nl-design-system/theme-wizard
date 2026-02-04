@@ -15,13 +15,13 @@ export interface TemplateLayoutProps extends NavigationProps {
  * It includes the SkipLink, Header, Navigation (with Search pattern), Footer, and PageBody wrapper.
  */
 export const TemplateLayout = ({
+  breadcrumb,
   children,
   currentPath,
-  breadcrumb,
-  searchQuery,
+  mainId = 'main',
   onSearchQueryChange,
   onSearchSubmit,
-  mainId = 'main',
+  searchQuery,
 }: TemplateLayoutProps) => {
   return (
     <>

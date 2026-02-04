@@ -20,7 +20,8 @@
   flex-direction: column;
   gap: var(--basis-space-row-md);
   list-style-type: none;
-  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
 }
 
 .clippy--search-filter-list-item {

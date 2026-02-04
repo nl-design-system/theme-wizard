@@ -63,7 +63,8 @@
 }
 
 .clippy--navigation-search-wrapper .clippy--search-form__field {
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 .clippy--navigation-search-wrapper .clippy--search-form__input-group .utrecht-textbox {
@@ -91,8 +92,10 @@
   flex-wrap: wrap;
   font-size: var(--basis-font-size-sm);
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
 }
 
 .utrecht-breadcrumb-nav__link {
@@ -135,8 +138,8 @@
   gap: var(--basis-space-inline-lg);
   inline-size: 100%;
   justify-content: space-between;
-  margin: 0;
-  margin-block-end: var(--basis-space-block-2xl);
+  margin-block: 0 var(--basis-space-block-2xl);
+  margin-inline: 0;
 }
 
 .clippy--search-results-heading-wrapper {
@@ -157,7 +160,8 @@
 
 .clippy--search-results-sort__label {
   font-weight: var(--basis-text-font-weight-bold);
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
   white-space: nowrap;
 }
 
@@ -176,7 +180,8 @@
   .clippy--navigation-content-wrapper {
     flex-wrap: wrap;
     gap: var(--basis-space-row-sm);
-    padding: var(--basis-space-row-sm);
+    padding-block: var(--basis-space-row-sm);
+    padding-inline: var(--basis-space-row-sm);
   }
 
   .clippy--navigation-hamburger-button {
@@ -224,7 +229,8 @@
   }
 
   .clippy--navigation-breadcrumb-wrapper .utrecht-breadcrumb-nav {
-    margin: 0;
+    margin-block: 0;
+    margin-inline: 0;
   }
 
   /* Navigation Menu (Dropdown) */
@@ -236,20 +242,23 @@
     order: 4;
   }
 
-  .clippy--navigation-menu.is-open {
+  .clippy--navigation-menu.clippy--is-open {
     display: block;
   }
 
   .clippy--navigation-menu .utrecht-nav-list {
     flex-direction: column;
-    margin: 0;
-    padding: var(--basis-space-row-md);
+    margin-block: 0;
+    margin-inline: 0;
+    padding-block: var(--basis-space-row-md);
+    padding-inline: var(--basis-space-row-md);
   }
 
   /* Search Wrapper (Header) - Navigation specific layout only */
   .clippy--navigation-search-wrapper {
     inline-size: 100%;
-    margin: 0;
+    margin-block: 0;
+    margin-inline: 0;
     order: 3;
   }
 

@@ -1,4 +1,5 @@
 import { Heading } from '@nl-design-system-candidate/heading-react/css';
+import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css';
 import {
   Fieldset,
   FieldsetLegend,
@@ -6,19 +7,18 @@ import {
   FormLabel,
   RadioButton,
 } from '@utrecht/component-library-react/dist/css-module';
-import { NumberBadge } from '@nl-design-system-candidate/number-badge-react/css';
 import React from 'react';
 import type { SearchFilterGroupProps } from './types';
 import './styles.css';
 
 export const SearchFilterGroup = ({
-  title,
   id,
   name,
+  children,
+  onValueChange,
   options,
   selectedValue,
-  onValueChange,
-  children,
+  title,
 }: SearchFilterGroupProps) => (
   <section className="clippy--search-filter-section">
     <div className="clippy--search-filter-heading">
