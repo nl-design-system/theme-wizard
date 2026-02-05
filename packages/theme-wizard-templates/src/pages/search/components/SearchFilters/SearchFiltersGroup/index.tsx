@@ -22,7 +22,7 @@ export const SearchFilterGroup = ({
 }: SearchFilterGroupProps) => (
   <section className="clippy--search-filter-section">
     <div className="clippy--search-filter-heading">
-      <Heading level={3} appearance="level-3">
+      <Heading level={3} appearance="level-5">
         {title}
       </Heading>
     </div>
@@ -40,26 +40,26 @@ export const SearchFilterGroup = ({
           return (
             <FormField key={option.value} type="radio">
               <li className="clippy--search-filter-list-item utrecht-form-field__label utrecht-form-field__label--radio">
-                  <RadioButton
-                    className="clippy--radio-button utrecht-form-field__input"
-                    id={optionId}
-                    name={name}
-                    value={option.value}
-                    checked={checked}
-                    onChange={() => onValueChange(option.value)}
-                  />
+                <RadioButton
+                  className="clippy--radio-button utrecht-form-field__input"
+                  id={optionId}
+                  name={name}
+                  value={option.value}
+                  checked={checked}
+                  onChange={() => onValueChange(option.value)}
+                />
 
-                  <FormLabel htmlFor={optionId} type="radio" className="clippy--search-filter-label">
-                    <span className="clippy--search-filter-item-text">{option.label}</span>
-                    {option.count !== undefined && (
-                      <>
-                        <span aria-hidden="true" className="clippy--search-filter-item-count">
-                          <NumberBadge>{option.count}</NumberBadge>
-                        </span>
-                        <span className="ams-visually-hidden">, bevat {option.count} resultaten</span>
-                      </>
-                    )}
-                  </FormLabel>
+                <FormLabel htmlFor={optionId} type="radio" className="clippy--search-filter-label">
+                  <span className="clippy--search-filter-item-text">{option.label}</span>
+                  {option.count !== undefined && (
+                    <>
+                      <span aria-hidden="true" className="clippy--search-filter-item-count">
+                        <NumberBadge>{option.count}</NumberBadge>
+                      </span>
+                      <span className="ams-visually-hidden">, bevat {option.count} resultaten</span>
+                    </>
+                  )}
+                </FormLabel>
 
               </li>
             </FormField>

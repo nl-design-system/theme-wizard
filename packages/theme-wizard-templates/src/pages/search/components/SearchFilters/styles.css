@@ -15,8 +15,9 @@
 
 .clippy--search-filters-header {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  margin-block-end: var(--basis-space-block-lg);
+  margin-block-end: var(--basis-space-block-4xl);
 }
 
 .clippy--search-filter-date-range {
@@ -42,6 +43,10 @@
 .clippy--search-filter-date-range__fields .utrecht-textbox {
   inline-size: 100%;
   max-inline-size: 12.5rem;
+}
+
+.clippy--search-results-reset-button {
+  margin-inline-end: var(--basis-space-inline-md);
 }
 
 /* Progressive Enhancement */

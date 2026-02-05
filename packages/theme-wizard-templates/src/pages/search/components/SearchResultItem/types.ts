@@ -6,4 +6,5 @@ export interface SearchResult {
   type: string;
   date?: string;
   dateTime?: string;
+  organization?: string;
 }

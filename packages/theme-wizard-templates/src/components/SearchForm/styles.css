@@ -1,10 +1,22 @@
 /* ==========================================================================
    Search Form (General)
    ========================================================================== */
+.clippy--search-form-section {
+  inline-size: 100%;
+  margin-block-end: var(--basis-space-inline-xl);
+}
+
 .clippy--search-form__input-group {
+  align-items: stretch;
   display: flex;
   min-block-size: var(--basis-pointer-target-min-block-size);
 }
+
+.clippy--search-form__input-group .utrecht-form-field {
+  flex: 1;
+  margin-block: 0;
+}
+
 
 .clippy--search-form__input-group .utrecht-textbox {
   block-size: auto;
@@ -15,39 +27,11 @@
   border-start-start-radius: var(--basis-border-radius-sm);
   flex: 1;
   min-inline-size: 0;
-}
-
-.clippy--search-form__submit-button {
-  block-size: auto;
-  border-end-end-radius: var(--basis-border-radius-sm);
-  border-end-start-radius: 0;
-  border-inline-start: 1px solid var(--utrecht-textbox-border-color);
-  border-start-end-radius: var(--basis-border-radius-sm);
-  border-start-start-radius: 0;
-  margin-block: 0;
-  margin-inline: 0;
+  inline-size: 100% !important;
+  max-inline-size: 100% !important;
 }
 
 .clippy--search-form__submit {
-  flex-shrink: 0;
-}
-
-.clippy--search-form__submit-button.nl-button--icon-only {
-  align-items: center;
-  border-block: none;
-  border-end-end-radius: var(--basis-border-radius-sm);
-  border-end-start-radius: 0;
-  border-inline: none;
-  border-start-end-radius: var(--basis-border-radius-sm);
-  border-start-start-radius: 0;
-  display: flex;
-  justify-content: center;
-  min-inline-size: 3rem;
-  padding-block: 0;
-  padding-inline: 0;
-}
-
-.clippy--search-form__submit-button.nl-button--icon-only svg {
   flex-shrink: 0;
 }
 
@@ -64,6 +48,7 @@
   }
 
   .clippy--navigation-search-wrapper .clippy--search-form__field {
+    margin-block-end: var(--basis-space-block-xl);
     inline-size: 100%;
   }
 

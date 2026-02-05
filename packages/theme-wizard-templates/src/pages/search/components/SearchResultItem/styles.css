@@ -17,7 +17,6 @@
   color: inherit;
   display: flex;
   flex-direction: column;
-  gap: var(--basis-space-row-lg);
   margin-block: calc(-1 * var(--basis-space-row-md));
   margin-inline: calc(-1 * var(--basis-space-row-md));
   padding-block: var(--basis-space-row-md);
@@ -26,10 +25,8 @@
   transition: background-color 200ms ease;
 }
 
-.clippy--search-result-item__link:hover,
 .clippy--search-result-item__link:focus {
-  background-color: var(--basis-color-default-bg-subtle);
-  outline: 2px solid var(--basis-color-accent-1-color-default);
+  outline: 2px dotted var(--basis-color-accent-1-color-default);
   outline-offset: 2px;
 }
 
@@ -62,10 +59,5 @@
 }
 
 .clippy--search-result-item {
-  border-block-end: 1px solid var(--basis-color-default-border-default);
   padding-block-end: var(--basis-space-row-lg);
-}
-
-.clippy--search-result-item:last-child {
-  border-block-end: none;
 }

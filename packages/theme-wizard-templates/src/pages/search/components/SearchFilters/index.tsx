@@ -2,6 +2,7 @@ import { Heading } from '@nl-design-system-candidate/heading-react';
 import {
   FormField,
   FormLabel,
+  Icon,
   Paragraph,
   Textbox,
 } from '@utrecht/component-library-react/dist/css-module';
@@ -10,12 +11,17 @@ import type { SearchFiltersProps } from './types';
 import { SEARCH_FILTER_PERIODS, SEARCH_FILTER_TYPES, SEARCH_FILTER_ORGANIZATIONS } from '../../constants';
 import './styles.css';
 import { SearchFilterGroup } from './SearchFiltersGroup';
+import { Sort } from '../SearchResultsHeader/Sort';
+import { IconFilterX } from '@tabler/icons-react';
+import { Button } from '@nl-design-system-candidate/button-react/css';
 export type { SearchFiltersProps };
 
 export const SearchFiltersComponent = ({
   currentQuery = '',
   currentSort = 'relevance',
   filters,
+  onSortChange,
+  sortOptions,
   onFilterChange,
   onResetFilters,
 }: SearchFiltersProps) => {
@@ -41,24 +47,29 @@ export const SearchFiltersComponent = ({
   };
 
   return (
-    <aside className="clippy--search-filters" aria-labelledby='search-filters-heading'>
+    <aside className="clippy--search-filters" aria-labelledby='search-filters-heading' id="filters">
       <div className="clippy--search-filters-header">
-        <Heading level={2} id="search-filters-heading">Filters </Heading>
+        <Heading level={2} id="search-filters-heading" appearance='level-3'>Sorteren & Filters</Heading>
 
-        {hasActiveFilters && (
-          <button
-            type="button"
-            className="clippy--search-filters-reset-button nl-button nl-button--subtle"
-            onClick={onResetFilters}
-          >
-            Filters wissen
-          </button>
-        )}
+
+        <Button
+          type="button"
+          className="clippy--icon-only-button nl-button nl-button--subtle nl-button--icon-only"
+          onClick={onResetFilters}
+          title='Filters wissen'
+          disabled={!hasActiveFilters}
+        >
+          <IconFilterX size={20} />
+
+          <span className="ams-visually-hidden">Filters wissen</span>
+        </Button>
       </div>
 
       <form method="get" action="" className="clippy--search-filters-form">
         <input type="hidden" name="search" value={currentQuery} />
         <input type="hidden" name="sort" value={currentSort} />
+
+        <Sort sortOptions={sortOptions} currentSort={currentSort} onSortChange={onSortChange} />
 
         <SearchFilterGroup
           title="Periode"

@@ -17,12 +17,13 @@ const searchParams = Astro.url.searchParams;
 const initialQuery = searchParams.get('search') || searchParams.get('query') || '';
 const initialFilters = {
   documentType: searchParams.get('filter_documentType') || undefined,
+  organization: searchParams.get('filter_organization') || undefined,
   period: searchParams.get('filter_period') || undefined,
 };
 const initialSort = (searchParams.get('sort') as any) || 'relevance';
 ---
 
-<BaseLayout title="Zoekresultaten">
+<BaseLayout title="Zoekresultaten" skip-link="Direct naar zoekresultaten">
   <SearchResultsPage
     client:load
     currentPath={currentPath}

@@ -2,6 +2,7 @@ import { Mark } from '@utrecht/component-library-react/dist/css-module';
 import React, { memo } from 'react';
 import type { SearchResult } from './types';
 import './styles.css';
+import { Article } from '@utrecht/component-library-react';
 
 export interface SearchResultItemProps {
   result: SearchResult;
@@ -27,7 +28,7 @@ const highlightText = (text: string, query?: string) => {
       {parts.map((part, index) => {
         const isMatch = regex.test(part);
         regex.lastIndex = 0;
-        
+
         return isMatch ? (
           <Mark key={index} className="clippy--search-highlight">{part}</Mark>
         ) : (
@@ -40,7 +41,7 @@ const highlightText = (text: string, query?: string) => {
 
 export const SearchResultItem = memo(({ position, query, result, totalResults }: SearchResultItemProps) => {
   return (
-    <article className="clippy--search-result-item">
+    <Article className="clippy--search-result-item">
       <a href={result.url} className="clippy--search-result-item__link">
         <h3 className="clippy--search-result-item__title">
           {highlightText(result.title, query)}
@@ -57,9 +58,9 @@ export const SearchResultItem = memo(({ position, query, result, totalResults }:
           {result.date && (
             <>
               <span aria-hidden="true"> • </span>
-              <time 
-                dateTime={result.dateTime || result.date} 
-                className="search-result-date" 
+              <time
+                dateTime={result.dateTime || result.date}
+                className="search-result-date"
                 aria-label={`Gepubliceerd op ${result.date}`}
               >
                 {result.date}
@@ -68,13 +69,13 @@ export const SearchResultItem = memo(({ position, query, result, totalResults }:
           )}
         </div>
       </a>
-      
+
       {position && totalResults && (
         <span className="ams-visually-hidden">
           Resultaat {position} van {totalResults}
         </span>
       )}
-    </article>
+    </Article>
   );
 });
 

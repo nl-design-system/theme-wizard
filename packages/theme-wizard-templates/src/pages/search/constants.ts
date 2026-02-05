@@ -40,6 +40,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Afval',
       type: 'Onderwerp',
       url: '/onderwerpen/afval',
+      organization: 'Organisatie A',
     },
     {
       id: '2',
@@ -49,6 +50,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Waar kan ik klein chemisch afval (kca) inleveren?',
       type: 'Vraag en antwoord',
       url: '/onderwerpen/afval/vraag-en-antwoord/waar-kan-ik-klein-chemisch-afval-kca-inleveren',
+      organization: 'Organisatie B',
     },
     {
       id: '3',
@@ -58,6 +60,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Nationaal programma radioactief afval',
       type: 'Publicatie',
       url: '/onderwerpen/afval/radioactief-afval',
+      organization: 'Organisatie A',
     },
     {
       id: '4',
@@ -65,6 +68,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Gevaarlijk afval veilig inzamelen',
       type: 'Onderwerp',
       url: '/onderwerpen/afval/gevaarlijk-afval',
+      organization: 'Organisatie C',
     },
     {
       id: '5',
@@ -73,6 +77,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Welk afval mag ik door de wc of gootsteen spoelen?',
       type: 'Vraag en antwoord',
       url: '/onderwerpen/afval/vraag-en-antwoord/welk-afval-mag-ik-door-de-wc-of-gootsteen-spoelen',
+      organization: 'Organisatie D',
     },
     {
       id: '6',
@@ -81,6 +86,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Huishoudelijk afval scheiden en recyclen',
       type: 'Onderwerp',
       url: '/onderwerpen/afval/huishoudelijk-afval',
+      organization: 'Organisatie A',
     },
     {
       id: '7',
@@ -89,6 +95,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Nieuws: Bedrijfsafval scheiden wordt verplicht',
       type: 'Nieuwsbericht',
       url: '/nieuws/bedrijfsafval-scheiden',
+      organization: 'Organisatie B',
     },
     {
       id: '8',
@@ -96,6 +103,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Centrale Organisatie voor Radioactief Afval (COVRA)',
       type: 'Contactgegevens',
       url: '/contact/covra',
+      organization: 'Organisatie C',
     },
     {
       id: '9',
@@ -106,6 +114,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Scenariostudie multinationale strategie eindberging radioactief afval',
       type: 'Rapport',
       url: '/publicaties/scenariostudie-radioactief-afval',
+      organization: 'Organisatie D',
     },
     {
       id: '10',
@@ -115,6 +124,7 @@ export const MOCK_SEARCH_RESULTS: SearchResultsData = {
       title: 'Ontwikkelpad Afval en recycling - november 2025',
       type: 'Publicatie',
       url: '/publicaties/ontwikkelpad-afval-recycling',
+      organization: 'Organisatie A',
     },
   ],
   sortBy: 'relevance',

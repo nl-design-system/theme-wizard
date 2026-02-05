@@ -61,10 +61,11 @@ export const SearchForm = ({
                 name="search"
                 placeholder="Zoeken"
                 label={label}
-                className="clippy--visually-hidden"
+                style={{ maxInlineSize: '100%', inlineSize: '100%' }}
+                className="clippy--search-form__input clippy--visually-hidden"
               />
 
-              <button type="submit" className="clippy--search-form__submit-button nl-button nl-button--primary nl-button--icon-only" title="Zoeken">
+              <button type="submit" className="clippy--icon-only-button clippy--icon-only-button--submit nl-button nl-button--primary nl-button--icon-only" title="Zoeken">
                 <IconSearch size={20} />
               </button>
             </div>

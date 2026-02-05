@@ -17,14 +17,14 @@ export interface NavigationProps {
   onSearchSubmit?: (query: string) => void;
 }
 
-const Navigation = ({ 
-  breadcrumb, 
-  children, 
+const Navigation = ({
+  breadcrumb,
+  children,
   currentPath,
-  onSearchQueryChange, 
-  onSearchSubmit, 
-  searchQuery = '', 
-  showSearch 
+  onSearchQueryChange,
+  onSearchSubmit,
+  searchQuery = '',
+  showSearch
 }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -60,16 +60,6 @@ const Navigation = ({
             ))}
           </NavList>
         </div>
-
-        {(showSearch || (onSearchQueryChange && onSearchSubmit)) && (
-          <div className="clippy--navigation-search-wrapper">
-            <SearchForm 
-              query={searchQuery} 
-              onQueryChange={onSearchQueryChange || (() => {})} 
-              onSubmit={onSearchSubmit || (() => {})} 
-            />
-          </div>
-        )}
 
         {children && <div className="clippy--navigation-extra-content-wrapper">{children}</div>}
       </div>

@@ -8,3 +8,14 @@ export interface SearchResultsData {
   sortBy: 'relevance' | 'date';
   filters: SearchFilters;
 }
+
+export interface SearchResultsProps {
+  currentPath?: string;
+  initialData?: SearchResultsData;
+  initialQuery?: string;
+  initialFilters?: SearchResultsData['filters'];
+  initialSort?: SortOption;
+  onSearch?: (query: string, filters: SearchResultsData['filters'], sortBy: SortOption) => void;
+}
+
+export type SortOption = 'relevance' | 'date';
