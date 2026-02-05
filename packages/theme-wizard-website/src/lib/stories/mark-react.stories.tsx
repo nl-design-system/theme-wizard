@@ -17,7 +17,7 @@ const meta: Meta<typeof MarkComponent> = {
   // ...externalLinks,
   component: MarkComponent,
   parameters: { tokens },
-  title: 'React Componenten/Mark',
+  title: 'Mark',
 };
 
 export default meta;

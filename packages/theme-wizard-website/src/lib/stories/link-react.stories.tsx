@@ -13,7 +13,7 @@ const meta: Meta<typeof LinkComponent> = {
     },
     tokens,
   },
-  title: 'React Componenten/Link',
+  title: 'Link',
 } satisfies Meta<typeof LinkComponent>;
 
 export default meta;

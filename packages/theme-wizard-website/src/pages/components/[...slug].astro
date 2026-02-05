@@ -11,7 +11,7 @@ export function getStaticPaths() {
 
 const componentList = await Promise.all(Object.entries(components).map(async ([slug, module]) => {
   const componentModule = await module()
-  const title = componentModule.default.id
+  const title = componentModule.default.title
   return {
     slug,
     title

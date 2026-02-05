@@ -17,7 +17,7 @@ const meta = {
   id: 'code',
   parameters: { tokens },
   // ...externalLinks,
-  title: 'React Componenten/Code',
+  title: 'Code',
 } satisfies Meta<typeof CodeComponent>;
 
 export default meta;

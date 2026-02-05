@@ -16,7 +16,7 @@ const meta = {
   id: 'color-sample',
   parameters: { tokens },
   // ...externalLinks,
-  title: 'React Componenten/Color Sample',
+  title: 'Color Sample',
 } satisfies Meta<typeof ColorSampleComponent>;
 
 export default meta;
