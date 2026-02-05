@@ -2,19 +2,12 @@ import type { MarkProps } from '@nl-design-system-candidate/mark-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentType } from 'react';
 import markMeta from '@nl-design-system-candidate/mark-docs/stories/mark.react.meta';
-// import * as Stories from '@nl-design-system-candidate/mark-docs/stories/mark.stories';
-// import packageJSON from '../../components-react/mark-react/package.json';
 import { Mark as MarkComponent } from '@nl-design-system-candidate/mark-react';
-// import '../../components-css/paragraph-css/src/paragraph.scss';
-// import { getExternalLinks } from '../src/helpers/external-links';
 import tokens from '@nl-design-system-candidate/mark-tokens';
-
-// const externalLinks = getExternalLinks('https://nldesignsystem.nl/mark', packageJSON.homepage);
 
 const meta: Meta<typeof MarkComponent> = {
   ...markMeta,
   id: 'mark',
-  // ...externalLinks,
   component: MarkComponent,
   parameters: { tokens },
   title: 'Mark',

@@ -703,6 +703,9 @@ importers:
       '@astrojs/vercel':
         specifier: 9.0.2
         version: 9.0.2(astro@5.16.6(@types/node@24.10.4)(@vercel/blob@1.0.2)(@vercel/functions@2.2.13)(rollup@4.53.5)(tsx@4.19.2)(typescript@5.9.3)(yaml@2.8.2))(react@18.3.1)(rollup@4.53.5)
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.0.0
+        version: 1.0.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.0.0
         version: 1.0.0(@babel/runtime@7.28.4)(react@18.3.1)

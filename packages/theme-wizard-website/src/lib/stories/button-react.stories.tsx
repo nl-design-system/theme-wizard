@@ -1,96 +1,13 @@
 import type { Meta, StoryObj, StoryContext } from '@storybook/react-vite';
+import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import { type ComponentType } from 'react';
 
 const meta = {
   id: 'button',
-  argTypes: {
-    disabled: {
-      control: 'boolean',
-      description: `Geeft aan dat de button disabled is. Een disabled button is zichtbaar, maar kan niet gebruikt worden. Het kan dus verwarrend zijn voor een gebruiker.
-
-  \`aria-disabled="true"\` wordt hiervoor gebruikt. Op die manier kan de gebruikter de button nog steeds met een toetsenbord bereiken en erachter komen dat de button disabled is.
-
-  De developer is echter wel verantwoordelijk voor het afhandelen van click events die nog steeds zullen werken!`,
-      table: {
-        category: 'Props',
-        type: { summary: 'boolean' },
-      },
-    },
-    hint: {
-      control: 'select',
-      description: `Een optionele hint van het resultaat van de button. Deze property werkt alleen als de \`purpose\` prop ook is gezet.
-
-- \`positive\` hint op de bevestiging van iets
-- \`positive\` hint op de verwijdering van iets
-`,
-      options: [undefined, 'positive', 'negative'],
-      table: {
-        category: 'Props',
-        type: { summary: `'positive' | 'negative'` },
-      },
-    },
-    htmlDisabled: {
-      control: 'boolean',
-      description: `Als het absoluut noodzakelijk is om de html \`disabled\` attribute te gebruiken, dan kan dat met \`htmlDisabled\`. Bedenk dat dit voor toegankelijkheid problemen zorgt omdat de button helemaal niet meer met het toetsenbord te bereiken is en dus ook onzichtbaar is voor hulpsoftware`,
-      table: {
-        category: 'Props',
-        type: { summary: 'boolean' },
-      },
-    },
-    iconEnd: {
-      control: false,
-      description: 'Een icon achter de content van de button',
-      table: { category: 'Props', type: { summary: 'ReactNode' } },
-    },
-    iconOnly: {
-      control: 'boolean',
-      description: 'Laat alleen icons zien, verberg de tekst.',
-      table: {
-        category: 'Props',
-        type: { summary: 'boolean' },
-      },
-    },
-    iconStart: {
-      control: false,
-      description: 'Een icon voor de content van de button',
-      table: { category: 'Props', type: { summary: 'ReactNode' } },
-    },
-    label: {
-      control: 'text',
-      description: 'De content van de button',
-      table: { category: 'Props' },
-    },
-    pressed: {
-      control: 'boolean',
-      description:
-        'Geeft aan dat de button is ingedrukt, ook als de gebruiker op dit moment niet met de button interacteert',
-      table: {
-        category: 'Props',
-        type: { summary: 'boolean' },
-      },
-    },
-    purpose: {
-      control: 'select',
-      description: 'Een optioneel doel van de button. Te veel primary buttons kunnen verwarrend zijn',
-      options: [undefined, 'primary', 'secondary', 'subtle'],
-      table: {
-        category: 'Props',
-        type: { summary: `'primary' | 'secondary' | 'subtle'` },
-      },
-    },
-    toggle: {
-      control: 'boolean',
-      description:
-        'Voor hulpsoftware wordt de button aangekondigd als Toggle Button, ook wanneer de button nog niet ingedrukt is.',
-      table: {
-        category: 'Props',
-        type: { summary: 'boolean' },
-      },
-    },
-  },
   component: ButtonComponent,
   parameters: {
+    css: buttonCss,
     docs: {
       description: {
         component: 'Als de `purpose` prop is gezet, kan er optioneel een `hint` mee gegeven worden',

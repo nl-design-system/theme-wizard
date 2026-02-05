@@ -5,13 +5,20 @@ import type { WizardReactRenderer } from '../wizard-react-element';
 export class WizardStoryRenderer extends HTMLElement {
   private reactRenderer: WizardReactRenderer | null = null;
 
+  constructor() {
+    super();
+  }
+
   connectedCallback() {
     this.reactRenderer = document.createElement('react-renderer') as WizardReactRenderer;
     this.appendChild(this.reactRenderer);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  renderStory(story: any, Component: any, args: any = {}) {
+  renderStory(story: any, componentMeta: any, args: any = {}) {
+    const Component = componentMeta.component;
+    const css = componentMeta.parameters?.css;
+
     if (this.reactRenderer) {
       // If the story has a custom render function, use it
       if (story.render) {
@@ -24,4 +31,4 @@ export class WizardStoryRenderer extends HTMLElement {
   }
 }
 
-customElements.define('story-renderer', WizardStoryRenderer);
+customElements.define('wizard-story-renderer', WizardStoryRenderer);

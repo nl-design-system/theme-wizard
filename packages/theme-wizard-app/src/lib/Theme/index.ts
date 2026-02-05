@@ -162,7 +162,7 @@ export default class Theme {
 
   async toCSS({
     resolved = false,
-    selector = `.${this.name}-theme`,
+    selector = `.${this.name}-theme, :host`,
   }: {
     resolved?: boolean;
     selector?: `.${string}`;
