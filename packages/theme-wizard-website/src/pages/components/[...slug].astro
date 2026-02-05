@@ -9,6 +9,15 @@ export function getStaticPaths() {
   }))
 }
 
+const componentList = await Promise.all(Object.entries(components).map(async ([slug, module]) => {
+  const componentModule = await module()
+  const title = componentModule.default.id
+  return {
+    slug,
+    title
+  }
+}))
+
 const slug = Astro.params.slug
 
 const componentModulePromiseFn = components[slug]
@@ -20,6 +29,12 @@ const storyIds = stories.map(([id]) => id)
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
+      <nav slot="sidebar">
+        {componentList.map(({slug, title}) => (
+          <a href={`/components/${slug}`}>{title}</a>
+          <br />
+        ))}
+      </nav>
       <main slot="main">
         <!-- TODO: make proper breadcrumb -->
         <nav>

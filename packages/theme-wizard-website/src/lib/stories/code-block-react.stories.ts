@@ -3,14 +3,6 @@ import { CodeBlock as CodeBlockComponent, type CodeBlockProps } from '@nl-design
 
 const meta = {
   id: 'code-block',
-  argTypes: {
-    children: { control: 'text', table: { category: 'API' } },
-    overflow: {
-      control: 'radio',
-      options: ['wrap', 'nowrap', 'overflow'],
-      table: { type: { summary: 'union' } },
-    },
-  },
   component: CodeBlockComponent,
   title: 'Code block',
 } satisfies Meta<CodeBlockProps>;
