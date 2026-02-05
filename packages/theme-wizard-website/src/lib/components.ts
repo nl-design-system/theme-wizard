@@ -1,4 +1,5 @@
 export const components = {
-  'code-block': () => import('./stories/code-block.stories'),
+  code: () => import('./stories/code-react.stories'),
+  'code-block': () => import('./stories/code-block-react.stories'),
   mark: () => import('./stories/mark-react.stories'),
 };

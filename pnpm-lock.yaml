@@ -706,6 +706,15 @@ importers:
       '@nl-design-system-candidate/code-block-react':
         specifier: 1.3.7
         version: 1.3.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/code-docs':
+        specifier: 1.1.2
+        version: 1.1.2
+      '@nl-design-system-candidate/code-react':
+        specifier: 1.2.7
+        version: 1.2.7(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/code-tokens':
+        specifier: 2.0.4
+        version: 2.0.4
       '@nl-design-system-candidate/mark-docs':
         specifier: 1.2.1
         version: 1.2.1
@@ -2240,6 +2249,18 @@ packages:
 
   '@nl-design-system-candidate/code-css@2.0.5':
     resolution: {integrity: sha512-KYRoiv389rTyGEb1xK1jFkzmQ4v3H6B82OOMafVqm3L5+ntr2f3tbJNYBkep3XYjAEq8VmNLkkJQYJZHiEo2ng==}
+
+  '@nl-design-system-candidate/code-docs@1.1.2':
+    resolution: {integrity: sha512-aJO9YuAV9bhqj/nv/pPI3oAY26ePC7a9OAxEEFPUL3w9Jpk7Qz3c97j9DYlDExtPUjSLksKpkDriL0bb8X9LTA==}
+
+  '@nl-design-system-candidate/code-react@1.2.7':
+    resolution: {integrity: sha512-ansOFc7d3Xla9RJO2OLRn0O5kwXYNUTStnQEzqZF/C8rq4ux63XyVSrhNf1rFjVCpD/cElX9mpHv/CnVRmWWdA==}
+    peerDependencies:
+      '@babel/runtime': ^7
+      react: ^18 || ^19
+
+  '@nl-design-system-candidate/code-tokens@2.0.4':
+    resolution: {integrity: sha512-6RmljcilQog/IXmo+aLaqpe3cZ22GOE8HknmLgACK+b+NVmkhtdf+HwgtnEgg235Ucf2kbDpbERKppEHKfikUA==}
 
   '@nl-design-system-candidate/color-sample-css@1.0.4':
     resolution: {integrity: sha512-zDQKBqdWnxKg+y08WMOc2FKTCbKYM+IVLgzWd044sAo2U+q3XKREP+VZDUKAmSDEPcaDn2hia1QFO6eJkhMFAQ==}
@@ -9699,6 +9720,15 @@ snapshots:
   '@nl-design-system-candidate/code-css@2.0.3': {}
 
   '@nl-design-system-candidate/code-css@2.0.5': {}
+
+  '@nl-design-system-candidate/code-docs@1.1.2': {}
+
+  '@nl-design-system-candidate/code-react@1.2.7(@babel/runtime@7.28.4)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 18.3.1
+
+  '@nl-design-system-candidate/code-tokens@2.0.4': {}
 
   '@nl-design-system-candidate/color-sample-css@1.0.4': {}
 

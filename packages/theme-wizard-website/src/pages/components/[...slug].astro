@@ -34,7 +34,9 @@ const storyIds = stories.map(([id]) => id)
         {stories.map(([id, story]) => (
           <section>
             <h2>{story.name}</h2>
-            <div data-story-container={id}></div>
+            <wizard-story-preview>
+              <div data-story-container={id}></div>
+            </wizard-story-preview>
           </section>
         ))}
       </main>
