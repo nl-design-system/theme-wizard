@@ -1,0 +1,21 @@
+---
+import { storyModules } from '../../../../theme-wizard-app/src/components/wizard-components-page/story-modules';
+import ComponentsLayout from '@/layouts/ComponentsLayout.astro';
+
+export function getStaticPaths() {
+  return storyModules.map(module => ({
+    params: { component: module.default.id }
+  }));
+}
+
+const { component } = Astro.params;
+const componentModule = storyModules.find(s => s.default.id === component)!
+const meta = componentModule.default;
+const description = meta?.['parameters']?.['docs']?.description?.component;
+---
+
+<ComponentsLayout title="Components - Theme Wizard" description="Preview and analyze website themes">
+  <h1>{component}</h1>
+  {description && <p>{description}</p>}
+  <wizard-component-page component-id={component}></wizard-component-page>
+</ComponentsLayout>

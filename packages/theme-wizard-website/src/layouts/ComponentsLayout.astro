@@ -1,0 +1,23 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { title = 'Theme Wizard', description = 'Preview and analyze website themes' } = Astro.props;
+import { storyModules } from '../../../theme-wizard-app/src/components/wizard-components-page/story-modules';
+---
+
+<BaseLayout title={title} description={description}>
+  <theme-wizard-app>
+    <wizard-layout>
+      <nav slot="sidebar">
+        <!-- TODO: replace with <clippy-side-nav> when available -->
+        {storyModules.map((storyModule) => {
+          const id = storyModule.default.id
+          const href = `/components/${id}`;
+          return <wizard-sidebar-link class="wizard-styleguide__nav-item" href={href}>{id}</wizard-sidebar-link>
+        })}
+      </nav>
+      <div slot="main">
+        <slot></slot>
+      </div>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
