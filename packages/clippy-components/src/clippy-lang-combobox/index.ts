@@ -59,11 +59,22 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
     return this.#lang || this.DEFAULT_LANG;
   }
 
-  override readonly filter =
-    (query: string) =>
-    ({ autonym, exonym }: Option) => {
-      return autonym.toLowerCase().includes(query.toLowerCase()) || exonym.toLowerCase().includes(query.toLowerCase());
+  override readonly filter = (query: string) => {
+    const normalizedQuery = query.toLowerCase();
+    return ({ autonym, exonym, label }: Option) => {
+      const hasLabelMatch = label.toLowerCase().includes(normalizedQuery);
+      switch (this.format) {
+        case 'autonym':
+          // When only displaying autonym, also check the exonym
+          return hasLabelMatch || exonym.toLowerCase().includes(normalizedQuery);
+        case 'exonym':
+          // When only displaying exonym, also check the autonym
+          return hasLabelMatch || autonym.toLowerCase().includes(normalizedQuery);
+        default:
+          return hasLabelMatch;
+      }
     };
+  };
 
   @property({ converter: arrayFromTokenList, type: Array })
   override set options(options: string[]) {
