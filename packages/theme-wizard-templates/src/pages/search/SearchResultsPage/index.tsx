@@ -264,7 +264,7 @@ export const SearchResults = ({
         <IconChevronRight size={14} aria-hidden="true" />
       </Icon>
 
-      <BreadcrumbNavLink href="/search-results/" aria-current="page">Zoekresultaten</BreadcrumbNavLink>
+      <BreadcrumbNavLink disabled href="/search-results/" aria-current="page">Zoekresultaten</BreadcrumbNavLink>
     </BreadcrumbNav>
   );
 
@@ -276,6 +276,7 @@ export const SearchResults = ({
           {breadcrumbs}
         </div>
       }
+      mainId='main'
       searchQuery={searchQuery}
       onSearchQueryChange={setSearchQuery}
       onSearchSubmit={handleSearch}
@@ -286,7 +287,7 @@ export const SearchResults = ({
       </div>
 
 
-      <main className="clippy--search-results-layout" tabIndex={-1}>
+      <main className="clippy--search-results-layout" tabIndex={-1} id='main'>
         <SkipLink href="#search-results">Direct naar resultaten, filters overslaan</SkipLink>
 
         <PageContent>
