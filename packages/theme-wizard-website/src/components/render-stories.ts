@@ -15,7 +15,7 @@ export async function initStories(componentId: string, storyIds: string[]) {
     const storyRenderer = document.createElement('wizard-story-renderer') as WizardStoryRenderer;
     container.appendChild(storyRenderer);
 
-    // Render the story with the component from meta
+    // Render the actual component
     storyRenderer.renderStory(Story, meta, Story.args || {});
   });
 }

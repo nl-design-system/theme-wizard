@@ -709,6 +709,9 @@ importers:
       '@nl-design-system-candidate/button-react':
         specifier: 1.0.0
         version: 1.0.0(@babel/runtime@7.28.4)(react@18.3.1)
+      '@nl-design-system-candidate/button-tokens':
+        specifier: 1.0.0
+        version: 1.0.0
       '@nl-design-system-candidate/code-block-react':
         specifier: 1.3.7
         version: 1.3.7(@babel/runtime@7.28.4)(react@18.3.1)
@@ -2276,6 +2279,9 @@ packages:
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18 || ^19
+
+  '@nl-design-system-candidate/button-tokens@1.0.0':
+    resolution: {integrity: sha512-2uxqqVUW9kyib/rPn1rvWI09auUVOkA5IUC+rBlYxUz9DVVn4UcXPeOe9KVgh0a1WuM2dzX3k/bpWRBINtKACw==}
 
   '@nl-design-system-candidate/code-block-react@1.3.7':
     resolution: {integrity: sha512-gpQySDLShzowkObZAf1WkTrKhT9KYas+ntq023IwT+86qdvIEc2BQQ38MBD6LZFdMCLE6WuVdh8R4BoWq5qNfA==}
@@ -9773,6 +9779,8 @@ snapshots:
       '@babel/runtime': 7.28.4
       clsx: 2.1.1
       react: 18.3.1
+
+  '@nl-design-system-candidate/button-tokens@1.0.0': {}
 
   '@nl-design-system-candidate/code-block-react@1.3.7(@babel/runtime@7.28.4)(react@18.3.1)':
     dependencies:
