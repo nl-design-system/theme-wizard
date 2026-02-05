@@ -1,7 +1,7 @@
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
-export class FormElement<V = unknown> extends LitElement {
+export class FormElement<V = string> extends LitElement {
   @property() name = '';
   @property({ attribute: 'hidden-label' }) hiddenLabel = '';
   @property({ type: Boolean }) disabled = false;
@@ -15,7 +15,17 @@ export class FormElement<V = unknown> extends LitElement {
     return this.internals_.form;
   }
 
-  @property()
+  @property({
+    converter: (value) => {
+      if (typeof value !== 'string') {
+        console.error(
+          `Reimplement value setter with property decorator. The inherited implementation only supports string values by design.`,
+        );
+        return null;
+      }
+      return value;
+    },
+  })
   set value(value: V | null) {
     if (this.#value !== value) {
       this.#value = value;
