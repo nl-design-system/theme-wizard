@@ -1,3 +1,4 @@
 export const components = {
-  mark: () => import('./mark-react.stories'),
+  'code-block': () => import('./stories/code-block.stories'),
+  mark: () => import('./stories/mark-react.stories'),
 };
