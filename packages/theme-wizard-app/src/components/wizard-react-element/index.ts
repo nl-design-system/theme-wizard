@@ -14,9 +14,12 @@ export class WizardReactRenderer extends HTMLElement {
     this.root?.unmount();
   }
 
-  render(element: ReactElement) {
+  render(element: ReactElement, styleSheets?: CSSStyleSheet[]) {
     this.root?.render(element);
+    if (styleSheets) {
+      this.shadowRoot?.adoptedStyleSheets.push(...styleSheets);
+    }
   }
 }
 
-customElements.define('react-renderer', WizardReactRenderer);
+customElements.define('wizard-react-element', WizardReactRenderer);

@@ -8,7 +8,7 @@ const meta = {
   id: 'button',
   component: ButtonComponent,
   parameters: {
-    css: buttonCss,
+    css: [buttonCss],
     docs: {
       description: {
         component: 'Als de `purpose` prop is gezet, kan er optioneel een `hint` mee gegeven worden',

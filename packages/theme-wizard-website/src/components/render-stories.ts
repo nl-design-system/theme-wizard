@@ -12,7 +12,7 @@ export async function initStories(componentId: string, storyIds: string[]) {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Story = (componentModule as any)[name];
-    const storyRenderer = document.createElement('wizard-story-renderer') as WizardStoryRenderer;
+    const storyRenderer = document.createElement('wizard-story-react') as WizardStoryRenderer;
     container.appendChild(storyRenderer);
 
     // Render the actual component
