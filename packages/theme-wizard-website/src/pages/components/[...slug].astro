@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { components } from '@/lib/components'
+import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils'
+
+export function getStaticPaths() {
+  return Object.keys(components).map(slug => ({
+    params: {slug}
+  }))
+}
+
+const slug = Astro.params.slug
+
+const componentModulePromiseFn = components[slug]
+const componentModule = await componentModulePromiseFn()
+const stories = getStories(componentModule, componentModule.default)
+const storyIds = stories.map(([id]) => id)
+---
+
+<BaseLayout title="Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <main slot="main">
+        <!-- TODO: make proper breadcrumb -->
+        <nav>
+          <a href="/">Wizard</a> /
+          <a href="/components">Componenten</a> /
+          <span>{slug}</span>
+        </nav>
+        <h1>{slug}</h1>
+
+        <div id="story-container" data-story-ids={JSON.stringify(storyIds)} data-component-id={slug}></div>
+
+        {stories.map(([id, story]) => (
+          <section>
+            <h2>{story.name}</h2>
+            <div data-story-container={id}></div>
+          </section>
+        ))}
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<script>
+  import { initStories } from '@/components/render-stories';
+
+  const container = document.getElementById('story-container');
+  const storyIds = JSON.parse(container!.dataset.storyIds || '[]');
+  const componentId = container?.dataset.componentId
+
+  initStories('#story-container', componentId, storyIds);
+</script>

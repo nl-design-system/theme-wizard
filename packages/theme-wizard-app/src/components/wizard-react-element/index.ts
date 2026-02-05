@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 
-export class ReactRenderer extends HTMLElement {
+export class WizardReactRenderer extends HTMLElement {
   private root: Root | null = null;
 
   connectedCallback() {
@@ -19,4 +19,4 @@ export class ReactRenderer extends HTMLElement {
   }
 }
 
-customElements.define('react-renderer', ReactRenderer);
+customElements.define('react-renderer', WizardReactRenderer);

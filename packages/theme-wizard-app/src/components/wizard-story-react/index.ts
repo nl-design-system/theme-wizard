@@ -1,12 +1,12 @@
 import { createElement } from 'react';
 import '../wizard-react-element';
-import type { ReactRenderer } from '../wizard-react-element';
+import type { WizardReactRenderer } from '../wizard-react-element';
 
-export class StoryRenderer extends HTMLElement {
-  private reactRenderer: ReactRenderer | null = null;
+export class WizardStoryRenderer extends HTMLElement {
+  private reactRenderer: WizardReactRenderer | null = null;
 
   connectedCallback() {
-    this.reactRenderer = document.createElement('react-renderer') as ReactRenderer;
+    this.reactRenderer = document.createElement('react-renderer') as WizardReactRenderer;
     this.appendChild(this.reactRenderer);
   }
 
@@ -24,4 +24,4 @@ export class StoryRenderer extends HTMLElement {
   }
 }
 
-customElements.define('story-renderer', StoryRenderer);
+customElements.define('story-renderer', WizardStoryRenderer);
