@@ -32,8 +32,6 @@ class C extends ClippyCombobox<Option> {}
 
 @safeCustomElement(tag)
 export class ClippyLangCombobox extends LocalizationMixin(C) {
-  #options: Option[] = [];
-  #lang?: string;
   exonyms = new Intl.DisplayNames(this.DEFAULT_LANG, { type: 'language' });
   @property() separator = DEFAULT_SEPARATOR;
   @property({
@@ -43,6 +41,8 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
     type: String,
   })
   format: Format = DEFAULT_FORMAT_OPTION;
+  #options: Option[] = [];
+  #lang?: string;
 
   static readonly autonyms = { of: (code: string) => languages[code as LangCode] }; // static because not dependent on instance
   readonly autonyms = { of: ClippyLangCombobox.autonyms.of }; // consistent api with exonyms for convenience
@@ -75,8 +75,8 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
         exonym,
         value,
       };
-      const exonymIfDifferent = option.exonym === option.autonym ? '' : option.exonym;
-      const label = this.format === 'both' ? `${option.autonym} ${exonymIfDifferent}` : option?.[this.format];
+      const suffix = exonym === autonym ? '' : ` ${this.separator} ${autonym}`;
+      const label = this.format === 'both' ? `${option.exonym}${suffix}` : option?.[this.format];
       return {
         ...option,
         label,
