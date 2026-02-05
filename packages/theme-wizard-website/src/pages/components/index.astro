@@ -1,0 +1,37 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import * as markModule from '../../lib/mark-react.stories'
+import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils'
+
+const stories = getStories(markModule, markModule.default)
+const storyIds = stories.map(([id]) => id)
+---
+
+<BaseLayout title="Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <main slot="main">
+        <h1>Componenten</h1>
+
+        <h2>Mark</h2>
+        <div id="story-container" data-story-ids={JSON.stringify(storyIds)}></div>
+
+        {stories.map(([id, story]) => (
+          <section>
+            <h3>{story.name}</h3>
+            <div data-story-container={id}></div>
+          </section>
+        ))}
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<script>
+  import { initStories } from '@/components/render-stories';
+
+  const container = document.getElementById('story-container');
+  const storyIds = JSON.parse(container.dataset.storyIds || '[]');
+
+  initStories('#story-container', storyIds);
+</script>

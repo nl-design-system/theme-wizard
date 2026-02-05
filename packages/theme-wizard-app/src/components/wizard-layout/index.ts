@@ -59,6 +59,13 @@ export class WizardLayout extends LitElement {
               ${t('nav.configure')}
             </a>
             <a
+              href="/components"
+              class="utrecht-link utrecht-link--html-a wizard-layout__nav-item"
+              aria-current=${this.isCurrentPage('/components') ? 'page' : nothing}
+            >
+              Components
+            </a>
+            <a
               href="/style-guide"
               class="utrecht-link utrecht-link--html-a wizard-layout__nav-item"
               aria-current=${this.isCurrentPage('/style-guide') ? 'page' : nothing}
