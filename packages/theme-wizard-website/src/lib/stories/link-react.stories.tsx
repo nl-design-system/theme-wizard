@@ -5,6 +5,7 @@ import tokens from '@nl-design-system-candidate/link-tokens';
 
 const meta: Meta<typeof LinkComponent> = {
   id: 'link',
+  component: LinkComponent,
   parameters: {
     docs: {
       description: {
@@ -78,6 +79,7 @@ export const DesignLinkStates: Story = {
   },
   render: RenderLinkStates,
 };
+
 export const DesignLinkDisabled: Story = {
   name: 'Design: Disabled Link',
   args: {
@@ -108,6 +110,7 @@ export const DesignLinkDisabled: Story = {
     },
   },
 };
+
 export const DesignLinkCurrent: Story = {
   name: 'Design: Current Link',
   args: {
