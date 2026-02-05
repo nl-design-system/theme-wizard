@@ -3,10 +3,10 @@ import { safeCustomElement } from '@src/lib/decorators';
 import LocalizationMixin from '@src/lib/LocalizationMixin';
 import { html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import languages, { direction, type LangCode } from './languages';
 import styles from './styles';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 type Option = {
   value: string;

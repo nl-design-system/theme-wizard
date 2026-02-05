@@ -5,6 +5,7 @@ import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import memoize from 'memoize';
 import { arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
@@ -263,7 +264,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   #getOptionId(index: number = this.selectedIndex) {
-    return index !== -1 ? `option-${index}-${this.#id}` : nothing;
+    return index === -1 ? undefined : `option-${index}-${this.#id}`;
   }
 
   /**
@@ -310,7 +311,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             aria-haspopup="listbox"
             aria-controls=${this.#listId}
             aria-expanded=${this.open}
-            aria-activedescendant=${this.#getOptionId()}
+            aria-activedescendant=${ifDefined(this.#getOptionId())}
             type="text"
             class="utrecht-textbox utrecht-combobox__input"
             dir="auto"
@@ -338,7 +339,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                   selectedClass,
                 )}"
                 role="option"
-                id=${this.#getOptionId(index)}
+                id=${ifDefined(this.#getOptionId(index))}
                 aria-selected=${selected}
                 data-index=${index}
                 @click=${this.#handleOptionsClick}
