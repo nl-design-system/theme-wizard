@@ -1,5 +1,6 @@
-import '../components/story-renderer';
-import type { StoryRenderer } from '../components/story-renderer';
+import type { StoryRenderer } from '@nl-design-system-community/theme-wizard-app';
+// import '../components/story-renderer';
+// import type { StoryRenderer } from '../components/story-renderer';
 import * as storiesModule from '../lib/mark-react.stories';
 
 export function initStories(_containerSelector: string, storyNames: string[]) {
