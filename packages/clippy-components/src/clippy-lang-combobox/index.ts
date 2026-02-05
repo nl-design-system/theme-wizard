@@ -4,7 +4,9 @@ import LocalizationMixin from '@src/lib/LocalizationMixin';
 import { html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ClippyCombobox } from '../clippy-combobox';
-import languages, { type LangCode } from './languages';
+import languages, { direction, type LangCode } from './languages';
+import styles from './styles';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 type Option = {
   value: string;
@@ -46,6 +48,12 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
 
   static readonly autonyms = { of: (code: string) => languages[code as LangCode] }; // static because not dependent on instance
   readonly autonyms = { of: ClippyLangCombobox.autonyms.of }; // consistent api with exonyms for convenience
+
+  static override readonly styles = [...ClippyCombobox.styles, styles];
+
+  get #dir() {
+    return direction(this.lang);
+  }
 
   @property()
   override set lang(value: string) {
@@ -100,6 +108,9 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
   }
 
   override renderEntry(option: Option) {
+    const optionDir = direction(option.value);
+    const dir = optionDir === this.#dir ? undefined : optionDir;
+
     const isCurrentLanguage = option.value === this.lang;
     const exonym =
       isCurrentLanguage || ['both', 'exonym'].includes(this.format)
@@ -107,13 +118,15 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
         : nothing;
     const autonym =
       !isCurrentLanguage && ['both', 'autonym'].includes(this.format)
-        ? html`<span class="clippy-lang-combobox__autonym" lang=${option.value}>${option.autonym}</span>`
+        ? html`<span class="clippy-lang-combobox__autonym" lang=${option.value} dir=${ifDefined(dir)}>
+            ${option.autonym}
+          </span>`
         : nothing;
 
     // Render separator only when both exonym and autonym will be rendered
     const separator =
       exonym === nothing || autonym === nothing ? nothing : html`<span role="presentation">${this.separator}</span>`;
 
-    return html`<span class="clippy-lang-combobox__option">${exonym} ${separator} ${autonym}</span>`;
+    return html` <span class="clippy-lang-combobox__option"> ${exonym} ${separator} ${autonym} </span>`;
   }
 }

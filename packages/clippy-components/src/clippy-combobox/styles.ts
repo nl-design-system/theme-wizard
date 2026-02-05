@@ -9,7 +9,7 @@ export default css`
   .clippy-combobox__current-option {
     pointer-events: none;
     position: absolute;
-    display: block;
+    display: flex;
     // Clip contents when current option exceeds input size
     inline-size: 100%;
     white-space: nowrap;
