@@ -1,29 +1,31 @@
-import { SkipLink } from '@nl-design-system-candidate/skip-link-react/css';
-import { PageBody } from '@utrecht/page-body-react';
 import React from 'react';
-import type { SummaryItem } from './components/OpeningHoursCard/types';
-import MainIntroSection from './Sections/MainIntro';
-import Navigation from './Sections/Navigation';
-import NewsSection from './Sections/News';
-import PageFooterSection from './Sections/PageFooter';
-import PageHeaderSection from './Sections/PageHeader';
-import SelfServiceSection from './Sections/SelfService';
-import './styles.css';
+import type { SummaryItem } from '../../components/OpeningHoursCard/types';
+import TemplateLayout from '../../layouts/TemplateLayout';
+import MainIntroSection from '../../sections/MainIntro';
+import NewsSection from '../../sections/News';
+import SelfServiceSection from '../../sections/SelfService';
 
 export interface GemeenteVoorbeeldHomeProps {
   currentPath?: string;
   openingHoursSummary?: SummaryItem[];
 }
 
-const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoorbeeldHomeProps) => (
-  <>
-    <SkipLink href="#main">Skip to main content</SkipLink>
+const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoorbeeldHomeProps) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
 
-    <PageHeaderSection />
+  const handleSearch = (query: string) => {
+    const params = new URLSearchParams();
+    params.set('search', query);
+    window.location.href = `/search/search-results?${params.toString()}`;
+  };
 
-    <Navigation currentPath={currentPath} />
-
-    <PageBody>
+  return (
+    <TemplateLayout
+      currentPath={currentPath}
+      searchQuery={searchQuery}
+      onSearchQueryChange={setSearchQuery}
+      onSearchSubmit={handleSearch}
+    >
       <main id="main">
         <MainIntroSection openingHoursSummary={openingHoursSummary} />
 
@@ -31,9 +33,8 @@ const GemeenteVoorbeeldHome = ({ currentPath, openingHoursSummary }: GemeenteVoo
 
         <NewsSection />
       </main>
-    </PageBody>
-    <PageFooterSection />
-  </>
-);
+    </TemplateLayout>
+  );
+};
 
 export default GemeenteVoorbeeldHome;

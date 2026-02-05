@@ -1,0 +1,1040 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-button/index.js",
+      "declarations": [
+        {
+          "name": "ClippyButton",
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "members": [
+            {
+              "name": "toggle",
+              "default": "undefined",
+              "kind": "field",
+              "attribute": "toggle"
+            },
+            {
+              "name": "pressed",
+              "type": {
+                "text": "boolean"
+              },
+              "default": false,
+              "kind": "field",
+              "attribute": "pressed"
+            },
+            {
+              "name": "busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": false,
+              "kind": "field",
+              "attribute": "busy"
+            },
+            {
+              "name": "hint",
+              "type": {
+                "text": "'positive' | 'negative' | undefined",
+                "references": [
+                  {
+                    "name": "Hint",
+                    "module": "src/clippy-button/index.js"
+                  }
+                ]
+              },
+              "kind": "field",
+              "attribute": "hint"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": false,
+              "kind": "field",
+              "attribute": "disabled"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'small' | 'medium'",
+                "references": [
+                  {
+                    "name": "Size",
+                    "module": "src/clippy-button/index.js"
+                  }
+                ]
+              },
+              "default": "defaultSize",
+              "kind": "field",
+              "attribute": "size"
+            },
+            {
+              "name": "purpose",
+              "type": {
+                "text": "'primary' | 'secondary' | 'subtle' | undefined",
+                "references": [
+                  {
+                    "name": "Purpose",
+                    "module": "src/clippy-button/index.js"
+                  }
+                ]
+              },
+              "kind": "field",
+              "attribute": "purpose"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyButton",
+          "declaration": {
+            "name": "ClippyButton",
+            "module": "src/clippy-button/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-button/styles.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-code/index.js",
+      "declarations": [
+        {
+          "name": "ClippyCode",
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyCode",
+          "declaration": {
+            "name": "ClippyCode",
+            "module": "src/clippy-code/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-color-combobox/index.js",
+      "declarations": [
+        {
+          "name": "ClippyColorCombobox",
+          "superclass": {
+            "name": "ClippyCombobox"
+          },
+          "members": [
+            {
+              "name": "styles",
+              "default": "[...ClippyCombobox.styles, colorComboboxStyles, unsafeCSS(colorSampleStyles)]",
+              "readonly": true,
+              "kind": "field",
+              "static": true
+            },
+            {
+              "name": "translations",
+              "default": "messages",
+              "kind": "field"
+            },
+            {
+              "name": "lang",
+              "kind": "field"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "lang",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "name": "loadLocalizations",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "option",
+                  "type": {
+                    "text": "{\n  color: Color;\n  label: string;\n  names: ColorName[];\n  value: string;\n}",
+                    "references": [
+                      {
+                        "name": "Option",
+                        "module": "src/clippy-color-combobox/index.js"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "name": "filter",
+              "kind": "method"
+            },
+            {
+              "name": "options",
+              "type": {
+                "text": "Option[]"
+              },
+              "kind": "field"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "Option['value']"
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "name": "valueToQuery",
+              "kind": "method"
+            },
+            {
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "name": "connectedCallback",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "option",
+                  "type": {
+                    "text": "{\n  color: Color;\n  label: string;\n  names: ColorName[];\n  value: string;\n}",
+                    "references": [
+                      {
+                        "name": "Option",
+                        "module": "src/clippy-color-combobox/index.js"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "name": "renderEntry",
+              "kind": "method"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyColorCombobox",
+          "declaration": {
+            "name": "ClippyColorCombobox",
+            "module": "src/clippy-color-combobox/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-color-combobox/index.test.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-color-combobox/lib.js",
+      "declarations": [
+        {
+          "name": "namedColors",
+          "type": {
+            "text": ": ColorLookup[]"
+          },
+          "kind": "variable"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "COLOR_NAMES",
+          "declaration": {
+            "name": "COLOR_NAMES",
+            "module": "src/clippy-color-combobox/lib.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "namedColors",
+          "declaration": {
+            "name": "namedColors",
+            "module": "src/clippy-color-combobox/lib.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-color-combobox/messages/en.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-color-combobox/messages/nl.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-color-combobox/styles.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-combobox/index.js",
+      "declarations": [
+        {
+          "name": "ClippyCombobox",
+          "superclass": {
+            "name": "FormField"
+          },
+          "members": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": false,
+              "kind": "field"
+            },
+            {
+              "name": "position",
+              "type": {
+                "text": "'block-start' | 'block-end'",
+                "references": [
+                  {
+                    "name": "Position",
+                    "module": "src/clippy-combobox/index.js"
+                  }
+                ]
+              },
+              "default": "'block-end'",
+              "readonly": true,
+              "kind": "field"
+            },
+            {
+              "name": "styles",
+              "default": "[\\n    srOnly,\\n    unsafeCSS(comboboxStyles),\\n    unsafeCSS(listboxStyles),\\n    unsafeCSS(textboxStyles),\\n  ]",
+              "readonly": true,
+              "kind": "field",
+              "static": true
+            },
+            {
+              "name": "filteredOptions",
+              "type": {
+                "text": "T[]"
+              },
+              "readonly": true,
+              "kind": "field"
+            },
+            {
+              "name": "options",
+              "type": {
+                "text": "T[]"
+              },
+              "kind": "field"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "T['value'] | null"
+              },
+              "kind": "field"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "type",
+                  "type": {
+                    "text": "'blur' | 'change' | 'focus' | 'input'"
+                  }
+                }
+              ],
+              "name": "emit",
+              "kind": "method"
+            },
+            {
+              "name": "filter",
+              "description": "Override this function to customize how options are filtered when typing",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "_query",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "name": "fetchAdditionalOptions",
+              "description": "Override this function to customize an external data source",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "query",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "T['value']"
+                }
+              },
+              "name": "queryToValue",
+              "description": "Override this function to customize how the user input is resolved to a value.\nThis runs on input.",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "T['value'] | null"
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "name": "valueToQuery",
+              "description": "Override this function to customize how a value is converted to a query.\nThis runs on setting the value.",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "_index",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "name": "renderEntry",
+              "description": "Override this function to customize the rendering of combobox options and selected value.",
+              "kind": "method"
+            },
+            {
+              "name": "connectedCallback",
+              "kind": "method"
+            },
+            {
+              "name": "disconnectedCallback",
+              "kind": "method"
+            },
+            {
+              "name": "render",
+              "kind": "method"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyCombobox",
+          "declaration": {
+            "name": "ClippyCombobox",
+            "module": "src/clippy-combobox/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-combobox/index.test.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-font-combobox/external.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-font-combobox/index.js",
+      "declarations": [
+        {
+          "name": "ClippyFontCombobox",
+          "superclass": {
+            "name": "ClippyCombobox"
+          },
+          "members": [
+            {
+              "parameters": [
+                {
+                  "name": "query",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "Promise\u003cOption[]\u003e"
+                }
+              },
+              "name": "fetchAdditionalOptions",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "Option['value']"
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "name": "valueToQuery",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "option",
+                  "type": {
+                    "text": "{\n  label: string;\n  value: string | Array\u003cstring\u003e;\n  cssUrl?: string;\n}",
+                    "references": [
+                      {
+                        "name": "Option",
+                        "module": "src/clippy-font-combobox/index.js"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "_index",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "name": "renderEntry",
+              "kind": "method"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyFontCombobox",
+          "declaration": {
+            "name": "ClippyFontCombobox",
+            "module": "src/clippy-font-combobox/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-font-combobox/index.test.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-heading/index.js",
+      "declarations": [
+        {
+          "name": "ClippyHeading",
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "members": [
+            {
+              "name": "level",
+              "type": {
+                "text": "number"
+              },
+              "default": 1,
+              "kind": "field",
+              "attribute": "level"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyHeading",
+          "declaration": {
+            "name": "ClippyHeading",
+            "module": "src/clippy-heading/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-heading/index.test.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-html-image/index.js",
+      "declarations": [
+        {
+          "name": "ClippyHtmlImage",
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "members": [
+            {
+              "name": "labelId",
+              "default": "`clippy-html-image-label-${++labelCounter}`",
+              "readonly": true,
+              "kind": "field",
+              "privacy": "private"
+            },
+            {
+              "name": "observer",
+              "type": {
+                "text": "MutationObserver"
+              },
+              "kind": "field",
+              "privacy": "private"
+            },
+            {
+              "name": "onLabelSlotChange",
+              "kind": "method",
+              "privacy": "private"
+            },
+            {
+              "name": "updateLabelledBy",
+              "kind": "method",
+              "privacy": "private"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyHtmlImage",
+          "declaration": {
+            "name": "ClippyHtmlImage",
+            "module": "src/clippy-html-image/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-html-image/index.test.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-html-image/styles.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-icon/index.js",
+      "declarations": [
+        {
+          "name": "ClippyIcon",
+          "description": "Clippy Icon Component\n\nA decorative icon wrapper component following NL Design System patterns.\nImplements WCAG 2.2 compliance by marking decorative icons as aria-hidden.",
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClippyIcon",
+          "declaration": {
+            "name": "ClippyIcon",
+            "module": "src/clippy-icon/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-icon/styles.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-modal/index.js",
+      "declarations": [
+        {
+          "name": "DIALOG_BUTTON_VALUES",
+          "kind": "variable"
+        },
+        {
+          "name": "ClippyModal",
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "members": [
+            {
+              "name": "ariaDescribedby",
+              "description": "Id of an element that describes the dialog, used for aria-describedby.\nConsumers are responsible for rendering that element in the light DOM.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "kind": "field",
+              "attribute": "aria-describedby"
+            },
+            {
+              "name": "standardOpen",
+              "description": "When loading the page, the dialog is not open by default.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": false,
+              "kind": "field",
+              "attribute": "standardopen"
+            },
+            {
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "kind": "field",
+              "attribute": "title"
+            },
+            {
+              "name": "closedBy",
+              "type": {
+                "text": "string"
+              },
+              "default": "'any'",
+              "kind": "field",
+              "attribute": "closedby"
+            },
+            {
+              "name": "actions",
+              "description": "Control which footer actions are rendered.\n- \"none\": no footer actions\n- \"cancel\": only cancel button\n- \"confirm\": only confirm button\n- \"both\": both confirm and cancel buttons",
+              "type": {
+                "text": "'none' | 'cancel' | 'confirm' | 'both'"
+              },
+              "default": "'cancel'",
+              "kind": "field",
+              "attribute": "actions"
+            },
+            {
+              "name": "confirmLabel",
+              "description": "Button labels for confirm/cancel actions. Consumers can override these,\ne.g. with localized strings.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'OK'",
+              "kind": "field",
+              "attribute": "confirmlabel"
+            },
+            {
+              "name": "cancelLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Cancel'",
+              "kind": "field",
+              "attribute": "cancellabel"
+            },
+            {
+              "name": "titleId",
+              "default": "`clippy-modal-title-${++dialogInstanceCounter}`",
+              "readonly": true,
+              "kind": "field",
+              "privacy": "private"
+            },
+            {
+              "name": "previouslyFocusedElement",
+              "type": {
+                "text": "HTMLElement | null"
+              },
+              "default": "null",
+              "kind": "field",
+              "privacy": "private"
+            },
+            {
+              "name": "open",
+              "kind": "method"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "name": "close",
+              "kind": "method"
+            },
+            {
+              "name": "onDialogClose",
+              "kind": "method",
+              "privacy": "private"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "name": "onDialogCancel",
+              "kind": "method",
+              "privacy": "private"
+            },
+            {
+              "name": "onCloseClick",
+              "kind": "method",
+              "privacy": "private"
+            },
+            {
+              "name": "returnValue",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "kind": "field"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DIALOG_BUTTON_VALUES",
+          "declaration": {
+            "name": "DIALOG_BUTTON_VALUES",
+            "module": "src/clippy-modal/index.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ClippyModal",
+          "declaration": {
+            "name": "ClippyModal",
+            "module": "src/clippy-modal/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-modal/index.test.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/clippy-modal/styles.js",
+      "declarations": [
+        {
+          "name": "dialogStyles",
+          "kind": "variable"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "dialogStyles",
+          "declaration": {
+            "name": "dialogStyles",
+            "module": "src/clippy-modal/styles.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/FormField/index.js",
+      "declarations": [
+        {
+          "name": "FormField",
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "members": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "kind": "field",
+              "attribute": "name"
+            },
+            {
+              "name": "hiddenLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "kind": "field",
+              "attribute": "hidden-label"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": false,
+              "kind": "field",
+              "attribute": "disabled"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": false,
+              "kind": "field",
+              "attribute": "readonly"
+            },
+            {
+              "name": "internals_",
+              "default": "this.attachInternals()",
+              "kind": "field"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "V | null"
+              },
+              "kind": "field",
+              "attribute": "value"
+            },
+            {
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "V | null"
+                  }
+                }
+              ],
+              "return": {
+                "type": {
+                  "text": "string | File | null"
+                }
+              },
+              "name": "valueToFormValue",
+              "description": "Override this function to customize how the value is converted to a form value;",
+              "kind": "method"
+            }
+          ],
+          "kind": "class"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FormField",
+          "declaration": {
+            "name": "FormField",
+            "module": "src/lib/FormField/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/FormField/index.test.js"
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/converters/index.js",
+      "declarations": [
+        {
+          "name": "arrayFromTokenList",
+          "kind": "function"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "arrayFromTokenList",
+          "declaration": {
+            "name": "arrayFromTokenList",
+            "module": "src/lib/converters/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/decorators.js",
+      "declarations": [
+        {
+          "parameters": [
+            {
+              "name": "tagName",
+              "description": "- The custom element tag name",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "return": {
+            "description": "A class decorator function"
+          },
+          "name": "safeCustomElement",
+          "description": "Custom element decorator with safety check that prevents duplicate registrations.\n\nThis decorator provides the same functionality as Lit's @customElement but adds\na safety check to prevent \"already defined\" errors when the same element is\nregistered multiple times (e.g., in hot module reloading scenarios).",
+          "kind": "function"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "safeCustomElement",
+          "declaration": {
+            "name": "safeCustomElement",
+            "module": "src/lib/decorators.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/sr-only/styles.js"
+    }
+  ]
+}

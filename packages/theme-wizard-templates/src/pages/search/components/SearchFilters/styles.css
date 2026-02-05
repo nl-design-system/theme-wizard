@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Filter Sidebar
+   ========================================================================== */
+.clippy--search-filters {
+  border-radius: var(--basis-border-radius-sm);
+  inline-size: 25%;
+  padding-block-end: var(--basis-space-block-xl);
+}
+
+.clippy--search-filters-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--basis-space-row-4xl);
+}
+
+.clippy--search-filters-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-block-end: var(--basis-space-block-4xl);
+}
+
+.clippy--search-filter-date-range {
+  background-color: var(--basis-color-accent-1-bg-default);
+  border: 1px solid var(--basis-color-accent-1-border-subtle);
+  border-radius: var(--basis-border-radius-sm);
+  margin-block-start: var(--basis-space-row-md);
+  padding-block: var(--basis-space-row-md);
+  padding-inline: var(--basis-space-row-md);
+}
+
+.clippy--search-filter-date-range__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-md);
+}
+
+.clippy--search-filter-date-range__fields .utrecht-form-field {
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+.clippy--search-filter-date-range__fields .utrecht-textbox {
+  inline-size: 100%;
+  max-inline-size: 12.5rem;
+}
+
+.clippy--search-results-reset-button {
+  margin-inline-end: var(--basis-space-inline-md);
+}
+
+/* Progressive Enhancement */
+.clippy--filter-submit-wrapper {
+  margin-block-start: var(--basis-space-row-lg);
+  padding-block-start: var(--basis-space-row-md);
+}
+
+.clippy--pe-only {
+  display: block;
+}
+
+/* Hide PE-only elements when JavaScript is enabled */
+.clippy--js-enabled .clippy--pe-only {
+  display: none !important;
+}
+
+/* Responsive Design */
+@media (width <= 768px) {
+  .clippy--search-filters {
+    flex: initial;
+    inline-size: 100%;
+  }
+}

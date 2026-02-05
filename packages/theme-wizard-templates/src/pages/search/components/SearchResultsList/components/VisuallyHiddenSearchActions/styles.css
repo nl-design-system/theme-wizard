@@ -1,0 +1,7 @@
+.clippy--search-actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--basis-space-row-xl);
+  list-style: none;
+  padding-inline: 0;
+}   

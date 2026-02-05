@@ -1,0 +1,20 @@
+.clippy--search-results-sort {
+    display: flex;
+    flex-direction: column;
+    gap: var(--basis-space-inline-md);
+}
+
+.clippy--search-results-sort__label {
+    align-items: start;
+    display: flex;
+    font-weight: var(--basis-text-font-weight-bold);
+    border-block-end: 1px solid var(--basis-color-accent-1-border-subtle);
+}   
+
+.clippy--search-results-sort__control {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  inline-size: 100%;
+  gap: var(--basis-space-inline-md);
+}

@@ -1,6 +1,6 @@
-import type { NewsItem } from './components/NewsCards/types';
-import type { QuickTask } from './components/QuickTasks/types';
-import type { NavigationItem } from './Sections/Navigation/types';
+import type { NewsItem } from '../../components/NewsCards/types';
+import type { QuickTask } from '../../components/QuickTasks/types';
+import type { NavigationItem } from '../../sections/Navigation/types';
 import sewerImage from '../../assets/images/140571-klein.jpg';
 import cyclistImage from '../../assets/images/56370-klein.jpg';
 import parrotImage from '../../assets/images/NL-HaNA_2.24.01.03_0_905-2093-klein.jpg';

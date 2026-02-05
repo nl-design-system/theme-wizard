@@ -1,0 +1,9 @@
+/* ==========================================================================
+   Search Page Layout
+   ========================================================================== */
+.clippy--search-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-2xl);
+  margin-block-start: var(--basis-space-row-xl);
+}

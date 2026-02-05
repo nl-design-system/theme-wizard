@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GemeenteVoorbeeldHome from './GemeenteVoorbeeldHome';
-import openingHoursData from './components/OpeningHoursCard/openingHours.json';
+import openingHoursData from '../../components/OpeningHoursCard/openingHours.json';
 
 export const detail = {
   name: 'Homepagina',
@@ -17,5 +17,5 @@ const openingHoursSummary = openingHoursData.summary;
 <BaseLayout>
   <GemeenteVoorbeeldHome client:load currentPath={currentPath} openingHoursSummary={openingHoursSummary} />
 
-  <script type="application/ld+json" set:html={JSON.stringify(openingHoursData)} />
+  <script is:inline set:html={JSON.stringify(openingHoursData)} />
 </BaseLayout>

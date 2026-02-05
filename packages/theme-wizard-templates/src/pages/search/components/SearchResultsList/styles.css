@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Results List
+   ========================================================================== */
+.clippy--search-results-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-row-2xl);
+  list-style: none;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-block-end: var(--basis-space-row-4xl);
+  padding-inline: 0;
+}

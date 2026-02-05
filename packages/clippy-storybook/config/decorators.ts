@@ -1,7 +1,7 @@
 import { THEMES } from './themes/theme-data';
 
 const stylesheetExists = (href: string): HTMLLinkElement | undefined =>
-  Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')).find((link) => link.href === href);
+  Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel~="stylesheet"]')).find((link) => link.href === href);
 
 const ensureThemeStylesheet = (root: HTMLElement, themeClassName: string) => {
   const head = document.querySelector('head');
