@@ -26,7 +26,6 @@ export default defineConfig({
     enabled: false,
   },
   integrations: [react()],
-  output: 'server',
   server: {
     port: 9492, // (T9 for WIZ)2
   },

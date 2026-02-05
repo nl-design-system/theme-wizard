@@ -59,14 +59,6 @@ export const SearchResults = ({
 
   const { filters, resetFilters, updateFilter } = useSearchFilters(effectiveInitialFilters);
 
-  // --- SERVER-SIDE LOGGING ---
-  if (typeof window === 'undefined') {
-    console.log(`[SEARCH STRATEGY] 🌍 SERVER-SIDE RENDERING (Progressive Enhancement)`);
-    console.log(`- Query: "${initialQuery}"`);
-    console.log(`- Filters:`, initialFilters);
-    console.log(`- Sort: ${initialSort}`);
-  }
-
   // Helper to sync state to URL (for both Client-side and Full-reload fallback)
   const syncUrl = useCallback((query: string, currentFilters: typeof filters, currentSort: SortOption) => {
     if (typeof window === 'undefined') return;
@@ -97,7 +89,6 @@ export const SearchResults = ({
   // --- CLIENT-SIDE INTERACTION HANDLERS ---
   const handleSearch = useCallback(
     (query: string) => {
-      console.log(`[SEARCH STRATEGY] 💻 CLIENT-SIDE Search update: "${query}"`);
       setSearchQuery(query);
       setAppliedQuery(query);
       syncUrl(query, filters, sortBy);
@@ -108,7 +99,6 @@ export const SearchResults = ({
 
   const handleSortChange = useCallback(
     (newSort: SortOption) => {
-      console.log(`[SEARCH STRATEGY] 💻 CLIENT-SIDE Sort update: "${newSort}"`);
       setSortBy(newSort);
       syncUrl(appliedQuery, filters, newSort);
       onSearch?.(appliedQuery, filters, newSort);
@@ -118,7 +108,6 @@ export const SearchResults = ({
 
   const handleFilterChange = useCallback(
     (key: keyof typeof filters, value: string) => {
-      console.log(`[SEARCH STRATEGY] 💻 CLIENT-SIDE Filter update: "${key}=${value}"`);
       updateFilter(key, value);
       const newFilters = { ...filters, [key]: value };
       syncUrl(appliedQuery, newFilters, sortBy);
@@ -128,7 +117,6 @@ export const SearchResults = ({
   );
 
   const handleResetFilters = useCallback(() => {
-    console.log(`[SEARCH STRATEGY] 💻 CLIENT-SIDE Reset filters`);
     resetFilters();
     const defaultFilters = { documentType: 'all', organization: 'all', period: 'all' };
     syncUrl(appliedQuery, defaultFilters, sortBy);
