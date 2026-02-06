@@ -166,7 +166,7 @@ export class WizardTokensForm extends LitElement {
       </section>
 
       <section>
-        <clippy-heading level="2">Download thema</clippy-heading-2>
+        <clippy-heading level="2">Download thema</clippy-heading>
 
         <wizard-download-confirmation
           .issues=${this.theme.groupedIssues}
