@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import css from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import { DataBadge, type DataBadgeProps } from '@nl-design-system-candidate/data-badge-react';
 
 const meta = {
   id: 'data-badge',
   component: DataBadge,
+  parameters: {
+    css: [css],
+  },
   title: 'Data Badge',
 } satisfies Meta<typeof DataBadge>;
 

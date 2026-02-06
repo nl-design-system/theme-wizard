@@ -14,11 +14,8 @@ export class WizardReactRenderer extends HTMLElement {
     this.root?.unmount();
   }
 
-  render(element: ReactElement, styleSheets?: CSSStyleSheet[]) {
+  render(element: ReactElement) {
     this.root?.render(element);
-    if (styleSheets) {
-      this.shadowRoot?.adoptedStyleSheets.push(...styleSheets);
-    }
   }
 }
 

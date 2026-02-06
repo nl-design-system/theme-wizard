@@ -1,9 +1,13 @@
 import type { StoryObj, Meta } from '@storybook/react-vite';
+import css from '@nl-design-system-candidate/code-block-css/code-block.css?inline';
 import { CodeBlock as CodeBlockComponent, type CodeBlockProps } from '@nl-design-system-candidate/code-block-react';
 
 const meta = {
   id: 'code-block',
   component: CodeBlockComponent,
+  parameters: {
+    css: [css],
+  },
   title: 'Code block',
 } satisfies Meta<CodeBlockProps>;
 

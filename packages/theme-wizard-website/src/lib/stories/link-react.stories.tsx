@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import css from '@nl-design-system-candidate/link-css/link.css?inline';
 import description from '@nl-design-system-candidate/link-docs/docs/description.md?raw';
 import { Link as LinkComponent, type LinkProps } from '@nl-design-system-candidate/link-react';
 import tokens from '@nl-design-system-candidate/link-tokens';
@@ -7,6 +8,7 @@ const meta: Meta<typeof LinkComponent> = {
   id: 'link',
   component: LinkComponent,
   parameters: {
+    css: [css],
     docs: {
       description: {
         component: description,

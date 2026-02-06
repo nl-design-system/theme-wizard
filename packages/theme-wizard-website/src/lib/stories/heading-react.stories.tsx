@@ -1,12 +1,16 @@
 import type { HeadingProps } from '@nl-design-system-candidate/heading-react';
 import type { StoryObj, Meta } from '@storybook/react-vite';
 import type { CSSProperties } from 'react';
+import css from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import { Heading } from '@nl-design-system-candidate/heading-react';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
 
 const meta = {
   id: 'heading',
   component: Heading,
+  parameters: {
+    css: [css],
+  },
   title: 'Heading',
 } satisfies Meta<typeof Heading>;
 

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import css from '@nl-design-system-candidate/code-css/code.css?inline';
 import codeMeta from '@nl-design-system-candidate/code-docs/stories/code.react.meta';
 import * as Stories from '@nl-design-system-candidate/code-docs/stories/code.stories';
 import { Code as CodeComponent, type CodeProps } from '@nl-design-system-candidate/code-react';
@@ -7,7 +8,10 @@ import tokens from '@nl-design-system-candidate/code-tokens';
 const meta = {
   ...codeMeta,
   id: 'code',
-  parameters: { tokens },
+  parameters: {
+    css: [css],
+    tokens,
+  },
   title: 'Code',
 } satisfies Meta<typeof CodeComponent>;
 

@@ -1,5 +1,6 @@
-import { createElement } from 'react';
 import '../wizard-react-element';
+import { LitElement, html } from 'lit';
+import { createElement } from 'react';
 import type { WizardReactRenderer } from '../wizard-react-element';
 
 // Token utilities are adapted from:
@@ -18,11 +19,15 @@ function getTokenPaths(obj: TokenNode, partialTokenPath: TokenPath = []): TokenP
 }
 const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + tokenPath.join('-');
 
-export class WizardStoryRenderer extends HTMLElement {
+export class WizardStoryRenderer extends LitElement {
   private reactRenderer: WizardReactRenderer | null = null;
 
-  connectedCallback() {
-    this.attachShadow({ mode: 'open' });
+  protected override render() {
+    return html``;
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
     this.reactRenderer = document.createElement('wizard-react-element') as WizardReactRenderer;
     this.shadowRoot?.appendChild(this.reactRenderer);
   }
@@ -42,25 +47,24 @@ export class WizardStoryRenderer extends HTMLElement {
 
     if (this.shadowRoot && tokens) {
       const resetCss = `@layer {
-            :host {
-              ${getTokenPaths(tokens)
-                .map((x) => `${tokenPathToCSSCustomProperty(x)}: initial;`)
-                .join('\n')}
-            }
-          }`;
+          :host {
+            ${getTokenPaths(tokens)
+              .map((x) => `${tokenPathToCSSCustomProperty(x)}: initial;`)
+              .join('\n')}
+          }
+        }`;
       const styleSheet = new CSSStyleSheet();
-
       styleSheet.replaceSync(resetCss);
-      this.shadowRoot.adoptedStyleSheets.push(styleSheet);
+      this.shadowRoot.adoptedStyleSheets.push(styleSheet, ...styleSheets);
     }
 
     if (this.reactRenderer) {
       // If the story has a custom render function, use it
       if (story.render) {
-        this.reactRenderer.render(story.render(args, { component: Component }), styleSheets);
+        this.reactRenderer.render(story.render(args, { component: Component }));
       } else {
         // Otherwise render the component with the args
-        this.reactRenderer.render(createElement(Component, args), styleSheets);
+        this.reactRenderer.render(createElement(Component, args));
       }
     }
   }

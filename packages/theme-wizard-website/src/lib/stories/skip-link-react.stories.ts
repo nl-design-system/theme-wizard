@@ -1,21 +1,13 @@
 import type { StoryObj, Meta } from '@storybook/react-vite';
+import css from '@nl-design-system-candidate/skip-link-css/skip-link.css?inline';
 import { type SkipLinkProps, SkipLink } from '@nl-design-system-candidate/skip-link-react';
 
 const meta = {
   id: 'skip-link',
-  argTypes: {
-    children: { table: { category: 'API' }, type: 'string' },
-    href: {
-      table: { category: 'API', type: { summary: "AnchorHTMLAttributes['href']" } },
-      type: { name: 'other', required: true, value: 'string' },
-    },
-    target: {
-      control: { labels: { undefined: '(undefined)' }, type: 'select' },
-      options: [undefined, '_blank', '_parent', '_self', '_top'],
-      table: { category: 'API' },
-    },
-  },
   component: SkipLink,
+  parameters: {
+    css: [css],
+  },
   title: 'Skip Link',
 } satisfies Meta<typeof SkipLink>;
 

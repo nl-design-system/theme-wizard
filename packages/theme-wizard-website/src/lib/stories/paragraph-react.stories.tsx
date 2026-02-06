@@ -1,9 +1,13 @@
 import type { StoryObj, Meta } from '@storybook/react-vite';
+import css from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { Paragraph, type ParagraphProps } from '@nl-design-system-candidate/paragraph-react';
 
 const meta = {
   id: 'paragraph',
   component: Paragraph,
+  parameters: {
+    css: [css],
+  },
   title: 'Paragraph',
 } satisfies Meta<typeof Paragraph>;
 

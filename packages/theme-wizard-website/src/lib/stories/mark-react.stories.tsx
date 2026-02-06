@@ -1,15 +1,20 @@
 import type { MarkProps } from '@nl-design-system-candidate/mark-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentType } from 'react';
+import css from '@nl-design-system-candidate/mark-css/mark.css?inline';
 import markMeta from '@nl-design-system-candidate/mark-docs/stories/mark.react.meta';
 import { Mark as MarkComponent } from '@nl-design-system-candidate/mark-react';
 import tokens from '@nl-design-system-candidate/mark-tokens';
+import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 
 const meta: Meta<typeof MarkComponent> = {
   ...markMeta,
   id: 'mark',
   component: MarkComponent,
-  parameters: { tokens },
+  parameters: {
+    css: [css, paragraphCss],
+    tokens,
+  },
   title: 'Mark',
 };
 
