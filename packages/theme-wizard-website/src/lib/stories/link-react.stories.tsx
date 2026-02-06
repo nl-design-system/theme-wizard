@@ -130,6 +130,9 @@ export const DesignLinkCurrent: Story = {
       nl: {
         link: {
           current: {
+            color: {
+              $value: '',
+            },
             cursor: {
               $value: '',
             },
