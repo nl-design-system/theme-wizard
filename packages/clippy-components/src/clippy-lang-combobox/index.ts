@@ -3,8 +3,10 @@ import { safeCustomElement } from '@src/lib/decorators';
 import LocalizationMixin from '@src/lib/LocalizationMixin';
 import { html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { ClippyCombobox } from '../clippy-combobox';
-import languages, { type LangCode } from './languages';
+import languages, { direction, type LangCode } from './languages';
+import styles from './styles';
 
 type Option = {
   value: string;
@@ -32,8 +34,6 @@ class C extends ClippyCombobox<Option> {}
 
 @safeCustomElement(tag)
 export class ClippyLangCombobox extends LocalizationMixin(C) {
-  #options: Option[] = [];
-  #lang?: string;
   exonyms = new Intl.DisplayNames(this.DEFAULT_LANG, { type: 'language' });
   @property() separator = DEFAULT_SEPARATOR;
   @property({
@@ -43,9 +43,17 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
     type: String,
   })
   format: Format = DEFAULT_FORMAT_OPTION;
+  #options: Option[] = [];
+  #lang?: string;
 
   static readonly autonyms = { of: (code: string) => languages[code as LangCode] }; // static because not dependent on instance
   readonly autonyms = { of: ClippyLangCombobox.autonyms.of }; // consistent api with exonyms for convenience
+
+  static override readonly styles = [...ClippyCombobox.styles, styles];
+
+  get #dir() {
+    return direction(this.lang);
+  }
 
   @property()
   override set lang(value: string) {
@@ -59,11 +67,22 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
     return this.#lang || this.DEFAULT_LANG;
   }
 
-  override readonly filter =
-    (query: string) =>
-    ({ autonym, exonym }: Option) => {
-      return autonym.toLowerCase().includes(query.toLowerCase()) || exonym.toLowerCase().includes(query.toLowerCase());
+  override readonly filter = (query: string) => {
+    const normalizedQuery = query.toLowerCase();
+    return ({ autonym, exonym, label }: Option) => {
+      const hasLabelMatch = label.toLowerCase().includes(normalizedQuery);
+      switch (this.format) {
+        case 'autonym':
+          // When only displaying autonym, also check the exonym
+          return hasLabelMatch || exonym.toLowerCase().includes(normalizedQuery);
+        case 'exonym':
+          // When only displaying exonym, also check the autonym
+          return hasLabelMatch || autonym.toLowerCase().includes(normalizedQuery);
+        default:
+          return hasLabelMatch;
+      }
     };
+  };
 
   @property({ converter: arrayFromTokenList, type: Array })
   override set options(options: string[]) {
@@ -75,8 +94,8 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
         exonym,
         value,
       };
-      const exonymIfDifferent = option.exonym === option.autonym ? '' : option.exonym;
-      const label = this.format === 'both' ? `${option.autonym} ${exonymIfDifferent}` : option?.[this.format];
+      const suffix = exonym === autonym ? '' : ` ${this.separator} ${autonym}`;
+      const label = this.format === 'both' ? `${option.exonym}${suffix}` : option?.[this.format];
       return {
         ...option,
         label,
@@ -89,6 +108,9 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
   }
 
   override renderEntry(option: Option) {
+    const optionDir = direction(option.value);
+    const dir = optionDir === this.#dir ? undefined : optionDir;
+
     const isCurrentLanguage = option.value === this.lang;
     const exonym =
       isCurrentLanguage || ['both', 'exonym'].includes(this.format)
@@ -96,13 +118,15 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
         : nothing;
     const autonym =
       !isCurrentLanguage && ['both', 'autonym'].includes(this.format)
-        ? html`<span class="clippy-lang-combobox__autonym" lang=${option.value}>${option.autonym}</span>`
+        ? html`<span class="clippy-lang-combobox__autonym" lang=${option.value} dir=${ifDefined(dir)}>
+            ${option.autonym}
+          </span>`
         : nothing;
 
     // Render separator only when both exonym and autonym will be rendered
     const separator =
       exonym === nothing || autonym === nothing ? nothing : html`<span role="presentation">${this.separator}</span>`;
 
-    return html`<span class="clippy-lang-combobox__option">${exonym} ${separator} ${autonym}</span>`;
+    return html` <span class="clippy-lang-combobox__option"> ${exonym} ${separator} ${autonym} </span>`;
   }
 }

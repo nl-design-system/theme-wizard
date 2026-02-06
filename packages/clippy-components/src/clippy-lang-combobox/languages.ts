@@ -186,8 +186,24 @@ const languages = {
   zu: 'isiZulu',
 };
 
-export const rtlLanguages = ['ar', 'dv', 'fa', 'ha', 'he', 'ps', 'sd', 'ug', 'ur', 'yi'];
+const rtlLanguages = new Set(['ar', 'dv', 'fa', 'he', 'ps', 'sd', 'ug', 'ur', 'yi']);
 
 export type LangCode = keyof typeof languages;
+
+/**
+ * Return writing direction based on ISO-639-1 language code.
+ *
+ * Strictly speaking, direction is dictated by script, not language, and languages can have multiple scripts.
+ * Examples are Sindhi, which can be written in both Perso-Arabic (rtl) and Devanagari (ltr), and Hausa, which can be
+ * written in both Boko (ltr) and Arabic.
+ * A possible solution for this would be to expand this component to also incorporate the ISO 15924 standard for script
+ * subtags on language codes.
+ *
+ * @param lang two-letter language code as defined in ISO-639-1
+ * @returns `"rtl"` or `"ltr"`
+ */
+export const direction = (lang: string): 'rtl' | 'ltr' => {
+  return rtlLanguages.has(lang) ? 'rtl' : 'ltr';
+};
 
 export default languages;

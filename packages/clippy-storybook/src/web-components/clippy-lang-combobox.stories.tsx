@@ -6,7 +6,32 @@ import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 
-const OPTIONS = ['bg', 'cs', 'da', 'de', 'el', 'en', 'es', 'et', 'fi', 'fr', 'ga', 'hr', 'hu', 'it', 'lt', 'lv', 'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'sl', 'sv'];
+const OPTIONS = [
+  'bg',
+  'cs',
+  'da',
+  'de',
+  'el',
+  'en',
+  'es',
+  'et',
+  'fi',
+  'fr',
+  'ga',
+  'hr',
+  'hu',
+  'it',
+  'lt',
+  'lv',
+  'mt',
+  'nl',
+  'pl',
+  'pt',
+  'ro',
+  'sk',
+  'sl',
+  'sv',
+];
 
 interface LangComboboxStoryArgs {
   options: typeof OPTIONS;
@@ -29,7 +54,8 @@ const meta = {
   argTypes: {
     format: {
       control: { type: 'select' },
-      description: 'Show languages in their own language (autonym), translated into current language (exonym), or both.',
+      description:
+        'Show languages in their own language (autonym), translated into current language (exonym), or both.',
       options: ['autonym', 'exonym', 'both'],
     },
     lang: {
@@ -38,7 +64,6 @@ const meta = {
       description: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/lang',
       type: 'string',
     },
-
   },
   parameters: {
     docs: {
@@ -76,14 +101,14 @@ export const Autonym: Story = {
   name: 'Show autonym',
   args: {
     format: 'autonym',
-  }
+  },
 };
 
 export const Exonym: Story = {
   name: 'Show exonym',
   args: {
     format: 'exonym',
-  }
+  },
 };
 
 export const AutonymAndExonym: Story = {
@@ -103,6 +128,6 @@ export const TranslatedNonLatin: Story = {
 export const RTLLanguages: Story = {
   name: 'Including right-to-left languages',
   args: {
-    options: ['ar', 'dv', 'fa', 'ha', 'he', 'ps', 'ug', 'ur', 'yi', ...OPTIONS]
+    options: ['ar', 'dv', 'fa', 'he', 'ps', 'ug', 'ur', 'yi', ...OPTIONS],
   },
 };
