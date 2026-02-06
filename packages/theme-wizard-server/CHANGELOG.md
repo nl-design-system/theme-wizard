@@ -1,5 +1,11 @@
 # @nl-design-system-community/theme-wizard-server
 
+## 1.2.0
+
+### Minor Changes
+
+- f57558d: Log URL of Swagger UI on theme server startup.
+
 ## 1.1.1
 
 ### Patch Changes
