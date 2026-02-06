@@ -3,6 +3,7 @@ import { ClippyFontCombobox } from '@nl-design-system-community/clippy-component
 import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { t } from '../../i18n';
 import { WizardTokenInput } from '../wizard-token-input';
 
@@ -55,9 +56,10 @@ export class WizardFontInput extends WizardTokenInput {
 
   override render() {
     const value = Array.isArray(this.value) ? this.value : [this.value];
+    const invalid = this.hasErrors ? 'true' : undefined;
+
     return html`
       <div class="utrecht-form-field__input">
-        <label id="label-${this.name}">${this.label}</label>
         ${this.errors.map(
           (error) =>
             html`<div class="utrecht-form-field-error-message" id=${error.id}>
@@ -65,14 +67,14 @@ export class WizardFontInput extends WizardTokenInput {
             </div>`,
         )}
         <clippy-font-combobox
-          hidden-label="${this.label}"
+          label="${this.label}"
           name=${this.name}
           @change=${this.#handleChange}
           .value=${value}
           .options=${DEFAULT_FONT_OPTIONS}
-          aria-invalid=${this.hasErrors ? 'true' : nothing}
-          aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
-        ></clippy-font-combobox>
+          invalid=${ifDefined(invalid)}
+        >
+        </clippy-font-combobox>
       </div>
     `;
   }

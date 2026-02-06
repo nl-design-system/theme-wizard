@@ -1,5 +1,6 @@
 import { safeCustomElement } from '@lib/decorators';
 import comboboxStyles from '@utrecht/combobox-css?inline';
+import formLabelStyles from '@utrecht/form-label-css';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, nothing, unsafeCSS } from 'lit';
@@ -43,6 +44,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     styles,
     srOnly,
     unsafeCSS(comboboxStyles),
+    unsafeCSS(formLabelStyles),
     unsafeCSS(listboxStyles),
     unsafeCSS(textboxStyles),
   ];
@@ -292,7 +294,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const currentOption = this.getOptionForValue(this.value);
     return html`
       <div class="utrecht-combobox">
-        <label for="${this.#id}" class="sr-only">${this.hiddenLabel}</label>
+        <label
+          for="${this.#id}"
+          class=${classMap({
+            'sr-only': this.hiddenLabel,
+            'utrecht-form-label': true,
+          })}
+          ><slot>${this.hiddenLabel}</slot></label
+        >
         <div class="clippy-combobox__input-container">
           ${currentOption
             ? html`<div
