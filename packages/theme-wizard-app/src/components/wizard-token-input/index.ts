@@ -42,7 +42,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
     }
   }
 
-  @property({ reflect: true })
+  @property()
   get value() {
     return this.#token?.$value || this.#token;
   }
