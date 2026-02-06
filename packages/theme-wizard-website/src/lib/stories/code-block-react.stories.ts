@@ -29,7 +29,7 @@ export const DesignCodeBlockColor: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'code-block': {
           'background-color': {
@@ -51,7 +51,7 @@ export const DesignCodeBlockTypography: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'code-block': {
           'font-family': {
@@ -76,7 +76,7 @@ export const DesignCodeBlockSize: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'code-block': {
           'padding-block': {
@@ -98,7 +98,7 @@ export const DesignCodeBlockBorder: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'code-block': {
           'border-radius': {

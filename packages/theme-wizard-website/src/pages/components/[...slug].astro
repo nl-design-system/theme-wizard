@@ -42,13 +42,13 @@ function getTokenLeaves(tokenObj: any) {
 }
 
 const storiesWithTokens = stories.map(([id, story]) => {
-  const storyTokens = story.parameters?.tokens?.['nl']?.[slug]
+  const storyTokens = story.parameters?.editableTokens
   return ({
     id,
     story,
     tokens: storyTokens
       ? getTokenLeaves(storyTokens).map(leaf => {
-        const token = dlv(componentModule.default.parameters?.tokens, ['nl', slug, ...leaf.path])
+        const token = dlv(componentModule.default.parameters?.tokens, leaf.path.join('.'))
         return {
           ...leaf,
           token
@@ -62,6 +62,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
+      <!-- TODO: implement proper sidenav -->
       <nav slot="sidebar">
         {componentList.map(({slug, title}) => (
           <a href={`/components/${slug}`}>{title}</a>
@@ -87,11 +88,12 @@ const storiesWithTokens = stories.map(([id, story]) => {
               <div data-story-container={id}></div>
             </wizard-story-preview>
             {tokens.length > 0 && (
-              <ol>
-                {tokens.map((leaf) => (
-                  <li>{leaf.path.join('.')}: {leaf.token?.$type ?? 'unknown'}</li>
+              <dl>
+                {tokens.map((token) => (
+                  <dt>{token.path.join('.')}</dt>
+                  <dd>{token.token?.$type ?? 'unknown type'}</dd>
                 ))}
-              </ol>
+              </dl>
             )}
           </section>
         ))}

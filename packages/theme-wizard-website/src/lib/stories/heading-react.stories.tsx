@@ -98,7 +98,7 @@ export const DesignHeadingSizes: Story = {
         story: `Gebruik dit overzicht om de \`font-size\` van elke Heading op elkaar af te stemmen.`,
       },
     },
-    tokens: {
+    editableTokens: {
       basis: {
         text: {
           'font-size': {

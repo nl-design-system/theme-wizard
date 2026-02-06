@@ -45,7 +45,7 @@ export const DesignDataBadgeSize: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'data-badge': {
           'min-block-size': {
@@ -73,7 +73,7 @@ export const DesignDataBadgeTypography: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'data-badge': {
           'font-family': {
@@ -101,7 +101,7 @@ export const DesignDataBadgeColor: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'data-badge': {
           'background-color': {
@@ -123,7 +123,7 @@ export const DesignDataBadgeBorder: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'data-badge': {
           'border-color': {

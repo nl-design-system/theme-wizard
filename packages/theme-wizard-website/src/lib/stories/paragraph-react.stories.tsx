@@ -23,7 +23,7 @@ export const DesignParagraphShared: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         paragraph: {
           color: { $value: '' },
@@ -47,7 +47,7 @@ export const DesignParagraph: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         paragraph: {
           'font-size': { $value: '' },
@@ -69,7 +69,7 @@ export const DesignLead: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         paragraph: {
           lead: {

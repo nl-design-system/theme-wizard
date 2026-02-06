@@ -47,7 +47,7 @@ export const DesignNumberBadgeColor: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'number-badge': {
           'background-color': {
@@ -73,7 +73,7 @@ export const DesignNumberBadgeBorder: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'number-badge': {
           'border-radius': {
@@ -96,7 +96,7 @@ export const DesignNumberBadgeSize: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'number-badge': {
           'min-block-size': {
@@ -125,7 +125,7 @@ export const DesignNumberBadgeTypography: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'number-badge': {
           'font-family': {

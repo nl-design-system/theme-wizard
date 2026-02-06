@@ -28,7 +28,7 @@ export const DesignCodeTypography: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         code: {
           'font-family': {
@@ -50,7 +50,7 @@ export const DesignCodeColor: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         code: {
           'background-color': {

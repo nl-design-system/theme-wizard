@@ -35,7 +35,7 @@ export const MarkInEenParagraph: Story = {
     children: 'Gemarkeerde tekst',
   },
   parameters: {
-    tokens: {
+    editableTokens: {
       nl: {
         mark: {
           'background-color': {
@@ -65,7 +65,7 @@ export const DesignMark: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         mark: {
           'background-color': {

@@ -41,7 +41,7 @@ export const DesignLinkStates: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         link: {
           active: {
@@ -96,7 +96,7 @@ export const DesignLinkDisabled: Story = {
         story: 'Een disabled link',
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         link: {
           disabled: {
@@ -126,7 +126,7 @@ export const DesignLinkCurrent: Story = {
         story: 'Een current link',
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         link: {
           current: {

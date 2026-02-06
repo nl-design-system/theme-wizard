@@ -70,7 +70,7 @@ export const DesignButton: Story = {
         story: `Een standaard Button`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           default: {
@@ -120,7 +120,7 @@ export const DesignButtonBorders: Story = {
         story: `Er is 1 instelling voor de border-radius van alle soorten buttons.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           'border-radius': {
@@ -166,7 +166,7 @@ export const DesignButtonTypography: Story = {
         story: `Buttons op 'n rijtje.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           default: {
@@ -261,7 +261,7 @@ export const DesignButtonStates: Story = {
         story: `Een standaard Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           default: {
@@ -317,7 +317,7 @@ export const DesignPrimaryButtonStates: Story = {
         story: `Een Primary Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -373,7 +373,7 @@ export const DesignSecondaryButtonStates: Story = {
         story: `Een Secondary Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -429,7 +429,7 @@ export const DesignSubtleButtonStates: Story = {
         story: `Een Subtle Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -486,7 +486,7 @@ export const DesignPrimaryPositiveButtonStates: Story = {
         story: `Een Primary Positive Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -544,7 +544,7 @@ export const DesignSecondaryPositiveButtonStates: Story = {
         story: `Een Secondary Positive Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -602,7 +602,7 @@ export const DesignSubtlePositiveButtonStates: Story = {
         story: `Een Subtle Positive Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -661,7 +661,7 @@ export const DesignPrimaryNegativeButtonStates: Story = {
         story: `Een Primary Negative Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -719,7 +719,7 @@ export const DesignSecondaryNegativeButtonStates: Story = {
         story: `Een Secondary Negative Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -777,7 +777,7 @@ export const DesignSubtleNegativeButtonStates: Story = {
         story: `Een Subtle Negative Button, met hover en active states.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -856,7 +856,7 @@ export const DesignPrimaryButton: Story = {
         story: `... `,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -965,7 +965,7 @@ Optioneel kan er een hint mee gegeven worden.
         `,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -1074,7 +1074,7 @@ Optioneel kan er een hint mee gegeven worden.
         `,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -1158,7 +1158,7 @@ export const DesignFocusButton: Story = {
         story: `...`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           focus: {
@@ -1214,7 +1214,7 @@ export const DesignDisabledButton: Story = {
         story: `...`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           default: {
@@ -1252,7 +1252,7 @@ export const DesignPrimaryDisabledButton: Story = {
       },
     },
 
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -1290,7 +1290,7 @@ export const DesignSecondaryDisabledButton: Story = {
       },
     },
 
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -1328,7 +1328,7 @@ export const DesignSubtleDisabledButton: Story = {
       },
     },
 
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -1358,13 +1358,6 @@ export const AlleenEenIcon: Story = {
     iconStart: <Icon />,
     label: 'Klik mij!',
   },
-  argTypes: {
-    iconStart: {
-      table: {
-        disable: false,
-      },
-    },
-  },
   parameters: {
     docs: {
       description: {
@@ -1381,13 +1374,6 @@ export const DesignAlleenEenIcon: Story = {
     iconStart: <Icon />,
     label: 'Klik mij!',
   },
-  argTypes: {
-    iconStart: {
-      table: {
-        disable: false,
-      },
-    },
-  },
   parameters: {
     designStory: true,
     docs: {
@@ -1395,7 +1381,7 @@ export const DesignAlleenEenIcon: Story = {
         story: `Een button met alleen een icon. Als de icon niet in het midden staat, dan moet je mogelijk een kleinere padding kiezen.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           icon: {
@@ -1442,20 +1428,13 @@ export const IconVoorHetLabel: Story = {
     iconStart: <Icon />,
     label: 'Klik mij!',
   },
-  argTypes: {
-    iconStart: {
-      table: {
-        disable: false,
-      },
-    },
-  },
   parameters: {
     docs: {
       description: {
         story: `Een button met een icon voor het label`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           'column-gap': {
@@ -1478,20 +1457,13 @@ export const IconAchterHetLabel: Story = {
     iconEnd: <Icon />,
     label: 'Klik mij!',
   },
-  argTypes: {
-    iconEnd: {
-      table: {
-        disable: false,
-      },
-    },
-  },
   parameters: {
     docs: {
       description: {
         story: `Een button met een icon achter het label`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           'column-gap': {
@@ -1517,13 +1489,6 @@ export const GeformatteerdLabel: Story = {
       </>
     ),
   },
-  argTypes: {
-    label: {
-      table: {
-        disable: true,
-      },
-    },
-  },
   parameters: {
     docs: {
       description: {
@@ -1542,13 +1507,6 @@ export const GeformatteerdLabelEnEenIcon: Story = {
         Met icon en <u>geformatteerd</u> label
       </>
     ),
-  },
-  argTypes: {
-    label: {
-      table: {
-        disable: true,
-      },
-    },
   },
   parameters: {
     docs: {
@@ -1588,7 +1546,7 @@ export const DesignPressedButton: Story = {
         story: `Een ingedrukte Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           default: {
@@ -1626,7 +1584,7 @@ export const DesignPrimaryPressedButton: Story = {
       },
     },
 
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -1664,7 +1622,7 @@ export const DesignSecondaryPressedButton: Story = {
       },
     },
 
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -1702,7 +1660,7 @@ export const DesignSubtlePressedButton: Story = {
       },
     },
 
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -1739,7 +1697,7 @@ export const DesignPrimaryPositiveButton: Story = {
         story: `Een ingedrukte positieve Primary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -1797,7 +1755,7 @@ export const DesignPrimaryNegativeButton: Story = {
         story: `Een ingedrukte negative Primary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -1855,7 +1813,7 @@ export const DesignSecondaryPositiveButton: Story = {
         story: `Een ingedrukte positieve Secondary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -1913,7 +1871,7 @@ export const DesignSecondaryNegativeButton: Story = {
         story: `Een ingedrukte negative Secondary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -1971,7 +1929,7 @@ export const DesignSubtlePositiveButton: Story = {
         story: `Een ingedrukte positieve Subtle Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -2029,7 +1987,7 @@ export const DesignSubtleNegativeButton: Story = {
         story: `Een ingedrukte negative Subtle Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -2088,7 +2046,7 @@ export const DesignPrimaryPositivePressedButton: Story = {
         story: `Een ingedrukte positieve Primary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -2150,7 +2108,7 @@ export const DesignPrimaryNegativePressedButton: Story = {
         story: `Een ingedrukte negative Primary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           primary: {
@@ -2212,7 +2170,7 @@ export const DesignSecondaryPositivePressedButton: Story = {
         story: `Een ingedrukte positieve Secondary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -2274,7 +2232,7 @@ export const DesignSecondaryNegativePressedButton: Story = {
         story: `Een ingedrukte negative Secondary Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           secondary: {
@@ -2336,7 +2294,7 @@ export const DesignSubtlePositivePressedButton: Story = {
         story: `Een ingedrukte positieve Subtle Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -2398,7 +2356,7 @@ export const DesignSubtleNegativePressedButton: Story = {
         story: `Een ingedrukte negative Subtle Button.`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           subtle: {
@@ -2518,7 +2476,7 @@ export const DesignButtonSize: Story = {
         story: `..`,
       },
     },
-    tokens: {
+    editableTokens: {
       nl: {
         button: {
           'default.line-height': { $value: '' },

@@ -35,7 +35,7 @@ export const DesignSkipLinkTypography: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'skip-link': {
           'font-size': {
@@ -68,7 +68,7 @@ export const DesignSkipLinkSize: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'skip-link': {
           'min-block-size': {
@@ -101,7 +101,7 @@ export const DesignSkipLinkFocus: Story = {
   },
   parameters: {
     designStory: true,
-    tokens: {
+    editableTokens: {
       nl: {
         'skip-link': {
           'background-color': {
