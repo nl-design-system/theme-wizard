@@ -36,7 +36,7 @@ export default defineConfig({
     },
     server: {
       fs: {
-        allow: [templatesRoot, templatesSrc, ...fontDirs],
+        allow: [srcDir, templatesRoot, templatesSrc, ...fontDirs],
       },
     },
   },
