@@ -2,6 +2,7 @@ import { isRef } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
@@ -22,9 +23,9 @@ declare global {
 @customElement(tag)
 export class WizardTokenField extends WizardTokenNavigator {
   @property() label: string = '';
-  @property() token: Token = {};
+  @property({ type: Object }) token: Token = {};
   @property() path: string = '';
-  @property() options = [];
+  @property({ type: Array }) options = [];
   @property({ attribute: false })
   errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
@@ -95,7 +96,7 @@ export class WizardTokenField extends WizardTokenNavigator {
           .errors=${this.#pathErrors}
           .value=${this.token.$value}
           id=${this.#id}
-          key=${key}
+          key=${ifDefined(key)}
           label=${label}
           name=${this.path}
         >
@@ -106,7 +107,7 @@ export class WizardTokenField extends WizardTokenNavigator {
           .errors=${this.#pathErrors}
           .value=${this.token.$value}
           id=${this.#id}
-          key=${key}
+          key=${ifDefined(key)}
           label=${label}
           name=${this.path}
         >
@@ -117,7 +118,7 @@ export class WizardTokenField extends WizardTokenNavigator {
           .errors=${this.#pathErrors}
           .value=${this.token}
           id=${this.#id}
-          key=${key}
+          key=${ifDefined(key)}
           label=${label}
           name=${this.path}
         >
@@ -143,7 +144,7 @@ export class WizardTokenField extends WizardTokenNavigator {
                   const path = `${this.path}.${key}`;
                   const depth = this.depth + 1;
                   return html`
-                    <li key=${key}>
+                    <li key=${ifDefined(key)}>
                       <wizard-token-field
                         .token=${token}
                         .errors=${this.#getChildPathErrors(path)}
