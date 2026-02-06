@@ -1,5 +1,11 @@
 # @nl-design-system-community/clippy-components
 
+## 1.1.1
+
+### Patch Changes
+
+- 06acdf8: ClippyButton naming
+
 ## 1.1.0
 
 ### Minor Changes
