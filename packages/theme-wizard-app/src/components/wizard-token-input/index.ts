@@ -91,7 +91,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
         class=${hasErrors ? 'theme-error' : ''}
         .value=${WizardTokenInput.valueAsString(this.value)}
         @change=${this.#handleChange}
-        aria-invalid=${this.hasErrors ? 'true' : nothing}
+        aria-invalid=${this.hasErrors ? 'true' : 'false'}
         aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
       ></textarea>`;
   }
