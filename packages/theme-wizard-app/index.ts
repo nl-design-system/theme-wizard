@@ -7,5 +7,6 @@ import './src/components/wizard-sidebar-link/index';
 import './src/components/wizard-tokens-form/index';
 import './src/components/wizard-scraper';
 import './src/components/wizard-story-react';
+import './src/components/wizard-story-react-with-theme/index';
 import './src/components/wizard-react-element';
 import './src/components/wizard-story-preview';

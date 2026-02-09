@@ -1,23 +1,7 @@
 import '../wizard-react-element';
-import { LitElement, nothing } from 'lit';
+import { LitElement, html } from 'lit';
 import { createElement } from 'react';
 import type { WizardReactRenderer } from '../wizard-react-element';
-
-// Token utilities are adapted from:
-// https://github.com/nl-design-system/documentatie/blob/main/src/utils.ts
-export type Token = { $value?: string; $type?: string; $extensions?: { [key: string]: unknown } }; //| { $type: unknown };
-export type TokenGroup = { $extensions?: { [key: string]: unknown } };
-export type TokenNode = { [key: string]: TokenNode | Token } & TokenGroup; //| { $type: unknown };
-export type TokenPath = string[];
-
-function getTokenPaths(obj: TokenNode, partialTokenPath: TokenPath = []): TokenPath[] {
-  if (Object.hasOwn(obj, '$type') || Object.hasOwn(obj, '$value')) return [partialTokenPath];
-
-  return Object.keys(obj).flatMap((key) =>
-    typeof obj[key] === 'object' && obj[key] !== null ? getTokenPaths(obj[key], [...partialTokenPath, key]) : [],
-  );
-}
-const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + tokenPath.join('-');
 
 export class WizardStoryRenderer extends LitElement {
   private reactRenderer: WizardReactRenderer | null = null;
@@ -27,6 +11,7 @@ export class WizardStoryRenderer extends LitElement {
   componentMeta: any = undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   args: any = undefined;
+  additionalStylesheets: CSSStyleSheet[] = [];
 
   override connectedCallback() {
     super.connectedCallback();
@@ -37,26 +22,25 @@ export class WizardStoryRenderer extends LitElement {
   protected override render() {
     const Component = this.componentMeta.component;
     const css = this.componentMeta.parameters?.css;
-    const tokens = this.componentMeta.parameters?.tokens;
-    const styleSheets = Array.isArray(css)
-      ? css.map((styles) => {
-          const sheet = new CSSStyleSheet();
-          sheet.replaceSync(styles);
-          return sheet;
-        })
-      : [];
 
-    if (this.shadowRoot && tokens) {
-      const resetCss = `@layer {
-          :host {
-            ${getTokenPaths(tokens)
-              .map((x) => `${tokenPathToCSSCustomProperty(x)}: initial;`)
-              .join('\n')}
-          }
-        }`;
-      const styleSheet = new CSSStyleSheet();
-      styleSheet.replaceSync(resetCss);
-      this.shadowRoot.adoptedStyleSheets.push(styleSheet, ...styleSheets);
+    const styleSheets: CSSStyleSheet[] = [];
+
+    // Additional stylesheets (theme CSS, resets, etc.)
+    styleSheets.push(...this.additionalStylesheets);
+
+    // Component CSS
+    if (Array.isArray(css)) {
+      const componentSheets = css.map((styles) => {
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(styles);
+        return sheet;
+      });
+      styleSheets.push(...componentSheets);
+    }
+
+    // Apply all stylesheets (clear first to prevent duplicates)
+    if (this.shadowRoot) {
+      this.shadowRoot.adoptedStyleSheets = styleSheets;
     }
 
     if (this.reactRenderer) {
@@ -69,7 +53,7 @@ export class WizardStoryRenderer extends LitElement {
       }
     }
 
-    return nothing;
+    return html`<slot></slot>`;
   }
 }
 

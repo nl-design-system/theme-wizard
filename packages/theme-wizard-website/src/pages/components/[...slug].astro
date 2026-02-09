@@ -112,7 +112,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
 
 <script>
   import { initStories } from '@/components/render-stories';
-import type { components } from '@/lib/components';
+  import type { components } from '@/lib/components';
 
   const container = document.getElementById('story-container');
   const storyIds = JSON.parse(container!.dataset.storyIds || '[]');
