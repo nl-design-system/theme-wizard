@@ -1,12 +1,14 @@
 import type { StoryObj, Meta } from '@storybook/react-vite';
 import css from '@nl-design-system-candidate/number-badge-css/number-badge.css?inline';
 import { type NumberBadgeProps, NumberBadge } from '@nl-design-system-candidate/number-badge-react';
+import tokens from '@nl-design-system-candidate/number-badge-tokens';
 
 const meta = {
   id: 'number-badge',
   component: NumberBadge,
   parameters: {
     css: [css],
+    tokens,
   },
   title: 'Number Badge',
 } satisfies Meta<typeof NumberBadge>;

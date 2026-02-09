@@ -1,12 +1,14 @@
 import type { StoryObj, Meta } from '@storybook/react-vite';
 import css from '@nl-design-system-candidate/skip-link-css/skip-link.css?inline';
 import { type SkipLinkProps, SkipLink } from '@nl-design-system-candidate/skip-link-react';
+import tokens from '@nl-design-system-candidate/skip-link-tokens';
 
 const meta = {
   id: 'skip-link',
   component: SkipLink,
   parameters: {
     css: [css],
+    tokens,
   },
   title: 'Skip Link',
 } satisfies Meta<typeof SkipLink>;

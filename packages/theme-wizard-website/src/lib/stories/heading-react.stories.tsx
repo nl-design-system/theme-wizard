@@ -3,6 +3,7 @@ import type { StoryObj, Meta } from '@storybook/react-vite';
 import type { CSSProperties } from 'react';
 import css from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import { Heading } from '@nl-design-system-candidate/heading-react';
+import tokens from '@nl-design-system-candidate/heading-tokens';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
 
 const meta = {
@@ -10,6 +11,7 @@ const meta = {
   component: Heading,
   parameters: {
     css: [css],
+    tokens,
   },
   title: 'Heading',
 } satisfies Meta<typeof Heading>;
