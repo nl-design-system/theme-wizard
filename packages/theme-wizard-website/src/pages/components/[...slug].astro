@@ -20,8 +20,7 @@ const componentList = await Promise.all(Object.entries(components).map(async ([s
   }
 }))
 
-const slug = Astro.params.slug
-
+const slug = Astro.params.slug as keyof typeof components
 const componentModulePromiseFn = components[slug]
 const componentModule = await componentModulePromiseFn()
 const stories = getStories(componentModule, componentModule.default)
