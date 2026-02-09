@@ -124,9 +124,6 @@ importers:
         specifier: 10.2.0
         version: 10.2.0
     devDependencies:
-      '@pwrs/cem':
-        specifier: 0.9.4
-        version: 0.9.4
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -667,9 +664,6 @@ importers:
       '@astrojs/check':
         specifier: 0.9.6
         version: 0.9.6(prettier@3.7.4)(typescript@5.9.3)
-      '@pwrs/cem':
-        specifier: 0.9.4
-        version: 0.9.4
       '@types/react':
         specifier: 19.2.7
         version: 19.2.7
@@ -2348,47 +2342,6 @@ packages:
 
   '@projectwallace/css-parser@0.11.4':
     resolution: {integrity: sha512-NWQFups5PWGT7b9yjvKi7YLbFS49zWtFnn9DM0CS2hzyQR/9puCaDf4qtntQoMOYCveWiLpPh0aBGW2Okcfvnw==}
-
-  '@pwrs/cem-darwin-arm64@0.9.0':
-    resolution: {integrity: sha512-6ppWZXaft9/K3SB2CNntbIlczf0YNOr1JstbNA5vy2W4Y9wObY/aacuC5CjVWEF2eoJECs9NBYySHy3cIDtpVQ==}
-    engines: {node: '>=22.0.0'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@pwrs/cem-darwin-x64@0.9.0':
-    resolution: {integrity: sha512-FbSF4+yS0+5VjAVTbtHpxI0Oiuy8f3AvDgl3VkqR3pWqSyd4CdcoQzrvWOYjrGtVFavt89uXM4xIPnJ/pFCxRw==}
-    engines: {node: '>=22.0.0'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@pwrs/cem-linux-arm64@0.9.0':
-    resolution: {integrity: sha512-m8ncTwBsGxkiTxrYZAYWrcY/YFeqkiT2Nmuwrv3g9Jby3XNT2TQrxJHxjJnKz17wZ2mnKHFhr7j7txAte9x9/A==}
-    engines: {node: '>=22.0.0'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@pwrs/cem-linux-x64@0.9.0':
-    resolution: {integrity: sha512-OlO8lV/FFqzOBuQn41Wenc2nbBIrSsXsXGJbUBVX63jGEGi9Vi9d+iEc+mnIrif0pKiLJWPx50MNa97/gpxXcw==}
-    engines: {node: '>=22.0.0'}
-    cpu: [x64]
-    os: [linux]
-
-  '@pwrs/cem-win32-arm64@0.9.0':
-    resolution: {integrity: sha512-PCzPUTpC5Qp25IkaWuGd4BrfF+GTc6CA5RSvfvIOUdWDdDvQ0AfA7CcuIOE7dh4BLaqcHC4AKXFS1+VCkWqkxw==}
-    engines: {node: '>=22.0.0'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@pwrs/cem-win32-x64@0.9.0':
-    resolution: {integrity: sha512-ZcmHeD1rPMk7sLGC0MDSl+fxP9uCalRYd0+ydM9GNXoeqqZWblCd9Kpg58hAc8zbORqEEKbCAjWeUXfckZd1aQ==}
-    engines: {node: '>=22.0.0'}
-    cpu: [x64]
-    os: [win32]
-
-  '@pwrs/cem@0.9.4':
-    resolution: {integrity: sha512-ku4QhRx8tZ5oM0kMT6spf4IQ8JItR8l5ifB3RfcxzrXoz6ElSsew9YqPHczrs1ZVFd+UViyvLSPWkDfelCDkNg==}
-    engines: {node: '>=22.0.0'}
-    hasBin: true
 
   '@rijkshuisstijl-community/storybook-tooling@1.1.1':
     resolution: {integrity: sha512-6XCape5xGLrZtXTMy5J5xMUFXx1NqxlRo2TM2s+htbfROVuUcA4mQJpWN98Ttr0FiGO5k6MJp/+SapxNnw0iyg==}
@@ -9914,33 +9867,6 @@ snapshots:
   '@projectwallace/css-parser@0.11.3': {}
 
   '@projectwallace/css-parser@0.11.4': {}
-
-  '@pwrs/cem-darwin-arm64@0.9.0':
-    optional: true
-
-  '@pwrs/cem-darwin-x64@0.9.0':
-    optional: true
-
-  '@pwrs/cem-linux-arm64@0.9.0':
-    optional: true
-
-  '@pwrs/cem-linux-x64@0.9.0':
-    optional: true
-
-  '@pwrs/cem-win32-arm64@0.9.0':
-    optional: true
-
-  '@pwrs/cem-win32-x64@0.9.0':
-    optional: true
-
-  '@pwrs/cem@0.9.4':
-    optionalDependencies:
-      '@pwrs/cem-darwin-arm64': 0.9.0
-      '@pwrs/cem-darwin-x64': 0.9.0
-      '@pwrs/cem-linux-arm64': 0.9.0
-      '@pwrs/cem-linux-x64': 0.9.0
-      '@pwrs/cem-win32-arm64': 0.9.0
-      '@pwrs/cem-win32-x64': 0.9.0
 
   '@rijkshuisstijl-community/storybook-tooling@1.1.1':
     dependencies:
