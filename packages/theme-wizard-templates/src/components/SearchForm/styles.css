@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Search Form (General)
+   ========================================================================== */
+.clippy--search-form-section {
+  inline-size: 100%;
+  margin-block-end: var(--basis-space-inline-xl);
+}
+
+.clippy--search-form__input-group {
+  align-items: stretch;
+  display: flex;
+  min-block-size: var(--basis-pointer-target-min-block-size);
+}
+
+.clippy--search-form__input-group .utrecht-form-field {
+  display: flex;
+  flex-direction: column;
+  margin-block: 0;
+}
+
+
+.clippy--search-form__input-group .utrecht-textbox {
+  border-end-end-radius: 0;
+  border-end-start-radius: var(--basis-border-radius-sm);
+  border-inline-end: none;
+  border-start-end-radius: 0;
+  border-start-start-radius: var(--basis-border-radius-sm);
+  flex: 1;
+  margin: 0;
+  min-inline-size: 0;
+  inline-size: 100% !important;
+  max-inline-size: 100% !important;
+}
+
+.clippy--search-form__submit {
+  flex-shrink: 0;
+}
+
+/* Responsive Design (Mobile) - Contextual styles when inside navigation */
+@media (width <= 768px) {
+  /* Search Wrapper (Header) */
+  .clippy--navigation-search-wrapper .clippy--search-form-section {
+    inline-size: 100%;
+    margin-block: var(--basis-space-inline-xs);
+  }
+
+  .clippy--navigation-search-wrapper .clippy--search-form {
+    inline-size: 100%;
+  }
+
+  .clippy--navigation-search-wrapper .clippy--search-form__field {
+    margin-block-end: var(--basis-space-block-xl);
+    inline-size: 100%;
+  }
+
+  .clippy--navigation-search-wrapper .clippy--search-form__field search {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .clippy--navigation-search-wrapper .clippy--search-form__input-group {
+    inline-size: 100%;
+  }
+
+  .clippy--navigation-search-wrapper .clippy--search-form__input-group .utrecht-form-field {
+    flex: 1;
+    min-inline-size: 0;
+  }
+}

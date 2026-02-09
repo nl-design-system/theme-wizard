@@ -7,6 +7,7 @@ import '@nl-design-system-candidate/link-css/link.css';
 import '@nl-design-system-candidate/heading-css/heading.css';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
 import '@nl-design-system-candidate/skip-link-css/skip-link.css';
+import '../styles/base.css';
 import ClientInit from '../components/ClientInit.astro';
 import DevTools from '../components/DevTools.astro';
 
@@ -29,6 +30,9 @@ const {
 <!doctype html>
 <html lang={lang} class={htmlClasses}>
   <head>
+    <script is:inline>
+      document.documentElement.classList.add('clippy--js-enabled');
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />

@@ -1,0 +1,13 @@
+/* Shared card and link styles */
+.clippy-voorbeeld__link,
+.clippy-voorbeeld__card {
+  align-items: start !important;
+  background-color: var(--clippy-voorbeeld-card-bg);
+  block-size: 100% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-block: var(--clippy-voorbeeld-card-padding-block) !important;
+  padding-inline: var(--clippy-voorbeeld-card-padding-inline) !important;
+  row-gap: var(--clippy-voorbeeld-card-row-gap);
+}

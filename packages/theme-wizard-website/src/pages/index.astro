@@ -11,8 +11,8 @@ const scraperUrl = withRelatedProject({
   defaultHost: process.env.API_HOST || '',
 });
 
-const templates = JSON.parse(TEMPLATES_JSON)
-let currentTemplate = Astro.url.searchParams.get('templatePath')
+const templates = JSON.parse(TEMPLATES_JSON);
+let currentTemplate = Astro.url.searchParams.get('templatePath');
 if (!currentTemplate) {
   const firstGroup = templates?.[0];
   const firstOption = firstGroup?.pages?.[0];
@@ -43,7 +43,7 @@ if (!currentTemplate) {
 
       <wizard-preview-picker slot="nav" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
 
-      <wizard-preview slot="main" url={currentTemplate} scraperUrl={scraperUrl}></wizard-previewslot="main">
-     </wizard-layout>
+      <wizard-preview slot="main" url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
+    </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>

@@ -1,3 +1,5 @@
+/// <reference types="./custom-elements.d.ts" />
+
 declare const __STANDALONE_PACKAGE__: boolean;
 
 declare module '@nl-design-system-community/theme-wizard-app';

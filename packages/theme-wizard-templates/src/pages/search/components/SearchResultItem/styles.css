@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Search Highlight
+   ========================================================================== */
+.clippy--search-highlight {
+  background-color: var(--basis-color-highlight-inverse-bg-default);
+  border-radius: 2px;
+  color: var(--basis-color-highlight-inverse-color-default);
+  padding-block: 0;
+  padding-inline: 2px;
+}
+
+/* ==========================================================================
+   Result Items
+   ========================================================================== */
+.clippy--search-result-item__link {
+  border-radius: var(--basis-border-radius-sm);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  margin-block: calc(-1 * var(--basis-space-row-md));
+  margin-inline: calc(-1 * var(--basis-space-row-md));
+  padding-block: var(--basis-space-row-md);
+  padding-inline: var(--basis-space-row-md);
+  text-decoration: none;
+  transition: background-color 200ms ease;
+}
+
+.clippy--search-result-item__link:focus {
+  outline: 2px dotted var(--basis-color-accent-1-color-default);
+  outline-offset: 2px;
+}
+
+.clippy--search-result-item__title {
+  color: var(--basis-color-accent-1-color-default);
+  margin-block-end: var(--basis-space-row-sm);
+  margin-block-start: 0;
+  text-decoration: underline;
+}
+
+.clippy--search-result-item__link:visited .clippy--search-result-item__title {
+  color: var(--basis-color-accent-1-color-active);
+}
+
+.clippy--search-result-item__description {
+  color: var(--basis-color-default-color-document);
+  margin-block: 0 var(--basis-space-row-sm);
+  margin-inline: 0;
+}
+
+.clippy--search-result-meta {
+  color: var(--basis-color-default-color-subtle);
+  display: flex;
+  font-size: var(--basis-text-font-size-sm);
+  gap: var(--basis-space-inline-md);
+}
+
+.clippy--search-result-type {
+  font-weight: var(--basis-text-font-weight-bold);
+}
+
+.clippy--search-result-item {
+  padding-block-end: var(--basis-space-row-lg);
+}
