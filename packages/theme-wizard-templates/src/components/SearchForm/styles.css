@@ -13,19 +13,20 @@
 }
 
 .clippy--search-form__input-group .utrecht-form-field {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
   margin-block: 0;
 }
 
 
 .clippy--search-form__input-group .utrecht-textbox {
-  block-size: auto;
   border-end-end-radius: 0;
   border-end-start-radius: var(--basis-border-radius-sm);
   border-inline-end: none;
   border-start-end-radius: 0;
   border-start-start-radius: var(--basis-border-radius-sm);
   flex: 1;
+  margin: 0;
   min-inline-size: 0;
   inline-size: 100% !important;
   max-inline-size: 100% !important;

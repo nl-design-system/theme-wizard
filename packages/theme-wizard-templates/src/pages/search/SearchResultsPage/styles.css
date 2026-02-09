@@ -282,27 +282,11 @@
   }
 }
 
-
-.clippy--icon-only-button {
-  align-items: center;
-  border: none;
-  display: inline-flex;
-  justify-content: center;
-  line-height: 1;
-  min-inline-size: 3rem;
-  padding: 0;
-}
-
-.clippy--icon-only-button svg {
-  flex-shrink: 0;
-}
-
 .clippy--icon-only-button--submit {
-  border-block: 1px solid var(--utrecht-textbox-border-color);
-  border-inline-end: 1px solid var(--utrecht-textbox-border-color);
-  border-inline-start: 1px solid var(--utrecht-textbox-border-color);
-  border-start-start-radius: 0;
-  border-end-start-radius: 0;
-  border-start-end-radius: var(--basis-border-radius-sm);
-  border-end-end-radius: var(--basis-border-radius-sm);
+  block-size: auto !important;
+  border-start-start-radius: 0 !important;
+  border-end-start-radius: 0 !important;
+  display: flex !important;
+  margin-inline-start: -1px;
+  vertical-align: top;
 }
