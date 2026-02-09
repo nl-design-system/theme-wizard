@@ -55,7 +55,7 @@ export default class Theme {
     this.#modified = !dequal(this.#defaults, values);
     this.#validateTheme(values);
     this.#tokens = values;
-    this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
+    this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}` }).then((css) => {
       const sheet = this.#stylesheet;
       sheet.replaceSync(css);
     });
@@ -162,7 +162,7 @@ export default class Theme {
 
   async toCSS({
     resolved = false,
-    selector = `.${this.name}-theme, :host`,
+    selector = `.${this.name}-theme`,
   }: {
     resolved?: boolean;
     selector?: `.${string}`;
