@@ -70,7 +70,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <!-- TODO: implement proper sidenav -->
+      <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
       <nav slot="sidebar">
         {componentList.map(({slug, title}) => (
           <a href={`/components/${slug}`}>{title}</a>
@@ -78,7 +78,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
         ))}
       </nav>
       <main slot="main">
-        <!-- TODO: make proper breadcrumb -->
+        <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a href="/">Wizard</a> /
           <a href="/components">Componenten</a> /
