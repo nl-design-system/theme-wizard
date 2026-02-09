@@ -1,5 +1,5 @@
 import '../wizard-react-element';
-import { LitElement, html } from 'lit';
+import { LitElement, nothing } from 'lit';
 import { createElement } from 'react';
 import type { WizardReactRenderer } from '../wizard-react-element';
 
@@ -21,10 +21,12 @@ const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + to
 
 export class WizardStoryRenderer extends LitElement {
   private reactRenderer: WizardReactRenderer | null = null;
-
-  protected override render() {
-    return html``;
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  story: any = undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  componentMeta: any = undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any = undefined;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -32,11 +34,10 @@ export class WizardStoryRenderer extends LitElement {
     this.shadowRoot?.appendChild(this.reactRenderer);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  renderStory(story: any, componentMeta: any, args: any = {}) {
-    const Component = componentMeta.component;
-    const css = componentMeta.parameters?.css;
-    const tokens = componentMeta.parameters?.tokens;
+  protected override render() {
+    const Component = this.componentMeta.component;
+    const css = this.componentMeta.parameters?.css;
+    const tokens = this.componentMeta.parameters?.tokens;
     const styleSheets = Array.isArray(css)
       ? css.map((styles) => {
           const sheet = new CSSStyleSheet();
@@ -60,13 +61,15 @@ export class WizardStoryRenderer extends LitElement {
 
     if (this.reactRenderer) {
       // If the story has a custom render function, use it
-      if (story.render) {
-        this.reactRenderer.render(story.render(args, { component: Component }));
+      if (this.story.render) {
+        this.reactRenderer.render(this.story.render(this.args, { component: Component }));
       } else {
         // Otherwise render the component with the args
-        this.reactRenderer.render(createElement(Component, args));
+        this.reactRenderer.render(createElement(Component, this.args));
       }
     }
+
+    return nothing;
   }
 }
 

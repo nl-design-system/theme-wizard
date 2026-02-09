@@ -14,9 +14,10 @@ export async function initStories(componentId: keyof typeof components, storyIds
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Story = (componentModule as any)[name];
     const storyRenderer = document.createElement('wizard-story-react') as WizardStoryRenderer;
+    storyRenderer.story = Story;
+    storyRenderer.componentMeta = meta;
+    storyRenderer.args = Story.args ?? {};
     container.appendChild(storyRenderer);
-
-    // Render the actual component
-    storyRenderer.renderStory(Story, meta, Story.args || {});
+    storyRenderer.render();
   });
 }
