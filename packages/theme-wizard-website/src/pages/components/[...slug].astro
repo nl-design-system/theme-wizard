@@ -5,25 +5,34 @@ import { Traverse } from 'neotraverse/modern'
 import dlv from 'dlv'
 import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils'
 
+type StoryObject = {
+  name?: string;
+  parameters?: {
+    editableTokens?: unknown;
+    [key: PropertyKey]: unknown;
+  };
+  [key: PropertyKey]: unknown;
+};
+
 export function getStaticPaths() {
   return Object.keys(components).map(slug => ({
-    params: {slug}
+    params: { slug }
   }))
 }
 
 const componentList = await Promise.all(Object.entries(components).map(async ([slug, module]) => {
   const componentModule = await module()
-  const title = componentModule.default.title
   return {
     slug,
-    title
+    title: componentModule.default.title
   }
 }))
 
 const slug = Astro.params.slug as keyof typeof components
 const componentModulePromiseFn = components[slug]
 const componentModule = await componentModulePromiseFn()
-const stories = getStories(componentModule, componentModule.default)
+const { default: meta, ...storyExports } = componentModule
+const stories = getStories(storyExports as unknown as Record<PropertyKey, StoryObject>, meta)
 const storyIds = stories.map(([id]) => id)
 
 function getTokenLeaves(tokenObj: any) {
@@ -41,7 +50,7 @@ function getTokenLeaves(tokenObj: any) {
 }
 
 const storiesWithTokens = stories.map(([id, story]) => {
-  const storyTokens = story.parameters?.editableTokens
+  const storyTokens = (story as any).parameters?.editableTokens
   return ({
     id,
     story,
@@ -103,10 +112,12 @@ const storiesWithTokens = stories.map(([id, story]) => {
 
 <script>
   import { initStories } from '@/components/render-stories';
+import type { components } from '@/lib/components';
 
   const container = document.getElementById('story-container');
   const storyIds = JSON.parse(container!.dataset.storyIds || '[]');
-  const componentId = container?.dataset.componentId!
+  // Assertion here is type-safe because that's taken care of by Astro in the top of this file
+  const componentId = container?.dataset.componentId! as keyof typeof components
 
   initStories(componentId, storyIds);
 </script>

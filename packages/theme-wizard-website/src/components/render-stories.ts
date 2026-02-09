@@ -1,7 +1,8 @@
+// @ts-expect-error We need to change how theme-wizard-app is bundled so we can get this type
 import type { WizardStoryRenderer } from '@nl-design-system-community/theme-wizard-app';
 import { components } from '@/lib/components';
 
-export async function initStories(componentId: string, storyIds: string[]) {
+export async function initStories(componentId: keyof typeof components, storyIds: string[]) {
   const componentModulePromiseFn = components[componentId];
   const componentModule = await componentModulePromiseFn();
   const meta = componentModule.default;

@@ -19,6 +19,11 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <style is:global>
+      theme-wizard-app:not(:defined) {
+        display: none;
+      }
+    </style>
   </head>
   <body class="utrecht-body">
     <slot />

@@ -1,9 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta } from '@storybook/react-vite';
 
 const isRegex = (val: unknown): val is RegExp => val instanceof RegExp;
 
 type PatternLike = string | RegExp;
+
+type StoryMetaConfig = {
+  includeStories?: PatternLike | PatternLike[];
+  excludeStories?: PatternLike | PatternLike[];
+  [key: string]: unknown;
+};
 
 const matches = (name: string, pattern?: PatternLike): boolean => {
   return isRegex(pattern) ? pattern.test(name) : name === pattern;
@@ -12,7 +17,7 @@ const matches = (name: string, pattern?: PatternLike): boolean => {
 const isIncluded = (name: string, patterns: unknown): boolean => {
   if (!patterns) return true;
   if (Array.isArray(patterns)) {
-    return patterns.some((pattern: PatternLike) => matches(name, pattern));
+    return patterns.some((pattern) => matches(name, pattern));
   }
   return matches(name, patterns as PatternLike);
 };
@@ -20,7 +25,7 @@ const isIncluded = (name: string, patterns: unknown): boolean => {
 const isExcluded = (name: string, patterns: unknown): boolean => {
   if (!patterns) return false;
   if (Array.isArray(patterns)) {
-    return patterns.some((pattern: PatternLike) => matches(name, pattern));
+    return patterns.some((pattern) => matches(name, pattern));
   }
   return matches(name, patterns as PatternLike);
 };
@@ -29,10 +34,13 @@ const isExcluded = (name: string, patterns: unknown): boolean => {
  * Extract Story objects from a CSF module, respecting includeStories/excludeStories config.
  * See: https://storybook.js.org/docs/api/csf#non-story-exports
  */
-export const getStories = (stories: Record<string, unknown>, meta: Meta<any>): [string, StoryObj<any>][] => {
-  const storyConfig = meta as any;
-  const includeStories = storyConfig.includeStories;
-  const excludeStories = storyConfig.excludeStories;
+export const getStories = <T,>(
+  stories: Record<PropertyKey, T>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  meta: StoryMetaConfig | Meta<any>,
+): Array<[string, T]> => {
+  const includeStories = meta.includeStories;
+  const excludeStories = meta.excludeStories;
 
   return Object.entries(stories).filter(([storyName]) => {
     if (storyName === 'default') return false;
@@ -40,5 +48,4 @@ export const getStories = (stories: Record<string, unknown>, meta: Meta<any>): [
     if (isExcluded(storyName, excludeStories)) return false;
     return true;
   });
-  // .map(([id, story]) => story as StoryObj<any>);
 };
