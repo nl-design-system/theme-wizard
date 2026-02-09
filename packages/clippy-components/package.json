@@ -14,7 +14,6 @@
   "files": [
     "dist/"
   ],
-  "custom-elements": "custom-elements.json",
   "publishConfig": {
     "access": "public",
     "provenance": true
