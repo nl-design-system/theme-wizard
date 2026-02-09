@@ -1,5 +1,15 @@
 # @nl-design-system-community/clippy-components
 
+## 1.2.0
+
+### Minor Changes
+
+- 249d690: Clippy modal with candidate nl-button and tabler icon
+
+### Patch Changes
+
+- 06acdf8: ClippyButton naming
+
 ## 1.1.0
 
 ### Minor Changes
