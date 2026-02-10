@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import { components } from '@/lib/components'
+
+const componentList = await Promise.all(Object.entries(components).map(async ([slug, module]) => {
+  const componentModule = await module()
+  const title = componentModule.default.title
+  return {
+    slug,
+    title
+  }
+}))
+---
+
+<BaseLayout title="Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <nav slot="sidebar">
+        {componentList.map(({slug, title}) => (
+          <a href={`/components/${slug}`}>{title}</a>
+          <br />
+        ))}
+      </nav>
+      <main slot="main">
+        <h1>Componenten</h1>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
