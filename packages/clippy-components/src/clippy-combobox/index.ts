@@ -18,6 +18,10 @@ type Option = {
   value: unknown;
 };
 
+const allowances = ['options', 'other'] as const;
+const defaultAllowance = 'options';
+type Allowance = (typeof allowances)[number];
+
 const positions = ['block-start', 'block-end'] as const;
 const defaultPosition = 'block-end';
 type Position = (typeof positions)[number];
@@ -32,12 +36,13 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends FormElement<T['value']> {
+  static readonly allowances = allowances;
   static readonly positions = positions;
-  static readonly defaultPosition = defaultPosition;
-  @property({ attribute: 'other', type: Boolean }) allowOther = false;
+  @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
+  allow: Allowance = defaultAllowance;
   @property({ reflect: true, type: Boolean }) open = false;
-  @property({ converter: allowedValuesConverter(ClippyCombobox.positions, ClippyCombobox.defaultPosition) })
-  readonly position: Position = ClippyCombobox.defaultPosition;
+  @property({ converter: allowedValuesConverter(ClippyCombobox.positions, defaultPosition) })
+  position: Position = defaultPosition;
 
   get #id() {
     return `${tag}-${this.name}`;
@@ -129,7 +134,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how the user input is resolved to a value.
    */
   queryToValue(query: string): T['value'] | null {
-    if (this.allowOther) {
+    if (this.allow === 'other') {
       return this.getOptionForValue(this.value)?.value || query;
     }
     const filter = this.filter(query);
@@ -156,7 +161,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const focusedRelatedElement = event.relatedTarget && this.shadowRoot?.contains(event.relatedTarget as Node);
     // Only when the focus moves outside of the component, treat it as a blur for outside
     if (!focusedRelatedElement) {
-      if (this.allowOther && this.query) {
+      if (this.allow === 'other' && this.query) {
         const value = this.queryToValue(this.query);
         if (value && this.value !== value) {
           this.value = value;
@@ -216,8 +221,8 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         if (index > -1) {
           return this.#commitSelection(index);
         } else if (count === 1) {
+        } else if (this.allow === 'other') {
           return this.#commitSelection(0);
-        } else if (this.allowOther) {
           return this.#commitQuery();
         }
         return undefined;

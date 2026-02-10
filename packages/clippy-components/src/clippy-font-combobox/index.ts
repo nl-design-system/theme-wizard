@@ -5,7 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
-import { arrayFromCommaList } from '../lib/converters';
+import { allowedValuesConverter, arrayFromCommaList } from '../lib/converters';
 
 type Option = {
   label: string;
@@ -13,6 +13,9 @@ type Option = {
   description?: string;
   cssUrl?: string;
 };
+
+// There's no exhaustive list of fonts, so we allow values outside of supplied options.
+const defaultAllowance = 'other';
 
 const tag = 'clippy-font-combobox';
 
@@ -24,7 +27,8 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyFontCombobox extends ClippyCombobox<Option> {
-  override readonly allowOther = true;
+  @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
+  override allow: (typeof ClippyCombobox.allowances)[number] = defaultAllowance;
   #additional?: Option[];
   #intersectionObserver?: IntersectionObserver;
   @query('[role=listbox]')

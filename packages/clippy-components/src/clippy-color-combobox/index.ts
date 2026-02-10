@@ -6,6 +6,7 @@ import { html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
+import { allowedValuesConverter } from '../lib/converters';
 import { namedColors, type ColorName } from './lib';
 import messages from './messages/en';
 import colorComboboxStyles from './styles';
@@ -16,6 +17,9 @@ type Option = {
   names: ColorName[];
   value: string;
 };
+
+// There's no exhaustive list of fonts, so we allow values outside of supplied options.
+const defaultAllowance = 'other';
 
 const tag = 'clippy-color-combobox';
 
@@ -30,9 +34,12 @@ class C extends ClippyCombobox<Option> {}
 
 @safeCustomElement(tag)
 export class ClippyColorCombobox extends LocalizationMixin(C) {
-  static override readonly styles = [...ClippyCombobox.styles, colorComboboxStyles, unsafeCSS(colorSampleStyles)];
+  @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
+  override allow: (typeof ClippyCombobox.allowances)[number] = defaultAllowance;
   translations = messages;
   #options: Option[] = [];
+
+  static override readonly styles = [...ClippyCombobox.styles, colorComboboxStyles, unsafeCSS(colorSampleStyles)];
 
   override set lang(value: string) {
     this.loadLocalizations(value).then(() => {
