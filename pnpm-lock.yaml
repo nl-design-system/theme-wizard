@@ -332,8 +332,8 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.1
-        version: 2.4.1
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 7.4.0
         version: 7.4.0
@@ -413,8 +413,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.1
-        version: 2.4.1
+        specifier: 3.0.0
+        version: 3.0.0
       '@storybook/react-vite':
         specifier: 10.1.11
         version: 10.1.11(esbuild@0.27.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.53.5)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
@@ -625,8 +625,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.1
-        version: 2.4.1
+        specifier: 3.0.0
+        version: 3.0.0
       '@tabler/icons-react':
         specifier: 3.36.1
         version: 3.36.1(react@18.3.1)
@@ -2481,8 +2481,8 @@ packages:
   '@nl-design-system-community/ma-design-tokens@3.0.0':
     resolution: {integrity: sha512-95uF6BODj/RldOGIdB0i4L8ISoJ4CauQVzZb6sgD8GBA4btEdX3Cdc6VOKncKbknads5WePeNFap7lo7YrlRGg==}
 
-  '@nl-design-system-unstable/start-design-tokens@2.4.1':
-    resolution: {integrity: sha512-ZNj5bRH8WHA55xxUcl/Ih77BISVES2r2616qUTMlgHx4iOGi6bEbVI2D/uJysbIPaXzK1OfvI5aXowDahpG8aQ==}
+  '@nl-design-system-unstable/start-design-tokens@3.0.0':
+    resolution: {integrity: sha512-L42dSHhdlc70PElvHpTM8RfqXaI3wXbi8tcyr+F152A9nwrtR/fAvnetOTwwrvGfrtuw5iplBjGg0x3d8rKnHQ==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0':
     resolution: {integrity: sha512-WiI8AbCM7pWiM50WRYoU9fqBx2sf0qvc8H51yi/vGyakfAnQwbkKlq1RdDLfM6UKki2BbqypY37j23GMs5Vb/w==}
@@ -5480,11 +5480,13 @@ packages:
 
   glob@10.5.0:
     resolution: {integrity: sha512-DfXN8DfhJ7NH3Oe7cFmu3NCu1wKbkReJ8TorzSAFbSKrlNaQSKfIzqYqVY8zlbs2NLBbWpRiU52GX2PbaBVNkg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@11.1.0:
     resolution: {integrity: sha512-vuNwKSaKiqm7g0THUBu2x7ckSs3XJLXE+2ssL7/MfTGPLLcrJQ/4Uq1CjPTtO5cCIiRxqvN6Twy1qOwhL0Xjcw==}
     engines: {node: 20 || >=22}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@13.0.0:
@@ -7625,10 +7627,12 @@ packages:
   tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   tar@7.5.2:
     resolution: {integrity: sha512-7NyxrTE4Anh8km8iEy7o0QYPs+0JKBTj5ZaqHg6B39erLg0qYXN3BijtShwbsNSvQ+LN75+KV+C4QR/f6Gwnpg==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   templite@1.2.0:
     resolution: {integrity: sha512-O9BpPXF44a9Pg84Be6mjzlrqOtbP2I/B5PNLWu5hb1n9UQ1GTLsjdMg1z5ROCkF6NFXsO5LQfRXEpgTGrZ7Q0Q==}
@@ -9974,7 +9978,7 @@ snapshots:
 
   '@nl-design-system-community/ma-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@2.4.1': {}
+  '@nl-design-system-unstable/start-design-tokens@3.0.0': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0': {}
 
