@@ -69,7 +69,7 @@
     "@utrecht/select-css": "2.0.1",
     "@utrecht/table-css": "2.0.1",
     "@utrecht/textbox-css": "3.0.1",
-    "@utrecht/web-component-library-stencil": "4.0.0",
+    "@utrecht/web-component-library-stencil": "4.1.0",
     "colorjs.io": "0.6.0",
     "dequal": "2.0.3",
     "dlv": "1.1.3",
