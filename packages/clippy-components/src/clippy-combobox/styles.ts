@@ -1,5 +1,4 @@
 import { css } from 'lit';
-
 export default css`
   .clippy-combobox__input-container {
     display: inline-block;
@@ -14,6 +13,7 @@ export default css`
     inline-size: 100%;
     white-space: nowrap;
     overflow: hidden;
+    align-items: center;
   }
   .clippy-combobox__current-option:has(+ input:focus) {
     display: none;
