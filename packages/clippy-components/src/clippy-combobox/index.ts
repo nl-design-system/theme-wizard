@@ -14,6 +14,7 @@ import styles from './styles';
 
 type Option = {
   label: string;
+  description?: string;
   value: unknown;
 };
 
@@ -100,8 +101,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    */
   readonly filter =
     (query: string) =>
-    ({ label }: T) => {
-      return label.toLowerCase().includes(query.toLowerCase());
+    ({ description, label }: T) => {
+      return (
+        label.toLowerCase().includes(query.toLowerCase()) || description?.toLowerCase().includes(query.toLowerCase())
+      );
     };
 
   /**
@@ -274,9 +277,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   /**
    * Override this function to customize the rendering of combobox options and selected value.
+   * By default, it renders the label and description (if available) in the listbox options,
+   * and only the label in the input when an option is selected (by virtue of `index` being `undefined`).
    */
-  renderEntry({ label }: Option, _index?: number) {
-    return html`${label}`;
+  renderEntry({ description, label }: Option, index?: number) {
+    return html`
+      <div>${label}</div>
+      ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
+    `;
   }
 
   override connectedCallback() {

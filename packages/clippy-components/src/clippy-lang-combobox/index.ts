@@ -11,6 +11,7 @@ import styles from './styles';
 type Option = {
   value: string;
   label: string;
+  description: string;
   autonym: string;
   exonym: string;
 };
