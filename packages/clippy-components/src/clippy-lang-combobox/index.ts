@@ -6,21 +6,17 @@ import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import languages, { direction, type LangCode } from './languages';
-import styles from './styles';
 
 type Option = {
   value: string;
   label: string;
-  description: string;
   autonym: string;
   exonym: string;
 };
 
-const FORMAT_OPTIONS = ['both', 'autonym', 'exonym'] as const;
+const FORMAT_OPTIONS = ['autonym', 'exonym', 'autonym-exonym', 'exonym-autonym'] as const;
 const DEFAULT_FORMAT_OPTION = FORMAT_OPTIONS[0];
 type Format = (typeof FORMAT_OPTIONS)[number];
-
-const DEFAULT_SEPARATOR = '-';
 
 const tag = 'clippy-lang-combobox';
 
@@ -36,7 +32,6 @@ class C extends ClippyCombobox<Option> {}
 @safeCustomElement(tag)
 export class ClippyLangCombobox extends LocalizationMixin(C) {
   exonyms = new Intl.DisplayNames(this.DEFAULT_LANG, { type: 'language' });
-  @property() separator = DEFAULT_SEPARATOR;
   @property({
     converter: {
       fromAttribute: (value: string | null): Format => FORMAT_OPTIONS.find((v) => v === value) || DEFAULT_FORMAT_OPTION,
@@ -49,8 +44,6 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
 
   static readonly autonyms = { of: (code: string) => languages[code as LangCode] }; // static because not dependent on instance
   readonly autonyms = { of: ClippyLangCombobox.autonyms.of }; // consistent api with exonyms for convenience
-
-  static override readonly styles = [...ClippyCombobox.styles, styles];
 
   get #dir() {
     return direction(this.lang);
@@ -95,8 +88,7 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
         exonym,
         value,
       };
-      const suffix = exonym === autonym ? '' : ` ${this.separator} ${autonym}`;
-      const label = this.format === 'both' ? `${option.exonym}${suffix}` : option?.[this.format];
+      const label = this.format.startsWith('autonym') ? autonym : exonym;
       return {
         ...option,
         label,
@@ -108,26 +100,25 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
     return this.#options;
   }
 
-  override renderEntry(option: Option) {
+  override renderEntry(option: Option, index?: number) {
     const optionDir = direction(option.value);
     const dir = optionDir === this.#dir ? undefined : optionDir;
 
-    const isCurrentLanguage = option.value === this.lang;
-    const exonym =
-      isCurrentLanguage || ['both', 'exonym'].includes(this.format)
-        ? html`<span class="clippy-lang-combobox__exonym">${option.exonym}</span>`
-        : nothing;
-    const autonym =
-      !isCurrentLanguage && ['both', 'autonym'].includes(this.format)
-        ? html`<span class="clippy-lang-combobox__autonym" lang=${option.value} dir=${ifDefined(dir)}>
-            ${option.autonym}
-          </span>`
-        : nothing;
+    const formatArray = this.format.split('-') as ('autonym' | 'exonym')[];
 
-    // Render separator only when both exonym and autonym will be rendered
-    const separator =
-      exonym === nothing || autonym === nothing ? nothing : html`<span role="presentation">${this.separator}</span>`;
+    const exonym = formatArray.includes('exonym')
+      ? html`<div class="clippy-lang-combobox__exonym">${option.exonym}</div>`
+      : nothing;
+    const autonym = formatArray.includes('autonym')
+      ? html`<div class="clippy-lang-combobox__autonym" lang=${option.value} dir=${ifDefined(dir)}>
+          ${option.autonym}
+        </div>`
+      : nothing;
 
-    return html` <span class="clippy-lang-combobox__option"> ${exonym} ${separator} ${autonym} </span>`;
+    const templates = { autonym, exonym };
+    // If `index` is undefined, it means we are rendering the selected value in the input,
+    // so we only show the first part of the format (e.g. autonym if format is autonym-exonym).
+    // If `index` is defined, we are rendering options in the listbox, so we show both autonym and exonym if specified.
+    return html`${index === undefined ? templates[formatArray[0]] : formatArray.map((part) => templates[part])}`;
   }
 }
