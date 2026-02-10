@@ -19,6 +19,7 @@ const {
 if (items.length) {
   const filteredItems = items.map(({ category, family }) => ({
     cssUrl: `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family)}&display=swap`,
+    description: 'Google Fonts',
     label: family,
     value: [family, ...['serif', 'sans-serif', 'monospace'].filter((type) => type === category)],
   }));
