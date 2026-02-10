@@ -34,7 +34,7 @@ const OpeningHoursCard = ({ openingHoursSummary = [] }: OpeningHoursCardProps) =
           <div className="opening-hours-summary">
             {openingHoursSummary.map((item) => (
               <Fragment key={item.label}>
-                <p className="opening-hours-item">
+                <div className="opening-hours-item">
                   <strong>{item.label}:</strong>{' '}
                   <p>
                     {item.hours ? (
@@ -50,7 +50,7 @@ const OpeningHoursCard = ({ openingHoursSummary = [] }: OpeningHoursCardProps) =
                       <span>gesloten</span>
                     )}
                   </p>
-                </p>
+                </div>
 
                 <br />
               </Fragment>
