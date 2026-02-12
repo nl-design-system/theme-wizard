@@ -1,7 +1,7 @@
 import { arrayFromTokenList } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import LocalizationMixin from '@src/lib/LocalizationMixin';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ClippyCombobox } from '../clippy-combobox';
@@ -101,24 +101,23 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
   }
 
   override renderEntry(option: Option, index?: number) {
-    const optionDir = direction(option.value);
-    const dir = optionDir === this.#dir ? undefined : optionDir;
-
     const formatArray = this.format.split('-') as ('autonym' | 'exonym')[];
+    const classes = ['clippy-lang-combobox__option-label', 'clippy-lang-combobox__option-description'];
 
-    const exonym = formatArray.includes('exonym')
-      ? html`<div class="clippy-lang-combobox__exonym">${option.exonym}</div>`
-      : nothing;
-    const autonym = formatArray.includes('autonym')
-      ? html`<div class="clippy-lang-combobox__autonym" lang=${option.value} dir=${ifDefined(dir)}>
-          ${option.autonym}
-        </div>`
-      : nothing;
+    // Only show the primary part in the input, show both in the list
+    const parts = index === undefined ? [formatArray[0]] : formatArray;
 
-    const templates = { autonym, exonym };
-    // If `index` is undefined, it means we are rendering the selected value in the input,
-    // so we only show the first part of the format (e.g. autonym if format is autonym-exonym).
-    // If `index` is defined, we are rendering options in the listbox, so we show both autonym and exonym if specified.
-    return html`${index === undefined ? templates[formatArray[0]] : formatArray.map((part) => templates[part])}`;
+    return html`${parts.map((part, i) => {
+      const content = option[part];
+      const optionDir = direction(option.value);
+      let lang: string | undefined;
+      let dir: typeof optionDir | undefined;
+      if (part === 'autonym') {
+        // If the autonym is in a different direction than the current language, use the autonym's language and direction for proper rendering
+        lang = option.value;
+        dir = optionDir === this.#dir ? undefined : optionDir;
+      }
+      return html`<div class="${classes[i]}" lang=${ifDefined(lang)} dir=${ifDefined(dir)}>${content}</div>`;
+    })}`;
   }
 }

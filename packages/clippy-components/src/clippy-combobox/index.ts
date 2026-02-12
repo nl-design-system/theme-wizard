@@ -58,7 +58,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     unsafeCSS(textboxStyles),
   ];
 
-  @state() selectedIndex = -1;
+  @state() activeIndex = -1;
   @state() query = ''; // Query is what the user types to filter options.
   @state() get filteredOptions(): T[] {
     if (this.query.length === 0) {
@@ -194,7 +194,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   readonly #handleInput = (event: InputEvent) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
-    this.selectedIndex = -1;
+    this.activeIndex = -1;
     this.open = true;
     this.query = target.value;
     this.emit('input');
@@ -206,41 +206,41 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
     const index = Number(target.dataset['index']);
     if (Number.isNaN(index)) return;
-    this.#commitSelection(index);
+    this.#commitActiveItem(index);
   };
 
   readonly #handleKeydown = ({ key }: KeyboardEvent) => {
-    const index = this.selectedIndex;
+    const index = this.activeIndex;
     const count = this.filteredOptions.length;
     switch (key) {
       case 'ArrowDown':
-        return this.#setSelection(index + 1, true);
+        return this.#setActiveItem(index + 1, true);
       case 'ArrowUp':
-        return this.#setSelection(index - 1, true);
+        return this.#setActiveItem(index - 1, true);
       case 'Enter':
         if (index > -1) {
-          return this.#commitSelection(index);
+          return this.#commitActiveItem(index);
         } else if (count === 1) {
+          return this.#commitActiveItem(0);
         } else if (this.allow === 'other') {
-          return this.#commitSelection(0);
           return this.#commitQuery();
         }
         return undefined;
       case 'Escape':
-        return this.#setSelection(-1);
+        return this.#setActiveItem(-1);
       case 'Home':
-        return this.#setSelection(0);
+        return this.#setActiveItem(0);
       case 'End':
-        return this.#setSelection(count - 1);
+        return this.#setActiveItem(count - 1);
       default:
         return undefined;
     }
   };
 
-  #setSelection(index: number, open: boolean = false) {
+  #setActiveItem(index: number, open: boolean = false) {
     this.open = open;
-    this.selectedIndex = index > -1 ? index % this.filteredOptions.length : -1;
-    if (this.selectedIndex > -1) {
+    this.activeIndex = index > -1 ? index % this.filteredOptions.length : -1;
+    if (this.activeIndex > -1) {
       const element = this.shadowRoot?.querySelector(`#${String(this.#getOptionId())}`);
       element?.scrollIntoView({
         behavior: 'smooth',
@@ -250,7 +250,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   }
 
-  #commitSelection(index: number) {
+  #commitActiveItem(index: number) {
     const { label, value } = this.filteredOptions.at(index) ?? {};
     if (index < 0 || !label || !value) return;
 
@@ -276,7 +276,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return `list-${this.#id}`;
   }
 
-  #getOptionId(index: number = this.selectedIndex) {
+  #getOptionId(index: number = this.activeIndex) {
     return index === -1 ? undefined : `option-${index}-${this.#id}`;
   }
 
@@ -348,13 +348,15 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         >
           <ul class="utrecht-listbox__list" role="none">
             ${this.filteredOptions.map((option, index) => {
-              const selected = index === this.selectedIndex;
-              const selectedClass = {
+              const active = index === this.activeIndex;
+              const selected = option.value === this.value;
+              const interactionClasses = {
+                'utrecht-listbox__option--active': active,
                 'utrecht-listbox__option--selected': selected,
               };
               return html`<li
                 class="clippy-combobox__option utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
-                  selectedClass,
+                  interactionClasses,
                 )}"
                 role="option"
                 id=${ifDefined(this.#getOptionId(index))}
