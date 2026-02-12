@@ -62,7 +62,7 @@
     "@utrecht/page-body-react": "1.0.10",
     "@utrecht/page-footer-react": "1.0.9",
     "@utrecht/page-header-react": "1.0.9",
-    "@utrecht/web-component-library-react": "3.0.12",
+    "@utrecht/web-component-library-react": "4.0.1",
     "@utrecht/web-component-library-stencil": "3.7.0",
     "clsx": "2.1.1",
     "lit": "3.3.2",
