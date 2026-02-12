@@ -6,7 +6,9 @@ import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
 import type ValidationIssue from '../../lib/ValidationIssue';
-import { Token } from '../wizard-token-input';
+import { WizardColorInput } from '../wizard-color-input';
+import { WizardFontInput } from '../wizard-font-input';
+import { Token, WizardTokenInput } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
@@ -33,12 +35,12 @@ export class WizardTokenField extends WizardTokenNavigator {
 
   static override readonly styles = [styles];
 
-  get #id() {
+  get _id() {
     return `input-${this.path}`;
   }
 
   get #hasErrors(): boolean {
-    return this.#pathErrors.length > 0 || this.#hasNestedErrors;
+    return this.pathErrors.length > 0 || this.#hasNestedErrors;
   }
 
   get #hasNestedErrors(): boolean {
@@ -49,7 +51,7 @@ export class WizardTokenField extends WizardTokenNavigator {
     return this.errors.some((error) => error.path.startsWith(this.path + '.'));
   }
 
-  get #pathErrors(): ValidationIssue[] {
+  protected get pathErrors(): ValidationIssue[] {
     return this.errors.filter((error) => error.path === this.path);
   }
 
@@ -79,6 +81,11 @@ export class WizardTokenField extends WizardTokenNavigator {
     return this.token?.$value;
   }
 
+  protected get _inputValue() {
+    return (this.shadowRoot?.getElementById(this._id) as WizardFontInput | WizardColorInput | WizardTokenInput | null)
+      ?.value;
+  }
+
   renderField(type: typeof this.type, label: string) {
     const key = this.path.split('.').pop();
 
@@ -92,9 +99,9 @@ export class WizardTokenField extends WizardTokenNavigator {
     switch (type) {
       case 'color':
         return html` <wizard-color-input
-          .errors=${this.#pathErrors}
+          .errors=${this.pathErrors}
           .value=${this.token.$value}
-          id=${this.#id}
+          id=${this._id}
           key=${key}
           label=${label}
           name=${this.path}
@@ -103,9 +110,9 @@ export class WizardTokenField extends WizardTokenNavigator {
         </wizard-color-input>`;
       case 'font':
         return html` <wizard-font-input
-          .errors=${this.#pathErrors}
+          .errors=${this.pathErrors}
           .value=${this.token.$value}
-          id=${this.#id}
+          id=${this._id}
           key=${key}
           label=${label}
           name=${this.path}
@@ -114,9 +121,9 @@ export class WizardTokenField extends WizardTokenNavigator {
         </wizard-font-input>`;
       default:
         return html` <wizard-token-input
-          .errors=${this.#pathErrors}
+          .errors=${this.pathErrors}
           .value=${this.token}
-          id=${this.#id}
+          id=${this._id}
           key=${key}
           label=${label}
           name=${this.path}
