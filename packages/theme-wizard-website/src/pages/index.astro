@@ -25,9 +25,6 @@ if (!currentTemplate) {
     gap: 2rem;
   }
 </style>
-<script>
-import '../lib/reset-theme-element';
-</script>
 
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
@@ -46,11 +43,11 @@ import '../lib/reset-theme-element';
       <wizard-preview-picker slot="nav" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
 
       <div slot="main">
-        <reset-theme>
+        <wizard-reset-theme>
           <wizard-preview-theme>
             <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
           </wizard-preview-theme>
-        </reset-theme>
+        </wizard-reset-theme>
       </div>
      </wizard-layout>
   </theme-wizard-app>
