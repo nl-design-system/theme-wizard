@@ -1,5 +1,5 @@
 // @ts-expect-error We need to change how theme-wizard-app is bundled so we can get this type
-import type { WizardStoryReactWithTheme } from '@nl-design-system-community/theme-wizard-app';
+import type { WizardStoryReact } from '@nl-design-system-community/theme-wizard-app';
 import { components } from '@/lib/components';
 
 export async function initStories(componentId: keyof typeof components, storyIds: string[]) {
@@ -13,7 +13,7 @@ export async function initStories(componentId: keyof typeof components, storyIds
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Story = (componentModule as any)[name];
-    const storyRenderer = document.createElement('wizard-story-react-with-theme') as WizardStoryReactWithTheme;
+    const storyRenderer = document.createElement('wizard-story-react') as WizardStoryReact;
     storyRenderer.story = Story;
     storyRenderer.componentMeta = meta;
     storyRenderer.args = Story.args ?? {};
