@@ -2,7 +2,6 @@
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
-
 export const prerender = false; // enable SSR
 
 const scraperUrl = withRelatedProject({
@@ -43,7 +42,13 @@ if (!currentTemplate) {
 
       <wizard-preview-picker slot="nav" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
 
-      <wizard-preview slot="main" url={currentTemplate} scraperUrl={scraperUrl}></wizard-previewslot="main">
+      <div slot="main">
+        <wizard-reset-theme>
+          <wizard-preview-theme>
+            <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
+          </wizard-preview-theme>
+        </wizard-reset-theme>
+      </div>
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
