@@ -1,9 +1,6 @@
 import type { PropertyValues } from 'lit';
-import { consume } from '@lit/context';
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type Theme from '../../lib/Theme';
-import { themeContext } from '../../contexts/theme';
 import Scraper from '../../lib/Scraper';
 import { PREVIEW_THEME_CLASS } from '../../lib/Theme';
 import { parseHtml, rewriteAttributeUrlsToAbsolute, rewriteSvgXlinkToAbsolute } from '../../utils';
@@ -19,10 +16,6 @@ declare global {
 
 @customElement(tag)
 export class ThemePreview extends LitElement {
-  @consume({ context: themeContext, subscribe: true })
-  @state()
-  private readonly theme!: Theme;
-
   @property() url?: string;
   @property() scraperUrl?: string;
 
@@ -48,7 +41,7 @@ export class ThemePreview extends LitElement {
     }
 
     // Make sure the newly set token --basis-heading-font-family is applied to the scraped CSS in the preview
-    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet, this.theme.stylesheet);
+    this.shadowRoot?.adoptedStyleSheets.push(this.previewStylesheet);
   }
 
   override updated(changedProperties: PropertyValues) {
