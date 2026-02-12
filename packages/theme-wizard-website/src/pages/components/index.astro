@@ -17,8 +17,7 @@ const componentList = await Promise.all(Object.entries(components).map(async ([s
     <wizard-layout>
       <nav slot="sidebar">
         {componentList.map(({slug, title}) => (
-          <a href={`/components/${slug}`}>{title}</a>
-          <br />
+          <wizard-sidebar-link href={`/components/${slug}`}>{title}</wizard-sidebar-link>
         ))}
       </nav>
       <main slot="main">
