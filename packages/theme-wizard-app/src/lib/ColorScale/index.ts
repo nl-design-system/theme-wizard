@@ -6,6 +6,7 @@ export default class ColorScale {
   #fromOKLCH: ColorToken;
   #derived: ColorToken[] = [];
   #derivedOKLCH: ColorToken[] = [];
+  #inverse: boolean = false;
   // Mandatory high to low
   static readonly #lightnessMask = [0.999, 0.97, 0.95, 0.93, 0.91, 0.79, 0.56, 0.52, 0.48, 0.38, 0.32, 0.26, 0.14, 0.1];
 
@@ -14,6 +15,7 @@ export default class ColorScale {
     // Explicitly set in constructor to satisfy TypeScript
     this.#from = this.from;
     this.#fromOKLCH = this.fromOKLCH;
+    this.#inverse = false;
   }
 
   get from() {
@@ -39,6 +41,16 @@ export default class ColorScale {
 
   get size() {
     return ColorScale.#lightnessMask.length;
+  }
+
+  set inverse(value: boolean | undefined) {
+    this.#inverse = value ?? false;
+    // Recalculate derived colors with new inverse setting
+    this.#derivedOKLCH = this.#deriveScale(this.#fromOKLCH);
+    const colorSpace = this.#from.$value.colorSpace;
+    this.#derived = this.#derivedOKLCH.map((token) =>
+      token === this.fromOKLCH ? this.from : token.toColorSpace(colorSpace),
+    );
   }
 
   list() {
@@ -84,7 +96,7 @@ export default class ColorScale {
     // Find the chroma decrease
     const chromaDelta = chroma / (nearest + 1);
 
-    return ColorScale.#lightnessMask.map((l, index) => {
+    const derived = ColorScale.#lightnessMask.map((l, index) => {
       if (index === nearest) {
         // Simply return the initial color
         return this.fromOKLCH;
@@ -108,5 +120,8 @@ export default class ColorScale {
         });
       }
     });
+
+    // Reverse the derived colors if inverse is true
+    return this.#inverse ? [...derived].reverse() : derived;
   }
 }
