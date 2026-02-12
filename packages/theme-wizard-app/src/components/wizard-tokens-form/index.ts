@@ -128,7 +128,7 @@ export class WizardTokensForm extends LitElement {
                 typeof basis === 'object' && basis !== null && 'color' in basis ? basis['color'] : undefined;
               const colorKeys = typeof color === 'object' && color !== null ? Object.keys(color) : [];
               return colorKeys
-                .filter((name) => !name.endsWith('inverse') && name !== 'transparent')
+                .filter((name) => name !== 'transparent')
                 .map(
                   (colorKey) => html`
                     <li>
@@ -138,6 +138,7 @@ export class WizardTokensForm extends LitElement {
                         id=${`basis.color.${colorKey}`}
                         name=${`basis.color.${colorKey}`}
                         .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
+                        .inverse=${colorKey.includes('inverse')}
                       >
                         <a
                           href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}

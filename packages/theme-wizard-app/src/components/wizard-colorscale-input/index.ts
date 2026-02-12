@@ -143,47 +143,51 @@ export class WizardColorscaleInput extends WizardTokenInput {
   @property({ attribute: false })
   scrapedColors: ScrapedColorToken[] = [];
 
+  @property()
+  inverse?: boolean;
+
   @state()
   private currentColorValue: string = '';
 
+  #updateColorFromToken(colorToken: ColorTokenType | undefined) {
+    if (!colorToken) return;
+    try {
+      const colorValue = resolveColorValue(colorToken);
+      if (colorValue) {
+        this.#scale.from = new ColorToken({ $value: colorValue });
+        this.currentColorValue = legacyToModernColor.encode(colorValue);
+      }
+    } catch {
+      // If parsing fails, keep the current scale
+    }
+  }
+
+  #updateScaleValue() {
+    this.#value = this.#scale.toObject();
+    this.internals_.setFormValue(JSON.stringify(transformScaleToColorKeys(this.#value)));
+  }
+
   override willUpdate(changedProperties: Map<string, unknown>) {
+    // Ensure inverse is always set on the scale before any updates
+    if (changedProperties.has('inverse') || changedProperties.has('colorToken')) {
+      this.#scale.inverse = this.inverse;
+    }
+
     // If the full value is being set, restore from it (takes precedence)
     if (changedProperties.has('value')) {
-      // The value setter will handle updating #value
-      // But we need to also update #scale.from from colorToken if it's available
-      if (this.colorToken) {
-        try {
-          const colorValue = resolveColorValue(this.colorToken);
-          if (colorValue) {
-            this.#scale.from = new ColorToken({
-              $value: colorValue,
-            });
-            this.currentColorValue = legacyToModernColor.encode(colorValue);
-          }
-        } catch {
-          // If parsing fails, keep the current scale
-        }
-      }
+      this.#updateColorFromToken(this.colorToken);
       return;
     }
 
-    // Initialize from the colorToken property if changed (before render)
-    if (changedProperties.has('colorToken') && this.colorToken) {
-      try {
-        const colorValue = resolveColorValue(this.colorToken);
-        if (colorValue) {
-          this.#scale.from = new ColorToken({
-            $value: colorValue,
-          });
-          // Reset the internal value to match the new color
-          this.#value = this.#scale.toObject();
-          // Set form value using COLOR_KEYS format for consistency
-          this.internals_.setFormValue(JSON.stringify(transformScaleToColorKeys(this.#value)));
-          this.currentColorValue = legacyToModernColor.encode(colorValue);
-        }
-      } catch {
-        // If parsing fails, keep the default
-      }
+    // Initialize from the colorToken property if changed
+    if (changedProperties.has('colorToken')) {
+      this.#updateColorFromToken(this.colorToken);
+      this.#updateScaleValue();
+    }
+
+    // Update internal value if inverse changed
+    if (changedProperties.has('inverse')) {
+      this.#updateScaleValue();
     }
   }
 
