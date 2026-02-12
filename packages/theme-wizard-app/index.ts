@@ -12,3 +12,4 @@ import './src/components/wizard-story-react';
 import './src/components/wizard-story-react-with-theme/index';
 import './src/components/wizard-react-element';
 import './src/components/wizard-story-preview';
+import './src/components/wizard-theme-token-field/index';
