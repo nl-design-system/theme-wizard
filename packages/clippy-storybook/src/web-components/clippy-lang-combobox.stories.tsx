@@ -36,13 +36,13 @@ const OPTIONS = [
 interface LangComboboxStoryArgs {
   options: typeof OPTIONS;
   lang?: string;
-  format: 'autonym' | 'exonym' | 'both';
+  format: 'autonym' | 'exonym' | 'autonym-exonym' | 'exonym-autonym';
 }
 
 const createTemplate = ({ lang, options }: LangComboboxStoryArgs) =>
   lang
-    ? html`<clippy-lang-combobox lang="${lang}" options='${JSON.stringify(options, null, 2)}'></clippy-lang-combobox>`
-    : html`<clippy-lang-combobox options='${JSON.stringify(options, null, 2)}'></clippy-lang-combobox>`;
+    ? html`<clippy-lang-combobox lang="${lang}" options="${JSON.stringify(options, null, 2)}"></clippy-lang-combobox>`
+    : html`<clippy-lang-combobox options="${JSON.stringify(options, null, 2)}"></clippy-lang-combobox>`;
 
 const meta = {
   id: 'clippy-lang-combobox',
@@ -56,7 +56,7 @@ const meta = {
       control: { type: 'select' },
       description:
         'Show languages in their own language (autonym), translated into current language (exonym), or both.',
-      options: ['autonym', 'exonym', 'both'],
+      options: ['autonym', 'exonym', 'autonym-exonym', 'exonym-autonym'],
     },
     lang: {
       name: 'lang',
@@ -112,9 +112,9 @@ export const Exonym: Story = {
 };
 
 export const AutonymAndExonym: Story = {
-  name: 'Show both autonym and exonyum',
+  name: 'Show both autonym and exonym',
   args: {
-    format: 'both',
+    format: 'autonym-exonym',
   },
 };
 

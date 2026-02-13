@@ -7,19 +7,26 @@ import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import memoize from 'memoize';
-import { arrayFromTokenList } from '../lib/converters';
+import { allowedValuesConverter, arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
 import srOnly from '../lib/sr-only/styles';
 import styles from './styles';
 
 type Option = {
   label: string;
+  description?: string;
   value: unknown;
 };
 
-type Position = 'block-start' | 'block-end';
+const allowances = ['options', 'other'] as const;
+const defaultAllowance = 'options';
+type Allowance = (typeof allowances)[number];
 
-const tag = 'clippy-combobox';
+const positions = ['block-start', 'block-end'] as const;
+const defaultPosition = 'block-end';
+type Position = (typeof positions)[number];
+
+const tag = 'clippy-combobox' as const;
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,9 +36,13 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyCombobox<T extends Option = Option> extends FormElement<T['value']> {
-  @property({ attribute: 'other', type: Boolean }) allowOther = false;
+  static readonly allowances = allowances;
+  static readonly positions = positions;
+  @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
+  allow: Allowance = defaultAllowance;
   @property({ reflect: true, type: Boolean }) open = false;
-  @property() readonly position: Position = 'block-end';
+  @property({ converter: allowedValuesConverter(ClippyCombobox.positions, defaultPosition) })
+  position: Position = defaultPosition;
 
   get #id() {
     return `${tag}-${this.name}`;
@@ -47,7 +58,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     unsafeCSS(textboxStyles),
   ];
 
-  @state() selectedIndex = -1;
+  @state() activeIndex = -1;
   @state() query = ''; // Query is what the user types to filter options.
   @state() get filteredOptions(): T[] {
     if (this.query.length === 0) {
@@ -95,8 +106,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    */
   readonly filter =
     (query: string) =>
-    ({ label }: T) => {
-      return label.toLowerCase().includes(query.toLowerCase());
+    ({ description, label }: T) => {
+      return (
+        label.toLowerCase().includes(query.toLowerCase()) || description?.toLowerCase().includes(query.toLowerCase())
+      );
     };
 
   /**
@@ -121,7 +134,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how the user input is resolved to a value.
    */
   queryToValue(query: string): T['value'] | null {
-    if (this.allowOther) {
+    if (this.allow === 'other') {
       return this.getOptionForValue(this.value)?.value || query;
     }
     const filter = this.filter(query);
@@ -148,7 +161,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const focusedRelatedElement = event.relatedTarget && this.shadowRoot?.contains(event.relatedTarget as Node);
     // Only when the focus moves outside of the component, treat it as a blur for outside
     if (!focusedRelatedElement) {
-      if (this.allowOther && this.query) {
+      if (this.allow === 'other' && this.query) {
         const value = this.queryToValue(this.query);
         if (value && this.value !== value) {
           this.value = value;
@@ -181,7 +194,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   readonly #handleInput = (event: InputEvent) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
-    this.selectedIndex = -1;
+    this.activeIndex = -1;
     this.open = true;
     this.query = target.value;
     this.emit('input');
@@ -193,41 +206,41 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
     const index = Number(target.dataset['index']);
     if (Number.isNaN(index)) return;
-    this.#commitSelection(index);
+    this.#commitActiveItem(index);
   };
 
   readonly #handleKeydown = ({ key }: KeyboardEvent) => {
-    const index = this.selectedIndex;
+    const index = this.activeIndex;
     const count = this.filteredOptions.length;
     switch (key) {
       case 'ArrowDown':
-        return this.#setSelection(index + 1, true);
+        return this.#setActiveItem(index + 1, true);
       case 'ArrowUp':
-        return this.#setSelection(index - 1, true);
+        return this.#setActiveItem(index - 1, true);
       case 'Enter':
         if (index > -1) {
-          return this.#commitSelection(index);
+          return this.#commitActiveItem(index);
         } else if (count === 1) {
-          return this.#commitSelection(0);
-        } else if (this.allowOther) {
+          return this.#commitActiveItem(0);
+        } else if (this.allow === 'other') {
           return this.#commitQuery();
         }
         return undefined;
       case 'Escape':
-        return this.#setSelection(-1);
+        return this.#setActiveItem(-1);
       case 'Home':
-        return this.#setSelection(0);
+        return this.#setActiveItem(0);
       case 'End':
-        return this.#setSelection(count - 1);
+        return this.#setActiveItem(count - 1);
       default:
         return undefined;
     }
   };
 
-  #setSelection(index: number, open: boolean = false) {
+  #setActiveItem(index: number, open: boolean = false) {
     this.open = open;
-    this.selectedIndex = index > -1 ? index % this.filteredOptions.length : -1;
-    if (this.selectedIndex > -1) {
+    this.activeIndex = index > -1 ? index % this.filteredOptions.length : -1;
+    if (this.activeIndex > -1) {
       const element = this.shadowRoot?.querySelector(`#${String(this.#getOptionId())}`);
       element?.scrollIntoView({
         behavior: 'smooth',
@@ -237,7 +250,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   }
 
-  #commitSelection(index: number) {
+  #commitActiveItem(index: number) {
     const { label, value } = this.filteredOptions.at(index) ?? {};
     if (index < 0 || !label || !value) return;
 
@@ -263,15 +276,20 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return `list-${this.#id}`;
   }
 
-  #getOptionId(index: number = this.selectedIndex) {
+  #getOptionId(index: number = this.activeIndex) {
     return index === -1 ? undefined : `option-${index}-${this.#id}`;
   }
 
   /**
    * Override this function to customize the rendering of combobox options and selected value.
+   * By default, it renders the label and description (if available) in the listbox options,
+   * and only the label in the input when an option is selected (by virtue of `index` being `undefined`).
    */
-  renderEntry({ label }: Option, _index?: number) {
-    return html`${label}`;
+  renderEntry({ description, label }: Option, index?: number) {
+    return html`
+      <div>${label}</div>
+      ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
+    `;
   }
 
   override connectedCallback() {
@@ -330,13 +348,15 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         >
           <ul class="utrecht-listbox__list" role="none">
             ${this.filteredOptions.map((option, index) => {
-              const selected = index === this.selectedIndex;
-              const selectedClass = {
+              const active = index === this.activeIndex;
+              const selected = option.value === this.value;
+              const interactionClasses = {
+                'utrecht-listbox__option--active': active,
                 'utrecht-listbox__option--selected': selected,
               };
               return html`<li
                 class="clippy-combobox__option utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
-                  selectedClass,
+                  interactionClasses,
                 )}"
                 role="option"
                 id=${ifDefined(this.#getOptionId(index))}

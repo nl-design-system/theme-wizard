@@ -1,12 +1,11 @@
 import { arrayFromTokenList } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import LocalizationMixin from '@src/lib/LocalizationMixin';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import languages, { direction, type LangCode } from './languages';
-import styles from './styles';
 
 type Option = {
   value: string;
@@ -15,11 +14,9 @@ type Option = {
   exonym: string;
 };
 
-const FORMAT_OPTIONS = ['both', 'autonym', 'exonym'] as const;
+const FORMAT_OPTIONS = ['autonym', 'exonym', 'autonym-exonym', 'exonym-autonym'] as const;
 const DEFAULT_FORMAT_OPTION = FORMAT_OPTIONS[0];
 type Format = (typeof FORMAT_OPTIONS)[number];
-
-const DEFAULT_SEPARATOR = '-';
 
 const tag = 'clippy-lang-combobox';
 
@@ -35,7 +32,6 @@ class C extends ClippyCombobox<Option> {}
 @safeCustomElement(tag)
 export class ClippyLangCombobox extends LocalizationMixin(C) {
   exonyms = new Intl.DisplayNames(this.DEFAULT_LANG, { type: 'language' });
-  @property() separator = DEFAULT_SEPARATOR;
   @property({
     converter: {
       fromAttribute: (value: string | null): Format => FORMAT_OPTIONS.find((v) => v === value) || DEFAULT_FORMAT_OPTION,
@@ -48,8 +44,6 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
 
   static readonly autonyms = { of: (code: string) => languages[code as LangCode] }; // static because not dependent on instance
   readonly autonyms = { of: ClippyLangCombobox.autonyms.of }; // consistent api with exonyms for convenience
-
-  static override readonly styles = [...ClippyCombobox.styles, styles];
 
   get #dir() {
     return direction(this.lang);
@@ -94,8 +88,7 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
         exonym,
         value,
       };
-      const suffix = exonym === autonym ? '' : ` ${this.separator} ${autonym}`;
-      const label = this.format === 'both' ? `${option.exonym}${suffix}` : option?.[this.format];
+      const label = this.format.startsWith('autonym') ? autonym : exonym;
       return {
         ...option,
         label,
@@ -107,26 +100,24 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
     return this.#options;
   }
 
-  override renderEntry(option: Option) {
-    const optionDir = direction(option.value);
-    const dir = optionDir === this.#dir ? undefined : optionDir;
+  override renderEntry(option: Option, index?: number) {
+    const formatArray = this.format.split('-') as ('autonym' | 'exonym')[];
+    const classes = ['clippy-lang-combobox__option-label', 'clippy-lang-combobox__option-description'];
 
-    const isCurrentLanguage = option.value === this.lang;
-    const exonym =
-      isCurrentLanguage || ['both', 'exonym'].includes(this.format)
-        ? html`<span class="clippy-lang-combobox__exonym">${option.exonym}</span>`
-        : nothing;
-    const autonym =
-      !isCurrentLanguage && ['both', 'autonym'].includes(this.format)
-        ? html`<span class="clippy-lang-combobox__autonym" lang=${option.value} dir=${ifDefined(dir)}>
-            ${option.autonym}
-          </span>`
-        : nothing;
+    // Only show the primary part in the input, show both in the list
+    const parts = index === undefined ? [formatArray[0]] : formatArray;
 
-    // Render separator only when both exonym and autonym will be rendered
-    const separator =
-      exonym === nothing || autonym === nothing ? nothing : html`<span role="presentation">${this.separator}</span>`;
-
-    return html` <span class="clippy-lang-combobox__option"> ${exonym} ${separator} ${autonym} </span>`;
+    return html`${parts.map((part, i) => {
+      const content = option[part];
+      const optionDir = direction(option.value);
+      let lang: string | undefined;
+      let dir: typeof optionDir | undefined;
+      if (part === 'autonym') {
+        // If the autonym is in a different direction than the current language, use the autonym's language and direction for proper rendering
+        lang = option.value;
+        dir = optionDir === this.#dir ? undefined : optionDir;
+      }
+      return html`<div class="${classes[i]}" lang=${ifDefined(lang)} dir=${ifDefined(dir)}>${content}</div>`;
+    })}`;
   }
 }

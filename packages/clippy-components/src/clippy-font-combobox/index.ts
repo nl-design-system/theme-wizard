@@ -1,17 +1,21 @@
 import { safeCustomElement } from '@lib/decorators';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
-import { arrayFromCommaList } from '../lib/converters';
+import { allowedValuesConverter, arrayFromCommaList } from '../lib/converters';
 
 type Option = {
   label: string;
   value: string[];
+  description?: string;
   cssUrl?: string;
 };
+
+// There's no exhaustive list of fonts, so we allow values outside of supplied options.
+const defaultAllowance = 'other';
 
 const tag = 'clippy-font-combobox';
 
@@ -23,7 +27,8 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyFontCombobox extends ClippyCombobox<Option> {
-  override readonly allowOther = true;
+  @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
+  override allow: (typeof ClippyCombobox.allowances)[number] = defaultAllowance;
   #additional?: Option[];
   #intersectionObserver?: IntersectionObserver;
   @query('[role=listbox]')
@@ -87,8 +92,7 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
     return this.options.find((option) => option.value.every((entry, index) => value?.[index] === entry));
   }
 
-  override renderEntry(option: Option, _index: number) {
-    const { cssUrl, label, value } = option;
+  override renderEntry({ cssUrl, description, label, value }: Option, index: number) {
     const styles = { fontFamily: value.toString(), fontSizeAdjust: 0.5 };
 
     const observeElement = (element?: Element) => {
@@ -96,8 +100,9 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
         this.#intersectionObserver.observe(element);
       }
     };
-    return html`<span ${ref(observeElement)} style=${styleMap(styles)} data-css-url=${ifDefined(cssUrl)}>
-      ${label}
-    </span>`;
+    return html`
+      <div ${ref(observeElement)} style=${styleMap(styles)} data-css-url=${ifDefined(cssUrl)}>${label}</div>
+      ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
+    `;
   }
 }

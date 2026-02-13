@@ -155,7 +155,7 @@ describe(`<${tag}>`, () => {
     expect(listener).toBeCalled();
   });
 
-  it('allows other no values than supplied options when `other` attribute is not set', async () => {
+  it('allows other no values than supplied options when `allow` attribute is not set', async () => {
     // Explicitly set the body so that the string options are used
     document.body.innerHTML = `
       <form>
@@ -169,11 +169,11 @@ describe(`<${tag}>`, () => {
     expect(component.value).not.toBe(query);
   });
 
-  it('allows other values than supplied options when `other` attribute is set', async () => {
+  it('allows other values than supplied options when `allow` attribute is set to `other`', async () => {
     // Explicitly set the body so that the string options are used
     document.body.innerHTML = `
       <form>
-        <${tag} name="${tag}" options="${STRING_OPTIONS}" other></${tag}>
+        <${tag} name="${tag}" options="${STRING_OPTIONS}" allow="other"></${tag}>
       </form>`;
 
     const component: ClippyCombobox = document.querySelector(tag)!;

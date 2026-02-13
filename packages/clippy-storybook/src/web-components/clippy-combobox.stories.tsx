@@ -64,3 +64,13 @@ export const Default: Story = {
     },
   },
 };
+
+export const WithDescriptions: Story = {
+  name: 'Combobox with descriptions',
+  args: {
+    options: OPTIONS.map((option) => ({
+      ...option,
+      description: 'Sesame street character',
+    })),
+  },
+};
