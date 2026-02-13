@@ -18,7 +18,6 @@ import Theme from '../../lib/Theme';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
-import { WizardTokensForm } from '../wizard-tokens-form';
 import appStyles from './app.css';
 
 /**
@@ -76,10 +75,7 @@ export class App extends LitElement {
     this.scrapedColors = target.colors;
   };
 
-  readonly #handleReset = (event: Event) => {
-    const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
-    if (!(target instanceof WizardTokensForm)) return;
-
+  readonly #handleReset = () => {
     this.theme.reset();
     this.#storage.removeJSON();
     this.requestUpdate();
