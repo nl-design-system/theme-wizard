@@ -23,7 +23,15 @@ import appStyles from './app.css';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
-  readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
+  readonly #storage = new PersistentStorage({
+    onChange: () => {
+      const tokens = this.#storage.getJSON();
+      if (tokens) {
+        this.theme.tokens = tokens;
+      }
+    },
+    prefix: 'theme-wizard',
+  });
   readonly #theme = new Theme();
 
   @provide({ context: themeContext })
