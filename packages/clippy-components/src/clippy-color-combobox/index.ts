@@ -68,11 +68,15 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
 
   override readonly filter = (query: string) => {
     const normalizedQuery = query.toLowerCase();
+    const canonicalizedQuery = this.translations[normalizedQuery];
+    const queryColor = Color.try(canonicalizedQuery || normalizedQuery);
     return (option: Option) => {
       const label = option.label.toLowerCase();
       const names = option.names;
-      return (
-        label.includes(normalizedQuery) || names?.some((name) => this.translations[name]?.includes(normalizedQuery))
+      return Boolean(
+        label.includes(normalizedQuery) ||
+        names?.some((name) => this.translations[name]?.includes(normalizedQuery)) ||
+        (queryColor && option.color && queryColor.deltaE(option.color) < 10),
       );
     };
   };
