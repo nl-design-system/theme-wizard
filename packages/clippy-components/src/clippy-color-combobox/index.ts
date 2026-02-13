@@ -104,7 +104,14 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     const color = option.color?.toString();
     return html`
       <span class="clippy-color-combobox__option">
-        <svg role="img" xmlns="http://www.w3.org/2000/svg" class="nl-color-sample" style=${styleMap({ color })}>
+        <svg
+          role="img"
+          width="32"
+          height="32"
+          xmlns="http://www.w3.org/2000/svg"
+          class="nl-color-sample"
+          style=${styleMap({ color })}
+        >
           <path d="M0 0H32V32H0Z" fill="currentcolor" />
         </svg>
         <span>${option.label}</span>
