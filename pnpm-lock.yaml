@@ -124,6 +124,9 @@ importers:
         specifier: 10.2.0
         version: 10.2.0
     devDependencies:
+      '@nl-design-system-community/design-tokens-schema':
+        specifier: workspace:*
+        version: link:../design-tokens-schema
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5

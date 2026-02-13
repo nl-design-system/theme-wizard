@@ -58,6 +58,7 @@
     "memoize": "10.2.0"
   },
   "devDependencies": {
+    "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@types/dlv": "1.1.5",
     "@types/react": "18.3.23",
     "@vitest/browser-playwright": "4.0.16",
