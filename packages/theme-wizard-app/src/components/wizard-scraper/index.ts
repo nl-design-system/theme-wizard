@@ -114,11 +114,7 @@ export class WizardScraper extends LitElement {
       this.#state = 'pending';
       const url = new URL(urlLike);
       this.options = await this.#scraper.getTokens(url);
-      this.dispatchEvent(
-        new Event('change', {
-          bubbles: true,
-        }),
-      );
+      this.dispatchEvent(new Event('change', { bubbles: true }));
       this.src = url.toString();
       this.#state = 'success';
     } catch {

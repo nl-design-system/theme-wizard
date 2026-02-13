@@ -15,11 +15,14 @@ import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
+import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
+import { WizardTokenInput } from '../wizard-token-input';
+import { WizardTokensForm } from '../wizard-tokens-form';
 import appStyles from './app.css';
 
 /**
- * Router shell component - Provides Theme context and manages routing
+ * Router shell component - Provides Theme context
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
@@ -28,6 +31,8 @@ export class App extends LitElement {
       const tokens = this.#storage.getJSON();
       if (tokens) {
         this.theme.tokens = tokens;
+        // Request update to show new validation warnings and to update the inputs with their new values
+        this.requestUpdate();
       }
     },
     prefix: 'theme-wizard',
@@ -54,17 +59,49 @@ export class App extends LitElement {
     }
 
     this.addEventListener('change', this.#handleScrapeDone);
+    this.addEventListener('change', this.#handleTokenChange);
+    this.addEventListener('reset', this.#handleReset);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('change', this.#handleScrapeDone);
+    this.removeEventListener('change', this.#handleTokenChange);
+    this.removeEventListener('reset', this.#handleReset);
   }
 
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
     this.scrapedColors = target.colors;
+  };
+
+  readonly #handleReset = (event: Event) => {
+    const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
+    if (!(target instanceof WizardTokensForm)) return;
+
+    this.theme.reset();
+    this.#storage.removeJSON();
+    this.requestUpdate();
+  };
+
+  readonly #handleTokenChange = async (event: Event) => {
+    const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
+    if (!(target instanceof WizardTokenInput)) return;
+
+    if (target instanceof WizardColorscaleInput) {
+      const updates = Object.entries(target.value).map(([colorKey, value]) => ({
+        path: `${target.name}.${colorKey}`,
+        value: value.$value,
+      }));
+      this.theme.updateMany(updates);
+    } else {
+      this.theme.updateAt(target.name, target.value);
+    }
+
+    // Request update to reflect any new validation issues
+    this.requestUpdate();
+    this.#storage.setJSON(this.theme.tokens);
   };
 
   override render() {
