@@ -29,7 +29,7 @@ export default class Theme {
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
-  #stylesheet: CSSStyleSheet = new CSSStyleSheet();
+  stylesheet: CSSStyleSheet = new CSSStyleSheet();
   name = 'wizard';
   #validationIssues: ValidationIssue[] = [];
 
@@ -56,17 +56,9 @@ export default class Theme {
     this.#validateTheme(values);
     this.#tokens = values;
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
-      const sheet = this.#stylesheet;
+      const sheet = this.stylesheet;
       sheet.replaceSync(css);
     });
-  }
-
-  get stylesheet() {
-    return this.#stylesheet;
-  }
-
-  set stylesheet(sheet: CSSStyleSheet) {
-    this.#stylesheet = sheet;
   }
 
   updateAt(path: string, value: DesignToken['$value']) {

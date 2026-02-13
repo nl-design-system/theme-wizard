@@ -28,19 +28,8 @@ export class App extends LitElement {
   readonly #storage = new PersistentStorage({
     onChange: () => {
       const tokens = this.#storage.getJSON();
-      console.log('storage updated');
-      if (tokens) {
-        this.theme.tokens = tokens;
-        const newTheme = new Theme();
-        newTheme.tokens = this.theme.tokens;
-        newTheme.stylesheet = this.theme.stylesheet;
-        this.theme = newTheme;
-      } else {
-        const newTheme = new Theme();
-        newTheme.tokens = {};
-        newTheme.stylesheet = this.theme.stylesheet;
-        this.theme = newTheme;
-      }
+      this.theme.tokens = tokens;
+      this.#forceUpdateTokens();
     },
     prefix: 'theme-wizard',
   });
@@ -78,16 +67,12 @@ export class App extends LitElement {
   }
 
   /**
-   * @description This function forcefully replaces this.theme with a new object. This is needed to tell
-   * the enitre subtree of this element that the theme and tokens have changed. If we don't do this, the
-   * subtree will not know that .tokens was updated and will not rerender themselves.
+   * @description Lit context only detects reference changes, not nested properties. New instance triggers updates; preserved stylesheet keeps preview styling of preview intact.
    */
-  readonly #forceUpdateTokens = (newTokens?: Theme['tokens']) => {
+  readonly #forceUpdateTokens = () => {
     const newTheme = new Theme();
     newTheme.stylesheet = this.theme.stylesheet;
-    if (newTokens) {
-      newTheme.tokens = newTokens;
-    }
+    newTheme.tokens = this.theme.tokens;
     this.theme = newTheme;
     this.requestUpdate();
   };
@@ -100,13 +85,8 @@ export class App extends LitElement {
 
   readonly #handleReset = () => {
     this.theme.reset();
-    // Force context update by creating a new Theme instance with current tokens
-    const newTheme = new Theme();
-    newTheme.tokens = this.theme.tokens;
-    newTheme.stylesheet = this.theme.stylesheet;
-    this.theme = newTheme;
-    this.#storage.setJSON(newTheme.tokens);
-    this.requestUpdate();
+    this.#forceUpdateTokens();
+    this.#storage.setJSON(this.theme.tokens);
   };
 
   readonly #handleTokenChange = async (event: Event) => {
@@ -123,17 +103,7 @@ export class App extends LitElement {
       this.theme.updateAt(target.name, target.value);
     }
 
-    console.log('updated');
-
-    // Force context update by creating a new Theme instance with current tokens
-    const newTheme = new Theme();
-    newTheme.tokens = this.theme.tokens;
-    // newTheme.tokens = this.theme.tokens;
-    newTheme.stylesheet = this.theme.stylesheet;
-    this.theme = newTheme;
-
-    // Request update to reflect any new validation issues
-    this.requestUpdate();
+    this.#forceUpdateTokens();
     this.#storage.setJSON(this.theme.tokens);
   };
 
