@@ -1,11 +1,10 @@
 {
-  "extends": "@nl-design-system/tsconfig",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "jsx": "react",
-    "lib": ["DOM", "ES2020"],
     "types": ["vite/client"]
   },
   "include": ["src/**/*", "config/**/*"]
