@@ -6,8 +6,9 @@ export const STORAGE_TYPES = {
 type StorageType = (typeof STORAGE_TYPES)[keyof typeof STORAGE_TYPES];
 
 type Options = {
-  type?: StorageType;
+  onChange?: (event: StorageEvent) => void;
   prefix?: string;
+  type?: StorageType;
 };
 
 const JSON_PREFIX = 'JSON';
@@ -22,7 +23,7 @@ export default class PersistentStorage {
   readonly #backend: Storage;
   readonly #prefix: string;
 
-  constructor({ prefix = '', type: requestedType = STORAGE_TYPES.LOCAL_STORAGE }: Options = {}) {
+  constructor({ onChange, prefix = '', type: requestedType = STORAGE_TYPES.LOCAL_STORAGE }: Options = {}) {
     let type = requestedType;
     const backupType = STORAGE_TYPES.SESSION_STORAGE;
 
@@ -39,6 +40,13 @@ export default class PersistentStorage {
     this.#prefix = prefix;
     this.#type = type;
     this.#backend = window[type];
+
+    globalThis.addEventListener('storage', (event) => {
+      const [version, prefix] = event.key?.split(SEPARATOR) || [];
+      if (version === `v${PersistentStorage.version}` && prefix === this.#prefix) {
+        onChange?.(event);
+      }
+    });
   }
 
   get length() {
