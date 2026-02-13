@@ -17,10 +17,10 @@ const SEPARATOR = ':';
 type ObjectOrArray = Record<string, unknown> | unknown[];
 
 export default class PersistentStorage {
-  static version = 0; // Helpful for when might need to migrate persisted data
-  #type: StorageType;
-  #backend: Storage;
-  #prefix: string;
+  static readonly version = 0; // Helpful for when might need to migrate persisted data
+  readonly #type: StorageType;
+  readonly #backend: Storage;
+  readonly #prefix: string;
 
   constructor({ prefix = '', type: requestedType = STORAGE_TYPES.LOCAL_STORAGE }: Options = {}) {
     let type = requestedType;
