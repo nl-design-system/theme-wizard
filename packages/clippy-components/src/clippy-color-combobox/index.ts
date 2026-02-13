@@ -1,21 +1,22 @@
-import { safeCustomElement } from '@lib/decorators';
 import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
-import LocalizationMixin from '@src/lib/LocalizationMixin';
+import { stringifyColor, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import { allowedValuesConverter } from '../lib/converters';
+import { safeCustomElement } from '../lib/decorators';
+import LocalizationMixin from '../lib/LocalizationMixin';
 import { namedColors, type ColorName } from './lib';
 import messages from './messages/en';
 import colorComboboxStyles from './styles';
 
 type Option = {
-  color: Color;
+  color?: Color;
   label: string;
-  names: ColorName[];
-  value: string;
+  names?: ColorName[];
+  value: ColorValue | string;
 };
 
 // There's no exhaustive list of fonts, so we allow values outside of supplied options.
@@ -71,7 +72,7 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
       const label = option.label.toLowerCase();
       const names = option.names;
       return (
-        label.includes(normalizedQuery) || names.some((name) => this.translations[name]?.includes(normalizedQuery))
+        label.includes(normalizedQuery) || names?.some((name) => this.translations[name]?.includes(normalizedQuery))
       );
     };
   };
@@ -82,8 +83,9 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
   }
 
   override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
-    this.#options = value.map(({ label, value }) => {
-      const color = new Color(value);
+    this.#options = value.map((option) => {
+      const { label, value } = option;
+      const color = new Color(typeof value === 'string' ? value : stringifyColor(value));
       const names = namedColors
         .filter(({ hue, rgb }) => (color.h ? hue(color.h) : rgb([color.r || 0, color.g || 0, color.b || 0])))
         .map(({ name }) => name);

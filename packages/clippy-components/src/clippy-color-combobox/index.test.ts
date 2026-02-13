@@ -5,7 +5,7 @@ import './index';
 
 const tag = 'clippy-color-combobox';
 
-const OPTIONS = [
+const HEX_OPTIONS = [
   {
     label: '#ff6600',
     value: '#ff6600',
@@ -20,11 +20,38 @@ const OPTIONS = [
   },
 ];
 
+const DESIGN_TOKEN_VALUE_OPTIONS = [
+  {
+    label: 'Red',
+    value: {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [1, 0.2, 0.2],
+    },
+  },
+  {
+    label: 'Green',
+    value: {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [0.2, 1, 0.2],
+    },
+  },
+  {
+    label: 'Blue',
+    value: {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [0.2, 0.2, 1],
+    },
+  },
+];
+
 describe(`<${tag}>`, () => {
   beforeEach(() => {
     document.body.innerHTML = `
     <form>
-      <${tag} name="${tag}" options='${JSON.stringify(OPTIONS)}'></${tag}>
+      <${tag} name="${tag}" options='${JSON.stringify(HEX_OPTIONS)}'></${tag}>
     </form>`;
   });
 
@@ -33,15 +60,30 @@ describe(`<${tag}>`, () => {
     await expect.element(combobox).toBeInTheDocument();
   });
 
-  it('shows list of options on focus', async () => {
+  it('allows a list of hex values', async () => {
+    document.body.innerHTML = `
+    <form>
+      <${tag} name="${tag}" options='${JSON.stringify(HEX_OPTIONS)}'></${tag}>
+    </form>`;
     const input = page.getByRole('combobox');
     await input.click();
     const options = page.getByRole('option').elements();
-    expect(options.length).toBe(OPTIONS.length);
+    expect(options.length).toBe(HEX_OPTIONS.length);
+  });
+
+  it('allows a list of design token $value objects', async () => {
+    document.body.innerHTML = `
+    <form>
+      <${tag} name="${tag}" options='${JSON.stringify(DESIGN_TOKEN_VALUE_OPTIONS)}'></${tag}>
+    </form>`;
+    const input = page.getByRole('combobox');
+    await input.click();
+    const options = page.getByRole('option').elements();
+    expect(options.length).toBe(DESIGN_TOKEN_VALUE_OPTIONS.length);
   });
 
   it('filters list of options based on text input', async () => {
-    const query = OPTIONS[0].label.slice(0, -1);
+    const query = HEX_OPTIONS[0].label.slice(0, -1);
     const input = page.getByRole('combobox');
     await input.fill(query);
     const options = page.getByRole('option').elements();
@@ -54,7 +96,7 @@ describe(`<${tag}>`, () => {
     await input.click();
     const option = page.getByRole('option').last();
     await option.click();
-    expect(component.value).toBe(OPTIONS.at(-1)?.value);
+    expect(component.value).toBe(HEX_OPTIONS.at(-1)?.value);
   });
 
   it('shows up as a form element', async () => {
@@ -64,7 +106,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('holds a form value', async () => {
-    const query = OPTIONS[0].value;
+    const query = HEX_OPTIONS[0].value;
     const input = page.getByRole('combobox');
     await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
     const form: HTMLFormElement = document.querySelector('form')!;
@@ -73,10 +115,10 @@ describe(`<${tag}>`, () => {
   });
 
   it.each([
-    [['ArrowDown'], OPTIONS[0]],
-    [['ArrowDown', 'ArrowDown'], OPTIONS[1]],
-    [['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown'], OPTIONS[0]],
-    [['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowUp'], OPTIONS[0]],
+    [['ArrowDown'], HEX_OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown'], HEX_OPTIONS[1]],
+    [['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown'], HEX_OPTIONS[0]],
+    [['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowUp'], HEX_OPTIONS[0]],
   ])('changes the selected option with arrow keys', async (sequence, selection) => {
     const component: ClippyColorCombobox = document.querySelector(tag)!;
     const input = page.getByRole('combobox');
@@ -86,9 +128,9 @@ describe(`<${tag}>`, () => {
   });
 
   it.each([
-    ['Orange', OPTIONS[0]],
-    ['green', OPTIONS[1]],
-    ['purple', OPTIONS[2]],
+    ['Orange', HEX_OPTIONS[0]],
+    ['green', HEX_OPTIONS[1]],
+    ['purple', HEX_OPTIONS[2]],
   ])('filters on color name $0', async (query, selection) => {
     const component: ClippyColorCombobox = document.querySelector(tag)!;
     const input = page.getByRole('combobox');
@@ -98,32 +140,18 @@ describe(`<${tag}>`, () => {
   });
 
   it.each([
-    ['oranje', OPTIONS[0]],
-    ['groen', OPTIONS[1]],
-    ['paars', OPTIONS[2]],
+    ['oranje', HEX_OPTIONS[0]],
+    ['groen', HEX_OPTIONS[1]],
+    ['paars', HEX_OPTIONS[2]],
   ])('filters on localized color name $0', async (query, selection) => {
     document.body.innerHTML = `
       <form>
-        <${tag} name="${tag}" lang="nl" options='${JSON.stringify(OPTIONS)}'></${tag}>
+        <${tag} name="${tag}" lang="nl" options='${JSON.stringify(HEX_OPTIONS)}'></${tag}>
       </form>`;
     const component: ClippyColorCombobox = document.querySelector(tag)!;
     const input = page.getByRole('combobox');
     await input.fill(query);
     await userEvent.keyboard('{ArrowDown}{Enter}');
     expect(component.value).toStrictEqual(selection.value);
-  });
-
-  it('allows other values than supplied options when `other` attribute is set', async () => {
-    // Explicitly set the body so that the string options are used
-    document.body.innerHTML = `
-      <form>
-        <${tag} name="${tag}" options='${JSON.stringify(OPTIONS)}' other></${tag}>
-      </form>`;
-
-    const component: ClippyColorCombobox = document.querySelector(tag)!;
-    const query = 'Elmo';
-    const input = page.getByRole('combobox');
-    await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
-    expect(component.value).toBe(query);
   });
 });

@@ -6,7 +6,7 @@ import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 
-const OPTIONS = [
+const HEX_OPTIONS = [
   {
     label: '#ff6600',
     value: '#ff6600',
@@ -37,8 +37,35 @@ const OPTIONS = [
   },
 ];
 
+const DESIGN_TOKEN_VALUE_OPTIONS = [
+  {
+    label: 'Red',
+    value: {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [1, 0.2, 0.2],
+    },
+  },
+  {
+    label: 'Green',
+    value: {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [0.2, 1, 0.2],
+    },
+  },
+  {
+    label: 'Blue',
+    value: {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [0.2, 0.2, 1],
+    },
+  },
+];
+
 interface ColorComboboxStoryArgs {
-  options: typeof OPTIONS;
+  options: typeof HEX_OPTIONS;
   lang?: string;
 }
 
@@ -51,7 +78,7 @@ const meta = {
   id: 'clippy-color-combobox',
   args: {
     lang: undefined,
-    options: OPTIONS,
+    options: HEX_OPTIONS,
   },
   argTypes: {
     lang: {
@@ -107,5 +134,12 @@ export const Translated = {
   name: 'Translated named colors',
   args: {
     lang: 'nl',
+  },
+};
+
+export const DesignTokens = {
+  name: 'Options with Design Token $value objects',
+  args: {
+    options: DESIGN_TOKEN_VALUE_OPTIONS,
   },
 };
