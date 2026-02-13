@@ -27,8 +27,7 @@ export class WizardTokenField extends WizardTokenNavigator {
   @property() token: Token = {};
   @property() path: string = '';
   @property() options = [];
-  @property({ attribute: false })
-  errors: ValidationIssue[] = [];
+  @property({ attribute: false }) errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
 
   static readonly maxDepth = 3;
