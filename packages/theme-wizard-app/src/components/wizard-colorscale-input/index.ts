@@ -210,7 +210,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
       this.value = this.#scale.toObject();
       this.currentColorValue = event.target.value;
       this.requestUpdate();
-      this.dispatchEvent(new Event('change', { bubbles: true }));
+      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
   };
 
