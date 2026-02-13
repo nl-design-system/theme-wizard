@@ -1,19 +1,13 @@
 import { BrandSchema } from '@nl-design-system-community/design-tokens-schema';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 import './index';
 
 const tag = 'wizard-colorscale-input';
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
-    document.body.innerHTML = `<${tag}></${tag}>`;
-  });
-
-  it('shows a color element', () => {
-    const element = document.querySelector(tag);
-    const color = element?.shadowRoot?.querySelector('input[type=color]') || undefined;
-    expect(color).toBeDefined();
+    document.body.innerHTML = `<${tag} label=${tag}></${tag}>`;
   });
 
   it('shows a list of colors', () => {
@@ -30,11 +24,10 @@ describe(`<${tag}>`, () => {
 
   it('value updates when color changes', async () => {
     const element = document.querySelector(tag);
-    /* @ts-expect-error element/shadowroot could be undefined, but it is fine if it would throw */
-    const color = page.elementLocator(element?.shadowRoot?.querySelector('input[type=color]'));
-    await color.fill('#990000');
+    const color = page.getByLabelText(tag);
+    await color.fill('#990000').then(() => userEvent.keyboard('{Enter}'));
     const first = element?.value || {};
-    await color.fill('#000099');
+    await color.fill('#000099').then(() => userEvent.keyboard('{Enter}'));
     const second = element?.value || {};
     expect(first).not.toMatchObject(second);
   });

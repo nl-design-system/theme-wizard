@@ -1,5 +1,7 @@
-import type { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { consume } from '@lit/context';
+import '@nl-design-system-community/clippy-components/clippy-color-combobox';
+import { ClippyColorCombobox } from '@nl-design-system-community/clippy-components/clippy-color-combobox';
+import { EXTENSION_AUTHORED_AS, type ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import {
   COLOR_KEYS,
   ColorValue,
@@ -7,10 +9,11 @@ import {
   isRef,
   legacyToModernColor,
   parseColor,
+  stringifyColor,
   type ColorSpace,
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import ColorScale from '../../lib/ColorScale';
@@ -97,7 +100,6 @@ export const resolveColorValue = (
 @customElement('wizard-colorscale-input')
 export class WizardColorscaleInput extends WizardTokenInput {
   readonly #scale = new ColorScale(DEFAULT_FROM);
-  readonly #idColor = 'color-scale-color';
   #value = this.#scale.toObject();
 
   readonly supportsCSSColorValues = getSupportsCSSColorValues();
@@ -143,7 +145,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
   @property({ attribute: false })
   scrapedColors: ScrapedColorToken[] = [];
 
-  @property()
+  @property({ type: Boolean })
   inverse?: boolean;
 
   @state()
@@ -202,13 +204,15 @@ export class WizardColorscaleInput extends WizardTokenInput {
   }
 
   readonly handleColorChange = (event: Event) => {
-    if (event.target instanceof HTMLInputElement) {
+    const target = event.target;
+    if (target instanceof ClippyColorCombobox && target.value) {
+      const value = typeof target.value === 'string' ? parseColor(target.value) : target.value;
       const newToken = new ColorToken({
-        $value: parseColor(event.target.value),
+        $value: value,
       });
       this.#scale.from = newToken;
       this.value = this.#scale.toObject();
-      this.currentColorValue = event.target.value;
+      this.currentColorValue = stringifyColor(value);
       this.requestUpdate();
       this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
@@ -218,27 +222,20 @@ export class WizardColorscaleInput extends WizardTokenInput {
     return html`
       <div class="wizard-colorscale-input">
         <div class="wizard-colorscale-input__label">
-          <label for=${this.#idColor}>${this.label}</label>
+          <p>${this.label}</p>
           <slot name="extra-label"></slot>
         </div>
-        <div class="wizard-colorscale-input__input">
-          ${this.scrapedColors.length === 0
-            ? nothing
-            : html`<datalist id="preset-colors">
-                ${this.scrapedColors.map(
-                  (color: ScrapedColorToken) => html`<option>${legacyToModernColor.encode(color.$value)}</option>`,
-                )}
-              </datalist>`}
-          <input
-            id=${this.#idColor}
-            name=${this.#idColor}
-            type="color"
-            .value=${this.currentColorValue}
-            colorspace=${this.colorSpace}
-            @change=${this.handleColorChange}
-            list="preset-colors"
-          />
-        </div>
+        <clippy-color-combobox
+          hidden-label=${this.label}
+          name=${this.name}
+          .options=${this.scrapedColors.map((color) => ({
+            /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
+            label: color.$extensions?.[EXTENSION_AUTHORED_AS] || legacyToModernColor.encode(color.$value),
+            value: color.$value,
+          }))}
+          .value=${this.currentColorValue}
+          @change=${this.handleColorChange}
+        ></clippy-color-combobox>
         <div
           role="presentation"
           class="wizard-colorscale-input__list"
