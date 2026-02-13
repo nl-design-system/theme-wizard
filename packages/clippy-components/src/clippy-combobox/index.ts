@@ -101,10 +101,12 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   /**
    * Override this function to customize how options are filtered when typing
    */
-  readonly filter = (query: string) => {
+  readonly filter = (query: string): ((option: T) => boolean) => {
     const normalizedQuery = query.toLowerCase();
     return ({ description, label }: T) => {
-      return label.toLowerCase().includes(normalizedQuery) || description?.toLowerCase().includes(normalizedQuery);
+      return Boolean(
+        label.toLowerCase().includes(normalizedQuery) || description?.toLowerCase().includes(normalizedQuery),
+      );
     };
   };
 
