@@ -46,7 +46,8 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
 
   override async fetchAdditionalOptions(query: string): Promise<Option[]> {
     this.#additional = this.#additional ?? (await import('./external').then(({ default: items }) => items));
-    const options = this.#additional.filter((option) => option.label.includes(query));
+    const filter = this.filter(query);
+    const options = this.#additional.filter(filter);
 
     if (options.length) {
       this.#intersectionObserver =
