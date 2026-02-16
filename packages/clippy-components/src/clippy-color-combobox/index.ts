@@ -8,14 +8,13 @@ import { ClippyCombobox } from '../clippy-combobox';
 import { allowedValuesConverter } from '../lib/converters';
 import { safeCustomElement } from '../lib/decorators';
 import LocalizationMixin from '../lib/LocalizationMixin';
-import { namedColors, type ColorName } from './lib';
+import { type ColorName, type ColorNameTranslations } from './lib';
 import messages from './messages/en';
 import colorComboboxStyles from './styles';
 
 type Option = {
   color?: Color;
   label: string;
-  names?: ColorName[];
   value: ColorValue | string;
 };
 
@@ -37,7 +36,7 @@ class C extends ClippyCombobox<Option> {}
 export class ClippyColorCombobox extends LocalizationMixin(C) {
   @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
   override allow: (typeof ClippyCombobox.allowances)[number] = defaultAllowance;
-  translations = messages;
+  translations: Record<string, ColorName> = messages;
   #options: Option[] = [];
 
   static override readonly styles = [...ClippyCombobox.styles, colorComboboxStyles, unsafeCSS(colorSampleStyles)];
@@ -51,13 +50,17 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
   async loadLocalizations(lang: string) {
     const SEPARATOR = '-';
     const subtags = lang.split(SEPARATOR);
-    let translations;
+    let translations: ColorNameTranslations | undefined;
 
     for (let i = subtags.length; i > 0; i--) {
       const code = subtags.slice(0, i).join(SEPARATOR);
       try {
         translations = await import(`./messages/${code}.ts`).then((module) => module.default);
-        this.translations = translations || this.translations;
+        // Create a reverse lookup from translation to canonical color name for filtering
+        const lookup = translations
+          ? Object.fromEntries(Object.entries(translations).map(([k, v]) => [v, k] as [string, ColorName]))
+          : undefined;
+        this.translations = lookup || this.translations;
         this.lang = code;
         break;
       } catch {
@@ -68,15 +71,11 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
 
   override readonly filter = (query: string) => {
     const normalizedQuery = query.toLowerCase();
-    const canonicalizedQuery = this.translations[normalizedQuery];
-    const queryColor = Color.try(canonicalizedQuery || normalizedQuery);
+    const queryColor = Color.try(this.translations[normalizedQuery] || normalizedQuery);
     return (option: Option) => {
       const label = option.label.toLowerCase();
-      const names = option.names;
       return Boolean(
-        label.includes(normalizedQuery) ||
-        names?.some((name) => this.translations[name]?.includes(normalizedQuery)) ||
-        (queryColor && option.color && queryColor.deltaE(option.color) < 10),
+        label.includes(normalizedQuery) || (queryColor && option.color && queryColor.deltaE(option.color, '2000') < 20),
       );
     };
   };
@@ -90,13 +89,9 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     this.#options = value.map((option) => {
       const { label, value } = option;
       const color = new Color(typeof value === 'string' ? value : stringifyColor(value));
-      const names = namedColors
-        .filter(({ hue, rgb }) => (color.h ? hue(color.h) : rgb([color.r || 0, color.g || 0, color.b || 0])))
-        .map(({ name }) => name);
       return {
         color,
         label,
-        names,
         value,
       };
     });
