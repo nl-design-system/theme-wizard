@@ -2,14 +2,14 @@ import { test, expect } from './fixtures/fixtures';
 
 test.describe('scraping css design tokens', () => {
   test('scrapes a valid, absolute URL', async ({ themeWizard }) => {
-    await themeWizard.scrapeUrl('https://www.example.com');
+    await themeWizard.scrapeUrl('https://nldesignsystem.nl/');
     const input = themeWizard.page.getByLabel('Website URL');
     await expect(input).not.toHaveAttribute('aria-invalid');
     await expect(themeWizard.page.getByRole('status')).toBeVisible();
   });
 
   test('scrapes a valid, non-absolute URL', async ({ themeWizard }) => {
-    await themeWizard.scrapeUrl('example.com');
+    await themeWizard.scrapeUrl('nldesignsystem.nl/');
     const input = themeWizard.page.getByLabel('Website URL');
     await expect(input).not.toHaveAttribute('aria-invalid');
     await expect(themeWizard.page.getByRole('status')).toBeVisible();
