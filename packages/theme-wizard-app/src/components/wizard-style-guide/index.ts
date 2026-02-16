@@ -2,6 +2,7 @@ import type { ClippyModal } from '@nl-design-system-community/clippy-components/
 import type { DesignToken } from 'style-dictionary/types';
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
+import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-modal';
@@ -92,7 +93,13 @@ export class WizardStyleGuide extends LitElement {
 
   #activeToken?: DisplayToken;
 
-  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(tableCss), unsafeCSS(colorSampleCss), styles];
+  static override readonly styles = [
+    unsafeCSS(dataBadgeCss),
+    unsafeCSS(tableCss),
+    unsafeCSS(colorSampleCss),
+    unsafeCSS(codeCss),
+    styles,
+  ];
 
   #countUsagePerToken(tokens: typeof this.theme.tokens): Map<string, string[]> {
     const tokenUsage = new Map<string, string[]>();
@@ -329,7 +336,7 @@ export class WizardStyleGuide extends LitElement {
                             appearance="subtle-button"
                             @click=${() => navigator.clipboard.writeText(tokenId)}
                           >
-                            <utrecht-code id=${tokenId}>${tokenId}</utrecht-code>
+                            <span class="nl-data-badge" id=${tokenId}>${tokenId}</span>
                           </utrecht-button>
                         </td>
                         <td class="utrecht-table__cell">
@@ -337,7 +344,7 @@ export class WizardStyleGuide extends LitElement {
                             appearance="subtle-button"
                             @click=${() => navigator.clipboard.writeText(displayValue)}
                           >
-                            <utrecht-code id=${displayValue}>${displayValue}</utrecht-code>
+                            <code class="nl-code" id=${displayValue}>${displayValue}</code>
                           </utrecht-button>
                         </td>
                         <td class="utrecht-table__cell">
@@ -417,7 +424,7 @@ export class WizardStyleGuide extends LitElement {
                   </td>
                   <td class="utrecht-table__cell">
                     <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(tokenId)}>
-                      <utrecht-code id="${`basis-text-font-family-${name}`}">${tokenId}</utrecht-code>
+                      <span class="nl-data-badge" id="${`basis-text-font-family-${name}`}">${tokenId}</span>
                     </utrecht-button>
                   </td>
                   <td class="utrecht-table__cell">
@@ -425,7 +432,7 @@ export class WizardStyleGuide extends LitElement {
                       appearance="subtle-button"
                       @click=${() => navigator.clipboard.writeText(displayValue)}
                     >
-                      <utrecht-code>${displayValue}</utrecht-code>
+                      <code class="nl-code">${displayValue}</code>
                     </utrecht-button>
                   </td>
                   <td class="utrecht-table__cell">
@@ -482,7 +489,7 @@ export class WizardStyleGuide extends LitElement {
                   <td class="utrecht-table__cell">${this.#renderFontSizeExample(displayValue)}</td>
                   <td class="utrecht-table__cell">
                     <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(tokenId)}>
-                      <utrecht-code id="${`basis-text-font-size-${name}`}"> ${tokenId} </utrecht-code>
+                      <span class="nl-data-badge" id="${`basis-text-font-size-${name}`}">${tokenId}</span>
                     </utrecht-button>
                   </td>
                   <td class="utrecht-table__cell">
@@ -490,7 +497,7 @@ export class WizardStyleGuide extends LitElement {
                       appearance="subtle-button"
                       @click=${() => navigator.clipboard.writeText(displayValue)}
                     >
-                      <utrecht-code>${displayValue}</utrecht-code>
+                      <code class="nl-code">${displayValue}</code>
                     </utrecht-button>
                   </td>
                   <td class="utrecht-table__cell">
@@ -550,9 +557,9 @@ export class WizardStyleGuide extends LitElement {
                       appearance="subtle-button"
                       @click=${() => navigator.clipboard.writeText(`basis.heading.level-${level}`)}
                     >
-                      <utrecht-code id="${`basis.heading.level-${level}`}" style="white-space: nowrap">
+                      <code class="nl-code" id="${`basis.heading.level-${level}`}" style="white-space: nowrap">
                         ${`basis.heading.level-${level}`}
-                      </utrecht-code>
+                      </code>
                     </utrecht-button>
                   </td>
                 </tr>
@@ -608,12 +615,12 @@ export class WizardStyleGuide extends LitElement {
                           appearance="subtle-button"
                           @click=${() => navigator.clipboard.writeText(tokenId)}
                         >
-                          <utrecht-code id="${`basis-space-${space}-${name}`}"> ${tokenId} </utrecht-code>
+                          <span class="nl-data-badge" id="${`basis-space-${space}-${name}`}">${tokenId}</span>
                         </utrecht-button>
                       </td>
                       <td class="utrecht-table__cell">
                         <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(value)}>
-                          <utrecht-code>${value}</utrecht-code>
+                          <code class="nl-code">${value}</code>
                         </utrecht-button>
                       </td>
 
@@ -723,7 +730,7 @@ export class WizardStyleGuide extends LitElement {
                           })}
                         </td>
                         <td class="utrecht-table__cell">
-                          <utrecht-code>${fullPath}</utrecht-code>
+                          <span class="nl-data-badge">${fullPath}</span>
                         </td>
                         <td class="utrecht-table__cell">
                           ${isRef(tokenConfig.$value)
@@ -731,7 +738,7 @@ export class WizardStyleGuide extends LitElement {
                             : nothing}
                         </td>
                         <td class="utrecht-table__cell">
-                          <utrecht-code>${displayValue}</utrecht-code>
+                          <code class="nl-code">${displayValue}</code>
                         </td>
                       </tr>
                     `;
@@ -760,26 +767,26 @@ export class WizardStyleGuide extends LitElement {
               <dl>
                 <dt>Token type</dt>
                 <dd>
-                  <utrecht-code>${this.#activeToken.tokenType}</utrecht-code>
+                  <code class="nl-code">${this.#activeToken.tokenType}</code>
                 </dd>
                 <dt>Token ID</dt>
                 <dd>
-                  <utrecht-code>${this.#activeToken.tokenId}</utrecht-code>
+                  <span class="nl-data-badge">${this.#activeToken.tokenId}</span>
                 </dd>
                 <dt>CSS Variable</dt>
                 <dd>
-                  <utrecht-code>${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</utrecht-code>
+                  <code class="nl-code">${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</code>
                 </dd>
                 <dt>${t('styleGuide.value')}</dt>
                 <dd>
-                  <utrecht-code>${this.#activeToken.displayValue}</utrecht-code>
+                  <code class="nl-code">${this.#activeToken.displayValue}</code>
                 </dd>
                 ${this.#activeToken.metadata
                   ? Object.entries(this.#activeToken.metadata).map(
                       ([key, value]) => html`
                         <dt>${key}</dt>
                         <dd>
-                          <utrecht-code>${value}</utrecht-code>
+                          <code class="nl-code">${value}</code>
                         </dd>
                       `,
                     )
