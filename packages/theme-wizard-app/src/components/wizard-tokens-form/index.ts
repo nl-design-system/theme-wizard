@@ -13,9 +13,6 @@ import type { WizardDownloadConfirmation } from '../wizard-download-confirmation
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import PersistentStorage from '../../lib/PersistentStorage';
-import { WizardColorscaleInput } from '../wizard-colorscale-input';
-import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -33,8 +30,6 @@ declare global {
 export class WizardTokensForm extends LitElement {
   static override readonly styles = [unsafeCSS(buttonLinkStyles), styles];
 
-  readonly #storage = new PersistentStorage({ prefix: 'theme-wizard' });
-
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
@@ -42,30 +37,8 @@ export class WizardTokensForm extends LitElement {
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
 
-  readonly #handleTokenChange = async (event: Event) => {
-    const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
-
-    if (target instanceof WizardColorscaleInput) {
-      const updates = Object.entries(target.value).map(([colorKey, value]) => ({
-        path: `${target.name}.${colorKey}`,
-        value: value.$value,
-      }));
-      this.theme.updateMany(updates);
-    } else if (target instanceof WizardTokenInput) {
-      this.theme.updateAt(target.name, target.value);
-    }
-
-    if (target instanceof WizardTokenInput) {
-      // Request update to reflect any new validation issues
-      this.requestUpdate();
-      this.#storage.setJSON(this.theme.tokens);
-    }
-  };
-
   readonly #handleReset = () => {
-    this.theme.reset();
-    this.#storage.removeJSON();
-    this.requestUpdate();
+    this.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
   };
 
   readonly #downloadJSON = async () => {
@@ -105,7 +78,7 @@ export class WizardTokensForm extends LitElement {
 
     return html`
       <section>
-        <form @change=${this.#handleTokenChange} @reset=${this.#handleReset}>
+        <form @reset=${this.#handleReset}>
           <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
 
           <wizard-token-field

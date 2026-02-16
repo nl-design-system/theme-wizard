@@ -15,20 +15,21 @@ import { scrapedColorsContext } from '../../contexts/scraped-colors';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
+import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
+import { WizardTokenInput } from '../wizard-token-input';
 import appStyles from './app.css';
 
 /**
- * Router shell component - Provides Theme context and manages routing
+ * Router shell component - Provides Theme context
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
   readonly #storage = new PersistentStorage({
     onChange: () => {
       const tokens = this.#storage.getJSON();
-      if (tokens) {
-        this.theme.tokens = tokens;
-      }
+      this.theme.tokens = tokens;
+      this.#forceUpdateTokens();
     },
     prefix: 'theme-wizard',
   });
@@ -54,17 +55,55 @@ export class App extends LitElement {
     }
 
     this.addEventListener('change', this.#handleScrapeDone);
+    this.addEventListener('change', this.#handleTokenChange);
+    this.addEventListener('reset', this.#handleReset);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('change', this.#handleScrapeDone);
+    this.removeEventListener('change', this.#handleTokenChange);
+    this.removeEventListener('reset', this.#handleReset);
   }
+
+  /**
+   * @description Lit context only detects reference changes, not nested properties. New instance triggers updates; preserved stylesheet keeps preview styling of preview intact.
+   */
+  readonly #forceUpdateTokens = () => {
+    const newTheme = new Theme(undefined, this.theme.stylesheet);
+    newTheme.tokens = this.theme.tokens;
+    this.theme = newTheme;
+    this.requestUpdate();
+  };
 
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
     this.scrapedColors = target.colors;
+  };
+
+  readonly #handleReset = () => {
+    this.theme.reset();
+    this.#forceUpdateTokens();
+    this.#storage.setJSON(this.theme.tokens);
+  };
+
+  readonly #handleTokenChange = async (event: Event) => {
+    const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
+    if (!(target instanceof WizardTokenInput)) return;
+
+    if (target instanceof WizardColorscaleInput) {
+      const updates = Object.entries(target.value).map(([colorKey, value]) => ({
+        path: `${target.name}.${colorKey}`,
+        value: value.$value,
+      }));
+      this.theme.updateMany(updates);
+    } else {
+      this.theme.updateAt(target.name, target.value);
+    }
+
+    this.#forceUpdateTokens();
+    this.#storage.setJSON(this.theme.tokens);
   };
 
   override render() {
