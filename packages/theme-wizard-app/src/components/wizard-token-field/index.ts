@@ -1,10 +1,12 @@
+import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
+import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import { isRef } from '@nl-design-system-community/design-tokens-schema';
-import { html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
+import { html, nothing, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
@@ -30,7 +32,7 @@ export class WizardTokenField extends WizardTokenNavigator {
 
   static readonly maxDepth = 3;
 
-  static override readonly styles = [styles];
+  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(codeCss), styles];
 
   get _id() {
     return `input-${this.path}`;
@@ -84,7 +86,8 @@ export class WizardTokenField extends WizardTokenNavigator {
     if (isRef(this.value)) {
       return html`
         <span>${label}</span>
-        <span>&rarr; ${this.value}</span>
+        &rarr;
+        <span class="nl-data-badge">${this.value.slice(1, -1)}</span>
       `;
     }
 
