@@ -26,16 +26,21 @@ const STYLE_DICTIONARY_SETTINGS = {
 
 export default class Theme {
   static readonly defaults = StrictThemeSchema.parse(startTokens); // Start tokens are default for all Themes
+  name = 'wizard';
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
-  stylesheet: CSSStyleSheet = new CSSStyleSheet();
-  name = 'wizard';
+  readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] = [];
 
-  constructor(tokens?: DesignTokens) {
+  /**
+   * @param tokens Default token set for the theme, defaults to start tokens. Resetting a theme will revert to these tokens.
+   * @param stylesheet Stylesheet instance to carry over so that adopted stylesheets can be preserved across new Theme instances.
+   */
+  constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
+    this.#stylesheet = stylesheet || new CSSStyleSheet();
     this.tokens = structuredClone(this.#defaults);
   }
 
@@ -47,6 +52,10 @@ export default class Theme {
     return this.#modified;
   }
 
+  get stylesheet() {
+    return this.#stylesheet;
+  }
+
   get tokens() {
     return this.#tokens;
   }
@@ -56,7 +65,7 @@ export default class Theme {
     this.#validateTheme(values);
     this.#tokens = values;
     this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
-      const sheet = this.stylesheet;
+      const sheet = this.#stylesheet;
       sheet.replaceSync(css);
     });
   }
