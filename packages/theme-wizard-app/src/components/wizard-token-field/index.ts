@@ -80,11 +80,6 @@ export class WizardTokenField extends WizardTokenNavigator {
     return this.token?.$value;
   }
 
-  protected get _inputValue() {
-    return (this.shadowRoot?.getElementById(this._id) as WizardFontInput | WizardColorInput | WizardTokenInput | null)
-      ?.value;
-  }
-
   renderField(type: typeof this.type, label: string) {
     const key = this.path.split('.').pop();
 
