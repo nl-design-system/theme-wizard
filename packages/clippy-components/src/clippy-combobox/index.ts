@@ -65,11 +65,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       return this.options;
     }
     const filter = this.filter(this.query);
-    const options = this.options.filter(filter);
-    if (options.length === 0) {
-      this.#addAdditionalOptions(this.query);
-    }
-    return options;
+    return this.options.filter(filter);
   }
 
   @property({ converter: arrayFromTokenList })
@@ -197,6 +193,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.activeIndex = -1;
     this.open = true;
     this.query = target.value;
+    if (this.query.length > 3) {
+      this.#addAdditionalOptions(this.query);
+    }
     this.emit('input');
   };
 
