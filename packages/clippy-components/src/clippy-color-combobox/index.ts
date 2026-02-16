@@ -97,6 +97,14 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     });
   }
 
+  override queryToValue(query: string): Option['value'] | null {
+    if (this.allow === 'other') {
+      const color = Color.try(this.translations[query.toLowerCase()] || query);
+      return this.getOptionForValue(this.value)?.value || color === null ? query : color.toString();
+    }
+    return super.queryToValue(query);
+  }
+
   override renderEntry(option: Option) {
     const color = option.color?.toString();
     return html`
