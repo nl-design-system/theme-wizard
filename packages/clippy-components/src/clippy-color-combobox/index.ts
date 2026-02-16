@@ -8,7 +8,7 @@ import { ClippyCombobox } from '../clippy-combobox';
 import { allowedValuesConverter } from '../lib/converters';
 import { safeCustomElement } from '../lib/decorators';
 import LocalizationMixin from '../lib/LocalizationMixin';
-import { type ColorName, type ColorNameTranslations } from './lib';
+import { BROAD_COLOR_NAMES, DELTA_E_THRESHOLD, type ColorName, type ColorNameTranslations } from './lib';
 import messages from './messages/en';
 import colorComboboxStyles from './styles';
 
@@ -71,11 +71,14 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
 
   override readonly filter = (query: string) => {
     const normalizedQuery = query.toLowerCase();
-    const queryColor = Color.try(this.translations[normalizedQuery] || normalizedQuery);
+    const colorName = this.translations[normalizedQuery] || normalizedQuery;
+    const queryColor = Color.try(colorName);
     return (option: Option) => {
       const label = option.label.toLowerCase();
+      const maxDeltaE = BROAD_COLOR_NAMES.includes(colorName) ? DELTA_E_THRESHOLD * 2 : DELTA_E_THRESHOLD;
       return Boolean(
-        label.includes(normalizedQuery) || (queryColor && option.color && queryColor.deltaE(option.color, '2000') < 20),
+        label.includes(normalizedQuery) ||
+        (queryColor && option.color && queryColor.deltaE(option.color, '2000') < maxDeltaE),
       );
     };
   };

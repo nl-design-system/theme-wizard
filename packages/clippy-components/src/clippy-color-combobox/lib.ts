@@ -18,4 +18,8 @@ export const COLOR_NAMES = {
 
 export type ColorName = keyof typeof COLOR_NAMES;
 
+export const BROAD_COLOR_NAMES: ColorName[] = ['red', 'green', 'blue'];
+
+export const DELTA_E_THRESHOLD = 20;
+
 export type ColorNameTranslations = { [K in ColorName]: string };
