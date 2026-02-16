@@ -6,9 +6,7 @@ import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
 import type ValidationIssue from '../../lib/ValidationIssue';
-import { WizardColorInput } from '../wizard-color-input';
-import { WizardFontInput } from '../wizard-font-input';
-import { Token, WizardTokenInput } from '../wizard-token-input';
+import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
