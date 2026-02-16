@@ -25,20 +25,19 @@ export class WizardTokenField extends WizardTokenNavigator {
   @property() token: Token = {};
   @property() path: string = '';
   @property() options = [];
-  @property({ attribute: false })
-  errors: ValidationIssue[] = [];
+  @property({ attribute: false }) errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
 
   static readonly maxDepth = 3;
 
   static override readonly styles = [styles];
 
-  get #id() {
+  get _id() {
     return `input-${this.path}`;
   }
 
   get #hasErrors(): boolean {
-    return this.#pathErrors.length > 0 || this.#hasNestedErrors;
+    return this.pathErrors.length > 0 || this.#hasNestedErrors;
   }
 
   get #hasNestedErrors(): boolean {
@@ -49,7 +48,7 @@ export class WizardTokenField extends WizardTokenNavigator {
     return this.errors.some((error) => error.path.startsWith(this.path + '.'));
   }
 
-  get #pathErrors(): ValidationIssue[] {
+  protected get pathErrors(): ValidationIssue[] {
     return this.errors.filter((error) => error.path === this.path);
   }
 
@@ -92,9 +91,9 @@ export class WizardTokenField extends WizardTokenNavigator {
     switch (type) {
       case 'color':
         return html` <wizard-color-input
-          .errors=${this.#pathErrors}
+          .errors=${this.pathErrors}
           .value=${this.token.$value}
-          id=${this.#id}
+          id=${this._id}
           key=${key}
           label=${label}
           name=${this.path}
@@ -103,9 +102,9 @@ export class WizardTokenField extends WizardTokenNavigator {
         </wizard-color-input>`;
       case 'font':
         return html` <wizard-font-input
-          .errors=${this.#pathErrors}
+          .errors=${this.pathErrors}
           .value=${this.token.$value}
-          id=${this.#id}
+          id=${this._id}
           key=${key}
           label=${label}
           name=${this.path}
@@ -114,9 +113,9 @@ export class WizardTokenField extends WizardTokenNavigator {
         </wizard-font-input>`;
       default:
         return html` <wizard-token-input
-          .errors=${this.#pathErrors}
+          .errors=${this.pathErrors}
           .value=${this.token}
-          id=${this.#id}
+          id=${this._id}
           key=${key}
           label=${label}
           name=${this.path}
