@@ -145,7 +145,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    */
   valueToQuery(value: Option['value']): string | undefined {
     const option = this.getOptionForValue(value);
-    return option?.label;
+    return option?.label || (this.allow === 'other' && typeof value === 'string' ? value : undefined);
   }
 
   readonly #addAdditionalOptions = debounce(
