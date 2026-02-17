@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 //@see https://rollupjs.org/configuration-options/#input
-export function getFiles(pattern: string, relativeTo = 'src') {
+export function getFiles(pattern: string | string[], relativeTo = 'src') {
   return Object.fromEntries(
     globSync(pattern).map((file) => {
       return [
@@ -22,8 +22,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     lib: {
       entry: {
-        ...getFiles('src/**/*.ts'),
-        ...getFiles('src/**/*.tsx'),
+        ...getFiles(['src/**/*.ts']),
       },
       formats: ['es'],
     },
@@ -38,7 +37,7 @@ export default defineConfig(({ mode }) => ({
         'lit/directives/style-map.js',
         'lit/directives/unsafe-svg.js',
       ],
-      input: getFiles('src/[!lib]**/index.ts'),
+      input: getFiles('src/**/index.ts'),
       output: {
         assetFileNames: (assetInfo) => {
           if (assetInfo.names.every((name) => name.endsWith('.json'))) {
