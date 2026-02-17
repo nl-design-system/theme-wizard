@@ -31,8 +31,7 @@ test.describe('scraping css design tokens', () => {
 });
 
 test.describe('change fonts', () => {
-  // Skipping because we don't have functionality to alter token refs at this moment
-  test.skip('can change heading font to Courier New on preview', async ({ previewPage }) => {
+  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
     const heading = previewPage.getHeading(2);
     await expect(heading).not.toHaveFont('Courier New');
     await previewPage.changeHeadingFont('Courier New');

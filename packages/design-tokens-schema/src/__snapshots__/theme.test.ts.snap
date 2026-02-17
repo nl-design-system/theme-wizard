@@ -11576,7 +11576,12 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
         },
         "$type": "fontFamily",
-        "$value": "'Fira Sans', Helvetica, Arial, sans-serif",
+        "$value": [
+          "Fira Sans",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
       },
       "font-weight": {
         "$extensions": {
@@ -33582,16 +33587,15 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-family": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": [
-            "IBM Plex Sans",
-            "sans-serif",
-          ],
           "studio.tokens": {
             "originalType": "fontFamilies",
           },
         },
         "$type": "fontFamily",
-        "$value": "{basis.text.font-family.default}",
+        "$value": [
+          "IBM Plex Sans",
+          "sans-serif",
+        ],
       },
       "font-weight": {
         "$extensions": {
@@ -56462,7 +56466,10 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
         },
         "$type": "fontFamily",
-        "$value": "'Noto Serif', serif",
+        "$value": [
+          "Noto Serif",
+          "serif",
+        ],
       },
       "font-weight": {
         "$extensions": {
