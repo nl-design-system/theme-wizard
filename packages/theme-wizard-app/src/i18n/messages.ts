@@ -219,10 +219,15 @@ export const en = {
     issue: {
       contrastValue: 'Contrast: {{value}}',
       fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
-        if (!token) return html`Font size is too small`;
+        const guidelinesLink = html`
+          <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte/" target="_blank">
+            Bekijk richtlijnen
+          </a>
+        `;
+        if (!token) return html`Font size is too small. ${guidelinesLink}`;
 
         const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Font size is too small in ${tokenLink}`;
+        return html`Font size is too small in ${tokenLink}. ${guidelinesLink}`;
       },
       fontSizeValue: 'Font size: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
@@ -448,10 +453,15 @@ export const nl = {
     issue: {
       contrastValue: 'Contrast: {{value}}',
       fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
-        if (!token) return html`Lettergrootte is te klein`;
+        const guidelinesLink = html`
+          <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte/" target="_blank">
+            Bekijk richtlijnen
+          </a>
+        `;
+        if (!token) return html`Lettergrootte is te klein. ${guidelinesLink}`;
 
         const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
-        return html`Lettergrootte is te klein in ${tokenLink}`;
+        return html`Lettergrootte is te klein in ${tokenLink}. ${guidelinesLink}`;
       },
       fontSizeValue: 'Lettergrootte: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
