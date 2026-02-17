@@ -168,6 +168,25 @@ export const en = {
   unknown: 'Unknown error',
   validation: {
     error: {
+      [ERROR_CODES.FONT_SIZE_TOO_SMALL]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
+        },
+        label: 'Font size too small',
+      },
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
         compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
           html`${t('validation.issue.invalidContrastWith', {
@@ -199,6 +218,18 @@ export const en = {
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
+      fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+        const guidelinesLink = html`
+          <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte/" target="_blank">
+            Bekijk richtlijnen
+          </a>
+        `;
+        if (!token) return html`Font size is too small. ${guidelinesLink}`;
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
+        return html`Font size is too small in ${tokenLink}. ${guidelinesLink}`;
+      },
+      fontSizeValue: 'Font size: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
         if (!token) return html`Insufficient contrast`;
 
@@ -373,6 +404,25 @@ export const nl = {
   unknown: 'Onbekende fout opgetreden',
   validation: {
     error: {
+      [ERROR_CODES.FONT_SIZE_TOO_SMALL]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
+        },
+        label: 'Lettergrootte te klein',
+      },
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
         compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
           html`${t('validation.issue.invalidContrastWith', {
@@ -402,6 +452,18 @@ export const nl = {
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
+      fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+        const guidelinesLink = html`
+          <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte/" target="_blank">
+            Bekijk richtlijnen
+          </a>
+        `;
+        if (!token) return html`Lettergrootte is te klein. ${guidelinesLink}`;
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
+        return html`Lettergrootte is te klein in ${tokenLink}. ${guidelinesLink}`;
+      },
+      fontSizeValue: 'Lettergrootte: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
         if (!token) return html`Onvoldoende contrast`;
 

@@ -253,7 +253,7 @@ describe('resolving Design Token refs', () => {
     expect.soft(result.success).toEqual(false);
     expect.soft(z.flattenError(result.error!)).toMatchObject({
       formErrors: [
-        `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
+        `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" at "basis.heading.font-family" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
       ],
     });
   });
@@ -860,14 +860,18 @@ describe('validate minimum font-size', () => {
         actual: '0.8rem',
         code: 'custom',
         ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
-        message: 'Font-size should be 16px or 1rem minimum (got: "0.8rem")',
+        message: 'Font-size should be 14px or 0.875rem minimum (got: "0.8rem")',
+        minimum: '14px / 0.875rem',
+        origin: 'number',
         path: ['basis', 'text', 'font-size', 'sm', '$value'],
       },
       {
         actual: '10px',
         code: 'custom',
         ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
-        message: 'Font-size should be 16px or 1rem minimum (got: "10px")',
+        message: 'Font-size should be 14px or 0.875rem minimum (got: "10px")',
+        minimum: '14px / 0.875rem',
+        origin: 'number',
         path: ['basis', 'text', 'font-size', 'xs', '$value'],
       },
     ];
@@ -901,7 +905,7 @@ describe('validate minimum font-size', () => {
       expect(result.error?.issues).toEqual(expectedErrors);
     });
 
-    it('flags legacy syntax', () => {
+    it('flags legacy syntax ($type=dimension, $value=string)', () => {
       const config = {
         basis: {
           text: {
@@ -922,6 +926,51 @@ describe('validate minimum font-size', () => {
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual(expectedErrors);
+    });
+
+    it('flags legacy syntax ($type=fontSize, $value=string)', () => {
+      const config = {
+        basis: {
+          text: {
+            'font-size': {
+              sm: {
+                $type: 'fontSize',
+                $value: '0.8rem',
+              },
+              xs: {
+                $type: 'fontSize',
+                $value: '10px',
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual(expectedErrors);
+    });
+
+    it('allows legacy syntax ($type=fontSize, $value=string)', () => {
+      const config = {
+        basis: {
+          text: {
+            'font-size': {
+              sm: {
+                $type: 'fontSize',
+                $value: '1rem',
+              },
+              xs: {
+                $type: 'fontSize',
+                $value: '16px',
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
     });
   });
 });

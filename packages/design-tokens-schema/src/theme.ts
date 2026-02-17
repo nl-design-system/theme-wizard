@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
-import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
+import { walkColors, walkDimensions, walkLineHeights, walkObject, walkTokens } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
   type ForegroundColorKey,
@@ -24,7 +24,7 @@ import {
   MinFontSizeIssue,
   createContrastIssue,
 } from './validation-issue';
-import { validateFontSize } from './validations';
+import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM } from './validations';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -148,11 +148,24 @@ export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
 
 export type Theme = z.infer<typeof ThemeShapeSchema>;
 
+/**
+ * @description NLDS themes use `$type: 'fontSize'` instead of dimension, so a quick round of preprocessing helps to get them in order
+ */
+const upgradeLegacyDimensionTypes = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
+  walkTokens(rootConfig, (token) => {
+    if (token.$type === 'fontSize') {
+      token.$type = 'dimension';
+    }
+  });
+  return rootConfig;
+};
+
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
 export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
+  .transform(upgradeLegacyDimensionTypes)
   .transform(addContrastExtensions)
   .transform(addColorScalePositionExtensions)
   .transform(resolveConfigRefs)
@@ -239,7 +252,9 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
           code: 'custom',
           ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
           input: actual,
-          message: `Font-size should be 16px or 1rem minimum (got: "${actual}")`,
+          message: `Font-size should be ${MIN_FONT_SIZE_PX}px or ${MIN_FONT_SIZE_REM}rem minimum (got: "${actual}")`,
+          minimum: `${MIN_FONT_SIZE_PX}px / ${MIN_FONT_SIZE_REM}rem`,
+          origin: 'number',
           path: [...path, '$value'],
         } satisfies MinFontSizeIssue);
       }

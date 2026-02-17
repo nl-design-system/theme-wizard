@@ -37,6 +37,7 @@ export type MinFontSizeIssue = z.core.$ZodSuperRefineIssue & {
   message: string;
   actual: string;
   path: string[];
+  minimum: string;
 };
 
 export type ThemeValidationIssue =

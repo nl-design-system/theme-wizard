@@ -38,7 +38,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.3xl}",
           },
           "line-height": {
@@ -58,7 +58,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.2xl}",
           },
           "line-height": {
@@ -78,7 +78,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.xl}",
           },
           "line-height": {
@@ -98,7 +98,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.lg}",
           },
           "line-height": {
@@ -118,7 +118,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "line-height": {
@@ -138,7 +138,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.sm}",
           },
           "line-height": {
@@ -11302,12 +11302,15 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-size": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "1rem",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 1,
+          },
           "studio.tokens": {
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -12317,8 +12320,11 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "2rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 2,
+          },
         },
         "3xl": {
           "$extensions": {
@@ -12326,8 +12332,11 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "2.5rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 2.5,
+          },
         },
         "4xl": {
           "$extensions": {
@@ -12335,8 +12344,11 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "3rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 3,
+          },
         },
         "lg": {
           "$extensions": {
@@ -12344,8 +12356,11 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1.25rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1.25,
+          },
         },
         "md": {
           "$extensions": {
@@ -12353,8 +12368,11 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1,
+          },
         },
         "sm": {
           "$extensions": {
@@ -12362,8 +12380,11 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "0.875rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 0.875,
+          },
         },
         "xl": {
           "$extensions": {
@@ -12371,8 +12392,11 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1.5rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1.5,
+          },
         },
       },
       "font-weight": {
@@ -12562,7 +12586,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -12725,7 +12749,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -12762,7 +12786,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "line-height": {
@@ -12865,7 +12889,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -12920,7 +12944,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -13101,7 +13125,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -13124,7 +13148,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -13166,7 +13190,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -13319,7 +13343,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -13343,7 +13367,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -13404,7 +13428,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -13641,7 +13665,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "icon": {
@@ -13769,7 +13793,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -14022,7 +14046,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -14686,7 +14710,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -14962,7 +14986,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -15299,7 +15323,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -15368,7 +15392,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
     },
@@ -15400,7 +15424,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -15483,7 +15507,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -15542,7 +15566,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.3xl}",
         },
         "font-weight": {
@@ -15594,7 +15618,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.2xl}",
         },
         "font-weight": {
@@ -15646,7 +15670,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -15698,7 +15722,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -15750,7 +15774,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -15802,7 +15826,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.sm}",
         },
         "font-weight": {
@@ -15945,7 +15969,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -15994,7 +16018,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -16013,7 +16037,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -16080,7 +16104,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -16138,7 +16162,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -16197,7 +16221,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -16259,7 +16283,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -16460,7 +16484,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -16826,7 +16850,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -16914,7 +16938,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -16977,7 +17001,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -17021,7 +17045,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -17329,7 +17353,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -17431,7 +17455,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -18130,7 +18154,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -18238,7 +18262,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -18425,7 +18449,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -18736,7 +18760,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -19307,7 +19331,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -19346,7 +19370,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
       },
@@ -19365,7 +19389,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "padding-block-end": {
@@ -19404,7 +19428,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -19442,7 +19466,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -19638,7 +19662,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -19764,7 +19788,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -19861,7 +19885,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -19958,7 +19982,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -20171,7 +20195,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -20208,7 +20232,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -20311,7 +20335,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -20421,7 +20445,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "line-height": {
@@ -20471,7 +20495,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -20508,7 +20532,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -20589,7 +20613,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -20637,7 +20661,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.3xl}",
       },
       "font-weight": {
@@ -20679,7 +20703,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.2xl}",
       },
       "font-weight": {
@@ -20721,7 +20745,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.xl}",
       },
       "font-weight": {
@@ -20763,7 +20787,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.lg}",
       },
       "font-weight": {
@@ -20805,7 +20829,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -20847,7 +20871,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.sm}",
       },
       "font-weight": {
@@ -21217,7 +21241,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -21253,7 +21277,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -21392,7 +21416,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "page-link": {
@@ -21574,7 +21598,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -21597,7 +21621,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -21639,7 +21663,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.sm}",
         },
         "font-weight": {
@@ -21682,7 +21706,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.sm}",
       },
       "font-weight": {
@@ -21977,7 +22001,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -22284,7 +22308,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -22343,7 +22367,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "footer": {
@@ -22473,7 +22497,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -22629,7 +22653,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -22724,7 +22748,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -22810,7 +22834,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "has-image": {
@@ -22857,7 +22881,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -23016,7 +23040,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -23178,7 +23202,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -23248,7 +23272,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.3xl}",
           },
           "line-height": {
@@ -23268,7 +23292,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.2xl}",
           },
           "line-height": {
@@ -23288,7 +23312,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.xl}",
           },
           "line-height": {
@@ -23308,7 +23332,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.lg}",
           },
           "line-height": {
@@ -23328,7 +23352,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "line-height": {
@@ -23348,7 +23372,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.sm}",
           },
           "line-height": {
@@ -23421,7 +23445,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -23491,7 +23515,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -23580,7 +23604,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -23701,7 +23725,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -33294,12 +33318,15 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-size": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "1rem",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 1,
+          },
           "studio.tokens": {
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -34304,8 +34331,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "2rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 2,
+          },
         },
         "3xl": {
           "$extensions": {
@@ -34313,8 +34343,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "2.5rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 2.5,
+          },
         },
         "4xl": {
           "$extensions": {
@@ -34322,8 +34355,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "3rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 3,
+          },
         },
         "lg": {
           "$extensions": {
@@ -34331,8 +34367,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1.25rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1.25,
+          },
         },
         "md": {
           "$extensions": {
@@ -34340,8 +34379,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1,
+          },
         },
         "sm": {
           "$extensions": {
@@ -34349,8 +34391,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "0.875rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 0.875,
+          },
         },
         "xl": {
           "$extensions": {
@@ -34358,8 +34403,11 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1.5rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1.5,
+          },
         },
       },
       "font-weight": {
@@ -34549,7 +34597,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -34712,7 +34760,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -34749,7 +34797,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "line-height": {
@@ -34852,7 +34900,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -34907,7 +34955,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -35088,7 +35136,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -35111,7 +35159,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -35153,7 +35201,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -35306,7 +35354,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -35330,7 +35378,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -35391,7 +35439,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -35648,7 +35696,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "icon": {
@@ -35769,7 +35817,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -35933,7 +35981,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -36061,7 +36109,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -36275,7 +36323,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{nl.button.default.font-size}",
         },
         "font-weight": {
@@ -36586,7 +36634,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{nl.button.default.font-size}",
         },
         "font-weight": {
@@ -36897,7 +36945,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{nl.button.default.font-size}",
         },
         "font-weight": {
@@ -37182,7 +37230,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
     },
@@ -37214,7 +37262,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -37297,7 +37345,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -37356,7 +37404,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.3xl}",
         },
         "font-weight": {
@@ -37408,7 +37456,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.2xl}",
         },
         "font-weight": {
@@ -37460,7 +37508,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -37512,7 +37560,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -37564,7 +37612,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -37616,7 +37664,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.sm}",
         },
         "font-weight": {
@@ -37759,7 +37807,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -37808,7 +37856,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -37827,7 +37875,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -37894,7 +37942,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -38000,7 +38048,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "line-height": {
@@ -38077,7 +38125,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -38132,7 +38180,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -38181,7 +38229,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -38420,7 +38468,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -38472,7 +38520,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -38530,7 +38578,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -38852,7 +38900,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -38940,7 +38988,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -39003,7 +39051,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -39047,7 +39095,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -39355,7 +39403,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -39457,7 +39505,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -40156,7 +40204,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -40264,7 +40312,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -40457,7 +40505,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -40768,7 +40816,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -41387,7 +41435,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -41426,7 +41474,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
       },
@@ -41445,7 +41493,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "margin-block-end": {
@@ -41504,7 +41552,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -41542,7 +41590,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -41738,7 +41786,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -41878,7 +41926,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -41989,7 +42037,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -42100,7 +42148,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -42305,7 +42353,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -42342,7 +42390,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -42465,7 +42513,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -42575,7 +42623,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "line-height": {
@@ -42645,7 +42693,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -42692,7 +42740,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -42783,7 +42831,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -42831,7 +42879,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.3xl}",
       },
       "font-weight": {
@@ -42883,7 +42931,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.2xl}",
       },
       "font-weight": {
@@ -42935,7 +42983,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.xl}",
       },
       "font-weight": {
@@ -42987,7 +43035,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.lg}",
       },
       "font-weight": {
@@ -43039,7 +43087,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -43091,7 +43139,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.sm}",
       },
       "font-weight": {
@@ -43496,7 +43544,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -43532,7 +43580,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -43671,7 +43719,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "margin-block-end": {
@@ -43863,7 +43911,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -43886,7 +43934,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -43928,7 +43976,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.sm}",
         },
         "font-weight": {
@@ -43971,7 +44019,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.sm}",
       },
       "font-weight": {
@@ -44286,7 +44334,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -44660,7 +44708,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -44830,7 +44878,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -44889,7 +44937,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "footer": {
@@ -45029,7 +45077,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -45185,7 +45233,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -45280,7 +45328,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -45366,7 +45414,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "has-image": {
@@ -45413,7 +45461,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -45572,7 +45620,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -45734,7 +45782,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -45804,7 +45852,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.3xl}",
           },
           "line-height": {
@@ -45824,7 +45872,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.2xl}",
           },
           "line-height": {
@@ -45844,7 +45892,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.xl}",
           },
           "line-height": {
@@ -45864,7 +45912,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.lg}",
           },
           "line-height": {
@@ -45884,7 +45932,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "line-height": {
@@ -45904,7 +45952,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.sm}",
           },
           "line-height": {
@@ -45977,7 +46025,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -46047,7 +46095,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -46136,7 +46184,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -46257,7 +46305,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -56144,12 +56192,15 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-size": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "1rem",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 1,
+          },
           "studio.tokens": {
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -57154,8 +57205,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "2rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 2,
+          },
         },
         "3xl": {
           "$extensions": {
@@ -57163,8 +57217,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "2.5rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 2.5,
+          },
         },
         "4xl": {
           "$extensions": {
@@ -57172,8 +57229,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "3rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 3,
+          },
         },
         "lg": {
           "$extensions": {
@@ -57181,8 +57241,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1.25rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1.25,
+          },
         },
         "md": {
           "$extensions": {
@@ -57190,8 +57253,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1,
+          },
         },
         "sm": {
           "$extensions": {
@@ -57199,8 +57265,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "0.875rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 0.875,
+          },
         },
         "xl": {
           "$extensions": {
@@ -57208,8 +57277,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
-          "$value": "1.5rem",
+          "$type": "dimension",
+          "$value": {
+            "unit": "rem",
+            "value": 1.5,
+          },
         },
       },
       "font-weight": {
@@ -57399,7 +57471,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -57562,7 +57634,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -57599,7 +57671,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "line-height": {
@@ -57702,7 +57774,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -57757,7 +57829,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -57938,7 +58010,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -57961,7 +58033,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -58003,7 +58075,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -58156,7 +58228,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -58180,7 +58252,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -58241,7 +58313,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -58498,7 +58570,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "icon": {
@@ -58619,7 +58691,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -58783,7 +58855,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -58911,7 +58983,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -59130,7 +59202,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{nl.button.default.font-size}",
         },
         "font-weight": {
@@ -59441,7 +59513,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{nl.button.default.font-size}",
         },
         "font-weight": {
@@ -59752,7 +59824,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{nl.button.default.font-size}",
         },
         "font-weight": {
@@ -60037,7 +60109,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
     },
@@ -60069,7 +60141,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -60152,7 +60224,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -60211,7 +60283,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.3xl}",
         },
         "font-weight": {
@@ -60263,7 +60335,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.2xl}",
         },
         "font-weight": {
@@ -60315,7 +60387,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -60367,7 +60439,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -60419,7 +60491,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -60471,7 +60543,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.sm}",
         },
         "font-weight": {
@@ -60614,7 +60686,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -60663,7 +60735,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -60682,7 +60754,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -60749,7 +60821,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -60855,7 +60927,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "line-height": {
@@ -60932,7 +61004,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -60987,7 +61059,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -61036,7 +61108,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -61275,7 +61347,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -61327,7 +61399,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -61385,7 +61457,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -61707,7 +61779,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -61795,7 +61867,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -61858,7 +61930,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -61902,7 +61974,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -62210,7 +62282,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
                 "originalType": "fontSizes",
               },
             },
-            "$type": "fontSize",
+            "$type": "dimension",
             "$value": "{basis.text.font-size.md}",
           },
           "font-weight": {
@@ -62312,7 +62384,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -63011,7 +63083,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -63119,7 +63191,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -63312,7 +63384,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -63623,7 +63695,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -64242,7 +64314,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
       },
@@ -64281,7 +64353,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
       },
@@ -64300,7 +64372,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "margin-block-end": {
@@ -64359,7 +64431,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -64397,7 +64469,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -64593,7 +64665,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -64733,7 +64805,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -64844,7 +64916,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -64955,7 +65027,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "font-weight": {
@@ -65160,7 +65232,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -65197,7 +65269,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -65320,7 +65392,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -65430,7 +65502,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.md}",
         },
         "line-height": {
@@ -65500,7 +65572,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "line-height": {
@@ -65547,7 +65619,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -65638,7 +65710,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -65686,7 +65758,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.3xl}",
       },
       "font-weight": {
@@ -65738,7 +65810,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.2xl}",
       },
       "font-weight": {
@@ -65790,7 +65862,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.xl}",
       },
       "font-weight": {
@@ -65842,7 +65914,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.lg}",
       },
       "font-weight": {
@@ -65894,7 +65966,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -65946,7 +66018,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.sm}",
       },
       "font-weight": {
@@ -66351,7 +66423,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -66387,7 +66459,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {
@@ -66526,7 +66598,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "margin-block-end": {
@@ -66718,7 +66790,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -66741,7 +66813,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.lg}",
         },
         "font-weight": {
@@ -66783,7 +66855,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.sm}",
         },
         "font-weight": {
@@ -66826,7 +66898,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.sm}",
       },
       "font-weight": {
@@ -67141,7 +67213,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -67515,7 +67587,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "font-weight": {
@@ -67685,7 +67757,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "originalType": "fontSizes",
             },
           },
-          "$type": "fontSize",
+          "$type": "dimension",
           "$value": "{basis.text.font-size.xl}",
         },
         "font-weight": {
@@ -67744,7 +67816,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "footer": {
@@ -67884,7 +67956,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -68040,7 +68112,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.form-control.font-size}",
       },
       "font-weight": {
@@ -68135,7 +68207,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "originalType": "fontSizes",
           },
         },
-        "$type": "fontSize",
+        "$type": "dimension",
         "$value": "{basis.text.font-size.md}",
       },
       "item": {

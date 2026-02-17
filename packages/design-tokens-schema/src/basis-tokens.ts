@@ -1,6 +1,7 @@
 import * as z from 'zod';
 import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
+import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 
@@ -124,6 +125,17 @@ export const BasisColorSchema = z
   });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
+export const FontSizeScaleSchema = z.looseObject({
+  /* eslint-disable perfectionist/sort-objects */
+  sm: DimensionTokenSchema.optional(),
+  md: DimensionTokenSchema.optional(),
+  lg: DimensionTokenSchema.optional(),
+  xl: DimensionTokenSchema.optional(),
+  '2xl': DimensionTokenSchema.optional(),
+  '3xl': DimensionTokenSchema.optional(),
+  '4xl': DimensionTokenSchema.optional(),
+});
+
 export const BasisTextSchema = z.looseObject({
   'font-family': z
     .looseObject({
@@ -131,7 +143,7 @@ export const BasisTextSchema = z.looseObject({
       monospace: FontFamilyTokenSchema.optional(),
     })
     .optional(),
-  // 'font-size': z.looseObject({}).optional(),
+  'font-size': FontSizeScaleSchema.optional(),
   // 'font-weight': z.looseObject({}).optional(),
   // 'line-height': z.looseObject({}).optional(),
 });
@@ -154,6 +166,7 @@ export const BasisTokensSchema = z.looseObject({
   // focus: z.strictObject({}),
   'form-control': z
     .looseObject({
+      ...BasisTextSchema.shape,
       ...FormControlStateSchema.shape,
       active: FormControlStateSchema.optional(),
       disabled: FormControlStateSchema.optional(),
@@ -171,8 +184,9 @@ export const BasisTokensSchema = z.looseObject({
     .optional(),
   heading: z
     .looseObject({
-      color: ColorTokenValidationSchema.optional(),
+      'font-size': FontSizeScaleSchema.optional(),
       'font-family': FontFamilyTokenSchema.optional(),
+      color: ColorTokenValidationSchema.optional(),
     })
     .optional(),
   // page: z.strictObject({}),

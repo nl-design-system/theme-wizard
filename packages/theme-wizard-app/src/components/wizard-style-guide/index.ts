@@ -19,6 +19,7 @@ import {
   isTokenLike,
   type TokenLike,
   ColorValue,
+  ModernDimensionToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import '../wizard-layout';
@@ -161,7 +162,8 @@ export class WizardStyleGuide extends LitElement {
     return Object.entries(text['font-size'] as Record<string, unknown>)
       .reverse()
       .map(([name, tokenValue]) => {
-        const displayValue = (tokenValue as DesignToken).$value;
+        const { $value } = tokenValue as ModernDimensionToken;
+        const displayValue = $value.value?.toString() + $value.unit;
         const tokenId = `basis.text.font-size.${name}`;
         const isUsed = tokenUsage.has(tokenId);
         const usage = tokenUsage.get(tokenId) || [];
