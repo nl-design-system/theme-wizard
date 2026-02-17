@@ -154,10 +154,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         for (const addition of additions) {
           this.#options.set(addition.label, addition);
         }
+        this.requestUpdate();
       },
       { maxAge: 60_000 },
     ),
-    250,
+    100,
   );
 
   readonly #handleBlur = (event: FocusEvent) => {

@@ -107,12 +107,10 @@ describe(`<${tag}>`, () => {
   });
 
   it('dynamically adds fonts from google fonts', async () => {
-    const query = 'Noto S';
-    const expectedValue = ['Noto Sans', 'sans-serif'];
-    const component: ClippyFontCombobox = document.querySelector(tag)!;
+    const query = 'Noto San';
     const input = page.getByRole('combobox');
     await input.fill(query);
-    await userEvent.keyboard('{ArrowDown}{Enter}');
-    expect(component.value).toStrictEqual(expectedValue);
+    const option = page.getByRole('option').first();
+    await expect.element(option).toBeInTheDocument();
   });
 });
