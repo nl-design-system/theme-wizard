@@ -12340,7 +12340,10 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
             },
           },
           "$type": "dimension",
-          "$value": "3rem",
+          "$value": {
+            "unit": "rem",
+            "value": 3,
+          },
         },
         "lg": {
           "$extensions": {
@@ -34349,7 +34352,10 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
             },
           },
           "$type": "dimension",
-          "$value": "3rem",
+          "$value": {
+            "unit": "rem",
+            "value": 3,
+          },
         },
         "lg": {
           "$extensions": {
@@ -57217,7 +57223,10 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             },
           },
           "$type": "dimension",
-          "$value": "3rem",
+          "$value": {
+            "unit": "rem",
+            "value": 3,
+          },
         },
         "lg": {
           "$extensions": {

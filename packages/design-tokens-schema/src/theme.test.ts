@@ -858,16 +858,20 @@ describe('validate minimum font-size', () => {
     const expectedErrors = [
       {
         actual: '0.8rem',
-        code: 'custom',
+        code: 'too_small',
         ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
         message: 'Font-size should be 16px or 1rem minimum (got: "0.8rem")',
+        minimum: 16,
+        origin: 'number',
         path: ['basis', 'text', 'font-size', 'sm', '$value'],
       },
       {
         actual: '10px',
-        code: 'custom',
+        code: 'too_small',
         ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
         message: 'Font-size should be 16px or 1rem minimum (got: "10px")',
+        minimum: 16,
+        origin: 'number',
         path: ['basis', 'text', 'font-size', 'xs', '$value'],
       },
     ];
