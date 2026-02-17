@@ -42,8 +42,8 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
   static override readonly styles = [...ClippyCombobox.styles, colorComboboxStyles, unsafeCSS(colorSampleStyles)];
 
   override set lang(value: string) {
-    this.loadLocalizations(value).then(() => {
-      super.lang = value;
+    this.loadLocalizations(value).then((code) => {
+      super.lang = code;
     });
   }
 
@@ -57,12 +57,12 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
       try {
         translations = await import(`./messages/${code}.ts`).then((module) => module.default);
         this.translations = translations || this.translations;
-        this.lang = code;
-        break;
+        return code;
       } catch {
         // ignore failure, continue with next
       }
     }
+    return lang;
   }
 
   override readonly filter = (query: string) => {

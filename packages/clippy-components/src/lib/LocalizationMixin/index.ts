@@ -63,10 +63,11 @@ const LocalizationMixin = <T extends Constructor<LitElement>>(superClass: T, def
             lang = element.getAttribute(LANG_ATTR) || lang;
             break;
           }
-          element = element.parentElement;
+          element =
+            element.parentNode instanceof ShadowRoot ? (element.parentNode.host as HTMLElement) : element.parentElement;
         }
       }
-      this.lang = lang || this.DEFAULT_LANG;
+      this.lang = lang || document.documentElement.lang || this.DEFAULT_LANG;
     }
   }
 

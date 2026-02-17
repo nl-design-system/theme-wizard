@@ -2,6 +2,7 @@ import { safeCustomElement } from '@lib/decorators';
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
+import debounce from 'debounce';
 import { html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -65,11 +66,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       return this.options;
     }
     const filter = this.filter(this.query);
-    const options = this.options.filter(filter);
-    if (options.length === 0) {
-      this.#addAdditionalOptions(this.query);
-    }
-    return options;
+    return this.options.filter(filter);
   }
 
   @property({ converter: arrayFromTokenList })
@@ -150,12 +147,19 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return option?.label;
   }
 
-  readonly #addAdditionalOptions = memoize(async (query: string) => {
-    const additions = await this.fetchAdditionalOptions(query);
-    for (const addition of additions) {
-      this.#options.set(addition.label, addition);
-    }
-  });
+  readonly #addAdditionalOptions = debounce(
+    memoize(
+      async (query: string) => {
+        const additions = await this.fetchAdditionalOptions(query);
+        for (const addition of additions) {
+          this.#options.set(addition.label, addition);
+        }
+        this.requestUpdate();
+      },
+      { maxAge: 60_000 },
+    ),
+    100,
+  );
 
   readonly #handleBlur = (event: FocusEvent) => {
     const focusedRelatedElement = event.relatedTarget && this.shadowRoot?.contains(event.relatedTarget as Node);
@@ -197,6 +201,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.activeIndex = -1;
     this.open = true;
     this.query = target.value;
+    if (this.query.length > 3) {
+      this.#addAdditionalOptions(this.query);
+    }
     this.emit('input');
   };
 
