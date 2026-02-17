@@ -89,7 +89,7 @@ export const isTokenWithRef = (
   // make sure the $type of the referenced token is the same type
   if (token.$type !== referencedToken.$type) {
     throw new Error(
-      `Invalid token reference: $type "${token['$type']}" of "${JSON.stringify(token)}" does not match the $type on reference {${refPath}}. Types "${token.$type}" and "${referencedToken.$type}" do not match.`,
+      `Invalid token reference: $type "${token['$type']}" of "${JSON.stringify(token)}" at "${path.join('.')}" does not match the $type on reference {${refPath}}. Types "${token.$type}" and "${referencedToken.$type}" do not match.`,
     );
   }
 

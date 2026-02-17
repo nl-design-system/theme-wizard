@@ -1,6 +1,6 @@
 import { ColorToken } from './tokens/color-token';
 import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
-import { isTokenLike, isTokenWithRef, type TokenWithRefLike } from './tokens/token-reference';
+import { isTokenLike, type TokenLike, isTokenWithRef, type TokenWithRefLike } from './tokens/token-reference';
 
 /**
  * @param root The object you want to traverse
@@ -90,4 +90,8 @@ export const walkDimensions = (root: unknown, callback: (token: DimensionToken, 
     const dimension = DimensionTokenSchema.safeParse(token);
     callback(dimension.data!, path);
   });
+};
+
+export const walkTokens = (root: unknown, callback: (token: TokenLike, path: string[]) => void): void => {
+  walkObject<TokenLike>(root, isTokenLike, callback);
 };

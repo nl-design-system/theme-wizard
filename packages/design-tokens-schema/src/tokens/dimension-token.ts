@@ -36,6 +36,11 @@ export const DimensionWithRefSchema = z.object({
   $value: TokenReferenceSchema,
 });
 
+export const LegacyDimensionWithRefSchema = z.object({
+  ...BaseDesignTokenValueSchema.shape,
+  $value: TokenReferenceSchema,
+});
+
 export const LegacyDimensionTokenValueSchema = z
   .string()
   .nonempty()
@@ -48,13 +53,13 @@ export type LegacyDimensionTokenValue = z.infer<typeof LegacyDimensionTokenValue
 export const LegacyDimensionTokenSchema = z
   .object({
     ...BaseDesignTokenValueSchema.shape,
-    $type: DimensionTypeSchema,
     $value: LegacyDimensionTokenValueSchema,
   })
   .transform((token) => {
     const { unit, value } = parse_dimension(token.$value);
     return {
       ...token,
+      $type: 'dimension',
       $value: {
         unit: unit.toLowerCase() as DimensionUnit,
         value,
@@ -65,7 +70,8 @@ export type LegacyDimensionToken = z.infer<typeof LegacyDimensionTokenSchema>;
 
 export const DimensionTokenSchema = z.union([
   ModernDimensionTokenSchema,
-  DimensionWithRefSchema,
   LegacyDimensionTokenSchema,
+  DimensionWithRefSchema,
+  LegacyDimensionWithRefSchema,
 ]);
 export type DimensionToken = z.infer<typeof DimensionTokenSchema>;

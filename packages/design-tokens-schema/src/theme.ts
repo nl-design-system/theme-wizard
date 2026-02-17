@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
-import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
+import { walkColors, walkDimensions, walkLineHeights, walkObject, walkTokens } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
   type ForegroundColorKey,
@@ -148,11 +148,24 @@ export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
 
 export type Theme = z.infer<typeof ThemeShapeSchema>;
 
+/**
+ * @description NLDS themes use `$type: 'fontSize'` instead of dimension, so a quick round of preprocessing helps to get them in order
+ */
+const upgradeLegacyDimensionTypes = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
+  walkTokens(rootConfig, (token) => {
+    if (token.$type === 'fontSize') {
+      token.$type = 'dimension';
+    }
+  });
+  return rootConfig;
+};
+
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
 export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
+  .transform(upgradeLegacyDimensionTypes)
   .transform(addContrastExtensions)
   .transform(addColorScalePositionExtensions)
   .transform(resolveConfigRefs)

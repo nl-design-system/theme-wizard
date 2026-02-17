@@ -1,5 +1,5 @@
 const PX_PER_REM = 16;
-const MIN_FONT_SIZE_PX = 16;
+const MIN_FONT_SIZE_PX = 14;
 
 /**
  * @returns True if valid, false if invalid
