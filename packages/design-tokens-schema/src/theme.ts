@@ -24,7 +24,7 @@ import {
   MinFontSizeIssue,
   createContrastIssue,
 } from './validation-issue';
-import { validateFontSize, MIN_FONT_SIZE_PX } from './validations';
+import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM } from './validations';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -249,11 +249,11 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
         const actual = `${token.$value.value}${token.$value.unit}`;
         ctx.addIssue({
           actual,
-          code: 'too_small',
+          code: 'custom',
           ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
           input: actual,
-          message: `Font-size should be 16px or 1rem minimum (got: "${actual}")`,
-          minimum: MIN_FONT_SIZE_PX,
+          message: `Font-size should be ${MIN_FONT_SIZE_PX}px or ${MIN_FONT_SIZE_REM}rem minimum (got: "${actual}")`,
+          minimum: `${MIN_FONT_SIZE_PX}px / ${MIN_FONT_SIZE_REM}rem`,
           origin: 'number',
           path: [...path, '$value'],
         } satisfies MinFontSizeIssue);

@@ -175,7 +175,7 @@ export const en = {
             token: issue.referredToken,
           })}.
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}`,
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
           return html`${issue.path}:
           ${t('validation.issue.fontSizeTooSmall', {
@@ -183,7 +183,7 @@ export const en = {
             token: issue.referredToken,
           })}.
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}.`;
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
         },
         label: 'Font size too small',
       },
@@ -411,7 +411,7 @@ export const nl = {
             token: issue.referredToken,
           })}.
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'nl') })}`,
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
         detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
           return html`${issue.path}:
           ${t('validation.issue.fontSizeTooSmall', {
@@ -419,7 +419,7 @@ export const nl = {
             token: issue.referredToken,
           })}.
           ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
-          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'nl') })}.`;
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
         },
         label: 'Lettergrootte te klein',
       },
