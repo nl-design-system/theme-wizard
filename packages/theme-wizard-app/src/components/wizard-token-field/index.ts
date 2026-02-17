@@ -1,17 +1,14 @@
 import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
-import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import { isRef } from '@nl-design-system-community/design-tokens-schema';
-import '../wizard-color-input';
-import '../wizard-font-input';
-import '../wizard-token-input';
+import { EXTENSION_RESOLVED_AS, isRef } from '@nl-design-system-community/design-tokens-schema';
+import '../wizard-token-combobox';
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { themeContext } from '../../contexts/theme';
 import Theme from '../../lib/Theme';
+import { type Option } from '../wizard-token-combobox';
 import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
@@ -33,19 +30,47 @@ export class WizardTokenField extends WizardTokenNavigator {
   @property() path: string = '';
   @property({ attribute: false }) errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
+  #options: Option[] = [];
+
   @state() token: Token = {};
+  @state() get options() {
+    return this.#options;
+  }
 
   static readonly maxDepth = 3;
 
-  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(codeCss), styles];
+  static override readonly styles = [unsafeCSS(codeCss), styles];
 
   override connectedCallback(): void {
     super.connectedCallback();
+    const basisTokens = this.theme.tokens['basis'];
     this.token = this.theme.at(this.path);
-  }
-
-  get #id() {
-    return `input-${this.path}`;
+    // Build options for referencing basis tokens
+    // TODO: only do this once and cache it, ideally in lib/Theme or its context provider,
+    // rather than on every field instance.
+    this.#options =
+      basisTokens && typeof basisTokens !== 'string'
+        ? Object.entries(Theme.flatten(basisTokens))
+            .filter(([, { $type }]) => $type === this.token.$type)
+            .map(([path, { $type, ...token }]) => {
+              // Find the resolved value for color tokens to show in the combobox options.
+              // Since tokens can reference other tokens, we check if the token is a reference and use the resolved value if so.
+              const resolved = isRef(token.$value) ? token['$extensions']?.[EXTENSION_RESOLVED_AS] : token.$value;
+              const $value = `{basis.${path}}`;
+              const $extensions = {
+                ...token['$extensions'],
+                [EXTENSION_RESOLVED_AS]: structuredClone(resolved),
+              };
+              return {
+                label: $value.slice(1, -1),
+                value: {
+                  $extensions,
+                  $type,
+                  $value,
+                },
+              };
+            })
+        : [];
   }
 
   get #hasErrors(): boolean {
@@ -82,7 +107,7 @@ export class WizardTokenField extends WizardTokenNavigator {
         return 'number';
       case 'fontFamily':
       case 'fontFamilies':
-        return 'font';
+        return 'font-family';
       default:
         return undefined;
     }
@@ -92,52 +117,15 @@ export class WizardTokenField extends WizardTokenNavigator {
     return this.token?.$value;
   }
 
-  renderField(type: typeof this.type, label: string) {
-    const key = this.path.split('.').pop();
-
-    if (isRef(this.value)) {
-      return html`
-        <span>${label}</span>
-        &rarr;
-        <span class="nl-data-badge">${this.value.slice(1, -1)}</span>
-      `;
-    }
-
-    switch (type) {
-      case 'color':
-        return html` <wizard-color-input
-          .errors=${this.pathErrors}
-          .value=${this.token.$value}
-          id=${this.#id}
-          key=${ifDefined(key)}
-          label=${label}
-          name=${this.path}
-        >
-          ${label}
-        </wizard-color-input>`;
-      case 'font':
-        return html` <wizard-font-input
-          .errors=${this.pathErrors}
-          .value=${this.token.$value}
-          id=${this.#id}
-          key=${ifDefined(key)}
-          label=${label}
-          name=${this.path}
-        >
-          ${label}
-        </wizard-font-input>`;
-      default:
-        return html` <wizard-token-input
-          .errors=${this.pathErrors}
-          .value=${this.token}
-          id=${this.#id}
-          key=${ifDefined(key)}
-          label=${label}
-          name=${this.path}
-        >
-          ${label}
-        </wizard-token-input>`;
-    }
+  renderField(type: NonNullable<typeof this.type>, label: string) {
+    return html`<wizard-token-combobox
+      name=${this.path}
+      hidden-label=${label}
+      type=${type}
+      .value=${this.token}
+      .options=${this.options}
+      class=${classMap({ 'theme-error': this.#hasErrors })}
+    ></wizard-token-combobox>`;
   }
 
   override render() {
@@ -153,13 +141,12 @@ export class WizardTokenField extends WizardTokenNavigator {
           ? this.renderField(type, label)
           : html`<utrecht-paragraph class=${classMap({ 'theme-error': this.#hasErrors })}>${label}</utrecht-paragraph>
               <ul>
-                ${this.entries.map(([key, token]) => {
+                ${this.entries.map(([key]) => {
                   const path = `${this.path}.${key}`;
                   const depth = this.depth + 1;
                   return html`
                     <li key=${key}>
                       <wizard-token-field
-                        .token=${token}
                         .errors=${this.#getChildPathErrors(path)}
                         path=${path}
                         depth=${depth}

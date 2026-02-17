@@ -1,0 +1,42 @@
+import { ColorValue, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
+import Color from 'colorjs.io';
+import { html, nothing } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
+const DELTA_E_THRESHOLD = 20;
+const BROAD_COLOR_NAMES = new Set(['red', 'green', 'blue']);
+
+/**
+ * Try parsing token $value using colorjs.io, returning null if parsing fails.
+ *
+ * @param value
+ * @returns
+ */
+export const parse = (value: unknown): Color | null => {
+  try {
+    const string = typeof value === 'string' ? value : stringifyColor(value as ColorValue);
+    return new Color(string);
+  } catch {
+    return null;
+  }
+};
+
+export const filter = <T extends { color?: Color }>(query: string) => {
+  const queryColor = Color.try(query);
+  const maxDeltaE = BROAD_COLOR_NAMES.has(query) ? DELTA_E_THRESHOLD * 2 : DELTA_E_THRESHOLD;
+  return ({ color }: T) => Boolean(queryColor && color && queryColor.deltaE(color, '2000') < maxDeltaE);
+};
+
+export const preview = <T extends { color?: Color }>({ color }: T) => {
+  return color
+    ? html`
+        <svg
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          class="nl-color-sample"
+          style=${styleMap({ color: color?.toString() })}
+        >
+          <path d="M0 0H32V32H0Z" fill="currentcolor" />
+        </svg>
+      `
+    : nothing;
+};

@@ -17,6 +17,7 @@ import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
+import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
 import appStyles from './app.css';
 
@@ -90,18 +91,18 @@ export class App extends LitElement {
 
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
-    if (!(target instanceof WizardTokenInput)) return;
-
+    if (!(target instanceof WizardTokenInput || target instanceof WizardTokenCombobox)) return;
     if (target instanceof WizardColorscaleInput) {
       const updates = Object.entries(target.value).map(([colorKey, value]) => ({
         path: `${target.name}.${colorKey}`,
         value: value.$value,
       }));
       this.theme.updateMany(updates);
-    } else {
+    } else if (target instanceof WizardTokenCombobox) {
+      this.theme.updateAt(target.name, target.value?.$value);
+    } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);
     }
-
     this.#forceUpdateTokens();
     this.#storage.setJSON(this.theme.tokens);
   };
