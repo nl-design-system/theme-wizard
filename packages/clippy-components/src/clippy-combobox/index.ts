@@ -2,6 +2,7 @@ import { safeCustomElement } from '@lib/decorators';
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
+import debounce from 'debounce';
 import { html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -146,12 +147,18 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return option?.label;
   }
 
-  readonly #addAdditionalOptions = memoize(async (query: string) => {
-    const additions = await this.fetchAdditionalOptions(query);
-    for (const addition of additions) {
-      this.#options.set(addition.label, addition);
-    }
-  });
+  readonly #addAdditionalOptions = debounce(
+    memoize(
+      async (query: string) => {
+        const additions = await this.fetchAdditionalOptions(query);
+        for (const addition of additions) {
+          this.#options.set(addition.label, addition);
+        }
+      },
+      { maxAge: 60_000 },
+    ),
+    250,
+  );
 
   readonly #handleBlur = (event: FocusEvent) => {
     const focusedRelatedElement = event.relatedTarget && this.shadowRoot?.contains(event.relatedTarget as Node);
