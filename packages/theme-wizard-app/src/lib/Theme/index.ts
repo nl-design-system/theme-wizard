@@ -12,6 +12,7 @@ import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
+import { flattenTokens } from './lib';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
@@ -32,6 +33,15 @@ export default class Theme {
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] = [];
+
+  /**
+   * Flatten a nested DesignTokens object into a flat map of token paths to DesignToken objects.
+   * @param tokens
+   * @returns
+   */
+  static flatten(tokens: DesignTokens): Record<string, DesignToken> {
+    return flattenTokens(tokens);
+  }
 
   /**
    * @param tokens Default token set for the theme, defaults to start tokens. Resetting a theme will revert to these tokens.
