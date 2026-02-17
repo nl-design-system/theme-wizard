@@ -168,6 +168,25 @@ export const en = {
   unknown: 'Unknown error',
   validation: {
     error: {
+      [ERROR_CODES.FONT_SIZE_TOO_SMALL]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'en') })}.`;
+        },
+        label: 'Font size too small',
+      },
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
         compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
           html`${t('validation.issue.invalidContrastWith', {
@@ -199,6 +218,13 @@ export const en = {
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
+      fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+        if (!token) return html`Font size is too small`;
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
+        return html`Font size is too small in ${tokenLink}`;
+      },
+      fontSizeValue: 'Font size: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
         if (!token) return html`Insufficient contrast`;
 
@@ -373,6 +399,25 @@ export const nl = {
   unknown: 'Onbekende fout opgetreden',
   validation: {
     error: {
+      [ERROR_CODES.FONT_SIZE_TOO_SMALL]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'nl') })}`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.fontSizeTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.fontSizeValue', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: formatNumber(issue.minimum, 'nl') })}.`;
+        },
+        label: 'Lettergrootte te klein',
+      },
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
         compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
           html`${t('validation.issue.invalidContrastWith', {
@@ -402,6 +447,13 @@ export const nl = {
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
+      fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+        if (!token) return html`Lettergrootte is te klein`;
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
+        return html`Lettergrootte is te klein in ${tokenLink}`;
+      },
+      fontSizeValue: 'Lettergrootte: {{value}}',
       invalidContrastWith: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
         if (!token) return html`Onvoldoende contrast`;
 

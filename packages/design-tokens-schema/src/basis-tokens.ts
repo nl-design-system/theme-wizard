@@ -141,6 +141,7 @@ export const BasisTextSchema = z.looseObject({
       xl: DimensionTokenSchema.optional(),
       '2xl': DimensionTokenSchema.optional(),
       '3xl': DimensionTokenSchema.optional(),
+      '4xl': DimensionTokenSchema.optional(),
     })
     .optional(),
   // 'font-weight': z.looseObject({}).optional(),

@@ -33,10 +33,11 @@ export type LineHeightUnitIssue = z.core.$ZodSuperRefineIssue & {
 
 export type MinFontSizeIssue = z.core.$ZodSuperRefineIssue & {
   ERROR_CODE: typeof ERROR_CODES.FONT_SIZE_TOO_SMALL;
-  code: 'custom';
+  code: 'too_small';
   message: string;
   actual: string;
   path: string[];
+  minimum: number;
 };
 
 export type ThemeValidationIssue =

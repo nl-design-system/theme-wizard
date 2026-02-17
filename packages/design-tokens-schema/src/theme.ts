@@ -249,10 +249,12 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
         const actual = `${token.$value.value}${token.$value.unit}`;
         ctx.addIssue({
           actual,
-          code: 'custom',
+          code: 'too_small',
           ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
           input: actual,
           message: `Font-size should be 16px or 1rem minimum (got: "${actual}")`,
+          minimum: 16,
+          origin: 'number',
           path: [...path, '$value'],
         } satisfies MinFontSizeIssue);
       }
