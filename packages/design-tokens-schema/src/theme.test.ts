@@ -15,6 +15,7 @@ import {
 } from './theme';
 import { parseColor, type ColorToken } from './tokens/color-token';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
+import { MIN_FONT_SIZE_PX } from './validations';
 
 const brandConfig = {
   ma: {
@@ -861,7 +862,7 @@ describe('validate minimum font-size', () => {
         code: 'too_small',
         ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
         message: 'Font-size should be 16px or 1rem minimum (got: "0.8rem")',
-        minimum: 14,
+        minimum: MIN_FONT_SIZE_PX,
         origin: 'number',
         path: ['basis', 'text', 'font-size', 'sm', '$value'],
       },
@@ -870,7 +871,7 @@ describe('validate minimum font-size', () => {
         code: 'too_small',
         ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
         message: 'Font-size should be 16px or 1rem minimum (got: "10px")',
-        minimum: 14,
+        minimum: MIN_FONT_SIZE_PX,
         origin: 'number',
         path: ['basis', 'text', 'font-size', 'xs', '$value'],
       },
