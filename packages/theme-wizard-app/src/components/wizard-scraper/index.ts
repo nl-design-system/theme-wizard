@@ -29,7 +29,7 @@ declare global {
 
 @customElement(tag)
 export class WizardScraper extends LitElement {
-  @property() tokens: ScrapedDesignToken[] = [];
+  @property({ type: Array }) tokens: ScrapedDesignToken[] = [];
   @property() scraperUrl?: string;
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard-scraper' });
   #options: ScrapedDesignToken[] = [];
@@ -61,6 +61,17 @@ export class WizardScraper extends LitElement {
 
     if (this.scraperUrl) {
       this.#scraper = new Scraper(this.scraperUrl);
+    }
+  }
+
+  override firstUpdated() {
+    if (this.options.length) {
+      this.dispatchEvent(
+        new Event('change', {
+          bubbles: true,
+        }),
+      );
+      this.#state = 'success';
     }
   }
 

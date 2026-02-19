@@ -101,13 +101,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   /**
    * Override this function to customize how options are filtered when typing
    */
-  readonly filter =
-    (query: string) =>
-    ({ description, label }: T) => {
-      return (
-        label.toLowerCase().includes(query.toLowerCase()) || description?.toLowerCase().includes(query.toLowerCase())
+  readonly filter = (query: string): ((option: T) => boolean) => {
+    const normalizedQuery = query.toLowerCase();
+    return ({ description, label }: T) => {
+      return Boolean(
+        label.toLowerCase().includes(normalizedQuery) || description?.toLowerCase().includes(normalizedQuery),
       );
     };
+  };
 
   /**
    * Override this function to customize an external data source
@@ -144,7 +145,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    */
   valueToQuery(value: Option['value']): string | undefined {
     const option = this.getOptionForValue(value);
-    return option?.label;
+    return option?.label || (this.allow === 'other' && typeof value === 'string' ? value : undefined);
   }
 
   readonly #addAdditionalOptions = debounce(
