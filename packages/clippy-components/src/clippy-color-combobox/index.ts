@@ -56,7 +56,9 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
       const code = subtags.slice(0, i).join(SEPARATOR);
       try {
         translations = await import(`./messages/${code}.ts`).then((module) => module.default);
-        // Create a reverse lookup from translation to canonical color name for filtering
+        // Create a reverse lookup from translation to canonical color name for filtering.
+        // This allows users to search for colors using localized names,
+        // Translations are defined as { "red": "rood" } in Dutch, but we want to match the token with value "red" when searching for "rood".
         const lookup = translations
           ? Object.fromEntries(Object.entries(translations).map(([k, v]) => [v, k] as [string, ColorName]))
           : undefined;
@@ -75,6 +77,7 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     const queryColor = Color.try(colorName);
     return (option: Option) => {
       const label = option.label.toLowerCase();
+      // Broader color names use a wider deltaE for matching, ie searching for "green" will match more colors than "pink".
       const maxDeltaE = BROAD_COLOR_NAMES.includes(colorName) ? DELTA_E_THRESHOLD * 2 : DELTA_E_THRESHOLD;
       return Boolean(
         label.includes(normalizedQuery) ||
