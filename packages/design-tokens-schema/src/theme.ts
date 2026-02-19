@@ -225,20 +225,24 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
     walkLineHeights(root, (token, path) => {
       // Refs are OK
       if (isRef(token.$value)) return;
-      // Numbers are OK
-      if (typeof token.$value === 'number') return;
+
+      if (typeof token.$value === 'number') {
+        // TODO: add validation for minimum line-height here
+        // https://github.com/nl-design-system/theme-wizard/issues/316
+        return;
+      }
 
       ctx.addIssue({
         code: 'invalid_type',
         ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
         expected: 'number',
         input: token.$value,
-        message: `Line-height should be a unitless number (got: "${token.$value}")`,
+        message: `Line-height should be a unitless number (got: ${JSON.stringify(token.$value)})`,
         path: [...path, '$value'],
       } satisfies LineHeightUnitIssue);
     });
 
-    // Validation 4: font-size must be 16px minimum
+    // Validation 4: font must have minimum size
     walkDimensions(root, (token, path) => {
       // MUST be a font-size token
       if (!path.includes('font-size')) return;

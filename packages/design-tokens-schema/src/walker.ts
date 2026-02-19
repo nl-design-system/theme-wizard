@@ -68,17 +68,12 @@ export const walkTokensWithRef = (
   );
 };
 
-type LineHeightToken = {
-  $type: 'lineHeight';
-  $value: unknown;
+const isLineHeightToken = (token: unknown, path: string[]): token is TokenLike => {
+  return isTokenLike(token) && (token.$type === 'lineHeight' || path.includes('line-height'));
 };
 
-const isLineHeightToken = (token: unknown): token is LineHeightToken => {
-  return typeof token === 'object' && token !== null && '$type' in token && token.$type === 'lineHeight';
-};
-
-export const walkLineHeights = (root: unknown, callback: (token: LineHeightToken, path: string[]) => void): void => {
-  walkObject<LineHeightToken>(root, isLineHeightToken, callback);
+export const walkLineHeights = (root: unknown, callback: (token: TokenLike, path: string[]) => void): void => {
+  walkObject<TokenLike>(root, isLineHeightToken, callback);
 };
 
 const isDimensionToken = (token: unknown): token is DimensionToken => {

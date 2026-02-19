@@ -746,6 +746,28 @@ describe('validate unitless line-height preference', () => {
     expect(result.success).toEqual(true);
   });
 
+  it('Does not report line-heights that are a ref', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1.5,
+            },
+            sm: {
+              $type: 'lineHeight',
+              $value: '{basis.text.line-height.md}',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
   it('flags line-heights that use units', () => {
     const config = {
       basis: {
@@ -769,6 +791,65 @@ describe('validate unitless line-height preference', () => {
         expected: 'number',
         message: 'Line-height should be a unitless number (got: "20px")',
         path: ['basis', 'text', 'line-height', 'md', '$value'],
+      },
+    ]);
+  });
+
+  it('flags line-heights that use dimensions', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'dimension',
+              $value: {
+                unit: 'px',
+                value: 20,
+              },
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      {
+        code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+        expected: 'number',
+        message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+        path: ['basis', 'text', 'line-height', 'md', '$value'],
+      },
+    ]);
+  });
+
+  it('flags invalid line-heights outside of basis tokens', () => {
+    const config = {
+      ma: {
+        someComponent: {
+          'line-height': {
+            md: {
+              $type: 'dimension',
+              $value: {
+                unit: 'px',
+                value: 20,
+              },
+            },
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      {
+        code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+        expected: 'number',
+        message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+        path: ['ma', 'someComponent', 'line-height', 'md', '$value'],
       },
     ]);
   });
