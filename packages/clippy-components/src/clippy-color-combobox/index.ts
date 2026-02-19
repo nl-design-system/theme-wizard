@@ -13,7 +13,7 @@ import messages from './messages/en';
 import colorComboboxStyles from './styles';
 
 type Option = {
-  color?: Color;
+  color?: Color | null;
   label: string;
   value: ColorValue | string;
 };
@@ -94,7 +94,7 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
   override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
     this.#options = value.map((option) => {
       const { label, value } = option;
-      const color = new Color(typeof value === 'string' ? value : stringifyColor(value));
+      const color = Color.try(typeof value === 'string' ? value : stringifyColor(value));
       return {
         color,
         label,
