@@ -3,6 +3,7 @@ import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
+import { LineHeightTokenSchema } from './tokens/line-height-token';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 
 export const ColorOrColorScaleSchema = z.union([
@@ -145,7 +146,18 @@ export const BasisTextSchema = z.looseObject({
     .optional(),
   'font-size': FontSizeScaleSchema.optional(),
   // 'font-weight': z.looseObject({}).optional(),
-  // 'line-height': z.looseObject({}).optional(),
+  'line-height': z
+    .looseObject({
+      /* eslint-disable perfectionist/sort-objects */
+      sm: LineHeightTokenSchema.optional(),
+      md: LineHeightTokenSchema.optional(),
+      lg: LineHeightTokenSchema.optional(),
+      xl: LineHeightTokenSchema.optional(),
+      '2xl': LineHeightTokenSchema.optional(),
+      '3xl': LineHeightTokenSchema.optional(),
+      '4xl': LineHeightTokenSchema.optional(),
+    })
+    .optional(),
 });
 
 export const FormControlStateSchema = z.looseObject({
@@ -186,6 +198,7 @@ export const BasisTokensSchema = z.looseObject({
     .looseObject({
       'font-size': FontSizeScaleSchema.optional(),
       'font-family': FontFamilyTokenSchema.optional(),
+      'line-height': LineHeightTokenSchema.optional(),
       color: ColorTokenValidationSchema.optional(),
     })
     .optional(),

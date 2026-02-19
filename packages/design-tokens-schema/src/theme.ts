@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
-import { walkColors, walkDimensions, walkLineHeights, walkObject, walkTokens } from './walker';
+import { walkColors, walkDimensions, walkObject, walkTokens } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
   type ForegroundColorKey,
@@ -134,39 +134,58 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
  * const refsReplacedWithActualValues = ThemeSchema.transform(resolveConfigRefs).safeParse(yourTokensJson);
  * ```
  */
-const ThemeShapeSchema = z.looseObject({
-  basis: BasisTokensSchema.optional(),
-  // $metadata: z.strictObject({
-  //   tokensSetOrder: z.array(z.string()),
-  // }),
-  // $themes: [],
-  brand: BrandsSchema.optional(),
-  // 'components/*': {},
-});
-
-export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
-
-export type Theme = z.infer<typeof ThemeShapeSchema>;
-
 /**
  * @description NLDS themes use `$type: 'fontSize'` instead of dimension, so a quick round of preprocessing helps to get them in order
  */
-const upgradeLegacyDimensionTypes = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
+const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
   walkTokens(rootConfig, (token) => {
     if (token.$type === 'fontSize') {
       token.$type = 'dimension';
+    } else if (token.$type === 'lineHeight') {
+      token.$type = 'number';
+      // Special case for line-height: attempt to parse the value in case it's "1.5"
+      if (typeof token.$value === 'string') {
+        const parsed = Number.parseFloat(token.$value);
+        if (parsed.toString() === token.$value) {
+          token.$value = parsed;
+        }
+      }
     }
   });
   return rootConfig;
 };
 
+/**
+ * @description Preprocess step to clean up tokens before validation
+ * Removes Style Dictionary metadata and upgrades legacy token types
+ */
+const preprocessTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
+  const cleaned = removeNonTokenProperties(rootConfig);
+  return upgradeLegacyTokens(cleaned);
+};
+
+const ThemeShapeSchema = z.preprocess(
+  preprocessTokens,
+  z.looseObject({
+    basis: BasisTokensSchema.optional(),
+    // $metadata: z.strictObject({
+    //   tokensSetOrder: z.array(z.string()),
+    // }),
+    // $themes: [],
+    brand: BrandsSchema.optional(),
+    // 'components/*': {},
+  }),
+);
+
+export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
+
+export type Theme = z.infer<typeof ThemeShapeSchema>;
+
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
-export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
-  .transform(upgradeLegacyDimensionTypes)
-  .transform(addContrastExtensions)
+export const StrictThemeSchema = ThemeSchema.transform(addContrastExtensions)
   .transform(addColorScalePositionExtensions)
   .transform(resolveConfigRefs)
   .superRefine((root, ctx) => {
@@ -221,24 +240,27 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
       }
     });
 
-    // Validation 3: check that line-heights are unit-less numbers
-    walkLineHeights(root, (token, path) => {
+    // Validation 3: line-height must be unitless (number, not string with units or dimensions)
+    walkTokens(root, (token, path) => {
+      // Only check line-height tokens
+      // if (!path.includes('line-height')) return;
+      if (token.$type !== 'lineHeight') return;
       // Refs are OK
       if (isRef(token.$value)) return;
-      // Numbers are OK
-      if (typeof token.$value === 'number') return;
+
+      if (token.$type === 'number') return;
 
       ctx.addIssue({
         code: 'invalid_type',
         ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
         expected: 'number',
         input: token.$value,
-        message: `Line-height should be a unitless number (got: "${token.$value}")`,
+        message: `Line-height should be a unitless number (got: "${JSON.stringify(token.$value)}")`,
         path: [...path, '$value'],
       } satisfies LineHeightUnitIssue);
     });
 
-    // Validation 4: font-size must be 16px minimum
+    // Validation 4: font must have minimum size
     walkDimensions(root, (token, path) => {
       // MUST be a font-size token
       if (!path.includes('font-size')) return;

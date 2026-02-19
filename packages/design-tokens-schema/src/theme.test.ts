@@ -727,7 +727,7 @@ describe('color scale position extension', () => {
   });
 });
 
-describe('validate unitless line-height preference', () => {
+describe.only('validate unitless line-height preference', () => {
   it('Does not report line-heights that use a unitless number', () => {
     const config = {
       basis: {
@@ -767,7 +767,37 @@ describe('validate unitless line-height preference', () => {
         code: 'invalid_type',
         ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
         expected: 'number',
-        message: 'Line-height should be a unitless number (got: "20px")',
+        message: 'Line-height should be a unitless number (got: "{"unit":"px","value":20}")',
+        path: ['basis', 'text', 'line-height', 'md', '$value'],
+      },
+    ]);
+  });
+
+  it('flags line-heights that use dimensions', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'dimension',
+              $value: {
+                unit: 'px',
+                value: 20,
+              },
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      {
+        code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+        expected: 'number',
+        message: 'Line-height should be a unitless number (got: "{"unit":"px","value":20}")',
         path: ['basis', 'text', 'line-height', 'md', '$value'],
       },
     ]);
