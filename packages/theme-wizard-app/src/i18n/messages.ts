@@ -187,6 +187,7 @@ export const en = {
         },
         label: 'Font size too small',
       },
+
       [ERROR_CODES.INSUFFICIENT_CONTRAST]: {
         compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
           html`${t('validation.issue.invalidContrastWith', {
@@ -215,13 +216,32 @@ export const en = {
         },
         label: 'Invalid reference',
       },
+      [ERROR_CODES.LINE_HEIGHT_TOO_SMALL]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.lineHeightTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.lineHeight', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.lineHeightTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.lineHeight', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
+        },
+        label: 'Lettergrootte te klein',
+      },
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
       fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
         const guidelinesLink = html`
           <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte/" target="_blank">
-            Bekijk richtlijnen
+            View guidelines
           </a>
         `;
         if (!token) return html`Font size is too small. ${guidelinesLink}`;
@@ -235,6 +255,21 @@ export const en = {
 
         const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
         return html`Insufficient contrast with ${tokenLink}`;
+      },
+      lineHeight: 'Line height: {{value}}',
+      lineHeightTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+        const guidelinesLink = html`
+          <a
+            href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/regelafstand/#zorg-voor-een-comfortabele-regelafstand"
+            target="_blank"
+          >
+            View guidelines
+          </a>
+        `;
+        if (!token) return html`Line height too small. ${guidelinesLink}`;
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
+        return html`Line height too small in ${tokenLink}. ${guidelinesLink}`;
       },
       minimalNeeded: ({ value }: { value: string }) => html`Required minimum: <strong>${value}</strong>`,
     },
@@ -449,12 +484,31 @@ export const nl = {
         },
         label: 'Ongeldige referentie',
       },
+      [ERROR_CODES.LINE_HEIGHT_TOO_SMALL]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.lineHeightTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.lineHeight', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.lineHeightTooSmall', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.
+          ${t('validation.issue.lineHeight', { value: issue.actual })}.
+          ${t('validation.issue.minimalNeeded', { value: issue.minimum })}.`;
+        },
+        label: 'Lettergrootte te klein',
+      },
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
       fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
         const guidelinesLink = html`
-          <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte/" target="_blank">
+          <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte" target="_blank">
             Bekijk richtlijnen
           </a>
         `;
@@ -469,6 +523,21 @@ export const nl = {
 
         const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
         return html`Onvoldoende contrast met ${tokenLink}`;
+      },
+      lineHeight: 'Regelafstand: {{value}}',
+      lineHeightTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
+        const guidelinesLink = html`
+          <a
+            href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/regelafstand/#zorg-voor-een-comfortabele-regelafstand"
+            target="_blank"
+          >
+            Bekijk richtlijnen
+          </a>
+        `;
+        if (!token) return html`Regelafstand is te klein. ${guidelinesLink}`;
+
+        const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
+        return html`Regelafstand is te klein in ${tokenLink}. ${guidelinesLink}`;
       },
       minimalNeeded: ({ value }: { value: string }) => html`Minimaal vereist: <strong>${value}</strong>`,
     },
