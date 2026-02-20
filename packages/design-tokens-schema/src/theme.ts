@@ -16,7 +16,7 @@ import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isRef, isValueObject } from './tokens/token-reference';
-import { upgradeLegacyDimensionTypes } from './upgrade-legacy-tokens';
+import { upgradeLegacyTokens } from './upgrade-legacy-tokens';
 import {
   ERROR_CODES,
   type InvalidRefIssue,
@@ -159,7 +159,7 @@ const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<st
 };
 
 export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
-  .transform(upgradeLegacyDimensionTypes)
+  .transform(upgradeLegacyTokens)
   .transform(addContrastExtensions)
   .transform(addColorScalePositionExtensions)
   .transform(resolveConfigRefs)

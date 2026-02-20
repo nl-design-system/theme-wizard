@@ -16,7 +16,6 @@ import {
 import { parseColor, type ColorToken } from './tokens/color-token';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
-// import { EXTEN}
 
 const brandConfig = {
   ma: {

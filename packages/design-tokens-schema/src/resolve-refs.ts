@@ -1,17 +1,12 @@
 import dlv from 'dlv';
 import type { BaseDesignToken, BaseDesignTokenValue } from './tokens/base-token';
+import { setExtension } from './extensions';
 import { legacyToModernColor } from './tokens/color-token';
 import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef, isTokenLike } from './tokens/token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
 export const EXTENSION_RESOLVED_AS = 'nl.nldesignsystem.value-resolved-as';
-
-export const setExtension = (token: BaseDesignTokenValue, key: string, value: unknown): void => {
-  // Make sure $extensions exists
-  token['$extensions'] ??= {};
-  token['$extensions'][key] = value;
-};
 
 export type ResolvedToken = BaseDesignTokenValue & {
   $value: TokenReference;

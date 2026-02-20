@@ -37,9 +37,9 @@ const processLineHeightValue = (
 };
 
 /**
- * @description NLDS themes use `$type: 'fontSize'` instead of dimension, so a quick round of preprocessing helps to get them in order
+ * @description NLDS themes use $type: fontSize and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
  */
-export const upgradeLegacyDimensionTypes = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
+export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
   walkTokens(rootConfig, (token) => {
     if (token.$type === 'fontSize') {
       token.$type = 'dimension';
