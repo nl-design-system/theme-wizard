@@ -4,18 +4,19 @@ import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/
 import { it, describe, expect } from 'vitest';
 import * as z from 'zod';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
+import { EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
   ThemeSchema,
   type Theme,
   StrictThemeSchema,
   EXTENSION_CONTRAST_WITH,
-  EXTENSION_RESOLVED_AS,
   EXTENSION_COLOR_SCALE_POSITION,
   type ContrastExtension,
 } from './theme';
 import { parseColor, type ColorToken } from './tokens/color-token';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
+// import { EXTEN}
 
 const brandConfig = {
   ma: {
