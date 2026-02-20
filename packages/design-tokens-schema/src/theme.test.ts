@@ -1159,34 +1159,123 @@ describe('validate minimum font-size', () => {
 });
 
 describe('upgrades legacy line-heights', () => {
-  it.todo('leaves lineHeights that are already numbers intact', () => {
-    // check that $type: 'lineHeight' is changed to $type: 'number'
-    // check that $value is the same
-    // check that extension is set with token-subtype: line-height
+  it('leaves lineHeights that are already numbers intact', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1.5,
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const token = (result.data?.basis?.text?.['line-height'] as any).md;
+    expect(token.$type).toEqual('number');
+    expect(token.$value).toEqual(1.5);
+    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
   });
 
-  it.todo('converts stringified numbers to numbers', () => [
-    // check that $value: '1.5' is converted to $value: 1.5
-    // check that $type: 'lineHeight' is changed to $type: 'number'
-    // check that extension is set with token-subtype: line-height
-  ]);
-
-  it.todo('coverts percentages to numbers', () => {
-    // check that $type is 'number'
-    // check that $value: 150% is converted to 1.5
-    // check that extension is set with token-subtype: line-height
+  it('converts stringified numbers to numbers', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: '1.5',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const token = (result.data?.basis?.text?.['line-height'] as any).md;
+    expect(token.$type).toEqual('number');
+    expect(token.$value).toEqual(1.5);
+    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
   });
 
-  it.todo('converts dimension strings to dimension', () => {
-    // check that $type is 'dimension'
-    // check that $value: '20px' is converted to { value: 20, unit: 'px' }
-    // check that extension is set with token-subtype: line-height
+  it('coverts percentages to numbers', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: '150%',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const token = (result.data?.basis?.text?.['line-height'] as any).md;
+    expect(token.$type).toEqual('number');
+    expect(token.$value).toEqual(1.5);
+    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
   });
 
-  it.todo('sets the correct type based on what token a reference points to', () => {
-    // ref is {basis.text.line-height.md}
-    // basis.text.line-height.md is `2`
-    // our token should have $type: number
+  it('converts dimension strings to dimension', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: '20px',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues.length).toBe(1);
+    expect(result.error?.issues[0]).toMatchObject({
+      // The message is proof the conversion worked, otherwise it would have shown 20px instead of the dimension object
+      message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+      path: ['basis', 'text', 'line-height', 'md', '$value'],
+    });
+  });
+
+  it('sets the correct type based on what token a reference points to', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 2,
+            },
+            sm: {
+              $type: 'lineHeight',
+              $value: '{basis.text.line-height.md}',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const token = (result.data?.basis?.text?.['line-height'] as any).sm;
+    expect(token.$type).toEqual('number');
+    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
   });
 });
 
