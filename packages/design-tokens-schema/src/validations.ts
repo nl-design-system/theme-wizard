@@ -14,3 +14,8 @@ export const validateFontSize = ({ unit, value }: { value: number; unit: string 
     (unit === 'px' && value < MIN_FONT_SIZE_PX) || (unit === 'rem' && pxToRem(value) < MIN_FONT_SIZE_PX);
   return !isTooSmall;
 };
+
+export const MINIMUM_LINE_HEIGHT = 1.1;
+
+/** @returns true if valid, false if invalid */
+export const validateMinLineHeight = (lineHeight: number) => lineHeight >= MINIMUM_LINE_HEIGHT;

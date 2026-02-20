@@ -22,9 +22,16 @@ import {
   type InvalidRefIssue,
   LineHeightUnitIssue,
   MinFontSizeIssue,
+  MinimumLineHeightIssue,
   createContrastIssue,
 } from './validation-issue';
-import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM } from './validations';
+import {
+  validateFontSize,
+  MIN_FONT_SIZE_PX,
+  MIN_FONT_SIZE_REM,
+  validateMinLineHeight,
+  MINIMUM_LINE_HEIGHT,
+} from './validations';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -227,8 +234,19 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
       if (isRef(token.$value)) return;
 
       if (typeof token.$value === 'number') {
-        // TODO: add validation for minimum line-height here
-        // https://github.com/nl-design-system/theme-wizard/issues/316
+        if (!validateMinLineHeight(token.$value)) {
+          ctx.addIssue({
+            actual: token.$value,
+            code: 'too_small',
+            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+            expected: 'number',
+            input: token.$value,
+            message: `Line height should be ${MINIMUM_LINE_HEIGHT} at minimum, received ${token.$value}`,
+            minimum: MINIMUM_LINE_HEIGHT,
+            origin: 'number',
+            path: [...path, '$value'],
+          } satisfies MinimumLineHeightIssue);
+        }
         return;
       }
 
