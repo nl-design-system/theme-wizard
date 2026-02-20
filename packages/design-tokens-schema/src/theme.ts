@@ -5,7 +5,7 @@ import {
   resolveRefs,
   EXTENSION_RESOLVED_FROM,
   EXTENSION_RESOLVED_AS,
-  addExtension,
+  setExtension,
 } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
@@ -58,7 +58,7 @@ export const addColorScalePositionExtensions = (rootConfig: Record<string, unkno
     if (matchingColorKeyIndex === -1) return;
 
     // Add the extension with the index
-    addExtension(color, EXTENSION_COLOR_SCALE_POSITION, matchingColorKeyIndex + 1);
+    setExtension(color, EXTENSION_COLOR_SCALE_POSITION, matchingColorKeyIndex + 1);
   });
   return rootConfig;
 };
@@ -107,13 +107,12 @@ export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
         expectedRatio,
       } satisfies ContrastExtension;
 
-      const ext = color['$extensions'] ?? {};
-      const existing = ext[EXTENSION_CONTRAST_WITH];
+      const existing = color['$extensions']?.[EXTENSION_CONTRAST_WITH];
 
       if (Array.isArray(existing)) {
-        addExtension(color, EXTENSION_CONTRAST_WITH, [...existing, contrastWith]);
+        setExtension(color, EXTENSION_CONTRAST_WITH, [...existing, contrastWith]);
       } else {
-        addExtension(color, EXTENSION_CONTRAST_WITH, [contrastWith]);
+        setExtension(color, EXTENSION_CONTRAST_WITH, [contrastWith]);
       }
     }
   });
