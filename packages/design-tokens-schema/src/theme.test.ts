@@ -15,6 +15,7 @@ import {
 } from './theme';
 import { parseColor, type ColorToken } from './tokens/color-token';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
+import { MINIMUM_LINE_HEIGHT } from './validations';
 
 const brandConfig = {
   ma: {
@@ -849,6 +850,107 @@ describe('validate unitless line-height preference', () => {
         ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
         expected: 'number',
         message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+        path: ['ma', 'someComponent', 'line-height', 'md', '$value'],
+      },
+    ]);
+  });
+});
+
+describe('validate minimum line-height preference', () => {
+  it('Does not report line-heights that comply', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1.5,
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
+  it('Does not report line-heights that are a ref', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1.5,
+            },
+            sm: {
+              $type: 'lineHeight',
+              $value: '{basis.text.line-height.md}',
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+  });
+
+  it('flags line-heights that are too small', () => {
+    const config = {
+      basis: {
+        text: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1,
+            },
+          },
+        },
+      },
+      brand: brandConfig,
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      {
+        actual: 1,
+        code: 'too_small',
+        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+        expected: 'number',
+        message: 'Line height should be 1.1 at minimum, received 1',
+        minimum: MINIMUM_LINE_HEIGHT,
+        origin: 'number',
+        path: ['basis', 'text', 'line-height', 'md', '$value'],
+      },
+    ]);
+  });
+
+  it('flags invalid line-heights outside of basis tokens', () => {
+    const config = {
+      ma: {
+        someComponent: {
+          'line-height': {
+            md: {
+              $type: 'lineHeight',
+              $value: 1.05,
+            },
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual([
+      {
+        actual: 1.05,
+        code: 'too_small',
+        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+        expected: 'number',
+        message: 'Line height should be 1.1 at minimum, received 1.05',
+        minimum: MINIMUM_LINE_HEIGHT,
+        origin: 'number',
         path: ['ma', 'someComponent', 'line-height', 'md', '$value'],
       },
     ]);

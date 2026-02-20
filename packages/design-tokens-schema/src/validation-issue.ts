@@ -4,6 +4,7 @@ export const ERROR_CODES = {
   FONT_SIZE_TOO_SMALL: 'font_size_too_small',
   INSUFFICIENT_CONTRAST: 'insufficient_contrast',
   INVALID_REF: 'invalid_ref',
+  LINE_HEIGHT_TOO_SMALL: 'line_height_too_small',
   UNEXPECTED_UNIT: 'unexpected_unit',
 } as const;
 
@@ -29,6 +30,17 @@ export type LineHeightUnitIssue = z.core.$ZodSuperRefineIssue & {
   code: 'invalid_type';
   message: string;
   path: string[];
+};
+
+export type MinimumLineHeightIssue = z.core.$ZodSuperRefineIssue & {
+  ERROR_CODE: typeof ERROR_CODES.LINE_HEIGHT_TOO_SMALL;
+  code: 'too_small';
+  message: string;
+  path: string[];
+  minimum: number;
+  expected: 'number';
+  input: number;
+  actual: number;
 };
 
 export type MinFontSizeIssue = z.core.$ZodSuperRefineIssue & {
