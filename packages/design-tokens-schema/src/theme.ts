@@ -11,6 +11,7 @@ import { ColorValue, compareContrast, type ColorToken } from './tokens/color-tok
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
 import { walkColors, walkDimensions, walkLineHeights, walkObject, walkTokens } from './walker';
 export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
+import { parse_dimension } from '@projectwallace/css-parser';
 import {
   type ForegroundColorKey,
   type BorderColorKey,
@@ -49,7 +50,7 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
 
 export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
-    const lastPath = path.at(-1) as string;
+    const lastPath = path.at(-1)!;
 
     // Find if the token name ends with any COLOR_KEYS value
     const matchingColorKeyIndex = COLOR_KEYS.findIndex((colorKey) => lastPath.endsWith(colorKey));
@@ -166,6 +167,45 @@ const upgradeLegacyDimensionTypes = (rootConfig: Record<string, unknown>): Recor
   walkTokens(rootConfig, (token) => {
     if (token.$type === 'fontSize') {
       token.$type = 'dimension';
+      setExtension(token, 'nl.nldesignsystem.subtype', 'font-size');
+      return;
+    }
+
+    if (token.$type === 'lineHeight') {
+      setExtension(token, 'nl.nldesignsystem.subtype', 'line-height');
+
+      if (typeof token.$value === 'number') {
+        token.$type = 'number';
+        return;
+      }
+
+      if (isRef(token.$value)) {
+        token.$type = 'number';
+        return;
+      }
+
+      if (typeof token.$value === 'string') {
+        if (token.$value.endsWith('%')) {
+          const parsedAsNumber = Number.parseFloat(token.$value.slice(0, -1));
+          token.$type = 'number';
+          token.$value = parsedAsNumber;
+          return;
+        }
+
+        const parsedAsNumber = Number.parseFloat(token.$value);
+        if (parsedAsNumber.toString() === token.$value) {
+          token.$value = parsedAsNumber;
+          token.$type = 'number';
+          return;
+        }
+
+        const { unit, value } = parse_dimension(token.$value);
+        if (unit && Number.isFinite(value)) {
+          token.$type = 'dimension';
+          token.$value = { unit, value };
+        }
+      }
+      // We assume all other notations of lineHeight will be correct
     }
   });
   return rootConfig;
