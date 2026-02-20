@@ -1,5 +1,9 @@
 import * as z from 'zod';
 
+/** @see 5.2.3 Extensions https://www.designtokens.org/tr/drafts/format/#extensions */
+export const ExtensionsSchema = z.record(z.string(), z.unknown());
+export type Extensions = z.infer<typeof ExtensionsSchema>;
+
 // 5.1 Name and value
 
 export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
@@ -32,7 +36,7 @@ export const BaseDesignTokenValueSchema = z.strictObject({
   /** @see 5.2.1 Description https://www.designtokens.org/tr/drafts/format/#description */
   $description: z.string().optional(),
   /** @see 5.2.3 Extensions https://www.designtokens.org/tr/drafts/format/#extensions */
-  $extensions: z.record(z.string(), z.unknown()).optional(),
+  $extensions: ExtensionsSchema.optional(),
   /** @see 5.2.2 Type https://www.designtokens.org/tr/drafts/format/#type-0 */
   $type: z.string().nonoptional(),
   $value: z.unknown().nonoptional(), // refine exact shape in concrete token types
