@@ -4,6 +4,7 @@ import {
   type Theme as ThemeType,
   EXTENSION_RESOLVED_AS,
   stringifyFontFamily,
+  EXTENSION_RESOLVED_FROM,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -80,12 +81,32 @@ export default class Theme {
     });
   }
 
+  // Updates a single token value at the given path, preserving other properties and extensions of the token.
+  // Unlike the non-private instance method `updateAt`, this method does not mark the theme as modified.
+  static #updateAt(tokens: DesignTokens, path: string, value: DesignToken['$value']) {
+    const original = dlv(tokens, path);
+    const $extensions = original?.$extensions;
+    const updated = {
+      ...original,
+      ...($extensions
+        ? {
+            $extensions: {
+              ...$extensions,
+              [EXTENSION_RESOLVED_AS]: undefined,
+              [EXTENSION_RESOLVED_FROM]: undefined,
+            },
+          }
+        : undefined),
+      $value: value,
+    };
+    dset(tokens, path, updated);
+  }
+
   updateAt(path: string, value: DesignToken['$value']) {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
-    const fullPath = `${path}.$value`;
-    dset(tokens, fullPath, value);
-    dset(tokens, `${path}.$extensions.${EXTENSION_RESOLVED_AS}`, undefined);
+    Theme.#updateAt(tokens, path, value);
+
     this.tokens = tokens;
   }
 
@@ -93,9 +114,7 @@ export default class Theme {
     const tokens = structuredClone(this.#tokens);
     this.#modified = true;
     for (const { path, value } of values) {
-      const fullPath = `${path}.$value`;
-      dset(tokens, fullPath, value);
-      dset(tokens, `${path}.$extensions.${EXTENSION_RESOLVED_AS}`, undefined);
+      Theme.#updateAt(tokens, path, value);
     }
     this.tokens = tokens;
   }
