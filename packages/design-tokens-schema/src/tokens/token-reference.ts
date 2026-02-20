@@ -1,6 +1,6 @@
 import dlv from 'dlv';
 import * as z from 'zod';
-import { BaseDesignTokenIdentifierSchema } from './base-token';
+import { BaseDesignTokenIdentifierSchema, type BaseDesignTokenValue } from './base-token';
 
 // A Design Token ref:
 // - Starts with {
@@ -28,12 +28,7 @@ export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj !== null && typeof obj === 'object';
 };
 
-export type TokenLike = {
-  $type: string;
-  $value: unknown;
-};
-
-export const isTokenLike = (obj: unknown): obj is TokenLike => {
+export const isTokenLike = (obj: unknown): obj is BaseDesignTokenValue => {
   if (!isValueObject(obj)) return false;
   // Must have a `$type: string`
   if (!('$type' in obj) || typeof obj['$type'] !== 'string') return false;
@@ -41,10 +36,14 @@ export const isTokenLike = (obj: unknown): obj is TokenLike => {
   return '$value' in obj;
 };
 
-export type TokenWithRefLike = {
+/** @deprecated use `BaseDesignTokenValue` instead */
+export type TokenLike = {
   $type: string;
+  $value: unknown;
+};
+
+export type TokenWithRefLike = BaseDesignTokenValue & {
   $value: `{${string}}`;
-  $extensions?: Record<string, unknown>;
 };
 
 export const isRef = (value: unknown): value is TokenReference => {

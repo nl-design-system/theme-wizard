@@ -3,7 +3,6 @@ import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
-export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 
 export const ColorOrColorScaleSchema = z.union([
   ColorTokenValidationSchema,
