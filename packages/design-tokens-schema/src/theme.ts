@@ -1,6 +1,12 @@
 import dlv from 'dlv';
 import * as z from 'zod';
-import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
+import {
+  validateRefs,
+  resolveRefs,
+  EXTENSION_RESOLVED_FROM,
+  EXTENSION_RESOLVED_AS,
+  setExtension,
+} from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
 import { walkColors, walkDimensions, walkLineHeights, walkObject, walkTokens } from './walker';
@@ -52,8 +58,7 @@ export const addColorScalePositionExtensions = (rootConfig: Record<string, unkno
     if (matchingColorKeyIndex === -1) return;
 
     // Add the extension with the index
-    color.$extensions ??= {};
-    color.$extensions[EXTENSION_COLOR_SCALE_POSITION] = matchingColorKeyIndex + 1;
+    setExtension(color, EXTENSION_COLOR_SCALE_POSITION, matchingColorKeyIndex + 1);
   });
   return rootConfig;
 };
@@ -102,14 +107,13 @@ export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
         expectedRatio,
       } satisfies ContrastExtension;
 
-      // Make sure $extensions exists
-      color.$extensions ??= {};
-      color.$extensions = {
-        ...color.$extensions,
-        [EXTENSION_CONTRAST_WITH]: Array.isArray(color.$extensions[EXTENSION_CONTRAST_WITH])
-          ? [...color.$extensions[EXTENSION_CONTRAST_WITH], contrastWith]
-          : [contrastWith],
-      };
+      const existing = color['$extensions']?.[EXTENSION_CONTRAST_WITH];
+
+      if (Array.isArray(existing)) {
+        setExtension(color, EXTENSION_CONTRAST_WITH, [...existing, contrastWith]);
+      } else {
+        setExtension(color, EXTENSION_CONTRAST_WITH, [contrastWith]);
+      }
     }
   });
   return rootConfig;
