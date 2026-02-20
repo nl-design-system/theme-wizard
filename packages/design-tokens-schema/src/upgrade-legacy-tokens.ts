@@ -34,7 +34,6 @@ const processLineHeightValue = (
   }
 
   // The next line is type-safe, but because of that we don't cover all branches
-  /* v8 ignore next -- @preserve */
   return { type: 'lineHeight' };
 };
 
