@@ -766,7 +766,7 @@ describe('validate unitless line-height preference', () => {
       brand: brandConfig,
     };
     const result = StrictThemeSchema.safeParse(config);
-    expect(result.success, result.error?.message).toEqual(true);
+    expect(result.success).toEqual(true);
   });
 
   it('flags line-heights that use units', () => {
@@ -894,7 +894,7 @@ describe('validate minimum line-height preference', () => {
       brand: brandConfig,
     };
     const result = StrictThemeSchema.safeParse(config);
-    expect(result.success, result.error?.message).toEqual(true);
+    expect(result.success).toEqual(true);
   });
 
   it('flags line-heights that are too small', () => {
@@ -1158,7 +1158,39 @@ describe('validate minimum font-size', () => {
   });
 });
 
-describe.skip('strictly validate known basis themes', () => {
+describe('upgrades legacy line-heights', () => {
+  it.todo('leaves lineHeights that are already numbers intact', () => {
+    // check that $type: 'lineHeight' is changed to $type: 'number'
+    // check that $value is the same
+    // check that extension is set with token-subtype: line-height
+  });
+
+  it.todo('converts stringified numbers to numbers', () => [
+    // check that $value: '1.5' is converted to $value: 1.5
+    // check that $type: 'lineHeight' is changed to $type: 'number'
+    // check that extension is set with token-subtype: line-height
+  ]);
+
+  it.todo('coverts percentages to numbers', () => {
+    // check that $type is 'number'
+    // check that $value: 150% is converted to 1.5
+    // check that extension is set with token-subtype: line-height
+  });
+
+  it.todo('converts dimension strings to dimension', () => {
+    // check that $type is 'dimension'
+    // check that $value: '20px' is converted to { value: 20, unit: 'px' }
+    // check that extension is set with token-subtype: line-height
+  });
+
+  it.todo('sets the correct type based on what token a reference points to', () => {
+    // ref is {basis.text.line-height.md}
+    // basis.text.line-height.md is `2`
+    // our token should have $type: number
+  });
+});
+
+describe('strictly validate known basis themes', () => {
   it('Mooi & Anders theme', () => {
     const result = StrictThemeSchema.safeParse(maTokens);
     expect(result.success).toEqual(true);
