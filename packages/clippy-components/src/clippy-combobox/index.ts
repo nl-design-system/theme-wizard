@@ -3,7 +3,7 @@ import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
-import { html, nothing, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -87,7 +87,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   @property()
   override set value(value: T['value'] | null) {
     super.value = value;
-    this.query = this.valueToQuery(value) || this.query;
   }
 
   override get value(): T['value'] | null {
@@ -265,9 +264,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   #commitActiveItem(index: number) {
     const { label, value } = this.filteredOptions.at(index) ?? {};
     if (index < 0 || !label || !value) return;
-
-    this.query = label.toString();
-
     if (this.value !== value) {
       this.value = value;
       this.#handleChange();
@@ -302,6 +298,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       <div>${label}</div>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
     `;
+  }
+
+  override updated(changed: PropertyValues) {
+    super.updated(changed);
+    if (changed.has('options') || changed.has('value')) {
+      // Query value in input is dependent on both `options` and `value`.
+      this.query = this.valueToQuery(this.value) ?? '';
+    }
   }
 
   override connectedCallback() {
