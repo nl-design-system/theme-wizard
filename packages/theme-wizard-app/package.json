@@ -40,7 +40,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@amsterdam/design-system-css": "2.2.0",
+    "@amsterdam/design-system-css": "3.1.0",
     "@fontsource/fira-sans": "5.2.7",
     "@fontsource/source-sans-pro": "5.2.5",
     "@gemeente-denhaag/action": "4.1.3",
