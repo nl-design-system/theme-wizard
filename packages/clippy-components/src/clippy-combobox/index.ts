@@ -118,11 +118,15 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     return Promise.resolve(empty);
   }
 
+  /**
+   * Override this function to customize how the value is looked up based on the selected option
+   */
   getOptionForValue(value: T['value'] | null): T | undefined {
     const valueIsNonNullObject = typeof value === 'object' && value !== null;
+    const stringifiedValue = JSON.stringify(value);
     return this.options.find((option) => {
       if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
-        return JSON.stringify(option.value) === JSON.stringify(value);
+        return JSON.stringify(option.value) === stringifiedValue;
       }
       return option.value === value;
     });
