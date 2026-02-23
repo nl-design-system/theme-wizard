@@ -1286,30 +1286,22 @@ describe('line-height validations', () => {
     // basis.text.font-size.sm: 16px
     // basis.text.font-size.line-height: 16px
     // calculated line-height: 16px/16px = 1
+    const unexpectedUnitError = {
+      ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+    };
+    const createDimension = (value: number, unit: 'rem' | 'px') => {
+      return { $type: 'dimension', $value: { unit, value } };
+    };
 
     it('invalid line-height: $type=dimension; px/px', () => {
       const config = {};
-      dset(config, 'basis.text.font-size.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 16,
-        },
-      });
-      dset(config, 'basis.text.line-height.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 16,
-        },
-      });
+      dset(config, 'basis.text.font-size.sm', createDimension(16, 'px'));
+      dset(config, 'basis.text.line-height.sm', createDimension(16, 'px'));
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toMatchObject({
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-      });
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
       expect(result.error?.issues[1]).toMatchObject({
         actual: 1,
         ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
@@ -1319,27 +1311,13 @@ describe('line-height validations', () => {
 
     it('invalid line-height: $type=dimension; px/rem', () => {
       const config = {};
-      dset(config, 'basis.text.font-size.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 16,
-        },
-      });
-      dset(config, 'basis.text.line-height.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'rem',
-          value: 1,
-        },
-      });
+      dset(config, 'basis.text.font-size.sm', createDimension(16, 'px'));
+      dset(config, 'basis.text.line-height.sm', createDimension(1, 'rem'));
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toMatchObject({
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-      });
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
       expect(result.error?.issues[1]).toMatchObject({
         actual: 1,
         ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
@@ -1349,27 +1327,13 @@ describe('line-height validations', () => {
 
     it('invalid line-height: $type=dimension; rem/px', () => {
       const config = {};
-      dset(config, 'basis.text.font-size.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'rem',
-          value: 1,
-        },
-      });
-      dset(config, 'basis.text.line-height.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 16,
-        },
-      });
+      dset(config, 'basis.text.font-size.sm', createDimension(1, 'rem'));
+      dset(config, 'basis.text.line-height.sm', createDimension(16, 'px'));
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toMatchObject({
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-      });
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
       expect(result.error?.issues[1]).toMatchObject({
         actual: 1,
         ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
@@ -1379,74 +1343,34 @@ describe('line-height validations', () => {
 
     it('valid line-height: $type=dimension; rem/px', () => {
       const config = {};
-      dset(config, 'basis.text.font-size.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'rem',
-          value: 1,
-        },
-      });
-      dset(config, 'basis.text.line-height.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 24,
-        },
-      });
+      dset(config, 'basis.text.font-size.sm', createDimension(1, 'rem'));
+      dset(config, 'basis.text.line-height.sm', createDimension(24, 'px'));
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(1);
-      expect(result.error?.issues[0]).toMatchObject({
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-      });
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
     });
 
     it('valid line-height: $type=dimension; rem/px; with font-size ref', () => {
       const config = {};
-      dset(config, 'basis.text.font-size.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'rem',
-          value: 1,
-        },
-      });
+      dset(config, 'basis.text.font-size.sm', createDimension(1, 'rem'));
       dset(config, 'basis.text.font-size.md', {
         $type: 'dimension',
         $value: '{basis.text.font-size.sm}',
       });
-      dset(config, 'basis.text.line-height.md', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 24,
-        },
-      });
+      dset(config, 'basis.text.line-height.md', createDimension(24, 'px'));
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(1);
-      expect(result.error?.issues[0]).toMatchObject({
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-      });
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
     });
 
     it('valid line-height: $type=dimension; rem/px; with line-height ref', () => {
       const config = {};
-      dset(config, 'basis.text.font-size.md', {
-        $type: 'dimension',
-        $value: {
-          unit: 'rem',
-          value: 1,
-        },
-      });
-      dset(config, 'basis.text.line-height.sm', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 24,
-        },
-      });
+      dset(config, 'basis.text.font-size.md', createDimension(1, 'rem'));
+      dset(config, 'basis.text.line-height.sm', createDimension(24, 'px'));
       dset(config, 'basis.text.line-height.md', {
         $type: 'dimension',
         $value: '{basis.text.line-height.sm}',
@@ -1455,9 +1379,7 @@ describe('line-height validations', () => {
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(1);
-      expect(result.error?.issues[0]).toMatchObject({
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-      });
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
     });
   });
 });
