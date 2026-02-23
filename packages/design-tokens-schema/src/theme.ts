@@ -1,17 +1,6 @@
 import dlv from 'dlv';
 import * as z from 'zod';
 import {
-  validateRefs,
-  resolveRefs,
-  EXTENSION_RESOLVED_FROM,
-  EXTENSION_RESOLVED_AS,
-  setExtension,
-} from './resolve-refs';
-import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
-import { TokenReference, isValueObject, isRef } from './tokens/token-reference';
-import { walkColors, walkDimensions, walkLineHeights, walkObject, walkTokens } from './walker';
-export { EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
-import {
   type ForegroundColorKey,
   type BorderColorKey,
   CONTRAST,
@@ -22,7 +11,12 @@ import {
   isBorderColor,
   COLOR_KEYS,
 } from './basis-tokens';
+import { setExtension } from './extensions';
 import { removeNonTokenProperties } from './remove-non-token-properties';
+import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
+import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
+import { TokenReference, isRef, isValueObject } from './tokens/token-reference';
+import { upgradeLegacyTokens } from './upgrade-legacy-tokens';
 import {
   ERROR_CODES,
   type InvalidRefIssue,
@@ -38,6 +32,7 @@ import {
   validateMinLineHeight,
   MINIMUM_LINE_HEIGHT,
 } from './validations';
+import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -49,7 +44,7 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
 
 export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
-    const lastPath = path.at(-1) as string;
+    const lastPath = path.at(-1)!;
 
     // Find if the token name ends with any COLOR_KEYS value
     const matchingColorKeyIndex = COLOR_KEYS.findIndex((colorKey) => lastPath.endsWith(colorKey));
@@ -159,24 +154,12 @@ export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
 
 export type Theme = z.infer<typeof ThemeShapeSchema>;
 
-/**
- * @description NLDS themes use `$type: 'fontSize'` instead of dimension, so a quick round of preprocessing helps to get them in order
- */
-const upgradeLegacyDimensionTypes = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
-  walkTokens(rootConfig, (token) => {
-    if (token.$type === 'fontSize') {
-      token.$type = 'dimension';
-    }
-  });
-  return rootConfig;
-};
-
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
 export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
-  .transform(upgradeLegacyDimensionTypes)
+  .transform(upgradeLegacyTokens)
   .transform(addContrastExtensions)
   .transform(addColorScalePositionExtensions)
   .transform(resolveConfigRefs)
