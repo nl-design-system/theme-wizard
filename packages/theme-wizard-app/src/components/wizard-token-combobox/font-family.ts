@@ -1,4 +1,5 @@
 import { EXTENSION_RESOLVED_AS, FontFamilyToken, isRef } from '@nl-design-system-community/design-tokens-schema';
+import '@nl-design-system-community/clippy-components/clippy-html-image';
 import { html, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -34,6 +35,8 @@ export const preview = <T extends { label: string; value: FontFamilyToken }>({ v
     fontSizeAdjust: 0.5,
   };
   return html`
-    <span class="wizard-token-combobox__preview--font-family" style=${styleMap(styles)}>${PREVIEW_VALUE}</span>
+    <clippy-html-image>
+      <span class="wizard-token-combobox__preview--font-family" style=${styleMap(styles)}>${PREVIEW_VALUE}</span>
+    </clippy-html-image>
   `;
 };
