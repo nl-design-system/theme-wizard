@@ -84,22 +84,15 @@ export default class Theme {
   // Updates a single token value at the given path, preserving other properties and extensions of the token.
   // Unlike the non-private instance method `updateAt`, this method does not mark the theme as modified.
   static #updateAt(tokens: DesignTokens, path: string, value: DesignToken['$value']) {
-    const original = dlv(tokens, path);
-    const $extensions = original?.$extensions;
-    const updated = {
+    const { $extensions, ...original } = dlv(tokens, path);
+    // TODO: set extensions on the updated token based on the new value, for example if the new value is a reference to another token.
+    delete $extensions?.[EXTENSION_RESOLVED_AS]; // Clear resolvedAs since the value is changing, it may no longer be valid
+    delete $extensions?.[EXTENSION_RESOLVED_FROM]; // Clear resolvedFrom since the value is changing, it may no longer be valid
+    dset(tokens, path, {
       ...original,
-      ...($extensions
-        ? {
-            $extensions: {
-              ...$extensions,
-              [EXTENSION_RESOLVED_AS]: undefined,
-              [EXTENSION_RESOLVED_FROM]: undefined,
-            },
-          }
-        : undefined),
+      $extensions,
       $value: value,
-    };
-    dset(tokens, path, updated);
+    });
   }
 
   updateAt(path: string, value: DesignToken['$value']) {
