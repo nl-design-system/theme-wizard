@@ -1,6 +1,7 @@
 import maTokens from '@nl-design-system-community/ma-design-tokens/dist/tokens';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
 import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
+import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
 import * as z from 'zod';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
@@ -729,235 +730,6 @@ describe('color scale position extension', () => {
   });
 });
 
-describe('validate unitless line-height preference', () => {
-  it('Does not report line-heights that use a unitless number', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 1.5,
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-  });
-
-  it('Does not report line-heights that are a ref', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 1.5,
-            },
-            sm: {
-              $type: 'lineHeight',
-              $value: '{basis.text.line-height.md}',
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-  });
-
-  it('flags line-heights that use units', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: '20px',
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(false);
-    expect(result.error?.issues).toEqual([
-      {
-        code: 'invalid_type',
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-        expected: 'number',
-        message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
-        path: ['basis', 'text', 'line-height', 'md', '$value'],
-      },
-    ]);
-  });
-
-  it('flags line-heights that use dimensions', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'dimension',
-              $value: {
-                unit: 'px',
-                value: 20,
-              },
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(false);
-    expect(result.error?.issues).toEqual([
-      {
-        code: 'invalid_type',
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-        expected: 'number',
-        message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
-        path: ['basis', 'text', 'line-height', 'md', '$value'],
-      },
-    ]);
-  });
-
-  it('flags invalid line-heights outside of basis tokens', () => {
-    const config = {
-      ma: {
-        someComponent: {
-          'line-height': {
-            md: {
-              $type: 'dimension',
-              $value: {
-                unit: 'px',
-                value: 20,
-              },
-            },
-          },
-        },
-      },
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(false);
-    expect(result.error?.issues).toEqual([
-      {
-        code: 'invalid_type',
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-        expected: 'number',
-        message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
-        path: ['ma', 'someComponent', 'line-height', 'md', '$value'],
-      },
-    ]);
-  });
-});
-
-describe('validate minimum line-height preference', () => {
-  it('Does not report line-heights that comply', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 1.5,
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-  });
-
-  it('Does not report line-heights that are a ref', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 1.5,
-            },
-            sm: {
-              $type: 'lineHeight',
-              $value: '{basis.text.line-height.md}',
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-  });
-
-  it('flags line-heights that are too small', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 1,
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(false);
-    expect(result.error?.issues).toEqual([
-      {
-        actual: 1,
-        code: 'too_small',
-        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-        expected: 'number',
-        message: 'Line height should be 1.1 at minimum, received 1',
-        minimum: MINIMUM_LINE_HEIGHT,
-        origin: 'number',
-        path: ['basis', 'text', 'line-height', 'md', '$value'],
-      },
-    ]);
-  });
-
-  it('flags invalid line-heights outside of basis tokens', () => {
-    const config = {
-      ma: {
-        someComponent: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 1.05,
-            },
-          },
-        },
-      },
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(false);
-    expect(result.error?.issues).toEqual([
-      {
-        actual: 1.05,
-        code: 'too_small',
-        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-        expected: 'number',
-        message: 'Line height should be 1.1 at minimum, received 1.05',
-        minimum: MINIMUM_LINE_HEIGHT,
-        origin: 'number',
-        path: ['ma', 'someComponent', 'line-height', 'md', '$value'],
-      },
-    ]);
-  });
-});
-
 describe('validate minimum font-size', () => {
   it('passes refs', () => {
     const config = {
@@ -1159,124 +931,534 @@ describe('validate minimum font-size', () => {
   });
 });
 
-describe('upgrades legacy line-heights', () => {
-  it('leaves lineHeights that are already numbers intact', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 1.5,
+describe('line-height validations', () => {
+  describe('validate unitless line-height preference', () => {
+    it('Does not report line-heights that use a unitless number', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 1.5,
+              },
             },
           },
         },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const token = (result.data?.basis?.text?.['line-height'] as any).md;
-    expect(token.$type).toEqual('number');
-    expect(token.$value).toEqual(1.5);
-    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
-  });
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+    });
 
-  it('converts stringified numbers to numbers', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: '1.5',
+    it('Does not report line-heights that are a ref', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 1.5,
+              },
+              sm: {
+                $type: 'lineHeight',
+                $value: '{basis.text.line-height.md}',
+              },
             },
           },
         },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const token = (result.data?.basis?.text?.['line-height'] as any).md;
-    expect(token.$type).toEqual('number');
-    expect(token.$value).toEqual(1.5);
-    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
-  });
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+    });
 
-  it('coverts percentages to numbers', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: '150%',
+    it('flags line-heights that use units', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: '20px',
+              },
             },
           },
         },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const token = (result.data?.basis?.text?.['line-height'] as any).md;
-    expect(token.$type).toEqual('number');
-    expect(token.$value).toEqual(1.5);
-    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
-  });
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual([
+        {
+          code: 'invalid_type',
+          ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+          expected: 'number',
+          message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+          path: ['basis', 'text', 'line-height', 'md', '$value'],
+        },
+      ]);
+    });
 
-  it('converts dimension strings to dimension', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: '20px',
+    it('flags line-heights that use dimensions', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'dimension',
+                $value: {
+                  unit: 'px',
+                  value: 20,
+                },
+              },
             },
           },
         },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(false);
-    expect(result.error?.issues.length).toBe(1);
-    expect(result.error?.issues[0]).toMatchObject({
-      // The message is proof the conversion worked, otherwise it would have shown 20px instead of the dimension object
-      message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
-      path: ['basis', 'text', 'line-height', 'md', '$value'],
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual([
+        {
+          code: 'invalid_type',
+          ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+          expected: 'number',
+          message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+          path: ['basis', 'text', 'line-height', 'md', '$value'],
+        },
+      ]);
+    });
+
+    it('flags invalid line-heights outside of basis tokens', () => {
+      const config = {
+        ma: {
+          someComponent: {
+            'line-height': {
+              md: {
+                $type: 'dimension',
+                $value: {
+                  unit: 'px',
+                  value: 20,
+                },
+              },
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual([
+        {
+          code: 'invalid_type',
+          ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+          expected: 'number',
+          message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+          path: ['ma', 'someComponent', 'line-height', 'md', '$value'],
+        },
+      ]);
     });
   });
 
-  it('sets the correct type based on what token a reference points to', () => {
-    const config = {
-      basis: {
-        text: {
-          'line-height': {
-            md: {
-              $type: 'lineHeight',
-              $value: 2,
-            },
-            sm: {
-              $type: 'lineHeight',
-              $value: '{basis.text.line-height.md}',
+  describe('validate minimum line-height preference', () => {
+    it('Does not report line-heights that comply', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 1.5,
+              },
             },
           },
         },
-      },
-      brand: brandConfig,
-    };
-    const result = StrictThemeSchema.safeParse(config);
-    expect(result.success).toEqual(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const token = (result.data?.basis?.text?.['line-height'] as any).sm;
-    expect(token.$type).toEqual('number');
-    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+    });
+
+    it('Does not report line-heights that are a ref', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 1.5,
+              },
+              sm: {
+                $type: 'lineHeight',
+                $value: '{basis.text.line-height.md}',
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+    });
+
+    it('flags line-heights that are too small', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 1,
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual([
+        {
+          actual: 1,
+          code: 'too_small',
+          ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+          expected: 'number',
+          message: 'Line height should be 1.1 at minimum, received 1',
+          minimum: MINIMUM_LINE_HEIGHT,
+          origin: 'number',
+          path: ['basis', 'text', 'line-height', 'md', '$value'],
+        },
+      ]);
+    });
+
+    it('flags invalid line-heights outside of basis tokens', () => {
+      const config = {
+        ma: {
+          someComponent: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 1.05,
+              },
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual([
+        {
+          actual: 1.05,
+          code: 'too_small',
+          ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+          expected: 'number',
+          message: 'Line height should be 1.1 at minimum, received 1.05',
+          minimum: MINIMUM_LINE_HEIGHT,
+          origin: 'number',
+          path: ['ma', 'someComponent', 'line-height', 'md', '$value'],
+        },
+      ]);
+    });
+  });
+
+  describe('upgrades legacy line-heights', () => {
+    it('leaves lineHeights that are already numbers intact', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 1.5,
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      expect(token.$type).toEqual('number');
+      expect(token.$value).toEqual(1.5);
+      expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
+    });
+
+    it('converts stringified numbers to numbers', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: '1.5',
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      expect(token.$type).toEqual('number');
+      expect(token.$value).toEqual(1.5);
+      expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
+    });
+
+    it('coverts percentages to numbers', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: '150%',
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      expect(token.$type).toEqual('number');
+      expect(token.$value).toEqual(1.5);
+      expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
+    });
+
+    it('converts dimension strings to dimension', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: '20px',
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(false);
+      expect(result.error?.issues.length).toBe(1);
+      expect(result.error?.issues[0]).toMatchObject({
+        // The message is proof the conversion worked, otherwise it would have shown 20px instead of the dimension object
+        message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+        path: ['basis', 'text', 'line-height', 'md', '$value'],
+      });
+    });
+
+    it('sets the correct type based on what token a reference points to', () => {
+      const config = {
+        basis: {
+          text: {
+            'line-height': {
+              md: {
+                $type: 'lineHeight',
+                $value: 2,
+              },
+              sm: {
+                $type: 'lineHeight',
+                $value: '{basis.text.line-height.md}',
+              },
+            },
+          },
+        },
+        brand: brandConfig,
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toEqual(true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const token = (result.data?.basis?.text?.['line-height'] as any).sm;
+      expect(token.$type).toEqual('number');
+      expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
+    });
+  });
+
+  describe('validate non-numeric relative line-height', () => {
+    // basis.text.font-size.sm: 16px
+    // basis.text.font-size.line-height: 16px
+    // calculated line-height: 16px/16px = 1
+
+    it('invalid line-height: $type=dimension; px/px', () => {
+      const config = {};
+      dset(config, 'basis.text.font-size.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 16,
+        },
+      });
+      dset(config, 'basis.text.line-height.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 16,
+        },
+      });
+
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(2);
+      expect(result.error?.issues[0]).toMatchObject({
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+      });
+      expect(result.error?.issues[1]).toMatchObject({
+        actual: 1,
+        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+        path: ['basis', 'text', 'line-height', 'sm', '$value'],
+      });
+    });
+
+    it('invalid line-height: $type=dimension; px/rem', () => {
+      const config = {};
+      dset(config, 'basis.text.font-size.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 16,
+        },
+      });
+      dset(config, 'basis.text.line-height.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'rem',
+          value: 1,
+        },
+      });
+
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(2);
+      expect(result.error?.issues[0]).toMatchObject({
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+      });
+      expect(result.error?.issues[1]).toMatchObject({
+        actual: 1,
+        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+        path: ['basis', 'text', 'line-height', 'sm', '$value'],
+      });
+    });
+
+    it('invalid line-height: $type=dimension; rem/px', () => {
+      const config = {};
+      dset(config, 'basis.text.font-size.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'rem',
+          value: 1,
+        },
+      });
+      dset(config, 'basis.text.line-height.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 16,
+        },
+      });
+
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(2);
+      expect(result.error?.issues[0]).toMatchObject({
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+      });
+      expect(result.error?.issues[1]).toMatchObject({
+        actual: 1,
+        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+        path: ['basis', 'text', 'line-height', 'sm', '$value'],
+      });
+    });
+
+    it('valid line-height: $type=dimension; rem/px', () => {
+      const config = {};
+      dset(config, 'basis.text.font-size.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'rem',
+          value: 1,
+        },
+      });
+      dset(config, 'basis.text.line-height.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 24,
+        },
+      });
+
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(1);
+      expect(result.error?.issues[0]).toMatchObject({
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+      });
+    });
+
+    it('valid line-height: $type=dimension; rem/px; with font-size ref', () => {
+      const config = {};
+      dset(config, 'basis.text.font-size.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'rem',
+          value: 1,
+        },
+      });
+      dset(config, 'basis.text.font-size.md', {
+        $type: 'dimension',
+        $value: '{basis.text.font-size.sm}',
+      });
+      dset(config, 'basis.text.line-height.md', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 24,
+        },
+      });
+
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(1);
+      expect(result.error?.issues[0]).toMatchObject({
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+      });
+    });
+
+    it('valid line-height: $type=dimension; rem/px; with line-height ref', () => {
+      const config = {};
+      dset(config, 'basis.text.font-size.md', {
+        $type: 'dimension',
+        $value: {
+          unit: 'rem',
+          value: 1,
+        },
+      });
+      dset(config, 'basis.text.line-height.sm', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 24,
+        },
+      });
+      dset(config, 'basis.text.line-height.md', {
+        $type: 'dimension',
+        $value: '{basis.text.line-height.sm}',
+      });
+
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(1);
+      expect(result.error?.issues[0]).toMatchObject({
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+      });
+    });
   });
 });
 

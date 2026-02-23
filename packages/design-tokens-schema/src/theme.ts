@@ -31,6 +31,7 @@ import {
   MIN_FONT_SIZE_REM,
   validateMinLineHeight,
   MINIMUM_LINE_HEIGHT,
+  remToPx,
 } from './validations';
 import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
 
@@ -41,6 +42,17 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   resolveRefs(rootConfig['basis'], rootConfig);
   return rootConfig;
 };
+
+// TODO: append component tokens based on proximity of font-size/line-height
+const KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS = new Map<string, string>([
+  ['basis.text.font-size.sm', 'basis.text.line-height.sm'],
+  ['basis.text.font-size.md', 'basis.text.line-height.md'],
+  ['basis.text.font-size.lg', 'basis.text.line-height.lg'],
+  ['basis.text.font-size.xl', 'basis.text.line-height.xl'],
+  ['basis.text.font-size.2xl', 'basis.text.line-height.2xl'],
+  ['basis.text.font-size.3xl', 'basis.text.line-height.3xl'],
+  ['basis.text.font-size.4xl', 'basis.text.line-height.4xl'],
+]);
 
 export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
@@ -215,7 +227,29 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
       }
     });
 
-    // Validation 3: check that line-heights are unit-less numbers
+    // Validation 3: font must have minimum size
+    walkDimensions(root, (token, path) => {
+      // MUST be a font-size token
+      if (!path.includes('font-size')) return;
+      // Refs are OK
+      if (isRef(token.$value)) return;
+
+      if (isValueObject(token.$value) && !validateFontSize(token.$value)) {
+        const actual = `${token.$value.value}${token.$value.unit}`;
+        ctx.addIssue({
+          actual,
+          code: 'custom',
+          ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
+          input: actual,
+          message: `Font-size should be ${MIN_FONT_SIZE_PX}px or ${MIN_FONT_SIZE_REM}rem minimum (got: "${actual}")`,
+          minimum: `${MIN_FONT_SIZE_PX}px / ${MIN_FONT_SIZE_REM}rem`,
+          origin: 'number',
+          path: [...path, '$value'],
+        } satisfies MinFontSizeIssue);
+      }
+    });
+
+    // Validation 4: check that line-heights are unit-less numbers
     walkLineHeights(root, (token, path) => {
       // Refs are OK
       if (isRef(token.$value)) return;
@@ -247,25 +281,40 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
       } satisfies LineHeightUnitIssue);
     });
 
-    // Validation 4: font must have minimum size
-    walkDimensions(root, (token, path) => {
-      // MUST be a font-size token
-      if (!path.includes('font-size')) return;
-      // Refs are OK
-      if (isRef(token.$value)) return;
+    // Validation 5: check that contextual line-heights are large enough
+    for (const [fontSizePath, lineHeightPath] of KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS) {
+      const fontSizeToken = dlv(root, fontSizePath);
+      const lineHeightToken = dlv(root, lineHeightPath);
 
-      if (isValueObject(token.$value) && !validateFontSize(token.$value)) {
-        const actual = `${token.$value.value}${token.$value.unit}`;
-        ctx.addIssue({
-          actual,
-          code: 'custom',
-          ERROR_CODE: ERROR_CODES.FONT_SIZE_TOO_SMALL,
-          input: actual,
-          message: `Font-size should be ${MIN_FONT_SIZE_PX}px or ${MIN_FONT_SIZE_REM}rem minimum (got: "${actual}")`,
-          minimum: `${MIN_FONT_SIZE_PX}px / ${MIN_FONT_SIZE_REM}rem`,
-          origin: 'number',
-          path: [...path, '$value'],
-        } satisfies MinFontSizeIssue);
+      if (fontSizeToken?.$type === 'dimension' && lineHeightToken?.$type === 'dimension') {
+        // Make sure we work with actual values, not references
+        const fontSizeValue = isRef(fontSizeToken.$value)
+          ? fontSizeToken.$extensions[EXTENSION_RESOLVED_AS]
+          : fontSizeToken.$value;
+        const lineHeightValue = isRef(lineHeightToken.$value)
+          ? lineHeightToken.$extensions?.[EXTENSION_RESOLVED_AS]
+          : lineHeightToken.$value;
+
+        // Normalize dimensions to px units, even if declared in rem
+        const normalizedFontSize = fontSizeValue.unit === 'rem' ? remToPx(fontSizeValue.value) : fontSizeValue.value;
+        const normalizedLineHeight =
+          lineHeightValue.unit === 'rem' ? remToPx(lineHeightValue.value) : lineHeightValue.value;
+
+        const actualLineHeight = normalizedLineHeight / normalizedFontSize;
+
+        if (!validateMinLineHeight(actualLineHeight)) {
+          ctx.addIssue({
+            actual: actualLineHeight,
+            code: 'too_small',
+            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+            expected: 'number',
+            input: actualLineHeight,
+            message: `Line height should be ${MINIMUM_LINE_HEIGHT} at minimum, received ${JSON.stringify(lineHeightValue)}`,
+            minimum: MINIMUM_LINE_HEIGHT,
+            origin: 'number',
+            path: lineHeightPath.split('.').concat('$value'),
+          } satisfies MinimumLineHeightIssue);
+        }
       }
-    });
+    }
   });

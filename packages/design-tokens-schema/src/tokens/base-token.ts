@@ -41,6 +41,7 @@ export const BaseDesignTokenValueSchema = z.strictObject({
   $type: z.string().nonoptional(),
   $value: z.unknown().nonoptional(), // refine exact shape in concrete token types
 });
+// TODO: refactor, this is a confusing name; BaseDesignToken or DesignToken would be better
 export type BaseDesignTokenValue = z.infer<typeof BaseDesignTokenValueSchema>;
 
 const BaseDesignTokenPropertiesEnum = BaseDesignTokenValueSchema.keyof();
