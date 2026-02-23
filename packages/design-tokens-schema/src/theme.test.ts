@@ -19,6 +19,17 @@ import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
 
+const createToken = (type: string, value: unknown, extensions?: Record<PropertyKey, unknown>) => {
+  return {
+    $extensions: extensions,
+    $type: type,
+    $value: value,
+  };
+};
+const createDimension = (value: number, unit: 'rem' | 'px') => {
+  return createToken('dimension', { unit, value });
+};
+
 const brandConfig = {
   ma: {
     name: {
@@ -1288,9 +1299,6 @@ describe('line-height validations', () => {
     // calculated line-height: 16px/16px = 1
     const unexpectedUnitError = {
       ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-    };
-    const createDimension = (value: number, unit: 'rem' | 'px') => {
-      return { $type: 'dimension', $value: { unit, value } };
     };
 
     it('invalid line-height: $type=dimension; px/px', () => {
