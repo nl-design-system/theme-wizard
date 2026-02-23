@@ -300,10 +300,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     `;
   }
 
-  override updated(changed: PropertyValues) {
-    super.updated(changed);
+  override willUpdate(changed: PropertyValues) {
+    super.willUpdate(changed);
+    // Query value in input is dependent on both `options` and `value`.
     if (changed.has('options') || changed.has('value')) {
-      // Query value in input is dependent on both `options` and `value`.
       this.query = this.valueToQuery(this.value) ?? '';
     }
   }
