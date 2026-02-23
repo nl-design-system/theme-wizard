@@ -12,6 +12,7 @@ import {
   type ResolvedToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
+import { dequal } from 'dequal';
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -111,9 +112,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   }
 
   override getOptionForValue(value: Option['value'] | null): Option | undefined {
-    // Compare only the token.$value for lookup, ignoring $extensions etc.
-    const stringifiedValue = JSON.stringify(value?.$value);
-    return this.options.find((option) => JSON.stringify(option.value.$value) === stringifiedValue);
+    return this.options.find((option) => dequal(option.value.$value, value?.$value));
   }
 
   override queryToValue(query: string): Option['value'] | null {

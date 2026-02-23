@@ -3,6 +3,7 @@ import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
+import { dequal } from 'dequal';
 import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -124,14 +125,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how the value is looked up based on the selected option
    */
   getOptionForValue(value: T['value'] | null): T | undefined {
-    const valueIsNonNullObject = typeof value === 'object' && value !== null;
-    const stringifiedValue = JSON.stringify(value);
-    return this.options.find((option) => {
-      if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
-        return JSON.stringify(option.value) === stringifiedValue;
-      }
-      return option.value === value;
-    });
+    return this.options.find((option) => dequal(option.value, value));
   }
 
   /**
