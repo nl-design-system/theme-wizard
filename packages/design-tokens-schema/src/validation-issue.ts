@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { MINIMUM_LINE_HEIGHT } from './validations';
 
 export const ERROR_CODES = {
   FONT_SIZE_TOO_SMALL: 'font_size_too_small',
@@ -41,6 +42,26 @@ export type MinimumLineHeightIssue = z.core.$ZodSuperRefineIssue & {
   expected: 'number';
   input: number;
   actual: number;
+};
+
+export const createMinLineHeightIssue = ({
+  actual,
+  path,
+}: {
+  path: string[];
+  actual: number;
+}): MinimumLineHeightIssue => {
+  return {
+    actual,
+    code: 'too_small',
+    ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+    expected: 'number',
+    input: actual,
+    message: `Line height should be ${MINIMUM_LINE_HEIGHT} at minimum, received ${JSON.stringify(actual)}`,
+    minimum: MINIMUM_LINE_HEIGHT,
+    origin: 'number',
+    path,
+  };
 };
 
 export type MinFontSizeIssue = z.core.$ZodSuperRefineIssue & {

@@ -22,17 +22,10 @@ import {
   type InvalidRefIssue,
   LineHeightUnitIssue,
   MinFontSizeIssue,
-  MinimumLineHeightIssue,
   createContrastIssue,
+  createMinLineHeightIssue,
 } from './validation-issue';
-import {
-  validateFontSize,
-  MIN_FONT_SIZE_PX,
-  MIN_FONT_SIZE_REM,
-  validateMinLineHeight,
-  MINIMUM_LINE_HEIGHT,
-  remToPx,
-} from './validations';
+import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM, validateMinLineHeight, remToPx } from './validations';
 import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
@@ -256,17 +249,11 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
 
       if (typeof token.$value === 'number') {
         if (!validateMinLineHeight(token.$value)) {
-          ctx.addIssue({
+          const issue = createMinLineHeightIssue({
             actual: token.$value,
-            code: 'too_small',
-            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-            expected: 'number',
-            input: token.$value,
-            message: `Line height should be ${MINIMUM_LINE_HEIGHT} at minimum, received ${token.$value}`,
-            minimum: MINIMUM_LINE_HEIGHT,
-            origin: 'number',
             path: [...path, '$value'],
-          } satisfies MinimumLineHeightIssue);
+          });
+          ctx.addIssue(issue);
         }
         return;
       }
@@ -303,17 +290,12 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
         const actualLineHeight = normalizedLineHeight / normalizedFontSize;
 
         if (!validateMinLineHeight(actualLineHeight)) {
-          ctx.addIssue({
-            actual: actualLineHeight,
-            code: 'too_small',
-            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-            expected: 'number',
-            input: actualLineHeight,
-            message: `Line height should be ${MINIMUM_LINE_HEIGHT} at minimum, received ${JSON.stringify(lineHeightValue)}`,
-            minimum: MINIMUM_LINE_HEIGHT,
-            origin: 'number',
-            path: lineHeightPath.split('.').concat('$value'),
-          } satisfies MinimumLineHeightIssue);
+          ctx.addIssue(
+            createMinLineHeightIssue({
+              actual: actualLineHeight,
+              path: [...lineHeightPath.split('.'), '$value'],
+            }),
+          );
         }
       }
     }
