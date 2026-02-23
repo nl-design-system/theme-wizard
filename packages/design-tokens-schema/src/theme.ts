@@ -44,7 +44,8 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
 
 export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
-    const lastPath = path.at(-1)!;
+    const lastPath = path.at(-1);
+    if (!lastPath) return;
 
     // Find if the token name ends with any COLOR_KEYS value
     const matchingColorKeyIndex = COLOR_KEYS.findIndex((colorKey) => lastPath.endsWith(colorKey));

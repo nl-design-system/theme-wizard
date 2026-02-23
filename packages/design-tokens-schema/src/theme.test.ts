@@ -14,6 +14,7 @@ import {
   type ContrastExtension,
 } from './theme';
 import { parseColor, type ColorToken } from './tokens/color-token';
+import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
 
@@ -1179,7 +1180,7 @@ describe('upgrades legacy line-heights', () => {
     const token = (result.data?.basis?.text?.['line-height'] as any).md;
     expect(token.$type).toEqual('number');
     expect(token.$value).toEqual(1.5);
-    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
+    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
   });
 
   it('converts stringified numbers to numbers', () => {
@@ -1202,7 +1203,7 @@ describe('upgrades legacy line-heights', () => {
     const token = (result.data?.basis?.text?.['line-height'] as any).md;
     expect(token.$type).toEqual('number');
     expect(token.$value).toEqual(1.5);
-    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
+    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
   });
 
   it('coverts percentages to numbers', () => {
@@ -1225,7 +1226,7 @@ describe('upgrades legacy line-heights', () => {
     const token = (result.data?.basis?.text?.['line-height'] as any).md;
     expect(token.$type).toEqual('number');
     expect(token.$value).toEqual(1.5);
-    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
+    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
   });
 
   it('converts dimension strings to dimension', () => {
@@ -1275,7 +1276,7 @@ describe('upgrades legacy line-heights', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const token = (result.data?.basis?.text?.['line-height'] as any).sm;
     expect(token.$type).toEqual('number');
-    expect(token.$extensions?.['nl.nldesignsystem.token-subtype']).toEqual('line-height');
+    expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
   });
 });
 
