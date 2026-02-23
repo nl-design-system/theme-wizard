@@ -7,6 +7,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { themeContext } from '../../contexts/theme';
+import { t } from '../../i18n';
 import Theme from '../../lib/Theme';
 import { type Option } from '../wizard-token-combobox';
 import { Token } from '../wizard-token-input';
@@ -118,14 +119,22 @@ export class WizardTokenField extends WizardTokenNavigator {
   }
 
   renderField(type: NonNullable<typeof this.type>, label: string) {
-    return html`<wizard-token-combobox
-      name=${this.path}
-      hidden-label=${label}
-      type=${type}
-      .value=${this.token}
-      .options=${this.options}
-      class=${classMap({ 'theme-error': this.#hasErrors })}
-    ></wizard-token-combobox>`;
+    // TODO: better a11y for combobox, move label and errors into the combobox itself rather than relying on visual proximity.
+    return html`<p>${label}</p>
+      ${this.pathErrors.map(
+        (error) =>
+          html`<div class="utrecht-form-field-error-message" id=${error.id}>
+            ${t(`validation.error.${error.code}.compact`, error)}
+          </div>`,
+      )}
+      <wizard-token-combobox
+        name=${this.path}
+        hidden-label=${label}
+        type=${type}
+        .value=${this.token}
+        .options=${this.options}
+        class=${classMap({ 'theme-error': this.#hasErrors })}
+      ></wizard-token-combobox>`;
   }
 
   override render() {
