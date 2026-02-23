@@ -56,6 +56,17 @@ describe('Theme', () => {
     return expect(resettedTokens).not.toMatchObject(updatedTokens);
   });
 
+  it('can reset token at a specific path', async () => {
+    const theme = new Theme();
+    const initialTokens = structuredClone(theme.tokens);
+    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
+    const updatedTokens = structuredClone(theme.tokens);
+    expect.soft(updatedTokens).not.toMatchObject(initialTokens);
+    theme.resetAt('basis.color.accent-1.color-hover');
+    const resettedTokens = structuredClone(theme.tokens);
+    expect(resettedTokens).toMatchObject(initialTokens);
+  });
+
   it('can export to css custom properties', async () => {
     const theme = new Theme();
     const css = await theme.toCSS();

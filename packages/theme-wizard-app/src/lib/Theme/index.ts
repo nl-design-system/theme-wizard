@@ -4,6 +4,7 @@ import {
   type Theme as ThemeType,
   EXTENSION_RESOLVED_AS,
   stringifyFontFamily,
+  EXTENSION_RESOLVED_FROM,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -12,6 +13,7 @@ import { dset } from 'dset';
 import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
+import { flattenTokens } from './lib';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
 
@@ -32,6 +34,15 @@ export default class Theme {
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] = [];
+
+  /**
+   * Flatten a nested DesignTokens object into a flat map of token paths to DesignToken objects.
+   * @param tokens
+   * @returns
+   */
+  static flatten(tokens: DesignTokens): Record<string, DesignToken> {
+    return flattenTokens(tokens);
+  }
 
   /**
    * @param tokens Default token set for the theme, defaults to start tokens. Resetting a theme will revert to these tokens.
@@ -70,12 +81,24 @@ export default class Theme {
     });
   }
 
+  // Updates a single token value at the given path, preserving other properties and extensions of the token.
+  // Unlike the non-private instance method `updateAt`, this method does not mark the theme as modified.
+  static #updateAt(tokens: DesignTokens, path: string, value: DesignToken['$value']) {
+    const { $extensions, ...original } = dlv(tokens, path);
+    // TODO: set extensions on the updated token based on the new value, for example if the new value is a reference to another token.
+    delete $extensions?.[EXTENSION_RESOLVED_AS]; // Clear resolvedAs since the value is changing, it may no longer be valid
+    delete $extensions?.[EXTENSION_RESOLVED_FROM]; // Clear resolvedFrom since the value is changing, it may no longer be valid
+    dset(tokens, path, {
+      ...original,
+      $extensions,
+      $value: value,
+    });
+  }
+
   updateAt(path: string, value: DesignToken['$value']) {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
-    const fullPath = `${path}.$value`;
-    dset(tokens, fullPath, value);
-    dset(tokens, `${path}.$extensions.${EXTENSION_RESOLVED_AS}`, undefined);
+    Theme.#updateAt(tokens, path, value);
     this.tokens = tokens;
   }
 
@@ -83,16 +106,15 @@ export default class Theme {
     const tokens = structuredClone(this.#tokens);
     this.#modified = true;
     for (const { path, value } of values) {
-      const fullPath = `${path}.$value`;
-      dset(tokens, fullPath, value);
-      dset(tokens, `${path}.$extensions.${EXTENSION_RESOLVED_AS}`, undefined);
+      Theme.#updateAt(tokens, path, value);
     }
     this.tokens = tokens;
   }
 
-  // resetAt(path: string) {
-  //   // TODO: implement
-  // }
+  resetAt(path: string) {
+    const defaultValue = dlv(this.#defaults, path);
+    this.updateAt(path, defaultValue?.$value);
+  }
 
   at(path: string): DesignToken {
     return dlv(this.tokens, path);
