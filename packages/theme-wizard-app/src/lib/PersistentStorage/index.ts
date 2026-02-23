@@ -87,7 +87,7 @@ export default class PersistentStorage {
   setJSON(value: ObjectOrArray): void;
   setJSON(keyOrValue: string | ObjectOrArray, value?: ObjectOrArray) {
     const key = typeof keyOrValue === 'string' ? keyOrValue : JSON_SUFFIX_DEFAULT;
-    const data = value !== undefined ? value : keyOrValue;
+    const data = value ?? keyOrValue;
     this.setItem(key, JSON.stringify(data), JSON_PREFIX);
   }
 
