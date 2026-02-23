@@ -99,7 +99,6 @@ export default class Theme {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
     Theme.#updateAt(tokens, path, value);
-
     this.tokens = tokens;
   }
 
@@ -112,9 +111,10 @@ export default class Theme {
     this.tokens = tokens;
   }
 
-  // resetAt(path: string) {
-  //   // TODO: implement
-  // }
+  resetAt(path: string) {
+    const defaultValue = dlv(this.#defaults, path);
+    this.updateAt(path, defaultValue?.$value);
+  }
 
   at(path: string): DesignToken {
     return dlv(this.tokens, path);
