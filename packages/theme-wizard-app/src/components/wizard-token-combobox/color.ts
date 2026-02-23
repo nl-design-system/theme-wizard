@@ -35,7 +35,7 @@ export const preview = <T extends { color?: Color }>({ color }: T) => {
         <svg
           role="img"
           xmlns="http://www.w3.org/2000/svg"
-          class="nl-color-sample"
+          class="wizard-token-combobox__preview nl-color-sample"
           style=${styleMap({ color: color?.toString() })}
         >
           <path d="M0 0H32V32H0Z" fill="currentcolor" />

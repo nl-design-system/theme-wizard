@@ -36,7 +36,9 @@ export const preview = <T extends { label: string; value: FontFamilyToken }>({ v
   };
   return html`
     <clippy-html-image>
-      <span class="wizard-token-combobox__preview--font-family" style=${styleMap(styles)}>${PREVIEW_VALUE}</span>
+      <span class="wizard-token-combobox__preview wizard-token-combobox__preview--font-family" style=${styleMap(styles)}
+        >${PREVIEW_VALUE}</span
+      >
     </clippy-html-image>
   `;
 };
