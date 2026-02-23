@@ -57,7 +57,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   ];
 
   static label(token: Option['value']) {
-    if (typeof token?.$value === 'string' || token.$value === undefined) {
+    if (typeof token?.$value === 'string' || typeof token?.$value === 'number' || token.$value === undefined) {
       return token.$value;
     }
     return JSON.stringify(token.$value); // TODO: improve this for better display of complex tokens
