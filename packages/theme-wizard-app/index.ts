@@ -11,4 +11,3 @@ import './src/components/wizard-scraper';
 import './src/components/wizard-story-react';
 import './src/components/wizard-react-element';
 import './src/components/wizard-story-preview';
-import './src/components/wizard-theme-token-field/index';

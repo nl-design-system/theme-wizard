@@ -1,3 +1,4 @@
+import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import { isRef } from '@nl-design-system-community/design-tokens-schema';
@@ -5,9 +6,12 @@ import '../wizard-color-input';
 import '../wizard-font-input';
 import '../wizard-token-input';
 import { html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
+import { themeContext } from '../../contexts/theme';
+import Theme from '../../lib/Theme';
 import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
@@ -23,18 +27,24 @@ declare global {
 
 @customElement(tag)
 export class WizardTokenField extends WizardTokenNavigator {
+  @consume({ context: themeContext })
+  private readonly theme!: Theme;
   @property() label: string = '';
-  @property() token: Token = {};
   @property() path: string = '';
-  @property() options = [];
   @property({ attribute: false }) errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
+  @state() token: Token = {};
 
   static readonly maxDepth = 3;
 
   static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(codeCss), styles];
 
-  get _id() {
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.token = this.theme.at(this.path);
+  }
+
+  get #id() {
     return `input-${this.path}`;
   }
 
@@ -98,8 +108,8 @@ export class WizardTokenField extends WizardTokenNavigator {
         return html` <wizard-color-input
           .errors=${this.pathErrors}
           .value=${this.token.$value}
-          id=${this._id}
-          key=${key}
+          id=${this.#id}
+          key=${ifDefined(key)}
           label=${label}
           name=${this.path}
         >
@@ -109,8 +119,8 @@ export class WizardTokenField extends WizardTokenNavigator {
         return html` <wizard-font-input
           .errors=${this.pathErrors}
           .value=${this.token.$value}
-          id=${this._id}
-          key=${key}
+          id=${this.#id}
+          key=${ifDefined(key)}
           label=${label}
           name=${this.path}
         >
@@ -120,8 +130,8 @@ export class WizardTokenField extends WizardTokenNavigator {
         return html` <wizard-token-input
           .errors=${this.pathErrors}
           .value=${this.token}
-          id=${this._id}
-          key=${key}
+          id=${this.#id}
+          key=${ifDefined(key)}
           label=${label}
           name=${this.path}
         >
