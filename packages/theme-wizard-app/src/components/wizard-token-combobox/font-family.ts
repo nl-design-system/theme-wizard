@@ -19,6 +19,9 @@ export const filter = <T extends { value: FontFamilyToken }>(query: string): ((o
   };
 };
 
+export const valueToQuery = <T extends { $value: FontFamilyToken['$value'] }>({ $value }: T): string =>
+  Array.isArray($value) ? $value[0] : $value || '';
+
 export const preview = <T extends { label: string; value: FontFamilyToken }>({ value }: T) => {
   const PREVIEW_VALUE = 'Ag';
   const actualValue = getActualValue(value);

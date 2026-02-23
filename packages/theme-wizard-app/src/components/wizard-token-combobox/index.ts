@@ -127,7 +127,17 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
 
   override valueToQuery({ $value }: Option['value']): string | undefined {
     const option = this.getOptionForValue({ $value });
-    return option?.label || (this.allow === 'other' && typeof $value === 'string' ? $value : undefined);
+    const stringValue = option?.label || typeof $value === 'string' ? $value : undefined;
+    switch (this.type) {
+      case 'color':
+        return stringValue ?? libColor.valueToQuery({ $value });
+      case 'font-family':
+        return stringValue ?? libFontFamily.valueToQuery({ $value });
+      case 'dimension':
+      case 'number':
+      default:
+        return stringValue || JSON.stringify($value);
+    }
   }
 
   renderPreview(option: Option) {

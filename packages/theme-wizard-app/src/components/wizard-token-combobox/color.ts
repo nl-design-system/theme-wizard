@@ -1,4 +1,4 @@
-import { ColorValue, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
+import { ColorToken, ColorValue, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { html, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -25,6 +25,9 @@ export const filter = <T extends { color?: Color }>(query: string) => {
   const maxDeltaE = BROAD_COLOR_NAMES.has(query) ? DELTA_E_THRESHOLD * 2 : DELTA_E_THRESHOLD;
   return ({ color }: T) => Boolean(queryColor && color && queryColor.deltaE(color, '2000') < maxDeltaE);
 };
+
+export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string =>
+  typeof $value === 'string' ? $value : stringifyColor($value as ColorValue);
 
 export const preview = <T extends { color?: Color }>({ color }: T) => {
   return color
