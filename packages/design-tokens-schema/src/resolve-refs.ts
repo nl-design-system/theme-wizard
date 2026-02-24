@@ -41,18 +41,10 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     const ref = resolveRef(root, token.$value);
 
     // Ensure ref is a token object with $value and $type
-    if (!isTokenLike(ref)) {
-      return;
-    }
-
-    // Capture the resolved value, transforming legacy colors to modern format if needed
-    let resolvedValue = ref.$value;
-    if (ref.$type === 'color' && typeof resolvedValue === 'string' && !isRef(resolvedValue)) {
-      resolvedValue = legacyToModernColor.decode(resolvedValue);
-    }
+    if (!isTokenLike(ref)) return;
 
     // Add an extension with the resolved ref's value
-    setExtension(token, EXTENSION_RESOLVED_AS, structuredClone(resolvedValue));
+    setExtension(token, EXTENSION_RESOLVED_AS, structuredClone(ref.$value));
   });
 };
 

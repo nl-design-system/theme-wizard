@@ -208,16 +208,16 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
  */
 const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
-  // Step 1: Normalize refs
+  // Step 1: Get `$extensions['original']['$value'] fron Style Dictionary and place it in $value
   data = useRefAsValue(data);
-  // Step 2: Clean up non-token properties
+  // Step 2: Clean up non-token properties for faster processing
   data = removeNonTokenProperties(data);
   // Step 3: Upgrade legacy token formats
   data = upgradeLegacyTokens(data);
   // Step 4: Add extensions
   data = addContrastExtensions(data);
   data = addColorScalePositionExtensions(data);
-  // Step 5: Resolve references
+  // Step 5: Add $value of referenced token in $extensions['resolved-as']
   data = resolveConfigRefs(data);
   return data;
 };
