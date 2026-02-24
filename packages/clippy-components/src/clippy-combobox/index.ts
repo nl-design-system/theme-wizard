@@ -272,8 +272,8 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   #commitQuery() {
-    const value = this.query;
-    if (this.value !== value) {
+    const value = this.queryToValue(this.query);
+    if (value && this.value !== value) {
       this.value = value;
       this.#handleChange();
     }
