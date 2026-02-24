@@ -70,13 +70,8 @@ export const walkTokensWithRef = (
   );
 };
 
-const isLineHeightToken = (token: unknown, path: string[]): token is BaseDesignTokenValue => {
-  return (
-    isTokenLike(token) &&
-    (path.at(-2) === 'line-height' ||
-      path.at(-1) === 'line-height' ||
-      token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === 'line-height')
-  );
+const isLineHeightToken = (token: unknown): token is BaseDesignTokenValue => {
+  return isTokenLike(token) && token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === 'line-height';
 };
 
 export const walkLineHeights = (
