@@ -42,6 +42,7 @@
     "@nl-design-system-unstable/voorbeeld-design-tokens": "7.4.0",
     "@types/dlv": "1.1.5",
     "@vitest/coverage-v8": "4.0.16",
+    "dset": "3.1.4",
     "rimraf": "6.1.2",
     "typescript": "5.9.3",
     "vite": "7.3.0",

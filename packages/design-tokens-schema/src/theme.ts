@@ -16,22 +16,16 @@ import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isRef, isValueObject } from './tokens/token-reference';
-import { upgradeLegacyTokens } from './upgrade-legacy-tokens';
+import { EXTENSION_TOKEN_SUBTYPE, upgradeLegacyTokens } from './upgrade-legacy-tokens';
 import {
   ERROR_CODES,
   type InvalidRefIssue,
   LineHeightUnitIssue,
   MinFontSizeIssue,
-  MinimumLineHeightIssue,
   createContrastIssue,
+  createMinLineHeightIssue,
 } from './validation-issue';
-import {
-  validateFontSize,
-  MIN_FONT_SIZE_PX,
-  MIN_FONT_SIZE_REM,
-  validateMinLineHeight,
-  MINIMUM_LINE_HEIGHT,
-} from './validations';
+import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM, validateMinLineHeight, remToPx } from './validations';
 import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
@@ -41,6 +35,17 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   resolveRefs(rootConfig['basis'], rootConfig);
   return rootConfig;
 };
+
+// TODO: append component tokens based on proximity of font-size/line-height
+const KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS = new Map<string, string>([
+  ['basis.text.font-size.sm', 'basis.text.line-height.sm'],
+  ['basis.text.font-size.md', 'basis.text.line-height.md'],
+  ['basis.text.font-size.lg', 'basis.text.line-height.lg'],
+  ['basis.text.font-size.xl', 'basis.text.line-height.xl'],
+  ['basis.text.font-size.2xl', 'basis.text.line-height.2xl'],
+  ['basis.text.font-size.3xl', 'basis.text.line-height.3xl'],
+  ['basis.text.font-size.4xl', 'basis.text.line-height.4xl'],
+]);
 
 export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
@@ -215,43 +220,11 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
       }
     });
 
-    // Validation 3: check that line-heights are unit-less numbers
-    walkLineHeights(root, (token, path) => {
-      // Refs are OK
-      if (isRef(token.$value)) return;
-
-      if (typeof token.$value === 'number') {
-        if (!validateMinLineHeight(token.$value)) {
-          ctx.addIssue({
-            actual: token.$value,
-            code: 'too_small',
-            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-            expected: 'number',
-            input: token.$value,
-            message: `Line height should be ${MINIMUM_LINE_HEIGHT} at minimum, received ${token.$value}`,
-            minimum: MINIMUM_LINE_HEIGHT,
-            origin: 'number',
-            path: [...path, '$value'],
-          } satisfies MinimumLineHeightIssue);
-        }
-        return;
-      }
-
-      ctx.addIssue({
-        code: 'invalid_type',
-        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-        expected: 'number',
-        input: token.$value,
-        message: `Line-height should be a unitless number (got: ${JSON.stringify(token.$value)})`,
-        path: [...path, '$value'],
-      } satisfies LineHeightUnitIssue);
-    });
-
-    // Validation 4: font must have minimum size
+    // Validation 3: font must have minimum size
     walkDimensions(root, (token, path) => {
-      // MUST be a font-size token
-      if (!path.includes('font-size')) return;
-      // Refs are OK
+      // Sub-type must be font-size
+      if (token.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') return;
+      // Do not attempt to process refs
       if (isRef(token.$value)) return;
 
       if (isValueObject(token.$value) && !validateFontSize(token.$value)) {
@@ -268,4 +241,62 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
         } satisfies MinFontSizeIssue);
       }
     });
+
+    // Validation 4: check that line-heights are unit-less numbers
+    walkLineHeights(root, (token, path) => {
+      // Refs are OK
+      if (isRef(token.$value)) return;
+
+      if (typeof token.$value === 'number') {
+        if (!validateMinLineHeight(token.$value)) {
+          const issue = createMinLineHeightIssue({
+            actual: token.$value,
+            path: [...path, '$value'],
+          });
+          ctx.addIssue(issue);
+        }
+        return;
+      }
+
+      ctx.addIssue({
+        code: 'invalid_type',
+        ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+        expected: 'number',
+        input: token.$value,
+        message: `Line-height should be a unitless number (got: ${JSON.stringify(token.$value)})`,
+        path: [...path, '$value'],
+      } satisfies LineHeightUnitIssue);
+    });
+
+    // Validation 5: check that contextual line-heights are large enough
+    for (const [fontSizePath, lineHeightPath] of KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS) {
+      const fontSizeToken = dlv(root, fontSizePath);
+      const lineHeightToken = dlv(root, lineHeightPath);
+
+      if (fontSizeToken?.$type === 'dimension' && lineHeightToken?.$type === 'dimension') {
+        // Make sure we work with actual values, not references
+        const fontSizeValue = isRef(fontSizeToken.$value)
+          ? fontSizeToken.$extensions[EXTENSION_RESOLVED_AS]
+          : fontSizeToken.$value;
+        const lineHeightValue = isRef(lineHeightToken.$value)
+          ? lineHeightToken.$extensions?.[EXTENSION_RESOLVED_AS]
+          : lineHeightToken.$value;
+
+        // Normalize dimensions to px units, even if declared in rem
+        const normalizedFontSize = fontSizeValue.unit === 'rem' ? remToPx(fontSizeValue.value) : fontSizeValue.value;
+        const normalizedLineHeight =
+          lineHeightValue.unit === 'rem' ? remToPx(lineHeightValue.value) : lineHeightValue.value;
+
+        const actualLineHeight = normalizedLineHeight / normalizedFontSize;
+
+        if (!validateMinLineHeight(actualLineHeight)) {
+          ctx.addIssue(
+            createMinLineHeightIssue({
+              actual: actualLineHeight,
+              path: [...lineHeightPath.split('.'), '$value'],
+            }),
+          );
+        }
+      }
+    }
   });

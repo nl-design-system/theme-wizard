@@ -1,8 +1,8 @@
-import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { BaseDesignTokenValue } from './tokens/base-token';
 import { ColorToken } from './tokens/color-token';
 import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
 import { isTokenLike, isTokenWithRef, type TokenWithRefLike } from './tokens/token-reference';
+import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 
 /**
  * @param root The object you want to traverse
@@ -70,11 +70,8 @@ export const walkTokensWithRef = (
   );
 };
 
-const isLineHeightToken = (token: unknown, path: string[]): token is BaseDesignTokenValue => {
-  return (
-    isTokenLike(token) &&
-    (path.includes('line-height') || token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === 'line-height')
-  );
+const isLineHeightToken = (token: unknown): token is BaseDesignTokenValue => {
+  return isTokenLike(token) && token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === 'line-height';
 };
 
 export const walkLineHeights = (
