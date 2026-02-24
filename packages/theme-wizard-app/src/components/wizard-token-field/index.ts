@@ -46,13 +46,22 @@ export class WizardTokenField extends WizardTokenNavigator {
     super.connectedCallback();
     const basisTokens = this.theme.tokens['basis'];
     this.token = this.theme.at(this.path);
+    // TODO: Find better way to guard against circular references in tokens.
+    let tokenPathIsSameOrAhead = false;
+    const filterByTypeAndPosition = ([path, { $type }]: [string, Token]) => {
+      if ($type === this.token.$type) {
+        tokenPathIsSameOrAhead = tokenPathIsSameOrAhead || `basis.${path}` === this.path;
+        return !tokenPathIsSameOrAhead;
+      }
+      return false;
+    };
     // Build options for referencing basis tokens
     // TODO: only do this once and cache it, ideally in lib/Theme or its context provider,
     // rather than on every field instance.
     this.#options =
       basisTokens && typeof basisTokens !== 'string'
         ? Object.entries(Theme.flatten(basisTokens))
-            .filter(([, { $type }]) => $type === this.token.$type)
+            .filter(filterByTypeAndPosition)
             .map(([path, { $type, ...token }]) => {
               // Find the resolved value for color tokens to show in the combobox options.
               // Since tokens can reference other tokens, we check if the token is a reference and use the resolved value if so.
