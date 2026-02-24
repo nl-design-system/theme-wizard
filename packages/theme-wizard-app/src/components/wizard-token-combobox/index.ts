@@ -138,15 +138,15 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     return this.options.find(filter)?.value ?? null;
   }
 
-  override valueToQuery({ $value }: Option['value']): string | undefined {
+  override valueToQuery({ $value }: Option['value']): string {
     const option = this.getOptionForValue({ $value });
-    const stringValue = option?.label || typeof $value === 'string' ? $value : undefined;
+    const stringValue = option?.label || typeof $value === 'string' ? String($value) : '';
 
     switch (this.type) {
       case 'color':
-        return stringValue ?? libColor.valueToQuery({ $value });
+        return stringValue || libColor.valueToQuery({ $value });
       case 'font-family':
-        return stringValue ?? libFontFamily.valueToQuery({ $value });
+        return stringValue || libFontFamily.valueToQuery({ $value });
       case 'dimension':
       case 'number':
       default:
