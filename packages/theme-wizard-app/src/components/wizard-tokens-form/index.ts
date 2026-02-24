@@ -138,11 +138,12 @@ export class WizardTokensForm extends LitElement {
           </ul>
 
           <details>
-            <summary>Alle tokens</summary>
+            <summary>Basis accent-1 colors</summary>
+
             <wizard-token-field
               .errors=${this.theme.issues}
-              .token=${this.theme.tokens['basis']}
-              path=${`basis`}
+              .token=${this.theme.at('basis.color.accent-1')}
+              path=${`basis.color.accent-1`}
               class="wizard-app__root-token-field"
             ></wizard-token-field>
           </details>
