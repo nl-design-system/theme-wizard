@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { BaseDesignTokenValueSchema } from './base-token';
+import { BaseDesignTokenSchema } from './base-token';
 import { TokenReferenceSchema } from './token-reference';
 
 // 8.2 Dimension
@@ -21,7 +21,7 @@ export const ModernDimensionValueSchema = z.strictObject({
 export type ModernDimensionValue = z.infer<typeof ModernDimensionValueSchema>;
 
 export const ModernDimensionTokenSchema = z.strictObject({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: DimensionTypeSchema,
   $value: ModernDimensionValueSchema,
 });
@@ -30,13 +30,10 @@ export const ModernDimensionTokenSchema = z.strictObject({
 export type ModernDimensionToken = z.infer<typeof ModernDimensionTokenSchema>;
 
 export const DimensionWithRefSchema = z.object({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: DimensionTypeSchema,
   $value: TokenReferenceSchema,
 });
 
-export const DimensionTokenSchema = z.union([
-  ModernDimensionTokenSchema,
-  DimensionWithRefSchema,
-]);
+export const DimensionTokenSchema = z.union([ModernDimensionTokenSchema, DimensionWithRefSchema]);
 export type DimensionToken = z.infer<typeof DimensionTokenSchema>;

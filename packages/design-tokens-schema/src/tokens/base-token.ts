@@ -30,7 +30,7 @@ export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
 /** @see https://www.designtokens.org/tr/drafts/format/#name-and-value */
 export type BaseDesignTokenIdentifier = z.infer<typeof BaseDesignTokenIdentifierSchema>;
 
-export const BaseDesignTokenValueSchema = z.strictObject({
+export const BaseDesignTokenSchema = z.strictObject({
   /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
   $deprecated: z.union([z.boolean(), z.string()]).optional(),
   /** @see 5.2.1 Description https://www.designtokens.org/tr/drafts/format/#description */
@@ -41,14 +41,8 @@ export const BaseDesignTokenValueSchema = z.strictObject({
   $type: z.string().nonoptional(),
   $value: z.unknown().nonoptional(), // refine exact shape in concrete token types
 });
-// TODO: refactor, this is a confusing name; BaseDesignToken or DesignToken would be better
-export type BaseDesignTokenValue = z.infer<typeof BaseDesignTokenValueSchema>;
+export type BaseDesignToken = z.infer<typeof BaseDesignTokenSchema>;
 
-const BaseDesignTokenPropertiesEnum = BaseDesignTokenValueSchema.keyof();
+const BaseDesignTokenPropertiesEnum = BaseDesignTokenSchema.keyof();
 export type BaseDesignTokenProperty = z.infer<typeof BaseDesignTokenPropertiesEnum>;
 export const BASE_DESIGN_TOKEN_PROPERTIES = BaseDesignTokenPropertiesEnum.options;
-
-export const BaseDesignTokenSchema = z.record(BaseDesignTokenIdentifierSchema, BaseDesignTokenValueSchema);
-
-/** @see https://www.designtokens.org/tr/drafts/format/#design-token-0 */
-export type BaseDesignToken = z.infer<typeof BaseDesignTokenSchema>;

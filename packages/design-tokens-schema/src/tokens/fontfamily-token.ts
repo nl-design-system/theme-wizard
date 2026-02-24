@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { BaseDesignTokenValueSchema } from './base-token';
+import { BaseDesignTokenSchema } from './base-token';
 import { TokenReferenceSchema } from './token-reference';
 
 // 8.3 Font family
@@ -38,7 +38,7 @@ export const ModernFontFamilyValueSchema = z.union([ModernFontFamilyNameSchema, 
 export type FontFamilyValue = z.infer<typeof ModernFontFamilyValueSchema>;
 
 export const ModernFontFamilyTokenSchema = z.looseObject({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: z.literal('fontFamily'),
   $value: ModernFontFamilyValueSchema,
 });
@@ -78,7 +78,7 @@ export const legacyToModernFontFamily = z.codec(z.string(), ModernFontFamilyValu
 });
 
 export const FontFamilyWithRefSchema = z.looseObject({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: z.literal('fontFamily'),
   $value: TokenReferenceSchema,
 });

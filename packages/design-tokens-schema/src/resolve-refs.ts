@@ -1,5 +1,5 @@
 import dlv from 'dlv';
-import type { BaseDesignToken, BaseDesignTokenValue } from './tokens/base-token';
+import type { BaseDesignToken, BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
 import { legacyToModernColor } from './tokens/color-token';
 import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef, isTokenLike } from './tokens/token-reference';
@@ -8,7 +8,7 @@ import { walkObject, walkTokensWithRef } from './walker';
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
 export const EXTENSION_RESOLVED_AS = 'nl.nldesignsystem.value-resolved-as';
 
-export type ResolvedToken = BaseDesignTokenValue & {
+export type ResolvedToken = BaseDesignToken & {
   $value: TokenReference;
   $extensions: {
     [EXTENSION_RESOLVED_AS]: BaseDesignToken['$value'];

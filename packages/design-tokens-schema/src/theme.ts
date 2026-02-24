@@ -47,7 +47,6 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   return rootConfig;
 };
 
-// TODO: append component tokens based on proximity of font-size/line-height
 const KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS = new Map<string, string>([
   ['basis.text.font-size.sm', 'basis.text.line-height.sm'],
   ['basis.text.font-size.md', 'basis.text.line-height.md'],
@@ -188,12 +187,7 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
  */
 const ThemeShapeSchema = z.looseObject({
   basis: BasisTokensSchema.optional(),
-  // $metadata: z.strictObject({
-  //   tokensSetOrder: z.array(z.string()),
-  // }),
-  // $themes: [],
   brand: BrandsSchema.optional(),
-  // 'components/*': {},
 });
 
 /**

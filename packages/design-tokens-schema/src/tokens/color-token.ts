@@ -1,6 +1,6 @@
 import Color, { type Coords } from 'colorjs.io';
 import * as z from 'zod';
-import { BaseDesignTokenValueSchema } from './base-token';
+import { BaseDesignTokenSchema } from './base-token';
 import { TokenReferenceSchema } from './token-reference';
 
 // 8.1 Color -> 4.1 Color Module: Format
@@ -59,7 +59,7 @@ export const ColorValueSchema = z.strictObject({
 export type ColorValue = z.infer<typeof ColorValueSchema>;
 
 export const ColorTokenSchema = z.looseObject({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: z.literal('color'),
   $value: ColorValueSchema,
 });
@@ -104,7 +104,7 @@ export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
 });
 
 const ColorReferenceSchema = z.looseObject({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: z.literal('color'),
   $value: TokenReferenceSchema,
 });

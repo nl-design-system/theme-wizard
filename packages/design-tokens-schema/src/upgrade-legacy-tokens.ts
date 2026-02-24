@@ -1,5 +1,5 @@
 import { parse_dimension } from '@projectwallace/css-parser';
-import type { BaseDesignTokenValue } from './tokens/base-token';
+import type { BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
@@ -56,7 +56,7 @@ const parseDimensionValue = (value: unknown): unknown => {
 /**
  * @description Upgrade a dimension token (parse string values, set subtype extension)
  */
-const upgradeDimensionToken = (token: BaseDesignTokenValue, path: string[]): void => {
+const upgradeDimensionToken = (token: BaseDesignToken, path: string[]): void => {
   token.$value = parseDimensionValue(token.$value);
 
   if (path.includes('font-size')) {
@@ -69,7 +69,7 @@ const upgradeDimensionToken = (token: BaseDesignTokenValue, path: string[]): voi
 /**
  * @description Upgrade a fontSize token (convert to dimension type, parse value, set subtype)
  */
-const upgradeFontSizeToken = (token: BaseDesignTokenValue): void => {
+const upgradeFontSizeToken = (token: BaseDesignToken): void => {
   token.$type = 'dimension';
   setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
   token.$value = parseDimensionValue(token.$value);
@@ -78,7 +78,7 @@ const upgradeFontSizeToken = (token: BaseDesignTokenValue): void => {
 /**
  * @description Upgrade a lineHeight token (determine type, parse value if needed)
  */
-const upgradeLineHeightToken = (token: BaseDesignTokenValue, rootConfig: Record<string, unknown>): void => {
+const upgradeLineHeightToken = (token: BaseDesignToken, rootConfig: Record<string, unknown>): void => {
   setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
 
   // If it's already a number, convert the type only
@@ -110,7 +110,7 @@ const upgradeLineHeightToken = (token: BaseDesignTokenValue, rootConfig: Record<
 /**
  * @description Upgrade a color token (parse legacy color strings to modern format)
  */
-const upgradeColorToken = (token: BaseDesignTokenValue): void => {
+const upgradeColorToken = (token: BaseDesignToken): void => {
   if (typeof token.$value === 'string' && !isRef(token.$value)) {
     try {
       token.$value = parseColor(token.$value);
@@ -123,7 +123,7 @@ const upgradeColorToken = (token: BaseDesignTokenValue): void => {
 /**
  * @description Upgrade a number token (set line-height subtype if applicable)
  */
-const upgradeNumberToken = (token: BaseDesignTokenValue, path: string[]): void => {
+const upgradeNumberToken = (token: BaseDesignToken, path: string[]): void => {
   if (path.includes('line-height')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
   }
@@ -132,7 +132,7 @@ const upgradeNumberToken = (token: BaseDesignTokenValue, path: string[]): void =
 /**
  * @description Upgrade a legacy fontFamilies token (convert to fontFamily type and parse value)
  */
-const upgradeLegacyFontFamiliesToken = (token: BaseDesignTokenValue): void => {
+const upgradeLegacyFontFamiliesToken = (token: BaseDesignToken): void => {
   token.$type = 'fontFamily';
   if (typeof token.$value === 'string') {
     token.$value = legacyToModernFontFamily.decode(token.$value);
@@ -142,7 +142,7 @@ const upgradeLegacyFontFamiliesToken = (token: BaseDesignTokenValue): void => {
 /**
  * @description Upgrade a fontFamily token with legacy string value (parse to array/string)
  */
-const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignTokenValue): void => {
+const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignToken): void => {
   if (typeof token.$value === 'string' && !isRef(token.$value)) {
     token.$value = legacyToModernFontFamily.decode(token.$value);
   }
