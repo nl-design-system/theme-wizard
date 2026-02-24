@@ -1390,6 +1390,70 @@ describe('line-height validations', () => {
       expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
     });
   });
+
+  describe('component line-heights', () => {
+    const unexpectedUnitError = {
+      ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+    };
+    const lineHeightTooSmallError = {
+      ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+    };
+
+    it('valid; font-size: px; line-height: px;', () => {
+      const config = {};
+      dset(config, 'nl.button.default.font-size', createDimension(16, 'px'));
+      dset(config, 'nl.button.default.line-height', createDimension(24, 'px'));
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(1);
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+    });
+
+    it('invalid; font-size: px; line-height: px;', () => {
+      const config = {};
+      dset(config, 'nl.paragraph.lead.font-size', createDimension(16, 'px'));
+      dset(config, 'nl.paragraph.lead.line-height', createDimension(16, 'px'));
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(2);
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+      expect(result.error?.issues[1]).toMatchObject(lineHeightTooSmallError);
+    });
+
+    it('valid; font-size: px; line-height: number;', () => {
+      const config = {};
+      dset(config, 'nl.paragraph.font-size', createDimension(16, 'px'));
+      dset(config, 'nl.paragraph.line-height', createToken('number', 1.5));
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+    });
+
+    it('invalid; font-size: px; line-height: number;', () => {
+      const config = {};
+      dset(config, 'nl.data-badge.font-size', createDimension(16, 'px'));
+      dset(config, 'nl.data-badge.line-height', createToken('number', 1));
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(1);
+      expect(result.error?.issues[0]).toMatchObject(lineHeightTooSmallError);
+    });
+
+    it('valid; font-size: px; line-height: not set;', () => {
+      const config = {};
+      dset(config, 'nl.button.default.font-size', createDimension(16, 'px'));
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+    });
+
+    it('valid; font-size: not set; line-height: px;', () => {
+      const config = {};
+      dset(config, 'nl.button.default.line-height', createDimension(16, 'px'));
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error?.issues).toHaveLength(1);
+      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+    });
+  });
 });
 
 describe('strictly validate known basis themes', () => {

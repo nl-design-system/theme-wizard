@@ -1,3 +1,14 @@
+import buttonTokens from '@nl-design-system-candidate/button-tokens';
+import codeBlockTokens from '@nl-design-system-candidate/code-block-tokens';
+import codeTokens from '@nl-design-system-candidate/code-tokens';
+import colorSampleTokens from '@nl-design-system-candidate/color-sample-tokens';
+import dataBadgeTokens from '@nl-design-system-candidate/data-badge-tokens';
+import headingTokens from '@nl-design-system-candidate/heading-tokens';
+import linkTokens from '@nl-design-system-candidate/link-tokens';
+import markTokens from '@nl-design-system-candidate/mark-tokens';
+import numberBadgeTokens from '@nl-design-system-candidate/number-badge-tokens';
+import paragraphTokens from '@nl-design-system-candidate/paragraph-tokens';
+import skipLinkTokens from '@nl-design-system-candidate/skip-link-tokens';
 import dlv from 'dlv';
 import * as z from 'zod';
 import {
@@ -46,6 +57,36 @@ const KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS = new Map<string, string>([
   ['basis.text.font-size.3xl', 'basis.text.line-height.3xl'],
   ['basis.text.font-size.4xl', 'basis.text.line-height.4xl'],
 ]);
+
+export const addComponentFontSizeLineHeightPairs = (initialMap: Map<string, string>) => {
+  const result = new Map(initialMap);
+  const componentsTokens = [
+    buttonTokens,
+    codeBlockTokens,
+    codeTokens,
+    colorSampleTokens,
+    dataBadgeTokens,
+    headingTokens,
+    linkTokens,
+    markTokens,
+    numberBadgeTokens,
+    paragraphTokens,
+    skipLinkTokens,
+  ];
+  for (const componentTokens of componentsTokens) {
+    walkObject(
+      componentTokens,
+      (obj) => isValueObject(obj),
+      (obj, path) => {
+        if ('line-height' in obj && 'font-size' in obj) {
+          const tokenPath = path.join('.');
+          result.set(`${tokenPath}.font-size`, `${tokenPath}.line-height`);
+        }
+      },
+    );
+  }
+  return result;
+};
 
 export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
@@ -269,7 +310,8 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
     });
 
     // Validation 5: check that contextual line-heights are large enough
-    for (const [fontSizePath, lineHeightPath] of KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS) {
+    const knownLineHeightFontSizePairs = addComponentFontSizeLineHeightPairs(KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS);
+    for (const [fontSizePath, lineHeightPath] of knownLineHeightFontSizePairs) {
       const fontSizeToken = dlv(root, fontSizePath);
       const lineHeightToken = dlv(root, lineHeightPath);
 
