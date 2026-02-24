@@ -12330,6 +12330,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       "font-size": {
         "2xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -12342,6 +12343,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "3xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -12354,6 +12356,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "4xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -12366,6 +12369,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "lg": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -12378,6 +12382,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "md": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -12390,6 +12395,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "sm": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -12402,6 +12408,7 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -34522,6 +34529,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       "font-size": {
         "2xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -34534,6 +34542,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "3xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -34546,6 +34555,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "4xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -34558,6 +34568,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "lg": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -34570,6 +34581,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "md": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -34582,6 +34594,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "sm": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -34594,6 +34607,7 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -57588,6 +57602,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       "font-size": {
         "2xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -57600,6 +57615,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "3xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -57612,6 +57628,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "4xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -57624,6 +57641,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "lg": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -57636,6 +57654,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "md": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -57648,6 +57667,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "sm": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },
@@ -57660,6 +57680,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "xl": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
             "studio.tokens": {
               "originalType": "fontSizes",
             },

@@ -16,7 +16,7 @@ import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, isRef, isValueObject } from './tokens/token-reference';
-import { upgradeLegacyTokens } from './upgrade-legacy-tokens';
+import { EXTENSION_TOKEN_SUBTYPE, upgradeLegacyTokens } from './upgrade-legacy-tokens';
 import {
   ERROR_CODES,
   type InvalidRefIssue,
@@ -222,9 +222,9 @@ export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
 
     // Validation 3: font must have minimum size
     walkDimensions(root, (token, path) => {
-      // MUST be a font-size token
-      if (!path.includes('font-size')) return;
-      // Refs are OK
+      // Sub-type must be font-size
+      if (token.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') return;
+      // Do not attempt to process refs
       if (isRef(token.$value)) return;
 
       if (isValueObject(token.$value) && !validateFontSize(token.$value)) {

@@ -82,6 +82,11 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
     // Attempt to set the sub-type
     if (path.includes('line-height') && (token.$type === 'number' || token.$type === 'dimension')) {
       setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
+      return;
+    }
+
+    if (path.includes('font-size') && token.$type === 'dimension') {
+      setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
     }
   });
   return rootConfig;
