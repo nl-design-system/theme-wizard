@@ -120,9 +120,10 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
       try {
         this.invalid = false;
         const option = this.getOptionForValue(this.value);
+        const $extensions = option?.value.$extensions;
         switch (this.type) {
           case 'color':
-            return option ?? libColor.queryToValue(query);
+            return option ?? { ...libColor.queryToValue(query), $extensions };
           case 'font-family':
           case 'dimension':
           case 'number':
