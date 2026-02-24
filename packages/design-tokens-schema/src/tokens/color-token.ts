@@ -58,28 +58,6 @@ export const ColorValueSchema = z.strictObject({
 });
 export type ColorValue = z.infer<typeof ColorValueSchema>;
 
-export const LegacyColorTokenSchema = z
-  .looseObject({
-    ...BaseDesignTokenValueSchema.shape,
-    $type: z.literal('color'),
-    // Color must be parseable in order to upgrade it
-    $value: z.custom<string>((value) => {
-      if (typeof value !== 'string') return false;
-      try {
-        parseColor(value);
-        return true;
-      } catch {
-        return false;
-      }
-    }, 'Color can not be parsed'),
-  })
-  .transform((token) => {
-    return {
-      ...token,
-      $value: legacyToModernColor.decode(token.$value),
-    };
-  });
-
 export const ColorTokenSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('color'),
@@ -132,8 +110,8 @@ const ColorReferenceSchema = z.looseObject({
 });
 export type ColorWithRef = z.infer<typeof ColorReferenceSchema>;
 
-/** @description Validation schema that allows legacy color tokens and upgrades them to modern */
-export const ColorTokenValidationSchema = z.union([LegacyColorTokenSchema, ColorTokenSchema, ColorReferenceSchema]);
+/** @description Validation schema for color tokens. Legacy color strings are handled by preprocessing. */
+export const ColorTokenValidationSchema = z.union([ColorTokenSchema, ColorReferenceSchema]);
 export type ValidColor = z.infer<typeof ColorTokenValidationSchema>;
 
 export const colorTokenValueToColorJS = (color: ColorValue): Color => {

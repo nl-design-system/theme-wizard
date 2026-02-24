@@ -274,13 +274,19 @@ describe('resolving Design Token refs', () => {
 });
 
 describe('Style Dictionary specifics', () => {
+  const modernWhite = {
+    alpha: 1,
+    colorSpace: 'srgb',
+    components: [1, 1, 1],
+  };
+
   const config = {
     basis: {
       color: {
         'accent-1': {
           'bg-default': {
             $type: 'color',
-            $value: '#ffffff',
+            $value: modernWhite,
             original: {
               $type: 'color',
               $value: '{ma.color.white}',
@@ -293,7 +299,7 @@ describe('Style Dictionary specifics', () => {
       color: {
         white: {
           $type: 'color',
-          $value: '#ffffff',
+          $value: modernWhite,
         },
       },
     },
@@ -1444,6 +1450,75 @@ describe('line-height validations', () => {
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(1);
       expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+    });
+  });
+
+  describe('upgrades legacy colors', () => {
+    it('converts legacy color strings in basis tokens', () => {
+      const config = {
+        basis: {
+          color: {
+            'accent-1': {
+              'bg-default': {
+                $type: 'color',
+                $value: '#ffffff',
+              },
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+      const color = result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value;
+      expect(color).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      });
+    });
+
+    it('converts legacy color strings in brand tokens', () => {
+      const config = {
+        ma: {
+          color: {
+            white: {
+              $type: 'color',
+              $value: '#FFFFFF',
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+      const color = result.data?.ma?.color?.white?.$value;
+      expect(color).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      });
+    });
+
+    it('converts nested legacy color strings in brand tokens', () => {
+      const config = {
+        ma: {
+          color: {
+            indigo: {
+              '1': {
+                $type: 'color',
+                $value: '#FFFFFF',
+              },
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+      const color = result.data?.ma?.color?.indigo?.['1']?.$value;
+      expect(color).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 1, 1],
+      });
     });
   });
 });
