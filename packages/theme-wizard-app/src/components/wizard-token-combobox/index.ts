@@ -117,15 +117,21 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
 
   override queryToValue(query: string): Option['value'] | null {
     if (this.allow === 'other') {
-      const option = this.getOptionForValue(this.value);
-      switch (this.type) {
-        case 'color':
-          return option ?? libColor.queryToValue(query);
-        case 'font-family':
-        case 'dimension':
-        case 'number':
-        default:
-          return option || { $type: this.type, $value: query };
+      try {
+        this.invalid = false;
+        const option = this.getOptionForValue(this.value);
+        switch (this.type) {
+          case 'color':
+            return option ?? libColor.queryToValue(query);
+          case 'font-family':
+          case 'dimension':
+          case 'number':
+          default:
+            return option || { $type: this.type, $value: query };
+        }
+      } catch {
+        this.invalid = true;
+        return this.value; // Return the current value to avoid losing it on invalid input, allowing the user to correct it.
       }
     }
     const filter = this.filter(query);
@@ -135,6 +141,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   override valueToQuery({ $value }: Option['value']): string | undefined {
     const option = this.getOptionForValue({ $value });
     const stringValue = option?.label || typeof $value === 'string' ? $value : undefined;
+
     switch (this.type) {
       case 'color':
         return stringValue ?? libColor.valueToQuery({ $value });
