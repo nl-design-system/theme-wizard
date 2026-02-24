@@ -1012,22 +1012,14 @@ describe('line-height validations', () => {
     });
 
     it('flags line-heights that use dimensions', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'dimension',
-                $value: {
-                  unit: 'px',
-                  value: 20,
-                },
-              },
-            },
-          },
+      const config = {};
+      dset(config, 'basis.text.line-height.md', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 20,
         },
-        brand: brandConfig,
-      };
+      });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual([

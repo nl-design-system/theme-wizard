@@ -42,9 +42,34 @@ const processLineHeightValue = (
  */
 export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
   walkTokens(rootConfig, (token, path) => {
+    if (token.$type === 'dimension') {
+      if (typeof token.$value === 'string') {
+        const parsed = parse_dimension(token.$value);
+        if ((parsed.unit === 'px' || parsed.unit === 'rem') && Number.isFinite(parsed.value)) {
+          token.$value = parsed;
+        }
+      }
+
+      if (path.includes('font-size')) {
+        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
+      } else if (path.includes('line-height')) {
+        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
+      }
+      return;
+    }
+
     if (token.$type === 'fontSize') {
       token.$type = 'dimension';
       setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
+
+      // Parse string values and convert to modern dimension format
+      if (typeof token.$value === 'string') {
+        const parsed = parse_dimension(token.$value);
+        if ((parsed.unit === 'px' || parsed.unit === 'rem') && Number.isFinite(parsed.value)) {
+          token.$value = parsed;
+        }
+      }
+
       return;
     }
 
@@ -80,13 +105,8 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
     }
 
     // Attempt to set the sub-type
-    if (path.includes('line-height') && (token.$type === 'number' || token.$type === 'dimension')) {
+    if (token.$type === 'number' && path.includes('line-height')) {
       setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
-      return;
-    }
-
-    if (path.includes('font-size') && token.$type === 'dimension') {
-      setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
     }
   });
   return rootConfig;
