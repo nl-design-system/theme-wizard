@@ -9,7 +9,6 @@ import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
 import {
-  legacyToModernColor,
   type ColorToken as ColorTokenType,
   walkTokensWithRef,
   walkObject,
@@ -21,6 +20,7 @@ import {
   ColorValue,
   ModernDimensionToken,
   DimensionToken,
+  stringifyColor,
 } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import '../wizard-layout';
@@ -132,7 +132,7 @@ export class WizardStyleGuide extends LitElement {
           .filter(([, token]) => typeof token === 'object' && token !== null && '$value' in token)
           .map(([colorKey, token]) => {
             const color = resolveColorValue(token as ColorTokenType, this.theme.tokens);
-            const displayValue = color ? legacyToModernColor.encode(color) : '#000';
+            const displayValue = color ? stringifyColor(color) : '#000';
             const tokenId = `basis.color.${key}.${colorKey}`;
             const isUsed = tokenUsage.has(tokenId);
             const usage = tokenUsage.get(tokenId) || [];
@@ -850,7 +850,7 @@ export class WizardStyleGuide extends LitElement {
     if (isValueObject(value)) {
       // Special handling for color tokens
       if (token['$type'] === 'color') {
-        return legacyToModernColor.encode(value as ColorValue);
+        return stringifyColor(value as ColorValue);
       }
       // Other object values: stringify
       return JSON.stringify(value);

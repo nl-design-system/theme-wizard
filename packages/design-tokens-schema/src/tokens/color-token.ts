@@ -87,22 +87,6 @@ export const stringifyColor = (color: ColorValue): string => {
   });
 };
 
-/**
- * @description Convert back and forth between a legacy color value and a modern value
- * @example
- * ```ts
- * legacyToModernColor.decode('#000');
- * //=> { alpha: 1, components: [0, 0, 0], colorSpace: 'rgb' }
- *
- * legacyToModernColor.encode({ alpha: 1, components: [0, 0, 0], colorSpace: 'rgb' })
- * //=> `#000000`
- * ```
- */
-export const legacyToModernColor = z.codec(z.string(), ColorValueSchema, {
-  decode: (value) => parseColor(value),
-  encode: (value) => stringifyColor(value),
-});
-
 const ColorReferenceSchema = z.looseObject({
   ...BaseDesignTokenSchema.shape,
   $type: z.literal('color'),

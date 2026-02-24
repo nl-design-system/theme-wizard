@@ -59,6 +59,7 @@ describe('legacy token format preprocessing (via theme schema)', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBeTruthy();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const token = (result.data as any)?.basis?.heading?.['font-family'];
     expect(token?.$type).toEqual('fontFamily');
     expect(token?.$value).toEqual(['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif']);
@@ -77,6 +78,7 @@ describe('legacy token format preprocessing (via theme schema)', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBeTruthy();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const token = (result.data as any)?.basis?.heading?.['font-family'];
     expect(token?.$type).toEqual('fontFamily');
     expect(token?.$value).toEqual(['IBM Plex Sans', 'monospace']);

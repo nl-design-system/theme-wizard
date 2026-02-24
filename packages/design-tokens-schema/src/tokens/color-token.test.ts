@@ -9,7 +9,6 @@ import {
   ColorValue,
   ColorToken,
   stringifyColor,
-  legacyToModernColor,
 } from './color-token';
 
 describe('Alpha', () => {
@@ -178,16 +177,5 @@ describe('stringify token to string', () => {
     } satisfies ColorValue;
     const result = stringifyColor(tokenValue);
     expect(result).toBe('#ffffff');
-  });
-
-  it('using the zod legacyToModernColor codec', () => {
-    expect(
-      legacyToModernColor.encode({
-        alpha: 1,
-        colorSpace: 'hsl',
-        components: ['none', 0, 100],
-        hex: '#ffffff',
-      }),
-    ).toEqual('#ffffff');
   });
 });
