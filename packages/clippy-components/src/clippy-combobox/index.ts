@@ -41,9 +41,12 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   static readonly positions = positions;
   @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
   allow: Allowance = defaultAllowance;
-  @property({ reflect: true, type: Boolean }) open = false;
+  @property({ reflect: true, type: Boolean })
+  open = false;
   @property({ converter: allowedValuesConverter(ClippyCombobox.positions, defaultPosition) })
   position: Position = defaultPosition;
+  @property({ reflect: true, type: Boolean })
+  invalid = false;
 
   get #id() {
     return `${tag}-${this.name}`;
@@ -196,6 +199,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   readonly #handleFocus = () => {
     this.open = true;
+    this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
   };
 
@@ -323,6 +327,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       [`utrecht-combobox__popover--${this.position}`]: this.position,
       'utrecht-combobox__popover--hidden': !this.open,
     };
+    const textboxClasses = {
+      'utrecht-combobox__input': true,
+      'utrecht-textbox': true,
+      'utrecht-textbox--invalid': this.invalid,
+    };
     const currentOption = this.getOptionForValue(this.value);
     return html`
       <div class="utrecht-combobox">
@@ -331,7 +340,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
           ${currentOption
             ? html`<div
                 role="presentation"
-                class="clippy-combobox__current-option utrecht-textbox utrecht-combobox__input"
+                class=${classMap({ 'clippy-combobox__current-option': true, ...textboxClasses })}
               >
                 ${this.renderEntry(currentOption)}
               </div>`
@@ -346,8 +355,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             aria-controls=${this.#listId}
             aria-expanded=${this.open}
             aria-activedescendant=${ifDefined(this.#getOptionId())}
+            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
             type="text"
-            class="utrecht-textbox utrecht-combobox__input"
+            class=${classMap(textboxClasses)}
             dir="auto"
             .value=${this.query}
             @input=${this.#handleInput}
