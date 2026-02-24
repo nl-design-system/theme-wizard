@@ -1,6 +1,7 @@
 import { parse_dimension } from '@projectwallace/css-parser';
 import { setExtension } from './extensions';
 import { resolveRef } from './resolve-refs';
+import { parseColor } from './tokens/color-token';
 import { isRef, isTokenLike } from './tokens/token-reference';
 import { walkTokens } from './walker';
 
@@ -101,6 +102,16 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
         }
       }
 
+      return;
+    }
+
+    // Parse legacy color strings to modern format (but not if it's a reference)
+    if (token.$type === 'color' && typeof token.$value === 'string' && !isRef(token.$value)) {
+      try {
+        token.$value = parseColor(token.$value);
+      } catch {
+        // If parsing fails, leave the value as is - schema validation will catch it
+      }
       return;
     }
 

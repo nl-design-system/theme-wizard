@@ -196,7 +196,39 @@ const ThemeShapeSchema = z.looseObject({
   // 'components/*': {},
 });
 
-export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
+/**
+ * Preprocessing pipeline: applies all transformations before Zod validation.
+ * This ensures data is normalized before schema validation.
+ * Clones input to avoid mutating the original object.
+ */
+const preprocessTheme = (input: unknown): Record<string, unknown> => {
+  let data = structuredClone(input as Record<string, unknown>);
+  // Apply transformations in order
+  data = useRefAsValue(data);
+  return data;
+};
+
+/**
+ * Strict preprocessing pipeline: includes all preprocessing for validation.
+ * Clones input to avoid mutating the original object.
+ */
+const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
+  let data = structuredClone(input as Record<string, unknown>);
+  // Step 1: Normalize refs
+  data = useRefAsValue(data);
+  // Step 2: Clean up non-token properties
+  data = removeNonTokenProperties(data);
+  // Step 3: Upgrade legacy token formats
+  data = upgradeLegacyTokens(data);
+  // Step 4: Add extensions
+  data = addContrastExtensions(data);
+  data = addColorScalePositionExtensions(data);
+  // Step 5: Resolve references
+  data = resolveConfigRefs(data);
+  return data;
+};
+
+export const ThemeSchema = z.unknown().transform(preprocessTheme).pipe(ThemeShapeSchema);
 
 export type Theme = z.infer<typeof ThemeShapeSchema>;
 
@@ -204,11 +236,10 @@ const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<st
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
-export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
-  .transform(upgradeLegacyTokens)
-  .transform(addContrastExtensions)
-  .transform(addColorScalePositionExtensions)
-  .transform(resolveConfigRefs)
+export const StrictThemeSchema = z
+  .unknown()
+  .transform(preprocessThemeStrict)
+  .pipe(ThemeShapeSchema)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid
     try {
