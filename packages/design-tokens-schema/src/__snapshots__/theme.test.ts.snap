@@ -12568,7 +12568,12 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-family": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "'Source Sans Pro', Helvetica, Arial, sans-serif",
+          "nl.nldesignsystem.value-resolved-as": [
+            "Source Sans Pro",
+            "Helvetica",
+            "Arial",
+            "sans-serif",
+          ],
           "studio.tokens": {
             "originalType": "fontFamilies",
           },
@@ -36702,7 +36707,10 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-family": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "'IBM Plex Sans', sans-serif",
+          "nl.nldesignsystem.value-resolved-as": [
+            "IBM Plex Sans",
+            "sans-serif",
+          ],
           "studio.tokens": {
             "originalType": "fontFamilies",
           },
@@ -37004,7 +37012,10 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-family": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "'IBM Plex Sans', sans-serif",
+          "nl.nldesignsystem.value-resolved-as": [
+            "IBM Plex Sans",
+            "sans-serif",
+          ],
           "studio.tokens": {
             "originalType": "fontFamilies",
           },
@@ -60863,7 +60874,10 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-family": {
         "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "'Noto Sans', sans-serif",
+          "nl.nldesignsystem.value-resolved-as": [
+            "Noto Sans",
+            "sans-serif",
+          ],
           "studio.tokens": {
             "originalType": "fontFamilies",
           },

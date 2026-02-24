@@ -77,38 +77,6 @@ export const legacyToModernFontFamily = z.codec(z.string(), ModernFontFamilyValu
   encode: (value) => stringifyFontFamily(value),
 });
 
-export const LegacyFontFamilyValueSchema = z
-  .string()
-  .trim()
-  .nonempty()
-  .refine(
-    (value) => splitFontFamily(value).every((s) => s.length > 1),
-    'Font-family names must have 1 or more characters',
-  )
-  .transform((value) => legacyToModernFontFamily.decode(value));
-export type LegacyFontFamilyValue = z.infer<typeof LegacyFontFamilyValueSchema>;
-
-export const LegacyFontFamilyTokenSchema = z
-  .object({
-    ...BaseDesignTokenValueSchema.shape,
-    $type: z.literal('fontFamilies'), // plural
-    $value: LegacyFontFamilyValueSchema,
-  })
-  // Transform to rename the $type to the modern format
-  .transform((token) => ({
-    ...token,
-    $type: 'fontFamily', // override `$type` when it exists in `token`
-  }));
-export type LegacyFontFamilyToken = z.infer<typeof LegacyFontFamilyTokenSchema>;
-
-/** Sometimes legacy $value is mixed with modern $type */
-export const MixedFontFamilyTokenSchema = z.object({
-  ...BaseDesignTokenValueSchema.shape,
-  $type: z.literal('fontFamily'),
-  $value: LegacyFontFamilyValueSchema,
-});
-export type MixedFontFamilyToken = z.infer<typeof MixedFontFamilyTokenSchema>;
-
 export const FontFamilyWithRefSchema = z.looseObject({
   ...BaseDesignTokenValueSchema.shape,
   $type: z.literal('fontFamily'),
@@ -116,10 +84,6 @@ export const FontFamilyWithRefSchema = z.looseObject({
 });
 export type FontFamilyWithRef = z.infer<typeof FontFamilyWithRefSchema>;
 
-export const FontFamilyTokenSchema = z.union([
-  FontFamilyWithRefSchema,
-  LegacyFontFamilyTokenSchema,
-  MixedFontFamilyTokenSchema,
-  ModernFontFamilyTokenSchema,
-]);
+/** @description Validation schema for fontFamily tokens. Legacy formats are handled by preprocessing. */
+export const FontFamilyTokenSchema = z.union([FontFamilyWithRefSchema, ModernFontFamilyTokenSchema]);
 export type FontFamilyToken = z.infer<typeof FontFamilyTokenSchema>;

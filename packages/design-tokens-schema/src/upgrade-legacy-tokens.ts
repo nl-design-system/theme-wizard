@@ -4,6 +4,7 @@ import { setExtension } from './extensions';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
 import { isRef, isTokenLike } from './tokens/token-reference';
+import { splitFontFamily, legacyToModernFontFamily } from './tokens/fontfamily-token';
 import { walkTokens } from './walker';
 
 export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.token-subtype';
@@ -129,6 +130,25 @@ const upgradeNumberToken = (token: BaseDesignTokenValue, path: string[]): void =
 };
 
 /**
+ * @description Upgrade a legacy fontFamilies token (convert to fontFamily type and parse value)
+ */
+const upgradeLegacyFontFamiliesToken = (token: BaseDesignTokenValue): void => {
+  token.$type = 'fontFamily';
+  if (typeof token.$value === 'string') {
+    token.$value = legacyToModernFontFamily.decode(token.$value);
+  }
+};
+
+/**
+ * @description Upgrade a fontFamily token with legacy string value (parse to array/string)
+ */
+const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignTokenValue): void => {
+  if (typeof token.$value === 'string' && !isRef(token.$value)) {
+    token.$value = legacyToModernFontFamily.decode(token.$value);
+  }
+};
+
+/**
  * @description NLDS themes use $type: fontSize and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
  */
 export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
@@ -148,6 +168,12 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
         break;
       case 'number':
         upgradeNumberToken(token, path);
+        break;
+      case 'fontFamilies':
+        upgradeLegacyFontFamiliesToken(token);
+        break;
+      case 'fontFamily':
+        upgradeFontFamilyTokenWithLegacyValue(token);
         break;
     }
   });
