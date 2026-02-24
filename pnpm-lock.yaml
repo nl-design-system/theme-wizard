@@ -321,6 +321,39 @@ importers:
 
   packages/design-tokens-schema:
     dependencies:
+      '@nl-design-system-candidate/button-tokens':
+        specifier: 1.0.0
+        version: 1.0.0
+      '@nl-design-system-candidate/code-block-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/code-tokens':
+        specifier: 2.0.4
+        version: 2.0.4
+      '@nl-design-system-candidate/color-sample-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/data-badge-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/heading-tokens':
+        specifier: 1.1.2
+        version: 1.1.2
+      '@nl-design-system-candidate/link-tokens':
+        specifier: 3.0.3
+        version: 3.0.3
+      '@nl-design-system-candidate/mark-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/number-badge-tokens':
+        specifier: 2.0.3
+        version: 2.0.3
+      '@nl-design-system-candidate/paragraph-tokens':
+        specifier: 1.1.3
+        version: 1.1.3
+      '@nl-design-system-candidate/skip-link-tokens':
+        specifier: 1.0.4
+        version: 1.0.4
       '@projectwallace/css-parser':
         specifier: 0.13.2
         version: 0.13.2
