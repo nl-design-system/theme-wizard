@@ -17,9 +17,10 @@ import {
   resolveRef,
   isValueObject,
   isTokenLike,
-  type TokenLike,
+  type BaseDesignToken,
   ColorValue,
   ModernDimensionToken,
+  DimensionToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import '../wizard-layout';
@@ -177,12 +178,13 @@ export class WizardStyleGuide extends LitElement {
       .filter(([name]) => !['min', 'max'].includes(name))
       .reverse()
       .map(([name, tokenValue]) => {
-        const value = (tokenValue as DesignToken).$value;
+        const value = (tokenValue as DimensionToken).$value;
+        const stringifiedValue = typeof value === 'string' ? value : value.value + value.unit;
         const tokenId = `basis.space.${space}.${name}`;
         const isUsed = tokenUsage.has(tokenId);
         const usage = tokenUsage.get(tokenId) || [];
         const usageCount = usage.length ?? 0;
-        return { name, isUsed, tokenId, usage, usageCount, value };
+        return { name, isUsed, tokenId, usage, usageCount, value: stringifiedValue };
       });
   }
 
@@ -668,15 +670,15 @@ export class WizardStyleGuide extends LitElement {
     componentId: string,
   ): {
     fullPath: string;
-    tokenConfig: TokenLike;
+    tokenConfig: BaseDesignToken;
   }[] {
     const tokens: {
       fullPath: string;
-      tokenConfig: TokenLike;
+      tokenConfig: BaseDesignToken;
     }[] = [];
 
     // Use walkObject to recursively find all tokens
-    walkObject<TokenLike>(componentConfig, isTokenLike, (tokenConfig: TokenLike, path: string[]) => {
+    walkObject<BaseDesignToken>(componentConfig, isTokenLike, (tokenConfig: BaseDesignToken, path: string[]) => {
       const tokenId = path.join('.');
       const fullPath = `nl.${componentId}.${tokenId}`;
       tokens.push({
@@ -832,8 +834,7 @@ export class WizardStyleGuide extends LitElement {
       return JSON.stringify(token);
     }
 
-    const tokenObj = token as Record<string, unknown>;
-    const value = tokenObj['$value'];
+    const value = token['$value'];
 
     // No $value property
     if (value === undefined || value === null) {
@@ -848,7 +849,7 @@ export class WizardStyleGuide extends LitElement {
     // Handle object values
     if (isValueObject(value)) {
       // Special handling for color tokens
-      if (tokenObj['$type'] === 'color') {
+      if (token['$type'] === 'color') {
         return legacyToModernColor.encode(value as ColorValue);
       }
       // Other object values: stringify
