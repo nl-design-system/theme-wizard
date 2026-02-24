@@ -28,6 +28,9 @@ export default defineConfig({
     port: 9492, // (T9 for WIZ)2
   },
   vite: {
+    build: {
+      minify: false,
+    },
     resolve: {
       alias: {
         '@': srcDir,
