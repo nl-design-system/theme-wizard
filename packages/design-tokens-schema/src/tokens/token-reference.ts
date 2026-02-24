@@ -36,7 +36,7 @@ export const isTokenLike = (obj: unknown): obj is BaseDesignToken => {
   return '$value' in obj;
 };
 
-/** @deprecated use `BaseDesignTokenValue` instead */
+/** @deprecated use `BaseDesignToken` instead */
 export type TokenLike = {
   $type: string;
   $value: unknown;

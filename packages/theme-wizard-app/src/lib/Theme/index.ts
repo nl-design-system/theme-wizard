@@ -5,6 +5,7 @@ import {
   EXTENSION_RESOLVED_AS,
   stringifyFontFamily,
   EXTENSION_RESOLVED_FROM,
+  EXTENSION_TOKEN_SUBTYPE,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -167,10 +168,35 @@ export default class Theme {
           };
         }
 
-        if (obj.$type === 'fontFamily' && Array.isArray(obj.$value)) {
+        if (obj.$type === 'fontFamily' && typeof obj.$value !== 'string') {
           return {
             ...obj,
             $value: stringifyFontFamily(obj.$value),
+          };
+        }
+
+        if (obj.$type === 'dimension' && typeof obj.$value === 'object' && obj.$value?.unit) {
+          const subtype = obj['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
+          const value = `${obj.$value.value}${obj.$value.unit}`;
+
+          if (subtype === 'font-size') {
+            return {
+              ...obj,
+              $type: 'fontSize',
+              $value: value,
+            };
+          } else if (subtype === 'line-height') {
+            return {
+              ...obj,
+              $type: 'lineHeight',
+              $value: value,
+            };
+          }
+
+          // For other dimension tokens, keep as-is (already in string format from Style Dictionary)
+          return {
+            ...obj,
+            $value: value,
           };
         }
 

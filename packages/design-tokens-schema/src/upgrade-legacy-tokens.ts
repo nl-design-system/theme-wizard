@@ -3,8 +3,8 @@ import type { BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
+import { legacyToModernFontFamily } from './tokens/fontfamily-token';
 import { isRef, isTokenLike } from './tokens/token-reference';
-import { splitFontFamily, legacyToModernFontFamily } from './tokens/fontfamily-token';
 import { walkTokens } from './walker';
 
 export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.token-subtype';

@@ -8,4 +8,5 @@ export * from './basis-tokens';
 export * from './theme';
 export * from './resolve-refs';
 export * from './remove-non-token-properties';
+export * from './upgrade-legacy-tokens';
 export * from './walker';
