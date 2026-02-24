@@ -262,7 +262,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   #commitActiveItem(index: number) {
     const { label, value } = this.filteredOptions.at(index) ?? {};
     if (index < 0 || !label || !value) return;
-    if (this.value !== value) {
+    if (!dequal(this.value, value)) {
       this.value = value;
       this.#handleChange();
     }
@@ -271,7 +271,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   #commitQuery() {
     const value = this.queryToValue(this.query);
-    if (value && this.value !== value) {
+    if (!dequal(this.value, value)) {
       this.value = value;
       this.#handleChange();
     }
