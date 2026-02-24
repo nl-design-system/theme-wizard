@@ -1,7 +1,6 @@
 import dlv from 'dlv';
-import type { BaseDesignToken, BaseDesignToken } from './tokens/base-token';
+import type { BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
-import { legacyToModernColor } from './tokens/color-token';
 import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef, isTokenLike } from './tokens/token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 

@@ -26,6 +26,7 @@ const createToken = (type: string, value: unknown, extensions?: Record<PropertyK
     $value: value,
   };
 };
+
 const createDimension = (value: number, unit: 'rem' | 'px') => {
   return createToken('dimension', { unit, value });
 };
