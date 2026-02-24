@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => ({
       fileName: 'index',
       formats: ['es'],
     },
-    minify: mode !== 'development',
+    minify: false,
     rollupOptions: {
       external: (id) => /^@?lit(-\w+)?($|\/.+)/.test(id),
     },
