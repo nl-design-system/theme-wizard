@@ -146,9 +146,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how a value is converted to a query.
    * This runs on setting the value.
    */
-  valueToQuery(value: Option['value']): string | undefined {
+  valueToQuery(value: Option['value']): string {
     const option = this.getOptionForValue(value);
-    return option?.label || (this.allow === 'other' && typeof value === 'string' ? value : undefined);
+    return option?.label || (this.allow === 'other' && typeof value === 'string' ? value : '');
   }
 
   readonly #addAdditionalOptions = debounce(
