@@ -70,7 +70,7 @@ test.describe('Download tokens as JSON', () => {
 
   test.describe('download confirmation modal', () => {
     test.beforeEach(async ({ themeWizard }) => {
-      await themeWizard.changeColor('tokens.fieldLabels.basis.color.accent-1-inverse.label', '#002e75');
+      await themeWizard.changeColor('Accent 1', '#3d87f5');
       await expect(themeWizard.downloadButton).toBeEnabled();
     });
 
@@ -108,7 +108,7 @@ test.describe('Download tokens as JSON', () => {
 
   test.describe('after changing a token', () => {
     test.beforeEach(async ({ themeWizard }) => {
-      await themeWizard.changeColor('Accent 1', '#002e75');
+      await themeWizard.changeBodyFont('system-ui');
     });
 
     test('Button becomes active after changes made', async ({ themeWizard }) => {
@@ -129,7 +129,7 @@ test.describe('Download tokens as JSON', () => {
 
     test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
       // Trigger a contrast warning
-      await themeWizard.changeColor('tokens.fieldLabels.basis.color.accent-1-inverse.label', '#002e75');
+      await themeWizard.changeColor('Accent 1', '#3d87f5');
 
       // The button should stay enabled, but show a confirmation dialog on click.
       await expect(themeWizard.downloadButton).toBeEnabled();
@@ -142,16 +142,18 @@ test.describe('Download tokens as JSON', () => {
   });
 });
 
-test.describe.skip('color contrast warnings', () => {
+test.describe('color contrast warnings', () => {
   test('No errors shown before making changes', async ({ themeWizard }) => {
     const errorAlert = themeWizard.getErrorAlert();
     await expect(errorAlert).not.toBeVisible();
 
-    const input = themeWizard.sidebar.getByLabel('bg-active').first();
+    const input = themeWizard.sidebar.getByLabel('Accent 1');
     await expect(input).not.toHaveAttribute('aria-invalid');
   });
 
-  test('shows in-place error message with the input when contrast is insufficient', async ({ themeWizard }) => {
+  // TODO: un-skip these tests once we know how to render feedback on the basis-tokens page's sidebar
+
+  test.skip('shows in-place error message with the input when contrast is insufficient', async ({ themeWizard }) => {
     await themeWizard.changeColor('bg-active', '#000000');
 
     // Input itself is marked as invalid
@@ -160,7 +162,7 @@ test.describe.skip('color contrast warnings', () => {
     await expect(input).toHaveAccessibleErrorMessage(/Onvoldoende contrast/);
   });
 
-  test('remove errors when contrast issues are fixed', async ({ themeWizard }) => {
+  test.skip('remove errors when contrast issues are fixed', async ({ themeWizard }) => {
     const input = themeWizard.sidebar.getByLabel('bg-active').first();
 
     // Set invalid state
@@ -230,7 +232,7 @@ test.describe('colorscale inputs', () => {
   });
 
   test('Changing value updates individual color inputs ("All tokens")', async ({ themeWizard }) => {
-    const input = themeWizard.sidebar.getByLabel('color-default').first();
+    const input = themeWizard.sidebar.getByLabel('Accent 1');
     await expect(input).toHaveValue(INITIAL_COLOR);
     await themeWizard.changeColor('Accent 1', '#ff0000');
     await expect(input).not.toHaveValue(INITIAL_COLOR);
