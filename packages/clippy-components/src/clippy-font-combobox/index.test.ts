@@ -72,10 +72,10 @@ describe(`<${tag}>`, () => {
 
   it('uses query as value', async () => {
     const component: ClippyFontCombobox = document.querySelector(tag)!;
-    const query = 'Elmo';
+    const query = 'Komiek Sans';
     const input = page.getByRole('combobox');
     await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
-    expect(component.value).toBe(query);
+    expect(component.value).toStrictEqual([query]);
   });
 
   it('shows up as a form element', async () => {
@@ -85,7 +85,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('holds a form value', async () => {
-    const query = 'Elmo';
+    const query = 'Komiek Sans';
     const input = page.getByRole('combobox');
     await input.fill(query).then(() => userEvent.keyboard('{Enter}'));
     const form: HTMLFormElement = document.querySelector('form')!;

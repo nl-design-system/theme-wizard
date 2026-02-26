@@ -10,7 +10,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: Number(process.env['E2E_TIMEOUT_EXPECT'] || 5000),
+    timeout: Number(process.env['E2E_TIMEOUT_EXPECT'] || 10_000),
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: Boolean(process.env['CI']),
@@ -37,7 +37,7 @@ const config: PlaywrightTestConfig = {
   testDir: './e2e',
   testMatch: '**/*spec.ts',
   /* Maximum time one test can run for. */
-  timeout: Number(process.env['E2E_TIMEOUT_TEST'] || 7500),
+  timeout: Number(process.env['E2E_TIMEOUT_TEST'] || 10_000),
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */

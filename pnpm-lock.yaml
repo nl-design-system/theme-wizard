@@ -120,6 +120,9 @@ importers:
       debounce:
         specifier: 3.0.0
         version: 3.0.0
+      dequal:
+        specifier: 2.0.3
+        version: 2.0.3
       lit:
         specifier: 3.3.2
         version: 3.3.2

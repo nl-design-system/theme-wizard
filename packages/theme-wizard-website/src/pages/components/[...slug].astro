@@ -104,7 +104,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
                   <dt>{token.path.join('.')}</dt>
                   <dd>{token.token?.$type ?? 'unknown type'}</dd>
                   <dd>
-                    <wizard-theme-token-field path={token.path.join('.')}></wizard-theme-token-field>
+                    <wizard-token-field path={token.path.join('.')}></wizard-token-field>
                   </dd>
                 ))}
               </dl>

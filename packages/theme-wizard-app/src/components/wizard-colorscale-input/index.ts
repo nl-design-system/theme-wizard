@@ -220,10 +220,6 @@ export class WizardColorscaleInput extends WizardTokenInput {
   override render() {
     return html`
       <div class="wizard-colorscale-input">
-        <div class="wizard-colorscale-input__label">
-          <p>${this.label}</p>
-          <slot name="extra-label"></slot>
-        </div>
         <clippy-color-combobox
           hidden-label=${this.label}
           name=${this.name}
@@ -234,7 +230,12 @@ export class WizardColorscaleInput extends WizardTokenInput {
           }))}
           .value=${this.currentColorValue}
           @change=${this.handleColorChange}
-        ></clippy-color-combobox>
+        >
+          <div slot="label" class="wizard-colorscale-input__label">
+            <div>${this.label}</div>
+            <slot name="extra-label"></slot>
+          </div>
+        </clippy-color-combobox>
         <div
           role="presentation"
           class="wizard-colorscale-input__list"

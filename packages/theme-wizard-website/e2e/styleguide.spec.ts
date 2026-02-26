@@ -12,15 +12,15 @@ test('page has accessibility basics', async ({ page }) => {
 });
 
 test('page uses values as stored by the configuration page', async ({ page }) => {
-  // Set Accent 1 to a bright red
+  // Set Accent 1 to red
   await page.goto('/');
   const accent1Input = page.getByLabel('Accent 1');
-  await accent1Input.fill('#ff0000');
+  await accent1Input.fill('#800000');
   await accent1Input.blur();
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');
-  await expect(page.getByRole('button', { name: '#ff0000' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '#800000' })).toBeVisible();
 });
 
 test.describe('interaction tests', () => {

@@ -3,6 +3,7 @@ import comboboxStyles from '@utrecht/combobox-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
+import { dequal } from 'dequal';
 import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -41,9 +42,12 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   static readonly positions = positions;
   @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
   allow: Allowance = defaultAllowance;
-  @property({ reflect: true, type: Boolean }) open = false;
+  @property({ reflect: true, type: Boolean })
+  open = false;
   @property({ converter: allowedValuesConverter(ClippyCombobox.positions, defaultPosition) })
   position: Position = defaultPosition;
+  @property({ reflect: true, type: Boolean })
+  invalid = false;
 
   get #id() {
     return `${tag}-${this.name}`;
@@ -121,14 +125,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how the value is looked up based on the selected option
    */
   getOptionForValue(value: T['value'] | null): T | undefined {
-    const valueIsNonNullObject = typeof value === 'object' && value !== null;
-    const stringifiedValue = JSON.stringify(value);
-    return this.options.find((option) => {
-      if (valueIsNonNullObject && typeof option.value === 'object' && option.value !== null) {
-        return JSON.stringify(option.value) === stringifiedValue;
-      }
-      return option.value === value;
-    });
+    return this.options.find((option) => dequal(option.value, value));
   }
 
   /**
@@ -146,9 +143,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how a value is converted to a query.
    * This runs on setting the value.
    */
-  valueToQuery(value: Option['value']): string | undefined {
+  valueToQuery(value: Option['value']): string {
     const option = this.getOptionForValue(value);
-    return option?.label || (this.allow === 'other' && typeof value === 'string' ? value : undefined);
+    return option?.label || (this.allow === 'other' && typeof value === 'string' ? value : '');
   }
 
   readonly #addAdditionalOptions = debounce(
@@ -196,6 +193,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   readonly #handleFocus = () => {
     this.open = true;
+    this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
   };
 
@@ -231,7 +229,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       case 'Enter':
         if (index > -1) {
           return this.#commitActiveItem(index);
-        } else if (count === 1) {
+        } else if (count === 1 && this.allow === 'options') {
           return this.#commitActiveItem(0);
         } else if (this.allow === 'other') {
           return this.#commitQuery();
@@ -264,7 +262,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   #commitActiveItem(index: number) {
     const { label, value } = this.filteredOptions.at(index) ?? {};
     if (index < 0 || !label || !value) return;
-    if (this.value !== value) {
+    if (!dequal(this.value, value)) {
       this.value = value;
       this.#handleChange();
     }
@@ -272,8 +270,8 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   #commitQuery() {
-    const value = this.query;
-    if (this.value !== value) {
+    const value = this.queryToValue(this.query);
+    if (!dequal(this.value, value)) {
       this.value = value;
       this.#handleChange();
     }
@@ -300,10 +298,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     `;
   }
 
-  override updated(changed: PropertyValues) {
-    super.updated(changed);
+  override willUpdate(changed: PropertyValues) {
+    super.willUpdate(changed);
+    // Query value in input is dependent on both `options` and `value`.
     if (changed.has('options') || changed.has('value')) {
-      // Query value in input is dependent on both `options` and `value`.
       this.query = this.valueToQuery(this.value) ?? '';
     }
   }
@@ -319,19 +317,47 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   override render() {
+    const labelClasses = {
+      'clippy-combobox__label': true,
+      'sr-only': !this.children.length, // If there are no slotted children, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
+    };
     const popoverClasses = {
       [`utrecht-combobox__popover--${this.position}`]: this.position,
       'utrecht-combobox__popover--hidden': !this.open,
     };
+    const textboxClasses = {
+      'utrecht-combobox__input': true,
+      'utrecht-textbox': true,
+      'utrecht-textbox--invalid': this.invalid,
+    };
     const currentOption = this.getOptionForValue(this.value);
+    const populatedSlots = Array.from(this.children).reduce(
+      (acc, child) => ({
+        ...acc,
+        [child.slot]: child,
+      }),
+      {} as Record<string, Element>,
+    );
     return html`
       <div class="utrecht-combobox">
-        <label for="${this.#id}" class="sr-only">${this.hiddenLabel}</label>
+        <label for="${this.#id}" class=${classMap(labelClasses)}>
+          <slot name="label">${this.hiddenLabel || this.name}</slot>
+        </label>
+        ${populatedSlots['description']
+          ? html` <div id="${this.#id}-description" class="clippy-combobox__description">
+              <slot name="description"></slot>
+            </div>`
+          : nothing}
+        ${populatedSlots['error']
+          ? html` <div id="${this.#id}-error" class="clippy-combobox__error">
+              <slot name="error"></slot>
+            </div>`
+          : nothing}
         <div class="clippy-combobox__input-container">
           ${currentOption
             ? html`<div
                 role="presentation"
-                class="clippy-combobox__current-option utrecht-textbox utrecht-combobox__input"
+                class=${classMap({ 'clippy-combobox__current-option': true, ...textboxClasses })}
               >
                 ${this.renderEntry(currentOption)}
               </div>`
@@ -346,8 +372,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             aria-controls=${this.#listId}
             aria-expanded=${this.open}
             aria-activedescendant=${ifDefined(this.#getOptionId())}
+            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+            aria-errormessage=${ifDefined(populatedSlots['error'] ? `${this.#id}-error` : undefined)}
+            aria-describedby=${ifDefined(populatedSlots['description'] ? `${this.#id}-description` : undefined)}
             type="text"
-            class="utrecht-textbox utrecht-combobox__input"
+            class=${classMap(textboxClasses)}
             dir="auto"
             .value=${this.query}
             @input=${this.#handleInput}
@@ -365,7 +394,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
           <ul class="utrecht-listbox__list" role="none">
             ${this.filteredOptions.map((option, index) => {
               const active = index === this.activeIndex;
-              const selected = option.value === this.value;
+              const selected = dequal(option, currentOption);
               const interactionClasses = {
                 'utrecht-listbox__option--active': active,
                 'utrecht-listbox__option--selected': selected,

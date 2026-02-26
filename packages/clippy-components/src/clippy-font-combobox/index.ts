@@ -84,9 +84,9 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
     return Array.isArray(value) ? value[0] : value;
   }
 
-  override queryToValue(query: string): string[] | null {
+  override queryToValue(query: string): string[] {
     // This is different from `this.getOptionForValue` because query is a string;
-    return this.options.find((option) => option.value[0] === query)?.value ?? null;
+    return this.options.find((option) => option.value[0] === query)?.value ?? [query];
   }
 
   override getOptionForValue(value: Option['value'] | null): Option | undefined {

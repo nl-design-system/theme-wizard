@@ -2,9 +2,11 @@ import { consume } from '@lit/context';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state, query } from 'lit/decorators.js';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import '../wizard-layout';
 import '../wizard-preview';
 import '../wizard-token-field';
+import '../wizard-font-input';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
@@ -12,7 +14,6 @@ import type Theme from '../../lib/Theme';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import '@nl-design-system-community/clippy-components/clippy-heading';
 import styles from './styles';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
@@ -73,26 +74,35 @@ export class WizardTokensForm extends LitElement {
       return html`<div>Loading...</div>`;
     }
 
-    const bodyFontToken = this.theme.at(BODY_FONT_TOKEN_REF);
-    const headingFontToken = this.theme.at(HEADING_FONT_TOKEN_REF);
+    const fonts = [
+      {
+        label: t('tokens.fieldLabels.headingFont'),
+        path: HEADING_FONT_TOKEN_REF,
+        token: this.theme.at(HEADING_FONT_TOKEN_REF),
+      },
+      {
+        label: t('tokens.fieldLabels.bodyFont'),
+        path: BODY_FONT_TOKEN_REF,
+        token: this.theme.at(BODY_FONT_TOKEN_REF),
+      },
+    ];
 
     return html`
       <section>
         <form @reset=${this.#handleReset}>
           <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
 
-          <wizard-token-field
-            .errors=${this.theme.issues}
-            .token=${headingFontToken}
-            label="${t('tokens.fieldLabels.headingFont')}"
-            path=${HEADING_FONT_TOKEN_REF}
-          ></wizard-token-field>
-          <wizard-token-field
-            .errors=${this.theme.issues}
-            .token=${bodyFontToken}
-            label="${t('tokens.fieldLabels.bodyFont')}"
-            path=${BODY_FONT_TOKEN_REF}
-          ></wizard-token-field>
+          ${fonts.map(
+            ({ label, path, token }) =>
+              html` <wizard-font-input
+                .errors=${this.theme.issues.filter((error) => error.path === path)}
+                .value=${token.$value}
+                label=${label}
+                name=${path}
+              >
+                <div slot="label">${label}</div>
+              </wizard-font-input>`,
+          )}
 
           <ul class="wizard-app__basis-colors">
             ${(() => {
@@ -128,11 +138,12 @@ export class WizardTokensForm extends LitElement {
           </ul>
 
           <details>
-            <summary>Alle tokens</summary>
+            <summary>Basis accent-1 colors</summary>
+
             <wizard-token-field
               .errors=${this.theme.issues}
-              .token=${this.theme.tokens['basis']}
-              path=${`basis`}
+              .token=${this.theme.at('basis.color.accent-1')}
+              path=${`basis.color.accent-1`}
               class="wizard-app__root-token-field"
             ></wizard-token-field>
           </details>
