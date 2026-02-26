@@ -2,10 +2,10 @@ import { css } from 'lit';
 
 export default css`
   :host {
-    --utrecht-heading-1-color: var(--basis-color-accent-1-inverse-color-default);
-    --utrecht-heading-1-font-size: var(--basis-text-font-size-lg);
-    --utrecht-heading-1-margin-block-start: 0;
-    --utrecht-heading-1-margin-block-end: 0;
+    --nl-heading-level-1-color: var(--basis-color-accent-1-inverse-color-default);
+    --nl-heading-level-1-font-size: var(--basis-text-font-size-lg);
+    --nl-heading-level-1-margin-block-start: 0;
+    --nl-heading-level-1-margin-block-end: 0;
 
     align-items: center;
     background-color: var(--basis-color-accent-1-inverse-bg-default);

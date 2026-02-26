@@ -42,12 +42,10 @@ export class WizardLayout extends LitElement {
     return html`
       <div class="wizard-layout ma-theme">
         <div class="wizard-layout__logo">
-          <wizard-logo></wizard-logo>
+          <a href="/">
+            <wizard-logo></wizard-logo>
+          </a>
         </div>
-
-        <wizard-sidebar class="wizard-layout__sidebar">
-          <slot name="sidebar"></slot>
-        </wizard-sidebar>
 
         <div class="wizard-layout__nav">
           <nav>
@@ -78,6 +76,10 @@ export class WizardLayout extends LitElement {
             <slot name="nav"></slot>
           </div>
         </div>
+
+        <wizard-sidebar class="wizard-layout__sidebar">
+          <slot name="sidebar"></slot>
+        </wizard-sidebar>
 
         <section class="wizard-layout__main">
           <slot name="main"></slot>

@@ -1,11 +1,3 @@
-// TODO: import this when new version of MA is released
-// import 'node_modules/@nl-design-system-community/ma-design-tokens/src/font.js';
-// Then: remove these when importing from MA theme works
-import '@fontsource/fira-sans/400.css';
-import '@fontsource/fira-sans/700.css';
-import '@fontsource/source-sans-pro/400.css';
-import '@fontsource/source-sans-pro/700.css';
-// <End TODO>
 import { provide } from '@lit/context';
 import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';

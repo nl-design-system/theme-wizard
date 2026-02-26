@@ -9,6 +9,10 @@ export default css`
   .wizard-colorscale-input__label {
     display: flex;
     justify-content: space-between;
+
+    & p {
+      margin-block: 0;
+    }
   }
 
   .wizard-colorscale-input__input input {
