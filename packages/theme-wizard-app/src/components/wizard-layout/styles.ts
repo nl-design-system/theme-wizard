@@ -28,6 +28,11 @@ export default css`
     background-color: var(--wizard-layout-nav-background-color);
     grid-area: logo;
     padding-block: var(--wizard-layout-nav-padding-block);
+
+    & a {
+      display: inline-block;
+      text-decoration: none;
+    }
   }
 
   .wizard-layout__sidebar {

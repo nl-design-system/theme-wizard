@@ -3,6 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import logoSvg from '../../assets/nl-design-system-beeldmerk.svg?raw';
 import styles from './styles';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 
 const tag = 'wizard-logo';
 // Declare the custom element for TypeScript
@@ -20,10 +21,10 @@ export class WizardLogo extends LitElement {
     return html`
       <div class="wizard-logo">
         ${unsafeSVG(logoSvg)}
-        <utrecht-heading-1>
+        <clippy-heading level="1">
           <span>Theme</span>
           <span>Wizard</span>
-        </utrecht-heading-1>
+        </clippy-heading>
       </div>
     `;
   }

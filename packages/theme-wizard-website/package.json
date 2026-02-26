@@ -27,6 +27,8 @@
   "dependencies": {
     "@astrojs/react": "^4.4.2",
     "@astrojs/vercel": "9.0.2",
+    "@fontsource/fira-sans": "5.2.7",
+    "@fontsource/source-sans-pro": "5.2.5",
     "@nl-design-system-candidate/button-css": "1.0.0",
     "@nl-design-system-candidate/button-react": "1.0.0",
     "@nl-design-system-candidate/button-tokens": "1.0.0",
