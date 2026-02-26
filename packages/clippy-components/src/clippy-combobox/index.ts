@@ -369,7 +369,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
           <ul class="utrecht-listbox__list" role="none">
             ${this.filteredOptions.map((option, index) => {
               const active = index === this.activeIndex;
-              const selected = option.value === this.value;
+              const selected = dequal(option, currentOption);
               const interactionClasses = {
                 'utrecht-listbox__option--active': active,
                 'utrecht-listbox__option--selected': selected,
