@@ -22,9 +22,9 @@ export default css`
   }
 
   [type='reset'] {
+    justify-self: start;
     min-block-size: auto;
     padding-block: 0;
     padding-inline: 0;
-    justify-self: start;
   }
 `;
