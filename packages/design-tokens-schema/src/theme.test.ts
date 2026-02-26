@@ -26,6 +26,7 @@ const createToken = (type: string, value: unknown, extensions?: Record<PropertyK
     $value: value,
   };
 };
+
 const createDimension = (value: number, unit: 'rem' | 'px') => {
   return createToken('dimension', { unit, value });
 };
@@ -58,6 +59,77 @@ const brandConfig = {
     },
   },
 };
+
+describe('upgrades legacy colors', () => {
+  it('converts legacy color strings in basis tokens', () => {
+    const config = {
+      basis: {
+        color: {
+          'accent-1': {
+            'bg-default': {
+              $type: 'color',
+              $value: '#ffffff',
+            },
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+    const color = result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value;
+    expect(color).toEqual({
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [1, 1, 1],
+    });
+  });
+
+  it('converts legacy color strings in brand tokens', () => {
+    const config = {
+      ma: {
+        color: {
+          white: {
+            $type: 'color',
+            $value: '#FFFFFF',
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const color = (result.data as any)?.ma?.color?.white?.$value;
+    expect(color).toEqual({
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [1, 1, 1],
+    });
+  });
+
+  it('converts nested legacy color strings in brand tokens', () => {
+    const config = {
+      ma: {
+        color: {
+          indigo: {
+            '1': {
+              $type: 'color',
+              $value: '#FFFFFF',
+            },
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const color = (result.data as any)?.ma?.color?.indigo?.['1']?.$value;
+    expect(color).toEqual({
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [1, 1, 1],
+    });
+  });
+});
 
 describe('adding contrast-with extensions', () => {
   it('adds contrast-with extensions for tokens that we know', () => {
@@ -274,13 +346,19 @@ describe('resolving Design Token refs', () => {
 });
 
 describe('Style Dictionary specifics', () => {
+  const modernWhite = {
+    alpha: 1,
+    colorSpace: 'srgb',
+    components: [1, 1, 1],
+  };
+
   const config = {
     basis: {
       color: {
         'accent-1': {
           'bg-default': {
             $type: 'color',
-            $value: '#ffffff',
+            $value: modernWhite,
             original: {
               $type: 'color',
               $value: '{ma.color.white}',
@@ -293,7 +371,7 @@ describe('Style Dictionary specifics', () => {
       color: {
         white: {
           $type: 'color',
-          $value: '#ffffff',
+          $value: modernWhite,
         },
       },
     },
@@ -1012,22 +1090,14 @@ describe('line-height validations', () => {
     });
 
     it('flags line-heights that use dimensions', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'dimension',
-                $value: {
-                  unit: 'px',
-                  value: 20,
-                },
-              },
-            },
-          },
+      const config = {};
+      dset(config, 'basis.text.line-height.md', {
+        $type: 'dimension',
+        $value: {
+          unit: 'px',
+          value: 20,
         },
-        brand: brandConfig,
-      };
+      });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual([

@@ -4,7 +4,6 @@ import {
   type BaseDesignTokenIdentifier,
   BaseDesignTokenSchema,
   type BaseDesignToken,
-  BaseDesignTokenValueSchema,
 } from './base-token';
 
 describe('BaseDesignTokenNameSchema', () => {
@@ -32,11 +31,9 @@ describe('BaseDesignTokenNameSchema', () => {
 describe('BaseDesignTokenSchema', () => {
   it('accepts objects with only valid properties', () => {
     const fixture = {
-      'my-token-id': {
-        $description: 'This is an unknown token',
-        $type: 'my-token-type',
-        $value: 'not-important',
-      },
+      $description: 'This is an unknown token',
+      $type: 'my-token-type',
+      $value: 'not-important',
     };
     const result = BaseDesignTokenSchema.safeParse(fixture);
     expect(result.success).toBeTruthy();
@@ -51,12 +48,12 @@ describe('BaseDesignTokenSchema', () => {
 
     it('MUST be a string', () => {
       const token = { ...fixture, $description: 'test' };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(true);
     });
 
     it('MUST not be null', () => {
       const token = { ...fixture, $description: null };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(false);
     });
   });
 
@@ -68,22 +65,22 @@ describe('BaseDesignTokenSchema', () => {
 
     it('MAY be true', () => {
       const token = { ...fixture, $deprecated: true };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(true);
     });
 
     it('MAY be false', () => {
       const token = { ...fixture, $deprecated: false };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(true);
     });
 
     it('MAY be a string', () => {
       const token = { ...fixture, $deprecated: 'Use X or Y instead' };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(true);
     });
 
     it('MUST not be null', () => {
       const token = { ...fixture, $deprecated: null };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(false);
     });
   });
 
@@ -95,26 +92,24 @@ describe('BaseDesignTokenSchema', () => {
 
     it('MAY be an empty record', () => {
       const token = { ...fixture, $extensions: {} };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(true);
     });
 
     it('MAY be an simple record', () => {
       const token = { ...fixture, $extensions: { test: 1 } };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(true);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(true);
     });
 
     it('MUST not be null', () => {
       const token = { ...fixture, $extensions: null };
-      expect(BaseDesignTokenValueSchema.safeParse(token).success).toEqual(false);
+      expect(BaseDesignTokenSchema.safeParse(token).success).toEqual(false);
     });
   });
 
   it('accepts a bare minimum token', () => {
     const fixture = {
-      'my-token-id': {
-        $type: 'unknown',
-        $value: 'not-important',
-      },
+      $type: 'unknown',
+      $value: 'not-important',
     };
     const result = BaseDesignTokenSchema.safeParse(fixture);
     expect(result.success).toBeTruthy();

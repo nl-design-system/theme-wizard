@@ -47,7 +47,6 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   return rootConfig;
 };
 
-// TODO: append component tokens based on proximity of font-size/line-height
 const KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS = new Map<string, string>([
   ['basis.text.font-size.sm', 'basis.text.line-height.sm'],
   ['basis.text.font-size.md', 'basis.text.line-height.md'],
@@ -188,15 +187,42 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
  */
 const ThemeShapeSchema = z.looseObject({
   basis: BasisTokensSchema.optional(),
-  // $metadata: z.strictObject({
-  //   tokensSetOrder: z.array(z.string()),
-  // }),
-  // $themes: [],
   brand: BrandsSchema.optional(),
-  // 'components/*': {},
 });
 
-export const ThemeSchema = ThemeShapeSchema.transform(useRefAsValue);
+/**
+ * Preprocessing pipeline: applies all transformations before Zod validation.
+ * This ensures data is normalized before schema validation.
+ * Clones input to avoid mutating the original object.
+ */
+const preprocessTheme = (input: unknown): Record<string, unknown> => {
+  let data = structuredClone(input as Record<string, unknown>);
+  // Apply transformations in order
+  data = useRefAsValue(data);
+  return data;
+};
+
+/**
+ * Strict preprocessing pipeline: includes all preprocessing for validation.
+ * Clones input to avoid mutating the original object.
+ */
+const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
+  let data = structuredClone(input as Record<string, unknown>);
+  // Step 1: Get `$extensions['original']['$value'] fron Style Dictionary and place it in $value
+  data = useRefAsValue(data);
+  // Step 2: Clean up non-token properties for faster processing
+  data = removeNonTokenProperties(data);
+  // Step 3: Upgrade legacy token formats
+  data = upgradeLegacyTokens(data);
+  // Step 4: Add extensions
+  data = addContrastExtensions(data);
+  data = addColorScalePositionExtensions(data);
+  // Step 5: Add $value of referenced token in $extensions['resolved-as']
+  data = resolveConfigRefs(data);
+  return data;
+};
+
+export const ThemeSchema = z.unknown().transform(preprocessTheme).pipe(ThemeShapeSchema);
 
 export type Theme = z.infer<typeof ThemeShapeSchema>;
 
@@ -204,11 +230,10 @@ const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<st
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
 
-export const StrictThemeSchema = ThemeSchema.transform(removeNonTokenProperties)
-  .transform(upgradeLegacyTokens)
-  .transform(addContrastExtensions)
-  .transform(addColorScalePositionExtensions)
-  .transform(resolveConfigRefs)
+export const StrictThemeSchema = z
+  .unknown()
+  .transform(preprocessThemeStrict)
+  .pipe(ThemeShapeSchema)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid
     try {

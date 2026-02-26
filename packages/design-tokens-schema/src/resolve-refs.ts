@@ -1,14 +1,13 @@
 import dlv from 'dlv';
-import type { BaseDesignToken, BaseDesignTokenValue } from './tokens/base-token';
+import type { BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
-import { legacyToModernColor } from './tokens/color-token';
 import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef, isTokenLike } from './tokens/token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
 export const EXTENSION_RESOLVED_AS = 'nl.nldesignsystem.value-resolved-as';
 
-export type ResolvedToken = BaseDesignTokenValue & {
+export type ResolvedToken = BaseDesignToken & {
   $value: TokenReference;
   $extensions: {
     [EXTENSION_RESOLVED_AS]: BaseDesignToken['$value'];
@@ -41,18 +40,10 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     const ref = resolveRef(root, token.$value);
 
     // Ensure ref is a token object with $value and $type
-    if (!isTokenLike(ref)) {
-      return;
-    }
-
-    // Capture the resolved value, transforming legacy colors to modern format if needed
-    let resolvedValue = ref.$value;
-    if (ref.$type === 'color' && typeof resolvedValue === 'string' && !isRef(resolvedValue)) {
-      resolvedValue = legacyToModernColor.decode(resolvedValue);
-    }
+    if (!isTokenLike(ref)) return;
 
     // Add an extension with the resolved ref's value
-    setExtension(token, EXTENSION_RESOLVED_AS, structuredClone(resolvedValue));
+    setExtension(token, EXTENSION_RESOLVED_AS, structuredClone(ref.$value));
   });
 };
 

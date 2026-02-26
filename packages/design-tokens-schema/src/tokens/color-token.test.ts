@@ -1,4 +1,5 @@
 import { describe, it, expect, expectTypeOf } from 'vitest';
+import { StrictThemeSchema } from '../theme';
 import {
   ColorAlphaSchema,
   type ColorAlpha,
@@ -8,7 +9,6 @@ import {
   ColorValue,
   ColorToken,
   stringifyColor,
-  legacyToModernColor,
 } from './color-token';
 
 describe('Alpha', () => {
@@ -62,62 +62,97 @@ describe('color token validation', () => {
     expect(result.data).toEqual(token);
   });
 
-  it('upgrade legacy color to modern', () => {
-    const legacyColor = {
-      $type: 'color',
-      $value: '#f00',
-    };
-    const result = ColorTokenValidationSchema.safeParse(legacyColor);
-
-    expect(result.success).toBeTruthy();
-    expect(result.data).toEqual({
+  it('modern color token is valid', () => {
+    const modernColor = {
       $type: 'color',
       $value: {
         alpha: 1,
         colorSpace: 'srgb',
         components: [1, 0, 0],
       },
-    } satisfies ColorToken);
-  });
-
-  describe('transparent colors', () => {
-    const expected_color = {
-      $type: 'color',
-      $value: {
-        alpha: 0,
-        colorSpace: 'srgb',
-        components: [0, 0, 0],
-      },
     } satisfies ColorToken;
+    const result = ColorTokenValidationSchema.safeParse(modernColor);
 
-    it('convert `transparent` to fully transparent black, modern syntax', () => {
-      const transparentColor = {
-        $type: 'color',
-        $value: 'transparent',
-      };
-      const result = ColorTokenValidationSchema.safeParse(transparentColor);
-      expect(result.success).toBeTruthy();
-      expect(result.data).toEqual(expected_color);
-    });
-
-    it('convert `rgba(0, 0, 0, 0)` to fully transparent black, modern syntax', () => {
-      const transparentColor = {
-        $type: 'color',
-        $value: 'rgba(0, 0, 0, 0)',
-      };
-      const result = ColorTokenValidationSchema.safeParse(transparentColor);
-      expect(result.success).toBeTruthy();
-      expect(result.data).toEqual(expected_color);
-    });
+    expect(result.success).toBeTruthy();
+    expect(result.data).toEqual(modernColor);
   });
 
   it('invalid colors are rejected', () => {
-    const legacyColor = {
+    const invalidColor = {
       $type: 'color',
-      $value: '__not_a_color__',
+      $value: { colorSpace: 'srgb', components: [1, 0] }, // Missing third component
     };
-    const result = ColorTokenValidationSchema.safeParse(legacyColor);
+    const result = ColorTokenValidationSchema.safeParse(invalidColor);
     expect(result.success).toBeFalsy();
+  });
+
+  describe('legacy color preprocessing (via theme schema)', () => {
+    it('upgrade legacy color to modern (via theme)', () => {
+      const config = {
+        basis: {
+          color: {
+            'accent-1': {
+              'bg-default': {
+                $type: 'color',
+                $value: '#f00',
+              },
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+
+      expect(result.success).toBeTruthy();
+      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+        alpha: 1,
+        colorSpace: 'srgb',
+        components: [1, 0, 0],
+      });
+    });
+
+    it('convert `transparent` to fully transparent black (via theme)', () => {
+      const config = {
+        basis: {
+          color: {
+            'accent-1': {
+              'bg-default': {
+                $type: 'color',
+                $value: 'transparent',
+              },
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBeTruthy();
+      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+        alpha: 0,
+        colorSpace: 'srgb',
+        components: [0, 0, 0],
+      });
+    });
+
+    it('convert `rgba(0, 0, 0, 0)` to fully transparent black (via theme)', () => {
+      const config = {
+        basis: {
+          color: {
+            'accent-1': {
+              'bg-default': {
+                $type: 'color',
+                $value: 'rgba(0, 0, 0, 0)',
+              },
+            },
+          },
+        },
+      };
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBeTruthy();
+      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+        alpha: 0,
+        colorSpace: 'srgb',
+        components: [0, 0, 0],
+      });
+    });
   });
 });
 
@@ -142,16 +177,5 @@ describe('stringify token to string', () => {
     } satisfies ColorValue;
     const result = stringifyColor(tokenValue);
     expect(result).toBe('#ffffff');
-  });
-
-  it('using the zod legacyToModernColor codec', () => {
-    expect(
-      legacyToModernColor.encode({
-        alpha: 1,
-        colorSpace: 'hsl',
-        components: ['none', 0, 100],
-        hex: '#ffffff',
-      }),
-    ).toEqual('#ffffff');
   });
 });

@@ -1,6 +1,5 @@
-import { parse_dimension } from '@projectwallace/css-parser';
 import * as z from 'zod';
-import { BaseDesignTokenValueSchema } from './base-token';
+import { BaseDesignTokenSchema } from './base-token';
 import { TokenReferenceSchema } from './token-reference';
 
 // 8.2 Dimension
@@ -22,7 +21,7 @@ export const ModernDimensionValueSchema = z.strictObject({
 export type ModernDimensionValue = z.infer<typeof ModernDimensionValueSchema>;
 
 export const ModernDimensionTokenSchema = z.strictObject({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: DimensionTypeSchema,
   $value: ModernDimensionValueSchema,
 });
@@ -31,41 +30,10 @@ export const ModernDimensionTokenSchema = z.strictObject({
 export type ModernDimensionToken = z.infer<typeof ModernDimensionTokenSchema>;
 
 export const DimensionWithRefSchema = z.object({
-  ...BaseDesignTokenValueSchema.shape,
+  ...BaseDesignTokenSchema.shape,
   $type: DimensionTypeSchema,
   $value: TokenReferenceSchema,
 });
 
-export const LegacyDimensionTokenValueSchema = z
-  .string()
-  .nonempty()
-  .refine((value) => {
-    const { unit } = parse_dimension(value);
-    return DimensionUnitSchema.safeParse(unit.toLowerCase()).success;
-  }, 'Dimensions MUST use `px` or `rem`');
-export type LegacyDimensionTokenValue = z.infer<typeof LegacyDimensionTokenValueSchema>;
-
-export const LegacyDimensionTokenSchema = z
-  .object({
-    ...BaseDesignTokenValueSchema.shape,
-    $value: LegacyDimensionTokenValueSchema,
-  })
-  .transform((token) => {
-    const { unit, value } = parse_dimension(token.$value);
-    return {
-      ...token,
-      $type: 'dimension',
-      $value: {
-        unit: unit.toLowerCase() as DimensionUnit,
-        value,
-      },
-    };
-  });
-export type LegacyDimensionToken = z.infer<typeof LegacyDimensionTokenSchema>;
-
-export const DimensionTokenSchema = z.union([
-  ModernDimensionTokenSchema,
-  LegacyDimensionTokenSchema,
-  DimensionWithRefSchema,
-]);
+export const DimensionTokenSchema = z.union([ModernDimensionTokenSchema, DimensionWithRefSchema]);
 export type DimensionToken = z.infer<typeof DimensionTokenSchema>;

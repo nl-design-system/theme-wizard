@@ -1,9 +1,8 @@
 import { describe, it, expect, expectTypeOf } from 'vitest';
+import { StrictThemeSchema } from '../theme';
 import {
   type FontFamilyValue,
   ModernFontFamilyValueSchema,
-  LegacyFontFamilyValueSchema,
-  type LegacyFontFamilyValue,
   FontFamilyTokenSchema,
   FontFamilyToken,
   legacyToModernFontFamily,
@@ -19,11 +18,11 @@ describe('parsing values', () => {
     }
   });
 
-  it('upgrades legacy format with a single comma-separated string', () => {
-    const result = LegacyFontFamilyValueSchema.safeParse('serif, sans-serif');
+  it('modern format accepts arrays', () => {
+    const result = ModernFontFamilyValueSchema.safeParse(['serif', 'sans-serif']);
     expect(result.success).toBeTruthy();
     expect(result.data).toEqual(['serif', 'sans-serif']);
-    expectTypeOf(result.data!).toEqualTypeOf<LegacyFontFamilyValue>();
+    expectTypeOf(result.data!).toEqualTypeOf<FontFamilyValue>();
   });
 
   it('rejects invalid "families"', () => {
@@ -46,22 +45,43 @@ it('accepts modern token', () => {
   expect.soft(result.data).toEqual(token);
 });
 
-describe('legacy token format', () => {
-  const token = {
-    $type: 'fontFamilies',
-    $value: 'Source Sans Pro, Helvetica, Arial, sans-serif',
-  };
-
-  it('accepts legacy token', () => {
-    const result = FontFamilyTokenSchema.safeParse(token);
-    expect.soft(result.success).toBeTruthy();
-    expectTypeOf(result.data!).toEqualTypeOf<FontFamilyToken>();
+describe('legacy token format preprocessing (via theme schema)', () => {
+  it('upgrades legacy fontFamilies token', () => {
+    const config = {
+      basis: {
+        heading: {
+          'font-family': {
+            $type: 'fontFamilies',
+            $value: 'Source Sans Pro, Helvetica, Arial, sans-serif',
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBeTruthy();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const token = (result.data as any)?.basis?.heading?.['font-family'];
+    expect(token?.$type).toEqual('fontFamily');
+    expect(token?.$value).toEqual(['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif']);
   });
 
-  it('upgrades legacy token', () => {
-    const result = FontFamilyTokenSchema.safeParse(token);
-    expect.soft(result.data?.$type).toEqual('fontFamily');
-    expect.soft(result.data?.$value).toEqual(['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif']);
+  it('upgrades fontFamily token with legacy string value', () => {
+    const config = {
+      basis: {
+        heading: {
+          'font-family': {
+            $type: 'fontFamily',
+            $value: 'IBM Plex Sans, monospace',
+          },
+        },
+      },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBeTruthy();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const token = (result.data as any)?.basis?.heading?.['font-family'];
+    expect(token?.$type).toEqual('fontFamily');
+    expect(token?.$value).toEqual(['IBM Plex Sans', 'monospace']);
   });
 });
 

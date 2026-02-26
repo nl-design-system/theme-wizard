@@ -7,7 +7,6 @@ import {
   ColorValue,
   EXTENSION_RESOLVED_AS,
   isRef,
-  legacyToModernColor,
   parseColor,
   stringifyColor,
   type ColorSpace,
@@ -157,7 +156,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
       const colorValue = resolveColorValue(colorToken);
       if (colorValue) {
         this.#scale.from = new ColorToken({ $value: colorValue });
-        this.currentColorValue = legacyToModernColor.encode(colorValue);
+        this.currentColorValue = stringifyColor(colorValue);
       }
     } catch {
       // If parsing fails, keep the current scale
@@ -200,7 +199,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
   override connectedCallback() {
     super.connectedCallback();
     this.value = this.#scale.toObject();
-    this.currentColorValue = legacyToModernColor.encode(this.#scale.from.$value);
+    this.currentColorValue = stringifyColor(this.#scale.from.$value);
   }
 
   readonly handleColorChange = (event: Event) => {
@@ -230,7 +229,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
           name=${this.name}
           .options=${this.scrapedColors.map((color) => ({
             /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
-            label: color.$extensions?.[EXTENSION_AUTHORED_AS] || legacyToModernColor.encode(color.$value),
+            label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),
             value: color.$value,
           }))}
           .value=${this.currentColorValue}
