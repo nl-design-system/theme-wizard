@@ -59,19 +59,23 @@ export class WizardTokensForm extends LitElement {
       <form @reset=${this.#handleReset}>
         <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
 
-        ${fonts.map(
-          ({ label, path, token }) =>
-            html` <wizard-font-input
-              .errors=${this.theme.issues.filter((error) => error.path === path)}
-              .value=${token.$value}
-              label=${label}
-              name=${path}
-            >
-              <div slot="label">${label}</div>
-            </wizard-font-input>`,
-        )}
+        <ul class="wizard-app__basis-tokens">
+          ${fonts.map(
+            ({ label, path, token }) =>
+              html`<li>
+                <wizard-font-input
+                  .errors=${this.theme.issues.filter((error) => error.path === path)}
+                  .value=${token.$value}
+                  label=${label}
+                  name=${path}
+                >
+                  <div slot="label">${label}</div>
+                </wizard-font-input>
+              </li>`,
+          )}
+        </ul>
 
-        <ul class="wizard-app__basis-colors">
+        <ul class="wizard-app__basis-tokens">
           ${(() => {
             const basis = this.theme.tokens['basis'];
             const color = typeof basis === 'object' && basis !== null && 'color' in basis ? basis['color'] : undefined;
