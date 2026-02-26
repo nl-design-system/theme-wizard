@@ -35,10 +35,6 @@ export default css`
     }
   }
 
-  .wizard-layout__sidebar {
-    grid-area: sidebar;
-  }
-
   .wizard-layout__nav {
     background-color: var(--wizard-layout-nav-background-color);
     color: var(--basis-color-accent-1-inverse-color-default);
