@@ -85,10 +85,23 @@ export class App extends LitElement {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
     if (!(target instanceof WizardTokenInput || target instanceof WizardTokenCombobox)) return;
     if (target instanceof WizardColorscaleInput) {
-      const updates = Object.entries(target.value).map(([colorKey, value]) => ({
-        path: `${target.name}.${colorKey}`,
-        value: value.$value,
-      }));
+      const scaleColors = Object.values(target.value);
+      const reversedScale = scaleColors.toReversed();
+
+      // Set regular and inversed scale simultaneously
+      // We know this is not the exact desired behaviour but it'll do for now
+      const updates = Object.entries(target.value).flatMap(([colorKey, value], index) => {
+        return [
+          {
+            path: `${target.name}.${colorKey}`,
+            value: value.$value,
+          },
+          {
+            path: `${target.name}-inverse.${colorKey}`,
+            value: reversedScale.at(index)?.$value,
+          },
+        ];
+      });
       this.theme.updateMany(updates);
     } else if (target instanceof WizardTokenCombobox) {
       this.theme.updateAt(target.name, target.value?.$value);
