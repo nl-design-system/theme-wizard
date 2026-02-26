@@ -229,7 +229,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       case 'Enter':
         if (index > -1) {
           return this.#commitActiveItem(index);
-        } else if (count === 1) {
+        } else if (count === 1 && this.allow === 'options') {
           return this.#commitActiveItem(0);
         } else if (this.allow === 'other') {
           return this.#commitQuery();
