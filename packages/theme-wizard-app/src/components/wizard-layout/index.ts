@@ -1,3 +1,11 @@
+// TODO: import this when new version of MA is released
+// import 'node_modules/@nl-design-system-community/ma-design-tokens/src/font.js';
+// Then: remove these when importing from MA theme works
+import '@fontsource/fira-sans/400.css';
+import '@fontsource/fira-sans/700.css';
+import '@fontsource/source-sans-pro/400.css';
+import '@fontsource/source-sans-pro/700.css';
+// <End TODO>
 import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import linkCss from '@utrecht/link-css/dist/index.css?inline';
 import { html, LitElement, unsafeCSS, nothing } from 'lit';
@@ -42,12 +50,10 @@ export class WizardLayout extends LitElement {
     return html`
       <div class="wizard-layout ma-theme">
         <div class="wizard-layout__logo">
-          <wizard-logo></wizard-logo>
+          <a href="/">
+            <wizard-logo></wizard-logo>
+          </a>
         </div>
-
-        <wizard-sidebar class="wizard-layout__sidebar">
-          <slot name="sidebar"></slot>
-        </wizard-sidebar>
 
         <div class="wizard-layout__nav">
           <nav>
@@ -78,6 +84,10 @@ export class WizardLayout extends LitElement {
             <slot name="nav"></slot>
           </div>
         </div>
+
+        <wizard-sidebar class="wizard-layout__sidebar">
+          <slot name="sidebar"></slot>
+        </wizard-sidebar>
 
         <section class="wizard-layout__main">
           <slot name="main"></slot>

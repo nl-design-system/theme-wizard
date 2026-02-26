@@ -101,6 +101,7 @@ export const en = {
     cancel: () => t('cancel'),
     downloadAnyway: 'Download anyway',
     title: 'Theme contains errors',
+    triggerText: 'Download tokens as JSON',
   },
   tokens: {
     fieldLabels: {
@@ -371,6 +372,7 @@ export const nl = {
     cancel: () => t('cancel'),
     downloadAnyway: 'Toch downloaden',
     title: 'Thema bevat nog fouten',
+    triggerText: 'Download tokens als JSON',
   },
 
   tokens: {

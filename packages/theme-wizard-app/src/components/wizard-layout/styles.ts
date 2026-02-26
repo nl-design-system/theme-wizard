@@ -13,6 +13,17 @@ export default css`
     min-block-size: 100vh;
   }
 
+  .wizard-layout__logo,
+  .wizard-layout__nav {
+    inset-block-start: 0;
+    position: sticky;
+    z-index: 1;
+  }
+
+  .wizard-layout__sidebar {
+    grid-area: sidebar;
+  }
+
   .wizard-layout__logo {
     background-color: var(--wizard-layout-nav-background-color);
     grid-area: logo;

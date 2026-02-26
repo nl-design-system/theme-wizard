@@ -7,10 +7,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <wizard-layout>
       <nav slot="sidebar">
         <!-- TODO: replace with <clippy-side-nav> when available https://github.com/nl-design-system/theme-wizard/issues/532 -->
-        <wizard-sidebar-link href="#colors">Kleuren</wizard-sidebar-link>
         <wizard-sidebar-link href="#typography">Typografie</wizard-sidebar-link>
+        <wizard-sidebar-link href="#colors">Kleuren</wizard-sidebar-link>
         <wizard-sidebar-link href="#spacing">Witruimte</wizard-sidebar-link>
         <wizard-sidebar-link href="#components">Componenten</wizard-sidebar-link>
+        <wizard-tokens-download></wizard-tokens-download>
       </nav>
       <div slot="main">
         <h1>Stijlgids</h1>

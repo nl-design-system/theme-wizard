@@ -880,9 +880,9 @@ export class WizardStyleGuide extends LitElement {
     }));
 
     return html`
-      <section id="color-groups">${this.#renderColorSection(colorGroups)}</section>
-
       <section id="typography">${this.#renderTypographySection(fontFamilies, fontSizes)}</section>
+
+      <section id="color-groups">${this.#renderColorSection(colorGroups)}</section>
 
       <section id="spacing">${this.#renderSpacingSection(spacingData)}</section>
 
