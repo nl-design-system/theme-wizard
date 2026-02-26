@@ -87,7 +87,6 @@ export class WizardTokensForm extends LitElement {
                       id=${`basis.color.${colorKey}`}
                       name=${`basis.color.${colorKey}`}
                       .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
-                      .inverse=${colorKey.includes('inverse')}
                     >
                       <a
                         href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)}

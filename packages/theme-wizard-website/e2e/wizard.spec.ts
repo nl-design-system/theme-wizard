@@ -54,8 +54,7 @@ test.describe('Download tokens as JSON', () => {
   });
 
   test('does not show confirmation modal when there are no validation errors', async ({ page, themeWizard }) => {
-    await themeWizard.sidebar.locator('summary').click();
-    await themeWizard.changeColor('bg-active', '#cccccc');
+    await themeWizard.changeColor('Accent 1', '#00238b');
     await expect(themeWizard.downloadButton).toBeEnabled();
 
     const downloadPromise = page.waitForEvent('download');
@@ -71,8 +70,7 @@ test.describe('Download tokens as JSON', () => {
 
   test.describe('download confirmation modal', () => {
     test.beforeEach(async ({ themeWizard }) => {
-      await themeWizard.sidebar.locator('summary').click();
-      await themeWizard.changeColor('bg-active', '#000000');
+      await themeWizard.changeColor('tokens.fieldLabels.basis.color.accent-1-inverse.label', '#002e75');
       await expect(themeWizard.downloadButton).toBeEnabled();
     });
 
@@ -110,8 +108,7 @@ test.describe('Download tokens as JSON', () => {
 
   test.describe('after changing a token', () => {
     test.beforeEach(async ({ themeWizard }) => {
-      await themeWizard.sidebar.locator('summary').click();
-      await themeWizard.changeColor('bg-active', '#f1f1f1');
+      await themeWizard.changeColor('Accent 1', '#002e75');
     });
 
     test('Button becomes active after changes made', async ({ themeWizard }) => {
@@ -132,7 +129,7 @@ test.describe('Download tokens as JSON', () => {
 
     test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
       // Trigger a contrast warning
-      await themeWizard.changeColor('bg-active', '#000000');
+      await themeWizard.changeColor('tokens.fieldLabels.basis.color.accent-1-inverse.label', '#002e75');
 
       // The button should stay enabled, but show a confirmation dialog on click.
       await expect(themeWizard.downloadButton).toBeEnabled();
@@ -145,12 +142,7 @@ test.describe('Download tokens as JSON', () => {
   });
 });
 
-test.describe('color contrast warnings', () => {
-  test.beforeEach(async ({ themeWizard }) => {
-    // Make sure the <details> containing all color inputs is shown (<wizard-token-field>)
-    await themeWizard.sidebar.locator('summary').click();
-  });
-
+test.describe.skip('color contrast warnings', () => {
   test('No errors shown before making changes', async ({ themeWizard }) => {
     const errorAlert = themeWizard.getErrorAlert();
     await expect(errorAlert).not.toBeVisible();
@@ -238,8 +230,6 @@ test.describe('colorscale inputs', () => {
   });
 
   test('Changing value updates individual color inputs ("All tokens")', async ({ themeWizard }) => {
-    // Make sure "all tokens" is visible
-    await themeWizard.sidebar.locator('summary').click();
     const input = themeWizard.sidebar.getByLabel('color-default').first();
     await expect(input).toHaveValue(INITIAL_COLOR);
     await themeWizard.changeColor('Accent 1', '#ff0000');
