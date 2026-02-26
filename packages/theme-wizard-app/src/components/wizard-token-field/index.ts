@@ -25,7 +25,7 @@ declare global {
 
 @customElement(tag)
 export class WizardTokenField extends WizardTokenNavigator {
-  @consume({ context: themeContext })
+  @consume({ context: themeContext, subscribe: true })
   private readonly theme!: Theme;
   @property() label: string = '';
   @property() path: string = '';
@@ -33,7 +33,10 @@ export class WizardTokenField extends WizardTokenNavigator {
   @property({ type: Number }) depth = 0;
   #options: Option[] = [];
 
-  @state() token: Token = {};
+  @state() get token() {
+    return this.theme?.at(this.path);
+  }
+
   @state() get options() {
     return this.#options;
   }
@@ -45,7 +48,6 @@ export class WizardTokenField extends WizardTokenNavigator {
   override connectedCallback(): void {
     super.connectedCallback();
     const basisTokens = this.theme.tokens['basis'];
-    this.token = this.theme.at(this.path);
     // TODO: Find better way to guard against circular references in tokens.
     let tokenPathIsSameOrAhead = false;
     const filterByTypeAndPosition = ([path, { $type }]: [string, Token]) => {
