@@ -317,6 +317,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   override render() {
+    const labelClasses = {
+      'clippy-combobox__label': true,
+      'sr-only': !this.children.length, // If there are no slotted children, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
+    };
     const popoverClasses = {
       [`utrecht-combobox__popover--${this.position}`]: this.position,
       'utrecht-combobox__popover--hidden': !this.open,
@@ -327,9 +331,28 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       'utrecht-textbox--invalid': this.invalid,
     };
     const currentOption = this.getOptionForValue(this.value);
+    const populatedSlots = Array.from(this.children).reduce(
+      (acc, child) => ({
+        ...acc,
+        [child.slot]: child,
+      }),
+      {} as Record<string, Element>,
+    );
     return html`
       <div class="utrecht-combobox">
-        <label for="${this.#id}" class="sr-only">${this.hiddenLabel}</label>
+        <label for="${this.#id}" class=${classMap(labelClasses)}>
+          <slot name="label">${this.hiddenLabel || this.name}</slot>
+        </label>
+        ${populatedSlots['description']
+          ? html` <div id="${this.#id}-description" class="clippy-combobox__description">
+              <slot name="description"></slot>
+            </div>`
+          : nothing}
+        ${populatedSlots['error']
+          ? html` <div id="${this.#id}-error" class="clippy-combobox__error">
+              <slot name="error"></slot>
+            </div>`
+          : nothing}
         <div class="clippy-combobox__input-container">
           ${currentOption
             ? html`<div
@@ -350,6 +373,8 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             aria-expanded=${this.open}
             aria-activedescendant=${ifDefined(this.#getOptionId())}
             aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+            aria-errormessage=${ifDefined(populatedSlots['error'] ? `${this.#id}-error` : undefined)}
+            aria-describedby=${ifDefined(populatedSlots['description'] ? `${this.#id}-description` : undefined)}
             type="text"
             class=${classMap(textboxClasses)}
             dir="auto"

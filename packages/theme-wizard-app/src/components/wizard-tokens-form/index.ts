@@ -100,7 +100,7 @@ export class WizardTokensForm extends LitElement {
                 label=${label}
                 name=${path}
               >
-                ${label}
+                <div slot="label">${label}</div>
               </wizard-font-input>`,
           )}
 
