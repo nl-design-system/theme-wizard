@@ -106,7 +106,13 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
   override queryToValue(query: string): Option['value'] | null {
     if (this.allow === 'other') {
       const color = Color.try(this.translations[query.toLowerCase()] || query);
-      return this.getOptionForValue(this.value)?.value || color === null ? query : color.toString();
+      return this.getOptionForValue(this.value)?.value || color === null
+        ? query
+        : color.toString({
+            collapse: false,
+            format: 'hex',
+            inGamut: true,
+          });
     }
     return super.queryToValue(query);
   }
