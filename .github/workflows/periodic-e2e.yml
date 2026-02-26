@@ -14,6 +14,7 @@ env:
 jobs:
   test-e2e:
     runs-on: ubuntu-latest
+    environment: Issues
 
     env:
       E2E_RETRIES: 3
@@ -49,10 +50,24 @@ jobs:
       - name: End-to-end tests
         run: pnpm run test-e2e
 
+      - name: Notify Slack channel of failure
+        if: failure()
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: |
+              *Theme Wizard E2E failed*
+              Workflow: ${{ github.workflow }} (run #${{ github.run_number }})
+              <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>
+
   create-issue:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     needs: test-e2e
+    environment: Issues
 
     steps:
       - name: Create GitHub App Token
