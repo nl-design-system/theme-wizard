@@ -142,9 +142,9 @@ export class WizardTokenField extends WizardTokenNavigator {
         name=${this.path}
         hidden-label=${label}
         type=${type}
+        .invalid=${this.#hasErrors}
         .value=${this.token}
         .options=${this.options}
-        class=${classMap({ 'theme-error': this.#hasErrors })}
       ></wizard-token-combobox>`;
   }
 
