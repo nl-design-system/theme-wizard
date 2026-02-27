@@ -4,7 +4,7 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "lib": ["ES2024", "DOM"],
+    "lib": ["ES2024", "DOM", "ESNext.Iterator"],
     "strict": true,
     "declaration": true,
     "declarationMap": true,

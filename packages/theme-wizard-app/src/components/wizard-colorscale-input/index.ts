@@ -1,7 +1,7 @@
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-color-combobox';
 import { ClippyColorCombobox } from '@nl-design-system-community/clippy-components/clippy-color-combobox';
-import { EXTENSION_AUTHORED_AS, type ScrapedColorToken } from '@nl-design-system-community/css-scraper';
+import { EXTENSION_AUTHORED_AS, type ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import {
   COLOR_KEYS,
   ColorValue,
@@ -14,7 +14,7 @@ import {
 } from '@nl-design-system-community/design-tokens-schema';
 import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { scrapedColorsContext } from '../../contexts/scraped-colors';
+import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -140,9 +140,9 @@ export class WizardColorscaleInput extends WizardTokenInput {
   @property({ attribute: false })
   colorToken?: ColorTokenType;
 
-  @consume({ context: scrapedColorsContext, subscribe: true })
+  @consume({ context: scrapedTokensContext, subscribe: true })
   @property({ attribute: false })
-  scrapedColors: ScrapedColorToken[] = [];
+  scrapedTokens: ScrapedDesignToken[] = [];
 
   @state()
   private currentColorValue: string = '';
@@ -210,11 +210,15 @@ export class WizardColorscaleInput extends WizardTokenInput {
         <clippy-color-combobox
           hidden-label=${this.label}
           name=${this.name}
-          .options=${this.scrapedColors.map((color) => ({
-            /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
-            label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),
-            value: color.$value,
-          }))}
+          .options=${this.scrapedTokens
+            .values()
+            .filter((token) => token.$type === 'color')
+            .map((color) => ({
+              /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
+              label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),
+              value: color.$value,
+            }))
+            .toArray()}
           .value=${this.currentColorValue}
           @change=${this.handleColorChange}
         >
