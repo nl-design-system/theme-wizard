@@ -144,9 +144,6 @@ export class WizardColorscaleInput extends WizardTokenInput {
   @property({ attribute: false })
   scrapedColors: ScrapedColorToken[] = [];
 
-  @property({ type: Boolean })
-  inverse?: boolean;
-
   @state()
   private currentColorValue: string = '';
 
@@ -169,11 +166,6 @@ export class WizardColorscaleInput extends WizardTokenInput {
   }
 
   override willUpdate(changedProperties: Map<string, unknown>) {
-    // Ensure inverse is always set on the scale before any updates
-    if (changedProperties.has('inverse') || changedProperties.has('colorToken')) {
-      this.#scale.inverse = this.inverse;
-    }
-
     // If the full value is being set, restore from it (takes precedence)
     if (changedProperties.has('value')) {
       this.#updateColorFromToken(this.colorToken);
@@ -183,11 +175,6 @@ export class WizardColorscaleInput extends WizardTokenInput {
     // Initialize from the colorToken property if changed
     if (changedProperties.has('colorToken')) {
       this.#updateColorFromToken(this.colorToken);
-      this.#updateScaleValue();
-    }
-
-    // Update internal value if inverse changed
-    if (changedProperties.has('inverse')) {
       this.#updateScaleValue();
     }
   }
