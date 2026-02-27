@@ -70,6 +70,7 @@ export class ThemeWizardPage {
   }
 
   async reset() {
-    await this.page.getByRole('button', { name: 'Reset tokens' }).click();
+    await this.page.getByRole('button', { name: 'Thema resetten' }).click();
+    await this.page.getByRole('dialog').getByRole('button', { name: 'Thema resetten ' }).click();
   }
 }

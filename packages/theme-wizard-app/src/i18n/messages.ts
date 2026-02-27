@@ -96,6 +96,13 @@ export const en = {
     unusedTokenWarning: 'This token is defined but never used in acomponent.',
     value: 'Value',
   },
+  themeResetDialog: {
+    body: 'Are you sure you want to reset all token values to their defaults? This cannot be undone.',
+    cancel: () => t('cancel'),
+    confirm: 'Reset theme',
+    title: 'Reset theme',
+    triggerText: 'Reset theme',
+  },
   tokenDownloadDialog: {
     body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
     cancel: () => t('cancel'),
@@ -366,6 +373,13 @@ export const nl = {
     tokenName: 'Naam',
     unusedTokenWarning: 'Token is gedefinieerd maar wordt nooit toegepast op een component.',
     value: 'Waarde',
+  },
+  themeResetDialog: {
+    body: 'Weet je zeker dat je alle tokenwaarden wilt terugzetten naar de standaardwaarden? Dit kan niet ongedaan worden gemaakt.',
+    cancel: () => t('cancel'),
+    confirm: 'Thema resetten',
+    title: 'Thema resetten',
+    triggerText: 'Thema resetten',
   },
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',
