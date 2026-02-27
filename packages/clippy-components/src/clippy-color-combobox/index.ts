@@ -15,6 +15,7 @@ import colorComboboxStyles from './styles';
 type Option = {
   color?: Color | null;
   label: string;
+  description?: string;
   value: ColorValue | string;
 };
 
@@ -101,6 +102,14 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
         value,
       };
     });
+  }
+
+  override getOptionForValue(value: Option['value'] | null): Option | undefined {
+    if (value === null) return undefined;
+    const option = super.getOptionForValue(value);
+    if (!option) return undefined;
+    const color = Color.try(typeof value === 'string' ? value : stringifyColor(value));
+    return color ? { ...option, color } : undefined; // A color that cannot be parsed is not a valid option
   }
 
   override queryToValue(query: string): Option['value'] | null {

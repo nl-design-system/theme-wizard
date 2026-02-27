@@ -125,7 +125,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * Override this function to customize how the value is looked up based on the selected option
    */
   getOptionForValue(value: T['value'] | null): T | undefined {
-    return this.options.find((option) => dequal(option.value, value));
+    const option = this.options.find((option) => dequal(option.value, value));
+    if (this.allow === 'other' && !option && typeof value === 'string') {
+      return { label: value, value } as T;
+    }
+    return option;
   }
 
   /**
@@ -168,7 +172,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     if (!focusedRelatedElement) {
       if (this.allow === 'other' && this.query) {
         const value = this.queryToValue(this.query);
-        if (value && this.value !== value) {
+        if (value && dequal(value, this.value)) {
           this.value = value;
           this.#handleChange();
         }
