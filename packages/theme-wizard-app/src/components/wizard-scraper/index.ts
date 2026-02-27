@@ -47,6 +47,9 @@ export class WizardScraper extends LitElement {
     super();
     this.options = this.#storage.getJSON(OPTIONS_STORAGE_KEY) || [];
     this.src = this.#storage.getItem(SRC_STORAGE_KEY) || '';
+    if (this.#options.length > 0) {
+      this.#state = 'success';
+    }
   }
 
   override connectedCallback() {
@@ -58,13 +61,12 @@ export class WizardScraper extends LitElement {
   }
 
   override firstUpdated() {
-    if (this.options.length) {
+    if (this.options.length > 0) {
       this.dispatchEvent(
         new Event('change', {
           bubbles: true,
         }),
       );
-      this.#state = 'success';
     }
   }
 
