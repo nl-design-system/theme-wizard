@@ -33,10 +33,6 @@ export class WizardTokensForm extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   private readonly theme!: Theme;
 
-  readonly #handleReset = () => {
-    this.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
-  };
-
   override render() {
     if (!this.theme) {
       return html`<div>Loading...</div>`;
@@ -56,9 +52,7 @@ export class WizardTokensForm extends LitElement {
     ];
 
     return html`
-      <form @reset=${this.#handleReset}>
-        <button class="utrecht-link-button utrecht-link-button--html-button" type="reset">Reset tokens</button>
-
+      <form>
         <ul class="wizard-app__basis-tokens">
           ${fonts.map(
             ({ label, path, token }) =>
