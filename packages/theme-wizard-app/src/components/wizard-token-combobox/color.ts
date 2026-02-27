@@ -30,8 +30,13 @@ export const queryToValue = (query: string): ColorToken => {
   return { $type: 'color', $value: parseColor(query) };
 };
 
-export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string =>
-  typeof $value === 'string' ? $value : stringifyColor($value as ColorValue);
+export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string => {
+  try {
+    return typeof $value === 'string' ? $value : stringifyColor($value);
+  } catch {
+    return ''; // If the value can't be stringified, return an empty string to avoid displaying invalid data in the input.
+  }
+};
 
 export const preview = <T extends { color?: Color }>({ color }: T) => {
   return color
