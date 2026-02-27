@@ -128,7 +128,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
           case 'dimension':
           case 'number':
           default:
-            return option || { $type: this.type, $value: query };
+            return option || { $extensions, $type: this.type, $value: query };
         }
       } catch {
         this.invalid = true;
