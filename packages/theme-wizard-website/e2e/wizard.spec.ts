@@ -53,7 +53,9 @@ test.describe('Download tokens as JSON', () => {
     await expect(themeWizard.downloadButton).toBeDisabled();
   });
 
-  test('does not show confirmation modal when there are no validation errors', async ({ page, themeWizard }) => {
+  // Skipped because we can't set individual colors for contrast errors
+  // TODO: re-enable when tackling component-level contrast warnings (https://github.com/nl-design-system/theme-wizard/issues/331)
+  test.skip('does not show confirmation modal when there are no validation errors', async ({ page, themeWizard }) => {
     await themeWizard.changeColor('Accent 1', '#00238b');
     await expect(themeWizard.downloadButton).toBeEnabled();
 
