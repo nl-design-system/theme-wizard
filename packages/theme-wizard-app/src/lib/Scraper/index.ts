@@ -20,11 +20,16 @@ export default class Scraper {
     return fetch(endpoint);
   }
 
+  // TODO: check if this method is actually used
   async getCSS(url: URL): Promise<string> {
     return this.#get(this.#requestCSSUrl, url).then((result) => result.text());
   }
 
   async getTokens(url: URL): Promise<ScrapedDesignToken[]> {
-    return this.#get(this.#requestTokenUrl, url).then((result) => result.json());
+    const response = await this.#get(this.#requestTokenUrl, url);
+    if (!response.ok) {
+      throw new Error('Scraping design tokens failed');
+    }
+    return response.json();
   }
 }

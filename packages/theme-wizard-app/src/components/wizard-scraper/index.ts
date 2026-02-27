@@ -1,9 +1,4 @@
-import {
-  ScrapedColorToken,
-  ScrapedDesignToken,
-  ScrapedFontFamilyToken,
-  resolveUrl,
-} from '@nl-design-system-community/css-scraper';
+import { ScrapedDesignToken, resolveUrl } from '@nl-design-system-community/css-scraper';
 import formFieldStyles from '@utrecht/form-field-css?inline';
 import formLabelStyles from '@utrecht/form-label-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
@@ -33,8 +28,6 @@ export class WizardScraper extends LitElement {
   @property() scraperUrl?: string;
   readonly #storage = new PersistentStorage({ prefix: 'theme-wizard-scraper' });
   #options: ScrapedDesignToken[] = [];
-  #colors: ScrapedColorToken[] = [];
-  #fonts: ScrapedFontFamilyToken[] = [];
   error: string | TemplateResult = '';
   readonly #id = 'target-id';
   #scraper?: Scraper;
@@ -54,6 +47,9 @@ export class WizardScraper extends LitElement {
     super();
     this.options = this.#storage.getJSON(OPTIONS_STORAGE_KEY) || [];
     this.src = this.#storage.getItem(SRC_STORAGE_KEY) || '';
+    if (this.#options.length > 0) {
+      this.#state = 'success';
+    }
   }
 
   override connectedCallback() {
@@ -65,13 +61,12 @@ export class WizardScraper extends LitElement {
   }
 
   override firstUpdated() {
-    if (this.options.length) {
+    if (this.options.length > 0) {
       this.dispatchEvent(
         new Event('change', {
           bubbles: true,
         }),
       );
-      this.#state = 'success';
     }
   }
 
@@ -82,8 +77,6 @@ export class WizardScraper extends LitElement {
   set options(options: ScrapedDesignToken[]) {
     this.#storage.setJSON(OPTIONS_STORAGE_KEY, options);
     this.#options = options;
-    this.#colors = options.filter((color): color is ScrapedColorToken => color.$type === 'color');
-    this.#fonts = options.filter((font): font is ScrapedFontFamilyToken => font.$type === 'fontFamily');
     this.requestUpdate();
   }
 
@@ -95,14 +88,6 @@ export class WizardScraper extends LitElement {
   set src(value: string) {
     this.#storage.setItem(SRC_STORAGE_KEY, value);
     this.#src = value;
-  }
-
-  get colors() {
-    return this.#colors;
-  }
-
-  get fonts() {
-    return this.#fonts;
   }
 
   readonly #handleScrape = async (event: SubmitEvent) => {
@@ -123,10 +108,9 @@ export class WizardScraper extends LitElement {
 
     try {
       this.#state = 'pending';
-      const url = new URL(urlLike);
-      this.options = await this.#scraper.getTokens(url);
+      this.options = await this.#scraper.getTokens(urlLike);
       this.dispatchEvent(new Event('change', { bubbles: true }));
-      this.src = url.toString();
+      this.src = urlLike.toString();
       this.#state = 'success';
     } catch {
       this.options = [];
@@ -172,7 +156,7 @@ export class WizardScraper extends LitElement {
         ${this.#state === 'success'
           ? html`
               <utrecht-paragraph role="status" id=${this.#statusMessageId}>
-                ${t('scraper.success', { tokenCount: this.colors.length + this.fonts.length })}
+                ${t('scraper.success', { tokenCount: this.options.length })}
               </utrecht-paragraph>
             `
           : nothing}

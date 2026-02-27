@@ -1,9 +1,9 @@
 import { provide } from '@lit/context';
-import { ScrapedColorToken } from '@nl-design-system-community/css-scraper';
+import { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { scrapedColorsContext } from '../../contexts/scraped-colors';
+import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
@@ -11,7 +11,6 @@ import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
-import appStyles from './app.css';
 
 /**
  * Router shell component - Provides Theme context
@@ -32,11 +31,9 @@ export class App extends LitElement {
   @state()
   protected theme: Theme = this.#theme;
 
-  @provide({ context: scrapedColorsContext })
+  @provide({ context: scrapedTokensContext })
   @state()
-  scrapedColors: ScrapedColorToken[] = [];
-
-  static override readonly styles = [appStyles];
+  scrapedTokens: ScrapedDesignToken[] = [];
 
   override connectedCallback() {
     super.connectedCallback();
@@ -72,7 +69,7 @@ export class App extends LitElement {
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
-    this.scrapedColors = target.colors;
+    this.scrapedTokens = target.options;
   };
 
   readonly #handleReset = () => {
