@@ -30,7 +30,7 @@ export type Option = {
 
 // Allow custom overrides
 const defaultAllowance = 'other';
-const types = ['color', 'dimension', 'font-family', 'number'] as const;
+const types = ['color', 'dimension', 'fontFamily', 'number'] as const;
 
 const tag = 'wizard-token-combobox';
 
@@ -80,7 +80,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     switch (this.type) {
       case 'color':
         return (option: Option) => filterByLabel(option) || libColor.filter(normalizedQuery)(option);
-      case 'font-family':
+      case 'fontFamily':
         return ({ label, value }: Option) =>
           filterByLabel({ label, value }) || libFontFamily.filter(normalizedQuery)({ value: value as FontFamilyToken });
       case 'dimension':
@@ -124,7 +124,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
         switch (this.type) {
           case 'color':
             return option ?? { ...libColor.queryToValue(query), $extensions };
-          case 'font-family':
+          case 'fontFamily':
           case 'dimension':
           case 'number':
           default:
@@ -146,7 +146,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     switch (this.type) {
       case 'color':
         return stringValue || libColor.valueToQuery({ $value });
-      case 'font-family':
+      case 'fontFamily':
         return stringValue || libFontFamily.valueToQuery({ $value });
       case 'dimension':
       case 'number':
@@ -159,7 +159,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     switch (this.type) {
       case 'color':
         return libColor.preview(option);
-      case 'font-family':
+      case 'fontFamily':
         return libFontFamily.preview(option as Option & { value: FontFamilyToken });
       case 'dimension':
       case 'number':
