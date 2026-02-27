@@ -145,8 +145,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
           }
         })(query);
         const option = this.#getOptionForValue(value);
-        const $extensions = this.value?.$extensions;
-        return option ?? { ...value, $extensions };
+        return option?.value ?? value;
       } catch {
         this.invalid = true;
         return this.value; // Return the current value to avoid losing it on invalid input, allowing the user to correct it.
@@ -174,7 +173,8 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   renderPreview(option: Option) {
     switch (option.value.$type) {
       case 'color':
-        return libColor.preview(option);
+        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
+        return libColor.preview(option as Option & { value: ColorToken });
       case 'fontFamily':
         // TODO fix type safety by making sure option type is inferred from `option.value.$type`
         return libFontFamily.preview(option as Option & { value: FontFamilyToken });
