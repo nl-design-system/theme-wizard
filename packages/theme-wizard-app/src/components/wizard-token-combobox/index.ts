@@ -125,6 +125,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
           case 'color':
             return option ?? { ...libColor.queryToValue(query), $extensions };
           case 'fontFamily':
+            return option ?? { ...libFontFamily.queryToValue(query), $extensions };
           case 'dimension':
           case 'number':
           default:
