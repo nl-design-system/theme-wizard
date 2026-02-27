@@ -119,18 +119,21 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     if (this.allow === 'other') {
       try {
         this.invalid = false;
-        const option = this.getOptionForValue(this.value);
-        const $extensions = option?.value.$extensions;
-        switch (this.type) {
-          case 'color':
-            return option ?? { ...libColor.queryToValue(query), $extensions };
-          case 'fontFamily':
-            return option ?? { ...libFontFamily.queryToValue(query), $extensions };
-          case 'dimension':
-          case 'number':
-          default:
-            return option || { $extensions, $type: this.type, $value: query };
-        }
+        const value = ((query: string) => {
+          switch (this.type) {
+            case 'color':
+              return libColor.queryToValue(query);
+            case 'fontFamily':
+              return libFontFamily.queryToValue(query);
+            case 'dimension':
+            case 'number':
+            default:
+              return super.queryToValue(query);
+          }
+        })(query);
+        const option = this.getOptionForValue(value);
+        const $extensions = this.value?.$extensions;
+        return option ?? { ...value, $extensions };
       } catch {
         this.invalid = true;
         return this.value; // Return the current value to avoid losing it on invalid input, allowing the user to correct it.
