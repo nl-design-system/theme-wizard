@@ -109,8 +109,21 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     });
   }
 
+  #getOptionForValue(value: Option['value'] | null): Option | undefined {
+    const { $value } = value ?? {};
+    return this.options.find((option) => dequal(option.value.$value, $value));
+  }
+
   override getOptionForValue(value: Option['value'] | null): Option | undefined {
-    return this.options.find((option) => dequal(option.value.$value, value?.$value));
+    const { $type, $value } = value ?? {};
+    const option = this.#getOptionForValue({ $value });
+    if (value && $type && !option && this.allow === 'other') {
+      return {
+        label: this.valueToQuery({ $value }),
+        value,
+      };
+    }
+    return option;
   }
 
   override queryToValue(query: string): Option['value'] | null {
@@ -129,7 +142,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
               return super.queryToValue(query);
           }
         })(query);
-        const option = this.getOptionForValue(value);
+        const option = this.#getOptionForValue(value);
         const $extensions = this.value?.$extensions;
         return option ?? { ...value, $extensions };
       } catch {
@@ -144,7 +157,6 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   override valueToQuery({ $value }: Option['value']): string {
     const option = this.getOptionForValue({ $value });
     const stringValue = option?.label || (typeof $value === 'string' ? $value : '');
-
     switch (this.type) {
       case 'color':
         return stringValue || libColor.valueToQuery({ $value });
@@ -158,10 +170,11 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   }
 
   renderPreview(option: Option) {
-    switch (this.type) {
+    switch (option.value.$type) {
       case 'color':
         return libColor.preview(option);
       case 'fontFamily':
+        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
         return libFontFamily.preview(option as Option & { value: FontFamilyToken });
       case 'dimension':
       case 'number':
