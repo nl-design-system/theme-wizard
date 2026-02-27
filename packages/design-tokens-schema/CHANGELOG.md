@@ -1,5 +1,11 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.0.0
+
+### Major Changes
+
+- 11114ce: refactor hoe legacy token types getransformeerd worden
+
 ## 1.1.0
 
 ### Minor Changes
