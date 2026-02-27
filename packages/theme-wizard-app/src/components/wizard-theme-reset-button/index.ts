@@ -6,6 +6,7 @@ import { customElement, query } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { isClippyModal } from '../../utils/assertions';
 
 const tag = 'wizard-theme-reset-button';
 
@@ -28,17 +29,14 @@ export class WizardThemeResetButton extends LitElement {
   };
 
   readonly #handleDialogClose = (event: Event) => {
-    const dialog = event.currentTarget as ClippyModal;
+    const dialog = event.currentTarget;
+    if (!isClippyModal(dialog)) return;
     if (dialog.returnValue === 'confirm') {
       this.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
     }
   };
 
   override render() {
-    if (!this.theme) {
-      return html``;
-    }
-
     return html`
       <clippy-modal
         .title=${t('themeResetDialog.title')}

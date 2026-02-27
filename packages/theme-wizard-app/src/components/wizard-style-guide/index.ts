@@ -1,4 +1,3 @@
-import type { ClippyModal } from '@nl-design-system-community/clippy-components/clippy-modal';
 import type { DesignToken } from 'style-dictionary/types';
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
@@ -31,6 +30,7 @@ import { html as staticHtml } from 'lit/static-html.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { isClippyModal } from '../../utils/assertions';
 import { resolveColorValue } from '../wizard-colorscale-input';
 import styles from './styles';
 
@@ -193,7 +193,8 @@ export class WizardStyleGuide extends LitElement {
 
     if (token !== undefined) {
       this.requestUpdate();
-      const dialog = this.renderRoot.querySelector('#token-dialog')! as ClippyModal;
+      const dialog = this.renderRoot.querySelector('#token-dialog');
+      if (!isClippyModal(dialog)) return;
 
       dialog.addEventListener(
         'close',
