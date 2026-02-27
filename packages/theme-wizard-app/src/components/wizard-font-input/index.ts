@@ -64,13 +64,11 @@ export class WizardFontInput extends WizardTokenInput {
     const value = Array.isArray(this.value) ? this.value : [this.value];
     const options = DEFAULT_FONT_OPTIONS.concat(
       this.scrapedTokens
-        .values()
         .filter((token) => token.$type === 'fontFamily')
         .map((token) => ({
           label: token.$value.join(', '),
           value: token.$value,
-        }))
-        .toArray(),
+        })),
     );
 
     return html`

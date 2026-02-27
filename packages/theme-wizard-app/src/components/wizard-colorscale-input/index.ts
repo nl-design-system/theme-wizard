@@ -211,14 +211,12 @@ export class WizardColorscaleInput extends WizardTokenInput {
           hidden-label=${this.label}
           name=${this.name}
           .options=${this.scrapedTokens
-            .values()
             .filter((token) => token.$type === 'color')
             .map((color) => ({
               /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
               label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),
               value: color.$value,
-            }))
-            .toArray()}
+            }))}
           .value=${this.currentColorValue}
           @change=${this.handleColorChange}
         >
