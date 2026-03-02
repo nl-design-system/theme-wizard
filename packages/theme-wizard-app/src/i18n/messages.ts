@@ -93,7 +93,6 @@ export const en = {
     showDetails: 'Show details',
     title: 'Style guide',
     tokenName: 'Name',
-    unusedTokenWarning: 'This token is defined but never used in acomponent.',
     value: 'Value',
   },
   themeResetDialog: {
@@ -371,7 +370,6 @@ export const nl = {
     showDetails: 'Toon details',
     title: 'Stijlgids',
     tokenName: 'Naam',
-    unusedTokenWarning: 'Token is gedefinieerd maar wordt nooit toegepast op een component.',
     value: 'Waarde',
   },
   themeResetDialog: {

@@ -1,9 +1,7 @@
-import type { ClippyModal } from '@nl-design-system-community/clippy-components/clippy-modal';
 import type { DesignToken } from 'style-dictionary/types';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
-import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
@@ -19,9 +17,10 @@ import { t } from '../../i18n';
 import styles from '../wizard-style-guide/styles';
 import {
   countUsagePerToken,
+  openTokenDialog,
   renderFontFamilyExample,
   renderFontSizeExample,
-  renderTokenExample,
+  renderTokenDialog,
 } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-style-guide-typography';
@@ -38,7 +37,7 @@ export class WizardStyleGuideTypography extends LitElement {
   @state()
   private readonly theme!: Theme;
 
-  #activeToken?: DisplayToken;
+  @state() private activeToken?: DisplayToken;
 
   static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(tableCss), unsafeCSS(codeCss), styles];
 
@@ -79,95 +78,13 @@ export class WizardStyleGuideTypography extends LitElement {
       });
   }
 
-  #setActiveToken(token: DisplayToken | undefined) {
-    this.#activeToken = token;
-
-    if (token !== undefined) {
-      this.requestUpdate();
-      const dialog = this.renderRoot.querySelector('#token-dialog')! as ClippyModal;
-
-      dialog.addEventListener(
-        'close',
-        () => {
-          this.#activeToken = undefined;
-        },
-        { once: true },
-      );
-      dialog.open();
-    }
-  }
-
-  #renderTokenDialog() {
-    return html`
-      <clippy-modal
-        id="token-dialog"
-        title=${this.#activeToken?.tokenId}
-        open=${this.#activeToken !== undefined}
-        actions="none"
-      >
-        ${this.#activeToken
-          ? html`
-              <clippy-heading level=${3}>${t('styleGuide.sample')}</clippy-heading>
-              ${renderTokenExample(this.#activeToken)}
-              <dl>
-                <dt>Token type</dt>
-                <dd>
-                  <code class="nl-code">${this.#activeToken.tokenType}</code>
-                </dd>
-                <dt>Token ID</dt>
-                <dd>
-                  <span class="nl-data-badge">${this.#activeToken.tokenId}</span>
-                </dd>
-                <dt>CSS Variable</dt>
-                <dd>
-                  <code class="nl-code">${`--${this.#activeToken.tokenId.replaceAll('.', '-')}`}</code>
-                </dd>
-                <dt>${t('styleGuide.value')}</dt>
-                <dd>
-                  <code class="nl-code">${this.#activeToken.displayValue}</code>
-                </dd>
-                ${this.#activeToken.metadata
-                  ? Object.entries(this.#activeToken.metadata).map(
-                      ([key, value]) => html`
-                        <dt>${key}</dt>
-                        <dd>
-                          <code class="nl-code">${value}</code>
-                        </dd>
-                      `,
-                    )
-                  : nothing}
-              </dl>
-
-              <clippy-heading level=${3}>
-                ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
-                <data>(${this.#activeToken.usage.length}&times;)</data>
-              </clippy-heading>
-              ${this.#activeToken.usage.length > 0
-                ? html`
-                    <ul>
-                      ${this.#activeToken.usage.map(
-                        (referrer) => html`
-                          <li>
-                            <span class="nl-data-badge">${referrer}</span>
-                          </li>
-                        `,
-                      )}
-                    </ul>
-                  `
-                : html`
-                    <utrecht-paragraph>${t('styleGuide.detailsDialog.tokenReferenceList.empty')}</utrecht-paragraph>
-                  `}
-            `
-          : nothing}
-      </clippy-modal>
-    `;
+  #openDialog(token: DisplayToken) {
+    openTokenDialog(token, this.renderRoot, (t) => {
+      this.activeToken = t;
+    });
   }
 
   override render() {
-    if (!this.theme) {
-      return t('loading');
-    }
-
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const text = basis['text'] as Record<string, unknown>;
     const tokenUsage = countUsagePerToken(this.theme.tokens);
@@ -175,9 +92,7 @@ export class WizardStyleGuideTypography extends LitElement {
     const fontSizes = this.#prepareFontSizes(text, tokenUsage);
 
     return html`
-      <section>
-        <clippy-heading level=${2}>${t('styleGuide.sections.typography.title')}</clippy-heading>
-
+      <div class="guide">
         <table class="utrecht-table">
           <caption class="utrecht-table__caption">
             ${t(`styleGuide.sections.typography.families.title`)}
@@ -192,11 +107,8 @@ export class WizardStyleGuideTypography extends LitElement {
           </thead>
           <tbody class="utrecht-table__body">
             ${fontFamilies.map(
-              ({ name, displayValue, googleFontsSpecimen, isUsed, tokenId, usage }) => html`
-                <tr
-                  aria-describedby=${isUsed ? nothing : 'basis-color-typography-font-family-unused-warning'}
-                  class="utrecht-table__row"
-                >
+              ({ name, displayValue, googleFontsSpecimen, tokenId, usage }) => html`
+                <tr class="utrecht-table__row">
                   <td class="utrecht-table__cell">
                     ${renderFontFamilyExample(displayValue)}
                     ${googleFontsSpecimen
@@ -208,32 +120,22 @@ export class WizardStyleGuideTypography extends LitElement {
                       : nothing}
                   </td>
                   <td class="utrecht-table__cell">
-                    <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(tokenId)}>
+                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(tokenId)}>
                       <span class="nl-data-badge" id="${`basis-text-font-family-${name}`}">${tokenId}</span>
-                    </utrecht-button>
+                    </clippy-button>
                   </td>
                   <td class="utrecht-table__cell">
-                    <utrecht-button
-                      appearance="subtle-button"
-                      @click=${() => navigator.clipboard.writeText(displayValue)}
-                    >
+                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(displayValue)}>
                       <code class="nl-code">${displayValue}</code>
-                    </utrecht-button>
+                    </clippy-button>
                   </td>
                   <td class="utrecht-table__cell">
-                    <utrecht-button
-                      @click=${() => {
-                        this.#setActiveToken({
-                          displayValue,
-                          isUsed,
-                          tokenId,
-                          tokenType: 'fontFamily',
-                          usage,
-                        });
-                      }}
+                    <clippy-button
+                      purpose="secondary"
+                      @click=${() => this.#openDialog({ displayValue, tokenId, tokenType: 'fontFamily', usage })}
                     >
                       ${t('styleGuide.showDetails')}
-                    </utrecht-button>
+                    </clippy-button>
                   </td>
                 </tr>
               `,
@@ -246,11 +148,6 @@ export class WizardStyleGuideTypography extends LitElement {
             docs
           </a>
         </utrecht-paragraph>
-        ${fontFamilies.every((family) => family.isUsed)
-          ? nothing
-          : html`<utrecht-paragraph id="basis-color-typography-font-family-unused-warning" class="wizard-token-unused">
-              ${t('styleGuide.unusedTokenWarning')}
-            </utrecht-paragraph>`}
 
         <table class="utrecht-table">
           <caption class="utrecht-table__caption">
@@ -266,39 +163,26 @@ export class WizardStyleGuideTypography extends LitElement {
           </thead>
           <tbody class="utrecht-table__body">
             ${fontSizes.map(
-              ({ name, displayValue, isUsed, tokenId, usage }) => html`
-                <tr
-                  class="utrecht-table__row"
-                  aria-describedby=${isUsed ? nothing : 'basis-color-typography-sizes-unused-warning'}
-                >
+              ({ name, displayValue, tokenId, usage }) => html`
+                <tr class="utrecht-table__row">
                   <td class="utrecht-table__cell">${renderFontSizeExample(displayValue)}</td>
                   <td class="utrecht-table__cell">
-                    <utrecht-button appearance="subtle-button" @click=${() => navigator.clipboard.writeText(tokenId)}>
+                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(tokenId)}>
                       <span class="nl-data-badge" id="${`basis-text-font-size-${name}`}">${tokenId}</span>
-                    </utrecht-button>
+                    </clippy-button>
                   </td>
                   <td class="utrecht-table__cell">
-                    <utrecht-button
-                      appearance="subtle-button"
-                      @click=${() => navigator.clipboard.writeText(displayValue)}
-                    >
+                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(displayValue)}>
                       <code class="nl-code">${displayValue}</code>
-                    </utrecht-button>
+                    </clippy-button>
                   </td>
                   <td class="utrecht-table__cell">
-                    <utrecht-button
-                      @click=${() => {
-                        this.#setActiveToken({
-                          displayValue,
-                          isUsed,
-                          tokenId,
-                          tokenType: 'fontSize',
-                          usage,
-                        });
-                      }}
+                    <clippy-button
+                      purpose="secondary"
+                      @click=${() => this.#openDialog({ displayValue, tokenId, tokenType: 'fontSize', usage })}
                     >
                       ${t('styleGuide.showDetails')}
-                    </utrecht-button>
+                    </clippy-button>
                   </td>
                 </tr>
               `,
@@ -310,11 +194,6 @@ export class WizardStyleGuideTypography extends LitElement {
             docs
           </a>
         </utrecht-paragraph>
-        ${fontSizes.every((size) => size.isUsed)
-          ? nothing
-          : html`<utrecht-paragraph id="basis-color-typography-sizes-unused-warning" class="wizard-token-unused">
-              ${t('styleGuide.unusedTokenWarning')}
-            </utrecht-paragraph>`}
 
         <table class="utrecht-table">
           <caption class="utrecht-table__caption">
@@ -338,14 +217,14 @@ export class WizardStyleGuideTypography extends LitElement {
                     </clippy-html-image>
                   </td>
                   <td class="utrecht-table__cell">
-                    <utrecht-button
-                      appearance="subtle-button"
+                    <clippy-button
+                      purpose="subtle"
                       @click=${() => navigator.clipboard.writeText(`basis.heading.level-${level}`)}
                     >
                       <code class="nl-code" id="${`basis.heading.level-${level}`}" style="white-space: nowrap">
                         ${`basis.heading.level-${level}`}
                       </code>
-                    </utrecht-button>
+                    </clippy-button>
                   </td>
                 </tr>
               `;
@@ -355,9 +234,9 @@ export class WizardStyleGuideTypography extends LitElement {
         <utrecht-paragraph>
           <a href="https://nldesignsystem.nl/heading/" target="_blank">docs</a>
         </utrecht-paragraph>
-      </section>
+      </div>
 
-      ${this.#renderTokenDialog()}
+      ${renderTokenDialog(this.activeToken)}
     `;
   }
 }

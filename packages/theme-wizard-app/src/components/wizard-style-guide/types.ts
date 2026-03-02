@@ -3,16 +3,14 @@ import type { DesignToken } from 'style-dictionary/types';
 export type DisplayToken = {
   tokenId: string;
   usage: string[];
-  isUsed?: boolean;
   tokenType: DesignToken['$type'];
   displayValue: string;
   metadata?: Record<string, string>;
 };
 
-export type TokenTableRow = Pick<DisplayToken, 'tokenId' | 'displayValue' | 'isUsed' | 'usage'>;
+export type TokenTableRow = Pick<DisplayToken, 'tokenId' | 'displayValue' | 'usage'>;
 
 export type BaseToken = {
-  isUsed: boolean;
   tokenId: string;
   usage: string[];
   usageCount: number;
@@ -25,7 +23,6 @@ export type ColorEntry = BaseToken & {
 
 export type ColorGroup = {
   colorEntries: ColorEntry[];
-  isUsed: boolean;
   key: string;
 };
 

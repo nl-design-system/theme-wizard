@@ -59,16 +59,11 @@ export class WizardStyleGuideComponents extends LitElement {
   }
 
   override render() {
-    if (!this.theme) {
-      return t('loading');
-    }
-
     const components = this.theme.tokens['nl'];
     if (!components) return nothing;
 
     return html`
-      <section>
-        <clippy-heading level=${2}>${t('styleGuide.sections.components.title')}</clippy-heading>
+      <div class="guide">
         <utrecht-paragraph>
           <a href="https://nldesignsystem.nl/componenten/" target="_blank">docs</a>
         </utrecht-paragraph>
@@ -123,7 +118,7 @@ export class WizardStyleGuideComponents extends LitElement {
             </table>
           `,
         )}
-      </section>
+      </div>
     `;
   }
 }

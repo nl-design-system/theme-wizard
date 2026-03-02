@@ -1,3 +1,6 @@
+import type { ClippyModal } from '@nl-design-system-community/clippy-components/clippy-modal';
+import '@nl-design-system-community/clippy-components/clippy-modal';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import type { DesignTokens } from 'style-dictionary/types';
 import {
   type ColorValue,
@@ -151,4 +154,81 @@ export function renderTokenExample(token: Omit<DisplayToken, 'usage' | 'isUsed'>
     default:
       return nothing;
   }
+}
+
+export function renderTokenDialog(activeToken: DisplayToken | undefined) {
+  return html`
+    <clippy-modal id="token-dialog" title=${activeToken?.tokenId} open=${activeToken !== undefined} actions="none">
+      ${activeToken
+        ? html`
+            <clippy-heading level=${3}>${t('styleGuide.sample')}</clippy-heading>
+            ${renderTokenExample(activeToken)}
+            <dl>
+              <dt>Token type</dt>
+              <dd>
+                <code class="nl-code">${activeToken.tokenType}</code>
+              </dd>
+              <dt>Token ID</dt>
+              <dd>
+                <span class="nl-data-badge">${activeToken.tokenId}</span>
+              </dd>
+              <dt>CSS Variable</dt>
+              <dd>
+                <code class="nl-code">${`--${activeToken.tokenId.replaceAll('.', '-')}`}</code>
+              </dd>
+              <dt>${t('styleGuide.value')}</dt>
+              <dd>
+                <code class="nl-code">${activeToken.displayValue}</code>
+              </dd>
+              ${activeToken.metadata
+                ? Object.entries(activeToken.metadata).map(
+                    ([key, value]) => html`
+                      <dt>${key}</dt>
+                      <dd>
+                        <code class="nl-code">${value}</code>
+                      </dd>
+                    `,
+                  )
+                : nothing}
+            </dl>
+
+            <clippy-heading level=${3}>
+              ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
+              <data>(${activeToken.usage.length}&times;)</data>
+            </clippy-heading>
+            ${activeToken.usage.length > 0
+              ? html`
+                  <ul>
+                    ${activeToken.usage.map(
+                      (referrer) => html`
+                        <li>
+                          <span class="nl-data-badge">${referrer}</span>
+                        </li>
+                      `,
+                    )}
+                  </ul>
+                `
+              : html`
+                  <utrecht-paragraph>${t('styleGuide.detailsDialog.tokenReferenceList.empty')}</utrecht-paragraph>
+                `}
+          `
+        : nothing}
+    </clippy-modal>
+  `;
+}
+
+/**
+ * Opens the token detail dialog. The dialog is always in the DOM (via `renderTokenDialog`),
+ * so it can be queried immediately. `setter` updates the component's reactive state to fill
+ * the dialog content on open and clear it on close.
+ */
+export function openTokenDialog(
+  token: DisplayToken,
+  renderRoot: HTMLElement | DocumentFragment,
+  setter: (token: DisplayToken | undefined) => void,
+) {
+  setter(token);
+  const dialog = renderRoot.querySelector('#token-dialog')! as ClippyModal;
+  dialog.addEventListener('close', () => setter(undefined), { once: true });
+  dialog.open();
 }

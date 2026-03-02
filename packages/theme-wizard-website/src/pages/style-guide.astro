@@ -1,5 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import WithPageNav from '@/components/WithPageNav.astro';
 ---
 
 <BaseLayout title="Style Guide - Theme Wizard" description="Preview and analyze website themes">
@@ -7,41 +8,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <wizard-layout>
       <div slot="main">
         <h1>Stijlgids</h1>
-        <div class="wrap">
-          <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: "typography"}, {title: "Kleuren", id: "colors"}, {title: "Witruimte", id: "spacing"}, {title: "Componenten", id: "components"}])}></wizard-anchor-nav>
-          <div>
-            <wizard-style-guide-typography id="typography"></wizard-style-guide-typography>
-            <wizard-style-guide-colors id="colors"></wizard-style-guide-colors>
-            <wizard-style-guide-spacing id="spacing"></wizard-style-guide-spacing>
-            <wizard-style-guide-components id="components"></wizard-style-guide-components>
+        <WithPageNav>
+          <div slot="page-nav">
+            <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: "typography"}, {title: "Kleuren", id: "colors"}, {title: "Witruimte", id: "spacing"}, {title: "Componenten", id: "components"}])}></wizard-anchor-nav>
           </div>
-        </div>
+          <div class="style-guides" slot="page-content">
+            <section>
+              <h2 id="typography">Typografie</h2>
+              <wizard-style-guide-typography></wizard-style-guide-typography>
+            </section>
+            <section>
+              <h2 id="colors">Kleuren</h2>
+              <wizard-style-guide-colors></wizard-style-guide-colors>
+            </section>
+            <section>
+              <h2 id="spacing">Witruimte</h2>
+              <wizard-style-guide-spacing></wizard-style-guide-spacing>
+            </section>
+            <section>
+              <h2 id="components">Componenten</h2>
+              <wizard-style-guide-components></wizard-style-guide-components>
+            </section>
+          </div>
+        </WithPageNav>
       </div>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 
 <style>
-  .wrap {
-    align-items: start;
-    column-gap: var(--basis-space-column-3xl);
+  .style-guides {
     display: grid;
-    grid-template-columns: 1fr 14rem;
-    position: relative;
-  }
-
-  wizard-anchor-nav {
-    order: 2;
-    position: sticky;
-    top: 6rem;
-    right: 0;
-    bottom: 0;
-    border-left: 1px solid var(--basis-color-default-border-subtle);
-    padding-inline-start: var(--basis-space-column-3xl);
-    padding-block: var(--basis-space-block-xl);
-    max-block-size: 85vh;
-    overflow: auto;
-    scrollbar-width: thin;
-    scrollbar-color:  var(--basis-color-action-1-color-default) transparent;
+    row-gap: var(--basis-space-row-3xl);
   }
 </style>

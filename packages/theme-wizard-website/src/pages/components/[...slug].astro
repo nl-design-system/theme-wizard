@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import WithPageNav from '@/components/WithPageNav.astro';
 import { components } from '@/lib/components'
 import { Traverse } from 'neotraverse/modern'
 import dlv from 'dlv'
@@ -69,36 +70,6 @@ const storiesWithTokens = stories.map(([id, story]) => {
 })
 ---
 
-<style>
-  .wrap {
-    align-items: start;
-    column-gap: var(--basis-space-column-3xl);
-    display: grid;
-    grid-template-columns: 1fr 18rem;
-    position: relative;
-  }
-
-  .stories {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  wizard-anchor-nav {
-    grid-column: 2;
-    position: sticky;
-    top: 6rem;
-    right: 0;
-    bottom: 0;
-    border-left: 1px solid var(--basis-color-default-border-subtle);
-    padding-inline-start: var(--basis-space-column-3xl);
-    padding-block: var(--basis-space-block-xl);
-    max-block-size: 85vh;
-    overflow: auto;
-    scrollbar-width: thin;
-    scrollbar-color:  var(--basis-color-action-1-color-default) transparent;
-  }
-</style>
-
 <BaseLayout title=`${slug} - Componenten - Theme Wizard`>
   <theme-wizard-app>
     <wizard-layout>
@@ -122,10 +93,12 @@ const storiesWithTokens = stories.map(([id, story]) => {
           Bekijk de component-documentatie op <a href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
         </p>
 
-        <div class="wrap">
-          <wizard-anchor-nav items={JSON.stringify(storiesWithTokens.map(({story, id}) => ({ title: story.name, id })))}></wizard-anchor-nav>
+        <WithPageNav>
+          <nav slot="page-nav">
+            <wizard-anchor-nav items={JSON.stringify(storiesWithTokens.map(({story, id}) => ({ title: story.name, id })))}></wizard-anchor-nav>
+          </nav>
 
-          <div class="stories">
+          <div slot="page-content">
             <div id="story-container" data-story-ids={JSON.stringify(storyIds)} data-component-id={slug}></div>
 
             {storiesWithTokens.map(({id, story, tokens}) => (
@@ -153,7 +126,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
               </section>
             ))}
           </div>
-        </div>
+        </WithPageNav>
       </main>
      </wizard-layout>
   </theme-wizard-app>
