@@ -140,16 +140,16 @@ export class ClippyModal extends LitElement {
             <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
             ${this.actions === 'confirm' || this.actions === 'both'
               ? html`
-                  <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
+                  <clippy-button type="submit" purpose="primary" value=${DIALOG_BUTTON_VALUES.confirm}>
                     ${this.confirmLabel}
-                  </button>
+                  </clippy-button>
                 `
               : nothing}
             ${this.actions === 'cancel' || this.actions === 'both'
               ? html`
-                  <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
+                  <clippy-button type="submit" purpose="secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
                     ${this.cancelLabel}
-                  </button>
+                  </clippy-button>
                 `
               : nothing}
           </footer>
