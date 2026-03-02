@@ -28,7 +28,6 @@ const STYLE_DICTIONARY_SETTINGS = {
 } as const;
 
 export default class Theme {
-  // static readonly defaults = StrictThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   name = 'wizard';
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
