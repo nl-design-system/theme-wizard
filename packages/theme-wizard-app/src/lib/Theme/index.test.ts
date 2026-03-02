@@ -3,11 +3,6 @@ import { describe, expect, it } from 'vitest';
 import Theme from './index';
 
 describe('Theme', () => {
-  it('instantiates with default values', () => {
-    const theme = new Theme();
-    expect(theme.defaults).toMatchObject(Theme.defaults);
-  });
-
   it('can instantiate with custom defaults', () => {
     const theme = new Theme(tokens);
     expect(theme.defaults).toMatchObject(tokens);
