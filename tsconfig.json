@@ -7,7 +7,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": ["es2020", "dom"],
+    "lib": ["es2024", "dom", "ESNext.Iterator"],
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -18,7 +18,7 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2020",
+    "target": "es2024",
     "jsx": "react"
   },
   "exclude": ["**/node_modules/*"]

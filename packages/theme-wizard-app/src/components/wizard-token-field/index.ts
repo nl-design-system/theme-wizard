@@ -1,6 +1,10 @@
 import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
-import { EXTENSION_RESOLVED_AS, isRef } from '@nl-design-system-community/design-tokens-schema';
+import {
+  EXTENSION_RESOLVED_AS,
+  EXTENSION_TOKEN_SUBTYPE,
+  isRef,
+} from '@nl-design-system-community/design-tokens-schema';
 import '../wizard-token-combobox';
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -51,7 +55,7 @@ export class WizardTokenField extends WizardTokenNavigator {
     // TODO: Find better way to guard against circular references in tokens.
     let tokenPathIsSameOrAhead = false;
     const filterByTypeAndPosition = ([path, { $type }]: [string, Token]) => {
-      if ($type === this.token.$type) {
+      if ($type === this.token?.$type) {
         tokenPathIsSameOrAhead = tokenPathIsSameOrAhead || `basis.${path}` === this.path;
         return !tokenPathIsSameOrAhead;
       }
@@ -60,10 +64,18 @@ export class WizardTokenField extends WizardTokenNavigator {
     // Build options for referencing basis tokens
     // TODO: only do this once and cache it, ideally in lib/Theme or its context provider,
     // rather than on every field instance.
+    const expectedSubType = this.token?.['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
     this.#options =
       basisTokens && typeof basisTokens !== 'string'
         ? Object.entries(Theme.flatten(basisTokens))
+            .values()
             .filter(filterByTypeAndPosition)
+            .filter(([, token]) => {
+              if (typeof expectedSubType === 'string') {
+                return token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === expectedSubType;
+              }
+              return true;
+            })
             .map(([path, { $type, ...token }]) => {
               // Find the resolved value for color tokens to show in the combobox options.
               // Since tokens can reference other tokens, we check if the token is a reference and use the resolved value if so.
@@ -82,6 +94,7 @@ export class WizardTokenField extends WizardTokenNavigator {
                 },
               };
             })
+            .toArray()
         : [];
   }
 

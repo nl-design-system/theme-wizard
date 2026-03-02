@@ -28,7 +28,7 @@ const STYLE_DICTIONARY_SETTINGS = {
 } as const;
 
 export default class Theme {
-  static readonly defaults = StrictThemeSchema.parse(startTokens); // Start tokens are default for all Themes
+  // static readonly defaults = StrictThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   name = 'wizard';
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
@@ -51,7 +51,7 @@ export default class Theme {
    */
   constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
-    this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
+    this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
     this.#stylesheet = stylesheet || new CSSStyleSheet();
     this.tokens = structuredClone(this.#defaults);
   }
