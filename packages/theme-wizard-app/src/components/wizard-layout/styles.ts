@@ -7,10 +7,14 @@ export default css`
 
     display: grid;
     font-family: var(--basis-text-font-family-default, inherit);
-    grid-template-areas: 'logo nav' 'sidebar main';
+    grid-template-areas: 'logo nav' 'main main';
     grid-template-columns: minmax(20rem, 24rem) 1fr;
     grid-template-rows: auto 1fr;
     min-block-size: 100vh;
+
+    &.has-sidebar {
+      grid-template-areas: 'logo nav' 'sidebar main';
+    }
   }
 
   .wizard-layout__logo,

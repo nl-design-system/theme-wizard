@@ -5,32 +5,51 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Style Guide - Theme Wizard" description="Preview and analyze website themes">
   <theme-wizard-app>
     <wizard-layout>
-      <nav slot="sidebar">
-        <!-- TODO: replace with <clippy-side-nav> when available https://github.com/nl-design-system/theme-wizard/issues/532 -->
-        <wizard-sidebar-link href="#typography">Typografie</wizard-sidebar-link>
-        <wizard-sidebar-link href="#colors">Kleuren</wizard-sidebar-link>
-        <wizard-sidebar-link href="#spacing">Witruimte</wizard-sidebar-link>
-        <wizard-sidebar-link href="#components">Componenten</wizard-sidebar-link>
-        <wizard-tokens-download></wizard-tokens-download>
-      </nav>
       <div slot="main">
         <h1>Stijlgids</h1>
-        <wizard-style-guide></wizard-style-guide>
+        <div class="wrap">
+          <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: "typography"}, {title: "Kleuren", id: "colors"}, {title: "Witruimte", id: "spacing"}, {title: "Componenten", id: "components"}])}></wizard-anchor-nav>
+          <wizard-style-guide></wizard-style-guide>
+        </div>
       </div>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 
 <script>
-  document.addEventListener('click', (event) => {
+  document.querySelector('wizard-anchor-nav')?.addEventListener('click', (event) => {
     const target = event.target as HTMLElement
-    if (target?.tagName !== 'WIZARD-SIDEBAR-LINK') return
+    console.log(event.target, event.currentTarget)
+    if (target?.tagName !== 'WIZARD_ANCHOR_NAV') return
     const styleGuide = document.querySelector('wizard-style-guide')
-    if (!styleGuide) return
     const elementId = target.getAttribute('href')?.slice(1)
     if (!elementId) return
-    const scrollTarget = styleGuide.shadowRoot?.getElementById(elementId)
-    if (!scrollTarget) return
+    const scrollTarget = styleGuide?.shadowRoot?.getElementById(elementId)
     scrollTarget?.scrollIntoView()
   })
 </script>
+
+<style>
+  .wrap {
+    align-items: start;
+    column-gap: var(--basis-space-column-3xl);
+    display: grid;
+    grid-template-columns: 1fr 18rem;
+    position: relative;
+  }
+
+  wizard-anchor-nav {
+    order: 2;
+    position: sticky;
+    top: 6rem;
+    right: 0;
+    bottom: 0;
+    border-left: 1px solid var(--basis-color-default-border-subtle);
+    padding-inline-start: var(--basis-space-column-3xl);
+    padding-block: var(--basis-space-block-xl);
+    max-block-size: 85vh;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color:  var(--basis-color-action-1-color-default) transparent;
+  }
+</style>
