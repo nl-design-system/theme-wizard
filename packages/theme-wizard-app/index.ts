@@ -1,7 +1,10 @@
 import './src/components/app/app';
 import './src/components/wizard-anchor-nav';
 import './src/components/wizard-layout/index';
-import './src/components/wizard-style-guide/index';
+import './src/components/wizard-style-guide-typography/index';
+import './src/components/wizard-style-guide-colors/index';
+import './src/components/wizard-style-guide-spacing/index';
+import './src/components/wizard-style-guide-components/index';
 import './src/components/wizard-preview/index';
 import './src/components/wizard-preview-picker/index';
 import './src/components/wizard-preview-theme/index';

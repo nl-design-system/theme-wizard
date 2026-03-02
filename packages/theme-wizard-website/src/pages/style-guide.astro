@@ -9,32 +9,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h1>Stijlgids</h1>
         <div class="wrap">
           <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: "typography"}, {title: "Kleuren", id: "colors"}, {title: "Witruimte", id: "spacing"}, {title: "Componenten", id: "components"}])}></wizard-anchor-nav>
-          <wizard-style-guide></wizard-style-guide>
+          <div>
+            <wizard-style-guide-typography id="typography"></wizard-style-guide-typography>
+            <wizard-style-guide-colors id="colors"></wizard-style-guide-colors>
+            <wizard-style-guide-spacing id="spacing"></wizard-style-guide-spacing>
+            <wizard-style-guide-components id="components"></wizard-style-guide-components>
+          </div>
         </div>
       </div>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 
-<script>
-  document.querySelector('wizard-anchor-nav')?.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement
-    console.log(event.target, event.currentTarget)
-    if (target?.tagName !== 'WIZARD_ANCHOR_NAV') return
-    const styleGuide = document.querySelector('wizard-style-guide')
-    const elementId = target.getAttribute('href')?.slice(1)
-    if (!elementId) return
-    const scrollTarget = styleGuide?.shadowRoot?.getElementById(elementId)
-    scrollTarget?.scrollIntoView()
-  })
-</script>
-
 <style>
   .wrap {
     align-items: start;
     column-gap: var(--basis-space-column-3xl);
     display: grid;
-    grid-template-columns: 1fr 18rem;
+    grid-template-columns: 1fr 14rem;
     position: relative;
   }
 
