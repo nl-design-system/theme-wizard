@@ -137,7 +137,7 @@ export function renderLineHeightExample(displayValue: string | number) {
   `;
 }
 
-export function renderTokenExample(token: Omit<DisplayToken, 'usage' | 'isUsed'>) {
+export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
   switch (token.tokenType) {
     case 'color':
       return renderColorSample(token.displayValue);

@@ -57,10 +57,9 @@ export class WizardStyleGuideTypography extends LitElement {
 
       const displayValue = Array.isArray(value) ? value.join(', ') : value;
       const tokenId = `basis.text.font-family.${name}`;
-      const isUsed = tokenUsage.has(tokenId);
       const usage = tokenUsage.get(tokenId) || [];
       const usageCount = usage.length;
-      return { name, displayValue, googleFontsSpecimen, isUsed, tokenId, usage, usageCount };
+      return { name, displayValue, googleFontsSpecimen, tokenId, usage, usageCount };
     });
   }
 
@@ -71,10 +70,9 @@ export class WizardStyleGuideTypography extends LitElement {
         const { $value } = tokenValue as ModernDimensionToken;
         const displayValue = $value.value?.toString() + $value.unit;
         const tokenId = `basis.text.font-size.${name}`;
-        const isUsed = tokenUsage.has(tokenId);
         const usage = tokenUsage.get(tokenId) || [];
         const usageCount = usage.length;
-        return { name, displayValue, isUsed, tokenId, usage, usageCount };
+        return { name, displayValue, tokenId, usage, usageCount };
       });
   }
 

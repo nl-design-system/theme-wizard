@@ -44,10 +44,9 @@ export class WizardStyleGuideSpacing extends LitElement {
         const value = (tokenValue as DimensionToken).$value;
         const stringifiedValue = typeof value === 'string' ? value : value.value + value.unit;
         const tokenId = `basis.space.${space}.${name}`;
-        const isUsed = tokenUsage.has(tokenId);
         const usage = tokenUsage.get(tokenId) || [];
         const usageCount = usage.length ?? 0;
-        return { name, isUsed, tokenId, usage, usageCount, value: stringifiedValue };
+        return { name, tokenId, usage, usageCount, value: stringifiedValue };
       });
   }
 
