@@ -88,7 +88,7 @@ export class WizardStyleGuideColors extends LitElement {
     const colorGroups = this.#prepareColorGroups(colors, tokenUsage);
 
     return html`
-      <div class="guide">
+      <div class="wizard-style-guide">
         ${colorGroups.map(({ colorEntries, key }) => {
           return html`
             <table class="utrecht-table">

@@ -90,7 +90,7 @@ export class WizardStyleGuideTypography extends LitElement {
     const fontSizes = this.#prepareFontSizes(text, tokenUsage);
 
     return html`
-      <div class="guide">
+      <div class="wizard-style-guide">
         <table class="utrecht-table">
           <caption class="utrecht-table__caption">
             ${t(`styleGuide.sections.typography.families.title`)}

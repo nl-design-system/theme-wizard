@@ -12,7 +12,7 @@ import WithPageNav from '@/components/WithPageNav.astro';
           <div slot="page-nav">
             <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: "typography"}, {title: "Kleuren", id: "colors"}, {title: "Witruimte", id: "spacing"}, {title: "Componenten", id: "components"}])}></wizard-anchor-nav>
           </div>
-          <div class="style-guides" slot="page-content">
+          <div class="wizard-style-guides" slot="page-content">
             <section>
               <h2 id="typography">Typografie</h2>
               <wizard-style-guide-typography></wizard-style-guide-typography>
@@ -37,7 +37,7 @@ import WithPageNav from '@/components/WithPageNav.astro';
 </BaseLayout>
 
 <style>
-  .style-guides {
+  .wizard-style-guides {
     display: grid;
     row-gap: var(--basis-space-row-3xl);
   }

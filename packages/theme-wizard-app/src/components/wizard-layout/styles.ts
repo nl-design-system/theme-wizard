@@ -11,10 +11,10 @@ export default css`
     grid-template-columns: minmax(20rem, 24rem) 1fr;
     grid-template-rows: auto 1fr;
     min-block-size: 100vh;
+  }
 
-    &.has-sidebar {
-      grid-template-areas: 'logo nav' 'sidebar main';
-    }
+  .wizard-layout--has-sidebar {
+    grid-template-areas: 'logo nav' 'sidebar main';
   }
 
   .wizard-layout__logo,

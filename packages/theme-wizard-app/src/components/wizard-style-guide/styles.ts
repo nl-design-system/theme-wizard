@@ -1,7 +1,7 @@
 import { css } from 'lit';
 
 export default css`
-  .guide {
+  .wizard-style-guide {
     display: grid;
     row-gap: var(--basis-space-row-4xl);
   }

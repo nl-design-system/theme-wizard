@@ -63,7 +63,7 @@ export class WizardStyleGuideComponents extends LitElement {
     if (!components) return nothing;
 
     return html`
-      <div class="guide">
+      <div class="wizard-style-guide">
         <utrecht-paragraph>
           <a href="https://nldesignsystem.nl/componenten/" target="_blank">docs</a>
         </utrecht-paragraph>

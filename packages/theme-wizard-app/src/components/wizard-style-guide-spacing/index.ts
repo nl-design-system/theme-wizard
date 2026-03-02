@@ -66,7 +66,7 @@ export class WizardStyleGuideSpacing extends LitElement {
     }));
 
     return html`
-      <div class="guide">
+      <div class="wizard-style-guide">
         <utrecht-paragraph>
           <a href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/" target="_blank"> docs </a>
         </utrecht-paragraph>

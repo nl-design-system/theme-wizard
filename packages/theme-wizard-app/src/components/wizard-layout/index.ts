@@ -48,7 +48,7 @@ export class WizardLayout extends LitElement {
 
   override render() {
     return html`
-      <div class="ma-theme wizard-layout ${classMap({ 'has-sidebar': this.hasSidebar })}">
+      <div class="ma-theme wizard-layout ${classMap({ 'wizard-layout--has-sidebar': this.hasSidebar })}">
         <div class="wizard-layout__logo">
           <a href="/">
             <wizard-logo></wizard-logo>

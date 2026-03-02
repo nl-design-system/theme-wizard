@@ -1,14 +1,14 @@
-<div class="wrap">
-  <div class="page-nav">
+<div class="wizard-page-wrap">
+  <div class="wizard-page-nav">
     <slot name="page-nav"></slot>
   </div>
-  <div class="main">
+  <div class="wizard-page-content">
     <slot name="page-content"></slot>
   </div>
 </div>
 
 <style>
-  .wrap {
+  .wizard-page-wrap {
     align-items: start;
     column-gap: var(--basis-space-column-3xl);
     display: grid;
@@ -17,12 +17,12 @@
     scroll-margin: var(--basis-space-block-6xl);
   }
 
-  .main {
+  .wizard-page-content {
     grid-column: 1;
     grid-row: 1;
   }
 
-  .side-nav {
+  .wizard-page-nav {
     grid-column: 2;
     grid-row: 1;
   }
