@@ -56,13 +56,36 @@ const parseDimensionValue = (value: unknown): unknown => {
 /**
  * @description Upgrade a dimension token (parse string values, set subtype extension)
  */
-const upgradeDimensionToken = (token: BaseDesignToken, path: string[]): void => {
+const upgradeDimensionToken = (token: BaseDesignToken, tokenPath: string[]): void => {
   token.$value = parseDimensionValue(token.$value);
+
+  const path = tokenPath.join('.');
 
   if (path.includes('font-size')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
   } else if (path.includes('line-height')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
+  } else if (
+    path.includes('margin-block') ||
+    path.includes('padding-block') ||
+    path.includes('row-gap') ||
+    path.includes('space.block')
+  ) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-block');
+  } else if (
+    path.includes('margin-inline') ||
+    path.includes('padding-inline') ||
+    path.includes('column-gap') ||
+    path.includes('space.inline')
+  ) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-inline');
+  } else if (path.includes('border-radius')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-radius');
+  } else if (path.includes('border-') && path.includes('-width')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-width');
+  } else if (path.includes('size')) {
+    // font-size does not match because that was caught earlier
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'size');
   }
 };
 
@@ -126,6 +149,8 @@ const upgradeColorToken = (token: BaseDesignToken): void => {
 const upgradeNumberToken = (token: BaseDesignToken, path: string[]): void => {
   if (path.includes('line-height')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
+  } else if (path.includes('font-weight')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-weight');
   }
 };
 
@@ -149,7 +174,7 @@ const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignToken): void => 
 };
 
 /**
- * @description NLDS themes use $type: fontSize and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
+ * @description NLDS themes use $type: fontSize(s) and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
  */
 export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
   walkTokens(rootConfig, (token, path) => {
@@ -158,9 +183,11 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
         upgradeDimensionToken(token, path);
         break;
       case 'fontSize':
+      case 'fontSizes':
         upgradeFontSizeToken(token);
         break;
       case 'lineHeight':
+      case 'lineHeights':
         upgradeLineHeightToken(token, rootConfig);
         break;
       case 'color':

@@ -113,15 +113,13 @@ const storiesWithTokens = stories.map(([id, story]) => {
                   </wizard-reset-theme>
                 </wizard-story-preview>
                 {tokens.length > 0 && (
-                  <dl>
+                  <ul class="wizard-secretly-a-list">
                     {tokens.map((token) => (
-                      <dt>{token.path.join('.')}</dt>
-                      <dd>{token.token?.$type ?? 'unknown type'}</dd>
-                      <dd>
-                        <wizard-token-field path={token.path.join('.')}></wizard-token-field>
-                      </dd>
+                      <li>
+                        <wizard-token-field label={token.path.join('.')} path={token.path.join('.')}></wizard-token-field>
+                      </li>
                     ))}
-                  </dl>
+                  </ul>
                 )}
               </section>
             ))}
@@ -131,6 +129,16 @@ const storiesWithTokens = stories.map(([id, story]) => {
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<style>
+  .wizard-secretly-a-list {
+    display: grid;
+    gap: var(--basis-space-block-lg);
+    list-style: none;
+    margin-block: 0;
+    padding-inline: 0;
+  }
+</style>
 
 <script>
   import { initStories } from '@/components/render-stories';
