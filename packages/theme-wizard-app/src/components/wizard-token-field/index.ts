@@ -114,12 +114,13 @@ export class WizardTokenField extends WizardTokenNavigator {
       case 'color':
         return 'color';
       case 'dimension':
+        return 'dimension';
       case 'number':
       case 'lineHeight':
         return 'number';
       case 'fontFamily':
       case 'fontFamilies':
-        return 'font-family';
+        return 'fontFamily';
       default:
         return undefined;
     }
