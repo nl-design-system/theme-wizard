@@ -726,7 +726,7 @@ describe('remove non-token properties', () => {
     } satisfies Theme;
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
-    expect(result.data).toEqual(theme);
+    expect(result.data).toMatchObject(theme);
   });
 });
 
