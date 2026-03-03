@@ -34,7 +34,7 @@ jobs:
           pnpm audit --audit-level critical
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --force
 
       - name: Build
         run: pnpm run build
