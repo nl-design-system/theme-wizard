@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/theme-wizard-server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Community for NL Design System",
   "description": "Web server with REST API for scraping websites to extract design tokens",
   "license": "EUPL-1.2",
