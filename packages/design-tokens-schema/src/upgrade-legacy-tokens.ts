@@ -54,11 +54,13 @@ const parseDimensionValue = (value: unknown): unknown => {
 };
 
 /**
- * @description Upgrade a dimension token (parse string values, set subtype extension)
+ * @description Upgrade a dimension token
  */
-const upgradeDimensionToken = (token: BaseDesignToken, tokenPath: string[]): void => {
+const upgradeDimensionToken = (token: BaseDesignToken): void => {
   token.$value = parseDimensionValue(token.$value);
+};
 
+const addDimensionSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
   const path = tokenPath.join('.');
 
   if (path.includes('font-size')) {
@@ -173,6 +175,18 @@ const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignToken): void => 
   }
 };
 
+const addColorSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
+  const path = tokenPath.join('.');
+
+  if (path.includes('.bg-')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'background-color');
+  } else if (path.includes('.border-')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-color');
+  } else if (path.includes('.color')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'color');
+  }
+};
+
 /**
  * @description NLDS themes use $type: fontSize(s) and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
  */
@@ -180,7 +194,8 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
   walkTokens(rootConfig, (token, path) => {
     switch (token.$type) {
       case 'dimension':
-        upgradeDimensionToken(token, path);
+        upgradeDimensionToken(token);
+        addDimensionSubType(token, path);
         break;
       case 'fontSize':
       case 'fontSizes':
@@ -192,6 +207,7 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
         break;
       case 'color':
         upgradeColorToken(token);
+        addColorSubType(token, path);
         break;
       case 'number':
         upgradeNumberToken(token, path);
