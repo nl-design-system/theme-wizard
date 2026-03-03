@@ -1,5 +1,13 @@
 # @nl-design-system-community/theme-wizard-website
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies [564c52e]
+  - @nl-design-system-community/theme-wizard-app@1.0.0
+  - @nl-design-system-community/theme-wizard-templates@1.0.4
+
 ## 0.0.7
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 1.0.0
+
+### Major Changes
+
+- 564c52e: Publish experimental components for the NL Design System Theme Wizard app.
+
+### Patch Changes
+
+- Updated dependencies [11114ce]
+  - @nl-design-system-community/design-tokens-schema@2.0.0
+  - @nl-design-system-community/clippy-components@1.2.0
+  - @nl-design-system-community/css-scraper@1.1.1
+
 ## 0.0.6
 
 ### Patch Changes
