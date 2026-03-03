@@ -96,7 +96,6 @@ const addDimensionSubType = (token: BaseDesignToken, tokenPath: string[]): void 
  */
 const upgradeFontSizeToken = (token: BaseDesignToken): void => {
   token.$type = 'dimension';
-  setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
   token.$value = parseDimensionValue(token.$value);
 };
 
@@ -104,8 +103,6 @@ const upgradeFontSizeToken = (token: BaseDesignToken): void => {
  * @description Upgrade a lineHeight token (determine type, parse value if needed)
  */
 const upgradeLineHeightToken = (token: BaseDesignToken, rootConfig: Record<string, unknown>): void => {
-  setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
-
   // If it's already a number, convert the type only
   if (typeof token.$value === 'number') {
     token.$type = 'number';
@@ -200,9 +197,11 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
       case 'fontSize':
       case 'fontSizes':
         upgradeFontSizeToken(token);
+        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
         break;
       case 'lineHeight':
       case 'lineHeights':
+        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
         upgradeLineHeightToken(token, rootConfig);
         break;
       case 'color':
