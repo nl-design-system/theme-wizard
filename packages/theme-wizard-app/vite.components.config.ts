@@ -20,6 +20,8 @@ const thisDir = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig(({ mode }) => ({
   build: {
+    // Disabled so `build:app` output (dist/index.js) is not wiped when this runs second in the `build` script
+    emptyOutDir: false,
     lib: {
       entry: {
         // Different from `clippy-components/vite.config.ts`:
