@@ -44,7 +44,7 @@ jobs:
           pnpm audit --audit-level critical
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --force
+        run: pnpm install --frozen-lockfile
 
   lint:
     runs-on: ubuntu-latest
@@ -69,7 +69,7 @@ jobs:
           pnpm audit --audit-level critical
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --force
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
         run: pnpm run lint
@@ -97,7 +97,7 @@ jobs:
           pnpm audit --audit-level critical
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --force
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm run --if-present build
@@ -134,7 +134,7 @@ jobs:
           pnpm audit --audit-level critical
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --force
+        run: pnpm install --frozen-lockfile
 
       - name: Install headless browsers for testing components in-browser
         run: pnpm run test-install-browsers
@@ -181,7 +181,7 @@ jobs:
           pnpm audit --audit-level critical
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --force
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm run build

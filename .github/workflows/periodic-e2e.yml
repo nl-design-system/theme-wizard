@@ -42,7 +42,7 @@ jobs:
           pnpm audit --audit-level critical
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --force
+        run: pnpm install --frozen-lockfile
 
       - name: Install headless browsers for end-to-end testing
         run: pnpm run test-install-browsers
