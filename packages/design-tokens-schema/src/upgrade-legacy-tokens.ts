@@ -3,7 +3,7 @@ import type { BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
-import { legacyToModernFontFamily } from './tokens/fontfamily-token';
+import { splitFontFamily } from './tokens/fontfamily-token';
 import { isRef, isTokenLike } from './tokens/token-reference';
 import { walkTokens } from './walker';
 
@@ -159,7 +159,7 @@ const upgradeNumberToken = (token: BaseDesignToken, path: string[]): void => {
 const upgradeLegacyFontFamiliesToken = (token: BaseDesignToken): void => {
   token.$type = 'fontFamily';
   if (typeof token.$value === 'string') {
-    token.$value = legacyToModernFontFamily.decode(token.$value);
+    token.$value = splitFontFamily(token.$value);
   }
 };
 
@@ -168,20 +168,21 @@ const upgradeLegacyFontFamiliesToken = (token: BaseDesignToken): void => {
  */
 const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignToken): void => {
   if (typeof token.$value === 'string' && !isRef(token.$value)) {
-    token.$value = legacyToModernFontFamily.decode(token.$value);
+    token.$value = splitFontFamily(token.$value);
   }
 };
 
 const addColorSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
   const path = tokenPath.join('.');
 
-  if (path.includes('.bg-')) {
+  if (path.includes('.bg-') || path.endsWith('.background-color')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'background-color');
   } else if (path.includes('.border-')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-color');
-  } else if (path.includes('.color')) {
+  } else if (path.includes('.color-') || path.endsWith('.color')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'color');
   }
+  console.log(path, token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]);
 };
 
 /**
