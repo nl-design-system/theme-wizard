@@ -1,0 +1,29 @@
+<div class="wizard-page-wrap">
+  <div class="wizard-page-nav">
+    <slot name="page-nav"></slot>
+  </div>
+  <div class="wizard-page-content">
+    <slot name="page-content"></slot>
+  </div>
+</div>
+
+<style>
+  .wizard-page-wrap {
+    align-items: start;
+    column-gap: var(--basis-space-column-3xl);
+    display: grid;
+    grid-template-columns: 1fr 18rem;
+    position: relative;
+    scroll-margin: var(--basis-space-block-6xl);
+  }
+
+  .wizard-page-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .wizard-page-nav {
+    grid-column: 2;
+    grid-row: 1;
+  }
+</style>

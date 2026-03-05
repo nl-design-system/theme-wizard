@@ -1,36 +1,51 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import WithPageNav from '@/components/WithPageNav.astro';
+
+const SECTION_IDS = {
+  typography: 'typography',
+  colors: 'colors',
+  spacing: 'spacing',
+  components: 'components'
+}
 ---
 
 <BaseLayout title="Style Guide - Theme Wizard" description="Preview and analyze website themes">
   <theme-wizard-app>
     <wizard-layout>
-      <nav slot="sidebar">
-        <!-- TODO: replace with <clippy-side-nav> when available https://github.com/nl-design-system/theme-wizard/issues/532 -->
-        <wizard-sidebar-link href="#typography">Typografie</wizard-sidebar-link>
-        <wizard-sidebar-link href="#colors">Kleuren</wizard-sidebar-link>
-        <wizard-sidebar-link href="#spacing">Witruimte</wizard-sidebar-link>
-        <wizard-sidebar-link href="#components">Componenten</wizard-sidebar-link>
-        <wizard-tokens-download></wizard-tokens-download>
-      </nav>
       <div slot="main">
         <h1>Stijlgids</h1>
-        <wizard-style-guide></wizard-style-guide>
+        <WithPageNav>
+          <div slot="page-nav">
+            <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
+          </div>
+          <div class="wizard-style-guides" slot="page-content">
+            <section>
+              <h2 id={SECTION_IDS.typography}>Typografie</h2>
+              <wizard-style-guide-typography></wizard-style-guide-typography>
+            </section>
+            <section>
+              <h2 id={SECTION_IDS.colors}>Kleuren</h2>
+              <wizard-style-guide-colors></wizard-style-guide-colors>
+            </section>
+            <section>
+              <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
+              <wizard-style-guide-spacing></wizard-style-guide-spacing>
+            </section>
+            <section>
+              <h2 id={SECTION_IDS.components}>Componenten</h2>
+              <wizard-style-guide-components></wizard-style-guide-components>
+            </section>
+          </div>
+        </WithPageNav>
       </div>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 
-<script>
-  document.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement
-    if (target?.tagName !== 'WIZARD-SIDEBAR-LINK') return
-    const styleGuide = document.querySelector('wizard-style-guide')
-    if (!styleGuide) return
-    const elementId = target.getAttribute('href')?.slice(1)
-    if (!elementId) return
-    const scrollTarget = styleGuide.shadowRoot?.getElementById(elementId)
-    if (!scrollTarget) return
-    scrollTarget?.scrollIntoView()
-  })
-</script>
+<style>
+  .wizard-style-guides {
+    display: grid;
+    row-gap: var(--basis-space-row-3xl);
+  }
+</style>

@@ -70,14 +70,14 @@ export class WizardTokensDownload extends LitElement {
         @close=${this.#handleDialogClose}
       ></wizard-download-confirmation>
 
-      <utrecht-button
-        appearance="primary-action-button"
+      <clippy-button
+        purpose="primary"
         type="button"
         ?disabled=${!this.theme.modified}
         @click=${this.#handleDownloadClick}
       >
         ${t('tokenDownloadDialog.triggerText')}
-      </utrecht-button>
+      </clippy-button>
     `;
   }
 }

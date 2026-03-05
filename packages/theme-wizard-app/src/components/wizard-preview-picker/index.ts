@@ -78,9 +78,7 @@ export class WizardPreviewPicker extends LitElement {
         .value=${this.value}
       ></wizard-dropdown>
 
-      <utrecht-button appearance="primary-action-button" type="submit" ?hidden=${this.#enhanced}>
-        Voorvertonen
-      </utrecht-button>
+      <clippy-button appearance="primary" type="submit" ?hidden=${this.#enhanced}> Voorvertonen </clippy-button>
     </form>`;
   }
 }
