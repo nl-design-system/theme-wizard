@@ -70,7 +70,7 @@ describe('Theme', () => {
 
   it('can export to resolved css custom properties', async () => {
     const theme = new Theme();
-    const css = await theme.toCSS({ resolved: true });
+    const css = await theme.toCSS();
     expect(css).toMatchSnapshot();
   });
 
