@@ -68,7 +68,6 @@ export class WizardTokenField extends WizardTokenNavigator {
     this.#options =
       basisTokens && typeof basisTokens !== 'string'
         ? Object.entries(Theme.flatten(basisTokens))
-            .values()
             .filter(filterByTypeAndPosition)
             .filter(([, token]) => {
               if (typeof expectedSubType === 'string') {
@@ -94,7 +93,6 @@ export class WizardTokenField extends WizardTokenNavigator {
                 },
               };
             })
-            .toArray()
         : [];
   }
 
