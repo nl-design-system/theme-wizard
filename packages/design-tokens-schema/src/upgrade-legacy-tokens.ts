@@ -185,7 +185,7 @@ const addColorSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
 };
 
 /**
- * @description NLDS themes use $type: fontSize(s) and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
+ * @description NLDS themes use $type: fontSize, fontSizes and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
  */
 export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
   walkTokens(rootConfig, (token, path) => {
