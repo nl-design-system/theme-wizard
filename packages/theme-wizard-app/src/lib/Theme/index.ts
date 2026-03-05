@@ -11,28 +11,21 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import { dequal } from 'dequal';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
-import { flattenTokens } from './lib';
+import { flattenTokens, refToCssVariable, walkTokens } from './lib';
+import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
-
-const STYLE_DICTIONARY_SETTINGS = {
-  log: {
-    errors: {
-      brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
-    },
-    verbosity: 'silent', // ignore logging since it goes to browser console
-  },
-} as const;
 
 export default class Theme {
   static readonly defaults = StrictThemeSchema.parse(startTokens); // Start tokens are default for all Themes
   name = 'wizard';
+  selector: string = `.${PREVIEW_THEME_CLASS}, :host`;
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
+  readonly #rule: CSSRule;
   readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] = [];
 
@@ -52,7 +45,9 @@ export default class Theme {
   constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (Theme.defaults as DesignTokens));
-    this.#stylesheet = stylesheet || new CSSStyleSheet();
+    const [styleSheet, rule] = createStylesheet(stylesheet, `.${PREVIEW_THEME_CLASS}, :host`);
+    this.#rule = rule;
+    this.#stylesheet = styleSheet;
     this.tokens = structuredClone(this.#defaults);
   }
 
@@ -76,10 +71,7 @@ export default class Theme {
     this.#modified = !dequal(this.#defaults, values);
     this.#validateTheme(values);
     this.#tokens = values;
-    this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
-      const sheet = this.#stylesheet;
-      sheet.replaceSync(css);
-    });
+    this.toCSS();
   }
 
   // Updates a single token value at the given path, preserving other properties and extensions of the token.
@@ -213,42 +205,28 @@ export default class Theme {
     return convertTokens(clonedTokens);
   }
 
-  async toCSS({
-    resolved = false,
-    selector = `.${this.name}-theme`,
-  }: {
-    resolved?: boolean;
-    selector?: `.${string}`;
-  } = {}) {
-    const platform = 'css';
+  async toCSS() {
+    console.time('toCSS');
     // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
     const tokens = this.toLegacyTokens();
-    const sd = new StyleDictionary({
-      ...STYLE_DICTIONARY_SETTINGS,
-      platforms: {
-        [platform]: {
-          files: [
-            {
-              destination: 'variables.css',
-              format: 'css/variables',
-              options: {
-                outputReferences: !resolved,
-                selector,
-              },
-            },
-          ],
-          transformGroup: 'css',
-        },
-      },
-      tokens,
+
+    walkTokens(tokens, (path, token) => {
+      if (token.$value === 'undefined') {
+        unsetToken(this.#rule, path);
+      } else {
+        setToken(this.#rule, path, refToCssVariable(String(token.$value || '')));
+      }
     });
-    const outputs = await sd.formatPlatform(platform);
-    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
+    console.timeEnd('toCSS');
+
+    return this.stylesheet.cssRules[0].cssText;
   }
 
   async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
-    const platform = 'json';
+    // const platform = 'json';
     const tokens = format === 'legacy' ? this.toLegacyTokens() : this.tokens;
+    return JSON.stringify(tokens);
+    /*
     const sd = new StyleDictionary({
       ...STYLE_DICTIONARY_SETTINGS,
       platforms: {
@@ -264,6 +242,6 @@ export default class Theme {
       tokens,
     });
     const outputs = await sd.formatPlatform(platform);
-    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
+    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');*/
   }
 }
