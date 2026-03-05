@@ -1,6 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import WithPageNav from '@/components/WithPageNav.astro';
+
+const SECTION_IDS = {
+  typography: 'typography',
+  colors: 'colors',
+  spacing: 'spacing',
+  components: 'components'
+}
 ---
 
 <BaseLayout title="Style Guide - Theme Wizard" description="Preview and analyze website themes">
@@ -10,23 +17,23 @@ import WithPageNav from '@/components/WithPageNav.astro';
         <h1>Stijlgids</h1>
         <WithPageNav>
           <div slot="page-nav">
-            <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: "typography"}, {title: "Kleuren", id: "colors"}, {title: "Witruimte", id: "spacing"}, {title: "Componenten", id: "components"}])}></wizard-anchor-nav>
+            <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
           </div>
           <div class="wizard-style-guides" slot="page-content">
             <section>
-              <h2 id="typography">Typografie</h2>
+              <h2 id={SECTION_IDS.typography}>Typografie</h2>
               <wizard-style-guide-typography></wizard-style-guide-typography>
             </section>
             <section>
-              <h2 id="colors">Kleuren</h2>
+              <h2 id={SECTION_IDS.colors}>Kleuren</h2>
               <wizard-style-guide-colors></wizard-style-guide-colors>
             </section>
             <section>
-              <h2 id="spacing">Witruimte</h2>
+              <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
               <wizard-style-guide-spacing></wizard-style-guide-spacing>
             </section>
             <section>
-              <h2 id="components">Componenten</h2>
+              <h2 id={SECTION_IDS.components}>Componenten</h2>
               <wizard-style-guide-components></wizard-style-guide-components>
             </section>
           </div>
