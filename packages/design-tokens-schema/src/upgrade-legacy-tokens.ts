@@ -182,7 +182,6 @@ const addColorSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
   } else if (path.includes('.color-') || path.endsWith('.color')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'color');
   }
-  console.log(path, token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]);
 };
 
 /**
