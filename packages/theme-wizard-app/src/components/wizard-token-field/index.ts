@@ -13,6 +13,7 @@ import type ValidationIssue from '../../lib/ValidationIssue';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import Theme from '../../lib/Theme';
+import { EXTENSION_TOKEN_STAGED } from '../../utils';
 import { type Option } from '../wizard-token-combobox';
 import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
@@ -70,8 +71,13 @@ export class WizardTokenField extends WizardTokenNavigator {
         ? Object.entries(Theme.flatten(basisTokens))
             .filter(filterByTypeAndPosition)
             .filter(([, token]) => {
+              // Filter out the correct token sub-types
               if (typeof expectedSubType === 'string') {
                 return token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === expectedSubType;
+              }
+              // Filter out only scraped tokens that were selected in the staging area
+              if (token['$extensions']?.[EXTENSION_TOKEN_STAGED] === false) {
+                return false;
               }
               return true;
             })

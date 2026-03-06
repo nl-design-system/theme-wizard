@@ -52,28 +52,12 @@ export function stringifyTokenValue(token: unknown): string {
 }
 
 export function renderFontSizeExample(displayValue: string) {
-  return html`
-    <clippy-html-image>
-      <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
-      <utrecht-paragraph
-        style="--utrecht-paragraph-font-size: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-      >
-        Op brute wijze ving de schooljuf de quasi-kalme lynx.
-      </utrecht-paragraph>
-    </clippy-html-image>
-  `;
+  return html`<wizard-font-sample size=${displayValue}></wizard-font-sample>`;
 }
 
 export function renderFontFamilyExample(displayValue: string) {
   return html`
-    <clippy-html-image>
-      <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
-      <utrecht-paragraph
-        style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-      >
-        Op brute wijze ving de schooljuf de quasi-kalme lynx.
-      </utrecht-paragraph>
-    </clippy-html-image>
+    <wizard-font-sample family=${displayValue} size="var(--basis-text-font-size-2xl)"></wizard-font-sample>
   `;
 }
 

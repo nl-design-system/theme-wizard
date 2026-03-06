@@ -14,7 +14,7 @@ declare global {
 export class WizardColorSample extends LitElement {
   static override readonly styles = [unsafeCSS(colorSampleStyles)];
 
-  @property({ reflect: true, type: String }) color: string = '';
+  @property() color: string = '';
 
   override render() {
     return html`

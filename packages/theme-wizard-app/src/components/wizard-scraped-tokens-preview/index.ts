@@ -6,7 +6,7 @@ import {
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import { html, LitElement, nothing, unsafeCSS } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
@@ -27,6 +27,7 @@ declare global {
 export class WizardScrapedTokensPreview extends LitElement {
   static override readonly styles = [styles, unsafeCSS(codeStyles), unsafeCSS(tableCss)];
 
+  // TODO: this shouldn't use storage directly but talk to this.scrapedTokens
   readonly #scrapedTokensStorage = new PersistentStorage({
     prefix: 'scraped-tokens',
   });
@@ -39,7 +40,8 @@ export class WizardScrapedTokensPreview extends LitElement {
     if (!(target instanceof HTMLInputElement)) return;
 
     const isStaged = Boolean(target.checked);
-    console.log('writing JSON', isStaged);
+
+    // TODO: this shouldn't write to storage directly but call enable/disable on a tokenStore
     this.#scrapedTokensStorage.setJSON(
       this.scrapedTokens.map((token) => {
         if (token.$extensions[EXTENSION_TOKEN_ID] === target.id) {
@@ -50,7 +52,39 @@ export class WizardScrapedTokensPreview extends LitElement {
     );
   };
 
+  readonly #renderSample = (type: StagedDesignToken['$type'], value: string) => {
+    switch (type) {
+      case 'color': {
+        return html`<wizard-color-sample color=${value}></wizard-color-sample>`;
+      }
+      case 'dimension': {
+        return html`<wizard-font-sample size=${value}></wizard-font-sample>`;
+      }
+      case 'fontFamily':
+      default: {
+        return html`<wizard-font-sample family=${value}></wizard-font-sample>`;
+      }
+    }
+  };
+
   override render() {
+    const sortedTokens = this.scrapedTokens.toSorted((a, b) => {
+      if (a.$type === 'fontFamily' && b.$type === 'fontFamily') {
+        return a.$extensions[EXTENSION_AUTHORED_AS].localeCompare(b.$extensions[EXTENSION_AUTHORED_AS]);
+      }
+      if (a.$type === 'dimension' && b.$type === 'dimension') {
+        const normalizedA = a.$value.unit === 'px' ? a.$value.value : a.$value.value * 16;
+        const normalizedB = b.$value.unit === 'px' ? b.$value.value : b.$value.value * 16;
+        return normalizedB - normalizedA;
+      }
+
+      // No need to sort colors because that already happened during scraping on the server
+      // https://github.com/projectwallace/css-design-tokens handles this
+
+      // Group tokens by type
+      return b.$type.localeCompare(a.$type);
+    });
+
     return html`
       <div class="wizard-scraped-tokens-preview">
         <table class="utrecht-table">
@@ -67,36 +101,28 @@ export class WizardScrapedTokensPreview extends LitElement {
             </tr>
           </thead>
           <tbody class="utrecht-table__body" @change=${this.#handleChange}>
-            ${this.scrapedTokens
-              .toSorted((a, b) => b.$type.localeCompare(a.$type))
-              .map(
-                (token) => html`
-                  <tr class="utrecht-table__row">
-                    <td class="utrecht-table__cell">
-                      <input
-                        type="checkbox"
-                        name="enabled-tokens"
-                        id=${token.$extensions[EXTENSION_TOKEN_ID]}
-                        ?checked=${token.$extensions[EXTENSION_TOKEN_STAGED] === true}
-                      />
-                    </td>
-                    <td class="utrecht-table__cell">
-                      ${token.$type === `color`
-                        ? html`
-                            <wizard-color-sample
-                              color=${token.$extensions[EXTENSION_AUTHORED_AS]}
-                            ></wizard-color-sample>
-                          `
-                        : nothing}
-                    </td>
-                    <td class="utrecht-table__cell">
-                      <code class="nl-code">${token.$extensions[EXTENSION_AUTHORED_AS]}</code>
-                    </td>
-                    <td class="utrecht-table__cell">${token.$type === 'dimension' ? 'font-size' : token.$type}</td>
-                    <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
-                  </tr>
-                `,
-              )}
+            ${sortedTokens.map(
+              (token) => html`
+                <tr class="utrecht-table__row">
+                  <td class="utrecht-table__cell">
+                    <input
+                      type="checkbox"
+                      name="enabled-tokens"
+                      id=${token.$extensions[EXTENSION_TOKEN_ID]}
+                      ?checked=${token.$extensions[EXTENSION_TOKEN_STAGED] === true}
+                    />
+                  </td>
+                  <td class="utrecht-table__cell">
+                    ${this.#renderSample(token.$type, token.$extensions[EXTENSION_AUTHORED_AS])}
+                  </td>
+                  <td class="utrecht-table__cell">
+                    <code class="nl-code">${token.$extensions[EXTENSION_AUTHORED_AS]}</code>
+                  </td>
+                  <td class="utrecht-table__cell">${token.$type === 'dimension' ? 'font-size' : token.$type}</td>
+                  <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
+                </tr>
+              `,
+            )}
           </tbody>
         </table>
       </div>
