@@ -53,6 +53,7 @@ export class WizardScrapedTokensPreview extends LitElement {
   readonly #deleteStagedToken = (tokenToDelete: StagedDesignToken) => {
     // TODO: this shouldn't write to storage directly
     // TODO: replace confirm() with proper dialog?
+    // TODO: this doesn't directly update the UI yet but token is gone after refresh or navigation
     // eslint-disable-next-line no-alert
     if (confirm('Delete token')) {
       this.#scrapedTokensStorage.setJSON(this.scrapedTokens.filter((token) => token !== tokenToDelete));
