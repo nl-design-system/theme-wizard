@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '@nl-design-system-candidate/button-css/button.css'
+---
+
+<BaseLayout title="Review design tokens - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <main slot="main" class="wizard-main">
+        <header>
+          <h1>Selecteer design tokens</h1>
+          <p>Je kunt deze design tokens gebruiken als opties om je huisstijl te bewerken.</p>
+          <a class="nl-button nl-button--primary" href="/basis-tokens">Huisstijl bewerken →</a>
+        </header>
+
+        <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
+
+        <a class="nl-button nl-button--subtle nl-button--negative" href="/">
+          ↺ Begin opnieuw
+        </a>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-main {
+    background-color: var(--basis-color-accent-1-bg-document);
+    block-size: 100%;
+    display: grid;
+    padding-block-end: var(--basis-space-block-5xl);
+    padding-inline: var(--basis-space-inline-2xl);
+    row-gap: var(--basis-space-row-4xl);
+  }
+</style>

@@ -51,46 +51,13 @@ export function stringifyTokenValue(token: unknown): string {
   return value.toString();
 }
 
-export function renderColorSample(displayValue: string, tokenId?: string) {
-  return html`
-    <svg
-      role="img"
-      xmlns="http://www.w3.org/2000/svg"
-      class="nl-color-sample"
-      style="color: ${displayValue};"
-      aria-labelledby=${tokenId}
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-    >
-      <path d="M0 0H32V32H0Z" fill="currentcolor" />
-    </svg>
-  `;
-}
-
 export function renderFontSizeExample(displayValue: string) {
-  return html`
-    <clippy-html-image>
-      <span slot="label">${t('styleGuide.sections.typography.sizes.sample')}</span>
-      <utrecht-paragraph
-        style="--utrecht-paragraph-font-size: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-      >
-        Op brute wijze ving de schooljuf de quasi-kalme lynx.
-      </utrecht-paragraph>
-    </clippy-html-image>
-  `;
+  return html`<wizard-font-sample size=${displayValue}></wizard-font-sample>`;
 }
 
 export function renderFontFamilyExample(displayValue: string) {
   return html`
-    <clippy-html-image>
-      <span slot="label">${t('styleGuide.sections.typography.families.sample')}</span>
-      <utrecht-paragraph
-        style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-family: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-      >
-        Op brute wijze ving de schooljuf de quasi-kalme lynx.
-      </utrecht-paragraph>
-    </clippy-html-image>
+    <wizard-font-sample family=${displayValue} size="var(--basis-text-font-size-2xl)"></wizard-font-sample>
   `;
 }
 
@@ -140,7 +107,7 @@ export function renderLineHeightExample(displayValue: string | number) {
 export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
   switch (token.tokenType) {
     case 'color':
-      return renderColorSample(token.displayValue);
+      return html`<wizard-color-sample color=${token.displayValue}></wizard-color-sample>`;
     case 'fontSize':
       return renderFontSizeExample(token.displayValue);
     case 'fontFamily':

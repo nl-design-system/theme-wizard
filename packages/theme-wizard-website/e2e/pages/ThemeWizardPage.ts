@@ -14,7 +14,7 @@ export class ThemeWizardPage {
   }
 
   async goto() {
-    await this.page.goto('/');
+    await this.page.goto('/basis-tokens');
     await expect(this.preview).toBeVisible();
   }
 

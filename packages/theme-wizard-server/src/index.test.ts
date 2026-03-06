@@ -192,6 +192,7 @@ describe('/api/v1', () => {
             'nl.nldesignsystem.theme-wizard.css-authored-as': '1rem',
             'nl.nldesignsystem.theme-wizard.css-properties': ['font-size'],
             'nl.nldesignsystem.theme-wizard.token-id': 'fontSize-17fec9',
+            'nl.nldesignsystem.theme-wizard.token-subtype': 'font-size',
             'nl.nldesignsystem.theme-wizard.usage-count': 1,
           },
           $type: 'dimension',

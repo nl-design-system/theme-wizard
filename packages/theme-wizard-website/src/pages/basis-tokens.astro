@@ -1,0 +1,64 @@
+---
+import { withRelatedProject } from '@vercel/related-projects';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
+export const prerender = false; // enable SSR
+
+const scraperUrl = withRelatedProject({
+  projectName: 'theme-wizard-server',
+  // Fallback API host
+  defaultHost: process.env.API_HOST || '',
+});
+
+const templates = JSON.parse(TEMPLATES_JSON)
+let currentTemplate = Astro.url.searchParams.get('templatePath')
+if (!currentTemplate) {
+  const firstGroup = templates?.[0];
+  const firstOption = firstGroup?.pages?.[0];
+  currentTemplate = firstOption?.value ?? '';
+}
+---
+
+<style>
+  .wizard-theme-sidebar {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .wizard-main {
+    display: grid;
+    padding-block: var(--basis-space-block-3xl);
+    row-gap: var(--basis-space-row-lg);
+  }
+
+  .wizard-preview-picker {
+    justify-self: end;
+  }
+</style>
+
+<BaseLayout title="Huisstijl bewerken - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <div slot="sidebar" class="wizard-theme-sidebar">
+        <section>
+          <h2>Huisstijl bewerken</h2>
+          <wizard-tokens-form></wizard-tokens-form>
+        </section>
+        <wizard-tokens-download></wizard-tokens-download>
+        <wizard-theme-reset-button></wizard-theme-reset-button>
+      </div>
+
+      <div slot="main" class="wizard-main">
+        <wizard-preview-picker class="wizard-preview-picker" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
+        <wizard-story-preview size="lg">
+          <wizard-reset-theme>
+            <wizard-preview-theme>
+              <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
+            </wizard-preview-theme>
+          </wizard-reset-theme>
+        </wizard-story-preview>
+      </div>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>

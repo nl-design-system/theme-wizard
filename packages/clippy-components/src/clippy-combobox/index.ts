@@ -11,7 +11,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import memoize from 'memoize';
 import { allowedValuesConverter, arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
-import srOnly from '../lib/sr-only/styles';
+import srOnly from '../lib/sr-only';
 import styles from './styles';
 
 type Option = {

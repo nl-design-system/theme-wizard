@@ -1,6 +1,8 @@
+import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import selectStyles from '@utrecht/select-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import styles from './styles';
 
 export type DropdownOption = {
   name: string;
@@ -27,7 +29,7 @@ export class WizardDropdown extends LitElement {
   @property() isOptgroup = false;
   @property({ reflect: true }) value = '';
 
-  static override readonly styles = [unsafeCSS(selectStyles)];
+  static override readonly styles = [unsafeCSS(selectStyles), unsafeCSS(srOnlyStyles), styles];
 
   static readonly formAssociated = true;
   readonly #internals = this.attachInternals();
@@ -51,7 +53,7 @@ export class WizardDropdown extends LitElement {
 
   override render() {
     return html`
-      <label for=${this.name}>${this.label}</label>
+      <label for=${this.name} class="sr-only">${this.label}</label>
       <select
         id=${this.name}
         name=${this.name}
@@ -59,6 +61,15 @@ export class WizardDropdown extends LitElement {
         .value=${this.value}
         @change=${this.#handleChange}
       >
+        <button>
+          <selectedcontent></selectedcontent>
+          <span class="wizard-dropdown__arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M18.707 8.293a1 1 0 0 1 0 1.414l-6 6a1 1 0 0 1 -1.414 0l-6 -6a1 1 0 0 1 1.414 -1.414l5.293 5.293l5.293 -5.293a1 1 0 0 1 1.414 0" />
+            </svg>
+          <span>
+        </button>
         ${this.options.map(
           (option) => html`
             ${this.isOptgroup
