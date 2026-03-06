@@ -56,12 +56,7 @@ export class WizardLayout extends LitElement {
             <wizard-logo></wizard-logo>
           </div>
           <div class="wizard-layout__footer-about">
-            <p>
-              ${t('footer.colophon.about', {
-                moreInfoUrl: 'https://nldesignsystem.nl/project/expertteam-digitale-toegankelijkheid/',
-                nlDesignSystemUrl: 'https://nldesignsystem.nl',
-              })}
-            </p>
+            <p>${t('footer.colophon.about')}</p>
           </div>
           <nav class="wizard-layout__footer-nav">
             <a class="nl-link wizard-layout__footer-nav-link" href="https://nldesignsystem.nl/project/kernteam/">

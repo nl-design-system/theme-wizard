@@ -48,7 +48,7 @@ export interface SidebarConfig {
   bodyFont: string;
 }
 
-export const EXTENSION_TOKEN_STAGED = 'nl.nldesignsystem.theme-wizard-token-staged';
+export const EXTENSION_TOKEN_STAGED = 'nl.nldesignsystem.theme-wizard.token-staged';
 
 export type StagedDesignToken = ScrapedDesignToken & {
   $extensions: {

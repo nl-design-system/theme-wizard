@@ -86,7 +86,6 @@ export class App extends LitElement {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
 
-    // TODO:
     this.scrapedTokens = target.options.map((token) => ({
       ...token,
       $extensions: {

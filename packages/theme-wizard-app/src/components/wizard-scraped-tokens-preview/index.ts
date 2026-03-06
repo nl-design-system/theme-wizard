@@ -12,6 +12,7 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
+import { dimensionToPx } from '../../utils/token-utils';
 import styles from './styles';
 
 const tag = 'wizard-scraped-tokens-preview';
@@ -81,9 +82,9 @@ export class WizardScrapedTokensPreview extends LitElement {
         return a.$extensions[EXTENSION_AUTHORED_AS].localeCompare(b.$extensions[EXTENSION_AUTHORED_AS]);
       }
       if (a.$type === 'dimension' && b.$type === 'dimension') {
-        const normalizedA = a.$value.unit === 'px' ? a.$value.value : a.$value.value * 16;
-        const normalizedB = b.$value.unit === 'px' ? b.$value.value : b.$value.value * 16;
-        return normalizedB - normalizedA;
+        const normalizedA = dimensionToPx(a.$value);
+        const normalizedB = dimensionToPx(b.$value);
+        return normalizedB.value - normalizedA.value;
       }
 
       // No need to sort colors because that already happened during scraping on the server
