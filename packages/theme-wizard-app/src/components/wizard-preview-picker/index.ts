@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../wizard-dropdown';
 import type { DropdownOption } from '../wizard-dropdown';
+import { t } from '../../i18n';
 import styles from './styles';
 
 export type Page<TValue extends string = string> = {
@@ -71,7 +72,7 @@ export class WizardPreviewPicker extends LitElement {
   override render() {
     return html`<form method="GET" id="preview-form" @change=${this.#handleChange}>
       <wizard-dropdown
-        label="Weergave"
+        label=${t('display')}
         name=${PREVIEW_PICKER_NAME}
         .options=${this.dropdownOptions}
         .isOptgroup=${true}

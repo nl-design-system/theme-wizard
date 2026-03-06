@@ -1,7 +1,6 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
 export const prerender = false; // enable SSR
 
 const scraperUrl = withRelatedProject({
@@ -9,51 +8,30 @@ const scraperUrl = withRelatedProject({
   // Fallback API host
   defaultHost: process.env.API_HOST || '',
 });
-
-const templates = JSON.parse(TEMPLATES_JSON)
-let currentTemplate = Astro.url.searchParams.get('templatePath')
-if (!currentTemplate) {
-  const firstGroup = templates?.[0];
-  const firstOption = firstGroup?.pages?.[0];
-  currentTemplate = firstOption?.value ?? '';
-}
 ---
-
-<style>
-  .theme-sidebar {
-    display: grid;
-    gap: 2rem;
-  }
-</style>
 
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <div slot="sidebar" class="theme-sidebar">
-        <section>
-          <h2>Analyzeer website</h2>
-          <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
-        </section>
-        <section>
-          <h2>Maak design keuzes</h2>
-          <wizard-tokens-form></wizard-tokens-form>
-        </section>
-        <section>
-          <h2>Download thema</h2>
-          <wizard-tokens-download></wizard-tokens-download>
-          <wizard-theme-reset-button></wizard-theme-reset-button>
-        </section>
-      </div>
-
-      <wizard-preview-picker slot="nav" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
-
-      <div slot="main">
-        <wizard-reset-theme>
-          <wizard-preview-theme>
-            <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
-          </wizard-preview-theme>
-        </wizard-reset-theme>
-      </div>
+      <main slot="main" class="main">
+        <wizard-container size="md">
+          <wizard-story-preview size="lg">
+            <h1 class="h1">Maak je eigen thema</h1>
+            <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
+          </wizard-story-preview>
+        </wizard-container>
+      </main>
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<style>
+  .main {
+    height: 100%;
+    place-content: center;
+  }
+
+  h1 {
+    margin-block-start: 0;
+  }
+</style>

@@ -13,31 +13,35 @@ const SECTION_IDS = {
 <BaseLayout title="Style Guide - Theme Wizard" description="Preview and analyze website themes">
   <theme-wizard-app>
     <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+
       <div slot="main">
-        <h1>Stijlgids</h1>
-        <WithPageNav>
-          <div slot="page-nav">
-            <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
-          </div>
-          <div class="wizard-style-guides" slot="page-content">
-            <section>
-              <h2 id={SECTION_IDS.typography}>Typografie</h2>
-              <wizard-style-guide-typography></wizard-style-guide-typography>
-            </section>
-            <section>
-              <h2 id={SECTION_IDS.colors}>Kleuren</h2>
-              <wizard-style-guide-colors></wizard-style-guide-colors>
-            </section>
-            <section>
-              <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
-              <wizard-style-guide-spacing></wizard-style-guide-spacing>
-            </section>
-            <section>
-              <h2 id={SECTION_IDS.components}>Componenten</h2>
-              <wizard-style-guide-components></wizard-style-guide-components>
-            </section>
-          </div>
-        </WithPageNav>
+        <wizard-container>
+          <h1>Stijlgids</h1>
+          <WithPageNav>
+            <div slot="page-nav">
+              <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
+            </div>
+            <div class="wizard-style-guides" slot="page-content">
+              <section>
+                <h2 id={SECTION_IDS.typography}>Typografie</h2>
+                <wizard-style-guide-typography></wizard-style-guide-typography>
+              </section>
+              <section>
+                <h2 id={SECTION_IDS.colors}>Kleuren</h2>
+                <wizard-style-guide-colors></wizard-style-guide-colors>
+              </section>
+              <section>
+                <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
+                <wizard-style-guide-spacing></wizard-style-guide-spacing>
+              </section>
+              <section>
+                <h2 id={SECTION_IDS.components}>Componenten</h2>
+                <wizard-style-guide-components></wizard-style-guide-components>
+              </section>
+            </div>
+          </WithPageNav>
+        </wizard-container>
       </div>
     </wizard-layout>
   </theme-wizard-app>
@@ -47,5 +51,9 @@ const SECTION_IDS = {
   .wizard-style-guides {
     display: grid;
     row-gap: var(--basis-space-row-3xl);
+  }
+
+  [slot="main"] {
+    background-color: var(--basis-color-default-bg-document);
   }
 </style>

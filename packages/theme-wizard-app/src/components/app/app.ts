@@ -17,9 +17,9 @@ import { WizardTokenInput } from '../wizard-token-input';
  */
 @customElement('theme-wizard-app')
 export class App extends LitElement {
-  readonly #storage = new PersistentStorage({
+  readonly #themeStorage = new PersistentStorage({
     onChange: () => {
-      const tokens = this.#storage.getJSON();
+      const tokens = this.#themeStorage.getJSON();
       this.theme.tokens = tokens;
       this.#forceUpdateTokens();
     },
@@ -31,6 +31,13 @@ export class App extends LitElement {
   @state()
   protected theme: Theme = this.#theme;
 
+  readonly #scrapedTokensStorage = new PersistentStorage({
+    onChange: () => {
+      const tokens = this.#scrapedTokensStorage.getJSON();
+      this.scrapedTokens = tokens;
+    },
+    prefix: 'scraped-tokens',
+  });
   @provide({ context: scrapedTokensContext })
   @state()
   scrapedTokens: ScrapedDesignToken[] = [];
@@ -39,9 +46,14 @@ export class App extends LitElement {
     super.connectedCallback();
     defineCustomElements();
 
-    const previousTokens = this.#storage.getJSON();
-    if (previousTokens) {
-      this.theme.tokens = previousTokens;
+    const previousThemeTokens = this.#themeStorage.getJSON();
+    if (previousThemeTokens) {
+      this.theme.tokens = previousThemeTokens;
+    }
+
+    const previousScrapedTokens = this.#scrapedTokensStorage.getJSON();
+    if (previousScrapedTokens) {
+      this.scrapedTokens = previousScrapedTokens;
     }
 
     this.addEventListener('change', this.#handleScrapeDone);
@@ -70,12 +82,13 @@ export class App extends LitElement {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
     this.scrapedTokens = target.options;
+    this.#scrapedTokensStorage.setJSON(target.options);
   };
 
   readonly #handleReset = () => {
     this.theme.reset();
     this.#forceUpdateTokens();
-    this.#storage.setJSON(this.theme.tokens);
+    this.#themeStorage.setJSON(this.theme.tokens);
   };
 
   readonly #handleTokenChange = async (event: Event) => {
@@ -106,7 +119,7 @@ export class App extends LitElement {
       this.theme.updateAt(target.name, target.value);
     }
     this.#forceUpdateTokens();
-    this.#storage.setJSON(this.theme.tokens);
+    this.#themeStorage.setJSON(this.theme.tokens);
   };
 
   override render() {

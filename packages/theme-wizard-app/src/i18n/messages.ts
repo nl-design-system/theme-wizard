@@ -18,8 +18,19 @@ export const en = {
   cancel: 'Cancel',
   close: 'Close',
   continue: 'Continue',
+  display: 'Display',
+  footer: {
+    colophon: {
+      about: html`The Theme Wizard is developed by the Expert team Digital Accessibility as part of
+        <a href="https://nldesignsystem.nl">NL Design System</a>.`,
+      accessibilityStatement: 'Accessbility',
+      contact: 'Contact',
+      privacyStatement: 'Privacy statement',
+    },
+  },
   loading: 'Loading...',
   nav: {
+    components: 'Components',
     configure: 'Edit branding',
     styleGuide: 'Style guide',
   },
@@ -100,7 +111,7 @@ export const en = {
     cancel: () => t('cancel'),
     confirm: 'Reset theme',
     title: 'Reset theme',
-    triggerText: 'Reset theme',
+    triggerText: 'Start over',
   },
   tokenDownloadDialog: {
     body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
@@ -295,8 +306,19 @@ export const nl = {
   cancel: 'Annuleren',
   close: 'Sluiten',
   continue: 'Doorgaan',
+  display: 'Weergave',
+  footer: {
+    colophon: {
+      about: html`De Theme Wizard is ontwikkeld door het Expertteam Digitale Toegankelijkheid in opdracht van
+        <a href="https://nldesignsystem.nl">NL Design System</a>.`,
+      accessibilityStatement: 'Toegankelijkheid',
+      contact: 'Contact',
+      privacyStatement: 'Privacyverklaring',
+    },
+  },
   loading: 'Laden...',
   nav: {
+    components: 'Componenten',
     configure: 'Huisstijl bewerken',
     styleGuide: 'Stijlgids',
   },
@@ -375,9 +397,9 @@ export const nl = {
   themeResetDialog: {
     body: 'Weet je zeker dat je alle tokenwaarden wilt terugzetten naar de standaardwaarden? Dit kan niet ongedaan worden gemaakt.',
     cancel: () => t('cancel'),
-    confirm: 'Thema resetten',
-    title: 'Thema resetten',
-    triggerText: 'Thema resetten',
+    confirm: 'Opnieuw beginnen',
+    title: 'Opnieuw beginnen',
+    triggerText: 'Begin opnieuw',
   },
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',
