@@ -5,14 +5,14 @@ export default css`
     --wizard-layout-nav-padding-block: var(--basis-space-block-md);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
 
+    background-color: var(--basis-color-accent-1-bg-subtle);
+    container-type: inline-size;
     display: grid;
     font-family: var(--basis-text-font-family-default, inherit);
     grid-template-areas: 'header header' 'main main' 'footer footer';
     grid-template-columns: minmax(20rem, 24rem) 1fr;
     grid-template-rows: auto 1fr;
     min-block-size: 100vh;
-    background-color: var(--basis-color-accent-1-bg-subtle);
-    container-type: inline-size;
   }
 
   .wizard-layout--has-sidebar {
@@ -20,16 +20,16 @@ export default css`
   }
 
   .wizard-layout__header {
-    inset-block-start: 0;
-    position: sticky;
-    z-index: 1;
+    align-items: center;
     background-color: var(--wizard-layout-nav-background-color);
     color: var(--basis-color-accent-1-inverse-color-default);
-    grid-area: header;
     display: grid;
+    grid-area: header;
     grid-template-columns: auto 1fr;
-    align-items: center;
+    inset-block-start: 0;
     padding-inline: var(--basis-space-inline-lg);
+    position: sticky;
+    z-index: 1;
   }
 
   .wizard-layout__sidebar {
@@ -50,12 +50,12 @@ export default css`
    ============================================ */
 
   .wizard-layout__main {
+    block-size: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     grid-area: main;
     inline-size: 100%;
-    block-size: 100%;
     min-block-size: 100%;
     padding-inline: var(--basis-space-inline-xl);
   }
@@ -82,13 +82,13 @@ export default css`
   .wizard-layout__footer {
     background-color: var(--wizard-layout-nav-background-color);
     color: var(--basis-color-accent-1-inverse-color-default);
-    grid-area: footer;
-    padding-inline: var(--basis-space-inline-lg);
-    padding-block-start: var(--basis-space-block-5xl);
-    padding-block-end: var(--basis-space-block-6xl);
-    display: grid;
-    row-gap: var(--basis-space-row-2xl);
     column-gap: var(--basis-space-column-4xl);
+    display: grid;
+    grid-area: footer;
+    padding-block-end: var(--basis-space-block-6xl);
+    padding-block-start: var(--basis-space-block-5xl);
+    padding-inline: var(--basis-space-inline-lg);
+    row-gap: var(--basis-space-row-2xl);
 
     @container (inline-size > 44rem) {
       grid-template-columns: 1fr 1fr 1fr;

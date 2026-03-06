@@ -20,18 +20,18 @@ if (!currentTemplate) {
 ---
 
 <style>
-  .theme-sidebar {
+  .wizard-theme-sidebar {
     display: grid;
     gap: 2rem;
   }
 
-  .main {
-    padding-block: var(--basis-space-block-3xl);
+  .wizard-main {
     display: grid;
+    padding-block: var(--basis-space-block-3xl);
     row-gap: var(--basis-space-row-lg);
   }
 
-  .preview-picker {
+  .wizard-preview-picker {
     justify-self: end;
   }
 </style>
@@ -40,7 +40,7 @@ if (!currentTemplate) {
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
-      <div slot="sidebar" class="theme-sidebar">
+      <div slot="sidebar" class="wizard-theme-sidebar">
         <section>
           <h2>Huisstijl bewerken</h2>
           <wizard-tokens-form></wizard-tokens-form>
@@ -49,8 +49,8 @@ if (!currentTemplate) {
         <wizard-theme-reset-button></wizard-theme-reset-button>
       </div>
 
-      <div slot="main" class="main">
-        <wizard-preview-picker class="preview-picker" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
+      <div slot="main" class="wizard-main">
+        <wizard-preview-picker class="wizard-preview-picker" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
         <wizard-story-preview size="lg">
           <wizard-reset-theme>
             <wizard-preview-theme>

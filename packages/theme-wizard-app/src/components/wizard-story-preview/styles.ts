@@ -15,10 +15,10 @@ export default css`
 
   .wizard-story-preview--lg {
     border-radius: var(--basis-border-radius-lg);
+    box-shadow:
+      0 8px 16px 0 #0000000f,
+      0 2px 4px 0 #00000014;
     padding-block: var(--basis-space-block-5xl);
     padding-inline: var(--basis-space-inline-4xl);
-    box-shadow:
-      0px 8px 16px 0px #0000000f,
-      0px 2px 4px 0px #00000014;
   }
 `;

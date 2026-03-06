@@ -11,11 +11,11 @@ declare global {
 }
 
 const styles = css`
-  .nl-paragraph {
-    overflow: clip;
-    display: -webkit-box;
+  .wizard-font-sample {
     -webkit-box-orient: vertical;
+    display: -webkit-box;
     -webkit-line-clamp: 1;
+    overflow: clip;
   }
 `;
 
@@ -36,7 +36,7 @@ export class WizardFontSample extends LitElement {
 
     return html`
       <clippy-html-image>
-        <p class="nl-paragraph" style="${fontStyles}">
+        <p class="nl-paragraph wizard-font-sample" style="${fontStyles}">
           <slot>Op brute wijze ving de schooljuf de quasi-kalme lynx.</slot>
         </p>
       </clippy-html-image>

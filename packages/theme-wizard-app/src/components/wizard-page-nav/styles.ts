@@ -4,10 +4,8 @@ export default css`
   .wizard-page-nav {
     display: flex;
     justify-content: center;
-    padding-inline: var(--basis-space-inline-lg);
-    margin-block: 0;
-    padding-inline: 0;
     list-style: none;
+    margin-block: 0;
   }
 
   .wizard-page-nav__link {

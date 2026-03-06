@@ -13,10 +13,10 @@ const scraperUrl = withRelatedProject({
 <BaseLayout title="Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <main slot="main" class="main">
+      <main slot="main" class="wizard-main">
         <wizard-container size="md">
           <wizard-story-preview size="lg">
-            <h1 class="h1">Maak je eigen thema</h1>
+            <h1 class="wizard-title">Maak je eigen thema</h1>
             <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
           </wizard-story-preview>
         </wizard-container>
@@ -26,12 +26,12 @@ const scraperUrl = withRelatedProject({
 </BaseLayout>
 
 <style>
-  .main {
-    height: 100%;
+  .wizard-main {
+    block-size: 100%;
     place-content: center;
   }
 
-  h1 {
+  .wizard-title {
     margin-block-start: 0;
   }
 </style>
