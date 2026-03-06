@@ -45,6 +45,7 @@ export const en = {
   },
   stagedTokens: {
     count: 'Count',
+    deleteToken: 'Delete',
     preview: 'Preview',
     staged: 'Staged',
     title: 'Selected design tokens',
@@ -341,6 +342,7 @@ export const nl = {
   },
   stagedTokens: {
     count: 'Aantal',
+    deleteToken: 'Verwijder',
     preview: 'Voorvertoning',
     staged: 'Geselecteerd',
     title: 'Geselecteerde design tokens',

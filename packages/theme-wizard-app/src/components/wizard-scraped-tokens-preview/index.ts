@@ -28,9 +28,7 @@ export class WizardScrapedTokensPreview extends LitElement {
   static override readonly styles = [styles, unsafeCSS(codeStyles), unsafeCSS(tableCss)];
 
   // TODO: this shouldn't use storage directly but talk to this.scrapedTokens
-  readonly #scrapedTokensStorage = new PersistentStorage({
-    prefix: 'scraped-tokens',
-  });
+  readonly #scrapedTokensStorage = new PersistentStorage({ prefix: 'scraped-tokens' });
 
   @consume({ context: scrapedTokensContext, subscribe: true })
   scrapedTokens: StagedDesignToken[] = [];
@@ -52,6 +50,15 @@ export class WizardScrapedTokensPreview extends LitElement {
     );
   };
 
+  readonly #deleteStagedToken = (tokenToDelete: StagedDesignToken) => {
+    // TODO: this shouldn't write to storage directly
+    // TODO: replace confirm() with proper dialog?
+    // eslint-disable-next-line no-alert
+    if (confirm('Delete token')) {
+      this.#scrapedTokensStorage.setJSON(this.scrapedTokens.filter((token) => token !== tokenToDelete));
+    }
+  };
+
   readonly #renderSample = (type: StagedDesignToken['$type'], value: string) => {
     switch (type) {
       case 'color': {
@@ -62,7 +69,7 @@ export class WizardScrapedTokensPreview extends LitElement {
       }
       case 'fontFamily':
       default: {
-        return html`<wizard-font-sample family=${value}></wizard-font-sample>`;
+        return html`<wizard-font-sample family=${value} size="var(--basis-text-font-size-xl)"></wizard-font-sample>`;
       }
     }
   };
@@ -120,6 +127,11 @@ export class WizardScrapedTokensPreview extends LitElement {
                   </td>
                   <td class="utrecht-table__cell">${token.$type === 'dimension' ? 'font-size' : token.$type}</td>
                   <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
+                  <td class="utrecht-table__cell">
+                    <clippy-button @click=${() => this.#deleteStagedToken(token)} hint="negative" purpose="subtle">
+                      ${t('stagedTokens.deleteToken')}
+                    </clippy-button>
+                  </td>
                 </tr>
               `,
             )}
