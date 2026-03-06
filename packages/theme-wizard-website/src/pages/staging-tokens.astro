@@ -5,9 +5,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Review design tokens - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <main slot="main">
-        <h1>N tokens gevonden</h1>
+      <main slot="main" class="main">
+        <header>
+          <h1>Selecteer design tokens</h1>
+          <p>Je kunt deze design tokens gebruiken als opties om je huisstijl te bewerken.</p>
+          <a href="/basis-tokens">Door naar huisstijl bewerken</a>
+        </header>
+
+        <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
+
+        <a href="/">Begin opnieuw</a>
       </main>
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<style>
+  .main {
+    background-color: var(--basis-color-accent-1-bg-document);
+    height: 100%;
+    display: grid;
+    row-gap: var(--basis-space-row-4xl);
+    padding-block-end: var(--basis-space-block-5xl);
+    padding-inline: var(--basis-space-inline-2xl);
+  }
+</style>

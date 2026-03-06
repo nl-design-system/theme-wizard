@@ -1,5 +1,4 @@
 import { provide } from '@lit/context';
-import { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -7,14 +6,18 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
+import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
 
-/**
- * Router shell component - Provides Theme context
- */
+declare global {
+  interface HTMLElementTagNameMap {
+    'theme-wizard-app': App;
+  }
+}
+
 @customElement('theme-wizard-app')
 export class App extends LitElement {
   readonly #themeStorage = new PersistentStorage({
@@ -38,9 +41,10 @@ export class App extends LitElement {
     },
     prefix: 'scraped-tokens',
   });
+
   @provide({ context: scrapedTokensContext })
   @state()
-  scrapedTokens: ScrapedDesignToken[] = [];
+  scrapedTokens: StagedDesignToken[] = [];
 
   override connectedCallback() {
     super.connectedCallback();
@@ -81,8 +85,17 @@ export class App extends LitElement {
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
-    this.scrapedTokens = target.options;
-    this.#scrapedTokensStorage.setJSON(target.options);
+
+    // TODO:
+    this.scrapedTokens = target.options.map((token) => ({
+      ...token,
+      $extensions: {
+        ...token.$extensions,
+        [EXTENSION_TOKEN_STAGED]: true,
+      },
+    }));
+    this.#scrapedTokensStorage.setJSON(this.scrapedTokens);
+    this.dispatchEvent(new Event('scrape-success'));
   };
 
   readonly #handleReset = () => {
@@ -124,12 +137,5 @@ export class App extends LitElement {
 
   override render() {
     return html`<slot></slot>`;
-  }
-}
-
-// Declare the custom element for TypeScript
-declare global {
-  interface HTMLElementTagNameMap {
-    'theme-wizard-app': App;
   }
 }

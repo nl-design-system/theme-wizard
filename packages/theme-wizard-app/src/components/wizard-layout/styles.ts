@@ -55,8 +55,8 @@ export default css`
     flex-direction: column;
     grid-area: main;
     inline-size: 100%;
+    block-size: 100%;
     min-block-size: 100%;
-    padding-block-end: var(--basis-space-block-3xl);
     padding-inline: var(--basis-space-inline-xl);
   }
 

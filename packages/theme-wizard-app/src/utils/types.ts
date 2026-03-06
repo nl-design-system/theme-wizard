@@ -2,6 +2,8 @@
  * Type utilities for working with nested object structures
  */
 
+import { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
+
 /**
  * Type helper to identify leaf nodes in a nested object structure
  * Non-objects and functions are considered leaves
@@ -45,3 +47,11 @@ export interface SidebarConfig {
   /** Font family for body text */
   bodyFont: string;
 }
+
+export const EXTENSION_TOKEN_STAGED = 'nl.nldesignsystem.theme-wizard-token-staged';
+
+export type StagedDesignToken = ScrapedDesignToken & {
+  $extensions: {
+    [EXTENSION_TOKEN_STAGED]: boolean;
+  };
+};

@@ -10,11 +10,13 @@ export const EXTENSION_TOKEN_ID = 'nl.nldesignsystem.theme-wizard.token-id';
 export const EXTENSION_USAGE_COUNT = 'nl.nldesignsystem.theme-wizard.usage-count';
 export const EXTENSION_AUTHORED_AS = 'nl.nldesignsystem.theme-wizard.css-authored-as';
 export const EXTENSION_CSS_PROPERTIES = 'nl.nldesignsystem.theme-wizard.css-properties';
+export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.theme-wizard.token-subtype';
 
 export const TokenExtensionsSchema = z.object({
   [EXTENSION_AUTHORED_AS]: z.string(),
   [EXTENSION_CSS_PROPERTIES]: z.array(z.string()),
   [EXTENSION_TOKEN_ID]: z.string(),
+  [EXTENSION_TOKEN_SUBTYPE]: z.union([z.literal('font-size')]).optional(),
   [EXTENSION_USAGE_COUNT]: z.int().positive(),
 });
 export type TokenExtensions = z.infer<typeof TokenExtensionsSchema>;

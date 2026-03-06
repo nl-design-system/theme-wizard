@@ -35,3 +35,11 @@ const scraperUrl = withRelatedProject({
     margin-block-start: 0;
   }
 </style>
+
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  document.querySelector('theme-wizard-app')?.addEventListener('scrape-success', () => {
+    navigate('/staging-tokens')
+  })
+</script>

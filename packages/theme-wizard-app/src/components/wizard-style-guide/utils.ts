@@ -51,23 +51,6 @@ export function stringifyTokenValue(token: unknown): string {
   return value.toString();
 }
 
-export function renderColorSample(displayValue: string, tokenId?: string) {
-  return html`
-    <svg
-      role="img"
-      xmlns="http://www.w3.org/2000/svg"
-      class="nl-color-sample"
-      style="color: ${displayValue};"
-      aria-labelledby=${tokenId}
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-    >
-      <path d="M0 0H32V32H0Z" fill="currentcolor" />
-    </svg>
-  `;
-}
-
 export function renderFontSizeExample(displayValue: string) {
   return html`
     <clippy-html-image>
@@ -140,7 +123,7 @@ export function renderLineHeightExample(displayValue: string | number) {
 export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
   switch (token.tokenType) {
     case 'color':
-      return renderColorSample(token.displayValue);
+      return html`<wizard-color-sample color=${token.displayValue}></wizard-color-sample>`;
     case 'fontSize':
       return renderFontSizeExample(token.displayValue);
     case 'fontFamily':

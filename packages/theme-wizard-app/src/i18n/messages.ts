@@ -43,6 +43,14 @@ export const en = {
     submit: 'Analyze',
     success: 'Done! Found {{tokenCount}} tokens.',
   },
+  stagedTokens: {
+    count: 'Count',
+    preview: 'Preview',
+    staged: 'Staged',
+    title: 'Selected design tokens',
+    type: 'Type',
+    value: 'Value',
+  },
   styleGuide: {
     details: 'Details',
     detailsDialog: {
@@ -330,6 +338,14 @@ export const nl = {
     scrapeFailed: `Kan "{{url}}" niet analyseren`,
     submit: 'Analyseer',
     success: 'Gereed, {{tokenCount}} tokens gevonden',
+  },
+  stagedTokens: {
+    count: 'Aantal',
+    preview: 'Voorvertoning',
+    staged: 'Geselecteerd',
+    title: 'Geselecteerde design tokens',
+    type: 'Type',
+    value: 'Waarde',
   },
   styleGuide: {
     details: 'Details',
