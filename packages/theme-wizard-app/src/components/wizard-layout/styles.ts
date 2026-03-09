@@ -58,6 +58,7 @@ export default css`
     inline-size: 100%;
     min-block-size: 100%;
     padding-inline: var(--basis-space-inline-xl);
+    scroll-margin: var(--basis-space-block-6xl);
   }
 
   @media print {

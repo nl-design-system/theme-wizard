@@ -11,10 +11,8 @@ declare global {
   }
 }
 
-type ContainerWidth = 'default' | 'page' | 'sm' | 'md' | 'lg' | 'xl';
-
 /* eslint-disable perfectionist/sort-objects */
-const CLASSNAME_MAP: Record<ContainerWidth, string> = {
+const CLASSNAME_MAP = {
   default: '',
   page: 'wizard-container--page',
   sm: 'wizard-container--sm',
@@ -23,6 +21,8 @@ const CLASSNAME_MAP: Record<ContainerWidth, string> = {
   xl: 'wizard-container--xl',
 };
 /* eslint-enable perfectionist/sort-objects */
+
+type ContainerWidth = keyof typeof CLASSNAME_MAP;
 
 @customElement(tag)
 export class WizardContainer extends LitElement {

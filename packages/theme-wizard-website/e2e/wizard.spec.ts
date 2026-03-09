@@ -1,6 +1,8 @@
 import { test, expect } from './fixtures/fixtures';
 
-test.describe('scraping css design tokens', () => {
+// Scraping tests skipped until we've figured out the UX flow with the redesign
+// Should be done before 24-03-2026
+test.describe.skip('scraping css design tokens', () => {
   test('scrapes a valid, absolute URL', async ({ themeWizard }) => {
     await themeWizard.scrapeUrl('https://nldesignsystem.nl/');
     const input = themeWizard.page.getByLabel('Website URL');

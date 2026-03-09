@@ -3,6 +3,8 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
+import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { type ColorToken as ColorTokenType, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import Color from 'colorjs.io';
@@ -37,6 +39,8 @@ export class WizardStyleGuideColors extends LitElement {
     unsafeCSS(tableCss),
     unsafeCSS(colorSampleCss),
     unsafeCSS(codeCss),
+    unsafeCSS(paragraphCss),
+    unsafeCSS(linkCss),
     styles,
   ];
 
@@ -135,9 +139,9 @@ export class WizardStyleGuideColors extends LitElement {
                 )}
               </tbody>
             </table>
-            <utrecht-paragraph>
-              <a target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
-            </utrecht-paragraph>
+            <p class="nl-paragraph">
+              <a class="nl-link" target="_blank" href=${t(`tokens.fieldLabels.basis.color.${key}.docs`)}>docs</a>
+            </p>
           `;
         })}
       </div>

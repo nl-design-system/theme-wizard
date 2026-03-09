@@ -14,7 +14,7 @@ export default css`
 
     align-content: center;
     border-block-start-style: solid;
-    border-block-start-width: 4px;
+    border-block-start-width: var(--basis-border-width-lg);
     border-color: var(--basis-color-transparent);
     box-sizing: border-box;
     display: block;

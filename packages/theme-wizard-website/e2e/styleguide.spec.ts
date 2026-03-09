@@ -13,7 +13,7 @@ test('page has accessibility basics', async ({ page }) => {
 
 test('page uses values as stored by the configuration page', async ({ page }) => {
   // Set Accent 1 to red
-  await page.goto('/');
+  await page.goto('/basis-tokens');
   const accent1Input = page.getByLabel('Accent 1');
   await accent1Input.fill('#800000');
   await accent1Input.blur();

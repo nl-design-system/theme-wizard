@@ -51,16 +51,6 @@ export function stringifyTokenValue(token: unknown): string {
   return value.toString();
 }
 
-export function renderFontSizeExample(displayValue: string) {
-  return html`<wizard-font-sample size=${displayValue}></wizard-font-sample>`;
-}
-
-export function renderFontFamilyExample(displayValue: string) {
-  return html`
-    <wizard-font-sample family=${displayValue} size="var(--basis-text-font-size-2xl)"></wizard-font-sample>
-  `;
-}
-
 export function renderSpacingExample(value: string, space: string = 'block') {
   return html`
     <clippy-html-image>
@@ -78,46 +68,19 @@ export function renderSpacingExample(value: string, space: string = 'block') {
   `;
 }
 
-export function renderFontWeightExample(displayValue: string | number) {
-  return html`
-    <clippy-html-image>
-      <span slot="label">${t('styleGuide.sections.typography.fontWeight.sample')}</span>
-      <utrecht-paragraph
-        style="--utrecht-paragraph-font-size: var(--basis-text-font-size-2xl); --utrecht-paragraph-font-weight: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"
-      >
-        Op brute wijze ving de schooljuf de quasi-kalme lynx.
-      </utrecht-paragraph>
-    </clippy-html-image>
-  `;
-}
-
-export function renderLineHeightExample(displayValue: string | number) {
-  return html`
-    <clippy-html-image>
-      <span slot="label">${t('styleGuide.sections.typography.fontWeight.sample')}</span>
-      <utrecht-paragraph
-        style="--utrecht-paragraph-font-size: var(--basis-text-font-size-xl); --utrecht-paragraph-line-height: ${displayValue}; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; outline: 1px solid"
-      >
-        Op brute wijze ving de schooljuf de quasi-kalme lynx.
-      </utrecht-paragraph>
-    </clippy-html-image>
-  `;
-}
-
 export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
   switch (token.tokenType) {
     case 'color':
       return html`<wizard-color-sample color=${token.displayValue}></wizard-color-sample>`;
     case 'fontSize':
-      return renderFontSizeExample(token.displayValue);
+      return html`<wizard-font-sample size=${token.displayValue}></wizard-font-sample>`;
     case 'fontFamily':
-      return renderFontFamilyExample(token.displayValue);
+      return html`<wizard-font-sample
+        family=${token.displayValue}
+        size="var(--basis-text-font-size-xl)"
+      ></wizard-font-sample>`;
     case 'dimension':
       return renderSpacingExample(token.displayValue, token.metadata?.['space']);
-    case 'fontWeight':
-      return renderFontWeightExample(token.displayValue);
-    case 'lineHeight':
-      return renderLineHeightExample(token.displayValue);
     default:
       return nothing;
   }

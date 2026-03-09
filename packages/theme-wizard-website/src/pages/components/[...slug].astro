@@ -77,8 +77,8 @@ const storiesWithTokens = stories.map(([id, story]) => {
 
       <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
       <nav slot="sidebar">
-        {componentList.map(({slug, title}) => (
-          <wizard-sidebar-link href={`/components/${slug}`}>{title}</wizard-sidebar-link>
+        {componentList.map(({slug: componentSlug, title}) => (
+          <wizard-sidebar-link href={`/components/${componentSlug}`} current={componentSlug === slug ? 'page' : undefined}>{title}</wizard-sidebar-link>
         ))}
       </nav>
       <main slot="main" class="wizard-main">

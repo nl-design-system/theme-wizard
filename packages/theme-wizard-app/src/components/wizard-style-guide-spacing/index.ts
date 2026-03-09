@@ -2,6 +2,8 @@ import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
+import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { type DimensionToken } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
@@ -34,7 +36,14 @@ export class WizardStyleGuideSpacing extends LitElement {
 
   @state() private activeToken?: DisplayToken;
 
-  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(tableCss), unsafeCSS(codeCss), styles];
+  static override readonly styles = [
+    unsafeCSS(dataBadgeCss),
+    unsafeCSS(tableCss),
+    unsafeCSS(codeCss),
+    unsafeCSS(paragraphCss),
+    unsafeCSS(linkCss),
+    styles,
+  ];
 
   #prepareSpaceTokens(basis: Record<string, unknown>, space: string, tokenUsage: Map<string, string[]>): SpaceToken[] {
     return Object.entries((basis['space'] as Record<string, unknown>)[space] as Record<string, unknown>)
@@ -67,9 +76,15 @@ export class WizardStyleGuideSpacing extends LitElement {
 
     return html`
       <div class="wizard-style-guide">
-        <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/" target="_blank"> docs </a>
-        </utrecht-paragraph>
+        <p class="nl-paragraph">
+          <a
+            class="nl-link"
+            href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/"
+            target="_blank"
+          >
+            docs
+          </a>
+        </p>
 
         ${spacingData.map(({ space, tokens }) => {
           const captionId = `styleguide-section-space-${space}-title`;
@@ -123,11 +138,15 @@ export class WizardStyleGuideSpacing extends LitElement {
               </tbody>
             </table>
 
-            <utrecht-paragraph>
-              <a href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/#${space}" target="_blank">
+            <p class="nl-paragraph">
+              <a
+                class="nl-link"
+                href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/#${space}"
+                target="_blank"
+              >
                 docs
               </a>
-            </utrecht-paragraph>
+            </p>
           `;
         })}
       </div>

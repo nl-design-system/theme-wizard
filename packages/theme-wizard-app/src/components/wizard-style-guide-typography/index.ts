@@ -2,8 +2,10 @@ import type { DesignToken } from 'style-dictionary/types';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
-import '@nl-design-system-community/clippy-components/clippy-heading';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
+import '@nl-design-system-community/clippy-components/clippy-heading';
+import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
+import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
 import { type ModernDimensionToken } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
@@ -15,13 +17,7 @@ import type { DisplayToken, FontFamilyToken, FontSizeToken } from '../wizard-sty
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import styles from '../wizard-style-guide/styles';
-import {
-  countUsagePerToken,
-  openTokenDialog,
-  renderFontFamilyExample,
-  renderFontSizeExample,
-  renderTokenDialog,
-} from '../wizard-style-guide/utils';
+import { countUsagePerToken, openTokenDialog, renderTokenDialog } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-style-guide-typography';
 
@@ -39,12 +35,17 @@ export class WizardStyleGuideTypography extends LitElement {
 
   @state() private activeToken?: DisplayToken;
 
-  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(tableCss), unsafeCSS(codeCss), styles];
+  static override readonly styles = [
+    unsafeCSS(dataBadgeCss),
+    unsafeCSS(tableCss),
+    unsafeCSS(codeCss),
+    unsafeCSS(linkCss),
+    unsafeCSS(paragraphCss),
+    styles,
+  ];
 
   #linkToGoogleFontsSpecimen(family: string): string | null {
-    const googleFont = googleFonts.find((font) => {
-      return font.label === family;
-    });
+    const googleFont = googleFonts.find((font) => font.label === family);
     if (!googleFont) return null;
     return `https://fonts.google.com/specimen/${googleFont.label.replaceAll(/\s+/g, '+')}`;
   }
@@ -108,13 +109,16 @@ export class WizardStyleGuideTypography extends LitElement {
               ({ name, displayValue, googleFontsSpecimen, tokenId, usage }) => html`
                 <tr class="utrecht-table__row">
                   <td class="utrecht-table__cell">
-                    ${renderFontFamilyExample(displayValue)}
+                    <wizard-font-sample
+                      family=${displayValue}
+                      size="var(--basis-text-font-size-xl)"
+                    ></wizard-font-sample>
                     ${googleFontsSpecimen
-                      ? html`<utrecht-paragraph>
-                          <a href=${googleFontsSpecimen} rel="external noreferrer" target="_blank">
+                      ? html`<p class="nl-paragraph">
+                          <a class="nl-link" href=${googleFontsSpecimen} rel="external noreferrer" target="_blank">
                             ${t('tokens.showOnGoogleFonts')}
                           </a>
-                        </utrecht-paragraph>`
+                        </p>`
                       : nothing}
                   </td>
                   <td class="utrecht-table__cell">
@@ -141,11 +145,15 @@ export class WizardStyleGuideTypography extends LitElement {
           </tbody>
         </table>
 
-        <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype" target="_blank">
+        <p class="nl-paragraph">
+          <a
+            class="nl-link"
+            href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype"
+            target="_blank"
+          >
             docs
           </a>
-        </utrecht-paragraph>
+        </p>
 
         <table class="utrecht-table">
           <caption class="utrecht-table__caption">
@@ -163,7 +171,9 @@ export class WizardStyleGuideTypography extends LitElement {
             ${fontSizes.map(
               ({ name, displayValue, tokenId, usage }) => html`
                 <tr class="utrecht-table__row">
-                  <td class="utrecht-table__cell">${renderFontSizeExample(displayValue)}</td>
+                  <td class="utrecht-table__cell">
+                    <wizard-font-sample size=${displayValue}></wizard-font-sample>
+                  </td>
                   <td class="utrecht-table__cell">
                     <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(tokenId)}>
                       <span class="nl-data-badge" id="${`basis-text-font-size-${name}`}">${tokenId}</span>
@@ -187,11 +197,15 @@ export class WizardStyleGuideTypography extends LitElement {
             )}
           </tbody>
         </table>
-        <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte" target="_blank">
+        <p class="nl-paragraph">
+          <a
+            class="nl-link"
+            href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte"
+            target="_blank"
+          >
             docs
           </a>
-        </utrecht-paragraph>
+        </p>
 
         <table class="utrecht-table">
           <caption class="utrecht-table__caption">
@@ -229,9 +243,9 @@ export class WizardStyleGuideTypography extends LitElement {
             })}
           </tbody>
         </table>
-        <utrecht-paragraph>
-          <a href="https://nldesignsystem.nl/heading/" target="_blank">docs</a>
-        </utrecht-paragraph>
+        <p class="nl-paragraph">
+          <a class="nl-link" href="https://nldesignsystem.nl/heading/" target="_blank">docs</a>
+        </p>
       </div>
 
       ${renderTokenDialog(this.activeToken)}
