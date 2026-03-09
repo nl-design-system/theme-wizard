@@ -21,6 +21,12 @@ import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'wizard-colorscale-input': WizardColorscaleInput;
+  }
+}
+
 type ColorScaleObject = Record<string, ColorTokenType>;
 
 const DEFAULT_FROM = new ColorToken({
@@ -222,10 +228,6 @@ export class WizardColorscaleInput extends WizardTokenInput {
           .value=${this.currentColorValue}
           @change=${this.handleColorChange}
         >
-          <div slot="label" class="wizard-colorscale-input__label">
-            <div>${this.label}</div>
-            <slot name="extra-label"></slot>
-          </div>
         </clippy-color-combobox>
         <div
           role="presentation"
@@ -245,11 +247,5 @@ export class WizardColorscaleInput extends WizardTokenInput {
         </div>
       </div>
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'wizard-colorscale-input': WizardColorscaleInput;
   }
 }

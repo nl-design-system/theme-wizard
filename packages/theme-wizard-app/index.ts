@@ -22,3 +22,4 @@ import './src/components/wizard-style-guide-components';
 import './src/components/wizard-theme-reset-button';
 import './src/components/wizard-tokens-download';
 import './src/components/wizard-tokens-form';
+import './src/components/wizard-stack';
