@@ -30,11 +30,12 @@ export default css`
     padding-inline-end: var(--basis-space-inline-xl);
     vertical-align: middle;
 
-    @media (hover) {
-      .icon {
-        transition: transform 0.1s ease-out;
-      }
+    & .icon {
+      transition: transform 0.1s ease-out;
+      color: var(--basis-color-accent-1-color-subtle);
+    }
 
+    @media (hover) {
       &:hover .icon {
         transform: translateX(var(--basis-space-inline-sm));
       }

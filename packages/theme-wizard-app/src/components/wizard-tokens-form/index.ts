@@ -1,7 +1,6 @@
 import { consume } from '@lit/context';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-import { LitElement, html, unsafeCSS } from 'lit';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import '../wizard-layout';
 import '../wizard-preview';
@@ -10,6 +9,7 @@ import '../wizard-font-input';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
@@ -44,7 +44,8 @@ export class WizardTokensForm extends LitElement {
     this.displayMode = newMode;
   };
 
-  private readonly showInitialMode = () => {
+  private readonly showInitialMode = (event: MouseEvent) => {
+    event.preventDefault();
     this.displayMode = 'initial';
   };
 
@@ -60,6 +61,7 @@ export class WizardTokensForm extends LitElement {
       stroke-linecap="round"
       stroke-linejoin="round"
       class="icon"
+      aria-hidden="true"
     >
       <path d="M9 6l6 6l-6 6" />
     </svg>`;
@@ -155,7 +157,9 @@ export class WizardTokensForm extends LitElement {
                       <clippy-heading level="4">
                         ${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
                       </clippy-heading>
-                      <p class="nl-paragraph">Dit is de belangrijkste kleur van het hele ding.</p>
+                      <p class="nl-paragraph">
+                        PLACEHOLDER: hier moet de tekst komen uit de NLDS documentatie package.
+                      </p>
                       <wizard-colorscale-input
                         key=${colorKey}
                         label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
