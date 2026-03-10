@@ -20,7 +20,7 @@ export default css`
   }
 
   .wizard-tokens-form__section-links {
-    border-block-start: 1px solid var(--basis-color-accent-1-border-subtle);
+    border-block-start: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle);
   }
 
   .wizard-tokens-form__section-link {
@@ -28,7 +28,7 @@ export default css`
     --nl-link-hover-color: var(--basis-color-accent-1-color-hover);
     --nl-link-text-decoration-color: var(--basis-color-transparent);
 
-    border-block-end: 1px solid var(--basis-color-accent-1-border-subtle);
+    border-block-end: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle);
     display: flex;
     font-size: var(--basis-text-font-size-md);
     font-weight: var(--basis-text-font-weight-bold);
