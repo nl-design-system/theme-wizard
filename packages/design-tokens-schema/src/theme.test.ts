@@ -5,7 +5,7 @@ import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
 import * as z from 'zod';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
-import { EXTENSION_RESOLVED_AS } from './resolve-refs';
+import { EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import {
   ThemeSchema,
   type Theme,
@@ -619,6 +619,57 @@ describe('validating color contrast', () => {
       dset(config, 'basis.color.default.bg-default', white);
       dset(config, 'clippy.button.color', { $type: 'color', $value: '{basis.color.default.color-subtle}' });
       dset(config, 'clippy.button.background-color', { $type: 'color', $value: '{basis.color.default.bg-default}' });
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error!.issues).toEqual(expectedIssues);
+    });
+
+    it('has custom contrast settinf for disabled states', () => {
+      const config = {};
+      dset(config, 'clippy.button.disabled.color', lightGray);
+      dset(config, 'clippy.button.disabled.background-color', white);
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error!.issues).toEqual([
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 3,
+          origin: 'number',
+          path: 'clippy.button.disabled.color.$value'.split('.'),
+          tokens: ['clippy.button.disabled.color', 'clippy.button.disabled.background-color'],
+        },
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 3,
+          origin: 'number',
+          path: 'clippy.button.disabled.background-color.$value'.split('.'),
+          tokens: ['clippy.button.disabled.background-color', 'clippy.button.disabled.color'],
+        },
+      ]);
+    });
+
+    it('leaves existing contrast extensions alone', () => {
+      const config = {};
+      dset(config, 'clippy.button.color', lightGray);
+      dset(config, 'clippy.button.background-color', white);
+      dset(config, `clippy.button.color.$extensions.${EXTENSION_CONTRAST_WITH}`, [
+        {
+          color: {
+            $extensions: {
+              [EXTENSION_RESOLVED_FROM]: `{clippy.button.hover.background-color'}`,
+            },
+            $type: 'color',
+            $value: white.$value,
+          },
+          expectedRatio: 1,
+        },
+      ]);
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
       expect(result.error!.issues).toEqual(expectedIssues);

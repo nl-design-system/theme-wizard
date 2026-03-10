@@ -155,13 +155,7 @@ export const addBasisContrastExtensions = (rootConfig: Record<string, unknown>) 
         expectedRatio,
       } satisfies ContrastExtension;
 
-      const existing = color['$extensions']?.[EXTENSION_CONTRAST_WITH];
-
-      if (Array.isArray(existing)) {
-        setExtension(color, EXTENSION_CONTRAST_WITH, [...existing, contrastWith]);
-      } else {
-        setExtension(color, EXTENSION_CONTRAST_WITH, [contrastWith]);
-      }
+      setExtension(color, EXTENSION_CONTRAST_WITH, [contrastWith]);
     }
   });
   return rootConfig;
@@ -208,13 +202,7 @@ export const addComponentContrastExtensions = (rootConfig: Record<string, unknow
         expectedRatio,
       } satisfies ContrastExtension;
 
-      const existing = foregroundColor['$extensions']?.[EXTENSION_CONTRAST_WITH];
-
-      if (Array.isArray(existing)) {
-        setExtension(foregroundColor, EXTENSION_CONTRAST_WITH, [...existing, contrastExtension]);
-      } else {
-        setExtension(foregroundColor, EXTENSION_CONTRAST_WITH, [contrastExtension]);
-      }
+      setExtension(foregroundColor, EXTENSION_CONTRAST_WITH, [contrastExtension]);
     },
   );
 
