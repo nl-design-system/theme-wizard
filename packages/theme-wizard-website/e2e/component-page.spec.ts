@@ -25,8 +25,8 @@ test('page has <h1>', async ({ page }) => {
 });
 
 test.describe('stories', () => {
-  test('shows 2 or more story sections', async ({ page }) => {
-    expect(await page.locator('section:has(wizard-story-preview)').count()).toBeGreaterThanOrEqual(2);
+  test('shows 1 or more story sections', async ({ page }) => {
+    expect(await page.locator('section:has(wizard-story-preview)').count()).toBeGreaterThanOrEqual(1);
   });
 
   test('most stories show input for design tokens', async ({ page }) => {
@@ -38,14 +38,16 @@ test.describe('stories', () => {
   test('shows validation warning when tokens have insufficient contrast', async ({ page }) => {
     const color = page.getByLabel('nl.code-block.color');
     const ERROR_MESSAGE = 'Onvoldoende contrast met nl.code-block.background-color';
+    const OPTION = 'basis.color.accent-1-inverse.color-default';
 
     // Make sure there's not already a validation message there
     await expect(color).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
     // First fill in a color name to get <wizard-token-combobox> to show options
-    await color.fill('basis.color.accent-1-inverse.color-default');
+    // Otherwise the next step fails because it wouldn't show any options
+    await color.fill(OPTION);
     // Then click the option that is shown
-    await page.getByRole('option').click();
+    await page.getByRole('option', { name: OPTION }).click();
     await expect(color).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
   });
 });

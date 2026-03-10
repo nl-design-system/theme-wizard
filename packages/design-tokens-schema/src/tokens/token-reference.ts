@@ -31,9 +31,9 @@ export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
 export const isTokenLike = (obj: unknown): obj is BaseDesignToken => {
   if (!isValueObject(obj)) return false;
   // Must have a `$type: string`
-  if (!('$type' in obj) || typeof obj['$type'] !== 'string') return false;
+  if (!Object.hasOwn(obj, '$type') || typeof obj['$type'] !== 'string') return false;
   // Must have a `$value`
-  return '$value' in obj;
+  return Object.hasOwn(obj, '$value');
 };
 
 /** @deprecated use `BaseDesignToken` instead */

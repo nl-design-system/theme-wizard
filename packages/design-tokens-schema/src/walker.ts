@@ -28,7 +28,9 @@ export const walkObject = <T = unknown>(
       visited.add(currentData);
 
       for (const key in currentData) {
-        traverse((currentData as Record<string, unknown>)[key], [...path, key]);
+        if (Object.hasOwn(currentData, key)) {
+          traverse((currentData as Record<string, unknown>)[key], [...path, key]);
+        }
       }
     }
 
@@ -44,13 +46,12 @@ export const walkObject = <T = unknown>(
 };
 
 export const isColorToken = (token: unknown): token is ColorToken => {
+  if (!isValueObject(token)) return false;
   return (
-    typeof token === 'object' &&
-    token !== null &&
-    '$type' in token &&
-    token.$type === 'color' &&
-    '$value' in token &&
-    (isRef(token.$value) || isValueObject(token.$value))
+    Object.hasOwn(token, '$type') &&
+    token['$type'] === 'color' &&
+    Object.hasOwn(token, '$value') &&
+    (isRef(token['$value']) || isValueObject(token['$value']))
   );
 };
 

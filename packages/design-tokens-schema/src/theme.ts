@@ -80,7 +80,7 @@ export const addComponentFontSizeLineHeightPairs = (initialMap: Map<string, stri
       componentTokens,
       (obj) => isValueObject(obj),
       (obj, path) => {
-        if ('line-height' in obj && 'font-size' in obj) {
+        if (Object.hasOwn(obj, 'line-height') && Object.hasOwn(obj, 'font-size')) {
           const tokenPath = path.join('.');
           result.set(`${tokenPath}.font-size`, `${tokenPath}.line-height`);
         }
@@ -216,7 +216,7 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
     (token): token is Record<string, unknown> & { original: { $value: TokenReference } } => {
       if (!isValueObject(token)) return false;
       if (!isValueObject(token['original'])) return false;
-      if (!('$value' in token['original'])) return false;
+      if (!Object.hasOwn(token['original'], '$value')) return false;
       return isRef(token['original']['$value']);
     },
     // Place `original.$value` in `$value`
