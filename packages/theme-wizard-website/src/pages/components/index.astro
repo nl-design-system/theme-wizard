@@ -2,9 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import { components } from '@/lib/components'
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, module]) => {
-  const componentModule = await module()
-  const title = componentModule.default.title
+const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
   return {
     slug,
     title

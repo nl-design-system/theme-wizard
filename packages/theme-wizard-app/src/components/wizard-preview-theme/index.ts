@@ -23,6 +23,7 @@ export class PreviewTheme extends LitElement {
 
     this.shadowRoot?.adoptedStyleSheets.push(this.theme.stylesheet);
   }
+
   protected override render() {
     return html`<slot></slot>`;
   }

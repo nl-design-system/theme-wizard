@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import WithPageNav from '@/components/WithPageNav.astro';
+import dlv from 'dlv'
 import { components } from '@/lib/components'
 import { Traverse } from 'neotraverse/modern'
-import dlv from 'dlv'
+import { getStories } from '../../../../../theme-wizard-app/src/utils/csf-utils'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
 import '@nl-design-system-candidate/link-css/link.css'
-import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils'
+import './index.css';
 
 type StoryObject = {
   name?: string;
@@ -23,18 +24,17 @@ export function getStaticPaths() {
   }))
 }
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, module]) => {
-  const componentModule = await module()
+const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
   return {
     slug,
-    title: componentModule.default.title
+    title,
   }
 }))
 
 const slug = Astro.params.slug as keyof typeof components
 const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl')
 nlDesignSystemDocsUrl.pathname = slug
-const componentModulePromiseFn = components[slug]
+const componentModulePromiseFn = components[slug].stories
 const componentModule = await componentModulePromiseFn()
 const { default: meta, ...storyExports } = componentModule
 const stories = getStories(storyExports as unknown as Record<PropertyKey, StoryObject>, meta)
@@ -87,8 +87,9 @@ const storiesWithTokens = stories.map(([id, story]) => {
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a class="nl-link" href="/">Wizard</a> /
-          <a class="nl-link" href="/components">Componenten</a> /
-          <span>{slug}</span>
+          <a class="nl-link" href="/components">componenten</a> /
+          <a class="nl-link" href={`/components/${slug}`}>{slug}</a> /
+          <span>tokens</span>
         </nav>
 
         <clippy-heading level="1">{slug}</clippy-heading>
