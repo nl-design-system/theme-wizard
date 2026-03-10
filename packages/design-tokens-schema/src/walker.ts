@@ -1,7 +1,7 @@
 import { BaseDesignToken } from './tokens/base-token';
 import { ColorToken } from './tokens/color-token';
 import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
-import { isTokenLike, isTokenWithRef, type TokenWithRefLike } from './tokens/token-reference';
+import { isRef, isTokenLike, isTokenWithRef, isValueObject, type TokenWithRefLike } from './tokens/token-reference';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 
 /**
@@ -43,8 +43,15 @@ export const walkObject = <T = unknown>(
   traverse(root, []);
 };
 
-const isColorToken = (token: unknown): token is ColorToken => {
-  return typeof token === 'object' && token !== null && '$type' in token && token.$type === 'color';
+export const isColorToken = (token: unknown): token is ColorToken => {
+  return (
+    typeof token === 'object' &&
+    token !== null &&
+    '$type' in token &&
+    token.$type === 'color' &&
+    '$value' in token &&
+    (isRef(token.$value) || isValueObject(token.$value))
+  );
 };
 
 export const walkColors = (root: unknown, callback: (token: ColorToken, path: string[]) => void): void => {

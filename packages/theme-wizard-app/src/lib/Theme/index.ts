@@ -120,6 +120,10 @@ export default class Theme {
     return dlv(this.tokens, path);
   }
 
+  issuesAt(path: string): ValidationIssue[] {
+    return this.#validationIssues.filter((issue) => issue.path.startsWith(path));
+  }
+
   get errorCount(): number {
     return this.#validationIssues.length;
   }

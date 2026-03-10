@@ -34,7 +34,6 @@ export class WizardTokenField extends WizardTokenNavigator {
   private readonly theme!: Theme;
   @property() label: string = '';
   @property() path: string = '';
-  @property({ attribute: false }) errors: ValidationIssue[] = [];
   @property({ type: Number }) depth = 0;
   #options: Option[] = [];
 
@@ -108,18 +107,14 @@ export class WizardTokenField extends WizardTokenNavigator {
 
   get #hasNestedErrors(): boolean {
     if (!this.path) {
-      return this.errors.length > 0;
+      return this.theme.issues.length > 0;
     }
 
-    return this.errors.some((error) => error.path.startsWith(this.path + '.'));
+    return this.theme.issues.some((error) => error.path.startsWith(this.path + '.'));
   }
 
   protected get pathErrors(): ValidationIssue[] {
-    return this.errors.filter((error) => error.path === this.path);
-  }
-
-  #getChildPathErrors(childPath: string): ValidationIssue[] {
-    return this.errors.filter((error) => error.path.startsWith(childPath));
+    return this.theme.issuesAt(this.path);
   }
 
   get entries() {
@@ -183,11 +178,7 @@ export class WizardTokenField extends WizardTokenNavigator {
                   const depth = this.depth + 1;
                   return html`
                     <li key=${key}>
-                      <wizard-token-field
-                        .errors=${this.#getChildPathErrors(path)}
-                        path=${path}
-                        depth=${depth}
-                      ></wizard-token-field>
+                      <wizard-token-field path=${path} depth=${depth}></wizard-token-field>
                     </li>
                   `;
                 })}

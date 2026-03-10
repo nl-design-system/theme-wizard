@@ -37,13 +37,16 @@ import {
   createMinLineHeightIssue,
 } from './validation-issue';
 import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM, validateMinLineHeight, remToPx } from './validations';
-import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
+import { isColorToken, walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
 
+export const MIN_CONTRAST_DISABLED = 3;
+export const MIN_CONTRAST_FUNCTIONAL = 4.5;
+
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  resolveRefs(rootConfig['basis'], rootConfig);
+  resolveRefs(rootConfig, rootConfig);
   return rootConfig;
 };
 
@@ -112,8 +115,13 @@ export type ContrastExtension = {
   expectedRatio: number;
 };
 
+/**
+ * Add "nl.nldesignsystem.contrast-with" to color $extensions for known background/foreground colors in basis tokens
+ */
 export const addBasisContrastExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
+    if (path.at(0) !== 'basis') return;
+
     const lastPath = path.at(-1)! as ForegroundColorKey | BorderColorKey;
 
     // Check that we have listed this color to have a known contrast counterpart
@@ -156,6 +164,60 @@ export const addBasisContrastExtensions = (rootConfig: Record<string, unknown>) 
       }
     }
   });
+  return rootConfig;
+};
+
+type ComponentConfig = { color: ColorToken; 'background-color': ColorToken };
+
+/**
+ * Add "nl.nldesignsystem.contrast-with" to color $extensions for background/foreground colors in component tokens that
+ * are defined on the same level/depth
+ */
+export const addComponentContrastExtensions = (rootConfig: Record<string, unknown>) => {
+  walkObject<ComponentConfig>(
+    rootConfig,
+    (obj, path): obj is ComponentConfig => {
+      // Basis tokens have their own contrast settings
+      if (path.at(0) === 'basis') return false;
+
+      if (isValueObject(obj) && isColorToken(obj['color']) && isColorToken(obj['background-color'])) {
+        // Make sure we only get to compare colors where alpha=1
+        const value = isRef(obj['background-color'].$value)
+          ? dlv(rootConfig, obj['background-color'].$value.slice(1, -1))?.$value
+          : obj['background-color'].$value;
+        if (typeof value?.alpha === 'number' && value.alpha === 1) {
+          return true;
+        }
+      }
+      return false;
+    },
+    (obj, path) => {
+      const expectedRatio = path.includes('disabled') ? MIN_CONTRAST_DISABLED : MIN_CONTRAST_FUNCTIONAL;
+
+      const foregroundColor = obj['color'];
+      const bgColor = obj['background-color'];
+
+      const contrastExtension = {
+        color: {
+          $extensions: {
+            [EXTENSION_RESOLVED_FROM]: `{${[...path, 'background-color'].join('.')}}`,
+          },
+          $type: 'color',
+          $value: getActualValue(bgColor),
+        },
+        expectedRatio,
+      } satisfies ContrastExtension;
+
+      const existing = foregroundColor['$extensions']?.[EXTENSION_CONTRAST_WITH];
+
+      if (Array.isArray(existing)) {
+        setExtension(foregroundColor, EXTENSION_CONTRAST_WITH, [...existing, contrastExtension]);
+      } else {
+        setExtension(foregroundColor, EXTENSION_CONTRAST_WITH, [contrastExtension]);
+      }
+    },
+  );
+
   return rootConfig;
 };
 
@@ -204,7 +266,7 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
 
 /**
  * Strict preprocessing pipeline: includes all preprocessing for validation.
- * Clones input to avoid mutating the original object.
+ * Clones input to avoid mutating the original object. Mutates cloned input for performance reasons.
  */
 const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
@@ -217,6 +279,7 @@ const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   // Step 4: Add extensions
   data = addBasisContrastExtensions(data);
   data = addBasisColorScalePositionExtensions(data);
+  data = addComponentContrastExtensions(data);
   // Step 5: Add $value of referenced token in $extensions['resolved-as']
   data = resolveConfigRefs(data);
   return data;
