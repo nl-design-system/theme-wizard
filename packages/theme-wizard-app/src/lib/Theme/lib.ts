@@ -1,5 +1,6 @@
 import { isTokenLike } from '@nl-design-system-community/design-tokens-schema';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
+export const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + tokenPath.join('-');
 
 export const flattenTokens = (
   tokens: DesignTokens,
@@ -17,4 +18,59 @@ export const flattenTokens = (
   }
 
   return accumulator;
+};
+
+export type Token = { $value?: string; $type?: string; $extensions?: { [key: string]: unknown } }; //| { $type: unknown };
+export type TokenGroup = { $extensions?: { [key: string]: unknown } };
+export type TokenNode = { [key: string]: TokenNode | Token } & TokenGroup; //| { $type: unknown };
+export type TokenPath = string[];
+
+export function walkTokens(
+  obj: TokenNode,
+  callback: (path: TokenPath, t: Token) => void,
+  partialTokenPath: TokenPath = [],
+) {
+  if (Object.hasOwn(obj, '$type') || Object.hasOwn(obj, '$value')) {
+    callback(partialTokenPath, obj);
+  } else {
+    Object.keys(obj).flatMap((key) =>
+      typeof obj[key] === 'object' && obj[key] !== null
+        ? walkTokens(obj[key], callback, [...partialTokenPath, key])
+        : [],
+    );
+  }
+}
+
+/**
+ * Replace `{example.component.property}` with `var(--example-component-property)`
+ */
+export const refToCssVariable = (value: string): string =>
+  value.replace(/\{([^}]+)\}/g, (_, tokenName) => {
+    return `var(--${tokenName.replace(/\./g, '-')})`;
+  });
+
+export const tokensToStyle = (tokens: TokenGroup) => {
+  const style: { [index: string]: string } = {};
+
+  walkTokens(tokens, (path, token) => {
+    const cssProperty = `--${path.join('-')}`;
+    const cssValue = refToCssVariable(token.$value || '');
+
+    style[cssProperty] = cssValue;
+  });
+
+  return style;
+};
+
+export const tokensToUpdateMany = (tokens: TokenGroup) => {
+  const updateMany: { path: string; value: DesignToken['$value'] }[] = [];
+
+  walkTokens(tokens, (currentPath, token) => {
+    const path = currentPath.join('.');
+    const value = token.$value;
+
+    updateMany.push({ path, value });
+  });
+
+  return updateMany;
 };

@@ -3,20 +3,21 @@ import type { WizardStoryReact } from '@nl-design-system-community/theme-wizard-
 import { components } from '@/lib/components';
 
 export async function initStories(componentId: keyof typeof components, storyIds: string[]) {
-  const componentModulePromiseFn = components[componentId];
+  const componentModulePromiseFn = components[componentId].stories;
   const componentModule = await componentModulePromiseFn();
   const meta = componentModule.default;
 
   storyIds.forEach((name) => {
-    const container = document.querySelector(`[data-story-container="${name}"]`);
-    if (!container) return;
+    const containers = [...document.querySelectorAll(`[data-story-container="${name}"]`)];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Story = (componentModule as any)[name];
-    const storyRenderer = document.createElement('wizard-story-react') as WizardStoryReact;
-    storyRenderer.story = Story;
-    storyRenderer.componentMeta = meta;
-    storyRenderer.args = Story.args ?? {};
-    container.appendChild(storyRenderer);
+    containers.forEach((container) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const Story = (componentModule as any)[name];
+      const storyRenderer = document.createElement('wizard-story-react') as WizardStoryReact;
+      storyRenderer.story = Story;
+      storyRenderer.componentMeta = meta;
+      storyRenderer.args = Story.args ?? {};
+      container.appendChild(storyRenderer);
+    });
   });
 }

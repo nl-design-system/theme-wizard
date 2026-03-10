@@ -22,5 +22,6 @@ import './src/components/wizard-style-guide-colors';
 import './src/components/wizard-style-guide-spacing';
 import './src/components/wizard-style-guide-components';
 import './src/components/wizard-theme-reset-button';
+import './src/components/wizard-token-presets';
 import './src/components/wizard-tokens-download';
 import './src/components/wizard-tokens-form';
