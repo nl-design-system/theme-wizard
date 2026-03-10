@@ -9,12 +9,42 @@ import '../wizard-font-input';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
+import accent1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-1-intro.md?raw';
+import accent2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-2-intro.md?raw';
+import accent3Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-3-intro.md?raw';
+import action1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-action-1-intro.md?raw';
+import action2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-action-2-intro.md?raw';
+import defaultDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-default-intro.md?raw';
+import disabledDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-disabled-intro.md?raw';
+import highlightDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-highlight-intro.md?raw';
+import infoDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-info-intro.md?raw';
+import negativeDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-negative-intro.md?raw';
+import positiveDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-positive-intro.md?raw';
+import selectedDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-selected-intro.md?raw';
+import warningDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-warning-intro.md?raw';
+
+const COLOR_DOCS: Record<string, string> = {
+  'accent-1': accent1Docs,
+  'accent-2': accent2Docs,
+  'accent-3': accent3Docs,
+  'action-1': action1Docs,
+  'action-2': action2Docs,
+  default: defaultDocs,
+  disabled: disabledDocs,
+  highlight: highlightDocs,
+  info: infoDocs,
+  negative: negativeDocs,
+  positive: positiveDocs,
+  selected: selectedDocs,
+  warning: warningDocs,
+};
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import styles from './styles';
+import '@vanillawc/wc-markdown';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
 const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
@@ -70,29 +100,32 @@ export class WizardTokensForm extends LitElement {
   override render() {
     if (this.displayMode === 'initial') {
       return html`
-        <div class="wizard-tokens-form__section-links">
-          <a
-            class="nl-link wizard-tokens-form__section-link"
-            href="#typography"
-            @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'fonts')}
-          >
-            Typografie ${this.renderChevron()}
-          </a>
-          <a
-            class="nl-link wizard-tokens-form__section-link"
-            href="#colors"
-            @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'colors')}
-          >
-            Kleuren ${this.renderChevron()}
-          </a>
-          <a
-            class="nl-link wizard-tokens-form__section-link"
-            href="#spacing"
-            @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'spacing')}
-          >
-            Witruimte ${this.renderChevron()}
-          </a>
-        </div>
+        <wizard-stack size="xl">
+          <clippy-heading level="3">Huisstijl bewerken</clippy-heading>
+          <div class="wizard-tokens-form__section-links">
+            <a
+              class="nl-link wizard-tokens-form__section-link"
+              href="#typography"
+              @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'fonts')}
+            >
+              Typografie ${this.renderChevron()}
+            </a>
+            <a
+              class="nl-link wizard-tokens-form__section-link"
+              href="#colors"
+              @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'colors')}
+            >
+              Kleuren ${this.renderChevron()}
+            </a>
+            <a
+              class="nl-link wizard-tokens-form__section-link"
+              href="#spacing"
+              @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'spacing')}
+            >
+              Witruimte ${this.renderChevron()}
+            </a>
+          </div>
+        </wizard-stack>
       `;
     }
 
@@ -143,38 +176,27 @@ export class WizardTokensForm extends LitElement {
         <wizard-stack size="4xl">
           <a href="#" class="nl-link" @click=${this.showInitialMode}>← Terug naar overzicht</a>
           <clippy-heading level="3">Kleuren</clippy-heading>
+
           <wizard-stack size="3xl">
-            ${(() => {
-              const basis = this.theme.tokens['basis'];
-              const color =
-                typeof basis === 'object' && basis !== null && 'color' in basis ? basis['color'] : undefined;
-              const colorKeys = typeof color === 'object' && color !== null ? Object.keys(color) : [];
-              return colorKeys
-                .filter((name) => name !== 'transparent' && !name.includes('inverse'))
-                .map(
-                  (colorKey) => html`
-                    <wizard-stack size="lg" class="wizard-form__color-field">
-                      <clippy-heading level="4">
-                        ${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
-                      </clippy-heading>
-                      <p class="nl-paragraph">
-                        PLACEHOLDER: hier moet de tekst komen uit de NLDS documentatie package.
-                      </p>
-                      <wizard-colorscale-input
-                        key=${colorKey}
-                        label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
-                        id=${`basis.color.${colorKey}`}
-                        name=${`basis.color.${colorKey}`}
-                        .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
-                      >
-                      </wizard-colorscale-input>
-                      <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
-                        Meer informatie
-                      </a>
-                    </wizard-stack>
-                  `,
-                );
-            })()}
+            ${Object.entries(COLOR_DOCS).map(
+              ([colorKey, docs]) => html`
+                <wizard-stack size="lg" class="wizard-form__color-field">
+                  <clippy-heading level="4"> ${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)} </clippy-heading>
+                  <wc-markdown class="wizard-tokens-form__markdown">${docs}</wc-markdown>
+                  <wizard-colorscale-input
+                    key=${colorKey}
+                    label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
+                    id=${`basis.color.${colorKey}`}
+                    name=${`basis.color.${colorKey}`}
+                    .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
+                  >
+                  </wizard-colorscale-input>
+                  <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
+                    Meer informatie
+                  </a>
+                </wizard-stack>
+              `,
+            )}
           </wizard-stack>
           <clippy-button purpose="primary" @click=${this.showInitialMode}>Opslaan</clippy-button>
         </wizard-stack>

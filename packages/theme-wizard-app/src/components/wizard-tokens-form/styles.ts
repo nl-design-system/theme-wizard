@@ -12,6 +12,13 @@ export default css`
     }
   }
 
+  .wizard-tokens-form__markdown {
+    p {
+      margin-block: 0;
+      color: var(--basis-color-default-color-subtle);
+    }
+  }
+
   .wizard-tokens-form__section-links {
     border-block-start: 1px solid var(--basis-color-accent-1-border-subtle);
   }
@@ -47,7 +54,5 @@ export default css`
     --nl-heading-level-4-line-height: var(--basis-text-line-height-md);
     --nl-heading-level-4-margin-block-end: 0;
     --nl-heading-level-4-margin-block-start: 0;
-    --nl-paragraph-margin-block-end: 0;
-    --nl-paragraph-color: var(--basis-color-default-color-subtle);
   }
 `;

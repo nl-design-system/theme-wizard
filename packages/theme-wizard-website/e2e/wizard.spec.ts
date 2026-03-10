@@ -33,15 +33,23 @@ test.describe.skip('scraping css design tokens', () => {
 });
 
 test.describe('change fonts', () => {
-  // TODO: remove .skip when https://github.com/nl-design-system/theme-wizard/pull/556 is merged
-  test.skip('can change heading font to Courier New on preview', async ({ previewPage }) => {
+  test.beforeEach(async ({ page, previewPage }) => {
+    await previewPage.goto();
+    await page.getByRole('link', { name: 'Typografie' }).click();
+  });
+
+  test('can change heading font to Courier New on preview', async ({ page, previewPage }) => {
+    await previewPage.goto();
+    await page.getByRole('link', { name: 'Typografie' }).click();
     const heading = previewPage.getHeading(2);
     await expect(heading).not.toHaveFont('Courier New');
     await previewPage.changeHeadingFont('Courier New');
     await expect(heading).toHaveFont('Courier New');
   });
 
-  test('can change body font to Arial', async ({ previewPage }) => {
+  test('can change body font to Arial', async ({ page, previewPage }) => {
+    await previewPage.goto();
+    await page.getByRole('link', { name: 'Typografie' }).click();
     const paragraph = previewPage.getParagraph();
     await expect(paragraph).not.toHaveFont('Arial');
     await previewPage.changeBodyFont('Arial');
