@@ -11,6 +11,8 @@ import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
+import { WizardTokenPreset } from '../wizard-token-presets';
+import { tokensToUpdateMany } from '../../lib/Theme/lib';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -104,8 +106,9 @@ export class App extends LitElement {
   };
 
   readonly #handleTokenChange = async (event: Event) => {
+    console.log(event);
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
-    if (!(target instanceof WizardTokenInput || target instanceof WizardTokenCombobox)) return;
+
     if (target instanceof WizardColorscaleInput) {
       const scaleColors = Object.values(target.value);
       const reversedScale = scaleColors.toReversed();
@@ -129,6 +132,10 @@ export class App extends LitElement {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);
+    } else if (target instanceof WizardTokenPreset) {
+      this.theme.updateMany(tokensToUpdateMany(target.value));
+    } else {
+      return;
     }
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
