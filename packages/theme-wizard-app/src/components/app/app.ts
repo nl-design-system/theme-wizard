@@ -12,13 +12,15 @@ import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
 
+const tag = 'theme-wizard-app';
+
 declare global {
   interface HTMLElementTagNameMap {
-    'theme-wizard-app': App;
+    [tag]: App;
   }
 }
 
-@customElement('theme-wizard-app')
+@customElement(tag)
 export class App extends LitElement {
   readonly #themeStorage = new PersistentStorage({
     onChange: () => {
