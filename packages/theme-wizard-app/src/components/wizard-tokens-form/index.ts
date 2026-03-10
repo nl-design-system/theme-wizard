@@ -60,7 +60,7 @@ export class WizardTokensForm extends LitElement {
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="icon"
+      class="wizard-tokens-form__section-link-icon"
       aria-hidden="true"
     >
       <path d="M9 6l6 6l-6 6" />

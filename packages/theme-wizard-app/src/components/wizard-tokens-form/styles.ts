@@ -30,16 +30,16 @@ export default css`
     padding-inline-end: var(--basis-space-inline-xl);
     vertical-align: middle;
 
-    & .icon {
-      transition: transform 0.1s ease-out;
-      color: var(--basis-color-accent-1-color-subtle);
-    }
-
     @media (hover) {
-      &:hover .icon {
+      &:hover .wizard-tokens-form__section-link-icon {
         transform: translateX(var(--basis-space-inline-sm));
       }
     }
+  }
+
+  .wizard-tokens-form__section-link-icon {
+    color: var(--basis-color-accent-1-color-subtle);
+    transition: transform 100ms ease-out;
   }
 
   .wizard-form__color-field {
