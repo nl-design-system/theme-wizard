@@ -4,7 +4,8 @@ import WithPageNav from '@/components/WithPageNav.astro';
 import { components } from '@/lib/components'
 import { Traverse } from 'neotraverse/modern'
 import dlv from 'dlv'
-import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils'
+import { getStories } from '../../../../../theme-wizard-app/src/utils/csf-utils'
+import './index.css';
 
 type StoryObject = {
   name?: string;
@@ -21,18 +22,17 @@ export function getStaticPaths() {
   }))
 }
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, module]) => {
-  const componentModule = await module()
+const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
   return {
     slug,
-    title: componentModule.default.title
+    title,
   }
 }))
 
 const slug = Astro.params.slug as keyof typeof components
 const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl')
 nlDesignSystemDocsUrl.pathname = slug
-const componentModulePromiseFn = components[slug]
+const componentModulePromiseFn = components[slug].stories
 const componentModule = await componentModulePromiseFn()
 const { default: meta, ...storyExports } = componentModule
 const stories = getStories(storyExports as unknown as Record<PropertyKey, StoryObject>, meta)
@@ -85,8 +85,9 @@ const storiesWithTokens = stories.map(([id, story]) => {
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a href="/">Wizard</a> /
-          <a href="/components">Componenten</a> /
-          <span>{slug}</span>
+          <a href="/components">componenten</a> /
+          <a href={`/components/${slug}`}>{slug}</a> /
+          <span>tokens</span>
         </nav>
 
         <h1>{slug}</h1>
@@ -131,34 +132,6 @@ const storiesWithTokens = stories.map(([id, story]) => {
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-<style>
-  .wizard-main {
-    background-color: var(--basis-color-default-bg-document);
-    padding-block: var(--basis-space-block-3xl);
-    padding-inline: var(--basis-space-inline-xl);
-  }
-
-  .wizard-page-content {
-    display: grid;
-    row-gap: var(--basis-space-row-5xl);
-  }
-
-  .wizard-story-section {
-    --nl-heading-level-2-font-size: var(--basis-text-font-size-lg);
-
-    display: grid;
-    row-gap: var(--basis-space-row-xl);
-  }
-
-  .wizard-secretly-a-list {
-    display: grid;
-    gap: var(--basis-space-block-lg);
-    list-style: none;
-    margin-block: 0;
-    padding-inline: 0;
-  }
-</style>
 
 <script>
   import { initStories } from '@/components/render-stories';

@@ -6,14 +6,23 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
+import { tokensToUpdateMany } from '../../lib/Theme/lib';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
+import { WizardTokenPreset } from '../wizard-token-presets';
 
 const tag = 'theme-wizard-app';
 
+export type ThemeUpdateEvent = CustomEvent<{ theme: Theme }>;
+
+declare global {
+  interface DocumentEventMap {
+    'theme-update': ThemeUpdateEvent;
+  }
+}
 declare global {
   interface HTMLElementTagNameMap {
     [tag]: App;
@@ -80,6 +89,7 @@ export class App extends LitElement {
   readonly #forceUpdateTokens = () => {
     this.theme = this.theme.clone();
     this.requestUpdate();
+    this.dispatchEvent(new CustomEvent('theme-update', { bubbles: true, detail: { theme: this.theme } }));
   };
 
   readonly #handleScrapeDone = (event: Event) => {
@@ -104,8 +114,9 @@ export class App extends LitElement {
   };
 
   readonly #handleTokenChange = async (event: Event) => {
+    console.log(event);
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
-    if (!(target instanceof WizardTokenInput || target instanceof WizardTokenCombobox)) return;
+
     if (target instanceof WizardColorscaleInput) {
       const scaleColors = Object.values(target.value);
       const reversedScale = scaleColors.toReversed();
@@ -129,6 +140,10 @@ export class App extends LitElement {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);
+    } else if (target instanceof WizardTokenPreset) {
+      this.theme.updateMany(tokensToUpdateMany(target.value));
+    } else {
+      return;
     }
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
