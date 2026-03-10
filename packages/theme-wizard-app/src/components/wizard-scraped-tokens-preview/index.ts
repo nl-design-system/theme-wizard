@@ -51,16 +51,6 @@ export class WizardScrapedTokensPreview extends LitElement {
     );
   };
 
-  readonly #deleteStagedToken = (tokenToDelete: StagedDesignToken) => {
-    // TODO: this shouldn't write to storage directly
-    // TODO: replace confirm() with proper dialog?
-    // TODO: this doesn't directly update the UI yet but token is gone after refresh or navigation
-    // eslint-disable-next-line no-alert
-    if (confirm('Delete token')) {
-      this.#scrapedTokensStorage.setJSON(this.scrapedTokens.filter((token) => token !== tokenToDelete));
-    }
-  };
-
   readonly #renderSample = (type: StagedDesignToken['$type'], value: string) => {
     switch (type) {
       case 'color': {
@@ -129,11 +119,6 @@ export class WizardScrapedTokensPreview extends LitElement {
                   </td>
                   <td class="utrecht-table__cell">${token.$type === 'dimension' ? 'font-size' : token.$type}</td>
                   <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
-                  <td class="utrecht-table__cell">
-                    <clippy-button @click=${() => this.#deleteStagedToken(token)} hint="negative" purpose="subtle">
-                      ${t('stagedTokens.deleteToken')}
-                    </clippy-button>
-                  </td>
                 </tr>
               `,
             )}
