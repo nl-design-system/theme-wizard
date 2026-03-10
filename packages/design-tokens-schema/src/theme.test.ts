@@ -581,34 +581,36 @@ describe('validating color contrast', () => {
       expect(result.success).toBe(true);
     });
 
+    const expectedIssues = [
+      {
+        actual: 1.6059285649300712,
+        code: 'too_small',
+        ERROR_CODE: 'insufficient_contrast',
+        message: 'Insufficient contrast',
+        minimum: 4.5,
+        origin: 'number',
+        path: 'clippy.button.color.$value'.split('.'),
+        tokens: ['clippy.button.color', 'clippy.button.background-color'],
+      },
+      {
+        actual: 1.6059285649300712,
+        code: 'too_small',
+        ERROR_CODE: 'insufficient_contrast',
+        message: 'Insufficient contrast',
+        minimum: 4.5,
+        origin: 'number',
+        path: 'clippy.button.background-color.$value'.split('.'),
+        tokens: ['clippy.button.background-color', 'clippy.button.color'],
+      },
+    ];
+
     it('fails when contrast is insufficient (absolute values)', () => {
       const config = {};
       dset(config, 'clippy.button.color', lightGray);
       dset(config, 'clippy.button.background-color', white);
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error!.issues).toEqual([
-        {
-          actual: 1.6059285649300712,
-          code: 'too_small',
-          ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
-          minimum: 4.5,
-          origin: 'number',
-          path: 'clippy.button.color.$value'.split('.'),
-          tokens: ['clippy.button.color', 'clippy.button.background-color'],
-        },
-        {
-          actual: 1.6059285649300712,
-          code: 'too_small',
-          ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
-          minimum: 4.5,
-          origin: 'number',
-          path: 'clippy.button.background-color.$value'.split('.'),
-          tokens: ['clippy.button.background-color', 'clippy.button.color'],
-        },
-      ]);
+      expect(result.error!.issues).toEqual(expectedIssues);
     });
 
     it('fails when contrast is insufficient (ref values)', () => {
@@ -619,28 +621,7 @@ describe('validating color contrast', () => {
       dset(config, 'clippy.button.background-color', { $type: 'color', $value: '{basis.color.default.bg-default}' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error!.issues).toEqual([
-        {
-          actual: 1.6059285649300712,
-          code: 'too_small',
-          ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
-          minimum: 4.5,
-          origin: 'number',
-          path: 'clippy.button.color.$value'.split('.'),
-          tokens: ['clippy.button.color', 'clippy.button.background-color'],
-        },
-        {
-          actual: 1.6059285649300712,
-          code: 'too_small',
-          ERROR_CODE: 'insufficient_contrast',
-          message: 'Insufficient contrast',
-          minimum: 4.5,
-          origin: 'number',
-          path: 'clippy.button.background-color.$value'.split('.'),
-          tokens: ['clippy.button.background-color', 'clippy.button.color'],
-        },
-      ]);
+      expect(result.error!.issues).toEqual(expectedIssues);
     });
   });
 });
