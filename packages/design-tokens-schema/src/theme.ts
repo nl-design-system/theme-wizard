@@ -266,7 +266,7 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
 
 /**
  * Strict preprocessing pipeline: includes all preprocessing for validation.
- * Clones input to avoid mutating the original object. Mutates cloned input for performance reasons.
+ * Clones input to avoid mutating the original object.
  */
 const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);

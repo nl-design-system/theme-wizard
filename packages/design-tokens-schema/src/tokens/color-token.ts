@@ -67,7 +67,7 @@ export const ColorTokenSchema = z.looseObject({
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorToken = z.infer<typeof ColorTokenSchema>;
 
-export const parseColor = (color: string): ColorValue & { alpha: NonNullable<ColorValue['alpha']> } => {
+export const parseColor = (color: string): ColorValue => {
   const parsedColor = new Color(color);
   return {
     alpha: parsedColor.alpha,
@@ -106,9 +106,6 @@ export const colorTokenValueToColorJS = (color: ColorValue): Color => {
   });
 };
 
-/**
- * @returns The contrast ratio as a single number
- */
 export const compareContrast = (valueA: ColorValue, valueB: ColorValue): number => {
   const colorA = colorTokenValueToColorJS(valueA);
   const colorB = colorTokenValueToColorJS(valueB);
