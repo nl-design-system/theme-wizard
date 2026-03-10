@@ -82,15 +82,14 @@ const presetStories = getStories(storyExports as unknown as Record<PropertyKey, 
               </wizard-story-preview>
               {
                 story.parameters?.presets?.map((preset) => (
-                  <>
-                  <h2>{preset.name}</h2>
-                  <p>{preset.description}</p>
-                  <div>
+                  <div class="wizard-token-preset">
+                  <h2 class="wizard-token-preset__title">{preset.name}</h2>
+                  <p class="wizard-token-preset__description">{preset.description}</p>
                     {
                       preset.options.map(option => 
                         <wizard-token-preset value={JSON.stringify(option.tokens)}>
                           <div>
-                            {option.name}
+                            <wizard-story-preview>
                             <wizard-reset-theme>
                               <wizard-preview-theme style={tokensToStyle(option.tokens as any)}>
                                 <div role="img">
@@ -98,11 +97,12 @@ const presetStories = getStories(storyExports as unknown as Record<PropertyKey, 
                                 </div>
                               </wizard-preview-theme>
                             </wizard-reset-theme>
+                            </wizard-story-preview>
+                            <p class="wizard-token-preset__option-title">{option.name}</p>
                           </div>
                         </wizard-token-preset>
                     )}
                   </div>
-                  </>
                   ))
               }
             </section>
