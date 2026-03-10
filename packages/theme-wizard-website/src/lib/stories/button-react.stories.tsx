@@ -55,21 +55,6 @@ export const Button: Story = {
         story: `Een standaard Button`,
       },
     },
-  },
-};
-
-export const DesignButton: Story = {
-  name: 'Design: Button',
-  args: {
-    label: 'Klik mij!',
-  },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een standaard Button`,
-      },
-    },
     editableTokens: {
       nl: {
         button: {
@@ -90,12 +75,51 @@ export const DesignButton: Story = {
         },
       },
     },
+    presets: [
+      {
+        name: 'Kies de minimale afmeting',
+        description:
+          'Voor WCAG 2.1 is 24px de minimale afmeting voor Button, maar voor gebruiksvriendelijkheid wordt ook wel 44px of 48px aangehouden',
+        options: [
+          {
+            name: 'Minimaal',
+            tokens: {
+              nl: {
+                button: {
+                  'min-block-size': {
+                    $value: '1.5rem',
+                  },
+                  'min-inline-size': {
+                    $value: '1.5rem',
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Aanbevolen',
+            tokens: {
+              nl: {
+                button: {
+                  'min-block-size': {
+                    $value: '{basis.pointer-target.min-block-size}',
+                  },
+                  'min-inline-size': {
+                    $value: '{basis.pointer-target.min-inline-size}',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    ],
   },
 };
 
 const ButtonVariants = ({ ...props }: ButtonProps) => (
   // TODO: Replace with Action Group
-  <div style={{ columnGap: '1ch', display: 'flex', flexDirection: 'row' }}>
+  <div style={{ columnGap: '1ch', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', rowGap: '0.5rem' }}>
     <ButtonComponent {...props} iconOnly />
     <ButtonComponent {...props} />
     <ButtonComponent {...props} purpose="primary" iconOnly />
