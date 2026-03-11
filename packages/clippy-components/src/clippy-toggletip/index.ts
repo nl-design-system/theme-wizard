@@ -43,11 +43,8 @@ export class ClippyToggletip extends LitElement {
         <span class="clippy-toggletip__trigger">
           <slot></slot>
         </span>
-        <span class="clippy-toggletip__popup" role="tooltip">
-          ${this.text || nothing}
-        </span>
+        <span class="clippy-toggletip__popup" role="tooltip"> ${this.text || nothing} </span>
       </span>
     `;
   }
 }
-
