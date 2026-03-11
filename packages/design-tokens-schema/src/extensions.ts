@@ -7,7 +7,7 @@ export const setExtension = (token: BaseDesignToken, key: string, value: unknown
   // Make sure $extensions exists
   token['$extensions'] ??= {};
 
-  // Combine the new value and exising extention value if they're both arrays
+  // Combine the new value and exising extension value if they're both arrays
   if (Array.isArray(token['$extensions'][key]) && Array.isArray(value)) {
     token.$extensions[key] = [...token.$extensions[key], ...value];
   } else {
