@@ -18,8 +18,6 @@
 }
 
 .wizard-step-selections {
-  border: var(--basis-border-width-sm) solid var(--basis-color-default-border-subtle);
-  border-radius: var(--basis-border-radius-md);
   margin-block: 0 var(--basis-space-block-lg);
   padding-block: var(--basis-space-block-sm);
   padding-inline: var(--basis-space-inline-md);
@@ -164,6 +162,83 @@
   flex-direction: column;
   gap: var(--basis-space-block-sm);
   max-inline-size: 42rem;
+}
+
+.wizard-token-preset__option {
+  position: relative;
+}
+
+.wizard-token-preset__input {
+  inset: 0;
+  opacity: 0%;
+  position: absolute;
+}
+
+.wizard-token-preset__label {
+  background-color: var(--basis-color-accent-1-bg-subtle);
+  border: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle);
+  border-radius: var(--basis-border-radius-md);
+  box-sizing: border-box;
+  color: var(--basis-color-accent-1-color-default);
+  cursor: pointer;
+  display: block;
+  min-block-size: 100%;
+  padding-block: var(--basis-space-block-2xl);
+  padding-inline: var(--basis-space-inline-2xl);
+  position: relative;
+  text-align: start;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    color 200ms ease;
+}
+
+.wizard-token-preset__label:hover {
+  background-color: var(--basis-color-accent-1-bg-hover);
+  border-color: var(--basis-color-accent-1-border-hover);
+  color: var(--basis-color-accent-1-color-hover);
+}
+
+.wizard-token-preset__input:focus-visible + .wizard-token-preset__label {
+  box-shadow: 0 0 0 var(--basis-border-width-md) var(--basis-color-accent-1-border-default);
+}
+
+.wizard-token-preset__input:checked + .wizard-token-preset__label {
+  background-color: var(--basis-color-accent-1-bg-default);
+  border-color: var(--basis-color-accent-1-border-default);
+  box-shadow:
+    inset 0 0 0 var(--basis-border-width-sm) var(--basis-color-accent-1-border-default),
+    0 0 0 var(--basis-border-width-xs) color-mix(in sRGB, var(--basis-color-accent-1-border-default) 24%, transparent);
+  color: var(--basis-color-accent-1-color-default);
+}
+
+.wizard-token-preset__selected-icon {
+  align-items: center;
+  background-color: var(--basis-color-accent-1-bg-document);
+  border-radius: 999px;
+  color: var(--basis-color-accent-1-color-default);
+  display: inline-flex;
+  inset-block-start: var(--basis-space-block-md);
+  inset-inline-end: var(--basis-space-inline-md);
+  justify-content: center;
+  opacity: 0%;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(0.8);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.wizard-token-preset__selected-icon svg {
+  block-size: 1.25rem;
+  inline-size: 1.25rem;
+}
+
+.wizard-token-preset__input:checked + .wizard-token-preset__label .wizard-token-preset__selected-icon {
+  opacity: 100%;
+  transform: scale(1);
 }
 
 /* Option card: thumbnail left, text right */
