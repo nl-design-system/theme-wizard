@@ -219,7 +219,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
           name=${this.name}
           .options=${this.scrapedTokens
             .filter((token) => token.$type === 'color')
-.filter(token => token.$extensions[EXTENSION_TOKEN_STAGED] !== false)
+            .filter((token) => token.$extensions[EXTENSION_TOKEN_STAGED] !== false)
             .map((color) => ({
               /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
               label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),

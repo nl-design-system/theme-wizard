@@ -33,27 +33,22 @@ test.describe.skip('scraping css design tokens', () => {
 });
 
 test.describe('change fonts', () => {
-  test.beforeEach(async ({ page, previewPage }) => {
-    await previewPage.goto();
-    await page.getByRole('link', { name: 'Typografie' }).click();
+  test.beforeEach(async ({ page }) => {
+    await page.getByRole('button', { name: 'Typografie' }).click();
   });
 
-  test('can change heading font to Courier New on preview', async ({ page, previewPage }) => {
-    await previewPage.goto();
-    await page.getByRole('link', { name: 'Typografie' }).click();
+  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
     const heading = previewPage.getHeading(2);
     await expect(heading).not.toHaveFont('Courier New');
     await previewPage.changeHeadingFont('Courier New');
     await expect(heading).toHaveFont('Courier New');
   });
 
-  test('can change body font to Arial', async ({ page, previewPage }) => {
-    await previewPage.goto();
-    await page.getByRole('link', { name: 'Typografie' }).click();
+  test('can change body font to Arial', async ({ previewPage }) => {
     const paragraph = previewPage.getParagraph();
-    await expect(paragraph).not.toHaveFont('Arial');
-    await previewPage.changeBodyFont('Arial');
-    await expect(paragraph).toHaveFont('Arial');
+    await expect(paragraph).not.toHaveFont('System UI');
+    await previewPage.changeBodyFont('System UI');
+    await expect(paragraph).toHaveFont('System UI');
   });
 });
 
@@ -82,6 +77,7 @@ test.describe('Download tokens as JSON', () => {
 
   test.describe('download confirmation modal', () => {
     test.beforeEach(async ({ themeWizard }) => {
+      await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
       await themeWizard.changeColor('Accent 1', '#3d87f5');
       await expect(themeWizard.downloadButton).toBeEnabled();
     });
@@ -120,6 +116,7 @@ test.describe('Download tokens as JSON', () => {
 
   test.describe('after changing a token', () => {
     test.beforeEach(async ({ themeWizard }) => {
+      await themeWizard.page.getByRole('button', { name: 'Typografie' }).click();
       await themeWizard.changeBodyFont('system-ui');
     });
 
@@ -140,6 +137,9 @@ test.describe('Download tokens as JSON', () => {
     });
 
     test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
+      await themeWizard.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
+      await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
+
       // Trigger a contrast warning
       await themeWizard.changeColor('Accent 1', '#3d87f5');
 
@@ -155,6 +155,10 @@ test.describe('Download tokens as JSON', () => {
 });
 
 test.describe('color contrast warnings', () => {
+  test.beforeEach(async ({ themeWizard }) => {
+    await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
+  });
+
   test('No errors shown before making changes', async ({ themeWizard }) => {
     const errorAlert = themeWizard.getErrorAlert();
     await expect(errorAlert).not.toBeVisible();
@@ -209,6 +213,10 @@ test.describe('printing the webpage', () => {
 test.describe('colorscale inputs', () => {
   const INITIAL_COLOR = '#1b59a4';
 
+  test.beforeEach(async ({ themeWizard }) => {
+    await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
+  });
+
   // Initial value matches Start Thema
   test('Initial value matches Start Thema', async ({ themeWizard }) => {
     const input = themeWizard.page.getByLabel('Accent 1');
@@ -232,13 +240,14 @@ test.describe('colorscale inputs', () => {
     const input = themeWizard.page.getByLabel('Accent 1');
     await themeWizard.changeColor('Accent 1', '#ff0000');
     await themeWizard.reset();
-    expect(input).toHaveValue(INITIAL_COLOR);
+    await expect(input).toHaveValue(INITIAL_COLOR);
   });
 
   test('Uses value from storage after refresh', async ({ themeWizard }) => {
     const input = themeWizard.page.getByLabel('Accent 1');
     await themeWizard.changeColor('Accent 1', '#ff0000');
     await themeWizard.page.reload();
+    await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
     // This is the mid-range darker red that the input stores (it does not store the user's actual picked color)
     await expect(input).toHaveValue('#8b0000');
   });
