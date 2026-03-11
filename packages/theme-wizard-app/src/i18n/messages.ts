@@ -19,6 +19,7 @@ export const en = {
   close: 'Close',
   continue: 'Continue',
   copyToClipboard: 'Copy to clipboard',
+  copyValueToClipboard: ({ value }: { value: string }) => `Copy "${value}" to clipboard`,
   display: 'Display',
   footer: {
     colophon: {
@@ -317,6 +318,7 @@ export const nl = {
   close: 'Sluiten',
   continue: 'Doorgaan',
   copyToClipboard: 'Kopieer naar klembord',
+  copyValueToClipboard: ({ value }: { value: string }) => `Kopieer "${value}" naar klembord`,
   display: 'Weergave',
   footer: {
     colophon: {
