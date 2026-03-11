@@ -358,13 +358,8 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
 
       wrapper.appendChild(header);
 
-      const summary = document.createElement('p');
-      summary.className = 'wizard-step-selection__summary';
-      summary.textContent = selections.length > 0 ? selections.join(' • ') : 'Nog geen preset gekozen.';
-      if (selections.length > 0) completedSteps += 1;
-      wrapper.appendChild(summary);
-
       if (selectedGroups.length > 0) {
+        if (selections.length > 0) completedSteps += 1;
         selectedGroups.forEach(group => {
           const groupBlock = document.createElement('div');
           groupBlock.className = 'wizard-step-selection__group';
@@ -392,6 +387,11 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
           groupBlock.appendChild(tokenList);
           wrapper.appendChild(groupBlock);
         });
+      } else {
+        const summary = document.createElement('p');
+        summary.className = 'wizard-step-selection__summary';
+        summary.textContent = 'Nog geen preset gekozen.';
+        wrapper.appendChild(summary);
       }
 
       stepSelectionsList.appendChild(wrapper);
