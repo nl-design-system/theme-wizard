@@ -22,6 +22,8 @@ import negativeDocs from '@nl-design-system-unstable/documentation/handboek/huis
 import positiveDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-positive-intro.md?raw';
 import selectedDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-selected-intro.md?raw';
 import warningDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-warning-intro.md?raw';
+import ChevronLeft from '@tabler/icons/outline/chevron-left.svg?raw';
+import ChevronRight from '@tabler/icons/outline/chevron-right.svg?raw';
 import buttonLinkCss from '@utrecht/link-button-css/dist/index.css?inline';
 
 const colorDocs: Record<string, string> = {
@@ -39,13 +41,14 @@ const colorDocs: Record<string, string> = {
   selected: selectedDocs,
   warning: warningDocs,
 };
-import { LitElement, html, svg, unsafeCSS } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import styles from './styles';
 import '@vanillawc/wc-markdown';
+import styles from './styles';
 
 const BODY_FONT_TOKEN_REF = 'basis.text.font-family.default';
 const HEADING_FONT_TOKEN_REF = 'basis.heading.font-family';
@@ -87,26 +90,9 @@ export class WizardTokensForm extends LitElement {
         @click=${this.showInitialMode}
         class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__back-button"
       >
-        ${this.renderChevron('start')} ${t('tokens.backToOverview')}
+        ${unsafeSVG(ChevronLeft)} ${t('tokens.backToOverview')}
       </button>
     `;
-  };
-
-  private readonly renderChevron = (dir: 'start' | 'end') => {
-    return html`<svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      ${dir === 'end' ? svg`<path d="M9 6l6 6l-6 6" />` : svg`<path d="M15 6l-6 6l6 6" />`}
-    </svg>`;
   };
 
   private readonly renderSaveButton = () => {
@@ -125,7 +111,7 @@ export class WizardTokensForm extends LitElement {
               @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'fonts')}
             >
               ${t('tokens.fieldLabels.basis.typography')}
-              <span class="wizard-tokens-form__section-link-icon">${this.renderChevron('end')}</span>
+              <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
             </button>
             <button
               type="button"
@@ -133,7 +119,7 @@ export class WizardTokensForm extends LitElement {
               @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'colors')}
             >
               ${t('tokens.fieldLabels.basis.colors')}
-              <span class="wizard-tokens-form__section-link-icon">${this.renderChevron('end')}</span>
+              <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
             </button>
             <button
               type="button"
@@ -141,9 +127,12 @@ export class WizardTokensForm extends LitElement {
               @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'spacing')}
             >
               ${t('tokens.fieldLabels.basis.spacing')}
-              <span class="wizard-tokens-form__section-link-icon">${this.renderChevron('end')}</span>
+              <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
             </button>
           </div>
+
+          <wizard-tokens-download></wizard-tokens-download>
+          <wizard-theme-reset-button></wizard-theme-reset-button>
         </wizard-stack>
       `;
     }
@@ -168,25 +157,27 @@ export class WizardTokensForm extends LitElement {
           ${this.renderBackLink()}
           <clippy-heading level="3">${t('tokens.fieldLabels.basis.typography')}</clippy-heading>
 
-          <wizard-stack size="2xl">
-            ${fonts.map(
-              ({ docsUrl, label, path, token }) =>
-                html`<wizard-stack class="wizard-form__field">
-                  <clippy-heading level="4">${label}</clippy-heading>
-                  <wizard-font-input
-                    .errors=${this.theme.issues.filter((error) => error.path === path)}
-                    .value=${token.$value}
-                    label=${label}
-                    name=${path}
-                  >
-                    <div slot="label">${label}</div>
-                  </wizard-font-input>
-                  <p class="nl-paragraph">
-                    <a href=${docsUrl} target="_blank" class="nl-link">${t('moreInformation')}</a>
-                  </p>
-                </wizard-stack>`,
-            )}
-          </wizard-stack>
+          <wizard-scroll-container>
+            <wizard-stack size="2xl">
+              ${fonts.map(
+                ({ docsUrl, label, path, token }) =>
+                  html`<wizard-stack class="wizard-form__field">
+                    <clippy-heading level="4">${label}</clippy-heading>
+                    <wizard-font-input
+                      .errors=${this.theme.issues.filter((error) => error.path === path)}
+                      .value=${token.$value}
+                      label=${label}
+                      name=${path}
+                    >
+                      <div slot="label">${label}</div>
+                    </wizard-font-input>
+                    <p class="nl-paragraph">
+                      <a href=${docsUrl} target="_blank" class="nl-link">${t('moreInformation')}</a>
+                    </p>
+                  </wizard-stack>`,
+              )}
+            </wizard-stack>
+          </wizard-scroll-container>
 
           ${this.renderSaveButton()}
         </wizard-stack>
@@ -199,27 +190,29 @@ export class WizardTokensForm extends LitElement {
           ${this.renderBackLink()}
           <clippy-heading level="3">${t('tokens.fieldLabels.basis.colors')}</clippy-heading>
 
-          <wizard-stack size="3xl">
-            ${Object.entries(colorDocs).map(
-              ([colorKey, docs]) => html`
-                <wizard-stack size="lg" class="wizard-form__field">
-                  <clippy-heading level="4">${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading>
-                  <wc-markdown class="wizard-tokens-form__markdown">${docs}</wc-markdown>
-                  <wizard-colorscale-input
-                    key=${colorKey}
-                    label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
-                    id=${`basis.color.${colorKey}`}
-                    name=${`basis.color.${colorKey}`}
-                    .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
-                  >
-                  </wizard-colorscale-input>
-                  <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
-                    ${t('moreInformation')}
-                  </a>
-                </wizard-stack>
-              `,
-            )}
-          </wizard-stack>
+          <wizard-scroll-container>
+            <wizard-stack size="3xl">
+              ${Object.entries(colorDocs).map(
+                ([colorKey, docs]) => html`
+                  <wizard-stack size="lg" class="wizard-form__field">
+                    <clippy-heading level="4">${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading>
+                    <wc-markdown class="wizard-tokens-form__markdown">${docs}</wc-markdown>
+                    <wizard-colorscale-input
+                      key=${colorKey}
+                      label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
+                      id=${`basis.color.${colorKey}`}
+                      name=${`basis.color.${colorKey}`}
+                      .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
+                    >
+                    </wizard-colorscale-input>
+                    <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
+                      ${t('moreInformation')}
+                    </a>
+                  </wizard-stack>
+                `,
+              )}
+            </wizard-stack>
+          </wizard-scroll-container>
 
           ${this.renderSaveButton()}
         </wizard-stack>
@@ -231,12 +224,16 @@ export class WizardTokensForm extends LitElement {
       <wizard-stack size="4xl">
         ${this.renderBackLink()}
         <clippy-heading level="3">${t('tokens.fieldLabels.basis.spacing')}</clippy-heading>
-        <div
-          aria-hidden="true"
-          style="block-size: var(--basis-size-2xl); border: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle); background-color: var(--basis-color-accent-1-bg-default);"
-        >
-          Placeholder (add controls here)
-        </div>
+
+        <wizard-scroll-container>
+          <div
+            aria-hidden="true"
+            style="block-size: var(--basis-size-2xl); border: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle); background-color: var(--basis-color-accent-1-bg-default);"
+          >
+            Placeholder (add controls here)
+          </div>
+        </wizard-scroll-container>
+
         ${this.renderSaveButton()}
       </wizard-stack>
     `;

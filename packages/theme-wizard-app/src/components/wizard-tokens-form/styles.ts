@@ -1,15 +1,8 @@
 import { css } from 'lit';
 
 export default css`
-  .wizard-app__basis-tokens {
-    display: grid;
-    margin-block: 0;
-    padding-inline-start: 0;
-    row-gap: var(--basis-space-row-md);
-
-    > li {
-      list-style-type: none;
-    }
+  :host {
+    --wizard-scroll-container-max-size: 65vh;
   }
 
   .wizard-tokens-form__markdown {
