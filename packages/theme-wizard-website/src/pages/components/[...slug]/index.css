@@ -213,34 +213,6 @@
   color: var(--basis-color-accent-1-color-default);
 }
 
-.wizard-token-preset__selected-icon {
-  align-items: center;
-  background-color: var(--basis-color-accent-1-bg-document);
-  border-radius: 999px;
-  color: var(--basis-color-accent-1-color-default);
-  display: inline-flex;
-  inset-block-start: var(--basis-space-block-md);
-  inset-inline-end: var(--basis-space-inline-md);
-  justify-content: center;
-  opacity: 0%;
-  pointer-events: none;
-  position: absolute;
-  transform: scale(0.8);
-  transition:
-    opacity 200ms ease,
-    transform 200ms ease;
-}
-
-.wizard-token-preset__selected-icon svg {
-  block-size: 1.25rem;
-  inline-size: 1.25rem;
-}
-
-.wizard-token-preset__input:checked + .wizard-token-preset__label .wizard-token-preset__selected-icon {
-  opacity: 100%;
-  transform: scale(1);
-}
-
 /* Option card: thumbnail left, text right */
 .wizard-token-preset__option-inner {
   align-items: center;

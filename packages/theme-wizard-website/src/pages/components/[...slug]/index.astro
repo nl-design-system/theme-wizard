@@ -132,11 +132,6 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
                                 data-tokens={JSON.stringify(option.tokens)}
                               />
                               <label class="wizard-token-preset__label" for={inputId}>
-                                <span class="wizard-token-preset__selected-icon" aria-hidden="true">
-                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                    <path d="M5 12l5 5l10 -10"></path>
-                                  </svg>
-                                </span>
                                 <div class="wizard-token-preset__option-inner">
                                   {preset.thumbnail !== false && (
                                     <div class="wizard-token-preset__option-thumbnail">
