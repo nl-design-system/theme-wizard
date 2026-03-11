@@ -19,6 +19,13 @@ export const wizardTokenCSS = css`
     text-align: start;
   }
 
+  button:where([aria-pressed='true']) {
+    border-color: var(--basis-color-selected-border-default);
+    border-style: solid;
+    background-color: var(--basis-color-selected-bg-default);
+    color: var(--basis-color-selected-color-default);
+  }
+
   button:hover {
     border-color: var(--basis-color-accent-1-border-hover);
     border-style: solid;

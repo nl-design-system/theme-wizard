@@ -3,6 +3,7 @@ import { html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
+import { walkTokens } from '../../lib/Theme/lib';
 
 const tag = 'wizard-preview-theme';
 
@@ -23,6 +24,7 @@ export class PreviewTheme extends LitElement {
 
     this.shadowRoot?.adoptedStyleSheets.push(this.theme.stylesheet);
   }
+
   protected override render() {
     return html`<slot></slot>`;
   }

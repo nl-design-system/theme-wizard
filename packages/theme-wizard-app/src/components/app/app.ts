@@ -82,6 +82,7 @@ export class App extends LitElement {
     newTheme.tokens = this.theme.tokens;
     this.theme = newTheme;
     this.requestUpdate();
+    this.dispatchEvent(new Event('theme-update', { bubbles: true }));
   };
 
   readonly #handleScrapeDone = (event: Event) => {
