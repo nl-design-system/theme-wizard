@@ -19,6 +19,10 @@ export class WizardTokenPreset extends LitElement {
     type: Object,
   })
   value = {};
+
+  @property({ reflect: true, type: Boolean })
+  selected = false;
+
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
