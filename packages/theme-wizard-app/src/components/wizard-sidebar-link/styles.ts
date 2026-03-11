@@ -16,5 +16,10 @@ export default css`
       background-color: var(--basis-color-accent-1-bg-hover);
       border-inline-start-color: var(--basis-color-accent-1-border-hover);
     }
+
+    &[aria-current] {
+      background-color: var(--basis-color-accent-1-bg-default);
+      border-inline-start-color: var(--basis-color-accent-1-border-default);
+    }
   }
 `;

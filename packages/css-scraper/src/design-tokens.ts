@@ -8,6 +8,7 @@ import {
   EXTENSION_AUTHORED_AS,
   EXTENSION_CSS_PROPERTIES,
   EXTENSION_TOKEN_ID,
+  EXTENSION_TOKEN_SUBTYPE,
   EXTENSION_USAGE_COUNT,
   type ScrapedDesignToken,
 } from './design-tokens.types';
@@ -67,6 +68,7 @@ export const getDesignTokens = (css: string): ScrapedDesignToken[] => {
           [EXTENSION_AUTHORED_AS]: token.$extensions[PW_EXTENSION_AUTHORED_AS],
           [EXTENSION_CSS_PROPERTIES]: ['font-size'],
           [EXTENSION_TOKEN_ID]: tokenId,
+          [EXTENSION_TOKEN_SUBTYPE]: 'font-size',
           [EXTENSION_USAGE_COUNT]: token.$extensions[PW_EXTENSION_USAGE_COUNT],
         },
         $type: token.$type,

@@ -9,19 +9,17 @@ export default css`
 
     align-items: center;
     background-color: var(--basis-color-accent-1-inverse-bg-default);
-    block-size: 100%;
     display: flex;
-    padding-inline: var(--basis-space-inline-lg);
   }
 
   .wizard-logo {
     align-items: center;
     color: var(--basis-color-accent-1-inverse-color-default);
-    column-gap: var(--basis-space-column-sm);
+    column-gap: var(--basis-space-column-md);
     display: flex;
-  }
 
-  span {
-    display: block;
+    & > svg {
+      block-size: var(--basis-size-sm);
+    }
   }
 `;

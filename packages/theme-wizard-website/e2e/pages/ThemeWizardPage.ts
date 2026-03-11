@@ -8,13 +8,13 @@ export class ThemeWizardPage {
 
   constructor(public readonly page: Page) {
     this.preview = this.page.getByTestId('preview');
-    this.sidebar = this.page.locator('.theme-sidebar');
+    this.sidebar = this.page.locator('.wizard-theme-sidebar');
     this.templateSelect = this.page.getByLabel('Weergave');
     this.downloadButton = this.page.getByRole('button', { name: 'Download tokens als JSON' });
   }
 
   async goto() {
-    await this.page.goto('/');
+    await this.page.goto('/basis-tokens');
     await expect(this.preview).toBeVisible();
   }
 
@@ -70,7 +70,7 @@ export class ThemeWizardPage {
   }
 
   async reset() {
-    await this.page.getByRole('button', { name: 'Thema resetten' }).click();
-    await this.page.getByRole('dialog').getByRole('button', { name: 'Thema resetten' }).click();
+    await this.page.getByRole('button', { name: 'Begin opnieuw' }).click();
+    await this.page.getByRole('dialog').getByRole('button', { name: 'Opnieuw beginnen' }).click();
   }
 }

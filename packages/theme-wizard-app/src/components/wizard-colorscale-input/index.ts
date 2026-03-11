@@ -1,7 +1,7 @@
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-color-combobox';
 import { ClippyColorCombobox } from '@nl-design-system-community/clippy-components/clippy-color-combobox';
-import { EXTENSION_AUTHORED_AS, type ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
+import { EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import {
   COLOR_KEYS,
   ColorValue,
@@ -17,6 +17,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
+import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
 
@@ -142,7 +143,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
 
   @consume({ context: scrapedTokensContext, subscribe: true })
   @property({ attribute: false })
-  scrapedTokens: ScrapedDesignToken[] = [];
+  scrapedTokens: StagedDesignToken[] = [];
 
   @state()
   private currentColorValue: string = '';
@@ -212,6 +213,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
           name=${this.name}
           .options=${this.scrapedTokens
             .filter((token) => token.$type === 'color')
+.filter(token => token.$extensions[EXTENSION_TOKEN_STAGED] !== false)
             .map((color) => ({
               /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
               label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),

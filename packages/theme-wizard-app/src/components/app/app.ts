@@ -1,5 +1,4 @@
 import { provide } from '@lit/context';
-import { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -7,19 +6,25 @@ import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
+import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
 
-/**
- * Router shell component - Provides Theme context
- */
-@customElement('theme-wizard-app')
+const tag = 'theme-wizard-app';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: App;
+  }
+}
+
+@customElement(tag)
 export class App extends LitElement {
-  readonly #storage = new PersistentStorage({
+  readonly #themeStorage = new PersistentStorage({
     onChange: () => {
-      const tokens = this.#storage.getJSON();
+      const tokens = this.#themeStorage.getJSON();
       this.theme.tokens = tokens;
       this.#forceUpdateTokens();
     },
@@ -31,17 +36,30 @@ export class App extends LitElement {
   @state()
   protected theme: Theme = this.#theme;
 
+  readonly #scrapedTokensStorage = new PersistentStorage({
+    onChange: () => {
+      const tokens = this.#scrapedTokensStorage.getJSON();
+      this.scrapedTokens = tokens;
+    },
+    prefix: 'scraped-tokens',
+  });
+
   @provide({ context: scrapedTokensContext })
   @state()
-  scrapedTokens: ScrapedDesignToken[] = [];
+  scrapedTokens: StagedDesignToken[] = [];
 
   override connectedCallback() {
     super.connectedCallback();
     defineCustomElements();
 
-    const previousTokens = this.#storage.getJSON();
-    if (previousTokens) {
-      this.theme.tokens = previousTokens;
+    const previousThemeTokens = this.#themeStorage.getJSON();
+    if (previousThemeTokens) {
+      this.theme.tokens = previousThemeTokens;
+    }
+
+    const previousScrapedTokens = this.#scrapedTokensStorage.getJSON();
+    if (previousScrapedTokens) {
+      this.scrapedTokens = previousScrapedTokens;
     }
 
     this.addEventListener('change', this.#handleScrapeDone);
@@ -69,13 +87,22 @@ export class App extends LitElement {
   readonly #handleScrapeDone = (event: Event) => {
     const target = event.target;
     if (!(target instanceof WizardScraper)) return;
-    this.scrapedTokens = target.options;
+
+    this.scrapedTokens = target.options.map((token) => ({
+      ...token,
+      $extensions: {
+        ...token.$extensions,
+        [EXTENSION_TOKEN_STAGED]: true,
+      },
+    }));
+    this.#scrapedTokensStorage.setJSON(this.scrapedTokens);
+    this.dispatchEvent(new Event('scrape-success'));
   };
 
   readonly #handleReset = () => {
     this.theme.reset();
     this.#forceUpdateTokens();
-    this.#storage.setJSON(this.theme.tokens);
+    this.#themeStorage.setJSON(this.theme.tokens);
   };
 
   readonly #handleTokenChange = async (event: Event) => {
@@ -106,17 +133,10 @@ export class App extends LitElement {
       this.theme.updateAt(target.name, target.value);
     }
     this.#forceUpdateTokens();
-    this.#storage.setJSON(this.theme.tokens);
+    this.#themeStorage.setJSON(this.theme.tokens);
   };
 
   override render() {
     return html`<slot></slot>`;
-  }
-}
-
-// Declare the custom element for TypeScript
-declare global {
-  interface HTMLElementTagNameMap {
-    'theme-wizard-app': App;
   }
 }

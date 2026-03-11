@@ -1,7 +1,7 @@
 import { css } from 'lit';
 
 export default css`
-  :host {
-    display: block;
+  input[type='checkbox'] {
+    zoom: 1.2;
   }
 `;

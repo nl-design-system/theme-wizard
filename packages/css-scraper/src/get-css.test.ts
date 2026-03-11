@@ -767,6 +767,7 @@ describe('getDesignTokens', () => {
           'nl.nldesignsystem.theme-wizard.css-authored-as': '16px',
           'nl.nldesignsystem.theme-wizard.css-properties': ['font-size'],
           'nl.nldesignsystem.theme-wizard.token-id': 'fontSize-171eed',
+          'nl.nldesignsystem.theme-wizard.token-subtype': 'font-size',
           'nl.nldesignsystem.theme-wizard.usage-count': 1,
         },
         $type: 'dimension',
