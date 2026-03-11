@@ -73,7 +73,6 @@ export class WizardFontInput extends WizardTokenInput {
 
     return html`
       <div class="utrecht-form-field__input">
-        <label id="label-${this.name}">${this.label}</label>
         ${this.errors.map(
           (error) =>
             html`<div class="utrecht-form-field-error-message" id=${error.id}>

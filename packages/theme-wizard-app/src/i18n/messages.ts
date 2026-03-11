@@ -29,11 +29,13 @@ export const en = {
     },
   },
   loading: 'Loading...',
+  moreInformation: 'More information',
   nav: {
     components: 'Components',
     configure: 'Edit branding',
     styleGuide: 'Style guide',
   },
+  save: 'Save',
   scraper: {
     input: {
       label: 'Website URL',
@@ -130,6 +132,7 @@ export const en = {
     triggerText: 'Download tokens as JSON',
   },
   tokens: {
+    backToOverview: 'Back to overview',
     fieldLabels: {
       basis: {
         color: {
@@ -186,6 +189,9 @@ export const en = {
             label: 'Warning',
           },
         },
+        colors: 'Colors',
+        spacing: 'Spacing',
+        typography: 'Typography',
       },
       bodyFont: 'Running text',
       headingFont: 'Headings',
@@ -326,11 +332,13 @@ export const nl = {
     },
   },
   loading: 'Laden...',
+  moreInformation: 'Meer informatie',
   nav: {
     components: 'Componenten',
     configure: 'Huisstijl bewerken',
     styleGuide: 'Stijlgids',
   },
+  save: 'Opslaan',
   scraper: {
     input: {
       label: 'Website URL',
@@ -419,6 +427,7 @@ export const nl = {
     title: 'Opnieuw beginnen',
     triggerText: 'Begin opnieuw',
   },
+
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',
     cancel: () => t('cancel'),
@@ -426,8 +435,8 @@ export const nl = {
     title: 'Thema bevat nog fouten',
     triggerText: 'Download tokens als JSON',
   },
-
   tokens: {
+    backToOverview: 'Terug naar overzicht',
     fieldLabels: {
       basis: {
         color: {
@@ -484,6 +493,9 @@ export const nl = {
             label: 'Waarschuwing',
           },
         },
+        colors: 'Kleuren',
+        spacing: 'Witruimte',
+        typography: 'Typografie',
       },
       bodyFont: 'Lopende tekst',
       headingFont: 'Koppen',
