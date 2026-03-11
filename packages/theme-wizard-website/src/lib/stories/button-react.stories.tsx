@@ -118,9 +118,7 @@ export const Button: Story = {
   },
 };
 
-const ButtonPrimary = ({ ...props }: ButtonProps) => (
-  <ButtonComponent {...props} purpose="primary" />
-);
+const ButtonPrimary = ({ ...props }: ButtonProps) => <ButtonComponent {...props} purpose="primary" />;
 
 const ButtonVariantsWithStates = ({ ...props }: ButtonProps) => (
   <div
@@ -133,11 +131,11 @@ const ButtonVariantsWithStates = ({ ...props }: ButtonProps) => (
     }}
   >
     <span />
-    <strong style={{ fontSize: '0.75rem' }}>Normaal</strong>
-    <strong style={{ fontSize: '0.75rem' }}>Hover</strong>
-    <strong style={{ fontSize: '0.75rem' }}>Active</strong>
+    <strong>Normaal</strong>
+    <strong>Hover</strong>
+    <strong>Active</strong>
 
-    <strong style={{ fontSize: '0.75rem' }}>Default</strong>
+    <strong>Default</strong>
     <ButtonComponent {...props} />
     <ButtonComponent
       {...props}
@@ -156,7 +154,7 @@ const ButtonVariantsWithStates = ({ ...props }: ButtonProps) => (
       }}
     />
 
-    <strong style={{ fontSize: '0.75rem' }}>Primary</strong>
+    <strong>Primary</strong>
     <ButtonComponent {...props} purpose="primary" />
     <ButtonComponent
       {...props}
@@ -177,7 +175,7 @@ const ButtonVariantsWithStates = ({ ...props }: ButtonProps) => (
       }}
     />
 
-    <strong style={{ fontSize: '0.75rem' }}>Secondary</strong>
+    <strong>Secondary</strong>
     <ButtonComponent {...props} purpose="secondary" />
     <ButtonComponent
       {...props}
@@ -200,13 +198,7 @@ const ButtonVariantsWithStates = ({ ...props }: ButtonProps) => (
   </div>
 );
 
-const WizardPreviewSection = ({
-  children,
-  label,
-}: {
-  children: ReactNode;
-  label: string;
-}) => (
+const WizardPreviewSection = ({ children, label }: { children: ReactNode; label: string }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
     <strong style={{ fontSize: '0.875rem' }}>{label}</strong>
     {children}
