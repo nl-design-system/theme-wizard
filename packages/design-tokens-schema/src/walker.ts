@@ -28,9 +28,7 @@ export const walkObject = <T = unknown>(
       visited.add(currentData);
 
       for (const key in currentData) {
-        if (Object.hasOwn(currentData, key)) {
-          traverse((currentData as Record<string, unknown>)[key], [...path, key]);
-        }
+        traverse((currentData as Record<string, unknown>)[key], [...path, key]);
       }
     }
 
