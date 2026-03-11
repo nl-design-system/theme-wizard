@@ -82,8 +82,8 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
         </nav>
 
         <h1>{slug}</h1>
-        <p class="wizard-selected-values" aria-live="polite">Nog geen preset gekozen.</p>
-        <details class="wizard-step-selections">
+        <p class="wizard-selected-values" aria-live="polite" hidden>Nog geen preset gekozen.</p>
+        <details class="wizard-step-selections" hidden>
           <summary class="wizard-step-selections__summary">Gekozen presets per stap (0/0)</summary>
           <div class="wizard-step-selections__list"></div>
         </details>
@@ -110,35 +110,54 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
                 ))}
               </div>
               {
-                story.parameters?.presets?.map((preset) => (
-                  <section class="wizard-token-preset" data-preset-group>
+                story.parameters?.presets?.map((preset, presetIndex) => (
+                  <section class="wizard-token-preset" data-preset-group data-group-label={preset.question ?? preset.name}>
                     <h2 class="wizard-token-preset__title">{preset.question ?? preset.name}</h2>
                     {preset.description && <p class="wizard-token-preset__description">{preset.description}</p>}
                     <div class="wizard-token-preset__layout">
                       <div class="wizard-token-preset__options">
-                        {preset.options.map(option =>
-                          <wizard-token-preset
-                            value={JSON.stringify(option.tokens)}
-                            aria-label={option.name}
-                          >
-                            <div class="wizard-token-preset__option-inner">
-                              {preset.thumbnail !== false && (
-                                <div class="wizard-token-preset__option-thumbnail">
-                                  <wizard-reset-theme>
-                                    <wizard-preview-theme style={tokensToStyle(option.tokens as any)}>
-                                      <div role="img">
-                                        <div data-story-container={id} aria-hidden="true" inert></div>
-                                      </div>
-                                    </wizard-preview-theme>
-                                  </wizard-reset-theme>
+                        {preset.options.map((option, optionIndex) => {
+                          const inputId = `${id}-preset-${presetIndex}-option-${optionIndex}`
+                          const inputName = `${id}-preset-${presetIndex}`
+
+                          return (
+                            <div class="wizard-token-preset__option">
+                              <input
+                                class="wizard-token-preset__input"
+                                id={inputId}
+                                name={inputName}
+                                type="radio"
+                                value={String(optionIndex)}
+                                data-option-label={option.name}
+                                data-tokens={JSON.stringify(option.tokens)}
+                              />
+                              <label class="wizard-token-preset__label" for={inputId}>
+                                <span class="wizard-token-preset__selected-icon" aria-hidden="true">
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <path d="M5 12l5 5l10 -10"></path>
+                                  </svg>
+                                </span>
+                                <div class="wizard-token-preset__option-inner">
+                                  {preset.thumbnail !== false && (
+                                    <div class="wizard-token-preset__option-thumbnail">
+                                      <wizard-reset-theme>
+                                        <wizard-preview-theme style={tokensToStyle(option.tokens as any)}>
+                                          <div role="img">
+                                            <div data-story-container={id} aria-hidden="true" inert></div>
+                                          </div>
+                                        </wizard-preview-theme>
+                                      </wizard-reset-theme>
+                                    </div>
+                                  )}
+                                  <div class="wizard-token-preset__option-text">
+                                    <p class="wizard-token-preset__option-title">{option.name}</p>
+                                    {option.description && <p class="wizard-token-preset__option-description">{option.description}</p>}
+                                  </div>
                                 </div>
-                              )}
-                              <div class="wizard-token-preset__option-text">
-                                <p class="wizard-token-preset__option-title">{option.name}</p>
-                                {option.description && <p class="wizard-token-preset__option-description">{option.description}</p>}
-                              </div>
+                              </label>
                             </div>
-                          </wizard-token-preset>
+                          )
+                        }
                         )}
                       </div>
                     </div>
@@ -148,7 +167,7 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
             </section>
           ))}
 
-          <nav class="wizard-preset-stepper" aria-label="Navigeer tussen keuzes">
+          <nav class="wizard-preset-stepper" aria-label="Navigeer tussen keuzes" hidden>
             <span class="wizard-preset-step-indicator" aria-live="polite"></span>
             <div class="wizard-preset-stepper__actions">
               <button class="wizard-preset-prev nl-button nl-button--subtle" type="button">Vorige</button>
@@ -166,7 +185,7 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
   import { initStories } from '@/components/render-stories';
   import type { components } from '@/lib/components';
 
-  type WizardTokenPresetElement = HTMLElement & { selected: boolean };
+  type WizardTokenPresetInput = HTMLInputElement;
   type DesignTokenLeaf = { path: string; value: string };
 
   const container = document.getElementById('story-container');
@@ -176,22 +195,6 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
 
   initStories(componentId, storyIds);
 
-  document.querySelectorAll('.wizard-token-preset__layout').forEach(layout => {
-    layout.querySelectorAll<WizardTokenPresetElement>('wizard-token-preset').forEach(option => {
-      option.addEventListener('change', () => {
-        const group = option.closest<HTMLElement>('[data-preset-group]');
-        group?.querySelectorAll<WizardTokenPresetElement>('wizard-token-preset').forEach(item => {
-          item.selected = item === option;
-        });
-        writeStoredState();
-        updateStepSelections();
-        updateSelectedValues(currentStep);
-        updateNextButtonState(currentStep);
-      });
-    });
-  });
-
-  // Stepper
   const allSections = Array.from(document.querySelectorAll<HTMLElement>('.wizard-story-section'));
   const total = allSections.length;
   let currentStep = 0;
@@ -203,6 +206,18 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
   const selectedValues = document.querySelector<HTMLElement>('.wizard-selected-values');
   const stepSelectionsSummary = document.querySelector<HTMLElement>('.wizard-step-selections__summary');
   const stepSelectionsList = document.querySelector<HTMLElement>('.wizard-step-selections__list');
+  const stepSelections = document.querySelector<HTMLElement>('.wizard-step-selections');
+  document.querySelectorAll('.wizard-token-preset__layout').forEach(layout => {
+    layout.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input').forEach(option => {
+      option.addEventListener('change', () => {
+        writeStoredState();
+        updateStepSelections();
+        updateSelectedValues(currentStep);
+        updateNextButtonState(currentStep);
+      });
+    });
+  });
+
   const storageKey = `theme-wizard:${componentId}:preset-state`;
 
   function readStoredState() {
@@ -220,7 +235,7 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
         currentStep,
         sections: allSections.map(section =>
           Array.from(section.querySelectorAll<HTMLElement>('[data-preset-group]')).map(group =>
-            Array.from(group.querySelectorAll<WizardTokenPresetElement>('wizard-token-preset')).findIndex(option => option.selected)
+            Array.from(group.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input')).findIndex(option => option.checked)
           )
         ),
       };
@@ -243,8 +258,8 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
         const selectedIndex = groupSelections?.[groupIndex];
         if (typeof selectedIndex !== 'number' || selectedIndex < 0) return;
 
-        Array.from(group.querySelectorAll<WizardTokenPresetElement>('wizard-token-preset')).forEach((option, optionIndex) => {
-          option.selected = optionIndex === selectedIndex;
+        Array.from(group.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input')).forEach((option, optionIndex) => {
+          option.checked = optionIndex === selectedIndex;
         });
       });
     });
@@ -272,14 +287,14 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
   }
 
   function getSelectedOption(group: HTMLElement) {
-    return Array.from(group.querySelectorAll<WizardTokenPresetElement>('wizard-token-preset'))
-      .find(option => option.selected);
+    return Array.from(group.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input'))
+      .find(option => option.checked);
   }
 
   function sectionHasRequiredSelections(section: HTMLElement) {
     const groups = Array.from(section.querySelectorAll<HTMLElement>('[data-preset-group]'));
     return groups.every(group =>
-      Array.from(group.querySelectorAll<WizardTokenPresetElement>('wizard-token-preset')).some(option => option.selected)
+      Array.from(group.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input')).some(option => option.checked)
     );
   }
 
@@ -300,10 +315,8 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
 
   function getSelectionLabels(section: HTMLElement) {
     return Array.from(section.querySelectorAll<HTMLElement>('[data-preset-group]')).flatMap(group => {
-      const label = group.querySelector<HTMLElement>('.wizard-token-preset__title')?.textContent?.trim();
-      const value = getSelectedOption(group)
-        ?.querySelector<HTMLElement>('.wizard-token-preset__option-title')
-        ?.textContent?.trim();
+      const label = group.dataset.groupLabel?.trim();
+      const value = getSelectedOption(group)?.dataset.optionLabel?.trim();
 
       if (!label || !value) return [];
       return [`${label}: ${value}`];
@@ -340,8 +353,8 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
         }
 
         return [{
-          label: group.querySelector<HTMLElement>('.wizard-token-preset__title')?.textContent?.trim() || '',
-          optionLabel: option.querySelector<HTMLElement>('.wizard-token-preset__option-title')?.textContent?.trim() || '',
+          label: group.dataset.groupLabel?.trim() || '',
+          optionLabel: option.dataset.optionLabel?.trim() || '',
           tokens: flattenDesignTokens(tokens),
         }];
       });
@@ -416,6 +429,9 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
   if (total === 0) {
     stepper?.setAttribute('hidden', '');
   } else {
+    selectedValues?.removeAttribute('hidden');
+    stepSelections?.removeAttribute('hidden');
+    stepper?.removeAttribute('hidden');
     showStep(restoreStoredState());
   }
 </script>
