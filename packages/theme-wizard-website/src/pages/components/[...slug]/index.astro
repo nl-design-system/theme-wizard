@@ -59,6 +59,8 @@ const previewStories = slug === 'button'
       return interactionStory ? [interactionStory] : presetStories.slice(0, 1)
     })()
 const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...previewStories.map(([id]) => id)]))
+const styleObjectToString = (obj: Record<string, string>) =>
+  Object.entries(obj).map(([k, v]) => `${k}:${v}`).join(';');
 
 ---
 
@@ -129,6 +131,7 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
                                 type="radio"
                                 value={String(optionIndex)}
                                 data-option-label={option.name}
+                                data-preview-style={styleObjectToString(tokensToStyle(option.tokens as any) as Record<string, string>)}
                                 data-tokens={JSON.stringify(option.tokens)}
                               />
                               <label class="wizard-token-preset__label" for={inputId}>
@@ -206,6 +209,7 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
     layout.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input').forEach(option => {
       option.addEventListener('change', () => {
         writeStoredState();
+        updateSectionPreview(currentStep);
         updateStepSelections();
         updateSelectedValues(currentStep);
         updateNextButtonState(currentStep);
@@ -286,6 +290,27 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
       .find(option => option.checked);
   }
 
+  function getSectionPreviewStyle(section: HTMLElement) {
+    return Array.from(section.querySelectorAll<HTMLElement>('[data-preset-group]'))
+      .map(group => getSelectedOption(group)?.dataset.previewStyle || '')
+      .filter(Boolean)
+      .join(';');
+  }
+
+  function updateSectionPreview(index: number) {
+    const section = allSections[index];
+    if (!section) return;
+
+    const previewStyle = getSectionPreviewStyle(section);
+    section.querySelectorAll<HTMLElement>('.wizard-story-section__variants wizard-preview-theme').forEach(preview => {
+      if (previewStyle) {
+        preview.setAttribute('style', previewStyle);
+      } else {
+        preview.removeAttribute('style');
+      }
+    });
+  }
+
   function sectionHasRequiredSelections(section: HTMLElement) {
     const groups = Array.from(section.querySelectorAll<HTMLElement>('[data-preset-group]'));
     return groups.every(group =>
@@ -342,7 +367,7 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
 
         let tokens: unknown = null;
         try {
-          tokens = JSON.parse(option.getAttribute('value') || '{}');
+          tokens = JSON.parse(option.dataset.tokens || '{}');
         } catch {
           tokens = {};
         }
@@ -411,6 +436,7 @@ const storyIds = Array.from(new Set([...presetStories.map(([id]) => id), ...prev
     updateStepSelections();
     updateSelectedValues(index);
     updateNextButtonState(index);
+    updateSectionPreview(index);
     writeStoredState();
   }
 
