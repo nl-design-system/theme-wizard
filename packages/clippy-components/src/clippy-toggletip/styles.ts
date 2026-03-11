@@ -2,16 +2,16 @@ import { css } from 'lit';
 
 export default css`
   :host {
-    --clippy-toggletip-arrow-size: 0.71428571em;
+    --clippy-toggletip-arrow-size: 0.5rem;
     --clippy-toggletip-background-color: var(--basis-color-default-inverse-bg-document);
-    --clippy-toggletip-border-radius: var(--basis-border-radius-sm, 0.28571429rem);
-    --clippy-toggletip-color: var(--basis-color-default-inverse-color-default, #fff);
-    --clippy-toggletip-font-size: var(--basis-text-font-size-sm, 0.875rem);
-    --clippy-toggletip-line-height: var(--basis-text-line-height-sm, 1.3);
+    --clippy-toggletip-border-radius: var(--basis-border-radius-sm);
+    --clippy-toggletip-color: var(--basis-color-default-inverse-color-default);
+    --clippy-toggletip-font-size: var(--basis-text-font-size-sm);
+    --clippy-toggletip-line-height: var(--basis-text-line-height-sm);
     --clippy-toggletip-max-inline-size: 18rem;
-    --clippy-toggletip-offset: var(--basis-space-block-xs, 0.6rem);
-    --clippy-toggletip-padding-block: var(--basis-space-block-sm, 0.833em);
-    --clippy-toggletip-padding-inline: var(--basis-space-inline-md, 1em);
+    --clippy-toggletip-offset: var(--clippy-toggletip-arrow-size);
+    --clippy-toggletip-padding-block: var(--basis-space-block-sm);
+    --clippy-toggletip-padding-inline: var(--basis-space-inline-md);
     --clippy-toggletip-z-index: 10;
     display: inline-block;
     position: relative;
@@ -35,6 +35,7 @@ export default css`
     color: var(--clippy-toggletip-color);
     font-size: var(--clippy-toggletip-font-size);
     inline-size: max-content;
+    isolation: isolate;
     line-height: var(--clippy-toggletip-line-height);
     max-inline-size: var(--clippy-toggletip-max-inline-size);
     opacity: 0;
@@ -44,7 +45,6 @@ export default css`
     position: absolute;
     transition:
       opacity 0.12s ease,
-      transform 0.12s ease,
       visibility 0.12s ease;
     visibility: hidden;
     z-index: var(--clippy-toggletip-z-index);
@@ -61,9 +61,11 @@ export default css`
     inline-size: var(--clippy-toggletip-arrow-size);
     position: absolute;
     transform: rotate(45deg);
+    z-index: -1;
   }
 
-  :host(:hover) .clippy-toggletip__popup {
+  :host(:hover) .clippy-toggletip__popup,
+  :host(:focus-within) .clippy-toggletip__popup {
     opacity: 1;
     visibility: visible;
   }
@@ -75,8 +77,8 @@ export default css`
   }
 
   .clippy-toggletip--top .clippy-toggletip__popup::before {
-    inset-block-start: calc(100% - 0.35em);
-    inset-inline-start: calc(50% - 0.35em);
+    inset-block-start: calc(100% - var(--clippy-toggletip-arrow-size) / 2);
+    inset-inline-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
   }
 
   .clippy-toggletip--right .clippy-toggletip__popup {
@@ -86,8 +88,8 @@ export default css`
   }
 
   .clippy-toggletip--right .clippy-toggletip__popup::before {
-    inset-block-start: calc(50% - 0.35em);
-    inset-inline-start: calc(-0.35em);
+    inset-block-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
+    inset-inline-start: calc(var(--clippy-toggletip-arrow-size) / -2);
     transform: rotate(-135deg);
   }
 
@@ -98,8 +100,8 @@ export default css`
   }
 
   .clippy-toggletip--bottom .clippy-toggletip__popup::before {
-    inset-block-start: calc(-0.35em);
-    inset-inline-start: calc(50% - 0.35em);
+    inset-block-start: calc(var(--clippy-toggletip-arrow-size) / -2);
+    inset-inline-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
     transform: rotate(225deg);
   }
 
@@ -110,28 +112,8 @@ export default css`
   }
 
   .clippy-toggletip--left .clippy-toggletip__popup::before {
-    inset-block-start: calc(50% - 0.35em);
-    inset-inline-end: calc(-0.35em);
+    inset-block-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
+    inset-inline-end: calc(var(--clippy-toggletip-arrow-size) / -2);
     transform: rotate(45deg);
-  }
-
-  :host(:hover) .clippy-toggletip--top .clippy-toggletip__popup,
-  :host(:focus-within) .clippy-toggletip--top .clippy-toggletip__popup {
-    transform: translate(-50%, 0);
-  }
-
-  :host(:hover) .clippy-toggletip--right .clippy-toggletip__popup,
-  :host(:focus-within) .clippy-toggletip--right .clippy-toggletip__popup {
-    transform: translate(0, -50%);
-  }
-
-  :host(:hover) .clippy-toggletip--bottom .clippy-toggletip__popup,
-  :host(:focus-within) .clippy-toggletip--bottom .clippy-toggletip__popup {
-    transform: translate(-50%, 0);
-  }
-
-  :host(:hover) .clippy-toggletip--left .clippy-toggletip__popup,
-  :host(:focus-within) .clippy-toggletip--left .clippy-toggletip__popup {
-    transform: translate(0, -50%);
   }
 `;
