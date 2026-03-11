@@ -18,6 +18,7 @@ export const en = {
   cancel: 'Cancel',
   close: 'Close',
   continue: 'Continue',
+  copyToClipboard: 'Copy to clipboard',
   display: 'Display',
   footer: {
     colophon: {
@@ -315,6 +316,7 @@ export const nl = {
   cancel: 'Annuleren',
   close: 'Sluiten',
   continue: 'Doorgaan',
+  copyToClipboard: 'Kopieer naar klembord',
   display: 'Weergave',
   footer: {
     colophon: {
