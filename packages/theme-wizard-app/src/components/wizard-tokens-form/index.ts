@@ -18,6 +18,12 @@ import warningDocs from '@nl-design-system-unstable/documentation/handboek/huiss
 import ChevronLeft from '@tabler/icons/outline/chevron-left.svg?raw';
 import ChevronRight from '@tabler/icons/outline/chevron-right.svg?raw';
 import buttonLinkCss from '@utrecht/link-button-css/dist/index.css?inline';
+import '../wizard-layout';
+import '../wizard-preview';
+import '../wizard-token-field';
+import '../wizard-font-input';
+import '../wizard-download-confirmation';
+import '../wizard-validation-issues-alert';
 
 const colorDocs: Record<string, string> = {
   'accent-1': accent1Docs,

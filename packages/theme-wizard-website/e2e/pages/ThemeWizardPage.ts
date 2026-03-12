@@ -62,7 +62,7 @@ export class ThemeWizardPage {
   }
 
   getParagraph(): Locator {
-    return this.preview.getByRole('paragraph').first();
+    return this.preview.locator('.nl-paragraph').first();
   }
 
   getErrorAlert(): Locator {

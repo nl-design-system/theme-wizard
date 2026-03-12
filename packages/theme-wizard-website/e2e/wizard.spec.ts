@@ -33,26 +33,31 @@ test.describe.skip('scraping css design tokens', () => {
 });
 
 test.describe('change fonts', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.getByRole('button', { name: 'Typografie' }).click();
+  test.beforeEach(async ({ themeWizard }) => {
+    await themeWizard.goto();
+    await themeWizard.page.getByRole('button', { name: 'Typografie' }).click();
   });
 
-  test('can change heading font to Courier New on preview', async ({ previewPage }) => {
-    const heading = previewPage.getHeading(2);
+  test('can change heading font to Courier New on preview', async ({ themeWizard }) => {
+    const heading = themeWizard.getHeading(2);
     await expect(heading).not.toHaveFont('Courier New');
-    await previewPage.changeHeadingFont('Courier New');
+    await themeWizard.changeHeadingFont('Courier New');
     await expect(heading).toHaveFont('Courier New');
   });
 
-  test('can change body font to Arial', async ({ previewPage }) => {
-    const paragraph = previewPage.getParagraph();
-    await expect(paragraph).not.toHaveFont('System UI');
-    await previewPage.changeBodyFont('System UI');
-    await expect(paragraph).toHaveFont('System UI');
+  test('can change body font to Courier New', async ({ themeWizard }) => {
+    const paragraph = themeWizard.getParagraph();
+    await expect(paragraph).not.toHaveFont('Courier New');
+    await themeWizard.changeBodyFont('Courier New');
+    await expect(paragraph).toHaveFont('Courier New');
   });
 });
 
 test.describe('Download tokens as JSON', () => {
+  test.beforeEach(async ({ themeWizard }) => {
+    await themeWizard.goto();
+  });
+
   test('initial button state is correct', async ({ themeWizard }) => {
     await expect(themeWizard.downloadButton).toBeVisible();
     await expect(themeWizard.downloadButton).toBeDisabled();
@@ -79,6 +84,7 @@ test.describe('Download tokens as JSON', () => {
     test.beforeEach(async ({ themeWizard }) => {
       await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
       await themeWizard.changeColor('Accent 1', '#3d87f5');
+      await themeWizard.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
       await expect(themeWizard.downloadButton).toBeEnabled();
     });
 
@@ -118,6 +124,7 @@ test.describe('Download tokens as JSON', () => {
     test.beforeEach(async ({ themeWizard }) => {
       await themeWizard.page.getByRole('button', { name: 'Typografie' }).click();
       await themeWizard.changeBodyFont('system-ui');
+      await themeWizard.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
     });
 
     test('Button becomes active after changes made', async ({ themeWizard }) => {
@@ -137,11 +144,11 @@ test.describe('Download tokens as JSON', () => {
     });
 
     test('Button remains enabled when validation errors are found', async ({ themeWizard }) => {
-      await themeWizard.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
       await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
 
       // Trigger a contrast warning
       await themeWizard.changeColor('Accent 1', '#3d87f5');
+      await themeWizard.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
 
       // The button should stay enabled, but show a confirmation dialog on click.
       await expect(themeWizard.downloadButton).toBeEnabled();
@@ -156,6 +163,7 @@ test.describe('Download tokens as JSON', () => {
 
 test.describe('color contrast warnings', () => {
   test.beforeEach(async ({ themeWizard }) => {
+    await themeWizard.goto();
     await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
   });
 
@@ -195,8 +203,9 @@ test.describe('color contrast warnings', () => {
 });
 
 test.describe('printing the webpage', () => {
-  test.beforeEach(({ page }) => {
-    page.emulateMedia({ media: 'print' });
+  test.beforeEach(async ({ page, themeWizard }) => {
+    await page.emulateMedia({ media: 'print' });
+    await themeWizard.goto();
   });
 
   test('prints the preview area', async ({ themeWizard }) => {
@@ -214,6 +223,7 @@ test.describe('colorscale inputs', () => {
   const INITIAL_COLOR = '#1b59a4';
 
   test.beforeEach(async ({ themeWizard }) => {
+    await themeWizard.goto();
     await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
   });
 
@@ -239,7 +249,9 @@ test.describe('colorscale inputs', () => {
   test('Reset restores value to initial value', async ({ themeWizard }) => {
     const input = themeWizard.page.getByLabel('Accent 1');
     await themeWizard.changeColor('Accent 1', '#ff0000');
+    await themeWizard.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
     await themeWizard.reset();
+    await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
     await expect(input).toHaveValue(INITIAL_COLOR);
   });
 

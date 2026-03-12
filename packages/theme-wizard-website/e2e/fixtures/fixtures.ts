@@ -83,7 +83,6 @@ export const test = baseTest.extend<ThemeWizardFixture>({
 
   themeWizard: async ({ page }, use) => {
     const themeWizard = new ThemeWizardPage(page);
-    await themeWizard.goto();
     await use(themeWizard);
   },
 });
