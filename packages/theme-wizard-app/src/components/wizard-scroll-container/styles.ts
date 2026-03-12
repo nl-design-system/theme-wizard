@@ -41,6 +41,7 @@ export default css`
     content: '';
     display: block;
     inset-inline: 0;
+    pointer-events: none;
     position: sticky;
     visibility: var(--_wizard-scroller-visibility-if-can-scroll, var(--_wizard-scroller-visibility-if-cannot-scroll));
     z-index: 1;
