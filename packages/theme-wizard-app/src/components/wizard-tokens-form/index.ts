@@ -2,6 +2,7 @@ import { consume } from '@lit/context';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import accent1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-1-intro.md?raw';
 import accent2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-2-intro.md?raw';
 import accent3Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-3-intro.md?raw';
@@ -64,7 +65,13 @@ type DisplayMode = 'initial' | 'fonts' | 'colors' | 'spacing';
 
 @customElement(tag)
 export class WizardTokensForm extends LitElement {
-  static override readonly styles = [unsafeCSS(linkCss), unsafeCSS(paragraphCss), unsafeCSS(buttonLinkCss), styles];
+  static override readonly styles = [
+    unsafeCSS(srOnlyStyles),
+    unsafeCSS(linkCss),
+    unsafeCSS(paragraphCss),
+    unsafeCSS(buttonLinkCss),
+    styles,
+  ];
 
   @consume({ context: themeContext, subscribe: true })
   private readonly theme!: Theme;
@@ -163,7 +170,10 @@ export class WizardTokensForm extends LitElement {
                     <div slot="label">${label}</div>
                   </wizard-font-input>
                   <p class="nl-paragraph">
-                    <a href=${docsUrl} target="_blank" class="nl-link">${t('moreInformation')}</a>
+                    <a href=${docsUrl} target="_blank" class="nl-link">
+                      <span aria-hidden="true">${t('moreInformationCompact')}</span>
+                      <span class="sr-only">${t('moreInformation', { text: label })}</span>
+                    </a>
                   </p>
                 </wizard-stack>`,
             )}
@@ -195,7 +205,10 @@ export class WizardTokensForm extends LitElement {
                   >
                   </wizard-colorscale-input>
                   <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
-                    ${t('moreInformation')}
+                    <span aria-hidden="true">${t('moreInformationCompact')}</span>
+                    <span class="sr-only">
+                      ${t('moreInformation', { text: t(`tokens.fieldLabels.basis.color.${colorKey}.label`) })}
+                    </span>
                   </a>
                 </wizard-stack>
               `,

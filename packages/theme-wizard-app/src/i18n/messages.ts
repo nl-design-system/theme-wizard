@@ -29,7 +29,8 @@ export const en = {
     },
   },
   loading: 'Loading...',
-  moreInformation: 'More information',
+  moreInformation: 'More information about {{text}}',
+  moreInformationCompact: 'More information',
   nav: {
     components: 'Components',
     configure: 'Edit branding',
@@ -332,7 +333,8 @@ export const nl = {
     },
   },
   loading: 'Laden...',
-  moreInformation: 'Meer informatie',
+  moreInformation: 'Meer informatie over {{text}}',
+  moreInformationCompact: 'Meer informatie',
   nav: {
     components: 'Componenten',
     configure: 'Huisstijl bewerken',
