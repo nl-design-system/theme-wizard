@@ -10,7 +10,7 @@ export class ThemeWizardPage {
     this.preview = this.page.getByTestId('preview');
     this.sidebar = this.page.locator('.wizard-theme-sidebar');
     this.templateSelect = this.page.getByLabel('Weergave');
-    this.downloadButton = this.page.getByRole('button', { name: 'Download tokens als JSON' });
+    this.downloadButton = this.page.getByRole('button', { name: 'Download thema (json)' });
   }
 
   async goto() {
