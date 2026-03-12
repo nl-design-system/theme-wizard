@@ -101,8 +101,8 @@ export class WizardTokensForm extends LitElement {
   override render() {
     if (this.displayMode === 'initial') {
       const buttons: Array<{ id: Exclude<DisplayMode, 'initial'>; title: string | TemplateResult }> = [
-        { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
         { id: 'fonts', title: t('tokens.fieldLabels.basis.typography') },
+        { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
         { id: 'spacing', title: t('tokens.fieldLabels.basis.spacing') },
       ];
       return html`
