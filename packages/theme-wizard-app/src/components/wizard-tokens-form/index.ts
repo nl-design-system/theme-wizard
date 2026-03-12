@@ -41,7 +41,7 @@ const colorDocs: Record<string, string> = {
   selected: selectedDocs,
   warning: warningDocs,
 };
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
@@ -101,34 +101,27 @@ export class WizardTokensForm extends LitElement {
 
   override render() {
     if (this.displayMode === 'initial') {
+      const buttons: Array<{ id: Exclude<DisplayMode, 'initial'>; title: string | TemplateResult }> = [
+        { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
+        { id: 'fonts', title: t('tokens.fieldLabels.basis.typography') },
+        { id: 'spacing', title: t('tokens.fieldLabels.basis.spacing') },
+      ];
       return html`
         <wizard-stack size="4xl">
           <clippy-heading level="3">${t('nav.configure')}</clippy-heading>
           <div class="wizard-tokens-form__section-links">
-            <button
-              type="button"
-              class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
-              @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'fonts')}
-            >
-              ${t('tokens.fieldLabels.basis.typography')}
-              <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
-            </button>
-            <button
-              type="button"
-              class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
-              @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'colors')}
-            >
-              ${t('tokens.fieldLabels.basis.colors')}
-              <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
-            </button>
-            <button
-              type="button"
-              class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
-              @click=${(event: MouseEvent) => this.handleModeSwitch(event, 'spacing')}
-            >
-              ${t('tokens.fieldLabels.basis.spacing')}
-              <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
-            </button>
+            ${buttons.map(
+              ({ id, title }) => html`
+                <button
+                  type="button"
+                  class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
+                  @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
+                >
+                  ${title}
+                  <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
+                </button>
+              `,
+            )}
           </div>
 
           <wizard-tokens-download></wizard-tokens-download>

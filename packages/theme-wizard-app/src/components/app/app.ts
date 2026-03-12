@@ -132,10 +132,6 @@ export class App extends LitElement {
     } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);
     }
-    // Defer context update to after Lit's current render cycle. Setting this.theme synchronously
-    // notifies @provide consumers immediately — including newly-constructed elements that haven't
-    // been inserted into the DOM yet, causing a "ChildPart has no parentNode" error.
-    await Promise.resolve();
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
   };

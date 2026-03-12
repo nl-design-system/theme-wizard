@@ -21,12 +21,6 @@ import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'wizard-colorscale-input': WizardColorscaleInput;
-  }
-}
-
 type ColorScaleObject = Record<string, ColorTokenType>;
 
 const DEFAULT_FROM = new ColorToken({
@@ -103,7 +97,15 @@ export const resolveColorValue = (
   return undefined;
 };
 
-@customElement('wizard-colorscale-input')
+const tag = 'wizard-colorscale-input';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: WizardColorscaleInput;
+  }
+}
+
+@customElement(tag)
 export class WizardColorscaleInput extends WizardTokenInput {
   readonly #scale = new ColorScale(DEFAULT_FROM);
   #value = this.#scale.toObject();

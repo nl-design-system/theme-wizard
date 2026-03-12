@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import styles from './styles';
 
 const tag = 'wizard-stack';
@@ -11,24 +12,7 @@ declare global {
   }
 }
 
-/* eslint-disable perfectionist/sort-objects */
-const CLASSNAME_MAP = {
-  none: 'wizard-stack--none',
-  '2xs': 'wizard-stack--2xs',
-  xs: 'wizard-stack--xs',
-  sm: 'wizard-stack--sm',
-  md: 'wizard-stack--md',
-  lg: 'wizard-stack--lg',
-  xl: 'wizard-stack--xl',
-  '2xl': 'wizard-stack--2xl',
-  '3xl': 'wizard-stack--3xl',
-  '4xl': 'wizard-stack--4xl',
-  '5xl': 'wizard-stack--5xl',
-  '6xl': 'wizard-stack--6xl',
-};
-/* eslint-enable perfectionist/sort-objects */
-
-type StackSize = keyof typeof CLASSNAME_MAP;
+type StackSize = 'none' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
 
 @customElement(tag)
 export class WizardStack extends LitElement {
@@ -38,7 +22,7 @@ export class WizardStack extends LitElement {
 
   override render() {
     return html`
-      <div class="wizard-stack ${CLASSNAME_MAP[this.size] ?? ''}">
+      <div class=${classMap({ [`wizard-stack--${this.size}`]: this.size !== 'none', 'wizard-stack': true })}>
         <slot></slot>
       </div>
     `;
