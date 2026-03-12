@@ -435,7 +435,7 @@ export const nl = {
     cancel: () => t('cancel'),
     downloadAnyway: 'Toch downloaden',
     title: 'Thema bevat nog fouten',
-    triggerText: 'Download tokens als JSON',
+    triggerText: 'Thema downloaden (json)',
   },
   tokens: {
     backToOverview: 'Terug naar overzicht',
