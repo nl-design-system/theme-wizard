@@ -37,13 +37,16 @@ import {
   createMinLineHeightIssue,
 } from './validation-issue';
 import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM, validateMinLineHeight, remToPx } from './validations';
-import { walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
+import { isColorToken, walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
 
+export const MIN_CONTRAST_DISABLED = 3;
+export const MIN_CONTRAST_FUNCTIONAL = 4.5;
+
 export const resolveConfigRefs = (rootConfig: Theme) => {
-  resolveRefs(rootConfig['basis'], rootConfig);
+  resolveRefs(rootConfig, rootConfig);
   return rootConfig;
 };
 
@@ -77,7 +80,7 @@ export const addComponentFontSizeLineHeightPairs = (initialMap: Map<string, stri
       componentTokens,
       (obj) => isValueObject(obj),
       (obj, path) => {
-        if ('line-height' in obj && 'font-size' in obj) {
+        if (Object.hasOwn(obj, 'line-height') && Object.hasOwn(obj, 'font-size')) {
           const tokenPath = path.join('.');
           result.set(`${tokenPath}.font-size`, `${tokenPath}.line-height`);
         }
@@ -87,7 +90,7 @@ export const addComponentFontSizeLineHeightPairs = (initialMap: Map<string, stri
   return result;
 };
 
-export const addColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
+export const addBasisColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
     const lastPath = path.at(-1)!;
 
@@ -112,8 +115,13 @@ export type ContrastExtension = {
   expectedRatio: number;
 };
 
-export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
+/**
+ * Add "nl.nldesignsystem.contrast-with" to color $extensions for known background/foreground colors in basis tokens
+ */
+export const addBasisContrastExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
+    if (path.at(0) !== 'basis') return;
+
     const lastPath = path.at(-1)! as ForegroundColorKey | BorderColorKey;
 
     // Check that we have listed this color to have a known contrast counterpart
@@ -147,15 +155,57 @@ export const addContrastExtensions = (rootConfig: Record<string, unknown>) => {
         expectedRatio,
       } satisfies ContrastExtension;
 
-      const existing = color['$extensions']?.[EXTENSION_CONTRAST_WITH];
-
-      if (Array.isArray(existing)) {
-        setExtension(color, EXTENSION_CONTRAST_WITH, [...existing, contrastWith]);
-      } else {
-        setExtension(color, EXTENSION_CONTRAST_WITH, [contrastWith]);
-      }
+      setExtension(color, EXTENSION_CONTRAST_WITH, [contrastWith]);
     }
   });
+  return rootConfig;
+};
+
+type ComponentConfig = { color: ColorToken; 'background-color': ColorToken };
+
+/**
+ * Add "nl.nldesignsystem.contrast-with" to color $extensions for background/foreground colors in component tokens that
+ * are defined on the same level/depth
+ */
+export const addComponentContrastExtensions = (rootConfig: Record<string, unknown>) => {
+  walkObject<ComponentConfig>(
+    rootConfig,
+    (obj, path): obj is ComponentConfig => {
+      // Basis tokens have their own contrast settings
+      if (path.at(0) === 'basis') return false;
+
+      if (isValueObject(obj) && isColorToken(obj['color']) && isColorToken(obj['background-color'])) {
+        // Make sure we only get to compare colors where alpha=1
+        const value = isRef(obj['background-color'].$value)
+          ? dlv(rootConfig, obj['background-color'].$value.slice(1, -1))?.$value
+          : obj['background-color'].$value;
+        if (typeof value?.alpha === 'number' && value.alpha === 1) {
+          return true;
+        }
+      }
+      return false;
+    },
+    (obj, path) => {
+      const expectedRatio = path.includes('disabled') ? MIN_CONTRAST_DISABLED : MIN_CONTRAST_FUNCTIONAL;
+
+      const foregroundColor = obj['color'];
+      const bgColor = obj['background-color'];
+
+      const contrastExtension = {
+        color: {
+          $extensions: {
+            [EXTENSION_RESOLVED_FROM]: `{${[...path, 'background-color'].join('.')}}`,
+          },
+          $type: 'color',
+          $value: getActualValue(bgColor),
+        },
+        expectedRatio,
+      } satisfies ContrastExtension;
+
+      setExtension(foregroundColor, EXTENSION_CONTRAST_WITH, [contrastExtension]);
+    },
+  );
+
   return rootConfig;
 };
 
@@ -166,7 +216,7 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
     (token): token is Record<string, unknown> & { original: { $value: TokenReference } } => {
       if (!isValueObject(token)) return false;
       if (!isValueObject(token['original'])) return false;
-      if (!('$value' in token['original'])) return false;
+      if (!Object.hasOwn(token['original'], '$value')) return false;
       return isRef(token['original']['$value']);
     },
     // Place `original.$value` in `$value`
@@ -208,15 +258,16 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
  */
 const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
-  // Step 1: Get `$extensions['original']['$value'] fron Style Dictionary and place it in $value
+  // Step 1: Get `$extensions['original']['$value'] from Style Dictionary and place it in $value
   data = useRefAsValue(data);
   // Step 2: Clean up non-token properties for faster processing
   data = removeNonTokenProperties(data);
   // Step 3: Upgrade legacy token formats
   data = upgradeLegacyTokens(data);
   // Step 4: Add extensions
-  data = addContrastExtensions(data);
-  data = addColorScalePositionExtensions(data);
+  data = addBasisContrastExtensions(data);
+  data = addBasisColorScalePositionExtensions(data);
+  data = addComponentContrastExtensions(data);
   // Step 5: Add $value of referenced token in $extensions['resolved-as']
   data = resolveConfigRefs(data);
   return data;

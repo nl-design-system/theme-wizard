@@ -5,7 +5,7 @@ import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
 import * as z from 'zod';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
-import { EXTENSION_RESOLVED_AS } from './resolve-refs';
+import { EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import {
   ThemeSchema,
   type Theme,
@@ -413,160 +413,267 @@ describe('validating color contrast', () => {
   const black = { $type: 'color', $value: parseColor('#000') } satisfies ColorToken;
   const white = { $type: 'color', $value: parseColor('#fff') } satisfies ColorToken;
   const lightGray = { $type: 'color', $value: parseColor('#ccc') } satisfies ColorToken;
-  const config = {
-    basis: {
-      color: {
-        // This is where each test case will write their own needs
-        default: Object.create(null),
-      },
-    },
-    brand: {
-      ma: {
-        name: {
-          $type: 'text',
-          $value: 'Mooi & Anders',
-        },
+
+  describe('basis tokens', () => {
+    const config = {
+      basis: {
         color: {
-          black,
-          gray: {
-            2: lightGray,
-          },
-          white,
+          // This is where each test case will write their own needs
+          default: Object.create(null),
         },
       },
-    },
-  } satisfies Theme;
-
-  it('passes when contrast is sufficient', () => {
-    const testConfig = structuredClone(config);
-    testConfig.basis.color.default['border-default'] = {
-      $type: 'color',
-      $value: '{ma.color.black}',
-    };
-    testConfig.basis.color.default['bg-default'] = {
-      $type: 'color',
-      $value: '{ma.color.white}',
-    };
-    const result = StrictThemeSchema.safeParse(testConfig);
-    expect(result.success).toEqual(true);
-  });
-
-  it('fails when color-document vs bg-subtle do not have enough contrast', () => {
-    const testConfig = structuredClone(config);
-    testConfig.basis.color.default['bg-subtle'] = {
-      $type: 'color',
-      $value: '{ma.color.white}',
-    };
-    testConfig.basis.color.default['color-document'] = {
-      $type: 'color',
-      $value: '{ma.color.gray.2}',
-    };
-    const result = StrictThemeSchema.safeParse(testConfig);
-    expect(result.success).toBeFalsy();
-    expect.soft(result.error!.issues).toEqual([
-      {
-        actual: 1.6059285649300712,
-        code: 'too_small',
-        ERROR_CODE: 'insufficient_contrast',
-        message: 'Insufficient contrast',
-        minimum: 4.5,
-        origin: 'number',
-        path: 'basis.color.default.color-document.$value'.split('.'),
-        tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
-      },
-      {
-        actual: 1.6059285649300712,
-        code: 'too_small',
-        ERROR_CODE: 'insufficient_contrast',
-        message: 'Insufficient contrast',
-        minimum: 4.5,
-        origin: 'number',
-        path: 'basis.color.default.bg-subtle.$value'.split('.'),
-        tokens: ['basis.color.default.bg-subtle', 'basis.color.default.color-document'],
-      },
-    ]);
-  });
-
-  it('passes when legacy tokens are used with proper contrast', () => {
-    const testConfig = structuredClone(config);
-    testConfig.basis.color.default['bg-subtle'] = {
-      $type: 'color',
-      $value: '#fff',
-    };
-    testConfig.basis.color.default['color-document'] = {
-      $type: 'color',
-      $value: '#000',
-    };
-    const result = StrictThemeSchema.safeParse(testConfig);
-    expect(result.success).toEqual(true);
-  });
-
-  it('fails when legacy tokens are used with improper contrast', () => {
-    const testConfig = structuredClone(config);
-    testConfig.basis.color.default['bg-subtle'] = {
-      $type: 'color',
-      $value: '#fff',
-    };
-    testConfig.basis.color.default['color-document'] = {
-      $type: 'color',
-      $value: '#ccc',
-    };
-    const result = StrictThemeSchema.safeParse(testConfig);
-    expect(result.success).toEqual(false);
-    expect(result.error!.issues).toEqual([
-      {
-        actual: 1.6059285649300712,
-        code: 'too_small',
-        ERROR_CODE: 'insufficient_contrast',
-        message: 'Insufficient contrast',
-        minimum: 4.5,
-        origin: 'number',
-        path: 'basis.color.default.color-document.$value'.split('.'),
-        tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
-      },
-      {
-        actual: 1.6059285649300712,
-        code: 'too_small',
-        ERROR_CODE: 'insufficient_contrast',
-        message: 'Insufficient contrast',
-        minimum: 4.5,
-        origin: 'number',
-        path: 'basis.color.default.bg-subtle.$value'.split('.'),
-        tokens: ['basis.color.default.bg-subtle', 'basis.color.default.color-document'],
-      },
-    ]);
-  });
-
-  it('handles contrast error when background color has no EXTENSION_RESOLVED_FROM', () => {
-    const testConfig = structuredClone(config);
-    testConfig.basis.color.default['color-document'] = {
-      $extensions: {
-        [EXTENSION_CONTRAST_WITH]: [
-          {
-            // Background color without EXTENSION_RESOLVED_FROM
-            color: {
-              $type: 'color',
-              $value: parseColor('#fff'),
-              // No EXTENSION_RESOLVED_FROM extension
-            },
-            expectedRatio: 4.5,
+      brand: {
+        ma: {
+          name: {
+            $type: 'text',
+            $value: 'Mooi & Anders',
           },
-        ],
+          color: {
+            black,
+            gray: {
+              2: lightGray,
+            },
+            white,
+          },
+        },
       },
-      $type: 'color',
-      $value: '#ccc',
-    };
-    const result = StrictThemeSchema.safeParse(testConfig);
-    expect(result.success).toBeFalsy();
-    const contrastErrors = (result.error!.issues as ThemeValidationIssue[]).filter(
-      (issue) => issue.ERROR_CODE === ERROR_CODES.INSUFFICIENT_CONTRAST,
-    );
-    expect(contrastErrors.length).toBeGreaterThan(0);
+    } satisfies Theme;
 
-    const errorWithUndefinedPath = contrastErrors.find(
-      (error) => error.path?.length === 1 && error.path[0] === '$value',
-    );
-    expect(errorWithUndefinedPath).toBeDefined();
+    it('passes when contrast is sufficient', () => {
+      const testConfig = structuredClone(config);
+      testConfig.basis.color.default['border-default'] = {
+        $type: 'color',
+        $value: '{ma.color.black}',
+      };
+      testConfig.basis.color.default['bg-default'] = {
+        $type: 'color',
+        $value: '{ma.color.white}',
+      };
+      const result = StrictThemeSchema.safeParse(testConfig);
+      expect(result.success).toEqual(true);
+    });
+
+    it('fails when color-document vs bg-subtle do not have enough contrast', () => {
+      const testConfig = structuredClone(config);
+      testConfig.basis.color.default['bg-subtle'] = {
+        $type: 'color',
+        $value: '{ma.color.white}',
+      };
+      testConfig.basis.color.default['color-document'] = {
+        $type: 'color',
+        $value: '{ma.color.gray.2}',
+      };
+      const result = StrictThemeSchema.safeParse(testConfig);
+      expect(result.success).toBeFalsy();
+      expect.soft(result.error!.issues).toEqual([
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 4.5,
+          origin: 'number',
+          path: 'basis.color.default.color-document.$value'.split('.'),
+          tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
+        },
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 4.5,
+          origin: 'number',
+          path: 'basis.color.default.bg-subtle.$value'.split('.'),
+          tokens: ['basis.color.default.bg-subtle', 'basis.color.default.color-document'],
+        },
+      ]);
+    });
+
+    it('passes when legacy tokens are used with proper contrast', () => {
+      const testConfig = structuredClone(config);
+      testConfig.basis.color.default['bg-subtle'] = {
+        $type: 'color',
+        $value: '#fff',
+      };
+      testConfig.basis.color.default['color-document'] = {
+        $type: 'color',
+        $value: '#000',
+      };
+      const result = StrictThemeSchema.safeParse(testConfig);
+      expect(result.success).toEqual(true);
+    });
+
+    it('fails when legacy tokens are used with improper contrast', () => {
+      const testConfig = structuredClone(config);
+      testConfig.basis.color.default['bg-subtle'] = {
+        $type: 'color',
+        $value: '#fff',
+      };
+      testConfig.basis.color.default['color-document'] = {
+        $type: 'color',
+        $value: '#ccc',
+      };
+      const result = StrictThemeSchema.safeParse(testConfig);
+      expect(result.success).toEqual(false);
+      expect(result.error!.issues).toEqual([
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 4.5,
+          origin: 'number',
+          path: 'basis.color.default.color-document.$value'.split('.'),
+          tokens: ['basis.color.default.color-document', 'basis.color.default.bg-subtle'],
+        },
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 4.5,
+          origin: 'number',
+          path: 'basis.color.default.bg-subtle.$value'.split('.'),
+          tokens: ['basis.color.default.bg-subtle', 'basis.color.default.color-document'],
+        },
+      ]);
+    });
+
+    it('handles contrast error when background color has no EXTENSION_RESOLVED_FROM', () => {
+      const testConfig = structuredClone(config);
+      testConfig.basis.color.default['color-document'] = {
+        $extensions: {
+          [EXTENSION_CONTRAST_WITH]: [
+            {
+              // Background color without EXTENSION_RESOLVED_FROM
+              color: {
+                $type: 'color',
+                $value: parseColor('#fff'),
+                // No EXTENSION_RESOLVED_FROM extension
+              },
+              expectedRatio: 4.5,
+            },
+          ],
+        },
+        $type: 'color',
+        $value: '#ccc',
+      };
+      const result = StrictThemeSchema.safeParse(testConfig);
+      expect(result.success).toBeFalsy();
+      const contrastErrors = (result.error!.issues as ThemeValidationIssue[]).filter(
+        (issue) => issue.ERROR_CODE === ERROR_CODES.INSUFFICIENT_CONTRAST,
+      );
+      expect(contrastErrors.length).toBeGreaterThan(0);
+
+      const errorWithUndefinedPath = contrastErrors.find(
+        (error) => error.path?.length === 1 && error.path[0] === '$value',
+      );
+      expect(errorWithUndefinedPath).toBeDefined();
+    });
+  });
+
+  describe('component tokens', () => {
+    it('passes when contrast is sufficient', () => {
+      const config = {};
+      dset(config, 'clippy.button.color', black);
+      dset(config, 'clippy.button.background-color', white);
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(true);
+    });
+
+    const expectedIssues = [
+      {
+        actual: 1.6059285649300712,
+        code: 'too_small',
+        ERROR_CODE: 'insufficient_contrast',
+        message: 'Insufficient contrast',
+        minimum: 4.5,
+        origin: 'number',
+        path: 'clippy.button.color.$value'.split('.'),
+        tokens: ['clippy.button.color', 'clippy.button.background-color'],
+      },
+      {
+        actual: 1.6059285649300712,
+        code: 'too_small',
+        ERROR_CODE: 'insufficient_contrast',
+        message: 'Insufficient contrast',
+        minimum: 4.5,
+        origin: 'number',
+        path: 'clippy.button.background-color.$value'.split('.'),
+        tokens: ['clippy.button.background-color', 'clippy.button.color'],
+      },
+    ];
+
+    it('fails when contrast is insufficient (absolute values)', () => {
+      const config = {};
+      dset(config, 'clippy.button.color', lightGray);
+      dset(config, 'clippy.button.background-color', white);
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error!.issues).toEqual(expectedIssues);
+    });
+
+    it('fails when contrast is insufficient (ref values)', () => {
+      const config = {};
+      dset(config, 'basis.color.default.color-subtle', lightGray);
+      dset(config, 'basis.color.default.bg-default', white);
+      dset(config, 'clippy.button.color', { $type: 'color', $value: '{basis.color.default.color-subtle}' });
+      dset(config, 'clippy.button.background-color', { $type: 'color', $value: '{basis.color.default.bg-default}' });
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error!.issues).toEqual(expectedIssues);
+    });
+
+    it('has custom contrast settinf for disabled states', () => {
+      const config = {};
+      dset(config, 'clippy.button.disabled.color', lightGray);
+      dset(config, 'clippy.button.disabled.background-color', white);
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error!.issues).toEqual([
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 3,
+          origin: 'number',
+          path: 'clippy.button.disabled.color.$value'.split('.'),
+          tokens: ['clippy.button.disabled.color', 'clippy.button.disabled.background-color'],
+        },
+        {
+          actual: 1.6059285649300712,
+          code: 'too_small',
+          ERROR_CODE: 'insufficient_contrast',
+          message: 'Insufficient contrast',
+          minimum: 3,
+          origin: 'number',
+          path: 'clippy.button.disabled.background-color.$value'.split('.'),
+          tokens: ['clippy.button.disabled.background-color', 'clippy.button.disabled.color'],
+        },
+      ]);
+    });
+
+    it('leaves existing contrast extensions alone', () => {
+      const config = {};
+      dset(config, 'clippy.button.color', lightGray);
+      dset(config, 'clippy.button.background-color', white);
+      dset(config, `clippy.button.color.$extensions.${EXTENSION_CONTRAST_WITH}`, [
+        {
+          color: {
+            $extensions: {
+              [EXTENSION_RESOLVED_FROM]: `{clippy.button.hover.background-color'}`,
+            },
+            $type: 'color',
+            $value: white.$value,
+          },
+          expectedRatio: 1,
+        },
+      ]);
+      const result = StrictThemeSchema.safeParse(config);
+      expect(result.success).toBe(false);
+      expect(result.error!.issues).toEqual(expectedIssues);
+    });
   });
 });
 
