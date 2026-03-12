@@ -157,27 +157,25 @@ export class WizardTokensForm extends LitElement {
           ${this.renderBackLink()}
           <clippy-heading level="3">${t('tokens.fieldLabels.basis.typography')}</clippy-heading>
 
-          <wizard-scroll-container>
-            <wizard-stack size="2xl">
-              ${fonts.map(
-                ({ docsUrl, label, path, token }) =>
-                  html`<wizard-stack class="wizard-form__field">
-                    <clippy-heading level="4">${label}</clippy-heading>
-                    <wizard-font-input
-                      .errors=${this.theme.issues.filter((error) => error.path === path)}
-                      .value=${token.$value}
-                      label=${label}
-                      name=${path}
-                    >
-                      <div slot="label">${label}</div>
-                    </wizard-font-input>
-                    <p class="nl-paragraph">
-                      <a href=${docsUrl} target="_blank" class="nl-link">${t('moreInformation')}</a>
-                    </p>
-                  </wizard-stack>`,
-              )}
-            </wizard-stack>
-          </wizard-scroll-container>
+          <wizard-stack size="2xl">
+            ${fonts.map(
+              ({ docsUrl, label, path, token }) =>
+                html`<wizard-stack class="wizard-form__field">
+                  <clippy-heading level="4">${label}</clippy-heading>
+                  <wizard-font-input
+                    .errors=${this.theme.issues.filter((error) => error.path === path)}
+                    .value=${token.$value}
+                    label=${label}
+                    name=${path}
+                  >
+                    <div slot="label">${label}</div>
+                  </wizard-font-input>
+                  <p class="nl-paragraph">
+                    <a href=${docsUrl} target="_blank" class="nl-link">${t('moreInformation')}</a>
+                  </p>
+                </wizard-stack>`,
+            )}
+          </wizard-stack>
 
           ${this.renderSaveButton()}
         </wizard-stack>
@@ -190,29 +188,27 @@ export class WizardTokensForm extends LitElement {
           ${this.renderBackLink()}
           <clippy-heading level="3">${t('tokens.fieldLabels.basis.colors')}</clippy-heading>
 
-          <wizard-scroll-container>
-            <wizard-stack size="3xl">
-              ${Object.entries(colorDocs).map(
-                ([colorKey, docs]) => html`
-                  <wizard-stack size="lg" class="wizard-form__field">
-                    <clippy-heading level="4">${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading>
-                    <wc-markdown class="wizard-tokens-form__markdown">${docs}</wc-markdown>
-                    <wizard-colorscale-input
-                      key=${colorKey}
-                      label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
-                      id=${`basis.color.${colorKey}`}
-                      name=${`basis.color.${colorKey}`}
-                      .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
-                    >
-                    </wizard-colorscale-input>
-                    <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
-                      ${t('moreInformation')}
-                    </a>
-                  </wizard-stack>
-                `,
-              )}
-            </wizard-stack>
-          </wizard-scroll-container>
+          <wizard-stack size="3xl">
+            ${Object.entries(colorDocs).map(
+              ([colorKey, docs]) => html`
+                <wizard-stack size="lg" class="wizard-form__field">
+                  <clippy-heading level="4">${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading>
+                  <wc-markdown class="wizard-tokens-form__markdown">${docs}</wc-markdown>
+                  <wizard-colorscale-input
+                    key=${colorKey}
+                    label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
+                    id=${`basis.color.${colorKey}`}
+                    name=${`basis.color.${colorKey}`}
+                    .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
+                  >
+                  </wizard-colorscale-input>
+                  <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
+                    ${t('moreInformation')}
+                  </a>
+                </wizard-stack>
+              `,
+            )}
+          </wizard-stack>
 
           ${this.renderSaveButton()}
         </wizard-stack>
@@ -225,14 +221,12 @@ export class WizardTokensForm extends LitElement {
         ${this.renderBackLink()}
         <clippy-heading level="3">${t('tokens.fieldLabels.basis.spacing')}</clippy-heading>
 
-        <wizard-scroll-container>
-          <div
-            aria-hidden="true"
-            style="block-size: var(--basis-size-2xl); border: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle); background-color: var(--basis-color-accent-1-bg-default);"
-          >
-            Placeholder (add controls here)
-          </div>
-        </wizard-scroll-container>
+        <div
+          aria-hidden="true"
+          style="block-size: var(--basis-size-2xl); border: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle); background-color: var(--basis-color-accent-1-bg-default);"
+        >
+          Placeholder (add controls here)
+        </div>
 
         ${this.renderSaveButton()}
       </wizard-stack>
