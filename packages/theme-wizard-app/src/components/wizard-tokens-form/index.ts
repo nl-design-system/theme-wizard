@@ -1,15 +1,8 @@
 import { consume } from '@lit/context';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-import accent1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-1-intro.md?raw';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import '../wizard-layout';
-import '../wizard-preview';
-import '../wizard-token-field';
-import '../wizard-font-input';
-import '../wizard-download-confirmation';
-import '../wizard-validation-issues-alert';
-import '../wizard-scraper';
+import accent1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-1-intro.md?raw';
 import accent2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-2-intro.md?raw';
 import accent3Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-3-intro.md?raw';
 import action1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-action-1-intro.md?raw';
