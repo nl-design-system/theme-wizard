@@ -10,6 +10,7 @@ export default css`
     .utrecht-select {
       background-color: var(--basis-color-transparent);
       border-color: var(--basis-color-transparent);
+      border-radius: var(--basis-border-radius-sm);
       color: var(--basis-color-accent-1-color-default);
       font-weight: var(--basis-text-font-weight-bold);
 
@@ -20,11 +21,6 @@ export default css`
       &:hover {
         background-color: var(--basis-color-accent-1-bg-hover);
       }
-    }
-
-    .wizard-dropdown__arrow {
-      fill: var(--basis-color-accent-1-color-subtle);
-      vertical-align: baseline;
     }
   }
 `;

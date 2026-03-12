@@ -484,15 +484,24 @@ importers:
       '@nl-design-system-community/ma-design-tokens':
         specifier: 3.0.0
         version: 3.0.0
+      '@nl-design-system-unstable/documentation':
+        specifier: 1.9.0
+        version: 1.9.0
       '@nl-design-system-unstable/start-design-tokens':
         specifier: 2.4.1
         version: 2.4.1
       '@storybook/react-vite':
         specifier: 10.1.11
         version: 10.1.11(esbuild@0.27.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.53.5)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
+      '@tabler/icons':
+        specifier: 3.36.0
+        version: 3.36.0
       '@utrecht/button-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/button-link-css':
+        specifier: 2.0.1
+        version: 2.0.1
       '@utrecht/form-field-css':
         specifier: 2.0.1
         version: 2.0.1
@@ -523,6 +532,9 @@ importers:
       '@utrecht/web-component-library-stencil':
         specifier: 4.0.0
         version: 4.0.0
+      '@vanillawc/wc-markdown':
+        specifier: 1.6.11
+        version: 1.6.11
       colorjs.io:
         specifier: 0.6.0
         version: 0.6.0
@@ -2565,6 +2577,9 @@ packages:
   '@nl-design-system-community/ma-design-tokens@3.0.0':
     resolution: {integrity: sha512-95uF6BODj/RldOGIdB0i4L8ISoJ4CauQVzZb6sgD8GBA4btEdX3Cdc6VOKncKbknads5WePeNFap7lo7YrlRGg==}
 
+  '@nl-design-system-unstable/documentation@1.9.0':
+    resolution: {integrity: sha512-acE07cKgCESCmFzroyK+qDPtOQjcLtpfZq/lWwD2zxbkKFMCEbqjXG3eDjaPxCa4ho+7azigHSQVvRrqlPuUkg==}
+
   '@nl-design-system-unstable/start-design-tokens@2.4.1':
     resolution: {integrity: sha512-ZNj5bRH8WHA55xxUcl/Ih77BISVES2r2616qUTMlgHx4iOGi6bEbVI2D/uJysbIPaXzK1OfvI5aXowDahpG8aQ==}
 
@@ -3085,8 +3100,8 @@ packages:
   '@tabler/icons@3.36.0':
     resolution: {integrity: sha512-z9OfTEG6QbaQWM9KBOxxUdpgvMUn0atageXyiaSc2gmYm51ORO8Ua7eUcjlks+Dc0YMK4rrodAFdK9SfjJ4ZcA==}
 
-  '@tabler/icons@3.36.1':
-    resolution: {integrity: sha512-f4Jg3Fof/Vru5ioix/UO4GX+sdDsF9wQo47FbtvG+utIYYVQ/QVAC0QYgcBbAjQGfbdOh2CCf0BgiFOF9Ixtjw==}
+  '@tabler/icons@3.40.0':
+    resolution: {integrity: sha512-V/Q4VgNPKubRTiLdmWjV/zscYcj5IIk+euicUtaVVqF6luSC9rDngYWgST5/yh3Mrg/mYUwRv1YVTk71Jp0twQ==}
 
   '@testing-library/jest-dom@6.9.1':
     resolution: {integrity: sha512-zIcONa+hVtVSSep9UT3jZ5rizo2BsxgyDYU7WFD5eICBE7no3881HGeb/QkGfsJs6JTkY1aQhT7rIPC7e+0nnA==}
@@ -3894,6 +3909,9 @@ packages:
 
   '@utrecht/youtube-video-css@2.0.1':
     resolution: {integrity: sha512-h4wGXrIDLUevryoUvPsAj8C6dSo23KkN7M0BgQxAhlOy6KB59aUOGBlmY+xhZtsIgL/XrHPctjwlZKw8crd3IA==}
+
+  '@vanillawc/wc-markdown@1.6.11':
+    resolution: {integrity: sha512-Ssw03l0l1oIHSlbuB/99XJ7PEcyYDjpKES+oA4czZ4IbQO1/2tSKxzHfmYfer0WdZFk4PZEIbppSpM+2k9KXmw==}
 
   '@vercel/analytics@1.6.1':
     resolution: {integrity: sha512-oH9He/bEM+6oKlv3chWuOOcp8Y6fo6/PSro8hEkgCW3pu9/OiCXiUpRUogDh3Fs3LH2sosDrx8CxeOLBEE+afg==}
@@ -10061,6 +10079,8 @@ snapshots:
 
   '@nl-design-system-community/ma-design-tokens@3.0.0': {}
 
+  '@nl-design-system-unstable/documentation@1.9.0': {}
+
   '@nl-design-system-unstable/start-design-tokens@2.4.1': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.0': {}
@@ -10501,12 +10521,12 @@ snapshots:
 
   '@tabler/icons-react@3.36.1(react@18.3.1)':
     dependencies:
-      '@tabler/icons': 3.36.1
+      '@tabler/icons': 3.40.0
       react: 18.3.1
 
   '@tabler/icons@3.36.0': {}
 
-  '@tabler/icons@3.36.1': {}
+  '@tabler/icons@3.40.0': {}
 
   '@testing-library/jest-dom@6.9.1':
     dependencies:
@@ -11603,6 +11623,8 @@ snapshots:
       '@stencil/core': 4.18.3
 
   '@utrecht/youtube-video-css@2.0.1': {}
+
+  '@vanillawc/wc-markdown@1.6.11': {}
 
   '@vercel/analytics@1.6.1(react@18.3.1)':
     optionalDependencies:

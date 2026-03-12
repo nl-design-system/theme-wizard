@@ -1,6 +1,8 @@
 import { test, expect } from './fixtures/fixtures';
 
 test('page has accessibility basics', async ({ themeWizard }) => {
+  await themeWizard.goto();
+
   // Has <title>
   const title = await themeWizard.page.title();
   expect.soft(title).toBeTruthy();

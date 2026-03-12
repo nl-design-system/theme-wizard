@@ -19,6 +19,7 @@ test('collage template shows correct content and structure', async ({ collagePag
 });
 
 test('can select different templates from the selector', async ({ themeWizard }) => {
+  await themeWizard.goto();
   await themeWizard.selectTemplate('Overzichtspagina');
   await themeWizard.page.waitForLoadState('domcontentloaded');
 

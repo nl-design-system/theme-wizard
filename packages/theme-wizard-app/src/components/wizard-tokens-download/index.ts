@@ -1,18 +1,20 @@
 import { consume } from '@lit/context';
+import Download from '@tabler/icons/outline/download.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
 import '../wizard-layout';
 import '../wizard-preview';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
+import { customElement, query } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
 import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import '@nl-design-system-community/clippy-components/clippy-heading';
 
 const tag = 'wizard-tokens-download';
 
@@ -60,10 +62,6 @@ export class WizardTokensDownload extends LitElement {
   };
 
   override render() {
-    if (!this.theme) {
-      return html`<div>Loading...</div>`;
-    }
-
     return html`
       <wizard-download-confirmation
         .issues=${this.theme.groupedIssues}
@@ -76,6 +74,7 @@ export class WizardTokensDownload extends LitElement {
         ?disabled=${!this.theme.modified}
         @click=${this.#handleDownloadClick}
       >
+        <span slot="iconStart">${unsafeSVG(Download)}</span>
         ${t('tokenDownloadDialog.triggerText')}
       </clippy-button>
     `;

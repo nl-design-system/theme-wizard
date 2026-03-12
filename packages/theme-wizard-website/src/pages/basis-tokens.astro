@@ -23,11 +23,12 @@ if (!currentTemplate) {
   .wizard-theme-sidebar {
     display: grid;
     gap: 2rem;
+    padding-block: var(--basis-space-block-lg);
   }
 
   .wizard-main {
     display: grid;
-    padding-block: var(--basis-space-block-3xl);
+    padding-block: var(--basis-space-block-lg);
     row-gap: var(--basis-space-row-lg);
   }
 
@@ -41,12 +42,7 @@ if (!currentTemplate) {
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <div slot="sidebar" class="wizard-theme-sidebar">
-        <section>
-          <h2>Huisstijl bewerken</h2>
-          <wizard-tokens-form></wizard-tokens-form>
-        </section>
-        <wizard-tokens-download></wizard-tokens-download>
-        <wizard-theme-reset-button></wizard-theme-reset-button>
+        <wizard-tokens-form></wizard-tokens-form>
       </div>
 
       <div slot="main" class="wizard-main">

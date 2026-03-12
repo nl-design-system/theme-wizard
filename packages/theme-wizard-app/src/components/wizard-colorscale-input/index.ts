@@ -97,7 +97,15 @@ export const resolveColorValue = (
   return undefined;
 };
 
-@customElement('wizard-colorscale-input')
+const tag = 'wizard-colorscale-input';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    [tag]: WizardColorscaleInput;
+  }
+}
+
+@customElement(tag)
 export class WizardColorscaleInput extends WizardTokenInput {
   readonly #scale = new ColorScale(DEFAULT_FROM);
   #value = this.#scale.toObject();
@@ -201,6 +209,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
       this.value = this.#scale.toObject();
       this.currentColorValue = stringifyColor(value);
       this.requestUpdate();
+      if (!this.isConnected) return;
       this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
   };
@@ -213,7 +222,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
           name=${this.name}
           .options=${this.scrapedTokens
             .filter((token) => token.$type === 'color')
-.filter(token => token.$extensions[EXTENSION_TOKEN_STAGED] !== false)
+            .filter((token) => token.$extensions[EXTENSION_TOKEN_STAGED] !== false)
             .map((color) => ({
               /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
               label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),
@@ -222,10 +231,6 @@ export class WizardColorscaleInput extends WizardTokenInput {
           .value=${this.currentColorValue}
           @change=${this.handleColorChange}
         >
-          <div slot="label" class="wizard-colorscale-input__label">
-            <div>${this.label}</div>
-            <slot name="extra-label"></slot>
-          </div>
         </clippy-color-combobox>
         <div
           role="presentation"
@@ -245,11 +250,5 @@ export class WizardColorscaleInput extends WizardTokenInput {
         </div>
       </div>
     `;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'wizard-colorscale-input': WizardColorscaleInput;
   }
 }
