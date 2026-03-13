@@ -1,0 +1,28 @@
+---
+import type { StoryWizardViewModel } from '@/lib/story-wizard';
+import StoryWizardStep from './components/StoryWizardStep.astro';
+import StoryWizardStepper from './components/StoryWizardStepper.astro';
+
+interface Props {
+  wizard: StoryWizardViewModel;
+}
+
+const { wizard } = Astro.props;
+---
+
+<p class="wizard-selected-values" aria-live="polite" hidden>Nog geen preset gekozen.</p>
+
+<details class="wizard-step-selections" hidden>
+  <summary class="wizard-step-selections__summary">Gekozen presets per stap (0/0)</summary>
+
+  <div class="wizard-step-selections__list"></div>
+</details>
+
+<div slot="page-content" class="wizard-page-content">
+  <div id="story-wizard" data-story-ids={JSON.stringify(wizard.storyIds)} data-component-id={wizard.componentId} hidden>
+  </div>
+
+  {wizard.steps.map((step) => <StoryWizardStep step={step} />)}
+
+  <StoryWizardStepper />
+</div>
