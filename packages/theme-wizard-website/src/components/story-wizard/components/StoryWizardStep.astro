@@ -1,0 +1,36 @@
+---
+import type { StoryWizardStep as StoryWizardStepViewModel } from '@/lib/story-wizard';
+import StoryWizardPresetGroup from './StoryWizardPresetGroup/index.astro';
+
+interface Props {
+  step: StoryWizardStepViewModel;
+}
+
+const { step } = Astro.props;
+---
+
+<section id={step.id} class="wizard-story-section" aria-labelledby={`${step.id}-title`} data-step-label={step.title}>
+  <header class="wizard-story-section__header">
+    <p class="wizard-story-section__intro">{step.intro}</p>
+  </header>
+
+  {
+    step.previewStories.length > 0 && (
+      <div class="wizard-story-section__variants" aria-label={`${step.title} previews`}>
+        {step.previewStories.map((previewStory) => (
+          <div class="wizard-story-section__variant">
+            <p class="wizard-story-section__variant-label">{previewStory.name}</p>
+            <wizard-story-preview>
+              <wizard-reset-theme>
+                <wizard-preview-theme>
+                  <div data-story-container={previewStory.id} />
+                </wizard-preview-theme>
+              </wizard-reset-theme>
+            </wizard-story-preview>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  {step.groups.map((group) => <StoryWizardPresetGroup group={group} storyId={step.id} />)}
+</section>

@@ -1,0 +1,63 @@
+---
+import type { StoryWizardPresetGroup } from '@/lib/story-wizard';
+
+interface Props {
+  group: StoryWizardPresetGroup;
+  storyId: string;
+}
+
+const { group, storyId } = Astro.props;
+---
+
+<section class="wizard-token-preset" data-preset-group data-group-label={group.name}>
+  <h2 class="wizard-token-preset__title">{group.name}</h2>
+
+  {group.description && <p class="wizard-token-preset__description">{group.description}</p>}
+
+  <div class="wizard-token-preset__layout">
+    <div class="wizard-token-preset__options">
+      {
+        group.options.map((option, optionIndex) => {
+          const inputId = `${storyId}-${group.id}-option-${optionIndex}`;
+          const inputName = `${storyId}-${group.id}`;
+
+          return (
+            <div class="wizard-token-preset__option">
+              <input
+                class="wizard-token-preset__input"
+                id={inputId}
+                name={inputName}
+                type="radio"
+                value={String(optionIndex)}
+                data-option-label={option.name}
+                data-preview-style={option.previewStyle}
+                data-tokens={JSON.stringify(option.tokens)}
+              />
+
+              <label class="wizard-token-preset__label" for={inputId}>
+                <div class="wizard-token-preset__option-inner">
+                  {group.showThumbnail && (
+                    <div class="wizard-token-preset__option-thumbnail">
+                      <wizard-reset-theme>
+                        <wizard-preview-theme style={option.previewStyle}>
+                          <div role="img">
+                            <div data-story-container={storyId} aria-hidden="true" inert />
+                          </div>
+                        </wizard-preview-theme>
+                      </wizard-reset-theme>
+                    </div>
+                  )}
+
+                  <div class="wizard-token-preset__option-text">
+                    <p class="wizard-token-preset__option-title">{option.name}</p>
+                    {option.description && <p class="wizard-token-preset__option-description">{option.description}</p>}
+                  </div>
+                </div>
+              </label>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
