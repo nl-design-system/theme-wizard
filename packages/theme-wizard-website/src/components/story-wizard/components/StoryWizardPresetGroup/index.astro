@@ -10,9 +10,9 @@ const { group, storyId } = Astro.props;
 ---
 
 <section class="wizard-token-preset" data-preset-group data-group-label={group.name}>
-  <h2 class="wizard-token-preset__title">{group.name}</h2>
+  <h3 class="nl-heading nl-heading--level-4 wizard-token-preset__title">{group.name}</h3>
 
-  {group.description && <p class="wizard-token-preset__description">{group.description}</p>}
+  {group.description && <p class="nl-paragraph wizard-token-preset__description">{group.description}</p>}
 
   <div class="wizard-token-preset__layout">
     <div class="wizard-token-preset__options">
@@ -35,24 +35,8 @@ const { group, storyId } = Astro.props;
               />
 
               <label class="wizard-token-preset__label" for={inputId}>
-                <div class="wizard-token-preset__option-inner">
-                  {group.showThumbnail && (
-                    <div class="wizard-token-preset__option-thumbnail">
-                      <wizard-reset-theme>
-                        <wizard-preview-theme style={option.previewStyle}>
-                          <div role="img">
-                            <div data-story-container={storyId} aria-hidden="true" inert />
-                          </div>
-                        </wizard-preview-theme>
-                      </wizard-reset-theme>
-                    </div>
-                  )}
-
-                  <div class="wizard-token-preset__option-text">
-                    <p class="wizard-token-preset__option-title">{option.name}</p>
-                    {option.description && <p class="wizard-token-preset__option-description">{option.description}</p>}
-                  </div>
-                </div>
+                <p class="nl-paragraph wizard-token-preset__option-title">{option.name}</p>
+                {option.description && <p class="nl-paragraph wizard-token-preset__option-description">{option.description}</p>}
               </label>
             </div>
           );
