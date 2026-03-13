@@ -630,8 +630,11 @@ export class StoryWizardController {
   }
 
   private reset() {
+<<<<<<< HEAD
     this.hasFinishedAllChoices = false;
     this.container.closest('theme-wizard-app')?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
+=======
+>>>>>>> 3caf1e9b (feat: reset button)
     this.clearSelections();
     this.clearStoredState();
     this.showStep(0);
