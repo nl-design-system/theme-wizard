@@ -9,6 +9,7 @@ export class StoryWizardController {
   private readonly indicator: HTMLElement | null;
   private readonly nextBtn: HTMLButtonElement | null;
   private readonly prevBtn: HTMLButtonElement | null;
+  private readonly resetBtn: HTMLButtonElement | null;
   private readonly selectedValues: HTMLElement | null;
   private readonly stepSelections: HTMLElement | null;
   private readonly stepSelectionsList: HTMLElement | null;
@@ -24,6 +25,7 @@ export class StoryWizardController {
       (element) => new StoryWizardStep(element),
     );
     this.stepper = root.querySelector<HTMLElement>('.wizard-preset-stepper');
+    this.resetBtn = root.querySelector<HTMLButtonElement>('.wizard-preset-reset');
     this.prevBtn = root.querySelector<HTMLButtonElement>('.wizard-preset-prev');
     this.nextBtn = root.querySelector<HTMLButtonElement>('.wizard-preset-next');
     this.indicator = root.querySelector<HTMLElement>('.wizard-preset-step-indicator');
@@ -62,6 +64,10 @@ export class StoryWizardController {
   }
 
   private bindNavigation() {
+    this.resetBtn?.addEventListener('click', () => {
+      this.reset();
+    });
+
     this.prevBtn?.addEventListener('click', () => {
       if (this.currentStep > 0) this.showStep(this.currentStep - 1);
     });
@@ -109,6 +115,24 @@ export class StoryWizardController {
     } catch {
       // Progressive enhancement: ignore storage failures and keep the wizard usable.
     }
+  }
+
+  private clearStoredState() {
+    try {
+      globalThis.localStorage?.removeItem(this.storageKey);
+    } catch {
+      // Progressive enhancement: ignore storage failures and keep the wizard usable.
+    }
+  }
+
+  private clearSelections() {
+    this.steps.forEach((step) => {
+      step.groups.forEach((group) => {
+        group.options.forEach((option) => {
+          option.setChecked(false);
+        });
+      });
+    });
   }
 
   private restoreStoredState() {
@@ -236,5 +260,11 @@ export class StoryWizardController {
     this.updateNextButtonState();
     this.getCurrentStep()?.applyPreviewStyle();
     this.writeStoredState();
+  }
+
+  private reset() {
+    this.clearSelections();
+    this.clearStoredState();
+    this.showStep(0);
   }
 }
