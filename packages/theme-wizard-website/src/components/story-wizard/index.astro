@@ -1,0 +1,20 @@
+---
+import type { StoryWizardViewModel } from '@/lib/story-wizard';
+import StoryWizardStep from './components/StoryWizardStep.astro';
+import StoryWizardStepper from './components/StoryWizardStepper.astro';
+
+interface Props {
+  wizard: StoryWizardViewModel;
+}
+
+const { wizard } = Astro.props;
+---
+
+<div slot="page-content" class="wizard-page-content">
+  <div id="story-wizard" data-story-ids={JSON.stringify(wizard.storyIds)} data-component-id={wizard.componentId} hidden>
+  </div>
+
+  {wizard.steps.map((step) => <StoryWizardStep step={step} />)}
+
+  <StoryWizardStepper />
+</div>
