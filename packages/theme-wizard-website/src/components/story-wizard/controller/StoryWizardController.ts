@@ -7,11 +7,9 @@ import { StoryWizardStep } from './StoryWizardStep';
 export class StoryWizardController {
   private readonly componentId: keyof typeof components;
   private currentStep = 0;
-  private readonly indicators: HTMLElement[];
   private readonly nextBtns: HTMLButtonElement[];
   private readonly prevBtns: HTMLButtonElement[];
   private readonly resetBtns: HTMLButtonElement[];
-  private readonly selectedValues: HTMLElement | null;
   private readonly stepSelections: HTMLElement | null;
   private readonly stepSelectionsList: HTMLElement | null;
   private readonly stepSelectionsSummary: HTMLElement | null;
@@ -30,8 +28,6 @@ export class StoryWizardController {
     this.resetBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-reset'));
     this.prevBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-prev'));
     this.nextBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-next'));
-    this.indicators = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-step-indicator'));
-    this.selectedValues = root.querySelector<HTMLElement>('.wizard-selected-values');
     this.stepSelectionsSummary = root.querySelector<HTMLElement>('.wizard-step-selections__summary');
     this.stepSelectionsList = root.querySelector<HTMLElement>('.wizard-step-selections__list');
     this.stepSelections = root.querySelector<HTMLElement>('.wizard-step-selections');
@@ -59,7 +55,6 @@ export class StoryWizardController {
       return;
     }
 
-    this.selectedValues?.removeAttribute('hidden');
     this.stepSelections?.removeAttribute('hidden');
     this.steppers.forEach((stepper) => stepper.removeAttribute('hidden'));
     this.showStep(this.restoreStoredState());
@@ -93,7 +88,6 @@ export class StoryWizardController {
         this.writeStoredState();
         this.getCurrentStep()?.applyPreviewStyle();
         this.updateStepSelections();
-        this.updateSelectedValues();
         this.updateNextButtonState();
       });
     });
@@ -174,13 +168,6 @@ export class StoryWizardController {
       nextBtn.classList.toggle('nl-button--disabled', !isComplete);
       nextBtn.textContent = isLastStep ? 'Afronden' : 'Volgende';
     });
-  }
-
-  private updateSelectedValues() {
-    if (!this.selectedValues) return;
-
-    const labels = this.getCurrentStep()?.getSelectionLabels() ?? [];
-    this.selectedValues.textContent = labels.length > 0 ? labels.join(' • ') : 'Nog geen preset gekozen.';
   }
 
   private getOrCreateTokensDialog(): HTMLDialogElement {
@@ -268,7 +255,7 @@ export class StoryWizardController {
       }
 
       const wrapper = document.createElement('div');
-      wrapper.className = `wizard-step-selection${hasSelection ? '' : ' wizard-step-selection--empty'}`;
+      wrapper.className = 'wizard-step-selection';
 
       const numberBadge = document.createElement('span');
       numberBadge.className = 'wizard-step-selection__number';
@@ -310,9 +297,9 @@ export class StoryWizardController {
         const tokensBtn = document.createElement('button');
         tokensBtn.className = 'wizard-step-selection__tokens-btn nl-button nl-button--subtle';
         tokensBtn.type = 'button';
-        tokensBtn.setAttribute('aria-label', `Design tokens voor: ${step.stepLabel || `Stap ${index + 1}`}`);
+        tokensBtn.setAttribute('aria-label', `Design tokens voor: ${stepLabel}`);
         tokensBtn.textContent = 'Design tokens';
-        tokensBtn.addEventListener('click', () => this.showTokensDialog(step.stepLabel, selectedGroups));
+        tokensBtn.addEventListener('click', () => this.showTokensDialog(stepLabel, selectedGroups));
         wrapper.appendChild(tokensBtn);
       }
 
@@ -349,15 +336,11 @@ export class StoryWizardController {
     });
 
     this.currentStep = index;
-    this.indicators.forEach((indicator) => {
-      indicator.textContent = `Stap ${index + 1} van ${this.total}`;
-    });
     this.prevBtns.forEach((prevBtn) => {
       prevBtn.disabled = index === 0;
       prevBtn.classList.toggle('nl-button--disabled', index === 0);
     });
     this.updateStepSelections();
-    this.updateSelectedValues();
     this.updateNextButtonState();
     this.getCurrentStep()?.applyPreviewStyle();
     this.writeStoredState();
