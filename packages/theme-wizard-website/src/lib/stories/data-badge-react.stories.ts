@@ -104,7 +104,7 @@ export const DataBadgeVorm: Story = {
             tokens: {
               nl: {
                 'data-badge': {
-                  'border-radius': { $value: '{basis.border-radius.full}' },
+                  'border-radius': { $value: '{basis.border-radius.round}' },
                 },
               },
             },
