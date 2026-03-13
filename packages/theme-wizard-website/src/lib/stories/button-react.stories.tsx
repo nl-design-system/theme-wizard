@@ -430,7 +430,6 @@ export const ButtonVorm: Story = {
         options: [
           {
             name: 'Hoekig',
-            description: 'Scherpe hoeken, strak en zakelijk.',
             tokens: {
               nl: {
                 button: {
@@ -463,7 +462,6 @@ export const ButtonVorm: Story = {
           },
           {
             name: 'Pill',
-            description: 'Volledig rond, moderne look.',
             tokens: {
               nl: {
                 button: {

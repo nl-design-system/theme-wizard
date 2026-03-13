@@ -5,6 +5,8 @@ type StyleLoader = () => Promise<unknown>;
 
 const sharedStyleLoaders: StyleLoader[] = [
   () => import('@nl-design-system-candidate/button-css/button.css'),
+  () => import('@nl-design-system-candidate/heading-css/heading.css'),
+  () => import('@nl-design-system-candidate/paragraph-css/paragraph.css'),
 ];
 
 const componentStyleLoaders: Partial<Record<ComponentId, StyleLoader[]>> = {};

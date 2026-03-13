@@ -14,7 +14,6 @@ export type StoryWizardPresetGroup = {
   id: string;
   name: string;
   options: StoryWizardPresetOption[];
-  showThumbnail: boolean;
 };
 
 export type StoryWizardPreview = {
@@ -126,7 +125,6 @@ export class StoryWizardModel {
         previewStyle: styleObjectToString(tokensToStyle(option.tokens as never) as Record<string, string>),
         tokens: option.tokens,
       })),
-      showThumbnail: preset.thumbnail !== false,
     };
   }
 

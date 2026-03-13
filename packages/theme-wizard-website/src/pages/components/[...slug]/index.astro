@@ -21,6 +21,7 @@ const componentList = await Promise.all(Object.entries(components).map(async ([s
 }))
 
 const slug = Astro.params.slug as keyof typeof components
+const { title } = components[slug]
 await loadStoryWizardComponentStyles(slug)
 const wizard = await StoryWizardModel.fromComponentId(slug)
 
@@ -45,7 +46,7 @@ const wizard = await StoryWizardModel.fromComponentId(slug)
           <span>{slug}</span>
         </nav>
 
-        <h1>{slug}</h1>
+        <h1>{title}</h1>
         <StoryWizard wizard={wizard} />
         <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>
       </main>
