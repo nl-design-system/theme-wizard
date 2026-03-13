@@ -1,6 +1,12 @@
-<nav class="wizard-preset-stepper" aria-label="Navigeer tussen keuzes" hidden>
-  <span class="wizard-preset-step-indicator" aria-live="polite"></span>
+---
+interface Props {
+  position?: 'top' | 'bottom';
+}
 
+const { position = 'bottom' } = Astro.props;
+---
+
+<nav class={`wizard-preset-stepper wizard-preset-stepper--${position}`} aria-label="Navigeer tussen keuzes" hidden>
   <div class="wizard-preset-stepper__actions">
     <button class="wizard-preset-reset nl-button nl-button--subtle" type="button">Opnieuw beginnen</button>
     <button class="wizard-preset-prev nl-button nl-button--subtle nl-button--disabled" type="button">Vorige</button>
@@ -9,4 +15,11 @@
       Volgende
     </button>
   </div>
+
+  <details class="wizard-step-selections">
+    <summary class="wizard-step-selections__summary">
+      <span aria-live="polite" aria-atomic="true">Design keuzes (0/0)</span>
+    </summary>
+    <div class="wizard-step-selections__list"></div>
+  </details>
 </nav>
