@@ -30,17 +30,26 @@ export const queryToValue = (query: string): ColorToken => {
   return { $type: 'color', $value: parseColor(query) };
 };
 
-export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string =>
-  typeof $value === 'string' ? $value : stringifyColor($value as ColorValue);
+export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string => {
+  try {
+    return typeof $value === 'string' ? $value : stringifyColor($value);
+  } catch {
+    return ''; // If the value can't be stringified, return an empty string to avoid displaying invalid data in the input.
+  }
+};
 
-export const preview = <T extends { color?: Color }>({ color }: T) => {
-  return color
+export const preview = <T extends { value: ColorToken; color?: Color }>({ color, value }: T) => {
+  if (!value) {
+    return nothing;
+  }
+  const colorValue = color?.toString() ?? stringifyColor(value?.$value);
+  return colorValue
     ? html`
         <svg
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           class="wizard-token-combobox__preview nl-color-sample"
-          style=${styleMap({ color: color?.toString() })}
+          style=${styleMap({ color: colorValue })}
         >
           <path d="M0 0H32V32H0Z" fill="currentcolor" />
         </svg>
