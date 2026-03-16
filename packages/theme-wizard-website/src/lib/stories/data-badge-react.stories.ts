@@ -37,14 +37,14 @@ const dataBadgeWizardStepBorder = {
   stepTitle: 'Data Badge rand',
 };
 
-export const DataBadgeStory: Story = {
+export const DataBadgeWithChildren: Story = {
   name: 'Data Badge (met chilren)',
   args: {
     children: '42',
   },
 };
 
-export const DataBadgeMetValue: Story = {
+export const DataBadgeWithValue: Story = {
   name: 'Data Badge met "value"',
   args: {
     children: '42',
@@ -52,7 +52,7 @@ export const DataBadgeMetValue: Story = {
   },
 };
 
-export const DataBadgeMetDateTime: Story = {
+export const DataBadgeWithDateTime: Story = {
   name: 'Data Badge met "dateTime"',
   args: {
     children: 'Donderdag 1 januari 1970 om 01:00:00',
