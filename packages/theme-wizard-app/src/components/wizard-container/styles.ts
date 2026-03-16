@@ -6,8 +6,8 @@ export default css`
   }
 
   .wizard-container {
-    padding-inline: var(--basis-space-inline-xl);
     max-inline-size: 100%;
+    padding-inline: var(--basis-space-inline-xl);
   }
 
   .wizard-container--page {
