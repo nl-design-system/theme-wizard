@@ -9,38 +9,40 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
   <theme-wizard-app>
     <wizard-layout>
       <main slot="main" class="wizard-main">
-        <wizard-story-preview size="lg">
-          <wizard-stack size="5xl">
-            <header>
-              <wizard-container size="md" class="header-container">
-                <wizard-stack size="xl">
-                  <a class="nl-link wizard-back-link" href="/">
-                    <IconArrowLeft />
-                    Vorige stap
-                  </a>
-                  <h1 class="wizard-page-title">Design tokens gevonden!</h1>
-                  <p class="nl-paragraph nl-paragraph--lead">Je kunt deze design tokens gebruiken als opties om je huisstijl te bewerken.</p>
-                  <p class="nl-paragraph">Selecteer de tokens die je wilt kunnen gebruiken. Geen zorgen, je kunt deze selectie altijd aanpassen.</p>
-                  <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
-                    <span class="nl-button__label">Huisstijl bewerken</span>
-                    <span class="nl-button__icon-end">
-                      <IconArrowRight />
-                    </span>
-                  </a>
-                </wizard-stack>
-              </wizard-container>
-            </header>
+        <wizard-container size="3xl">
+          <wizard-story-preview size="lg">
+            <wizard-stack size="5xl">
+              <header>
+                <wizard-container size="md" class="header-container">
+                  <wizard-stack size="xl">
+                    <a class="nl-link wizard-back-link" href="/">
+                      <IconArrowLeft />
+                      Vorige stap
+                    </a>
+                    <h1 class="wizard-page-title">Design tokens gevonden!</h1>
+                    <p class="nl-paragraph nl-paragraph--lead">Je kunt deze design tokens gebruiken als opties om je huisstijl te bewerken.</p>
+                    <p class="nl-paragraph">Selecteer de tokens die je wilt kunnen gebruiken. Geen zorgen, je kunt deze selectie altijd aanpassen.</p>
+                    <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
+                      <span class="nl-button__label">Huisstijl bewerken</span>
+                      <span class="nl-button__icon-end">
+                        <IconArrowRight />
+                      </span>
+                    </a>
+                  </wizard-stack>
+                </wizard-container>
+              </header>
 
-            <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
+                <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
 
-            <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
-              <span class="nl-button__label">Huisstijl bewerken</span>
-              <span class="nl-button__icon-end">
-                <IconArrowRight />
-              </span>
-            </a>
-          </wizard-stack>
-        </wizard-story-preview>
+                <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
+                  <span class="nl-button__label">Huisstijl bewerken</span>
+                  <span class="nl-button__icon-end">
+                    <IconArrowRight />
+                  </span>
+                </a>
+            </wizard-stack>
+          </wizard-story-preview>
+        </wizard-container>
       </main>
      </wizard-layout>
   </theme-wizard-app>
@@ -49,6 +51,7 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 <style>
   .wizard-main {
     display: grid;
+    place-content: center;
     padding-block-end: var(--basis-space-block-5xl);
     padding-block-start: var(--basis-space-block-3xl);
     padding-inline: var(--basis-space-inline-2xl);

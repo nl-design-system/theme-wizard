@@ -29,4 +29,12 @@ export default css`
   .wizard-container--xl {
     inline-size: 55rem;
   }
+
+  .wizard-container--2xl {
+    inline-size: 72rem;
+  }
+
+  .wizard-container--3xl {
+    inline-size: 96rem;
+  }
 `;

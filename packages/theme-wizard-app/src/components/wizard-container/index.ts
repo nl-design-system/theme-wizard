@@ -19,6 +19,8 @@ const CLASSNAME_MAP = {
   md: 'wizard-container--md',
   lg: 'wizard-container--lg',
   xl: 'wizard-container--xl',
+  '2xl': 'wizard-container--2xl',
+  '3xl': 'wizard-container--3xl',
 };
 /* eslint-enable perfectionist/sort-objects */
 
