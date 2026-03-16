@@ -37,7 +37,7 @@ import {
   createMinLineHeightIssue,
 } from './validation-issue';
 import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM, validateMinLineHeight, remToPx } from './validations';
-import { isColorToken, walkColors, walkDimensions, walkLineHeights, walkObject } from './walker';
+import { isColorToken, walkColors, walkDimensions, walkLineHeights, walkObject, SKIP } from './walker';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -98,10 +98,11 @@ export const addBasisColorScalePositionExtensions = (rootConfig: Record<string, 
     const matchingColorKeyIndex = COLOR_KEYS.findIndex((colorKey) => lastPath.endsWith(colorKey));
 
     // If no match found, skip this token
-    if (matchingColorKeyIndex === -1) return;
+    if (matchingColorKeyIndex === -1) return undefined;
 
     // Add the extension with the index
     setExtension(color, EXTENSION_COLOR_SCALE_POSITION, matchingColorKeyIndex + 1);
+    return SKIP;
   });
   return rootConfig;
 };
