@@ -27,34 +27,6 @@ export default css`
     padding-inline-start: var(--basis-space-inline-md);
   }
 
-  .wizard-token-field__default {
-    align-items: center;
-    color: var(--basis-color-default-color-subtle);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--basis-space-inline-xs);
-    margin-block-end: 0;
-    margin-block-start: var(--basis-space-block-2xs);
-  }
-
-  .wizard-token-field__default-label {
-    font-size: 0.875rem;
-    font-weight: 700;
-  }
-
-  .wizard-token-field__default--missing {
-    font-style: italic;
-  }
-
-  .wizard-token-field__default-missing {
-    font-size: 0.875rem;
-  }
-
-  .wizard-token-field__default-reference,
-  .wizard-token-field__default-value {
-    font-size: 0.875rem;
-  }
-
   .wizard-token-field--invalid {
     border-inline-start-color: var(--basis-color-negative-color-default);
   }
