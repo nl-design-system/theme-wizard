@@ -1,11 +1,14 @@
 import {
-  stringifyColor,
   StrictThemeSchema,
   type Theme as ThemeType,
   EXTENSION_RESOLVED_AS,
+  stringifyColor,
   stringifyFontFamily,
+  stringifyDimension,
   EXTENSION_RESOLVED_FROM,
   EXTENSION_TOKEN_SUBTYPE,
+  walkTokens,
+  SKIP,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -13,14 +16,15 @@ import dlv from 'dlv';
 import { dset } from 'dset';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
-import { flattenTokens, refToCssVariable, walkTokens } from './lib';
+import { flattenTokens, refToCssVariable } from './lib';
 import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
+const DEFAULT_SELECTOR = `.${PREVIEW_THEME_CLASS}, :host`;
 
 export default class Theme {
   name = 'wizard';
-  selector: string = `.${PREVIEW_THEME_CLASS}, :host`;
+  selector: string = DEFAULT_SELECTOR;
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
@@ -185,7 +189,7 @@ export default class Theme {
 
         if (obj.$type === 'dimension' && typeof obj.$value === 'object' && obj.$value?.unit) {
           const subtype = obj['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
-          const value = `${obj.$value.value}${obj.$value.unit}`;
+          const value = stringifyDimension(obj.$value);
 
           if (subtype === 'font-size') {
             return {
@@ -201,7 +205,7 @@ export default class Theme {
             };
           }
 
-          // For other dimension tokens, keep as-is (already in string format from Style Dictionary)
+          // For other dimension tokens, keep as-is
           return {
             ...obj,
             $value: value,
@@ -222,29 +226,32 @@ export default class Theme {
   }
 
   async toCSS() {
-    console.time('toCSS');
-    // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
     const tokens = this.toLegacyTokens();
 
-    walkTokens(tokens, (path, token) => {
+    walkTokens(tokens, (token, path) => {
       if (token.$value === 'undefined') {
         unsetToken(this.#rule, path);
       } else {
-        setToken(this.#rule, path, refToCssVariable(String(token.$value || '')));
+        setToken(this.#rule, path, refToCssVariable(String(token.$value) || ''));
       }
+      // Prevent walking deeper into the token's extensions
+      return SKIP;
     });
-    console.timeEnd('toCSS');
 
     return this.stylesheet.cssRules[0].cssText;
   }
 
   async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
-    // const platform = 'json';
+    const StyleDictionary = await import('style-dictionary');
+    const platform = 'json';
     const tokens = format === 'legacy' ? this.toLegacyTokens() : this.tokens;
-    return JSON.stringify(tokens);
-    /*
-    const sd = new StyleDictionary({
-      ...STYLE_DICTIONARY_SETTINGS,
+    const sd = new StyleDictionary.default({
+      log: {
+        errors: {
+          brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
+        },
+        verbosity: 'silent', // ignore logging since it goes to browser console
+      },
       platforms: {
         [platform]: {
           files: [
@@ -258,6 +265,6 @@ export default class Theme {
       tokens,
     });
     const outputs = await sd.formatPlatform(platform);
-    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');*/
+    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
   }
 }

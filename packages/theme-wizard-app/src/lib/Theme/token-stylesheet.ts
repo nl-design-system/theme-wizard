@@ -1,4 +1,5 @@
-import { TokenPath, tokenPathToCSSCustomProperty } from './lib';
+import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import { tokenPathToCSSCustomProperty } from './lib';
 
 export const createStylesheet = (styleSheet = new CSSStyleSheet(), selector = ':root'): [CSSStyleSheet, CSSRule] => {
   styleSheet.replaceSync(`${selector} {}`);

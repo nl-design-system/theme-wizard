@@ -220,7 +220,9 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
       return isRef(token['original']['$value']);
     },
     // Place `original.$value` in `$value`
-    (token) => (token['$value'] = token.original.$value),
+    (token) => {
+      token['$value'] = token.original.$value;
+    },
   );
   return root;
 };
