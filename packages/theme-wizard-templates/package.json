@@ -56,7 +56,7 @@
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-unstable/start-design-tokens": "2.4.1",
     "@tabler/icons-react": "3.36.1",
-    "@utrecht/component-library-css": "8.2.1",
+    "@utrecht/component-library-css": "9.0.1",
     "@utrecht/component-library-react": "12.0.0",
     "@utrecht/link-list-css": "3.0.1",
     "@utrecht/page-body-react": "1.0.10",
