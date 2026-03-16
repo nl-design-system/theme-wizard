@@ -17,6 +17,26 @@ export default meta;
 
 type Story = StoryObj<DataBadgeProps>;
 
+const dataBadgeWizardStepSize = {
+  step: 'data-badge-size',
+  stepTitle: 'Data Badge grootte',
+};
+
+const dataBadgeWizardStepTypography = {
+  step: 'data-badge-typography',
+  stepTitle: 'Data Badge typografie',
+};
+
+const dataBadgeWizardStepColor = {
+  step: 'data-badge-color',
+  stepTitle: 'Data Badge kleur',
+};
+
+const dataBadgeWizardStepBorder = {
+  step: 'data-badge-border',
+  stepTitle: 'Data Badge rand',
+};
+
 export const DataBadgeStory: Story = {
   name: 'Data Badge (met chilren)',
   args: {
@@ -144,10 +164,6 @@ export const DesignDataBadgeSize: Story = {
   },
   parameters: {
     designStory: true,
-    wizard: {
-      question: 'Wil je de grootte van de Data Badge verder verfijnen?',
-      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je de badge compacter of ruimer wilt afstellen.',
-    },
     editableTokens: {
       nl: {
         'data-badge': {
@@ -166,6 +182,11 @@ export const DesignDataBadgeSize: Story = {
         },
       },
     },
+    wizard: {
+      ...dataBadgeWizardStepSize,
+      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je de badge compacter of ruimer wilt afstellen.',
+      question: 'Wil je de grootte van de Data Badge verder verfijnen?',
+    },
   },
 };
 
@@ -176,10 +197,6 @@ export const DesignDataBadgeTypography: Story = {
   },
   parameters: {
     designStory: true,
-    wizard: {
-      question: 'Wil je de typografie van de Data Badge verder verfijnen?',
-      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je lettertype, grootte of regelhoogte precies wilt bijsturen.',
-    },
     editableTokens: {
       nl: {
         'data-badge': {
@@ -198,6 +215,11 @@ export const DesignDataBadgeTypography: Story = {
         },
       },
     },
+    wizard: {
+      ...dataBadgeWizardStepTypography,
+      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je lettertype, grootte of regelhoogte precies wilt bijsturen.',
+      question: 'Wil je de typografie van de Data Badge verder verfijnen?',
+    },
   },
 };
 
@@ -208,10 +230,6 @@ export const DesignDataBadgeColor: Story = {
   },
   parameters: {
     designStory: true,
-    wizard: {
-      question: 'Wil je de kleurinstellingen van de Data Badge verder verfijnen?',
-      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je de badgekleur of tekstkleur handmatig wilt afstemmen.',
-    },
     editableTokens: {
       nl: {
         'data-badge': {
@@ -224,6 +242,11 @@ export const DesignDataBadgeColor: Story = {
         },
       },
     },
+    wizard: {
+      ...dataBadgeWizardStepColor,
+      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je de badgekleur of tekstkleur handmatig wilt afstemmen.',
+      question: 'Wil je de kleurinstellingen van de Data Badge verder verfijnen?',
+    },
   },
 };
 
@@ -234,10 +257,6 @@ export const DesignDataBadgeBorder: Story = {
   },
   parameters: {
     designStory: true,
-    wizard: {
-      question: 'Wil je de rand en afronding van de Data Badge verder verfijnen?',
-      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je randkleur, randbreedte of afronding precies wilt instellen.',
-    },
     editableTokens: {
       nl: {
         'data-badge': {
@@ -252,6 +271,11 @@ export const DesignDataBadgeBorder: Story = {
           },
         },
       },
+    },
+    wizard: {
+      ...dataBadgeWizardStepBorder,
+      description: 'De veilige keuzes zijn al gemaakt. Gebruik deze geavanceerde instellingen alleen als je randkleur, randbreedte of afronding precies wilt instellen.',
+      question: 'Wil je de rand en afronding van de Data Badge verder verfijnen?',
     },
   },
 };
