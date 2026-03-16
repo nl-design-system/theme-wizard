@@ -8,6 +8,7 @@ import { StoryWizardStep } from './StoryWizardStep';
 export class StoryWizardController {
   private readonly componentId: keyof typeof components;
   private currentStep = 0;
+  private hasFinishedAllChoices = false;
   private readonly finishSafeBtns: HTMLButtonElement[];
   private readonly nextBtns: HTMLButtonElement[];
   private readonly prevBtns: HTMLButtonElement[];
@@ -199,7 +200,8 @@ export class StoryWizardController {
 
     const isComplete = currentStep.hasRequiredSelections();
     const isLastStep = this.currentStep === this.total - 1;
-    const isLastSafeStep = this.currentStep === this.getLastSafeStepIndex() && this.hasAdvancedSteps();
+    const lastSafeStepIndex = this.getLastSafeStepIndex();
+    const isLastSafeStep = lastSafeStepIndex >= 0 && this.currentStep === lastSafeStepIndex && this.hasAdvancedSteps();
     const showSafeFinish = isLastSafeStep && isComplete;
 
     this.nextBtns.forEach((nextBtn) => {
@@ -232,11 +234,11 @@ export class StoryWizardController {
 
   private getLastSafeStepIndex() {
     const firstAdvancedIndex = this.getFirstAdvancedStepIndex();
-    return firstAdvancedIndex > 0 ? firstAdvancedIndex - 1 : this.total - 1;
-  }
+    if (firstAdvancedIndex === 0) {
+      return -1;
+    }
 
-  private getSelectedGroups(steps: StoryWizardStep[]) {
-    return steps.flatMap((step) => step.createSelectionSummary(flattenDesignTokens));
+    return firstAdvancedIndex > 0 ? firstAdvancedIndex - 1 : this.total - 1;
   }
 
   private getTheme() {
@@ -250,12 +252,25 @@ export class StoryWizardController {
       | null;
   }
 
-  private getAdvancedSelectionSummary(step: StoryWizardStep): StoryWizardSelectionSummary[] {
+  private formatTokenValue(value: unknown) {
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    return JSON.stringify(value);
+  }
+
+  private getAdvancedSelectionSummary(
+    step: StoryWizardStep,
+    options: { includeUnchangedTokens?: boolean } = {},
+  ): StoryWizardSelectionSummary[] {
     const themeHost = this.getTheme();
     const theme = themeHost?.theme;
     if (!theme || step.editableTokenPaths.length === 0) return [];
 
-    const changedTokens = step.editableTokenPaths.flatMap((path) => {
+    const { includeUnchangedTokens = false } = options;
+
+    const tokens = step.editableTokenPaths.flatMap((path) => {
       const currentToken = theme.at(path);
       const defaultToken = theme.defaults && typeof theme.defaults === 'object'
         ? path.split('.').reduce<unknown>((token, key) => {
@@ -270,37 +285,65 @@ export class StoryWizardController {
           ? (defaultToken as { $value?: unknown }).$value
           : undefined;
 
-      if (dequal(currentValue, defaultValue)) {
+      if (!includeUnchangedTokens && dequal(currentValue, defaultValue)) {
         return [];
       }
 
       return [
         {
           path,
-          value: JSON.stringify(currentValue),
+          value: this.formatTokenValue(currentValue),
         },
       ];
     });
 
-    if (changedTokens.length === 0) {
+    if (tokens.length === 0) {
       return [];
     }
+
+    const hasChanges = tokens.some((token) => {
+      const currentToken = theme.at(token.path);
+      const defaultToken = theme.defaults && typeof theme.defaults === 'object'
+        ? token.path.split('.').reduce<unknown>((value, key) => {
+            if (!value || typeof value !== 'object') return undefined;
+            return (value as Record<string, unknown>)[key];
+          }, theme.defaults)
+        : undefined;
+
+      const currentValue = currentToken?.$value;
+      const defaultValue =
+        defaultToken && typeof defaultToken === 'object' && '$value' in (defaultToken as Record<string, unknown>)
+          ? (defaultToken as { $value?: unknown }).$value
+          : undefined;
+
+      return !dequal(currentValue, defaultValue);
+    });
 
     return [
       {
         label: step.stepLabel,
-        optionLabel: changedTokens
-          .map((token) => `${token.path}: ${token.value.replaceAll('"', '')}`)
-          .join(' · '),
-        tokens: changedTokens,
+        optionLabel: hasChanges
+          ? tokens.map((token) => `${token.path}: ${token.value}`).join(' · ')
+          : 'Standaard',
+        tokens,
       },
     ];
+  }
+
+  private getAllSelectionGroups(includeAdvancedDefaults = false) {
+    return this.steps.flatMap((step) => {
+      if (step.isAdvanced) {
+        return this.getAdvancedSelectionSummary(step, { includeUnchangedTokens: includeAdvancedDefaults });
+      }
+
+      return step.createSelectionSummary(flattenDesignTokens);
+    });
   }
 
   private finishWithSafeChoices() {
     const lastSafeStepIndex = this.getLastSafeStepIndex();
     const safeSteps = this.steps.slice(0, Math.max(lastSafeStepIndex + 1, 0));
-    const selectedGroups = this.getSelectedGroups(safeSteps);
+    const selectedGroups = safeSteps.flatMap((step) => step.createSelectionSummary(flattenDesignTokens));
     if (selectedGroups.length === 0) return;
 
     this.showTokensDialog('Veilige keuzes', selectedGroups);
@@ -309,9 +352,11 @@ export class StoryWizardController {
   }
 
   private finishWithAllChoices() {
-    const selectedGroups = this.getSelectedGroups(this.steps);
+    const selectedGroups = this.getAllSelectionGroups(true);
     if (selectedGroups.length === 0) return;
 
+    this.hasFinishedAllChoices = true;
+    this.updateStepSelections();
     this.showTokensDialog('Alle design keuzes', selectedGroups);
     const details = this.stepSelections as HTMLDetailsElement | null;
     if (details) details.open = true;
@@ -397,7 +442,8 @@ export class StoryWizardController {
       const selectedGroups = step.isAdvanced
         ? this.getAdvancedSelectionSummary(step)
         : step.createSelectionSummary(flattenDesignTokens);
-      const isCompletedAdvancedStep = step.isAdvanced && index < this.currentStep;
+      const isCompletedAdvancedStep =
+        step.isAdvanced && (index < this.currentStep || (index === this.currentStep && this.hasFinishedAllChoices));
       const hasSelection = selectedGroups.length > 0;
       if (hasSelection || isCompletedAdvancedStep) {
         completedSteps += 1;
@@ -550,6 +596,10 @@ export class StoryWizardController {
   }
 
   private showStep(index: number) {
+    if (index !== this.total - 1) {
+      this.hasFinishedAllChoices = false;
+    }
+
     this.steps.forEach((step, stepIndex) => {
       if (stepIndex === index) {
         step.show();
@@ -570,6 +620,7 @@ export class StoryWizardController {
   }
 
   private reset() {
+    this.hasFinishedAllChoices = false;
     this.container
       .closest('theme-wizard-app')
       ?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
