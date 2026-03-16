@@ -9,20 +9,29 @@
 
 <style>
   .wizard-page-wrap {
-    align-items: start;
-    column-gap: var(--basis-space-column-3xl);
-    display: grid;
-    grid-template-columns: 1fr 18rem;
+    align-items: flex-start;
+    display: flex;
+    gap: var(--basis-space-column-3xl);
     position: relative;
   }
 
   .wizard-page-content {
-    grid-column: 1;
-    grid-row: 1;
+    flex: 1 1 auto;
+    min-inline-size: 0;
   }
 
   .wizard-page-nav {
-    grid-column: 2;
-    grid-row: 1;
+    flex: 0 0 18rem;
+  }
+
+  @media (width <= 960px) {
+    .wizard-page-wrap {
+      flex-direction: column;
+    }
+
+    .wizard-page-nav {
+      flex-basis: auto;
+      inline-size: 100%;
+    }
   }
 </style>
