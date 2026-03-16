@@ -1,5 +1,6 @@
 ---
 import type { StoryWizardStep as StoryWizardStepViewModel } from '@/lib/story-wizard';
+import StoryWizardEditableTokenGroup from './StoryWizardEditableTokenGroup/index.astro';
 import StoryWizardPresetGroup from './StoryWizardPresetGroup/index.astro';
 
 interface Props {
@@ -9,7 +10,13 @@ interface Props {
 const { step } = Astro.props;
 ---
 
-<section id={step.id} class="wizard-story-section" aria-label={step.title} data-step-label={step.title}>
+<section
+  id={step.id}
+  class="wizard-story-section"
+  aria-label={step.title}
+  data-step-kind={step.groups.some((group) => group.type === 'editable-tokens') ? 'advanced' : 'safe'}
+  data-step-label={step.title}
+>
   <div class="wizard-story-section__layout">
     <div class="wizard-story-section__preview-column">
       {
@@ -37,7 +44,17 @@ const { step } = Astro.props;
     </div>
 
     <aside class="wizard-story-section__settings-panel" aria-label={`${step.title} instellingen`}>
-      {step.groups.map((group) => <StoryWizardPresetGroup group={group} storyId={step.id} />)}
+      <p class="nl-paragraph wizard-token-preset__description">{step.intro}</p>
+
+      {
+        step.groups.map((group) =>
+          group.type === 'preset' ? (
+            <StoryWizardPresetGroup group={group} storyId={step.id} />
+          ) : (
+            <StoryWizardEditableTokenGroup group={group} />
+          ),
+        )
+      }
     </aside>
   </div>
 </section>

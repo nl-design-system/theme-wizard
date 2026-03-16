@@ -1,0 +1,31 @@
+---
+import type { StoryWizardEditableTokenGroup } from '@/lib/story-wizard';
+
+interface Props {
+  group: StoryWizardEditableTokenGroup;
+}
+
+const { group } = Astro.props;
+---
+
+<section
+  class="wizard-token-preset"
+  data-group-label={group.name}
+  data-editable-token-paths={JSON.stringify(group.tokens.map((token) => token.path))}
+>
+  <h3 class="nl-heading nl-heading--level-4 wizard-token-preset__title">{group.name}</h3>
+
+  {group.description && <p class="nl-paragraph wizard-token-preset__description">{group.description}</p>}
+
+  <details class="wizard-token-preset__advanced">
+    <summary class="wizard-token-preset__advanced-summary">{group.advancedTitle ?? 'Geavanceerde instellingen'}</summary>
+
+    <ul class="wizard-secretly-a-list wizard-secretly-a-list--compact">
+      {group.tokens.map((token) => (
+        <li>
+          <wizard-token-field label={token.label} path={token.path}></wizard-token-field>
+        </li>
+      ))}
+    </ul>
+  </details>
+</section>

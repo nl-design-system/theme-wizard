@@ -3,15 +3,30 @@ import { StoryWizardGroup } from './StoryWizardGroup';
 
 export class StoryWizardStep {
   public readonly groups: StoryWizardGroup[];
+  public readonly editableTokenPaths: string[];
 
   public constructor(public readonly element: HTMLElement) {
     this.groups = Array.from(element.querySelectorAll<HTMLElement>('[data-preset-group]')).map(
       (group) => new StoryWizardGroup(group),
     );
+    this.editableTokenPaths = Array.from(element.querySelectorAll<HTMLElement>('[data-editable-token-paths]')).flatMap(
+      (group) => {
+        try {
+          const tokenPaths = JSON.parse(group.dataset.editableTokenPaths || '[]');
+          return Array.isArray(tokenPaths) ? tokenPaths.filter((path): path is string => typeof path === 'string') : [];
+        } catch {
+          return [];
+        }
+      },
+    );
   }
 
   public get stepLabel() {
     return this.element.dataset.stepLabel || '';
+  }
+
+  public get isAdvanced() {
+    return this.element.dataset.stepKind === 'advanced';
   }
 
   public hide() {
@@ -56,24 +71,10 @@ export class StoryWizardStep {
       .join(';');
   }
 
-  public applyPreviewStyle() {
-    const previewStyle = this.getPreviewStyle();
-
-    this.element
-      .querySelectorAll<HTMLElement>('.wizard-story-section__variants wizard-preview-theme')
-      .forEach((preview) => {
-        if (previewStyle) {
-          preview.setAttribute('style', previewStyle);
-        } else {
-          preview.removeAttribute('style');
-        }
-      });
-  }
-
   public createSelectionSummary(
     flattenTokens: (tokens: unknown, path?: string[]) => DesignTokenLeaf[],
   ): StoryWizardSelectionSummary[] {
-    return this.groups.flatMap((group) => {
+    const selectedGroups = this.groups.flatMap((group) => {
       const option = group.getSelectedOption();
       if (!option) return [];
 
@@ -85,5 +86,17 @@ export class StoryWizardStep {
         },
       ];
     });
+
+    if (selectedGroups.length === 0) {
+      return [];
+    }
+
+    return [
+      {
+        label: this.stepLabel,
+        optionLabel: selectedGroups.map((group) => group.optionLabel).join(' · '),
+        tokens: selectedGroups.flatMap((group) => group.tokens),
+      },
+    ];
   }
 }
