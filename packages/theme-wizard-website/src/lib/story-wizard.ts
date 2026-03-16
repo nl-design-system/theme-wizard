@@ -1,6 +1,6 @@
-import { components } from '@/lib/components';
 import { tokensToStyle } from '../../../theme-wizard-app/src/lib/Theme/lib';
 import { getStories } from '../../../theme-wizard-app/src/utils/csf-utils';
+import { components } from './components';
 
 export type StoryWizardPresetOption = {
   description?: string;
@@ -152,7 +152,8 @@ const tokenPropertyOrder = ['background-color', 'border-color', 'color', 'border
 const tokenStateOrder = ['default', 'hover', 'active', 'pressed', 'disabled', 'focus'];
 
 const getTokenPropertyRank = (tokenPath: string) => {
-  const property = tokenPath.split('.').at(-1) ?? '';
+  const parts = tokenPath.split('.');
+  const property = parts[parts.length - 1] ?? '';
   const rank = tokenPropertyOrder.indexOf(property);
   return rank === -1 ? tokenPropertyOrder.length : rank;
 };
