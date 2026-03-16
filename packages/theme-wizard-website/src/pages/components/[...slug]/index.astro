@@ -4,6 +4,7 @@ import { loadStoryWizardComponentStyles } from '@/components/story-wizard/compon
 import StoryWizard from '@/components/story-wizard/index.astro';
 import { components } from '@/lib/components';
 import { StoryWizardModel } from '@/lib/story-wizard';
+import { IconRefresh } from '@tabler/icons-react';
 
 import './index.css';
 
@@ -46,7 +47,13 @@ const wizard = await StoryWizardModel.fromComponentId(slug)
           <span>{slug}</span>
         </nav>
 
-        <h1>{title}</h1>
+        <div class="wizard-page-header">
+          <h1>{title}</h1>
+          <button class="wizard-preset-reset nl-button nl-button--subtle wizard-page-reset" type="button">
+            <span class="wizard-page-reset__icon" aria-hidden="true"><IconRefresh/></span>
+            Opnieuw beginnen
+          </button>
+        </div>
         <StoryWizard wizard={wizard} />
         <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>
       </main>
