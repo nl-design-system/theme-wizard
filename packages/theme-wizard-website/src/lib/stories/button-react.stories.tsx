@@ -243,7 +243,7 @@ export const WizardPreview: Story = {
   ),
 };
 
-export const ButtonInteractie: Story = {
+export const ButtonInteractionStyle: Story = {
   name: 'Interactiestijl',
   args: {
     iconStart: '❤️',
@@ -514,7 +514,7 @@ const getButtonStateStyle = (
   };
 };
 
-export const ButtonVorm: Story = {
+export const ButtonShape: Story = {
   name: 'Vorm',
   args: {
     iconStart: '❤️',
@@ -589,7 +589,7 @@ export const ButtonVorm: Story = {
   render: ButtonPrimary,
 };
 
-export const ButtonKleurstijl: Story = {
+export const ButtonColorStyle: Story = {
   name: 'Kleurstijl',
   args: {
     iconStart: '❤️',
