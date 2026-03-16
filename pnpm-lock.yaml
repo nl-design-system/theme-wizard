@@ -922,6 +922,9 @@ importers:
       '@storybook/react-vite':
         specifier: 10.1.11
         version: 10.1.11(esbuild@0.27.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.53.5)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(tsx@4.19.2)(yaml@2.8.2))
+      '@tabler/icons-react':
+        specifier: 3.36.1
+        version: 3.36.1(react@18.3.1)
       '@utrecht/body-css':
         specifier: 2.0.1
         version: 2.0.1

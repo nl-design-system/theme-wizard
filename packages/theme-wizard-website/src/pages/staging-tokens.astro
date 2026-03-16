@@ -1,23 +1,46 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '@nl-design-system-candidate/button-css/button.css'
+import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 ---
 
 <BaseLayout title="Review design tokens - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
       <main slot="main" class="wizard-main">
-        <header>
-          <h1>Selecteer design tokens</h1>
-          <p>Je kunt deze design tokens gebruiken als opties om je huisstijl te bewerken.</p>
-          <a class="nl-button nl-button--primary" href="/basis-tokens">Huisstijl bewerken →</a>
-        </header>
+        <wizard-story-preview size="lg">
+          <wizard-stack size="5xl">
+            <header>
+              <wizard-container size="md" class="header-container">
+                <wizard-stack size="xl">
+                  <a class="nl-link wizard-back-link" href="/">
+                    <IconArrowLeft />
+                    Vorige stap
+                  </a>
+                  <h1 class="wizard-page-title">Design tokens gevonden!</h1>
+                  <p class="nl-paragraph nl-paragraph--lead">Je kunt deze design tokens gebruiken als opties om je huisstijl te bewerken.</p>
+                  <p class="nl-paragraph">Selecteer de tokens die je wilt kunnen gebruiken. Geen zorgen, je kunt deze selectie altijd aanpassen.</p>
+                  <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
+                    <span class="nl-button__label">Huisstijl bewerken</span>
+                    <span class="nl-button__icon-end">
+                      <IconArrowRight />
+                    </span>
+                  </a>
+                </wizard-stack>
+              </wizard-container>
+            </header>
 
-        <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
+            <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
 
-        <a class="nl-button nl-button--subtle nl-button--negative" href="/">
-          ↺ Begin opnieuw
-        </a>
+            <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
+              <span class="nl-button__label">Huisstijl bewerken</span>
+              <span class="nl-button__icon-end">
+                <IconArrowRight />
+              </span>
+            </a>
+          </wizard-stack>
+        </wizard-story-preview>
       </main>
      </wizard-layout>
   </theme-wizard-app>
@@ -25,11 +48,20 @@ import '@nl-design-system-candidate/button-css/button.css'
 
 <style>
   .wizard-main {
-    background-color: var(--basis-color-accent-1-bg-document);
-    block-size: 100%;
     display: grid;
     padding-block-end: var(--basis-space-block-5xl);
+    padding-block-start: var(--basis-space-block-3xl);
     padding-inline: var(--basis-space-inline-2xl);
     row-gap: var(--basis-space-row-4xl);
+  }
+
+  .wizard-page-title {
+    margin-block: 0;
+  }
+
+  .wizard-back-link {
+    display: flex;
+    gap: var(--basis-space-column-sm);
+    align-items: center;
   }
 </style>
