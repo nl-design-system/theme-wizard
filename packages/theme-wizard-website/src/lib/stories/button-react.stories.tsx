@@ -416,6 +416,104 @@ const ButtonVariants = ({ ...props }: ButtonProps) => (
   </div>
 );
 
+const statePreviewStyle = {
+  columnGap: '1rem',
+  display: 'flex',
+  flexWrap: 'wrap' as const,
+  rowGap: '1rem',
+};
+
+const statePreviewItemStyle = {
+  alignItems: 'flex-start',
+  display: 'flex',
+  flexDirection: 'column' as const,
+  gap: '0.5rem',
+};
+
+const statePreviewLabelStyle = {
+  color: 'var(--basis-color-default-color-subtle)',
+  fontSize: '0.875rem',
+  fontWeight: 700,
+};
+
+const buttonWizardStepBasic = {
+  step: 'button-basic',
+  stepTitle: 'Button basis',
+};
+
+const buttonWizardStepStates = {
+  step: 'button-states',
+  stepTitle: 'Button states',
+};
+
+const buttonWizardStepPositiveStates = {
+  step: 'button-positive-states',
+  stepTitle: 'Positieve button states',
+};
+
+const buttonWizardStepNegativeStates = {
+  step: 'button-negative-states',
+  stepTitle: 'Negatieve button states',
+};
+
+const buttonWizardStepVariants = {
+  step: 'button-variants',
+  stepTitle: 'Button varianten',
+};
+
+const buttonWizardStepPositiveVariants = {
+  step: 'button-positive-variants',
+  stepTitle: 'Positieve button varianten',
+};
+
+const buttonWizardStepNegativeVariants = {
+  step: 'button-negative-variants',
+  stepTitle: 'Negatieve button varianten',
+};
+
+const buttonWizardStepDisabled = {
+  step: 'button-disabled',
+  stepTitle: 'Button disabled',
+};
+
+const buttonWizardStepPressed = {
+  step: 'button-selected',
+  stepTitle: 'Button geselecteerd',
+};
+
+const buttonWizardStepPositivePressed = {
+  step: 'button-positive-selected',
+  stepTitle: 'Positieve geselecteerde buttons',
+};
+
+const buttonWizardStepNegativePressed = {
+  step: 'button-negative-selected',
+  stepTitle: 'Negatieve geselecteerde buttons',
+};
+
+const StatePreviewItem = ({ children, label }: { children: ReactNode; label: string }) => (
+  <div style={statePreviewItemStyle}>
+    <span style={statePreviewLabelStyle}>{label}</span>
+    {children}
+  </div>
+);
+
+const getButtonStateStyle = (
+  purpose: ButtonProps['purpose'],
+  hint: ButtonProps['hint'],
+  state: 'active' | 'hover',
+) => {
+  const variant = purpose ?? 'default';
+  const hintSegment = hint ? `-${hint}` : '';
+  const cssVarBase = `--nl-button-${variant}${hintSegment}-${state}`;
+
+  return {
+    backgroundColor: `var(${cssVarBase}-background-color)`,
+    borderColor: `var(${cssVarBase}-border-color)`,
+    color: `var(${cssVarBase}-color)`,
+  };
+};
+
 export const ButtonVorm: Story = {
   name: 'Vorm',
   args: {
@@ -430,6 +528,18 @@ export const ButtonVorm: Story = {
         options: [
           {
             name: 'Hoekig',
+            description: 'Geen afgeronde hoeken.',
+            tokens: {
+              nl: {
+                button: {
+                  'border-radius': { $value: '0' },
+                },
+              },
+            },
+          },
+          {
+            name: 'Licht hoekig',
+            description: 'Kleine afronding, bijna recht.',
             tokens: {
               nl: {
                 button: {
@@ -451,7 +561,7 @@ export const ButtonVorm: Story = {
           },
           {
             name: 'Sterk afgerond',
-            description: 'Grote afronding, vriendelijke uitstraling.',
+            description: 'Grote afronding.',
             tokens: {
               nl: {
                 button: {
@@ -461,7 +571,8 @@ export const ButtonVorm: Story = {
             },
           },
           {
-            name: 'Pill',
+            name: 'Rond',
+            description: 'Volledig rond.',
             tokens: {
               nl: {
                 button: {
@@ -615,6 +726,7 @@ export const DesignButtonBorders: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
   render: ButtonVariants,
 };
@@ -685,34 +797,45 @@ export const DesignButtonTypography: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
   render: ButtonVariants,
 };
 
 const RenderButtonStates = ({ ...props }: ButtonProps) => (
-  <>
-    <ButtonComponent {...props} />
-    {' → hover → '}
-    <ButtonComponent {...props} className="nl-button--hover" />
-    {' → active → '}
-    <ButtonComponent {...props} className="nl-button--active" />
-  </>
+  <div style={statePreviewStyle}>
+    <StatePreviewItem label="Normaal">
+      <ButtonComponent {...props} />
+    </StatePreviewItem>
+    <StatePreviewItem label="Hover">
+      <ButtonComponent {...props} style={getButtonStateStyle(props.purpose, props.hint, 'hover')} />
+    </StatePreviewItem>
+    <StatePreviewItem label="Active">
+      <ButtonComponent {...props} style={getButtonStateStyle(props.purpose, props.hint, 'active')} />
+    </StatePreviewItem>
+  </div>
 );
 
 const RenderButtonDisabled = ({ ...props }: ButtonProps) => (
-  <>
-    <ButtonComponent {...props} disabled={false} htmlDisabled={undefined} />
-    {' → disabled → '}
-    <ButtonComponent {...props} disabled htmlDisabled={undefined} />
-  </>
+  <div style={statePreviewStyle}>
+    <StatePreviewItem label="Actief">
+      <ButtonComponent {...props} disabled={false} htmlDisabled={undefined} />
+    </StatePreviewItem>
+    <StatePreviewItem label="Disabled">
+      <ButtonComponent {...props} disabled htmlDisabled={undefined} />
+    </StatePreviewItem>
+  </div>
 );
 
 const RenderButtonPressed = ({ ...props }: ButtonProps) => (
-  <>
-    <ButtonComponent {...props} pressed={false} />
-    {' → pressed → '}
-    <ButtonComponent {...props} pressed />
-  </>
+  <div style={statePreviewStyle}>
+    <StatePreviewItem label="Normaal">
+      <ButtonComponent {...props} pressed={false} />
+    </StatePreviewItem>
+    <StatePreviewItem label="Geselecteerd">
+      <ButtonComponent {...props} pressed />
+    </StatePreviewItem>
+  </div>
 );
 
 export const DesignButtonStates: Story = {
@@ -766,6 +889,7 @@ export const DesignButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -822,6 +946,7 @@ export const DesignPrimaryButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -878,6 +1003,7 @@ export const DesignSecondaryButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -934,6 +1060,7 @@ export const DesignSubtleButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -993,6 +1120,7 @@ export const DesignPrimaryPositiveButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveStates,
   },
   render: RenderButtonStates,
 };
@@ -1051,6 +1179,7 @@ export const DesignSecondaryPositiveButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveStates,
   },
   render: RenderButtonStates,
 };
@@ -1109,6 +1238,7 @@ export const DesignSubtlePositiveButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveStates,
   },
   render: RenderButtonStates,
 };
@@ -1168,6 +1298,7 @@ export const DesignPrimaryNegativeButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeStates,
   },
   render: RenderButtonStates,
 };
@@ -1226,6 +1357,7 @@ export const DesignSecondaryNegativeButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeStates,
   },
   render: RenderButtonStates,
 };
@@ -1284,6 +1416,7 @@ export const DesignSubtleNegativeButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeStates,
   },
   render: RenderButtonStates,
 };
@@ -1342,6 +1475,7 @@ export const DesignPrimaryButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepVariants,
   },
   render(args: ButtonProps, context: StoryContext<ButtonProps>) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1451,6 +1585,7 @@ Optioneel kan er een hint mee gegeven worden.
         },
       },
     },
+    wizard: buttonWizardStepVariants,
   },
   render: (args: ButtonProps, context: StoryContext<ButtonProps>) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1560,6 +1695,7 @@ Optioneel kan er een hint mee gegeven worden.
         },
       },
     },
+    wizard: buttonWizardStepVariants,
   },
   render: (args: ButtonProps, context: StoryContext<ButtonProps>) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1612,7 +1748,7 @@ Optioneel kan er een hint mee gegeven worden.
 };
 
 export const DesignFocusButton: Story = {
-  name: 'Design: Focus Button',
+  name: 'Design: Focus Visible Button',
   args: {
     className: 'nl-button--focus-visible',
     label: 'Klik mij!',
@@ -1644,6 +1780,7 @@ export const DesignFocusButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
 };
 
@@ -1699,6 +1836,7 @@ export const DesignDisabledButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1717,7 +1855,6 @@ export const DesignPrimaryDisabledButton: Story = {
         story: `Een ingedrukte Primary Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1737,6 +1874,8 @@ export const DesignPrimaryDisabledButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1755,7 +1894,6 @@ export const DesignSecondaryDisabledButton: Story = {
         story: `Een ingedrukte Secondary Button`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1775,6 +1913,8 @@ export const DesignSecondaryDisabledButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1793,7 +1933,6 @@ export const DesignSubtleDisabledButton: Story = {
         story: `Een ingedrukte Subtle Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1813,6 +1952,8 @@ export const DesignSubtleDisabledButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1872,6 +2013,7 @@ export const DesignAlleenEenIcon: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
   render: () => (
     // TODO: Use Action Group
@@ -1985,7 +2127,7 @@ export const GeformatteerdLabelEnEenIcon: Story = {
 };
 
 export const PressedButton: Story = {
-  name: 'Pressed Button',
+  name: 'Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -2000,7 +2142,7 @@ export const PressedButton: Story = {
 };
 
 export const DesignPressedButton: Story = {
-  name: 'Design: Pressed Button',
+  name: 'Design: Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -2031,12 +2173,13 @@ export const DesignPressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignPrimaryPressedButton: Story = {
-  name: 'Design: Primary Pressed Button',
+  name: 'Design: Primary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -2049,7 +2192,6 @@ export const DesignPrimaryPressedButton: Story = {
         story: `Een ingedrukte Primary Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -2069,12 +2211,14 @@ export const DesignPrimaryPressedButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSecondaryPressedButton: Story = {
-  name: 'Design: Secondary Pressed Button',
+  name: 'Design: Secondary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -2087,7 +2231,6 @@ export const DesignSecondaryPressedButton: Story = {
         story: `Een ingedrukte Secondary Button`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -2107,12 +2250,14 @@ export const DesignSecondaryPressedButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSubtlePressedButton: Story = {
-  name: 'Design: Subtle Pressed Button',
+  name: 'Design: Subtle Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -2125,7 +2270,6 @@ export const DesignSubtlePressedButton: Story = {
         story: `Een ingedrukte Subtle Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -2145,6 +2289,8 @@ export const DesignSubtlePressedButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
@@ -2204,6 +2350,7 @@ export const DesignPrimaryPositiveButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveVariants,
   },
 };
 
@@ -2262,6 +2409,7 @@ export const DesignPrimaryNegativeButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeVariants,
   },
 };
 
@@ -2320,6 +2468,7 @@ export const DesignSecondaryPositiveButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveVariants,
   },
 };
 
@@ -2378,6 +2527,7 @@ export const DesignSecondaryNegativeButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeVariants,
   },
 };
 
@@ -2436,6 +2586,7 @@ export const DesignSubtlePositiveButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveVariants,
   },
 };
 
@@ -2494,11 +2645,12 @@ export const DesignSubtleNegativeButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeVariants,
   },
 };
 
 export const DesignPrimaryPositivePressedButton: Story = {
-  name: 'Design: Primary Positive Pressed Button',
+  name: 'Design: Primary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -2555,12 +2707,13 @@ export const DesignPrimaryPositivePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositivePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignPrimaryNegativePressedButton: Story = {
-  name: 'Design: Primary Negative Pressed Button',
+  name: 'Design: Primary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -2617,12 +2770,13 @@ export const DesignPrimaryNegativePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSecondaryPositivePressedButton: Story = {
-  name: 'Design: Secondary Positive Pressed Button',
+  name: 'Design: Secondary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -2679,12 +2833,13 @@ export const DesignSecondaryPositivePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositivePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSecondaryNegativePressedButton: Story = {
-  name: 'Design: Secondary Negative Pressed Button',
+  name: 'Design: Secondary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -2741,12 +2896,13 @@ export const DesignSecondaryNegativePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSubtlePositivePressedButton: Story = {
-  name: 'Design: Subtle Positive Pressed Button',
+  name: 'Design: Subtle Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -2803,12 +2959,13 @@ export const DesignSubtlePositivePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositivePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSubtleNegativePressedButton: Story = {
-  name: 'Design: Subtle Negative Pressed Button',
+  name: 'Design: Subtle Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -2865,6 +3022,7 @@ export const DesignSubtleNegativePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativePressed,
   },
   render: RenderButtonPressed,
 };
