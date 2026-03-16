@@ -52,7 +52,7 @@ export class WizardScrapedTokensPreview extends LitElement {
     );
   };
 
-  readonly renderTable = (
+  readonly #renderTable = (
     caption: string | TemplateResult,
     tokens: StagedDesignToken[],
     renderSample: (token: StagedDesignToken) => TemplateResult,
@@ -111,7 +111,7 @@ export class WizardScrapedTokensPreview extends LitElement {
     return html`
       <div class="wizard-scraped-tokens-preview">
         <wizard-stack size="5xl">
-          ${this.renderTable(
+          ${this.#renderTable(
             t('tokens.types.fontFamilies'),
             families,
             (token) =>
@@ -120,13 +120,13 @@ export class WizardScrapedTokensPreview extends LitElement {
                 size="var(--basis-text-font-size-xl)"
               ></wizard-font-sample>`,
           )}
-          ${this.renderTable(
+          ${this.#renderTable(
             t('tokens.types.fontSizes'),
             sizes,
             (token) =>
               html`<wizard-font-sample size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}></wizard-font-sample>`,
           )}
-          ${this.renderTable(
+          ${this.#renderTable(
             t('tokens.types.colors'),
             colors,
             (token) =>

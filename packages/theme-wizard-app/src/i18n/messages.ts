@@ -201,7 +201,7 @@ export const en = {
     types: {
       color: 'Color',
       colors: 'Colors',
-      fontFamilies: 'Font family',
+      fontFamilies: 'Font families',
       fontFamily: 'Font family',
       fontSize: 'Font size',
       fontSizes: 'Font sizes',

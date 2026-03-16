@@ -15,7 +15,7 @@ const scraperUrl = withRelatedProject({
   <theme-wizard-app>
     <wizard-layout>
       <main slot="main" class="wizard-main">
-        <wizard-container size="md" class="wizard-container">
+        <wizard-container size="md">
           <wizard-story-preview size="lg">
             <h1 class="wizard-title">Maak je eigen thema</h1>
             <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
@@ -32,7 +32,6 @@ const scraperUrl = withRelatedProject({
     block-size: 100%;
     display: grid;
     place-content: center;
-
   }
 
   .wizard-title {
