@@ -140,14 +140,14 @@ export class WizardStyleGuideTypography extends LitElement {
                   </td>
                   <td class="utrecht-table__cell">
                     <code class="nl-code">${displayValue}</code>
-                    <clippy-toggletip text=${t('copyToClipboard', { value: displayValue })}>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
                       <clippy-button
                         icon-only
                         purpose="subtle"
                         size="small"
                         @click=${() => navigator.clipboard.writeText(displayValue)}
                       >
-                        ${t('copyToClipboard', { value: displayValue })}
+                        ${t('copyValueToClipboard', { value: displayValue })}
                         <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
                       </clippy-button>
                     </clippy-toggletip>
@@ -211,14 +211,14 @@ export class WizardStyleGuideTypography extends LitElement {
                   </td>
                   <td class="utrecht-table__cell">
                     <code class="nl-code">${displayValue}</code>
-                    <clippy-toggletip text=${t('copyToClipboard', { value: displayValue })}>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
                       <clippy-button
                         icon-only
                         purpose="subtle"
                         size="small"
                         @click=${() => navigator.clipboard.writeText(displayValue)}
                       >
-                        ${t('copyToClipboard', { value: displayValue })}
+                        ${t('copyValueToClipboard', { value: displayValue })}
                         <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
                       </clippy-button>
                     </clippy-toggletip>
@@ -271,14 +271,14 @@ export class WizardStyleGuideTypography extends LitElement {
                     <code class="nl-code" id="${`basis.heading.level-${level}`}" style="white-space: nowrap">
                       ${`basis.heading.level-${level}`}
                     </code>
-                    <clippy-toggletip text=${t('copyToClipboard', { value: `basis.heading.level-${level}` })}>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
                       <clippy-button
                         icon-only
                         purpose="subtle"
                         size="small"
                         @click=${() => navigator.clipboard.writeText(`basis.heading.level-${level}`)}
                       >
-                        ${t('copyToClipboard', { value: `basis.heading.level-${level}` })}
+                        ${t('copyValueToClipboard', { value: `basis.heading.level-${level}` })}
                         <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
                       </clippy-button>
                     </clippy-toggletip>

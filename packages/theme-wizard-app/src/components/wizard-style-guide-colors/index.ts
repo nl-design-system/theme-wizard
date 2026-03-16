@@ -135,14 +135,14 @@ export class WizardStyleGuideColors extends LitElement {
                       </td>
                       <td class="utrecht-table__cell">
                         <code class="nl-code" id=${displayValue}>${displayValue}</code>
-                        <clippy-toggletip text=${t('copyToClipboard', { value: displayValue })}>
+                        <clippy-toggletip text=${t('copyToClipboard')}>
                           <clippy-button
                             purpose="subtle"
                             icon-only
                             size="small"
                             @click=${() => navigator.clipboard.writeText(displayValue)}
                           >
-                            ${t('copyToClipboard', { value: displayValue })}
+                            ${t('copyValueToClipboard', { value: displayValue })}
                             <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
                           </clippy-button>
                         </clippy-toggletip>

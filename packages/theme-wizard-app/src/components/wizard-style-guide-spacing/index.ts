@@ -125,14 +125,14 @@ export class WizardStyleGuideSpacing extends LitElement {
                       </td>
                       <td class="utrecht-table__cell">
                         <code class="nl-code">${value}</code>
-                        <clippy-toggletip text=${t('copyToClipboard', { value })}>
+                        <clippy-toggletip text=${t('copyToClipboard')}>
                           <clippy-button
                             icon-only
                             purpose="subtle"
                             size="small"
                             @click=${() => navigator.clipboard.writeText(value)}
                           >
-                            ${t('copyToClipboard', { value })}
+                            ${t('copyValueToClipboard', { value })}
                             <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
                           </clippy-button>
                         </clippy-toggletip>

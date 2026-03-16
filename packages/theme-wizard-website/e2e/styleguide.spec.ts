@@ -47,7 +47,10 @@ test.describe('interaction tests', () => {
 
     test('Token name can be copied to clipboard', async ({ page }) => {
       const tokenName = 'basis.color.accent-1.bg-hover';
-      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: tokenName }).click();
+      await page
+        .getByRole('table', { name: 'Accent 1' })
+        .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord`, exact: true })
+        .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
       });
@@ -56,7 +59,7 @@ test.describe('interaction tests', () => {
 
     test('Token value can be copied to clipboard', async ({ page }) => {
       const tokenValue = '#fbfcfd';
-      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: tokenValue }).click();
+      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true }).click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
       });
@@ -79,7 +82,10 @@ test.describe('interaction tests', () => {
     test.describe('font-size', () => {
       test('Token name can be copied to clipboard', async ({ page }) => {
         const tokenName = 'basis.text.font-size.4xl';
-        await page.getByRole('table', { name: 'Lettergroottes' }).getByRole('button', { name: tokenName }).click();
+        await page
+          .getByRole('table', { name: 'Lettergroottes' })
+          .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord`, exact: true })
+          .click();
         const clipboardText = await page.evaluate(async () => {
           return await navigator.clipboard.readText();
         });
@@ -88,7 +94,10 @@ test.describe('interaction tests', () => {
 
       test('Token value can be copied to clipboard', async ({ page }) => {
         const tokenValue = '3rem';
-        await page.getByRole('table', { name: 'Lettergroottes' }).getByRole('button', { name: tokenValue }).click();
+        await page
+          .getByRole('table', { name: 'Lettergroottes' })
+          .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true })
+          .click();
         const clipboardText = await page.evaluate(async () => {
           return await navigator.clipboard.readText();
         });
@@ -122,7 +131,10 @@ test.describe('interaction tests', () => {
 
     test('Token name can be copied to clipboard', async ({ page }) => {
       const tokenName = 'basis.space.block.6xl';
-      await page.getByRole('table', { name: 'Block' }).getByRole('button', { name: tokenName }).click();
+      await page
+        .getByRole('table', { name: 'Block' })
+        .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord`, exact: true })
+        .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
       });
@@ -131,7 +143,10 @@ test.describe('interaction tests', () => {
 
     test('Token value can be copied to clipboard', async ({ page }) => {
       const tokenValue = '64px';
-      await page.getByRole('table', { name: 'Block' }).getByRole('button', { name: tokenValue }).click();
+      await page
+        .getByRole('table', { name: 'Block' })
+        .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true })
+        .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
       });
