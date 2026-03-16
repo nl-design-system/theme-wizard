@@ -5,7 +5,7 @@ import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import '@nl-design-system-candidate/button-css/button.css';
 
 interface ToggletipStoryArgs {
-  position: 'top' | 'right' | 'bottom' | 'left';
+  position: 'block-start' | 'inline-end' | 'block-end' | 'inline-start';
   text: string;
 }
 
@@ -14,8 +14,8 @@ const meta: Meta<ToggletipStoryArgs> = {
   argTypes: {
     position: {
       control: 'select',
-      description: 'Popup position relative to trigger button',
-      options: ['top', 'right', 'bottom', 'left'],
+      description: 'Popup position relative to trigger button using logical directions',
+      options: ['block-start', 'inline-end', 'block-end', 'inline-start'],
     },
     text: {
       control: 'text',
@@ -31,7 +31,7 @@ type Story = StoryObj<ToggletipStoryArgs>;
 
 export const Default: Story = {
   args: {
-    position: 'top',
+    position: 'block-start',
     text: 'Copy value to clipboard',
   },
   render: (args: ToggletipStoryArgs) =>

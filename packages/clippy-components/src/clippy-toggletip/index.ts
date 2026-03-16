@@ -7,7 +7,22 @@ import styles from './styles';
 
 const tag = 'clippy-toggletip';
 
-type Position = 'top' | 'right' | 'bottom' | 'left';
+type Position = 'block-start' | 'inline-end' | 'block-end' | 'inline-start';
+
+const validPositions = new Set<Position>(['block-start', 'inline-end', 'block-end', 'inline-start']);
+
+const fromAttribute = (value: string | null): Position => {
+  if (value === null) {
+    return 'block-start';
+  }
+
+  if (validPositions.has(value as Position)) {
+    return value as Position;
+  }
+
+  console.warn(`Invalid position "${value}". Using default "block-start".`);
+  return 'block-start';
+};
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -20,20 +35,10 @@ export class ClippyToggletip extends LitElement {
   @property({ type: String }) text = '';
 
   @property({
-    converter: {
-      fromAttribute: (value: string | null): Position => {
-        if (value === 'top' || value === 'right' || value === 'bottom' || value === 'left') {
-          return value;
-        }
-        if (value !== null) {
-          console.warn(`Invalid position "${value}". Using default "top".`);
-        }
-        return 'top';
-      },
-    },
+    converter: { fromAttribute },
     type: String,
   })
-  position: Position = 'top';
+  position: Position = 'block-start';
 
   static override readonly styles = [styles];
 

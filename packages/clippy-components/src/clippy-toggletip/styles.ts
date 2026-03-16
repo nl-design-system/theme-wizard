@@ -70,48 +70,48 @@ export default css`
     visibility: visible;
   }
 
-  .clippy-toggletip--top .clippy-toggletip__popup {
+  .clippy-toggletip--block-start .clippy-toggletip__popup {
     inset-block-end: calc(100% + var(--clippy-toggletip-offset));
     inset-inline-start: 50%;
     transform: translate(-50%, 0.25rem);
   }
 
-  .clippy-toggletip--top .clippy-toggletip__popup::before {
+  .clippy-toggletip--block-start .clippy-toggletip__popup::before {
     inset-block-start: calc(100% - var(--clippy-toggletip-arrow-size) / 2);
     inset-inline-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
   }
 
-  .clippy-toggletip--right .clippy-toggletip__popup {
+  .clippy-toggletip--inline-end .clippy-toggletip__popup {
     inset-block-start: 50%;
     inset-inline-start: calc(100% + var(--clippy-toggletip-offset));
     transform: translate(-0.25rem, -50%);
   }
 
-  .clippy-toggletip--right .clippy-toggletip__popup::before {
+  .clippy-toggletip--inline-end .clippy-toggletip__popup::before {
     inset-block-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
     inset-inline-start: calc(var(--clippy-toggletip-arrow-size) / -2);
     transform: rotate(-135deg);
   }
 
-  .clippy-toggletip--bottom .clippy-toggletip__popup {
+  .clippy-toggletip--block-end .clippy-toggletip__popup {
     inset-block-start: calc(100% + var(--clippy-toggletip-offset));
     inset-inline-start: 50%;
     transform: translate(-50%, -0.25rem);
   }
 
-  .clippy-toggletip--bottom .clippy-toggletip__popup::before {
+  .clippy-toggletip--block-end .clippy-toggletip__popup::before {
     inset-block-start: calc(var(--clippy-toggletip-arrow-size) / -2);
     inset-inline-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
     transform: rotate(225deg);
   }
 
-  .clippy-toggletip--left .clippy-toggletip__popup {
+  .clippy-toggletip--inline-start .clippy-toggletip__popup {
     inset-block-start: 50%;
     inset-inline-end: calc(100% + var(--clippy-toggletip-offset));
     transform: translate(0.25rem, -50%);
   }
 
-  .clippy-toggletip--left .clippy-toggletip__popup::before {
+  .clippy-toggletip--inline-start .clippy-toggletip__popup::before {
     inset-block-start: calc(50% - var(--clippy-toggletip-arrow-size) / 2);
     inset-inline-end: calc(var(--clippy-toggletip-arrow-size) / -2);
     transform: rotate(45deg);
