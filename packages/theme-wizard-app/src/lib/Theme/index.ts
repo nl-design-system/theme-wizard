@@ -231,8 +231,10 @@ export default class Theme {
     walkTokens(tokens, (token, path) => {
       if (token.$value === 'undefined') {
         unsetToken(this.#rule, path);
-      } else {
-        setToken(this.#rule, path, refToCssVariable(String(token.$value) || ''));
+      } else if (typeof token.$value === 'string') {
+        // Only set tokens that we've confirmed to be strings. CSS will ignore it otherwise
+        // and this should not happen anyway, so this is a fail-safe.
+        setToken(this.#rule, path, refToCssVariable(token.$value));
       }
       // Prevent walking deeper into the token's extensions
       return SKIP;
