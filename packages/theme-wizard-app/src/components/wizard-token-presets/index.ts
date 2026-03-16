@@ -20,9 +20,6 @@ export class WizardTokenPreset extends LitElement {
   })
   value = {};
 
-  @property({ reflect: true, type: Boolean })
-  selected = false;
-
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
@@ -44,7 +41,7 @@ export class WizardTokenPreset extends LitElement {
     this.ownerDocument.removeEventListener('theme-update', this._bindHandleThemeUpdate);
   }
 
-  _selected = false;
+  private _selected = false;
 
   get selected() {
     return this._selected;
@@ -57,7 +54,7 @@ export class WizardTokenPreset extends LitElement {
     }
   }
 
-  _updateSelected(theme: Theme) {
+  private _updateSelected(theme: Theme) {
     // Start with `true`. An empty preset is always selected 🤷‍♂️
     let selected = true;
 
