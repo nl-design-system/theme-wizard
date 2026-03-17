@@ -255,8 +255,8 @@ importers:
         specifier: 4.0.0
         version: 4.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@whitespace/storybook-addon-html':
-        specifier: 8.0.2
-        version: 8.0.2(storybook@10.2.19(prettier@3.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: 9.0.0
+        version: 9.0.0(prettier@3.7.4)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       lit:
         specifier: 3.3.2
         version: 3.3.2
@@ -4398,10 +4398,11 @@ packages:
   '@vue/shared@3.5.22':
     resolution: {integrity: sha512-F4yc6palwq3TT0u+FYf0Ns4Tfl9GRFURDN2gWG7L1ecIaS/4fCIuFOjMTnCyjsu/OK6vaDKLCrGAa+KvvH+h4w==}
 
-  '@whitespace/storybook-addon-html@8.0.2':
-    resolution: {integrity: sha512-NsCpY+jWl6MamuQuSptuC5A1Xa4UWNtqhbBjv710C8Ka+n+t2e/tCfx1UAsB6m3linja2jU4Zmxu8W026lzLGQ==}
+  '@whitespace/storybook-addon-html@9.0.0':
+    resolution: {integrity: sha512-GX2lk5EgE46Lqbs1sa/7mWDWo6g/tPiIH8SyYvzBgMlUmq/q1mulHLxowQeN/HYpdlFMeUskUlYhMmE64qi44w==}
     peerDependencies:
-      storybook: ^9.0.0
+      prettier: ^3.7.1
+      storybook: ^10
 
   '@zip.js/zip.js@2.8.23':
     resolution: {integrity: sha512-RB+RLnxPJFPrGvQ9rgO+4JOcsob6lD32OcF0QE0yg24oeW9q8KnTTNlugcDaIveEcCbclobJcZP+fLQ++sH0bw==}
@@ -12520,9 +12521,10 @@ snapshots:
 
   '@vue/shared@3.5.22': {}
 
-  '@whitespace/storybook-addon-html@8.0.2(storybook@10.2.19(prettier@3.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@whitespace/storybook-addon-html@9.0.0(prettier@3.7.4)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
-      storybook: 10.2.19(prettier@3.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      prettier: 3.7.4
+      storybook: 10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@zip.js/zip.js@2.8.23': {}
 
