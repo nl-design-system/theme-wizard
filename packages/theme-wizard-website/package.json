@@ -83,6 +83,7 @@
   },
   "devDependencies": {
     "@playwright/test": "1.58.2",
+    "@tabler/icons": "3.40.0",
     "@types/dlv": "1.1.5",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
