@@ -1,4 +1,4 @@
-import { BaseDesignTokenIdentifier, isRef, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignTokenIdentifier, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 export const tokenPathToCSSCustomProperty = (tokenPath: BaseDesignTokenIdentifier[]): string =>
   '--' + tokenPath.join('-');
