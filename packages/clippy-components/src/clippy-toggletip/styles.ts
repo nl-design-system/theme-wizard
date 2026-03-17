@@ -14,10 +14,11 @@ export default css`
     --clippy-toggletip-padding-inline: var(--basis-space-inline-md);
     --clippy-toggletip-z-index: 10;
 
+    position: relative;
+
     &:not([hidden]) {
       display: inline-block;
     }
-    position: relative;
   }
 
   .clippy-toggletip {
