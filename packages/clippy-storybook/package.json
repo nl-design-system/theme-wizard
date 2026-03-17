@@ -51,7 +51,7 @@
     "@types/react-dom": "18.3.7",
     "@utrecht/component-library-css": "8.2.1",
     "@utrecht/component-library-react": "10.3.10",
-    "@utrecht/web-component-library-react": "4.0.0",
+    "@utrecht/web-component-library-react": "4.0.1",
     "@whitespace/storybook-addon-html": "8.0.2",
     "lit": "3.3.2",
     "prettier": "3.7.4",
