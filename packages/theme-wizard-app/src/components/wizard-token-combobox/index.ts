@@ -30,7 +30,7 @@ export type Option = {
 
 // Allow custom overrides
 const defaultAllowance = 'other';
-const types = ['color', 'dimension', 'font-family', 'number'] as const;
+const types = ['color', 'dimension', 'fontFamily', 'number'] as const;
 
 const tag = 'wizard-token-combobox';
 
@@ -80,7 +80,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     switch (this.type) {
       case 'color':
         return (option: Option) => filterByLabel(option) || libColor.filter(normalizedQuery)(option);
-      case 'font-family':
+      case 'fontFamily':
         return ({ label, value }: Option) =>
           filterByLabel({ label, value }) || libFontFamily.filter(normalizedQuery)({ value: value as FontFamilyToken });
       case 'dimension':
@@ -97,10 +97,14 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
 
   override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
     this.#options = value.map(({ label, value }) => {
-      const tokenIsRef = isRef(value?.$value); // Check if the token *value* is itself a reference to another token
-      const color = tokenIsRef
-        ? libColor.parse(value.$extensions[EXTENSION_RESOLVED_AS])
-        : libColor.parse(value.$value);
+      let color = undefined;
+      if (this.type === 'color') {
+        if (isRef(value?.$value)) {
+          color = libColor.parse(value.$extensions[EXTENSION_RESOLVED_AS]);
+        } else {
+          color = libColor.parse(value.$value);
+        }
+      }
       return {
         color: color ?? undefined,
         label,
@@ -109,26 +113,45 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     });
   }
 
+  #getOptionForValue(value: Option['value'] | null): Option | undefined {
+    const { $value } = value ?? {};
+    return this.options.find((option) => dequal(option.value.$value, $value));
+  }
+
   override getOptionForValue(value: Option['value'] | null): Option | undefined {
-    return this.options.find((option) => dequal(option.value.$value, value?.$value));
+    const { $type, $value } = value ?? {};
+    const option = this.#getOptionForValue({ $value });
+    if (value && $type && !option && this.allow === 'other') {
+      return {
+        label: this.valueToQuery({ $value }),
+        value,
+      };
+    }
+    return option;
   }
 
   override queryToValue(query: string): Option['value'] | null {
     if (this.allow === 'other') {
+      const existingOption = this.options.find((o) => o.label === query);
+      if (existingOption) return existingOption.value;
       try {
         this.invalid = false;
-        const option = this.getOptionForValue(this.value);
-        const $extensions = option?.value.$extensions;
-        switch (this.type) {
-          case 'color':
-            return option ?? { ...libColor.queryToValue(query), $extensions };
-          case 'font-family':
-          case 'dimension':
-          case 'number':
-          default:
-            return option || { $type: this.type, $value: query };
-        }
-      } catch {
+        const value = ((query: string) => {
+          switch (this.type) {
+            case 'color':
+              return libColor.queryToValue(query);
+            case 'fontFamily':
+              return libFontFamily.queryToValue(query);
+            case 'dimension':
+            case 'number':
+            default:
+              return super.queryToValue(query);
+          }
+        })(query);
+        const option = this.#getOptionForValue(value);
+        return option?.value ?? value;
+      } catch (error) {
+        console.warn(error);
         this.invalid = true;
         return this.value; // Return the current value to avoid losing it on invalid input, allowing the user to correct it.
       }
@@ -139,12 +162,11 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
 
   override valueToQuery({ $value }: Option['value']): string {
     const option = this.getOptionForValue({ $value });
-    const stringValue = option?.label || typeof $value === 'string' ? String($value) : '';
-
+    const stringValue = option?.label || (typeof $value === 'string' ? $value : '');
     switch (this.type) {
       case 'color':
         return stringValue || libColor.valueToQuery({ $value });
-      case 'font-family':
+      case 'fontFamily':
         return stringValue || libFontFamily.valueToQuery({ $value });
       case 'dimension':
       case 'number':
@@ -154,10 +176,12 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   }
 
   renderPreview(option: Option) {
-    switch (this.type) {
+    switch (option.value.$type) {
       case 'color':
-        return libColor.preview(option);
-      case 'font-family':
+        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
+        return libColor.preview(option as Option & { value: ColorToken });
+      case 'fontFamily':
+        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
         return libFontFamily.preview(option as Option & { value: FontFamilyToken });
       case 'dimension':
       case 'number':

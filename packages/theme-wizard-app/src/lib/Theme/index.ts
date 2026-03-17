@@ -52,7 +52,25 @@ export default class Theme {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
     this.#stylesheet = stylesheet || new CSSStyleSheet();
-    this.tokens = structuredClone(this.#defaults);
+    this.#tokens = structuredClone(this.#defaults);
+    if (!stylesheet) {
+      // Fresh theme: generate initial CSS. Cloned themes inherit a stylesheet that already has correct CSS.
+      this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
+        this.#stylesheet.replaceSync(css);
+      });
+    }
+  }
+
+  /**
+   * Creates a new Theme instance with the same state, without re-running validation or CSS generation.
+   * Use this instead of `new Theme()` when you need a new reference for Lit context change detection.
+   */
+  clone(stylesheet = this.#stylesheet): Theme {
+    const cloned = new Theme(this.#defaults, stylesheet);
+    cloned.#tokens = this.#tokens;
+    cloned.#modified = this.#modified;
+    cloned.#validationIssues = [...this.#validationIssues];
+    return cloned;
   }
 
   get defaults() {

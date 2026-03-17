@@ -33,20 +33,19 @@ export class ThemeWizardPage {
   async changeColor(label: string, colorHexValue: string) {
     const input = this.page.getByLabel(label).first();
     await input.fill(colorHexValue);
-    // Need to trigger blur so that the color input fires a change event
-    await input.blur();
+    await input.press('Enter');
   }
 
   async changeHeadingFont(fontName: string) {
     const input = this.page.getByLabel('Koppen');
     await input.fill(fontName);
-    await input.blur();
+    await input.press('Enter');
   }
 
   async changeBodyFont(fontName: string) {
     const input = this.page.getByLabel('Lopende tekst');
     await input.fill(fontName);
-    await input.blur();
+    await input.press('Enter');
   }
 
   getPreviewChild(): Locator {

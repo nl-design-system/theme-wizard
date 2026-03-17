@@ -78,9 +78,7 @@ export class App extends LitElement {
    * @description Lit context only detects reference changes, not nested properties. New instance triggers updates; preserved stylesheet keeps preview styling of preview intact.
    */
   readonly #forceUpdateTokens = () => {
-    const newTheme = new Theme(undefined, this.theme.stylesheet);
-    newTheme.tokens = this.theme.tokens;
-    this.theme = newTheme;
+    this.theme = this.theme.clone();
     this.requestUpdate();
   };
 

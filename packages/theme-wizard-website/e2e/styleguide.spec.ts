@@ -17,7 +17,7 @@ test('page uses values as stored by the configuration page', async ({ page }) =>
   await page.getByRole('button', { name: 'Kleuren' }).click();
   const accent1Input = page.getByLabel('Accent 1');
   await accent1Input.fill('#800000');
-  await accent1Input.blur();
+  await accent1Input.press('Enter');
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');
@@ -59,7 +59,10 @@ test.describe('interaction tests', () => {
 
     test('Token value can be copied to clipboard', async ({ page }) => {
       const tokenValue = '#fbfcfd';
-      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true }).click();
+      await page
+        .getByRole('table', { name: 'Accent 1' })
+        .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true })
+        .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
       });
