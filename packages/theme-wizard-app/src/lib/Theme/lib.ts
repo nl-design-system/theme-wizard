@@ -24,9 +24,7 @@ export const flattenTokens = (
 /**
  * Replace `{example.component.property}` with `var(--example-component-property)`
  */
-export const refToCssVariable = (value: string): string => {
-  if (isRef(value)) {
-    return `var(--${value.slice(1, -1).replaceAll('.', '-')})`;
-  }
-  return value;
-};
+export const refToCssVariable = (value: string): string =>
+  value.replaceAll(/\{([^}]+)\}/g, (_, tokenName) => {
+    return `var(--${tokenName.replaceAll('.', '-')})`;
+  });
