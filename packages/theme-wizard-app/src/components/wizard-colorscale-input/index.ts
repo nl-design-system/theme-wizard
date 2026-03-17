@@ -175,12 +175,6 @@ export class WizardColorscaleInput extends WizardTokenInput {
   }
 
   override willUpdate(changedProperties: Map<string, unknown>) {
-    // If the full value is being set, restore from it (takes precedence)
-    if (changedProperties.has('value')) {
-      this.#updateColorFromToken(this.colorToken);
-      return;
-    }
-
     // Initialize from the colorToken property if changed
     if (changedProperties.has('colorToken')) {
       this.#updateColorFromToken(this.colorToken);
