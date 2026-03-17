@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   build: {
     lib: {
       entry: 'index.ts',
       fileName: 'index',
       formats: ['es'],
     },
-    minify: mode !== 'development',
+    minify: false,
     rollupOptions: {
       external: (id) => /^@?lit(-\w+)?($|\/.+)/.test(id),
     },

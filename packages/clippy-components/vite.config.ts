@@ -18,7 +18,7 @@ export function getFiles(pattern: string | string[], relativeTo = 'src') {
 
 const thisDir = fileURLToPath(new URL('.', import.meta.url));
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   build: {
     lib: {
       entry: {
@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => ({
       },
       formats: ['es'],
     },
-    minify: mode !== 'development',
+    minify: false,
     rollupOptions: {
       external: [
         'lit',

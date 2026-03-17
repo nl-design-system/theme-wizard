@@ -173,8 +173,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       if (this.allow === 'other' && this.query) {
         const value = this.queryToValue(this.query);
         if (value && dequal(value, this.value)) {
-          this.value = value;
-          this.#handleChange();
+          this.value = value; // normalize display without emitting change
         }
       }
       this.open = false;

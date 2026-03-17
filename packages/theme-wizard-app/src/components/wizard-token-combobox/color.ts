@@ -1,4 +1,10 @@
-import { ColorToken, ColorValue, parseColor, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
+import {
+  ColorToken,
+  ColorValue,
+  isRef,
+  parseColor,
+  stringifyColor,
+} from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { html, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -13,7 +19,7 @@ const BROAD_COLOR_NAMES = new Set(['red', 'green', 'blue']);
  */
 export const parse = (value: unknown): Color | null => {
   try {
-    const string = typeof value === 'string' ? value : stringifyColor(value as ColorValue);
+    const string = typeof value === 'string' && !isRef(value) ? value : stringifyColor(value as ColorValue);
     return new Color(string);
   } catch {
     return null;

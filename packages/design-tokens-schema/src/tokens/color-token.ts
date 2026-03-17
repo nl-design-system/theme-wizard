@@ -77,14 +77,19 @@ export const parseColor = (color: string): ColorValue => {
 };
 
 export const stringifyColor = (color: ColorValue): string => {
-  const reference = colorTokenValueToColorJS(color);
-  const converted = reference.to('srgb');
-  return converted.toString({
-    // Collapse prevents using the shorthand notation
-    collapse: false,
-    format: 'hex',
-    inGamut: true,
-  });
+  try {
+    const reference = colorTokenValueToColorJS(color);
+    const converted = reference.to('srgb');
+    return converted.toString({
+      // Collapse prevents using the shorthand notation
+      collapse: false,
+      format: 'hex',
+      inGamut: true,
+    });
+  } catch {
+    console.warn('Could not parse color:', color);
+    return '#0000';
+  }
 };
 
 const ColorReferenceSchema = z.looseObject({

@@ -98,9 +98,9 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
     this.#options = value.map(({ label, value }) => {
       const tokenIsRef = isRef(value?.$value); // Check if the token *value* is itself a reference to another token
-      const color = tokenIsRef
-        ? libColor.parse(value.$extensions[EXTENSION_RESOLVED_AS])
-        : libColor.parse(value.$value);
+      const color =
+        this.type === 'color' &&
+        (tokenIsRef ? libColor.parse(value.$extensions[EXTENSION_RESOLVED_AS]) : libColor.parse(value.$value));
       return {
         color: color ?? undefined,
         label,
@@ -128,6 +128,8 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
 
   override queryToValue(query: string): Option['value'] | null {
     if (this.allow === 'other') {
+      const existingOption = this.options.find((o) => o.label === query);
+      if (existingOption) return existingOption.value;
       try {
         this.invalid = false;
         const value = ((query: string) => {
@@ -144,7 +146,8 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
         })(query);
         const option = this.#getOptionForValue(value);
         return option?.value ?? value;
-      } catch {
+      } catch (error) {
+        console.warn(error);
         this.invalid = true;
         return this.value; // Return the current value to avoid losing it on invalid input, allowing the user to correct it.
       }
