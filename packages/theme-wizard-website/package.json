@@ -70,6 +70,7 @@
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@storybook/react-vite": "10.2.19",
+    "@tabler/icons-react": "3.36.1",
     "@utrecht/body-css": "2.0.1",
     "@utrecht/root-css": "2.0.1",
     "@vercel/related-projects": "1.0.1",

@@ -1,7 +1,8 @@
 ---
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
-export const prerender = false; // enable SSR
+import '@nl-design-system-candidate/link-css/link.css'
+import '@nl-design-system-candidate/paragraph-css/paragraph.css'
 
 const scraperUrl = withRelatedProject({
   projectName: 'theme-wizard-server',
@@ -19,7 +20,7 @@ const scraperUrl = withRelatedProject({
             <h1 class="wizard-title">Maak je eigen thema</h1>
             <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
           </wizard-story-preview>
-          <p>Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.</p>
+          <p class="nl-paragraph">Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.</p>
         </wizard-container>
       </main>
      </wizard-layout>
@@ -29,6 +30,7 @@ const scraperUrl = withRelatedProject({
 <style>
   .wizard-main {
     block-size: 100%;
+    display: grid;
     place-content: center;
   }
 

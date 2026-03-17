@@ -200,6 +200,14 @@ export const en = {
       headingFont: 'Headings',
     },
     showOnGoogleFonts: 'Show on Google Fonts',
+    types: {
+      color: 'Color',
+      colors: 'Colors',
+      fontFamilies: 'Font families',
+      fontFamily: 'Font family',
+      fontSize: 'Font size',
+      fontSizes: 'Font sizes',
+    },
   },
   unknown: 'Unknown error',
   validation: {
@@ -507,6 +515,14 @@ export const nl = {
       headingFont: 'Koppen',
     },
     showOnGoogleFonts: 'Toon op Google Fonts',
+    types: {
+      color: 'Kleur',
+      colors: 'Kleuren',
+      fontFamilies: 'Lettertypes',
+      fontFamily: 'Lettertype',
+      fontSize: 'Lettergrootte',
+      fontSizes: 'Lettergroottes',
+    },
   },
   unknown: 'Onbekende fout opgetreden',
   validation: {
