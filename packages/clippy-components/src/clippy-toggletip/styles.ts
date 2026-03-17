@@ -14,7 +14,9 @@ export default css`
     --clippy-toggletip-padding-inline: var(--basis-space-inline-md);
     --clippy-toggletip-z-index: 10;
 
-    display: inline-block;
+    &:not([hidden]) {
+      display: inline-block;
+    }
     position: relative;
   }
 
@@ -112,8 +114,7 @@ export default css`
     transform: rotate(45deg);
   }
 
-  :host(:hover) .clippy-toggletip__popup,
-  :host(:focus-within) .clippy-toggletip__popup {
+  :host(:is(:hover, :focus-within)) .clippy-toggletip__popup {
     opacity: 100%;
     visibility: visible;
   }
