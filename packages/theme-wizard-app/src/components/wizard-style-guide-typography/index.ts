@@ -4,13 +4,16 @@ import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
 import { type ModernDimensionToken } from '@nl-design-system-community/design-tokens-schema';
+import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { html as staticHtml } from 'lit/static-html.js';
 import type Theme from '../../lib/Theme';
 import type { DisplayToken, FontFamilyToken, FontSizeToken } from '../wizard-style-guide/types';
@@ -122,14 +125,32 @@ export class WizardStyleGuideTypography extends LitElement {
                       : nothing}
                   </td>
                   <td class="utrecht-table__cell">
-                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(tokenId)}>
-                      <span class="nl-data-badge" id="${`basis-text-font-family-${name}`}">${tokenId}</span>
-                    </clippy-button>
+                    <span class="nl-data-badge" id="${`basis-text-font-family-${name}`}">${tokenId}</span>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
+                      <clippy-button
+                        icon-only
+                        purpose="subtle"
+                        size="small"
+                        @click=${() => navigator.clipboard.writeText(tokenId)}
+                      >
+                        ${t('copyValueToClipboard', { value: tokenId })}
+                        <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                      </clippy-button>
+                    </clippy-toggletip>
                   </td>
                   <td class="utrecht-table__cell">
-                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(displayValue)}>
-                      <code class="nl-code">${displayValue}</code>
-                    </clippy-button>
+                    <code class="nl-code">${displayValue}</code>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
+                      <clippy-button
+                        icon-only
+                        purpose="subtle"
+                        size="small"
+                        @click=${() => navigator.clipboard.writeText(displayValue)}
+                      >
+                        ${t('copyValueToClipboard', { value: displayValue })}
+                        <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                      </clippy-button>
+                    </clippy-toggletip>
                   </td>
                   <td class="utrecht-table__cell">
                     <clippy-button
@@ -175,14 +196,32 @@ export class WizardStyleGuideTypography extends LitElement {
                     <wizard-font-sample size=${displayValue}></wizard-font-sample>
                   </td>
                   <td class="utrecht-table__cell">
-                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(tokenId)}>
-                      <span class="nl-data-badge" id="${`basis-text-font-size-${name}`}">${tokenId}</span>
-                    </clippy-button>
+                    <span class="nl-data-badge" id="${`basis-text-font-size-${name}`}">${tokenId}</span>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
+                      <clippy-button
+                        icon-only
+                        purpose="subtle"
+                        size="small"
+                        @click=${() => navigator.clipboard.writeText(tokenId)}
+                      >
+                        ${t('copyValueToClipboard', { value: tokenId })}
+                        <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                      </clippy-button>
+                    </clippy-toggletip>
                   </td>
                   <td class="utrecht-table__cell">
-                    <clippy-button purpose="subtle" @click=${() => navigator.clipboard.writeText(displayValue)}>
-                      <code class="nl-code">${displayValue}</code>
-                    </clippy-button>
+                    <code class="nl-code">${displayValue}</code>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
+                      <clippy-button
+                        icon-only
+                        purpose="subtle"
+                        size="small"
+                        @click=${() => navigator.clipboard.writeText(displayValue)}
+                      >
+                        ${t('copyValueToClipboard', { value: displayValue })}
+                        <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                      </clippy-button>
+                    </clippy-toggletip>
                   </td>
                   <td class="utrecht-table__cell">
                     <clippy-button
@@ -229,14 +268,20 @@ export class WizardStyleGuideTypography extends LitElement {
                     </clippy-html-image>
                   </td>
                   <td class="utrecht-table__cell">
-                    <clippy-button
-                      purpose="subtle"
-                      @click=${() => navigator.clipboard.writeText(`basis.heading.level-${level}`)}
-                    >
-                      <code class="nl-code" id="${`basis.heading.level-${level}`}" style="white-space: nowrap">
-                        ${`basis.heading.level-${level}`}
-                      </code>
-                    </clippy-button>
+                    <code class="nl-code" id="${`basis.heading.level-${level}`}" style="white-space: nowrap">
+                      ${`basis.heading.level-${level}`}
+                    </code>
+                    <clippy-toggletip text=${t('copyToClipboard')}>
+                      <clippy-button
+                        icon-only
+                        purpose="subtle"
+                        size="small"
+                        @click=${() => navigator.clipboard.writeText(`basis.heading.level-${level}`)}
+                      >
+                        ${t('copyValueToClipboard', { value: `basis.heading.level-${level}` })}
+                        <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                      </clippy-button>
+                    </clippy-toggletip>
                   </td>
                 </tr>
               `;

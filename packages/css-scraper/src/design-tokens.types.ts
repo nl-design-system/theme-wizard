@@ -16,7 +16,7 @@ export const TokenExtensionsSchema = z.object({
   [EXTENSION_AUTHORED_AS]: z.string(),
   [EXTENSION_CSS_PROPERTIES]: z.array(z.string()),
   [EXTENSION_TOKEN_ID]: z.string(),
-  [EXTENSION_TOKEN_SUBTYPE]: z.union([z.literal('font-size')]).optional(),
+  [EXTENSION_TOKEN_SUBTYPE]: z.literal('font-size').optional(),
   [EXTENSION_USAGE_COUNT]: z.int().positive(),
 });
 export type TokenExtensions = z.infer<typeof TokenExtensionsSchema>;
