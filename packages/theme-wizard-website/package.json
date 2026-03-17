@@ -69,12 +69,8 @@
     "@nl-design-system-community/ma-design-tokens": "2.5.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
-<<<<<<< feat/staged-tokens-sections
-    "@storybook/react-vite": "10.1.11",
-    "@tabler/icons-react": "3.36.1",
-=======
     "@storybook/react-vite": "10.2.19",
->>>>>>> main
+    "@tabler/icons-react": "3.36.1",
     "@utrecht/body-css": "2.0.1",
     "@utrecht/root-css": "2.0.1",
     "@vercel/related-projects": "1.0.1",
