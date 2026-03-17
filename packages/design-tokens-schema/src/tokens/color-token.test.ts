@@ -178,4 +178,10 @@ describe('stringify token to string', () => {
     const result = stringifyColor(tokenValue);
     expect(result).toBe('#ffffff');
   });
+
+  it('stringifies a non-color without throwing', () => {
+    // @ts-expect-error We actually want to test this potential invalid case
+    const result = stringifyColor(undefined);
+    expect(result).toBe('#0000');
+  });
 });
