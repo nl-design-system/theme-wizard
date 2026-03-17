@@ -1,37 +1,34 @@
 import {
-  stringifyColor,
   StrictThemeSchema,
   type Theme as ThemeType,
   EXTENSION_RESOLVED_AS,
+  stringifyColor,
   stringifyFontFamily,
+  stringifyDimension,
   EXTENSION_RESOLVED_FROM,
   EXTENSION_TOKEN_SUBTYPE,
+  walkTokens,
+  SKIP,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import StyleDictionary from 'style-dictionary';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
-import { flattenTokens } from './lib';
+import { flattenTokens, refToCssVariable } from './lib';
+import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
 export const PREVIEW_THEME_CLASS = 'preview-theme';
-
-const STYLE_DICTIONARY_SETTINGS = {
-  log: {
-    errors: {
-      brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
-    },
-    verbosity: 'silent', // ignore logging since it goes to browser console
-  },
-} as const;
+const DEFAULT_SELECTOR = `.${PREVIEW_THEME_CLASS}, :host`;
 
 export default class Theme {
   name = 'wizard';
+  selector: string = DEFAULT_SELECTOR;
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
+  readonly #rule: CSSRule;
   readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] = [];
 
@@ -51,14 +48,10 @@ export default class Theme {
   constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
-    this.#stylesheet = stylesheet || new CSSStyleSheet();
-    this.#tokens = structuredClone(this.#defaults);
-    if (!stylesheet) {
-      // Fresh theme: generate initial CSS. Cloned themes inherit a stylesheet that already has correct CSS.
-      this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
-        this.#stylesheet.replaceSync(css);
-      });
-    }
+    const [styleSheet, rule] = createStylesheet(stylesheet, DEFAULT_SELECTOR);
+    this.#rule = rule;
+    this.#stylesheet = styleSheet;
+    this.tokens = structuredClone(this.#defaults);
   }
 
   /**
@@ -70,6 +63,7 @@ export default class Theme {
     cloned.#tokens = this.#tokens;
     cloned.#modified = this.#modified;
     cloned.#validationIssues = [...this.#validationIssues];
+    cloned.toCSS();
     return cloned;
   }
 
@@ -93,10 +87,7 @@ export default class Theme {
     this.#modified = !dequal(this.#defaults, values);
     this.#validateTheme(values);
     this.#tokens = values;
-    this.toCSS({ selector: `.${PREVIEW_THEME_CLASS}, :host` }).then((css) => {
-      const sheet = this.#stylesheet;
-      sheet.replaceSync(css);
-    });
+    this.toCSS();
   }
 
   // Updates a single token value at the given path, preserving other properties and extensions of the token.
@@ -198,7 +189,7 @@ export default class Theme {
 
         if (obj.$type === 'dimension' && typeof obj.$value === 'object' && obj.$value?.unit) {
           const subtype = obj['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
-          const value = `${obj.$value.value}${obj.$value.unit}`;
+          const value = stringifyDimension(obj.$value);
 
           if (subtype === 'font-size') {
             return {
@@ -214,7 +205,7 @@ export default class Theme {
             };
           }
 
-          // For other dimension tokens, keep as-is (already in string format from Style Dictionary)
+          // For other dimension tokens, keep as-is
           return {
             ...obj,
             $value: value,
@@ -234,44 +225,35 @@ export default class Theme {
     return convertTokens(clonedTokens);
   }
 
-  async toCSS({
-    resolved = false,
-    selector = `.${this.name}-theme`,
-  }: {
-    resolved?: boolean;
-    selector?: `.${string}`;
-  } = {}) {
-    const platform = 'css';
-    // TODO: drop conversion to legacy tokens when Style Dictionary handles Spec Color definitions.
+  async toCSS() {
     const tokens = this.toLegacyTokens();
-    const sd = new StyleDictionary({
-      ...STYLE_DICTIONARY_SETTINGS,
-      platforms: {
-        [platform]: {
-          files: [
-            {
-              destination: 'variables.css',
-              format: 'css/variables',
-              options: {
-                outputReferences: !resolved,
-                selector,
-              },
-            },
-          ],
-          transformGroup: 'css',
-        },
-      },
-      tokens,
+
+    walkTokens(tokens, (token, path) => {
+      if (token.$value === 'undefined') {
+        unsetToken(this.#rule, path);
+      } else if (typeof token.$value === 'string') {
+        // Only set tokens that we've confirmed to be strings. CSS will ignore it otherwise
+        // and this should not happen anyway, so this is a fail-safe.
+        setToken(this.#rule, path, refToCssVariable(token.$value));
+      }
+      // Prevent walking deeper into the token's extensions
+      return SKIP;
     });
-    const outputs = await sd.formatPlatform(platform);
-    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
+
+    return this.stylesheet.cssRules[0].cssText;
   }
 
   async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
+    const StyleDictionary = await import('style-dictionary');
     const platform = 'json';
     const tokens = format === 'legacy' ? this.toLegacyTokens() : this.tokens;
-    const sd = new StyleDictionary({
-      ...STYLE_DICTIONARY_SETTINGS,
+    const sd = new StyleDictionary.default({
+      log: {
+        errors: {
+          brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
+        },
+        verbosity: 'silent', // ignore logging since it goes to browser console
+      },
       platforms: {
         [platform]: {
           files: [

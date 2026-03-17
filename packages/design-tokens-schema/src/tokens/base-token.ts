@@ -29,8 +29,9 @@ export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
 
 /** @see https://www.designtokens.org/tr/drafts/format/#name-and-value */
 export type BaseDesignTokenIdentifier = z.infer<typeof BaseDesignTokenIdentifierSchema>;
+export type TokenPath = BaseDesignTokenIdentifier[];
 
-export const BaseDesignTokenSchema = z.strictObject({
+export const BaseDesignTokenSchema = z.looseObject({
   /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
   $deprecated: z.union([z.boolean(), z.string()]).optional(),
   /** @see 5.2.1 Description https://www.designtokens.org/tr/drafts/format/#description */

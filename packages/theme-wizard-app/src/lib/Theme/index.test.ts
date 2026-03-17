@@ -1,6 +1,27 @@
 import tokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
+import { parse as parseCss } from '@projectwallace/css-parser';
 import { describe, expect, it } from 'vitest';
 import Theme from './index';
+
+// CSSOM isn't stable in what it returns, so for testing purposes we normalize the CSS
+// so that the outcome is predictable.
+const normalizeCss = (css: string): string => {
+  const ast = parseCss(css, {
+    parse_atrule_preludes: false,
+    parse_selectors: false,
+    parse_values: false,
+  });
+  const newCss: string[] = [];
+  const rule = ast.first_child;
+  newCss.push(rule?.first_child?.text + ' {');
+  rule?.block?.children
+    .toSorted((a, b) => (a.property ?? '').localeCompare(b.property ?? ''))
+    .forEach((declaration) => {
+      newCss.push(`\t${declaration.property}: ${declaration.value}`);
+    });
+  newCss.push('}');
+  return newCss.join('\n');
+};
 
 describe('Theme', () => {
   it('can instantiate with custom defaults', () => {
@@ -26,9 +47,9 @@ describe('Theme', () => {
 
   it('has a different CSS output after token update', async () => {
     const theme = new Theme();
-    const initialCSS = await theme.toCSS();
+    const initialCSS = normalizeCss(await theme.toCSS());
     theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
-    const updatedCSS = await theme.toCSS();
+    const updatedCSS = normalizeCss(await theme.toCSS());
     expect(updatedCSS).toMatchSnapshot();
     return expect(initialCSS).not.toMatch(updatedCSS);
   });
@@ -64,14 +85,8 @@ describe('Theme', () => {
 
   it('can export to css custom properties', async () => {
     const theme = new Theme();
-    const css = await theme.toCSS();
+    const css = normalizeCss(await theme.toCSS());
     return expect(css).toMatchSnapshot();
-  });
-
-  it('can export to resolved css custom properties', async () => {
-    const theme = new Theme();
-    const css = await theme.toCSS({ resolved: true });
-    expect(css).toMatchSnapshot();
   });
 
   it('can export to JSON token file', async () => {

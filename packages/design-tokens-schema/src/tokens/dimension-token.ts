@@ -37,3 +37,5 @@ export const DimensionWithRefSchema = z.object({
 
 export const DimensionTokenSchema = z.union([ModernDimensionTokenSchema, DimensionWithRefSchema]);
 export type DimensionToken = z.infer<typeof DimensionTokenSchema>;
+
+export const stringifyDimension = (value: ModernDimensionValue): string => `${value.value}${value.unit}`;
