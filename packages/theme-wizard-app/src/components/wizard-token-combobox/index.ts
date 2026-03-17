@@ -97,10 +97,14 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
 
   override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
     this.#options = value.map(({ label, value }) => {
-      const tokenIsRef = isRef(value?.$value); // Check if the token *value* is itself a reference to another token
-      const color =
-        this.type === 'color' &&
-        (tokenIsRef ? libColor.parse(value.$extensions[EXTENSION_RESOLVED_AS]) : libColor.parse(value.$value));
+      let color = undefined;
+      if (this.type === 'color') {
+        if (isRef(value?.$value)) {
+          color = libColor.parse(value.$extensions[EXTENSION_RESOLVED_AS]);
+        } else {
+          color = libColor.parse(value.$value);
+        }
+      }
       return {
         color: color ?? undefined,
         label,
