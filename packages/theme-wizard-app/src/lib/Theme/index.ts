@@ -48,7 +48,7 @@ export default class Theme {
   constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
     // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
-    const [styleSheet, rule] = createStylesheet(stylesheet, `.${PREVIEW_THEME_CLASS}, :host`);
+    const [styleSheet, rule] = createStylesheet(stylesheet, DEFAULT_SELECTOR);
     this.#rule = rule;
     this.#stylesheet = styleSheet;
     this.tokens = structuredClone(this.#defaults);
