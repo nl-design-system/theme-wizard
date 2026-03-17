@@ -256,7 +256,7 @@ importers:
         version: 4.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@whitespace/storybook-addon-html':
         specifier: 9.0.0
-        version: 9.0.0(prettier@3.7.4)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 9.0.0(prettier@3.8.1)(storybook@10.2.19(prettier@3.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       lit:
         specifier: 3.3.2
         version: 3.3.2
@@ -12521,10 +12521,10 @@ snapshots:
 
   '@vue/shared@3.5.22': {}
 
-  '@whitespace/storybook-addon-html@9.0.0(prettier@3.7.4)(storybook@10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@whitespace/storybook-addon-html@9.0.0(prettier@3.8.1)(storybook@10.2.19(prettier@3.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
-      prettier: 3.7.4
-      storybook: 10.1.11(prettier@3.7.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      prettier: 3.8.1
+      storybook: 10.2.19(prettier@3.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@zip.js/zip.js@2.8.23': {}
 
