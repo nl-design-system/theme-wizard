@@ -2896,6 +2896,9 @@ packages:
     resolution: {integrity: sha512-+1pBqHy4h6zsquQde2S8dp/4zXUQNdxvPCdCN3GO9wTzL/5cjV+qQCVJ9Kb/GVhtvvTBjV2Tt/Ar+cEP4ZfMpA==}
     engines: {node: '>=22'}
 
+  '@projectwallace/css-parser@0.13.2':
+    resolution: {integrity: sha512-UKQHxnE0MYmFMZwedlhxYW5D0zzgzPqCbHVvZkZIMC81RwGMWp3ZuS/MCvU/y6wWzXJ6ySqtEJfRZ6an6Nz+gA==}
+
   '@projectwallace/css-parser@0.13.8':
     resolution: {integrity: sha512-yOwSi2IUKkvo2rVgbtoDoX94SIj2xD8awgQ4MdgriyRxDKxUpt2gQHUienzoSrfOI9NSdXpFqGOmyXBk2YXgaQ==}
 
@@ -10494,6 +10497,8 @@ snapshots:
       color-sorter: 7.0.2
       colorjs.io: 0.6.1
       css-time-sort: 3.0.1
+
+  '@projectwallace/css-parser@0.13.2': {}
 
   '@projectwallace/css-parser@0.13.8': {}
 
