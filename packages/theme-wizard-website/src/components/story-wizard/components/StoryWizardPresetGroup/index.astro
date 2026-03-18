@@ -1,135 +1,24 @@
 ---
 import type { StoryWizardPresetGroup } from '@/lib/story-wizard';
 
-const flattenTokenValues = (tokens: unknown, path: string[] = []): { path: string; value: string }[] => {
-  if (!tokens || typeof tokens !== 'object') return [];
+const collectTokenPaths = (tokens: unknown, path: string[] = []): string[] => {
+  if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return [];
 
-  if ('$value' in (tokens as Record<string, unknown>)) {
-    const rawValue = (tokens as { $value: unknown }).$value;
-    return [
-      {
-        path: path.join('.'),
-        value:
-          typeof rawValue === 'string' || typeof rawValue === 'number' ? String(rawValue) : JSON.stringify(rawValue),
-      },
-    ];
+  const obj = tokens as Record<string, unknown>;
+
+  if (Object.hasOwn(obj, '$value')) {
+    return [path.join('.')];
   }
 
-  return Object.entries(tokens as Record<string, unknown>).flatMap(([key, value]) =>
-    flattenTokenValues(value, [...path, key]),
-  );
+  return Object.entries(obj).flatMap(([key, value]) => collectTokenPaths(value, [...path, key]));
 };
-
-const formatTokenPathLabel = (path: string) =>
-  path
-    .split('.')
-    .slice(-2)
-    .join(' ')
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
-
-const splitTokenValue = (value: string) => {
-  const normalized = value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : value;
-  const lastDotIndex = normalized.lastIndexOf('.');
-
-  if (lastDotIndex === -1) {
-    return { base: '', last: normalized };
-  }
-
-  return {
-    base: `${normalized.slice(0, lastDotIndex + 1)}`,
-    last: normalized.slice(lastDotIndex + 1),
-  };
-};
-
-const getCommonPrefixSegmentCount = (values: string[][]) => {
-  if (values.length === 0) return 0;
-
-  let prefixCount = 0;
-  const shortestLength = Math.min(...values.map((value) => value.length));
-
-  while (prefixCount < shortestLength) {
-    const segment = values[0][prefixCount];
-    if (values.every((value) => value[prefixCount] === segment)) {
-      prefixCount += 1;
-    } else {
-      break;
-    }
-  }
-
-  return prefixCount;
-};
-
-const getCommonSuffixSegmentCount = (values: string[][], prefixCount: number) => {
-  if (values.length === 0) return 0;
-
-  let suffixCount = 0;
-  const shortestLength = Math.min(...values.map((value) => value.length - prefixCount));
-
-  while (suffixCount < shortestLength) {
-    const indexFromEnd = suffixCount + 1;
-    const segment = values[0][values[0].length - indexFromEnd];
-    if (values.every((value) => value[value.length - indexFromEnd] === segment)) {
-      suffixCount += 1;
-    } else {
-      break;
-    }
-  }
-
-  return suffixCount;
-};
-
-const splitTokenValueByVariants = (value: string, variants: string[]) => {
-  const normalizedValue = value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : value;
-  const normalizedVariants = variants.map((variant) =>
-    variant.startsWith('{') && variant.endsWith('}') ? variant.slice(1, -1) : variant,
-  );
-  const uniqueVariants = Array.from(new Set(normalizedVariants));
-
-  if (uniqueVariants.length <= 1) {
-    return splitTokenValue(value);
-  }
-
-  const variantSegments = uniqueVariants.map((variant) => variant.split('.'));
-  const valueSegments = normalizedValue.split('.');
-  const prefixCount = getCommonPrefixSegmentCount(variantSegments);
-  const suffixCount = getCommonSuffixSegmentCount(variantSegments, prefixCount);
-  const middleSegments = valueSegments.slice(prefixCount, valueSegments.length - suffixCount || undefined);
-  const middle = middleSegments.join('.');
-
-  if (!middle) {
-    return splitTokenValue(value);
-  }
-
-  return {
-    base: prefixCount > 0 ? `${valueSegments.slice(0, prefixCount).join('.')}.` : '',
-    last: middle,
-    suffix: suffixCount > 0 ? `.${valueSegments.slice(valueSegments.length - suffixCount).join('.')}` : '',
-  };
-};
-
-const collectTokenPaths = (group: StoryWizardPresetGroup) =>
-  Array.from(new Set(group.options.flatMap((option) => flattenTokenValues(option.tokens).map((token) => token.path))));
-
-const collectTokenValueVariants = (group: StoryWizardPresetGroup) =>
-  Object.fromEntries(
-    collectTokenPaths(group).map((tokenPath) => [
-      tokenPath,
-      group.options
-        .flatMap((option) => flattenTokenValues(option.tokens))
-        .filter((token) => token.path === tokenPath)
-        .map((token) => token.value),
-    ]),
-  );
 
 interface Props {
   group: StoryWizardPresetGroup;
 }
 
 const { group } = Astro.props;
-const tokenPaths = collectTokenPaths(group);
-const tokenValueVariants = collectTokenValueVariants(group);
+const tokenPaths = Array.from(new Set(group.options.flatMap((option) => collectTokenPaths(option.tokens))));
 ---
 
 <section class="wizard-token-preset" data-preset-group data-group-label={group.name}>
@@ -156,81 +45,11 @@ const tokenValueVariants = collectTokenValueVariants(group);
 
   <div class="wizard-token-preset__layout">
     <div class="wizard-token-preset__options">
-      {
-        group.options.map((option) => {
-          const tokenValues = flattenTokenValues(option.tokens);
-
-          return (
-            <div class="wizard-token-preset__option">
-              <wizard-token-preset
-                class="wizard-token-preset__input"
-                value={JSON.stringify(option.tokens)}
-                name={option.name}
-                description={option.description}
-                data-option-label={option.name}
-                data-preview-style={option.previewStyle}
-              ></wizard-token-preset>
-              {tokenValues.length === 1 && (
-                <div class="wizard-token-preset__option-values">
-                  {tokenValues.map((token) => {
-                    const tokenValueParts = splitTokenValueByVariants(
-                      token.value,
-                      tokenValueVariants[token.path] ?? [token.value],
-                    );
-
-                    return (
-                      <p class="nl-paragraph wizard-token-preset__option-value">
-                        <span class="wizard-token-preset__option-value-heading">
-                          <span class="wizard-token-preset__option-value-label">{formatTokenPathLabel(token.path)}</span>
-                          <code class="wizard-token-preset__option-value-path">{token.path}</code>
-                        </span>
-                        <span class="wizard-token-preset__option-value-mapping">
-                          <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
-                          <code class="wizard-token-preset__option-value-token">{tokenValueParts.base}<strong
-                              class="wizard-token-preset__option-value-token-strong">{tokenValueParts.last}</strong>{'suffix' in tokenValueParts
-                              ? tokenValueParts.suffix
-                              : ''}</code>
-                        </span>
-                      </p>
-                    );
-                  })}
-                </div>
-              )}
-              {tokenValues.length > 1 && (
-                <details class="wizard-token-preset__option-values wizard-token-preset__option-values--summary">
-                  <summary class="wizard-token-preset__option-values-summary">Tokens ({tokenValues.length})</summary>
-                  <div class="wizard-token-preset__option-values-list">
-                    {tokenValues.map((token) => {
-                      const tokenValueParts = splitTokenValueByVariants(
-                        token.value,
-                        tokenValueVariants[token.path] ?? [token.value],
-                      );
-
-                      return (
-                        <p class="nl-paragraph wizard-token-preset__option-value">
-                          <span class="wizard-token-preset__option-value-heading">
-                            <span class="wizard-token-preset__option-value-label">
-                              {formatTokenPathLabel(token.path)}
-                            </span>
-                            <code class="wizard-token-preset__option-value-path">{token.path}</code>
-                          </span>
-                          <span class="wizard-token-preset__option-value-mapping">
-                            <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
-                            <code class="wizard-token-preset__option-value-token">{tokenValueParts.base}<strong
-                                class="wizard-token-preset__option-value-token-strong">{tokenValueParts.last}</strong>{'suffix' in tokenValueParts
-                                ? tokenValueParts.suffix
-                                : ''}</code>
-                          </span>
-                        </p>
-                      );
-                    })}
-                  </div>
-                </details>
-              )}
-            </div>
-          );
-        })
-      }
+      <wizard-token-preset
+        class="wizard-token-preset__input"
+        group-label={group.name}
+        options={JSON.stringify(group.options)}
+      ></wizard-token-preset>
     </div>
   </div>
 </section>

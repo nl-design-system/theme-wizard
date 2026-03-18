@@ -1,4 +1,18 @@
-export type WizardTokenPresetInput = HTMLElement;
+export type StoryWizardSelectedOption = {
+  optionLabel: string;
+  previewStyle: string;
+  tokens: unknown;
+};
+
+export type WizardTokenPresetInput = HTMLElement & {
+  clearSelection: () => void;
+  optionLabel: string;
+  previewStyle: string;
+  selectedIndex: number;
+  selectedOption: StoryWizardSelectedOption | null;
+  selectIndex: (index: number) => void;
+  value: unknown;
+};
 
 export type DesignTokenLeaf = {
   path: string;
