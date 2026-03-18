@@ -9,7 +9,8 @@ const flattenTokenValues = (tokens: unknown, path: string[] = []): { path: strin
     return [
       {
         path: path.join('.'),
-        value: typeof rawValue === 'string' || typeof rawValue === 'number' ? String(rawValue) : JSON.stringify(rawValue),
+        value:
+          typeof rawValue === 'string' || typeof rawValue === 'number' ? String(rawValue) : JSON.stringify(rawValue),
       },
     ];
   }
@@ -109,13 +110,7 @@ const splitTokenValueByVariants = (value: string, variants: string[]) => {
 };
 
 const collectTokenPaths = (group: StoryWizardPresetGroup) =>
-  Array.from(
-    new Set(
-      group.options.flatMap((option) =>
-        flattenTokenValues(option.tokens).map((token) => token.path),
-      ),
-    ),
-  );
+  Array.from(new Set(group.options.flatMap((option) => flattenTokenValues(option.tokens).map((token) => token.path))));
 
 const collectTokenValueVariants = (group: StoryWizardPresetGroup) =>
   Object.fromEntries(
@@ -130,10 +125,9 @@ const collectTokenValueVariants = (group: StoryWizardPresetGroup) =>
 
 interface Props {
   group: StoryWizardPresetGroup;
-  storyId: string;
 }
 
-const { group, storyId } = Astro.props;
+const { group } = Astro.props;
 const tokenPaths = collectTokenPaths(group);
 const tokenValueVariants = collectTokenValueVariants(group);
 ---
@@ -163,31 +157,49 @@ const tokenValueVariants = collectTokenValueVariants(group);
   <div class="wizard-token-preset__layout">
     <div class="wizard-token-preset__options">
       {
-        group.options.map((option, optionIndex) => {
-          const inputId = `${storyId}-${group.id}-option-${optionIndex}`;
-          const inputName = `${storyId}-${group.id}`;
+        group.options.map((option) => {
           const tokenValues = flattenTokenValues(option.tokens);
 
           return (
             <div class="wizard-token-preset__option">
-              <input
+              <wizard-token-preset
                 class="wizard-token-preset__input"
-                id={inputId}
-                name={inputName}
-                type="radio"
-                value={String(optionIndex)}
+                value={JSON.stringify(option.tokens)}
+                name={option.name}
+                description={option.description}
                 data-option-label={option.name}
                 data-preview-style={option.previewStyle}
-                data-tokens={JSON.stringify(option.tokens)}
-              />
+              ></wizard-token-preset>
+              {tokenValues.length === 1 && (
+                <div class="wizard-token-preset__option-values">
+                  {tokenValues.map((token) => {
+                    const tokenValueParts = splitTokenValueByVariants(
+                      token.value,
+                      tokenValueVariants[token.path] ?? [token.value],
+                    );
 
-              <label class="wizard-token-preset__label" for={inputId}>
-                <p class="nl-paragraph wizard-token-preset__option-title">{option.name}</p>
-                {option.description && <p class="nl-paragraph wizard-token-preset__option-description">{option.description}</p>}
-              </label>
-              {
-                tokenValues.length === 1 && (
-                  <div class="wizard-token-preset__option-values">
+                    return (
+                      <p class="nl-paragraph wizard-token-preset__option-value">
+                        <span class="wizard-token-preset__option-value-heading">
+                          <span class="wizard-token-preset__option-value-label">{formatTokenPathLabel(token.path)}</span>
+                          <code class="wizard-token-preset__option-value-path">{token.path}</code>
+                        </span>
+                        <span class="wizard-token-preset__option-value-mapping">
+                          <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
+                          <code class="wizard-token-preset__option-value-token">{tokenValueParts.base}<strong
+                              class="wizard-token-preset__option-value-token-strong">{tokenValueParts.last}</strong>{'suffix' in tokenValueParts
+                              ? tokenValueParts.suffix
+                              : ''}</code>
+                        </span>
+                      </p>
+                    );
+                  })}
+                </div>
+              )}
+              {tokenValues.length > 1 && (
+                <details class="wizard-token-preset__option-values wizard-token-preset__option-values--summary">
+                  <summary class="wizard-token-preset__option-values-summary">Tokens ({tokenValues.length})</summary>
+                  <div class="wizard-token-preset__option-values-list">
                     {tokenValues.map((token) => {
                       const tokenValueParts = splitTokenValueByVariants(
                         token.value,
@@ -196,44 +208,25 @@ const tokenValueVariants = collectTokenValueVariants(group);
 
                       return (
                         <p class="nl-paragraph wizard-token-preset__option-value">
-                          <span class="wizard-token-preset__option-value-label">{formatTokenPathLabel(token.path)}</span>
-                          <code class="wizard-token-preset__option-value-token"
-                            >{tokenValueParts.base}<strong class="wizard-token-preset__option-value-token-strong"
-                              >{tokenValueParts.last}</strong
-                            >{'suffix' in tokenValueParts ? tokenValueParts.suffix : ''}</code
-                          >
+                          <span class="wizard-token-preset__option-value-heading">
+                            <span class="wizard-token-preset__option-value-label">
+                              {formatTokenPathLabel(token.path)}
+                            </span>
+                            <code class="wizard-token-preset__option-value-path">{token.path}</code>
+                          </span>
+                          <span class="wizard-token-preset__option-value-mapping">
+                            <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
+                            <code class="wizard-token-preset__option-value-token">{tokenValueParts.base}<strong
+                                class="wizard-token-preset__option-value-token-strong">{tokenValueParts.last}</strong>{'suffix' in tokenValueParts
+                                ? tokenValueParts.suffix
+                                : ''}</code>
+                          </span>
                         </p>
                       );
                     })}
                   </div>
-                )
-              }
-              {
-                tokenValues.length > 1 && (
-                  <details class="wizard-token-preset__option-values wizard-token-preset__option-values--summary">
-                    <summary class="wizard-token-preset__option-values-summary">Tokens ({tokenValues.length})</summary>
-                    <div class="wizard-token-preset__option-values-list">
-                      {tokenValues.map((token) => {
-                        const tokenValueParts = splitTokenValueByVariants(
-                          token.value,
-                          tokenValueVariants[token.path] ?? [token.value],
-                        );
-
-                        return (
-                          <p class="nl-paragraph wizard-token-preset__option-value">
-                            <span class="wizard-token-preset__option-value-label">{formatTokenPathLabel(token.path)}</span>
-                            <code class="wizard-token-preset__option-value-token"
-                              >{tokenValueParts.base}<strong class="wizard-token-preset__option-value-token-strong"
-                                >{tokenValueParts.last}</strong
-                              >{'suffix' in tokenValueParts ? tokenValueParts.suffix : ''}</code
-                            >
-                          </p>
-                        );
-                      })}
-                    </div>
-                  </details>
-                )
-              }
+                </details>
+              )}
             </div>
           );
         })
