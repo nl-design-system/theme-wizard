@@ -3,6 +3,7 @@ import { StoryWizardOption } from './StoryWizardOption';
 
 export class StoryWizardGroup {
   public readonly options: StoryWizardOption[];
+  #selectedIndex = -1;
 
   public constructor(public readonly element: HTMLElement) {
     this.options = Array.from(element.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input')).map(
@@ -15,34 +16,33 @@ export class StoryWizardGroup {
   }
 
   public getSelectedOption() {
-    return this.options.find((option) => option.isChecked);
+    return this.options[this.#selectedIndex];
   }
 
   public getSelectedIndex() {
-    return this.options.findIndex((option) => option.isChecked);
+    return this.#selectedIndex;
   }
 
   public hasSelection() {
-    return this.getSelectedIndex() >= 0;
+    return this.#selectedIndex >= 0;
+  }
+
+  public clearSelection() {
+    this.#selectedIndex = -1;
   }
 
   public restoreSelectedIndex(index: number) {
-    if (index < 0) return;
-
-    this.options.forEach((option, optionIndex) => {
-      option.setChecked(optionIndex === index);
-    });
+    if (index < 0 || index >= this.options.length) return;
+    this.#selectedIndex = index;
+    this.options[index]?.dispatchChange();
   }
 
   public bindOptions(listener: () => void) {
-    this.options.forEach((option) => option.bindChange(listener));
-  }
-
-  public getSelectionLabel() {
-    const selectedOption = this.getSelectedOption();
-    if (!selectedOption) return '';
-    if (!this.groupLabel || !selectedOption.optionLabel) return '';
-
-    return `${this.groupLabel}: ${selectedOption.optionLabel}`;
+    this.options.forEach((option, index) => {
+      option.bindChange(() => {
+        this.#selectedIndex = index;
+        listener();
+      });
+    });
   }
 }

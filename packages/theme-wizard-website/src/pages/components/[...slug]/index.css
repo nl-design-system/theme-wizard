@@ -111,6 +111,13 @@
   inline-size: 100%;
 }
 
+.wizard-step-selection__value-option {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  margin-block-end: 0.25rem;
+}
+
 .wizard-step-selection__value-summary {
   display: block;
 }
@@ -489,66 +496,6 @@
   position: relative;
 }
 
-.wizard-token-preset__input {
-  inset: 0;
-  opacity: 0%;
-  position: absolute;
-}
-
-.wizard-token-preset__label {
-  background: transparent;
-  border: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 80%, transparent);
-  border-radius: var(--nl-button-border-radius, var(--basis-border-radius-md));
-  box-sizing: border-box;
-  cursor: pointer;
-  display: block;
-  min-block-size: 100%;
-  padding-block: var(--basis-space-block-xl);
-  padding-inline-start: var(--wizard-settings-inline-padding);
-  position: relative;
-  text-align: start;
-  transition:
-    background-color 150ms ease,
-    border-color 150ms ease,
-    box-shadow 150ms ease,
-    color 150ms ease;
-}
-
-.wizard-token-preset__label:hover {
-  background-color: color-mix(
-    in srgb,
-    var(--nl-button-primary-background-color, var(--basis-color-action-1-inverse-bg-default)) 8%,
-    transparent
-  );
-  border-color: var(--nl-button-primary-background-color, var(--basis-color-action-1-inverse-bg-default));
-  color: var(--basis-color-action-1-color-default);
-}
-
-.wizard-token-preset__input:focus-visible + .wizard-token-preset__label {
-  box-shadow: 0 0 0 2px var(--nl-button-primary-background-color, var(--basis-color-action-1-inverse-bg-default));
-}
-
-.wizard-token-preset__input:checked + .wizard-token-preset__label {
-  background-color: var(--nl-button-primary-background-color, var(--basis-color-action-1-inverse-bg-default));
-  border-color: var(--nl-button-primary-background-color, var(--basis-color-action-1-inverse-bg-default));
-  box-shadow: none;
-  color: white;
-}
-
-.wizard-token-preset__input:checked + .wizard-token-preset__label * {
-  color: white;
-}
-
-.wizard-token-preset__option-title {
-  font-weight: 700;
-  margin: 0;
-}
-
-.wizard-token-preset__option-description {
-  color: var(--basis-color-default-color-subtle);
-  margin: 0;
-}
-
 .wizard-token-preset__option-values {
   display: none;
   margin-block-start: var(--basis-space-block-sm);
@@ -569,37 +516,67 @@
 }
 
 .wizard-token-preset__option-value {
-  align-items: center;
+  align-items: flex-start;
+  border-block-start: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 45%, transparent);
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--basis-space-inline-xs);
+  flex-direction: column;
+  gap: 0.125rem;
   margin: 0;
+  padding-block-start: var(--basis-space-block-2xs);
+}
+
+.wizard-token-preset__option-value-heading {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.125rem;
 }
 
 .wizard-token-preset__option-value-label {
-  color: var(--basis-color-default-color-subtle);
-  font-size: 0.875rem;
+  color: var(--basis-color-default-color-default);
+  font-size: 0.8125rem;
   font-weight: 700;
-  min-inline-size: 11rem;
+  line-height: 1.3;
+}
+
+.wizard-token-preset__option-value-path {
+  color: var(--basis-color-default-color-subtle);
+  font-family: var(--basis-text-font-family-monospace, monospace);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.wizard-token-preset__option-value-mapping {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.125rem;
+}
+
+.wizard-token-preset__option-value-mapping-label {
+  color: var(--basis-color-default-color-subtle);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .wizard-token-preset__option-value + .wizard-token-preset__option-value {
-  margin-block-start: var(--basis-space-block-2xs);
+  margin-block-start: var(--basis-space-block-xs);
 }
 
 .wizard-token-preset__option-value-token {
-  font-size: 0.875rem;
+  font-family: var(--basis-text-font-family-monospace, monospace);
+  font-size: 0.75rem;
+  line-height: 1.35;
 }
 
 .wizard-token-preset__option-value-token-strong {
   font-weight: 700;
 }
 
-.wizard-token-preset__input:checked + .wizard-token-preset__label .wizard-token-preset__option-description {
-  color: white;
-}
-
-.wizard-token-preset__input:checked ~ .wizard-token-preset__option-values {
+.wizard-token-preset__input[selected] ~ .wizard-token-preset__option-values {
   display: block;
 }
 
