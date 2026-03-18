@@ -41,6 +41,10 @@ export class StoryWizardStep {
     this.groups.forEach((group) => group.bindOptions(listener));
   }
 
+  public clearSelections() {
+    this.groups.forEach((group) => group.clearSelection());
+  }
+
   public getStoredSelection() {
     return this.groups.map((group) => group.getSelectedIndex());
   }
@@ -55,13 +59,6 @@ export class StoryWizardStep {
 
   public hasRequiredSelections() {
     return this.groups.every((group) => group.hasSelection());
-  }
-
-  public getSelectionLabels() {
-    return this.groups.flatMap((group) => {
-      const label = group.getSelectionLabel();
-      return label ? [label] : [];
-    });
   }
 
   public getPreviewStyle() {
