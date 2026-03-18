@@ -1,12 +1,4 @@
----
-interface Props {
-  position?: 'top' | 'bottom';
-}
-
-const { position = 'bottom' } = Astro.props;
----
-
-<nav class={`wizard-preset-stepper wizard-preset-stepper--${position}`} aria-label="Navigeer tussen keuzes" hidden>
+<nav class="wizard-preset-stepper" aria-label="Navigeer tussen keuzes" hidden>
   <div class="wizard-preset-stepper__actions">
     <div class="wizard-preset-stepper__actions-secondary">
       <button class="wizard-preset-reset nl-button nl-button--subtle" type="button">Opnieuw beginnen</button>
