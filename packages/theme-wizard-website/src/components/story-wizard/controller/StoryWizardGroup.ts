@@ -1,14 +1,10 @@
 import type { WizardTokenPresetInput } from './types';
-import { StoryWizardOption } from './StoryWizardOption';
 
 export class StoryWizardGroup {
-  public readonly options: StoryWizardOption[];
-  #selectedIndex = -1;
+  public readonly input: WizardTokenPresetInput | null;
 
   public constructor(public readonly element: HTMLElement) {
-    this.options = Array.from(element.querySelectorAll<WizardTokenPresetInput>('.wizard-token-preset__input')).map(
-      (input) => new StoryWizardOption(input),
-    );
+    this.input = element.querySelector<WizardTokenPresetInput>('.wizard-token-preset__input');
   }
 
   public get groupLabel() {
@@ -16,33 +12,26 @@ export class StoryWizardGroup {
   }
 
   public getSelectedOption() {
-    return this.options[this.#selectedIndex];
+    return this.input?.selectedOption ?? null;
   }
 
   public getSelectedIndex() {
-    return this.#selectedIndex;
+    return this.input?.selectedIndex ?? -1;
   }
 
   public hasSelection() {
-    return this.#selectedIndex >= 0;
+    return this.getSelectedIndex() >= 0;
   }
 
   public clearSelection() {
-    this.#selectedIndex = -1;
+    this.input?.clearSelection();
   }
 
   public restoreSelectedIndex(index: number) {
-    if (index < 0 || index >= this.options.length) return;
-    this.#selectedIndex = index;
-    this.options[index]?.dispatchChange();
+    this.input?.selectIndex(index);
   }
 
   public bindOptions(listener: () => void) {
-    this.options.forEach((option, index) => {
-      option.bindChange(() => {
-        this.#selectedIndex = index;
-        listener();
-      });
-    });
+    this.input?.addEventListener('change', listener);
   }
 }
