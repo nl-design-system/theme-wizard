@@ -1,7 +1,7 @@
 import { consume } from '@lit/context';
-import { walkTokens } from '@nl-design-system-community/design-tokens-schema';
+import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { dequal } from 'dequal';
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { themeContext } from '../../contexts/theme';
 import Theme from '../../lib/Theme';
@@ -19,6 +19,12 @@ export class WizardTokenPreset extends LitElement {
     type: Object,
   })
   value = {};
+
+  @property({ type: String })
+  name = '';
+
+  @property({ type: String })
+  description = '';
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -54,23 +60,27 @@ export class WizardTokenPreset extends LitElement {
     }
   }
 
+  private _walkPresetTokens(tokens: unknown, path: string[], callback: (value: unknown, path: string[]) => void) {
+    if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return;
+    const obj = tokens as Record<string, unknown>;
+    if (Object.hasOwn(obj, '$value')) {
+      callback(obj['$value'], path);
+      return;
+    }
+    for (const [key, value] of Object.entries(obj)) {
+      this._walkPresetTokens(value, [...path, key], callback);
+    }
+  }
+
   private _updateSelected(theme: Theme) {
     // Start with `true`. An empty preset is always selected 🤷‍♂️
     let selected = true;
 
-    // TODO: This would be great to implement with a generator function (using `yield`)
-    // so we can stop the walk early when the first non-matching token is found.
-    walkTokens(this.value, (token, path) => {
-      if (!selected) {
-        return;
-      }
+    this._walkPresetTokens(this.value, [], (presetValue, path) => {
+      if (!selected) return;
       const themeToken = theme.at(path.join('.'));
       const themeValue = themeToken ? themeToken['$value'] : null;
-      const presetValue = token['$value'];
-      const themeEqualsPreset = dequal(themeValue, presetValue);
-
-      // Check if the value from the preset is the current value in the theme
-      if (!themeEqualsPreset) {
+      if (!dequal(themeValue, presetValue)) {
         selected = false;
       }
     });
@@ -78,18 +88,27 @@ export class WizardTokenPreset extends LitElement {
     // TODO: We could calculate this `selected` state lazily, and invalidate the cached
     // value at the `theme-update` event.
     this._selected = selected;
+    this.toggleAttribute('selected', selected);
     this.requestUpdate();
   }
   private readonly onButtonClick = () => {
     this.dispatchEvent(new Event('change', { bubbles: true }));
   };
 
-  static override readonly styles = [wizardTokenCSS];
+  static override readonly styles = [unsafeCSS(buttonCss), wizardTokenCSS];
 
   override render() {
     return html`
-      <button aria-pressed="${this.selected ? 'true' : 'false'}" type="button" @click=${this.onButtonClick}>
-        <slot></slot>
+      <button
+        class="nl-button nl-button--secondary ${this.selected ? ' nl-button--pressed' : ''}"
+        aria-pressed="${this.selected ? 'true' : 'false'}"
+        type="button"
+        @click=${this.onButtonClick}
+      >
+        <span class="nl-paragraph wizard-token-preset__option-title">${this.name}</span>
+        ${this.description
+          ? html`<span class="nl-paragraph wizard-token-preset__option-description">${this.description}</span>`
+          : nothing}
       </button>
     `;
   }
