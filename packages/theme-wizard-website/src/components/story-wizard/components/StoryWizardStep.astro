@@ -49,7 +49,7 @@ const { step } = Astro.props;
       {
         step.groups.map((group) =>
           group.type === 'preset' ? (
-            <StoryWizardPresetGroup group={group} storyId={step.id} />
+            <StoryWizardPresetGroup group={group} />
           ) : (
             <StoryWizardEditableTokenGroup group={group} />
           ),

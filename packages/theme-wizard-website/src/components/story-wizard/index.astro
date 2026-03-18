@@ -11,7 +11,7 @@ const { wizard } = Astro.props;
 ---
 
 <div slot="page-content" class="wizard-page-content">
-  <section class="wizard-flow" data-story-wizard-root>
+  <section data-story-wizard-root>
     <div id="story-wizard" data-story-ids={JSON.stringify(wizard.storyIds)} data-component-id={wizard.componentId} hidden>
     </div>
 

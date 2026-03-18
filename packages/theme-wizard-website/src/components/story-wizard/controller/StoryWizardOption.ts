@@ -3,10 +3,6 @@ import type { WizardTokenPresetInput } from './types';
 export class StoryWizardOption {
   public constructor(public readonly input: WizardTokenPresetInput) {}
 
-  public get isChecked() {
-    return this.input.checked;
-  }
-
   public get optionLabel() {
     return this.input.dataset.optionLabel?.trim() ?? '';
   }
@@ -16,15 +12,11 @@ export class StoryWizardOption {
   }
 
   public get tokens() {
-    try {
-      return JSON.parse(this.input.dataset.tokens || '{}');
-    } catch {
-      return {};
-    }
+    return (this.input as HTMLElement & { value?: unknown }).value ?? {};
   }
 
-  public setChecked(isChecked: boolean) {
-    this.input.checked = isChecked;
+  public dispatchChange() {
+    this.input.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   public bindChange(listener: () => void) {
