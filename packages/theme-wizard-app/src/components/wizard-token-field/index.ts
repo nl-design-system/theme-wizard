@@ -118,7 +118,7 @@ export class WizardTokenField extends WizardTokenNavigator {
   }
 
   get entries() {
-    return WizardTokenField.entries(this.token);
+    return this.token ? WizardTokenField.entries(this.token) : [];
   }
 
   get type() {
