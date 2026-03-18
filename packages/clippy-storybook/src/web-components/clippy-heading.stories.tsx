@@ -11,7 +11,8 @@ interface HeadingStoryArgs {
 }
 
 // Docs template builds a full <clippy-heading> element for the Source block.
-const createTemplate = (level: number, content: string) => html`<clippy-heading level="${level}">${content}</clippy-heading>`;
+const createTemplate = (level: number, content: string) =>
+  html`<clippy-heading level="${level}">${content}</clippy-heading>`;
 
 const meta = {
   id: 'clippy-heading',
