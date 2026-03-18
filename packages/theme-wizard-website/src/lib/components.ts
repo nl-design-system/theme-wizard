@@ -1,5 +1,5 @@
 export const components = {
-  button: { stories: () => import('./stories/button-react.stories'), title: 'Button' },
+  button: { stories: () => import('./stories/Button/button-react.stories'), title: 'Button' },
   code: { stories: () => import('./stories/code-react.stories'), title: 'Code' },
   'code-block': { stories: () => import('./stories/code-block-react.stories'), title: 'Code Block' },
   'color-sample': { stories: () => import('./stories/color-sample-react.stories'), title: 'Color Sample' },
