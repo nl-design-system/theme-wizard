@@ -8,7 +8,7 @@ import { themeContext } from '../../contexts/theme';
 import { getSiblingGroupsWithOnlyRefsTo } from '../../lib/ColorScale/siblings';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
-import { tokensToUpdateMany } from '../../lib/Theme/lib';
+import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
@@ -116,7 +116,6 @@ export class App extends LitElement {
   };
 
   readonly #handleTokenChange = async (event: Event) => {
-    console.log(event);
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 
     if (target instanceof WizardColorscaleInput) {
@@ -155,7 +154,8 @@ export class App extends LitElement {
     } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);
     } else if (target instanceof WizardTokenPreset) {
-      this.theme.updateMany(tokensToUpdateMany(target.value));
+      const updates = presetTokensToUpdateMany(target.value);
+      this.theme.updateMany(updates);
     } else {
       return;
     }
