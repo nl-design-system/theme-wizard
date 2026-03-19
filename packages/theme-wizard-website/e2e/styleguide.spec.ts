@@ -16,12 +16,14 @@ test('page uses values as stored by the configuration page', async ({ page }) =>
   await page.goto('/basis-tokens');
   await page.getByRole('button', { name: 'Kleuren' }).click();
   const accent1Input = page.getByLabel('Accent 1');
-  await accent1Input.fill('#800000');
+  await accent1Input.fill('#ff0000');
   await accent1Input.press('Enter');
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');
-  await expect(page.getByRole('button', { name: '#800000' })).toBeVisible();
+  const table = page.getByRole('table', { name: 'Accent 1' });
+  await expect(table).toBeVisible();
+  await expect(table.getByRole('button', { name: 'Kopieer "#ff0000" naar klembord' })).toBeVisible();
 });
 
 test.describe('interaction tests', () => {

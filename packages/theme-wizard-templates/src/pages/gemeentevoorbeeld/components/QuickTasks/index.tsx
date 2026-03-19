@@ -1,14 +1,6 @@
 import '@amsterdam/design-system-css/dist/visually-hidden/visually-hidden.css';
 import { Link } from '@nl-design-system-candidate/link-react';
 import { Icon } from '@utrecht/component-library-react';
-import {
-  UtrechtIconPaspoort,
-  UtrechtIconMeldingKlacht,
-  UtrechtIconVerhuizen,
-  UtrechtIconWerken,
-  UtrechtIconNummerbord,
-  UtrechtIconAfvalScheiden,
-} from '@utrecht/web-component-library-react';
 import React, { type ReactElement } from 'react';
 import type { QuickTask } from './types';
 import { Column, Row } from '../Layout';
@@ -20,12 +12,12 @@ export interface QuickTasksProps {
 type IconName = 'afval-scheiden' | 'melding-klacht' | 'nummerbord' | 'paspoort' | 'verhuizen' | 'werken';
 
 const ICON_COMPONENTS: Record<IconName, ReactElement> = {
-  'afval-scheiden': <UtrechtIconAfvalScheiden />,
-  'melding-klacht': <UtrechtIconMeldingKlacht />,
-  nummerbord: <UtrechtIconNummerbord />,
-  paspoort: <UtrechtIconPaspoort />,
-  verhuizen: <UtrechtIconVerhuizen />,
-  werken: <UtrechtIconWerken />,
+  'afval-scheiden': React.createElement('utrecht-icon-afval-scheiden', { suppressHydrationWarning: true }),
+  'melding-klacht': React.createElement('utrecht-icon-melding-klacht', { suppressHydrationWarning: true }),
+  nummerbord: React.createElement('utrecht-icon-nummerbord', { suppressHydrationWarning: true }),
+  paspoort: React.createElement('utrecht-icon-paspoort', { suppressHydrationWarning: true }),
+  verhuizen: React.createElement('utrecht-icon-verhuizen', { suppressHydrationWarning: true }),
+  werken: React.createElement('utrecht-icon-werken', { suppressHydrationWarning: true }),
 };
 
 const renderIcon = (iconName: string): JSX.Element | null => {

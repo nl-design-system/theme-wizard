@@ -42,6 +42,10 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
     // Ensure ref is a token object with $value and $type
     if (!isTokenLike(ref)) return;
 
+    // Clear any previously resolved value before setting to avoid array concatenation
+    // when resolveRefs is called multiple times on the same token object.
+    delete token.$extensions?.[EXTENSION_RESOLVED_AS];
+
     // Add an extension with the resolved ref's value
     setExtension(token, EXTENSION_RESOLVED_AS, structuredClone(ref.$value));
   });

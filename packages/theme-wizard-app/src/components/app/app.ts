@@ -7,7 +7,7 @@ import { themeContext } from '../../contexts/theme';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
-import { WizardColorscaleInput } from '../wizard-colorscale-input';
+import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
@@ -125,6 +125,7 @@ export class App extends LitElement {
         ];
       });
       this.theme.updateMany(updates);
+      this.theme.setGroupExtension(target.name, EXTENSION_COLORSCALE_SEED, target.seedColor);
     } else if (target instanceof WizardTokenCombobox) {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {

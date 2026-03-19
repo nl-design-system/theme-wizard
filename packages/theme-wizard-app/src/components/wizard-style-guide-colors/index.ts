@@ -55,7 +55,7 @@ export class WizardStyleGuideColors extends LitElement {
         const colorEntries = Object.entries(value as Record<string, unknown>)
           .filter(([, token]) => typeof token === 'object' && token !== null && '$value' in token)
           .map(([colorKey, token]) => {
-            const color = resolveColorValue(token as ColorTokenType, this.theme.tokens);
+            const color = resolveColorValue(token as ColorTokenType);
             const displayValue = color ? stringifyColor(color) : '#000';
             const tokenId = `basis.color.${key}.${colorKey}`;
             const usage = tokenUsage.get(tokenId) || [];
