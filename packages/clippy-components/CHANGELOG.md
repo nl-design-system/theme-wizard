@@ -1,5 +1,11 @@
 # @nl-design-system-community/clippy-components
 
+## 2.0.0
+
+### Major Changes
+
+- 0e5176a: Fix heading bug in clippy-modal and change attribute naming for action labels (`confirm-label` and `cancel-label`). Add storybook docs and tests.
+
 ## 1.2.0
 
 ### Minor Changes
