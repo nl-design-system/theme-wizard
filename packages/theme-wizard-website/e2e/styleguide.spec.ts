@@ -21,7 +21,9 @@ test('page uses values as stored by the configuration page', async ({ page }) =>
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');
-  await expect(page.getByRole('button', { name: '#ff0000' })).toBeVisible();
+  const table = page.getByRole('table', { name: 'Accent 1' });
+  await expect(table).toBeVisible();
+  await expect(table.getByRole('button', { name: 'Kopieer "#ff0000" naar klembord' })).toBeVisible();
 });
 
 test.describe('interaction tests', () => {
