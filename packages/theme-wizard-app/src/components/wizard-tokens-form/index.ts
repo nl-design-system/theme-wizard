@@ -77,7 +77,7 @@ export class WizardTokensForm extends LitElement {
   private readonly theme!: Theme;
 
   @state()
-  private displayMode: DisplayMode = 'initial';
+  private displayMode: DisplayMode = 'colors'; // TODO change back
 
   private readonly handleModeSwitch = (event: MouseEvent, newMode: DisplayMode) => {
     event.preventDefault();
@@ -198,13 +198,12 @@ export class WizardTokensForm extends LitElement {
                 ([colorKey, docs]) => html`
                   <wizard-stack size="lg" class="wizard-form__field">
                     <clippy-heading level="4">${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading>
-                    <wc-markdown class="wizard-tokens-form__markdown">${docs}</wc-markdown>
+                    <wc-markdown class="wizard-tokens-form__markdown" .textContent=${docs}></wc-markdown>
                     <wizard-colorscale-input
                       key=${colorKey}
                       label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
                       id=${`basis.color.${colorKey}`}
                       name=${`basis.color.${colorKey}`}
-                      .colorToken=${this.theme.at(`basis.color.${colorKey}.color-default`)}
                     >
                     </wizard-colorscale-input>
                     <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">

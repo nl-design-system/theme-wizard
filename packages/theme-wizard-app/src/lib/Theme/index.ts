@@ -1,6 +1,7 @@
 import {
   StrictThemeSchema,
   type Theme as ThemeType,
+  type BaseDesignToken,
   EXTENSION_RESOLVED_AS,
   stringifyColor,
   stringifyFontFamily,
@@ -9,6 +10,8 @@ import {
   EXTENSION_TOKEN_SUBTYPE,
   walkTokens,
   SKIP,
+  resolveRefs,
+  setExtension,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -86,6 +89,7 @@ export default class Theme {
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
     this.#validateTheme(values);
+    resolveRefs(values, values as Record<string, unknown>);
     this.#tokens = values;
     this.toCSS();
   }
@@ -118,6 +122,13 @@ export default class Theme {
       Theme.#updateAt(tokens, path, value);
     }
     this.tokens = tokens;
+  }
+
+  setGroupExtension(groupPath: string, extensionKey: string, value: unknown): void {
+    const group = dlv(this.#tokens, groupPath);
+    if (group && typeof group === 'object') {
+      setExtension(group as BaseDesignToken, extensionKey, value);
+    }
   }
 
   resetAt(path: string) {

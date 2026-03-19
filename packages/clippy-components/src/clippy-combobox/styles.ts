@@ -5,21 +5,24 @@ export default css`
     inline-size: 100%;
     position: relative;
   }
+
   .clippy-combobox__current-option {
     pointer-events: none;
     position: absolute;
     display: flex;
-    // Clip contents when current option exceeds input size
+    /* Clip contents when current option exceeds input size */
     inline-size: 100%;
     white-space: nowrap;
-    overflow: hidden;
+    overflow: clip;
     align-items: center;
   }
+
   .clippy-combobox__current-option:has(+ input:focus) {
     display: none;
   }
+
   /* added specificity to override the align-items now that the flex direction changes */
-  .clippy-combobox__option.utrecht-listbox__option {
+  .clippy-combobox__option[class] {
     display: flex;
     flex-direction: column;
     align-items: unset;

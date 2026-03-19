@@ -2,16 +2,6 @@ import { css } from 'lit';
 
 export default css`
   .wizard-colorscale-input {
-    display: grid;
-  }
-
-  .wizard-colorscale-input__label {
-    display: flex;
-    justify-content: space-between;
-
-    & p {
-      margin-block: 0;
-    }
   }
 
   .wizard-colorscale-input__input input {
@@ -25,7 +15,11 @@ export default css`
   }
 
   .wizard-colorscale-input__stop {
-    block-size: 0.75em;
+    block-size: var(--basis-size-2xs);
     inline-size: 100%;
+  }
+
+  .wizard-colorscale-input__stop--seed {
+    /* TODO: implement */
   }
 `;

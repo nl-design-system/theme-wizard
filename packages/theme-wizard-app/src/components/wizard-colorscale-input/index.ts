@@ -12,9 +12,13 @@ import {
   type ColorSpace,
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
+import { dequal } from 'dequal';
 import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
+import { themeContext } from '../../contexts/theme';
 import ColorScale from '../../lib/ColorScale';
 import ColorToken from '../../lib/ColorToken';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
@@ -97,6 +101,8 @@ export const resolveColorValue = (
   return undefined;
 };
 
+export const EXTENSION_COLORSCALE_SEED = 'nl.nldesignsystem.theme-wizard.color-scale-seed-color';
+
 const tag = 'wizard-colorscale-input';
 
 declare global {
@@ -146,8 +152,9 @@ export class WizardColorscaleInput extends WizardTokenInput {
     this.requestUpdate('value', oldValue);
   }
 
-  @property({ attribute: false })
-  colorToken?: ColorTokenType;
+  @consume({ context: themeContext, subscribe: true })
+  @state()
+  private readonly theme?: Theme;
 
   @consume({ context: scrapedTokensContext, subscribe: true })
   @property({ attribute: false })
@@ -156,10 +163,27 @@ export class WizardColorscaleInput extends WizardTokenInput {
   @state()
   private currentColorValue: string = '';
 
+  get #colorToken(): ColorTokenType | undefined {
+    return this.theme?.at(`${this.name}.color-default`) as ColorTokenType | undefined;
+  }
+
+  get #seedColor(): ColorValue | undefined {
+    const group = this.theme?.at(this.name) as Record<string, unknown> | undefined;
+    const seedColor = (group?.['$extensions'] as Record<string, unknown> | undefined)?.[EXTENSION_COLORSCALE_SEED];
+    if (seedColor && typeof seedColor === 'object' && 'colorSpace' in seedColor) {
+      return seedColor as ColorValue;
+    }
+    return undefined;
+  }
+
+  get seedColor(): ColorValue {
+    return this.#scale.from.$value;
+  }
+
   #updateColorFromToken(colorToken: ColorTokenType | undefined) {
     if (!colorToken) return;
     try {
-      const colorValue = resolveColorValue(colorToken);
+      const colorValue = resolveColorValue(colorToken, this.theme?.tokens as Record<string, unknown>);
       if (colorValue) {
         this.#scale.from = new ColorToken({ $value: colorValue });
         this.currentColorValue = stringifyColor(colorValue);
@@ -175,9 +199,14 @@ export class WizardColorscaleInput extends WizardTokenInput {
   }
 
   override willUpdate(changedProperties: Map<string, unknown>) {
-    // Initialize from the colorToken property if changed
-    if (changedProperties.has('colorToken')) {
-      this.#updateColorFromToken(this.colorToken);
+    if (changedProperties.has('theme') || changedProperties.has('name')) {
+      const seedColor = this.#seedColor;
+      if (seedColor) {
+        this.#scale.from = new ColorToken({ $value: seedColor });
+        this.currentColorValue = stringifyColor(seedColor);
+      } else {
+        this.#updateColorFromToken(this.#colorToken);
+      }
       this.#updateScaleValue();
     }
   }
@@ -196,13 +225,15 @@ export class WizardColorscaleInput extends WizardTokenInput {
     const target = event.target;
     if (target instanceof ClippyColorCombobox && target.value) {
       const value = typeof target.value === 'string' ? parseColor(target.value) : target.value;
+      const newColorValue = stringifyColor(value);
+      // Skip initialization-triggered events where the value hasn't actually changed
+      if (newColorValue === this.currentColorValue) return;
       const newToken = new ColorToken({
         $value: value,
       });
       this.#scale.from = newToken;
       this.value = this.#scale.toObject();
-      this.currentColorValue = stringifyColor(value);
-      this.requestUpdate();
+      this.currentColorValue = newColorValue;
       if (!this.isConnected) return;
       this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
@@ -235,7 +266,10 @@ export class WizardColorscaleInput extends WizardTokenInput {
             const cssColor = stop.toCSSColorFunction();
             return html`
               <div
-                class="wizard-colorscale-input__stop"
+                class="${classMap({
+                  'wizard-colorscale-input__stop': true,
+                  'wizard-colorscale-input__stop--seed': dequal(this.seedColor, stop.$value),
+                })}"
                 style=${`background-color: ${cssColor}`}
                 title=${`${COLOR_KEYS.at(index)}: ${cssColor}`}
               ></div>
