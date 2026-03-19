@@ -1,4 +1,5 @@
 import { provide } from '@lit/context';
+import { isRef, isTokenGroup } from '@nl-design-system-community/design-tokens-schema';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -125,7 +126,28 @@ export class App extends LitElement {
         ];
       });
       this.theme.updateMany(updates);
-      this.theme.setGroupExtension(target.name, EXTENSION_COLORSCALE_SEED, target.seedColor);
+
+      const nameParts = target.name.split('.'); // e.g. ['basis', 'color', 'accent-1']
+      const parentPath = nameParts.slice(0, -1).join('.'); // e.g. 'basis.color'
+      const selfKey = nameParts.at(-1)!; // e.g. 'accent-1'
+      const parentGroup = nameParts.length > 1 ? this.theme.at(parentPath) : null; // e.g. basis.color group
+      const siblingGroupsWithOnlyRefsToSelf =
+        parentGroup && typeof parentGroup === 'object'
+          ? Object.entries(parentGroup)
+              .filter(([siblingKey, siblingGroup]) => {
+                if (siblingKey === selfKey || !isTokenGroup(siblingGroup)) return false;
+                // Keep only siblings whose every token references this group, e.g. {basis.color.accent-1.100}
+                return Object.entries(siblingGroup)
+                  .filter(([k]) => !k.startsWith('$')) // skip group-level $type, $extensions, etc.
+                  .every(([, token]) => isRef(token.$value) && token.$value.slice(1, -1).startsWith(target.name));
+              })
+              .map(([siblingKey]) => `${parentPath}.${siblingKey}`)
+          : [];
+
+      // Set the seed on the updated group and any siblings that exclusively reference it
+      for (const groupPath of [target.name, ...siblingGroupsWithOnlyRefsToSelf]) {
+        this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, target.seedColor);
+      }
     } else if (target instanceof WizardTokenCombobox) {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {

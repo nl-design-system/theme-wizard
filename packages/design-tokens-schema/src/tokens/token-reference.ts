@@ -36,6 +36,16 @@ export const isTokenLike = (obj: unknown): obj is BaseDesignToken => {
   return Object.hasOwn(obj, '$value');
 };
 
+export const isTokenGroup = (obj: unknown): obj is Record<string, BaseDesignToken> => {
+  if (!isValueObject(obj)) return false;
+  if (Object.hasOwn(obj, '$value')) return false;
+  if (Object.hasOwn(obj, '$type') && typeof obj['$type'] !== 'string') return false;
+  if (Object.hasOwn(obj, '$extensions') && !isValueObject(obj['$extensions'])) return false;
+  return Object.entries(obj)
+    .filter(([k]) => !k.startsWith('$'))
+    .every(([, v]) => isTokenLike(v));
+};
+
 /** @deprecated use `BaseDesignToken` instead */
 export type TokenLike = {
   $type: string;
