@@ -18,7 +18,7 @@ export default css`
   }
 
   .wizard-colorscale-input__stop {
-    block-size: var(--basis-size-2xs);
+    block-size: var(--basis-size-3xs);
     inline-size: 100%;
   }
 `;
