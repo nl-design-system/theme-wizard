@@ -1,10 +1,11 @@
 import amsDialogStyles from '@amsterdam/design-system-css/dist/dialog/dialog.css?inline';
 import { safeCustomElement } from '@lib/decorators';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
-import './../clippy-button'
-import './../clippy-icon'
+import './../clippy-heading';
+import './../clippy-button';
+import './../clippy-icon';
 import CloseIcon from '@tabler/icons/outline/x.svg?raw';
-import { LitElement, html, unsafeCSS,  nothing } from 'lit';
+import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { dialogStyles } from './styles';
@@ -30,7 +31,7 @@ export class ClippyModal extends LitElement {
    * When loading the page, the dialog is not open by default.
    */
   @property({ type: Boolean })
-  standardOpen = false;
+  'standard-open' = false;
   @property({ type: String }) override title = '';
   @property({ type: String }) closedBy = 'any';
   /**
@@ -46,8 +47,8 @@ export class ClippyModal extends LitElement {
    * Button labels for confirm/cancel actions. Consumers can override these,
    * e.g. with localized strings.
    */
-  @property({ type: String }) confirmLabel = 'OK';
-  @property({ type: String }) cancelLabel = 'Cancel';
+  @property({ type: String }) 'confirm-label' = 'OK';
+  @property({ type: String }) 'cancel-label' = 'Cancel';
 
   @query('dialog')
   readonly dialogElement!: HTMLDialogElement;
@@ -56,11 +57,7 @@ export class ClippyModal extends LitElement {
 
   private previouslyFocusedElement: HTMLElement | null = null;
 
-  static override readonly styles = [
-    dialogStyles,
-    unsafeCSS(amsDialogStyles),
-    unsafeCSS(buttonStyles),
-  ];
+  static override readonly styles = [dialogStyles, unsafeCSS(amsDialogStyles), unsafeCSS(buttonStyles)];
 
   readonly open = () => {
     if (!this.dialogElement) return;
@@ -121,11 +118,11 @@ export class ClippyModal extends LitElement {
         aria-describedby=${this.ariaDescribedby || undefined}
         @close=${this.onDialogClose}
         @cancel=${this.onDialogCancel}
-        ?open=${this.standardOpen}
+        ?open=${this['standard-open']}
       >
         <form method="dialog" novalidate>
           <header class="ams-dialog__header">
-            <clippy-heading level={1} id=${this.titleId}>
+            <clippy-heading level="1" id=${this.titleId}>
               <slot name="title">${this.title}</slot>
             </clippy-heading>
             <clippy-button icon-only @click=${this.onCloseClick} purpose="subtle">
@@ -141,14 +138,14 @@ export class ClippyModal extends LitElement {
             ${this.actions === 'confirm' || this.actions === 'both'
               ? html`
                   <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
-                    ${this.confirmLabel}
+                    ${this['confirm-label']}
                   </button>
                 `
               : nothing}
             ${this.actions === 'cancel' || this.actions === 'both'
               ? html`
                   <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
-                    ${this.cancelLabel}
+                    ${this['cancel-label']}
                   </button>
                 `
               : nothing}

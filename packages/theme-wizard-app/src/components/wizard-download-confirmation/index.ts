@@ -36,8 +36,8 @@ export class WizardDownloadConfirmation extends LitElement {
       <clippy-modal
         .title=${t('tokenDownloadDialog.title')}
         actions="both"
-        .confirmLabel=${t('tokenDownloadDialog.downloadAnyway')}
-        .cancelLabel=${t('tokenDownloadDialog.cancel')}
+        .confirm-label=${t('tokenDownloadDialog.downloadAnyway')}
+        .cancel-label=${t('tokenDownloadDialog.cancel')}
         aria-describedby=${ariaDescribedby}
       >
         <p id=${ariaDescribedby}>${t('tokenDownloadDialog.body')}</p>
