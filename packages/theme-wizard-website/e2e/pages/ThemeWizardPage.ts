@@ -12,7 +12,7 @@ export class ThemeWizardPage {
     this.sidebar = this.page.locator('.wizard-theme-sidebar');
     this.templateSelect = this.page.getByLabel('Weergave');
     this.downloadJsonButton = this.page.getByRole('button', { name: 'Thema downloaden (JSON)' });
-    this.downloadCssButton = this.page.getByRole('button', { name: 'Thema downloaden (CSS)' });
+    this.downloadCssButton = this.page.getByRole('link', { name: 'Thema downloaden (CSS)' });
   }
 
   async goto() {
