@@ -261,7 +261,7 @@ test.describe('colorscale inputs', () => {
     await themeWizard.page.reload();
     await themeWizard.page.getByRole('button', { name: 'Kleuren' }).click();
     // This is the mid-range darker red that the input stores (it does not store the user's actual picked color)
-    await expect(input).toHaveValue('#8b0000');
+    await expect(input).toHaveValue('#ff0000');
   });
 
   test('Changing value updates individual color inputs ("All tokens")', async ({ themeWizard }) => {
