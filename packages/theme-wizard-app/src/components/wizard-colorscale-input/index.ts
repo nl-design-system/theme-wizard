@@ -5,10 +5,11 @@ import { EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import {
   COLOR_KEYS,
   ColorValue,
+  ColorValueSchema,
   EXTENSION_RESOLVED_AS,
-  isRef,
   parseColor,
   stringifyColor,
+  type BaseDesignToken,
   type ColorSpace,
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
@@ -52,53 +53,14 @@ const transformScaleToColorKeys = (scaleObject: ColorScaleObject) => {
 };
 
 /**
- * Look up a token by its reference path
+ * Extract the resolved color value from a token.
+ * Relies on `EXTENSION_RESOLVED_AS` being populated by `resolveRefs`, which
+ * Theme does on every token update.
  */
-const resolveTokenRef = (refString: string, allTokens: Record<string, unknown>): unknown => {
-  const refPath = refString.replaceAll(/[{}]/g, '').split('.');
-  let current: unknown = allTokens;
-  for (const key of refPath) {
-    if (typeof current === 'object' && current !== null && key in current) {
-      current = (current as Record<string, unknown>)[key];
-    } else {
-      return undefined;
-    }
-  }
-  return current;
-};
-
-/**
- * Extract the resolved color value from a token
- */
-export const resolveColorValue = (
-  token: ColorTokenType,
-  allTokens?: Record<string, unknown>,
-): ColorValue | undefined => {
-  // Guard against non-object tokens
-  if (!token || typeof token !== 'object') {
-    return undefined;
-  }
-
-  // Get the resolved color value from extensions or fallback to token's $value
-  if (isRef(token['$value'])) {
-    const resolved = token['$extensions']?.[EXTENSION_RESOLVED_AS];
-    // If resolved value is an object with colorSpace, return it
-    if (resolved && typeof resolved === 'object' && 'colorSpace' in resolved) {
-      return resolved as ColorValue;
-    }
-    // If resolved value is a string ref and we have allTokens, recursively resolve it
-    if (typeof resolved === 'string' && allTokens) {
-      const refToken = resolveTokenRef(resolved, allTokens);
-      if (refToken && typeof refToken === 'object') {
-        return resolveColorValue(refToken as ColorTokenType, allTokens);
-      }
-    }
-  }
-  const value = token['$value'];
-  if (value && typeof value === 'object' && 'colorSpace' in value) {
-    return value as ColorValue;
-  }
-  return undefined;
+export const resolveColorValue = (token: ColorTokenType): ColorValue | undefined => {
+  const value = token.$extensions?.[EXTENSION_RESOLVED_AS] ?? token.$value;
+  const result = ColorValueSchema.safeParse(value);
+  return result.success ? result.data : undefined;
 };
 
 export const EXTENSION_COLORSCALE_SEED = 'nl.nldesignsystem.theme-wizard.color-scale-seed-color';
@@ -168,8 +130,8 @@ export class WizardColorscaleInput extends WizardTokenInput {
   }
 
   get #seedColor(): ColorValue | undefined {
-    const group = this.theme?.at(this.name) as Record<string, unknown> | undefined;
-    const seedColor = (group?.['$extensions'] as Record<string, unknown> | undefined)?.[EXTENSION_COLORSCALE_SEED];
+    const group = this.theme?.at(this.name) as BaseDesignToken | undefined;
+    const seedColor = group?.$extensions?.[EXTENSION_COLORSCALE_SEED];
     if (seedColor && typeof seedColor === 'object' && 'colorSpace' in seedColor) {
       return seedColor as ColorValue;
     }
@@ -183,7 +145,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
   #updateColorFromToken(colorToken: ColorTokenType | undefined) {
     if (!colorToken) return;
     try {
-      const colorValue = resolveColorValue(colorToken, this.theme?.tokens as Record<string, unknown>);
+      const colorValue = resolveColorValue(colorToken);
       if (colorValue) {
         this.#scale.from = new ColorToken({ $value: colorValue });
         this.currentColorValue = stringifyColor(colorValue);
