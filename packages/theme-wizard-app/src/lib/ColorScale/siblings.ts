@@ -3,7 +3,7 @@ import { extractRef, isRef, isTokenGroup } from '@nl-design-system-community/des
 /**
  * Given a color scale group path (e.g. 'basis.color.accent-1') and its parent group object
  * (e.g. the 'basis.color' group), returns the paths of sibling groups whose every token is
- * a reference into the target group (e.g. 'basis.color.accent-1-inverse' → [{basis.color.accent-1.100}, ...]).
+ * a reference into the target group (e.g. 'basis.color.accent-2' → [{basis.color.accent-2.color-default}, ...]).
  *
  * Used to propagate the colorscale seed extension to groups that "follow" the updated scale.
  */
