@@ -4,6 +4,27 @@ import { defineConfig } from 'astro/config';
 import { readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// @astrojs/react only injects the React Fast Refresh preamble on pages with React islands
+// (client:* directives). Story .tsx files are dynamically imported via vanilla <script> tags
+// and their transformed code checks for window.__vite_plugin_react_preamble_installed__.
+// This integration injects the preamble on every page so the check passes.
+const reactPreamble = {
+  name: 'inject-react-preamble',
+  hooks: {
+    'astro:config:setup': ({ command, injectScript }) => {
+      if (command === 'dev') {
+        injectScript(
+          'page',
+          `import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;
+window.__vite_plugin_react_preamble_installed__ = true;`,
+        );
+      }
+    },
+  },
+};
 
 const thisDir = dirname(fileURLToPath(import.meta.url));
 const srcDir = resolve(thisDir, 'src');
@@ -23,7 +44,7 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  integrations: [react()],
+  integrations: [react(), reactPreamble],
   server: {
     port: 9492, // (T9 for WIZ)2
   },
