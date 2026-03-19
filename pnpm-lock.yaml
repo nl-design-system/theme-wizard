@@ -421,6 +421,9 @@ importers:
       '@lit/context':
         specifier: 1.1.6
         version: 1.1.6
+      '@nl-design-system-candidate/button-css':
+        specifier: 1.1.0
+        version: 1.1.0
       '@nl-design-system-candidate/button-tokens':
         specifier: 1.0.0
         version: 1.0.0

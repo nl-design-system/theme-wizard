@@ -127,6 +127,9 @@ export const en = {
     title: 'Reset theme',
     triggerText: 'Start over',
   },
+  tokenDownloadCss: {
+    triggerText: 'Download CSS',
+  },
   tokenDownloadDialog: {
     body: 'There are still errors in your theme. This may lead to issues with readability, contrast, or consistency. Do you still want to download the tokens?',
     cancel: () => t('cancel'),
@@ -441,13 +444,15 @@ export const nl = {
     title: 'Opnieuw beginnen',
     triggerText: 'Begin opnieuw',
   },
-
+  tokenDownloadCss: {
+    triggerText: 'Thema downloaden (CSS)',
+  },
   tokenDownloadDialog: {
     body: 'Er zijn nog fouten gevonden in je thema. Dit kan leiden tot problemen met leesbaarheid, contrast of consistentie. Wil je de tokens toch downloaden?',
     cancel: () => t('cancel'),
     downloadAnyway: 'Toch downloaden',
     title: 'Thema bevat nog fouten',
-    triggerText: 'Thema downloaden (json)',
+    triggerText: 'Thema downloaden (JSON)',
   },
   tokens: {
     backToOverview: 'Terug naar overzicht',

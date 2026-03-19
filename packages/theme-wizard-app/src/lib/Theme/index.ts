@@ -254,6 +254,10 @@ export default class Theme {
     return this.stylesheet.cssRules[0].cssText;
   }
 
+  get css() {
+    return this.stylesheet.cssRules[0].cssText;
+  }
+
   async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
     const StyleDictionary = await import('style-dictionary');
     const platform = 'json';

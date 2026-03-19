@@ -4,13 +4,15 @@ export class ThemeWizardPage {
   readonly preview: Locator;
   readonly sidebar: Locator;
   readonly templateSelect: Locator;
-  readonly downloadButton: Locator;
+  readonly downloadJsonButton: Locator;
+  readonly downloadCssButton: Locator;
 
   constructor(public readonly page: Page) {
     this.preview = this.page.getByTestId('preview');
     this.sidebar = this.page.locator('.wizard-theme-sidebar');
     this.templateSelect = this.page.getByLabel('Weergave');
-    this.downloadButton = this.page.getByRole('button', { name: 'Thema downloaden (json)' });
+    this.downloadJsonButton = this.page.getByRole('button', { name: 'Thema downloaden (JSON)' });
+    this.downloadCssButton = this.page.getByRole('link', { name: 'Thema downloaden (CSS)' });
   }
 
   async goto() {
