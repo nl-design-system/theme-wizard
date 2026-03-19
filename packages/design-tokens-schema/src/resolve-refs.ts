@@ -1,7 +1,14 @@
 import dlv from 'dlv';
 import type { BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
-import { TokenReference, type TokenWithRefLike, isTokenWithRef, isRef, isTokenLike } from './tokens/token-reference';
+import {
+  TokenReference,
+  type TokenWithRefLike,
+  isTokenWithRef,
+  isRef,
+  isTokenLike,
+  extractRef,
+} from './tokens/token-reference';
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
@@ -14,8 +21,8 @@ export type ResolvedToken = BaseDesignToken & {
   };
 };
 
-export const resolveRef = (root: object, path: string): unknown => {
-  const refPath = path.slice(1, -1);
+export const resolveRef = (root: object, path: TokenReference): unknown => {
+  const refPath = extractRef(path);
   // Look up path.to.ref in root or in `brand` because NL Design System tokens don't always include the `.brand` part
   const resolved = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 

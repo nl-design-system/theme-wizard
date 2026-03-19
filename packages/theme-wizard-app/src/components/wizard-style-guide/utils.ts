@@ -4,6 +4,7 @@ import '@nl-design-system-community/clippy-components/clippy-heading';
 import type { DesignTokens } from 'style-dictionary/types';
 import {
   type ColorValue,
+  extractRef,
   isValueObject,
   stringifyColor,
   walkTokensWithRef,
@@ -15,7 +16,7 @@ import { t } from '../../i18n';
 export function countUsagePerToken(tokens: DesignTokens): Map<string, string[]> {
   const tokenUsage = new Map<string, string[]>();
   walkTokensWithRef(tokens, tokens, (token, path) => {
-    const tokenId = token.$value.slice(1, -1);
+    const tokenId = extractRef(token.$value);
     if (path.includes('$extensions')) return;
     const stored = tokenUsage.get(tokenId) || [];
     stored.push(path.join('.'));
