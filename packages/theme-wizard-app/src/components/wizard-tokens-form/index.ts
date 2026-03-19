@@ -77,7 +77,7 @@ export class WizardTokensForm extends LitElement {
   private readonly theme!: Theme;
 
   @state()
-  private displayMode: DisplayMode = 'colors'; // TODO change back
+  private displayMode: DisplayMode = 'initial';
 
   private readonly handleModeSwitch = (event: MouseEvent, newMode: DisplayMode) => {
     event.preventDefault();
