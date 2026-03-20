@@ -1,11 +1,23 @@
+import type { DerivedTokenReference } from '@/lib/story-wizard-preset-resolution';
+
 export type StoryWizardSelectedOption = {
+  derivedTokenReference?: DerivedTokenReference;
   optionLabel: string;
   previewStyle: string;
   tokens: unknown;
 };
 
+export type StoryWizardPresetOption = {
+  description?: string;
+  derivedTokenReference?: DerivedTokenReference;
+  name: string;
+  previewStyle?: string;
+  tokens: unknown;
+};
+
 export type WizardTokenPresetInput = HTMLElement & {
   clearSelection: () => void;
+  options: StoryWizardPresetOption[];
   optionLabel: string;
   previewStyle: string;
   selectedIndex: number;

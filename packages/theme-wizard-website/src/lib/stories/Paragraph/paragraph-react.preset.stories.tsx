@@ -70,29 +70,25 @@ export const LeadParagraphFontSize: Story = {
         options: [
           {
             name: 'Aanbevolen',
-            description: 'Gebruik de standaard uit het startthema.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  lead: {
-                    'font-size': { $value: '{basis.text.font-size.lg}' },
-                  },
-                },
-              },
+            derivedTokenReference: {
+              offset: 0,
+              scalePath: 'basis.text.font-size',
+              sourcePath: 'nl.paragraph.font-size',
+              targetPath: 'nl.paragraph.lead.font-size',
             },
+            description: 'Gebruik de standaard uit het startthema.',
+            tokens: {},
           },
           {
             name: 'Extra ruim',
-            description: 'Maak de lead paragraph groter voor extra nadruk.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  lead: {
-                    'font-size': { $value: '{basis.text.font-size.xl}' },
-                  },
-                },
-              },
+            derivedTokenReference: {
+              offset: 1,
+              scalePath: 'basis.text.font-size',
+              sourcePath: 'nl.paragraph.font-size',
+              targetPath: 'nl.paragraph.lead.font-size',
             },
+            description: 'Maak de lead paragraph groter voor extra nadruk.',
+            tokens: {},
           },
         ],
       },

@@ -1,9 +1,11 @@
+import type { DerivedTokenReference } from './story-wizard-preset-resolution';
 import { tokensToStyle } from '../../../theme-wizard-app/src/lib/Theme/lib';
 import { getStories } from '../../../theme-wizard-app/src/utils/csf-utils';
 import { components } from './components';
 
 export type StoryWizardPresetOption = {
   description?: string;
+  derivedTokenReference?: DerivedTokenReference;
   name: string;
   previewStyle: string;
   tokens: unknown;
@@ -54,6 +56,7 @@ export type StoryWizardViewModel = {
 
 type StoryWizardPresetOptionObject = {
   description?: string;
+  derivedTokenReference?: DerivedTokenReference;
   name: string;
   tokens: unknown;
 };
@@ -363,6 +366,7 @@ export class StoryWizardModel {
       description: preset.description,
       options: preset.options.map((option) => ({
         name: option.name,
+        derivedTokenReference: option.derivedTokenReference,
         description: option.description,
         previewStyle: styleObjectToString(tokensToStyle(option.tokens as never) as Record<string, string>),
         tokens: option.tokens,
