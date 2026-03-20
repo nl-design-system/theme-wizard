@@ -225,6 +225,8 @@ export class WizardScraper extends LitElement {
 
     const ariaErrorMessage = isError ? 'scraper-error' : nothing;
     const ariaInvalid = isError ? 'true' : nothing;
+    const loader1AriaHidden = this.#timerState === 'loader1' ? nothing : 'true';
+    const loader2AriaHidden = this.#timerState === 'loader2' ? nothing : 'true';
     const errorMessage = isError
       ? html`
           <utrecht-form-field-error-message id="scraper-error" class="utrecht-form-field__error-message">
@@ -273,19 +275,25 @@ export class WizardScraper extends LitElement {
             </wizard-stack>
           `
         : nothing}
-      ${isLoading && this.#timerState === 'loader1'
-        ? html`<wizard-scraper-loader
-            emoji="🧙"
-            text=${t('scraper.loaders.loader1.text', { url: this._snapshot?.context.url })}
-            heading=${t('scraper.loaders.loader1.heading')}
-          ></wizard-scraper-loader>`
-        : nothing}
-      ${isLoading && this.#timerState === 'loader2'
-        ? html`<wizard-scraper-loader
-            emoji="🎨"
-            text=${t('scraper.loaders.loader2.text', { url: this._snapshot?.context.url })}
-            heading=${t('scraper.loaders.loader2.heading')}
-          ></wizard-scraper-loader>`
+      ${isLoading
+        ? html`
+            <div class="wizard-scraper__loaders">
+              <wizard-scraper-loader
+                aria-hidden=${loader1AriaHidden}
+                class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader1' })}
+                emoji="🧙"
+                heading=${t('scraper.loaders.loader1.heading')}
+                text=${t('scraper.loaders.loader1.text', { url: this._snapshot?.context.url })}
+              ></wizard-scraper-loader>
+              <wizard-scraper-loader
+                aria-hidden=${loader2AriaHidden}
+                class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader2' })}
+                emoji="🎨"
+                heading=${t('scraper.loaders.loader2.heading')}
+                text=${t('scraper.loaders.loader2.text', { url: this._snapshot?.context.url })}
+              ></wizard-scraper-loader>
+            </div>
+          `
         : nothing}
       ${isDone ? html`<slot name="done"></slot>` : nothing}
     `;
