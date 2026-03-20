@@ -1,7 +1,9 @@
 import { dequal } from 'dequal';
+import dlv from 'dlv';
 import type { components } from '@/lib/components';
 import { initStories } from '@/components/render-stories';
-import type { StoryWizardSelectionSummary, StoryWizardThemeHost } from './types';
+import { resolveDynamicPresetOptions } from '@/lib/story-wizard-preset-resolution';
+import type { StoryWizardPresetOption, StoryWizardSelectionSummary, StoryWizardThemeHost } from './types';
 import { flattenDesignTokens } from './flatten-design-tokens';
 import { StoryWizardStep } from './StoryWizardStep';
 
@@ -64,7 +66,9 @@ export class StoryWizardController {
 
     this.stepSelections?.removeAttribute('hidden');
     this.steppers.forEach((stepper) => stepper.removeAttribute('hidden'));
-    this.showStep(this.restoreStoredState());
+    const restoredStepIndex = this.restoreStoredState();
+    this.syncDynamicPresetOptions();
+    this.showStep(restoredStepIndex);
   }
 
   private bindNavigation() {
@@ -100,10 +104,34 @@ export class StoryWizardController {
   private bindOptionListeners() {
     this.steps.forEach((step) => {
       step.bindOptions(() => {
+        this.syncDynamicPresetOptions();
         this.writeStoredState();
         this.applyPreviewStyles();
         this.updateStepSelections();
         this.updateNextButtonState();
+      });
+    });
+  }
+
+  private syncDynamicPresetOptions() {
+    const defaults = this.getTheme()?.theme?.defaults;
+    const selectedOptions = this.steps.flatMap((step) => step.groups.map((group) => group.getSelectedOption()));
+
+    this.steps.forEach((step) => {
+      step.groups.forEach((group) => {
+        const baseOptions = group.getInitialOptions();
+
+        if (!baseOptions.some((option) => option.derivedTokenReference)) {
+          return;
+        }
+
+        group.setOptions(
+          resolveDynamicPresetOptions<StoryWizardPresetOption>({
+            defaults,
+            options: baseOptions,
+            selectedOptions,
+          }),
+        );
       });
     });
   }
@@ -246,13 +274,7 @@ export class StoryWizardController {
   }
 
   private getDefaultTokenValue(defaults: unknown, path: string) {
-    const defaultToken =
-      defaults && typeof defaults === 'object'
-        ? path.split('.').reduce<unknown>((token, key) => {
-            if (!token || typeof token !== 'object') return undefined;
-            return (token as Record<string, unknown>)[key];
-          }, defaults)
-        : undefined;
+    const defaultToken = dlv(defaults && typeof defaults === 'object' ? defaults : undefined, path);
 
     return defaultToken && typeof defaultToken === 'object' && '$value' in (defaultToken as Record<string, unknown>)
       ? (defaultToken as { $value?: unknown }).$value
