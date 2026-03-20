@@ -194,4 +194,11 @@ export const wizardTokenCSS = css`
   .wizard-token-preset__option-value-token-strong {
     font-weight: var(--basis-text-font-weight-bold);
   }
+
+  .wizard-token-preset__option-value-resolved {
+    color: var(--basis-color-default-color-document);
+    font-family: var(--basis-text-font-family-monospace);
+    font-size: var(--basis-text-font-size-sm);
+    font-weight: var(--basis-text-font-weight-bold);
+  }
 `;
