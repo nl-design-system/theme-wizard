@@ -1,19 +1,10 @@
-import type { StoryObj, Meta } from '@storybook/react-vite';
-import css from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
+import type { StoryObj } from '@storybook/react-vite';
 import { Paragraph, type ParagraphProps } from '@nl-design-system-candidate/paragraph-react';
-import tokens from '@nl-design-system-candidate/paragraph-tokens';
-
-const meta = {
-  id: 'paragraph',
-  component: Paragraph,
-  parameters: {
-    css: [css],
-    tokens,
-  },
-  title: 'Paragraph',
-} satisfies Meta<typeof Paragraph>;
-
-export default meta;
+import {
+  paragraphWizardStepDefault,
+  paragraphWizardStepLead,
+  paragraphWizardStepShared,
+} from './paragraph-react.story-helpers';
 
 type Story = StoryObj<ParagraphProps>;
 
@@ -33,6 +24,11 @@ export const DesignParagraphShared: Story = {
         },
       },
     },
+    wizard: {
+      ...paragraphWizardStepShared,
+      description: 'Pas de gedeelde kleur en het lettertype aan voor zowel gewone als lead paragraphs.',
+      question: 'Wil je de gedeelde basis van paragraphs verder verfijnen?',
+    },
   },
   render: ({ children }) => (
     <>
@@ -41,6 +37,7 @@ export const DesignParagraphShared: Story = {
     </>
   ),
 };
+
 export const DesignParagraph: Story = {
   name: 'Design: Paragraph',
   args: {
@@ -59,6 +56,11 @@ export const DesignParagraph: Story = {
           'margin-block-start': { $value: '' },
         },
       },
+    },
+    wizard: {
+      ...paragraphWizardStepDefault,
+      description: 'Gebruik deze geavanceerde instellingen om de gewone paragraph exact af te stemmen.',
+      question: 'Wil je de standaard paragraph verder verfijnen?',
     },
   },
 };
@@ -83,6 +85,11 @@ export const DesignLead: Story = {
           },
         },
       },
+    },
+    wizard: {
+      ...paragraphWizardStepLead,
+      description: 'Gebruik deze geavanceerde instellingen om de lead paragraph precies meer of minder nadruk te geven.',
+      question: 'Wil je de lead paragraph verder verfijnen?',
     },
   },
 };
