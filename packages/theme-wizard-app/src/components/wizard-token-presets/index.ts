@@ -303,7 +303,11 @@ export class WizardTokenPreset extends LitElement {
         <span class="wizard-token-preset__option-value-mapping">
           <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
 
-          <code class="wizard-token-preset__option-value-token">${tokenValueParts.base}<strong class="wizard-token-preset__option-value-token-strong">${tokenValueParts.last}</strong>${'suffix' in tokenValueParts ? tokenValueParts.suffix : ''}</code>
+          <code class="wizard-token-preset__option-value-token"
+            >${tokenValueParts.base}<strong class="wizard-token-preset__option-value-token-strong"
+              >${tokenValueParts.last}</strong
+            >${'suffix' in tokenValueParts ? tokenValueParts.suffix : ''}</code
+          >
         </span>
       </p>
     `;
@@ -337,7 +341,8 @@ export class WizardTokenPreset extends LitElement {
 
   override render() {
     return html`
-      <div class="wizard-token-preset__group" role="radiogroup" aria-label=${this.groupLabel || 'Preset opties'}>
+      <fieldset class="wizard-token-preset__group">
+        <legend class="wizard-token-preset__legend">${this.groupLabel || 'Preset opties'}</legend>
         ${this.options.map((option, index) => {
           const isSelected = index === this.selectedIndex;
 
@@ -356,7 +361,6 @@ export class WizardTokenPreset extends LitElement {
                   class="nl-button nl-button--secondary wizard-token-preset__button ${isSelected
                     ? 'nl-button--pressed'
                     : ''}"
-                  aria-pressed=${isSelected ? 'true' : 'false'}
                 >
                   <span class="nl-paragraph wizard-token-preset__option-title">${option.name}</span>
 
@@ -371,7 +375,7 @@ export class WizardTokenPreset extends LitElement {
             </div>
           `;
         })}
-      </div>
+      </fieldset>
     `;
   }
 }
