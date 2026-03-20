@@ -1,5 +1,6 @@
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import { type ReactNode } from 'react';
+import { WizardPreviewSection, createWizardStep } from '../story-helpers';
 
 export const Icon = () => (
   <span className="nl-icon">
@@ -113,13 +114,6 @@ export const RenderButtonFocusVisible = ({ ...props }: ButtonProps) => (
   />
 );
 
-export const WizardPreviewSection = ({ children, label }: { children: ReactNode; label: string }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-    <strong style={{ fontSize: '0.875rem' }}>{label}</strong>
-    {children}
-  </div>
-);
-
 export const ButtonVariants = ({ ...props }: ButtonProps) => (
   <div style={{ columnGap: '1ch', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', rowGap: '0.5rem' }}>
     <ButtonComponent {...props} iconOnly />
@@ -153,60 +147,41 @@ const statePreviewLabelStyle = {
   fontWeight: 700,
 };
 
-export const buttonWizardStepBasic = {
-  step: 'button-basic',
-  stepTitle: 'Button basis',
-};
+export { WizardPreviewSection };
 
-export const buttonWizardStepStates = {
-  step: 'button-states',
-  stepTitle: 'Button states',
-};
+export const buttonWizardStepBasic = createWizardStep('button-basic', 'Button basis');
 
-export const buttonWizardStepPositiveStates = {
-  step: 'button-positive-states',
-  stepTitle: 'Positieve button states',
-};
+export const buttonWizardStepStates = createWizardStep('button-states', 'Button states');
 
-export const buttonWizardStepNegativeStates = {
-  step: 'button-negative-states',
-  stepTitle: 'Negatieve button states',
-};
+export const buttonWizardStepPositiveStates = createWizardStep('button-positive-states', 'Positieve button states');
 
-export const buttonWizardStepVariants = {
-  step: 'button-variants',
-  stepTitle: 'Button varianten',
-};
+export const buttonWizardStepNegativeStates = createWizardStep('button-negative-states', 'Negatieve button states');
 
-export const buttonWizardStepPositiveVariants = {
-  step: 'button-positive-variants',
-  stepTitle: 'Positieve button varianten',
-};
+export const buttonWizardStepVariants = createWizardStep('button-variants', 'Button varianten');
 
-export const buttonWizardStepNegativeVariants = {
-  step: 'button-negative-variants',
-  stepTitle: 'Negatieve button varianten',
-};
+export const buttonWizardStepPositiveVariants = createWizardStep(
+  'button-positive-variants',
+  'Positieve button varianten',
+);
 
-export const buttonWizardStepDisabled = {
-  step: 'button-disabled',
-  stepTitle: 'Button disabled',
-};
+export const buttonWizardStepNegativeVariants = createWizardStep(
+  'button-negative-variants',
+  'Negatieve button varianten',
+);
 
-export const buttonWizardStepPressed = {
-  step: 'button-selected',
-  stepTitle: 'Button geselecteerd',
-};
+export const buttonWizardStepDisabled = createWizardStep('button-disabled', 'Button disabled');
 
-export const buttonWizardStepPositivePressed = {
-  step: 'button-positive-selected',
-  stepTitle: 'Positieve geselecteerde buttons',
-};
+export const buttonWizardStepPressed = createWizardStep('button-selected', 'Button geselecteerd');
 
-export const buttonWizardStepNegativePressed = {
-  step: 'button-negative-selected',
-  stepTitle: 'Negatieve geselecteerde buttons',
-};
+export const buttonWizardStepPositivePressed = createWizardStep(
+  'button-positive-selected',
+  'Positieve geselecteerde buttons',
+);
+
+export const buttonWizardStepNegativePressed = createWizardStep(
+  'button-negative-selected',
+  'Negatieve geselecteerde buttons',
+);
 
 const StatePreviewItem = ({ children, label }: { children: ReactNode; label: string }) => (
   <div style={statePreviewItemStyle}>

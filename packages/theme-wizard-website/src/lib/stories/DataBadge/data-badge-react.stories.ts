@@ -2,6 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import css from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import { DataBadge, type DataBadgeProps } from '@nl-design-system-candidate/data-badge-react';
 import tokens from '@nl-design-system-candidate/data-badge-tokens';
+import {
+  dataBadgeWizardStepBorder,
+  dataBadgeWizardStepColor,
+  dataBadgeWizardStepSize,
+  dataBadgeWizardStepTypography,
+} from './data-badge-react.story-helpers';
 
 const meta = {
   id: 'data-badge',
@@ -16,26 +22,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<DataBadgeProps>;
-
-const dataBadgeWizardStepSize = {
-  step: 'data-badge-size',
-  stepTitle: 'Data Badge grootte',
-};
-
-const dataBadgeWizardStepTypography = {
-  step: 'data-badge-typography',
-  stepTitle: 'Data Badge typografie',
-};
-
-const dataBadgeWizardStepColor = {
-  step: 'data-badge-color',
-  stepTitle: 'Data Badge kleur',
-};
-
-const dataBadgeWizardStepBorder = {
-  step: 'data-badge-border',
-  stepTitle: 'Data Badge rand',
-};
 
 export const DataBadgeWithChildren: Story = {
   name: 'Data Badge (met chilren)',
