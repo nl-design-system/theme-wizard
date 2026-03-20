@@ -80,52 +80,54 @@ export class WizardStyleGuideComponents extends LitElement {
 
         ${Object.entries(components).map(
           ([componentId, componentConfig]) => html`
-            <table class="utrecht-table">
-              <caption class="utrecht-table__caption">
-                ${`nl.${componentId}`}
-              </caption>
-              <thead class="utrecht-table__header">
-                <tr class="utrecht-table__row">
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.reference')}</th>
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
-                </tr>
-              </thead>
-              <tbody class="utrecht-table__body">
-                ${this.#collectComponentTokens(componentConfig as Record<string, unknown>, componentId).map(
-                  ({ fullPath, tokenConfig }) => {
-                    const resolvedValue = isRef(tokenConfig.$value)
-                      ? resolveRef(this.theme.tokens, tokenConfig.$value)
-                      : tokenConfig.$value;
-                    const displayValue = stringifyTokenValue(resolvedValue);
+            <wizard-table-scroller>
+              <table class="utrecht-table">
+                <caption class="utrecht-table__caption">
+                  ${`nl.${componentId}`}
+                </caption>
+                <thead class="utrecht-table__header">
+                  <tr class="utrecht-table__row">
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.reference')}</th>
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
+                  </tr>
+                </thead>
+                <tbody class="utrecht-table__body">
+                  ${this.#collectComponentTokens(componentConfig as Record<string, unknown>, componentId).map(
+                    ({ fullPath, tokenConfig }) => {
+                      const resolvedValue = isRef(tokenConfig.$value)
+                        ? resolveRef(this.theme.tokens, tokenConfig.$value)
+                        : tokenConfig.$value;
+                      const displayValue = stringifyTokenValue(resolvedValue);
 
-                    return html`
-                      <tr class="utrecht-table__row">
-                        <td class="utrecht-table__cell">
-                          ${renderTokenExample({
-                            displayValue: displayValue,
-                            tokenId: fullPath,
-                            tokenType: tokenConfig.$type,
-                          })}
-                        </td>
-                        <td class="utrecht-table__cell">
-                          <span class="nl-data-badge">${fullPath}</span>
-                        </td>
-                        <td class="utrecht-table__cell">
-                          ${isRef(tokenConfig.$value)
-                            ? html`<span class="nl-data-badge">${extractRef(tokenConfig.$value)}</span>`
-                            : nothing}
-                        </td>
-                        <td class="utrecht-table__cell">
-                          <code class="nl-code">${displayValue}</code>
-                        </td>
-                      </tr>
-                    `;
-                  },
-                )}
-              </tbody>
-            </table>
+                      return html`
+                        <tr class="utrecht-table__row">
+                          <td class="utrecht-table__cell">
+                            ${renderTokenExample({
+                              displayValue: displayValue,
+                              tokenId: fullPath,
+                              tokenType: tokenConfig.$type,
+                            })}
+                          </td>
+                          <td class="utrecht-table__cell">
+                            <span class="nl-data-badge">${fullPath}</span>
+                          </td>
+                          <td class="utrecht-table__cell">
+                            ${isRef(tokenConfig.$value)
+                              ? html`<span class="nl-data-badge">${extractRef(tokenConfig.$value)}</span>`
+                              : nothing}
+                          </td>
+                          <td class="utrecht-table__cell">
+                            <code class="nl-code">${displayValue}</code>
+                          </td>
+                        </tr>
+                      `;
+                    },
+                  )}
+                </tbody>
+              </table>
+            </wizard-table-scroller>
           `,
         )}
       </div>

@@ -4,6 +4,8 @@ import WithPageNav from '@/components/WithPageNav.astro';
 import { components } from '@/lib/components'
 import { Traverse } from 'neotraverse/modern'
 import dlv from 'dlv'
+import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import '@nl-design-system-candidate/link-css/link.css'
 import { getStories } from '../../../../theme-wizard-app/src/utils/csf-utils'
 
 type StoryObject = {
@@ -84,15 +86,15 @@ const storiesWithTokens = stories.map(([id, story]) => {
       <main slot="main" class="wizard-main">
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
-          <a href="/">Wizard</a> /
-          <a href="/components">Componenten</a> /
+          <a class="nl-link" href="/">Wizard</a> /
+          <a class="nl-link" href="/components">Componenten</a> /
           <span>{slug}</span>
         </nav>
 
-        <h1>{slug}</h1>
+        <clippy-heading level="1">{slug}</clippy-heading>
 
-        <p>
-          Bekijk de component-documentatie op <a href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
+        <p class="nl-paragraph">
+          Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
         </p>
 
         <WithPageNav>
@@ -135,8 +137,10 @@ const storiesWithTokens = stories.map(([id, story]) => {
 <style>
   .wizard-main {
     background-color: var(--basis-color-default-bg-document);
+    display: grid;
     padding-block: var(--basis-space-block-3xl);
     padding-inline: var(--basis-space-inline-xl);
+    row-gap: var(--basis-space-row-3xl);
   }
 
   .wizard-page-content {

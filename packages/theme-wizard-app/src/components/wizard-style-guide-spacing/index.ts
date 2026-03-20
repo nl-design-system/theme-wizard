@@ -92,72 +92,74 @@ export class WizardStyleGuideSpacing extends LitElement {
         ${spacingData.map(({ space, tokens }) => {
           const captionId = `styleguide-section-space-${space}-title`;
           return html`
-            <table class="utrecht-table" aria-labelledby=${captionId}>
-              <caption class="utrecht-table__caption" id=${captionId}>
-                ${t(`styleGuide.sections.space.${space}.title`)}
-              </caption>
-              <thead class="utrecht-table__header">
-                <tr class="utrecht-table__row">
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
-                  <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.details')}</th>
-                </tr>
-              </thead>
-              <tbody class="utrecht-table__body">
-                ${tokens.map(
-                  ({ name, tokenId, usage, value }) => html`
-                    <tr class="utrecht-table__row">
-                      <td class="utrecht-table__cell">${renderSpacingExample(value, space)}</td>
-                      <td class="utrecht-table__cell">
-                        <span class="nl-data-badge" id="${`basis-space-${space}-${name}`}">${tokenId}</span>
-                        <clippy-toggletip text=${t('copyToClipboard')}>
-                          <clippy-button
-                            icon-only
-                            purpose="subtle"
-                            size="small"
-                            @click=${() => navigator.clipboard.writeText(tokenId)}
-                          >
-                            ${t('copyValueToClipboard', { value: tokenId })}
-                            <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
-                          </clippy-button>
-                        </clippy-toggletip>
-                      </td>
-                      <td class="utrecht-table__cell">
-                        <code class="nl-code">${value}</code>
-                        <clippy-toggletip text=${t('copyToClipboard')}>
-                          <clippy-button
-                            icon-only
-                            purpose="subtle"
-                            size="small"
-                            @click=${() => navigator.clipboard.writeText(value)}
-                          >
-                            ${t('copyValueToClipboard', { value })}
-                            <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
-                          </clippy-button>
-                        </clippy-toggletip>
-                      </td>
+            <wizard-table-scroller>
+              <table class="utrecht-table" aria-labelledby=${captionId}>
+                <caption class="utrecht-table__caption" id=${captionId}>
+                  ${t(`styleGuide.sections.space.${space}.title`)}
+                </caption>
+                <thead class="utrecht-table__header">
+                  <tr class="utrecht-table__row">
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
+                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.details')}</th>
+                  </tr>
+                </thead>
+                <tbody class="utrecht-table__body">
+                  ${tokens.map(
+                    ({ name, tokenId, usage, value }) => html`
+                      <tr class="utrecht-table__row">
+                        <td class="utrecht-table__cell">${renderSpacingExample(value, space)}</td>
+                        <td class="utrecht-table__cell">
+                          <span class="nl-data-badge" id="${`basis-space-${space}-${name}`}">${tokenId}</span>
+                          <clippy-toggletip text=${t('copyToClipboard')}>
+                            <clippy-button
+                              icon-only
+                              purpose="subtle"
+                              size="small"
+                              @click=${() => navigator.clipboard.writeText(tokenId)}
+                            >
+                              ${t('copyValueToClipboard', { value: tokenId })}
+                              <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                            </clippy-button>
+                          </clippy-toggletip>
+                        </td>
+                        <td class="utrecht-table__cell">
+                          <code class="nl-code">${value}</code>
+                          <clippy-toggletip text=${t('copyToClipboard')}>
+                            <clippy-button
+                              icon-only
+                              purpose="subtle"
+                              size="small"
+                              @click=${() => navigator.clipboard.writeText(value)}
+                            >
+                              ${t('copyValueToClipboard', { value })}
+                              <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                            </clippy-button>
+                          </clippy-toggletip>
+                        </td>
 
-                      <td class="utrecht-table__cell">
-                        <clippy-button
-                          purpose="secondary"
-                          @click=${() =>
-                            this.#openDialog({
-                              displayValue: value,
-                              metadata: { space },
-                              tokenId,
-                              tokenType: 'dimension',
-                              usage,
-                            })}
-                        >
-                          ${t('styleGuide.showDetails')}
-                        </clippy-button>
-                      </td>
-                    </tr>
-                  `,
-                )}
-              </tbody>
-            </table>
+                        <td class="utrecht-table__cell">
+                          <clippy-button
+                            purpose="secondary"
+                            @click=${() =>
+                              this.#openDialog({
+                                displayValue: value,
+                                metadata: { space },
+                                tokenId,
+                                tokenType: 'dimension',
+                                usage,
+                              })}
+                          >
+                            ${t('styleGuide.showDetails')}
+                          </clippy-button>
+                        </td>
+                      </tr>
+                    `,
+                  )}
+                </tbody>
+              </table>
+            </wizard-table-scroller>
 
             <p class="nl-paragraph">
               <a

@@ -30,6 +30,10 @@ export default css`
     padding-inline: var(--basis-space-inline-lg);
     position: sticky;
     z-index: 1;
+
+    @media (forced-colors: active) {
+      border-block-end: var(--basis-border-width-sm) solid;
+    }
   }
 
   .wizard-layout__sidebar {
@@ -57,6 +61,7 @@ export default css`
     grid-area: main;
     inline-size: 100%;
     min-block-size: 100%;
+    min-inline-size: 0;
     padding-inline: var(--basis-space-inline-xl);
     scroll-margin: var(--basis-space-block-6xl);
   }
@@ -90,6 +95,10 @@ export default css`
     padding-block-start: var(--basis-space-block-5xl);
     padding-inline: var(--basis-space-inline-lg);
     row-gap: var(--basis-space-row-2xl);
+
+    @media (forced-colors: active) {
+      border-block-start: var(--basis-border-width-sm) solid;
+    }
 
     @container (inline-size > 44rem) {
       grid-template-columns: 1fr 1fr 1fr;

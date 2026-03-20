@@ -57,40 +57,42 @@ export class WizardScrapedTokensPreview extends LitElement {
     tokens: StagedDesignToken[],
     renderSample: (token: StagedDesignToken) => TemplateResult,
   ) => html`
-    <table class="utrecht-table">
-      <caption class="utrecht-table__caption">
-        ${caption}
-      </caption>
-      <thead class="utrecht-table__header">
-        <tr class="utrecht-table__row">
-          <th class="utrecht-table__header-cell">${t('stagedTokens.staged')}</th>
-          <th class="utrecht-table__header-cell">${t('stagedTokens.preview')}</th>
-          <th class="utrecht-table__header-cell">${t('stagedTokens.value')}</th>
-          <th class="utrecht-table__header-cell">${t('stagedTokens.count')}</th>
-        </tr>
-      </thead>
-      <tbody class="utrecht-table__body" @change=${this.#handleChange}>
-        ${tokens.map(
-          (token) => html`
-            <tr class="utrecht-table__row">
-              <td class="utrecht-table__cell">
-                <input
-                  type="checkbox"
-                  name="enabled-tokens"
-                  id=${token.$extensions[EXTENSION_TOKEN_ID]}
-                  ?checked=${token.$extensions[EXTENSION_TOKEN_STAGED] === true}
-                />
-              </td>
-              <td class="utrecht-table__cell">${renderSample(token)}</td>
-              <td class="utrecht-table__cell">
-                <code class="nl-code">${token.$extensions[EXTENSION_AUTHORED_AS]}</code>
-              </td>
-              <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
-            </tr>
-          `,
-        )}
-      </tbody>
-    </table>
+    <wizard-table-scroller>
+      <table class="utrecht-table">
+        <caption class="utrecht-table__caption">
+          ${caption}
+        </caption>
+        <thead class="utrecht-table__header">
+          <tr class="utrecht-table__row">
+            <th class="utrecht-table__header-cell">${t('stagedTokens.staged')}</th>
+            <th class="utrecht-table__header-cell">${t('stagedTokens.preview')}</th>
+            <th class="utrecht-table__header-cell">${t('stagedTokens.value')}</th>
+            <th class="utrecht-table__header-cell">${t('stagedTokens.count')}</th>
+          </tr>
+        </thead>
+        <tbody class="utrecht-table__body" @change=${this.#handleChange}>
+          ${tokens.map(
+            (token) => html`
+              <tr class="utrecht-table__row">
+                <td class="utrecht-table__cell">
+                  <input
+                    type="checkbox"
+                    name="enabled-tokens"
+                    id=${token.$extensions[EXTENSION_TOKEN_ID]}
+                    ?checked=${token.$extensions[EXTENSION_TOKEN_STAGED] === true}
+                  />
+                </td>
+                <td class="utrecht-table__cell">${renderSample(token)}</td>
+                <td class="utrecht-table__cell">
+                  <code class="nl-code">${token.$extensions[EXTENSION_AUTHORED_AS]}</code>
+                </td>
+                <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
+              </tr>
+            `,
+          )}
+        </tbody>
+      </table>
+    </wizard-table-scroller>
   `;
 
   override render() {
