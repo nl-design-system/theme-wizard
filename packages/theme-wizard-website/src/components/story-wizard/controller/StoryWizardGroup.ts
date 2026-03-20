@@ -1,10 +1,12 @@
-import type { WizardTokenPresetInput } from './types';
+import type { StoryWizardPresetOption, WizardTokenPresetInput } from './types';
 
 export class StoryWizardGroup {
   public readonly input: WizardTokenPresetInput | null;
+  private readonly initialOptions: StoryWizardPresetOption[];
 
   public constructor(public readonly element: HTMLElement) {
     this.input = element.querySelector<WizardTokenPresetInput>('.wizard-token-preset__input');
+    this.initialOptions = structuredClone(this.input?.options ?? []);
   }
 
   public get groupLabel() {
@@ -19,6 +21,14 @@ export class StoryWizardGroup {
     return this.input?.selectedIndex ?? -1;
   }
 
+  public getOptions() {
+    return this.input?.options ?? [];
+  }
+
+  public getInitialOptions() {
+    return structuredClone(this.initialOptions);
+  }
+
   public hasSelection() {
     return this.getSelectedIndex() >= 0;
   }
@@ -29,6 +39,12 @@ export class StoryWizardGroup {
 
   public restoreSelectedIndex(index: number) {
     this.input?.selectIndex(index);
+  }
+
+  public setOptions(options: StoryWizardPresetOption[]) {
+    if (!this.input) return;
+
+    this.input.options = structuredClone(options);
   }
 
   public bindOptions(listener: () => void) {
