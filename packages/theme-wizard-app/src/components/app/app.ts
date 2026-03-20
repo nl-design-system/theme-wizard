@@ -1,3 +1,4 @@
+import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { provide } from '@lit/context';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
@@ -63,14 +64,14 @@ export class App extends LitElement {
       this.scrapedTokens = previousScrapedTokens;
     }
 
-    this.addEventListener('change', this.#handleScrapeDone);
+    this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('change', this.#handleScrapeDone);
+    this.removeEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
   }
@@ -84,10 +85,10 @@ export class App extends LitElement {
   };
 
   readonly #handleScrapeDone = (event: Event) => {
-    const target = event.target;
-    if (!(target instanceof WizardScraper)) return;
+    if (!(event.target instanceof WizardScraper)) return;
+    const { result } = (event as CustomEvent<{ result: ScrapedDesignToken[] }>).detail;
 
-    this.scrapedTokens = target.options.map((token) => ({
+    this.scrapedTokens = result.map((token) => ({
       ...token,
       $extensions: {
         ...token.$extensions,

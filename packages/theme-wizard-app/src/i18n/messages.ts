@@ -40,13 +40,25 @@ export const en = {
   },
   save: 'Save',
   scraper: {
+    directStart: html`Begin directly with <a href="/basis-tokens" class="nl-link">basic tokens</a>.`,
     input: {
       label: 'Website URL',
     },
     invalidUrl: 'Please fill in a valid URL',
+    loaders: {
+      loader1: {
+        heading: 'Typography',
+        text: 'Fetching styles from {{url}}',
+      },
+      loader2: {
+        heading: 'Colors',
+        text: 'Fetching styles from {{url}}',
+      },
+    },
     scrapeFailed: `Failed to scrape "{{url}}"`,
     submit: 'Analyze',
     success: 'Done! Found {{tokenCount}} tokens.',
+    title: 'Make your own theme',
   },
   stagedTokens: {
     count: 'Count',
@@ -357,13 +369,25 @@ export const nl = {
   },
   save: 'Opslaan',
   scraper: {
+    directStart: html`Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.`,
     input: {
       label: 'Website URL',
     },
     invalidUrl: 'Vul een valide URL in',
+    loaders: {
+      loader1: {
+        heading: 'Typografie',
+        text: 'Huisstijl ophalen van {{url}}',
+      },
+      loader2: {
+        heading: 'Kleuren',
+        text: 'Huisstijl ophalen van {{url}}',
+      },
+    },
     scrapeFailed: `Kan "{{url}}" niet analyseren`,
     submit: 'Analyseer',
     success: 'Gereed, {{tokenCount}} tokens gevonden',
+    title: 'Maak je eigen thema',
   },
   stagedTokens: {
     count: 'Aantal',
