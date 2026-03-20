@@ -16,6 +16,7 @@ const meta = {
 export default meta;
 
 export * from './data-badge-react.preset.stories';
+export * from './data-badge-react.advanced-stories';
 
 type Story = StoryObj<DataBadgeProps>;
 

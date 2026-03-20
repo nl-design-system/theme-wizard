@@ -1,8 +1,6 @@
 import type { DataBadgeProps } from '@nl-design-system-candidate/data-badge-react';
 import type { StoryObj } from '@storybook/react-vite';
 
-export * from './data-badge-react.advanced-stories';
-
 type Story = StoryObj<DataBadgeProps>;
 
 export const DataBadgeKleur: Story = {
