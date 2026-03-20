@@ -6,9 +6,22 @@ export const wizardTokenCSS = css`
   }
 
   .wizard-token-preset__group {
+    border: none;
     display: flex;
     flex-direction: column;
     gap: var(--basis-space-block-sm);
+    margin: 0;
+    padding: 0;
+  }
+
+  .wizard-token-preset__legend {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
   }
 
   .wizard-token-preset__label {
