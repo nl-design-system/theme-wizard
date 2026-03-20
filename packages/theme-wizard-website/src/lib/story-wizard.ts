@@ -254,7 +254,7 @@ export class StoryWizardModel {
     const presetTokenPaths = this.collectPresetTokenPaths(wizardStories);
     const previewStories = this.resolvePreviewStories(allStories, wizardStories);
     const rawSteps = wizardStories
-      .map(([id, story]: StoryEntry) => this.createStep(id, story, previewStories, presetTokenPaths))
+      .map(([id, story]: StoryEntry) => this.createStep(id, story, allStories, previewStories, presetTokenPaths))
       .filter((step): step is StoryWizardStep => step !== null);
     const steps = this.createFlowSteps(rawSteps);
     const storyIds = Array.from(
@@ -325,6 +325,7 @@ export class StoryWizardModel {
   private static createStep(
     id: string,
     story: StoryWizardStory,
+    allStories: StoryEntry[],
     previewStories: StoryWizardPreview[],
     presetTokenPaths: Set<string>,
   ): StoryWizardStep | null {
@@ -346,7 +347,7 @@ export class StoryWizardModel {
       flowTitle: story.parameters?.wizard?.stepTitle ?? guessFlowGroup(story)?.title,
       groups,
       intro: story.parameters?.wizard?.description ?? DEFAULT_STEP_INTRO,
-      previewStories: this.resolveStepPreviewStories(id, story, previewStories),
+      previewStories: this.resolveStepPreviewStories(id, story, allStories, previewStories),
       title: story.name ?? id,
     };
   }
@@ -434,6 +435,7 @@ export class StoryWizardModel {
   private static resolveStepPreviewStories(
     id: string,
     story: StoryWizardStory,
+    allStories: StoryEntry[],
     previewStories: StoryWizardPreview[],
   ): StoryWizardPreview[] {
     const previewStoryIds = story.parameters?.wizard?.previewStoryIds;
@@ -443,6 +445,15 @@ export class StoryWizardModel {
       }
 
       return previewStories;
+    }
+
+    const explicitlyResolvedPreviewStories = previewStoryIds
+      .map((previewStoryId) => allStories.find(([id]) => id === previewStoryId))
+      .filter((entry): entry is StoryEntry => Boolean(entry))
+      .map(([previewStoryId, previewStory]) => this.toPreviewStory(previewStoryId, previewStory));
+
+    if (explicitlyResolvedPreviewStories.length > 0) {
+      return explicitlyResolvedPreviewStories;
     }
 
     const filteredPreviewStories = previewStories.filter((previewStory) => previewStoryIds.includes(previewStory.id));
