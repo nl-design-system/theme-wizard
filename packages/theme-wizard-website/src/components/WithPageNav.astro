@@ -1,23 +1,24 @@
 <div class="wizard-page-wrap">
   <div class="wizard-page-nav">
-    <slot name="page-nav"></slot>
+    <slot name="page-nav" />
   </div>
   <div class="wizard-page-content">
-    <slot name="page-content"></slot>
+    <slot name="page-content" />
   </div>
 </div>
 
 <style>
   .wizard-page-wrap {
-    align-items: flex-start;
-    display: flex;
-    gap: var(--basis-space-column-3xl);
+    align-items: start;
+    column-gap: var(--basis-space-column-3xl);
+    display: grid;
+    grid-template-columns: 1fr 18rem;
     position: relative;
   }
 
   .wizard-page-content {
-    flex: 1 1 auto;
-    min-inline-size: 0;
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .wizard-page-nav {
