@@ -3,6 +3,7 @@ import { dequal } from 'dequal';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import Theme from '../../lib/Theme';
+import { resolveTokenReferenceValue } from '../../lib/token-value';
 import { ThemeUpdateEvent } from '../app/app';
 import { wizardTokenCSS } from './styles';
 
@@ -35,6 +36,7 @@ export class WizardTokenPreset extends LitElement {
 
   private readonly inputName = `${tag}-${Math.random().toString(36).slice(2)}`;
   private readonly handleThemeUpdate = (event: ThemeUpdateEvent) => this.onThemeUpdate(event);
+  private currentTheme = new Theme();
   private selectedIndexState = -1;
 
   override connectedCallback(): void {
@@ -273,6 +275,7 @@ export class WizardTokenPreset extends LitElement {
 
   private onThemeUpdate(event: CustomEvent) {
     if (event.detail.theme) {
+      this.currentTheme = event.detail.theme;
       this.updateSelectedIndex(event.detail.theme);
     }
   }
@@ -291,6 +294,7 @@ export class WizardTokenPreset extends LitElement {
       token.value,
       this.collectTokenValueVariants(option)[token.path] ?? [token.value],
     );
+    const resolvedValue = resolveTokenReferenceValue(token.value, this.currentTheme);
 
     return html`
       <p class="nl-paragraph wizard-token-preset__option-value">
@@ -309,6 +313,16 @@ export class WizardTokenPreset extends LitElement {
             >${'suffix' in tokenValueParts ? tokenValueParts.suffix : ''}</code
           >
         </span>
+
+        ${resolvedValue && resolvedValue !== token.value
+          ? html`
+              <span class="wizard-token-preset__option-value-mapping">
+                <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
+
+                <code class="wizard-token-preset__option-value-resolved">${resolvedValue}</code>
+              </span>
+            `
+          : nothing}
       </p>
     `;
   }
