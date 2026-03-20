@@ -25,7 +25,6 @@ export class WizardTableScroller extends LitElement {
    */
   override connectedCallback() {
     super.connectedCallback();
-    this.style.display = 'block';
     this.style.inlineSize = '100%';
     this.style.overflowX = 'auto';
   }
