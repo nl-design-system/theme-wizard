@@ -3,6 +3,7 @@ import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-c
 import { type ComponentType } from 'react';
 import {
   ButtonVariants,
+  Icon,
   RenderButtonDisabled,
   RenderButtonFocusVisible,
   RenderButtonPressed,
