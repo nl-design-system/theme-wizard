@@ -207,9 +207,11 @@ export const RenderButtonStates = ({ ...props }: ButtonProps) => (
     <StatePreviewItem label="Normaal">
       <ButtonComponent {...props} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Hover">
       <ButtonComponent {...props} style={getButtonStateStyle(props.purpose, props.hint, 'hover')} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Active">
       <ButtonComponent {...props} style={getButtonStateStyle(props.purpose, props.hint, 'active')} />
     </StatePreviewItem>
@@ -221,6 +223,7 @@ export const RenderButtonDisabled = ({ ...props }: ButtonProps) => (
     <StatePreviewItem label="Actief">
       <ButtonComponent {...props} disabled={false} htmlDisabled={undefined} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Disabled">
       <ButtonComponent {...props} disabled htmlDisabled={undefined} />
     </StatePreviewItem>
@@ -232,6 +235,7 @@ export const RenderButtonPressed = ({ ...props }: ButtonProps) => (
     <StatePreviewItem label="Normaal">
       <ButtonComponent {...props} pressed={false} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Geselecteerd">
       <ButtonComponent {...props} pressed />
     </StatePreviewItem>
