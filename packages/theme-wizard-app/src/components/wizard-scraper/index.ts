@@ -1,4 +1,3 @@
-// Requires `xstate` to be installed: pnpm add xstate
 import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
@@ -255,7 +254,6 @@ export class WizardScraper extends LitElement {
                         aria-errormessage=${ariaErrorMessage}
                         aria-invalid=${ariaInvalid}
                         class="utrecht-textbox utrecht-textbox--html-input"
-                        data-state=${snapshot.value}
                         id="scraper-url"
                         inputmode="url"
                         name="url"

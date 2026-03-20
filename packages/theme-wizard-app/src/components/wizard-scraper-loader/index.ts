@@ -23,13 +23,13 @@ export class WizardScraperLoader extends LitElement {
       <div class="wizard-scraper-loader">
         <clippy-heading class="wizard-scraper-loader__heading">
           ${this.heading}
-          <span class="wizard-scraper-loader__ellipsis-wrapper">
+          <span class="wizard-scraper-loader__ellipsis-wrapper" aria-hidden="true">
             <span class="wizard-scraper-loader__ellipsis">.</span>
             <span class="wizard-scraper-loader__ellipsis">.</span>
             <span class="wizard-scraper-loader__ellipsis">.</span>
           </span>
         </clippy-heading>
-        <p class="nl-paragraph" class="wizard-scraper-loader__text">${this.text}</p>
+        <p class="nl-paragraph wizard-scraper-loader__text">${this.text}</p>
         <div aria-hidden="true" class="wizard-scraper-loader__emoji">
           <span class="wizard-scraper-loader__emoji-icon">${this.emoji}</span>
         </div>

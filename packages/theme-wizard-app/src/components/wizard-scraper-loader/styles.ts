@@ -75,7 +75,6 @@ export default css`
 
     @media (prefers-reduced-motion: reduce) {
       animation-name: --wizard-fade-in-out;
-      opacity: 0%;
     }
   }
 
@@ -107,7 +106,6 @@ export default css`
 
     @media (prefers-reduced-motion: reduce) {
       animation-name: --wizard-fade-in-out;
-      opacity: 0%;
     }
   }
 
