@@ -25,9 +25,6 @@ test('collage template shows correct content and structure', async ({ basisToken
 });
 
 test('can select different templates from the selector', async ({ basisTokens }) => {
-  await basisTokens.goto();
-  await basisTokens.page.waitForLoadState('domcontentloaded');
-
   // Verify the select element is visible
   const templateSelect = basisTokens.page.getByLabel('Weergave');
   await expect(templateSelect).toBeVisible();
