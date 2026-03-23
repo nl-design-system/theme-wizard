@@ -1,10 +1,8 @@
 import { expect as baseExpect, test as baseTest, type Locator } from '@playwright/test';
-import { ThemeWizardPage } from '../pages/ThemeWizardPage';
+import { BasisTokensPage } from '../pages/BasisTokensPage';
 
 type ThemeWizardFixture = {
-  themeWizard: ThemeWizardPage;
-  previewPage: ThemeWizardPage;
-  collagePage: ThemeWizardPage;
+  basisTokens: BasisTokensPage;
 };
 
 type MatcherResult =
@@ -67,22 +65,8 @@ export const expect = baseExpect.extend({
 });
 
 export const test = baseTest.extend<ThemeWizardFixture>({
-  collagePage: async ({ page }, use) => {
-    const themeWizard = new ThemeWizardPage(page);
-    await themeWizard.goto();
-    await themeWizard.selectTemplate('Collage 1');
-    await use(themeWizard);
-  },
-
-  previewPage: async ({ page }, use) => {
-    const themeWizard = new ThemeWizardPage(page);
-    await themeWizard.goto();
-    await themeWizard.selectTemplate('Overzichtspagina');
-    await use(themeWizard);
-  },
-
-  themeWizard: async ({ page }, use) => {
-    const themeWizard = new ThemeWizardPage(page);
+  basisTokens: async ({ page }, use) => {
+    const themeWizard = new BasisTokensPage(page);
     await use(themeWizard);
   },
 });
