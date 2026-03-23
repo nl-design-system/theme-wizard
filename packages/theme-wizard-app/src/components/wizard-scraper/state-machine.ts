@@ -84,7 +84,7 @@ export const scraperMachine = setup({
     loading: {
       invoke: {
         // url is guaranteed non-null here: SUBMIT always sets it before entering loading.
-        input: ({ context }) => ({ scraper: context.scraper, url: context.resolvedUrl as URL }), // NOSONAR
+        input: ({ context }) => ({ scraper: context.scraper, url: context.resolvedUrl as URL }),
         onDone: {
           // No target — stay in the parallel regions; just record the result
           // and raise an internal event so the `task` region can finalize.

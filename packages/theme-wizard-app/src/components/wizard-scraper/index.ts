@@ -45,11 +45,10 @@ export class WizardScraper extends LitElement {
     const scraper = new Scraper(this.scraperUrl);
     this.#actor = createActor(scraperMachine, { input: { scraper } });
     this.#actor.subscribe((snapshot) => {
-      const prev = this._snapshot;
       this._snapshot = snapshot;
 
       // Let the host app know that we're done so it can start navigating
-      if (snapshot.matches('done') && !prev?.matches('done')) {
+      if (snapshot.matches('done')) {
         this.dispatchEvent(
           new CustomEvent('wizard-scraper-done', {
             bubbles: true,
@@ -124,15 +123,12 @@ export class WizardScraper extends LitElement {
                         <div class="utrecht-form-field__label">
                           <label for="scraper-url" class="utrecht-form-label">${t('scraper.input.label')}</label>
                         </div>
-                        <div class="utrecht-form-field__description" id="scraper-description">
-                          ${t('scraper.input.description')}
-                        </div>
+                        <div class="utrecht-form-field__description">${t('scraper.input.description')}</div>
                         ${errorMessage}
                         <div class="utrecht-form-field__input">
                           <input
                             aria-errormessage=${ariaErrorMessage}
                             aria-invalid=${ariaInvalid}
-                            aria-described-by="scraper-description"
                             class="utrecht-textbox utrecht-textbox--html-input"
                             id="scraper-url"
                             inputmode="url"
