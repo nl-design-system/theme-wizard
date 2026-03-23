@@ -36,6 +36,16 @@ export const isTokenLike = (obj: unknown): obj is BaseDesignToken => {
   return Object.hasOwn(obj, '$value');
 };
 
+export const isTokenGroup = (obj: unknown): obj is Record<string, BaseDesignToken> => {
+  if (!isValueObject(obj)) return false;
+  if (Object.hasOwn(obj, '$value')) return false;
+  if (Object.hasOwn(obj, '$type') && typeof obj['$type'] !== 'string') return false;
+  if (Object.hasOwn(obj, '$extensions') && !isValueObject(obj['$extensions'])) return false;
+  return Object.entries(obj)
+    .filter(([key]) => !key.startsWith('$'))
+    .every(([, token]) => isTokenLike(token));
+};
+
 /** @deprecated use `BaseDesignToken` instead */
 export type TokenLike = {
   $type: string;
@@ -49,6 +59,8 @@ export type TokenWithRefLike = BaseDesignToken & {
 export const isRef = (value: unknown): value is TokenReference => {
   return typeof value === 'string' && value.startsWith('{') && value.endsWith('}');
 };
+
+export const extractRef = (ref: TokenReference): string => ref.slice(1, -1);
 
 const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
   if (!isTokenLike(obj)) return false;
@@ -72,7 +84,7 @@ export const isTokenWithRef = (
   if (!isTokenWithRefLike(token)) return false;
 
   // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
-  const refPath = token.$value.slice(1, -1);
+  const refPath = extractRef(token.$value);
   const referencedToken = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
   if (!referencedToken) {

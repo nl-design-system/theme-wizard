@@ -4,6 +4,7 @@ import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
+import { getSiblingGroupsWithOnlyRefsTo } from '../../lib/ColorScale/siblings';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
@@ -125,7 +126,18 @@ export class App extends LitElement {
         ];
       });
       this.theme.updateMany(updates);
-      this.theme.setGroupExtension(target.name, EXTENSION_COLORSCALE_SEED, target.seedColor);
+
+      // Add $extensions for seed-color for the changed token, as well as for any siblings
+      // that exclusively point to the changed token's values.
+      // -> accent-2 points exclusively to accent-1, so update accent-2's seed-color as well
+      const nameParts = target.name.split('.'); // e.g. ['basis', 'color', 'accent-1']
+      const parentGroup = nameParts.length > 1 ? this.theme.at(nameParts.slice(0, -1).join('.')) : null; // e.g. basis.color group
+      const siblingGroupsWithOnlyRefsToSelf = getSiblingGroupsWithOnlyRefsTo(target.name, parentGroup);
+
+      // Set the seed on the updated group and any siblings that exclusively reference it
+      for (const groupPath of [target.name, ...siblingGroupsWithOnlyRefsToSelf]) {
+        this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, target.seedColor);
+      }
     } else if (target instanceof WizardTokenCombobox) {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {

@@ -26,7 +26,7 @@ import { setExtension } from './extensions';
 import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
-import { TokenReference, isRef, isValueObject } from './tokens/token-reference';
+import { TokenReference, extractRef, isRef, isValueObject } from './tokens/token-reference';
 import { EXTENSION_TOKEN_SUBTYPE, upgradeLegacyTokens } from './upgrade-legacy-tokens';
 import {
   ERROR_CODES,
@@ -178,7 +178,7 @@ export const addComponentContrastExtensions = (rootConfig: Record<string, unknow
       if (isValueObject(obj) && isColorToken(obj['color']) && isColorToken(obj['background-color'])) {
         // Make sure we only get to compare colors where alpha=1
         const value = isRef(obj['background-color'].$value)
-          ? dlv(rootConfig, obj['background-color'].$value.slice(1, -1))?.$value
+          ? dlv(rootConfig, extractRef(obj['background-color'].$value))?.$value
           : obj['background-color'].$value;
         if (typeof value?.alpha === 'number' && value.alpha === 1) {
           return true;

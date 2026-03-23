@@ -3,7 +3,9 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import {
   EXTENSION_RESOLVED_AS,
   EXTENSION_TOKEN_SUBTYPE,
+  extractRef,
   isRef,
+  type TokenReference,
 } from '@nl-design-system-community/design-tokens-schema';
 import '../wizard-token-combobox';
 import { html, nothing, unsafeCSS } from 'lit';
@@ -84,13 +86,13 @@ export class WizardTokenField extends WizardTokenNavigator {
               // Find the resolved value for color tokens to show in the combobox options.
               // Since tokens can reference other tokens, we check if the token is a reference and use the resolved value if so.
               const resolved = isRef(token.$value) ? token['$extensions']?.[EXTENSION_RESOLVED_AS] : token.$value;
-              const $value = `{basis.${path}}`;
+              const $value = `{basis.${path}}` satisfies TokenReference;
               const $extensions = {
                 ...token['$extensions'],
                 [EXTENSION_RESOLVED_AS]: structuredClone(resolved),
               };
               return {
-                label: $value.slice(1, -1),
+                label: extractRef($value),
                 value: {
                   $extensions,
                   $type,

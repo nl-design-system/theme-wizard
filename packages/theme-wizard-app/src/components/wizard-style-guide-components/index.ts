@@ -5,6 +5,7 @@ import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import {
+  extractRef,
   isRef,
   isTokenLike,
   resolveRef,
@@ -113,7 +114,7 @@ export class WizardStyleGuideComponents extends LitElement {
                         </td>
                         <td class="utrecht-table__cell">
                           ${isRef(tokenConfig.$value)
-                            ? html`<span class="nl-data-badge">${tokenConfig.$value.slice(1, -1)}</span>`
+                            ? html`<span class="nl-data-badge">${extractRef(tokenConfig.$value)}</span>`
                             : nothing}
                         </td>
                         <td class="utrecht-table__cell">
