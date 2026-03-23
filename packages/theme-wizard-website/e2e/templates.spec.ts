@@ -1,30 +1,32 @@
 import { test, expect } from './fixtures/fixtures';
 
-test('preview template shows correct content and structure', async ({ previewPage }) => {
-  const previewChild = previewPage.getPreviewChild();
-
-  await expect(previewPage.preview).toContainText('Mijn omgeving');
-  await expect(previewChild).not.toHaveAttribute('data-test-id', 'theme-wizard-collage');
-  await expect(previewPage.getCollageComponents()).not.toBeVisible();
+test.beforeEach(async ({ basisTokens }) => {
+  await basisTokens.goto();
+  await basisTokens.selectTemplate('Overzichtspagina');
 });
 
-test('collage template shows correct content and structure', async ({ collagePage }) => {
-  const previewChild = collagePage.getPreviewChild();
+test('preview template shows correct content and structure', async ({ basisTokens }) => {
+  const previewChild = basisTokens.getPreviewChild();
 
-  await expect(collagePage.preview).toContainText(
+  await expect(basisTokens.preview).toContainText('Mijn omgeving');
+  await expect(previewChild).not.toHaveAttribute('data-test-id', 'theme-wizard-collage');
+  await expect(basisTokens.getCollageComponents()).not.toBeVisible();
+});
+
+test('collage template shows correct content and structure', async ({ basisTokens }) => {
+  await basisTokens.selectTemplate('Collage 1');
+  const previewChild = basisTokens.getPreviewChild();
+
+  await expect(basisTokens.preview).toContainText(
     "Breadcrumb navigation wordt gebruikt om naar andere pagina's in een gebruikersinterface te navigeren.",
   );
   await expect(previewChild).toHaveAttribute('data-test-id', 'theme-wizard-collage');
-  await expect(collagePage.getCollageComponents()).toHaveCount(6);
+  await expect(basisTokens.getCollageComponents()).toHaveCount(6);
 });
 
-test('can select different templates from the selector', async ({ themeWizard }) => {
-  await themeWizard.goto();
-  await themeWizard.selectTemplate('Overzichtspagina');
-  await themeWizard.page.waitForLoadState('domcontentloaded');
-
+test('can select different templates from the selector', async ({ basisTokens }) => {
   // Verify the select element is visible
-  const templateSelect = themeWizard.page.getByLabel('Weergave');
+  const templateSelect = basisTokens.page.getByLabel('Weergave');
   await expect(templateSelect).toBeVisible();
 
   // Get initial option count
@@ -40,5 +42,5 @@ test('can select different templates from the selector', async ({ themeWizard })
   const newValue = await templateSelect.inputValue();
   expect(newValue).not.toBe(oldValue);
 
-  await expect(themeWizard.preview).toBeVisible();
+  await expect(basisTokens.preview).toBeVisible();
 });

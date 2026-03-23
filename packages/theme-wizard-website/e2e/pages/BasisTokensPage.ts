@@ -1,6 +1,6 @@
 import { type Page, type Locator, expect } from '@playwright/test';
 
-export class ThemeWizardPage {
+export class BasisTokensPage {
   readonly preview: Locator;
   readonly sidebar: Locator;
   readonly templateSelect: Locator;
