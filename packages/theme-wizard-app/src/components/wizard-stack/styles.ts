@@ -6,7 +6,8 @@ export default css`
   }
 
   .wizard-stack {
-    display: grid;
+    display: flex;
+    flex-direction: column;
   }
 
   .wizard-stack--none {

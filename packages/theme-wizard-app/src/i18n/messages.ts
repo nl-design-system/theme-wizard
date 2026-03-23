@@ -42,8 +42,10 @@ export const en = {
   scraper: {
     directStart: html`Begin directly with <a href="/basis-tokens" class="nl-link">basic tokens</a>.`,
     input: {
+      description: 'E.g. gemeentevoorbeeld.nl',
       label: 'Website URL',
     },
+    intro: 'Use the Theme Wizard to easily make an NL Design System theme for your organisation.',
     invalidUrl: 'Please fill in a valid URL',
     loaders: {
       loader1: {
@@ -371,8 +373,10 @@ export const nl = {
   scraper: {
     directStart: html`Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.`,
     input: {
+      description: 'Bijvoorbeeld gemeentevoorbeeld.nl',
       label: 'Website URL',
     },
+    intro: 'Met de Theme Wizard maak je gemakkelijk een NL Design System thema voor jouw organisatie.',
     invalidUrl: 'Vul een valide URL in',
     loaders: {
       loader1: {
@@ -385,7 +389,7 @@ export const nl = {
       },
     },
     scrapeFailed: `Kan "{{url}}" niet analyseren`,
-    submit: 'Analyseer',
+    submit: 'Huisstijl ophalen',
     success: 'Gereed, {{tokenCount}} tokens gevonden',
     title: 'Maak je eigen thema',
   },

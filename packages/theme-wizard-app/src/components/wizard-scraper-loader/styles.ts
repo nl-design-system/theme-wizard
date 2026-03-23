@@ -88,13 +88,17 @@ export default css`
     }
   }
 
+  .wizard-scraper-loader__ellipsis-wrapper {
+    margin-inline-start: -0.25ch;
+  }
+
   .wizard-scraper-loader__ellipsis {
     animation-duration: var(--wizard-scraper-loader-animation-duration);
     animation-iteration-count: infinite;
     animation-name: --wizard-ellipsis-jump;
     animation-timing-function: var(--wizard-scraper-loader-animation-timing-function);
     display: inline-block;
-    letter-spacing: -0.1em;
+    letter-spacing: -0.2ch;
 
     &:nth-child(2) {
       animation-delay: 100ms;
