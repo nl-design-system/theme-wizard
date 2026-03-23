@@ -2,6 +2,8 @@ import { css } from 'lit';
 
 export default css`
   .wizard-style-guide {
+    --utrecht-table-caption-text-align: start;
+
     display: grid;
     row-gap: var(--basis-space-row-4xl);
   }

@@ -12,17 +12,21 @@
     align-items: start;
     column-gap: var(--basis-space-column-3xl);
     display: grid;
-    grid-template-columns: 1fr 18rem;
     position: relative;
-  }
+    row-gap: var(--basis-space-row-4xl);
 
-  .wizard-page-content {
-    grid-column: 1;
-    grid-row: 1;
-  }
+    @container (inline-size > 54rem) {
+      grid-template-columns: 1fr 18rem;
 
-  .wizard-page-nav {
-    grid-column: 2;
-    grid-row: 1;
+      .wizard-page-content {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .wizard-page-nav {
+        grid-column: 2;
+        grid-row: 1;
+      }
+    }
   }
 </style>

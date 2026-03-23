@@ -6,35 +6,37 @@ export default css`
   }
 
   .wizard-container {
-    max-inline-size: 100%;
-    padding-inline: var(--basis-space-inline-xl);
+    box-sizing: border-box;
+    display: block;
+    inline-size: 100%;
   }
 
   .wizard-container--page {
-    inline-size: var(--basis-page-max-inline-size);
+    max-inline-size: var(--basis-page-max-max-inline-size);
+    padding-inline: var(--basis-space-inline-xl);
   }
 
   .wizard-container--sm {
-    inline-size: 20rem;
+    max-inline-size: 20rem;
   }
 
   .wizard-container--md {
-    inline-size: 33rem;
+    max-inline-size: 33rem;
   }
 
   .wizard-container--lg {
-    inline-size: 44rem;
+    max-inline-size: 44rem;
   }
 
   .wizard-container--xl {
-    inline-size: 55rem;
+    max-inline-size: 55rem;
   }
 
   .wizard-container--2xl {
-    inline-size: 72rem;
+    max-inline-size: 72rem;
   }
 
   .wizard-container--3xl {
-    inline-size: 96rem;
+    max-inline-size: 96rem;
   }
 `;

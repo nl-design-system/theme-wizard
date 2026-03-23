@@ -16,11 +16,13 @@ const scraperUrl = withRelatedProject({
     <wizard-layout>
       <main slot="main" class="wizard-main">
         <wizard-container size="md">
-          <wizard-story-preview size="lg">
-            <h1 class="wizard-title">Maak je eigen thema</h1>
-            <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
-          </wizard-story-preview>
-          <p class="nl-paragraph">Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.</p>
+          <wizard-stack>
+            <wizard-story-preview size="lg">
+              <h1 class="wizard-title">Maak je eigen thema</h1>
+              <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
+            </wizard-story-preview>
+            <p class="nl-paragraph">Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.</p>
+          </wizard-stack>
         </wizard-container>
       </main>
      </wizard-layout>
@@ -31,6 +33,7 @@ const scraperUrl = withRelatedProject({
   .wizard-main {
     block-size: 100%;
     display: grid;
+    padding-block: var(--basis-space-block-5xl);
     place-content: center;
   }
 
