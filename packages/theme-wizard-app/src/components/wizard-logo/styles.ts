@@ -2,11 +2,6 @@ import { css } from 'lit';
 
 export default css`
   :host {
-    --nl-heading-level-1-color: var(--basis-color-accent-1-inverse-color-default);
-    --nl-heading-level-1-font-size: var(--basis-text-font-size-lg);
-    --nl-heading-level-1-margin-block-start: 0;
-    --nl-heading-level-1-margin-block-end: 0;
-
     align-items: center;
     background-color: var(--basis-color-accent-1-inverse-bg-default);
     display: flex;
@@ -21,5 +16,14 @@ export default css`
     & > svg {
       block-size: var(--basis-size-sm);
     }
+  }
+
+  .wizard-logo__text {
+    color: var(--basis-color-accent-1-inverse-color-default);
+    font-family: var(--basis-heading-font-family);
+    font-size: var(--basis-text-font-size-lg);
+    font-weight: var(--basis-text-font-weight-bold);
+    margin-block-start: 0;
+    margin-block-end: 0;
   }
 `;
