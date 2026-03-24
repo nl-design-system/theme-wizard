@@ -1,6 +1,6 @@
 import type { ButtonProps } from '@nl-design-system-candidate/button-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { ButtonPrimary, ButtonVariantsWithStates } from './button-react.story-components';
+import { ButtonPrimary, RenderButtonPurposePreview } from './button-react.story-components';
 
 type Story = StoryObj<ButtonProps>;
 
@@ -53,8 +53,8 @@ export const ButtonMinimumSize: Story = {
   render: ButtonPrimary,
 };
 
-export const ButtonInteractionStyle: Story = {
-  name: 'Interactiestijl',
+export const ButtonDefaultVariantStyle: Story = {
+  name: 'Stijl standaard button',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
@@ -62,12 +62,12 @@ export const ButtonInteractionStyle: Story = {
   parameters: {
     presets: [
       {
-        name: 'Kies de kleur voor interactie met de Buttons',
+        name: 'Kies de stijl van de standaard button',
         description: 'De middelste button in elke rij toont de hover-staat, de rechter toont de actieve staat.',
         options: [
           {
-            name: 'Donkerdere tinten',
-            description: 'De button wordt iets donkerder bij aanwijzen.',
+            name: 'Gevuld',
+            description: 'De standaard button heeft een ingevulde neutrale achtergrond.',
             tokens: {
               nl: {
                 button: {
@@ -77,30 +77,134 @@ export const ButtonInteractionStyle: Story = {
                       'border-color': { $value: '{basis.color.default.border-active}' },
                       color: { $value: '{basis.color.default.color-active}' },
                     },
+                    'background-color': { $value: '{basis.color.default.bg-default}' },
+                    'border-color': { $value: '{basis.color.default.border-default}' },
+                    color: { $value: '{basis.color.default.color-default}' },
                     hover: {
                       'background-color': { $value: '{basis.color.default.bg-hover}' },
                       'border-color': { $value: '{basis.color.default.border-hover}' },
                       color: { $value: '{basis.color.default.color-hover}' },
                     },
                   },
+                },
+              },
+            },
+          },
+          {
+            name: 'Outlined',
+            description: 'De standaard button heeft alleen een lijn en geen vulling.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    active: {
+                      'background-color': { $value: '{basis.color.default.bg-active}' },
+                      'border-color': { $value: '{basis.color.default.border-active}' },
+                      color: { $value: '{basis.color.default.color-active}' },
+                    },
+                    'background-color': { $value: '{basis.color.transparent}' },
+                    'border-color': { $value: '{basis.color.default.border-default}' },
+                    color: { $value: '{basis.color.default.color-default}' },
+                    hover: {
+                      'background-color': { $value: '{basis.color.default.bg-hover}' },
+                      'border-color': { $value: '{basis.color.default.border-hover}' },
+                      color: { $value: '{basis.color.default.color-hover}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Subtle',
+            description: 'De standaard button toont vooral tekst, met alleen een zachte hover- en active-staat.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    active: {
+                      'background-color': { $value: '{basis.color.default.bg-active}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
+                      color: { $value: '{basis.color.default.color-active}' },
+                    },
+                    'background-color': { $value: '{basis.color.transparent}' },
+                    'border-color': { $value: '{basis.color.transparent}' },
+                    color: { $value: '{basis.color.default.color-default}' },
+                    hover: {
+                      'background-color': { $value: '{basis.color.default.bg-hover}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
+                      color: { $value: '{basis.color.default.color-hover}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+        question: 'Welke stijl wil je voor de standaard button?',
+        thumbnail: false,
+      },
+    ],
+    wizard: {
+      previewStoryIds: ['DefaultButtonPurposePreview'],
+    },
+  },
+  render: RenderButtonPurposePreview,
+};
+
+export const ButtonPrimaryVariantStyle: Story = {
+  name: 'Stijl primary button',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: 'primary',
+  },
+  parameters: {
+    presets: [
+      {
+        name: 'Kies de stijl van de primary button',
+        description: 'De middelste button in elke rij toont de hover-staat, de rechter toont de actieve staat.',
+        options: [
+          {
+            name: 'Gevuld',
+            description: 'De primary button krijgt een duidelijke ingevulde accentkleur.',
+            tokens: {
+              nl: {
+                button: {
                   primary: {
                     active: {
                       'background-color': { $value: '{basis.color.action-1-inverse.bg-active}' },
-                      'border-color': { $value: '{basis.color.action-1-inverse.border-active}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
                       color: { $value: '{basis.color.action-1-inverse.color-active}' },
                     },
+                    'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
+                    'border-color': { $value: '{basis.color.transparent}' },
+                    color: { $value: '{basis.color.action-1-inverse.color-default}' },
                     hover: {
                       'background-color': { $value: '{basis.color.action-1-inverse.bg-hover}' },
-                      'border-color': { $value: '{basis.color.action-1-inverse.border-hover}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
                       color: { $value: '{basis.color.action-1-inverse.color-hover}' },
                     },
                   },
-                  secondary: {
+                },
+              },
+            },
+          },
+          {
+            name: 'Outlined',
+            description: 'De primary button krijgt een accentkleurige lijn en transparante achtergrond.',
+            tokens: {
+              nl: {
+                button: {
+                  primary: {
                     active: {
                       'background-color': { $value: '{basis.color.action-1.bg-active}' },
                       'border-color': { $value: '{basis.color.action-1.border-active}' },
                       color: { $value: '{basis.color.action-1.color-active}' },
                     },
+                    'background-color': { $value: '{basis.color.transparent}' },
+                    'border-color': { $value: '{basis.color.action-1.border-default}' },
+                    color: { $value: '{basis.color.action-1.color-default}' },
                     hover: {
                       'background-color': { $value: '{basis.color.action-1.bg-hover}' },
                       'border-color': { $value: '{basis.color.action-1.border-hover}' },
@@ -112,91 +216,24 @@ export const ButtonInteractionStyle: Story = {
             },
           },
           {
-            name: 'Omgedraaide kleuren',
-            description: 'De button wisselt van kleur bij aanwijzen.',
+            name: 'Subtle',
+            description: 'De primary button toont vooral tekstkleur met een zachte achtergrond bij interactie.',
             tokens: {
               nl: {
                 button: {
-                  default: {
-                    active: {
-                      'background-color': { $value: '{basis.color.default-inverse.bg-active}' },
-                      'border-color': { $value: '{basis.color.default-inverse.border-active}' },
-                      color: { $value: '{basis.color.default-inverse.color-active}' },
-                    },
-                    hover: {
-                      'background-color': { $value: '{basis.color.default-inverse.bg-default}' },
-                      'border-color': { $value: '{basis.color.default-inverse.border-default}' },
-                      color: { $value: '{basis.color.default-inverse.color-default}' },
-                    },
-                  },
                   primary: {
                     active: {
                       'background-color': { $value: '{basis.color.action-1.bg-active}' },
-                      'border-color': { $value: '{basis.color.action-1.border-active}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
                       color: { $value: '{basis.color.action-1.color-active}' },
                     },
+                    'background-color': { $value: '{basis.color.transparent}' },
+                    'border-color': { $value: '{basis.color.transparent}' },
+                    color: { $value: '{basis.color.action-1.color-default}' },
                     hover: {
-                      'background-color': { $value: '{basis.color.action-1.bg-default}' },
-                      'border-color': { $value: '{basis.color.action-1.border-default}' },
-                      color: { $value: '{basis.color.action-1.color-default}' },
-                    },
-                  },
-                  secondary: {
-                    active: {
-                      'background-color': { $value: '{basis.color.action-1-inverse.bg-active}' },
-                      'border-color': { $value: '{basis.color.action-1-inverse.border-active}' },
-                      color: { $value: '{basis.color.action-1-inverse.color-active}' },
-                    },
-                    hover: {
-                      'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
-                      'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
-                      color: { $value: '{basis.color.action-1-inverse.color-default}' },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          {
-            name: 'Alternatieve kleur',
-            description: 'De button gebruikt een tweede accentkleur bij aanwijzen.',
-            tokens: {
-              nl: {
-                button: {
-                  default: {
-                    active: {
-                      'background-color': { $value: '{basis.color.action-2.bg-active}' },
-                      'border-color': { $value: '{basis.color.action-2.border-active}' },
-                      color: { $value: '{basis.color.action-2.color-active}' },
-                    },
-                    hover: {
-                      'background-color': { $value: '{basis.color.action-2.bg-default}' },
-                      'border-color': { $value: '{basis.color.action-2.border-default}' },
-                      color: { $value: '{basis.color.action-2.color-default}' },
-                    },
-                  },
-                  primary: {
-                    active: {
-                      'background-color': { $value: '{basis.color.action-2-inverse.bg-active}' },
-                      'border-color': { $value: '{basis.color.action-2-inverse.border-active}' },
-                      color: { $value: '{basis.color.action-2-inverse.color-active}' },
-                    },
-                    hover: {
-                      'background-color': { $value: '{basis.color.action-2-inverse.bg-default}' },
-                      'border-color': { $value: '{basis.color.action-2-inverse.border-default}' },
-                      color: { $value: '{basis.color.action-2-inverse.color-default}' },
-                    },
-                  },
-                  secondary: {
-                    active: {
-                      'background-color': { $value: '{basis.color.action-2-inverse.bg-active}' },
-                      'border-color': { $value: '{basis.color.action-2-inverse.border-active}' },
-                      color: { $value: '{basis.color.action-2-inverse.color-active}' },
-                    },
-                    hover: {
-                      'background-color': { $value: '{basis.color.action-2-inverse.bg-default}' },
-                      'border-color': { $value: '{basis.color.action-2-inverse.border-default}' },
-                      color: { $value: '{basis.color.action-2-inverse.color-default}' },
+                      'background-color': { $value: '{basis.color.action-1.bg-hover}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
+                      color: { $value: '{basis.color.action-1.color-hover}' },
                     },
                   },
                 },
@@ -204,12 +241,115 @@ export const ButtonInteractionStyle: Story = {
             },
           },
         ],
-        question: 'Hoe wil je dat buttons reageren op muisbeweging?',
+        question: 'Welke stijl wil je voor de primary button?',
         thumbnail: false,
       },
     ],
+    wizard: {
+      previewStoryIds: ['PrimaryButtonPurposePreview'],
+    },
   },
-  render: ButtonVariantsWithStates,
+  render: RenderButtonPurposePreview,
+};
+
+export const ButtonSecondaryVariantStyle: Story = {
+  name: 'Stijl secondary button',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: 'secondary',
+  },
+  parameters: {
+    presets: [
+      {
+        name: 'Kies de stijl van de secondary button',
+        description: 'De middelste button in elke rij toont de hover-staat, de rechter toont de actieve staat.',
+        options: [
+          {
+            name: 'Gevuld',
+            description: 'De secondary button krijgt een lichte ingevulde stijl.',
+            tokens: {
+              nl: {
+                button: {
+                  secondary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-1.bg-active}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
+                      color: { $value: '{basis.color.action-1.color-active}' },
+                    },
+                    'background-color': { $value: '{basis.color.action-1.bg-default}' },
+                    'border-color': { $value: '{basis.color.transparent}' },
+                    color: { $value: '{basis.color.action-1.color-default}' },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-1.bg-hover}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
+                      color: { $value: '{basis.color.action-1.color-hover}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Outlined',
+            description: 'De secondary button krijgt een duidelijke lijn en transparante achtergrond.',
+            tokens: {
+              nl: {
+                button: {
+                  secondary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-1.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-1.border-active}' },
+                      color: { $value: '{basis.color.action-1.color-active}' },
+                    },
+                    'background-color': { $value: '{basis.color.transparent}' },
+                    'border-color': { $value: '{basis.color.action-1.border-default}' },
+                    color: { $value: '{basis.color.action-1.color-default}' },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-1.bg-hover}' },
+                      'border-color': { $value: '{basis.color.action-1.border-hover}' },
+                      color: { $value: '{basis.color.action-1.color-hover}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Subtle',
+            description: 'De secondary button toont vooral tekstkleur met een zachte hover-achtergrond.',
+            tokens: {
+              nl: {
+                button: {
+                  secondary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-1.bg-active}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
+                      color: { $value: '{basis.color.action-1.color-active}' },
+                    },
+                    'background-color': { $value: '{basis.color.transparent}' },
+                    'border-color': { $value: '{basis.color.transparent}' },
+                    color: { $value: '{basis.color.action-1.color-default}' },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-1.bg-hover}' },
+                      'border-color': { $value: '{basis.color.transparent}' },
+                      color: { $value: '{basis.color.action-1.color-hover}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+        question: 'Welke stijl wil je voor de secondary button?',
+        thumbnail: false,
+      },
+    ],
+    wizard: {
+      previewStoryIds: ['SecondaryButtonPurposePreview'],
+    },
+  },
+  render: RenderButtonPurposePreview,
 };
 
 export const ButtonShape: Story = {
@@ -283,101 +423,9 @@ export const ButtonShape: Story = {
         question: 'Hoe afgerond mogen de hoeken van buttons zijn?',
       },
     ],
-  },
-  render: ButtonPrimary,
-};
-
-export const ButtonColorStyle: Story = {
-  name: 'Kleurstijl',
-  args: {
-    iconStart: '❤️',
-    label: 'Klik mij!',
-  },
-  parameters: {
-    presets: [
-      {
-        name: 'Kies de kleurstijl van de Buttons',
-        description: 'De kleur van de button-varianten in de standaard staat.',
-        options: [
-          {
-            name: 'Standaard',
-            description: 'Neutrale kleur voor de default button, accentkleur voor primary.',
-            tokens: {
-              nl: {
-                button: {
-                  default: {
-                    'background-color': { $value: '{basis.color.default.bg-default}' },
-                    'border-color': { $value: '{basis.color.default.border-default}' },
-                    color: { $value: '{basis.color.default.color-default}' },
-                  },
-                  primary: {
-                    'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
-                    'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
-                    color: { $value: '{basis.color.action-1-inverse.color-default}' },
-                  },
-                  secondary: {
-                    'background-color': { $value: '{basis.color.action-1.bg-default}' },
-                    'border-color': { $value: '{basis.color.action-1.border-default}' },
-                    color: { $value: '{basis.color.action-1.color-default}' },
-                  },
-                },
-              },
-            },
-          },
-          {
-            name: 'Omgedraaid',
-            description: 'Default en primary wisselen van kleur.',
-            tokens: {
-              nl: {
-                button: {
-                  default: {
-                    'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
-                    'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
-                    color: { $value: '{basis.color.action-1-inverse.color-default}' },
-                  },
-                  primary: {
-                    'background-color': { $value: '{basis.color.default.bg-default}' },
-                    'border-color': { $value: '{basis.color.default.border-default}' },
-                    color: { $value: '{basis.color.default.color-default}' },
-                  },
-                  secondary: {
-                    'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
-                    'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
-                    color: { $value: '{basis.color.action-1-inverse.color-default}' },
-                  },
-                },
-              },
-            },
-          },
-          {
-            name: 'Tweede accentkleur',
-            description: 'Gebruikt de tweede accentkleur van uw huisstijl.',
-            tokens: {
-              nl: {
-                button: {
-                  default: {
-                    'background-color': { $value: '{basis.color.action-2.bg-default}' },
-                    'border-color': { $value: '{basis.color.action-2.border-default}' },
-                    color: { $value: '{basis.color.action-2.color-default}' },
-                  },
-                  primary: {
-                    'background-color': { $value: '{basis.color.action-2-inverse.bg-default}' },
-                    'border-color': { $value: '{basis.color.action-2-inverse.border-default}' },
-                    color: { $value: '{basis.color.action-2-inverse.color-default}' },
-                  },
-                  secondary: {
-                    'background-color': { $value: '{basis.color.action-2.bg-default}' },
-                    'border-color': { $value: '{basis.color.action-2.border-default}' },
-                    color: { $value: '{basis.color.action-2.color-default}' },
-                  },
-                },
-              },
-            },
-          },
-        ],
-        question: 'Welke kleurstijl past bij uw huisstijl?',
-      },
-    ],
+    wizard: {
+      previewStoryIds: ['AllButtonPurposesPreview'],
+    },
   },
   render: ButtonPrimary,
 };

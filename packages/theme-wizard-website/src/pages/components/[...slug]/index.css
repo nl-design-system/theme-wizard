@@ -354,6 +354,12 @@
   position: sticky;
 }
 
+.wizard-token-preset__token-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-xs);
+}
+
 .wizard-page-reset {
   align-items: center;
   display: inline-flex;

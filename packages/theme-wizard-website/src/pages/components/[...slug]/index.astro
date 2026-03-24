@@ -9,23 +9,24 @@ import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
 import './index.css';
 
 export function getStaticPaths() {
-  return Object.keys(components).map(slug => ({
-    params: { slug }
-  }))
+  return Object.keys(components).map((slug) => ({
+    params: { slug },
+  }));
 }
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
-  return {
-    slug,
-    title
-  }
-}))
+const componentList = await Promise.all(
+  Object.entries(components).map(async ([slug, { title }]) => {
+    return {
+      slug,
+      title,
+    };
+  }),
+);
 
-const slug = Astro.params.slug as keyof typeof components
-const { title } = components[slug]
-await loadStoryWizardComponentStyles(slug)
-const wizard = await StoryWizardModel.fromComponentId(slug)
-
+const slug = Astro.params.slug as keyof typeof components;
+const { title } = components[slug];
+await loadStoryWizardComponentStyles(slug);
+const wizard = await StoryWizardModel.fromComponentId(slug);
 ---
 
 <BaseLayout title={`${slug} - Theme Wizard`}>
@@ -35,9 +36,16 @@ const wizard = await StoryWizardModel.fromComponentId(slug)
 
       <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
       <nav slot="sidebar">
-        {componentList.map(({slug: componentSlug, title}) => (
-          <wizard-sidebar-link href={`/components/${componentSlug}`} current={componentSlug === slug ? 'page' : undefined}>{title}</wizard-sidebar-link>
-        ))}
+        {
+          componentList.map(({ slug: componentSlug, title }) => (
+            <wizard-sidebar-link
+              href={`/components/${componentSlug}`}
+              current={componentSlug === slug ? 'page' : undefined}
+            >
+              {title}
+            </wizard-sidebar-link>
+          ))
+        }
       </nav>
       <main slot="main" class="wizard-main">
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
@@ -57,7 +65,7 @@ const wizard = await StoryWizardModel.fromComponentId(slug)
         <StoryWizard wizard={wizard} />
         <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>
       </main>
-     </wizard-layout>
+    </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 
