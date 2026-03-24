@@ -69,7 +69,10 @@ export class StoryWizardController {
 
     this.stepSelections?.removeAttribute('hidden');
     this.steppers.forEach((stepper) => stepper.removeAttribute('hidden'));
-    const restoredStepIndex = this.restoreStoredState();
+    const { hasStoredState, restoredStepIndex } = this.restoreStoredState();
+    if (!hasStoredState) {
+      this.restoreDefaultSelections();
+    }
     this.syncDynamicPresetOptions();
     this.showStep(restoredStepIndex);
   }
@@ -210,7 +213,12 @@ export class StoryWizardController {
 
   private restoreStoredState() {
     const storedState = this.readStoredState();
-    if (!storedState) return 0;
+    if (!storedState) {
+      return {
+        hasStoredState: false,
+        restoredStepIndex: 0,
+      };
+    }
 
     storedState.sections?.forEach((selection: number[], index: number) => {
       this.steps[index]?.restoreStoredSelection(selection);
@@ -221,10 +229,16 @@ export class StoryWizardController {
       storedState.currentStep >= 0 &&
       storedState.currentStep < this.total
     ) {
-      return storedState.currentStep;
+      return {
+        hasStoredState: true,
+        restoredStepIndex: storedState.currentStep,
+      };
     }
 
-    return 0;
+    return {
+      hasStoredState: true,
+      restoredStepIndex: 0,
+    };
   }
 
   private updateNextButtonState() {
