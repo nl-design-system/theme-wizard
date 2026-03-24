@@ -7,8 +7,12 @@ export class HomePage {
     this.input = page.getByLabel('Website URL');
   }
 
+  get url() {
+    return '/';
+  }
+
   async goto() {
-    await this.page.goto('/');
+    await this.page.goto(this.url);
   }
 
   async scrapeUrl(url: string) {

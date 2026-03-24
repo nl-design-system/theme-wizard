@@ -15,8 +15,12 @@ export class BasisTokensPage {
     this.downloadCssButton = this.page.getByRole('link', { name: 'Thema downloaden (CSS)' });
   }
 
+  get url() {
+    return '/basis-tokens';
+  }
+
   async goto() {
-    await this.page.goto('/basis-tokens');
+    await this.page.goto(this.url);
     await expect(this.preview).toBeVisible();
   }
 

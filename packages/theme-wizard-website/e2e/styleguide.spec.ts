@@ -11,11 +11,11 @@ test('page has accessibility basics', async ({ page }) => {
   await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 });
 
-test('page uses values as stored by the configuration page', async ({ basisTokens, page }) => {
+test('page uses values as stored by the configuration page', async ({ basisTokensPage, page }) => {
   // Set Accent 1 to red
-  await basisTokens.goto();
+  await basisTokensPage.goto();
   await page.getByRole('button', { name: 'Kleuren' }).click();
-  await basisTokens.changeColor('Accent 1', '#ff0000');
+  await basisTokensPage.changeColor('Accent 1', '#ff0000');
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');
