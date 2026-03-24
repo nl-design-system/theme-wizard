@@ -1,5 +1,6 @@
 import { expect as baseExpect, test as baseTest, type Locator } from '@playwright/test';
 import { BasisTokensPage } from '../pages/BasisTokensPage';
+import { ComponentPage } from '../pages/ComponentPage';
 import { HomePage } from '../pages/HomePage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
 
@@ -66,10 +67,15 @@ export const test = baseTest.extend<{
   basisTokensPage: BasisTokensPage;
   homePage: HomePage;
   stagingTokensPage: StagingTokensPage;
+  componentPage: ComponentPage;
 }>({
   basisTokensPage: async ({ page }, use) => {
     const themeWizard = new BasisTokensPage(page);
     await use(themeWizard);
+  },
+  componentPage: async ({ page }, use) => {
+    const componentPage = new ComponentPage(page);
+    await use(componentPage);
   },
   homePage: async ({ page }, use) => {
     const homePage = new HomePage(page);
