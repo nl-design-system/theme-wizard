@@ -54,7 +54,10 @@ export class WizardTokenPreset extends LitElement {
   override updated(changed: PropertyValues) {
     if (changed.has('options')) {
       this.defaultIndexState = -1;
-      this.updateSelectedIndex(this.currentTheme);
+
+      if (this.selectedIndexState === -1) {
+        this.updateSelectedIndex(this.currentTheme);
+      }
     }
   }
 
