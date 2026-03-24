@@ -5,6 +5,7 @@ export type DerivedTokenReference = {
   offset: number;
   scalePath: string;
   sourcePath: string;
+  targetIndex?: number;
   targetPath: string;
 };
 
@@ -76,6 +77,7 @@ const getTokenValueAtPath = (tokens: unknown, path: string) => {
 const getSelectedTokenReference = (
   selectedOptions: SelectedPresetOption[],
   path: string,
+  defaults: unknown,
   fallbackReference: string,
 ) => {
   for (const option of selectedOptions) {
@@ -84,6 +86,12 @@ const getSelectedTokenReference = (
     if (typeof value === 'string' && value.startsWith('{') && value.endsWith('}')) {
       return value;
     }
+  }
+
+  const defaultValue = getTokenValueAtPath(defaults, path);
+
+  if (typeof defaultValue === 'string' && defaultValue.startsWith('{') && defaultValue.endsWith('}')) {
+    return defaultValue;
   }
 
   return fallbackReference;
@@ -120,6 +128,18 @@ const getShiftedScaleReference = (defaults: unknown, reference: string, scalePat
   const targetIndex = Math.min(Math.max(currentIndex + offset, 0), scale.length - 1);
 
   return `{${prefix}${scale[targetIndex]}}`;
+};
+
+const getScaleReferenceAtIndex = (defaults: unknown, scalePath: string, targetIndex: number, fallbackReference: string) => {
+  const scale = getTokenScale(defaults, scalePath);
+
+  if (scale.length === 0) {
+    return fallbackReference;
+  }
+
+  const clampedIndex = Math.min(Math.max(targetIndex, 0), scale.length - 1);
+
+  return `{${scalePath}.${scale[clampedIndex]}}`;
 };
 
 /**
@@ -168,9 +188,12 @@ const resolveDynamicPresetOption = <TOption extends DynamicPresetOption>(
     return option;
   }
 
-  const { offset, scalePath, sourcePath, targetPath } = option.derivedTokenReference;
-  const sourceReference = getSelectedTokenReference(selectedOptions, sourcePath, `{${scalePath}.md}`);
-  const resolvedValue = getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
+  const { offset, scalePath, sourcePath, targetIndex, targetPath } = option.derivedTokenReference;
+  const sourceReference = getSelectedTokenReference(selectedOptions, sourcePath, defaults, `{${scalePath}.md}`);
+  const resolvedValue =
+    typeof targetIndex === 'number'
+      ? getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference)
+      : getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
   const resolvedTokens = buildTokenValue(targetPath, resolvedValue);
 
   return {

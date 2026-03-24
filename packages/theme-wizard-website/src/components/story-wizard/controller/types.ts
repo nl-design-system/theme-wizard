@@ -17,6 +17,7 @@ export type StoryWizardPresetOption = {
 
 export type WizardTokenPresetInput = HTMLElement & {
   clearSelection: () => void;
+  defaultIndex: number;
   options: StoryWizardPresetOption[];
   optionLabel: string;
   previewStyle: string;
