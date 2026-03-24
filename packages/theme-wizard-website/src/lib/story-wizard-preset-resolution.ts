@@ -1,4 +1,5 @@
 import dlv from 'dlv';
+import { presetTokensToStyle, styleObjectToString } from '../../../theme-wizard-app/src/lib/Theme/lib';
 
 export type DerivedTokenReference = {
   offset: number;
@@ -9,6 +10,7 @@ export type DerivedTokenReference = {
 
 export type DynamicPresetOption = {
   derivedTokenReference?: DerivedTokenReference;
+  previewStyle?: string;
   tokens: unknown;
 };
 
@@ -22,6 +24,16 @@ type PresetResolutionContext<TOption extends DynamicPresetOption> = {
   selectedOptions: SelectedPresetOption[];
 };
 
+/**
+ * Reads the available keys from a token scale in the defaults object.
+ *
+ * Example input:
+ * `defaults = { basis: { text: { 'font-size': { sm: {}, md: {}, lg: {} } } } }`
+ * `path = 'basis.text.font-size'`
+ *
+ * Example return:
+ * `['sm', 'md', 'lg']`
+ */
 const getTokenScale = (defaults: unknown, path: string) => {
   const tokenGroup = dlv(defaults && typeof defaults === 'object' ? defaults : undefined, path);
 
@@ -32,6 +44,16 @@ const getTokenScale = (defaults: unknown, path: string) => {
   return Object.keys(tokenGroup);
 };
 
+/**
+ * Reads a `$value` from a nested token object at a dot-path.
+ *
+ * Example input:
+ * `tokens = { nl: { paragraph: { 'font-size': { $value: '{basis.text.font-size.md}' } } } }`
+ * `path = 'nl.paragraph.font-size'`
+ *
+ * Example return:
+ * `'{basis.text.font-size.md}'`
+ */
 const getTokenValueAtPath = (tokens: unknown, path: string) => {
   const token = dlv(tokens && typeof tokens === 'object' ? tokens : undefined, path);
 
@@ -40,6 +62,17 @@ const getTokenValueAtPath = (tokens: unknown, path: string) => {
     : undefined;
 };
 
+/**
+ * Finds the first selected preset that contains a token reference for a given path.
+ *
+ * Example input:
+ * `selectedOptions = [{ tokens: { nl: { paragraph: { 'font-size': { $value: '{basis.text.font-size.lg}' } } } } }]`
+ * `path = 'nl.paragraph.font-size'`
+ * `fallbackReference = '{basis.text.font-size.md}'`
+ *
+ * Example return:
+ * `'{basis.text.font-size.lg}'`
+ */
 const getSelectedTokenReference = (
   selectedOptions: SelectedPresetOption[],
   path: string,
@@ -56,9 +89,20 @@ const getSelectedTokenReference = (
   return fallbackReference;
 };
 
+/**
+ * Shifts a token reference within a scale by an offset.
+ *
+ * Example input:
+ * `defaults = { basis: { text: { 'font-size': { sm: {}, md: {}, lg: {}, xl: {} } } } }`
+ * `reference = '{basis.text.font-size.lg}'`
+ * `scalePath = 'basis.text.font-size'`
+ * `offset = 1`
+ *
+ * Example return:
+ * `'{basis.text.font-size.xl}'`
+ */
 const getShiftedScaleReference = (defaults: unknown, reference: string, scalePath: string, offset: number) => {
-  const normalizedReference =
-    reference.startsWith('{') && reference.endsWith('}') ? reference.slice(1, -1) : reference;
+  const normalizedReference = reference.startsWith('{') && reference.endsWith('}') ? reference.slice(1, -1) : reference;
   const prefix = `${scalePath}.`;
 
   if (!normalizedReference.startsWith(prefix)) {
@@ -78,6 +122,16 @@ const getShiftedScaleReference = (defaults: unknown, reference: string, scalePat
   return `{${prefix}${scale[targetIndex]}}`;
 };
 
+/**
+ * Builds a nested token object with a single `$value` leaf.
+ *
+ * Example input:
+ * `path = 'nl.paragraph.lead.font-size'`
+ * `value = '{basis.text.font-size.xl}'`
+ *
+ * Example return:
+ * `{ nl: { paragraph: { lead: { 'font-size': { $value: '{basis.text.font-size.xl}' } } } } }`
+ */
 const buildTokenValue = (path: string, value: unknown) => {
   const result: Record<string, unknown> = {};
   const segments = path.split('.');
@@ -96,6 +150,15 @@ const buildTokenValue = (path: string, value: unknown) => {
   return result;
 };
 
+/**
+ * Resolves one dynamic preset option into a concrete option with actual token values and preview style.
+ *
+ * Example input:
+ * `option = { name: 'Extra ruim', derivedTokenReference: { offset: 1, scalePath: 'basis.text.font-size', sourcePath: 'nl.paragraph.font-size', targetPath: 'nl.paragraph.lead.font-size' }, tokens: {} }`
+ *
+ * Example return:
+ * `{ name: 'Extra ruim', derivedTokenReference: { ... }, previewStyle: '--nl-paragraph-lead-font-size:var(--basis-text-font-size-xl)', tokens: { nl: { paragraph: { lead: { 'font-size': { $value: '{basis.text.font-size.xl}' } } } } } }`
+ */
 const resolveDynamicPresetOption = <TOption extends DynamicPresetOption>(
   option: TOption,
   defaults: unknown,
@@ -108,13 +171,24 @@ const resolveDynamicPresetOption = <TOption extends DynamicPresetOption>(
   const { offset, scalePath, sourcePath, targetPath } = option.derivedTokenReference;
   const sourceReference = getSelectedTokenReference(selectedOptions, sourcePath, `{${scalePath}.md}`);
   const resolvedValue = getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
+  const resolvedTokens = buildTokenValue(targetPath, resolvedValue);
 
   return {
     ...option,
-    tokens: buildTokenValue(targetPath, resolvedValue),
+    previewStyle: styleObjectToString(presetTokensToStyle(resolvedTokens)),
+    tokens: resolvedTokens,
   };
 };
 
+/**
+ * Resolves all dynamic preset options in a preset group.
+ *
+ * Example input:
+ * `{ defaults, options: [{ name: 'Aanbevolen', derivedTokenReference: { ... }, tokens: {} }], selectedOptions }`
+ *
+ * Example return:
+ * `[{ name: 'Aanbevolen', derivedTokenReference: { ... }, previewStyle: '--nl-paragraph-lead-font-size:var(--basis-text-font-size-lg)', tokens: { nl: { paragraph: { lead: { 'font-size': { $value: '{basis.text.font-size.lg}' } } } } } }]`
+ */
 export const resolveDynamicPresetOptions = <TOption extends DynamicPresetOption>({
   defaults,
   options,
