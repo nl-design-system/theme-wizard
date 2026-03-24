@@ -147,6 +147,14 @@ const statePreviewLabelStyle = {
   fontWeight: 700,
 };
 
+const statePreviewGridStyle = {
+  alignItems: 'center',
+  columnGap: '1rem',
+  display: 'grid',
+  gridTemplateColumns: 'max-content repeat(5, max-content)',
+  rowGap: '0.75rem',
+};
+
 export { WizardPreviewSection };
 
 export const buttonWizardStepBasic = createWizardStep('button-basic', 'Button basis');
@@ -215,6 +223,103 @@ export const RenderButtonStates = ({ ...props }: ButtonProps) => (
     <StatePreviewItem label="Active">
       <ButtonComponent {...props} style={getButtonStateStyle(props.purpose, props.hint, 'active')} />
     </StatePreviewItem>
+  </div>
+);
+
+const ButtonPurposeMatrix = ({ purpose }: { purpose: ButtonProps['purpose'] }) => {
+  const baseProps: ButtonProps = {
+    iconStart: undefined,
+    label: 'Klik mij!',
+    purpose,
+  };
+
+  const emojiProps: ButtonProps = {
+    ...baseProps,
+    iconStart: '❤️',
+  };
+
+  const iconOnlyProps: ButtonProps = {
+    ...baseProps,
+    iconStart: '❤️',
+    iconOnly: true,
+    label: 'Favoriet',
+  };
+
+  const disabledProps: ButtonProps = {
+    ...baseProps,
+    disabled: true,
+    htmlDisabled: undefined,
+  };
+
+  const closedProps: ButtonProps = {
+    ...baseProps,
+    label: 'Meer tonen',
+    pressed: false,
+  };
+
+  const openProps: ButtonProps = {
+    ...baseProps,
+    label: 'Meer tonen',
+    pressed: true,
+  };
+
+  return (
+    <div style={statePreviewGridStyle}>
+      <span />
+      <strong>Default</strong>
+      <strong>Hover</strong>
+      <strong>Active</strong>
+      <strong>Open</strong>
+      <strong>Gesloten</strong>
+
+      <strong>Normaal</strong>
+      <ButtonComponent {...baseProps} />
+      <ButtonComponent {...baseProps} style={getButtonStateStyle(baseProps.purpose, baseProps.hint, 'hover')} />
+      <ButtonComponent {...baseProps} style={getButtonStateStyle(baseProps.purpose, baseProps.hint, 'active')} />
+      <ButtonComponent {...openProps} />
+      <ButtonComponent {...closedProps} />
+
+      <strong>Met emoji</strong>
+      <ButtonComponent {...emojiProps} />
+      <ButtonComponent {...emojiProps} style={getButtonStateStyle(emojiProps.purpose, emojiProps.hint, 'hover')} />
+      <ButtonComponent {...emojiProps} style={getButtonStateStyle(emojiProps.purpose, emojiProps.hint, 'active')} />
+      <ButtonComponent {...openProps} iconStart="❤️" />
+      <ButtonComponent {...closedProps} iconStart="❤️" />
+
+      <strong>Icon only</strong>
+      <ButtonComponent {...iconOnlyProps} />
+      <ButtonComponent {...iconOnlyProps} style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'hover')} />
+      <ButtonComponent {...iconOnlyProps} style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'active')} />
+      <ButtonComponent {...iconOnlyProps} pressed />
+      <ButtonComponent {...iconOnlyProps} pressed={false} />
+
+      <strong>Disabled</strong>
+      <ButtonComponent {...disabledProps} />
+      <ButtonComponent {...disabledProps} />
+      <ButtonComponent {...disabledProps} />
+      <ButtonComponent {...disabledProps} pressed />
+      <ButtonComponent {...disabledProps} pressed={false} />
+    </div>
+  );
+};
+
+const getPurposeLabel = (purpose: ButtonProps['purpose']) => {
+  if (purpose === 'primary') return 'Primary';
+  if (purpose === 'secondary') return 'Secondary';
+  return 'Default';
+};
+
+export const RenderButtonPurposePreview = ({ purpose }: ButtonProps) => (
+  <ButtonPurposeMatrix purpose={purpose} />
+);
+
+export const RenderAllButtonPurposesPreview = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    {([undefined, 'primary', 'secondary'] as const).map((purpose) => (
+      <WizardPreviewSection key={purpose ?? 'default'} label={getPurposeLabel(purpose)}>
+        <ButtonPurposeMatrix purpose={purpose} />
+      </WizardPreviewSection>
+    ))}
   </div>
 );
 
