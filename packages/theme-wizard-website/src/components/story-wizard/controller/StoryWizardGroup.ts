@@ -41,6 +41,14 @@ export class StoryWizardGroup {
     this.input?.selectIndex(index);
   }
 
+  public restoreDefaultSelection() {
+    if (!this.input || this.input.options.length === 0 || this.hasSelection()) {
+      return;
+    }
+
+    this.input.selectIndex(0);
+  }
+
   public setOptions(options: StoryWizardPresetOption[]) {
     if (!this.input) return;
 
