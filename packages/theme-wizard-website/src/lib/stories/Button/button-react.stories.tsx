@@ -62,45 +62,6 @@ export const Button: Story = {
         },
       },
     },
-    presets: [
-      {
-        name: 'Kies de minimale afmeting',
-        description:
-          'Voor WCAG 2.1 is 24px de minimale afmeting voor Button, maar voor gebruiksvriendelijkheid wordt ook wel 44px of 48px aangehouden',
-        options: [
-          {
-            name: 'Minimaal',
-            tokens: {
-              nl: {
-                button: {
-                  'min-block-size': {
-                    $value: '1.5rem',
-                  },
-                  'min-inline-size': {
-                    $value: '1.5rem',
-                  },
-                },
-              },
-            },
-          },
-          {
-            name: 'Aanbevolen',
-            tokens: {
-              nl: {
-                button: {
-                  'min-block-size': {
-                    $value: '{basis.pointer-target.min-block-size}',
-                  },
-                  'min-inline-size': {
-                    $value: '{basis.pointer-target.min-inline-size}',
-                  },
-                },
-              },
-            },
-          },
-        ],
-      },
-    ],
   },
 };
 
