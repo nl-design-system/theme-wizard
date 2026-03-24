@@ -1,5 +1,6 @@
 import type { Locator } from '@playwright/test';
 import { test, expect } from './fixtures/fixtures';
+import { storageStatePath } from './project-setup';
 
 test('page has accessibility basics', async ({ basisTokensPage }) => {
   await basisTokensPage.goto();
@@ -219,6 +220,9 @@ test.describe('printing the webpage', () => {
 });
 
 test.describe('colorscale inputs', () => {
+  // Make sure we have access to scraped tokens
+  test.use({ storageState: storageStatePath });
+
   const INITIAL_COLOR = '#1b59a4';
 
   test.beforeEach(async ({ basisTokensPage }) => {
@@ -230,6 +234,24 @@ test.describe('colorscale inputs', () => {
   test('Initial value matches Start Thema', async ({ basisTokensPage }) => {
     const input = basisTokensPage.page.getByLabel('Accent 1');
     await expect(input).toHaveValue(INITIAL_COLOR);
+  });
+
+  test('Color options are taken from scraper results', async ({ basisTokensPage }) => {
+    const options = await basisTokensPage.getInputOptions('Accent 1');
+    expect.soft(await options.count()).toBeGreaterThanOrEqual(1);
+
+    // Stop after N colors to not make the test too slow
+    const MAX_OPTIONS_TO_CHECK = 50;
+    let count = 0;
+
+    for (const option of await options.all()) {
+      if (count > MAX_OPTIONS_TO_CHECK) break;
+      count += 1;
+
+      const text = (await option.textContent())?.trim();
+      // like `red`, `#ff0000`, `rgb(0, 0, 0)
+      expect(text).toMatch(/^\w+$|^#[a-f0-9]{3,8}$|^rgba?\(.*/);
+    }
   });
 
   test('Changing a scale updates the preview', async ({ basisTokensPage }) => {
