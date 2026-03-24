@@ -47,7 +47,9 @@ export class StoryWizardController {
     const container = document.getElementById('story-wizard');
     if (!container) return;
 
-    void new StoryWizardController(container).start();
+    new StoryWizardController(container).start().catch((error) => {
+      console.error('Failed to initialize Story Wizard', error);
+    });
   }
 
   private get total() {
