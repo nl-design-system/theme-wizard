@@ -16,6 +16,13 @@ test('Accessibility basics', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
+test('Allows going to basis tokens without scraping', async ({ page }) => {
+  const link = page.getByRole('link', { name: 'basis tokens' });
+  await expect(link).toBeVisible();
+  await link.click();
+  expect(page.url()).toContain('/basis-tokens');
+});
+
 test.describe('scraping css design tokens', () => {
   test('scrapes a valid, absolute URL', async ({ homePage, page }) => {
     // This test waits for the loaders to disappear after scraping, which takes several seconds
