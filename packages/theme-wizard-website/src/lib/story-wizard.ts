@@ -1,5 +1,5 @@
 import type { DerivedTokenReference } from './story-wizard-preset-resolution';
-import { tokensToStyle } from '../../../theme-wizard-app/src/lib/Theme/lib';
+import { styleObjectToString, tokensToStyle } from '../../../theme-wizard-app/src/lib/Theme/lib';
 import { getStories } from '../../../theme-wizard-app/src/utils/csf-utils';
 import { components } from './components';
 
@@ -94,11 +94,6 @@ type StoryWizardStory = {
 type StoryEntry = [id: string, story: StoryWizardStory];
 
 const DEFAULT_STEP_INTRO = 'Kies een instelling en bekijk direct het effect op het component.';
-
-const styleObjectToString = (styleObject: Record<string, string>) =>
-  Object.entries(styleObject)
-    .map(([key, value]) => `${key}:${value}`)
-    .join(';');
 
 const formatLabelPart = (value: string) =>
   value
