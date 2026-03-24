@@ -1,6 +1,6 @@
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { dequal } from 'dequal';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import Theme from '../../lib/Theme';
 import { resolveTokenReferenceValue } from '../../lib/token-value';
@@ -8,6 +8,7 @@ import { ThemeUpdateEvent } from '../app/app';
 import { wizardTokenCSS } from './styles';
 
 const tag = 'wizard-token-preset';
+const themeTag = 'start-theme';
 
 type PresetOption = {
   description?: string;
@@ -37,6 +38,7 @@ export class WizardTokenPreset extends LitElement {
   private readonly inputName = `${tag}-${Math.random().toString(36).slice(2)}`;
   private readonly handleThemeUpdate = (event: ThemeUpdateEvent) => this.onThemeUpdate(event);
   private currentTheme = new Theme();
+  private defaultIndexState = -1;
   private selectedIndexState = -1;
 
   override connectedCallback(): void {
@@ -47,6 +49,13 @@ export class WizardTokenPreset extends LitElement {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.ownerDocument.removeEventListener('theme-update', this.handleThemeUpdate);
+  }
+
+  override updated(changed: PropertyValues) {
+    if (changed.has('options')) {
+      this.defaultIndexState = -1;
+      this.updateSelectedIndex(this.currentTheme);
+    }
   }
 
   get selectedIndex() {
@@ -270,6 +279,11 @@ export class WizardTokenPreset extends LitElement {
 
   private updateSelectedIndex(theme: Theme) {
     const selectedIndex = this.options.findIndex((option) => this.matchesTheme(theme, option.tokens));
+
+    if (this.defaultIndexState === -1 && selectedIndex >= 0) {
+      this.defaultIndexState = selectedIndex;
+    }
+
     this.setSelectedIndex(selectedIndex);
   }
 
@@ -359,6 +373,7 @@ export class WizardTokenPreset extends LitElement {
         <legend class="wizard-token-preset__legend">${this.groupLabel || 'Preset opties'}</legend>
         ${this.options.map((option, index) => {
           const isSelected = index === this.selectedIndex;
+          const isDefault = index === this.defaultIndexState;
 
           return html`
             <div class="wizard-token-preset__option">
@@ -376,7 +391,12 @@ export class WizardTokenPreset extends LitElement {
                     ? 'nl-button--pressed'
                     : ''}"
                 >
-                  <span class="nl-paragraph wizard-token-preset__option-title">${option.name}</span>
+                  <span class="wizard-token-preset__option-title-row">
+                    <span class="nl-paragraph wizard-token-preset__option-title">${option.name}</span>
+                    ${isDefault
+                      ? html`<span class="wizard-token-preset__option-default-pill">${themeTag}</span>`
+                      : nothing}
+                  </span>
 
                   ${option.description
                     ? html`<span class="nl-paragraph wizard-token-preset__option-description"
