@@ -20,6 +20,7 @@ export type StoryWizardPresetGroup = {
 };
 
 export type StoryWizardEditableToken = {
+  cssVar: string;
   label: string;
   path: string;
 };
@@ -93,8 +94,6 @@ type StoryWizardStory = {
 
 type StoryEntry = [id: string, story: StoryWizardStory];
 
-const DEFAULT_STEP_INTRO = 'Kies een instelling en bekijk direct het effect op het component.';
-
 const formatLabelPart = (value: string) =>
   value
     .split('-')
@@ -115,6 +114,8 @@ const formatTokenLabel = (tokenPath: string) => {
 
   return relevantParts.map(formatLabelPart).join(' ');
 };
+
+const formatTokenCssVar = (tokenPath: string) => `--${tokenPath.replaceAll('.', '-')}`;
 
 const uniqueById = <T extends { id: string }>(items: T[]) =>
   Array.from(new Map(items.map((item) => [item.id, item])).values());
@@ -138,7 +139,7 @@ const collectEditableTokenPaths = (tokens: unknown, path: string[] = []): StoryW
 
   if ('$value' in (tokens as Record<string, unknown>)) {
     const tokenPath = path.join('.');
-    return [{ label: formatTokenLabel(tokenPath), path: tokenPath }];
+    return [{ cssVar: formatTokenCssVar(tokenPath), label: formatTokenLabel(tokenPath), path: tokenPath }];
   }
 
   return Object.entries(tokens as Record<string, unknown>).flatMap(([key, value]) =>
@@ -344,7 +345,7 @@ export class StoryWizardModel {
       flowGroup: story.parameters?.wizard?.step ?? guessFlowGroup(story)?.key,
       flowTitle: story.parameters?.wizard?.stepTitle ?? guessFlowGroup(story)?.title,
       groups,
-      intro: story.parameters?.wizard?.description ?? DEFAULT_STEP_INTRO,
+      intro: story.parameters?.wizard?.description,
       previewStories: this.resolveStepPreviewStories(id, story, allStories, previewStories),
       title: story.name ?? id,
     };
