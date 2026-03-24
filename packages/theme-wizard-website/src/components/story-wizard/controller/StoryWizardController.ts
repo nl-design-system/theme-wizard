@@ -47,14 +47,15 @@ export class StoryWizardController {
     const container = document.getElementById('story-wizard');
     if (!container) return;
 
-    new StoryWizardController(container).start();
+    void new StoryWizardController(container).start();
   }
 
   private get total() {
     return this.steps.length;
   }
 
-  private start() {
+  private async start() {
+    await customElements.whenDefined('wizard-token-preset');
     initStories(this.componentId, JSON.parse(this.container.dataset.storyIds || '[]'));
     this.bindOptionListeners();
     this.bindNavigation();
@@ -132,6 +133,10 @@ export class StoryWizardController {
             selectedOptions,
           }),
         );
+
+        if (!group.hasSelection()) {
+          group.restoreSelectedIndex(0);
+        }
       });
     });
   }
@@ -195,6 +200,10 @@ export class StoryWizardController {
 
   private clearSelections() {
     this.steps.forEach((step) => step.clearSelections());
+  }
+
+  private restoreDefaultSelections() {
+    this.steps.forEach((step) => step.restoreDefaultSelection());
   }
 
   private restoreStoredState() {
@@ -656,6 +665,8 @@ export class StoryWizardController {
     this.container.closest('theme-wizard-app')?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
     this.clearSelections();
     this.clearStoredState();
+    this.syncDynamicPresetOptions();
+    this.restoreDefaultSelections();
     this.showStep(0);
   }
 }
