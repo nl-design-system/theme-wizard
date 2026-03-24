@@ -6,6 +6,8 @@ import { type ComponentType } from 'react';
 import {
   ButtonVariantsWithStates,
   Icon,
+  RenderAllButtonPurposesPreview,
+  RenderButtonPurposePreview,
   WizardPreviewSection,
 } from './button-react.story-components';
 
@@ -124,6 +126,26 @@ Optioneel kan er een hint mee gegeven worden.
   },
 };
 
+export const DefaultButtonPurposePreview: Story = {
+  name: 'Default Button Purpose Preview',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: undefined,
+  },
+  render: RenderButtonPurposePreview,
+};
+
+export const PrimaryButtonPurposePreview: Story = {
+  name: 'Primary Button Purpose Preview',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: 'primary',
+  },
+  render: RenderButtonPurposePreview,
+};
+
 export const SecondaryButton: Story = {
   name: 'Secondary Button',
   args: {
@@ -142,6 +164,21 @@ Optioneel kan er een hint mee gegeven worden.
       },
     },
   },
+};
+
+export const SecondaryButtonPurposePreview: Story = {
+  name: 'Secondary Button Purpose Preview',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: 'secondary',
+  },
+  render: RenderButtonPurposePreview,
+};
+
+export const AllButtonPurposesPreview: Story = {
+  name: 'All Button Purposes Preview',
+  render: RenderAllButtonPurposesPreview,
 };
 
 export const SubtleButton: Story = {

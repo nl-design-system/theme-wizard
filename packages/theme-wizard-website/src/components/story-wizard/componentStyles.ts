@@ -3,6 +3,7 @@ import type { components } from '@/lib/components';
 import '@nl-design-system-candidate/button-css/button.css';
 import '@nl-design-system-candidate/heading-css/heading.css';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import '@nl-design-system-candidate/code-css/code.css';
 
 type ComponentId = keyof typeof components;
 type StyleLoader = () => Promise<unknown>;

@@ -44,8 +44,6 @@ const { step } = Astro.props;
     </div>
 
     <aside class="wizard-story-section__settings-panel" aria-label={`${step.title} instellingen`}>
-      <p class="nl-paragraph wizard-token-preset__description">{step.intro}</p>
-
       {
         step.groups.map((group) =>
           group.type === 'preset' ? (
