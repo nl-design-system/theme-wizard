@@ -18,22 +18,14 @@ test('changing the paragraph preset also updates the lead paragraph preset', asy
       };
     });
 
-  for (const [index, label] of ['Aanbevolen', 'Ruim', 'Extra ruim'].entries()) {
-    await wizardTokenPreset.evaluate(
-      (element, selectedIndex) => {
-        (element as HTMLElement & { selectIndex: (index: number) => void }).selectIndex(selectedIndex);
-      },
-      index,
-    );
-
-    const values = await readThemeValues();
-    console.log(`Preset ${label}:`, values);
+  for (const [index] of ['Aanbevolen', 'Ruim', 'Extra ruim'].entries()) {
+    await wizardTokenPreset.evaluate((element, selectedIndex) => {
+      (element as HTMLElement & { selectIndex: (index: number) => void }).selectIndex(selectedIndex);
+    }, index);
   }
 
-  await expect
-    .poll(readThemeValues)
-    .toEqual({
-      lead: '{basis.text.font-size.xl}',
-      paragraph: '{basis.text.font-size.xl}',
-    });
+  await expect.poll(readThemeValues).toEqual({
+    lead: '{basis.text.font-size.xl}',
+    paragraph: '{basis.text.font-size.xl}',
+  });
 });
