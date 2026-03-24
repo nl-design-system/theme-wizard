@@ -212,9 +212,7 @@ export class StoryWizardController {
 
     this.transitionNotes.forEach((note) => {
       note.hidden = !isLastSafeStep;
-      note.textContent = isLastSafeStep
-        ? 'Je kunt nu afronden of doorgaan naar geavanceerde instellingen.'
-        : '';
+      note.textContent = isLastSafeStep ? 'Je kunt nu afronden of doorgaan naar geavanceerde instellingen.' : '';
     });
   }
 
@@ -248,12 +246,13 @@ export class StoryWizardController {
   }
 
   private getDefaultTokenValue(defaults: unknown, path: string) {
-    const defaultToken = defaults && typeof defaults === 'object'
-      ? path.split('.').reduce<unknown>((token, key) => {
-          if (!token || typeof token !== 'object') return undefined;
-          return (token as Record<string, unknown>)[key];
-        }, defaults)
-      : undefined;
+    const defaultToken =
+      defaults && typeof defaults === 'object'
+        ? path.split('.').reduce<unknown>((token, key) => {
+            if (!token || typeof token !== 'object') return undefined;
+            return (token as Record<string, unknown>)[key];
+          }, defaults)
+        : undefined;
 
     return defaultToken && typeof defaultToken === 'object' && '$value' in (defaultToken as Record<string, unknown>)
       ? (defaultToken as { $value?: unknown }).$value
@@ -304,9 +303,7 @@ export class StoryWizardController {
     return [
       {
         label: step.stepLabel,
-        optionLabel: hasChanges
-          ? tokens.map((token) => `${token.path}: ${token.value}`).join(' · ')
-          : 'Standaard',
+        optionLabel: hasChanges ? tokens.map((token) => `${token.path}: ${token.value}`).join(' · ') : 'Standaard',
         tokens,
       },
     ];
@@ -528,7 +525,8 @@ export class StoryWizardController {
     value.className = 'wizard-step-selection__value';
 
     if (selectedGroups.length === 0) {
-      value.textContent = isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
+      value.textContent =
+        isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
 
       if (!isAdvanced || !isCompletedAdvancedStep) {
         value.classList.add('wizard-step-selection__value--empty');
@@ -633,9 +631,7 @@ export class StoryWizardController {
 
   private reset() {
     this.hasFinishedAllChoices = false;
-    this.container
-      .closest('theme-wizard-app')
-      ?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
+    this.container.closest('theme-wizard-app')?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
     this.clearSelections();
     this.clearStoredState();
     this.showStep(0);
