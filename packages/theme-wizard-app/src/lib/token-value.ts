@@ -42,11 +42,11 @@ export function stringifyTokenValue(token: unknown): string {
 
   if (isValueObject(value)) {
     if ('colorSpace' in value && 'components' in value) {
-      return stringifyColor(value);
+      return stringifyColor(value as Parameters<typeof stringifyColor>[0]);
     }
 
     if ('unit' in value && 'value' in value) {
-      return stringifyDimension(value);
+      return stringifyDimension(value as Parameters<typeof stringifyDimension>[0]);
     }
 
     return JSON.stringify(value);
@@ -55,11 +55,7 @@ export function stringifyTokenValue(token: unknown): string {
   return value.toString();
 }
 
-export function resolveTokenReferenceValue(
-  value: string,
-  theme: Theme,
-  seen = new Set<string>(),
-): string | null {
+export function resolveTokenReferenceValue(value: string, theme: Theme, seen = new Set<string>()): string | null {
   const normalized = value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : '';
 
   if (!normalized) {
