@@ -2,6 +2,7 @@ import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline'
 import { dequal } from 'dequal';
 import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Theme from '../../lib/Theme';
 import { resolveTokenReferenceValue } from '../../lib/token-value';
 import { ThemeUpdateEvent } from '../app/app';
@@ -60,6 +61,10 @@ export class WizardTokenPreset extends LitElement {
 
   get selectedIndex() {
     return this.selectedIndexState;
+  }
+
+  get defaultIndex() {
+    return this.defaultIndexState;
   }
 
   get selectedOption() {
@@ -400,7 +405,7 @@ export class WizardTokenPreset extends LitElement {
 
                   ${option.description
                     ? html`<span class="nl-paragraph wizard-token-preset__option-description"
-                        >${option.description}</span
+                        >${unsafeHTML(option.description)}</span
                       >`
                     : nothing}
                 </span>
