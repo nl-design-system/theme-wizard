@@ -72,7 +72,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
 })
 ---
 
-<BaseLayout title=`${slug} - Componenten - Theme Wizard`>
+<BaseLayout title={`${components[slug].title} - Componenten - Theme Wizard`}>
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
@@ -87,9 +87,9 @@ const storiesWithTokens = stories.map(([id, story]) => {
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a class="nl-link" href="/">Wizard</a> /
-          <a class="nl-link" href="/components">componenten</a> /
-          <a class="nl-link" href={`/components/${slug}`}>{slug}</a> /
-          <span>tokens</span>
+          <a class="nl-link" href="/components">Componenten</a> /
+          <a class="nl-link" href={`/components/${slug}`}>{components[slug].title}</a> /
+          <span>Tokens</span>
         </nav>
 
         <clippy-heading level="1">{slug}</clippy-heading>

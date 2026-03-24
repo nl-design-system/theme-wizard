@@ -29,7 +29,7 @@ await loadStoryWizardComponentStyles(slug);
 const wizard = await StoryWizardModel.fromComponentId(slug);
 ---
 
-<BaseLayout title={`${slug} - Theme Wizard`}>
+<BaseLayout title={`${title} - Theme Wizard`}>
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
@@ -51,8 +51,8 @@ const wizard = await StoryWizardModel.fromComponentId(slug);
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a href="/">Wizard</a> /
-          <a href="/components">componenten</a> /
-          <span>{slug}</span>
+          <a href="/components">Componenten</a> /
+          <span>{title}</span>
         </nav>
 
         <div class="wizard-page-header">
