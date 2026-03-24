@@ -43,7 +43,7 @@ export type StoryWizardStep = {
   flowGroup?: string;
   flowTitle?: string;
   id: string;
-  intro: string;
+  intro?: string;
   previewStories: StoryWizardPreview[];
   groups: Array<StoryWizardPresetGroup | StoryWizardEditableTokenGroup>;
   title: string;
