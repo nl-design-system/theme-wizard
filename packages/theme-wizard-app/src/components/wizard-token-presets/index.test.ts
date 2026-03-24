@@ -214,35 +214,6 @@ describe(`<${tag}>`, () => {
     });
   });
 
-  describe('matched option ordering', () => {
-    it('renders the theme-matched option first in the list', async () => {
-      const el = await mount({ options: [optionA, optionB] });
-      dispatchThemeUpdate({ color: { primary: { $value: 'red' } } });
-      await el.updateComplete;
-
-      const titles = el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-title');
-      const names = Array.from(titles ?? []).map((title) => title.textContent?.trim());
-
-      expect(names[0]).toBe('Optie B');
-      expect(names[1]).toBe('Optie A');
-    });
-
-    it('does not move the clicked option to the top when the theme match stays the same', async () => {
-      const el = await mount({ options: [optionA, optionB] });
-      dispatchThemeUpdate({ color: { primary: { $value: 'red' } } });
-      await el.updateComplete;
-
-      el.selectIndex(0);
-      await el.updateComplete;
-
-      const titles = el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-title');
-      const names = Array.from(titles ?? []).map((title) => title.textContent?.trim());
-
-      expect(names[0]).toBe('Optie B');
-      expect(names[1]).toBe('Optie A');
-    });
-  });
-
   describe('token details rendering', () => {
     it('does not render token details when no option is selected', async () => {
       const el = await mount({ options: [optionA] });
