@@ -45,6 +45,10 @@ export class StoryWizardStep {
     this.groups.forEach((group) => group.clearSelection());
   }
 
+  public restoreDefaultSelection() {
+    this.groups.forEach((group) => group.restoreDefaultSelection());
+  }
+
   public getStoredSelection() {
     return this.groups.map((group) => group.getSelectedIndex());
   }
