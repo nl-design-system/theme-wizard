@@ -10,18 +10,19 @@ export const wizardTokenCSS = css`
     display: flex;
     flex-direction: column;
     gap: var(--basis-space-block-sm);
-    margin: 0;
-    padding: 0;
+    margin-block: 0;
+    margin-inline: 0;
+    padding-block: 0;
+    padding-inline: 0;
   }
 
   .wizard-token-preset__legend {
-    clip: rect(0 0 0 0);
+    block-size: 1px;
     clip-path: inset(50%);
-    height: 1px;
+    inline-size: 1px;
     overflow: hidden;
     position: absolute;
     white-space: nowrap;
-    width: 1px;
   }
 
   .wizard-token-preset__label {
@@ -32,7 +33,7 @@ export const wizardTokenCSS = css`
 
   .wizard-token-preset__control {
     inset: 0;
-    opacity: 0;
+    opacity: 0%;
     position: absolute;
   }
 
@@ -55,7 +56,8 @@ export const wizardTokenCSS = css`
     font-size: var(--basis-text-font-size-md);
     font-weight: var(--basis-text-font-weight-bold);
     line-height: var(--basis-text-line-height-md);
-    margin: 0;
+    margin-block: 0;
+    margin-inline: 0;
   }
 
   .wizard-token-preset__option-description {
@@ -65,7 +67,8 @@ export const wizardTokenCSS = css`
     font-size: var(--basis-text-font-size-sm);
     font-weight: var(--basis-text-font-weight-default);
     line-height: var(--basis-text-line-height-sm);
-    margin: 0;
+    margin-block: 0;
+    margin-inline: 0;
   }
 
   .wizard-token-preset__label:hover .wizard-token-preset__option-title {
@@ -134,11 +137,12 @@ export const wizardTokenCSS = css`
   .wizard-token-preset__option-value {
     align-items: flex-start;
     border-block-start: var(--basis-border-width-sm) solid
-      color-mix(in srgb, var(--basis-color-default-border-subtle) 45%, transparent);
+      color-mix(in sRGB, var(--basis-color-default-border-subtle) 45%, transparent);
     display: flex;
     flex-direction: column;
     gap: var(--basis-space-block-xs);
-    margin: 0;
+    margin-block: 0;
+    margin-inline: 0;
     padding-block-start: var(--basis-space-block-2xs);
   }
 

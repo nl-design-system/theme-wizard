@@ -148,7 +148,17 @@ const collectEditableTokenPaths = (tokens: unknown, path: string[] = []): StoryW
   );
 };
 
-const tokenPropertyOrder = ['background-color', 'border-color', 'color', 'border-width', 'border-radius', 'font-family', 'font-size', 'font-weight', 'line-height'];
+const tokenPropertyOrder = [
+  'background-color',
+  'border-color',
+  'color',
+  'border-width',
+  'border-radius',
+  'font-family',
+  'font-size',
+  'font-weight',
+  'line-height',
+];
 const tokenStateOrder = ['default', 'hover', 'active', 'pressed', 'disabled', 'focus'];
 
 const getTokenPropertyRank = (tokenPath: string) => {
@@ -188,7 +198,10 @@ const compareEditableTokens = (left: StoryWizardEditableToken, right: StoryWizar
 };
 
 const normalizeStoryName = (storyName?: string) =>
-  storyName?.replace(/^Design:\s*/i, '').trim().toLowerCase() ?? '';
+  storyName
+    ?.replace(/^Design:\s*/i, '')
+    .trim()
+    .toLowerCase() ?? '';
 
 const guessFlowGroup = (story: StoryWizardStory) => {
   const name = normalizeStoryName(story.name);
@@ -202,7 +215,13 @@ const guessFlowGroup = (story: StoryWizardStory) => {
   }
 
   if (name.includes('button')) {
-    if (name.includes('borders') || name.includes('typography') || name.includes('size') || name.includes('focus') || name.includes('icon')) {
+    if (
+      name.includes('borders') ||
+      name.includes('typography') ||
+      name.includes('size') ||
+      name.includes('focus') ||
+      name.includes('icon')
+    ) {
       return { key: 'button:basic', title: 'Button basis' };
     }
 
@@ -258,10 +277,7 @@ export class StoryWizardModel {
     const safeSteps = rawSteps.filter((step) => !this.isAdvancedStep(step));
     const advancedSteps = rawSteps.filter((step) => this.isAdvancedStep(step));
 
-    return [
-      ...safeSteps,
-      ...this.mergeStepsByFlowGroup(advancedSteps),
-    ];
+    return [...safeSteps, ...this.mergeStepsByFlowGroup(advancedSteps)];
   }
 
   private static mergeStepsByFlowGroup(steps: StoryWizardStep[]) {
@@ -283,25 +299,27 @@ export class StoryWizardModel {
       groupedSteps.get(groupKey)?.push(step);
     });
 
-    return groupOrder.map((groupKey) => {
-      const chunk = groupedSteps.get(groupKey) ?? [];
+    return groupOrder
+      .map((groupKey) => {
+        const chunk = groupedSteps.get(groupKey) ?? [];
 
-      if (chunk.length <= 1) {
-        return chunk[0];
-      }
+        if (chunk.length <= 1) {
+          return chunk[0];
+        }
 
-      return {
-        id: chunk.map((step) => step.id).join('--'),
-        flowGroup: groupKey,
-        flowTitle: chunk[0].flowTitle,
-        groups: chunk.flatMap((step) => step.groups),
-        intro: `Gebruik deze stap om meerdere geavanceerde instellingen binnen ${(
-          chunk[0].flowTitle ?? summarizeTitles(chunk.map((step) => step.title))
-        ).toLowerCase()} verder te verfijnen.`,
-        previewStories: uniqueById(chunk.flatMap((step) => step.previewStories)),
-        title: chunk[0].flowTitle ?? summarizeTitles(chunk.map((step) => step.title)),
-      };
-    }).filter((step): step is StoryWizardStep => Boolean(step));
+        return {
+          id: chunk.map((step) => step.id).join('--'),
+          flowGroup: groupKey,
+          flowTitle: chunk[0].flowTitle,
+          groups: chunk.flatMap((step) => step.groups),
+          intro: `Gebruik deze stap om meerdere geavanceerde instellingen binnen ${(
+            chunk[0].flowTitle ?? summarizeTitles(chunk.map((step) => step.title))
+          ).toLowerCase()} verder te verfijnen.`,
+          previewStories: uniqueById(chunk.flatMap((step) => step.previewStories)),
+          title: chunk[0].flowTitle ?? summarizeTitles(chunk.map((step) => step.title)),
+        };
+      })
+      .filter((step): step is StoryWizardStep => Boolean(step));
   }
 
   private static createStep(

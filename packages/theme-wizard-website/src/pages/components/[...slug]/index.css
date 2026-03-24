@@ -8,7 +8,7 @@
 }
 
 .wizard-page-content {
-  --wizard-panel-border-color: color-mix(in srgb, var(--basis-color-default-border-subtle) 78%, transparent);
+  --wizard-panel-border-color: color-mix(in sRGB, var(--basis-color-default-border-subtle) 78%, transparent);
   --wizard-settings-inline-padding: var(--basis-space-inline-lg);
 
   display: flex;
@@ -29,7 +29,8 @@
 
 .wizard-step-selections {
   margin-block-end: var(--basis-space-block-lg);
-  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
 }
 
 .wizard-step-selections__summary {
@@ -63,11 +64,11 @@
 }
 
 .wizard-step-selection + .wizard-step-selection {
-  border-block-start: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 40%, transparent);
+  border-block-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 40%, transparent);
 }
 
 .wizard-step-selection--total {
-  border-block-start: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 80%, transparent) !important;
+  border-block-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 80%, transparent) !important;
   margin-block-start: var(--basis-space-block-xs);
 }
 
@@ -95,7 +96,8 @@
   flex-shrink: 0;
   font-size: 0.9375rem;
   font-weight: 400;
-  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
   text-decoration: underline;
 }
 
@@ -160,7 +162,7 @@
 }
 
 .wizard-step-selection__value-token-path {
-  background-color: color-mix(in srgb, var(--basis-color-default-bg-subtle) 88%, transparent);
+  background-color: color-mix(in sRGB, var(--basis-color-default-bg-subtle) 88%, transparent);
   color: var(--basis-color-default-color-subtle);
 }
 
@@ -169,7 +171,7 @@
 }
 
 .wizard-step-selection__value-token-value {
-  background-color: color-mix(in srgb, var(--basis-color-action-1-bg-subtle) 72%, transparent);
+  background-color: color-mix(in sRGB, var(--basis-color-action-1-bg-subtle) 72%, transparent);
   color: var(--basis-color-action-1-color-default);
   font-weight: 700;
 }
@@ -195,19 +197,20 @@
   border: 0;
   max-block-size: 100dvh;
   max-inline-size: 100vw;
-  padding: 0;
+  padding-block: 0;
+  padding-inline: 0;
 }
 
 .wizard-tokens-dialog::backdrop {
   backdrop-filter: blur(4px);
-  background: color-mix(in srgb, var(--basis-color-default-bg-document, black) 60%, transparent);
+  background: color-mix(in sRGB, var(--basis-color-default-bg-document, black) 60%, transparent);
 }
 
 .wizard-tokens-dialog__inner {
   background: var(--basis-color-default-bg-default, #fff);
   border: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle, #ccc) 80%, transparent);
   border-radius: var(--basis-border-radius-lg, 8px);
-  box-shadow: 0 8px 32px color-mix(in srgb, black 16%, transparent);
+  box-shadow: 0 8px 32px color-mix(in sRGB, black 16%, transparent);
   display: flex;
   flex-direction: column;
   max-block-size: min(80dvh, 40rem);
@@ -218,7 +221,7 @@
 
 .wizard-tokens-dialog__header {
   align-items: center;
-  border-block-end: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 60%, transparent);
+  border-block-end: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 60%, transparent);
   display: flex;
   gap: var(--basis-space-inline-md);
   justify-content: space-between;
@@ -229,7 +232,8 @@
 .wizard-tokens-dialog__title {
   font-size: 1rem;
   font-weight: 700;
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 .wizard-tokens-dialog__body {
@@ -256,7 +260,7 @@
 }
 
 .wizard-tokens-dialog__table tr + tr td {
-  border-block-start: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 40%, transparent);
+  border-block-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 40%, transparent);
 }
 
 .wizard-tokens-dialog__token-path,
@@ -265,7 +269,7 @@
   font-size: 0.8125rem;
   padding-block: var(--basis-space-block-xs);
   padding-inline-end: var(--basis-space-inline-md);
-  vertical-align: top;
+  vertical-align: block-start;
 }
 
 .wizard-tokens-dialog__token-path {
@@ -335,33 +339,33 @@
 .wizard-story-section__settings-panel {
   align-self: start;
   background: transparent;
-  border-inline-start: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 58%, transparent);
+  border-inline-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 58%, transparent);
   border-radius: 0;
   display: flex;
   flex: 0 1 23rem;
   flex-direction: column;
   gap: var(--basis-space-block-lg);
   inline-size: 23rem;
+  inset-block-start: var(--basis-space-block-lg);
   max-inline-size: 100%;
   min-inline-size: 0;
   padding-block: 0;
   padding-inline: var(--wizard-settings-inline-padding) 0;
   position: sticky;
-  top: var(--basis-space-block-lg);
 }
 
 .wizard-page-reset {
   align-items: center;
   display: inline-flex;
-  gap: var(--basis-space-inline-xs);
   flex-shrink: 0;
+  gap: var(--basis-space-inline-xs);
 }
 
 .wizard-page-reset__icon {
   block-size: 1rem;
   display: inline-flex;
-  inline-size: 1rem;
   flex-shrink: 0;
+  inline-size: 1rem;
 }
 
 .wizard-page-reset__icon > svg {
@@ -379,9 +383,10 @@
 
 .wizard-story-section__variant-label {
   color: var(--basis-color-default-color-subtle);
-  letter-spacing: 0.04em;
   font-weight: 700;
-  margin: 0;
+  letter-spacing: 0.04em;
+  margin-block: 0;
+  margin-inline: 0;
   text-transform: uppercase;
 }
 
@@ -453,7 +458,8 @@
 }
 
 .wizard-token-preset__title-token-list-item {
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 .wizard-token-preset__description {
@@ -472,7 +478,8 @@
   color: var(--basis-color-default-color-default);
   cursor: pointer;
   font-weight: 700;
-  margin: 0;
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 .wizard-token-preset__advanced[open] .wizard-token-preset__advanced-summary {
@@ -494,7 +501,7 @@
 
 .wizard-preset-stepper {
   background: var(--basis-color-default-bg-document);
-  border-block-start: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 85%, transparent);
+  border-block-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 85%, transparent);
   display: flex;
   flex-direction: column;
   gap: var(--basis-space-block-sm);
@@ -505,8 +512,9 @@
 .wizard-preset-transition-note {
   color: var(--basis-color-default-color-subtle);
   flex: 0 1 24rem;
-  margin: 0;
-  text-align: left;
+  margin-block: 0;
+  margin-inline: 0;
+  text-align: inline-start;
 }
 
 .wizard-preset-stepper__actions {
@@ -532,15 +540,15 @@
 
 @media (width <= 960px) {
   .wizard-story-section__settings-panel {
-    border-block-start: 1px solid color-mix(in srgb, var(--basis-color-default-border-subtle) 68%, transparent);
+    border-block-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 68%, transparent);
     flex-basis: 100%;
     inline-size: 100%;
+    inset-block-start: auto;
     max-inline-size: none;
     min-inline-size: 0;
     padding-block-start: var(--basis-space-block-lg);
     padding-inline: 0;
     position: static;
-    top: auto;
   }
 
   .wizard-token-preset__options {

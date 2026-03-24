@@ -118,7 +118,6 @@ export const Button: Story = {
   },
 };
 
-
 export const WizardPreview: Story = {
   name: 'Wizard Preview',
   render: () => (
@@ -315,7 +314,6 @@ export const ButtonInteractionStyle: Story = {
   },
   render: ButtonVariantsWithStates,
 };
-
 
 export const ButtonShape: Story = {
   name: 'Vorm',
