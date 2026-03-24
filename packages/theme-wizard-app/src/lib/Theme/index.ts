@@ -65,7 +65,7 @@ export default class Theme {
     const cloned = new Theme(this.#defaults, stylesheet);
     cloned.#tokens = this.#tokens;
     cloned.#modified = this.#modified;
-    cloned.#validationIssues = this.#validateTheme(cloned.#tokens);
+    cloned.#validationIssues = [...this.#validationIssues];
     cloned.toCSS();
     return cloned;
   }

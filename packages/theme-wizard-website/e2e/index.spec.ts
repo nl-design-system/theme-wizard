@@ -12,7 +12,7 @@ test('Accessibility basics', async ({ page }) => {
   // Has document language specified
   await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 
-  // Has 1 <h1>
+  // Has a <h1>
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
