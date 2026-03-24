@@ -1,6 +1,5 @@
-import type { StoryContext, StoryObj } from '@storybook/react-vite';
+import type { StoryObj } from '@storybook/react-vite';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
-import { type ComponentType } from 'react';
 import {
   ButtonVariants,
   Icon,
@@ -20,1213 +19,359 @@ import {
   buttonWizardStepStates,
   buttonWizardStepVariants,
 } from './button-react.story-components';
+import {
+  createDesignStory,
+  createDisabledStory,
+  createPressedStory,
+  createStateStory,
+  createVariantStory,
+  renderVariantShowcase,
+  tokenValue,
+} from './button-react.story-helpers';
 
 type Story = StoryObj<ButtonProps>;
 
-export const DesignButtonBorders: Story = {
+export const DesignButtonBorders: Story = createDesignStory({
   name: 'Design: Button Borders',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Er is 1 instelling voor de border-radius van alle soorten buttons.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          'border-radius': {
-            $value: '',
-          },
-          default: {
-            'border-width': {
-              $value: '',
-            },
-          },
-          primary: {
-            'border-width': {
-              $value: '',
-            },
-          },
-          secondary: {
-            'border-width': {
-              $value: '',
-            },
-          },
-          subtle: {
-            'border-width': {
-              $value: '',
-            },
-          },
+  description: `Er is 1 instelling voor de border-radius van alle soorten buttons.`,
+  editableTokens: {
+    nl: {
+      button: {
+        'border-radius': tokenValue(),
+        default: {
+          'border-width': tokenValue(),
+        },
+        primary: {
+          'border-width': tokenValue(),
+        },
+        secondary: {
+          'border-width': tokenValue(),
+        },
+        subtle: {
+          'border-width': tokenValue(),
         },
       },
     },
-    wizard: buttonWizardStepBasic,
   },
   render: ButtonVariants,
-};
+  wizard: buttonWizardStepBasic,
+});
 
-export const DesignButtonTypography: Story = {
+export const DesignButtonTypography: Story = createDesignStory({
   name: 'Design: Button Typography',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Buttons op 'n rijtje.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          default: {
-            'font-size': {
-              $value: '',
-            },
-            'font-weight': {
-              $value: '',
-            },
-            'line-height': {
-              $value: '',
-            },
-          },
-          'font-family': {
-            $value: '',
-          },
-          primary: {
-            'font-size': {
-              $value: '',
-            },
-            'font-weight': {
-              $value: '',
-            },
-            'line-height': {
-              $value: '',
-            },
-          },
-          secondary: {
-            'font-size': {
-              $value: '',
-            },
-            'font-weight': {
-              $value: '',
-            },
-            'line-height': {
-              $value: '',
-            },
-          },
-          subtle: {
-            'font-size': {
-              $value: '',
-            },
-            'font-weight': {
-              $value: '',
-            },
-            'line-height': {
-              $value: '',
-            },
-          },
+  description: `Buttons op 'n rijtje.`,
+  editableTokens: {
+    nl: {
+      button: {
+        default: {
+          'font-size': tokenValue(),
+          'font-weight': tokenValue(),
+          'line-height': tokenValue(),
+        },
+        'font-family': tokenValue(),
+        primary: {
+          'font-size': tokenValue(),
+          'font-weight': tokenValue(),
+          'line-height': tokenValue(),
+        },
+        secondary: {
+          'font-size': tokenValue(),
+          'font-weight': tokenValue(),
+          'line-height': tokenValue(),
+        },
+        subtle: {
+          'font-size': tokenValue(),
+          'font-weight': tokenValue(),
+          'line-height': tokenValue(),
         },
       },
     },
-    wizard: buttonWizardStepBasic,
   },
   render: ButtonVariants,
-};
+  wizard: buttonWizardStepBasic,
+});
 
-export const DesignButtonStates: Story = {
+export const DesignButtonStates = createStateStory({
   name: 'Design: Button States',
   args: {
     label: 'Klik mij!',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een standaard Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          default: {
-            active: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-            'background-color': {
-              $value: '',
-            },
-            'border-color': {
-              $value: '',
-            },
-            color: {
-              $value: '',
-            },
-            hover: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepStates,
-  },
+  description: `Een standaard Button, met hover en active states.`,
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepStates,
+});
 
-export const DesignPrimaryButtonStates: Story = {
+export const DesignPrimaryButtonStates = createStateStory({
   name: 'Design: Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Primary Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            active: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-            'background-color': {
-              $value: '',
-            },
-            'border-color': {
-              $value: '',
-            },
-            color: {
-              $value: '',
-            },
-            hover: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepStates,
-  },
+  description: `Een Primary Button, met hover en active states.`,
+  purpose: 'primary',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepStates,
+});
 
-export const DesignSecondaryButtonStates: Story = {
+export const DesignSecondaryButtonStates = createStateStory({
   name: 'Design: Secondary Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Secondary Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            active: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-            'background-color': {
-              $value: '',
-            },
-            'border-color': {
-              $value: '',
-            },
-            color: {
-              $value: '',
-            },
-            hover: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepStates,
-  },
+  description: `Een Secondary Button, met hover en active states.`,
+  purpose: 'secondary',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepStates,
+});
 
-export const DesignSubtleButtonStates: Story = {
+export const DesignSubtleButtonStates = createStateStory({
   name: 'Design: Subtle Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Subtle Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            active: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-            'background-color': {
-              $value: '',
-            },
-            'border-color': {
-              $value: '',
-            },
-            color: {
-              $value: '',
-            },
-            hover: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepStates,
-  },
+  description: `Een Subtle Button, met hover en active states.`,
+  purpose: 'subtle',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepStates,
+});
 
-export const DesignPrimaryPositiveButtonStates: Story = {
+export const DesignPrimaryPositiveButtonStates = createStateStory({
   name: 'Design: Primary Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Primary Positive Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            positive: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositiveStates,
-  },
+  description: `Een Primary Positive Button, met hover en active states.`,
+  hint: 'positive',
+  purpose: 'primary',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepPositiveStates,
+});
 
-export const DesignSecondaryPositiveButtonStates: Story = {
+export const DesignSecondaryPositiveButtonStates = createStateStory({
   name: 'Design: Secondary Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Secondary Positive Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            positive: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositiveStates,
-  },
+  description: `Een Secondary Positive Button, met hover en active states.`,
+  hint: 'positive',
+  purpose: 'secondary',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepPositiveStates,
+});
 
-export const DesignSubtlePositiveButtonStates: Story = {
+export const DesignSubtlePositiveButtonStates = createStateStory({
   name: 'Design: Subtle Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Subtle Positive Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            positive: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositiveStates,
-  },
+  description: `Een Subtle Positive Button, met hover en active states.`,
+  hint: 'positive',
+  purpose: 'subtle',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepPositiveStates,
+});
 
-export const DesignPrimaryNegativeButtonStates: Story = {
+export const DesignPrimaryNegativeButtonStates = createStateStory({
   name: 'Design: Primary Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Primary Negative Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            negative: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativeStates,
-  },
+  description: `Een Primary Negative Button, met hover en active states.`,
+  hint: 'negative',
+  purpose: 'primary',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepNegativeStates,
+});
 
-export const DesignSecondaryNegativeButtonStates: Story = {
+export const DesignSecondaryNegativeButtonStates = createStateStory({
   name: 'Design: Secondary Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Secondary Negative Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            negative: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativeStates,
-  },
+  description: `Een Secondary Negative Button, met hover en active states.`,
+  hint: 'negative',
+  purpose: 'secondary',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepNegativeStates,
+});
 
-export const DesignSubtleNegativeButtonStates: Story = {
+export const DesignSubtleNegativeButtonStates = createStateStory({
   name: 'Design: Subtle Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een Subtle Negative Button, met hover en active states.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            negative: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativeStates,
-  },
+  description: `Een Subtle Negative Button, met hover en active states.`,
+  hint: 'negative',
+  purpose: 'subtle',
   render: RenderButtonStates,
-};
+  wizard: buttonWizardStepNegativeStates,
+});
 
-export const DesignPrimaryButton: Story = {
+export const DesignPrimaryButton = createVariantStory({
   name: 'Design: Primary Button',
   args: {
     label: 'Primary Button',
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `... `,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            'border-width': {
-              $value: '',
-            },
-            'font-size': {
-              $value: '',
-            },
-            'font-weight': {
-              $value: '',
-            },
-            'line-height': {
-              $value: '',
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepVariants,
-  },
-  render(args: ButtonProps, context: StoryContext<ButtonProps>) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { disabled, htmlDisabled, iconEnd, iconOnly, iconStart, label, pressed, toggle, ...rest } = args as any;
-    const Button = context.component as ComponentType<ButtonProps>;
+  description: `... `,
+  purpose: 'primary',
+  render: renderVariantShowcase,
+  wizard: buttonWizardStepVariants,
+});
 
-    return (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <Button
-          label={label}
-          purpose="primary"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-        <Button
-          label={`${label} (positive)`}
-          purpose="primary"
-          hint="positive"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-        <Button
-          label={`${label} (negative)`}
-          purpose="primary"
-          hint="negative"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-      </div>
-    );
-  },
-};
-
-export const DesignSecondaryButton: Story = {
+export const DesignSecondaryButton = createVariantStory({
   name: 'Design: Secondary Button',
   args: {
     label: 'Secondary Button',
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Button die een secondare actie aanduid. De secondaire actie wordt gebruikt als alternatief voor de primaire actie.
+  description: `Button die een secondare actie aanduid. De secondaire actie wordt gebruikt als alternatief voor de primaire actie.
 Optioneel kan er een hint mee gegeven worden.
 
 - \`hint="positive"\` geeft een positief of successvol resultaat aan. Bijvoorbeeld een creatie actie.
 - \`hint="negative"\` geeft een negatief of destructief resultaat aan. Bijvoorbeeld een verwijder actie.
         `,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            'border-width': {
-              $value: '',
-            },
-            'font-size': {
-              $value: '',
-            },
-            'font-weight': {
-              $value: '',
-            },
-            'line-height': {
-              $value: '',
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepVariants,
-  },
-  render: (args: ButtonProps, context: StoryContext<ButtonProps>) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { disabled, htmlDisabled, iconEnd, iconOnly, iconStart, label, pressed, toggle, ...rest } = args as any;
-    const Button = context.component as ComponentType<ButtonProps>;
+  purpose: 'secondary',
+  render: renderVariantShowcase,
+  wizard: buttonWizardStepVariants,
+});
 
-    return (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <Button
-          label={label}
-          purpose="secondary"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-        <Button
-          label={`${label} (positive)`}
-          purpose="secondary"
-          hint="positive"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-        <Button
-          label={`${label} (negative)`}
-          purpose="secondary"
-          hint="negative"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-      </div>
-    );
-  },
-};
-
-export const DesignSubtleButton: Story = {
+export const DesignSubtleButton = createVariantStory({
   name: 'Design: Subtle Button',
   args: {
     label: 'Subtle Button',
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een subtle button is een button die niet meteen de aandacht trekt.
+  description: `Een subtle button is een button die niet meteen de aandacht trekt.
 Optioneel kan er een hint mee gegeven worden.
 
 - \`hint="positive"\` geeft een positief of successvol resultaat aan. Bijvoorbeeld een creatie actie.
 - \`hint="negative"\` geeft een negatief of destructief resultaat aan. Bijvoorbeeld een verwijder actie.
         `,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            'border-width': {
-              $value: '',
-            },
-            'font-size': {
-              $value: '',
-            },
-            'font-weight': {
-              $value: '',
-            },
-            'line-height': {
-              $value: '',
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepVariants,
-  },
-  render: (args: ButtonProps, context: StoryContext<ButtonProps>) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { disabled, htmlDisabled, iconEnd, iconOnly, iconStart, label, pressed, toggle, ...rest } = args as any;
-    const Button = context.component as ComponentType<ButtonProps>;
+  purpose: 'subtle',
+  render: renderVariantShowcase,
+  wizard: buttonWizardStepVariants,
+});
 
-    return (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <Button
-          label={label}
-          purpose="subtle"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-        <Button
-          label={`${label} (positive)`}
-          purpose="subtle"
-          hint="positive"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-        <Button
-          label={`${label} (negative)`}
-          purpose="subtle"
-          hint="negative"
-          disabled={disabled}
-          htmlDisabled={htmlDisabled}
-          iconStart={iconStart}
-          iconEnd={iconEnd}
-          iconOnly={iconOnly}
-          pressed={pressed}
-          toggle={toggle}
-          {...rest}
-        />
-      </div>
-    );
-  },
-};
-
-export const DesignFocusButton: Story = {
+export const DesignFocusButton: Story = createDesignStory({
   name: 'Design: Focus Visible Button',
   args: {
     label: 'Klik mij!',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `...`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          focus: {
-            'background-color': {
-              $value: '',
-            },
-            'border-color': {
-              $value: '',
-            },
-            color: {
-              $value: '',
-            },
-          },
-          'outline-offset': {
-            $value: '',
-          },
+  description: `...`,
+  editableTokens: {
+    nl: {
+      button: {
+        focus: {
+          'background-color': tokenValue(),
+          'border-color': tokenValue(),
+          color: tokenValue(),
         },
+        'outline-offset': tokenValue(),
       },
     },
-    wizard: buttonWizardStepBasic,
   },
   render: RenderButtonFocusVisible,
-};
+  wizard: buttonWizardStepBasic,
+});
 
-export const DesignDisabledButton: Story = {
+export const DesignDisabledButton = createDisabledStory({
   name: 'Design: Disabled Button',
   args: {
     disabled: true,
     label: 'Klik mij!',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `...`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          default: {
-            disabled: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepDisabled,
-  },
+  description: `...`,
+  purpose: 'default',
   render: RenderButtonDisabled,
-};
+  wizard: buttonWizardStepDisabled,
+});
 
-export const DesignPrimaryDisabledButton: Story = {
+export const DesignPrimaryDisabledButton = createDisabledStory({
   name: 'Design: Primary Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte Primary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            disabled: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-
-    wizard: buttonWizardStepDisabled,
-  },
+  description: `Een ingedrukte Primary Button.`,
+  purpose: 'primary',
   render: RenderButtonDisabled,
-};
+  wizard: buttonWizardStepDisabled,
+});
 
-export const DesignSecondaryDisabledButton: Story = {
+export const DesignSecondaryDisabledButton = createDisabledStory({
   name: 'Design: Secondary Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte Secondary Button`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            disabled: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-
-    wizard: buttonWizardStepDisabled,
-  },
+  description: `Een ingedrukte Secondary Button`,
+  purpose: 'secondary',
   render: RenderButtonDisabled,
-};
+  wizard: buttonWizardStepDisabled,
+});
 
-export const DesignSubtleDisabledButton: Story = {
+export const DesignSubtleDisabledButton = createDisabledStory({
   name: 'Design: Subtle Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte Subtle Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            disabled: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-
-    wizard: buttonWizardStepDisabled,
-  },
+  description: `Een ingedrukte Subtle Button.`,
+  purpose: 'subtle',
   render: RenderButtonDisabled,
-};
+  wizard: buttonWizardStepDisabled,
+});
 
-export const DesignAlleenEenIcon: Story = {
+export const DesignAlleenEenIcon: Story = createDesignStory({
   name: 'Design: Alleen een icon',
   args: {
     iconOnly: true,
     iconStart: <Icon />,
     label: 'Klik mij!',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een button met alleen een icon. Als de icon niet in het midden staat, dan moet je mogelijk een kleinere padding kiezen.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          icon: {
-            size: {
-              $value: '',
-            },
-          },
-          'icon-only': {
-            'padding-block-end': {
-              $value: '',
-            },
-            'padding-block-start': {
-              $value: '',
-            },
-            'padding-inline-end': {
-              $value: '',
-            },
-            'padding-inline-start': {
-              $value: '',
-            },
-          },
+  description: `Een button met alleen een icon. Als de icon niet in het midden staat, dan moet je mogelijk een kleinere padding kiezen.`,
+  editableTokens: {
+    nl: {
+      button: {
+        icon: {
+          size: tokenValue(),
+        },
+        'icon-only': {
+          'padding-block-end': tokenValue(),
+          'padding-block-start': tokenValue(),
+          'padding-inline-end': tokenValue(),
+          'padding-inline-start': tokenValue(),
         },
       },
     },
-    wizard: buttonWizardStepBasic,
   },
   render: () => (
-    // TODO: Use Action Group
     <div style={{ columnGap: '1ch', display: 'flex', flexDirection: 'row' }}>
       <ButtonComponent iconOnly iconStart={<Icon />} />
       <ButtonComponent iconOnly iconStart={<Icon />} purpose="primary" />
@@ -1238,517 +383,145 @@ export const DesignAlleenEenIcon: Story = {
       <ButtonComponent iconOnly iconStart={<span className="nl-icon">❤️</span>} purpose="subtle" />
     </div>
   ),
-};
+  wizard: buttonWizardStepBasic,
+});
 
-export const DesignPressedButton: Story = {
+export const DesignPressedButton = createPressedStory({
   name: 'Design: Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          default: {
-            pressed: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPressed,
-  },
+  description: `Een ingedrukte Button.`,
+  purpose: 'default',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepPressed,
+});
 
-export const DesignPrimaryPressedButton: Story = {
+export const DesignPrimaryPressedButton = createPressedStory({
   name: 'Design: Primary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte Primary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            pressed: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-
-    wizard: buttonWizardStepPressed,
-  },
+  description: `Een ingedrukte Primary Button.`,
+  purpose: 'primary',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepPressed,
+});
 
-export const DesignSecondaryPressedButton: Story = {
+export const DesignSecondaryPressedButton = createPressedStory({
   name: 'Design: Secondary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte Secondary Button`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            pressed: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-
-    wizard: buttonWizardStepPressed,
-  },
+  description: `Een ingedrukte Secondary Button`,
+  purpose: 'secondary',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepPressed,
+});
 
-export const DesignSubtlePressedButton: Story = {
+export const DesignSubtlePressedButton = createPressedStory({
   name: 'Design: Subtle Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte Subtle Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            pressed: {
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-            },
-          },
-        },
-      },
-    },
-
-    wizard: buttonWizardStepPressed,
-  },
+  description: `Een ingedrukte Subtle Button.`,
+  purpose: 'subtle',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepPressed,
+});
 
-export const DesignPrimaryPositiveButton: Story = {
+export const DesignPrimaryPositiveButton = createStateStory({
   name: 'Design: Primary Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte positieve Primary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            positive: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositiveVariants,
-  },
-};
+  description: `Een ingedrukte positieve Primary Button.`,
+  hint: 'positive',
+  purpose: 'primary',
+  render: RenderButtonStates,
+  wizard: buttonWizardStepPositiveVariants,
+});
 
-export const DesignPrimaryNegativeButton: Story = {
+export const DesignPrimaryNegativeButton = createStateStory({
   name: 'Design: Primary Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte negative Primary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            negative: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativeVariants,
-  },
-};
+  description: `Een ingedrukte negative Primary Button.`,
+  hint: 'negative',
+  purpose: 'primary',
+  render: RenderButtonStates,
+  wizard: buttonWizardStepNegativeVariants,
+});
 
-export const DesignSecondaryPositiveButton: Story = {
+export const DesignSecondaryPositiveButton = createStateStory({
   name: 'Design: Secondary Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte positieve Secondary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            positive: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositiveVariants,
-  },
-};
+  description: `Een ingedrukte positieve Secondary Button.`,
+  hint: 'positive',
+  purpose: 'secondary',
+  render: RenderButtonStates,
+  wizard: buttonWizardStepPositiveVariants,
+});
 
-export const DesignSecondaryNegativeButton: Story = {
+export const DesignSecondaryNegativeButton = createStateStory({
   name: 'Design: Secondary Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte negative Secondary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            negative: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativeVariants,
-  },
-};
+  description: `Een ingedrukte negative Secondary Button.`,
+  hint: 'negative',
+  purpose: 'secondary',
+  render: RenderButtonStates,
+  wizard: buttonWizardStepNegativeVariants,
+});
 
-export const DesignSubtlePositiveButton: Story = {
+export const DesignSubtlePositiveButton = createStateStory({
   name: 'Design: Subtle Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte positieve Subtle Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            positive: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositiveVariants,
-  },
-};
+  description: `Een ingedrukte positieve Subtle Button.`,
+  hint: 'positive',
+  purpose: 'subtle',
+  render: RenderButtonStates,
+  wizard: buttonWizardStepPositiveVariants,
+});
 
-export const DesignSubtleNegativeButton: Story = {
+export const DesignSubtleNegativeButton = createStateStory({
   name: 'Design: Subtle Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte negative Subtle Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            negative: {
-              active: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-              'background-color': {
-                $value: '',
-              },
-              'border-color': {
-                $value: '',
-              },
-              color: {
-                $value: '',
-              },
-              hover: {
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativeVariants,
-  },
-};
+  description: `Een ingedrukte negative Subtle Button.`,
+  hint: 'negative',
+  purpose: 'subtle',
+  render: RenderButtonStates,
+  wizard: buttonWizardStepNegativeVariants,
+});
 
-export const DesignPrimaryPositivePressedButton: Story = {
+export const DesignPrimaryPositivePressedButton = createPressedStory({
   name: 'Design: Primary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
@@ -1756,62 +529,14 @@ export const DesignPrimaryPositivePressedButton: Story = {
     pressed: true,
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte positieve Primary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            positive: {
-              pressed: {
-                active: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-                hover: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositivePressed,
-  },
+  description: `Een ingedrukte positieve Primary Button.`,
+  hint: 'positive',
+  purpose: 'primary',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepPositivePressed,
+});
 
-export const DesignPrimaryNegativePressedButton: Story = {
+export const DesignPrimaryNegativePressedButton = createPressedStory({
   name: 'Design: Primary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
@@ -1819,62 +544,14 @@ export const DesignPrimaryNegativePressedButton: Story = {
     pressed: true,
     purpose: 'primary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte negative Primary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          primary: {
-            negative: {
-              pressed: {
-                active: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-                hover: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativePressed,
-  },
+  description: `Een ingedrukte negative Primary Button.`,
+  hint: 'negative',
+  purpose: 'primary',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepNegativePressed,
+});
 
-export const DesignSecondaryPositivePressedButton: Story = {
+export const DesignSecondaryPositivePressedButton = createPressedStory({
   name: 'Design: Secondary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
@@ -1882,62 +559,14 @@ export const DesignSecondaryPositivePressedButton: Story = {
     pressed: true,
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte positieve Secondary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            positive: {
-              pressed: {
-                active: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-                hover: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositivePressed,
-  },
+  description: `Een ingedrukte positieve Secondary Button.`,
+  hint: 'positive',
+  purpose: 'secondary',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepPositivePressed,
+});
 
-export const DesignSecondaryNegativePressedButton: Story = {
+export const DesignSecondaryNegativePressedButton = createPressedStory({
   name: 'Design: Secondary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
@@ -1945,62 +574,14 @@ export const DesignSecondaryNegativePressedButton: Story = {
     pressed: true,
     purpose: 'secondary',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte negative Secondary Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          secondary: {
-            negative: {
-              pressed: {
-                active: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-                hover: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativePressed,
-  },
+  description: `Een ingedrukte negative Secondary Button.`,
+  hint: 'negative',
+  purpose: 'secondary',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepNegativePressed,
+});
 
-export const DesignSubtlePositivePressedButton: Story = {
+export const DesignSubtlePositivePressedButton = createPressedStory({
   name: 'Design: Subtle Positive Geselecteerde Button',
   args: {
     hint: 'positive',
@@ -2008,62 +589,14 @@ export const DesignSubtlePositivePressedButton: Story = {
     pressed: true,
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte positieve Subtle Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            positive: {
-              pressed: {
-                active: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-                hover: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepPositivePressed,
-  },
+  description: `Een ingedrukte positieve Subtle Button.`,
+  hint: 'positive',
+  purpose: 'subtle',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepPositivePressed,
+});
 
-export const DesignSubtleNegativePressedButton: Story = {
+export const DesignSubtleNegativePressedButton = createPressedStory({
   name: 'Design: Subtle Negative Geselecteerde Button',
   args: {
     hint: 'negative',
@@ -2071,60 +604,12 @@ export const DesignSubtleNegativePressedButton: Story = {
     pressed: true,
     purpose: 'subtle',
   },
-  parameters: {
-    designStory: true,
-    docs: {
-      description: {
-        story: `Een ingedrukte negative Subtle Button.`,
-      },
-    },
-    editableTokens: {
-      nl: {
-        button: {
-          subtle: {
-            negative: {
-              pressed: {
-                active: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-                'background-color': {
-                  $value: '',
-                },
-                'border-color': {
-                  $value: '',
-                },
-                color: {
-                  $value: '',
-                },
-                hover: {
-                  'background-color': {
-                    $value: '',
-                  },
-                  'border-color': {
-                    $value: '',
-                  },
-                  color: {
-                    $value: '',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    wizard: buttonWizardStepNegativePressed,
-  },
+  description: `Een ingedrukte negative Subtle Button.`,
+  hint: 'negative',
+  purpose: 'subtle',
   render: RenderButtonPressed,
-};
+  wizard: buttonWizardStepNegativePressed,
+});
 
 export const DesignButtonSize: Story = {
   name: 'Design: Button Size',

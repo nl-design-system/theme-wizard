@@ -8,7 +8,6 @@
 }
 
 .wizard-page-content {
-  --wizard-panel-border-color: color-mix(in sRGB, var(--basis-color-default-border-subtle) 78%, transparent);
   --wizard-settings-inline-padding: var(--basis-space-inline-lg);
 
   display: flex;
