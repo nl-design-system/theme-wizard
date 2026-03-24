@@ -288,19 +288,10 @@ const createVariantStateTokens = ({
   filledBorderTransparent = false,
   mode,
 }: Omit<ButtonPresetOptionConfig, 'description' | 'name'>) => {
-  const defaultBorderColor =
-    mode === 'subtle'
-      ? transparentToken
-      : mode === 'filled' && filledBorderTransparent
-        ? transparentToken
-        : tokenRef(`${family}.border-default`);
+  const useTransparentBorder = mode === 'subtle' || (mode === 'filled' && filledBorderTransparent);
+  const defaultBorderColor = useTransparentBorder ? transparentToken : tokenRef(`${family}.border-default`);
   const hoverBorderColor = mode === 'subtle' ? transparentToken : tokenRef(`${family}.border-hover`);
-  const activeBorderColor =
-    mode === 'subtle'
-      ? transparentToken
-      : mode === 'filled' && filledBorderTransparent
-        ? transparentToken
-        : tokenRef(`${family}.border-active`);
+  const activeBorderColor = useTransparentBorder ? transparentToken : tokenRef(`${family}.border-active`);
 
   return {
     active: {
