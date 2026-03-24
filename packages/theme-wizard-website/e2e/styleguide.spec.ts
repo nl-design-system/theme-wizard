@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures/fixtures';
 
 test('page has accessibility basics', async ({ page }) => {
   await page.goto('/style-guide');
@@ -11,13 +11,11 @@ test('page has accessibility basics', async ({ page }) => {
   await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 });
 
-test('page uses values as stored by the configuration page', async ({ page }) => {
+test('page uses values as stored by the configuration page', async ({ page, themeWizard }) => {
   // Set Accent 1 to red
-  await page.goto('/basis-tokens');
+  await themeWizard.goto();
   await page.getByRole('button', { name: 'Kleuren' }).click();
-  const accent1Input = page.getByLabel('Accent 1');
-  await accent1Input.fill('#ff0000');
-  await accent1Input.press('Enter');
+  await themeWizard.changeColor('Accent 1', '#ff0000');
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
   await page.goto('/style-guide');

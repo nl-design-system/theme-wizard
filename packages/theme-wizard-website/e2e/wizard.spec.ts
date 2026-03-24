@@ -1,37 +1,5 @@
 import { test, expect } from './fixtures/fixtures';
 
-// Scraping tests skipped until we've figured out the UX flow with the redesign
-// Should be done before 24-03-2026
-test.describe.skip('scraping css design tokens', () => {
-  test('scrapes a valid, absolute URL', async ({ basisTokens }) => {
-    await basisTokens.scrapeUrl('https://nldesignsystem.nl/');
-    const input = basisTokens.page.getByLabel('Website URL');
-    await expect(input).not.toHaveAttribute('aria-invalid');
-    await expect(basisTokens.page.getByRole('status')).toBeVisible();
-  });
-
-  test('scrapes a valid, non-absolute URL', async ({ basisTokens }) => {
-    await basisTokens.scrapeUrl('nldesignsystem.nl/');
-    const input = basisTokens.page.getByLabel('Website URL');
-    await expect(input).not.toHaveAttribute('aria-invalid');
-    await expect(basisTokens.page.getByRole('status')).toBeVisible();
-  });
-
-  test('errors on an invalid URL', async ({ basisTokens }) => {
-    await basisTokens.scrapeUrl('https://.com');
-    const input = basisTokens.page.getByLabel('Website URL');
-    await expect(input).toHaveAttribute('aria-invalid', 'true');
-    await expect(input).toHaveAccessibleErrorMessage('Kan "https://.com/" niet analyseren');
-  });
-
-  test('errors when no URL is entered', async ({ basisTokens }) => {
-    await basisTokens.scrapeUrl('');
-    const input = basisTokens.page.getByLabel('Website URL');
-    await expect(input).toHaveAttribute('aria-invalid', 'true');
-    await expect(input).toHaveAccessibleErrorMessage('Vul een valide URL in');
-  });
-});
-
 test.describe('change fonts', () => {
   test.beforeEach(async ({ basisTokens }) => {
     await basisTokens.goto();
