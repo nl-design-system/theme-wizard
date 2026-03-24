@@ -44,10 +44,7 @@ export const CookieConsentDrawer = ({
       )}
 
       {title && (
-        <Heading 
-          level={2} 
-          id="cookie-consent-title" 
-          style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
+        <Heading level={2} id="cookie-consent-title" style={{ marginBlockEnd: 'var(--basis-space-block-lg, 1.5rem)' }}>
           {title}
         </Heading>
       )}

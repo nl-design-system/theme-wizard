@@ -56,7 +56,10 @@ export const isColorToken = (token: unknown): token is ColorToken => {
   );
 };
 
-export const walkColors = (root: unknown, callback: (token: ColorToken, path: string[]) => void | typeof SKIP): void => {
+export const walkColors = (
+  root: unknown,
+  callback: (token: ColorToken, path: string[]) => void | typeof SKIP,
+): void => {
   walkObject<ColorToken>(root, isColorToken, callback);
 };
 
@@ -83,7 +86,10 @@ const isLineHeightToken = (token: unknown): token is BaseDesignToken => {
   return isTokenLike(token) && token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === 'line-height';
 };
 
-export const walkLineHeights = (root: unknown, callback: (token: BaseDesignToken, path: string[]) => void | typeof SKIP): void => {
+export const walkLineHeights = (
+  root: unknown,
+  callback: (token: BaseDesignToken, path: string[]) => void | typeof SKIP,
+): void => {
   walkObject<BaseDesignToken>(root, isLineHeightToken, callback);
 };
 
@@ -91,13 +97,19 @@ const isDimensionToken = (token: unknown): token is DimensionToken => {
   return isTokenLike(token) && DimensionTokenSchema.safeParse(token).success;
 };
 
-export const walkDimensions = (root: unknown, callback: (token: DimensionToken, path: string[]) => void | typeof SKIP): void => {
+export const walkDimensions = (
+  root: unknown,
+  callback: (token: DimensionToken, path: string[]) => void | typeof SKIP,
+): void => {
   walkObject<DimensionToken>(root, isDimensionToken, (token, path) => {
     const dimension = DimensionTokenSchema.safeParse(token);
     return callback(dimension.data!, path);
   });
 };
 
-export const walkTokens = (root: unknown, callback: (token: BaseDesignToken, path: string[]) => void | typeof SKIP): void => {
+export const walkTokens = (
+  root: unknown,
+  callback: (token: BaseDesignToken, path: string[]) => void | typeof SKIP,
+): void => {
   walkObject<BaseDesignToken>(root, isTokenLike, callback);
 };
