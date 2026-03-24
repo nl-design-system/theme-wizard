@@ -271,7 +271,7 @@ export const createVariantStory = ({
   description: string;
   name: string;
   purpose: VariantPurpose;
-  render: ButtonStory['render'];
+  render: (args: VariantStoryArgs) => JSX.Element;
   wizard: WizardStep;
 }) =>
   createDesignStory({
@@ -279,7 +279,7 @@ export const createVariantStory = ({
     args,
     description,
     editableTokens: createVariantEditableTokens(purpose),
-    render,
+    render: render as ButtonStory['render'],
     wizard,
   });
 
