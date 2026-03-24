@@ -240,8 +240,8 @@ const ButtonPurposeMatrix = ({ purpose }: { purpose: ButtonProps['purpose'] }) =
 
   const iconOnlyProps: ButtonProps = {
     ...baseProps,
-    iconStart: '❤️',
     iconOnly: true,
+    iconStart: '❤️',
     label: 'Favoriet',
   };
 
@@ -288,8 +288,14 @@ const ButtonPurposeMatrix = ({ purpose }: { purpose: ButtonProps['purpose'] }) =
 
       <strong>Icon only</strong>
       <ButtonComponent {...iconOnlyProps} />
-      <ButtonComponent {...iconOnlyProps} style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'hover')} />
-      <ButtonComponent {...iconOnlyProps} style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'active')} />
+      <ButtonComponent
+        {...iconOnlyProps}
+        style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'hover')}
+      />
+      <ButtonComponent
+        {...iconOnlyProps}
+        style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'active')}
+      />
       <ButtonComponent {...iconOnlyProps} pressed />
       <ButtonComponent {...iconOnlyProps} pressed={false} />
 
@@ -309,9 +315,7 @@ const getPurposeLabel = (purpose: ButtonProps['purpose']) => {
   return 'Default';
 };
 
-export const RenderButtonPurposePreview = ({ purpose }: ButtonProps) => (
-  <ButtonPurposeMatrix purpose={purpose} />
-);
+export const RenderButtonPurposePreview = ({ purpose }: ButtonProps) => <ButtonPurposeMatrix purpose={purpose} />;
 
 export const RenderAllButtonPurposesPreview = () => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
