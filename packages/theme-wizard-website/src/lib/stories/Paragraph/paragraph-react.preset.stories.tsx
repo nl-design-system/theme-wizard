@@ -3,163 +3,149 @@ import type { StoryObj } from '@storybook/react-vite';
 
 type Story = StoryObj<ParagraphProps>;
 
-export const ParagraphFontSize: Story = {
+type PresetOption = {
+  derivedTokenReference?: {
+    offset: number;
+    scalePath: string;
+    sourcePath: string;
+    targetPath: string;
+  };
+  description: string;
+  name: string;
+  tokens: unknown;
+};
+
+const paragraphSampleText = 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.';
+
+const createParagraphToken = (path: string, value: string) => {
+  const [group, property] = path.split('.');
+  const hasNestedProperty = typeof property === 'string';
+
+  return {
+    nl: {
+      paragraph: {
+        [group]: hasNestedProperty ? { [property]: { $value: value } } : { $value: value },
+      },
+    },
+  };
+};
+
+const createParagraphPresetStory = ({
+  name,
+  args,
+  description,
+  options,
+  previewStoryId,
+  question,
+}: {
+  args: ParagraphProps;
+  description: string;
+  name: string;
+  options: PresetOption[];
+  previewStoryId: string;
+  question: string;
+}): Story => ({
+  name,
+  args,
+  parameters: {
+    presets: [
+      {
+        name: question,
+        description,
+        options,
+      },
+    ],
+    wizard: {
+      previewStoryIds: [previewStoryId],
+    },
+  },
+});
+
+const createAccentColorOption = (name: string, accentNumber: 1 | 2 | 3): PresetOption => ({
+  name,
+  description: 'Overschrijf de lead paragraph met een accentkleur.',
+  tokens: createParagraphToken('color', `{basis.color.accent-${accentNumber}.color-document}`),
+});
+
+export const ParagraphFontSize: Story = createParagraphPresetStory({
   name: 'Paragraph font-size',
   args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
+    children: paragraphSampleText,
   },
-  parameters: {
-    presets: [
-      {
-        name: 'Kies de grootte van de paragraph',
-        description: 'Bepaal of de gewone paragraph compacter of juist ruimtelijker leest.',
-        options: [
-          {
-            name: 'Aanbevolen',
-            description: 'Gebruik de standaard uit het startthema.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  'font-size': { $value: '{basis.text.font-size.md}' },
-                },
-              },
-            },
-          },
-          {
-            name: 'Ruim',
-            description: 'Maak de paragraph iets groter dan de standaard.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  'font-size': { $value: '{basis.text.font-size.lg}' },
-                },
-              },
-            },
-          },
-          {
-            name: 'Extra ruim',
-            description: 'Gebruik een extra grote paragraph uit het startthema.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  'font-size': { $value: '{basis.text.font-size.xl}' },
-                },
-              },
-            },
-          },
-        ],
-      },
-    ],
-    wizard: {
-      previewStoryIds: ['ParagraphStory'],
+  description: 'Bepaal of de gewone paragraph compacter of juist ruimtelijker leest.',
+  options: [
+    {
+      name: 'Aanbevolen',
+      description: 'Gebruik de standaard uit het startthema.',
+      tokens: createParagraphToken('font-size', '{basis.text.font-size.md}'),
     },
-  },
-};
+    {
+      name: 'Ruim',
+      description: 'Maak de paragraph iets groter dan de standaard.',
+      tokens: createParagraphToken('font-size', '{basis.text.font-size.lg}'),
+    },
+    {
+      name: 'Extra ruim',
+      description: 'Gebruik een extra grote paragraph uit het startthema.',
+      tokens: createParagraphToken('font-size', '{basis.text.font-size.xl}'),
+    },
+  ],
+  previewStoryId: 'ParagraphStory',
+  question: 'Kies de grootte van de paragraph',
+});
 
-export const LeadParagraphFontSize: Story = {
+export const LeadParagraphFontSize: Story = createParagraphPresetStory({
   name: 'Lead font-size',
   args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
+    children: paragraphSampleText,
     purpose: 'lead',
   },
-  parameters: {
-    presets: [
-      {
-        name: 'Kies de grootte van de lead paragraph',
-        description: 'Bepaal of de lead paragraph de startthema-grootte houdt of extra nadruk krijgt.',
-        options: [
-          {
-            name: 'Aanbevolen',
-            derivedTokenReference: {
-              offset: 0,
-              scalePath: 'basis.text.font-size',
-              sourcePath: 'nl.paragraph.font-size',
-              targetPath: 'nl.paragraph.lead.font-size',
-            },
-            description: 'Gebruik de standaard uit het startthema.',
-            tokens: {},
-          },
-          {
-            name: 'Extra ruim',
-            derivedTokenReference: {
-              offset: 1,
-              scalePath: 'basis.text.font-size',
-              sourcePath: 'nl.paragraph.font-size',
-              targetPath: 'nl.paragraph.lead.font-size',
-            },
-            description: 'Maak de lead paragraph groter voor extra nadruk.',
-            tokens: {},
-          },
-        ],
+  description: 'Bepaal of de lead paragraph de startthema-grootte houdt of extra nadruk krijgt.',
+  options: [
+    {
+      name: 'Aanbevolen',
+      derivedTokenReference: {
+        offset: 0,
+        scalePath: 'basis.text.font-size',
+        sourcePath: 'nl.paragraph.font-size',
+        targetPath: 'nl.paragraph.lead.font-size',
       },
-    ],
-    wizard: {
-      previewStoryIds: ['LeadParagraphStory'],
+      description: 'Gebruik de standaard uit het startthema.',
+      tokens: {},
     },
-  },
-};
+    {
+      name: 'Extra ruim',
+      derivedTokenReference: {
+        offset: 1,
+        scalePath: 'basis.text.font-size',
+        sourcePath: 'nl.paragraph.font-size',
+        targetPath: 'nl.paragraph.lead.font-size',
+      },
+      description: 'Maak de lead paragraph groter voor extra nadruk.',
+      tokens: {},
+    },
+  ],
+  previewStoryId: 'LeadParagraphStory',
+  question: 'Kies de grootte van de lead paragraph',
+});
 
-export const LeadParagraphColor: Story = {
+export const LeadParagraphColor: Story = createParagraphPresetStory({
   name: 'Lead color',
   args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
+    children: paragraphSampleText,
     purpose: 'lead',
   },
-  parameters: {
-    presets: [
-      {
-        name: 'Kies de kleur van de lead paragraph',
-        description: 'Laat de lead paragraph het startthema volgen of geef hem een accentkleur.',
-        options: [
-          {
-            name: 'Aanbevolen',
-            description: 'Gebruik de standaard uit het startthema.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  color: { $value: '{basis.color.default.color-document}' },
-                },
-              },
-            },
-          },
-          {
-            name: 'Accentkleur 1',
-            description: 'Overschrijf de lead paragraph met een accentkleur.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  color: { $value: '{basis.color.accent-1.color-document}' },
-                },
-              },
-            },
-          },
-          {
-            name: 'Accentkleur 2',
-            description: 'Overschrijf de lead paragraph met een accentkleur.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  color: { $value: '{basis.color.accent-2.color-document}' },
-                },
-              },
-            },
-          },
-          {
-            name: 'Accentkleur 3',
-            description: 'Overschrijf de lead paragraph met een accentkleur.',
-            tokens: {
-              nl: {
-                paragraph: {
-                  color: { $value: '{basis.color.accent-3.color-document}' },
-                },
-              },
-            },
-          },
-        ],
-      },
-    ],
-    wizard: {
-      previewStoryIds: ['LeadParagraphStory'],
+  description: 'Laat de lead paragraph het startthema volgen of geef hem een accentkleur.',
+  options: [
+    {
+      name: 'Aanbevolen',
+      description: 'Gebruik de standaard uit het startthema.',
+      tokens: createParagraphToken('color', '{basis.color.default.color-document}'),
     },
-  },
-};
+    createAccentColorOption('Accentkleur 1', 1),
+    createAccentColorOption('Accentkleur 2', 2),
+    createAccentColorOption('Accentkleur 3', 3),
+  ],
+  previewStoryId: 'LeadParagraphStory',
+  question: 'Kies de kleur van de lead paragraph',
+});
