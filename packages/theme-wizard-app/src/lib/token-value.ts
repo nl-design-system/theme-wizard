@@ -3,6 +3,8 @@ import {
   stringifyColor,
   stringifyDimension,
   stringifyFontFamily,
+  type ColorValue,
+  type ModernDimensionValue,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import type Theme from './Theme';
@@ -17,6 +19,14 @@ function getTokenAtPath(source: unknown, path: string) {
           : undefined,
       source,
     );
+}
+
+function isColorValue(value: unknown): value is ColorValue {
+  return isValueObject(value) && 'colorSpace' in value && 'components' in value;
+}
+
+function isDimensionValue(value: unknown): value is ModernDimensionValue {
+  return isValueObject(value) && 'unit' in value && 'value' in value;
 }
 
 export function stringifyTokenValue(token: unknown): string {
@@ -40,15 +50,15 @@ export function stringifyTokenValue(token: unknown): string {
     return String(value);
   }
 
+  if (isColorValue(value)) {
+    return stringifyColor(value);
+  }
+
+  if (isDimensionValue(value)) {
+    return stringifyDimension(value);
+  }
+
   if (isValueObject(value)) {
-    if ('colorSpace' in value && 'components' in value) {
-      return stringifyColor(value as Parameters<typeof stringifyColor>[0]);
-    }
-
-    if ('unit' in value && 'value' in value) {
-      return stringifyDimension(value as Parameters<typeof stringifyDimension>[0]);
-    }
-
     return JSON.stringify(value);
   }
 
