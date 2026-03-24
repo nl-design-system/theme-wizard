@@ -59,6 +59,15 @@ test.describe('after scraping a website', () => {
       }
     });
 
+    test('Each table has at least one row', async ({ page }) => {
+      const tables = page.getByRole('table');
+
+      for (const table of await tables.all()) {
+        const rows = table.locator('tbody').getByRole('row');
+        expect.soft(await rows.count()).toBeGreaterThanOrEqual(1);
+      }
+    });
+
     test('All tokens are selected by default', async ({ page }) => {
       // This would be the CORRECT test, but it is very slow
 
@@ -72,6 +81,8 @@ test.describe('after scraping a website', () => {
       // }
 
       // So we do this instead:
+      // Check that the amount of checkboxes on the page matches the amount of checked checkboxes
+      expect(await page.getByRole('checkbox').count()).toEqual(await page.locator('input:checked').count());
       expect(await page.locator('input:not(:checked)').count()).toBe(0);
     });
   });

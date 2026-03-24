@@ -1,3 +1,4 @@
+import type { Locator } from '@playwright/test';
 import { test, expect } from './fixtures/fixtures';
 
 test.describe('change fonts', () => {
@@ -221,7 +222,7 @@ test.describe('colorscale inputs', () => {
   });
 
   test('Changing a scale updates the preview', async ({ basisTokensPage }) => {
-    // The 'Home' link in the the breadcrumb of the preview
+    // The 'Home' link in the the navigation of the preview
     const breadcrumbLink = basisTokensPage.preview.getByRole('navigation').getByRole('link').first();
     const beforeColor = await breadcrumbLink.evaluate((element) =>
       globalThis.getComputedStyle(element).getPropertyValue('color'),
@@ -243,21 +244,71 @@ test.describe('colorscale inputs', () => {
   });
 
   test('Uses value from storage after refresh', async ({ basisTokensPage }) => {
-    const input = basisTokensPage.page.getByLabel('Accent 1');
     await basisTokensPage.changeColor('Accent 1', '#ff0000');
     await basisTokensPage.page.reload();
     await basisTokensPage.page.getByRole('button', { name: 'Kleuren' }).click();
-    // This is the mid-range darker red that the input stores (it does not store the user's actual picked color)
+    const input = basisTokensPage.page.getByLabel('Accent 1');
     await expect(input).toHaveValue('#ff0000');
   });
 
-  test('Changing value updates individual color inputs ("All tokens")', async ({ basisTokensPage }) => {
-    const input = basisTokensPage.sidebar.getByLabel('Accent 1');
-    await expect(input).toHaveValue(INITIAL_COLOR);
+  test('Changing an individual token updates the attached colorscale input', async ({ basisTokensPage }) => {
+    const initialStopValues = await basisTokensPage.getColorStops('Accent 1');
+
     await basisTokensPage.changeColor('Accent 1', '#ff0000');
-    await expect(input).not.toHaveValue(INITIAL_COLOR);
+    const updatedStopValues = await basisTokensPage.getColorStops('Accent 1');
+
+    expect(updatedStopValues).toHaveLength(initialStopValues.length);
+    expect(updatedStopValues).not.toEqual(initialStopValues);
+    for (const value of updatedStopValues) {
+      expect(initialStopValues).not.toContain(value);
+    }
   });
 
-  // This does not work yet
-  test.skip('Changing an individual token updates the attached colorscale input', () => {});
+  test('Changing Accent 1 also updates Accent 2', async ({ basisTokensPage }) => {
+    const accent1Input = basisTokensPage.page.getByLabel('Accent 1');
+    const accent2Input = basisTokensPage.page.getByLabel('Accent 2');
+
+    // Start off equally
+    expect.soft(accent1Input.inputValue).toEqual(accent2Input.inputValue);
+
+    // Update Accent 1 and Accent 2 should follow automatically
+    await basisTokensPage.changeColor('Accent 1', '#ff0000');
+    await expect.soft(accent1Input).toHaveValue('#ff0000');
+    await expect.soft(accent2Input).toHaveValue('#ff0000');
+    expect
+      .soft(await basisTokensPage.getColorStops('Accent 1'))
+      .toEqual(await basisTokensPage.getColorStops('Accent 2'));
+  });
+
+  test.describe('Updating Accent 2 decouples it from Accent 1', () => {
+    let accent1Input: Locator;
+    let accent2Input: Locator;
+
+    test.beforeEach(async ({ basisTokensPage }) => {
+      accent1Input = basisTokensPage.page.getByLabel('Accent 1');
+      accent2Input = basisTokensPage.page.getByLabel('Accent 2');
+
+      // Update Accent-2 and check that it no londer matches Accent-1
+      await basisTokensPage.changeColor('Accent 2', '#ff0000');
+    });
+
+    test('Accent 2 updates independently', async ({ basisTokensPage }) => {
+      // Accent 1 and 2 should no longer be the same
+      await expect.soft(accent1Input).not.toHaveValue('#ff0000');
+      await expect.soft(accent2Input).toHaveValue('#ff0000');
+      expect
+        .soft(await basisTokensPage.getColorStops('Accent 1'))
+        .not.toEqual(await basisTokensPage.getColorStops('Accent 2'));
+    });
+
+    test('Updating Accent 1 after Accent 2 keeps value of Accent 2 intact', async ({ basisTokensPage }) => {
+      await basisTokensPage.changeColor('Accent 1', '#00ff00');
+
+      await expect.soft(accent1Input).toHaveValue('#00ff00');
+      await expect.soft(accent2Input).toHaveValue('#ff0000');
+      expect
+        .soft(await basisTokensPage.getColorStops('Accent 1'))
+        .not.toEqual(await basisTokensPage.getColorStops('Accent 2'));
+    });
+  });
 });

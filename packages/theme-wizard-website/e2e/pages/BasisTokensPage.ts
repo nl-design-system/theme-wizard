@@ -24,13 +24,6 @@ export class BasisTokensPage {
     await expect(this.preview).toBeVisible();
   }
 
-  async scrapeUrl(url: string) {
-    const input = this.sidebar.getByLabel('Website URL');
-    await input.fill(url);
-    await this.sidebar.getByRole('button', { name: 'Analyseer' }).click();
-    await expect(input).not.toHaveAttribute('data-state', 'pending');
-  }
-
   async selectTemplate(templateName: string) {
     await this.templateSelect.selectOption({ label: templateName });
   }
@@ -68,6 +61,12 @@ export class BasisTokensPage {
 
   getParagraph(): Locator {
     return this.preview.locator('.nl-paragraph').first();
+  }
+
+  async getColorStops(label: string): Promise<(string | null)[]> {
+    const input = this.page.locator(`wizard-colorscale-input[label="${label}"]`);
+    const stops = await input.getByTestId('color-scale-stop').all();
+    return Promise.all(stops.map((stop) => stop.getAttribute('data-value')));
   }
 
   getErrorAlert(): Locator {
