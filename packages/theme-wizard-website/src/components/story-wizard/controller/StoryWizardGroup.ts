@@ -46,7 +46,8 @@ export class StoryWizardGroup {
       return;
     }
 
-    this.input.selectIndex(this.input.defaultIndex >= 0 ? this.input.defaultIndex : 0);
+    const defaultIndex = Math.max(this.input.defaultIndex, 0);
+    this.input.selectIndex(defaultIndex);
   }
 
   public setOptions(options: StoryWizardPresetOption[]) {
