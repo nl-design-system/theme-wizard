@@ -22,8 +22,7 @@ const { step } = Astro.props;
       {
         step.previewStories.length > 0 && (
           <section class="wizard-story-preview-panel" aria-label={`${step.title} previews`}>
-            <div class="wizard-story-preview-panel__header">
-            </div>
+            <div class="wizard-story-preview-panel__header"></div>
             <div class="wizard-story-section__variants">
               {step.previewStories.map((previewStory) => (
                 <div class="wizard-story-section__variant">
@@ -43,7 +42,7 @@ const { step } = Astro.props;
       }
     </div>
 
-    <aside class="wizard-story-section__settings-panel" aria-label={`${step.title} instellingen`}>
+    <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
       {
         step.groups.map((group) =>
           group.type === 'preset' ? (
