@@ -170,4 +170,13 @@ export class PresetWizardPage {
       return token?.textContent?.trim() ?? null;
     });
   }
+
+  async assertSelectedOptionShowsResolvedCssValue(
+    groupLabel: string,
+    expectedTokenReference: string,
+    expectedResolvedValuePattern: RegExp = /^\d+(\.\d+)?(rem|px|em)$/,
+  ) {
+    await expect.poll(() => this.readSelectedTokenReference(groupLabel)).toContain(expectedTokenReference);
+    await expect.poll(() => this.readSelectedResolvedValue(groupLabel)).toMatch(expectedResolvedValuePattern);
+  }
 }
