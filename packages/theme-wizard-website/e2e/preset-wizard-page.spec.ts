@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/components/code-block');
+  await page.goto('/components/paragraph');
 });
 
 test('page has accessibility basics', async ({ page }) => {
