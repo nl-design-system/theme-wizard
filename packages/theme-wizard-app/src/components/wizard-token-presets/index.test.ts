@@ -252,6 +252,84 @@ describe(`<${tag}>`, () => {
       expect(el.selectedIndex).toBe(1);
     });
 
+    it('sets defaultIndex to the matching option on initial theme-update', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      expect(el.defaultIndex).toBe(-1);
+
+      dispatchThemeUpdate({ color: { primary: { $value: 'red' } } });
+      await el.updateComplete;
+
+      expect(el.defaultIndex).toBe(1);
+    });
+
+    it('renders the default pill on the matching option', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      dispatchThemeUpdate({ color: { primary: { $value: 'blue' } } });
+      await el.updateComplete;
+
+      const pills = el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-default-pill') ?? [];
+      expect(pills).toHaveLength(1);
+
+      // The pill should be inside the first option (Optie A)
+      const optionWithPill = pills[0]?.closest('.wizard-token-preset__option');
+      const title = optionWithPill?.querySelector('.wizard-token-preset__option-title');
+      expect(title?.textContent?.trim()).toBe('Optie A');
+    });
+
+    it('defaultIndex stays -1 when no option matches the theme', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      dispatchThemeUpdate({ color: { primary: { $value: 'green' } } });
+      await el.updateComplete;
+
+      expect(el.defaultIndex).toBe(-1);
+      const pills = el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-default-pill') ?? [];
+      expect(pills).toHaveLength(0);
+    });
+
+    it('matches a preset when the theme value resolves to it through a reference chain', async () => {
+      // Preset expects "final-value", but the theme has a reference that resolves to it
+      const optionDirect = {
+        name: 'Direct',
+        tokens: { heading: { color: { $value: '{color.document}' } } },
+      };
+      const optionOther = {
+        name: 'Other',
+        tokens: { heading: { color: { $value: 'green' } } },
+      };
+      const el = await mount({ options: [optionDirect, optionOther] });
+
+      // Theme has heading.color → {heading.base-color}, and heading.base-color → {color.document}
+      // So heading.color resolves through the chain to {color.document}
+      dispatchThemeUpdate({
+        color: { document: { $value: '#000000' } },
+        heading: {
+          'base-color': { $value: '{color.document}' },
+          color: { $value: '{heading.base-color}' },
+        },
+      });
+
+      expect(el.selectedIndex).toBe(0);
+    });
+
+    it('sets defaultIndex through a reference chain', async () => {
+      const optionResolved = {
+        name: 'Resolved',
+        tokens: { heading: { color: { $value: '{color.document}' } } },
+      };
+      const el = await mount({ options: [optionResolved] });
+
+      dispatchThemeUpdate({
+        color: { document: { $value: '#000000' } },
+        heading: {
+          'base-color': { $value: '{color.document}' },
+          color: { $value: '{heading.base-color}' },
+        },
+      });
+      await el.updateComplete;
+
+      expect(el.defaultIndex).toBe(0);
+    });
+
     it('clears selection when no preset matches the theme', async () => {
       const el = await mount({ options: [optionA, optionB] });
       el.selectIndex(0);
