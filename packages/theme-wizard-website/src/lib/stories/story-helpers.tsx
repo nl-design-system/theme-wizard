@@ -5,6 +5,8 @@ export type WizardStep = {
   stepTitle: string;
 };
 
+export const storySampleText = 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.';
+
 export const createWizardStep = (step: string, stepTitle: string): WizardStep => ({
   step,
   stepTitle,

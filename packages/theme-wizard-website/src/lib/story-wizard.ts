@@ -84,6 +84,7 @@ type StoryWizardParameters = {
     question?: string;
     step?: string;
     stepTitle?: string;
+    type?: 'advanced' | 'preset';
   };
   [key: PropertyKey]: unknown;
 };
@@ -332,8 +333,10 @@ export class StoryWizardModel {
     presetTokenPaths: Set<string>,
   ): StoryWizardStep | null {
     const groups = story.parameters?.presets?.length
-      ? (story.parameters.presets ?? []).map((preset, index) => this.createPresetGroup(id, preset, index))
-      : story.parameters?.designStory && story.parameters?.editableTokens
+      ? story.parameters?.wizard?.type === 'preset'
+        ? (story.parameters.presets ?? []).map((preset, index) => this.createPresetGroup(id, preset, index))
+        : []
+      : story.parameters?.wizard?.type === 'advanced' && story.parameters?.editableTokens
         ? [this.createEditableTokenGroup(id, story, presetTokenPaths)].filter(
             (group): group is StoryWizardEditableTokenGroup => group !== null,
           )
@@ -428,7 +431,8 @@ export class StoryWizardModel {
 
   private static isWizardStory(story: StoryWizardStory) {
     return Boolean(
-      story.parameters?.presets?.length || (story.parameters?.designStory && story.parameters?.editableTokens),
+      (story.parameters?.wizard?.type === 'preset' && story.parameters?.presets?.length) ||
+        (story.parameters?.wizard?.type === 'advanced' && story.parameters?.editableTokens),
     );
   }
 
@@ -444,7 +448,7 @@ export class StoryWizardModel {
   ): StoryWizardPreview[] {
     const previewStoryIds = story.parameters?.wizard?.previewStoryIds;
     if (!previewStoryIds?.length) {
-      if (story.parameters?.designStory) {
+      if (story.parameters?.wizard?.type === 'advanced') {
         return [this.toPreviewStory(id, story)];
       }
 

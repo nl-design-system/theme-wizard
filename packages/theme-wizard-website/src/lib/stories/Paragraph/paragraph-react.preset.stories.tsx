@@ -1,5 +1,6 @@
 import type { ParagraphProps } from '@nl-design-system-candidate/paragraph-react';
 import type { StoryObj } from '@storybook/react-vite';
+import { storySampleText } from '../story-helpers';
 
 type Story = StoryObj<ParagraphProps>;
 
@@ -15,7 +16,7 @@ type PresetOption = {
   tokens: unknown;
 };
 
-const paragraphSampleText = 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.';
+const paragraphSampleText = storySampleText;
 
 const createParagraphToken = (path: string, value: string) => {
   const [group, property] = path.split('.');
@@ -60,6 +61,7 @@ const createParagraphPresetStory = ({
     wizard: {
       order,
       previewStoryIds: [previewStoryId],
+      type: 'preset',
     },
   },
 });
