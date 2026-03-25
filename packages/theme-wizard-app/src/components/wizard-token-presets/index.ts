@@ -4,7 +4,7 @@ import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Theme from '../../lib/Theme';
-import { resolveTokenReferenceValue } from '../../lib/token-value';
+import { resolveTokenReferenceChain } from '../../lib/token-value';
 import { ThemeUpdateEvent } from '../app/app';
 import { wizardTokenCSS } from './styles';
 
@@ -265,12 +265,27 @@ export class WizardTokenPreset extends LitElement {
     this.walkPresetTokens(tokens, [], (presetValue, path) => {
       if (!selected) return;
 
-      const themeToken = theme.at(path.join('.'));
+      const tokenPath = path.join('.');
+      const themeToken = theme.at(tokenPath);
       const themeValue = themeToken ? themeToken['$value'] : null;
 
-      if (!dequal(themeValue, presetValue)) {
-        selected = false;
+      // Direct match
+      if (dequal(themeValue, presetValue)) {
+        return;
       }
+
+      // Resolve through the token reference chain: if the theme value is a reference,
+      // check if it resolves through to the preset value at any step.
+      // E.g. theme has {basis.heading.color} → {basis.color.default.color-document},
+      // and the preset value is {basis.color.default.color-document}.
+      if (typeof themeValue === 'string' && typeof presetValue === 'string') {
+        const chain = resolveTokenReferenceChain(themeValue, theme);
+        if (chain.includes(presetValue)) {
+          return;
+        }
+      }
+
+      selected = false;
     });
 
     return selected;
@@ -312,7 +327,18 @@ export class WizardTokenPreset extends LitElement {
       token.value,
       this.collectTokenValueVariants(option)[token.path] ?? [token.value],
     );
-    const resolvedValue = resolveTokenReferenceValue(token.value, this.currentTheme);
+
+    // Build the full resolution chain from the token path through the theme,
+    // so intermediate references (e.g. {basis.heading.color}) are shown.
+    const fullChain = resolveTokenReferenceChain(`{${token.path}}`, this.currentTheme);
+
+    // Steps before the preset value are intermediate theme references
+    const presetValueIndex = fullChain.indexOf(token.value);
+    const intermediateSteps = presetValueIndex > 0 ? fullChain.slice(0, presetValueIndex) : [];
+
+    // Steps after the preset value are resolved values
+    const resolvedSteps =
+      presetValueIndex >= 0 ? fullChain.slice(presetValueIndex + 1) : resolveTokenReferenceChain(token.value, this.currentTheme);
 
     return html`
       <p class="nl-paragraph wizard-token-preset__option-value">
@@ -321,6 +347,16 @@ export class WizardTokenPreset extends LitElement {
 
           <code class="wizard-token-preset__option-value-path">${token.path}</code>
         </span>
+
+        ${intermediateSteps.map(
+          (step) => html`
+            <span class="wizard-token-preset__option-value-mapping">
+              <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
+
+              <code class="wizard-token-preset__option-value-resolved">${step}</code>
+            </span>
+          `,
+        )}
 
         <span class="wizard-token-preset__option-value-mapping">
           <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
@@ -332,15 +368,15 @@ export class WizardTokenPreset extends LitElement {
           >
         </span>
 
-        ${resolvedValue && resolvedValue !== token.value
-          ? html`
-              <span class="wizard-token-preset__option-value-mapping">
-                <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
+        ${resolvedSteps.map(
+          (step) => html`
+            <span class="wizard-token-preset__option-value-mapping">
+              <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
 
-                <code class="wizard-token-preset__option-value-resolved">${resolvedValue}</code>
-              </span>
-            `
-          : nothing}
+              <code class="wizard-token-preset__option-value-resolved">${step}</code>
+            </span>
+          `,
+        )}
       </p>
     `;
   }
