@@ -56,8 +56,14 @@ export class StoryWizardController {
     return this.steps.length;
   }
 
+  private async waitForPresetInputs() {
+    const presetInputs = Array.from(document.querySelectorAll<HTMLElement & { updateComplete?: Promise<unknown> }>('wizard-token-preset'));
+    await Promise.all(presetInputs.map((input) => input.updateComplete ?? Promise.resolve()));
+  }
+
   private async start() {
     await customElements.whenDefined('wizard-token-preset');
+    await this.waitForPresetInputs();
     initStories(this.componentId, JSON.parse(this.container.dataset.storyIds || '[]'));
     this.bindOptionListeners();
     this.bindNavigation();
@@ -80,7 +86,7 @@ export class StoryWizardController {
   private bindNavigation() {
     this.resetBtns.forEach((resetBtn) => {
       resetBtn.addEventListener('click', () => {
-        this.reset();
+        void this.reset();
       });
     });
 
@@ -140,7 +146,7 @@ export class StoryWizardController {
         );
 
         if (!group.hasSelection()) {
-          group.restoreSelectedIndex(0);
+          group.restoreDefaultSelection();
         }
       });
     });
@@ -676,12 +682,13 @@ export class StoryWizardController {
     this.writeStoredState();
   }
 
-  private reset() {
+  private async reset() {
     this.hasFinishedAllChoices = false;
     this.container.closest('theme-wizard-app')?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
     this.clearSelections();
     this.clearStoredState();
     this.syncDynamicPresetOptions();
+    await this.waitForPresetInputs();
     this.restoreDefaultSelections();
     this.showStep(0);
   }

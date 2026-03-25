@@ -39,6 +39,7 @@ export class WizardTokenPreset extends LitElement {
   private readonly inputName = `${tag}-${Math.random().toString(36).slice(2)}`;
   private readonly handleThemeUpdate = (event: ThemeUpdateEvent) => this.onThemeUpdate(event);
   private currentTheme = new Theme();
+  private defaultTheme = new Theme();
   private defaultIndexState = -1;
   private selectedIndexState = -1;
 
@@ -54,11 +55,7 @@ export class WizardTokenPreset extends LitElement {
 
   override updated(changed: PropertyValues) {
     if (changed.has('options')) {
-      this.defaultIndexState = -1;
-
-      if (this.selectedIndexState === -1) {
-        this.updateSelectedIndex(this.currentTheme);
-      }
+      this.updateSelectionState();
     }
   }
 
@@ -285,20 +282,19 @@ export class WizardTokenPreset extends LitElement {
     this.requestUpdate();
   }
 
-  private updateSelectedIndex(theme: Theme) {
-    const selectedIndex = this.options.findIndex((option) => this.matchesTheme(theme, option.tokens));
-
-    if (this.defaultIndexState === -1 && selectedIndex >= 0) {
-      this.defaultIndexState = selectedIndex;
-    }
-
+  private updateSelectionState() {
+    this.defaultIndexState = this.options.findIndex((option) => this.matchesTheme(this.defaultTheme, option.tokens));
+    const selectedIndex = this.options.findIndex((option) => this.matchesTheme(this.currentTheme, option.tokens));
     this.setSelectedIndex(selectedIndex);
   }
 
   private onThemeUpdate(event: CustomEvent) {
     if (event.detail.theme) {
       this.currentTheme = event.detail.theme;
-      this.updateSelectedIndex(event.detail.theme);
+      if (!dequal(this.defaultTheme.defaults, event.detail.theme.defaults)) {
+        this.defaultTheme = new Theme(event.detail.theme.defaults);
+      }
+      this.updateSelectionState();
     }
   }
 

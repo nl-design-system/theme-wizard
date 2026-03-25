@@ -26,10 +26,14 @@ const mount = async (overrides: Partial<WizardTokenPreset> = {}): Promise<Wizard
 const getRadios = (el: WizardTokenPreset): HTMLInputElement[] =>
   Array.from(el.shadowRoot?.querySelectorAll('input[type="radio"]') ?? []);
 
-const dispatchThemeUpdate = (tokens: Record<string, unknown>) => {
+const dispatchThemeUpdate = (
+  tokens: Record<string, unknown>,
+  defaults: Record<string, unknown> = structuredClone(tokens),
+) => {
   const theme = {
     at: (path: string) =>
       path.split('.').reduce((obj: Record<string, unknown>, key) => obj?.[key] as Record<string, unknown>, tokens),
+    defaults,
   };
   document.dispatchEvent(new CustomEvent('theme-update', { detail: { theme } }));
 };
@@ -260,6 +264,28 @@ describe(`<${tag}>`, () => {
       el.remove();
       dispatchThemeUpdate({ color: { primary: { $value: 'blue' } } });
       expect(el.selectedIndex).toBe(-1);
+    });
+
+    it('preserves the start-theme default option when the current theme changes', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      const startTheme = { color: { primary: { $value: 'blue' } } };
+      dispatchThemeUpdate(startTheme);
+      await el.updateComplete;
+      expect(el.defaultIndex).toBe(0);
+
+      dispatchThemeUpdate({ color: { primary: { $value: 'red' } } }, startTheme);
+      await el.updateComplete;
+
+      expect(el.selectedIndex).toBe(1);
+      expect(el.defaultIndex).toBe(0);
+
+      const defaultPills = Array.from(
+        el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-default-pill') ?? [],
+      );
+      expect(defaultPills).toHaveLength(1);
+      expect(defaultPills[0]?.textContent?.trim()).toBe('start-theme');
+      const optionTitles = Array.from(el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-title') ?? []);
+      expect(optionTitles[0]?.textContent?.trim()).toBe('Optie A');
     });
   });
 
