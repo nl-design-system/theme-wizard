@@ -18,6 +18,15 @@ test('changing the paragraph preset also updates the lead paragraph preset', asy
       };
     });
 
+  // Wait for the component to be ready with options before interacting
+  await expect
+    .poll(() =>
+      wizardTokenPreset.evaluate(
+        (el) => (el as HTMLElement & { options: unknown[] }).options?.length > 0,
+      ),
+    )
+    .toBe(true);
+
   for (const [index] of ['Aanbevolen', 'Ruim', 'Extra ruim'].entries()) {
     await wizardTokenPreset.evaluate((element, selectedIndex) => {
       (element as HTMLElement & { selectIndex: (index: number) => void }).selectIndex(selectedIndex);
