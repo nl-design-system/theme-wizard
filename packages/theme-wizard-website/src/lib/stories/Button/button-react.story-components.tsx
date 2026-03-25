@@ -155,8 +155,6 @@ const statePreviewGridStyle = {
   rowGap: '0.75rem',
 };
 
-export { WizardPreviewSection };
-
 export const buttonWizardStepBasic = createWizardStep('button-basic', 'Button basis');
 
 export const buttonWizardStepStates = createWizardStep('button-states', 'Button states');
