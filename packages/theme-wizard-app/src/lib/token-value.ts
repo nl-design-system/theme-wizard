@@ -65,6 +65,39 @@ export function stringifyTokenValue(token: unknown): string {
   return value.toString();
 }
 
+/**
+ * Resolves a token reference through the entire chain, returning all intermediate steps.
+ * E.g. `{basis.heading.color}` → `["{basis.color.default.color-document}", "0.875rem"]`
+ */
+export function resolveTokenReferenceChain(value: string, theme: Theme, seen = new Set<string>()): string[] {
+  const normalized = value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : '';
+
+  if (!normalized) {
+    return [];
+  }
+
+  if (seen.has(normalized)) {
+    return [];
+  }
+
+  seen.add(normalized);
+
+  const token =
+    theme.at(normalized) ?? getTokenAtPath(theme.defaults, normalized) ?? getTokenAtPath(startTokens, normalized);
+  const tokenValue = token?.['$value'];
+
+  if (tokenValue === undefined) {
+    return [];
+  }
+
+  if (typeof tokenValue === 'string' && tokenValue.startsWith('{') && tokenValue.endsWith('}')) {
+    return [tokenValue, ...resolveTokenReferenceChain(tokenValue, theme, seen)];
+  }
+
+  const stringified = stringifyTokenValue({ $value: tokenValue });
+  return [stringified];
+}
+
 export function resolveTokenReferenceValue(value: string, theme: Theme, seen = new Set<string>()): string | null {
   const normalized = value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : '';
 
