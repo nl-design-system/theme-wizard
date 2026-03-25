@@ -196,9 +196,10 @@ describe(`<${appTag}> lifecycle`, () => {
   it('removes event listeners on disconnectedCallback', async () => {
     const { app } = await mount();
     const themeUpdateHandler = vi.fn();
+
     app.addEventListener('theme-update', themeUpdateHandler);
 
-    document.body.removeChild(app);
+    app.remove();
 
     app.dispatchEvent(new Event('reset'));
     expect(themeUpdateHandler).not.toHaveBeenCalled();
