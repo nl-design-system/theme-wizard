@@ -2,6 +2,8 @@ import { type Page, type Locator, expect } from '@playwright/test';
 
 export class PresetWizardPage {
   readonly presets: Locator;
+  readonly resetButton: Locator;
+  readonly stepSelectionsSummary: Locator;
   readonly themeApp: Locator;
 
   constructor(
@@ -9,6 +11,8 @@ export class PresetWizardPage {
     public readonly componentSlug: string,
   ) {
     this.presets = this.page.locator('wizard-token-preset');
+    this.resetButton = this.page.locator('.wizard-preset-reset').first();
+    this.stepSelectionsSummary = this.page.locator('.wizard-step-selections__summary [aria-live]');
     this.themeApp = this.page.locator('theme-wizard-app');
   }
 
@@ -31,9 +35,7 @@ export class PresetWizardPage {
     const preset = this.preset(groupLabel);
 
     await expect
-      .poll(() =>
-        preset.evaluate((el) => (el as HTMLElement & { options: unknown[] }).options?.length > 0),
-      )
+      .poll(() => preset.evaluate((el) => (el as HTMLElement & { options: unknown[] }).options?.length > 0))
       .toBe(true);
 
     return preset.evaluate((el) => (el as HTMLElement & { options: unknown[] }).options?.length ?? 0);
@@ -47,6 +49,64 @@ export class PresetWizardPage {
     await preset.evaluate((element, selectedIndex) => {
       (element as HTMLElement & { selectIndex: (index: number) => void }).selectIndex(selectedIndex);
     }, index);
+  }
+
+  async reset() {
+    await this.resetButton.click();
+  }
+
+  async readSelectionsSummary(): Promise<string | null> {
+    return this.stepSelectionsSummary.textContent();
+  }
+
+  async readPresetStates(): Promise<
+    { defaultIndex: number; groupLabel: string | null; selectedIndex: number; selectedLabel: string | null }[]
+  > {
+    return this.presets.evaluateAll((elements) =>
+      elements.map((element) => {
+        const preset = element as HTMLElement & {
+          defaultIndex: number;
+          selectedIndex: number;
+          selectedOption?: { optionLabel?: string | null } | null;
+        };
+
+        return {
+          defaultIndex: preset.defaultIndex ?? -1,
+          groupLabel: preset.getAttribute('group-label'),
+          selectedIndex: preset.selectedIndex ?? -1,
+          selectedLabel: preset.selectedOption?.optionLabel ?? null,
+        };
+      }),
+    );
+  }
+
+  async assertSelectionsSummary(expected: string) {
+    await expect.poll(() => this.readSelectionsSummary()).toBe(expected);
+  }
+
+  async assertPresetStates(
+    expected: {
+      defaultIndex: number;
+      groupLabel: string | null;
+      selectedIndex: number;
+      selectedLabel: string | null;
+    }[],
+  ) {
+    await expect.poll(() => this.readPresetStates()).toEqual(expected);
+  }
+
+  async assertResetRestoresPresetSelections(
+    expected: {
+      defaultIndex: number;
+      groupLabel: string | null;
+      selectedIndex: number;
+      selectedLabel: string | null;
+    }[],
+    expectedSummary: string,
+  ) {
+    await this.reset();
+    await this.assertPresetStates(expected);
+    await this.assertSelectionsSummary(expectedSummary);
   }
 
   /** Read a single design token value from the theme. */
@@ -64,8 +124,13 @@ export class PresetWizardPage {
 
   /** Read the defaultIndex for a preset (-1 means no default matched). */
   async readDefaultIndex(groupLabel: string): Promise<number> {
+    return this.preset(groupLabel).evaluate((el) => (el as HTMLElement & { defaultIndex: number }).defaultIndex ?? -1);
+  }
+
+  /** Read the selectedIndex for a preset (-1 means no option selected). */
+  async readSelectedIndex(groupLabel: string): Promise<number> {
     return this.preset(groupLabel).evaluate(
-      (el) => (el as HTMLElement & { defaultIndex: number }).defaultIndex ?? -1,
+      (el) => (el as HTMLElement & { selectedIndex: number }).selectedIndex ?? -1,
     );
   }
 
@@ -79,9 +144,7 @@ export class PresetWizardPage {
 
       // Wait for options to load
       await expect
-        .poll(() =>
-          preset.evaluate((el) => (el as HTMLElement & { options: unknown[] }).options?.length > 0),
-        )
+        .poll(() => preset.evaluate((el) => (el as HTMLElement & { options: unknown[] }).options?.length > 0))
         .toBe(true);
 
       const defaultIndex = await preset.evaluate(
