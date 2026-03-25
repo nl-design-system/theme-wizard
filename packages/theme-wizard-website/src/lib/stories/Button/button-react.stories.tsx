@@ -3,12 +3,12 @@ import css from '@nl-design-system-candidate/button-css/button.css?inline';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import tokens from '@nl-design-system-candidate/button-tokens';
 import { type ComponentType } from 'react';
+import { WizardPreviewSection } from '../story-helpers';
 import {
   ButtonVariantsWithStates,
   Icon,
   RenderAllButtonPurposesPreview,
   RenderButtonPurposePreview,
-  WizardPreviewSection,
 } from './button-react.story-components';
 
 const meta = {
