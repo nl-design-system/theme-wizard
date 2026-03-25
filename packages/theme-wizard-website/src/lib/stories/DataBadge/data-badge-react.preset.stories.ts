@@ -40,6 +40,8 @@ const createPresetStory = ({
     ],
     wizard: {
       order,
+      previewStoryIds: ['WizardPreview'],
+      type: 'preset',
     },
   },
 });

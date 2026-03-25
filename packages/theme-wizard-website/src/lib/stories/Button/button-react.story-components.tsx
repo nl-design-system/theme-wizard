@@ -1,6 +1,6 @@
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import { type ReactNode } from 'react';
-import { WizardPreviewSection, createWizardStep } from '../story-helpers';
+import { WizardPreviewSection } from '../story-helpers';
 
 export const Icon = () => (
   <span className="nl-icon">
@@ -154,40 +154,6 @@ const statePreviewGridStyle = {
   gridTemplateColumns: 'max-content repeat(5, max-content)',
   rowGap: '0.75rem',
 };
-
-export const buttonWizardStepBasic = createWizardStep('button-basic', 'Button basis');
-
-export const buttonWizardStepStates = createWizardStep('button-states', 'Button states');
-
-export const buttonWizardStepPositiveStates = createWizardStep('button-positive-states', 'Positieve button states');
-
-export const buttonWizardStepNegativeStates = createWizardStep('button-negative-states', 'Negatieve button states');
-
-export const buttonWizardStepVariants = createWizardStep('button-variants', 'Button varianten');
-
-export const buttonWizardStepPositiveVariants = createWizardStep(
-  'button-positive-variants',
-  'Positieve button varianten',
-);
-
-export const buttonWizardStepNegativeVariants = createWizardStep(
-  'button-negative-variants',
-  'Negatieve button varianten',
-);
-
-export const buttonWizardStepDisabled = createWizardStep('button-disabled', 'Button disabled');
-
-export const buttonWizardStepPressed = createWizardStep('button-selected', 'Button geselecteerd');
-
-export const buttonWizardStepPositivePressed = createWizardStep(
-  'button-positive-selected',
-  'Positieve geselecteerde buttons',
-);
-
-export const buttonWizardStepNegativePressed = createWizardStep(
-  'button-negative-selected',
-  'Negatieve geselecteerde buttons',
-);
 
 const StatePreviewItem = ({ children, label }: { children: ReactNode; label: string }) => (
   <div style={statePreviewItemStyle}>

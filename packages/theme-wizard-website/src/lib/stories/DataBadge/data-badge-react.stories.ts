@@ -48,4 +48,9 @@ export const WizardPreview: Story = {
   args: {
     children: 'Nieuwe melding',
   },
+  parameters: {
+    wizard: {
+      preview: true,
+    },
+  },
 };

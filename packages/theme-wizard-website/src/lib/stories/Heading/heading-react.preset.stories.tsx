@@ -1,5 +1,13 @@
 import type { HeadingLevel, HeadingProps } from '@nl-design-system-candidate/heading-react';
 import type { StoryObj } from '@storybook/react-vite';
+import {
+  createHeadingToken,
+  headingFontSizes,
+  headingLevels,
+  headingSampleText,
+  type AccentNumber,
+  type PreviewHeadingLevel,
+} from './heading-react.story-helpers';
 
 type Story = StoryObj<HeadingProps>;
 
@@ -16,27 +24,6 @@ type PresetOption = {
   name: string;
   tokens: unknown;
 };
-
-const headingSampleText = 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.';
-
-const headingFontSizes = [
-  { label: 'Enorm', step: '3xl' },
-  { label: 'Heel groot', step: '2xl' },
-  { label: 'Extra groot', step: 'xl' },
-  { label: 'Groot', step: 'lg' },
-  { label: 'Normaal', step: 'md' },
-  { label: 'Klein', step: 'sm' },
-] as const;
-
-const createHeadingToken = (level: HeadingLevel, property: string, value: string) => ({
-  nl: {
-    heading: {
-      [`level-${level}`]: {
-        [property]: { $value: value },
-      },
-    },
-  },
-});
 
 const createHeadingPresetStory = ({
   name,
@@ -68,6 +55,7 @@ const createHeadingPresetStory = ({
     wizard: {
       order,
       previewStoryIds: [previewStoryId],
+      type: 'preset',
     },
   },
 });
@@ -109,21 +97,11 @@ const createColorOptions = (level: HeadingLevel): PresetOption[] => [
     description: 'Gebruik het documentkleur uit het startthema.',
     tokens: createHeadingToken(level, 'color', '{basis.color.default.color-document}'),
   },
-  {
-    name: 'Accentkleur 1',
-    description: 'Geef headings accentkleur 1.',
-    tokens: createHeadingToken(level, 'color', '{basis.color.accent-1.color-document}'),
-  },
-  {
-    name: 'Accentkleur 2',
-    description: 'Geef headings accentkleur 2.',
-    tokens: createHeadingToken(level, 'color', '{basis.color.accent-2.color-document}'),
-  },
-  {
-    name: 'Accentkleur 3',
-    description: 'Geef headings accentkleur 3.',
-    tokens: createHeadingToken(level, 'color', '{basis.color.accent-3.color-document}'),
-  },
+  ...([1, 2, 3] as const).map((accentNumber: AccentNumber) => ({
+    name: `Accentkleur ${accentNumber}`,
+    description: `Geef headings accentkleur ${accentNumber}.`,
+    tokens: createHeadingToken(level, 'color', `{basis.color.accent-${accentNumber}.color-document}`),
+  })),
 ];
 
 const createColorStory = (level: HeadingLevel): Story =>
@@ -140,15 +118,28 @@ const createColorStory = (level: HeadingLevel): Story =>
     question: `Kies de kleur van de H${level}`,
   });
 
-export const Heading1FontSize: Story = createFontSizeStory(1);
-export const Heading2FontSize: Story = createFontSizeStory(2);
-export const Heading3FontSize: Story = createFontSizeStory(3);
-export const Heading4FontSize: Story = createFontSizeStory(4);
-export const Heading5FontSize: Story = createFontSizeStory(5);
-export const Heading6FontSize: Story = createFontSizeStory(6);
-export const Heading1Color: Story = createColorStory(1);
-export const Heading2Color: Story = createColorStory(2);
-export const Heading3Color: Story = createColorStory(3);
-export const Heading4Color: Story = createColorStory(4);
-export const Heading5Color: Story = createColorStory(5);
-export const Heading6Color: Story = createColorStory(6);
+const headingFontSizeStories = Object.fromEntries(
+  headingLevels.map((level) => [`Heading${level}FontSize`, createFontSizeStory(level)]),
+) as Record<`Heading${PreviewHeadingLevel}FontSize`, Story>;
+
+const headingColorStories = Object.fromEntries(
+  headingLevels.map((level) => [`Heading${level}Color`, createColorStory(level)]),
+) as Record<`Heading${PreviewHeadingLevel}Color`, Story>;
+
+export const {
+  Heading1FontSize,
+  Heading2FontSize,
+  Heading3FontSize,
+  Heading4FontSize,
+  Heading5FontSize,
+  Heading6FontSize,
+} = headingFontSizeStories;
+
+export const {
+  Heading1Color,
+  Heading2Color,
+  Heading3Color,
+  Heading4Color,
+  Heading5Color,
+  Heading6Color,
+} = headingColorStories;

@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react-vite';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
-import type { WizardStep } from '../story-helpers';
+import { createWizardStep, type WizardStep } from '../story-helpers';
 
 export type ButtonStory = StoryObj<ButtonProps>;
 export type ButtonPurpose = 'default' | 'primary' | 'secondary' | 'subtle';
@@ -22,6 +22,103 @@ export type ButtonPresetOptionConfig = {
   mode: ButtonVariantMode;
   name: 'Gevuld' | 'Outlined' | 'Subtle';
 };
+
+type ButtonPresetOption = {
+  description?: string;
+  name: string;
+  tokens: unknown;
+};
+
+type ButtonPresetGroup = {
+  description?: string;
+  name: string;
+  options: ButtonPresetOption[];
+  question?: string;
+  thumbnail?: boolean;
+};
+
+export const buttonWizardStepBasic = createWizardStep('button-basic', 'Button basis');
+export const buttonWizardStepStates = createWizardStep('button-states', 'Button states');
+export const buttonWizardStepPositiveStates = createWizardStep('button-positive-states', 'Positieve button states');
+export const buttonWizardStepNegativeStates = createWizardStep('button-negative-states', 'Negatieve button states');
+export const buttonWizardStepVariants = createWizardStep('button-variants', 'Button varianten');
+export const buttonWizardStepPositiveVariants = createWizardStep(
+  'button-positive-variants',
+  'Positieve button varianten',
+);
+export const buttonWizardStepNegativeVariants = createWizardStep(
+  'button-negative-variants',
+  'Negatieve button varianten',
+);
+export const buttonWizardStepDisabled = createWizardStep('button-disabled', 'Button disabled');
+export const buttonWizardStepPressed = createWizardStep('button-pressed', 'Button pressed');
+export const buttonWizardStepPositivePressed = createWizardStep('button-positive-pressed', 'Positieve button pressed');
+export const buttonWizardStepNegativePressed = createWizardStep('button-negative-pressed', 'Negatieve button pressed');
+
+export const defaultButtonVariantOptions: ButtonPresetOptionConfig[] = [
+  {
+    name: 'Gevuld',
+    description: 'De standaard button heeft een ingevulde neutrale achtergrond.',
+    family: 'basis.color.default',
+    mode: 'filled',
+  },
+  {
+    name: 'Outlined',
+    description: 'De standaard button heeft alleen een lijn en geen vulling.',
+    family: 'basis.color.default',
+    mode: 'outlined',
+  },
+  {
+    name: 'Subtle',
+    description: 'De standaard button toont vooral tekst, met alleen een zachte hover- en active-staat.',
+    family: 'basis.color.default',
+    mode: 'subtle',
+  },
+];
+
+export const primaryButtonVariantOptions: ButtonPresetOptionConfig[] = [
+  {
+    name: 'Gevuld',
+    description: 'De primary button krijgt een duidelijke ingevulde accentkleur.',
+    family: 'basis.color.action-1-inverse',
+    filledBorderTransparent: true,
+    mode: 'filled',
+  },
+  {
+    name: 'Outlined',
+    description: 'De primary button krijgt een accentkleurige lijn en transparante achtergrond.',
+    family: 'basis.color.action-1',
+    mode: 'outlined',
+  },
+  {
+    name: 'Subtle',
+    description: 'De primary button toont vooral tekstkleur met een zachte achtergrond bij interactie.',
+    family: 'basis.color.action-1',
+    mode: 'subtle',
+  },
+];
+
+export const secondaryButtonVariantOptions: ButtonPresetOptionConfig[] = [
+  {
+    name: 'Gevuld',
+    description: 'De secondary button krijgt een lichte ingevulde stijl.',
+    family: 'basis.color.action-1',
+    filledBorderTransparent: true,
+    mode: 'filled',
+  },
+  {
+    name: 'Outlined',
+    description: 'De secondary button krijgt een duidelijke lijn en transparante achtergrond.',
+    family: 'basis.color.action-1',
+    mode: 'outlined',
+  },
+  {
+    name: 'Subtle',
+    description: 'De secondary button toont vooral tekstkleur met een zachte hover-achtergrond.',
+    family: 'basis.color.action-1',
+    mode: 'subtle',
+  },
+];
 
 const transparentToken = '{basis.color.transparent}';
 
@@ -111,7 +208,7 @@ export const createButtonTokenTree = (
   };
 };
 
-export const createDesignStory = ({
+export const createAdvancedStory = ({
   name,
   args,
   description,
@@ -137,7 +234,7 @@ export const createDesignStory = ({
         },
       },
       editableTokens,
-      ...(wizard ? { wizard } : {}),
+      ...(wizard ? { wizard: { ...wizard, type: 'advanced' as const } } : {}),
     },
     ...(render ? { render } : {}),
   }) as ButtonStory;
@@ -159,7 +256,7 @@ export const createStateStory = ({
   render: ButtonStory['render'];
   wizard: WizardStep;
 }) =>
-  createDesignStory({
+  createAdvancedStory({
     name,
     args,
     description,
@@ -183,7 +280,7 @@ export const createDisabledStory = ({
   render: ButtonStory['render'];
   wizard: WizardStep;
 }) =>
-  createDesignStory({
+  createAdvancedStory({
     name,
     args,
     description,
@@ -209,7 +306,7 @@ export const createPressedStory = ({
   render: ButtonStory['render'];
   wizard: WizardStep;
 }) =>
-  createDesignStory({
+  createAdvancedStory({
     name,
     args,
     description,
@@ -274,7 +371,7 @@ export const createVariantStory = ({
   render: (args: VariantStoryArgs) => JSX.Element;
   wizard: WizardStep;
 }) =>
-  createDesignStory({
+  createAdvancedStory({
     name,
     args,
     description,
@@ -327,6 +424,35 @@ export const createButtonVariantOption = (purpose: ButtonPresetPurpose, config: 
   tokens: createButtonPurposeTokens(purpose, config),
 });
 
+export const createButtonPresetStory = ({
+  name,
+  args,
+  order,
+  presets,
+  previewStoryIds,
+  render,
+}: {
+  args: ButtonStoryArgs;
+  name: string;
+  order: number;
+  previewStoryIds: string[];
+  presets: ButtonPresetGroup[];
+  render: ButtonStory['render'];
+}): ButtonStory =>
+  ({
+    name,
+    args,
+    parameters: {
+      presets,
+      wizard: {
+        order,
+        previewStoryIds,
+        type: 'preset',
+      },
+    },
+    render,
+  }) as ButtonStory;
+
 export const createButtonVariantStory = ({
   name,
   args,
@@ -344,22 +470,18 @@ export const createButtonVariantStory = ({
   question: string;
   render: ButtonStory['render'];
 }): ButtonStory =>
-  ({
+  createButtonPresetStory({
     name,
     args,
-    parameters: {
-      presets: [
-        {
-          name: question,
-          options: options.map((option) => createButtonVariantOption(args.purpose ?? 'default', option)),
-          question,
-          thumbnail: false,
-        },
-      ],
-      wizard: {
-        order,
-        previewStoryIds: [previewStoryId],
+    order,
+    presets: [
+      {
+        name: question,
+        options: options.map((option) => createButtonVariantOption(args.purpose ?? 'default', option)),
+        question,
+        thumbnail: false,
       },
-    },
+    ],
+    previewStoryIds: [previewStoryId],
     render,
-  }) as ButtonStory;
+  });
