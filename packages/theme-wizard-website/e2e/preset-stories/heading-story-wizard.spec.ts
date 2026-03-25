@@ -70,12 +70,7 @@ test('selected preset option shows a resolved CSS value', async () => {
   const groupLabel = 'Kies de grootte van de H1';
 
   await wizard.selectOption(groupLabel, 0);
-
-  // Token reference should contain the scale path
-  await expect.poll(() => wizard.readSelectedTokenReference(groupLabel)).toContain('basis.text.font-size.3xl');
-
-  // Resolved value should be a CSS unit like "0.875rem"
-  await expect.poll(() => wizard.readSelectedResolvedValue(groupLabel)).toMatch(/^\d+(\.\d+)?(rem|px|em)$/);
+  await wizard.assertSelectedOptionShowsResolvedCssValue(groupLabel, 'basis.text.font-size.3xl');
 });
 
 test('every preset step has a default option from the start theme', async () => {
