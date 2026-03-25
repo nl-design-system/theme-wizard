@@ -35,6 +35,7 @@ const createParagraphPresetStory = ({
   args,
   description,
   options,
+  order,
   previewStoryId,
   question,
 }: {
@@ -42,6 +43,7 @@ const createParagraphPresetStory = ({
   description: string;
   name: string;
   options: PresetOption[];
+  order: number;
   previewStoryId: string;
   question: string;
 }): Story => ({
@@ -56,6 +58,7 @@ const createParagraphPresetStory = ({
       },
     ],
     wizard: {
+      order,
       previewStoryIds: [previewStoryId],
     },
   },
@@ -90,6 +93,7 @@ export const ParagraphFontSize: Story = createParagraphPresetStory({
       tokens: createParagraphToken('font-size', '{basis.text.font-size.xl}'),
     },
   ],
+  order: 1,
   previewStoryId: 'ParagraphStory',
   question: 'Kies de grootte van de paragraph',
 });
@@ -125,6 +129,7 @@ export const LeadParagraphFontSize: Story = createParagraphPresetStory({
       tokens: {},
     },
   ],
+  order: 2,
   previewStoryId: 'LeadParagraphStory',
   question: 'Kies de grootte van de lead paragraph',
 });
@@ -146,6 +151,7 @@ export const LeadParagraphColor: Story = createParagraphPresetStory({
     createAccentColorOption('Accentkleur 2', 2),
     createAccentColorOption('Accentkleur 3', 3),
   ],
+  order: 3,
   previewStoryId: 'LeadParagraphStory',
   question: 'Kies de kleur van de lead paragraph',
 });

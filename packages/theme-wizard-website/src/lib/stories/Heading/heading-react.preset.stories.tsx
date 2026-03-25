@@ -42,6 +42,7 @@ const createHeadingPresetStory = ({
   args,
   description,
   options,
+  order,
   previewStoryId,
   question,
 }: {
@@ -49,6 +50,7 @@ const createHeadingPresetStory = ({
   description: string;
   name: string;
   options: PresetOption[];
+  order: number;
   previewStoryId: string;
   question: string;
 }): Story => ({
@@ -63,6 +65,7 @@ const createHeadingPresetStory = ({
       },
     ],
     wizard: {
+      order,
       previewStoryIds: [previewStoryId],
     },
   },
@@ -94,6 +97,7 @@ const createFontSizeStory = (level: HeadingLevel): Story =>
     },
     description: `Bepaal hoe groot de H${level} is ten opzichte van de rest van de pagina.`,
     options: createFontSizeOptions(level),
+    order: level,
     previewStoryId: `Heading${level}Preview`,
     question: `Kies de grootte van de H${level}`,
   });
@@ -134,6 +138,7 @@ export const HeadingColor: Story = createHeadingPresetStory({
       tokens: createHeadingToken(1, 'color', '{basis.color.accent-3.color-document}'),
     },
   ],
+  order: 7,
   previewStoryId: 'AllHeadingsPreview',
   question: 'Kies de kleur van headings',
 });

@@ -1,5 +1,15 @@
 import { test, expect } from '@playwright/test';
 
+test('paragraph wizard questions keep the intended order', async ({ page }) => {
+  await page.goto('/components/paragraph');
+
+  const legends = page.locator('wizard-token-preset legend');
+  await expect(legends).toHaveCount(3);
+  await expect(legends.nth(0)).toHaveText('Kies de grootte van de paragraph');
+  await expect(legends.nth(1)).toHaveText('Kies de grootte van de lead paragraph');
+  await expect(legends.nth(2)).toHaveText('Kies de kleur van de lead paragraph');
+});
+
 test('changing the paragraph preset also updates the lead paragraph preset', async ({ page }) => {
   await page.goto('/components/paragraph');
 
@@ -34,7 +44,7 @@ test('changing the paragraph preset also updates the lead paragraph preset', asy
   }
 
   await expect.poll(readThemeValues).toEqual({
-    lead: '{basis.text.font-size.xl}',
+    lead: '{basis.text.font-size.2xl}',
     paragraph: '{basis.text.font-size.xl}',
   });
 });
