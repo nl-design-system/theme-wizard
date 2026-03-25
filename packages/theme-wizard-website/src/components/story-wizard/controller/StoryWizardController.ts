@@ -57,7 +57,9 @@ export class StoryWizardController {
   }
 
   private async waitForPresetInputs() {
-    const presetInputs = Array.from(document.querySelectorAll<HTMLElement & { updateComplete?: Promise<unknown> }>('wizard-token-preset'));
+    const presetInputs = Array.from(
+      document.querySelectorAll<HTMLElement & { updateComplete?: Promise<unknown> }>('wizard-token-preset'),
+    );
     await Promise.all(presetInputs.map((input) => input.updateComplete ?? Promise.resolve()));
   }
 
@@ -86,7 +88,9 @@ export class StoryWizardController {
   private bindNavigation() {
     this.resetBtns.forEach((resetBtn) => {
       resetBtn.addEventListener('click', () => {
-        void this.reset();
+        this.reset().catch((error) => {
+          console.error('Failed to reset Story Wizard', error);
+        });
       });
     });
 
