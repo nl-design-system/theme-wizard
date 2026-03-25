@@ -115,6 +115,9 @@ export const ButtonMinimumSize: Story = {
         ],
       },
     ],
+    wizard: {
+      order: 1,
+    },
   },
   render: ButtonPrimary,
 };
@@ -126,6 +129,7 @@ export const ButtonDefaultVariantStyle = createButtonVariantStory({
     label: 'Klik mij!',
   },
   options: defaultButtonVariantOptions,
+  order: 2,
   previewStoryId: 'DefaultButtonPurposePreview',
   question: 'Welke stijl wil je voor de standaard button?',
   render: RenderButtonPurposePreview,
@@ -139,6 +143,7 @@ export const ButtonPrimaryVariantStyle = createButtonVariantStory({
     purpose: 'primary',
   },
   options: primaryButtonVariantOptions,
+  order: 3,
   previewStoryId: 'PrimaryButtonPurposePreview',
   question: 'Welke stijl wil je voor de primary button?',
   render: RenderButtonPurposePreview,
@@ -152,6 +157,7 @@ export const ButtonSecondaryVariantStyle = createButtonVariantStory({
     purpose: 'secondary',
   },
   options: secondaryButtonVariantOptions,
+  order: 4,
   previewStoryId: 'SecondaryButtonPurposePreview',
   question: 'Welke stijl wil je voor de secondary button?',
   render: RenderButtonPurposePreview,
@@ -229,6 +235,7 @@ export const ButtonShape: Story = {
       },
     ],
     wizard: {
+      order: 5,
       previewStoryIds: ['AllButtonPurposesPreview'],
     },
   },

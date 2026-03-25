@@ -18,12 +18,14 @@ const createPresetStory = ({
   args,
   description,
   options,
+  order,
   question,
 }: {
   args: DataBadgeProps;
   description?: string;
   name: string;
   options: Array<{ description: string; name: string; tokens: unknown }>;
+  order: number;
   question: string;
 }): Story => ({
   name,
@@ -36,6 +38,9 @@ const createPresetStory = ({
         options,
       },
     ],
+    wizard: {
+      order,
+    },
   },
 });
 
@@ -63,6 +68,7 @@ export const DataBadgeKleur: Story = createPresetStory({
       }),
     },
   ],
+  order: 1,
   question: 'Kies de kleur voor de Data Badge',
 });
 
@@ -94,5 +100,6 @@ export const DataBadgeVorm: Story = createPresetStory({
       }),
     },
   ],
+  order: 2,
   question: 'Kies de vorm van de Data Badge',
 });

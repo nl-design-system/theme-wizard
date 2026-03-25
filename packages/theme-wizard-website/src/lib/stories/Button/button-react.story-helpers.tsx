@@ -331,6 +331,7 @@ export const createButtonVariantStory = ({
   name,
   args,
   options,
+  order,
   previewStoryId,
   question,
   render,
@@ -338,6 +339,7 @@ export const createButtonVariantStory = ({
   args: ButtonVariantStoryArgs;
   name: string;
   options: ButtonPresetOptionConfig[];
+  order: number;
   previewStoryId: string;
   question: string;
   render: ButtonStory['render'];
@@ -355,6 +357,7 @@ export const createButtonVariantStory = ({
         },
       ],
       wizard: {
+        order,
         previewStoryIds: [previewStoryId],
       },
     },

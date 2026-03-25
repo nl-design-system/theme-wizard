@@ -44,6 +44,7 @@ export type StoryWizardStep = {
   flowTitle?: string;
   id: string;
   intro?: string;
+  order?: number;
   previewStories: StoryWizardPreview[];
   groups: Array<StoryWizardPresetGroup | StoryWizardEditableTokenGroup>;
   title: string;
@@ -77,6 +78,7 @@ type StoryWizardParameters = {
   wizard?: {
     advancedTitle?: string;
     description?: string;
+    order?: number;
     preview?: boolean;
     previewStoryIds?: string[];
     question?: string;
@@ -254,7 +256,8 @@ export class StoryWizardModel {
     const previewStories = this.resolvePreviewStories(allStories, wizardStories);
     const rawSteps = wizardStories
       .map(([id, story]: StoryEntry) => this.createStep(id, story, allStories, previewStories, presetTokenPaths))
-      .filter((step): step is StoryWizardStep => step !== null);
+      .filter((step): step is StoryWizardStep => step !== null)
+      .sort((a, b) => (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY));
     const steps = this.createFlowSteps(rawSteps);
     const storyIds = Array.from(
       new Set([
@@ -346,6 +349,7 @@ export class StoryWizardModel {
       flowTitle: story.parameters?.wizard?.stepTitle ?? guessFlowGroup(story)?.title,
       groups,
       intro: story.parameters?.wizard?.description,
+      order: story.parameters?.wizard?.order,
       previewStories: this.resolveStepPreviewStories(id, story, allStories, previewStories),
       title: story.name ?? id,
     };
