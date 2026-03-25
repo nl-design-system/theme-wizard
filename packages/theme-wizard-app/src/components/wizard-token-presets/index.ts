@@ -259,11 +259,11 @@ export class WizardTokenPreset extends LitElement {
     );
   }
 
-  private matchesTheme(theme: Theme, tokens: unknown) {
-    let selected = true;
+  private matchesThemeByReferenceChain(theme: Theme, tokens: unknown) {
+    let matches = true;
 
     this.walkPresetTokens(tokens, [], (presetValue, path) => {
-      if (!selected) return;
+      if (!matches) return;
 
       const tokenPath = path.join('.');
       const themeToken = theme.at(tokenPath);
@@ -285,10 +285,32 @@ export class WizardTokenPreset extends LitElement {
         }
       }
 
-      selected = false;
+      matches = false;
     });
 
-    return selected;
+    return matches;
+  }
+
+  private matchesThemeExactly(theme: Theme, tokens: unknown) {
+    let matches = true;
+
+    this.walkPresetTokens(tokens, [], (presetValue, path) => {
+      if (!matches) return;
+
+      const tokenPath = path.join('.');
+      const themeToken = theme.at(tokenPath);
+      const themeValue = themeToken ? themeToken['$value'] : null;
+
+      if (!dequal(themeValue, presetValue)) {
+        matches = false;
+      }
+    });
+
+    return matches;
+  }
+
+  private findMatchingOptionIndex(theme: Theme, matcher: (theme: Theme, tokens: unknown) => boolean) {
+    return this.options.findIndex((option) => matcher.call(this, theme, option.tokens));
   }
 
   private setSelectedIndex(index: number) {
@@ -298,9 +320,8 @@ export class WizardTokenPreset extends LitElement {
   }
 
   private updateSelectionState() {
-    this.defaultIndexState = this.options.findIndex((option) => this.matchesTheme(this.defaultTheme, option.tokens));
-    const selectedIndex = this.options.findIndex((option) => this.matchesTheme(this.currentTheme, option.tokens));
-    this.setSelectedIndex(selectedIndex);
+    this.defaultIndexState = this.findMatchingOptionIndex(this.defaultTheme, this.matchesThemeByReferenceChain);
+    this.setSelectedIndex(this.findMatchingOptionIndex(this.currentTheme, this.matchesThemeExactly));
   }
 
   private onThemeUpdate(event: CustomEvent) {
@@ -315,6 +336,12 @@ export class WizardTokenPreset extends LitElement {
 
   private dispatchSelectionChange() {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
+  private onOptionClick(index: number) {
+    if (index === this.selectedIndex) {
+      this.dispatchSelectionChange();
+    }
   }
 
   private onOptionChange(index: number) {
@@ -424,6 +451,7 @@ export class WizardTokenPreset extends LitElement {
                   name=${this.inputName}
                   .value=${String(index)}
                   ?checked=${isSelected}
+                  @click=${() => this.onOptionClick(index)}
                   @change=${() => this.onOptionChange(index)}
                 />
                 <span
