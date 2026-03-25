@@ -9,6 +9,7 @@ type PresetOption = {
     scalePath: string;
     sourcePath: string;
     targetIndex?: number;
+    targetKey?: string;
     targetPath: string;
   };
   description: string;
@@ -19,12 +20,12 @@ type PresetOption = {
 const headingSampleText = 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.';
 
 const headingFontSizes = [
-  { label: 'Klein', step: 'sm' },
-  { label: 'Normaal', step: 'md' },
-  { label: 'Groot', step: 'lg' },
-  { label: 'Extra groot', step: 'xl' },
-  { label: 'Heel groot', step: '2xl' },
   { label: 'Enorm', step: '3xl' },
+  { label: 'Heel groot', step: '2xl' },
+  { label: 'Extra groot', step: 'xl' },
+  { label: 'Groot', step: 'lg' },
+  { label: 'Normaal', step: 'md' },
+  { label: 'Klein', step: 'sm' },
 ] as const;
 
 const createHeadingToken = (level: HeadingLevel, property: string, value: string) => ({
@@ -74,13 +75,13 @@ const createHeadingPresetStory = ({
 const createFontSizeOptions = (level: HeadingLevel): PresetOption[] => {
   const targetPath = `nl.heading.level-${level}.font-size`;
 
-  return headingFontSizes.map(({ label }, targetIndex) => ({
+  return headingFontSizes.map(({ label, step }) => ({
     name: label,
     derivedTokenReference: {
       offset: 0,
       scalePath: 'basis.text.font-size',
       sourcePath: targetPath,
-      targetIndex,
+      targetKey: step,
       targetPath,
     },
     description: `Gebruik de maat ${label.toLowerCase()} voor deze heading.`,
