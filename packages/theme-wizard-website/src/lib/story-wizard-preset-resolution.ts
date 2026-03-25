@@ -6,6 +6,7 @@ export type DerivedTokenReference = {
   scalePath: string;
   sourcePath: string;
   targetIndex?: number;
+  targetKey?: string;
   targetPath: string;
 };
 
@@ -142,6 +143,16 @@ const getScaleReferenceAtIndex = (defaults: unknown, scalePath: string, targetIn
   return `{${scalePath}.${scale[clampedIndex]}}`;
 };
 
+const getScaleReferenceForKey = (defaults: unknown, scalePath: string, targetKey: string, fallbackReference: string) => {
+  const scale = getTokenScale(defaults, scalePath);
+
+  if (!scale.includes(targetKey)) {
+    return fallbackReference;
+  }
+
+  return `{${scalePath}.${targetKey}}`;
+};
+
 /**
  * Builds a nested token object with a single `$value` leaf.
  *
@@ -188,10 +199,12 @@ const resolveDynamicPresetOption = <TOption extends DynamicPresetOption>(
     return option;
   }
 
-  const { offset, scalePath, sourcePath, targetIndex, targetPath } = option.derivedTokenReference;
+  const { offset, scalePath, sourcePath, targetIndex, targetKey, targetPath } = option.derivedTokenReference;
   const sourceReference = getSelectedTokenReference(selectedOptions, sourcePath, defaults, `{${scalePath}.md}`);
   const resolvedValue =
-    typeof targetIndex === 'number'
+    typeof targetKey === 'string'
+      ? getScaleReferenceForKey(defaults, scalePath, targetKey, sourceReference)
+      : typeof targetIndex === 'number'
       ? getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference)
       : getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
   const resolvedTokens = buildTokenValue(targetPath, resolvedValue);
