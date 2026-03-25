@@ -62,6 +62,36 @@ export class PresetWizardPage {
     }, tokenPath);
   }
 
+  /** Read the defaultIndex for a preset (-1 means no default matched). */
+  async readDefaultIndex(groupLabel: string): Promise<number> {
+    return this.preset(groupLabel).evaluate(
+      (el) => (el as HTMLElement & { defaultIndex: number }).defaultIndex ?? -1,
+    );
+  }
+
+  /** Check that every preset on the page has a default option (defaultIndex >= 0). */
+  async assertAllPresetsHaveDefault() {
+    const count = await this.presets.count();
+
+    for (let i = 0; i < count; i++) {
+      const preset = this.presets.nth(i);
+      const groupLabel = await preset.getAttribute('group-label');
+
+      // Wait for options to load
+      await expect
+        .poll(() =>
+          preset.evaluate((el) => (el as HTMLElement & { options: unknown[] }).options?.length > 0),
+        )
+        .toBe(true);
+
+      const defaultIndex = await preset.evaluate(
+        (el) => (el as HTMLElement & { defaultIndex: number }).defaultIndex ?? -1,
+      );
+
+      expect(defaultIndex, `Preset "${groupLabel}" should have a default option`).toBeGreaterThanOrEqual(0);
+    }
+  }
+
   /** Read the resolved value text (e.g. "0.875rem") from the selected option's shadow DOM. */
   async readSelectedResolvedValue(groupLabel: string): Promise<string | null> {
     return this.preset(groupLabel).evaluate((el) => {
