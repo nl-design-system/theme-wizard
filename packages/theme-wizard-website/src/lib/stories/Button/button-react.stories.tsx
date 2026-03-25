@@ -69,6 +69,11 @@ export const Button: Story = {
 
 export const WizardPreview: Story = {
   name: 'Wizard Preview',
+  parameters: {
+    wizard: {
+      preview: true,
+    },
+  },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div style={{ columnGap: '1.5rem', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', rowGap: '1.5rem' }}>

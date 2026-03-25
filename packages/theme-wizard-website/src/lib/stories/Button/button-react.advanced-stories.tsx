@@ -7,6 +7,8 @@ import {
   RenderButtonFocusVisible,
   RenderButtonPressed,
   RenderButtonStates,
+} from './button-react.story-components';
+import {
   buttonWizardStepBasic,
   buttonWizardStepDisabled,
   buttonWizardStepNegativePressed,
@@ -18,9 +20,7 @@ import {
   buttonWizardStepPressed,
   buttonWizardStepStates,
   buttonWizardStepVariants,
-} from './button-react.story-components';
-import {
-  createDesignStory,
+  createAdvancedStory,
   createDisabledStory,
   createPressedStory,
   createStateStory,
@@ -31,8 +31,8 @@ import {
 
 type Story = StoryObj<ButtonProps>;
 
-export const DesignButtonBorders: Story = createDesignStory({
-  name: 'Design: Button Borders',
+export const AdvancedButtonBorders: Story = createAdvancedStory({
+  name: 'Advanced: Button Borders',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
@@ -61,8 +61,8 @@ export const DesignButtonBorders: Story = createDesignStory({
   wizard: buttonWizardStepBasic,
 });
 
-export const DesignButtonTypography: Story = createDesignStory({
-  name: 'Design: Button Typography',
+export const AdvancedButtonTypography: Story = createAdvancedStory({
+  name: 'Advanced: Button Typography',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
@@ -99,8 +99,8 @@ export const DesignButtonTypography: Story = createDesignStory({
   wizard: buttonWizardStepBasic,
 });
 
-export const DesignButtonStates = createStateStory({
-  name: 'Design: Button States',
+export const AdvancedButtonStates = createStateStory({
+  name: 'Advanced: Button States',
   args: {
     label: 'Klik mij!',
   },
@@ -109,8 +109,8 @@ export const DesignButtonStates = createStateStory({
   wizard: buttonWizardStepStates,
 });
 
-export const DesignPrimaryButtonStates = createStateStory({
-  name: 'Design: Button States',
+export const AdvancedPrimaryButtonStates = createStateStory({
+  name: 'Advanced: Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'primary',
@@ -121,8 +121,8 @@ export const DesignPrimaryButtonStates = createStateStory({
   wizard: buttonWizardStepStates,
 });
 
-export const DesignSecondaryButtonStates = createStateStory({
-  name: 'Design: Secondary Button States',
+export const AdvancedSecondaryButtonStates = createStateStory({
+  name: 'Advanced: Secondary Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'secondary',
@@ -133,8 +133,8 @@ export const DesignSecondaryButtonStates = createStateStory({
   wizard: buttonWizardStepStates,
 });
 
-export const DesignSubtleButtonStates = createStateStory({
-  name: 'Design: Subtle Button States',
+export const AdvancedSubtleButtonStates = createStateStory({
+  name: 'Advanced: Subtle Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'subtle',
@@ -145,8 +145,8 @@ export const DesignSubtleButtonStates = createStateStory({
   wizard: buttonWizardStepStates,
 });
 
-export const DesignPrimaryPositiveButtonStates = createStateStory({
-  name: 'Design: Primary Positive Button States',
+export const AdvancedPrimaryPositiveButtonStates = createStateStory({
+  name: 'Advanced: Primary Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
@@ -159,8 +159,8 @@ export const DesignPrimaryPositiveButtonStates = createStateStory({
   wizard: buttonWizardStepPositiveStates,
 });
 
-export const DesignSecondaryPositiveButtonStates = createStateStory({
-  name: 'Design: Secondary Positive Button States',
+export const AdvancedSecondaryPositiveButtonStates = createStateStory({
+  name: 'Advanced: Secondary Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
@@ -173,8 +173,8 @@ export const DesignSecondaryPositiveButtonStates = createStateStory({
   wizard: buttonWizardStepPositiveStates,
 });
 
-export const DesignSubtlePositiveButtonStates = createStateStory({
-  name: 'Design: Subtle Positive Button States',
+export const AdvancedSubtlePositiveButtonStates = createStateStory({
+  name: 'Advanced: Subtle Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
@@ -187,8 +187,8 @@ export const DesignSubtlePositiveButtonStates = createStateStory({
   wizard: buttonWizardStepPositiveStates,
 });
 
-export const DesignPrimaryNegativeButtonStates = createStateStory({
-  name: 'Design: Primary Negative Button States',
+export const AdvancedPrimaryNegativeButtonStates = createStateStory({
+  name: 'Advanced: Primary Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
@@ -201,8 +201,8 @@ export const DesignPrimaryNegativeButtonStates = createStateStory({
   wizard: buttonWizardStepNegativeStates,
 });
 
-export const DesignSecondaryNegativeButtonStates = createStateStory({
-  name: 'Design: Secondary Negative Button States',
+export const AdvancedSecondaryNegativeButtonStates = createStateStory({
+  name: 'Advanced: Secondary Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
@@ -215,8 +215,8 @@ export const DesignSecondaryNegativeButtonStates = createStateStory({
   wizard: buttonWizardStepNegativeStates,
 });
 
-export const DesignSubtleNegativeButtonStates = createStateStory({
-  name: 'Design: Subtle Negative Button States',
+export const AdvancedSubtleNegativeButtonStates = createStateStory({
+  name: 'Advanced: Subtle Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
@@ -229,8 +229,8 @@ export const DesignSubtleNegativeButtonStates = createStateStory({
   wizard: buttonWizardStepNegativeStates,
 });
 
-export const DesignPrimaryButton = createVariantStory({
-  name: 'Design: Primary Button',
+export const AdvancedPrimaryButton = createVariantStory({
+  name: 'Advanced: Primary Button',
   args: {
     label: 'Primary Button',
     purpose: 'primary',
@@ -241,8 +241,8 @@ export const DesignPrimaryButton = createVariantStory({
   wizard: buttonWizardStepVariants,
 });
 
-export const DesignSecondaryButton = createVariantStory({
-  name: 'Design: Secondary Button',
+export const AdvancedSecondaryButton = createVariantStory({
+  name: 'Advanced: Secondary Button',
   args: {
     label: 'Secondary Button',
     purpose: 'secondary',
@@ -258,8 +258,8 @@ Optioneel kan er een hint mee gegeven worden.
   wizard: buttonWizardStepVariants,
 });
 
-export const DesignSubtleButton = createVariantStory({
-  name: 'Design: Subtle Button',
+export const AdvancedSubtleButton = createVariantStory({
+  name: 'Advanced: Subtle Button',
   args: {
     label: 'Subtle Button',
     purpose: 'subtle',
@@ -275,8 +275,8 @@ Optioneel kan er een hint mee gegeven worden.
   wizard: buttonWizardStepVariants,
 });
 
-export const DesignFocusButton: Story = createDesignStory({
-  name: 'Design: Focus Visible Button',
+export const AdvancedFocusButton: Story = createAdvancedStory({
+  name: 'Advanced: Focus Visible Button',
   args: {
     label: 'Klik mij!',
   },
@@ -297,8 +297,8 @@ export const DesignFocusButton: Story = createDesignStory({
   wizard: buttonWizardStepBasic,
 });
 
-export const DesignDisabledButton = createDisabledStory({
-  name: 'Design: Disabled Button',
+export const AdvancedDisabledButton = createDisabledStory({
+  name: 'Advanced: Disabled Button',
   args: {
     disabled: true,
     label: 'Klik mij!',
@@ -309,8 +309,8 @@ export const DesignDisabledButton = createDisabledStory({
   wizard: buttonWizardStepDisabled,
 });
 
-export const DesignPrimaryDisabledButton = createDisabledStory({
-  name: 'Design: Primary Disabled Button',
+export const AdvancedPrimaryDisabledButton = createDisabledStory({
+  name: 'Advanced: Primary Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
@@ -322,8 +322,8 @@ export const DesignPrimaryDisabledButton = createDisabledStory({
   wizard: buttonWizardStepDisabled,
 });
 
-export const DesignSecondaryDisabledButton = createDisabledStory({
-  name: 'Design: Secondary Disabled Button',
+export const AdvancedSecondaryDisabledButton = createDisabledStory({
+  name: 'Advanced: Secondary Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
@@ -335,8 +335,8 @@ export const DesignSecondaryDisabledButton = createDisabledStory({
   wizard: buttonWizardStepDisabled,
 });
 
-export const DesignSubtleDisabledButton = createDisabledStory({
-  name: 'Design: Subtle Disabled Button',
+export const AdvancedSubtleDisabledButton = createDisabledStory({
+  name: 'Advanced: Subtle Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
@@ -348,8 +348,8 @@ export const DesignSubtleDisabledButton = createDisabledStory({
   wizard: buttonWizardStepDisabled,
 });
 
-export const DesignAlleenEenIcon: Story = createDesignStory({
-  name: 'Design: Alleen een icon',
+export const AdvancedAlleenEenIcon: Story = createAdvancedStory({
+  name: 'Advanced: Alleen een icon',
   args: {
     iconOnly: true,
     iconStart: <Icon />,
@@ -386,8 +386,8 @@ export const DesignAlleenEenIcon: Story = createDesignStory({
   wizard: buttonWizardStepBasic,
 });
 
-export const DesignPressedButton = createPressedStory({
-  name: 'Design: Geselecteerde Button',
+export const AdvancedPressedButton = createPressedStory({
+  name: 'Advanced: Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -398,8 +398,8 @@ export const DesignPressedButton = createPressedStory({
   wizard: buttonWizardStepPressed,
 });
 
-export const DesignPrimaryPressedButton = createPressedStory({
-  name: 'Design: Primary Geselecteerde Button',
+export const AdvancedPrimaryPressedButton = createPressedStory({
+  name: 'Advanced: Primary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -411,8 +411,8 @@ export const DesignPrimaryPressedButton = createPressedStory({
   wizard: buttonWizardStepPressed,
 });
 
-export const DesignSecondaryPressedButton = createPressedStory({
-  name: 'Design: Secondary Geselecteerde Button',
+export const AdvancedSecondaryPressedButton = createPressedStory({
+  name: 'Advanced: Secondary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -424,8 +424,8 @@ export const DesignSecondaryPressedButton = createPressedStory({
   wizard: buttonWizardStepPressed,
 });
 
-export const DesignSubtlePressedButton = createPressedStory({
-  name: 'Design: Subtle Geselecteerde Button',
+export const AdvancedSubtlePressedButton = createPressedStory({
+  name: 'Advanced: Subtle Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -437,8 +437,8 @@ export const DesignSubtlePressedButton = createPressedStory({
   wizard: buttonWizardStepPressed,
 });
 
-export const DesignPrimaryPositiveButton = createStateStory({
-  name: 'Design: Primary Positive Button',
+export const AdvancedPrimaryPositiveButton = createStateStory({
+  name: 'Advanced: Primary Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -451,8 +451,8 @@ export const DesignPrimaryPositiveButton = createStateStory({
   wizard: buttonWizardStepPositiveVariants,
 });
 
-export const DesignPrimaryNegativeButton = createStateStory({
-  name: 'Design: Primary Negative Button',
+export const AdvancedPrimaryNegativeButton = createStateStory({
+  name: 'Advanced: Primary Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -465,8 +465,8 @@ export const DesignPrimaryNegativeButton = createStateStory({
   wizard: buttonWizardStepNegativeVariants,
 });
 
-export const DesignSecondaryPositiveButton = createStateStory({
-  name: 'Design: Secondary Positive Button',
+export const AdvancedSecondaryPositiveButton = createStateStory({
+  name: 'Advanced: Secondary Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -479,8 +479,8 @@ export const DesignSecondaryPositiveButton = createStateStory({
   wizard: buttonWizardStepPositiveVariants,
 });
 
-export const DesignSecondaryNegativeButton = createStateStory({
-  name: 'Design: Secondary Negative Button',
+export const AdvancedSecondaryNegativeButton = createStateStory({
+  name: 'Advanced: Secondary Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -493,8 +493,8 @@ export const DesignSecondaryNegativeButton = createStateStory({
   wizard: buttonWizardStepNegativeVariants,
 });
 
-export const DesignSubtlePositiveButton = createStateStory({
-  name: 'Design: Subtle Positive Button',
+export const AdvancedSubtlePositiveButton = createStateStory({
+  name: 'Advanced: Subtle Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -507,8 +507,8 @@ export const DesignSubtlePositiveButton = createStateStory({
   wizard: buttonWizardStepPositiveVariants,
 });
 
-export const DesignSubtleNegativeButton = createStateStory({
-  name: 'Design: Subtle Negative Button',
+export const AdvancedSubtleNegativeButton = createStateStory({
+  name: 'Advanced: Subtle Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -521,8 +521,8 @@ export const DesignSubtleNegativeButton = createStateStory({
   wizard: buttonWizardStepNegativeVariants,
 });
 
-export const DesignPrimaryPositivePressedButton = createPressedStory({
-  name: 'Design: Primary Positive Geselecteerde Button',
+export const AdvancedPrimaryPositivePressedButton = createPressedStory({
+  name: 'Advanced: Primary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -536,8 +536,8 @@ export const DesignPrimaryPositivePressedButton = createPressedStory({
   wizard: buttonWizardStepPositivePressed,
 });
 
-export const DesignPrimaryNegativePressedButton = createPressedStory({
-  name: 'Design: Primary Negative Geselecteerde Button',
+export const AdvancedPrimaryNegativePressedButton = createPressedStory({
+  name: 'Advanced: Primary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -551,8 +551,8 @@ export const DesignPrimaryNegativePressedButton = createPressedStory({
   wizard: buttonWizardStepNegativePressed,
 });
 
-export const DesignSecondaryPositivePressedButton = createPressedStory({
-  name: 'Design: Secondary Positive Geselecteerde Button',
+export const AdvancedSecondaryPositivePressedButton = createPressedStory({
+  name: 'Advanced: Secondary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -566,8 +566,8 @@ export const DesignSecondaryPositivePressedButton = createPressedStory({
   wizard: buttonWizardStepPositivePressed,
 });
 
-export const DesignSecondaryNegativePressedButton = createPressedStory({
-  name: 'Design: Secondary Negative Geselecteerde Button',
+export const AdvancedSecondaryNegativePressedButton = createPressedStory({
+  name: 'Advanced: Secondary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -581,8 +581,8 @@ export const DesignSecondaryNegativePressedButton = createPressedStory({
   wizard: buttonWizardStepNegativePressed,
 });
 
-export const DesignSubtlePositivePressedButton = createPressedStory({
-  name: 'Design: Subtle Positive Geselecteerde Button',
+export const AdvancedSubtlePositivePressedButton = createPressedStory({
+  name: 'Advanced: Subtle Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -596,8 +596,8 @@ export const DesignSubtlePositivePressedButton = createPressedStory({
   wizard: buttonWizardStepPositivePressed,
 });
 
-export const DesignSubtleNegativePressedButton = createPressedStory({
-  name: 'Design: Subtle Negative Geselecteerde Button',
+export const AdvancedSubtleNegativePressedButton = createPressedStory({
+  name: 'Advanced: Subtle Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -611,8 +611,8 @@ export const DesignSubtleNegativePressedButton = createPressedStory({
   wizard: buttonWizardStepNegativePressed,
 });
 
-export const DesignButtonSize: Story = {
-  name: 'Design: Button Size',
+export const AdvancedButtonSize: Story = {
+  name: 'Advanced: Button Size',
   args: {
     label: 'Voorbeeld',
   },

@@ -1,17 +1,13 @@
 import type { StoryObj } from '@storybook/react-vite';
 import { Paragraph, type ParagraphProps } from '@nl-design-system-candidate/paragraph-react';
-import {
-  paragraphWizardStepDefault,
-  paragraphWizardStepLead,
-  paragraphWizardStepShared,
-} from './paragraph-react.story-helpers';
+import { storySampleText } from '../story-helpers';
 
 type Story = StoryObj<ParagraphProps>;
 
-export const DesignParagraphShared: Story = {
-  name: 'Design: Paragraph en Lead Paragraph',
+export const AdvancedParagraphShared: Story = {
+  name: 'Advanced: Paragraph en Lead Paragraph',
   args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
+    children: storySampleText,
     purpose: undefined,
   },
   parameters: {
@@ -25,9 +21,9 @@ export const DesignParagraphShared: Story = {
       },
     },
     wizard: {
-      ...paragraphWizardStepShared,
       description: 'Pas de gedeelde kleur en het lettertype aan voor zowel gewone als lead paragraphs.',
       question: 'Wil je de gedeelde basis van paragraphs verder verfijnen?',
+      type: 'advanced',
     },
   },
   render: ({ children }) => (
@@ -38,10 +34,10 @@ export const DesignParagraphShared: Story = {
   ),
 };
 
-export const DesignParagraph: Story = {
-  name: 'Design: Paragraph',
+export const AdvancedParagraph: Story = {
+  name: 'Advanced: Paragraph',
   args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
+    children: storySampleText,
     purpose: undefined,
   },
   parameters: {
@@ -49,7 +45,6 @@ export const DesignParagraph: Story = {
     editableTokens: {
       nl: {
         paragraph: {
-          'font-size': { $value: '' },
           'font-weight': { $value: '' },
           'line-height': { $value: '' },
           'margin-block-end': { $value: '' },
@@ -58,17 +53,17 @@ export const DesignParagraph: Story = {
       },
     },
     wizard: {
-      ...paragraphWizardStepDefault,
       description: 'Gebruik deze geavanceerde instellingen om de gewone paragraph exact af te stemmen.',
       question: 'Wil je de standaard paragraph verder verfijnen?',
+      type: 'advanced',
     },
   },
 };
 
-export const DesignLead: Story = {
-  name: 'Design: Paragraph Lead',
+export const AdvancedLead: Story = {
+  name: 'Advanced: Paragraph Lead',
   args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
+    children: storySampleText,
     purpose: 'lead',
   },
   parameters: {
@@ -77,7 +72,6 @@ export const DesignLead: Story = {
       nl: {
         paragraph: {
           lead: {
-            'font-size': { $value: '' },
             'font-weight': { $value: '' },
             'line-height': { $value: '' },
             'margin-block-end': { $value: '' },
@@ -87,9 +81,10 @@ export const DesignLead: Story = {
       },
     },
     wizard: {
-      ...paragraphWizardStepLead,
-      description: 'Gebruik deze geavanceerde instellingen om de lead paragraph precies meer of minder nadruk te geven.',
+      description:
+        'Gebruik deze geavanceerde instellingen om de lead paragraph precies meer of minder nadruk te geven.',
       question: 'Wil je de lead paragraph verder verfijnen?',
+      type: 'advanced',
     },
   },
 };

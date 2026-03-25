@@ -5,8 +5,7 @@ import {
   type HeadingProps,
 } from '@nl-design-system-candidate/heading-react';
 import { Fragment } from 'react';
-
-const sampleText = 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.';
+import { headingSampleText } from './heading-react.story-helpers';
 
 export const HeadingAllLevels = ({ children, ...props }: Omit<HeadingProps, 'level'>) => (
   <div
@@ -21,7 +20,7 @@ export const HeadingAllLevels = ({ children, ...props }: Omit<HeadingProps, 'lev
       <Fragment key={level}>
         <strong style={{ fontFamily: 'monospace', opacity: 0.5 }}>h{level}</strong>
         <Heading {...props} level={level}>
-          {children ?? sampleText}
+          {children ?? headingSampleText}
         </Heading>
       </Fragment>
     ))}

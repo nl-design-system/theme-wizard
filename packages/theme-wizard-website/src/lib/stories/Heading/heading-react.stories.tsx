@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { CSSProperties } from 'react';
 import css from '@nl-design-system-candidate/heading-css/heading.css?inline';
 import { Heading, type HeadingProps } from '@nl-design-system-candidate/heading-react';
 import tokens from '@nl-design-system-candidate/heading-tokens';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
-import { HeadingAllLevels } from './heading-react.story-components';
+import { createHeadingPreview, headingSampleText, renderHeadingLevelsPreview } from './heading-react.story-helpers';
 
 const meta = {
   id: 'heading',
@@ -82,87 +81,25 @@ Dit voorbeeld voldoet niet aan de best practices van NL Design System om de teks
   },
 };
 
-const clampStyles: CSSProperties = {
-  display: '-webkit-box',
-  lineClamp: 1,
-  overflow: 'hidden',
-  WebkitBoxOrient: 'block-axis',
-  WebkitLineClamp: '1',
-};
-
 export const WizardPreview: Story = {
   name: 'Wizard Preview',
   args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
+    children: headingSampleText,
     level: 1,
   },
-  render: (args) => <HeadingAllLevels {...args} />,
+  render: (args) => renderHeadingLevelsPreview(args),
 };
 
-export const Heading1Preview: Story = {
-  name: 'Heading 1 Preview',
-  args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
-    level: 1,
-  },
-  render: (args) => <HeadingAllLevels {...args} />,
-};
+export const Heading1Preview: Story = createHeadingPreview('Heading 1 Preview', 1);
+export const Heading2Preview: Story = createHeadingPreview('Heading 2 Preview', 2);
+export const Heading3Preview: Story = createHeadingPreview('Heading 3 Preview', 3);
+export const Heading4Preview: Story = createHeadingPreview('Heading 4 Preview', 4);
+export const Heading5Preview: Story = createHeadingPreview('Heading 5 Preview', 5);
+export const Heading6Preview: Story = createHeadingPreview('Heading 6 Preview', 6);
+export const AllHeadingsPreview: Story = createHeadingPreview('All Headings Preview');
 
-export const Heading2Preview: Story = {
-  name: 'Heading 2 Preview',
-  args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
-    level: 2,
-  },
-  render: (args) => <HeadingAllLevels {...args} />,
-};
-
-export const Heading3Preview: Story = {
-  name: 'Heading 3 Preview',
-  args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
-    level: 3,
-  },
-  render: (args) => <HeadingAllLevels {...args} />,
-};
-
-export const Heading4Preview: Story = {
-  name: 'Heading 4 Preview',
-  args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
-    level: 4,
-  },
-  render: (args) => <HeadingAllLevels {...args} />,
-};
-
-export const Heading5Preview: Story = {
-  name: 'Heading 5 Preview',
-  args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
-    level: 5,
-  },
-  render: (args) => <HeadingAllLevels {...args} />,
-};
-
-export const Heading6Preview: Story = {
-  name: 'Heading 6 Preview',
-  args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
-    level: 6,
-  },
-  render: (args) => <HeadingAllLevels {...args} />,
-};
-
-export const AllHeadingsPreview: Story = {
-  name: 'All Headings Preview',
-  args: {
-    children: 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.',
-  },
-  render: (args) => <HeadingAllLevels {...args} />,
-};
-
-export const DesignHeadingSizes: Story = {
-  name: 'Design: Heading Sizes',
+export const AdvancedHeadingSizes: Story = {
+  name: 'Advanced: Heading Sizes',
   args: {
     children: 'The quick brown fox jumps over the lazy dog',
     level: 1,
@@ -212,28 +149,5 @@ export const DesignHeadingSizes: Story = {
       },
     },
   },
-  render: ({ children }) => {
-    return (
-      <div>
-        <Heading level={1} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={2} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={3} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={4} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={5} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={6} style={clampStyles}>
-          {children}
-        </Heading>
-      </div>
-    );
-  },
+  render: renderHeadingLevelsPreview,
 };
