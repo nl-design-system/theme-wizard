@@ -187,6 +187,47 @@ const mount = async (): Promise<{
   };
 };
 
+describe(`<${appTag}> lifecycle`, () => {
+  beforeEach(() => {
+    document.body.innerHTML = '';
+    localStorage.clear();
+  });
+
+  it('removes event listeners on disconnectedCallback', async () => {
+    const { app } = await mount();
+    const themeUpdateHandler = vi.fn();
+    app.addEventListener('theme-update', themeUpdateHandler);
+
+    document.body.removeChild(app);
+
+    app.dispatchEvent(new Event('reset'));
+    expect(themeUpdateHandler).not.toHaveBeenCalled();
+  });
+
+  it('logs a warning and skips update for unhandled change event targets', async () => {
+    const { app } = await mount();
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const div = document.createElement('div');
+    app.appendChild(div);
+    div.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+    expect(warnSpy).toHaveBeenCalledWith('Unhandled token change event target', div);
+    warnSpy.mockRestore();
+  });
+
+  it('resets the theme and dispatches theme-update on reset event', async () => {
+    const { app } = await mount();
+    const themeUpdateHandler = vi.fn();
+    app.addEventListener('theme-update', themeUpdateHandler);
+
+    app.dispatchEvent(new Event('reset', { bubbles: false }));
+
+    expect(getTheme(app).modified).toBe(false);
+    expect(themeUpdateHandler).toHaveBeenCalled();
+  });
+});
+
 describe(`<${appTag}> preset updates`, () => {
   beforeEach(() => {
     document.body.innerHTML = '';
