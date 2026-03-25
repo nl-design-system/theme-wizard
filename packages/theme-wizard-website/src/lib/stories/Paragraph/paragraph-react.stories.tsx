@@ -15,8 +15,8 @@ const meta = {
 
 export default meta;
 
-export * from './paragraph-react.preset.stories';
-export * from './paragraph-react.advanced-stories';
+export { ParagraphFontSize, LeadParagraphFontSize, LeadParagraphColor } from './paragraph-react.preset.stories';
+export { DesignParagraphShared, DesignParagraph, DesignLead } from './paragraph-react.advanced-stories';
 
 type Story = StoryObj<ParagraphProps>;
 
