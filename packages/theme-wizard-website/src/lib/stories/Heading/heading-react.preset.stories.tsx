@@ -103,43 +103,52 @@ const createFontSizeStory = (level: HeadingLevel): Story =>
     question: `Kies de grootte van de H${level}`,
   });
 
+const createColorOptions = (level: HeadingLevel): PresetOption[] => [
+  {
+    name: 'Standaard',
+    description: 'Gebruik het documentkleur uit het startthema.',
+    tokens: createHeadingToken(level, 'color', '{basis.color.default.color-document}'),
+  },
+  {
+    name: 'Accentkleur 1',
+    description: 'Geef headings accentkleur 1.',
+    tokens: createHeadingToken(level, 'color', '{basis.color.accent-1.color-document}'),
+  },
+  {
+    name: 'Accentkleur 2',
+    description: 'Geef headings accentkleur 2.',
+    tokens: createHeadingToken(level, 'color', '{basis.color.accent-2.color-document}'),
+  },
+  {
+    name: 'Accentkleur 3',
+    description: 'Geef headings accentkleur 3.',
+    tokens: createHeadingToken(level, 'color', '{basis.color.accent-3.color-document}'),
+  },
+];
+
+const createColorStory = (level: HeadingLevel): Story =>
+  createHeadingPresetStory({
+    name: `Heading ${level} kleur`,
+    args: {
+      children: headingSampleText,
+      level,
+    },
+    description: `Geef de H${level} een accentkleur of laat hem het standaard documentkleur volgen.`,
+    options: createColorOptions(level),
+    order: level + 6,
+    previewStoryId: `Heading${level}Preview`,
+    question: `Kies de kleur van de H${level}`,
+  });
+
 export const Heading1FontSize: Story = createFontSizeStory(1);
 export const Heading2FontSize: Story = createFontSizeStory(2);
 export const Heading3FontSize: Story = createFontSizeStory(3);
 export const Heading4FontSize: Story = createFontSizeStory(4);
 export const Heading5FontSize: Story = createFontSizeStory(5);
 export const Heading6FontSize: Story = createFontSizeStory(6);
-
-export const HeadingColor: Story = createHeadingPresetStory({
-  name: 'Heading kleur',
-  args: {
-    children: headingSampleText,
-    level: 1,
-  },
-  description: 'Geef headings een accentkleur of laat ze het standaard documentkleur volgen.',
-  options: [
-    {
-      name: 'Standaard',
-      description: 'Gebruik het documentkleur uit het startthema.',
-      tokens: createHeadingToken(1, 'color', '{basis.color.default.color-document}'),
-    },
-    {
-      name: 'Accentkleur 1',
-      description: 'Geef headings accentkleur 1.',
-      tokens: createHeadingToken(1, 'color', '{basis.color.accent-1.color-document}'),
-    },
-    {
-      name: 'Accentkleur 2',
-      description: 'Geef headings accentkleur 2.',
-      tokens: createHeadingToken(1, 'color', '{basis.color.accent-2.color-document}'),
-    },
-    {
-      name: 'Accentkleur 3',
-      description: 'Geef headings accentkleur 3.',
-      tokens: createHeadingToken(1, 'color', '{basis.color.accent-3.color-document}'),
-    },
-  ],
-  order: 7,
-  previewStoryId: 'AllHeadingsPreview',
-  question: 'Kies de kleur van headings',
-});
+export const Heading1Color: Story = createColorStory(1);
+export const Heading2Color: Story = createColorStory(2);
+export const Heading3Color: Story = createColorStory(3);
+export const Heading4Color: Story = createColorStory(4);
+export const Heading5Color: Story = createColorStory(5);
+export const Heading6Color: Story = createColorStory(6);
