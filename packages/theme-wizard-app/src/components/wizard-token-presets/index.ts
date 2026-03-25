@@ -321,7 +321,12 @@ export class WizardTokenPreset extends LitElement {
 
   private updateSelectionState() {
     this.defaultIndexState = this.findMatchingOptionIndex(this.defaultTheme, this.matchesThemeByReferenceChain);
-    this.setSelectedIndex(this.findMatchingOptionIndex(this.currentTheme, this.matchesThemeExactly));
+    const exactSelectedIndex = this.findMatchingOptionIndex(this.currentTheme, this.matchesThemeExactly);
+    this.setSelectedIndex(
+      exactSelectedIndex >= 0
+        ? exactSelectedIndex
+        : this.findMatchingOptionIndex(this.currentTheme, this.matchesThemeByReferenceChain),
+    );
   }
 
   private onThemeUpdate(event: CustomEvent) {
