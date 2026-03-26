@@ -36,7 +36,10 @@ export const valueToQuery = <T extends { $value: DimensionToken['$value'] }>({ $
 };
 
 export const preview = <T extends { label: string; value: ModernDimensionToken }>({ value }: T) => {
-  if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') return nothing;
+  if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') {
+    return nothing;
+  }
+
   const PREVIEW_VALUE = 'Ag';
   const actualValue = getActualValue(value);
   const styles = {
