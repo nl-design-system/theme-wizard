@@ -87,9 +87,7 @@ describe(`<${tag}>`, () => {
     await toggletip.updateComplete;
     const container = toggletip.shadowRoot.querySelector('.clippy-toggletip');
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      'Invalid position "invalid-position". Using default "block-start".',
-    );
+    expect(consoleWarnSpy).toHaveBeenCalledWith('Invalid position "invalid-position". Using default "block-start".');
     expect(container?.classList.contains('clippy-toggletip--block-start')).toBe(true);
 
     consoleWarnSpy.mockRestore();

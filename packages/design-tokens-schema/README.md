@@ -34,22 +34,22 @@ const myConfig = {
       color: {
         black: {
           $type: 'color',
-          $value: '#000'
-        }
+          $value: '#000',
+        },
         // + dozens of tokens
-      }
-    }
+      },
+    },
   },
   basis: {
     color: {
       default: {
         'bg-document': {
           $type: 'color',
-          $value: '{ma.color.black}'
-        }
-      }
-    }
-  }
+          $value: '{ma.color.black}',
+        },
+      },
+    },
+  },
 };
 
 // Token references like `{ma.color.black}` are only validated to follow the proper format, they are not resolved.

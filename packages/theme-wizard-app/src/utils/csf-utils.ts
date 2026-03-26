@@ -34,7 +34,7 @@ const isExcluded = (name: string, patterns: unknown): boolean => {
  * Extract Story objects from a CSF module, respecting includeStories/excludeStories config.
  * See: https://storybook.js.org/docs/api/csf#non-story-exports
  */
-export const getStories = <T,>(
+export const getStories = <T>(
   stories: Record<PropertyKey, T>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta: StoryMetaConfig | Meta<any>,
