@@ -105,15 +105,15 @@ Zie voor meer details:
 
 De volledige implementatie (`src/patterns/cookie-consent/Drawer/index.tsx`) ondersteunt deze props:
 
-| Prop                  | Type                             | Default                                                      | Beschrijving                        |
-| --------------------- | -------------------------------- | ------------------------------------------------------------ | ----------------------------------- |
-| `buttonAccept`        | `string`                         | `'Alle cookies accepteren'`                           | Label accepteer knop                |
-| `buttonReject`        | `string`                         | `'Cookies weigeren'`                             | Label weiger knop                   |
-| `customizeLink`       | `{ href: string, text: string }` | `{ href: '/templates/cookies', text: 'Zelf instellen' }`     | Link naar cookie-instellingen       |
-| `showLogo`            | `boolean`                        | -                                                            | Toon logo boven de titel            |
-| `children`            | `React.ReactNode`                | -                                                            | Custom content                      |
-| `clearStorageOnMount` | `boolean`                        | `false`                                                      | Wis localStorage bij mount (testen) |
-| `title`               | `string`                         | -                                                            | Custom titel                        |
+| Prop                  | Type                             | Default                                                  | Beschrijving                        |
+| --------------------- | -------------------------------- | -------------------------------------------------------- | ----------------------------------- |
+| `buttonAccept`        | `string`                         | `'Alle cookies accepteren'`                              | Label accepteer knop                |
+| `buttonReject`        | `string`                         | `'Cookies weigeren'`                                     | Label weiger knop                   |
+| `customizeLink`       | `{ href: string, text: string }` | `{ href: '/templates/cookies', text: 'Zelf instellen' }` | Link naar cookie-instellingen       |
+| `showLogo`            | `boolean`                        | -                                                        | Toon logo boven de titel            |
+| `children`            | `React.ReactNode`                | -                                                        | Custom content                      |
+| `clearStorageOnMount` | `boolean`                        | `false`                                                  | Wis localStorage bij mount (testen) |
+| `title`               | `string`                         | -                                                        | Custom titel                        |
 
 ### State management
 

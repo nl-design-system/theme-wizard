@@ -30,3 +30,5 @@ pnpm-workspace.yaml
 # Use `terraform fmt` to fix formatting issues in Terraform files
 *.tf
 *.hcl
+
+packages/clippy-components/assets/
