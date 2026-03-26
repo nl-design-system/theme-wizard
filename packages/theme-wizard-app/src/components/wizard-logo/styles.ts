@@ -23,7 +23,6 @@ export default css`
     font-family: var(--basis-heading-font-family);
     font-size: var(--basis-text-font-size-lg);
     font-weight: var(--basis-text-font-weight-bold);
-    margin-block-end: 0;
-    margin-block-start: 0;
+    margin-block: 0;
   }
 `;
