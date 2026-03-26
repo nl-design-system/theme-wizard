@@ -628,11 +628,11 @@ export const nl = {
     issue: {
       contrastValue: 'Contrast: {{value}}',
       fontSizeTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
-        const guidelinesLink = html`
-          <a href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte" target="_blank">
-            Bekijk richtlijnen
-          </a>
-        `;
+        const guidelinesLink = html`<a
+          href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/lettergrootte"
+          target="_blank"
+          >Bekijk richtlijnen</a
+        >`;
         if (!token) return html`Lettergrootte is te klein. ${guidelinesLink}`;
 
         const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;
@@ -647,14 +647,11 @@ export const nl = {
       },
       lineHeight: 'Regelafstand: {{value}}',
       lineHeightTooSmall: ({ context, token }: { context?: TokenLinkRenderer; token: string }) => {
-        const guidelinesLink = html`
-          <a
-            href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/regelafstand/#zorg-voor-een-comfortabele-regelafstand"
-            target="_blank"
-          >
-            Bekijk richtlijnen
-          </a>
-        `;
+        const guidelinesLink = html`<a
+          href="https://nldesignsystem.nl/richtlijnen/stijl/typografie/regelafstand/#zorg-voor-een-comfortabele-regelafstand"
+          target="_blank"
+          >Bekijk richtlijnen</a
+        >`;
         if (!token) return html`Regelafstand is te klein. ${guidelinesLink}`;
 
         const tokenLink = context ? context(token) : html`<strong>${token}</strong>`;

@@ -81,8 +81,28 @@ test.describe('stories', () => {
     });
   });
 
+  test.describe('inputs allow manual input', () => {
+    test('color', async ({ page }) => {
+      const input = page.getByLabel('nl.code-block.color');
+      expect(await input.inputValue()).not.toBe('#ff0000');
+      await input.fill('#ff0000');
+      await input.press('Enter');
+      expect(await input.inputValue()).toBe('#ff0000');
+    });
+
+    test('dimension (font-size)', async ({ page }) => {
+      const input = page.getByLabel('nl.code-block.font-size');
+      expect(await input.inputValue()).not.toBe('24px');
+      await input.fill('24px');
+      await input.press('Enter');
+      expect(await input.inputValue()).toBe('24px');
+    });
+  });
+
   test.describe('validations', () => {
-    test('shows validation warning when bg+color tokens have insufficient contrast', async ({ page }) => {
+    test('shows validation warning when bg+color tokens have insufficient contrast - basis tokens', async ({
+      page,
+    }) => {
       const color = page.getByLabel('nl.code-block.color');
       const ERROR_MESSAGE = 'Onvoldoende contrast met nl.code-block.background-color';
       const OPTION = 'basis.color.accent-1-inverse.color-default';
@@ -98,10 +118,17 @@ test.describe('stories', () => {
       await expect(color).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
     });
 
-    // Entering custom dimensions does not work yet
     test('shows min-font-size validation', async ({ page }) => {
+      const ERROR_MESSAGE =
+        'Lettergrootte is te klein. Bekijk richtlijnen. Lettergrootte: 12px. Minimaal vereist: 14px / 0.875rem';
+
       const input = page.getByLabel('nl.code-block.font-size');
+      // Make sure there's not already a validation message there
+      await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+
       await input.fill('12px');
+      await input.press('Enter');
+      await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
     });
 
     // Entering custom dimensions/numbers does not work yet

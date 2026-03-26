@@ -16,7 +16,7 @@ export const filter = <T extends { value: FontFamilyToken }>(query: string): ((o
   return ({ value: token }: T) => {
     const actualValue = getActualValue(token);
     const value = Array.isArray(actualValue) ? actualValue[0] : (actualValue ?? '');
-    return value.toLowerCase().includes(query.toLowerCase());
+    return value.toLowerCase().includes(query);
   };
 };
 
