@@ -17,6 +17,7 @@ const config: PlaywrightTestConfig = {
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
+  globalSetup: './e2e/project-setup.ts',
   globalTimeout: Number(process.env['E2E_TIMEOUT_GLOBAL'] || 120_000),
   outputDir: './tmp/playwright-results/',
   /* Configure projects for major browsers */

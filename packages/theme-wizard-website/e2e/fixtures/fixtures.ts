@@ -1,9 +1,8 @@
 import { expect as baseExpect, test as baseTest, type Locator } from '@playwright/test';
 import { BasisTokensPage } from '../pages/BasisTokensPage';
-
-type ThemeWizardFixture = {
-  basisTokens: BasisTokensPage;
-};
+import { ComponentPage } from '../pages/ComponentPage';
+import { HomePage } from '../pages/HomePage';
+import { StagingTokensPage } from '../pages/StagingTokensPage';
 
 type MatcherResult =
   | {
@@ -64,9 +63,26 @@ export const expect = baseExpect.extend({
   },
 });
 
-export const test = baseTest.extend<ThemeWizardFixture>({
-  basisTokens: async ({ page }, use) => {
+export const test = baseTest.extend<{
+  basisTokensPage: BasisTokensPage;
+  homePage: HomePage;
+  stagingTokensPage: StagingTokensPage;
+  componentPage: ComponentPage;
+}>({
+  basisTokensPage: async ({ page }, use) => {
     const themeWizard = new BasisTokensPage(page);
     await use(themeWizard);
+  },
+  componentPage: async ({ page }, use) => {
+    const componentPage = new ComponentPage(page);
+    await use(componentPage);
+  },
+  homePage: async ({ page }, use) => {
+    const homePage = new HomePage(page);
+    await use(homePage);
+  },
+  stagingTokensPage: async ({ page }, use) => {
+    const stagingTokensPage = new StagingTokensPage(page);
+    await use(stagingTokensPage);
   },
 });

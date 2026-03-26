@@ -111,7 +111,7 @@ export class WizardScraper extends LitElement {
             <wizard-stack size="xl">
               <wizard-story-preview size="lg">
                 <wizard-stack size="3xl">
-                  <clippy-heading level="2">${t('scraper.title')}</clippy-heading>
+                  <clippy-heading level="1">${t('scraper.title')}</clippy-heading>
                   <p class="nl-paragraph nl-paragraph--lead">${t('scraper.intro')}</p>
                   <form @submit=${this.#handleSubmit}>
                     <wizard-stack size="3xl">

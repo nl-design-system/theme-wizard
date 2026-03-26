@@ -219,11 +219,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
           @change=${this.handleColorChange}
         >
         </clippy-color-combobox>
-        <div
-          role="presentation"
-          class="wizard-colorscale-input__list"
-          style=${`color: ${this.#scale.from?.toCSSColorFunction()}`}
-        >
+        <div role="presentation" class="wizard-colorscale-input__list">
           ${this.#scale.list().map((stop, index) => {
             const cssColor = stop.toCSSColorFunction();
             return html`
@@ -234,6 +230,8 @@ export class WizardColorscaleInput extends WizardTokenInput {
                 })}"
                 style=${`background-color: ${cssColor}`}
                 title=${`${COLOR_KEYS.at(index)}: ${cssColor}`}
+                data-testid="color-scale-stop"
+                data-value=${cssColor}
               ></div>
             `;
           })}

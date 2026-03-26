@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host {
+    --nl-heading-level-1-font-size: var(--basis-text-font-size-2xl);
+  }
+
   .utrecht-form-field__description {
     --utrecht-form-field-description-margin-block-end: var(--basis-space-row-2xl);
     --utrecht-form-field-description-margin-block-start: var(--basis-space-row-sm);

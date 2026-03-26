@@ -15,16 +15,13 @@ export class BasisTokensPage {
     this.downloadCssButton = this.page.getByRole('link', { name: 'Thema downloaden (CSS)' });
   }
 
-  async goto() {
-    await this.page.goto('/basis-tokens');
-    await expect(this.preview).toBeVisible();
+  get url() {
+    return '/basis-tokens';
   }
 
-  async scrapeUrl(url: string) {
-    const input = this.sidebar.getByLabel('Website URL');
-    await input.fill(url);
-    await this.sidebar.getByRole('button', { name: 'Analyseer' }).click();
-    await expect(input).not.toHaveAttribute('data-state', 'pending');
+  async goto() {
+    await this.page.goto(this.url);
+    await expect(this.preview).toBeVisible();
   }
 
   async selectTemplate(templateName: string) {
@@ -64,6 +61,18 @@ export class BasisTokensPage {
 
   getParagraph(): Locator {
     return this.preview.locator('.nl-paragraph').first();
+  }
+
+  async getColorStops(label: string): Promise<(string | null)[]> {
+    const input = this.page.locator(`wizard-colorscale-input[label="${label}"]`);
+    const stops = await input.getByTestId('color-scale-stop').all();
+    return Promise.all(stops.map((stop) => stop.getAttribute('data-value')));
+  }
+
+  async getInputOptions(label: string, value = '') {
+    const input = this.page.getByLabel(label);
+    await input.fill(value); // trigger the dropdown with options
+    return this.page.getByRole('option');
   }
 
   getErrorAlert(): Locator {

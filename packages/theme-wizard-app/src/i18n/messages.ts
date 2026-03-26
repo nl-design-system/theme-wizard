@@ -388,7 +388,7 @@ export const nl = {
         text: 'Huisstijl ophalen van {{url}}',
       },
     },
-    scrapeFailed: `Kan "{{url}}" niet analyseren`,
+    scrapeFailed: `Kan "{{url}}" niet analyseren.`,
     submit: 'Huisstijl ophalen',
     success: 'Gereed, {{tokenCount}} tokens gevonden',
     title: 'Maak je eigen thema',

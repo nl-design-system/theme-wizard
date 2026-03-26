@@ -1,32 +1,32 @@
 import { test, expect } from './fixtures/fixtures';
 
-test.beforeEach(async ({ basisTokens }) => {
-  await basisTokens.goto();
-  await basisTokens.selectTemplate('Overzichtspagina');
+test.beforeEach(async ({ basisTokensPage }) => {
+  await basisTokensPage.goto();
+  await basisTokensPage.selectTemplate('Overzichtspagina');
 });
 
-test('preview template shows correct content and structure', async ({ basisTokens }) => {
-  const previewChild = basisTokens.getPreviewChild();
+test('preview template shows correct content and structure', async ({ basisTokensPage }) => {
+  const previewChild = basisTokensPage.getPreviewChild();
 
-  await expect(basisTokens.preview).toContainText('Mijn omgeving');
+  await expect(basisTokensPage.preview).toContainText('Mijn omgeving');
   await expect(previewChild).not.toHaveAttribute('data-test-id', 'theme-wizard-collage');
-  await expect(basisTokens.getCollageComponents()).not.toBeVisible();
+  await expect(basisTokensPage.getCollageComponents()).not.toBeVisible();
 });
 
-test('collage template shows correct content and structure', async ({ basisTokens }) => {
-  await basisTokens.selectTemplate('Collage 1');
-  const previewChild = basisTokens.getPreviewChild();
+test('collage template shows correct content and structure', async ({ basisTokensPage }) => {
+  await basisTokensPage.selectTemplate('Collage 1');
+  const previewChild = basisTokensPage.getPreviewChild();
 
-  await expect(basisTokens.preview).toContainText(
+  await expect(basisTokensPage.preview).toContainText(
     "Breadcrumb navigation wordt gebruikt om naar andere pagina's in een gebruikersinterface te navigeren.",
   );
   await expect(previewChild).toHaveAttribute('data-test-id', 'theme-wizard-collage');
-  await expect(basisTokens.getCollageComponents()).toHaveCount(6);
+  await expect(basisTokensPage.getCollageComponents()).toHaveCount(6);
 });
 
-test('can select different templates from the selector', async ({ basisTokens }) => {
+test('can select different templates from the selector', async ({ basisTokensPage }) => {
   // Verify the select element is visible
-  const templateSelect = basisTokens.page.getByLabel('Weergave');
+  const templateSelect = basisTokensPage.page.getByLabel('Weergave');
   await expect(templateSelect).toBeVisible();
 
   // Get initial option count
@@ -42,5 +42,5 @@ test('can select different templates from the selector', async ({ basisTokens })
   const newValue = await templateSelect.inputValue();
   expect(newValue).not.toBe(oldValue);
 
-  await expect(basisTokens.preview).toBeVisible();
+  await expect(basisTokensPage.preview).toBeVisible();
 });

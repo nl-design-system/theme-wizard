@@ -21,10 +21,10 @@ export class WizardLogo extends LitElement {
     return html`
       <div class="wizard-logo">
         ${unsafeSVG(logoSvg)}
-        <clippy-heading level="1">
+        <div class="wizard-logo__text">
           <span>Theme</span>
           <span>Wizard</span>
-        </clippy-heading>
+        </div>
       </div>
     `;
   }
