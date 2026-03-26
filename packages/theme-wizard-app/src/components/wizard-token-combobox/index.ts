@@ -186,14 +186,14 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   }
 
   renderPreview(option: Option) {
+    // TODO fix type safety by making sure option type is inferred from `option.value.$type`
     switch (option.value.$type) {
       case 'color':
-        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
         return libColor.preview(option as Option & { value: ColorToken });
       case 'fontFamily':
-        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
         return libFontFamily.preview(option as Option & { value: FontFamilyToken });
       case 'dimension':
+        return libDimension.preview(option as Option & { value: ModernDimensionToken });
       case 'number':
       default:
         return nothing;
