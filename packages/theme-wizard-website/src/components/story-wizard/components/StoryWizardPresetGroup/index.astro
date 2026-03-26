@@ -1,0 +1,55 @@
+---
+import type { StoryWizardPresetGroup } from '@/lib/story-wizard';
+
+const collectTokenPaths = (tokens: unknown, path: string[] = []): string[] => {
+  if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return [];
+
+  const obj = tokens as Record<string, unknown>;
+
+  if (Object.hasOwn(obj, '$value')) {
+    return [path.join('.')];
+  }
+
+  return Object.entries(obj).flatMap(([key, value]) => collectTokenPaths(value, [...path, key]));
+};
+
+interface Props {
+  group: StoryWizardPresetGroup;
+}
+
+const { group } = Astro.props;
+const tokenPaths = Array.from(new Set(group.options.flatMap((option) => collectTokenPaths(option.tokens))));
+---
+
+<section class="wizard-token-preset" data-preset-group data-group-label={group.name}>
+  <h3 class="nl-heading nl-heading--level-4 wizard-token-preset__title">
+    <span>{group.name}</span>
+    {tokenPaths.length === 1 && <code class="wizard-token-preset__title-token">{tokenPaths[0]}</code>}
+    {
+      tokenPaths.length > 1 && (
+        <details class="wizard-token-preset__title-tokens">
+          <summary class="wizard-token-preset__title-tokens-summary">Tokens ({tokenPaths.length})</summary>
+          <ul class="wizard-token-preset__title-token-list">
+            {tokenPaths.map((tokenPath) => (
+              <li class="wizard-token-preset__title-token-list-item">
+                <code class="wizard-token-preset__title-token">{tokenPath}</code>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )
+    }
+  </h3>
+
+  {group.description && <p class="nl-paragraph wizard-token-preset__description">{group.description}</p>}
+
+  <div class="wizard-token-preset__layout">
+    <div class="wizard-token-preset__options">
+      <wizard-token-preset
+        class="wizard-token-preset__input"
+        group-label={group.name}
+        options={JSON.stringify(group.options)}
+      ></wizard-token-preset>
+    </div>
+  </div>
+</section>

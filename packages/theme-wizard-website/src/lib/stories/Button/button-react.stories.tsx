@@ -3,6 +3,28 @@ import css from '@nl-design-system-candidate/button-css/button.css?inline';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import tokens from '@nl-design-system-candidate/button-tokens';
 import { type ComponentType } from 'react';
+import {
+  ButtonPrimary,
+  ButtonVariants,
+  ButtonVariantsWithStates,
+  Icon,
+  RenderButtonDisabled,
+  RenderButtonFocusVisible,
+  RenderButtonPressed,
+  RenderButtonStates,
+  WizardPreviewSection,
+  buttonWizardStepBasic,
+  buttonWizardStepDisabled,
+  buttonWizardStepNegativePressed,
+  buttonWizardStepNegativeStates,
+  buttonWizardStepNegativeVariants,
+  buttonWizardStepPositivePressed,
+  buttonWizardStepPositiveStates,
+  buttonWizardStepPositiveVariants,
+  buttonWizardStepPressed,
+  buttonWizardStepStates,
+  buttonWizardStepVariants,
+} from './button-react.story-components';
 
 const meta = {
   id: 'button',
@@ -23,48 +45,12 @@ export default meta;
 
 type Story = StoryObj<ButtonProps>;
 
-const Icon = () => (
-  <span className="nl-icon">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-      <path d="M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1" />
-      <circle cx="12" cy="7.5" r=".5" fill="currentColor" />
-    </svg>
-  </span>
-);
-
 export const Button: Story = {
   name: 'Button',
   args: {
     label: 'Klik mij!',
   },
   parameters: {
-    docs: {
-      description: {
-        story: `Een standaard Button`,
-      },
-    },
-  },
-};
-
-export const DesignButton: Story = {
-  name: 'Design: Button',
-  args: {
-    label: 'Klik mij!',
-  },
-  parameters: {
-    designStory: true,
     docs: {
       description: {
         story: `Een standaard Button`,
@@ -90,22 +76,414 @@ export const DesignButton: Story = {
         },
       },
     },
+    presets: [
+      {
+        name: 'Kies de minimale afmeting',
+        description:
+          'Voor WCAG 2.1 is 24px de minimale afmeting voor Button, maar voor gebruiksvriendelijkheid wordt ook wel 44px of 48px aangehouden',
+        options: [
+          {
+            name: 'Minimaal',
+            tokens: {
+              nl: {
+                button: {
+                  'min-block-size': {
+                    $value: '1.5rem',
+                  },
+                  'min-inline-size': {
+                    $value: '1.5rem',
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Aanbevolen',
+            tokens: {
+              nl: {
+                button: {
+                  'min-block-size': {
+                    $value: '{basis.pointer-target.min-block-size}',
+                  },
+                  'min-inline-size': {
+                    $value: '{basis.pointer-target.min-inline-size}',
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    ],
   },
 };
 
-const ButtonVariants = ({ ...props }: ButtonProps) => (
-  // TODO: Replace with Action Group
-  <div style={{ columnGap: '1ch', display: 'flex', flexDirection: 'row' }}>
-    <ButtonComponent {...props} iconOnly />
-    <ButtonComponent {...props} />
-    <ButtonComponent {...props} purpose="primary" iconOnly />
-    <ButtonComponent {...props} purpose="primary" />
-    <ButtonComponent {...props} purpose="secondary" iconOnly />
-    <ButtonComponent {...props} purpose="secondary" />
-    <ButtonComponent {...props} purpose="subtle" iconOnly />
-    <ButtonComponent {...props} purpose="subtle" />
-  </div>
-);
+export const WizardPreview: Story = {
+  name: 'Wizard Preview',
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <div style={{ columnGap: '1.5rem', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', rowGap: '1.5rem' }}>
+        <WizardPreviewSection label="Normaal">
+          <ButtonComponent label="Klik mij!" />
+        </WizardPreviewSection>
+
+        <WizardPreviewSection label="Met emoji">
+          <ButtonComponent iconStart="❤️" label="Klik mij!" />
+        </WizardPreviewSection>
+
+        <WizardPreviewSection label="Icon only">
+          <ButtonComponent iconOnly iconStart={<Icon />} label="Klik mij!" />
+        </WizardPreviewSection>
+
+        <WizardPreviewSection label="Disabled">
+          <ButtonComponent disabled label="Klik mij!" />
+        </WizardPreviewSection>
+
+        <WizardPreviewSection label="Toggle gesloten en open">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <ButtonComponent label="Meer tonen" pressed={false} />
+            <ButtonComponent label="Meer tonen" pressed />
+          </div>
+        </WizardPreviewSection>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <WizardPreviewSection label="Hover en active">
+          <ButtonVariantsWithStates iconStart="❤️" label="Klik mij!" />
+        </WizardPreviewSection>
+      </div>
+    </div>
+  ),
+};
+
+export const ButtonInteractionStyle: Story = {
+  name: 'Interactiestijl',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+  },
+  parameters: {
+    presets: [
+      {
+        name: 'Kies de kleur voor interactie met de Buttons',
+        description: 'De middelste button in elke rij toont de hover-staat, de rechter toont de actieve staat.',
+        options: [
+          {
+            name: 'Donkerdere tinten',
+            description: 'De button wordt iets donkerder bij aanwijzen.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    active: {
+                      'background-color': { $value: '{basis.color.default.bg-active}' },
+                      'border-color': { $value: '{basis.color.default.border-active}' },
+                      color: { $value: '{basis.color.default.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.default.bg-hover}' },
+                      'border-color': { $value: '{basis.color.default.border-hover}' },
+                      color: { $value: '{basis.color.default.color-hover}' },
+                    },
+                  },
+                  primary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-1-inverse.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-1-inverse.border-active}' },
+                      color: { $value: '{basis.color.action-1-inverse.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-1-inverse.bg-hover}' },
+                      'border-color': { $value: '{basis.color.action-1-inverse.border-hover}' },
+                      color: { $value: '{basis.color.action-1-inverse.color-hover}' },
+                    },
+                  },
+                  secondary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-1.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-1.border-active}' },
+                      color: { $value: '{basis.color.action-1.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-1.bg-hover}' },
+                      'border-color': { $value: '{basis.color.action-1.border-hover}' },
+                      color: { $value: '{basis.color.action-1.color-hover}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Omgedraaide kleuren',
+            description: 'De button wisselt van kleur bij aanwijzen.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    active: {
+                      'background-color': { $value: '{basis.color.default-inverse.bg-active}' },
+                      'border-color': { $value: '{basis.color.default-inverse.border-active}' },
+                      color: { $value: '{basis.color.default-inverse.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.default-inverse.bg-default}' },
+                      'border-color': { $value: '{basis.color.default-inverse.border-default}' },
+                      color: { $value: '{basis.color.default-inverse.color-default}' },
+                    },
+                  },
+                  primary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-1.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-1.border-active}' },
+                      color: { $value: '{basis.color.action-1.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-1.bg-default}' },
+                      'border-color': { $value: '{basis.color.action-1.border-default}' },
+                      color: { $value: '{basis.color.action-1.color-default}' },
+                    },
+                  },
+                  secondary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-1-inverse.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-1-inverse.border-active}' },
+                      color: { $value: '{basis.color.action-1-inverse.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
+                      'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
+                      color: { $value: '{basis.color.action-1-inverse.color-default}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Alternatieve kleur',
+            description: 'De button gebruikt een tweede accentkleur bij aanwijzen.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-2.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-2.border-active}' },
+                      color: { $value: '{basis.color.action-2.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-2.bg-default}' },
+                      'border-color': { $value: '{basis.color.action-2.border-default}' },
+                      color: { $value: '{basis.color.action-2.color-default}' },
+                    },
+                  },
+                  primary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-2-inverse.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-2-inverse.border-active}' },
+                      color: { $value: '{basis.color.action-2-inverse.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-2-inverse.bg-default}' },
+                      'border-color': { $value: '{basis.color.action-2-inverse.border-default}' },
+                      color: { $value: '{basis.color.action-2-inverse.color-default}' },
+                    },
+                  },
+                  secondary: {
+                    active: {
+                      'background-color': { $value: '{basis.color.action-2-inverse.bg-active}' },
+                      'border-color': { $value: '{basis.color.action-2-inverse.border-active}' },
+                      color: { $value: '{basis.color.action-2-inverse.color-active}' },
+                    },
+                    hover: {
+                      'background-color': { $value: '{basis.color.action-2-inverse.bg-default}' },
+                      'border-color': { $value: '{basis.color.action-2-inverse.border-default}' },
+                      color: { $value: '{basis.color.action-2-inverse.color-default}' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+        question: 'Hoe wil je dat buttons reageren op muisbeweging?',
+        thumbnail: false,
+      },
+    ],
+  },
+  render: ButtonVariantsWithStates,
+};
+
+export const ButtonShape: Story = {
+  name: 'Vorm',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+  },
+  parameters: {
+    presets: [
+      {
+        name: 'Kies de vorm van de Buttons',
+        description: 'De afronding van de hoeken van alle button-varianten.',
+        options: [
+          {
+            name: 'Hoekig',
+            description: 'Geen afgeronde hoeken.',
+            tokens: {
+              nl: {
+                button: {
+                  'border-radius': { $value: '0' },
+                },
+              },
+            },
+          },
+          {
+            name: 'Licht hoekig',
+            description: 'Kleine afronding, bijna recht.',
+            tokens: {
+              nl: {
+                button: {
+                  'border-radius': { $value: '{basis.border-radius.sm}' },
+                },
+              },
+            },
+          },
+          {
+            name: 'Licht afgerond',
+            description: 'Subtiel afgeronde hoeken.',
+            tokens: {
+              nl: {
+                button: {
+                  'border-radius': { $value: '{basis.border-radius.md}' },
+                },
+              },
+            },
+          },
+          {
+            name: 'Sterk afgerond',
+            description: 'Grote afronding.',
+            tokens: {
+              nl: {
+                button: {
+                  'border-radius': { $value: '{basis.border-radius.lg}' },
+                },
+              },
+            },
+          },
+          {
+            name: 'Rond',
+            description: 'Volledig rond.',
+            tokens: {
+              nl: {
+                button: {
+                  'border-radius': { $value: '{basis.border-radius.round}' },
+                },
+              },
+            },
+          },
+        ],
+        question: 'Hoe afgerond mogen de hoeken van buttons zijn?',
+      },
+    ],
+  },
+  render: ButtonPrimary,
+};
+
+export const ButtonColorStyle: Story = {
+  name: 'Kleurstijl',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+  },
+  parameters: {
+    presets: [
+      {
+        name: 'Kies de kleurstijl van de Buttons',
+        description: 'De kleur van de button-varianten in de standaard staat.',
+        options: [
+          {
+            name: 'Standaard',
+            description: 'Neutrale kleur voor de default button, accentkleur voor primary.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    'background-color': { $value: '{basis.color.default.bg-default}' },
+                    'border-color': { $value: '{basis.color.default.border-default}' },
+                    color: { $value: '{basis.color.default.color-default}' },
+                  },
+                  primary: {
+                    'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
+                    'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
+                    color: { $value: '{basis.color.action-1-inverse.color-default}' },
+                  },
+                  secondary: {
+                    'background-color': { $value: '{basis.color.action-1.bg-default}' },
+                    'border-color': { $value: '{basis.color.action-1.border-default}' },
+                    color: { $value: '{basis.color.action-1.color-default}' },
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Omgedraaid',
+            description: 'Default en primary wisselen van kleur.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
+                    'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
+                    color: { $value: '{basis.color.action-1-inverse.color-default}' },
+                  },
+                  primary: {
+                    'background-color': { $value: '{basis.color.default.bg-default}' },
+                    'border-color': { $value: '{basis.color.default.border-default}' },
+                    color: { $value: '{basis.color.default.color-default}' },
+                  },
+                  secondary: {
+                    'background-color': { $value: '{basis.color.action-1-inverse.bg-default}' },
+                    'border-color': { $value: '{basis.color.action-1-inverse.border-default}' },
+                    color: { $value: '{basis.color.action-1-inverse.color-default}' },
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: 'Tweede accentkleur',
+            description: 'Gebruikt de tweede accentkleur van uw huisstijl.',
+            tokens: {
+              nl: {
+                button: {
+                  default: {
+                    'background-color': { $value: '{basis.color.action-2.bg-default}' },
+                    'border-color': { $value: '{basis.color.action-2.border-default}' },
+                    color: { $value: '{basis.color.action-2.color-default}' },
+                  },
+                  primary: {
+                    'background-color': { $value: '{basis.color.action-2-inverse.bg-default}' },
+                    'border-color': { $value: '{basis.color.action-2-inverse.border-default}' },
+                    color: { $value: '{basis.color.action-2-inverse.color-default}' },
+                  },
+                  secondary: {
+                    'background-color': { $value: '{basis.color.action-2.bg-default}' },
+                    'border-color': { $value: '{basis.color.action-2.border-default}' },
+                    color: { $value: '{basis.color.action-2.color-default}' },
+                  },
+                },
+              },
+            },
+          },
+        ],
+        question: 'Welke kleurstijl past bij uw huisstijl?',
+      },
+    ],
+  },
+  render: ButtonPrimary,
+};
 
 export const DesignButtonBorders: Story = {
   name: 'Design: Button Borders',
@@ -149,6 +527,7 @@ export const DesignButtonBorders: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
   render: ButtonVariants,
 };
@@ -219,35 +598,10 @@ export const DesignButtonTypography: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
   render: ButtonVariants,
 };
-
-const RenderButtonStates = ({ ...props }: ButtonProps) => (
-  <>
-    <ButtonComponent {...props} />
-    {' → hover → '}
-    <ButtonComponent {...props} className="nl-button--hover" />
-    {' → active → '}
-    <ButtonComponent {...props} className="nl-button--active" />
-  </>
-);
-
-const RenderButtonDisabled = ({ ...props }: ButtonProps) => (
-  <>
-    <ButtonComponent {...props} disabled={false} htmlDisabled={undefined} />
-    {' → disabled → '}
-    <ButtonComponent {...props} disabled htmlDisabled={undefined} />
-  </>
-);
-
-const RenderButtonPressed = ({ ...props }: ButtonProps) => (
-  <>
-    <ButtonComponent {...props} pressed={false} />
-    {' → pressed → '}
-    <ButtonComponent {...props} pressed />
-  </>
-);
 
 export const DesignButtonStates: Story = {
   name: 'Design: Button States',
@@ -300,6 +654,7 @@ export const DesignButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -356,6 +711,7 @@ export const DesignPrimaryButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -412,6 +768,7 @@ export const DesignSecondaryButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -468,6 +825,7 @@ export const DesignSubtleButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepStates,
   },
   render: RenderButtonStates,
 };
@@ -527,6 +885,7 @@ export const DesignPrimaryPositiveButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveStates,
   },
   render: RenderButtonStates,
 };
@@ -585,6 +944,7 @@ export const DesignSecondaryPositiveButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveStates,
   },
   render: RenderButtonStates,
 };
@@ -643,6 +1003,7 @@ export const DesignSubtlePositiveButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveStates,
   },
   render: RenderButtonStates,
 };
@@ -702,6 +1063,7 @@ export const DesignPrimaryNegativeButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeStates,
   },
   render: RenderButtonStates,
 };
@@ -760,6 +1122,7 @@ export const DesignSecondaryNegativeButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeStates,
   },
   render: RenderButtonStates,
 };
@@ -818,6 +1181,7 @@ export const DesignSubtleNegativeButtonStates: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeStates,
   },
   render: RenderButtonStates,
 };
@@ -876,6 +1240,7 @@ export const DesignPrimaryButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepVariants,
   },
   render(args: ButtonProps, context: StoryContext<ButtonProps>) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -985,6 +1350,7 @@ Optioneel kan er een hint mee gegeven worden.
         },
       },
     },
+    wizard: buttonWizardStepVariants,
   },
   render: (args: ButtonProps, context: StoryContext<ButtonProps>) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1094,6 +1460,7 @@ Optioneel kan er een hint mee gegeven worden.
         },
       },
     },
+    wizard: buttonWizardStepVariants,
   },
   render: (args: ButtonProps, context: StoryContext<ButtonProps>) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1146,9 +1513,8 @@ Optioneel kan er een hint mee gegeven worden.
 };
 
 export const DesignFocusButton: Story = {
-  name: 'Design: Focus Button',
+  name: 'Design: Focus Visible Button',
   args: {
-    className: 'nl-button--focus-visible',
     label: 'Klik mij!',
   },
   parameters: {
@@ -1178,7 +1544,9 @@ export const DesignFocusButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
+  render: RenderButtonFocusVisible,
 };
 
 export const DisabledButton: Story = {
@@ -1233,6 +1601,7 @@ export const DesignDisabledButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1251,7 +1620,6 @@ export const DesignPrimaryDisabledButton: Story = {
         story: `Een ingedrukte Primary Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1271,6 +1639,8 @@ export const DesignPrimaryDisabledButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1289,7 +1659,6 @@ export const DesignSecondaryDisabledButton: Story = {
         story: `Een ingedrukte Secondary Button`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1309,6 +1678,8 @@ export const DesignSecondaryDisabledButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1327,7 +1698,6 @@ export const DesignSubtleDisabledButton: Story = {
         story: `Een ingedrukte Subtle Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1347,6 +1717,8 @@ export const DesignSubtleDisabledButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepDisabled,
   },
   render: RenderButtonDisabled,
 };
@@ -1406,6 +1778,7 @@ export const DesignAlleenEenIcon: Story = {
         },
       },
     },
+    wizard: buttonWizardStepBasic,
   },
   render: () => (
     // TODO: Use Action Group
@@ -1519,7 +1892,7 @@ export const GeformatteerdLabelEnEenIcon: Story = {
 };
 
 export const PressedButton: Story = {
-  name: 'Pressed Button',
+  name: 'Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -1534,7 +1907,7 @@ export const PressedButton: Story = {
 };
 
 export const DesignPressedButton: Story = {
-  name: 'Design: Pressed Button',
+  name: 'Design: Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -1565,12 +1938,13 @@ export const DesignPressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignPrimaryPressedButton: Story = {
-  name: 'Design: Primary Pressed Button',
+  name: 'Design: Primary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -1583,7 +1957,6 @@ export const DesignPrimaryPressedButton: Story = {
         story: `Een ingedrukte Primary Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1603,12 +1976,14 @@ export const DesignPrimaryPressedButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSecondaryPressedButton: Story = {
-  name: 'Design: Secondary Pressed Button',
+  name: 'Design: Secondary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -1621,7 +1996,6 @@ export const DesignSecondaryPressedButton: Story = {
         story: `Een ingedrukte Secondary Button`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1641,12 +2015,14 @@ export const DesignSecondaryPressedButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSubtlePressedButton: Story = {
-  name: 'Design: Subtle Pressed Button',
+  name: 'Design: Subtle Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -1659,7 +2035,6 @@ export const DesignSubtlePressedButton: Story = {
         story: `Een ingedrukte Subtle Button.`,
       },
     },
-
     editableTokens: {
       nl: {
         button: {
@@ -1679,6 +2054,8 @@ export const DesignSubtlePressedButton: Story = {
         },
       },
     },
+
+    wizard: buttonWizardStepPressed,
   },
   render: RenderButtonPressed,
 };
@@ -1738,6 +2115,7 @@ export const DesignPrimaryPositiveButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveVariants,
   },
 };
 
@@ -1796,6 +2174,7 @@ export const DesignPrimaryNegativeButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeVariants,
   },
 };
 
@@ -1854,6 +2233,7 @@ export const DesignSecondaryPositiveButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveVariants,
   },
 };
 
@@ -1912,6 +2292,7 @@ export const DesignSecondaryNegativeButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeVariants,
   },
 };
 
@@ -1970,6 +2351,7 @@ export const DesignSubtlePositiveButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositiveVariants,
   },
 };
 
@@ -2028,11 +2410,12 @@ export const DesignSubtleNegativeButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativeVariants,
   },
 };
 
 export const DesignPrimaryPositivePressedButton: Story = {
-  name: 'Design: Primary Positive Pressed Button',
+  name: 'Design: Primary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -2089,12 +2472,13 @@ export const DesignPrimaryPositivePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositivePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignPrimaryNegativePressedButton: Story = {
-  name: 'Design: Primary Negative Pressed Button',
+  name: 'Design: Primary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -2151,12 +2535,13 @@ export const DesignPrimaryNegativePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSecondaryPositivePressedButton: Story = {
-  name: 'Design: Secondary Positive Pressed Button',
+  name: 'Design: Secondary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -2213,12 +2598,13 @@ export const DesignSecondaryPositivePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositivePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSecondaryNegativePressedButton: Story = {
-  name: 'Design: Secondary Negative Pressed Button',
+  name: 'Design: Secondary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -2275,12 +2661,13 @@ export const DesignSecondaryNegativePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSubtlePositivePressedButton: Story = {
-  name: 'Design: Subtle Positive Pressed Button',
+  name: 'Design: Subtle Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -2337,12 +2724,13 @@ export const DesignSubtlePositivePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepPositivePressed,
   },
   render: RenderButtonPressed,
 };
 
 export const DesignSubtleNegativePressedButton: Story = {
-  name: 'Design: Subtle Negative Pressed Button',
+  name: 'Design: Subtle Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -2399,6 +2787,7 @@ export const DesignSubtleNegativePressedButton: Story = {
         },
       },
     },
+    wizard: buttonWizardStepNegativePressed,
   },
   render: RenderButtonPressed,
 };

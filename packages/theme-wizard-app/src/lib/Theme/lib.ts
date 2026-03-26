@@ -1,5 +1,7 @@
-import { BaseDesignTokenIdentifier, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignTokenIdentifier, isTokenLike, walkTokens } from '@nl-design-system-community/design-tokens-schema';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
+import { TokenGroup } from '../../components/wizard-reset-theme/reset-css';
+
 export const tokenPathToCSSCustomProperty = (tokenPath: BaseDesignTokenIdentifier[]): string =>
   '--' + tokenPath.join('-');
 
@@ -28,3 +30,44 @@ export const refToCssVariable = (value: string): string =>
   value.replaceAll(/\{([^}]+)\}/g, (_, tokenName) => {
     return `var(--${tokenName.replaceAll('.', '-')})`;
   });
+
+/**
+ * Flattens preset token values into `{ path, value }` updates.
+ * Unlike `walkTokens`, this also handles tokens that only specify `$value` without `$type`.
+ */
+export const presetTokensToUpdateMany = (
+  tokens: unknown,
+  basePath = '',
+): { path: string; value: DesignToken['$value'] }[] => {
+  if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return [];
+
+  const obj = tokens as Record<string, unknown>;
+
+  if (Object.hasOwn(obj, '$value')) {
+    const result = { path: basePath, value: obj['$value'] as DesignToken['$value'] };
+    return [result];
+  }
+
+  return Object.entries(obj).flatMap(([key, value]) =>
+    presetTokensToUpdateMany(value, basePath ? `${basePath}.${key}` : key),
+  );
+};
+
+/**
+ * Converts token values to a style object of CSS custom properties.
+ * Example: `{ nl: { button: { color: { $value: '{basis.color.default.color-default}' } } } }`
+ * becomes `{ '--nl-button-color': 'var(--basis-color-default-color-default)' }`.
+ */
+export const tokensToStyle = (tokens: TokenGroup) => {
+  const style: { [index: string]: string } = {};
+
+  walkTokens(tokens, (token, path) => {
+    if (typeof token.$value === 'string') {
+      const cssProperty = `--${path.join('-')}`;
+      const cssValue = refToCssVariable(token.$value);
+      style[cssProperty] = cssValue;
+    }
+  });
+
+  return style;
+};
