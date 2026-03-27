@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import Theme from './Theme';
-import { resolveTokenReferenceValue, stringifyTokenValue } from './token-value';
+import { resolveTokenReferenceChain, resolveTokenReferenceValue, stringifyTokenValue } from './token-value';
 
 describe('stringifyTokenValue', () => {
   it('returns string values as-is', () => {
@@ -101,5 +101,17 @@ describe('resolveTokenReferenceValue', () => {
     theme.updateAt('basis.color.accent-1.bg-default', '{basis.color.accent-1.bg-subtle}');
     const result = resolveTokenReferenceValue('{basis.color.accent-1.bg-default}', theme);
     expect(result).not.toBeNull();
+  });
+});
+
+describe('resolveTokenReferenceChain', () => {
+  it('returns an empty array when a reference cycle is detected', () => {
+    const theme = new Theme();
+    vi.spyOn(theme, 'at').mockReturnValue({ $value: '{basis.color.accent-1.bg-default}' } as never);
+
+    const result = resolveTokenReferenceChain('{basis.color.accent-1.bg-default}', theme);
+
+    expect(result).toEqual(['{basis.color.accent-1.bg-default}']);
+    vi.restoreAllMocks();
   });
 });
