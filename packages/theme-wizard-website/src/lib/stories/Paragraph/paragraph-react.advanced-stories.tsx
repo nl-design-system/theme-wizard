@@ -22,7 +22,10 @@ export const AdvancedParagraphShared: Story = {
     },
     wizard: {
       description: 'Pas de gedeelde kleur en het lettertype aan voor zowel gewone als lead paragraphs.',
+      order: 4,
       question: 'Wil je de gedeelde basis van paragraphs verder verfijnen?',
+      step: 'paragraph:advanced',
+      stepTitle: 'Paragraph geavanceerd',
       type: 'advanced',
     },
   },
@@ -54,7 +57,10 @@ export const AdvancedParagraph: Story = {
     },
     wizard: {
       description: 'Gebruik deze geavanceerde instellingen om de gewone paragraph exact af te stemmen.',
+      order: 5,
       question: 'Wil je de standaard paragraph verder verfijnen?',
+      step: 'paragraph:advanced',
+      stepTitle: 'Paragraph geavanceerd',
       type: 'advanced',
     },
   },
@@ -83,7 +89,10 @@ export const AdvancedLead: Story = {
     wizard: {
       description:
         'Gebruik deze geavanceerde instellingen om de lead paragraph precies meer of minder nadruk te geven.',
+      order: 6,
       question: 'Wil je de lead paragraph verder verfijnen?',
+      step: 'paragraph:advanced',
+      stepTitle: 'Paragraph geavanceerd',
       type: 'advanced',
     },
   },
