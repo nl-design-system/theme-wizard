@@ -200,16 +200,12 @@ export class StoryWizardController {
 
   private refreshSelectionState() {
     this.persistStepState();
-    this.scheduleSummaryUpdate();
+    this.updateSummary();
     this.updateNavigationState();
   }
 
-  private scheduleSummaryUpdate() {
-    this.summary.scheduleUpdate(this.steps, this.currentStep, this.hasFinishedAllChoices, this.getTheme());
-  }
-
   private updateSummary() {
-    this.summary.update(this.steps, this.currentStep, this.hasFinishedAllChoices, this.getTheme());
+    this.summary.update(this.steps, this.getTheme());
   }
 
   private updateNavigationState() {

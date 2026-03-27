@@ -9,6 +9,7 @@ const createAdvancedStory = ({
   args,
   description,
   level,
+  order,
   question,
   tokenNames,
 }: {
@@ -16,6 +17,7 @@ const createAdvancedStory = ({
   description: string;
   level: number;
   name: string;
+  order: number;
   question: string;
   tokenNames: string[];
 }): Story => ({
@@ -26,7 +28,10 @@ const createAdvancedStory = ({
     editableTokens: createHeadingEditableTokens(level, tokenNames),
     wizard: {
       description,
+      order,
       question,
+      step: 'heading:advanced',
+      stepTitle: 'Heading geavanceerd',
       type: 'advanced',
     },
   },
@@ -40,6 +45,7 @@ export const AdvancedHeading1: Story = createAdvancedStory({
   },
   description: 'Gebruik deze geavanceerde instelling alleen als je de H1-grootte precies wilt bijsturen.',
   level: 1,
+  order: 13,
   question: 'Wil je de H1 verder verfijnen?',
   tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
 });
@@ -52,6 +58,7 @@ export const AdvancedHeading2: Story = createAdvancedStory({
   },
   description: 'Gebruik deze geavanceerde instelling alleen als je de H2-grootte precies wilt bijsturen.',
   level: 2,
+  order: 14,
   question: 'Wil je de H2 verder verfijnen?',
   tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
 });
@@ -64,6 +71,7 @@ export const AdvancedHeading3: Story = createAdvancedStory({
   },
   description: 'Gebruik deze geavanceerde instelling alleen als je de H3-grootte precies wilt bijsturen.',
   level: 3,
+  order: 15,
   question: 'Wil je de H3 verder verfijnen?',
   tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
 });
@@ -76,6 +84,7 @@ export const AdvancedHeading4: Story = createAdvancedStory({
   },
   description: 'Gebruik deze geavanceerde instelling alleen als je de H4-grootte precies wilt bijsturen.',
   level: 4,
+  order: 16,
   question: 'Wil je de H4 verder verfijnen?',
   tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
 });
@@ -88,6 +97,7 @@ export const AdvancedHeading5: Story = createAdvancedStory({
   },
   description: 'Gebruik deze geavanceerde instelling alleen als je de H5-grootte precies wilt bijsturen.',
   level: 5,
+  order: 17,
   question: 'Wil je de H5 verder verfijnen?',
   tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
 });
@@ -100,6 +110,7 @@ export const AdvancedHeading6: Story = createAdvancedStory({
   },
   description: 'Gebruik deze geavanceerde instelling alleen als je de H6-grootte precies wilt bijsturen.',
   level: 6,
+  order: 18,
   question: 'Wil je de H6 verder verfijnen?',
   tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
 });

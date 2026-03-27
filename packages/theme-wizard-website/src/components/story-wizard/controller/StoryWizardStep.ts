@@ -85,7 +85,7 @@ export class StoryWizardStep {
 
   public restoreStoredSelection(selection: number[]) {
     this.groups.forEach((group, groupIndex) => {
-      const selectedIndex = selection?.[groupIndex];
+      const selectedIndex = selection[groupIndex];
       if (typeof selectedIndex !== 'number') return;
       group.restoreSelectedIndex(selectedIndex);
     });
@@ -93,7 +93,7 @@ export class StoryWizardStep {
 
   public restoreChosenState(chosenState: boolean[]) {
     this.groups.forEach((group, groupIndex) => {
-      group.restoreChosenState(Boolean(chosenState?.[groupIndex]));
+      group.restoreChosenState(Boolean(chosenState[groupIndex]));
     });
   }
 
@@ -129,28 +129,19 @@ export class StoryWizardStep {
   }
 
   public createSelectionSummary(): StoryWizardSelectionSummary[] {
-    const selectedGroups = this.groups.flatMap((group) => {
+    const chosenOptions = this.groups.flatMap((group) => {
+      if (!group.hasChosenSelection()) return [];
       const option = group.getSelectedOption();
-      if (!option || !group.hasChosenSelection()) return [];
-
-      return [
-        {
-          label: group.groupLabel,
-          optionLabel: option.optionLabel,
-          tokens: flattenDesignTokens(option.tokens),
-        },
-      ];
+      return option ? [option] : [];
     });
 
-    if (selectedGroups.length === 0) {
-      return [];
-    }
+    if (chosenOptions.length === 0) return [];
 
     return [
       {
         label: this.stepLabel,
-        optionLabel: selectedGroups.map((group) => group.optionLabel).join(' · '),
-        tokens: selectedGroups.flatMap((group) => group.tokens),
+        optionLabel: chosenOptions.map((o) => o.optionLabel).join(' · '),
+        tokens: chosenOptions.flatMap((o) => flattenDesignTokens(o.tokens)),
       },
     ];
   }

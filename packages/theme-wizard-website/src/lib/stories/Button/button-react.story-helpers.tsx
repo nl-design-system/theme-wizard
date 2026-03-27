@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react-vite';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
-import { createWizardStep, type WizardStep } from '../story-helpers';
+import { type WizardStep } from '../story-helpers';
 
 export type ButtonStory = StoryObj<ButtonProps>;
 export type ButtonPurpose = 'default' | 'primary' | 'secondary' | 'subtle';
@@ -37,23 +37,17 @@ type ButtonPresetGroup = {
   thumbnail?: boolean;
 };
 
-export const buttonWizardStepBasic = createWizardStep('button-basic', 'Button basis');
-export const buttonWizardStepStates = createWizardStep('button-states', 'Button states');
-export const buttonWizardStepPositiveStates = createWizardStep('button-positive-states', 'Positieve button states');
-export const buttonWizardStepNegativeStates = createWizardStep('button-negative-states', 'Negatieve button states');
-export const buttonWizardStepVariants = createWizardStep('button-variants', 'Button varianten');
-export const buttonWizardStepPositiveVariants = createWizardStep(
-  'button-positive-variants',
-  'Positieve button varianten',
-);
-export const buttonWizardStepNegativeVariants = createWizardStep(
-  'button-negative-variants',
-  'Negatieve button varianten',
-);
-export const buttonWizardStepDisabled = createWizardStep('button-disabled', 'Button disabled');
-export const buttonWizardStepPressed = createWizardStep('button-pressed', 'Button pressed');
-export const buttonWizardStepPositivePressed = createWizardStep('button-positive-pressed', 'Positieve button pressed');
-export const buttonWizardStepNegativePressed = createWizardStep('button-negative-pressed', 'Negatieve button pressed');
+export const buttonWizardStepBasic: WizardStep = { order: 6, stepTitle: 'Button basis' };
+export const buttonWizardStepStates: WizardStep = { order: 7, stepTitle: 'Button states' };
+export const buttonWizardStepPositiveStates: WizardStep = { order: 8, stepTitle: 'Positieve button states' };
+export const buttonWizardStepNegativeStates: WizardStep = { order: 9, stepTitle: 'Negatieve button states' };
+export const buttonWizardStepVariants: WizardStep = { order: 10, stepTitle: 'Button varianten' };
+export const buttonWizardStepPositiveVariants: WizardStep = { order: 11, stepTitle: 'Positieve button varianten' };
+export const buttonWizardStepNegativeVariants: WizardStep = { order: 12, stepTitle: 'Negatieve button varianten' };
+export const buttonWizardStepDisabled: WizardStep = { order: 13, stepTitle: 'Button disabled' };
+export const buttonWizardStepPressed: WizardStep = { order: 14, stepTitle: 'Button pressed' };
+export const buttonWizardStepPositivePressed: WizardStep = { order: 15, stepTitle: 'Positieve button pressed' };
+export const buttonWizardStepNegativePressed: WizardStep = { order: 16, stepTitle: 'Negatieve button pressed' };
 
 export const defaultButtonVariantOptions: ButtonPresetOptionConfig[] = [
   {
