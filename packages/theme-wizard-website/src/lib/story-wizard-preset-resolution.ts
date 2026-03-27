@@ -1,5 +1,5 @@
+import { presetTokensToStyle, styleObjectToString } from '@app/lib/Theme/lib';
 import dlv from 'dlv';
-import { presetTokensToStyle, styleObjectToString } from '../../../theme-wizard-app/src/lib/Theme/lib';
 import { type DynamicPresetOption, type SelectedPresetOption, type PresetResolutionContext } from './types';
 
 /**

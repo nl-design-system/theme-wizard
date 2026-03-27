@@ -77,6 +77,7 @@ export class App extends LitElement {
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
+    this.addEventListener('reset-tokens', this.#handlePresetResetTokens as EventListener);
   }
 
   override disconnectedCallback() {
@@ -84,6 +85,7 @@ export class App extends LitElement {
     this.removeEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
+    this.removeEventListener('reset-tokens', this.#handlePresetResetTokens as EventListener);
   }
 
   /**
@@ -112,6 +114,15 @@ export class App extends LitElement {
 
   readonly #handleReset = () => {
     this.theme.reset();
+    this.#forceUpdateTokens();
+    this.#themeStorage.setJSON(this.theme.tokens);
+  };
+
+  readonly #handlePresetResetTokens = (event: CustomEvent<{ paths: string[] }>) => {
+    const { paths } = event.detail;
+    if (!paths || paths.length === 0) return;
+
+    this.theme.resetMany(paths);
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
   };
