@@ -14,23 +14,60 @@ test('page has accessibility basics', async ({ basisTokensPage }) => {
 });
 
 test.describe('change fonts', () => {
-  test.beforeEach(async ({ basisTokensPage }) => {
+  // Make sure we have access to scraped tokens
+  test.use({ storageState: storageStatePath });
+
+  test('Shows all options from staging tokens in font dropdown', async ({
+    basisTokensPage,
+    page,
+    stagingTokensPage,
+  }) => {
+    await stagingTokensPage.goto();
+    const tbody = page.getByRole('table', { name: 'Lettertypes' }).locator('tbody');
+    const stagedFamilies = await tbody.getByRole('code').allTextContents();
+
     await basisTokensPage.goto();
-    await basisTokensPage.page.getByRole('button', { name: 'Typografie' }).click();
+    await page.getByRole('button', { name: 'Typografie' }).click();
+    const options = await basisTokensPage.getInputOptions('Koppen');
+    const optionFamilies = (await options.allTextContents()).map((s) => s.trim());
+
+    expect(optionFamilies).toEqual(expect.arrayContaining(stagedFamilies));
   });
 
-  test('can change heading font to Courier New on preview', async ({ basisTokensPage }) => {
-    const heading = basisTokensPage.getHeading(2);
-    await expect(heading).not.toHaveFont('Courier New');
-    await basisTokensPage.changeHeadingFont('Courier New');
-    await expect(heading).toHaveFont('Courier New');
+  test('Unstaged font family is not shown in font dropdown', async ({ basisTokensPage, page, stagingTokensPage }) => {
+    await stagingTokensPage.goto();
+    const tbody = page.getByRole('table', { name: 'Lettertypes' }).locator('tbody');
+
+    await tbody.getByRole('row').first().getByRole('checkbox').uncheck();
+    const unstagedFamily = await tbody.getByRole('row').first().getByRole('code').textContent();
+
+    await basisTokensPage.goto();
+    await page.getByRole('button', { name: 'Typografie' }).click();
+    const options = await basisTokensPage.getInputOptions('Koppen');
+    const optionFamilies = (await options.allTextContents()).map((s) => s.trim());
+
+    expect(optionFamilies).not.toContain(unstagedFamily);
   });
 
-  test('can change body font to Courier New', async ({ basisTokensPage }) => {
-    const paragraph = basisTokensPage.getParagraph();
-    await expect(paragraph).not.toHaveFont('Courier New');
-    await basisTokensPage.changeBodyFont('Courier New');
-    await expect(paragraph).toHaveFont('Courier New');
+  test.describe('wizard page only', () => {
+    test.beforeEach(async ({ basisTokensPage }) => {
+      await basisTokensPage.goto();
+      await basisTokensPage.page.getByRole('button', { name: 'Typografie' }).click();
+    });
+
+    test('can change heading font to Courier New on preview', async ({ basisTokensPage }) => {
+      const heading = basisTokensPage.getHeading(2);
+      await expect(heading).not.toHaveFont('Courier New');
+      await basisTokensPage.changeHeadingFont('Courier New');
+      await expect(heading).toHaveFont('Courier New');
+    });
+
+    test('can change body font to Courier New', async ({ basisTokensPage }) => {
+      const paragraph = basisTokensPage.getParagraph();
+      await expect(paragraph).not.toHaveFont('Courier New');
+      await basisTokensPage.changeBodyFont('Courier New');
+      await expect(paragraph).toHaveFont('Courier New');
+    });
   });
 });
 

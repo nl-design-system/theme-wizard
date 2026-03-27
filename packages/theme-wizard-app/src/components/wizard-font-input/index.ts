@@ -1,12 +1,12 @@
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-font-combobox';
 import { ClippyFontCombobox } from '@nl-design-system-community/clippy-components/clippy-font-combobox';
-import { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
+import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 
 export type FontOption = { label: string; value: ModernFontFamilyToken['$value'] };
@@ -40,7 +40,7 @@ export class WizardFontInput extends WizardTokenInput {
 
   @consume({ context: scrapedTokensContext, subscribe: true })
   @property({ attribute: false })
-  scrapedTokens: ScrapedDesignToken[] = [];
+  scrapedTokens: StagedDesignToken[] = [];
 
   override get value() {
     return this.#token.$value;
@@ -62,14 +62,16 @@ export class WizardFontInput extends WizardTokenInput {
 
   override render() {
     const value = Array.isArray(this.value) ? this.value : [this.value];
-    const options = DEFAULT_FONT_OPTIONS.concat(
-      this.scrapedTokens
+    const options: FontOption[] = [
+      ...this.scrapedTokens
+        .filter((token) => token.$extensions?.[EXTENSION_TOKEN_STAGED] === true)
         .filter((token) => token.$type === 'fontFamily')
         .map((token) => ({
           label: token.$value.join(', '),
           value: token.$value,
         })),
-    );
+      ...DEFAULT_FONT_OPTIONS,
+    ];
 
     return html`
       <div class="utrecht-form-field__input">
