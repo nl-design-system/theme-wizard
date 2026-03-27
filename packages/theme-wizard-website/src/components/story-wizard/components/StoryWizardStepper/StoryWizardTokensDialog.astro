@@ -1,0 +1,27 @@
+<dialog class="wizard-tokens-dialog" id="wizard-tokens-dialog">
+  <div class="wizard-tokens-dialog__inner">
+    <div class="wizard-tokens-dialog__header">
+      <h2 class="wizard-tokens-dialog__title"></h2>
+      <button class="wizard-tokens-dialog__close nl-button nl-button--subtle" type="button" aria-label="Sluiten"
+        >&#x2715;</button
+      >
+    </div>
+    <div class="wizard-tokens-dialog__body"></div>
+  </div>
+</dialog>
+
+<!-- Group section -->
+<template id="wizard-dialog-group-tmpl">
+  <section class="wizard-tokens-dialog__group">
+    <h3 class="wizard-tokens-dialog__group-title"></h3>
+    <table class="wizard-tokens-dialog__table"></table>
+  </section>
+</template>
+
+<!-- Token row -->
+<template id="wizard-dialog-row-tmpl">
+  <tr>
+    <td class="wizard-tokens-dialog__token-path"></td>
+    <td class="wizard-tokens-dialog__token-value"></td>
+  </tr>
+</template>
