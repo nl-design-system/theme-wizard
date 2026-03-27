@@ -1,5 +1,5 @@
-import { cloneTemplate } from './cloneTemplate';
 import type { StoryWizardSelectionSummary } from './types';
+import { cloneTemplate } from './cloneTemplate';
 
 export class StoryWizardTokensDialog {
   private dialog: HTMLDialogElement | null = null;

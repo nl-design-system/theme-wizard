@@ -1,9 +1,9 @@
 import { dequal } from 'dequal';
 import dlv from 'dlv';
-import { cloneTemplate } from './cloneTemplate';
 import type { StoryWizardStep } from './StoryWizardStep';
 import type { StoryWizardTokensDialog } from './StoryWizardTokensDialog';
 import type { StoryWizardSelectionSummary, StoryWizardThemeHost } from './types';
+import { cloneTemplate } from './cloneTemplate';
 
 export class StoryWizardSummary {
   private readonly listElement: HTMLElement | null;
