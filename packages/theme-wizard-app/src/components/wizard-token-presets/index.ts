@@ -309,10 +309,6 @@ export class WizardTokenPreset extends LitElement {
     return matches;
   }
 
-  private findMatchingOptionIndex(theme: Theme, matcher: (theme: Theme, tokens: unknown) => boolean) {
-    return this.options.findIndex((option) => matcher.call(this, theme, option.tokens));
-  }
-
   private setSelectedIndex(index: number) {
     this.selectedIndexState = index;
     this.toggleAttribute('selected', index >= 0);
@@ -320,12 +316,14 @@ export class WizardTokenPreset extends LitElement {
   }
 
   private updateSelectionState() {
-    this.defaultIndexState = this.findMatchingOptionIndex(this.defaultTheme, this.matchesThemeByReferenceChain);
-    const exactSelectedIndex = this.findMatchingOptionIndex(this.currentTheme, this.matchesThemeExactly);
+    this.defaultIndexState = this.options.findIndex((option) =>
+      this.matchesThemeByReferenceChain(this.defaultTheme, option.tokens),
+    );
+    const exactSelectedIndex = this.options.findIndex((option) => this.matchesThemeExactly(this.currentTheme, option.tokens));
     this.setSelectedIndex(
       exactSelectedIndex >= 0
         ? exactSelectedIndex
-        : this.findMatchingOptionIndex(this.currentTheme, this.matchesThemeByReferenceChain),
+        : this.options.findIndex((option) => this.matchesThemeByReferenceChain(this.currentTheme, option.tokens)),
     );
   }
 
