@@ -171,21 +171,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     // Only when the focus moves outside of the component, treat it as a blur for outside
     if (!focusedRelatedElement) {
       if (this.allow === 'other' && this.query) {
-        const value = this.queryToValue(this.query);
-        if (value && !dequal(value, this.value)) {
-          this.value = value;
-          this.#handleChange();
-        } else if (value) {
-          this.value = value; // normalize display without emitting change
-        }
+        this.#commitQuery();
       }
       this.open = false;
       this.emit('blur');
     }
-  };
-
-  readonly #handleChange = () => {
-    this.emit('change');
   };
 
   readonly #handleDocumentClick = (event: MouseEvent) => {
@@ -265,23 +255,22 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   }
 
-  #commitActiveItem(index: number) {
-    const { label, value } = this.filteredOptions.at(index) ?? {};
-    if (index < 0 || !label || !value) return;
+  #commit(value: T['value'] | null) {
     if (!dequal(this.value, value)) {
       this.value = value;
-      this.#handleChange();
+      this.emit('change');
     }
     this.open = false;
   }
 
+  #commitActiveItem(index: number) {
+    const { label, value } = this.filteredOptions.at(index) ?? {};
+    if (index < 0 || !label || !value) return;
+    this.#commit(value);
+  }
+
   #commitQuery() {
-    const value = this.queryToValue(this.query);
-    if (!dequal(this.value, value)) {
-      this.value = value;
-      this.#handleChange();
-    }
-    this.open = false;
+    this.#commit(this.queryToValue(this.query));
   }
 
   get #listId() {
