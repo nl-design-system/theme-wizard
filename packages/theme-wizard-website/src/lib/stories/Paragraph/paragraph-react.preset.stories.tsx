@@ -120,14 +120,25 @@ export const LeadParagraphFontSize: Story = createParagraphPresetStory({
       tokens: {},
     },
     {
-      name: 'Extra ruim',
+      name: 'Ruim',
       derivedTokenReference: {
         offset: 1,
         scalePath: 'basis.text.font-size',
         sourcePath: 'nl.paragraph.font-size',
         targetPath: 'nl.paragraph.lead.font-size',
       },
-      description: 'Maak de lead paragraph groter voor extra nadruk.',
+      description: 'Maak de lead paragraph groter voor meer nadruk.',
+      tokens: {},
+    },
+    {
+      name: 'Extra ruim',
+      derivedTokenReference: {
+        offset: 2,
+        scalePath: 'basis.text.font-size',
+        sourcePath: 'nl.paragraph.font-size',
+        targetPath: 'nl.paragraph.lead.font-size',
+      },
+      description: 'Maak de lead paragraph extra groot voor extra nadruk.',
       tokens: {},
     },
   ],

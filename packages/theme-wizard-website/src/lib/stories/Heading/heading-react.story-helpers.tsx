@@ -13,6 +13,7 @@ export const headingSampleText = storySampleText;
 export const headingLevels: PreviewHeadingLevel[] = [1, 2, 3, 4, 5, 6];
 
 export const headingFontSizes = [
+  { label: 'Gigantisch', step: '4xl' },
   { label: 'Enorm', step: '3xl' },
   { label: 'Heel groot', step: '2xl' },
   { label: 'Extra groot', step: 'xl' },
