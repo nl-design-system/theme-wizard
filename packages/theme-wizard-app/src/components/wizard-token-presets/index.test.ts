@@ -216,6 +216,20 @@ describe(`<${tag}>`, () => {
       radios[0].dispatchEvent(new Event('change', { bubbles: true }));
       expect(handler).toHaveBeenCalledOnce();
     });
+
+    it('clicking the selected radio dispatches a change event again', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      const handler = vi.fn();
+      el.addEventListener('change', handler);
+
+      el.selectIndex(0);
+      handler.mockClear();
+
+      const radios = getRadios(el);
+      radios[0].dispatchEvent(new Event('click', { bubbles: true }));
+
+      expect(handler).toHaveBeenCalledOnce();
+    });
   });
 
   describe('token details rendering', () => {
@@ -242,6 +256,38 @@ describe(`<${tag}>`, () => {
       el.selectIndex(0);
       await el.updateComplete;
       expect(el.shadowRoot?.querySelector('details')).toBeTruthy();
+    });
+
+    it('renders intermediate and resolved steps for token reference chains', async () => {
+      const chainOption = {
+        name: 'Chain',
+        tokens: {
+          heading: {
+            color: {
+              $value: '{color.document}',
+            },
+          },
+        },
+      };
+      const el = await mount({ options: [chainOption] });
+
+      dispatchThemeUpdate({
+        color: { document: { $value: '#000000' } },
+        heading: {
+          'base-color': { $value: '{color.document}' },
+          color: { $value: '{heading.base-color}' },
+        },
+      });
+
+      el.selectIndex(0);
+      await el.updateComplete;
+
+      const resolvedValues = Array.from(
+        el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-value-resolved') ?? [],
+      ).map((node) => node.textContent?.trim());
+
+      expect(resolvedValues).toContain('{heading.base-color}');
+      expect(resolvedValues).toContain('#000000');
     });
   });
 
