@@ -7,14 +7,13 @@ export default css`
   }
 
   .clippy-combobox__current-option {
+    align-items: center;
+    display: flex;
+    inline-size: 100%;
+    overflow: hidden;
     pointer-events: none;
     position: absolute;
-    display: flex;
-    /* Clip contents when current option exceeds input size */
-    inline-size: 100%;
     white-space: nowrap;
-    overflow: hidden;
-    align-items: center;
   }
 
   .clippy-combobox__current-option:has(+ input:focus) {
@@ -23,8 +22,8 @@ export default css`
 
   /* added specificity to override the align-items now that the flex direction changes */
   .clippy-combobox__option[class] {
+    align-items: unset;
     display: flex;
     flex-direction: column;
-    align-items: unset;
   }
 `;
