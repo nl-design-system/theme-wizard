@@ -4,28 +4,34 @@ import { StoryWizardStep } from './StoryWizardStep';
 import { StoryWizardStorage } from './StoryWizardStorage';
 
 export class StoryWizardPresetState {
-  private isSyncing = false;
-  private readonly groups;
-  private readonly dynamicGroups;
+  #isSyncing = false;
+  readonly #groups;
+  readonly #dynamicGroups;
+  readonly #steps: StoryWizardStep[];
+  readonly #storage: StoryWizardStorage;
+  readonly #getTheme: () => StoryWizardThemeHost | null;
 
   public constructor(
-    private readonly steps: StoryWizardStep[],
-    private readonly storage: StoryWizardStorage,
-    private readonly getTheme: () => StoryWizardThemeHost | null,
+    steps: StoryWizardStep[],
+    storage: StoryWizardStorage,
+    getTheme: () => StoryWizardThemeHost | null,
   ) {
-    this.groups = steps.flatMap((step) => step.groups);
-    this.dynamicGroups = this.groups.filter((group) =>
+    this.#steps = steps;
+    this.#storage = storage;
+    this.#getTheme = getTheme;
+    this.#groups = steps.flatMap((step) => step.groups);
+    this.#dynamicGroups = this.#groups.filter((group) =>
       group.getInitialOptions().some((option) => option.derivedTokenReference),
     );
   }
 
   public get syncing() {
-    return this.isSyncing;
+    return this.#isSyncing;
   }
 
   public async ready() {
     await customElements.whenDefined('wizard-token-preset');
-    await this.waitForPresetInputs();
+    await this.#waitForPresetInputs();
   }
 
   public async initialize({
@@ -39,34 +45,34 @@ export class StoryWizardPresetState {
     let hasStoredState = false;
 
     if (restoreStoredState) {
-      ({ hasStoredState, restoredStepIndex } = this.runSync(() => this.storage.restore(this.steps)));
+      ({ hasStoredState, restoredStepIndex } = this.#runSync(() => this.#storage.restore(this.#steps)));
     }
 
     if (!hasStoredState) {
-      this.runSync(() => this.restoreDefaultSelections());
+      this.#runSync(() => this.#restoreDefaultSelections());
     }
 
-    this.runSync(() => this.syncDynamicOptions());
-    await this.waitForPresetInputs();
+    this.#runSync(() => this.syncDynamicOptions());
+    await this.#waitForPresetInputs();
 
     if (forceDefaultsAfterSync) {
-      this.runSync(() => this.restoreDefaultSelections(true));
+      this.#runSync(() => this.#restoreDefaultSelections(true));
     }
 
     return restoredStepIndex;
   }
 
   public async reset() {
-    this.runSync(() => this.clearSelections());
-    this.storage.clear();
+    this.#runSync(() => this.#clearSelections());
+    this.#storage.clear();
     await this.initialize({ forceDefaultsAfterSync: true, restoreStoredState: false });
   }
 
   public syncDynamicOptions() {
-    const defaults = this.getTheme()?.theme?.defaults;
-    const selectedOptions = this.groups.map((group) => group.getSelectedOption());
+    const defaults = this.#getTheme()?.theme?.defaults;
+    const selectedOptions = this.#groups.map((group) => group.getSelectedOption());
 
-    this.dynamicGroups.forEach((group) => {
+    this.#dynamicGroups.forEach((group) => {
       group.setOptions(
         resolveDynamicPresetOptions<StoryWizardPresetOption>({
           defaults,
@@ -81,27 +87,27 @@ export class StoryWizardPresetState {
     });
   }
 
-  private async waitForPresetInputs() {
+  async #waitForPresetInputs() {
     await Promise.all(
-      this.groups.map((group) => group.input?.updateComplete ?? Promise.resolve())
+      this.#groups.map((group) => group.input?.updateComplete ?? Promise.resolve())
     );
   }
 
-  private runSync<T>(callback: () => T): T {
-    this.isSyncing = true;
+  #runSync<T>(callback: () => T): T {
+    this.#isSyncing = true;
 
     try {
       return callback();
     } finally {
-      this.isSyncing = false;
+      this.#isSyncing = false;
     }
   }
 
-  private clearSelections() {
-    this.steps.forEach((step) => step.clearSelections());
+  #clearSelections() {
+    this.#steps.forEach((step) => step.clearSelections());
   }
 
-  private restoreDefaultSelections(force = false) {
-    this.steps.forEach((step) => step.restoreDefaultSelection(force));
+  #restoreDefaultSelections(force = false) {
+    this.#steps.forEach((step) => step.restoreDefaultSelection(force));
   }
 }

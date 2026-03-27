@@ -8,17 +8,17 @@ interface StoredState {
 }
 
 export class StoryWizardStorage {
-  private readonly key: string;
-  private lastSerializedState: string | null = null;
+  readonly #key: string;
+  #lastSerializedState: string | null = null;
 
   public constructor(componentId: string) {
-    this.key = `theme-wizard:${componentId}:preset-state`;
+    this.#key = `theme-wizard:${componentId}:preset-state`;
   }
 
   public read(): StoredState | null {
     try {
-      const raw = globalThis.localStorage?.getItem(this.key);
-      this.lastSerializedState = raw;
+      const raw = globalThis.localStorage?.getItem(this.#key);
+      this.#lastSerializedState = raw;
       return raw ? JSON.parse(raw) : null;
     } catch {
       return null;
@@ -35,12 +35,12 @@ export class StoryWizardStorage {
       };
 
       const serializedState = JSON.stringify(state);
-      if (serializedState === this.lastSerializedState) {
+      if (serializedState === this.#lastSerializedState) {
         return;
       }
 
-      globalThis.localStorage?.setItem(this.key, serializedState);
-      this.lastSerializedState = serializedState;
+      globalThis.localStorage?.setItem(this.#key, serializedState);
+      this.#lastSerializedState = serializedState;
     } catch {
       // Progressive enhancement: ignore storage failures and keep the wizard usable.
     }
@@ -48,8 +48,8 @@ export class StoryWizardStorage {
 
   public clear() {
     try {
-      globalThis.localStorage?.removeItem(this.key);
-      this.lastSerializedState = null;
+      globalThis.localStorage?.removeItem(this.#key);
+      this.#lastSerializedState = null;
     } catch {
       // Progressive enhancement: ignore storage failures and keep the wizard usable.
     }

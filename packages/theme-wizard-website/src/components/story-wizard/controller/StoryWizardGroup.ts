@@ -2,12 +2,12 @@ import type { StoryWizardPresetOption, WizardTokenPresetInput } from './types';
 
 export class StoryWizardGroup {
   public readonly input: WizardTokenPresetInput | null;
-  private readonly initialOptions: StoryWizardPresetOption[];
-  private wasChosen = false;
+  readonly #initialOptions: StoryWizardPresetOption[];
+  #wasChosen = false;
 
   public constructor(public readonly element: HTMLElement) {
     this.input = element.querySelector<WizardTokenPresetInput>('.wizard-token-preset__input');
-    this.initialOptions = structuredClone(this.input?.options ?? []);
+    this.#initialOptions = structuredClone(this.input?.options ?? []);
   }
 
   public get groupLabel() {
@@ -27,7 +27,7 @@ export class StoryWizardGroup {
   }
 
   public getInitialOptions() {
-    return this.initialOptions;
+    return this.#initialOptions;
   }
 
   public hasSelection() {
@@ -35,25 +35,25 @@ export class StoryWizardGroup {
   }
 
   public hasChosenSelection() {
-    return this.hasSelection() && this.wasChosen;
+    return this.hasSelection() && this.#wasChosen;
   }
 
   public getStoredChosenState() {
-    return this.wasChosen;
+    return this.#wasChosen;
   }
 
   public clearSelection() {
-    this.wasChosen = false;
+    this.#wasChosen = false;
     this.input?.clearSelection();
   }
 
   public restoreSelectedIndex(index: number) {
-    this.wasChosen = false;
+    this.#wasChosen = false;
     this.input?.selectIndex(index);
   }
 
   public restoreChosenState(wasChosen: boolean) {
-    this.wasChosen = this.hasSelection() && wasChosen;
+    this.#wasChosen = this.hasSelection() && wasChosen;
   }
 
   public restoreDefaultSelection(force = false) {
@@ -72,7 +72,7 @@ export class StoryWizardGroup {
   }
 
   public markAsChosen() {
-    this.wasChosen = this.hasSelection();
+    this.#wasChosen = this.hasSelection();
   }
 
   public confirmSelection() {

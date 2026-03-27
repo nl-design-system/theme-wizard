@@ -9,39 +9,39 @@ export interface NavigationCallbacks {
 }
 
 export class StoryWizardNavigation {
-  private readonly finishSafeBtns: HTMLButtonElement[];
-  private readonly nextBtns: HTMLButtonElement[];
-  private readonly prevBtns: HTMLButtonElement[];
-  private readonly resetBtns: HTMLButtonElement[];
-  private readonly transitionNotes: HTMLElement[];
-  private readonly steppers: HTMLElement[];
+  readonly #finishSafeBtns: HTMLButtonElement[];
+  readonly #nextBtns: HTMLButtonElement[];
+  readonly #prevBtns: HTMLButtonElement[];
+  readonly #resetBtns: HTMLButtonElement[];
+  readonly #transitionNotes: HTMLElement[];
+  readonly #steppers: HTMLElement[];
 
   public constructor(root: HTMLElement | Document, shell: HTMLElement | Document) {
-    this.steppers = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-stepper'));
-    this.finishSafeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-finish-safe'));
-    this.resetBtns = Array.from(shell.querySelectorAll<HTMLButtonElement>('.wizard-preset-reset'));
-    this.prevBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-prev'));
-    this.nextBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-next'));
-    this.transitionNotes = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-transition-note'));
+    this.#steppers = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-stepper'));
+    this.#finishSafeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-finish-safe'));
+    this.#resetBtns = Array.from(shell.querySelectorAll<HTMLButtonElement>('.wizard-preset-reset'));
+    this.#prevBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-prev'));
+    this.#nextBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-next'));
+    this.#transitionNotes = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-transition-note'));
   }
 
   public bind(callbacks: NavigationCallbacks) {
-    this.resetBtns.forEach((btn) => btn.addEventListener('click', callbacks.onReset));
-    this.prevBtns.forEach((btn) => btn.addEventListener('click', callbacks.onPrev));
-    this.nextBtns.forEach((btn) => btn.addEventListener('click', callbacks.onNext));
-    this.finishSafeBtns.forEach((btn) => btn.addEventListener('click', callbacks.onFinishSafe));
+    this.#resetBtns.forEach((btn) => btn.addEventListener('click', callbacks.onReset));
+    this.#prevBtns.forEach((btn) => btn.addEventListener('click', callbacks.onPrev));
+    this.#nextBtns.forEach((btn) => btn.addEventListener('click', callbacks.onNext));
+    this.#finishSafeBtns.forEach((btn) => btn.addEventListener('click', callbacks.onFinishSafe));
   }
 
   public showSteppers() {
-    this.steppers.forEach((stepper) => stepper.removeAttribute('hidden'));
+    this.#steppers.forEach((stepper) => stepper.removeAttribute('hidden'));
   }
 
   public hideSteppers() {
-    this.steppers.forEach((stepper) => stepper.setAttribute('hidden', ''));
+    this.#steppers.forEach((stepper) => stepper.setAttribute('hidden', ''));
   }
 
   public updatePrevState(isFirstStep: boolean) {
-    this.prevBtns.forEach((btn) => {
+    this.#prevBtns.forEach((btn) => {
       btn.disabled = isFirstStep;
       btn.classList.toggle('nl-button--disabled', isFirstStep);
     });
@@ -59,7 +59,7 @@ export class StoryWizardNavigation {
       nextLabel = 'Geavanceerd';
     }
 
-    this.nextBtns.forEach((btn) => {
+    this.#nextBtns.forEach((btn) => {
       btn.disabled = !isComplete;
       btn.classList.toggle('nl-button--disabled', !isComplete);
       btn.textContent = nextLabel;
@@ -67,11 +67,11 @@ export class StoryWizardNavigation {
       btn.classList.toggle('nl-button--subtle', isLastSafeStep && !isLastStep);
     });
 
-    this.finishSafeBtns.forEach((btn) => {
+    this.#finishSafeBtns.forEach((btn) => {
       btn.hidden = !showSafeFinish;
     });
 
-    this.transitionNotes.forEach((note) => {
+    this.#transitionNotes.forEach((note) => {
       note.hidden = !isLastSafeStep;
       note.textContent = isLastSafeStep ? 'Je kunt nu afronden of doorgaan naar geavanceerde instellingen.' : '';
     });

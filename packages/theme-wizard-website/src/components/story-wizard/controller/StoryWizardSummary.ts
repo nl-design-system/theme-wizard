@@ -6,30 +6,35 @@ import type { StoryWizardSelectionSummary, StoryWizardThemeHost } from './types'
 import { cloneTemplate } from './cloneTemplate';
 
 export class StoryWizardSummary {
-  private readonly listElement: HTMLElement | null;
-  private readonly summaryElement: HTMLElement | null;
-  private readonly detailsElement: HTMLElement | null;
+  readonly #listElement: HTMLElement | null;
+  readonly #summaryElement: HTMLElement | null;
+  readonly #detailsElement: HTMLElement | null;
+  readonly #dialog: StoryWizardTokensDialog;
+  readonly #onNavigate: (stepIndex: number) => void;
+
   public constructor(
     root: HTMLElement | Document,
-    private readonly dialog: StoryWizardTokensDialog,
-    private readonly onNavigate: (stepIndex: number) => void,
+    dialog: StoryWizardTokensDialog,
+    onNavigate: (stepIndex: number) => void,
   ) {
-    this.summaryElement = root.querySelector<HTMLElement>('.wizard-step-selections__summary');
-    this.listElement = root.querySelector<HTMLElement>('.wizard-step-selections__list');
-    this.detailsElement = root.querySelector<HTMLElement>('.wizard-step-selections');
+    this.#dialog = dialog;
+    this.#onNavigate = onNavigate;
+    this.#summaryElement = root.querySelector<HTMLElement>('.wizard-step-selections__summary');
+    this.#listElement = root.querySelector<HTMLElement>('.wizard-step-selections__list');
+    this.#detailsElement = root.querySelector<HTMLElement>('.wizard-step-selections');
   }
 
   public show() {
-    this.detailsElement?.removeAttribute('hidden');
+    this.#detailsElement?.removeAttribute('hidden');
   }
 
   public openDetails() {
-    const details = this.detailsElement as HTMLDetailsElement | null;
+    const details = this.#detailsElement as HTMLDetailsElement | null;
     if (details) details.open = true;
   }
 
   public update(steps: StoryWizardStep[], themeHost: StoryWizardThemeHost | null) {
-    const { listElement } = this;
+    const listElement = this.#listElement;
     if (!listElement) return;
 
     listElement.replaceChildren();
@@ -56,18 +61,18 @@ export class StoryWizardSummary {
       }
 
       const stepLabel = step.stepLabel || `Stap ${index + 1}`;
-      const value = this.createValueElement(visibleGroups, step.isAdvanced, isConfirmedAdvancedStep);
-      const wrapper = this.createStepWrapper(stepLabel, index, value);
+      const value = this.#createValueElement(visibleGroups, step.isAdvanced, isConfirmedAdvancedStep);
+      const wrapper = this.#createStepWrapper(stepLabel, index, value);
 
       if (hasChosenSelection) {
-        this.appendTokensButton(wrapper, stepLabel, visibleGroups);
+        this.#appendTokensButton(wrapper, stepLabel, visibleGroups);
       }
 
       listElement.appendChild(wrapper);
     });
 
-    this.appendTotalTokensButton(allSelectedGroups);
-    this.updateCount(completedSteps, steps.length);
+    this.#appendTotalTokensButton(allSelectedGroups);
+    this.#updateCount(completedSteps, steps.length);
   }
 
   public getAdvancedSummary(
@@ -83,13 +88,13 @@ export class StoryWizardSummary {
     let hasChanges = false;
     const tokens = step.editableTokenPaths.flatMap((path) => {
       const currentValue = theme.at(path)?.$value;
-      const defaultValue = this.getDefaultTokenValue(theme.defaults, path);
+      const defaultValue = this.#getDefaultTokenValue(theme.defaults, path);
       const isChanged = !dequal(currentValue, defaultValue);
 
       if (isChanged) hasChanges = true;
       if (!includeUnchangedTokens && !isChanged) return [];
 
-      return [{ path, value: this.formatTokenValue(currentValue) }];
+      return [{ path, value: this.#formatTokenValue(currentValue) }];
     });
 
     if (tokens.length === 0) return [];
@@ -103,7 +108,7 @@ export class StoryWizardSummary {
     ];
   }
 
-  private getDefaultTokenValue(defaults: unknown, path: string) {
+  #getDefaultTokenValue(defaults: unknown, path: string) {
     const defaultToken = dlv(defaults && typeof defaults === 'object' ? defaults : undefined, path);
 
     return defaultToken && typeof defaultToken === 'object' && '$value' in (defaultToken as Record<string, unknown>)
@@ -111,20 +116,20 @@ export class StoryWizardSummary {
       : undefined;
   }
 
-  private formatTokenValue(value: unknown) {
+  #formatTokenValue(value: unknown) {
     return typeof value === 'string' ? value : JSON.stringify(value);
   }
 
-  private updateCount(completed: number, total: number) {
-    if (!this.summaryElement) return;
+  #updateCount(completed: number, total: number) {
+    if (!this.#summaryElement) return;
 
-    const liveRegion = this.summaryElement.querySelector('[aria-live]') ?? this.summaryElement;
+    const liveRegion = this.#summaryElement.querySelector('[aria-live]') ?? this.#summaryElement;
     liveRegion.textContent = `Design keuzes (${completed}/${total})`;
   }
 
   // --- DOM construction (templates for complex structures, createElement for simple ones) ---
 
-  private createStepWrapper(stepLabel: string, index: number, value: HTMLElement): HTMLElement {
+  #createStepWrapper(stepLabel: string, index: number, value: HTMLElement): HTMLElement {
     const wrapper = cloneTemplate<HTMLElement>('wizard-step-selection-tmpl', '.wizard-step-selection');
 
     wrapper.querySelector('.wizard-step-selection__number')!.textContent = String(index + 1);
@@ -133,8 +138,8 @@ export class StoryWizardSummary {
     title.textContent = stepLabel;
     title.setAttribute('aria-label', `Ga naar: ${stepLabel}`);
     title.addEventListener('click', () => {
-      this.onNavigate(index);
-      const details = this.detailsElement as HTMLDetailsElement | null;
+      this.#onNavigate(index);
+      const details = this.#detailsElement as HTMLDetailsElement | null;
       if (details) details.open = false;
     });
 
@@ -143,27 +148,27 @@ export class StoryWizardSummary {
     return wrapper;
   }
 
-  private appendTokensButton(wrapper: HTMLElement, stepLabel: string, groups: StoryWizardSelectionSummary[]) {
+  #appendTokensButton(wrapper: HTMLElement, stepLabel: string, groups: StoryWizardSelectionSummary[]) {
     wrapper.appendChild(
-      this.createTokensButton('Design tokens', () => this.dialog.show(stepLabel, groups), {
+      this.#createTokensButton('Design tokens', () => this.#dialog.show(stepLabel, groups), {
         ariaLabel: `Design tokens voor: ${stepLabel}`,
       }),
     );
   }
 
-  private appendTotalTokensButton(allGroups: StoryWizardSelectionSummary[]) {
-    if (!this.listElement || allGroups.length === 0) return;
+  #appendTotalTokensButton(allGroups: StoryWizardSelectionSummary[]) {
+    if (!this.#listElement || allGroups.length === 0) return;
 
     const wrapper = document.createElement('div');
     wrapper.className = 'wizard-step-selection wizard-step-selection--total';
     wrapper.appendChild(
-      this.createTokensButton('Alle design tokens', () => this.dialog.show('Alle design keuzes', allGroups)),
+      this.#createTokensButton('Alle design tokens', () => this.#dialog.show('Alle design keuzes', allGroups)),
     );
 
-    this.listElement.appendChild(wrapper);
+    this.#listElement.appendChild(wrapper);
   }
 
-  private createTokensButton(label: string, onClick: () => void, options: { ariaLabel?: string } = {}) {
+  #createTokensButton(label: string, onClick: () => void, options: { ariaLabel?: string } = {}) {
     const btn = document.createElement('button');
     btn.className = 'wizard-step-selection__tokens-btn nl-button nl-button--subtle';
     btn.type = 'button';
@@ -177,7 +182,7 @@ export class StoryWizardSummary {
     return btn;
   }
 
-  private createValueElement(
+  #createValueElement(
     groups: StoryWizardSelectionSummary[],
     isAdvanced: boolean,
     isCompletedAdvancedStep: boolean,
@@ -209,17 +214,17 @@ export class StoryWizardSummary {
       if (token) {
         const tokenSpan = document.createElement('span');
         tokenSpan.className = 'wizard-step-selection__value-token';
-        tokenSpan.appendChild(this.createTokenValueItem(token.path, token.value));
+        tokenSpan.appendChild(this.#createTokenValueItem(token.path, token.value));
         value.appendChild(tokenSpan);
       }
       return value;
     }
 
-    value.appendChild(this.createSummaryDetails(groups));
+    value.appendChild(this.#createSummaryDetails(groups));
     return value;
   }
 
-  private createSummaryDetails(groups: StoryWizardSelectionSummary[]): HTMLDetailsElement {
+  #createSummaryDetails(groups: StoryWizardSelectionSummary[]): HTMLDetailsElement {
     const details = cloneTemplate<HTMLDetailsElement>('wizard-value-summary-tmpl', '.wizard-step-selection__value-summary');
 
     details.querySelector('.wizard-step-selection__value-summary-label')!.textContent =
@@ -231,7 +236,7 @@ export class StoryWizardSummary {
       group.tokens.forEach((token) => {
         const item = document.createElement('li');
         item.className = 'wizard-step-selection__value-summary-item';
-        item.appendChild(this.createTokenValueItem(token.path, token.value));
+        item.appendChild(this.#createTokenValueItem(token.path, token.value));
         list.appendChild(item);
       });
     });
@@ -239,7 +244,7 @@ export class StoryWizardSummary {
     return details;
   }
 
-  private createTokenValueItem(path: string, rawValue: string): DocumentFragment {
+  #createTokenValueItem(path: string, rawValue: string): DocumentFragment {
     const fragment = cloneTemplate('wizard-token-item-tmpl');
 
     fragment.querySelector('.wizard-step-selection__value-token-path')!.textContent = path;

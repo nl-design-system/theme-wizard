@@ -24,7 +24,7 @@ const flattenDesignTokens = (tokens: unknown, path: string[] = []): DesignTokenL
 export class StoryWizardStep {
   public readonly groups: StoryWizardGroup[];
   public readonly editableTokenPaths: string[];
-  private wasVisited = false;
+  #wasVisited = false;
 
   public constructor(public readonly element: HTMLElement) {
     this.groups = Array.from(element.querySelectorAll<HTMLElement>('[data-preset-group]')).map(
@@ -63,7 +63,7 @@ export class StoryWizardStep {
   }
 
   public clearSelections() {
-    this.wasVisited = false;
+    this.#wasVisited = false;
     this.groups.forEach((group) => group.clearSelection());
   }
 
@@ -80,7 +80,7 @@ export class StoryWizardStep {
   }
 
   public getStoredVisitedState() {
-    return this.wasVisited;
+    return this.#wasVisited;
   }
 
   public restoreStoredSelection(selection: number[]) {
@@ -98,7 +98,7 @@ export class StoryWizardStep {
   }
 
   public restoreVisitedState(wasVisited: boolean) {
-    this.wasVisited = wasVisited;
+    this.#wasVisited = wasVisited;
   }
 
   public hasRequiredSelections() {
@@ -110,11 +110,11 @@ export class StoryWizardStep {
   }
 
   public hasBeenVisited() {
-    return this.wasVisited;
+    return this.#wasVisited;
   }
 
   public confirmAdvancedSelection() {
-    this.wasVisited = true;
+    this.#wasVisited = true;
   }
 
   public confirmSelections() {
