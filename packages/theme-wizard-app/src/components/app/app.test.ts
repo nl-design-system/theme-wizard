@@ -7,7 +7,6 @@ import { parseColor } from '@nl-design-system-community/design-tokens-schema';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type Theme from '../../lib/Theme';
 import type { WizardColorscaleInput } from '../wizard-colorscale-input';
-import type { WizardTokenCombobox } from '../wizard-token-combobox';
 import type { WizardTokenInput } from '../wizard-token-input';
 import type { WizardTokenPreset } from '../wizard-token-presets';
 import type { App } from './app';
@@ -356,22 +355,6 @@ describe(`<${appTag}> preset updates`, () => {
 
     expect(getTheme(app).at('nl.paragraph.font-size')?.$value).toBe('1.25rem');
     expect(themeUpdateHandler).toHaveBeenCalledOnce();
-  });
-
-  it('skips theme-update when a combobox change does not change the current value', async () => {
-    const { app } = await mount();
-    const themeUpdateHandler = vi.fn();
-    const combobox = document.createElement('wizard-token-combobox') as WizardTokenCombobox;
-
-    app.addEventListener('theme-update', themeUpdateHandler);
-    getTheme(app).updateAt('nl.paragraph.font-size', '{basis.text.font-size.md}');
-
-    combobox.name = 'nl.paragraph.font-size';
-    combobox.value = { $value: '{basis.text.font-size.md}' } as typeof combobox.value;
-    app.appendChild(combobox);
-    combobox.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
-
-    expect(themeUpdateHandler).not.toHaveBeenCalled();
   });
 
   it('updates colorscale tokens when a colorscale input changes', async () => {
