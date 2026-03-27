@@ -23,11 +23,9 @@ export const headingFontSizes = [
 ] as const;
 
 export const clampStyles: CSSProperties = {
-  display: '-webkit-box',
-  lineClamp: 1,
+  whiteSpace: 'nowrap',
   overflow: 'hidden',
-  WebkitBoxOrient: 'block-axis',
-  WebkitLineClamp: '1',
+  textOverflow: 'ellipsis',
 };
 
 const tokenValue = (value: string) => ({ $value: value });
