@@ -51,11 +51,18 @@ export class StoryWizardNavigation {
     const isLastStep = currentIndex === totalSteps - 1;
     const isLastSafeStep = lastSafeStepIndex >= 0 && currentIndex === lastSafeStepIndex && hasAdvancedSteps;
     const showSafeFinish = isLastSafeStep && isComplete;
+    let nextLabel = 'Volgende';
+
+    if (isLastStep) {
+      nextLabel = 'Afronden';
+    } else if (isLastSafeStep) {
+      nextLabel = 'Geavanceerd';
+    }
 
     this.nextBtns.forEach((btn) => {
       btn.disabled = !isComplete;
       btn.classList.toggle('nl-button--disabled', !isComplete);
-      btn.textContent = isLastStep ? 'Afronden' : isLastSafeStep ? 'Geavanceerd' : 'Volgende';
+      btn.textContent = nextLabel;
       btn.classList.toggle('nl-button--primary', !isLastSafeStep || isLastStep);
       btn.classList.toggle('nl-button--subtle', isLastSafeStep && !isLastStep);
     });
