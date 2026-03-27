@@ -27,7 +27,7 @@ export class StoryWizardGroup {
   }
 
   public getInitialOptions() {
-    return structuredClone(this.initialOptions);
+    return this.initialOptions;
   }
 
   public hasSelection() {
@@ -68,7 +68,7 @@ export class StoryWizardGroup {
   public setOptions(options: StoryWizardPresetOption[]) {
     if (!this.input) return;
 
-    this.input.options = structuredClone(options);
+    this.input.options = options;
   }
 
   public markAsChosen() {
