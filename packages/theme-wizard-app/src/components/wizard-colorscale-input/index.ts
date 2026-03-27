@@ -7,12 +7,16 @@ import {
   ColorValue,
   ColorValueSchema,
   EXTENSION_RESOLVED_AS,
+  colorJSToColorValue,
+  colorJSToHex,
+  colorTokenValueToColorJS,
   parseColor,
   stringifyColor,
   type BaseDesignToken,
   type ColorSpace,
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
+import Color from 'colorjs.io';
 import { dequal } from 'dequal';
 import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
@@ -186,8 +190,17 @@ export class WizardColorscaleInput extends WizardTokenInput {
   readonly handleColorChange = (event: Event) => {
     const target = event.target;
     if (target instanceof ClippyColorCombobox && target.value) {
-      const value = typeof target.value === 'string' ? parseColor(target.value) : target.value;
-      const newColorValue = stringifyColor(value);
+      const rawValue = target.value;
+      let color: Color;
+      let value: ColorValue;
+      if (typeof rawValue === 'string') {
+        color = new Color(rawValue);
+        value = colorJSToColorValue(color);
+      } else {
+        color = colorTokenValueToColorJS(rawValue);
+        value = rawValue;
+      }
+      const newColorValue: string = colorJSToHex(color);
       // Skip initialization-triggered events where the value hasn't actually changed
       if (newColorValue === this.currentColorValue) return;
       const newToken = new ColorToken({
