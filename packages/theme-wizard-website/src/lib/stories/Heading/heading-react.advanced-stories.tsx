@@ -38,7 +38,7 @@ const createAdvancedStory = ({
 });
 
 export const AdvancedHeading1: Story = createAdvancedStory({
-  name: 'Advanced: Heading 1',
+  name: 'Heading 1',
   args: {
     children: headingSampleText,
     level: 1,
@@ -51,7 +51,7 @@ export const AdvancedHeading1: Story = createAdvancedStory({
 });
 
 export const AdvancedHeading2: Story = createAdvancedStory({
-  name: 'Advanced: Heading 2',
+  name: 'Heading 2',
   args: {
     children: headingSampleText,
     level: 2,
@@ -64,7 +64,7 @@ export const AdvancedHeading2: Story = createAdvancedStory({
 });
 
 export const AdvancedHeading3: Story = createAdvancedStory({
-  name: 'Advanced: Heading 3',
+  name: 'Heading 3',
   args: {
     children: headingSampleText,
     level: 3,
@@ -77,7 +77,7 @@ export const AdvancedHeading3: Story = createAdvancedStory({
 });
 
 export const AdvancedHeading4: Story = createAdvancedStory({
-  name: 'Advanced: Heading 4',
+  name: 'Heading 4',
   args: {
     children: headingSampleText,
     level: 4,
@@ -90,7 +90,7 @@ export const AdvancedHeading4: Story = createAdvancedStory({
 });
 
 export const AdvancedHeading5: Story = createAdvancedStory({
-  name: 'Advanced: Heading 5',
+  name: 'Heading 5',
   args: {
     children: headingSampleText,
     level: 5,
@@ -103,7 +103,7 @@ export const AdvancedHeading5: Story = createAdvancedStory({
 });
 
 export const AdvancedHeading6: Story = createAdvancedStory({
-  name: 'Advanced: Heading 6',
+  name: 'Heading 6',
   args: {
     children: headingSampleText,
     level: 6,

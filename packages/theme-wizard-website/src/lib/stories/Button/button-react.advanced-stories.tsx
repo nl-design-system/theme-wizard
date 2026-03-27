@@ -32,7 +32,7 @@ import {
 type Story = StoryObj<ButtonProps>;
 
 export const AdvancedButtonBorders: Story = createAdvancedStory({
-  name: 'Advanced: Button Borders',
+  name: 'Button Borders',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
@@ -62,7 +62,7 @@ export const AdvancedButtonBorders: Story = createAdvancedStory({
 });
 
 export const AdvancedButtonTypography: Story = createAdvancedStory({
-  name: 'Advanced: Button Typography',
+  name: 'Button Typography',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
@@ -100,7 +100,7 @@ export const AdvancedButtonTypography: Story = createAdvancedStory({
 });
 
 export const AdvancedButtonStates = createStateStory({
-  name: 'Advanced: Button States',
+  name: 'Button States',
   args: {
     label: 'Klik mij!',
   },
@@ -110,7 +110,7 @@ export const AdvancedButtonStates = createStateStory({
 });
 
 export const AdvancedPrimaryButtonStates = createStateStory({
-  name: 'Advanced: Button States',
+  name: 'Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'primary',
@@ -122,7 +122,7 @@ export const AdvancedPrimaryButtonStates = createStateStory({
 });
 
 export const AdvancedSecondaryButtonStates = createStateStory({
-  name: 'Advanced: Secondary Button States',
+  name: 'Secondary Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'secondary',
@@ -134,7 +134,7 @@ export const AdvancedSecondaryButtonStates = createStateStory({
 });
 
 export const AdvancedSubtleButtonStates = createStateStory({
-  name: 'Advanced: Subtle Button States',
+  name: 'Subtle Button States',
   args: {
     label: 'Klik mij!',
     purpose: 'subtle',
@@ -146,7 +146,7 @@ export const AdvancedSubtleButtonStates = createStateStory({
 });
 
 export const AdvancedPrimaryPositiveButtonStates = createStateStory({
-  name: 'Advanced: Primary Positive Button States',
+  name: 'Primary Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
@@ -160,7 +160,7 @@ export const AdvancedPrimaryPositiveButtonStates = createStateStory({
 });
 
 export const AdvancedSecondaryPositiveButtonStates = createStateStory({
-  name: 'Advanced: Secondary Positive Button States',
+  name: 'Secondary Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
@@ -174,7 +174,7 @@ export const AdvancedSecondaryPositiveButtonStates = createStateStory({
 });
 
 export const AdvancedSubtlePositiveButtonStates = createStateStory({
-  name: 'Advanced: Subtle Positive Button States',
+  name: 'Subtle Positive Button States',
   args: {
     hint: 'positive',
     label: 'Klik mij!',
@@ -188,7 +188,7 @@ export const AdvancedSubtlePositiveButtonStates = createStateStory({
 });
 
 export const AdvancedPrimaryNegativeButtonStates = createStateStory({
-  name: 'Advanced: Primary Negative Button States',
+  name: 'Primary Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
@@ -202,7 +202,7 @@ export const AdvancedPrimaryNegativeButtonStates = createStateStory({
 });
 
 export const AdvancedSecondaryNegativeButtonStates = createStateStory({
-  name: 'Advanced: Secondary Negative Button States',
+  name: 'Secondary Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
@@ -216,7 +216,7 @@ export const AdvancedSecondaryNegativeButtonStates = createStateStory({
 });
 
 export const AdvancedSubtleNegativeButtonStates = createStateStory({
-  name: 'Advanced: Subtle Negative Button States',
+  name: 'Subtle Negative Button States',
   args: {
     hint: 'negative',
     label: 'Klik mij!',
@@ -230,7 +230,7 @@ export const AdvancedSubtleNegativeButtonStates = createStateStory({
 });
 
 export const AdvancedPrimaryButton = createVariantStory({
-  name: 'Advanced: Primary Button',
+  name: 'Primary Button',
   args: {
     label: 'Primary Button',
     purpose: 'primary',
@@ -242,7 +242,7 @@ export const AdvancedPrimaryButton = createVariantStory({
 });
 
 export const AdvancedSecondaryButton = createVariantStory({
-  name: 'Advanced: Secondary Button',
+  name: 'Secondary Button',
   args: {
     label: 'Secondary Button',
     purpose: 'secondary',
@@ -259,7 +259,7 @@ Optioneel kan er een hint mee gegeven worden.
 });
 
 export const AdvancedSubtleButton = createVariantStory({
-  name: 'Advanced: Subtle Button',
+  name: 'Subtle Button',
   args: {
     label: 'Subtle Button',
     purpose: 'subtle',
@@ -276,7 +276,7 @@ Optioneel kan er een hint mee gegeven worden.
 });
 
 export const AdvancedFocusButton: Story = createAdvancedStory({
-  name: 'Advanced: Focus Visible Button',
+  name: 'Focus Visible Button',
   args: {
     label: 'Klik mij!',
   },
@@ -298,7 +298,7 @@ export const AdvancedFocusButton: Story = createAdvancedStory({
 });
 
 export const AdvancedDisabledButton = createDisabledStory({
-  name: 'Advanced: Disabled Button',
+  name: 'Disabled Button',
   args: {
     disabled: true,
     label: 'Klik mij!',
@@ -310,7 +310,7 @@ export const AdvancedDisabledButton = createDisabledStory({
 });
 
 export const AdvancedPrimaryDisabledButton = createDisabledStory({
-  name: 'Advanced: Primary Disabled Button',
+  name: 'Primary Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
@@ -323,7 +323,7 @@ export const AdvancedPrimaryDisabledButton = createDisabledStory({
 });
 
 export const AdvancedSecondaryDisabledButton = createDisabledStory({
-  name: 'Advanced: Secondary Disabled Button',
+  name: 'Secondary Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
@@ -336,7 +336,7 @@ export const AdvancedSecondaryDisabledButton = createDisabledStory({
 });
 
 export const AdvancedSubtleDisabledButton = createDisabledStory({
-  name: 'Advanced: Subtle Disabled Button',
+  name: 'Subtle Disabled Button',
   args: {
     disabled: true,
     label: 'Ingedrukt',
@@ -349,7 +349,7 @@ export const AdvancedSubtleDisabledButton = createDisabledStory({
 });
 
 export const AdvancedAlleenEenIcon: Story = createAdvancedStory({
-  name: 'Advanced: Alleen een icon',
+  name: 'Alleen een icon',
   args: {
     iconOnly: true,
     iconStart: <Icon />,
@@ -387,7 +387,7 @@ export const AdvancedAlleenEenIcon: Story = createAdvancedStory({
 });
 
 export const AdvancedPressedButton = createPressedStory({
-  name: 'Advanced: Geselecteerde Button',
+  name: 'Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -399,7 +399,7 @@ export const AdvancedPressedButton = createPressedStory({
 });
 
 export const AdvancedPrimaryPressedButton = createPressedStory({
-  name: 'Advanced: Primary Geselecteerde Button',
+  name: 'Primary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -412,7 +412,7 @@ export const AdvancedPrimaryPressedButton = createPressedStory({
 });
 
 export const AdvancedSecondaryPressedButton = createPressedStory({
-  name: 'Advanced: Secondary Geselecteerde Button',
+  name: 'Secondary Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -425,7 +425,7 @@ export const AdvancedSecondaryPressedButton = createPressedStory({
 });
 
 export const AdvancedSubtlePressedButton = createPressedStory({
-  name: 'Advanced: Subtle Geselecteerde Button',
+  name: 'Subtle Geselecteerde Button',
   args: {
     label: 'Ingedrukt',
     pressed: true,
@@ -438,7 +438,7 @@ export const AdvancedSubtlePressedButton = createPressedStory({
 });
 
 export const AdvancedPrimaryPositiveButton = createStateStory({
-  name: 'Advanced: Primary Positive Button',
+  name: 'Primary Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -452,7 +452,7 @@ export const AdvancedPrimaryPositiveButton = createStateStory({
 });
 
 export const AdvancedPrimaryNegativeButton = createStateStory({
-  name: 'Advanced: Primary Negative Button',
+  name: 'Primary Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -466,7 +466,7 @@ export const AdvancedPrimaryNegativeButton = createStateStory({
 });
 
 export const AdvancedSecondaryPositiveButton = createStateStory({
-  name: 'Advanced: Secondary Positive Button',
+  name: 'Secondary Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -480,7 +480,7 @@ export const AdvancedSecondaryPositiveButton = createStateStory({
 });
 
 export const AdvancedSecondaryNegativeButton = createStateStory({
-  name: 'Advanced: Secondary Negative Button',
+  name: 'Secondary Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -494,7 +494,7 @@ export const AdvancedSecondaryNegativeButton = createStateStory({
 });
 
 export const AdvancedSubtlePositiveButton = createStateStory({
-  name: 'Advanced: Subtle Positive Button',
+  name: 'Subtle Positive Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -508,7 +508,7 @@ export const AdvancedSubtlePositiveButton = createStateStory({
 });
 
 export const AdvancedSubtleNegativeButton = createStateStory({
-  name: 'Advanced: Subtle Negative Button',
+  name: 'Subtle Negative Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -522,7 +522,7 @@ export const AdvancedSubtleNegativeButton = createStateStory({
 });
 
 export const AdvancedPrimaryPositivePressedButton = createPressedStory({
-  name: 'Advanced: Primary Positive Geselecteerde Button',
+  name: 'Primary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -537,7 +537,7 @@ export const AdvancedPrimaryPositivePressedButton = createPressedStory({
 });
 
 export const AdvancedPrimaryNegativePressedButton = createPressedStory({
-  name: 'Advanced: Primary Negative Geselecteerde Button',
+  name: 'Primary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -552,7 +552,7 @@ export const AdvancedPrimaryNegativePressedButton = createPressedStory({
 });
 
 export const AdvancedSecondaryPositivePressedButton = createPressedStory({
-  name: 'Advanced: Secondary Positive Geselecteerde Button',
+  name: 'Secondary Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -567,7 +567,7 @@ export const AdvancedSecondaryPositivePressedButton = createPressedStory({
 });
 
 export const AdvancedSecondaryNegativePressedButton = createPressedStory({
-  name: 'Advanced: Secondary Negative Geselecteerde Button',
+  name: 'Secondary Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -582,7 +582,7 @@ export const AdvancedSecondaryNegativePressedButton = createPressedStory({
 });
 
 export const AdvancedSubtlePositivePressedButton = createPressedStory({
-  name: 'Advanced: Subtle Positive Geselecteerde Button',
+  name: 'Subtle Positive Geselecteerde Button',
   args: {
     hint: 'positive',
     label: 'Ingedrukt',
@@ -597,7 +597,7 @@ export const AdvancedSubtlePositivePressedButton = createPressedStory({
 });
 
 export const AdvancedSubtleNegativePressedButton = createPressedStory({
-  name: 'Advanced: Subtle Negative Geselecteerde Button',
+  name: 'Subtle Negative Geselecteerde Button',
   args: {
     hint: 'negative',
     label: 'Ingedrukt',
@@ -612,7 +612,7 @@ export const AdvancedSubtleNegativePressedButton = createPressedStory({
 });
 
 export const AdvancedButtonSize: Story = {
-  name: 'Advanced: Button Size',
+  name: 'Button Size',
   args: {
     label: 'Voorbeeld',
   },

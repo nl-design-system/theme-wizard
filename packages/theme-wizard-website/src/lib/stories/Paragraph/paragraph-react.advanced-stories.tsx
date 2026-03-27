@@ -5,7 +5,7 @@ import { storySampleText } from '../story-helpers';
 type Story = StoryObj<ParagraphProps>;
 
 export const AdvancedParagraphShared: Story = {
-  name: 'Advanced: Paragraph en Lead Paragraph',
+  name: 'Paragraph en Lead Paragraph',
   args: {
     children: storySampleText,
     purpose: undefined,
@@ -38,7 +38,7 @@ export const AdvancedParagraphShared: Story = {
 };
 
 export const AdvancedParagraph: Story = {
-  name: 'Advanced: Paragraph',
+  name: 'Paragraph',
   args: {
     children: storySampleText,
     purpose: undefined,
@@ -67,7 +67,7 @@ export const AdvancedParagraph: Story = {
 };
 
 export const AdvancedLead: Story = {
-  name: 'Advanced: Paragraph Lead',
+  name: 'Paragraph Lead',
   args: {
     children: storySampleText,
     purpose: 'lead',
