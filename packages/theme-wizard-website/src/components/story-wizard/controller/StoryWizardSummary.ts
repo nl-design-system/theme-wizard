@@ -77,9 +77,6 @@ export class StoryWizardSummary {
 
       if (hasChosenSelection) {
         completedSteps += 1;
-      }
-
-      if (hasChosenSelection) {
         allSelectedGroups.push(...visibleGroups);
       }
 
@@ -108,24 +105,19 @@ export class StoryWizardSummary {
 
     const { includeUnchangedTokens = false } = options;
 
+    let hasChanges = false;
     const tokens = step.editableTokenPaths.flatMap((path) => {
       const currentValue = theme.at(path)?.$value;
       const defaultValue = this.getDefaultTokenValue(theme.defaults, path);
+      const isChanged = !dequal(currentValue, defaultValue);
 
-      if (!includeUnchangedTokens && dequal(currentValue, defaultValue)) {
-        return [];
-      }
+      if (isChanged) hasChanges = true;
+      if (!includeUnchangedTokens && !isChanged) return [];
 
       return [{ path, value: this.formatTokenValue(currentValue) }];
     });
 
     if (tokens.length === 0) return [];
-
-    const hasChanges = tokens.some((token) => {
-      const currentValue = theme.at(token.path)?.$value;
-      const defaultValue = this.getDefaultTokenValue(theme.defaults, token.path);
-      return !dequal(currentValue, defaultValue);
-    });
 
     return [
       {
@@ -240,17 +232,17 @@ export class StoryWizardSummary {
       return value;
     }
 
-    if (groups.length === 1 && groups[0].optionLabel) {
-      const option = document.createElement('span');
-      option.className = 'wizard-step-selection__value-option';
-      option.textContent = groups[0].optionLabel;
-      value.appendChild(option);
-    }
-
     if (groups.length === 1 && groups[0].tokens.length <= 1) {
       const token = groups[0].tokens[0];
 
       if (token) {
+        if (groups[0].optionLabel) {
+          const option = document.createElement('span');
+          option.className = 'wizard-step-selection__value-option';
+          option.textContent = groups[0].optionLabel;
+          value.appendChild(option);
+        }
+
         const tokenValue = document.createElement('span');
         tokenValue.className = 'wizard-step-selection__value-token';
         tokenValue.appendChild(this.createTokenValueItem(token.path, token.value));
@@ -260,6 +252,13 @@ export class StoryWizardSummary {
       }
 
       return value;
+    }
+
+    if (groups.length === 1 && groups[0].optionLabel) {
+      const option = document.createElement('span');
+      option.className = 'wizard-step-selection__value-option';
+      option.textContent = groups[0].optionLabel;
+      value.appendChild(option);
     }
 
     const details = document.createElement('details');
