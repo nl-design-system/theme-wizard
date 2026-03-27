@@ -5,12 +5,19 @@ import { StoryWizardStorage } from './StoryWizardStorage';
 
 export class StoryWizardPresetState {
   private isSyncing = false;
+  private readonly groups;
+  private readonly dynamicGroups;
 
   public constructor(
     private readonly steps: StoryWizardStep[],
     private readonly storage: StoryWizardStorage,
     private readonly getTheme: () => StoryWizardThemeHost | null,
-  ) {}
+  ) {
+    this.groups = steps.flatMap((step) => step.groups);
+    this.dynamicGroups = this.groups.filter((group) =>
+      group.getInitialOptions().some((option) => option.derivedTokenReference),
+    );
+  }
 
   public get syncing() {
     return this.isSyncing;
@@ -57,25 +64,20 @@ export class StoryWizardPresetState {
 
   public syncDynamicOptions() {
     const defaults = this.getTheme()?.theme?.defaults;
-    const selectedOptions = this.steps.flatMap((step) => step.groups.map((group) => group.getSelectedOption()));
+    const selectedOptions = this.groups.map((group) => group.getSelectedOption());
 
-    this.steps.forEach((step) => {
-      step.groups.forEach((group) => {
-        const baseOptions = group.getInitialOptions();
-        if (!baseOptions.some((option) => option.derivedTokenReference)) return;
+    this.dynamicGroups.forEach((group) => {
+      group.setOptions(
+        resolveDynamicPresetOptions<StoryWizardPresetOption>({
+          defaults,
+          options: group.getInitialOptions(),
+          selectedOptions,
+        }),
+      );
 
-        group.setOptions(
-          resolveDynamicPresetOptions<StoryWizardPresetOption>({
-            defaults,
-            options: baseOptions,
-            selectedOptions,
-          }),
-        );
-
-        if (!group.hasSelection()) {
-          group.restoreDefaultSelection();
-        }
-      });
+      if (!group.hasSelection()) {
+        group.restoreDefaultSelection();
+      }
     });
   }
 
