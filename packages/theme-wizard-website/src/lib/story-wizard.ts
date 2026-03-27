@@ -72,7 +72,6 @@ type StoryWizardPresetObject = {
 };
 
 type StoryWizardParameters = {
-  designStory?: boolean;
   editableTokens?: unknown;
   presets?: StoryWizardPresetObject[];
   wizard?: {

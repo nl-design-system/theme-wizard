@@ -34,10 +34,6 @@ export class StoryWizardGroup {
     return this.getSelectedIndex() >= 0;
   }
 
-  public hasDefaultSelection() {
-    return Boolean(this.input) && this.hasSelection() && this.input!.defaultIndex >= 0 && this.getSelectedIndex() === this.input!.defaultIndex;
-  }
-
   public hasChosenSelection() {
     return this.hasSelection() && this.wasChosen;
   }

@@ -90,7 +90,7 @@ export class StoryWizardController {
   // --- Navigation handlers ---
 
   private handleNext() {
-    this.confirmCurrentStepSelections();
+    this.steps[this.currentStep]?.confirmSelections();
     this.confirmCurrentAdvancedStep(true);
     this.refreshSelectionState();
 
@@ -103,10 +103,6 @@ export class StoryWizardController {
 
   private handlePrev() {
     if (this.currentStep > 0) this.showStep(this.currentStep - 1);
-  }
-
-  private confirmCurrentStepSelections() {
-    this.steps[this.currentStep]?.confirmSelections();
   }
 
   private confirmCurrentAdvancedStep(force = false) {
@@ -133,7 +129,7 @@ export class StoryWizardController {
   // --- Finish flows ---
 
   private finishWithSafeChoices() {
-    this.confirmCurrentStepSelections();
+    this.steps[this.currentStep]?.confirmSelections();
     this.refreshSelectionState();
 
     const lastSafe = this.getLastSafeStepIndex();
