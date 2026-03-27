@@ -4,6 +4,7 @@ export default css`
   .wizard-layout {
     --wizard-layout-nav-padding-block: var(--basis-space-block-md);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
+    --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
 
     background-color: var(--basis-color-accent-1-bg-subtle);
     container-type: inline-size;
@@ -73,11 +74,7 @@ export default css`
     }
 
     /* Hide all app descendants, except those that are needed to show the preview content */
-    .wizard-layout *:not(
-      :has(.wizard-layout__main), 
-      .wizard-layout__main, 
-      .wizard-layout__main * 
-    ) {
+    .wizard-layout *:not(:has(.wizard-layout__main), .wizard-layout__main, .wizard-layout__main *) {
       display: none;
     }
   }
