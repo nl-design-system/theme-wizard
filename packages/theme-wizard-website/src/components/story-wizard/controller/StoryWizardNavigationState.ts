@@ -8,8 +8,8 @@ import type { StoryWizardStep } from './StoryWizardStep';
  * - Derived getters: isFirstStep, isLastStep, isLastSafeStep
  */
 export class StoryWizardNavigationState {
-  private _currentStep = 0;
-  private _hasFinishedAllChoices = false;
+  #currentStep = 0;
+  #hasFinishedAllChoices = false;
 
   public readonly total: number;
   public readonly hasAdvancedSteps: boolean;
@@ -30,38 +30,38 @@ export class StoryWizardNavigationState {
   }
 
   public get currentStep() {
-    return this._currentStep;
+    return this.#currentStep;
   }
 
   public get hasFinishedAllChoices() {
-    return this._hasFinishedAllChoices;
+    return this.#hasFinishedAllChoices;
   }
 
   public get isFirstStep() {
-    return this._currentStep === 0;
+    return this.#currentStep === 0;
   }
 
   public get isLastStep() {
-    return this._currentStep === this.total - 1;
+    return this.#currentStep === this.total - 1;
   }
 
   public get isLastSafeStep() {
-    return this.lastSafeStepIndex >= 0 && this._currentStep === this.lastSafeStepIndex && this.hasAdvancedSteps;
+    return this.lastSafeStepIndex >= 0 && this.#currentStep === this.lastSafeStepIndex && this.hasAdvancedSteps;
   }
 
   public goTo(index: number) {
     if (index !== this.total - 1) {
-      this._hasFinishedAllChoices = false;
+      this.#hasFinishedAllChoices = false;
     }
-    this._currentStep = index;
+    this.#currentStep = index;
   }
 
   public finish() {
-    this._hasFinishedAllChoices = true;
+    this.#hasFinishedAllChoices = true;
   }
 
   public reset() {
-    this._currentStep = 0;
-    this._hasFinishedAllChoices = false;
+    this.#currentStep = 0;
+    this.#hasFinishedAllChoices = false;
   }
 }
