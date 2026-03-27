@@ -99,7 +99,7 @@ export const Heading6Preview: Story = createHeadingPreview('Heading 6 Preview', 
 export const AllHeadingsPreview: Story = createHeadingPreview('All Headings Preview');
 
 export const AdvancedHeadingSizes: Story = {
-  name: 'Advanced: Heading Sizes',
+  name: 'Heading Sizes',
   args: {
     children: 'The quick brown fox jumps over the lazy dog',
     level: 1,
