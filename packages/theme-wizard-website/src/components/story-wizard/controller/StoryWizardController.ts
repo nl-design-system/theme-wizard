@@ -2,6 +2,7 @@ import type { components } from '@/lib/components';
 import { initStories } from '@/components/render-stories';
 import type { StoryWizardThemeHost } from './types';
 import { StoryWizardNavigation } from './StoryWizardNavigation';
+import { StoryWizardNavigationState } from './StoryWizardNavigationState';
 import { StoryWizardPresetState } from './StoryWizardPresetState';
 import { StoryWizardPreview } from './StoryWizardPreview';
 import { StoryWizardStep } from './StoryWizardStep';
@@ -18,9 +19,7 @@ export class StoryWizardController {
   private readonly dialog: StoryWizardTokensDialog;
   private readonly preview: StoryWizardPreview;
   private readonly presetState: StoryWizardPresetState;
-
-  private currentStep = 0;
-  private hasFinishedAllChoices = false;
+  private readonly nav: StoryWizardNavigationState;
 
   public constructor(private readonly container: HTMLElement) {
     this.componentId = container.dataset.componentId as keyof typeof components;
@@ -31,6 +30,7 @@ export class StoryWizardController {
       (element) => new StoryWizardStep(element),
     );
 
+    this.nav = new StoryWizardNavigationState(this.steps);
     this.storage = new StoryWizardStorage(this.componentId);
     this.dialog = new StoryWizardTokensDialog();
     this.summary = new StoryWizardSummary(root, this.dialog, (index) => this.showStep(index));
@@ -46,10 +46,6 @@ export class StoryWizardController {
     new StoryWizardController(container).start().catch((error) => {
       console.error('Failed to initialize Story Wizard', error);
     });
-  }
-
-  private get total() {
-    return this.steps.length;
   }
 
   private getTheme() {
@@ -69,7 +65,7 @@ export class StoryWizardController {
       onReset: () => this.reset().catch((e) => console.error('Failed to reset Story Wizard', e)),
     });
 
-    if (this.total === 0) {
+    if (this.nav.total === 0) {
       this.navigation.hideSteppers();
       return;
     }
@@ -81,7 +77,7 @@ export class StoryWizardController {
   }
 
   private async reset() {
-    this.hasFinishedAllChoices = false;
+    this.nav.reset();
     this.container.closest('theme-wizard-app')?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
     await this.presetState.reset();
     this.showStep(0);
@@ -90,23 +86,23 @@ export class StoryWizardController {
   // --- Navigation handlers ---
 
   private handleNext() {
-    this.steps[this.currentStep]?.confirmSelections();
+    this.steps[this.nav.currentStep]?.confirmSelections();
     this.confirmCurrentAdvancedStep(true);
     this.refreshSelectionState();
 
-    if (this.currentStep === this.total - 1) {
+    if (this.nav.isLastStep) {
       this.finishWithAllChoices();
     } else {
-      this.showStep(this.currentStep + 1);
+      this.showStep(this.nav.currentStep + 1);
     }
   }
 
   private handlePrev() {
-    if (this.currentStep > 0) this.showStep(this.currentStep - 1);
+    if (!this.nav.isFirstStep) this.showStep(this.nav.currentStep - 1);
   }
 
   private confirmCurrentAdvancedStep(force = false) {
-    const currentStep = this.steps[this.currentStep];
+    const currentStep = this.steps[this.nav.currentStep];
     if (!currentStep?.isAdvanced) {
       return;
     }
@@ -119,7 +115,7 @@ export class StoryWizardController {
 
   private showStep(index: number) {
     this.confirmCurrentAdvancedStep();
-    this.updateCurrentStepState(index);
+    this.nav.goTo(index);
     this.updateVisibleStep(index);
     this.refreshStepNavigation();
     this.refreshStepView();
@@ -129,11 +125,10 @@ export class StoryWizardController {
   // --- Finish flows ---
 
   private finishWithSafeChoices() {
-    this.steps[this.currentStep]?.confirmSelections();
+    this.steps[this.nav.currentStep]?.confirmSelections();
     this.refreshSelectionState();
 
-    const lastSafe = this.getLastSafeStepIndex();
-    const safeSteps = this.steps.slice(0, Math.max(lastSafe + 1, 0));
+    const safeSteps = this.steps.slice(0, Math.max(this.nav.lastSafeStepIndex + 1, 0));
     const groups = safeSteps.flatMap((step) => step.createSelectionSummary());
     if (groups.length === 0) return;
 
@@ -145,7 +140,7 @@ export class StoryWizardController {
     const groups = this.getAllSelectionGroups(true);
     if (groups.length === 0) return;
 
-    this.hasFinishedAllChoices = true;
+    this.nav.finish();
     this.updateSummary();
     this.dialog.show('Alle design keuzes', groups);
     this.summary.openDetails();
@@ -172,20 +167,12 @@ export class StoryWizardController {
 
   // --- Summary & navigation updates ---
 
-  private updateCurrentStepState(index: number) {
-    if (index !== this.total - 1) {
-      this.hasFinishedAllChoices = false;
-    }
-
-    this.currentStep = index;
-  }
-
   private updateVisibleStep(index: number) {
     this.steps.forEach((step, i) => (i === index ? step.show() : step.hide()));
   }
 
   private refreshStepNavigation() {
-    this.navigation.updatePrevState(this.currentStep === 0);
+    this.navigation.updatePrevState(this.nav.isFirstStep);
     this.updateNavigationState();
   }
 
@@ -195,7 +182,7 @@ export class StoryWizardController {
   }
 
   private persistStepState() {
-    this.storage.write(this.currentStep, this.steps);
+    this.storage.write(this.nav.currentStep, this.steps);
   }
 
   private refreshSelectionState() {
@@ -209,29 +196,13 @@ export class StoryWizardController {
   }
 
   private updateNavigationState() {
-    const currentStep = this.steps[this.currentStep];
+    const currentStep = this.steps[this.nav.currentStep];
     if (!currentStep) return;
 
-    this.navigation.updateNextState(
-      currentStep,
-      this.currentStep,
-      this.total,
-      this.hasAdvancedSteps(),
-      this.getLastSafeStepIndex(),
-    );
+    this.navigation.updateNextState(currentStep, this.nav);
   }
 
   // --- Step helpers ---
-
-  private hasAdvancedSteps() {
-    return this.steps.some((step) => step.isAdvanced);
-  }
-
-  private getLastSafeStepIndex() {
-    const firstAdvanced = this.steps.findIndex((step) => step.isAdvanced);
-    if (firstAdvanced === 0) return -1;
-    return firstAdvanced > 0 ? firstAdvanced - 1 : this.total - 1;
-  }
 
   private getAllSelectionGroups(includeAdvancedDefaults = false) {
     return this.steps.flatMap((step) => {

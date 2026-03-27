@@ -1,3 +1,4 @@
+import type { StoryWizardNavigationState } from './StoryWizardNavigationState';
 import type { StoryWizardStep } from './StoryWizardStep';
 
 export interface NavigationCallbacks {
@@ -46,10 +47,9 @@ export class StoryWizardNavigation {
     });
   }
 
-  public updateNextState(step: StoryWizardStep, currentIndex: number, totalSteps: number, hasAdvancedSteps: boolean, lastSafeStepIndex: number) {
+  public updateNextState(step: StoryWizardStep, nav: StoryWizardNavigationState) {
     const isComplete = step.hasRequiredSelections();
-    const isLastStep = currentIndex === totalSteps - 1;
-    const isLastSafeStep = lastSafeStepIndex >= 0 && currentIndex === lastSafeStepIndex && hasAdvancedSteps;
+    const { isLastSafeStep, isLastStep } = nav;
     const showSafeFinish = isLastSafeStep && isComplete;
     let nextLabel = 'Volgende';
 
