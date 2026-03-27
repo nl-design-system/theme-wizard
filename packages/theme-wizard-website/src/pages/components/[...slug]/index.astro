@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StoryWizard from '@/components/story-wizard/index.astro';
 import { components } from '@/lib/components';
-import { StoryWizardModel } from '@/lib/story-wizard';
+import { resolveStoryWizardModel } from '@/lib/story-wizard';
 import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
 import '@nl-design-system-candidate/button-css/button.css';
 import '@nl-design-system-candidate/heading-css/heading.css';
@@ -28,7 +28,7 @@ const componentList = await Promise.all(
 
 const slug = Astro.params.slug as keyof typeof components;
 const { title } = components[slug];
-const wizard = await StoryWizardModel.fromComponentId(slug);
+const wizard = await resolveStoryWizardModel(slug);
 ---
 
 <BaseLayout title={`${title} - Theme Wizard`}>

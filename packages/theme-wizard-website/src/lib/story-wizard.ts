@@ -50,213 +50,228 @@ const collectEditableTokenPaths = (tokens: unknown, path: string[] = []): StoryW
   );
 };
 
-export class StoryWizardModel {
-  public static async fromComponentId(componentId: keyof typeof components): Promise<StoryWizardViewModel> {
-    const componentModule = await components[componentId].stories();
-    const { default: meta, ...storyExports } = componentModule;
-    const allStories = getStories(
-      storyExports as unknown as Record<PropertyKey, StoryWizardStory>,
-      meta,
-    ) as StoryEntry[];
-    const wizardStories = allStories.filter(([, story]: StoryEntry) => this.isWizardStory(story));
-    const presetTokenPaths = this.collectPresetTokenPaths(wizardStories);
-    const rawSteps = wizardStories
-      .map(([id, story]: StoryEntry) => this.createStep(id, story, allStories, presetTokenPaths))
-      .filter((step): step is StoryWizardStep => step !== null)
-      .sort((a, b) => a.order - b.order);
-    const steps = this.createFlowSteps(rawSteps);
-    const storyIds = Array.from(
-      new Set([
-        ...steps.flatMap((step: StoryWizardStep) =>
-          step.previewStories.map((previewStory: StoryWizardPreview) => previewStory.id),
-        ),
-        ...steps.map((step: StoryWizardStep) => step.id),
-      ]),
-    );
+export const resolveStoryWizardModel = async (componentId: keyof typeof components): Promise<StoryWizardViewModel> => {
+  const componentModule = await components[componentId].stories();
+  const { default: meta, ...storyExports } = componentModule;
 
-    return {
-      componentId,
-      steps,
-      storyIds,
-    };
+  const allStories = getStories(
+    storyExports as unknown as Record<PropertyKey, StoryWizardStory>,
+    meta,
+  ) as StoryEntry[];
+
+  const wizardStories = allStories.filter(([, story]) => isWizardStory(story));
+
+  const presetTokenPaths = collectPresetTokenPaths(wizardStories);
+  const storyMap = new Map(allStories);
+
+  const rawSteps = wizardStories
+    .reduce<StoryWizardStep[]>((acc, [id, story]) => {
+      const step = createStep(id, story, storyMap, presetTokenPaths);
+      if (step) acc.push(step);
+      else console.warn("No valid configuration for wizard step found.", story)
+      return acc;
+    }, [])
+    .sort((a, b) => a.order - b.order);
+
+  const steps = createFlowSteps(rawSteps);
+  const storyIds = Array.from(
+    new Set(steps.flatMap((step) => [step.id, ...step.previewStories.map((p) => p.id)])),
+  );
+
+  return {
+    componentId,
+    steps,
+    storyIds,
+  };
+};
+
+const createFlowSteps = (rawSteps: StoryWizardStep[]) => {
+  const safeSteps = rawSteps.filter((step) => step.type !== 'advanced');
+  const advancedSteps = rawSteps.filter((step) => step.type === 'advanced');
+
+  return [...safeSteps, ...mergeStepsByFlowGroup(advancedSteps)];
+};
+
+/**
+ * Groups and merges individual 'advanced' story-wizard steps based on their shared `flowGroup` (determined by `wizard.stepTitle`).
+ * This process allows developers to author small, isolated stories per component/variant,
+ * while rendering them together as one logical bundle within the Wizard UI.
+ */
+const mergeStepsByFlowGroup = (steps: StoryWizardStep[]) => {
+  if (steps.length === 0) {
+    return [];
   }
 
-  private static createFlowSteps(rawSteps: StoryWizardStep[]) {
-    const safeSteps = rawSteps.filter((step) => !this.isAdvancedStep(step));
-    const advancedSteps = rawSteps.filter((step) => this.isAdvancedStep(step));
+  // 1. Group all steps in a temporary Map.
+  // We explicitly keep track of the original insertion order (`groupOrder`),
+  // to ensure numbered flow steps don't arbitrarily shuffle during the iteration.
+  const groupedSteps = new Map<string, StoryWizardStep[]>();
+  const groupOrder: string[] = [];
 
-    return [...safeSteps, ...this.mergeStepsByFlowGroup(advancedSteps)];
-  }
+  steps.forEach((step) => {
+    const groupKey = step.flowGroup;
 
-  private static mergeStepsByFlowGroup(steps: StoryWizardStep[]) {
-    if (steps.length === 0) {
-      return [];
+    if (!groupedSteps.has(groupKey)) {
+      groupedSteps.set(groupKey, []);
+      groupOrder.push(groupKey);
     }
 
-    const groupedSteps = new Map<string, StoryWizardStep[]>();
-    const groupOrder: string[] = [];
+    groupedSteps.get(groupKey)?.push(step);
+  });
 
-    steps.forEach((step) => {
-      const groupKey = step.flowGroup;
+  // 2. Iterate through our unique ordered keys and build the final array of merged steps
+  return groupOrder
+    .map((groupKey) => {
+      const chunk = groupedSteps.get(groupKey) ?? [];
 
-      if (!groupedSteps.has(groupKey)) {
-        groupedSteps.set(groupKey, []);
-        groupOrder.push(groupKey);
+      // If there's only 1 advanced story in this group, no merging is required.
+      if (chunk.length <= 1) {
+        return chunk[0];
       }
 
-      groupedSteps.get(groupKey)?.push(step);
-    });
+      const flowTitle = chunk[0].flowTitle;
 
-    return groupOrder
-      .map((groupKey) => {
-        const chunk = groupedSteps.get(groupKey) ?? [];
-
-        if (chunk.length <= 1) {
-          return chunk[0];
-        }
-
-        const flowTitle = chunk[0].flowTitle;
-
-        return {
-          id: chunk.map((step) => step.id).join('--'),
-          flowGroup: groupKey,
-          flowTitle,
-          groups: chunk.flatMap((step) => step.groups),
-          intro: `Gebruik deze stap om meerdere geavanceerde instellingen binnen ${flowTitle.toLowerCase()} verder te verfijnen.`,
-          order: chunk[0].order,
-          previewStories: Array.from(
-            new Map(chunk.flatMap((step) => step.previewStories).map((s) => [s.id, s])).values(),
-          ),
-          title: flowTitle,
-        };
-      })
-      .filter((step): step is StoryWizardStep => Boolean(step));
-  }
-
-  private static createStep(
-    id: string,
-    story: StoryWizardStory,
-    allStories: StoryEntry[],
-    presetTokenPaths: Set<string>,
-  ): StoryWizardStep | null {
-    const groups = story.parameters?.presets?.length
-      ? story.parameters?.wizard?.type === 'preset'
-        ? (story.parameters.presets ?? []).map((preset, index) => this.createPresetGroup(id, preset, index))
-        : []
-      : story.parameters?.wizard?.type === 'advanced' && story.parameters?.editableTokens
-        ? [this.createEditableTokenGroup(id, story, presetTokenPaths)].filter(
-            (group): group is StoryWizardEditableTokenGroup => group !== null,
-          )
-        : [];
-
-    if (groups.length === 0) {
-      return null;
-    }
-
-    const wizard = story.parameters!.wizard!;
-
-    return {
-      id,
-      flowGroup: wizard.type === 'advanced' ? wizard.stepTitle : id,
-      flowTitle: wizard.type === 'advanced' ? wizard.stepTitle : (story.name ?? id),
-      groups,
-      intro: wizard.description,
-      order: wizard.order,
-      previewStories: this.resolveStepPreviewStories(id, story, allStories),
-      title: story.name ?? id,
-    };
-  }
-
-  private static createPresetGroup(
-    storyId: string,
-    preset: StoryWizardPresetObject,
-    index: number,
-  ): StoryWizardPresetGroup {
-    return {
-      id: `${storyId}-preset-group-${index}`,
-      name: preset.question ?? preset.name,
-      description: preset.description,
-      options: preset.options.map((option) => ({
-        name: option.name,
-        derivedTokenReference: option.derivedTokenReference,
-        description: option.description,
-        previewStyle: styleObjectToString(tokensToStyle(option.tokens as never) as Record<string, string>),
-        tokens: option.tokens,
-      })),
-      type: 'preset',
-    };
-  }
-
-  private static createEditableTokenGroup(
-    storyId: string,
-    story: StoryWizardStory,
-    presetTokenPaths: Set<string>,
-  ): StoryWizardEditableTokenGroup | null {
-    const editableTokens = collectEditableTokenPaths(story.parameters?.editableTokens);
-    const filteredTokens = editableTokens.filter((token) => !presetTokenPaths.has(token.path));
-    if (filteredTokens.length === 0) {
-      return null;
-    }
-
-    const wizard = story.parameters!.wizard!;
-    if (wizard.type !== 'advanced') return null;
-
-    const storyName = story.name ?? storyId;
-    const name =
-      wizard.question ?? (storyName.startsWith('Design: ') ? storyName.slice('Design: '.length) : storyName);
-
-    return {
-      id: `${storyId}-editable-tokens`,
-      name,
-      advancedTitle: wizard.advancedTitle ?? 'Geavanceerde instellingen',
-      description: wizard.description,
-      tokens: filteredTokens,
-      type: 'editable-tokens',
-    };
-  }
-
-  private static collectPresetTokenPaths(stories: StoryEntry[]) {
-    return new Set(
-      stories.flatMap(([, story]) =>
-        (story.parameters?.presets ?? []).flatMap((preset) =>
-          preset.options.flatMap((option) => collectEditableTokenPaths(option.tokens).map((token) => token.path)),
+      // 3. Merge all isolated stories together into a single 'Super-Step'
+      return {
+        // ID is a unique concatenation of all merged stories (e.g. 'button-primary--button-secondary')
+        id: chunk.map((step) => step.id).join('--'),
+        type: 'advanced',
+        flowGroup: groupKey,
+        flowTitle,
+        // Stack all their individual groups (like editable token lists) and panels on top of one another
+        groups: chunk.flatMap((step) => step.groups),
+        intro: `Gebruik deze stap om meerdere geavanceerde instellingen binnen ${flowTitle.toLowerCase()} verder te verfijnen.`,
+        // Roughly preserve the original sort order (based on the first element found)
+        order: chunk[0].order,
+        // Live previews: Remove duplicates (via Map) so we don't load the same story twice in the preview UI
+        previewStories: Array.from(
+          new Map(chunk.flatMap((step) => step.previewStories).map((s) => [s.id, s])).values(),
         ),
+        title: flowTitle,
+      };
+    })
+    .filter((step): step is StoryWizardStep => Boolean(step));
+};
+
+const createStep = (
+  id: string,
+  story: StoryWizardStory,
+  storyMap: Map<string, StoryWizardStory>,
+  presetTokenPaths: Set<string>,
+): StoryWizardStep | null => {
+  const wizard = story.parameters!.wizard!;
+  let groups: Array<StoryWizardPresetGroup | StoryWizardEditableTokenGroup> = [];
+
+  if (wizard.type === 'preset' && story.parameters!.presets?.length) {
+    groups = story.parameters!.presets.map((preset, index) => createPresetGroup(id, preset, index));
+  } else if (wizard.type === 'advanced' && story.parameters!.editableTokens) {
+    const group = createEditableTokenGroup(id, story, presetTokenPaths);
+    if (group) groups.push(group);
+  }
+
+  if (groups.length === 0) {
+    return null;
+  }
+
+  return {
+    id,
+    type: wizard.type,
+    flowGroup: wizard.type === 'advanced' ? wizard.stepTitle : id,
+    flowTitle: wizard.type === 'advanced' ? wizard.stepTitle : (story.name ?? id),
+    groups,
+    intro: wizard.description,
+    order: wizard.order,
+    previewStories: resolveStepPreviewStories(id, story, storyMap),
+    title: story.name ?? id,
+  };
+};
+
+const createPresetGroup = (
+  storyId: string,
+  preset: StoryWizardPresetObject,
+  index: number,
+): StoryWizardPresetGroup => {
+  return {
+    id: `${storyId}-preset-group-${index}`,
+    name: preset.question ?? preset.name,
+    description: preset.description,
+    options: preset.options.map((option) => ({
+      name: option.name,
+      derivedTokenReference: option.derivedTokenReference,
+      description: option.description,
+      previewStyle: styleObjectToString(tokensToStyle(option.tokens as never) as Record<string, string>),
+      tokens: option.tokens,
+    })),
+    type: 'preset',
+  };
+};
+
+const createEditableTokenGroup = (
+  storyId: string,
+  story: StoryWizardStory,
+  presetTokenPaths: Set<string>,
+): StoryWizardEditableTokenGroup | null => {
+  const editableTokens = collectEditableTokenPaths(story.parameters?.editableTokens);
+  const filteredTokens = editableTokens.filter((token) => !presetTokenPaths.has(token.path));
+  
+  if (filteredTokens.length === 0) {
+    return null;
+  }
+
+  const wizard = story.parameters!.wizard!;
+  if (wizard.type !== 'advanced') return null;
+
+  const storyName = story.name ?? storyId;
+  const name =
+    wizard.question ?? (storyName.startsWith('Design: ') ? storyName.slice('Design: '.length) : storyName);
+
+  return {
+    id: `${storyId}-editable-tokens`,
+    name,
+    advancedTitle: wizard.advancedTitle ?? 'Geavanceerde instellingen',
+    description: wizard.description,
+    tokens: filteredTokens,
+    type: 'editable-tokens',
+  };
+};
+
+const collectPresetTokenPaths = (stories: StoryEntry[]) => {
+  return new Set(
+    stories.flatMap(([, story]) =>
+      (story.parameters?.presets ?? []).flatMap((preset) =>
+        preset.options.flatMap((option) => collectEditableTokenPaths(option.tokens).map((token) => token.path)),
       ),
-    );
+    ),
+  );
+};
+
+const isWizardStory = (story: StoryWizardStory) => {
+  return Boolean(
+    (story.parameters?.wizard?.type === 'preset' && story.parameters?.presets?.length) ||
+    (story.parameters?.wizard?.type === 'advanced' && story.parameters?.editableTokens),
+  );
+};
+
+const resolveStepPreviewStories = (
+  id: string,
+  story: StoryWizardStory,
+  storyMap: Map<string, StoryWizardStory>,
+): StoryWizardPreview[] => {
+  const wizard = story.parameters!.wizard!;
+
+  if (wizard.type === 'advanced') {
+    return [toPreviewStory(id, story)];
   }
 
-  private static isWizardStory(story: StoryWizardStory) {
-    return Boolean(
-      (story.parameters?.wizard?.type === 'preset' && story.parameters?.presets?.length) ||
-      (story.parameters?.wizard?.type === 'advanced' && story.parameters?.editableTokens),
-    );
-  }
+  return wizard.previewStoryIds.flatMap((previewStoryId) => {
+    const previewStory = storyMap.get(previewStoryId);
+    return previewStory ? [toPreviewStory(previewStoryId, previewStory)] : [];
+  });
+};
 
-  private static isAdvancedStep(step: StoryWizardStep) {
-    return step.groups.some((group) => group.type === 'editable-tokens');
-  }
-
-  private static resolveStepPreviewStories(
-    id: string,
-    story: StoryWizardStory,
-    allStories: StoryEntry[],
-  ): StoryWizardPreview[] {
-    const wizard = story.parameters!.wizard!;
-
-    if (wizard.type === 'advanced') {
-      return [this.toPreviewStory(id, story)];
-    }
-
-    return wizard.previewStoryIds
-      .map((previewStoryId) => allStories.find(([storyId]) => storyId === previewStoryId))
-      .filter((entry): entry is StoryEntry => Boolean(entry))
-      .map(([previewStoryId, previewStory]) => this.toPreviewStory(previewStoryId, previewStory));
-  }
-
-  private static toPreviewStory(id: string, story: StoryWizardStory): StoryWizardPreview {
-    return {
-      id,
-      name: story.name ?? id,
-    };
-  }
-}
+const toPreviewStory = (id: string, story: StoryWizardStory): StoryWizardPreview => {
+  return {
+    id,
+    name: story.name ?? id,
+  };
+};

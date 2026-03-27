@@ -14,7 +14,7 @@ const { step } = Astro.props;
   id={step.id}
   class="wizard-story-section"
   aria-label={step.title}
-  data-step-kind={step.groups.some((group) => group.type === 'editable-tokens') ? 'advanced' : 'safe'}
+  data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
   data-step-label={step.title}
 >
   <div class="wizard-story-section__layout">

@@ -62,6 +62,7 @@ export type StoryWizardPreview = {
 };
 
 export type StoryWizardStep = {
+  type: 'preset' | 'advanced';
   flowGroup: string;
   flowTitle: string;
   id: string;
