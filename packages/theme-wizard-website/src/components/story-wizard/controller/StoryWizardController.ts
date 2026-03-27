@@ -88,9 +88,9 @@ export class StoryWizardController {
   private handleNext() {
     this.steps[this.nav.currentStep]?.confirmSelections();
     this.confirmCurrentAdvancedStep(true);
-    this.refreshSelectionState();
 
     if (this.nav.isLastStep) {
+      this.refreshSelectionState();
       this.finishWithAllChoices();
     } else {
       this.showStep(this.nav.currentStep + 1);
