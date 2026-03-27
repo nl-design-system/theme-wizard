@@ -19,14 +19,10 @@ const BROAD_COLOR_NAMES = new Set(['red', 'green', 'blue']);
  * @returns
  */
 export const parse = (value: unknown): Color | null => {
-  try {
-    if (typeof value === 'string' && !isRef(value)) {
-      return new Color(value);
-    }
-    return colorTokenValueToColorJS(value as ColorValue);
-  } catch {
-    return null;
+  if (typeof value === 'string' && !isRef(value)) {
+    return Color.try(value);
   }
+  return colorTokenValueToColorJS(value as ColorValue);
 };
 
 export const filter = <T extends { color?: Color }>(query: string) => {
@@ -40,11 +36,11 @@ export const queryToValue = (query: string): ColorToken => {
 };
 
 export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string => {
-  try {
-    return typeof $value === 'string' ? $value : stringifyColor($value);
-  } catch {
-    return ''; // If the value can't be stringified, return an empty string to avoid displaying invalid data in the input.
+  if (typeof $value === 'string') {
+    return $value;
   }
+
+  return stringifyColor($value);
 };
 
 export const preview = <T extends { value: ColorToken; color?: Color }>({ color, value }: T) => {
