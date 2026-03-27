@@ -27,20 +27,20 @@ test('changing the paragraph preset also updates the lead paragraph preset', asy
 });
 
 test('choosing the start-theme preset counts as a design choice', async () => {
-  await wizard.assertSelectionsSummary('Design keuzes (0/6)');
+  await wizard.assertSelectionsSummary('Design keuzes (0/4)');
 
   await wizard.selectOption('Kies de grootte van de paragraph', 0);
 
-  await wizard.assertSelectionsSummary('Design keuzes (1/6)');
+  await wizard.assertSelectionsSummary('Design keuzes (1/4)');
 });
 
 test('reset restores the start-theme preset selections', async () => {
   await expect.poll(() => wizard.readDefaultIndex('Kies de grootte van de paragraph')).toBe(0);
   await expect.poll(() => wizard.readSelectedIndex('Kies de grootte van de paragraph')).toBe(0);
-  await wizard.assertSelectionsSummary('Design keuzes (0/6)');
+  await wizard.assertSelectionsSummary('Design keuzes (0/4)');
 
   await wizard.selectOption('Kies de grootte van de paragraph', 1);
-  await expect.poll(async () => (await wizard.readSelectionsSummary()) !== 'Design keuzes (0/6)').toBe(true);
+  await expect.poll(async () => (await wizard.readSelectionsSummary()) !== 'Design keuzes (0/4)').toBe(true);
 
   await wizard.assertResetRestoresPresetSelections(
     [
@@ -54,7 +54,7 @@ test('reset restores the start-theme preset selections', async () => {
         defaultIndex: 1,
         groupLabel: 'Kies de grootte van de lead paragraph',
         selectedIndex: 1,
-        selectedLabel: 'Extra ruim',
+        selectedLabel: 'Ruim',
       },
       {
         defaultIndex: 0,
@@ -63,6 +63,6 @@ test('reset restores the start-theme preset selections', async () => {
         selectedLabel: 'Aanbevolen',
       },
     ],
-    'Design keuzes (0/6)',
+    'Design keuzes (0/4)',
   );
 });
