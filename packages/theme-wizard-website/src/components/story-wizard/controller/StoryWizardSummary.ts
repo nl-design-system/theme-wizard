@@ -187,54 +187,49 @@ export class StoryWizardSummary {
     return btn;
   }
 
-  private createValueElement(
-    groups: StoryWizardSelectionSummary[],
-    isAdvanced: boolean,
-    isCompletedAdvancedStep: boolean,
-  ): HTMLElement {
+  private createEmptyValueElement(isAdvanced: boolean, isCompletedAdvancedStep: boolean): HTMLElement {
+    const value = document.createElement('span');
+    value.className = 'wizard-step-selection__value';
+    value.textContent =
+      isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
+
+    if (!isAdvanced || !isCompletedAdvancedStep) {
+      value.classList.add('wizard-step-selection__value--empty');
+    }
+
+    return value;
+  }
+
+  private appendOptionLabel(value: HTMLElement, optionLabel: string) {
+    const option = document.createElement('span');
+    option.className = 'wizard-step-selection__value-option';
+    option.textContent = optionLabel;
+    value.appendChild(option);
+  }
+
+  private createSingleTokenValueElement(group: StoryWizardSelectionSummary): HTMLElement {
     const value = document.createElement('span');
     value.className = 'wizard-step-selection__value';
 
-    if (groups.length === 0) {
-      value.textContent =
-        isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
+    if (group.optionLabel) {
+      this.appendOptionLabel(value, group.optionLabel);
+    }
 
-      if (!isAdvanced || !isCompletedAdvancedStep) {
-        value.classList.add('wizard-step-selection__value--empty');
-      }
-
+    const token = group.tokens[0];
+    if (!token) {
+      value.textContent = group.optionLabel;
       return value;
     }
 
-    if (groups.length === 1 && groups[0].tokens.length <= 1) {
-      const token = groups[0].tokens[0];
+    const tokenValue = document.createElement('span');
+    tokenValue.className = 'wizard-step-selection__value-token';
+    tokenValue.appendChild(this.createTokenValueItem(token.path, token.value));
+    value.appendChild(tokenValue);
 
-      if (token) {
-        if (groups[0].optionLabel) {
-          const option = document.createElement('span');
-          option.className = 'wizard-step-selection__value-option';
-          option.textContent = groups[0].optionLabel;
-          value.appendChild(option);
-        }
+    return value;
+  }
 
-        const tokenValue = document.createElement('span');
-        tokenValue.className = 'wizard-step-selection__value-token';
-        tokenValue.appendChild(this.createTokenValueItem(token.path, token.value));
-        value.appendChild(tokenValue);
-      } else {
-        value.textContent = groups[0].optionLabel;
-      }
-
-      return value;
-    }
-
-    if (groups.length === 1 && groups[0].optionLabel) {
-      const option = document.createElement('span');
-      option.className = 'wizard-step-selection__value-option';
-      option.textContent = groups[0].optionLabel;
-      value.appendChild(option);
-    }
-
+  private createSummaryDetails(groups: StoryWizardSelectionSummary[]): HTMLDetailsElement {
     const details = document.createElement('details');
     details.className = 'wizard-step-selection__value-summary';
 
@@ -256,7 +251,32 @@ export class StoryWizardSummary {
 
     details.appendChild(summary);
     details.appendChild(list);
-    value.appendChild(details);
+
+    return details;
+  }
+
+  private createValueElement(
+    groups: StoryWizardSelectionSummary[],
+    isAdvanced: boolean,
+    isCompletedAdvancedStep: boolean,
+  ): HTMLElement {
+    if (groups.length === 0) {
+      return this.createEmptyValueElement(isAdvanced, isCompletedAdvancedStep);
+    }
+
+    const [group] = groups;
+    if (groups.length === 1 && group.tokens.length <= 1) {
+      return this.createSingleTokenValueElement(group);
+    }
+
+    const value = document.createElement('span');
+    value.className = 'wizard-step-selection__value';
+
+    if (groups.length === 1 && group.optionLabel) {
+      this.appendOptionLabel(value, group.optionLabel);
+    }
+
+    value.appendChild(this.createSummaryDetails(groups));
 
     return value;
   }
