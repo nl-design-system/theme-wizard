@@ -1,5 +1,12 @@
 # @nl-design-system-community/theme-wizard-website
 
+## 0.0.10
+
+### Patch Changes
+
+- @nl-design-system-community/theme-wizard-app@1.0.2
+- @nl-design-system-community/theme-wizard-templates@1.0.6
+
 ## 0.0.9
 
 ### Patch Changes
