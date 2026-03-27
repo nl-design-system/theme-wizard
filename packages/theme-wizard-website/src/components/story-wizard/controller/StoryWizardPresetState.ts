@@ -82,10 +82,9 @@ export class StoryWizardPresetState {
   }
 
   private async waitForPresetInputs() {
-    const presetInputs = Array.from(
-      document.querySelectorAll<HTMLElement & { updateComplete?: Promise<unknown> }>('wizard-token-preset'),
+    await Promise.all(
+      this.groups.map((group) => group.input?.updateComplete ?? Promise.resolve())
     );
-    await Promise.all(presetInputs.map((input) => input.updateComplete ?? Promise.resolve()));
   }
 
   private runSync<T>(callback: () => T): T {
