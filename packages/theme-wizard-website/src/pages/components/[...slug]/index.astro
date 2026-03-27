@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { loadStoryWizardComponentStyles } from '@/components/story-wizard/componentStyles';
 import StoryWizard from '@/components/story-wizard/index.astro';
 import { components } from '@/lib/components';
 import { StoryWizardModel } from '@/lib/story-wizard';
 import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
+import '@nl-design-system-candidate/button-css/button.css';
+import '@nl-design-system-candidate/heading-css/heading.css';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import '@nl-design-system-candidate/code-css/code.css';
 
 import './index.css';
 
@@ -25,7 +28,6 @@ const componentList = await Promise.all(
 
 const slug = Astro.params.slug as keyof typeof components;
 const { title } = components[slug];
-await loadStoryWizardComponentStyles(slug);
 const wizard = await StoryWizardModel.fromComponentId(slug);
 ---
 
