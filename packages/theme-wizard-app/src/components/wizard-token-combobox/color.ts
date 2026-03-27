@@ -1,9 +1,10 @@
 import {
-  ColorToken,
-  ColorValue,
+  type ColorToken,
+  type ColorValue,
   isRef,
   parseColor,
   stringifyColor,
+  colorTokenValueToColorJS,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { html, nothing } from 'lit';
@@ -19,8 +20,10 @@ const BROAD_COLOR_NAMES = new Set(['red', 'green', 'blue']);
  */
 export const parse = (value: unknown): Color | null => {
   try {
-    const string = typeof value === 'string' && !isRef(value) ? value : stringifyColor(value as ColorValue);
-    return new Color(string);
+    if (typeof value === 'string' && !isRef(value)) {
+      return new Color(value);
+    }
+    return colorTokenValueToColorJS(value as ColorValue);
   } catch {
     return null;
   }
