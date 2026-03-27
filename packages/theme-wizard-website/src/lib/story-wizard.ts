@@ -40,11 +40,11 @@ export type StoryWizardPreview = {
 };
 
 export type StoryWizardStep = {
-  flowGroup?: string;
+  flowGroup: string;
   flowTitle?: string;
   id: string;
   intro?: string;
-  order?: number;
+  order: number;
   previewStories: StoryWizardPreview[];
   groups: Array<StoryWizardPresetGroup | StoryWizardEditableTokenGroup>;
   title: string;
@@ -77,11 +77,11 @@ type StoryWizardParameters = {
   wizard?: {
     advancedTitle?: string;
     description?: string;
-    order?: number;
+    order: number;
     preview?: boolean;
     previewStoryIds?: string[];
     question?: string;
-    step?: string;
+    step: string;
     stepTitle?: string;
     type?: 'advanced' | 'preset';
   };
@@ -198,50 +198,6 @@ const compareEditableTokens = (left: StoryWizardEditableToken, right: StoryWizar
   return leftPath.localeCompare(rightPath);
 };
 
-const normalizeStoryName = (storyName?: string) =>
-  storyName
-    ?.replace(/^Design:\s*/i, '')
-    .trim()
-    .toLowerCase() ?? '';
-
-const guessFlowGroup = (story: StoryWizardStory) => {
-  const name = normalizeStoryName(story.name);
-  if (!name) return undefined;
-
-  if (name.includes('data badge')) {
-    if (name.includes('size')) return { key: 'data-badge:size', title: 'Data Badge grootte' };
-    if (name.includes('typography')) return { key: 'data-badge:typography', title: 'Data Badge typografie' };
-    if (name.includes('border')) return { key: 'data-badge:border', title: 'Data Badge rand' };
-    if (name.includes('color')) return { key: 'data-badge:color', title: 'Data Badge kleur' };
-  }
-
-  if (name.includes('button')) {
-    if (
-      name.includes('borders') ||
-      name.includes('typography') ||
-      name.includes('size') ||
-      name.includes('focus') ||
-      name.includes('icon')
-    ) {
-      return { key: 'button:basic', title: 'Button basis' };
-    }
-
-    if (name.includes('disabled')) return { key: 'button:disabled', title: 'Button disabled' };
-    if (name.includes('pressed')) return { key: 'button:pressed', title: 'Button pressed' };
-
-    if (name.includes('states')) {
-      if (name.includes('positive')) return { key: 'button:positive-states', title: 'Positieve button states' };
-      if (name.includes('negative')) return { key: 'button:negative-states', title: 'Negatieve button states' };
-      return { key: 'button:states', title: 'Button states' };
-    }
-
-    if (name.includes('positive')) return { key: 'button:positive-variants', title: 'Positieve button varianten' };
-    if (name.includes('negative')) return { key: 'button:negative-variants', title: 'Negatieve button varianten' };
-    return { key: 'button:variants', title: 'Button varianten' };
-  }
-
-  return undefined;
-};
 
 export class StoryWizardModel {
   public static async fromComponentId(componentId: keyof typeof components): Promise<StoryWizardViewModel> {
@@ -257,7 +213,7 @@ export class StoryWizardModel {
     const rawSteps = wizardStories
       .map(([id, story]: StoryEntry) => this.createStep(id, story, allStories, previewStories, presetTokenPaths))
       .filter((step): step is StoryWizardStep => step !== null)
-      .sort((a, b) => (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY));
+      .sort((a, b) => a.order - b.order);
     const steps = this.createFlowSteps(rawSteps);
     const storyIds = Array.from(
       new Set([
@@ -317,6 +273,7 @@ export class StoryWizardModel {
           intro: `Gebruik deze stap om meerdere geavanceerde instellingen binnen ${(
             chunk[0].flowTitle ?? summarizeTitles(chunk.map((step) => step.title))
           ).toLowerCase()} verder te verfijnen.`,
+          order: chunk[0].order,
           previewStories: uniqueById(chunk.flatMap((step) => step.previewStories)),
           title: chunk[0].flowTitle ?? summarizeTitles(chunk.map((step) => step.title)),
         };
@@ -347,11 +304,11 @@ export class StoryWizardModel {
 
     return {
       id,
-      flowGroup: story.parameters?.wizard?.step ?? guessFlowGroup(story)?.key,
-      flowTitle: story.parameters?.wizard?.stepTitle ?? guessFlowGroup(story)?.title,
+      flowGroup: story.parameters!.wizard!.step,
+      flowTitle: story.parameters?.wizard?.stepTitle,
       groups,
       intro: story.parameters?.wizard?.description,
-      order: story.parameters?.wizard?.order,
+      order: story.parameters!.wizard!.order,
       previewStories: this.resolveStepPreviewStories(id, story, allStories, previewStories),
       title: story.name ?? id,
     };
