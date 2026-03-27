@@ -11,7 +11,7 @@ import {
 import { html, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
-const getActualValue = (token: ModernDimensionToken): ModernDimensionValue => {
+const getActualValue = (token: DimensionToken): DimensionToken['$value'] => {
   const { $extensions, $value } = token;
   const resolvedAs = $extensions?.[EXTENSION_RESOLVED_AS];
   if (isRef($value)) {
@@ -23,6 +23,9 @@ const getActualValue = (token: ModernDimensionToken): ModernDimensionValue => {
 export const filter = <T extends { value: ModernDimensionToken }>(query: string): ((option: T) => boolean) => {
   return ({ value: token }: T) => {
     const actualValue = getActualValue(token);
+    if (typeof actualValue === 'string') {
+      return actualValue.toLowerCase().includes(query);
+    }
     return stringifyDimension(actualValue).toLowerCase().includes(query);
   };
 };
@@ -35,7 +38,7 @@ export const valueToQuery = <T extends { $value: DimensionToken['$value'] }>({ $
   return typeof $value === 'string' ? $value : stringifyDimension($value);
 };
 
-export const preview = <T extends { label: string; value: ModernDimensionToken }>({ value }: T) => {
+export const preview = <T extends { label: string; value: DimensionToken }>({ value }: T) => {
   if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') {
     return nothing;
   }
@@ -43,7 +46,7 @@ export const preview = <T extends { label: string; value: ModernDimensionToken }
   const PREVIEW_VALUE = 'Ag';
   const actualValue = getActualValue(value);
   const styles = {
-    fontSize: stringifyDimension(actualValue),
+    fontSize: typeof actualValue === 'string' ? actualValue : stringifyDimension(actualValue),
   };
   return html`
     <clippy-html-image>
