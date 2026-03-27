@@ -1,3 +1,4 @@
+import Color from 'colorjs.io';
 import { describe, it, expect, expectTypeOf } from 'vitest';
 import { StrictThemeSchema } from '../theme';
 import {
@@ -6,6 +7,8 @@ import {
   type ColorHexFallback,
   ColorHexFallbackSchema,
   ColorTokenValidationSchema,
+  colorJSToColorValue,
+  colorJSToHex,
   ColorValue,
   ColorToken,
   stringifyColor,
@@ -156,6 +159,43 @@ describe('color token validation', () => {
   });
 });
 
+describe('colorJSToColorValue', () => {
+  it('converts a Color to a ColorValue', () => {
+    const color = new Color({ alpha: 1, coords: [1, 0, 0], spaceId: 'srgb' });
+    const result = colorJSToColorValue(color);
+    expect(result).toEqual({ alpha: 1, colorSpace: 'srgb', components: [1, 0, 0] });
+    expectTypeOf(result).toEqualTypeOf<ColorValue>();
+  });
+
+  it('preserves alpha', () => {
+    const color = new Color({ alpha: 0.5, coords: [0, 0, 1], spaceId: 'srgb' });
+    expect(colorJSToColorValue(color).alpha).toBe(0.5);
+  });
+
+  it('preserves colorSpace', () => {
+    const color = new Color('oklch(50% 0.2 180)');
+    expect(colorJSToColorValue(color).colorSpace).toBe('oklch');
+  });
+});
+
+describe('colorToHex', () => {
+  it('converts an sRGB Color to a 6-digit hex string', () => {
+    const color = new Color({ alpha: 1, coords: [1, 0, 0], spaceId: 'srgb' });
+    expect(colorJSToHex(color)).toBe('#ff0000');
+  });
+
+  it('converts a wide-gamut Color to a clamped hex string', () => {
+    const color = new Color('oklch(50% 0.2 180)');
+    const result = colorJSToHex(color);
+    expect(result).toMatch(/^#[0-9a-f]{6}$/);
+  });
+
+  it('uses 6-digit hex, not shorthand', () => {
+    const color = new Color({ alpha: 1, coords: [0, 0, 0], spaceId: 'srgb' });
+    expect(colorJSToHex(color)).toBe('#000000');
+  });
+});
+
 describe('stringify token to string', () => {
   it('stringify a color value to an srgb string', () => {
     const tokenValue = {
@@ -165,6 +205,11 @@ describe('stringify token to string', () => {
     } satisfies ColorValue;
     const result = stringifyColor(tokenValue);
     expect(result).toBe('#ff0000');
+  });
+
+  it('accepts a Color object directly, skipping colorTokenValueToColorJS', () => {
+    const color = new Color({ alpha: 1, coords: [1, 0, 0], spaceId: 'srgb' });
+    expect(stringifyColor(color)).toBe('#ff0000');
   });
 
   // https://www.designtokens.org/tr/drafts/color/#using-the-none-keyword
@@ -180,8 +225,7 @@ describe('stringify token to string', () => {
   });
 
   it('stringifies a non-color without throwing', () => {
-    // @ts-expect-error We actually want to test this potential invalid case
-    const result = stringifyColor(undefined);
+    const result = stringifyColor(undefined as unknown as ColorValue);
     expect(result).toBe('#0000');
   });
 });

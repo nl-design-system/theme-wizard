@@ -1,9 +1,10 @@
 import {
-  ColorToken,
-  ColorValue,
+  type ColorToken,
+  type ColorValue,
   isRef,
   parseColor,
   stringifyColor,
+  colorTokenValueToColorJS,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { html, nothing } from 'lit';
@@ -18,12 +19,10 @@ const BROAD_COLOR_NAMES = new Set(['red', 'green', 'blue']);
  * @returns
  */
 export const parse = (value: unknown): Color | null => {
-  try {
-    const string = typeof value === 'string' && !isRef(value) ? value : stringifyColor(value as ColorValue);
-    return new Color(string);
-  } catch {
-    return null;
+  if (typeof value === 'string' && !isRef(value)) {
+    return Color.try(value);
   }
+  return colorTokenValueToColorJS(value as ColorValue);
 };
 
 export const filter = <T extends { color?: Color }>(query: string) => {
@@ -37,11 +36,11 @@ export const queryToValue = (query: string): ColorToken => {
 };
 
 export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string => {
-  try {
-    return typeof $value === 'string' ? $value : stringifyColor($value);
-  } catch {
-    return ''; // If the value can't be stringified, return an empty string to avoid displaying invalid data in the input.
+  if (typeof $value === 'string') {
+    return $value;
   }
+
+  return stringifyColor($value);
 };
 
 export const preview = <T extends { value: ColorToken; color?: Color }>({ color, value }: T) => {

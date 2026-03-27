@@ -1,5 +1,5 @@
 import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
-import { stringifyColor, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
+import { colorTokenValueToColorJS, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
@@ -75,7 +75,7 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
   override readonly filter = (query: string) => {
     const normalizedQuery = query.toLowerCase();
     const colorName = this.translations[normalizedQuery] || normalizedQuery;
-    const queryColor = Color.try(colorName);
+    const queryColor = this.#parseColor(colorName);
     return (option: Option) => {
       const label = option.label.toLowerCase();
       // Broader color names use a wider deltaE for matching, ie searching for "green" will match more colors than "pink".
@@ -92,29 +92,35 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     return this.#options;
   }
 
+  #parseColor(value: Option['value']): Color | null {
+    if (typeof value !== 'string') {
+      try {
+        return colorTokenValueToColorJS(value);
+      } catch {
+        return null;
+      }
+    }
+    return Color.try(value);
+  }
+
   override set options(value: Array<{ label: Option['label']; value: Option['value'] }>) {
     this.#options = value.map((option) => {
       const { label, value } = option;
-      const color = Color.try(typeof value === 'string' ? value : stringifyColor(value));
-      return {
-        color,
-        label,
-        value,
-      };
+      return { color: this.#parseColor(value), label, value };
     });
   }
 
   override getOptionForValue(value: Option['value'] | null): Option | undefined {
     if (value === null) return undefined;
     const option = super.getOptionForValue(value);
-    if (!option) return undefined;
-    const color = Color.try(typeof value === 'string' ? value : stringifyColor(value));
-    return color ? { ...option, color } : undefined; // A color that cannot be parsed is not a valid option
+    // option.color is pre-parsed in the setter; a missing color means it's not a valid option
+    return option?.color ? option : undefined;
   }
 
   override queryToValue(query: string): Option['value'] | null {
     if (this.allow === 'other') {
-      const color = Color.try(this.translations[query.toLowerCase()] || query);
+      const resolved = this.translations[query.toLowerCase()] || query;
+      const color = this.#parseColor(resolved);
       return this.getOptionForValue(this.value)?.value || color === null
         ? query
         : color.toString({

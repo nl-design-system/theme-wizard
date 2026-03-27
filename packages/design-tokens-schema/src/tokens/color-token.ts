@@ -67,25 +67,26 @@ export const ColorTokenSchema = z.looseObject({
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorToken = z.infer<typeof ColorTokenSchema>;
 
-export const parseColor = (color: string): ColorValue => {
-  const parsedColor = new Color(color);
-  return {
-    alpha: parsedColor.alpha,
-    colorSpace: parsedColor.spaceId as ColorSpace,
-    components: parsedColor.coords as ColorComponents,
-  };
-};
+export const colorJSToColorValue = (color: Color): ColorValue => ({
+  alpha: color.alpha,
+  colorSpace: color.spaceId as ColorSpace,
+  components: color.coords as ColorComponents,
+});
 
-export const stringifyColor = (color: ColorValue): string => {
+export const parseColor = (color: string): ColorValue => colorJSToColorValue(new Color(color));
+
+export const colorJSToHex = (color: Color): string =>
+  color.to('srgb').toString({
+    // Collapse prevents using the shorthand notation
+    collapse: false,
+    format: 'hex',
+    inGamut: true,
+  });
+
+export const stringifyColor = (color: Color | ColorValue): string => {
   try {
-    const reference = colorTokenValueToColorJS(color);
-    const converted = reference.to('srgb');
-    return converted.toString({
-      // Collapse prevents using the shorthand notation
-      collapse: false,
-      format: 'hex',
-      inGamut: true,
-    });
+    const reference = color instanceof Color ? color : colorTokenValueToColorJS(color);
+    return colorJSToHex(reference);
   } catch {
     console.warn('Could not parse color:', color);
     return '#0000';
