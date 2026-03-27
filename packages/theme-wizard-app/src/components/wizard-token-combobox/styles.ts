@@ -19,7 +19,7 @@ export default css`
     block-size: var(--nl-color-sample-block-size);
     display: inline-flex;
     font-size: var(--basis-text-font-size-lg);
-    inline-size: var(--nl-color-sample-block-size);
+    inline-size: var(--nl-color-sample-inline-size);
     justify-content: center;
     overflow: clip;
     text-wrap: nowrap;
