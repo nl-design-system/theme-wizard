@@ -82,20 +82,47 @@ test.describe('stories', () => {
   });
 
   test.describe('inputs allow manual input', () => {
-    test('color', async ({ page }) => {
-      const input = page.getByLabel('nl.code-block.color');
-      expect(await input.inputValue()).not.toBe('#ff0000');
-      await input.fill('#ff0000');
-      await input.press('Enter');
-      expect(await input.inputValue()).toBe('#ff0000');
+    test.describe('color', () => {
+      test('updates input value', async ({ page }) => {
+        const input = page.getByLabel('nl.code-block.color');
+        expect(await input.inputValue()).not.toBe('#ff0000');
+        await input.fill('#ff0000');
+        await input.press('Enter');
+        expect(await input.inputValue()).toBe('#ff0000');
+      });
+
+      test('updates input preview', async ({ componentPage, page }) => {
+        const label = 'nl.code-block.color';
+        const preview = componentPage.getComboboxPreviewElement(label);
+        const computedBgColor = await componentPage.getComputedProperty(preview, 'color');
+        expect(computedBgColor).not.toBe('#ff0000');
+        await page.getByLabel(label).fill('#ff0000');
+        await page.keyboard.press('Tab');
+        const updatedBgColor = await componentPage.getComputedProperty(preview, 'color');
+        // Computed colors are returned in rgb()
+        expect(updatedBgColor).toBe('rgb(255, 0, 0)');
+      });
     });
 
-    test('dimension (font-size)', async ({ page }) => {
-      const input = page.getByLabel('nl.code-block.font-size');
-      expect(await input.inputValue()).not.toBe('24px');
-      await input.fill('24px');
-      await input.press('Enter');
-      expect(await input.inputValue()).toBe('24px');
+    test.describe('dimension (font-size)', () => {
+      test('updates input value', async ({ page }) => {
+        const input = page.getByLabel('nl.code-block.font-size');
+        expect(await input.inputValue()).not.toBe('24px');
+        await input.fill('24px');
+        await input.press('Enter');
+        expect(await input.inputValue()).toBe('24px');
+      });
+
+      test('updates input preview', async ({ componentPage, page }) => {
+        const label = 'nl.code-block.font-size';
+        const preview = componentPage.getComboboxPreviewElement(label);
+        const computedFontSize = await componentPage.getComputedProperty(preview, 'font-size');
+        expect(computedFontSize).not.toBe('24px');
+        await page.getByLabel(label).fill('24px');
+        await page.keyboard.press('Tab');
+        const updatedFontSize = await componentPage.getComputedProperty(preview, 'font-size');
+        expect(updatedFontSize).toBe('24px');
+      });
     });
   });
 
