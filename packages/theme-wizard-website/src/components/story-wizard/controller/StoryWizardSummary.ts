@@ -1,5 +1,6 @@
 import { dequal } from 'dequal';
 import dlv from 'dlv';
+import { cloneTemplate } from './cloneTemplate';
 import type { StoryWizardStep } from './StoryWizardStep';
 import type { StoryWizardTokensDialog } from './StoryWizardTokensDialog';
 import type { StoryWizardSelectionSummary, StoryWizardThemeHost } from './types';
@@ -121,21 +122,14 @@ export class StoryWizardSummary {
     liveRegion.textContent = `Design keuzes (${completed}/${total})`;
   }
 
+  // --- DOM construction (templates for complex structures, createElement for simple ones) ---
+
   private createStepWrapper(stepLabel: string, index: number, value: HTMLElement): HTMLElement {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'wizard-step-selection';
+    const wrapper = cloneTemplate<HTMLElement>('wizard-step-selection-tmpl', '.wizard-step-selection');
 
-    const numberBadge = document.createElement('span');
-    numberBadge.className = 'wizard-step-selection__number';
-    numberBadge.setAttribute('aria-hidden', 'true');
-    numberBadge.textContent = String(index + 1);
+    wrapper.querySelector('.wizard-step-selection__number')!.textContent = String(index + 1);
 
-    const info = document.createElement('span');
-    info.className = 'wizard-step-selection__info';
-
-    const title = document.createElement('button');
-    title.className = 'wizard-step-selection__title nl-link';
-    title.type = 'button';
+    const title = wrapper.querySelector<HTMLButtonElement>('.wizard-step-selection__title')!;
     title.textContent = stepLabel;
     title.setAttribute('aria-label', `Ga naar: ${stepLabel}`);
     title.addEventListener('click', () => {
@@ -144,10 +138,7 @@ export class StoryWizardSummary {
       if (details) details.open = false;
     });
 
-    info.appendChild(title);
-    info.appendChild(value);
-    wrapper.appendChild(numberBadge);
-    wrapper.appendChild(info);
+    wrapper.querySelector('.wizard-step-selection__value')!.replaceWith(value);
 
     return wrapper;
   }
@@ -183,62 +174,58 @@ export class StoryWizardSummary {
     }
 
     btn.addEventListener('click', onClick);
-
     return btn;
   }
 
-  private createEmptyValueElement(isAdvanced: boolean, isCompletedAdvancedStep: boolean): HTMLElement {
-    const value = document.createElement('span');
-    value.className = 'wizard-step-selection__value';
-    value.textContent =
-      isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
-
-    if (!isAdvanced || !isCompletedAdvancedStep) {
-      value.classList.add('wizard-step-selection__value--empty');
-    }
-
-    return value;
-  }
-
-  private appendOptionLabel(value: HTMLElement, optionLabel: string) {
-    const option = document.createElement('span');
-    option.className = 'wizard-step-selection__value-option';
-    option.textContent = optionLabel;
-    value.appendChild(option);
-  }
-
-  private createSingleTokenValueElement(group: StoryWizardSelectionSummary): HTMLElement {
+  private createValueElement(
+    groups: StoryWizardSelectionSummary[],
+    isAdvanced: boolean,
+    isCompletedAdvancedStep: boolean,
+  ): HTMLElement {
     const value = document.createElement('span');
     value.className = 'wizard-step-selection__value';
 
-    if (group.optionLabel) {
-      this.appendOptionLabel(value, group.optionLabel);
-    }
+    if (groups.length === 0) {
+      value.textContent =
+        isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
 
-    const token = group.tokens[0];
-    if (!token) {
-      value.textContent = group.optionLabel;
+      if (!isAdvanced || !isCompletedAdvancedStep) {
+        value.classList.add('wizard-step-selection__value--empty');
+      }
       return value;
     }
 
-    const tokenValue = document.createElement('span');
-    tokenValue.className = 'wizard-step-selection__value-token';
-    tokenValue.appendChild(this.createTokenValueItem(token.path, token.value));
-    value.appendChild(tokenValue);
+    const [group] = groups;
 
+    if (groups.length === 1 && group.optionLabel) {
+      const option = document.createElement('span');
+      option.className = 'wizard-step-selection__value-option';
+      option.textContent = group.optionLabel;
+      value.appendChild(option);
+    }
+
+    if (groups.length === 1 && group.tokens.length <= 1) {
+      const token = group.tokens[0];
+      if (token) {
+        const tokenSpan = document.createElement('span');
+        tokenSpan.className = 'wizard-step-selection__value-token';
+        tokenSpan.appendChild(this.createTokenValueItem(token.path, token.value));
+        value.appendChild(tokenSpan);
+      }
+      return value;
+    }
+
+    value.appendChild(this.createSummaryDetails(groups));
     return value;
   }
 
   private createSummaryDetails(groups: StoryWizardSelectionSummary[]): HTMLDetailsElement {
-    const details = document.createElement('details');
-    details.className = 'wizard-step-selection__value-summary';
+    const details = cloneTemplate<HTMLDetailsElement>('wizard-value-summary-tmpl', '.wizard-step-selection__value-summary');
 
-    const summary = document.createElement('summary');
-    summary.className = 'wizard-step-selection__value-summary-label';
-    summary.textContent = `${groups.reduce((count, group) => count + group.tokens.length, 0)} tokens`;
+    details.querySelector('.wizard-step-selection__value-summary-label')!.textContent =
+      `${groups.reduce((count, group) => count + group.tokens.length, 0)} tokens`;
 
-    const list = document.createElement('ul');
-    list.className = 'wizard-step-selection__value-summary-list';
+    const list = details.querySelector('.wizard-step-selection__value-summary-list')!;
 
     groups.forEach((group) => {
       group.tokens.forEach((token) => {
@@ -249,56 +236,14 @@ export class StoryWizardSummary {
       });
     });
 
-    details.appendChild(summary);
-    details.appendChild(list);
-
     return details;
   }
 
-  private createValueElement(
-    groups: StoryWizardSelectionSummary[],
-    isAdvanced: boolean,
-    isCompletedAdvancedStep: boolean,
-  ): HTMLElement {
-    if (groups.length === 0) {
-      return this.createEmptyValueElement(isAdvanced, isCompletedAdvancedStep);
-    }
-
-    const [group] = groups;
-    if (groups.length === 1 && group.tokens.length <= 1) {
-      return this.createSingleTokenValueElement(group);
-    }
-
-    const value = document.createElement('span');
-    value.className = 'wizard-step-selection__value';
-
-    if (groups.length === 1 && group.optionLabel) {
-      this.appendOptionLabel(value, group.optionLabel);
-    }
-
-    value.appendChild(this.createSummaryDetails(groups));
-
-    return value;
-  }
-
   private createTokenValueItem(path: string, rawValue: string): DocumentFragment {
-    const fragment = document.createDocumentFragment();
+    const fragment = cloneTemplate('wizard-token-item-tmpl');
 
-    const tokenPath = document.createElement('code');
-    tokenPath.className = 'wizard-step-selection__value-token-path';
-    tokenPath.textContent = path;
-
-    const separator = document.createElement('span');
-    separator.className = 'wizard-step-selection__value-token-separator';
-    separator.textContent = ':';
-
-    const tokenValue = document.createElement('code');
-    tokenValue.className = 'wizard-step-selection__value-token-value';
-    tokenValue.textContent = rawValue;
-
-    fragment.appendChild(tokenPath);
-    fragment.appendChild(separator);
-    fragment.appendChild(tokenValue);
+    fragment.querySelector('.wizard-step-selection__value-token-path')!.textContent = path;
+    fragment.querySelector('.wizard-step-selection__value-token-value')!.textContent = rawValue;
 
     return fragment;
   }
