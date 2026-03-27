@@ -6,8 +6,9 @@ import LocalizationMixin from '@nl-design-system-community/clippy-components/lib
 import {
   EXTENSION_RESOLVED_AS,
   isRef,
+  stringifyDimension,
   type ColorToken,
-  type DimensionToken,
+  type ModernDimensionToken,
   type FontFamilyToken,
   type ResolvedToken,
 } from '@nl-design-system-community/design-tokens-schema';
@@ -18,13 +19,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { DesignToken } from 'style-dictionary/types';
 import * as libColor from './color'; // Consider loading this dynamically based on component attribute `type`
+import * as libDimension from './dimension'; // Consider loading this dynamically based on component attribute `type`
 import * as libFontFamily from './font-family'; // Consider loading this dynamically based on component attribute `type`
 import styles from './styles';
 
 export type Option = {
   label: string;
   description?: string;
-  value: ColorToken | DimensionToken | FontFamilyToken | ResolvedToken | DesignToken;
+  value: ColorToken | ModernDimensionToken | FontFamilyToken | ResolvedToken | DesignToken;
   color?: Color;
 };
 
@@ -61,6 +63,9 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     if (typeof token?.$value === 'string' || typeof token?.$value === 'number' || token.$value === undefined) {
       return token.$value;
     }
+    if (token.$type === 'dimension') {
+      return stringifyDimension(token.$value);
+    }
     return JSON.stringify(token.$value); // TODO: improve this for better display of complex tokens
   }
 
@@ -84,6 +89,9 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
         return ({ label, value }: Option) =>
           filterByLabel({ label, value }) || libFontFamily.filter(normalizedQuery)({ value: value as FontFamilyToken });
       case 'dimension':
+        return ({ label, value }: Option) =>
+          filterByLabel({ label, value }) ||
+          libDimension.filter(normalizedQuery)({ value: value as ModernDimensionToken });
       case 'number':
       default:
         return filterByLabel;
@@ -143,6 +151,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
             case 'fontFamily':
               return libFontFamily.queryToValue(query);
             case 'dimension':
+              return libDimension.queryToValue(query);
             case 'number':
             default:
               return super.queryToValue(query);
@@ -169,6 +178,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
       case 'fontFamily':
         return stringValue || libFontFamily.valueToQuery({ $value });
       case 'dimension':
+        return stringValue || libDimension.valueToQuery({ $value });
       case 'number':
       default:
         return stringValue || JSON.stringify($value);
@@ -176,14 +186,14 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
   }
 
   renderPreview(option: Option) {
+    // TODO fix type safety by making sure option type is inferred from `option.value.$type`
     switch (option.value.$type) {
       case 'color':
-        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
         return libColor.preview(option as Option & { value: ColorToken });
       case 'fontFamily':
-        // TODO fix type safety by making sure option type is inferred from `option.value.$type`
         return libFontFamily.preview(option as Option & { value: FontFamilyToken });
       case 'dimension':
+        return libDimension.preview(option as Option & { value: ModernDimensionToken });
       case 'number':
       default:
         return nothing;

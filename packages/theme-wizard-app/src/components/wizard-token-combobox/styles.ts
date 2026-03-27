@@ -13,12 +13,15 @@ export default css`
     gap: var(--wizard-token-combobox-option-gap, var(--basis-space-inline-md));
   }
 
-  .wizard-token-combobox__preview--font-family {
+  .wizard-token-combobox__preview--font-family,
+  .wizard-token-combobox__preview--font-size {
     align-items: center;
+    block-size: var(--nl-color-sample-block-size);
     display: inline-flex;
     font-size: var(--basis-text-font-size-lg);
+    inline-size: var(--nl-color-sample-inline-size);
     justify-content: center;
-    overflow: hidden;
+    overflow: clip;
     text-wrap: nowrap;
   }
 `;
