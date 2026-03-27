@@ -136,6 +136,16 @@ export default class Theme {
     this.updateAt(path, defaultValue?.$value);
   }
 
+  resetMany(paths: string[]) {
+    const updates = paths
+      .map((path) => ({ path, value: dlv(this.#defaults, path)?.$value }))
+      .filter(({ value }) => value !== undefined);
+
+    if (updates.length > 0) {
+      this.updateMany(updates);
+    }
+  }
+
   at(path: string): DesignToken {
     return dlv(this.tokens, path);
   }

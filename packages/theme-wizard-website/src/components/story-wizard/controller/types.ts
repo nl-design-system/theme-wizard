@@ -1,11 +1,25 @@
+import type { DerivedTokenReference } from '@/lib/types';
+
 export type StoryWizardSelectedOption = {
+  derivedTokenReference?: DerivedTokenReference;
   optionLabel: string;
   previewStyle: string;
   tokens: unknown;
 };
 
+export type StoryWizardPresetOption = {
+  description?: string;
+  derivedTokenReference?: DerivedTokenReference;
+  name: string;
+  previewStyle?: string;
+  tokens: unknown;
+};
+
 export type WizardTokenPresetInput = HTMLElement & {
+  updateComplete?: Promise<boolean>;
   clearSelection: () => void;
+  defaultIndex: number;
+  options: StoryWizardPresetOption[];
   optionLabel: string;
   previewStyle: string;
   selectedIndex: number;

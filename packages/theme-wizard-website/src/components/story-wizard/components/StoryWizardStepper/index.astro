@@ -1,3 +1,8 @@
+---
+import StoryWizardSummaryTemplates from './StoryWizardSummaryTemplates.astro';
+import StoryWizardTokensDialog from './StoryWizardTokensDialog.astro';
+---
+
 <nav class="wizard-preset-stepper" aria-label="Navigeer tussen keuzes" hidden>
   <div class="wizard-preset-stepper__actions">
     <div class="wizard-preset-stepper__actions-secondary">
@@ -6,9 +11,7 @@
 
     <div class="wizard-preset-stepper__actions-primary">
       <p class="nl-paragraph wizard-preset-transition-note"></p>
-      <button class="wizard-preset-finish-safe nl-button nl-button--primary" type="button" hidden>
-        Afronden
-      </button>
+      <button class="wizard-preset-finish-safe nl-button nl-button--primary" type="button" hidden> Afronden </button>
       <button class="wizard-preset-next nl-button nl-button--primary nl-button--disabled" type="button" disabled>
         Volgende
       </button>
@@ -19,6 +22,10 @@
     <summary class="wizard-step-selections__summary">
       <span aria-live="polite" aria-atomic="true">Design keuzes (0/0)</span>
     </summary>
+
     <div class="wizard-step-selections__list"></div>
   </details>
 </nav>
+
+<StoryWizardSummaryTemplates />
+<StoryWizardTokensDialog />

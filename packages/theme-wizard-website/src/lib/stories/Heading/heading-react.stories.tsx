@@ -1,10 +1,9 @@
-import type { HeadingProps } from '@nl-design-system-candidate/heading-react';
-import type { StoryObj, Meta } from '@storybook/react-vite';
-import type { CSSProperties } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import css from '@nl-design-system-candidate/heading-css/heading.css?inline';
-import { Heading } from '@nl-design-system-candidate/heading-react';
+import { Heading, type HeadingProps } from '@nl-design-system-candidate/heading-react';
 import tokens from '@nl-design-system-candidate/heading-tokens';
 import { Paragraph } from '@nl-design-system-candidate/paragraph-react';
+import { createHeadingPreview, headingSampleText, renderHeadingLevelsPreview } from './heading-react.story-helpers';
 
 const meta = {
   id: 'heading',
@@ -17,6 +16,9 @@ const meta = {
 } satisfies Meta<typeof Heading>;
 
 export default meta;
+
+export * from './heading-react.preset.stories';
+export * from './heading-react.advanced-stories';
 
 type Story = StoryObj<HeadingProps>;
 
@@ -79,16 +81,25 @@ Dit voorbeeld voldoet niet aan de best practices van NL Design System om de teks
   },
 };
 
-const clampStyles: CSSProperties = {
-  display: '-webkit-box',
-  lineClamp: 1,
-  overflow: 'hidden',
-  WebkitBoxOrient: 'block-axis',
-  WebkitLineClamp: '1',
+export const WizardPreview: Story = {
+  name: 'Wizard Preview',
+  args: {
+    children: headingSampleText,
+    level: 1,
+  },
+  render: (args) => renderHeadingLevelsPreview(args),
 };
 
-export const DesignHeadingSizes: Story = {
-  name: 'Design: Heading Sizes',
+export const Heading1Preview: Story = createHeadingPreview('Heading 1 Preview', 1);
+export const Heading2Preview: Story = createHeadingPreview('Heading 2 Preview', 2);
+export const Heading3Preview: Story = createHeadingPreview('Heading 3 Preview', 3);
+export const Heading4Preview: Story = createHeadingPreview('Heading 4 Preview', 4);
+export const Heading5Preview: Story = createHeadingPreview('Heading 5 Preview', 5);
+export const Heading6Preview: Story = createHeadingPreview('Heading 6 Preview', 6);
+export const AllHeadingsPreview: Story = createHeadingPreview('All Headings Preview');
+
+export const AdvancedHeadingSizes: Story = {
+  name: 'Heading Sizes',
   args: {
     children: 'The quick brown fox jumps over the lazy dog',
     level: 1,
@@ -138,28 +149,5 @@ export const DesignHeadingSizes: Story = {
       },
     },
   },
-  render: ({ children }) => {
-    return (
-      <div>
-        <Heading level={1} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={2} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={3} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={4} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={5} style={clampStyles}>
-          {children}
-        </Heading>
-        <Heading level={6} style={clampStyles}>
-          {children}
-        </Heading>
-      </div>
-    );
-  },
+  render: renderHeadingLevelsPreview,
 };
