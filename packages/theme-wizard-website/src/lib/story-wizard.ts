@@ -1,5 +1,5 @@
-import { styleObjectToString, tokensToStyle } from '../../../theme-wizard-app/src/lib/Theme/lib';
-import { getStories } from '../../../theme-wizard-app/src/utils/csf-utils';
+import { styleObjectToString, tokensToStyle } from '@app/lib/Theme/lib';
+import { getStories } from '@app/utils/csf-utils';
 import { components } from './components';
 import {
   type StoryWizardPresetGroup,
@@ -36,7 +36,6 @@ const formatTokenLabel = (tokenPath: string) => {
 
 const formatTokenCssVar = (tokenPath: string) => `--${tokenPath.replaceAll('.', '-')}`;
 
-
 const collectEditableTokenPaths = (tokens: unknown, path: string[] = []): StoryWizardEditableToken[] => {
   if (!tokens || typeof tokens !== 'object') return [];
 
@@ -54,10 +53,7 @@ export const resolveStoryWizardModel = async (componentId: keyof typeof componen
   const componentModule = await components[componentId].stories();
   const { default: meta, ...storyExports } = componentModule;
 
-  const allStories = getStories(
-    storyExports as unknown as Record<PropertyKey, StoryWizardStory>,
-    meta,
-  ) as StoryEntry[];
+  const allStories = getStories(storyExports as unknown as Record<PropertyKey, StoryWizardStory>, meta) as StoryEntry[];
 
   const wizardStories = allStories.filter(([, story]) => isWizardStory(story));
 
@@ -68,15 +64,13 @@ export const resolveStoryWizardModel = async (componentId: keyof typeof componen
     .reduce<StoryWizardStep[]>((acc, [id, story]) => {
       const step = createStep(id, story, storyMap, presetTokenPaths);
       if (step) acc.push(step);
-      else console.warn("No valid configuration for wizard step found.", story)
+      else console.warn('No valid configuration for wizard step found.', story);
       return acc;
     }, [])
     .sort((a, b) => a.order - b.order);
 
   const steps = createFlowSteps(rawSteps);
-  const storyIds = Array.from(
-    new Set(steps.flatMap((step) => [step.id, ...step.previewStories.map((p) => p.id)])),
-  );
+  const storyIds = Array.from(new Set(steps.flatMap((step) => [step.id, ...step.previewStories.map((p) => p.id)])));
 
   return {
     componentId,
@@ -186,11 +180,7 @@ const createStep = (
   };
 };
 
-const createPresetGroup = (
-  storyId: string,
-  preset: StoryWizardPresetObject,
-  index: number,
-): StoryWizardPresetGroup => {
+const createPresetGroup = (storyId: string, preset: StoryWizardPresetObject, index: number): StoryWizardPresetGroup => {
   return {
     id: `${storyId}-preset-group-${index}`,
     name: preset.question ?? preset.name,
@@ -213,7 +203,7 @@ const createEditableTokenGroup = (
 ): StoryWizardEditableTokenGroup | null => {
   const editableTokens = collectEditableTokenPaths(story.parameters?.editableTokens);
   const filteredTokens = editableTokens.filter((token) => !presetTokenPaths.has(token.path));
-  
+
   if (filteredTokens.length === 0) {
     return null;
   }
@@ -222,8 +212,7 @@ const createEditableTokenGroup = (
   if (wizard.type !== 'advanced') return null;
 
   const storyName = story.name ?? storyId;
-  const name =
-    wizard.question ?? (storyName.startsWith('Design: ') ? storyName.slice('Design: '.length) : storyName);
+  const name = wizard.question ?? (storyName.startsWith('Design: ') ? storyName.slice('Design: '.length) : storyName);
 
   return {
     id: `${storyId}-editable-tokens`,

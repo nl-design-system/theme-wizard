@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@templates/*": ["../theme-wizard-templates/src/*", "../../theme-wizard-templates/src/*"]
+      "@templates/*": ["../theme-wizard-templates/src/*", "../../theme-wizard-templates/src/*"],
+      "@app/*": ["../theme-wizard-app/src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"

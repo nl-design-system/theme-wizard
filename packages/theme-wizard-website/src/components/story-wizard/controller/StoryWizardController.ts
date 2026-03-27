@@ -1,3 +1,4 @@
+import { presetTokensToUpdateMany } from '@app/lib/Theme/lib';
 import type { components } from '@/lib/components';
 import { initStories } from '@/components/render-stories';
 import type { StoryWizardThemeHost } from './types';
@@ -80,9 +81,28 @@ export class StoryWizardController {
 
   async #reset() {
     this.#nav.reset();
-    this.#container.closest('theme-wizard-app')?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
+    const paths = this.#getAllAffectedTokenPaths();
+    this.#container
+      .closest('theme-wizard-app')
+      ?.dispatchEvent(new CustomEvent('reset-tokens', { bubbles: true, composed: true, detail: { paths } }));
     await this.#presetState.reset();
     this.#showStep(0);
+  }
+
+  /**
+   * Collects all token paths that the story wizard can affect:
+   * all options from all preset groups, plus editable token paths from advanced steps.
+   */
+  #getAllAffectedTokenPaths(): string[] {
+    const presetPaths = this.#steps.flatMap((step) =>
+      step.groups.flatMap((group) =>
+        group.getOptions().flatMap((option) => presetTokensToUpdateMany(option.tokens).map(({ path }) => path)),
+      ),
+    );
+
+    const editablePaths = this.#steps.flatMap((step) => step.editableTokenPaths);
+
+    return [...new Set([...presetPaths, ...editablePaths])];
   }
 
   // --- Navigation handlers ---
