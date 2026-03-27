@@ -150,21 +150,7 @@ const getScaleReferenceForKey = (
  * `{ nl: { paragraph: { lead: { 'font-size': { $value: '{basis.text.font-size.xl}' } } } } }`
  */
 const buildTokenValue = (path: string, value: unknown) => {
-  const result: Record<string, unknown> = {};
-  const segments = path.split('.');
-  let current: Record<string, unknown> = result;
-
-  segments.forEach((segment, index) => {
-    if (index === segments.length - 1) {
-      current[segment] = { $value: value };
-      return;
-    }
-
-    current[segment] = {};
-    current = current[segment] as Record<string, unknown>;
-  });
-
-  return result;
+  return path.split('.').reduceRight<Record<string, unknown>>((acc, key) => ({ [key]: acc }), { $value: value });
 };
 
 /**
@@ -187,12 +173,16 @@ const resolveDynamicPresetOption = <TOption extends DynamicPresetOption>(
 
   const { offset, scalePath, sourcePath, targetIndex, targetKey, targetPath } = option.derivedTokenReference;
   const sourceReference = getSelectedTokenReference(selectedOptions, sourcePath, defaults, `{${scalePath}.md}`);
-  const resolvedValue =
-    typeof targetKey === 'string'
-      ? getScaleReferenceForKey(defaults, scalePath, targetKey, sourceReference)
-      : typeof targetIndex === 'number'
-        ? getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference)
-        : getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
+  let resolvedValue: string;
+
+  if (typeof targetKey === 'string') {
+    resolvedValue = getScaleReferenceForKey(defaults, scalePath, targetKey, sourceReference);
+  } else if (typeof targetIndex === 'number') {
+    resolvedValue = getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference);
+  } else {
+    resolvedValue = getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
+  }
+
   const resolvedTokens = buildTokenValue(targetPath, resolvedValue);
 
   return {
