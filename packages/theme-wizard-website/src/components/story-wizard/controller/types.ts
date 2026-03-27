@@ -1,4 +1,4 @@
-import type { DerivedTokenReference } from '@/lib/story-wizard-preset-resolution';
+import type { DerivedTokenReference } from '@/lib/types';
 
 export type StoryWizardSelectedOption = {
   derivedTokenReference?: DerivedTokenReference;

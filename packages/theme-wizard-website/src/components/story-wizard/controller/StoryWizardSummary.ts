@@ -8,8 +8,6 @@ export class StoryWizardSummary {
   private readonly listElement: HTMLElement | null;
   private readonly summaryElement: HTMLElement | null;
   private readonly detailsElement: HTMLElement | null;
-  private pendingUpdate = false;
-
   public constructor(
     root: HTMLElement | Document,
     private readonly dialog: StoryWizardTokensDialog,
@@ -29,50 +27,26 @@ export class StoryWizardSummary {
     if (details) details.open = true;
   }
 
-  /** Coalesces multiple rapid calls into a single DOM update. */
-  public scheduleUpdate(
-    steps: StoryWizardStep[],
-    currentStep: number,
-    hasFinishedAllChoices: boolean,
-    themeHost: StoryWizardThemeHost | null,
-  ) {
-    if (this.pendingUpdate) return;
+  public update(steps: StoryWizardStep[], themeHost: StoryWizardThemeHost | null) {
+    const { listElement } = this;
+    if (!listElement) return;
 
-    this.pendingUpdate = true;
-    queueMicrotask(() => {
-      this.pendingUpdate = false;
-      this.update(steps, currentStep, hasFinishedAllChoices, themeHost);
-    });
-  }
-
-  public update(
-    steps: StoryWizardStep[],
-    currentStep: number,
-    hasFinishedAllChoices: boolean,
-    themeHost: StoryWizardThemeHost | null,
-  ) {
-    if (!this.listElement) return;
-
-    this.listElement.replaceChildren();
+    listElement.replaceChildren();
     let completedSteps = 0;
     const allSelectedGroups: StoryWizardSelectionSummary[] = [];
 
     steps.forEach((step, index) => {
       const selectedGroups = step.isAdvanced ? this.getAdvancedSummary(step, themeHost) : step.createSelectionSummary();
-      const defaultAdvancedGroups =
-        step.isAdvanced && step.hasBeenVisited() && selectedGroups.length === 0
-          ? this.getAdvancedSummary(step, themeHost, { includeUnchangedTokens: true })
-          : [];
-
       const isCompletedAdvancedStep = step.isAdvanced && step.hasBeenVisited();
       const isConfirmedAdvancedStep = step.isAdvanced && (selectedGroups.length > 0 || isCompletedAdvancedStep);
-      const visibleGroups = step.isAdvanced
-        ? isConfirmedAdvancedStep
-          ? selectedGroups.length > 0
-            ? selectedGroups
-            : defaultAdvancedGroups
-          : []
-        : selectedGroups;
+
+      const getVisibleGroups = (): StoryWizardSelectionSummary[] => {
+        if (!step.isAdvanced) return selectedGroups;
+        if (!isConfirmedAdvancedStep) return [];
+        if (selectedGroups.length > 0) return selectedGroups;
+        return this.getAdvancedSummary(step, themeHost, { includeUnchangedTokens: true });
+      };
+      const visibleGroups = getVisibleGroups();
       const hasChosenSelection = step.isAdvanced ? isConfirmedAdvancedStep : step.hasChosenSelection();
 
       if (hasChosenSelection) {
@@ -88,7 +62,7 @@ export class StoryWizardSummary {
         this.appendTokensButton(wrapper, stepLabel, visibleGroups);
       }
 
-      this.listElement!.appendChild(wrapper);
+      listElement.appendChild(wrapper);
     });
 
     this.appendTotalTokensButton(allSelectedGroups);

@@ -1,30 +1,6 @@
 import dlv from 'dlv';
 import { presetTokensToStyle, styleObjectToString } from '../../../theme-wizard-app/src/lib/Theme/lib';
-
-export type DerivedTokenReference = {
-  offset: number;
-  scalePath: string;
-  sourcePath: string;
-  targetIndex?: number;
-  targetKey?: string;
-  targetPath: string;
-};
-
-export type DynamicPresetOption = {
-  derivedTokenReference?: DerivedTokenReference;
-  previewStyle?: string;
-  tokens: unknown;
-};
-
-type SelectedPresetOption = {
-  tokens: unknown;
-} | null;
-
-type PresetResolutionContext<TOption extends DynamicPresetOption> = {
-  defaults: unknown;
-  options: TOption[];
-  selectedOptions: SelectedPresetOption[];
-};
+import { type DynamicPresetOption, type SelectedPresetOption, type PresetResolutionContext } from './types';
 
 /**
  * Reads the available keys from a token scale in the defaults object.
@@ -131,7 +107,12 @@ const getShiftedScaleReference = (defaults: unknown, reference: string, scalePat
   return `{${prefix}${scale[targetIndex]}}`;
 };
 
-const getScaleReferenceAtIndex = (defaults: unknown, scalePath: string, targetIndex: number, fallbackReference: string) => {
+const getScaleReferenceAtIndex = (
+  defaults: unknown,
+  scalePath: string,
+  targetIndex: number,
+  fallbackReference: string,
+) => {
   const scale = getTokenScale(defaults, scalePath);
 
   if (scale.length === 0) {
@@ -143,7 +124,12 @@ const getScaleReferenceAtIndex = (defaults: unknown, scalePath: string, targetIn
   return `{${scalePath}.${scale[clampedIndex]}}`;
 };
 
-const getScaleReferenceForKey = (defaults: unknown, scalePath: string, targetKey: string, fallbackReference: string) => {
+const getScaleReferenceForKey = (
+  defaults: unknown,
+  scalePath: string,
+  targetKey: string,
+  fallbackReference: string,
+) => {
   const scale = getTokenScale(defaults, scalePath);
 
   if (!scale.includes(targetKey)) {
@@ -205,8 +191,8 @@ const resolveDynamicPresetOption = <TOption extends DynamicPresetOption>(
     typeof targetKey === 'string'
       ? getScaleReferenceForKey(defaults, scalePath, targetKey, sourceReference)
       : typeof targetIndex === 'number'
-      ? getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference)
-      : getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
+        ? getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference)
+        : getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
   const resolvedTokens = buildTokenValue(targetPath, resolvedValue);
 
   return {
