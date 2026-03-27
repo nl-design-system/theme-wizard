@@ -3,6 +3,7 @@ import '../wizard-colorscale-input';
 import '../wizard-token-combobox';
 import '../wizard-token-input';
 import '../wizard-token-presets';
+import { parseColor } from '@nl-design-system-community/design-tokens-schema';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type Theme from '../../lib/Theme';
 import type { WizardColorscaleInput } from '../wizard-colorscale-input';
@@ -382,9 +383,9 @@ describe(`<${appTag}> preset updates`, () => {
 
     colorscale.name = 'basis.color.accent-1';
     colorscale.value = {
-      'color-default': { $value: '#111111' },
-      'color-dark': { $value: '#222222' },
-    } as typeof colorscale.value;
+      'color-dark': { $type: 'color', $value: parseColor('#222222') },
+      'color-default': { $type: 'color', $value: parseColor('#111111') },
+    };
     app.appendChild(colorscale);
     colorscale.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
 
