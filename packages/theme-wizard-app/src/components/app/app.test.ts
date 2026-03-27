@@ -1,7 +1,13 @@
 import './app';
+import '../wizard-colorscale-input';
+import '../wizard-token-combobox';
+import '../wizard-token-input';
 import '../wizard-token-presets';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type Theme from '../../lib/Theme';
+import type { WizardColorscaleInput } from '../wizard-colorscale-input';
+import type { WizardTokenCombobox } from '../wizard-token-combobox';
+import type { WizardTokenInput } from '../wizard-token-input';
 import type { WizardTokenPreset } from '../wizard-token-presets';
 import type { App } from './app';
 
@@ -187,6 +193,9 @@ const mount = async (): Promise<{
   };
 };
 
+const themeStorageKey = 'v0:theme-wizard:JSON:_';
+const scrapedTokensStorageKey = 'v0:scraped-tokens:JSON:_';
+
 describe(`<${appTag}> lifecycle`, () => {
   beforeEach(() => {
     document.body.innerHTML = '';
@@ -227,6 +236,55 @@ describe(`<${appTag}> lifecycle`, () => {
     expect(getTheme(app).modified).toBe(false);
     expect(themeUpdateHandler).toHaveBeenCalled();
   });
+
+  it('restores persisted theme tokens and scraped tokens on connect', async () => {
+    localStorage.setItem(
+      themeStorageKey,
+      JSON.stringify({
+        basis: {
+          'border-radius': {
+            sm: { $value: '0.25rem' },
+          },
+        },
+      }),
+    );
+    localStorage.setItem(
+      scrapedTokensStorageKey,
+      JSON.stringify([
+        {
+          name: 'basis.color.document',
+          $type: 'color',
+          $value: '#000000',
+        },
+      ]),
+    );
+
+    const { app } = await mount();
+
+    expect(getTheme(app).at('basis.border-radius.sm')?.$value).toBe('0.25rem');
+    expect(app.scrapedTokens).toHaveLength(1);
+  });
+
+  it('ignores wizard-scraper-done events from non-scraper elements', async () => {
+    const { app } = await mount();
+    const scrapeSuccessHandler = vi.fn();
+    const otherElement = document.createElement('div');
+
+    app.addEventListener('scrape-success', scrapeSuccessHandler);
+    app.appendChild(otherElement);
+    otherElement.dispatchEvent(
+      new CustomEvent('wizard-scraper-done', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          result: [{ name: 'ignored-token' }],
+        },
+      }),
+    );
+
+    expect(scrapeSuccessHandler).not.toHaveBeenCalled();
+    expect(app.scrapedTokens).toEqual([]);
+  });
 });
 
 describe(`<${appTag}> preset updates`, () => {
@@ -265,5 +323,77 @@ describe(`<${appTag}> preset updates`, () => {
       leadFontSize: '{basis.text.font-size.md}',
       paragraphFontSize: '{basis.text.font-size.md}',
     });
+  });
+
+  it('skips theme-update when a token input change does not change the current value', async () => {
+    const { app } = await mount();
+    const themeUpdateHandler = vi.fn();
+    const input = document.createElement('wizard-token-input') as WizardTokenInput;
+
+    app.addEventListener('theme-update', themeUpdateHandler);
+    getTheme(app).updateAt('nl.paragraph.font-size', '1rem');
+
+    input.name = 'nl.paragraph.font-size';
+    input.value = '1rem';
+    app.appendChild(input);
+    input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+    expect(themeUpdateHandler).not.toHaveBeenCalled();
+  });
+
+  it('updates the theme when a token input change changes the value', async () => {
+    const { app } = await mount();
+    const themeUpdateHandler = vi.fn();
+    const input = document.createElement('wizard-token-input') as WizardTokenInput;
+
+    app.addEventListener('theme-update', themeUpdateHandler);
+
+    input.name = 'nl.paragraph.font-size';
+    input.value = '1.25rem';
+    app.appendChild(input);
+    input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+    expect(getTheme(app).at('nl.paragraph.font-size')?.$value).toBe('1.25rem');
+    expect(themeUpdateHandler).toHaveBeenCalledOnce();
+  });
+
+  it('skips theme-update when a combobox change does not change the current value', async () => {
+    const { app } = await mount();
+    const themeUpdateHandler = vi.fn();
+    const combobox = document.createElement('wizard-token-combobox') as WizardTokenCombobox;
+
+    app.addEventListener('theme-update', themeUpdateHandler);
+    getTheme(app).updateAt('nl.paragraph.font-size', '{basis.text.font-size.md}');
+
+    combobox.name = 'nl.paragraph.font-size';
+    combobox.value = { $value: '{basis.text.font-size.md}' } as typeof combobox.value;
+    app.appendChild(combobox);
+    combobox.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+    expect(themeUpdateHandler).not.toHaveBeenCalled();
+  });
+
+  it('updates colorscale tokens when a colorscale input changes', async () => {
+    const { app } = await mount();
+    const themeUpdateHandler = vi.fn();
+    const colorscale = document.createElement('wizard-colorscale-input') as WizardColorscaleInput;
+
+    app.addEventListener('theme-update', themeUpdateHandler);
+
+    colorscale.name = 'basis.color.accent-1';
+    colorscale.value = {
+      'color-default': { $value: '#111111' },
+      'color-dark': { $value: '#222222' },
+    } as typeof colorscale.value;
+    app.appendChild(colorscale);
+    colorscale.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+    expect(getTheme(app).at('basis.color.accent-1.color-default')?.$value).toMatchObject({
+      colorSpace: 'srgb',
+    });
+    expect(getTheme(app).at('basis.color.accent-1-inverse.color-default')?.$value).toMatchObject({
+      colorSpace: 'srgb',
+    });
+    expect(themeUpdateHandler).toHaveBeenCalledOnce();
   });
 });
