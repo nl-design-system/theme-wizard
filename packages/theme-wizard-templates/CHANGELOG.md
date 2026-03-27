@@ -1,5 +1,14 @@
 # @nl-design-system-community/theme-wizard-templates
 
+## 1.0.6
+
+### Patch Changes
+
+- Updated dependencies [b570fd2]
+  - @nl-design-system-community/design-tokens-schema@2.1.0
+  - @nl-design-system-community/clippy-components@2.0.0
+  - @nl-design-system-community/theme-wizard-app@1.0.2
+
 ## 1.0.5
 
 ### Patch Changes
