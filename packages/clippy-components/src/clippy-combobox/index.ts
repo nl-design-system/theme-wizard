@@ -205,14 +205,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.emit('input');
   };
 
-  readonly #handleOptionsClick = (event: Event) => {
-    const target = event.currentTarget;
-    if (!(target instanceof HTMLElement)) return;
-
-    const index = Number(target.dataset['index']);
-    if (Number.isNaN(index)) return;
-    this.#commitActiveItem(index);
-  };
 
   readonly #handleKeydown = ({ key }: KeyboardEvent) => {
     const index = this.activeIndex;
@@ -401,8 +393,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                 role="option"
                 id=${ifDefined(this.#getOptionId(index))}
                 aria-selected=${selected}
-                data-index=${index}
-                @click=${this.#handleOptionsClick}
+                @click=${() => this.#commitActiveItem(index)}
               >
                 ${this.renderEntry(option, index)}
               </li>`;
