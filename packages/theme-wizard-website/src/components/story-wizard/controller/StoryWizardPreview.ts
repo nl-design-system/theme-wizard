@@ -1,7 +1,7 @@
 import type { StoryWizardStep } from './StoryWizardStep';
 
 export class StoryWizardPreview {
-  private lastMergedStyle: string | null = null;
+  #lastMergedStyle: string | null = null;
 
   public apply(steps: StoryWizardStep[]) {
     const mergedStyle = steps
@@ -9,11 +9,11 @@ export class StoryWizardPreview {
       .filter(Boolean)
       .join(';');
 
-    if (mergedStyle === this.lastMergedStyle) {
+    if (mergedStyle === this.#lastMergedStyle) {
       return;
     }
 
-    this.lastMergedStyle = mergedStyle;
+    this.#lastMergedStyle = mergedStyle;
 
     steps.forEach((step) => {
       step.element

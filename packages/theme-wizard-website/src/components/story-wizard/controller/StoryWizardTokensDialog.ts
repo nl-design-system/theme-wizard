@@ -2,10 +2,10 @@ import type { StoryWizardSelectionSummary } from './types';
 import { cloneTemplate } from './cloneTemplate';
 
 export class StoryWizardTokensDialog {
-  private dialog: HTMLDialogElement | null = null;
+  #dialog: HTMLDialogElement | null = null;
 
   public show(title: string, groups: StoryWizardSelectionSummary[]) {
-    const dialog = this.getDialog();
+    const dialog = this.#getDialog();
 
     dialog.querySelector('.wizard-tokens-dialog__title')!.textContent = title;
 
@@ -13,14 +13,14 @@ export class StoryWizardTokensDialog {
     body.replaceChildren();
 
     groups.forEach((group) => {
-      body.appendChild(this.createGroupSection(group));
+      body.appendChild(this.#createGroupSection(group));
     });
 
     dialog.showModal();
   }
 
-  private getDialog(): HTMLDialogElement {
-    if (this.dialog) return this.dialog;
+  #getDialog(): HTMLDialogElement {
+    if (this.#dialog) return this.#dialog;
 
     const dialog = document.getElementById('wizard-tokens-dialog') as HTMLDialogElement | null;
     if (!dialog) throw new Error('Dialog #wizard-tokens-dialog not found in DOM');
@@ -30,11 +30,11 @@ export class StoryWizardTokensDialog {
       if (e.target === dialog) dialog.close();
     });
 
-    this.dialog = dialog;
+    this.#dialog = dialog;
     return dialog;
   }
 
-  private createGroupSection(group: StoryWizardSelectionSummary): HTMLElement {
+  #createGroupSection(group: StoryWizardSelectionSummary): HTMLElement {
     const section = cloneTemplate<HTMLElement>('wizard-dialog-group-tmpl', '.wizard-tokens-dialog__group');
 
     section.querySelector('.wizard-tokens-dialog__group-title')!.textContent =
