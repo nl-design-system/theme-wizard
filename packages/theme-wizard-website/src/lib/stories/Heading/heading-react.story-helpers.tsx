@@ -23,9 +23,9 @@ export const headingFontSizes = [
 ] as const;
 
 export const clampStyles: CSSProperties = {
-  whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 };
 
 const tokenValue = (value: string) => ({ $value: value });

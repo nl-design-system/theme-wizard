@@ -135,12 +135,11 @@ const mergeStepsByFlowGroup = (steps: StoryWizardStep[]) => {
       return {
         // ID is a unique concatenation of all merged stories (e.g. 'button-primary--button-secondary')
         id: chunk.map((step) => step.id).join('--'),
-        type: 'advanced',
         flowGroup: groupKey,
         flowTitle,
-        // Stack all their individual groups (like editable token lists) and panels on top of one another
         groups: chunk.flatMap((step) => step.groups),
         intro: `Gebruik deze stap om meerdere geavanceerde instellingen binnen ${flowTitle.toLowerCase()} verder te verfijnen.`,
+        // Stack all their individual groups (like editable token lists) and panels on top of one another
         // Roughly preserve the original sort order (based on the first element found)
         order: chunk[0].order,
         // Live previews: Remove duplicates (via Map) so we don't load the same story twice in the preview UI
@@ -148,6 +147,7 @@ const mergeStepsByFlowGroup = (steps: StoryWizardStep[]) => {
           new Map(chunk.flatMap((step) => step.previewStories).map((s) => [s.id, s])).values(),
         ),
         title: flowTitle,
+        type: 'advanced',
       };
     })
     .filter((step): step is StoryWizardStep => Boolean(step));
@@ -175,7 +175,6 @@ const createStep = (
 
   return {
     id,
-    type: wizard.type,
     flowGroup: wizard.type === 'advanced' ? wizard.stepTitle : id,
     flowTitle: wizard.type === 'advanced' ? wizard.stepTitle : (story.name ?? id),
     groups,
@@ -183,6 +182,7 @@ const createStep = (
     order: wizard.order,
     previewStories: resolveStepPreviewStories(id, story, storyMap),
     title: story.name ?? id,
+    type: wizard.type,
   };
 };
 
