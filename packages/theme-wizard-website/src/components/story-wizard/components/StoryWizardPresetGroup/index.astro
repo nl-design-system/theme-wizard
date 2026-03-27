@@ -1,5 +1,5 @@
 ---
-import type { StoryWizardPresetGroup } from '@/lib/story-wizard';
+import type { StoryWizardPresetGroup } from '@/lib/types';
 
 const collectTokenPaths = (tokens: unknown, path: string[] = []): string[] => {
   if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return [];
@@ -48,8 +48,7 @@ const tokenPaths = Array.from(new Set(group.options.flatMap((option) => collectT
       <wizard-token-preset
         class="wizard-token-preset__input"
         group-label={group.name}
-        options={JSON.stringify(group.options)}
-      ></wizard-token-preset>
+        options={JSON.stringify(group.options)}></wizard-token-preset>
     </div>
   </div>
 </section>
