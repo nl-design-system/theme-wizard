@@ -27,19 +27,15 @@ test.describe('scraping css design tokens', () => {
   test('scrapes a valid, absolute URL', async ({ homePage, page, stagingTokensPage }) => {
     // This test waits for the loaders to disappear after scraping, which takes several seconds
     test.slow();
-    const navigationPromise = page.waitForEvent('load');
     await homePage.scrapeUrl('https://theme-wizard.nl-design-system-community.nl');
-    await navigationPromise;
-    expect(page.url()).toContain(stagingTokensPage.url);
+    await expect(page).toHaveURL(new RegExp(stagingTokensPage.url));
   });
 
   test('scrapes a valid, non-absolute URL', async ({ homePage, page, stagingTokensPage }) => {
     // This test waits for the loaders to disappear after scraping, which takes several seconds
     test.slow();
-    const navigationPromise = page.waitForEvent('load');
     await homePage.scrapeUrl('theme-wizard.nl-design-system-community.nl');
-    await navigationPromise;
-    expect(page.url()).toContain(stagingTokensPage.url);
+    await expect(page).toHaveURL(new RegExp(stagingTokensPage.url));
   });
 
   test('errors on an invalid URL', async ({ homePage }) => {
