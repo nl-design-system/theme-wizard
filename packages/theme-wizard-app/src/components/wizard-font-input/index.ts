@@ -63,13 +63,15 @@ export class WizardFontInput extends WizardTokenInput {
   override render() {
     const value = Array.isArray(this.value) ? this.value : [this.value];
     const options: FontOption[] = [
-      ...this.scrapedTokens
-        .filter((token) => token.$extensions?.[EXTENSION_TOKEN_STAGED] === true)
-        .filter((token) => token.$type === 'fontFamily')
-        .map((token) => ({
-          label: token.$value.join(', '),
-          value: token.$value,
-        })),
+      ...this.scrapedTokens.reduce<FontOption[]>((acc, token) => {
+        if (token.$extensions?.[EXTENSION_TOKEN_STAGED] === true && token.$type === 'fontFamily') {
+          acc.push({
+            label: token.$value.join(', '),
+            value: token.$value,
+          });
+        }
+        return acc;
+      }, []),
       ...DEFAULT_FONT_OPTIONS,
     ];
 
