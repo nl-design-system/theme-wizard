@@ -210,7 +210,7 @@ export const addComponentContrastExtensions = (rootConfig: Record<string, unknow
   return rootConfig;
 };
 
-export const useRefAsValue = (root: Record<string, unknown>) => {
+export const useOriginalValue = (root: Record<string, unknown>) => {
   walkObject(
     root,
     // Find token with `original` (Style Dictionary convention)
@@ -227,6 +227,11 @@ export const useRefAsValue = (root: Record<string, unknown>) => {
   );
   return root;
 };
+
+/**
+ * @deprecated This was a really confusing name. Use `useOriginalValue()` instead.
+ */
+export const useRefAsValue = useOriginalValue;
 
 /**
  * Validate a full theme
@@ -251,7 +256,7 @@ const ThemeShapeSchema = z.looseObject({
 const preprocessTheme = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
   // Apply transformations in order
-  data = useRefAsValue(data);
+  data = useOriginalValue(data);
   return data;
 };
 
@@ -262,7 +267,7 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
 const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
   // Step 1: Get `$extensions['original']['$value'] from Style Dictionary and place it in $value
-  data = useRefAsValue(data);
+  data = useOriginalValue(data);
   // Step 2: Clean up non-token properties for faster processing
   data = removeNonTokenProperties(data);
   // Step 3: Upgrade legacy token formats
