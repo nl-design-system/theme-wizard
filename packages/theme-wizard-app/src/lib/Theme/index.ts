@@ -10,12 +10,13 @@ import {
   EXTENSION_TOKEN_SUBTYPE,
   walkTokens,
   SKIP,
-  resolveRefs,
   setExtension,
   EXTENSION_CONTRAST_WITH,
   addComponentContrastExtensions,
   addBasisContrastExtensions,
   upgradeLegacyTokens,
+  resolveConfigRefs,
+  useRefAsValue,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -92,10 +93,6 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
-    upgradeLegacyTokens(values);
-    resolveRefs(values, values as Record<string, unknown>);
-    addComponentContrastExtensions(values);
-    addBasisContrastExtensions(values);
     this.#validateTheme(values);
     this.#tokens = values;
     this.toCSS();
@@ -115,10 +112,20 @@ export default class Theme {
     });
   }
 
+  #runThemeProcessors(tokens: DesignTokens) {
+    useRefAsValue(tokens);
+    upgradeLegacyTokens(tokens);
+    addComponentContrastExtensions(tokens);
+    addBasisContrastExtensions(tokens);
+    resolveConfigRefs(tokens);
+    return tokens;
+  }
+
   updateAt(path: string, value: DesignToken['$value']) {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
     Theme.#updateAt(tokens, path, value);
+    this.#runThemeProcessors(tokens);
     this.tokens = tokens;
   }
 
@@ -128,6 +135,7 @@ export default class Theme {
     for (const { path, value } of values) {
       Theme.#updateAt(tokens, path, value);
     }
+    this.#runThemeProcessors(tokens);
     this.tokens = tokens;
   }
 
@@ -191,7 +199,7 @@ export default class Theme {
           return obj?.map(convertTokens);
         }
 
-        if (obj.$type === 'color' && obj.$value?.components) {
+        if (obj.$type === 'color' && typeof obj.$value !== 'string') {
           return {
             ...obj,
             $value: stringifyColor(obj.$value),
