@@ -145,6 +145,22 @@ test.describe('stories', () => {
       await expect(color).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
     });
 
+    test('shows validation warning when bg+color tokens have insufficient contrast - absolute value', async ({
+      page,
+    }) => {
+      const color = page.getByLabel('nl.code-block.color');
+      const ERROR_MESSAGE = 'Onvoldoende contrast met nl.code-block.background-color';
+
+      // Make sure there's not already a validation message there
+      await expect(color).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+
+      // First fill in a color name to get <wizard-token-combobox> to show options
+      // Otherwise the next step fails because it wouldn't show any options
+      await color.fill('#fff');
+      await color.blur();
+      await expect(color).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+    });
+
     test('shows min-font-size validation', async ({ page }) => {
       const ERROR_MESSAGE =
         'Lettergrootte is te klein. Bekijk richtlijnen. Lettergrootte: 12px. Minimaal vereist: 14px / 0.875rem';

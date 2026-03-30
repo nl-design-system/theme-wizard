@@ -12,6 +12,10 @@ import {
   SKIP,
   resolveRefs,
   setExtension,
+  EXTENSION_CONTRAST_WITH,
+  addComponentContrastExtensions,
+  addBasisContrastExtensions,
+  upgradeLegacyTokens,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -88,8 +92,11 @@ export default class Theme {
 
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
-    this.#validateTheme(values);
+    upgradeLegacyTokens(values);
     resolveRefs(values, values as Record<string, unknown>);
+    addComponentContrastExtensions(values);
+    addBasisContrastExtensions(values);
+    this.#validateTheme(values);
     this.#tokens = values;
     this.toCSS();
   }
@@ -98,9 +105,9 @@ export default class Theme {
   // Unlike the non-private instance method `updateAt`, this method does not mark the theme as modified.
   static #updateAt(tokens: DesignTokens, path: string, value: DesignToken['$value']) {
     const { $extensions, ...original } = dlv(tokens, path);
-    // TODO: set extensions on the updated token based on the new value, for example if the new value is a reference to another token.
     delete $extensions?.[EXTENSION_RESOLVED_AS]; // Clear resolvedAs since the value is changing, it may no longer be valid
     delete $extensions?.[EXTENSION_RESOLVED_FROM]; // Clear resolvedFrom since the value is changing, it may no longer be valid
+    delete $extensions?.[EXTENSION_CONTRAST_WITH]; // The value might change a ref, so need to re-caculate the extension
     dset(tokens, path, {
       ...original,
       $extensions,
