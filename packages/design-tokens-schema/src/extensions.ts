@@ -9,11 +9,11 @@ export const setExtension = (token: BaseDesignToken, key: string, value: unknown
   token['$extensions'] ??= {};
 
   // Combine the new value and exising extension value if they're both arrays
-  if (Array.isArray(token['$extensions'][key]) && Array.isArray(value)) {
-    // Only add if the exact extension value isn't already in there, to avoid duplicates
-    if (!token.$extensions[key].some((extension) => dequal(extension, value))) {
-      token.$extensions[key] = [...token.$extensions[key], ...value];
-    }
+  const existing = token['$extensions'][key];
+  if (Array.isArray(existing) && Array.isArray(value)) {
+    // Only add items that aren't already in there, to avoid duplicates
+    const newItems = value.filter((item) => !existing.some((extension: unknown) => dequal(extension, item)));
+    token.$extensions[key] = [...existing, ...newItems];
   } else {
     // Otherwise, add or override the extension
     token.$extensions[key] = value;
