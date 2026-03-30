@@ -10,8 +10,13 @@ import {
   EXTENSION_TOKEN_SUBTYPE,
   walkTokens,
   SKIP,
-  resolveRefs,
   setExtension,
+  EXTENSION_CONTRAST_WITH,
+  addComponentContrastExtensions,
+  addBasisContrastExtensions,
+  upgradeLegacyTokens,
+  resolveConfigRefs,
+  useRefAsValue,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -89,7 +94,6 @@ export default class Theme {
   set tokens(values: DesignTokens) {
     this.#modified = !dequal(this.#defaults, values);
     this.#validateTheme(values);
-    resolveRefs(values, values as Record<string, unknown>);
     this.#tokens = values;
     this.toCSS();
   }
@@ -98,9 +102,9 @@ export default class Theme {
   // Unlike the non-private instance method `updateAt`, this method does not mark the theme as modified.
   static #updateAt(tokens: DesignTokens, path: string, value: DesignToken['$value']) {
     const { $extensions, ...original } = dlv(tokens, path);
-    // TODO: set extensions on the updated token based on the new value, for example if the new value is a reference to another token.
     delete $extensions?.[EXTENSION_RESOLVED_AS]; // Clear resolvedAs since the value is changing, it may no longer be valid
     delete $extensions?.[EXTENSION_RESOLVED_FROM]; // Clear resolvedFrom since the value is changing, it may no longer be valid
+    delete $extensions?.[EXTENSION_CONTRAST_WITH]; // The value might change a ref, so need to re-caculate the extension
     dset(tokens, path, {
       ...original,
       $extensions,
@@ -108,10 +112,20 @@ export default class Theme {
     });
   }
 
+  #runThemeProcessors(tokens: DesignTokens) {
+    useRefAsValue(tokens);
+    upgradeLegacyTokens(tokens);
+    addComponentContrastExtensions(tokens);
+    addBasisContrastExtensions(tokens);
+    resolveConfigRefs(tokens);
+    return tokens;
+  }
+
   updateAt(path: string, value: DesignToken['$value']) {
     this.#modified = !dequal(dlv(this.#defaults, `${path}.$value`), value);
     const tokens = structuredClone(this.tokens);
     Theme.#updateAt(tokens, path, value);
+    this.#runThemeProcessors(tokens);
     this.tokens = tokens;
   }
 
@@ -121,6 +135,7 @@ export default class Theme {
     for (const { path, value } of values) {
       Theme.#updateAt(tokens, path, value);
     }
+    this.#runThemeProcessors(tokens);
     this.tokens = tokens;
   }
 
@@ -184,7 +199,7 @@ export default class Theme {
           return obj?.map(convertTokens);
         }
 
-        if (obj.$type === 'color' && obj.$value?.components) {
+        if (obj.$type === 'color' && typeof obj.$value !== 'string') {
           return {
             ...obj,
             $value: stringifyColor(obj.$value),

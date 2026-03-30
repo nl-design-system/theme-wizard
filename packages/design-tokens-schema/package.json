@@ -63,6 +63,7 @@
     "@nl-design-system-candidate/skip-link-tokens": "1.0.4",
     "@projectwallace/css-parser": "0.13.8",
     "colorjs.io": "0.6.1",
+    "dequal": "2.0.3",
     "dlv": "1.1.3",
     "zod": "4.3.6"
   }

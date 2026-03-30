@@ -1,5 +1,6 @@
 import tokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
 import { parse as parseCss } from '@projectwallace/css-parser';
+import dlv from 'dlv';
 import { describe, expect, it } from 'vitest';
 import Theme from './index';
 
@@ -59,7 +60,12 @@ describe('Theme', () => {
     const initialJSON = await theme.toTokensJSON();
     theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
     const updatedJSON = await theme.toTokensJSON();
-    expect(updatedJSON).toMatchSnapshot();
+    const parsed = JSON.parse(updatedJSON);
+    const sourceValue = dlv(parsed, 'basis.color.accent-1.color-hover.$value');
+    const destinationValue = dlv(parsed, 'basis.color.accent-1.bg-active.$value');
+    const expectedValue = '#dde6f1';
+    expect(sourceValue).toBe(expectedValue);
+    expect(destinationValue).toBe(expectedValue);
     return expect(initialJSON).not.toMatch(updatedJSON);
   });
 
@@ -74,13 +80,14 @@ describe('Theme', () => {
 
   it('can reset token at a specific path', async () => {
     const theme = new Theme();
+    const path = 'basis.color.accent-1.color-hover';
     const initialTokens = structuredClone(theme.tokens);
-    theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
-    const updatedTokens = structuredClone(theme.tokens);
-    expect.soft(updatedTokens).not.toMatchObject(initialTokens);
-    theme.resetAt('basis.color.accent-1.color-hover');
+    theme.updateAt(path, '{basis.color.accent-1.bg-active}');
+    theme.resetAt(path);
     const resettedTokens = structuredClone(theme.tokens);
-    expect(resettedTokens).toMatchObject(initialTokens);
+    const initialToken = dlv(initialTokens, path);
+    const resettedToken = dlv(resettedTokens, path);
+    expect(resettedToken).toMatchObject(initialToken);
   });
 
   it('can export to css custom properties', async () => {

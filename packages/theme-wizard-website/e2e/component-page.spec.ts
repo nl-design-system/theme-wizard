@@ -127,35 +127,72 @@ test.describe('stories', () => {
   });
 
   test.describe('validations', () => {
-    test('shows validation warning when bg+color tokens have insufficient contrast - basis tokens', async ({
-      page,
-    }) => {
-      const color = page.getByLabel('nl.code-block.color');
+    test.describe('color contrast', () => {
       const ERROR_MESSAGE = 'Onvoldoende contrast met nl.code-block.background-color';
-      const OPTION = 'basis.color.accent-1-inverse.color-default';
 
-      // Make sure there's not already a validation message there
-      await expect(color).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      test('shows validation warning when bg+color tokens have insufficient contrast - basis tokens', async ({
+        page,
+      }) => {
+        const input = page.getByLabel('nl.code-block.color');
+        const OPTION = 'basis.color.accent-1-inverse.color-default';
+        await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
-      // First fill in a color name to get <wizard-token-combobox> to show options
-      // Otherwise the next step fails because it wouldn't show any options
-      await color.fill(OPTION);
-      // Then click the option that is shown
-      await page.getByRole('option', { name: OPTION }).click();
-      await expect(color).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+        // First fill in a color name to get <wizard-token-combobox> to show options
+        // Otherwise the next step fails because it wouldn't show any options
+        await input.fill(OPTION);
+        // Then click the option that is shown
+        await page.getByRole('option', { name: OPTION }).click();
+        await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      });
+
+      test('shows validation warning when bg+color tokens have insufficient contrast - absolute value', async ({
+        page,
+      }) => {
+        const input = page.getByLabel('nl.code-block.color');
+        await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+
+        await input.fill('#fff');
+        await input.blur();
+
+        await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      });
+
+      test('contrast warning goes away after setting valid values', async ({ page }) => {
+        const input = page.getByLabel('nl.code-block.color');
+        await input.fill('#fff');
+        await input.blur();
+        await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+
+        await input.fill('#000');
+        await input.blur();
+        await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      });
     });
 
-    test('shows min-font-size validation', async ({ page }) => {
+    test.describe('font-size', () => {
       const ERROR_MESSAGE =
         'Lettergrootte is te klein. Bekijk richtlijnen. Lettergrootte: 12px. Minimaal vereist: 14px / 0.875rem';
 
-      const input = page.getByLabel('nl.code-block.font-size');
-      // Make sure there's not already a validation message there
-      await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      test('shows min-font-size validation', async ({ page }) => {
+        const input = page.getByLabel('nl.code-block.font-size');
+        // Make sure there's not already a validation message there
+        await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
-      await input.fill('12px');
-      await input.press('Enter');
-      await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+        await input.fill('12px');
+        await input.blur();
+        await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      });
+
+      test('error message is gone after fixing', async ({ page }) => {
+        const input = page.getByLabel('nl.code-block.font-size');
+        await input.fill('12px');
+        await input.blur();
+        await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+
+        await input.fill('16px');
+        await input.blur();
+        await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      });
     });
 
     // Entering custom dimensions/numbers does not work yet
