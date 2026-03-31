@@ -1,10 +1,38 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import { IconArrowLeft } from '@tabler/icons-react';
+import {
+  Heading1,
+  Icon,
+  Link,
+  Paragraph,
+  UnorderedList,
+  UnorderedListItem,
+  ButtonLink,
+} from '@utrecht/component-library-react/dist/css-module';
 export const detail = { name: 'Stap 1', value: 'step-1', module: 'Meerstapformulier' };
 ---
 
-<PageLayout>
+<PageLayout cookieBanner={false}>
   <main id="main" slot="content">
-    <h1>Stap 1</h1>
+    <Link href="/#" className="voorbeeld-back-link">
+      <Icon>
+        <IconArrowLeft />
+      </Icon>
+      Terug
+    </Link>
+    <Heading1>Vraag aan de gemeente</Heading1>
+    <Paragraph lead>
+      Veel zaken regelt u eenvoudig zelf online via onze website. Kunt u de gewenste informatie niet vinden? Stel dan uw
+      vraag via het contactformulier.
+    </Paragraph>
+    <UnorderedList>
+      <UnorderedListItem>Vul alle velden in. Als een veld niet verplicht is, staat dit erbij.</UnorderedListItem>
+      <UnorderedListItem>U kunt het formulier tussentijds opslaan en later verder gaan.</UnorderedListItem>
+      <UnorderedListItem>
+        Na het versturen ontvangt u een bevestigingsmail. Ook heeft u de mogelijkheid uw vraag te downloaden of printen.
+      </UnorderedListItem>
+    </UnorderedList>
+    <ButtonLink appearance="primary-action-button">Doorgaan</ButtonLink>
   </main>
 </PageLayout>
