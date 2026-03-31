@@ -1,0 +1,62 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { IconCircleCheck, IconPrinter, IconFileText } from '@tabler/icons-react';
+import {
+  Heading1,
+  Heading2,
+  Icon,
+  Link,
+  PreserveData,
+  ButtonGroup,
+  URLData,
+  Alert,
+  Paragraph,
+  UnorderedList,
+  UnorderedListItem,
+  Strong
+} from '@utrecht/component-library-react/dist/css-module';
+export const detail = { name: 'Stap 4', value: 'step-4', module: 'Meerstapformulier' };
+---
+
+<PageLayout cookieBanner={false}>
+  <main id="main" slot="content">
+    <Alert type="ok">
+      <Heading1>
+        <Icon>
+          <IconCircleCheck size={32} />
+        </Icon>
+        Uw aanvraag is met succes verstuurd
+      </Heading1>
+      <Paragraph>
+        Zaaknummer: <PreserveData>2bf9-cne2-9910</PreserveData>
+      </Paragraph>
+    </Alert>
+    <Heading2>Wat gaat er nu gebeuren?</Heading2>
+    <UnorderedList>
+      <UnorderedListItem>
+        U ontvangt een bevestigingsmail op{' '}
+        <Strong>
+          <URLData>j.vandrouwen@gmail.com</URLData>
+        </Strong>
+      </UnorderedListItem>
+      <UnorderedListItem>De afdeling Vraagbaak gaat met uw vraag aan de slag.</UnorderedListItem>
+    </UnorderedList>
+    <ButtonGroup direction="column">
+      <Link href="#">
+        <Icon>
+          <IconPrinter />
+        </Icon>
+        Print uw vraag
+      </Link>
+      <Link href="/" download="vraag.pdf">
+        <Icon>
+          <IconFileText />
+        </Icon>
+        Download uw vraag als PDF
+      </Link>
+      <Link href="/#">
+        Terug naar <URLData>gemeentevoorbeeld.nl</URLData>
+      </Link>
+    </ButtonGroup>
+  </main>
+</PageLayout>

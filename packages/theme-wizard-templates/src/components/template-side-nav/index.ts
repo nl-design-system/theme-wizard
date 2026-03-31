@@ -1,10 +1,11 @@
 import sidenavStyles from '@gemeente-denhaag/side-navigation/index.css?inline';
+import nlNumberBadgeStyles from '@nl-design-system-candidate/number-badge-css/number-badge.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 @customElement('template-side-nav')
 export class TemplateSideNav extends LitElement {
-  static override readonly styles = [unsafeCSS(sidenavStyles)];
+  static override readonly styles = [unsafeCSS(sidenavStyles), unsafeCSS(nlNumberBadgeStyles)];
 
   override render() {
     return html`

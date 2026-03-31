@@ -7,14 +7,15 @@ export interface Props {
   sideNav?: boolean;
   title?: string;
   description?: string;
+  cookieBanner?: boolean
 }
 
-const { sideNav = true, title, description } = Astro.props;
+const { sideNav = true, title, description, cookieBanner = true } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
   <div>
-    <Cookies />
+    {cookieBanner && <Cookies />}
     <template-skip-link>Direct naar de hoofdinhoud</template-skip-link>
 
     <template-page-header>

@@ -60,7 +60,7 @@ export class BasisTokensPage {
   }
 
   getParagraph(): Locator {
-    return this.preview.locator('.nl-paragraph').first();
+    return this.preview.getByRole('paragraph').first();
   }
 
   async getColorStops(label: string): Promise<(string | null)[]> {

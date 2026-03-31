@@ -13,9 +13,9 @@ const scraperUrl = withRelatedProject({
 const templates = JSON.parse(TEMPLATES_JSON)
 let currentTemplate = Astro.url.searchParams.get('templatePath')
 if (!currentTemplate) {
-  const firstGroup = templates?.[0];
-  const firstOption = firstGroup?.pages?.[0];
-  currentTemplate = firstOption?.value ?? '';
+  const group = templates?.at(1);
+  const option = group?.pages?.at(1);
+  currentTemplate = option?.value ?? '';
 }
 ---
 

@@ -1,10 +1,65 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import { IconArrowLeft } from '@tabler/icons-react';
+import {
+  Button,
+  ButtonGroup,
+  FormFieldTextbox,
+  Heading1,
+  Heading2,
+  HeadingGroup,
+  Icon,
+  Link,
+  LinkButton,
+  LogoImage,
+  Paragraph,
+  PreHeading,
+} from '@utrecht/component-library-react/dist/css-module';
 export const detail = { name: 'Stap 2', value: 'step-2', module: 'Meerstapformulier' };
 ---
 
-<PageLayout>
+<PageLayout cookieBanner={false}>
   <main id="main" slot="content">
-    <h1>Stap 2</h1>
+    <Link href="/#" className="voorbeeld-back-link">
+      <Icon>
+        <IconArrowLeft />
+      </Icon>
+      Terug
+    </Link>
+    <Heading1>Vraag aan de gemeente</Heading1>
+    <HeadingGroup>
+      <PreHeading>Stap 2 van 4</PreHeading>
+      <Heading2>Uw gegevens</Heading2>
+    </HeadingGroup>
+    <Paragraph>
+      Om u zo goed mogelijk te kunnen helpen, ontvangen we graag uw contactgegevens. Deze gegevens worden niet met
+      anderen gedeeld.
+    </Paragraph>
+    <FormFieldTextbox label="Naam" id="nameField" autoComplete="name" required />
+    <FormFieldTextbox label="Straat" id="streetField" autoComplete="street-address" required />
+    <FormFieldTextbox label="Huisnummer" id="houseField" required />
+    <FormFieldTextbox label="Toevoeging" id="houseAdditionField" description="Niet verplicht." />
+    <FormFieldTextbox label="Postcode" id="postcodeField" autoComplete="postal-code" required />
+    <FormFieldTextbox label="Woonplaats" id="placeField" required invalid errorMessage="Vul een postcode in" />
+    <FormFieldTextbox label="E-mailadres" id="emailField" autoComplete="email" type="email" required />
+    <FormFieldTextbox
+      label="Telefoonnummer"
+      id="phoneField"
+      description="Niet verplicht."
+      autoComplete="tel"
+      type="tel"
+      status="0 van de 10 tekens gebruikt."
+    />
+    <ButtonGroup direction="column">
+      <Button type="submit" className="voorbeeld-button-spacing" appearance="primary-action-button">
+        Volgende stap
+      </Button>
+      <LinkButton inline className="voorbeeld-button-link">
+        Opslaan en later verder
+      </LinkButton>
+      <LinkButton inline className="voorbeeld-button-link">
+        Stoppen met formulier
+      </LinkButton>
+    </ButtonGroup>
   </main>
 </PageLayout>
