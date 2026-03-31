@@ -37,12 +37,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "inverse-color": {
@@ -13084,12 +13085,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "hover": {
@@ -13396,12 +13398,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
     },
@@ -14961,20 +14964,22 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       "font-weight": {
         "bold": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": 700,
         },
         "default": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": 400,
         },
       },
@@ -15121,12 +15126,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         "bold": {
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -15150,12 +15156,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "gap": {
@@ -15187,12 +15194,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "gap": {
@@ -15262,12 +15270,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "gap": {
@@ -15619,12 +15628,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "margin-block-start": {
@@ -15897,12 +15907,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -15999,12 +16010,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lg": {
@@ -16151,12 +16163,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "padding-block-end": {
@@ -16533,12 +16546,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -16852,12 +16866,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "warning": {
@@ -16991,12 +17006,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -17124,12 +17140,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -17164,12 +17181,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -17219,12 +17237,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -18110,12 +18129,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "hover": {
@@ -18749,12 +18769,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "icon": {
@@ -20564,12 +20585,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "item": {
@@ -21381,12 +21403,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -22288,12 +22311,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "hover": {
@@ -22738,12 +22762,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -22847,12 +22872,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -22937,12 +22963,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -23027,12 +23054,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -23117,12 +23145,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -23207,12 +23236,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -23297,12 +23327,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -23599,12 +23630,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "min-block-size": {
@@ -23700,12 +23732,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lead": {
@@ -23725,12 +23758,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -23949,12 +23983,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -24072,12 +24107,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "icon": {
@@ -24181,12 +24217,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -24689,12 +24726,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -25736,12 +25774,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -25913,12 +25952,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -25952,12 +25992,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
     },
@@ -26027,12 +26068,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -26228,12 +26270,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       "item-key": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "padding-block-end": {
@@ -26327,12 +26370,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       "item-value": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "padding-block-end": {
@@ -26850,12 +26894,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -26936,12 +26981,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -26964,12 +27010,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "padding-block-end": {
@@ -27232,12 +27279,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "text-decoration": {
@@ -27285,12 +27333,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -27647,12 +27696,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -29095,12 +29145,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -29377,12 +29428,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "icon-size": {
@@ -29709,12 +29761,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
     "skip-link": {
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
     },
@@ -29820,12 +29873,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "informative": {
@@ -30564,12 +30618,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -30622,12 +30677,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "icon": {
@@ -32263,12 +32319,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -32424,12 +32481,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         "current": {
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.default}",
           },
         },
@@ -32822,12 +32880,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "hover": {
@@ -33185,12 +33244,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -33470,12 +33530,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -33755,12 +33816,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -34707,12 +34769,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -35145,12 +35208,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -35225,24 +35289,26 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
       "checked": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -35296,12 +35362,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "radio": {
@@ -35323,12 +35390,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -35381,12 +35449,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -35449,12 +35518,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -35517,12 +35587,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -35585,12 +35656,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -35653,12 +35725,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -35721,12 +35794,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -35937,12 +36011,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
     "link-list": {
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "icon": {
@@ -36662,12 +36737,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "min-block-size": {
@@ -37201,12 +37277,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -37405,12 +37482,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -37565,12 +37643,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lead": {
@@ -37606,12 +37685,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -37670,12 +37750,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -37739,12 +37820,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -38644,12 +38726,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "hover": {
@@ -39510,12 +39593,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -39714,12 +39798,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       "header-cell": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -39977,12 +40062,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "invalid": {
@@ -40416,12 +40502,13 @@ exports[`strictly validate known basis themes > Mooi & Anders theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "invalid": {
@@ -40944,12 +41031,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -41218,12 +41306,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "inverse": {
@@ -41555,12 +41644,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "line-height": {
@@ -41634,12 +41724,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "inverse-color": {
@@ -41947,12 +42038,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -42061,12 +42153,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "text-wrap": {
@@ -42129,12 +42222,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           "open": {
             "font-weight": {
               "$extensions": {
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700,
                 "studio.tokens": {
                   "originalType": "fontWeights",
                 },
               },
-              "$type": "fontWeight",
+              "$type": "number",
               "$value": "{basis.text.font-weight.bold}",
             },
           },
@@ -42208,12 +42302,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -42418,12 +42513,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -42503,12 +42599,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -52534,12 +52631,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "hover": {
@@ -52845,12 +52943,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
     },
@@ -54407,20 +54506,22 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       "font-weight": {
         "bold": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": 700,
         },
         "default": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": 400,
         },
       },
@@ -54567,12 +54668,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         "bold": {
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -54596,12 +54698,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "gap": {
@@ -54633,12 +54736,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "gap": {
@@ -54706,12 +54810,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "gap": {
@@ -55063,12 +55168,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "margin-block-start": {
@@ -55339,12 +55445,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -55439,12 +55546,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lg": {
@@ -55591,12 +55699,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "padding-block-end": {
@@ -55969,12 +56078,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -56349,12 +56459,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "warning": {
@@ -56507,12 +56618,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -56638,12 +56750,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -56722,12 +56835,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -56777,12 +56891,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -57724,12 +57839,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -57829,12 +57945,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -58112,12 +58229,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "hover": {
@@ -58525,12 +58643,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -59264,12 +59383,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{nl.button.default.font-weight}",
         },
         "hover": {
@@ -60520,12 +60640,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{nl.button.default.font-weight}",
         },
         "hover": {
@@ -61775,12 +61896,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{nl.button.default.font-weight}",
         },
         "hover": {
@@ -63260,12 +63382,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -63370,12 +63493,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -63458,12 +63582,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -63546,12 +63671,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -63634,12 +63760,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -63722,12 +63849,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -63810,12 +63938,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -64152,12 +64281,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "min-block-size": {
@@ -64251,12 +64381,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lead": {
@@ -64276,12 +64407,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -64881,12 +65013,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -64968,12 +65101,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -65048,12 +65182,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "item": {
@@ -65701,12 +65836,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -65822,12 +65958,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -65935,12 +66072,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -66866,12 +67004,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -67041,12 +67180,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -67080,12 +67220,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
     },
@@ -67153,12 +67294,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -67352,12 +67494,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       "item-key": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "padding-block-end": {
@@ -67451,12 +67594,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       "item-value": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "padding-block-end": {
@@ -68014,12 +68158,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -68100,12 +68245,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -68128,12 +68274,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "padding-block-end": {
@@ -68415,12 +68562,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "text-decoration": {
@@ -68489,12 +68637,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -68872,12 +69021,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -70402,12 +70552,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -70745,12 +70896,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "icon-size": {
@@ -71119,12 +71271,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
     "skip-link": {
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
     },
@@ -71262,12 +71415,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "informative": {
@@ -72090,12 +72244,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -72146,12 +72301,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "icon": {
@@ -74170,12 +74326,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -74329,12 +74486,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         "current": {
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.default}",
           },
         },
@@ -74788,12 +74946,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "hover": {
@@ -75264,12 +75423,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -75620,12 +75780,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -75976,12 +76137,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -77021,12 +77183,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -77545,12 +77708,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -77647,24 +77811,26 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
       "checked": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -77718,12 +77884,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "radio": {
@@ -77745,12 +77912,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -77801,12 +77969,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -77889,12 +78058,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -77977,12 +78147,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -78065,12 +78236,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -78153,12 +78325,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -78241,12 +78414,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -78565,12 +78739,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "text-decoration": {
@@ -79341,12 +79516,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "min-block-size": {
@@ -79984,12 +80160,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -80218,12 +80395,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -80397,12 +80575,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lead": {
@@ -80438,12 +80617,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -80502,12 +80682,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -80569,12 +80750,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -81535,12 +81717,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "hover": {
@@ -82855,12 +83038,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "inactive": {
@@ -83478,12 +83662,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -83680,12 +83865,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       "header-cell": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -83963,12 +84149,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "invalid": {
@@ -84400,12 +84587,13 @@ exports[`strictly validate known basis themes > Start theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "invalid": {
@@ -84907,12 +85095,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -85181,12 +85370,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "inverse": {
@@ -85518,12 +85708,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "line-height": {
@@ -85597,12 +85788,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "inverse-color": {
@@ -85910,12 +86102,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -86024,12 +86217,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "text-wrap": {
@@ -86092,12 +86286,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "open": {
             "font-weight": {
               "$extensions": {
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700,
                 "studio.tokens": {
                   "originalType": "fontWeights",
                 },
               },
-              "$type": "fontWeight",
+              "$type": "number",
               "$value": "{basis.text.font-weight.bold}",
             },
           },
@@ -86171,12 +86366,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -86381,12 +86577,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -86466,12 +86663,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -96791,12 +96989,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "hover": {
@@ -97101,12 +97300,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
     },
@@ -98663,20 +98863,22 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       "font-weight": {
         "bold": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": 700,
         },
         "default": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": 400,
         },
       },
@@ -98823,12 +99025,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "bold": {
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -98852,12 +99055,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "gap": {
@@ -98889,12 +99093,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "gap": {
@@ -98962,12 +99167,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "gap": {
@@ -99319,12 +99525,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "margin-block-start": {
@@ -99595,12 +99802,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -99695,12 +99903,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lg": {
@@ -99847,12 +100056,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "padding-block-end": {
@@ -100225,12 +100435,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -100542,12 +100753,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "warning": {
@@ -100679,12 +100891,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -100810,12 +101023,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -100894,12 +101108,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -100949,12 +101164,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -101791,12 +102007,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -101896,12 +102113,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
         },
@@ -102158,12 +102376,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "hover": {
@@ -102508,12 +102727,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -103168,12 +103388,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{nl.button.default.font-weight}",
         },
         "hover": {
@@ -104214,12 +104435,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{nl.button.default.font-weight}",
         },
         "hover": {
@@ -105259,12 +105481,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{nl.button.default.font-weight}",
         },
         "hover": {
@@ -106471,12 +106694,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -106581,12 +106805,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -106669,12 +106894,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -106757,12 +106983,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -106845,12 +107072,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -106933,12 +107161,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -107021,12 +107250,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -107321,12 +107551,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "min-block-size": {
@@ -107420,12 +107651,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lead": {
@@ -107445,12 +107677,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -108029,12 +108262,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -108116,12 +108350,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -108196,12 +108431,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "item": {
@@ -108828,12 +109064,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -108949,12 +109186,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -109062,12 +109300,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -109972,12 +110211,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -110147,12 +110387,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -110186,12 +110427,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
     },
@@ -110259,12 +110501,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -110458,12 +110701,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       "item-key": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "padding-block-end": {
@@ -110557,12 +110801,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       "item-value": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "padding-block-end": {
@@ -111099,12 +111344,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "line-height": {
@@ -111185,12 +111431,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -111213,12 +111460,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "padding-block-end": {
@@ -111479,12 +111727,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.bold}",
           },
           "text-decoration": {
@@ -111553,12 +111802,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -111936,12 +112186,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -113466,12 +113717,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "line-height": {
@@ -113746,12 +113998,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "icon-size": {
@@ -114078,12 +114331,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
     "skip-link": {
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
     },
@@ -114200,12 +114454,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "informative": {
@@ -114944,12 +115199,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -115000,12 +115256,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "icon": {
@@ -116814,12 +117071,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -116973,12 +117231,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "current": {
           "font-weight": {
             "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
-            "$type": "fontWeight",
+            "$type": "number",
             "$value": "{basis.text.font-weight.default}",
           },
         },
@@ -117411,12 +117670,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "hover": {
@@ -117845,12 +118105,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -118201,12 +118462,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -118557,12 +118819,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
         "hover": {
@@ -119539,12 +119802,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -120042,12 +120306,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "line-height": {
@@ -120144,24 +120409,26 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
       "checked": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -120215,12 +120482,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "radio": {
@@ -120242,12 +120510,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
       },
@@ -120298,12 +120567,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -120386,12 +120656,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -120474,12 +120745,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -120562,12 +120834,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -120650,12 +120923,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -120738,12 +121012,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
       "line-height": {
@@ -121062,12 +121337,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "text-decoration": {
@@ -121775,12 +122051,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "min-block-size": {
@@ -122334,12 +122611,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -122547,12 +122825,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "hover": {
@@ -122705,12 +122984,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.default}",
       },
       "lead": {
@@ -122746,12 +123026,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -122810,12 +123091,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.default}",
         },
         "line-height": {
@@ -122877,12 +123159,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "line-height": {
@@ -123822,12 +124105,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "hover": {
@@ -124932,12 +125216,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
       "inactive": {
@@ -125408,12 +125693,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.heading.font-weight}",
         },
         "line-height": {
@@ -125610,12 +125896,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       "header-cell": {
         "font-weight": {
           "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700,
             "studio.tokens": {
               "originalType": "fontWeights",
             },
           },
-          "$type": "fontWeight",
+          "$type": "number",
           "$value": "{basis.text.font-weight.bold}",
         },
       },
@@ -125893,12 +126180,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "invalid": {
@@ -126330,12 +126618,13 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
       },
       "font-weight": {
         "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400,
           "studio.tokens": {
             "originalType": "fontWeights",
           },
         },
-        "$type": "fontWeight",
+        "$type": "number",
         "$value": "{basis.form-control.font-weight}",
       },
       "invalid": {

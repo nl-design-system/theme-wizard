@@ -204,16 +204,12 @@ export default class Theme {
             ...obj,
             $value: stringifyColor(obj.$value),
           };
-        }
-
-        if (obj.$type === 'fontFamily' && typeof obj.$value !== 'string') {
+        } else if (obj.$type === 'fontFamily' && typeof obj.$value !== 'string') {
           return {
             ...obj,
             $value: stringifyFontFamily(obj.$value),
           };
-        }
-
-        if (obj.$type === 'dimension' && typeof obj.$value === 'object' && obj.$value?.unit) {
+        } else if (obj.$type === 'dimension' && typeof obj.$value === 'object' && obj.$value?.unit) {
           const subtype = obj['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
           const value = stringifyDimension(obj.$value);
 
@@ -236,6 +232,22 @@ export default class Theme {
             ...obj,
             $value: value,
           };
+        } else if (obj.$type === 'number') {
+          const subtype = obj['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
+
+          if (subtype === 'font-weight') {
+            return {
+              ...obj,
+              $type: 'fontWeight',
+            };
+          } else if (subtype === 'line-height') {
+            return {
+              ...obj,
+              $type: 'lineHeight',
+            };
+          }
+
+          return obj;
         }
 
         const result: Record<string, DesignToken> = {};
@@ -257,10 +269,10 @@ export default class Theme {
     walkTokens(tokens, (token, path) => {
       if (token.$value === 'undefined') {
         unsetToken(this.#rule, path);
-      } else if (typeof token.$value === 'string') {
-        // Only set tokens that we've confirmed to be strings. CSS will ignore it otherwise
-        // and this should not happen anyway, so this is a fail-safe.
-        setToken(this.#rule, path, refToCssVariable(token.$value));
+      } else if (typeof token.$value === 'string' || typeof token.$value === 'number') {
+        // Only set tokens that we've confirmed to be strings or numbers. CSS will ignore
+        // it otherwise and this should not happen anyway, so this is a fail-safe.
+        setToken(this.#rule, path, refToCssVariable(token.$value.toString()));
       }
       // Prevent walking deeper into the token's extensions
       return SKIP;

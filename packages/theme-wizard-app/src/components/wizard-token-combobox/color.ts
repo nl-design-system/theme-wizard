@@ -25,16 +25,25 @@ export const parse = (value: unknown): Color | null => {
   return colorTokenValueToColorJS(value as ColorValue);
 };
 
+/**
+ * @description customize how options are filtered when typing
+ */
 export const filter = <T extends { color?: Color }>(query: string) => {
   const queryColor = Color.try(query);
   const maxDeltaE = BROAD_COLOR_NAMES.has(query) ? DELTA_E_THRESHOLD * 2 : DELTA_E_THRESHOLD;
   return ({ color }: T) => Boolean(queryColor && color && queryColor.deltaE(color, '2000') < maxDeltaE);
 };
 
+/**
+ * @description customize how the user input is resolved to a value
+ */
 export const queryToValue = (query: string): ColorToken => {
   return { $type: 'color', $value: parseColor(query) };
 };
 
+/**
+ * @description customize how a value is converted to a query
+ */
 export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $value }: T): string => {
   if (typeof $value === 'string') {
     return $value;

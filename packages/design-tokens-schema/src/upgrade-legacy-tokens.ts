@@ -31,8 +31,11 @@ const processLineHeightValue = (
     }
 
     const { unit, value: parsedValue } = parse_dimension(lineHeight);
-    if (unit && Number.isFinite(parsedValue)) {
-      return { type: 'dimension', value: { unit, value: parsedValue } };
+    if (Number.isFinite(parsedValue)) {
+      if (unit) {
+        return { type: 'dimension', value: { unit, value: parsedValue } };
+      }
+      return { type: 'number', value: parsedValue };
     }
   }
 
@@ -184,6 +187,50 @@ const addColorSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
   }
 };
 
+const fontWeightMap: Record<string, number> = {
+  /* eslint-disable perfectionist/sort-objects */
+  thin: 100,
+  hairline: 100,
+  extralight: 200,
+  ultralight: 200,
+  light: 300,
+  normal: 400,
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  demibold: 600,
+  bold: 700,
+  extrabold: 800,
+  ultrabold: 800,
+  black: 900,
+  heavy: 900,
+};
+
+export const parseFontWeight = (input: string): number | null => {
+  const normalized = input.toLowerCase();
+  if (Object.hasOwn(fontWeightMap, normalized)) {
+    return fontWeightMap[normalized];
+  }
+  const asNumber = Number(normalized);
+  if (Number.isFinite(asNumber)) {
+    return asNumber;
+  }
+  return null;
+};
+
+const upgradeFontWeightToken = (token: BaseDesignToken): void => {
+  token.$type = 'number';
+
+  // Token Studio stores named font-weights, so we need to map them to numbers
+  const value = token.$value;
+  if (typeof value === 'string') {
+    const parsed = parseFontWeight(value);
+    if (parsed !== null) {
+      token.$value = parsed;
+    }
+  }
+};
+
 /**
  * @description NLDS themes use $type: fontSize, fontSizes and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
  */
@@ -201,8 +248,8 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
         break;
       case 'lineHeight':
       case 'lineHeights':
-        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
         upgradeLineHeightToken(token, rootConfig);
+        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
         break;
       case 'color':
         upgradeColorToken(token);
@@ -216,6 +263,11 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
         break;
       case 'fontFamily':
         upgradeFontFamilyTokenWithLegacyValue(token);
+        break;
+      case 'fontWeight':
+      case 'fontWeights':
+        upgradeFontWeightToken(token);
+        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-weight');
         break;
     }
   });

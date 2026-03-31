@@ -296,6 +296,21 @@ export const en = {
         },
         label: 'Lettergrootte te klein',
       },
+      [ERROR_CODES.UNEXPECTED_UNIT]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.unexpectedUnit', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.unexpectedUnit', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.`;
+        },
+        label: 'Unexpected unit.',
+      },
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
@@ -333,6 +348,7 @@ export const en = {
         return html`Line height too small in ${tokenLink}. ${guidelinesLink}`;
       },
       minimalNeeded: ({ value }: { value: string }) => html`Required minimum: <strong>${value}</strong>`,
+      unexpectedUnit: 'Unexpected unit. Use a plain number instead.',
     },
     title: 'Theme validation errors',
     token_link: {
@@ -624,6 +640,21 @@ export const nl = {
         },
         label: 'Lettergrootte te klein',
       },
+      [ERROR_CODES.UNEXPECTED_UNIT]: {
+        compact: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult =>
+          html`${t('validation.issue.unexpectedUnit', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.`,
+        detailed: (issue: ValidationIssue & { renderTokenLink?: TokenLinkRenderer }): TemplateResult => {
+          return html`${issue.path}:
+          ${t('validation.issue.unexpectedUnit', {
+            context: issue.renderTokenLink,
+            token: issue.referredToken,
+          })}.`;
+        },
+        label: 'Onverwachte eenheid',
+      },
     },
     issue: {
       contrastValue: 'Contrast: {{value}}',
@@ -658,6 +689,7 @@ export const nl = {
         return html`Regelafstand is te klein in ${tokenLink}. ${guidelinesLink}`;
       },
       minimalNeeded: ({ value }: { value: string }) => html`Minimaal vereist: <strong>${value}</strong>`,
+      unexpectedUnit: 'Onverwachte eenheid. Gebruik alleen nummers',
     },
 
     title: 'Thema validatie fouten',
