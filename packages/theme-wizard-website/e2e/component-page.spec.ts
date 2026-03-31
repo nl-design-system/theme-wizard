@@ -213,24 +213,28 @@ test.describe('stories', () => {
       });
     });
 
-    test('shows min-line-height validation', async ({ page }) => {
-      const ERROR_MESSAGE = 'Regelafstand is te klein. Bekijk richtlijnen. Regelafstand: 1.01. Minimaal vereist: 1.1';
-      const input = page.getByLabel('nl.code-block.line-height');
-      await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+    test.describe('line-height', () => {
+      test('shows min-line-height validation', async ({ page }) => {
+        const ERROR_MESSAGE = 'Regelafstand is te klein. Bekijk richtlijnen. Regelafstand: 1.01. Minimaal vereist: 1.1';
+        const input = page.getByLabel('nl.code-block.line-height');
+        await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
-      await input.fill('1.01');
-      await input.blur();
-      await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
-    });
+        await input.fill('1.01');
+        await input.blur();
+        await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      });
 
-    test('shows unitless-line-height validation', async ({ page }) => {
-      const ERROR_MESSAGE = 'Onverwachte eenheid. Gebruik alleen nummers.';
-      const input = page.getByLabel('nl.code-block.line-height');
-      await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+      ['20px', '120%'].forEach((size) => {
+        test(`shows unitless-line-height validation (${size})`, async ({ page }) => {
+          const ERROR_MESSAGE = 'Onverwachte eenheid. Gebruik alleen nummers.';
+          const input = page.getByLabel('nl.code-block.line-height');
+          await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
-      await input.fill('20px');
-      await input.blur();
-      await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+          await input.fill(size);
+          await input.blur();
+          await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+        });
+      });
     });
   });
 });
