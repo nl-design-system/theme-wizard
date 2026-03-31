@@ -129,8 +129,8 @@ export class WizardTokenField extends WizardTokenNavigator {
         return 'color';
       case 'dimension':
         return 'dimension';
-      case 'number':
       case 'lineHeight':
+      case 'number':
         return 'number';
       case 'fontFamily':
       case 'fontFamilies':

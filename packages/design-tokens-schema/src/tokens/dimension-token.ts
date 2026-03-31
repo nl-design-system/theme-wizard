@@ -7,7 +7,7 @@ import { TokenReferenceSchema } from './token-reference';
 export const DimensionTypeSchema = z.literal('dimension');
 export type DimensionType = z.infer<typeof DimensionTypeSchema>;
 
-export const DimensionUnitSchema = z.union([z.literal('px'), z.literal('rem')]);
+export const DimensionUnitSchema = z.enum(['px', 'rem']);
 
 /** @see https://www.designtokens.org/tr/drafts/format/#dimension */
 export type DimensionUnit = z.infer<typeof DimensionUnitSchema>;
@@ -38,4 +38,5 @@ export const DimensionWithRefSchema = z.object({
 export const DimensionTokenSchema = z.union([ModernDimensionTokenSchema, DimensionWithRefSchema]);
 export type DimensionToken = z.infer<typeof DimensionTokenSchema>;
 
-export const stringifyDimension = (value: ModernDimensionValue): string => `${value.value}${value.unit}`;
+export const stringifyDimension = (value: { value: string | number; unit: string }): string =>
+  `${value.value}${value.unit}`;

@@ -11,6 +11,7 @@ import {
   type ModernDimensionToken,
   type FontFamilyToken,
   type ResolvedToken,
+  NumberToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { dequal } from 'dequal';
@@ -18,9 +19,10 @@ import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { DesignToken } from 'style-dictionary/types';
-import * as libColor from './color'; // Consider loading this dynamically based on component attribute `type`
-import * as libDimension from './dimension'; // Consider loading this dynamically based on component attribute `type`
-import * as libFontFamily from './font-family'; // Consider loading this dynamically based on component attribute `type`
+import * as libColor from './color';
+import * as libDimension from './dimension';
+import * as libFontFamily from './font-family';
+import * as libNumber from './number';
 import styles from './styles';
 
 export type Option = {
@@ -78,6 +80,9 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     return this.#type;
   }
 
+  /**
+   * @description customize how options are filtered when typing
+   */
   override readonly filter = (query: string): ((option: Option) => boolean) => {
     const normalizedQuery = query.toLowerCase();
     const filterByLabel = ({ label }: Option) => label.toLowerCase().includes(normalizedQuery);
@@ -126,6 +131,9 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     return this.options.find((option) => dequal(option.value.$value, $value));
   }
 
+  /**
+   * @description customize how the value is looked up based on the selected option
+   */
   override getOptionForValue(value: Option['value'] | null): Option | undefined {
     const { $type, $value } = value ?? {};
     const option = this.#getOptionForValue({ $value });
@@ -138,6 +146,9 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     return option;
   }
 
+  /**
+   * @description customize how the user input is resolved to a value
+   */
   override queryToValue(query: string): Option['value'] | null {
     if (this.allow === 'other') {
       const existingOption = this.options.find((o) => o.label === query);
@@ -153,6 +164,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
             case 'dimension':
               return libDimension.queryToValue(query);
             case 'number':
+              return libNumber.queryToValue(query);
             default:
               return super.queryToValue(query);
           }
@@ -169,6 +181,9 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     return this.options.find(filter)?.value ?? null;
   }
 
+  /**
+   * @description customize how a value is converted to a query
+   */
   override valueToQuery({ $value }: Option['value']): string {
     const option = this.getOptionForValue({ $value });
     const stringValue = option?.label || (typeof $value === 'string' ? $value : '');
@@ -180,6 +195,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
       case 'dimension':
         return stringValue || libDimension.valueToQuery({ $value });
       case 'number':
+        return stringValue || libNumber.valueToQuery({ $value });
       default:
         return stringValue || JSON.stringify($value);
     }
@@ -195,6 +211,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
       case 'dimension':
         return libDimension.preview(option as Option & { value: ModernDimensionToken });
       case 'number':
+        return libNumber.preview(option as Option & { value: NumberToken });
       default:
         return nothing;
     }

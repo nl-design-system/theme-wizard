@@ -19496,6 +19496,68 @@ exports[`Theme > can export to JSON token file 1`] = `
           "font-size"
         ]
       },
+      "font-weight": {
+        "key": "{basis.form-control.font-weight}",
+        "$type": "fontWeight",
+        "$value": 400,
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontWeights"
+          },
+          "nl.nldesignsystem.token-subtype": "font-weight",
+          "nl.nldesignsystem.value-resolved-as": 400
+        },
+        "original": {
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.default}",
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontWeights"
+            },
+            "nl.nldesignsystem.token-subtype": "font-weight",
+            "nl.nldesignsystem.value-resolved-as": 400
+          },
+          "key": "{basis.form-control.font-weight}"
+        },
+        "name": "font-weight",
+        "attributes": {},
+        "path": [
+          "basis",
+          "form-control",
+          "font-weight"
+        ]
+      },
+      "line-height": {
+        "key": "{basis.form-control.line-height}",
+        "$type": "lineHeight",
+        "$value": 1.5,
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "lineHeights"
+          },
+          "nl.nldesignsystem.token-subtype": "line-height",
+          "nl.nldesignsystem.value-resolved-as": 1.5
+        },
+        "original": {
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "lineHeights"
+            },
+            "nl.nldesignsystem.token-subtype": "line-height",
+            "nl.nldesignsystem.value-resolved-as": 1.5
+          },
+          "key": "{basis.form-control.line-height}"
+        },
+        "name": "line-height",
+        "attributes": {},
+        "path": [
+          "basis",
+          "form-control",
+          "line-height"
+        ]
+      },
       "accent-color": {
         "key": "{basis.form-control.accent-color}",
         "$extensions": {
@@ -20772,66 +20834,6 @@ exports[`Theme > can export to JSON token file 1`] = `
           "border-width"
         ]
       },
-      "font-weight": {
-        "key": "{basis.form-control.font-weight}",
-        "$type": "fontWeight",
-        "$value": 400,
-        "$extensions": {
-          "studio.tokens": {
-            "originalType": "fontWeights"
-          },
-          "nl.nldesignsystem.value-resolved-as": 400
-        },
-        "original": {
-          "$type": "fontWeight",
-          "$value": "{basis.text.font-weight.default}",
-          "$extensions": {
-            "studio.tokens": {
-              "originalType": "fontWeights"
-            },
-            "nl.nldesignsystem.value-resolved-as": 400
-          },
-          "key": "{basis.form-control.font-weight}"
-        },
-        "name": "font-weight",
-        "attributes": {},
-        "path": [
-          "basis",
-          "form-control",
-          "font-weight"
-        ]
-      },
-      "line-height": {
-        "key": "{basis.form-control.line-height}",
-        "$type": "number",
-        "$value": 1.5,
-        "$extensions": {
-          "studio.tokens": {
-            "originalType": "lineHeights"
-          },
-          "nl.nldesignsystem.token-subtype": "line-height",
-          "nl.nldesignsystem.value-resolved-as": 1.5
-        },
-        "original": {
-          "$type": "number",
-          "$value": "{basis.text.line-height.md}",
-          "$extensions": {
-            "studio.tokens": {
-              "originalType": "lineHeights"
-            },
-            "nl.nldesignsystem.token-subtype": "line-height",
-            "nl.nldesignsystem.value-resolved-as": 1.5
-          },
-          "key": "{basis.form-control.line-height}"
-        },
-        "name": "line-height",
-        "attributes": {},
-        "path": [
-          "basis",
-          "form-control",
-          "line-height"
-        ]
-      },
       "padding-block-end": {
         "key": "{basis.form-control.padding-block-end}",
         "$type": "dimension",
@@ -21065,6 +21067,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -21074,6 +21077,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{basis.heading.font-weight}"
@@ -21361,21 +21365,23 @@ exports[`Theme > can export to JSON token file 1`] = `
       "font-weight": {
         "default": {
           "key": "{basis.text.font-weight.default}",
-          "$type": "fontWeight",
-          "$value": 400,
           "$extensions": {
             "studio.tokens": {
               "originalType": "fontWeights"
-            }
+            },
+            "nl.nldesignsystem.token-subtype": "font-weight"
           },
+          "$type": "fontWeight",
+          "$value": 400,
           "original": {
-            "$type": "fontWeight",
-            "$value": 400,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "fontWeights"
-              }
+              },
+              "nl.nldesignsystem.token-subtype": "font-weight"
             },
+            "$type": "fontWeight",
+            "$value": 400,
             "key": "{basis.text.font-weight.default}"
           },
           "name": "default",
@@ -21389,21 +21395,23 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "bold": {
           "key": "{basis.text.font-weight.bold}",
-          "$type": "fontWeight",
-          "$value": 700,
           "$extensions": {
             "studio.tokens": {
               "originalType": "fontWeights"
-            }
+            },
+            "nl.nldesignsystem.token-subtype": "font-weight"
           },
+          "$type": "fontWeight",
+          "$value": 700,
           "original": {
-            "$type": "fontWeight",
-            "$value": 700,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "fontWeights"
-              }
+              },
+              "nl.nldesignsystem.token-subtype": "font-weight"
             },
+            "$type": "fontWeight",
+            "$value": 700,
             "key": "{basis.text.font-weight.bold}"
           },
           "name": "bold",
@@ -21419,23 +21427,23 @@ exports[`Theme > can export to JSON token file 1`] = `
       "line-height": {
         "sm": {
           "key": "{basis.text.line-height.sm}",
-          "$type": "number",
-          "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
             },
             "nl.nldesignsystem.token-subtype": "line-height"
           },
+          "$type": "lineHeight",
+          "$value": 1.5,
           "original": {
-            "$type": "number",
-            "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "lineHeights"
               },
               "nl.nldesignsystem.token-subtype": "line-height"
             },
+            "$type": "lineHeight",
+            "$value": 1.5,
             "key": "{basis.text.line-height.sm}"
           },
           "name": "sm",
@@ -21449,23 +21457,23 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "md": {
           "key": "{basis.text.line-height.md}",
-          "$type": "number",
-          "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
             },
             "nl.nldesignsystem.token-subtype": "line-height"
           },
+          "$type": "lineHeight",
+          "$value": 1.5,
           "original": {
-            "$type": "number",
-            "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "lineHeights"
               },
               "nl.nldesignsystem.token-subtype": "line-height"
             },
+            "$type": "lineHeight",
+            "$value": 1.5,
             "key": "{basis.text.line-height.md}"
           },
           "name": "md",
@@ -21479,23 +21487,23 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "lg": {
           "key": "{basis.text.line-height.lg}",
-          "$type": "number",
-          "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
             },
             "nl.nldesignsystem.token-subtype": "line-height"
           },
+          "$type": "lineHeight",
+          "$value": 1.25,
           "original": {
-            "$type": "number",
-            "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "lineHeights"
               },
               "nl.nldesignsystem.token-subtype": "line-height"
             },
+            "$type": "lineHeight",
+            "$value": 1.25,
             "key": "{basis.text.line-height.lg}"
           },
           "name": "lg",
@@ -21509,23 +21517,23 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "xl": {
           "key": "{basis.text.line-height.xl}",
-          "$type": "number",
-          "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
             },
             "nl.nldesignsystem.token-subtype": "line-height"
           },
+          "$type": "lineHeight",
+          "$value": 1.25,
           "original": {
-            "$type": "number",
-            "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "lineHeights"
               },
               "nl.nldesignsystem.token-subtype": "line-height"
             },
+            "$type": "lineHeight",
+            "$value": 1.25,
             "key": "{basis.text.line-height.xl}"
           },
           "name": "xl",
@@ -21539,23 +21547,23 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "2xl": {
           "key": "{basis.text.line-height.2xl}",
-          "$type": "number",
-          "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
             },
             "nl.nldesignsystem.token-subtype": "line-height"
           },
+          "$type": "lineHeight",
+          "$value": 1.25,
           "original": {
-            "$type": "number",
-            "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "lineHeights"
               },
               "nl.nldesignsystem.token-subtype": "line-height"
             },
+            "$type": "lineHeight",
+            "$value": 1.25,
             "key": "{basis.text.line-height.2xl}"
           },
           "name": "2xl",
@@ -21569,23 +21577,23 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "3xl": {
           "key": "{basis.text.line-height.3xl}",
-          "$type": "number",
-          "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
             },
             "nl.nldesignsystem.token-subtype": "line-height"
           },
+          "$type": "lineHeight",
+          "$value": 1.25,
           "original": {
-            "$type": "number",
-            "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "lineHeights"
               },
               "nl.nldesignsystem.token-subtype": "line-height"
             },
+            "$type": "lineHeight",
+            "$value": 1.25,
             "key": "{basis.text.line-height.3xl}"
           },
           "name": "3xl",
@@ -21599,23 +21607,23 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "4xl": {
           "key": "{basis.text.line-height.4xl}",
-          "$type": "number",
-          "$value": 1.1,
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
             },
             "nl.nldesignsystem.token-subtype": "line-height"
           },
+          "$type": "lineHeight",
+          "$value": 1.1,
           "original": {
-            "$type": "number",
-            "$value": 1.1,
             "$extensions": {
               "studio.tokens": {
                 "originalType": "lineHeights"
               },
               "nl.nldesignsystem.token-subtype": "line-height"
             },
+            "$type": "lineHeight",
+            "$value": 1.1,
             "key": "{basis.text.line-height.4xl}"
           },
           "name": "4xl",
@@ -29634,7 +29642,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.breadcrumb-nav.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -29644,7 +29652,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -29985,6 +29993,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "original": {
@@ -29994,6 +30003,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 400
               },
               "key": "{utrecht.breadcrumb-nav.link.current.font-weight}"
@@ -30645,6 +30655,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -30654,6 +30665,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.button.font-weight}"
@@ -30668,7 +30680,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.button.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -30678,7 +30690,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -31898,6 +31910,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -31907,6 +31920,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{utrecht.button.primary-action.font-weight}"
@@ -31922,7 +31936,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{utrecht.button.primary-action.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -31932,7 +31946,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -32823,6 +32837,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -32832,6 +32847,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{utrecht.button.secondary-action.font-weight}"
@@ -32847,7 +32863,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{utrecht.button.secondary-action.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -32857,7 +32873,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -33748,6 +33764,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -33757,6 +33774,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{utrecht.button.subtle.font-weight}"
@@ -33772,7 +33790,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{utrecht.button.subtle.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -33782,7 +33800,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -35781,7 +35799,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.code.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -35791,7 +35809,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -36010,7 +36028,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.code-block.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -36020,7 +36038,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -36868,6 +36886,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -36877,6 +36896,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.data-badge.font-weight}"
@@ -36891,7 +36911,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.data-badge.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -36901,7 +36921,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -37650,7 +37670,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{utrecht.figure.caption.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -37660,7 +37680,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -37958,7 +37978,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.form-field-description.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -37968,7 +37988,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -38201,6 +38221,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -38210,6 +38231,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{utrecht.form-field-error-message.font-weight}"
@@ -38224,7 +38246,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.form-field-error-message.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -38234,7 +38256,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -38483,6 +38505,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -38492,6 +38515,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.form-label.font-weight}"
@@ -38555,6 +38579,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -38564,6 +38589,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.form-label.checkbox.font-weight}"
@@ -38587,6 +38613,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -38596,6 +38623,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.form-label.checked.font-weight}"
@@ -38705,6 +38733,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -38714,6 +38743,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.form-label.radio.font-weight}"
@@ -38851,6 +38881,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -38860,6 +38891,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.heading-1.font-weight}"
@@ -38874,7 +38906,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.heading-1.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.25,
         "$extensions": {
           "studio.tokens": {
@@ -38884,7 +38916,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.25
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.3xl}",
           "$extensions": {
             "studio.tokens": {
@@ -39076,6 +39108,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -39085,6 +39118,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.heading-2.font-weight}"
@@ -39099,7 +39133,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.heading-2.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.25,
         "$extensions": {
           "studio.tokens": {
@@ -39109,7 +39143,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.25
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.2xl}",
           "$extensions": {
             "studio.tokens": {
@@ -39301,6 +39335,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -39310,6 +39345,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.heading-3.font-weight}"
@@ -39324,7 +39360,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.heading-3.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.25,
         "$extensions": {
           "studio.tokens": {
@@ -39334,7 +39370,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.25
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.xl}",
           "$extensions": {
             "studio.tokens": {
@@ -39526,6 +39562,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -39535,6 +39572,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.heading-4.font-weight}"
@@ -39549,7 +39587,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.heading-4.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.25,
         "$extensions": {
           "studio.tokens": {
@@ -39559,7 +39597,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.25
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.lg}",
           "$extensions": {
             "studio.tokens": {
@@ -39751,6 +39789,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -39760,6 +39799,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.heading-5.font-weight}"
@@ -39774,7 +39814,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.heading-5.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -39784,7 +39824,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -39976,6 +40016,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -39985,6 +40026,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.heading-6.font-weight}"
@@ -39999,7 +40041,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.heading-6.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -40009,7 +40051,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.sm}",
           "$extensions": {
             "studio.tokens": {
@@ -40909,6 +40951,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -40918,6 +40961,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.link-list.link.font-weight}"
@@ -43152,6 +43196,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -43161,6 +43206,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.number-badge.font-weight}"
@@ -43338,7 +43384,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.ordered-list.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -43348,7 +43394,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -43811,6 +43857,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -43820,6 +43867,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.pagination.page-link.font-weight}"
@@ -44517,6 +44565,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -44526,6 +44575,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.pagination.relative-link.font-weight}"
@@ -45088,6 +45138,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -45097,6 +45148,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{utrecht.paragraph.font-weight}"
@@ -45111,7 +45163,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.paragraph.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -45121,7 +45173,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -45229,6 +45281,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -45238,6 +45291,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.paragraph.lead.font-weight}"
@@ -45253,7 +45307,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{utrecht.paragraph.lead.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -45263,7 +45317,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.lg}",
             "$extensions": {
               "studio.tokens": {
@@ -45373,6 +45427,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -45382,6 +45437,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{utrecht.paragraph.small.font-weight}"
@@ -45397,7 +45453,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{utrecht.paragraph.small.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -45407,7 +45463,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.sm}",
             "$extensions": {
               "studio.tokens": {
@@ -45551,6 +45607,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -45560,6 +45617,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.pre-heading.font-weight}"
@@ -45574,7 +45632,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.pre-heading.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -45584,7 +45642,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -47642,6 +47700,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -47651,6 +47710,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{utrecht.select.font-weight}"
@@ -47665,7 +47725,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.select.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -47675,7 +47735,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.form-control.line-height}",
           "$extensions": {
             "studio.tokens": {
@@ -49324,6 +49384,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -49333,6 +49394,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{utrecht.status-badge.font-weight}"
@@ -49347,7 +49409,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.status-badge.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -49357,7 +49419,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -51312,7 +51374,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.table.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -51322,7 +51384,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -51436,7 +51498,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{utrecht.table.caption.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -51446,7 +51508,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.xl}",
             "$extensions": {
               "studio.tokens": {
@@ -51548,6 +51610,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -51557,6 +51620,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{utrecht.table.caption.font-weight}"
@@ -51988,6 +52052,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -51997,6 +52062,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{utrecht.table.header-cell.font-weight}"
@@ -52385,6 +52451,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -52394,6 +52461,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{utrecht.textarea.font-weight}"
@@ -52408,7 +52476,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.textarea.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -52418,7 +52486,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.form-control.line-height}",
           "$extensions": {
             "studio.tokens": {
@@ -53541,6 +53609,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -53550,6 +53619,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{utrecht.textbox.font-weight}"
@@ -53564,7 +53634,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.textbox.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -53574,7 +53644,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.form-control.line-height}",
           "$extensions": {
             "studio.tokens": {
@@ -54440,7 +54510,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.unordered-list.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -54450,7 +54520,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -54974,6 +55044,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -54983,6 +55054,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{utrecht.body.font-weight}"
@@ -54997,7 +55069,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{utrecht.body.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -55007,7 +55079,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -56987,6 +57059,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -56996,6 +57069,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{todo.accordion.button.font-weight}"
@@ -57011,7 +57085,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{todo.accordion.button.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -57021,7 +57095,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -57155,6 +57229,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -57164,6 +57239,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{todo.breadcrumb-nav.font-weight}"
@@ -57178,7 +57254,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{todo.breadcrumb-nav.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -57188,7 +57264,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -58258,6 +58334,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -58267,6 +58344,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{todo.case-card.description.font-weight}"
@@ -58282,7 +58360,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{todo.case-card.description.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -58292,7 +58370,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -58438,6 +58516,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -58447,6 +58526,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{todo.case-card.heading.font-weight}"
@@ -58462,7 +58542,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{todo.case-card.heading.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -58472,7 +58552,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.xl}",
             "$extensions": {
               "studio.tokens": {
@@ -58618,6 +58698,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -58627,6 +58708,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{todo.case-card.metadata.font-weight}"
@@ -58642,7 +58724,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{todo.case-card.metadata.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -58652,7 +58734,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -61726,6 +61808,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -61735,6 +61818,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{todo.drawer.header.label.font-weight}"
@@ -61751,7 +61835,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{todo.drawer.header.label.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
@@ -61761,7 +61845,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.5
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.md}",
               "$extensions": {
                 "studio.tokens": {
@@ -62415,6 +62499,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -62424,6 +62509,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{todo.form-field-label.font-weight}"
@@ -62438,7 +62524,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{todo.form-field-label.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -62448,7 +62534,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -62518,6 +62604,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -62527,6 +62614,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{todo.form-field-label-suffix.font-weight}"
@@ -62662,6 +62750,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -62671,6 +62760,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{todo.form-field-option-label.font-weight}"
@@ -62685,7 +62775,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{todo.form-field-option-label.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -62695,7 +62785,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -62867,7 +62957,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{todo.form-summary.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -62877,7 +62967,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -63271,6 +63361,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -63280,6 +63371,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{todo.form-summary.item-key.font-weight}"
@@ -63541,6 +63633,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -63550,6 +63643,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{todo.form-summary.item-value.font-weight}"
@@ -65124,6 +65218,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -65133,6 +65228,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{todo.modal-dialog.header.label.font-weight}"
@@ -65149,7 +65245,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{todo.modal-dialog.header.label.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
@@ -65159,7 +65255,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.5
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.md}",
               "$extensions": {
                 "studio.tokens": {
@@ -65291,7 +65387,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{todo.pagination.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -65301,7 +65397,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -65371,6 +65467,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -65380,6 +65477,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{todo.pagination.ellipses.font-weight}"
@@ -65573,6 +65671,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -65582,6 +65681,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{todo.pagination.description.font-weight}"
@@ -65787,6 +65887,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -65796,6 +65897,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{todo.pagination.relative-link.font-weight}"
@@ -66861,6 +66963,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -66870,6 +66973,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{todo.pagination.page-link.font-weight}"
@@ -67423,6 +67527,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -67432,6 +67537,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{todo.pagination.page-link.current.font-weight}"
@@ -71238,6 +71344,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -71247,6 +71354,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{todo.progress-list.step-heading.font-weight}"
@@ -71262,7 +71370,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{todo.progress-list.step-heading.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -71272,7 +71380,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -71729,6 +71837,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -71738,6 +71847,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{todo.progress-list.step-marker.font-weight}"
@@ -71785,7 +71895,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{todo.progress-list.step-marker.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -71795,7 +71905,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -73216,6 +73326,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -73225,6 +73336,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{todo.skip-link.font-weight}"
@@ -73546,6 +73658,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -73555,6 +73668,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{todo.status-badge.font-weight}"
@@ -73569,7 +73683,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{todo.status-badge.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -73579,7 +73693,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -75631,6 +75745,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -75640,6 +75755,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{todo.table.footer.font-weight}"
@@ -75777,6 +75893,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -75786,6 +75903,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{todo.task-list.font-weight}"
@@ -75800,7 +75918,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{todo.task-list.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -75810,7 +75928,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -76794,7 +76912,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{ams.avatar.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -76804,7 +76922,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -76985,6 +77103,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -76994,6 +77113,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{ams.breadcrumb.font-weight}"
@@ -77008,7 +77128,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{ams.breadcrumb.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -77018,7 +77138,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -77782,6 +77902,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -77791,6 +77912,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{ams.figure.caption.font-weight}"
@@ -77806,7 +77928,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{ams.figure.caption.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -77816,7 +77938,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -78156,6 +78278,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -78165,6 +78288,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{ams.file-input.font-weight}"
@@ -78179,7 +78303,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{ams.file-input.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -78189,7 +78313,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.form-control.line-height}",
           "$extensions": {
             "studio.tokens": {
@@ -78554,7 +78678,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{ams.file-input.button.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -78564,7 +78688,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -78909,6 +79033,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -78918,6 +79043,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{ams.heading.font-weight}"
@@ -79012,7 +79138,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{ams.heading.level.1.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
@@ -79022,7 +79148,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.25
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.3xl}",
               "$extensions": {
                 "studio.tokens": {
@@ -79086,7 +79212,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{ams.heading.level.2.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
@@ -79096,7 +79222,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.25
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.2xl}",
               "$extensions": {
                 "studio.tokens": {
@@ -79160,7 +79286,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{ams.heading.level.3.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
@@ -79170,7 +79296,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.25
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.xl}",
               "$extensions": {
                 "studio.tokens": {
@@ -79234,7 +79360,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{ams.heading.level.4.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.25,
             "$extensions": {
               "studio.tokens": {
@@ -79244,7 +79370,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.25
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.lg}",
               "$extensions": {
                 "studio.tokens": {
@@ -79308,7 +79434,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{ams.heading.level.5.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
@@ -79318,7 +79444,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.5
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.md}",
               "$extensions": {
                 "studio.tokens": {
@@ -79382,7 +79508,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{ams.heading.level.6.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
@@ -79392,7 +79518,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.5
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.sm}",
               "$extensions": {
                 "studio.tokens": {
@@ -79612,6 +79738,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -79621,6 +79748,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{ams.tabs.button.font-weight}"
@@ -79636,7 +79764,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{ams.tabs.button.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -79646,7 +79774,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -79928,6 +80056,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -79937,6 +80066,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{ams.tabs.button.selected.font-weight}"
@@ -80231,6 +80361,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -80240,6 +80371,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{ams.page-header.brand-name.font-weight}"
@@ -80359,6 +80491,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "original": {
@@ -80368,6 +80501,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                   "studio.tokens": {
                     "originalType": "fontWeights"
                   },
+                  "nl.nldesignsystem.token-subtype": "font-weight",
                   "nl.nldesignsystem.value-resolved-as": 700
                 },
                 "key": "{ams.page-header.mega-menu-button.label.open.font-weight}"
@@ -80573,6 +80707,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -80582,6 +80717,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{ams.page-header.menu-item.font-weight}"
@@ -80597,7 +80733,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{ams.page-header.menu-item.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -80607,7 +80743,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -81191,6 +81327,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -81200,6 +81337,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{ams.page-footer.menu-link.font-weight}"
@@ -81215,7 +81353,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{ams.page-footer.menu-link.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -81225,7 +81363,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -82300,6 +82438,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -82309,6 +82448,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.button.default.font-weight}"
@@ -82324,7 +82464,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.button.default.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -82334,7 +82474,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -83696,6 +83836,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -83705,6 +83846,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.button.primary.font-weight}"
@@ -83720,7 +83862,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.button.primary.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -83730,7 +83872,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{nl.button.default.line-height}",
             "$extensions": {
               "studio.tokens": {
@@ -86916,6 +87058,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -86925,6 +87068,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.button.secondary.font-weight}"
@@ -86940,7 +87084,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.button.secondary.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -86950,7 +87094,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{nl.button.default.line-height}",
             "$extensions": {
               "studio.tokens": {
@@ -90128,6 +90272,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -90137,6 +90282,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.button.subtle.font-weight}"
@@ -90152,7 +90298,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.button.subtle.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -90162,7 +90308,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{nl.button.default.line-height}",
             "$extensions": {
               "studio.tokens": {
@@ -93572,7 +93718,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{nl.code-block.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -93582,7 +93728,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -94136,6 +94282,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -94145,6 +94292,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{nl.data-badge.font-weight}"
@@ -94159,7 +94307,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{nl.data-badge.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -94169,7 +94317,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -94431,6 +94579,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -94440,6 +94589,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.heading.level-1.font-weight}"
@@ -94455,7 +94605,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.heading.level-1.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -94465,7 +94615,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.3xl}",
             "$extensions": {
               "studio.tokens": {
@@ -94663,6 +94813,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -94672,6 +94823,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.heading.level-2.font-weight}"
@@ -94687,7 +94839,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.heading.level-2.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -94697,7 +94849,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.2xl}",
             "$extensions": {
               "studio.tokens": {
@@ -94895,6 +95047,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -94904,6 +95057,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.heading.level-3.font-weight}"
@@ -94919,7 +95073,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.heading.level-3.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -94929,7 +95083,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.xl}",
             "$extensions": {
               "studio.tokens": {
@@ -95127,6 +95281,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -95136,6 +95291,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.heading.level-4.font-weight}"
@@ -95151,7 +95307,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.heading.level-4.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -95161,7 +95317,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.lg}",
             "$extensions": {
               "studio.tokens": {
@@ -95359,6 +95515,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -95368,6 +95525,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.heading.level-5.font-weight}"
@@ -95383,7 +95541,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.heading.level-5.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -95393,7 +95551,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -95591,6 +95749,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -95600,6 +95759,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{nl.heading.level-6.font-weight}"
@@ -95615,7 +95775,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.heading.level-6.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -95625,7 +95785,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.sm}",
             "$extensions": {
               "studio.tokens": {
@@ -96484,6 +96644,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -96493,6 +96654,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{nl.number-badge.font-weight}"
@@ -96752,6 +96914,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -96761,6 +96924,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{nl.paragraph.font-weight}"
@@ -96775,7 +96939,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{nl.paragraph.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -96785,7 +96949,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -96901,6 +97065,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -96910,6 +97075,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{nl.paragraph.lead.font-weight}"
@@ -96925,7 +97091,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{nl.paragraph.lead.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -96935,7 +97101,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.lg}",
             "$extensions": {
               "studio.tokens": {
@@ -97173,7 +97339,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{nl.skip-link.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -97183,7 +97349,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -97635,6 +97801,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -97644,6 +97811,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{denhaag.contact-timeline.step-details.sender.font-weight}"
@@ -97776,7 +97944,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{denhaag.contact-timeline.step-header.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -97786,7 +97954,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -98349,6 +98517,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
         "original": {
@@ -98358,6 +98527,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "key": "{denhaag.description-list.font-weight}"
@@ -98372,7 +98542,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{denhaag.description-list.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -98382,7 +98552,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -98542,7 +98712,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{denhaag.description-list.caption.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -98552,7 +98722,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.xl}",
             "$extensions": {
               "studio.tokens": {
@@ -98654,6 +98824,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -98663,6 +98834,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{denhaag.description-list.caption.font-weight}"
@@ -98826,6 +98998,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -98835,6 +99008,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{denhaag.description-list.title.font-weight}"
@@ -99702,7 +99876,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{denhaag.process-steps.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -99712,7 +99886,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -99958,6 +100132,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -99967,6 +100142,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{denhaag.process-steps.step-heading.font-weight}"
@@ -99982,7 +100158,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{denhaag.process-steps.step-heading.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.25,
           "$extensions": {
             "studio.tokens": {
@@ -99992,7 +100168,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.25
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.lg}",
             "$extensions": {
               "studio.tokens": {
@@ -100602,6 +100778,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -100611,6 +100788,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{denhaag.process-steps.step-marker.font-weight}"
@@ -101417,6 +101595,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "original": {
@@ -101426,6 +101605,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "key": "{denhaag.process-steps.sub-step-heading.font-weight}"
@@ -101797,6 +101977,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -101806,6 +101987,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{denhaag.side-navigation.item.font-weight}"
@@ -101821,7 +102003,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{denhaag.side-navigation.item.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -101831,7 +102013,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -102147,6 +102329,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -102156,6 +102339,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{denhaag.side-navigation.link.active.font-weight}"
@@ -102223,6 +102407,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -102232,6 +102417,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{denhaag.side-navigation.link.current.font-weight}"
@@ -104474,6 +104660,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -104483,6 +104670,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{denhaag.tabs.tab.font-weight}"
@@ -104498,7 +104686,7 @@ exports[`Theme > can export to JSON token file 1`] = `
         },
         "line-height": {
           "key": "{denhaag.tabs.tab.line-height}",
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": 1.5,
           "$extensions": {
             "studio.tokens": {
@@ -104508,7 +104696,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
           "original": {
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": "{basis.text.line-height.md}",
             "$extensions": {
               "studio.tokens": {
@@ -104818,6 +105006,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -104827,6 +105016,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{denhaag.tabs.tab.selected.font-weight}"
@@ -105326,6 +105516,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -105335,6 +105526,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{denhaag.action.font-weight}"
@@ -105378,7 +105570,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{denhaag.action.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -105388,7 +105580,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -105678,6 +105870,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
           "original": {
@@ -105687,6 +105880,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 400
             },
             "key": "{denhaag.action.date.font-weight}"
@@ -105782,6 +105976,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -105791,6 +105986,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{denhaag.action.date.warning.font-weight}"
@@ -105848,6 +106044,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -105857,6 +106054,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{denhaag.action.content.bold.font-weight}"
@@ -107011,7 +107209,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{rhc.navigation-list.item.description.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
@@ -107021,7 +107219,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.5
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.md}",
               "$extensions": {
                 "studio.tokens": {
@@ -107478,6 +107676,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "studio.tokens": {
                 "originalType": "fontWeights"
               },
+              "nl.nldesignsystem.token-subtype": "font-weight",
               "nl.nldesignsystem.value-resolved-as": 700
             },
             "original": {
@@ -107487,6 +107686,7 @@ exports[`Theme > can export to JSON token file 1`] = `
                 "studio.tokens": {
                   "originalType": "fontWeights"
                 },
+                "nl.nldesignsystem.token-subtype": "font-weight",
                 "nl.nldesignsystem.value-resolved-as": 700
               },
               "key": "{rhc.navigation-list.item.label.font-weight}"
@@ -107503,7 +107703,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           },
           "line-height": {
             "key": "{rhc.navigation-list.item.label.line-height}",
-            "$type": "number",
+            "$type": "lineHeight",
             "$value": 1.5,
             "$extensions": {
               "studio.tokens": {
@@ -107513,7 +107713,7 @@ exports[`Theme > can export to JSON token file 1`] = `
               "nl.nldesignsystem.value-resolved-as": 1.5
             },
             "original": {
-              "$type": "number",
+              "$type": "lineHeight",
               "$value": "{basis.text.line-height.md}",
               "$extensions": {
                 "studio.tokens": {
@@ -107836,6 +108036,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "studio.tokens": {
             "originalType": "fontWeights"
           },
+          "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
         "original": {
@@ -107845,6 +108046,7 @@ exports[`Theme > can export to JSON token file 1`] = `
             "studio.tokens": {
               "originalType": "fontWeights"
             },
+            "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
           "key": "{lux.login-link.font-weight}"
@@ -107859,7 +108061,7 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{lux.login-link.line-height}",
-        "$type": "number",
+        "$type": "lineHeight",
         "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
@@ -107869,7 +108071,7 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
         "original": {
-          "$type": "number",
+          "$type": "lineHeight",
           "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
@@ -108456,6 +108658,7 @@ exports[`Theme > can export to JSON token file 1`] = `
 
 exports[`Theme > can export to css custom properties 1`] = `
 ".preview-theme, :host {
+	--ams-avatar-aspect-ratio: 1
 	--ams-avatar-background-color: var(--basis-color-accent-1-inverse-bg-default)
 	--ams-avatar-border-color: var(--basis-color-transparent)
 	--ams-avatar-border-style: solid
@@ -108546,6 +108749,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-heading-level-5-line-height: var(--basis-text-line-height-md)
 	--ams-heading-level-6-font-size: var(--basis-text-font-size-sm)
 	--ams-heading-level-6-line-height: var(--basis-text-line-height-sm)
+	--ams-image-aspect-ratio: 1.7778
 	--ams-page-footer-menu-column-gap: var(--basis-space-column-4xl)
 	--ams-page-footer-menu-link-color: var(--basis-color-action-1-color-default)
 	--ams-page-footer-menu-link-font-family: var(--basis-text-font-family-default)
@@ -109208,6 +109412,15 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--basis-text-font-size-md: 1rem
 	--basis-text-font-size-sm: 0.875rem
 	--basis-text-font-size-xl: 1.5rem
+	--basis-text-font-weight-bold: 700
+	--basis-text-font-weight-default: 400
+	--basis-text-line-height-2xl: 1.25
+	--basis-text-line-height-3xl: 1.25
+	--basis-text-line-height-4xl: 1.1
+	--basis-text-line-height-lg: 1.25
+	--basis-text-line-height-md: 1.5
+	--basis-text-line-height-sm: 1.5
+	--basis-text-line-height-xl: 1.25
 	--denhaag-action-background-color: var(--basis-color-transparent)
 	--denhaag-action-border-color: var(--basis-color-default-border-subtle)
 	--denhaag-action-border-style: solid
@@ -111173,6 +111386,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 
 exports[`Theme > has a different CSS output after token update 1`] = `
 ".preview-theme, :host {
+	--ams-avatar-aspect-ratio: 1
 	--ams-avatar-background-color: var(--basis-color-accent-1-inverse-bg-default)
 	--ams-avatar-border-color: var(--basis-color-transparent)
 	--ams-avatar-border-style: solid
@@ -111263,6 +111477,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-heading-level-5-line-height: var(--basis-text-line-height-md)
 	--ams-heading-level-6-font-size: var(--basis-text-font-size-sm)
 	--ams-heading-level-6-line-height: var(--basis-text-line-height-sm)
+	--ams-image-aspect-ratio: 1.7778
 	--ams-page-footer-menu-column-gap: var(--basis-space-column-4xl)
 	--ams-page-footer-menu-link-color: var(--basis-color-action-1-color-default)
 	--ams-page-footer-menu-link-font-family: var(--basis-text-font-family-default)
@@ -111925,6 +112140,15 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--basis-text-font-size-md: 1rem
 	--basis-text-font-size-sm: 0.875rem
 	--basis-text-font-size-xl: 1.5rem
+	--basis-text-font-weight-bold: 700
+	--basis-text-font-weight-default: 400
+	--basis-text-line-height-2xl: 1.25
+	--basis-text-line-height-3xl: 1.25
+	--basis-text-line-height-4xl: 1.1
+	--basis-text-line-height-lg: 1.25
+	--basis-text-line-height-md: 1.5
+	--basis-text-line-height-sm: 1.5
+	--basis-text-line-height-xl: 1.25
 	--denhaag-action-background-color: var(--basis-color-transparent)
 	--denhaag-action-border-color: var(--basis-color-default-border-subtle)
 	--denhaag-action-border-style: solid

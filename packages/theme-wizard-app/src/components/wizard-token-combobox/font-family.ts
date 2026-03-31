@@ -12,6 +12,9 @@ const getActualValue = (token: FontFamilyToken) => {
   return $value;
 };
 
+/**
+ * @description customize how options are filtered when typing
+ */
 export const filter = <T extends { value: FontFamilyToken }>(query: string): ((option: T) => boolean) => {
   return ({ value: token }: T) => {
     const actualValue = getActualValue(token);
@@ -20,12 +23,18 @@ export const filter = <T extends { value: FontFamilyToken }>(query: string): ((o
   };
 };
 
+/**
+ * @description customize how the user input is resolved to a value
+ */
 export const queryToValue = (query: string): FontFamilyToken => {
   return { $type: 'fontFamily', $value: [query] };
 };
 
+/**
+ * @description customize how a value is converted to a query
+ */
 export const valueToQuery = <T extends { $value: FontFamilyToken['$value'] }>({ $value }: T): string => {
-  return Array.isArray($value) ? $value[0] : $value || '';
+  return Array.isArray($value) ? $value.join(', ') : $value || '';
 };
 
 export const preview = <T extends { label: string; value: FontFamilyToken }>({ value }: T) => {

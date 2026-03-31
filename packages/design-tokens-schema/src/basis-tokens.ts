@@ -3,6 +3,7 @@ import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
+import { NumberTokenSchema } from './tokens/number-token';
 
 export const ColorOrColorScaleSchema = z.union([
   ColorTokenValidationSchema,
@@ -143,8 +144,24 @@ export const BasisTextSchema = z.looseObject({
     })
     .optional(),
   'font-size': FontSizeScaleSchema.optional(),
-  // 'font-weight': z.looseObject({}).optional(),
-  // 'line-height': z.looseObject({}).optional(),
+  'font-weight': z
+    .looseObject({
+      default: NumberTokenSchema.optional(),
+      bold: NumberTokenSchema.optional(),
+    })
+    .optional(),
+  'line-height': z
+    .looseObject({
+      /* eslint-disable perfectionist/sort-objects */
+      sm: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
+      md: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
+      lg: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
+      xl: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
+      '2xl': z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
+      '3xl': z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
+      '4xl': z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
+    })
+    .optional(),
 });
 
 export const FormControlStateSchema = z.looseObject({

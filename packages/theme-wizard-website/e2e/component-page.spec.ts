@@ -109,7 +109,7 @@ test.describe('stories', () => {
         const input = page.getByLabel('nl.code-block.font-size');
         expect(await input.inputValue()).not.toBe('24px');
         await input.fill('24px');
-        await input.press('Enter');
+        await input.blur();
         expect(await input.inputValue()).toBe('24px');
       });
 
@@ -122,6 +122,24 @@ test.describe('stories', () => {
         await page.keyboard.press('Tab');
         const updatedFontSize = await componentPage.getComputedProperty(preview, 'font-size');
         expect(updatedFontSize).toBe('24px');
+      });
+    });
+
+    test.describe('line-height', () => {
+      test('updates input value (dimension)', async ({ page }) => {
+        const input = page.getByLabel('nl.code-block.line-height');
+        expect(await input.inputValue()).not.toBe('24px');
+        await input.fill('24px');
+        await input.blur();
+        expect(await input.inputValue()).toBe('24px');
+      });
+
+      test('updates input value (number)', async ({ page }) => {
+        const input = page.getByLabel('nl.code-block.line-height');
+        expect(await input.inputValue()).not.toBe('1.2');
+        await input.fill('1.2');
+        await input.blur();
+        expect(await input.inputValue()).toBe('1.2');
       });
     });
   });
@@ -195,10 +213,24 @@ test.describe('stories', () => {
       });
     });
 
-    // Entering custom dimensions/numbers does not work yet
-    test.skip('shows min-line-height validation', async ({ page }) => {
+    test('shows min-line-height validation', async ({ page }) => {
+      const ERROR_MESSAGE = 'Regelafstand is te klein. Bekijk richtlijnen. Regelafstand: 1.01. Minimaal vereist: 1.1';
       const input = page.getByLabel('nl.code-block.line-height');
-      await input.fill('0.5');
+      await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+
+      await input.fill('1.01');
+      await input.blur();
+      await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+    });
+
+    test('shows unitless-line-height validation', async ({ page }) => {
+      const ERROR_MESSAGE = 'Onverwachte eenheid. Gebruik alleen nummers.';
+      const input = page.getByLabel('nl.code-block.line-height');
+      await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
+
+      await input.fill('20px');
+      await input.blur();
+      await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
     });
   });
 });
