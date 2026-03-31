@@ -10,6 +10,7 @@ import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
 import { type ModernDimensionToken } from '@nl-design-system-community/design-tokens-schema';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
+import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -44,6 +45,7 @@ export class WizardStyleGuideTypography extends LitElement {
     unsafeCSS(codeCss),
     unsafeCSS(linkCss),
     unsafeCSS(paragraphCss),
+    unsafeCSS(buttonLinkStyles),
     styles,
   ];
 
@@ -154,12 +156,13 @@ export class WizardStyleGuideTypography extends LitElement {
                       </clippy-toggletip>
                     </td>
                     <td class="utrecht-table__cell">
-                      <clippy-button
-                        purpose="secondary"
+                      <button
+                        type="button"
+                        class="utrecht-link-button utrecht-link-button--html-button"
                         @click=${() => this.#openDialog({ displayValue, tokenId, tokenType: 'fontFamily', usage })}
                       >
                         ${t('styleGuide.showDetails')}
-                      </clippy-button>
+                      </button>
                     </td>
                   </tr>
                 `,
@@ -227,12 +230,13 @@ export class WizardStyleGuideTypography extends LitElement {
                       </clippy-toggletip>
                     </td>
                     <td class="utrecht-table__cell">
-                      <clippy-button
-                        purpose="secondary"
+                      <button
+                        type="button"
+                        class="utrecht-link-button utrecht-link-button--html-button"
                         @click=${() => this.#openDialog({ displayValue, tokenId, tokenType: 'fontSize', usage })}
                       >
                         ${t('styleGuide.showDetails')}
-                      </clippy-button>
+                      </button>
                     </td>
                   </tr>
                 `,

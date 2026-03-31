@@ -12,7 +12,7 @@ export default css`
   }
 
   .wizard-container--page {
-    max-inline-size: var(--basis-page-max-max-inline-size);
+    max-inline-size: var(--basis-page-max-inline-size);
     padding-inline: var(--basis-space-inline-xl);
   }
 
