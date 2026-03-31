@@ -8,6 +8,7 @@ import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { type ColorToken as ColorTokenType, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
+import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import Color from 'colorjs.io';
 import { LitElement, html, unsafeCSS } from 'lit';
@@ -44,6 +45,7 @@ export class WizardStyleGuideColors extends LitElement {
     unsafeCSS(codeCss),
     unsafeCSS(paragraphCss),
     unsafeCSS(linkCss),
+    unsafeCSS(buttonLinkStyles),
     styles,
   ];
 
@@ -149,12 +151,13 @@ export class WizardStyleGuideColors extends LitElement {
                           </clippy-toggletip>
                         </td>
                         <td class="utrecht-table__cell">
-                          <clippy-button
-                            purpose="secondary"
+                          <button
+                            type="button"
+                            class="utrecht-link-button utrecht-link-button--html-button"
                             @click=${() => this.#openDialog(displayValue, tokenId, usage)}
                           >
                             ${t('styleGuide.showDetails')}
-                          </clippy-button>
+                          </button>
                         </td>
                       </tr>
                     `,

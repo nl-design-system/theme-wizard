@@ -15,32 +15,44 @@ const SECTION_IDS = {
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
 
-      <div slot="main">
+      <div slot="main" class="wizard-main">
         <wizard-container>
-          <h1>Stijlgids</h1>
-          <WithPageNav>
-            <div slot="page-nav">
-              <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
-            </div>
-            <div class="wizard-style-guides" slot="page-content">
-              <section>
-                <h2 id={SECTION_IDS.typography}>Typografie</h2>
-                <wizard-style-guide-typography></wizard-style-guide-typography>
-              </section>
-              <section>
-                <h2 id={SECTION_IDS.colors}>Kleuren</h2>
-                <wizard-style-guide-colors></wizard-style-guide-colors>
-              </section>
-              <section>
-                <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
-                <wizard-style-guide-spacing></wizard-style-guide-spacing>
-              </section>
-              <section>
-                <h2 id={SECTION_IDS.components}>Componenten</h2>
-                <wizard-style-guide-components></wizard-style-guide-components>
-              </section>
-            </div>
-          </WithPageNav>
+          <wizard-story-preview size="lg">
+            <wizard-stack size="4xl">
+              <clippy-heading level="1">Stijlgids</clippy-heading>
+              <WithPageNav>
+                <div slot="page-nav">
+                  <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
+                </div>
+                <wizard-stack size="3xl" slot="page-content">
+                  <section>
+                    <wizard-stack size="2xl">
+                      <clippy-heading level="2" id={SECTION_IDS.typography}>Typografie</clippy-heading>
+                      <wizard-style-guide-typography></wizard-style-guide-typography>
+                    </wizard-stack>
+                  </section>
+                  <section>
+                    <wizard-stack size="2xl">
+                      <h2 id={SECTION_IDS.colors}>Kleuren</h2>
+                      <wizard-style-guide-colors></wizard-style-guide-colors>
+                    </wizard-stack>
+                  </section>
+                  <section>
+                    <wizard-stack size="2xl">
+                      <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
+                      <wizard-style-guide-spacing></wizard-style-guide-spacing>
+                    </wizard-stack>
+                  </section>
+                  <section>
+                    <wizard-stack size="2xl">
+                      <h2 id={SECTION_IDS.components}>Componenten</h2>
+                      <wizard-style-guide-components></wizard-style-guide-components>
+                    </wizard-stack>
+                  </section>
+                </wizard-stack>
+              </WithPageNav>
+            </wizard-stack>
+          </wizard-story-preview>
         </wizard-container>
       </div>
     </wizard-layout>
@@ -48,12 +60,8 @@ const SECTION_IDS = {
 </BaseLayout>
 
 <style>
-  .wizard-style-guides {
-    display: grid;
-    row-gap: var(--basis-space-row-3xl);
-  }
-
-  [slot="main"] {
-    background-color: var(--basis-color-default-bg-document);
+  .wizard-main {
+    padding-block-end: var(--basis-space-block-6xl);
+    padding-block-start: var(--basis-space-block-4xl);
   }
 </style>

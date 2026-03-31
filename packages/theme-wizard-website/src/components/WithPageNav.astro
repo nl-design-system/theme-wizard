@@ -10,34 +10,20 @@
 <style>
   .wizard-page-wrap {
     align-items: start;
-    column-gap: var(--basis-space-column-3xl);
     display: grid;
+    gap: var(--basis-space-row-4xl);
     position: relative;
-    row-gap: var(--basis-space-row-4xl);
 
-    @container (inline-size > 54rem) {
+    @media (width >= 54rem) {
       grid-template-columns: 1fr 18rem;
 
       .wizard-page-content {
-        grid-column: 1;
-        grid-row: 1;
+        order: 1;
       }
 
       .wizard-page-nav {
-        grid-column: 2;
-        grid-row: 1;
+        order: 2;
       }
-    }
-  }
-
-  @media (width <= 960px) {
-    .wizard-page-wrap {
-      flex-direction: column;
-    }
-
-    .wizard-page-nav {
-      flex-basis: auto;
-      inline-size: 100%;
     }
   }
 </style>

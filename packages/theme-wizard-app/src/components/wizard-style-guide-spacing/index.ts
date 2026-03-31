@@ -7,6 +7,7 @@ import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { type DimensionToken } from '@nl-design-system-community/design-tokens-schema';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
+import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -45,6 +46,7 @@ export class WizardStyleGuideSpacing extends LitElement {
     unsafeCSS(codeCss),
     unsafeCSS(paragraphCss),
     unsafeCSS(linkCss),
+    unsafeCSS(buttonLinkStyles),
     styles,
   ];
 
@@ -140,8 +142,9 @@ export class WizardStyleGuideSpacing extends LitElement {
                         </td>
 
                         <td class="utrecht-table__cell">
-                          <clippy-button
-                            purpose="secondary"
+                          <button
+                            type="button"
+                            class="utrecht-link-button utrecht-link-button--html-button"
                             @click=${() =>
                               this.#openDialog({
                                 displayValue: value,
@@ -152,7 +155,7 @@ export class WizardStyleGuideSpacing extends LitElement {
                               })}
                           >
                             ${t('styleGuide.showDetails')}
-                          </clippy-button>
+                          </button>
                         </td>
                       </tr>
                     `,
