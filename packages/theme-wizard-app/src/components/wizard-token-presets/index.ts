@@ -11,11 +11,13 @@ import { wizardTokenCSS } from './styles';
 const tag = 'wizard-token-preset';
 const themeTag = 'start-theme';
 
+type PresetTokenLeaf = { $value: string };
+type PresetTokenTree = { [key: string]: PresetTokenTree | PresetTokenLeaf };
 type PresetOption = {
   description?: string;
   name: string;
   previewStyle?: string;
-  tokens: unknown;
+  tokens: PresetTokenTree | null;
 };
 
 type FlattenedTokenValue = {
@@ -90,7 +92,9 @@ export class WizardTokenPreset extends LitElement {
   }
 
   get value() {
-    return this.selectedOption?.tokens ?? {};
+    const option = this.options[this.selectedIndex];
+    if (!option) return {};
+    return this.resolveTokens(option);
   }
 
   public clearSelection() {
@@ -137,6 +141,58 @@ export class WizardTokenPreset extends LitElement {
     }
 
     return Object.entries(obj).flatMap(([key, value]) => this.flattenTokenValues(value, [...path, key]));
+  }
+
+  /**
+   * Resolves the tokens for an option. When `tokens` is `null`, builds default token values
+   * from the default theme using token paths defined by sibling options.
+   */
+  private resolveTokens(option: PresetOption): unknown {
+    return option.tokens === null ? this.buildDefaultTokens() : option.tokens;
+  }
+
+  /**
+   * Collects all unique token paths from options that have explicit token values.
+   */
+  private getTokenPathsFromSiblings(): string[] {
+    const paths = new Set<string>();
+    for (const option of this.options) {
+      if (option.tokens !== null && typeof option.tokens === 'object') {
+        for (const { path } of this.flattenTokenValues(option.tokens)) {
+          paths.add(path);
+        }
+      }
+    }
+    return Array.from(paths);
+  }
+
+  /**
+   * Builds a nested token structure with default theme values for all token paths
+   * defined by sibling options. Used when an option has `tokens: null`.
+   */
+  private buildDefaultTokens(): Record<string, unknown> {
+    const paths = this.getTokenPathsFromSiblings();
+    const result: Record<string, unknown> = {};
+
+    for (const path of paths) {
+      const defaultToken = this.defaultTheme.at(path);
+      if (defaultToken?.$value !== undefined) {
+        const parts = path.split('.');
+        let current: Record<string, unknown> = result;
+        for (let i = 0; i < parts.length; i++) {
+          if (i === parts.length - 1) {
+            current[parts[i]] = { $value: defaultToken.$value };
+          } else {
+            if (!current[parts[i]] || typeof current[parts[i]] !== 'object') {
+              current[parts[i]] = {};
+            }
+            current = current[parts[i]] as Record<string, unknown>;
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   private formatTokenPathLabel(path: string) {
@@ -248,7 +304,7 @@ export class WizardTokenPreset extends LitElement {
   }
 
   private collectTokenValueVariants(option: PresetOption) {
-    const tokenValues = this.flattenTokenValues(option.tokens);
+    const tokenValues = this.flattenTokenValues(this.resolveTokens(option));
     const tokenPaths = Array.from(new Set(tokenValues.map((token) => token.path)));
 
     return Object.fromEntries(
@@ -317,13 +373,17 @@ export class WizardTokenPreset extends LitElement {
 
   private updateSelectionState() {
     this.defaultIndexState = this.options.findIndex((option) =>
-      this.matchesThemeByReferenceChain(this.defaultTheme, option.tokens),
+      this.matchesThemeByReferenceChain(this.defaultTheme, this.resolveTokens(option)),
     );
-    const exactSelectedIndex = this.options.findIndex((option) => this.matchesThemeExactly(this.currentTheme, option.tokens));
+    const exactSelectedIndex = this.options.findIndex((option) =>
+      this.matchesThemeExactly(this.currentTheme, this.resolveTokens(option)),
+    );
     this.setSelectedIndex(
       exactSelectedIndex >= 0
         ? exactSelectedIndex
-        : this.options.findIndex((option) => this.matchesThemeByReferenceChain(this.currentTheme, option.tokens)),
+        : this.options.findIndex((option) =>
+            this.matchesThemeByReferenceChain(this.currentTheme, this.resolveTokens(option)),
+          ),
     );
   }
 
@@ -368,7 +428,9 @@ export class WizardTokenPreset extends LitElement {
 
     // Steps after the preset value are resolved values
     const resolvedSteps =
-      presetValueIndex >= 0 ? fullChain.slice(presetValueIndex + 1) : resolveTokenReferenceChain(token.value, this.currentTheme);
+      presetValueIndex >= 0
+        ? fullChain.slice(presetValueIndex + 1)
+        : resolveTokenReferenceChain(token.value, this.currentTheme);
 
     return html`
       <p class="nl-paragraph wizard-token-preset__option-value">
@@ -412,7 +474,7 @@ export class WizardTokenPreset extends LitElement {
   }
 
   private renderTokenDetails(option: PresetOption) {
-    const tokenValues = this.flattenTokenValues(option.tokens);
+    const tokenValues = this.flattenTokenValues(this.resolveTokens(option));
 
     if (tokenValues.length === 0) {
       return nothing;
