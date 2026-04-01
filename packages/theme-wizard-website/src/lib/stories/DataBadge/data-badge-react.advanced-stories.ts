@@ -65,26 +65,14 @@ export const AdvancedDataBadgeTypography: Story = createAdvancedStory({
   tokenNames: ['font-family', 'font-size', 'font-weight', 'line-height'],
 });
 
-export const AdvancedDataBadgeColor: Story = createAdvancedStory({
-  name: 'Data Badge Color',
-  args: {
-    children: '42',
-  },
-  description:
-    'Gebruik deze geavanceerde instellingen alleen als je de badgekleur of tekstkleur handmatig wilt afstemmen.',
-  order: 5,
-  question: 'Wil je de kleurinstellingen van de Data Badge verder verfijnen?',
-  tokenNames: ['background-color', 'color'],
-});
-
 export const AdvancedDataBadgeBorder: Story = createAdvancedStory({
   name: 'Data Badge Border',
   args: {
     children: '42',
   },
   description:
-    'Gebruik deze geavanceerde instellingen alleen als je randkleur, randbreedte of afronding precies wilt instellen.',
+    'Gebruik deze geavanceerde instellingen alleen als je randkleur of randbreedte precies wilt instellen.',
   order: 6,
-  question: 'Wil je de rand en afronding van de Data Badge verder verfijnen?',
-  tokenNames: ['border-color', 'border-radius', 'border-width'],
+  question: 'Wil je de rand van de Data Badge verder verfijnen?',
+  tokenNames: ['border-color', 'border-width'],
 });
