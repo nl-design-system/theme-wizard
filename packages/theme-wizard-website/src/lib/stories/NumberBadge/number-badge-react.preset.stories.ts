@@ -1,6 +1,6 @@
 import type { NumberBadgeProps } from '@nl-design-system-candidate/number-badge-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
 
 type Story = StoryObj<NumberBadgeProps>;
 
@@ -17,7 +17,7 @@ const createPresetStory = ({
   args: NumberBadgeProps;
   description?: string;
   name: string;
-  options: Array<{ description: string; name: string; tokens: Record<string, unknown> | null }>;
+  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
   question: string;
 }): Story => ({
@@ -115,21 +115,8 @@ export const NumberBadgeLettertype: Story = createPresetStory({
 export const NumberBadgeTekstgrootte: Story = createPresetStory({
   name: 'Tekstgrootte',
   args: defaultArgs,
-  description: 'De tekstgrootte bepaalt hoe nadrukkelijk het getal in de badge is.',
-  options: [
-    {
-      name: 'Aanbevolen',
-      description: 'Gebruik de standaard uit het startthema.',
-      tokens: null,
-    },
-    {
-      name: 'Ruim',
-      description: 'Gebruik een grotere tekstgrootte.',
-      tokens: createNumberBadgeTokens({
-        'font-size': '{basis.text.font-size.lg}',
-      }),
-    },
-  ],
+  description: 'De tekstgrootte van de badge blijft in verhouding tot de ingestelde paragraph-grootte.',
+  options: createRelativeFontSizePresetOptions('nl.number-badge.font-size', 'de Number Badge'),
   order: 4,
   question: 'Kies de tekstgrootte van de Number Badge',
 });

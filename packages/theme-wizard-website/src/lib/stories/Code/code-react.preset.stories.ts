@@ -1,6 +1,6 @@
 import type { CodeProps } from '@nl-design-system-candidate/code-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
 
 type Story = StoryObj<CodeProps>;
 
@@ -19,7 +19,7 @@ const createPresetStory = ({
   args: CodeProps;
   description?: string;
   name: string;
-  options: Array<{ description: string; name: string; tokens: Record<string, unknown> | null }>;
+  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
   question: string;
 }): Story => ({
@@ -46,28 +46,8 @@ export const CodeFontSize: Story = createPresetStory({
   args: {
     children: codeSampleText,
   },
-  description: 'De grootte van inline code bepaalt hoeveel nadruk codefragmenten krijgen in lopende tekst.',
-  options: [
-    {
-      name: 'Aanbevolen',
-      description: 'Gebruik de standaard uit het startthema.',
-      tokens: null,
-    },
-    {
-      name: 'Compact',
-      description: 'Maak inline code iets kleiner en compacter.',
-      tokens: createCodeTokens({
-        'font-size': '{basis.text.font-size.sm}',
-      }),
-    },
-    {
-      name: 'Ruim',
-      description: 'Maak inline code iets groter en opvallender.',
-      tokens: createCodeTokens({
-        'font-size': '{basis.text.font-size.lg}',
-      }),
-    },
-  ],
+  description: 'De grootte van inline code blijft in verhouding tot de ingestelde paragraph-grootte.',
+  options: createRelativeFontSizePresetOptions('nl.code.font-size', 'inline code'),
   order: 1,
   question: 'Kies de grootte van inline code',
 });

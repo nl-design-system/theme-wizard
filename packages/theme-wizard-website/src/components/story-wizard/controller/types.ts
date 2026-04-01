@@ -2,6 +2,7 @@ import type { DerivedTokenReference } from '@/lib/types';
 
 export type StoryWizardSelectedOption = {
   derivedTokenReference?: DerivedTokenReference;
+  derivedTokenReferences?: DerivedTokenReference[];
   optionLabel: string;
   previewStyle: string;
   tokens: unknown;
@@ -10,6 +11,7 @@ export type StoryWizardSelectedOption = {
 export type StoryWizardPresetOption = {
   description?: string;
   derivedTokenReference?: DerivedTokenReference;
+  derivedTokenReferences?: DerivedTokenReference[];
   name: string;
   previewStyle?: string;
   tokens: unknown;

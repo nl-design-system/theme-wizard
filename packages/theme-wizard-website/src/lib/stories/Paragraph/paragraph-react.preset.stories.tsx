@@ -1,20 +1,8 @@
 import type { ParagraphProps } from '@nl-design-system-candidate/paragraph-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens, storySampleText } from '../story-helpers';
+import { createPresetTokens, storySampleText, type PresetOption } from '../story-helpers';
 
 type Story = StoryObj<ParagraphProps>;
-
-type PresetOption = {
-  derivedTokenReference?: {
-    offset: number;
-    scalePath: string;
-    sourcePath: string;
-    targetPath: string;
-  };
-  description: string;
-  name: string;
-  tokens: unknown | null;
-};
 
 const paragraphSampleText = storySampleText;
 
@@ -33,7 +21,7 @@ const createParagraphPresetStory = ({
   args: ParagraphProps;
   description: string;
   name: string;
-  options: PresetOption[];
+  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
   previewStoryId: string;
   question: string;
@@ -56,7 +44,10 @@ const createParagraphPresetStory = ({
   },
 });
 
-const createAccentColorOption = (name: string, accentNumber: 1 | 2 | 3): PresetOption => ({
+const createAccentColorOption = (
+  name: string,
+  accentNumber: 1 | 2 | 3,
+): PresetOption<Record<string, unknown> | null> => ({
   name,
   description: 'Overschrijf de lead paragraph met een accentkleur.',
   tokens: createParagraphToken('color', `{basis.color.accent-${accentNumber}.color-document}`),

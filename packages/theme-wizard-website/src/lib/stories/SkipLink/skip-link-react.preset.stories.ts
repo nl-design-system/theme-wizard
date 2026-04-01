@@ -1,20 +1,8 @@
 import type { SkipLinkProps } from '@nl-design-system-candidate/skip-link-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
 
 type Story = StoryObj<SkipLinkProps>;
-
-type PresetOption = {
-  derivedTokenReference?: {
-    offset: number;
-    scalePath: string;
-    sourcePath: string;
-    targetPath: string;
-  };
-  description: string;
-  name: string;
-  tokens: Record<string, unknown> | null;
-};
 
 const createSkipLinkTokens = (entries: Record<string, string>) => createPresetTokens('nl.skip-link', entries);
 
@@ -29,7 +17,7 @@ const createPresetStory = ({
   args: SkipLinkProps;
   description?: string;
   name: string;
-  options: PresetOption[];
+  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
   question: string;
 }): Story => ({
@@ -118,35 +106,7 @@ export const SkipLinkTekstgrootte: Story = createPresetStory({
   name: 'Tekstgrootte',
   args: defaultArgs,
   description: 'De tekstgrootte van de skip link blijft in verhouding tot de ingestelde paragraph-grootte.',
-  options: [
-    {
-      name: 'Aanbevolen',
-      description: 'Gebruik de standaard uit het startthema.',
-      tokens: null,
-    },
-    {
-      name: 'Kleiner dan bodytekst',
-      derivedTokenReference: {
-        offset: -1,
-        scalePath: 'basis.text.font-size',
-        sourcePath: 'nl.paragraph.font-size',
-        targetPath: 'nl.skip-link.font-size',
-      },
-      description: 'Maak de skip link een stap kleiner dan de gewone paragraph.',
-      tokens: {},
-    },
-    {
-      name: 'Groter dan bodytekst',
-      derivedTokenReference: {
-        offset: 1,
-        scalePath: 'basis.text.font-size',
-        sourcePath: 'nl.paragraph.font-size',
-        targetPath: 'nl.skip-link.font-size',
-      },
-      description: 'Maak de skip link een stap groter dan de gewone paragraph.',
-      tokens: {},
-    },
-  ],
+  options: createRelativeFontSizePresetOptions('nl.skip-link.font-size', 'de skip link'),
   order: 3,
   question: 'Kies de tekstgrootte van de Skip Link',
 });
