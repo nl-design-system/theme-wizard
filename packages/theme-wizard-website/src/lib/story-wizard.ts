@@ -57,12 +57,11 @@ export const resolveStoryWizardModel = async (componentId: keyof typeof componen
 
   const wizardStories = allStories.filter(([, story]) => isWizardStory(story));
 
-  const presetTokenPaths = collectPresetTokenPaths(wizardStories);
   const storyMap = new Map(allStories);
 
   const rawSteps = wizardStories
     .reduce<StoryWizardStep[]>((acc, [id, story]) => {
-      const step = createStep(id, story, storyMap, presetTokenPaths);
+      const step = createStep(id, story, storyMap);
       if (step) acc.push(step);
       else console.warn('No valid configuration for wizard step found.', story);
       return acc;
@@ -151,7 +150,6 @@ const createStep = (
   id: string,
   story: StoryWizardStory,
   storyMap: Map<string, StoryWizardStory>,
-  presetTokenPaths: Set<string>,
 ): StoryWizardStep | null => {
   const wizard = story.parameters!.wizard!;
   let groups: Array<StoryWizardPresetGroup | StoryWizardEditableTokenGroup> = [];
@@ -159,7 +157,7 @@ const createStep = (
   if (wizard.type === 'preset' && story.parameters!.presets?.length) {
     groups = story.parameters!.presets.map((preset, index) => createPresetGroup(id, preset, index));
   } else if (wizard.type === 'advanced' && story.parameters!.editableTokens) {
-    const group = createEditableTokenGroup(id, story, presetTokenPaths);
+    const group = createEditableTokenGroup(id, story);
     if (group) groups.push(group);
   }
 
@@ -199,12 +197,10 @@ const createPresetGroup = (storyId: string, preset: StoryWizardPresetObject, ind
 const createEditableTokenGroup = (
   storyId: string,
   story: StoryWizardStory,
-  presetTokenPaths: Set<string>,
 ): StoryWizardEditableTokenGroup | null => {
   const editableTokens = collectEditableTokenPaths(story.parameters?.editableTokens);
-  const filteredTokens = editableTokens.filter((token) => !presetTokenPaths.has(token.path));
 
-  if (filteredTokens.length === 0) {
+  if (editableTokens.length === 0) {
     return null;
   }
 
@@ -219,19 +215,9 @@ const createEditableTokenGroup = (
     name,
     advancedTitle: wizard.advancedTitle ?? 'Geavanceerde instellingen',
     description: wizard.description,
-    tokens: filteredTokens,
+    tokens: editableTokens,
     type: 'editable-tokens',
   };
-};
-
-const collectPresetTokenPaths = (stories: StoryEntry[]) => {
-  return new Set(
-    stories.flatMap(([, story]) =>
-      (story.parameters?.presets ?? []).flatMap((preset) =>
-        preset.options.flatMap((option) => collectEditableTokenPaths(option.tokens).map((token) => token.path)),
-      ),
-    ),
-  );
 };
 
 const isWizardStory = (story: StoryWizardStory) => {
