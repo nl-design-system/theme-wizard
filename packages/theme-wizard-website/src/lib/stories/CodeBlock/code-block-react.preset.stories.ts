@@ -1,17 +1,12 @@
 import type { CodeBlockProps } from '@nl-design-system-candidate/code-block-react';
 import type { StoryObj } from '@storybook/react-vite';
+import { createPresetTokens } from '../story-helpers';
 
 type Story = StoryObj<CodeBlockProps>;
 
-const tokenValue = (value: string) => ({ $value: value });
-
 const codeBlockSampleText = `import { CodeBlock } from '@nl-design-system-candidate/code-block-react';`;
 
-const createCodeBlockTokens = (tokenEntries: Record<string, string>) => ({
-  nl: {
-    'code-block': Object.fromEntries(Object.entries(tokenEntries).map(([key, value]) => [key, tokenValue(value)])),
-  },
-});
+const createCodeBlockTokens = (entries: Record<string, string>) => createPresetTokens('nl.code-block', entries);
 
 const createPresetStory = ({
   name,
