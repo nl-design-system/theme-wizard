@@ -1,5 +1,6 @@
 import type { HeadingLevel, HeadingProps } from '@nl-design-system-candidate/heading-react';
 import type { StoryObj } from '@storybook/react-vite';
+import type { PresetOption } from '../story-helpers';
 import {
   createHeadingToken,
   headingFontSizes,
@@ -10,20 +11,6 @@ import {
 } from './heading-react.story-helpers';
 
 type Story = StoryObj<HeadingProps>;
-
-type PresetOption = {
-  derivedTokenReference?: {
-    offset: number;
-    scalePath: string;
-    sourcePath: string;
-    targetIndex?: number;
-    targetKey?: string;
-    targetPath: string;
-  };
-  description: string;
-  name: string;
-  tokens: unknown | null;
-};
 
 const createHeadingPresetStory = ({
   name,
@@ -37,7 +24,7 @@ const createHeadingPresetStory = ({
   args: HeadingProps;
   description: string;
   name: string;
-  options: PresetOption[];
+  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
   previewStoryId: string;
   question: string;
@@ -60,7 +47,7 @@ const createHeadingPresetStory = ({
   },
 });
 
-const createFontSizeOptions = (level: HeadingLevel): PresetOption[] => {
+const createFontSizeOptions = (level: HeadingLevel): PresetOption<Record<string, unknown> | null>[] => {
   const targetPath = `nl.heading.level-${level}.font-size`;
 
   return headingFontSizes.map(({ label, step }) => ({
@@ -91,7 +78,7 @@ const createFontSizeStory = (level: HeadingLevel): Story =>
     question: `Kies de grootte van de H${level}`,
   });
 
-const createColorOptions = (level: HeadingLevel): PresetOption[] => [
+const createColorOptions = (level: HeadingLevel): PresetOption<Record<string, unknown> | null>[] => [
   {
     name: 'Standaard',
     description: 'Gebruik het documentkleur uit het startthema.',

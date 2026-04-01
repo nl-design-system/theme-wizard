@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react-vite';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
-import { type WizardStep } from '../story-helpers';
+import { type PresetOption, type WizardStep } from '../story-helpers';
 
 export type ButtonStory = StoryObj<ButtonProps>;
 export type ButtonPurpose = 'default' | 'primary' | 'secondary' | 'subtle';
@@ -23,10 +23,8 @@ export type ButtonPresetOptionConfig = {
   name: 'Gevuld' | 'Outlined' | 'Subtle';
 };
 
-type ButtonPresetOption = {
+type ButtonPresetOption = PresetOption<unknown> & {
   description?: string;
-  name: string;
-  tokens: unknown;
 };
 
 type ButtonPresetGroup = {

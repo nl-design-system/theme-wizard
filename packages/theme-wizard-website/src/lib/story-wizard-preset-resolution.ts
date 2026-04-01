@@ -1,6 +1,11 @@
 import { presetTokensToStyle, styleObjectToString } from '@app/lib/Theme/lib';
 import dlv from 'dlv';
-import { type DynamicPresetOption, type SelectedPresetOption, type PresetResolutionContext } from './types';
+import {
+  type DerivedTokenReference,
+  type DynamicPresetOption,
+  type SelectedPresetOption,
+  type PresetResolutionContext,
+} from './types';
 
 /**
  * Reads the available keys from a token scale in the defaults object.
@@ -154,7 +159,75 @@ const buildTokenValue = (path: string, value: unknown) => {
 };
 
 /**
+ * Deep-merges two nested token objects.
+ * When both sides contain nested token groups, they are merged recursively.
+ * Leaf `$value` objects are replaced by the incoming value.
+ */
+const mergeTokenObjects = (base: unknown, next: unknown): Record<string, unknown> => {
+  if (!base || typeof base !== 'object' || Array.isArray(base)) {
+    return (next as Record<string, unknown>) ?? {};
+  }
+
+  if (!next || typeof next !== 'object' || Array.isArray(next)) {
+    return base as Record<string, unknown>;
+  }
+
+  const result: Record<string, unknown> = { ...(base as Record<string, unknown>) };
+
+  for (const [key, value] of Object.entries(next as Record<string, unknown>)) {
+    const existingValue = result[key];
+
+    if (
+      existingValue &&
+      typeof existingValue === 'object' &&
+      !Array.isArray(existingValue) &&
+      value &&
+      typeof value === 'object' &&
+      !Array.isArray(value) &&
+      !('$value' in (existingValue as Record<string, unknown>)) &&
+      !('$value' in (value as Record<string, unknown>))
+    ) {
+      result[key] = mergeTokenObjects(existingValue, value);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+};
+
+/**
+ * Resolves one derived token reference into a concrete token object.
+ *
+ * Example input:
+ * `reference = { offset: 1, scalePath: 'basis.text.font-size', sourcePath: 'nl.paragraph.font-size', targetPath: 'nl.code.font-size' }`
+ *
+ * Example return:
+ * `{ nl: { code: { 'font-size': { $value: '{basis.text.font-size.lg}' } } } }`
+ */
+const resolveDerivedTokenReference = (
+  reference: DerivedTokenReference,
+  defaults: unknown,
+  selectedOptions: SelectedPresetOption[],
+) => {
+  const { offset, scalePath, sourcePath, targetIndex, targetKey, targetPath } = reference;
+  const sourceReference = getSelectedTokenReference(selectedOptions, sourcePath, defaults, `{${scalePath}.md}`);
+  let resolvedValue: string;
+
+  if (typeof targetKey === 'string') {
+    resolvedValue = getScaleReferenceForKey(defaults, scalePath, targetKey, sourceReference);
+  } else if (typeof targetIndex === 'number') {
+    resolvedValue = getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference);
+  } else {
+    resolvedValue = getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
+  }
+
+  return buildTokenValue(targetPath, resolvedValue);
+};
+
+/**
  * Resolves one dynamic preset option into a concrete option with actual token values and preview style.
+ * Supports both a single `derivedTokenReference` and multiple `derivedTokenReferences`.
  *
  * Example input:
  * `option = { name: 'Extra ruim', derivedTokenReference: { offset: 1, scalePath: 'basis.text.font-size', sourcePath: 'nl.paragraph.font-size', targetPath: 'nl.paragraph.lead.font-size' }, tokens: {} }`
@@ -167,23 +240,17 @@ const resolveDynamicPresetOption = <TOption extends DynamicPresetOption>(
   defaults: unknown,
   selectedOptions: SelectedPresetOption[],
 ): TOption => {
-  if (!option.derivedTokenReference) {
+  const derivedReferences =
+    option.derivedTokenReferences ?? (option.derivedTokenReference ? [option.derivedTokenReference] : []);
+
+  if (derivedReferences.length === 0) {
     return option;
   }
 
-  const { offset, scalePath, sourcePath, targetIndex, targetKey, targetPath } = option.derivedTokenReference;
-  const sourceReference = getSelectedTokenReference(selectedOptions, sourcePath, defaults, `{${scalePath}.md}`);
-  let resolvedValue: string;
-
-  if (typeof targetKey === 'string') {
-    resolvedValue = getScaleReferenceForKey(defaults, scalePath, targetKey, sourceReference);
-  } else if (typeof targetIndex === 'number') {
-    resolvedValue = getScaleReferenceAtIndex(defaults, scalePath, targetIndex, sourceReference);
-  } else {
-    resolvedValue = getShiftedScaleReference(defaults, sourceReference, scalePath, offset);
-  }
-
-  const resolvedTokens = buildTokenValue(targetPath, resolvedValue);
+  const resolvedTokens = derivedReferences.reduce<Record<string, unknown>>(
+    (acc, reference) => mergeTokenObjects(acc, resolveDerivedTokenReference(reference, defaults, selectedOptions)),
+    {},
+  );
 
   return {
     ...option,

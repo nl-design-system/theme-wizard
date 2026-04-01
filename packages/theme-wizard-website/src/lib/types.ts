@@ -11,6 +11,7 @@ export type DerivedTokenReference = {
 
 export type DynamicPresetOption = {
   derivedTokenReference?: DerivedTokenReference;
+  derivedTokenReferences?: DerivedTokenReference[];
   previewStyle?: string;
   tokens: unknown;
 };
@@ -28,6 +29,7 @@ export type PresetResolutionContext<TOption extends DynamicPresetOption> = {
 export type StoryWizardPresetOption = {
   description?: string;
   derivedTokenReference?: DerivedTokenReference;
+  derivedTokenReferences?: DerivedTokenReference[];
   name: string;
   previewStyle: string;
   tokens: unknown;
@@ -82,6 +84,7 @@ export type StoryWizardViewModel = {
 export type StoryWizardPresetOptionObject = {
   description?: string;
   derivedTokenReference?: DerivedTokenReference;
+  derivedTokenReferences?: DerivedTokenReference[];
   name: string;
   tokens: unknown;
 };

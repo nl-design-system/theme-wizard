@@ -1,6 +1,6 @@
 import type { CodeBlockProps } from '@nl-design-system-candidate/code-block-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
 
 type Story = StoryObj<CodeBlockProps>;
 
@@ -19,7 +19,7 @@ const createPresetStory = ({
   args: CodeBlockProps;
   description?: string;
   name: string;
-  options: Array<{ description: string; name: string; tokens: Record<string, unknown> | null }>;
+  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
   question: string;
 }): Story => ({
@@ -134,6 +134,17 @@ export const CodeBlockPadding: Story = createPresetStory({
   question: 'Kies de padding van het Code Block',
 });
 
+export const CodeBlockTekstgrootte: Story = createPresetStory({
+  name: 'Tekstgrootte',
+  args: {
+    children: codeBlockSampleText,
+  },
+  description: 'De tekstgrootte van het code block blijft in verhouding tot de ingestelde paragraph-grootte.',
+  options: createRelativeFontSizePresetOptions('nl.code-block.font-size', 'het code block'),
+  order: 4,
+  question: 'Kies de tekstgrootte van het Code Block',
+});
+
 export const CodeBlockLettertype: Story = createPresetStory({
   name: 'Lettertype',
   args: {
@@ -155,6 +166,6 @@ export const CodeBlockLettertype: Story = createPresetStory({
       }),
     },
   ],
-  order: 4,
+  order: 5,
   question: 'Kies het lettertype van het Code Block',
 });

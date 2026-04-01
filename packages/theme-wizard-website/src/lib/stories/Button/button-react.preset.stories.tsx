@@ -1,5 +1,6 @@
 import type { ButtonProps } from '@nl-design-system-candidate/button-react';
 import type { StoryObj } from '@storybook/react-vite';
+import { createRelativeFontSizePresetOptions } from '../story-helpers';
 import { ButtonPrimary, RenderButtonPurposePreview } from './button-react.story-components';
 import {
   createButtonPresetStory,
@@ -10,6 +11,7 @@ import {
 } from './button-react.story-helpers';
 
 type Story = StoryObj<ButtonProps>;
+
 export const ButtonMinimumSize: Story = createButtonPresetStory({
   name: 'Minimale afmeting',
   args: {
@@ -164,6 +166,32 @@ export const ButtonShape: Story = createButtonPresetStory({
         },
       ],
       question: 'Hoe afgerond mogen de hoeken van buttons zijn?',
+    },
+  ],
+  previewStoryIds: ['AllButtonPurposesPreview'],
+  render: ButtonPrimary,
+});
+
+export const ButtonTextSize: Story = createButtonPresetStory({
+  name: 'Tekstgrootte',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+  },
+  order: 6,
+  presets: [
+    {
+      name: 'Kies de tekstgrootte van alle buttons',
+      options: createRelativeFontSizePresetOptions(
+        [
+          'nl.button.default.font-size',
+          'nl.button.primary.font-size',
+          'nl.button.secondary.font-size',
+          'nl.button.subtle.font-size',
+        ],
+        'alle buttonvarianten',
+      ),
+      question: 'Kies de tekstgrootte van alle buttons',
     },
   ],
   previewStoryIds: ['AllButtonPurposesPreview'],

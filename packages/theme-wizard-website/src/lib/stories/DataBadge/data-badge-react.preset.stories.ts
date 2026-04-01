@@ -1,6 +1,6 @@
 import type { DataBadgeProps } from '@nl-design-system-candidate/data-badge-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
 
 type Story = StoryObj<DataBadgeProps>;
 
@@ -17,7 +17,7 @@ const createPresetStory = ({
   args: DataBadgeProps;
   description?: string;
   name: string;
-  options: Array<{ description: string; name: string; tokens: Record<string, unknown> | null }>;
+  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
   question: string;
 }): Story => ({
@@ -155,18 +155,7 @@ export const DataBadgeTypografie: Story = createPresetStory({
   },
   description: 'Het lettertype en de tekstgrootte van de badge.',
   options: [
-    {
-      name: 'Aanbevolen',
-      description: 'Gebruik de standaard uit het startthema.',
-      tokens: null,
-    },
-    {
-      name: 'Klein',
-      description: 'Kleiner lettertype voor subtielere badges.',
-      tokens: createDataBadgeTokens({
-        'font-size': '{basis.text.font-size.sm}',
-      }),
-    },
+    ...createRelativeFontSizePresetOptions('nl.data-badge.font-size', 'de Data Badge'),
     {
       name: 'Monospace',
       description: 'Gebruik een monospace lettertype, handig voor numerieke waarden.',
