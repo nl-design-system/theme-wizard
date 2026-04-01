@@ -16,7 +16,6 @@ const meta = {
 export default meta;
 
 export * from './data-badge-react.preset.stories';
-export * from './data-badge-react.advanced-stories';
 
 type Story = StoryObj<DataBadgeProps>;
 
@@ -45,12 +44,15 @@ export const DataBadgeWithDateTime: Story = {
 
 export const WizardPreview: Story = {
   name: 'Wizard Preview',
-  args: {
-    children: 'Nieuwe melding',
-  },
   parameters: {
     wizard: {
       preview: true,
     },
   },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <DataBadge>Nieuwe melding</DataBadge>
+      <DataBadge dateTime="2024-12-31T23:59:59+01:00">31 december 2024</DataBadge>
+    </div>
+  ),
 };
