@@ -7,9 +7,7 @@ const tokenValue = (value: string) => ({ $value: value });
 
 const createDataBadgeTokens = (tokenEntries: Record<string, string>) => ({
   nl: {
-    'data-badge': Object.fromEntries(
-      Object.entries(tokenEntries).map(([key, value]) => [key, tokenValue(value)]),
-    ),
+    'data-badge': Object.fromEntries(Object.entries(tokenEntries).map(([key, value]) => [key, tokenValue(value)])),
   },
 });
 
@@ -24,7 +22,7 @@ const createPresetStory = ({
   args: DataBadgeProps;
   description?: string;
   name: string;
-  options: Array<{ description: string; name: string; tokens: unknown }>;
+  options: Array<{ description: string; name: string; tokens: Record<string, unknown> | null }>;
   order: number;
   question: string;
 }): Story => ({
@@ -54,6 +52,11 @@ export const DataBadgeKleur: Story = createPresetStory({
   description: 'De achtergrondkleur en tekstkleur bepalen hoe de badge opvalt in de interface.',
   options: [
     {
+      name: 'Aanbevolen',
+      description: 'Gebruik de standaard uit het startthema. Neutrale achtergrond, minder opvallend',
+      tokens: null,
+    },
+    {
       name: 'Actiekleur',
       description: 'Gebruikt de primaire actiekleur, geschikt voor notificaties.',
       tokens: createDataBadgeTokens({
@@ -80,6 +83,11 @@ export const DataBadgeVorm: Story = createPresetStory({
     children: 'Nieuwe melding',
   },
   options: [
+    {
+      name: 'Aanbevolen',
+      description: 'Gebruik de standaard uit het startthema.',
+      tokens: null,
+    },
     {
       name: 'Pill',
       description: 'Volledig afgerond, klassieke badge-vorm.',

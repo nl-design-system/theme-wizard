@@ -22,7 +22,7 @@ type PresetOption = {
   };
   description: string;
   name: string;
-  tokens: unknown;
+  tokens: unknown | null;
 };
 
 const createHeadingPresetStory = ({
@@ -95,7 +95,7 @@ const createColorOptions = (level: HeadingLevel): PresetOption[] => [
   {
     name: 'Standaard',
     description: 'Gebruik het documentkleur uit het startthema.',
-    tokens: createHeadingToken(level, 'color', '{basis.color.default.color-document}'),
+    tokens: null,
   },
   ...([1, 2, 3] as const).map((accentNumber: AccentNumber) => ({
     name: `Accentkleur ${accentNumber}`,
