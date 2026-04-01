@@ -1,6 +1,6 @@
 export const components = {
   button: { stories: () => import('./stories/Button/button-react.stories'), title: 'Button' },
-  code: { stories: () => import('./stories/code-react.stories'), title: 'Code' },
+  code: { stories: () => import('./stories/Code/code-react.stories'), title: 'Code' },
   'code-block': { stories: () => import('./stories/CodeBlock/code-block-react.stories'), title: 'Code Block' },
   'color-sample': { stories: () => import('./stories/color-sample-react.stories'), title: 'Color Sample' },
   'data-badge': { stories: () => import('./stories/DataBadge/data-badge-react.stories'), title: 'Data Badge' },
