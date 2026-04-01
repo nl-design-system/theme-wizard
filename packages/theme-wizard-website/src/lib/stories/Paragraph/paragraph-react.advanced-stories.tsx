@@ -15,13 +15,12 @@ export const AdvancedParagraphShared: Story = {
     editableTokens: {
       nl: {
         paragraph: {
-          color: { $value: '' },
           'font-family': { $value: '' },
         },
       },
     },
     wizard: {
-      description: 'Pas de gedeelde kleur en het lettertype aan voor zowel gewone als lead paragraphs.',
+      description: 'Pas het gedeelde lettertype aan voor zowel gewone als lead paragraphs.',
       order: 4,
       question: 'Wil je de gedeelde basis van paragraphs verder verfijnen?',
       step: 'paragraph:advanced',

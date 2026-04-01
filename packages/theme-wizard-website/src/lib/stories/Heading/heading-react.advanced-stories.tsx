@@ -47,7 +47,7 @@ export const AdvancedHeading1: Story = createAdvancedStory({
   level: 1,
   order: 13,
   question: 'Wil je de H1 verder verfijnen?',
-  tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
+  tokenNames: ['line-height', 'font-family', 'font-weight'],
 });
 
 export const AdvancedHeading2: Story = createAdvancedStory({
@@ -60,7 +60,7 @@ export const AdvancedHeading2: Story = createAdvancedStory({
   level: 2,
   order: 14,
   question: 'Wil je de H2 verder verfijnen?',
-  tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
+  tokenNames: ['line-height', 'font-family', 'font-weight'],
 });
 
 export const AdvancedHeading3: Story = createAdvancedStory({
@@ -73,7 +73,7 @@ export const AdvancedHeading3: Story = createAdvancedStory({
   level: 3,
   order: 15,
   question: 'Wil je de H3 verder verfijnen?',
-  tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
+  tokenNames: ['line-height', 'font-family', 'font-weight'],
 });
 
 export const AdvancedHeading4: Story = createAdvancedStory({
@@ -86,7 +86,7 @@ export const AdvancedHeading4: Story = createAdvancedStory({
   level: 4,
   order: 16,
   question: 'Wil je de H4 verder verfijnen?',
-  tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
+  tokenNames: ['line-height', 'font-family', 'font-weight'],
 });
 
 export const AdvancedHeading5: Story = createAdvancedStory({
@@ -99,7 +99,7 @@ export const AdvancedHeading5: Story = createAdvancedStory({
   level: 5,
   order: 17,
   question: 'Wil je de H5 verder verfijnen?',
-  tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
+  tokenNames: ['line-height', 'font-family', 'font-weight'],
 });
 
 export const AdvancedHeading6: Story = createAdvancedStory({
@@ -112,5 +112,5 @@ export const AdvancedHeading6: Story = createAdvancedStory({
   level: 6,
   order: 18,
   question: 'Wil je de H6 verder verfijnen?',
-  tokenNames: ['color', 'line-height', 'font-family', 'font-weight'],
+  tokenNames: ['line-height', 'font-family', 'font-weight'],
 });

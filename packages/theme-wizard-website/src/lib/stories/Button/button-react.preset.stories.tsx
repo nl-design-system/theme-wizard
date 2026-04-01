@@ -24,18 +24,8 @@ export const ButtonMinimumSize: Story = createButtonPresetStory({
       options: [
         {
           name: 'Aanbevolen',
-          tokens: {
-            nl: {
-              button: {
-                'min-block-size': {
-                  $value: '{basis.pointer-target.min-block-size}',
-                },
-                'min-inline-size': {
-                  $value: '{basis.pointer-target.min-inline-size}',
-                },
-              },
-            },
-          },
+          description: 'Gebruik de standaard uit het startthema.',
+          tokens: null,
         },
         {
           name: 'Minimaal',
@@ -112,6 +102,11 @@ export const ButtonShape: Story = createButtonPresetStory({
       name: 'Kies de vorm van de Buttons',
       description: 'De afronding van de hoeken van alle button-varianten.',
       options: [
+        {
+          name: 'Aanbevolen',
+          description: 'Gebruik de standaard uit het startthema.',
+          tokens: null,
+        },
         {
           name: 'Hoekig',
           description: 'Geen afgeronde hoeken.',
