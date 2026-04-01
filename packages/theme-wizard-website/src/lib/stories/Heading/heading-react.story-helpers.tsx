@@ -28,17 +28,12 @@ export const clampStyles: CSSProperties = {
   whiteSpace: 'nowrap',
 };
 
+import { createPresetTokens } from '../story-helpers';
+
 const tokenValue = (value: string) => ({ $value: value });
 
-export const createHeadingToken = (level: HeadingLevel, property: string, value: string) => ({
-  nl: {
-    heading: {
-      [`level-${level}`]: {
-        [property]: { $value: value },
-      },
-    },
-  },
-});
+export const createHeadingToken = (level: HeadingLevel, property: string, value: string) =>
+  createPresetTokens(`nl.heading.level-${level}`, { [property]: value });
 
 export const createHeadingEditableTokens = (level: number, tokenNames: string[]) => ({
   nl: {
