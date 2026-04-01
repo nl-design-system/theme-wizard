@@ -9,5 +9,5 @@ export const components = {
   mark: { stories: () => import('./stories/mark-react.stories'), title: 'Mark' },
   'number-badge': { stories: () => import('./stories/NumberBadge/number-badge-react.stories'), title: 'Number Badge' },
   paragraph: { stories: () => import('./stories/Paragraph/paragraph-react.stories'), title: 'Paragraph' },
-  'skip-link': { stories: () => import('./stories/skip-link-react.stories'), title: 'Skip Link' },
+  'skip-link': { stories: () => import('./stories/SkipLink/skip-link-react.stories'), title: 'Skip Link' },
 };
