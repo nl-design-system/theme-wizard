@@ -471,7 +471,10 @@ export const createButtonVariantStory = ({
     presets: [
       {
         name: question,
-        options: options.map((option) => createButtonVariantOption(args.purpose ?? 'default', option)),
+        options: [
+          { name: 'Aanbevolen', description: 'Gebruik de standaard uit het startthema.', tokens: null },
+          ...options.map((option) => createButtonVariantOption(args.purpose ?? 'default', option)),
+        ],
         question,
         thumbnail: false,
       },

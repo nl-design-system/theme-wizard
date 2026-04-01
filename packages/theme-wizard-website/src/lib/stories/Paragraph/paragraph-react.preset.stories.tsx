@@ -13,7 +13,7 @@ type PresetOption = {
   };
   description: string;
   name: string;
-  tokens: unknown;
+  tokens: unknown | null;
 };
 
 const paragraphSampleText = storySampleText;
@@ -82,7 +82,7 @@ export const ParagraphFontSize: Story = createParagraphPresetStory({
     {
       name: 'Aanbevolen',
       description: 'Gebruik de standaard uit het startthema.',
-      tokens: createParagraphToken('font-size', '{basis.text.font-size.md}'),
+      tokens: null,
     },
     {
       name: 'Ruim',
@@ -158,7 +158,7 @@ export const LeadParagraphColor: Story = createParagraphPresetStory({
     {
       name: 'Aanbevolen',
       description: 'Gebruik de standaard uit het startthema.',
-      tokens: createParagraphToken('color', '{basis.color.default.color-document}'),
+      tokens: null,
     },
     createAccentColorOption('Accentkleur 1', 1),
     createAccentColorOption('Accentkleur 2', 2),
