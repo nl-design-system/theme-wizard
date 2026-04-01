@@ -37,11 +37,10 @@ export const AdvancedButtonBorders: Story = createAdvancedStory({
     iconStart: '❤️',
     label: 'Klik mij!',
   },
-  description: `Er is 1 instelling voor de border-radius van alle soorten buttons.`,
+  description: `Stel de randbreedte van alle button-varianten afzonderlijk af.`,
   editableTokens: {
     nl: {
       button: {
-        'border-radius': tokenValue(),
         default: {
           'border-width': tokenValue(),
         },
@@ -97,40 +96,6 @@ export const AdvancedButtonTypography: Story = createAdvancedStory({
   },
   render: ButtonVariants,
   wizard: buttonWizardStepBasic,
-});
-
-export const AdvancedButtonStates = createStateStory({
-  name: 'Button States',
-  args: {
-    label: 'Klik mij!',
-  },
-  description: `Een standaard Button, met hover en active states.`,
-  render: RenderButtonStates,
-  wizard: buttonWizardStepStates,
-});
-
-export const AdvancedPrimaryButtonStates = createStateStory({
-  name: 'Button States',
-  args: {
-    label: 'Klik mij!',
-    purpose: 'primary',
-  },
-  description: `Een Primary Button, met hover en active states.`,
-  purpose: 'primary',
-  render: RenderButtonStates,
-  wizard: buttonWizardStepStates,
-});
-
-export const AdvancedSecondaryButtonStates = createStateStory({
-  name: 'Secondary Button States',
-  args: {
-    label: 'Klik mij!',
-    purpose: 'secondary',
-  },
-  description: `Een Secondary Button, met hover en active states.`,
-  purpose: 'secondary',
-  render: RenderButtonStates,
-  wizard: buttonWizardStepStates,
 });
 
 export const AdvancedSubtleButtonStates = createStateStory({
@@ -626,8 +591,6 @@ export const AdvancedButtonSize: Story = {
       nl: {
         button: {
           'default.line-height': { $value: '' },
-          'min-block-size': { $value: '' },
-          'min-inline-size': { $value: '' },
           'padding-block-end': { $value: '' },
           'padding-block-start': { $value: '' },
           'padding-inline-end': { $value: '' },
