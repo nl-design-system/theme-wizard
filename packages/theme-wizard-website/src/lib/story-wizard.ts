@@ -186,6 +186,7 @@ const createPresetGroup = (storyId: string, preset: StoryWizardPresetObject, ind
     options: preset.options.map((option) => ({
       name: option.name,
       derivedTokenReference: option.derivedTokenReference,
+      derivedTokenReferences: option.derivedTokenReferences,
       description: option.description,
       previewStyle: styleObjectToString(tokensToStyle(option.tokens as never) as Record<string, string>),
       tokens: option.tokens,
@@ -194,10 +195,7 @@ const createPresetGroup = (storyId: string, preset: StoryWizardPresetObject, ind
   };
 };
 
-const createEditableTokenGroup = (
-  storyId: string,
-  story: StoryWizardStory,
-): StoryWizardEditableTokenGroup | null => {
+const createEditableTokenGroup = (storyId: string, story: StoryWizardStory): StoryWizardEditableTokenGroup | null => {
   const editableTokens = collectEditableTokenPaths(story.parameters?.editableTokens);
 
   if (editableTokens.length === 0) {

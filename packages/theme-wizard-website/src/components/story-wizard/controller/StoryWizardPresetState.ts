@@ -21,7 +21,9 @@ export class StoryWizardPresetState {
     this.#getTheme = getTheme;
     this.#groups = steps.flatMap((step) => step.groups);
     this.#dynamicGroups = this.#groups.filter((group) =>
-      group.getInitialOptions().some((option) => option.derivedTokenReference),
+      group.getInitialOptions().some(
+        (option) => option.derivedTokenReference || (Array.isArray(option.derivedTokenReferences) && option.derivedTokenReferences.length > 0),
+      ),
     );
   }
 
