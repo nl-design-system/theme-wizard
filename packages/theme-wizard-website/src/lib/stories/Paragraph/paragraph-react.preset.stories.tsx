@@ -1,6 +1,6 @@
 import type { ParagraphProps } from '@nl-design-system-candidate/paragraph-react';
 import type { StoryObj } from '@storybook/react-vite';
-import { storySampleText } from '../story-helpers';
+import { createPresetTokens, storySampleText } from '../story-helpers';
 
 type Story = StoryObj<ParagraphProps>;
 
@@ -18,18 +18,8 @@ type PresetOption = {
 
 const paragraphSampleText = storySampleText;
 
-const createParagraphToken = (path: string, value: string) => {
-  const [group, property] = path.split('.');
-  const hasNestedProperty = typeof property === 'string';
-
-  return {
-    nl: {
-      paragraph: {
-        [group]: hasNestedProperty ? { [property]: { $value: value } } : { $value: value },
-      },
-    },
-  };
-};
+const createParagraphToken = (property: string, value: string) =>
+  createPresetTokens('nl.paragraph', { [property]: value });
 
 const createParagraphPresetStory = ({
   name,

@@ -1,15 +1,10 @@
 import type { DataBadgeProps } from '@nl-design-system-candidate/data-badge-react';
 import type { StoryObj } from '@storybook/react-vite';
+import { createPresetTokens } from '../story-helpers';
 
 type Story = StoryObj<DataBadgeProps>;
 
-const tokenValue = (value: string) => ({ $value: value });
-
-const createDataBadgeTokens = (tokenEntries: Record<string, string>) => ({
-  nl: {
-    'data-badge': Object.fromEntries(Object.entries(tokenEntries).map(([key, value]) => [key, tokenValue(value)])),
-  },
-});
+const createDataBadgeTokens = (entries: Record<string, string>) => createPresetTokens('nl.data-badge', entries);
 
 const createPresetStory = ({
   name,
