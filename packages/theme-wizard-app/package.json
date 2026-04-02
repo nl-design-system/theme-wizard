@@ -79,7 +79,7 @@
     "@nl-design-system-unstable/documentation": "1.9.0",
     "@nl-design-system-unstable/start-design-tokens": "2.4.1",
     "@storybook/react-vite": "10.2.19",
-    "@tabler/icons": "3.40.0",
+    "@tabler/icons": "3.41.1",
     "@utrecht/button-css": "3.1.0",
     "@utrecht/button-link-css": "2.0.1",
     "@utrecht/form-field-css": "2.0.1",
@@ -101,8 +101,8 @@
     "react": "18.3.1",
     "react-dom": "^18.3.1",
     "rosetta": "1.1.0",
-    "style-dictionary": "5.3.3",
-    "xstate": "5.28.0",
+    "style-dictionary": "5.4.0",
+    "xstate": "5.30.0",
     "zod": "4.3.6"
   },
   "devDependencies": {
@@ -110,8 +110,8 @@
     "@types/dlv": "1.1.5",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
-    "@vitest/browser-playwright": "4.1.0",
-    "@vitest/coverage-v8": "4.1.0",
+    "@vitest/browser-playwright": "4.1.2",
+    "@vitest/coverage-v8": "4.1.2",
     "glob": "13.0.6",
     "playwright": "1.58.2",
     "postcss-lit": "1.4.1",
@@ -119,6 +119,6 @@
     "typescript": "5.9.3",
     "vite": "7.3.0",
     "vite-plugin-dts": "4.5.4",
-    "vitest": "4.1.0"
+    "vitest": "4.1.2"
   }
 }
