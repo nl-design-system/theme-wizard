@@ -57,7 +57,7 @@
     "debounce": "3.0.0",
     "dequal": "2.0.3",
     "lit": "3.3.2",
-    "memoize": "10.2.0"
+    "memoize": "11.0.0"
   },
   "devDependencies": {
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
