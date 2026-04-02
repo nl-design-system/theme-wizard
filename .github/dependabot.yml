@@ -15,6 +15,30 @@ updates:
     schedule:
       interval: "monthly"
     groups:
+      hono:
+        applies-to: "version-updates"
+        patterns:
+          - "@hono/*"
+          - "hono"
+        update-types:
+          - "patch"
+          - "minor"
+      storybook:
+        applies-to: "version-updates"
+        patterns:
+          - "@storybook/*"
+          - "storybook"
+        update-types:
+          - "patch"
+          - "minor"
+      vite:
+        applies-to: "version-updates"
+        patterns:
+          - "@vitest/*"
+          - "vite"
+        update-types:
+          - "patch"
+          - "minor"
       patch-and-minor-dependencies:
         applies-to: "version-updates"
         update-types:
