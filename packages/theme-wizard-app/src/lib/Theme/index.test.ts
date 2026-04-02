@@ -1,5 +1,5 @@
 import tokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
-import { parse as parseCss } from '@projectwallace/css-parser';
+import { type CSSNode, parse as parseCss } from '@projectwallace/css-parser';
 import dlv from 'dlv';
 import { describe, expect, it } from 'vitest';
 import Theme from './index';
@@ -18,7 +18,7 @@ const normalizeCss = (css: string): string => {
   rule?.block?.children
     .toSorted((a, b) => (a.property ?? '').localeCompare(b.property ?? ''))
     .forEach((declaration) => {
-      newCss.push(`\t${declaration.property}: ${declaration.value}`);
+      newCss.push(`\t${declaration.property}: ${(declaration.value as CSSNode)?.text}`);
     });
   newCss.push('}');
   return newCss.join('\n');
