@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
+import dts from 'unplugin-dts/vite';
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   build: {
@@ -8,10 +8,17 @@ export default defineConfig({
       entry: resolve('./src/get-css.ts'),
       formats: ['es'],
     },
+    minify: false,
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['linkedom'],
+      external: [
+        '@nl-design-system-community/design-tokens-schema',
+        '@projectwallace/css-design-tokens',
+        '@projectwallace/css-parser',
+        'linkedom',
+        'zod',
+      ],
     },
   },
   plugins: [dts()],
