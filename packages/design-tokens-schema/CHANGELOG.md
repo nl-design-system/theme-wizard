@@ -1,5 +1,12 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.1.0
+
+### Minor Changes
+
+- b570fd2: - feat: add `extractReference()` method to get the value of a ref between `{}`
+  - feat: add `isTokenGroup()`
+
 ## 2.0.0
 
 ### Major Changes
