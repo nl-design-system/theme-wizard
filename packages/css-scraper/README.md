@@ -68,40 +68,6 @@ const css = await getCss('https://example.com', {
 });
 ```
 
-### Error handling
-
-The package provides specific error types for different failure scenarios:
-
-```ts
-import {
-  getCss,
-  ForbiddenError,
-  NotFoundError,
-  ConnectionRefusedError,
-  InvalidUrlError,
-  TimeoutError,
-  ScrapingError,
-} from '@nl-design-system-community/css-scraper';
-
-try {
-  const css = await getCss('https://example.com');
-} catch (error) {
-  if (error instanceof ForbiddenError) {
-    console.error('Scraping is blocked (403)');
-  } else if (error instanceof NotFoundError) {
-    console.error('URL not found (404)');
-  } else if (error instanceof ConnectionRefusedError) {
-    console.error('Server refused connection');
-  } else if (error instanceof TimeoutError) {
-    console.error('Request timed out');
-  } else if (error instanceof InvalidUrlError) {
-    console.error('Invalid URL provided');
-  } else if (error instanceof ScrapingError) {
-    console.error('Other scraping error:', error.message);
-  }
-}
-```
-
 ### Extracting design tokens
 
 If your CSS contains design tokens in CSS custom properties, you can extract them:
@@ -142,4 +108,38 @@ console.log(tokens);
 //   },
 //   ...
 // ]
+```
+
+### Error handling
+
+The package provides specific error types for different failure scenarios:
+
+```ts
+import {
+  getCss,
+  ForbiddenError,
+  NotFoundError,
+  ConnectionRefusedError,
+  InvalidUrlError,
+  TimeoutError,
+  ScrapingError,
+} from '@nl-design-system-community/css-scraper';
+
+try {
+  const css = await getCss('https://example.com');
+} catch (error) {
+  if (error instanceof ForbiddenError) {
+    console.error('Scraping is blocked (403)');
+  } else if (error instanceof NotFoundError) {
+    console.error('URL not found (404)');
+  } else if (error instanceof ConnectionRefusedError) {
+    console.error('Server refused connection');
+  } else if (error instanceof TimeoutError) {
+    console.error('Request timed out');
+  } else if (error instanceof InvalidUrlError) {
+    console.error('Invalid URL provided');
+  } else if (error instanceof ScrapingError) {
+    console.error('Other scraping error:', error.message);
+  }
+}
 ```
