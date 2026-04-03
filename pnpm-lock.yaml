@@ -566,7 +566,7 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.3.1
+        specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       rosetta:
         specifier: 1.1.0
@@ -809,8 +809,8 @@ importers:
   packages/theme-wizard-website:
     dependencies:
       '@astrojs/react':
-        specifier: ^5.0.2
-        version: 5.0.2(@types/node@24.12.0)(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(lightningcss@1.32.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tsx@4.21.0)(yaml@2.8.2)
+        specifier: 5.0.2
+        version: 5.0.2(@types/node@24.12.0)(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(lightningcss@1.32.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tsx@4.21.0)(yaml@2.8.2)
       '@astrojs/vercel':
         specifier: 9.0.5
         version: 9.0.5(astro@5.18.1(@types/node@24.12.0)(@vercel/blob@2.3.0)(@vercel/functions@2.2.13)(lightningcss@1.32.0)(rollup@4.60.1)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.8.2))(react@18.3.1)(rollup@4.60.1)
@@ -968,10 +968,10 @@ importers:
         specifier: 0.6.18
         version: 0.6.18
       react:
-        specifier: ^18.3.1
+        specifier: 18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.3.1
+        specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@playwright/test':
