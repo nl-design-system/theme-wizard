@@ -5,7 +5,7 @@ import vitest from '@vitest/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import perfectionist from 'eslint-plugin-perfectionist';
 import react from 'eslint-plugin-react';
-import eslintPluginZodX from 'eslint-plugin-zod-x';
+import eslintPluginZod from 'eslint-plugin-zod';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
@@ -84,8 +84,8 @@ export default defineConfig([
     ...prettier,
   },
   {
-    name: 'eslint-plugin-zod-x',
-    ...eslintPluginZodX.configs.recommended,
+    name: 'eslint-plugin-zod',
+    ...eslintPluginZod.configs.recommended,
   },
   {
     name: '@vitest',
