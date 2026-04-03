@@ -53,7 +53,7 @@
     "@nl-design-system-candidate/skip-link-react": "1.1.7",
     "@nl-design-system-community/clippy-components": "workspace:*",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
-    "@nl-design-system-community/ma-design-tokens": "3.0.0",
+    "@nl-design-system-community/ma-design-tokens": "4.1.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-unstable/start-design-tokens": "2.4.1",
     "@tabler/icons-react": "3.41.1",
