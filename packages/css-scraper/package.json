@@ -10,10 +10,10 @@
   ],
   "type": "module",
   "module": "./dist/css-scraper.js",
-  "types": "./dist/get-css.d.ts",
+  "types": "./dist/src/get-css.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/get-css.d.ts",
+      "types": "./dist/src/get-css.d.ts",
       "import": "./dist/css-scraper.js"
     }
   },
@@ -36,11 +36,12 @@
     "lint:js": "eslint",
     "lint-fix:js": "eslint --fix",
     "test-build": "vitest run --coverage",
-    "build": "vite build",
+    "build": "vite build && publint",
     "clean": "rimraf dist/"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "4.1.2",
+    "publint": "0.3.18",
     "rimraf": "6.1.3",
     "typescript": "6.0.2",
     "unplugin-dts": "1.0.0-beta.6",
