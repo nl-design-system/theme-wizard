@@ -3,13 +3,12 @@
   "compilerOptions": {
     "allowUnreachableCode": false,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "lib": ["es2020", "dom"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -19,7 +18,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2020",
-    "jsx": "react"
+    "jsx": "react",
+    "types": ["node"]
   },
   "exclude": ["**/node_modules/*"]
 }

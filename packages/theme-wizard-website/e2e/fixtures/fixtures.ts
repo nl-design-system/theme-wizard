@@ -28,7 +28,9 @@ export const expect = baseExpect.extend({
       if (error instanceof Error && 'matcherResult' in error) {
         matcherResult = error.matcherResult as MatcherResult;
       } else {
-        throw new Error('Failed to get font family');
+        throw new Error('Failed to get font family', {
+          cause: error,
+        });
       }
       pass = false;
     }

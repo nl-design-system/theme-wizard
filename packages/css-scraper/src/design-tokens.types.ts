@@ -13,9 +13,9 @@ export const EXTENSION_CSS_PROPERTIES = 'nl.nldesignsystem.theme-wizard.css-prop
 export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.theme-wizard.token-subtype';
 
 export const TokenExtensionsSchema = z.object({
-  [EXTENSION_AUTHORED_AS]: z.string(),
-  [EXTENSION_CSS_PROPERTIES]: z.array(z.string()),
-  [EXTENSION_TOKEN_ID]: z.string(),
+  [EXTENSION_AUTHORED_AS]: z.string().trim(),
+  [EXTENSION_CSS_PROPERTIES]: z.array(z.string().trim()),
+  [EXTENSION_TOKEN_ID]: z.string().trim(),
   [EXTENSION_TOKEN_SUBTYPE]: z.literal('font-size').optional(),
   [EXTENSION_USAGE_COUNT]: z.int().positive(),
 });
