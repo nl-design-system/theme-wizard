@@ -43,8 +43,9 @@
     "npm-package-json-lint": "9.1.0",
     "postcss": "8.5.8",
     "prettier": "3.8.1",
-    "stylelint": "16.26.1",
-    "stylelint-config-standard-scss": "16.0.0",
+    "stylelint": "17.6.0",
+    "stylelint-config-astro": "2.0.0",
+    "stylelint-config-standard-scss": "17.0.0",
     "stylelint-order": "8.1.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.58.0"
