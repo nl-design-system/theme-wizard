@@ -64,7 +64,7 @@
     "vitest": "4.1.2"
   },
   "dependencies": {
-    "@amsterdam/design-system-assets": "1.1.0",
+    "@amsterdam/design-system-assets": "2.1.0",
     "@amsterdam/design-system-react": "2.2.0",
     "@amsterdam/design-system-tokens": "2.2.0",
     "@nl-design-system-candidate/heading-react": "1.1.7",
