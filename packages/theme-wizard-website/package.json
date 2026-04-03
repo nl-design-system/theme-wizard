@@ -66,7 +66,7 @@
     "@nl-design-system-candidate/skip-link-css": "1.0.5",
     "@nl-design-system-candidate/skip-link-react": "1.1.7",
     "@nl-design-system-candidate/skip-link-tokens": "1.0.4",
-    "@nl-design-system-community/ma-design-tokens": "2.5.0",
+    "@nl-design-system-community/ma-design-tokens": "4.1.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@storybook/react-vite": "10.3.4",
