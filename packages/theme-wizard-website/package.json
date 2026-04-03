@@ -87,8 +87,6 @@
     "@types/dlv": "1.1.5",
     "@types/react": "18.3.28",
     "@types/react-dom": "18.3.7",
-    "postcss-html": "1.8.1",
-    "stylelint": "16.26.1",
-    "stylelint-config-astro": "2.0.0"
+    "postcss-html": "1.8.1"
   }
 }
