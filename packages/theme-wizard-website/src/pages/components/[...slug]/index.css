@@ -8,7 +8,6 @@
 }
 
 .wizard-page-content {
-  --wizard-panel-border-color: color-mix(in sRGB, var(--basis-color-default-border-subtle) 78%, transparent);
   --wizard-settings-inline-padding: var(--basis-space-inline-lg);
 
   display: flex;
@@ -352,6 +351,12 @@
   padding-block: 0;
   padding-inline: var(--wizard-settings-inline-padding) 0;
   position: sticky;
+}
+
+.wizard-token-preset__token-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-xs);
 }
 
 .wizard-page-reset {

@@ -1,5 +1,5 @@
 ---
-import type { StoryWizardEditableTokenGroup } from '@/lib/story-wizard';
+import type { StoryWizardEditableTokenGroup } from '@/lib/types';
 
 interface Props {
   group: StoryWizardEditableTokenGroup;
@@ -18,14 +18,20 @@ const { group } = Astro.props;
   {group.description && <p class="nl-paragraph wizard-token-preset__description">{group.description}</p>}
 
   <details class="wizard-token-preset__advanced">
-    <summary class="wizard-token-preset__advanced-summary">{group.advancedTitle ?? 'Geavanceerde instellingen'}</summary>
+    <summary class="wizard-token-preset__advanced-summary">{group.advancedTitle ?? 'Geavanceerde instellingen'}</summary
+    >
 
     <ul class="wizard-secretly-a-list wizard-secretly-a-list--compact">
-      {group.tokens.map((token) => (
-        <li>
-          <wizard-token-field label={token.label} path={token.path}></wizard-token-field>
-        </li>
-      ))}
+      {
+        group.tokens.map((token) => (
+          <li>
+            <div class="wizard-token-preset__token-field">
+              <code class="nl-code">{token.cssVar}</code>
+              <wizard-token-field label={token.label} path={token.path} />
+            </div>
+          </li>
+        ))
+      }
     </ul>
   </details>
 </section>

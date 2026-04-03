@@ -1,639 +1,240 @@
-import { dequal } from 'dequal';
+import { presetTokensToUpdateMany } from '@app/lib/Theme/lib';
 import type { components } from '@/lib/components';
 import { initStories } from '@/components/render-stories';
-import type { StoryWizardSelectionSummary, StoryWizardThemeHost } from './types';
-import { flattenDesignTokens } from './flatten-design-tokens';
+import type { StoryWizardThemeHost } from './types';
+import { StoryWizardNavigation } from './StoryWizardNavigation';
+import { StoryWizardNavigationState } from './StoryWizardNavigationState';
+import { StoryWizardPresetState } from './StoryWizardPresetState';
+import { StoryWizardPreview } from './StoryWizardPreview';
 import { StoryWizardStep } from './StoryWizardStep';
+import { StoryWizardStorage } from './StoryWizardStorage';
+import { StoryWizardSummary } from './StoryWizardSummary';
+import { StoryWizardTokensDialog } from './StoryWizardTokensDialog';
 
 export class StoryWizardController {
-  private readonly componentId: keyof typeof components;
-  private currentStep = 0;
-  private hasFinishedAllChoices = false;
-  private readonly finishSafeBtns: HTMLButtonElement[];
-  private readonly nextBtns: HTMLButtonElement[];
-  private readonly prevBtns: HTMLButtonElement[];
-  private readonly resetBtns: HTMLButtonElement[];
-  private readonly transitionNotes: HTMLElement[];
-  private readonly stepSelections: HTMLElement | null;
-  private readonly stepSelectionsList: HTMLElement | null;
-  private readonly stepSelectionsSummary: HTMLElement | null;
-  private readonly steps: StoryWizardStep[];
-  private readonly steppers: HTMLElement[];
-  private readonly storageKey: string;
-  private tokensDialog: HTMLDialogElement | null = null;
+  readonly #componentId: keyof typeof components;
+  readonly #steps: StoryWizardStep[];
+  readonly #storage: StoryWizardStorage;
+  readonly #navigation: StoryWizardNavigation;
+  readonly #summary: StoryWizardSummary;
+  readonly #dialog: StoryWizardTokensDialog;
+  readonly #preview: StoryWizardPreview;
+  readonly #presetState: StoryWizardPresetState;
+  readonly #nav: StoryWizardNavigationState;
+  readonly #container: HTMLElement;
 
-  public constructor(private readonly container: HTMLElement) {
-    this.componentId = container.dataset.componentId as keyof typeof components;
+  public constructor(container: HTMLElement) {
+    this.#container = container;
+    this.#componentId = container.dataset.componentId as keyof typeof components;
     const root = container.closest<HTMLElement>('[data-story-wizard-root]') ?? container.parentElement ?? document;
     const shell = container.closest<HTMLElement>('.wizard-main') ?? root;
-    this.steps = Array.from(root.querySelectorAll<HTMLElement>('.wizard-story-section')).map(
+
+    this.#steps = Array.from(root.querySelectorAll<HTMLElement>('.wizard-story-section')).map(
       (element) => new StoryWizardStep(element),
     );
-    this.steppers = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-stepper'));
-    this.finishSafeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-finish-safe'));
-    this.resetBtns = Array.from(shell.querySelectorAll<HTMLButtonElement>('.wizard-preset-reset'));
-    this.prevBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-prev'));
-    this.nextBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-next'));
-    this.transitionNotes = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-transition-note'));
-    this.stepSelectionsSummary = root.querySelector<HTMLElement>('.wizard-step-selections__summary');
-    this.stepSelectionsList = root.querySelector<HTMLElement>('.wizard-step-selections__list');
-    this.stepSelections = root.querySelector<HTMLElement>('.wizard-step-selections');
-    this.storageKey = `theme-wizard:${this.componentId}:preset-state`;
+
+    this.#nav = new StoryWizardNavigationState(this.#steps);
+    this.#storage = new StoryWizardStorage(this.#componentId);
+    this.#dialog = new StoryWizardTokensDialog();
+    this.#summary = new StoryWizardSummary(root, this.#dialog, (index) => this.#showStep(index));
+    this.#navigation = new StoryWizardNavigation(root, shell);
+    this.#preview = new StoryWizardPreview();
+    this.#presetState = new StoryWizardPresetState(this.#steps, this.#storage, () => this.#getTheme());
   }
 
   public static init() {
     const container = document.getElementById('story-wizard');
     if (!container) return;
 
-    new StoryWizardController(container).start();
+    new StoryWizardController(container).#start().catch((error) => {
+      console.error('Failed to initialize Story Wizard', error);
+    });
   }
 
-  private get total() {
-    return this.steps.length;
+  #getTheme() {
+    return this.#container.closest('theme-wizard-app') as StoryWizardThemeHost | null;
   }
 
-  private start() {
-    initStories(this.componentId, JSON.parse(this.container.dataset.storyIds || '[]'));
-    this.bindOptionListeners();
-    this.bindNavigation();
+  // --- Lifecycle ---
 
-    if (this.total === 0) {
-      this.steppers.forEach((stepper) => stepper.setAttribute('hidden', ''));
+  async #start() {
+    await this.#presetState.ready();
+    initStories(this.#componentId, JSON.parse(this.#container.dataset.storyIds || '[]'));
+    this.#bindOptionListeners();
+    this.#navigation.bind({
+      onFinishSafe: () => this.#finishWithSafeChoices(),
+      onNext: () => this.#handleNext(),
+      onPrev: () => this.#handlePrev(),
+      onReset: () => this.#reset().catch((e) => console.error('Failed to reset Story Wizard', e)),
+    });
+
+    if (this.#nav.total === 0) {
+      this.#navigation.hideSteppers();
       return;
     }
 
-    this.stepSelections?.removeAttribute('hidden');
-    this.steppers.forEach((stepper) => stepper.removeAttribute('hidden'));
-    this.showStep(this.restoreStoredState());
+    this.#summary.show();
+    this.#navigation.showSteppers();
+    const restoredStepIndex = await this.#presetState.initialize({ restoreStoredState: true });
+    this.#showStep(restoredStepIndex);
   }
 
-  private bindNavigation() {
-    this.resetBtns.forEach((resetBtn) => {
-      resetBtn.addEventListener('click', () => {
-        this.reset();
-      });
-    });
+  async #reset() {
+    this.#nav.reset();
+    const paths = this.#getAllAffectedTokenPaths();
+    this.#container
+      .closest('theme-wizard-app')
+      ?.dispatchEvent(new CustomEvent('reset-tokens', { bubbles: true, composed: true, detail: { paths } }));
+    await this.#presetState.reset();
+    this.#showStep(0);
+  }
 
-    this.prevBtns.forEach((prevBtn) => {
-      prevBtn.addEventListener('click', () => {
-        if (this.currentStep > 0) this.showStep(this.currentStep - 1);
-      });
-    });
+  /**
+   * Collects all token paths that the story wizard can affect:
+   * all options from all preset groups, plus editable token paths from advanced steps.
+   */
+  #getAllAffectedTokenPaths(): string[] {
+    const presetPaths = this.#steps.flatMap((step) =>
+      step.groups.flatMap((group) =>
+        group.getOptions().flatMap((option) => presetTokensToUpdateMany(option.tokens).map(({ path }) => path)),
+      ),
+    );
 
-    this.finishSafeBtns.forEach((finishBtn) => {
-      finishBtn.addEventListener('click', () => {
-        this.finishWithSafeChoices();
-      });
-    });
+    const editablePaths = this.#steps.flatMap((step) => step.editableTokenPaths);
 
-    this.nextBtns.forEach((nextBtn) => {
-      nextBtn.addEventListener('click', () => {
-        if (this.currentStep === this.total - 1) {
-          this.finishWithAllChoices();
-        } else {
-          this.showStep(this.currentStep + 1);
+    return [...new Set([...presetPaths, ...editablePaths])];
+  }
+
+  // --- Navigation handlers ---
+
+  #handleNext() {
+    this.#steps[this.#nav.currentStep]?.confirmSelections();
+    this.#confirmCurrentAdvancedStep(true);
+
+    if (this.#nav.isLastStep) {
+      this.#refreshSelectionState();
+      this.#finishWithAllChoices();
+    } else {
+      this.#showStep(this.#nav.currentStep + 1);
+    }
+  }
+
+  #handlePrev() {
+    if (!this.#nav.isFirstStep) this.#showStep(this.#nav.currentStep - 1);
+  }
+
+  #confirmCurrentAdvancedStep(force = false) {
+    const currentStep = this.#steps[this.#nav.currentStep];
+    if (!currentStep?.isAdvanced) {
+      return;
+    }
+
+    const hasAdvancedChanges = this.#summary.getAdvancedSummary(currentStep, this.#getTheme()).length > 0;
+    if (force || hasAdvancedChanges) {
+      currentStep.confirmAdvancedSelection();
+    }
+  }
+
+  #showStep(index: number) {
+    this.#confirmCurrentAdvancedStep();
+    this.#nav.goTo(index);
+    this.#updateVisibleStep(index);
+    this.#refreshStepNavigation();
+    this.#refreshStepView();
+    this.#persistStepState();
+  }
+
+  // --- Finish flows ---
+
+  #finishWithSafeChoices() {
+    this.#steps[this.#nav.currentStep]?.confirmSelections();
+    this.#refreshSelectionState();
+
+    const safeSteps = this.#steps.slice(0, Math.max(this.#nav.lastSafeStepIndex + 1, 0));
+    const groups = safeSteps.flatMap((step) => step.createSelectionSummary());
+    if (groups.length === 0) return;
+
+    this.#dialog.show('Veilige keuzes', groups);
+    this.#summary.openDetails();
+  }
+
+  #finishWithAllChoices() {
+    const groups = this.#getAllSelectionGroups(true);
+    if (groups.length === 0) return;
+
+    this.#nav.finish();
+    this.#updateSummary();
+    this.#dialog.show('Alle design keuzes', groups);
+    this.#summary.openDetails();
+  }
+
+  // --- Selection sync ---
+
+  #bindOptionListeners() {
+    this.#steps.forEach((step) => {
+      step.bindOptions((group) => {
+        if (!this.#presetState.syncing) {
+          group.markAsChosen();
         }
+
+        this.#presetState.syncDynamicOptions();
+        this.#refreshSelectionState();
       });
     });
-  }
 
-  private bindOptionListeners() {
-    this.steps.forEach((step) => {
-      step.bindOptions(() => {
-        this.writeStoredState();
-        this.applyPreviewStyles();
-        this.updateStepSelections();
-        this.updateNextButtonState();
-      });
+    document.addEventListener('theme-update', () => {
+      this.#preview.apply(this.#steps);
     });
   }
 
-  private getCurrentStep() {
-    return this.steps[this.currentStep];
+  // --- Summary & navigation updates ---
+
+  #updateVisibleStep(index: number) {
+    this.#steps.forEach((step, i) => (i === index ? step.show() : step.hide()));
   }
 
-  private getMergedPreviewStyle() {
-    return this.steps
-      .map((step) => step.getPreviewStyle())
-      .filter(Boolean)
-      .join(';');
+  #refreshStepNavigation() {
+    this.#navigation.updatePrevState(this.#nav.isFirstStep);
+    this.#updateNavigationState();
   }
 
-  private applyPreviewStyles() {
-    const previewStyle = this.getMergedPreviewStyle();
-
-    this.steps.forEach((step) => {
-      step.element
-        .querySelectorAll<HTMLElement>('.wizard-story-section__variants wizard-preview-theme')
-        .forEach((preview) => {
-          if (previewStyle) {
-            preview.setAttribute('style', previewStyle);
-          } else {
-            preview.removeAttribute('style');
-          }
-        });
-    });
+  #refreshStepView() {
+    this.#updateSummary();
+    this.#preview.apply(this.#steps);
   }
 
-  private readStoredState() {
-    try {
-      const raw = globalThis.localStorage?.getItem(this.storageKey);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
+  #persistStepState() {
+    this.#storage.write(this.#nav.currentStep, this.#steps);
   }
 
-  private writeStoredState() {
-    try {
-      const state = {
-        currentStep: this.currentStep,
-        sections: this.steps.map((step) => step.getStoredSelection()),
-      };
-
-      globalThis.localStorage?.setItem(this.storageKey, JSON.stringify(state));
-    } catch {
-      // Progressive enhancement: ignore storage failures and keep the wizard usable.
-    }
+  #refreshSelectionState() {
+    this.#persistStepState();
+    this.#updateSummary();
+    this.#updateNavigationState();
   }
 
-  private clearStoredState() {
-    try {
-      globalThis.localStorage?.removeItem(this.storageKey);
-    } catch {
-      // Progressive enhancement: ignore storage failures and keep the wizard usable.
-    }
+  #updateSummary() {
+    this.#summary.update(this.#steps, this.#getTheme());
   }
 
-  private clearSelections() {
-    this.steps.forEach((step) => step.clearSelections());
-  }
-
-  private restoreStoredState() {
-    const storedState = this.readStoredState();
-    if (!storedState) return 0;
-
-    storedState.sections?.forEach((selection: number[], index: number) => {
-      this.steps[index]?.restoreStoredSelection(selection);
-    });
-
-    if (
-      typeof storedState.currentStep === 'number' &&
-      storedState.currentStep >= 0 &&
-      storedState.currentStep < this.total
-    ) {
-      return storedState.currentStep;
-    }
-
-    return 0;
-  }
-
-  private updateNextButtonState() {
-    const currentStep = this.getCurrentStep();
+  #updateNavigationState() {
+    const currentStep = this.#steps[this.#nav.currentStep];
     if (!currentStep) return;
 
-    const isComplete = currentStep.hasRequiredSelections();
-    const isLastStep = this.currentStep === this.total - 1;
-    const lastSafeStepIndex = this.getLastSafeStepIndex();
-    const isLastSafeStep = lastSafeStepIndex >= 0 && this.currentStep === lastSafeStepIndex && this.hasAdvancedSteps();
-    const showSafeFinish = isLastSafeStep && isComplete;
-
-    this.nextBtns.forEach((nextBtn) => {
-      nextBtn.disabled = !isComplete;
-      nextBtn.classList.toggle('nl-button--disabled', !isComplete);
-      nextBtn.textContent = isLastStep ? 'Afronden' : isLastSafeStep ? 'Geavanceerd' : 'Volgende';
-      nextBtn.classList.toggle('nl-button--primary', !isLastSafeStep || isLastStep);
-      nextBtn.classList.toggle('nl-button--subtle', isLastSafeStep && !isLastStep);
-    });
-
-    this.finishSafeBtns.forEach((finishBtn) => {
-      finishBtn.hidden = !showSafeFinish;
-    });
-
-    this.transitionNotes.forEach((note) => {
-      note.hidden = !isLastSafeStep;
-      note.textContent = isLastSafeStep ? 'Je kunt nu afronden of doorgaan naar geavanceerde instellingen.' : '';
-    });
+    this.#navigation.updateNextState(currentStep, this.#nav);
   }
 
-  private hasAdvancedSteps() {
-    return this.steps.some((step) => step.isAdvanced);
-  }
+  // --- Step helpers ---
 
-  private getFirstAdvancedStepIndex() {
-    return this.steps.findIndex((step) => step.isAdvanced);
-  }
-
-  private getLastSafeStepIndex() {
-    const firstAdvancedIndex = this.getFirstAdvancedStepIndex();
-    if (firstAdvancedIndex === 0) {
-      return -1;
-    }
-
-    return firstAdvancedIndex > 0 ? firstAdvancedIndex - 1 : this.total - 1;
-  }
-
-  private getTheme() {
-    return this.container.closest('theme-wizard-app') as StoryWizardThemeHost | null;
-  }
-
-  private formatTokenValue(value: unknown) {
-    if (typeof value === 'string') {
-      return value;
-    }
-
-    return JSON.stringify(value);
-  }
-
-  private getDefaultTokenValue(defaults: unknown, path: string) {
-    const defaultToken =
-      defaults && typeof defaults === 'object'
-        ? path.split('.').reduce<unknown>((token, key) => {
-            if (!token || typeof token !== 'object') return undefined;
-            return (token as Record<string, unknown>)[key];
-          }, defaults)
-        : undefined;
-
-    return defaultToken && typeof defaultToken === 'object' && '$value' in (defaultToken as Record<string, unknown>)
-      ? (defaultToken as { $value?: unknown }).$value
-      : undefined;
-  }
-
-  private getThemeTokenValues(theme: NonNullable<StoryWizardThemeHost['theme']>, path: string) {
-    return {
-      currentValue: theme.at(path)?.$value,
-      defaultValue: this.getDefaultTokenValue(theme.defaults, path),
-    };
-  }
-
-  private getAdvancedSelectionSummary(
-    step: StoryWizardStep,
-    options: { includeUnchangedTokens?: boolean } = {},
-  ): StoryWizardSelectionSummary[] {
-    const themeHost = this.getTheme();
-    const theme = themeHost?.theme;
-    if (!theme || step.editableTokenPaths.length === 0) return [];
-
-    const { includeUnchangedTokens = false } = options;
-
-    const tokens = step.editableTokenPaths.flatMap((path) => {
-      const { currentValue, defaultValue } = this.getThemeTokenValues(theme, path);
-
-      if (!includeUnchangedTokens && dequal(currentValue, defaultValue)) {
-        return [];
-      }
-
-      return [
-        {
-          path,
-          value: this.formatTokenValue(currentValue),
-        },
-      ];
-    });
-
-    if (tokens.length === 0) {
-      return [];
-    }
-
-    const hasChanges = tokens.some((token) => {
-      const { currentValue, defaultValue } = this.getThemeTokenValues(theme, token.path);
-      return !dequal(currentValue, defaultValue);
-    });
-
-    return [
-      {
-        label: step.stepLabel,
-        optionLabel: hasChanges ? tokens.map((token) => `${token.path}: ${token.value}`).join(' · ') : 'Standaard',
-        tokens,
-      },
-    ];
-  }
-
-  private getAllSelectionGroups(includeAdvancedDefaults = false) {
-    return this.steps.flatMap((step) => {
+  #getAllSelectionGroups(includeAdvancedDefaults = false) {
+    return this.#steps.flatMap((step) => {
       if (step.isAdvanced) {
-        return this.getAdvancedSelectionSummary(step, { includeUnchangedTokens: includeAdvancedDefaults });
+        return includeAdvancedDefaults
+          ? this.#summary.getAdvancedSummary(step, this.#getTheme(), { includeUnchangedTokens: true })
+          : [];
       }
 
-      return step.createSelectionSummary(flattenDesignTokens);
+      return step.createSelectionSummary();
     });
-  }
-
-  private finishWithSafeChoices() {
-    const lastSafeStepIndex = this.getLastSafeStepIndex();
-    const safeSteps = this.steps.slice(0, Math.max(lastSafeStepIndex + 1, 0));
-    const selectedGroups = safeSteps.flatMap((step) => step.createSelectionSummary(flattenDesignTokens));
-    if (selectedGroups.length === 0) return;
-
-    this.showTokensDialog('Veilige keuzes', selectedGroups);
-    const details = this.stepSelections as HTMLDetailsElement | null;
-    if (details) details.open = true;
-  }
-
-  private finishWithAllChoices() {
-    const selectedGroups = this.getAllSelectionGroups(true);
-    if (selectedGroups.length === 0) return;
-
-    this.hasFinishedAllChoices = true;
-    this.updateStepSelections();
-    this.showTokensDialog('Alle design keuzes', selectedGroups);
-    const details = this.stepSelections as HTMLDetailsElement | null;
-    if (details) details.open = true;
-  }
-
-  private getOrCreateTokensDialog(): HTMLDialogElement {
-    if (this.tokensDialog) return this.tokensDialog;
-
-    const dialog = document.createElement('dialog');
-    dialog.className = 'wizard-tokens-dialog';
-    dialog.innerHTML = `
-      <div class="wizard-tokens-dialog__inner">
-        <div class="wizard-tokens-dialog__header">
-          <h2 class="wizard-tokens-dialog__title"></h2>
-          <button class="wizard-tokens-dialog__close nl-button nl-button--subtle" type="button" aria-label="Sluiten">✕</button>
-        </div>
-        <div class="wizard-tokens-dialog__body"></div>
-      </div>
-    `;
-
-    dialog.querySelector('.wizard-tokens-dialog__close')!.addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', (e) => {
-      if (e.target === dialog) dialog.close();
-    });
-
-    (document.querySelector('theme-wizard-app') ?? document.body).appendChild(dialog);
-    this.tokensDialog = dialog;
-    return dialog;
-  }
-
-  private showTokensDialog(stepTitle: string, groups: StoryWizardSelectionSummary[]) {
-    const dialog = this.getOrCreateTokensDialog();
-
-    const titleEl = dialog.querySelector('.wizard-tokens-dialog__title')!;
-    titleEl.textContent = stepTitle;
-
-    const body = dialog.querySelector('.wizard-tokens-dialog__body')!;
-    body.replaceChildren();
-
-    groups.forEach((group) => {
-      const section = document.createElement('section');
-      section.className = 'wizard-tokens-dialog__group';
-
-      const groupTitle = document.createElement('h3');
-      groupTitle.className = 'wizard-tokens-dialog__group-title';
-      groupTitle.textContent = group.label ? `${group.label}: ${group.optionLabel}` : group.optionLabel;
-      section.appendChild(groupTitle);
-
-      const table = document.createElement('table');
-      table.className = 'wizard-tokens-dialog__table';
-
-      group.tokens.forEach((token) => {
-        const row = document.createElement('tr');
-
-        const pathCell = document.createElement('td');
-        pathCell.className = 'wizard-tokens-dialog__token-path';
-        pathCell.textContent = token.path;
-
-        const valueCell = document.createElement('td');
-        valueCell.className = 'wizard-tokens-dialog__token-value';
-        valueCell.textContent = token.value;
-
-        row.appendChild(pathCell);
-        row.appendChild(valueCell);
-        table.appendChild(row);
-      });
-
-      section.appendChild(table);
-      body.appendChild(section);
-    });
-
-    dialog.showModal();
-  }
-
-  private createStepSelectionWrapper(stepLabel: string, index: number, value: HTMLElement) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'wizard-step-selection';
-
-    const numberBadge = document.createElement('span');
-    numberBadge.className = 'wizard-step-selection__number';
-    numberBadge.setAttribute('aria-hidden', 'true');
-    numberBadge.textContent = String(index + 1);
-
-    const info = document.createElement('span');
-    info.className = 'wizard-step-selection__info';
-
-    const title = document.createElement('button');
-    title.className = 'wizard-step-selection__title nl-link';
-    title.type = 'button';
-    title.textContent = stepLabel;
-    title.setAttribute('aria-label', `Ga naar: ${stepLabel}`);
-    title.addEventListener('click', () => {
-      this.showStep(index);
-      const details = this.stepSelections as HTMLDetailsElement | null;
-      if (details) details.open = false;
-    });
-
-    info.appendChild(title);
-    info.appendChild(value);
-    wrapper.appendChild(numberBadge);
-    wrapper.appendChild(info);
-
-    return wrapper;
-  }
-
-  private appendStepTokensButton(
-    wrapper: HTMLElement,
-    stepLabel: string,
-    selectedGroups: StoryWizardSelectionSummary[],
-  ) {
-    const tokensBtn = document.createElement('button');
-    tokensBtn.className = 'wizard-step-selection__tokens-btn nl-button nl-button--subtle';
-    tokensBtn.type = 'button';
-    tokensBtn.setAttribute('aria-label', `Design tokens voor: ${stepLabel}`);
-    tokensBtn.textContent = 'Design tokens';
-    tokensBtn.addEventListener('click', () => this.showTokensDialog(stepLabel, selectedGroups));
-    wrapper.appendChild(tokensBtn);
-  }
-
-  private appendTotalTokensButton(allSelectedGroups: StoryWizardSelectionSummary[]) {
-    if (!this.stepSelectionsList || allSelectedGroups.length === 0) return;
-
-    const totalWrapper = document.createElement('div');
-    totalWrapper.className = 'wizard-step-selection wizard-step-selection--total';
-
-    const totalTokensBtn = document.createElement('button');
-    totalTokensBtn.className = 'wizard-step-selection__tokens-btn nl-button nl-button--subtle';
-    totalTokensBtn.type = 'button';
-    totalTokensBtn.textContent = 'Alle design tokens';
-    totalTokensBtn.addEventListener('click', () => this.showTokensDialog('Alle design keuzes', allSelectedGroups));
-    totalWrapper.appendChild(totalTokensBtn);
-
-    this.stepSelectionsList.appendChild(totalWrapper);
-  }
-
-  private updateSelectionsSummary(completedSteps: number) {
-    if (!this.stepSelectionsSummary) return;
-
-    const liveRegion = this.stepSelectionsSummary.querySelector('[aria-live]') ?? this.stepSelectionsSummary;
-    liveRegion.textContent = `Design keuzes (${completedSteps}/${this.total})`;
-  }
-
-  private updateStepSelections() {
-    const stepSelectionsList = this.stepSelectionsList;
-    if (!stepSelectionsList) return;
-
-    stepSelectionsList.replaceChildren();
-    let completedSteps = 0;
-    const allSelectedGroups: StoryWizardSelectionSummary[] = [];
-
-    this.steps.forEach((step, index) => {
-      const selectedGroups = step.isAdvanced
-        ? this.getAdvancedSelectionSummary(step)
-        : step.createSelectionSummary(flattenDesignTokens);
-      const isCompletedAdvancedStep =
-        step.isAdvanced && (index < this.currentStep || (index === this.currentStep && this.hasFinishedAllChoices));
-      const hasSelection = selectedGroups.length > 0;
-      if (hasSelection || isCompletedAdvancedStep) {
-        completedSteps += 1;
-      }
-
-      if (hasSelection) {
-        allSelectedGroups.push(...selectedGroups);
-      }
-
-      const stepLabel = step.stepLabel || `Stap ${index + 1}`;
-      const value = this.createStepSelectionValue(selectedGroups, step.isAdvanced, isCompletedAdvancedStep);
-      const wrapper = this.createStepSelectionWrapper(stepLabel, index, value);
-
-      if (hasSelection) {
-        this.appendStepTokensButton(wrapper, stepLabel, selectedGroups);
-      }
-
-      stepSelectionsList.appendChild(wrapper);
-    });
-
-    this.appendTotalTokensButton(allSelectedGroups);
-    this.updateSelectionsSummary(completedSteps);
-  }
-
-  private createStepSelectionValue(
-    selectedGroups: StoryWizardSelectionSummary[],
-    isAdvanced: boolean,
-    isCompletedAdvancedStep: boolean,
-  ) {
-    const value = document.createElement('span');
-    value.className = 'wizard-step-selection__value';
-
-    if (selectedGroups.length === 0) {
-      value.textContent =
-        isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
-
-      if (!isAdvanced || !isCompletedAdvancedStep) {
-        value.classList.add('wizard-step-selection__value--empty');
-      }
-
-      return value;
-    }
-
-    if (selectedGroups.length === 1 && selectedGroups[0].optionLabel) {
-      const option = document.createElement('span');
-      option.className = 'wizard-step-selection__value-option';
-      option.textContent = selectedGroups[0].optionLabel;
-      value.appendChild(option);
-    }
-
-    if (selectedGroups.length === 1 && selectedGroups[0].tokens.length <= 1) {
-      const token = selectedGroups[0].tokens[0];
-
-      if (token) {
-        const tokenValue = document.createElement('span');
-        tokenValue.className = 'wizard-step-selection__value-token';
-        tokenValue.appendChild(this.createTokenValueItem(token.path, token.value));
-        value.appendChild(tokenValue);
-      } else {
-        value.textContent = selectedGroups[0].optionLabel;
-      }
-
-      return value;
-    }
-
-    const details = document.createElement('details');
-    details.className = 'wizard-step-selection__value-summary';
-
-    const summary = document.createElement('summary');
-    summary.className = 'wizard-step-selection__value-summary-label';
-    summary.textContent = `${selectedGroups.reduce((count, group) => count + group.tokens.length, 0)} tokens`;
-
-    const list = document.createElement('ul');
-    list.className = 'wizard-step-selection__value-summary-list';
-
-    selectedGroups.forEach((group) => {
-      group.tokens.forEach((token) => {
-        const item = document.createElement('li');
-        item.className = 'wizard-step-selection__value-summary-item';
-        item.appendChild(this.createTokenValueItem(token.path, token.value));
-        list.appendChild(item);
-      });
-    });
-
-    details.appendChild(summary);
-    details.appendChild(list);
-    value.appendChild(details);
-
-    return value;
-  }
-
-  private createTokenValueItem(path: string, rawValue: string) {
-    const fragment = document.createDocumentFragment();
-
-    const tokenPath = document.createElement('code');
-    tokenPath.className = 'wizard-step-selection__value-token-path';
-    tokenPath.textContent = path;
-
-    const separator = document.createElement('span');
-    separator.className = 'wizard-step-selection__value-token-separator';
-    separator.textContent = ':';
-
-    const tokenValue = document.createElement('code');
-    tokenValue.className = 'wizard-step-selection__value-token-value';
-    tokenValue.textContent = rawValue.replaceAll('"', '');
-
-    fragment.appendChild(tokenPath);
-    fragment.appendChild(separator);
-    fragment.appendChild(tokenValue);
-
-    return fragment;
-  }
-
-  private showStep(index: number) {
-    if (index !== this.total - 1) {
-      this.hasFinishedAllChoices = false;
-    }
-
-    this.steps.forEach((step, stepIndex) => {
-      if (stepIndex === index) {
-        step.show();
-      } else {
-        step.hide();
-      }
-    });
-
-    this.currentStep = index;
-    this.prevBtns.forEach((prevBtn) => {
-      prevBtn.disabled = index === 0;
-      prevBtn.classList.toggle('nl-button--disabled', index === 0);
-    });
-    this.updateStepSelections();
-    this.updateNextButtonState();
-    this.applyPreviewStyles();
-    this.writeStoredState();
-  }
-
-  private reset() {
-    this.hasFinishedAllChoices = false;
-    this.container.closest('theme-wizard-app')?.dispatchEvent(new Event('reset', { bubbles: true, composed: true }));
-    this.clearSelections();
-    this.clearStoredState();
-    this.showStep(0);
   }
 }

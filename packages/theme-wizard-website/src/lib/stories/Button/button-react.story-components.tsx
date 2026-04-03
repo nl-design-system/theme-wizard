@@ -1,5 +1,6 @@
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import { type ReactNode } from 'react';
+import { WizardPreviewSection } from '../story-helpers';
 
 export const Icon = () => (
   <span className="nl-icon">
@@ -113,13 +114,6 @@ export const RenderButtonFocusVisible = ({ ...props }: ButtonProps) => (
   />
 );
 
-export const WizardPreviewSection = ({ children, label }: { children: ReactNode; label: string }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-    <strong style={{ fontSize: '0.875rem' }}>{label}</strong>
-    {children}
-  </div>
-);
-
 export const ButtonVariants = ({ ...props }: ButtonProps) => (
   <div style={{ columnGap: '1ch', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', rowGap: '0.5rem' }}>
     <ButtonComponent {...props} iconOnly />
@@ -153,59 +147,12 @@ const statePreviewLabelStyle = {
   fontWeight: 700,
 };
 
-export const buttonWizardStepBasic = {
-  step: 'button-basic',
-  stepTitle: 'Button basis',
-};
-
-export const buttonWizardStepStates = {
-  step: 'button-states',
-  stepTitle: 'Button states',
-};
-
-export const buttonWizardStepPositiveStates = {
-  step: 'button-positive-states',
-  stepTitle: 'Positieve button states',
-};
-
-export const buttonWizardStepNegativeStates = {
-  step: 'button-negative-states',
-  stepTitle: 'Negatieve button states',
-};
-
-export const buttonWizardStepVariants = {
-  step: 'button-variants',
-  stepTitle: 'Button varianten',
-};
-
-export const buttonWizardStepPositiveVariants = {
-  step: 'button-positive-variants',
-  stepTitle: 'Positieve button varianten',
-};
-
-export const buttonWizardStepNegativeVariants = {
-  step: 'button-negative-variants',
-  stepTitle: 'Negatieve button varianten',
-};
-
-export const buttonWizardStepDisabled = {
-  step: 'button-disabled',
-  stepTitle: 'Button disabled',
-};
-
-export const buttonWizardStepPressed = {
-  step: 'button-selected',
-  stepTitle: 'Button geselecteerd',
-};
-
-export const buttonWizardStepPositivePressed = {
-  step: 'button-positive-selected',
-  stepTitle: 'Positieve geselecteerde buttons',
-};
-
-export const buttonWizardStepNegativePressed = {
-  step: 'button-negative-selected',
-  stepTitle: 'Negatieve geselecteerde buttons',
+const statePreviewGridStyle = {
+  alignItems: 'center',
+  columnGap: '1rem',
+  display: 'grid',
+  gridTemplateColumns: 'max-content repeat(5, max-content)',
+  rowGap: '0.75rem',
 };
 
 const StatePreviewItem = ({ children, label }: { children: ReactNode; label: string }) => (
@@ -232,12 +179,115 @@ export const RenderButtonStates = ({ ...props }: ButtonProps) => (
     <StatePreviewItem label="Normaal">
       <ButtonComponent {...props} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Hover">
       <ButtonComponent {...props} style={getButtonStateStyle(props.purpose, props.hint, 'hover')} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Active">
       <ButtonComponent {...props} style={getButtonStateStyle(props.purpose, props.hint, 'active')} />
     </StatePreviewItem>
+  </div>
+);
+
+const ButtonPurposeMatrix = ({ purpose }: { purpose: ButtonProps['purpose'] }) => {
+  const baseProps: ButtonProps = {
+    iconStart: undefined,
+    label: 'Klik mij!',
+    purpose,
+  };
+
+  const emojiProps: ButtonProps = {
+    ...baseProps,
+    iconStart: '❤️',
+  };
+
+  const iconOnlyProps: ButtonProps = {
+    ...baseProps,
+    iconOnly: true,
+    iconStart: '❤️',
+    label: 'Favoriet',
+  };
+
+  const disabledProps: ButtonProps = {
+    ...baseProps,
+    disabled: true,
+    htmlDisabled: undefined,
+  };
+
+  const closedProps: ButtonProps = {
+    ...baseProps,
+    label: 'Meer tonen',
+    pressed: false,
+  };
+
+  const openProps: ButtonProps = {
+    ...baseProps,
+    label: 'Meer tonen',
+    pressed: true,
+  };
+
+  return (
+    <div style={statePreviewGridStyle}>
+      <span />
+      <strong>Default</strong>
+      <strong>Hover</strong>
+      <strong>Active</strong>
+      <strong>Open</strong>
+      <strong>Gesloten</strong>
+
+      <strong>Normaal</strong>
+      <ButtonComponent {...baseProps} />
+      <ButtonComponent {...baseProps} style={getButtonStateStyle(baseProps.purpose, baseProps.hint, 'hover')} />
+      <ButtonComponent {...baseProps} style={getButtonStateStyle(baseProps.purpose, baseProps.hint, 'active')} />
+      <ButtonComponent {...openProps} />
+      <ButtonComponent {...closedProps} />
+
+      <strong>Met emoji</strong>
+      <ButtonComponent {...emojiProps} />
+      <ButtonComponent {...emojiProps} style={getButtonStateStyle(emojiProps.purpose, emojiProps.hint, 'hover')} />
+      <ButtonComponent {...emojiProps} style={getButtonStateStyle(emojiProps.purpose, emojiProps.hint, 'active')} />
+      <ButtonComponent {...openProps} iconStart="❤️" />
+      <ButtonComponent {...closedProps} iconStart="❤️" />
+
+      <strong>Icon only</strong>
+      <ButtonComponent {...iconOnlyProps} />
+      <ButtonComponent
+        {...iconOnlyProps}
+        style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'hover')}
+      />
+      <ButtonComponent
+        {...iconOnlyProps}
+        style={getButtonStateStyle(iconOnlyProps.purpose, iconOnlyProps.hint, 'active')}
+      />
+      <ButtonComponent {...iconOnlyProps} pressed />
+      <ButtonComponent {...iconOnlyProps} pressed={false} />
+
+      <strong>Disabled</strong>
+      <ButtonComponent {...disabledProps} />
+      <ButtonComponent {...disabledProps} />
+      <ButtonComponent {...disabledProps} />
+      <ButtonComponent {...disabledProps} pressed />
+      <ButtonComponent {...disabledProps} pressed={false} />
+    </div>
+  );
+};
+
+const getPurposeLabel = (purpose: ButtonProps['purpose']) => {
+  if (purpose === 'primary') return 'Primary';
+  if (purpose === 'secondary') return 'Secondary';
+  return 'Default';
+};
+
+export const RenderButtonPurposePreview = ({ purpose }: ButtonProps) => <ButtonPurposeMatrix purpose={purpose} />;
+
+export const RenderAllButtonPurposesPreview = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    {([undefined, 'primary', 'secondary'] as const).map((purpose) => (
+      <WizardPreviewSection key={purpose ?? 'default'} label={getPurposeLabel(purpose)}>
+        <ButtonPurposeMatrix purpose={purpose} />
+      </WizardPreviewSection>
+    ))}
   </div>
 );
 
@@ -246,6 +296,7 @@ export const RenderButtonDisabled = ({ ...props }: ButtonProps) => (
     <StatePreviewItem label="Actief">
       <ButtonComponent {...props} disabled={false} htmlDisabled={undefined} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Disabled">
       <ButtonComponent {...props} disabled htmlDisabled={undefined} />
     </StatePreviewItem>
@@ -257,6 +308,7 @@ export const RenderButtonPressed = ({ ...props }: ButtonProps) => (
     <StatePreviewItem label="Normaal">
       <ButtonComponent {...props} pressed={false} />
     </StatePreviewItem>
+
     <StatePreviewItem label="Geselecteerd">
       <ButtonComponent {...props} pressed />
     </StatePreviewItem>
