@@ -77,7 +77,7 @@
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "3.0.0",
     "@nl-design-system-unstable/documentation": "1.9.0",
-    "@nl-design-system-unstable/start-design-tokens": "2.4.1",
+    "@nl-design-system-unstable/start-design-tokens": "5.1.0",
     "@storybook/react-vite": "10.3.4",
     "@tabler/icons": "3.41.1",
     "@utrecht/button-css": "3.1.0",
