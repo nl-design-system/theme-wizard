@@ -11,7 +11,13 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['linkedom'],
+      external: [
+        '@nl-design-system-community/design-tokens-schema',
+        '@projectwallace/css-design-tokens',
+        '@projectwallace/css-parser',
+        'linkedom',
+        'zod',
+      ],
     },
   },
   plugins: [dts()],
