@@ -3,4 +3,8 @@
 '@nl-design-system-community/css-scraper': patch
 ---
 
-chore: update Vite, Typescript, Hono. Add Publint for checking build output.
+- update Vite
+- update Typescript
+- update Hono.
+- Add Publint for checking build output.
+- Replace vite-plugin-dts with unplugin-dts.
