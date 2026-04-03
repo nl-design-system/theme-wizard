@@ -383,8 +383,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       '@nl-design-system-unstable/voorbeeld-design-tokens':
-        specifier: 7.4.1
-        version: 7.4.1
+        specifier: 10.0.0
+        version: 10.0.0
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -2555,8 +2555,8 @@ packages:
   '@nl-design-system-unstable/start-design-tokens@2.4.1':
     resolution: {integrity: sha512-ZNj5bRH8WHA55xxUcl/Ih77BISVES2r2616qUTMlgHx4iOGi6bEbVI2D/uJysbIPaXzK1OfvI5aXowDahpG8aQ==}
 
-  '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.1':
-    resolution: {integrity: sha512-GNnapAn2mTIzXRcCvs0JMr4Bf9+ivUJ3zFBJLRT1SYpAYm2xPwptVxIM3k4WLJ0c59E9FfxsEBPJluGuAHUVvg==}
+  '@nl-design-system-unstable/voorbeeld-design-tokens@10.0.0':
+    resolution: {integrity: sha512-4MaPsxhY8DltSxJFirDEoMj3lqYRcVYP3NyfqnzkNWfc5H4Z7Y/Cya6tcTD3MGmtfR46Oq778VfUWTHwj9r9dg==}
 
   '@nl-design-system/eslint-config@2.2.0':
     resolution: {integrity: sha512-vZVbEkOQviJoiOdQT5zOi0GuSCaFrcz9/Awg/iXsmaNoXLkD5WOPVXR7RNlqeP4fPRmrHUvnVPsTDKLeIwbn2w==}
@@ -10428,7 +10428,7 @@ snapshots:
 
   '@nl-design-system-unstable/start-design-tokens@2.4.1': {}
 
-  '@nl-design-system-unstable/voorbeeld-design-tokens@7.4.1': {}
+  '@nl-design-system-unstable/voorbeeld-design-tokens@10.0.0': {}
 
   '@nl-design-system/eslint-config@2.2.0(eslint@9.39.4)(typescript@5.9.3)':
     dependencies:
