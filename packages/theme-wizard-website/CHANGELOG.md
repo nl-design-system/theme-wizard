@@ -1,5 +1,15 @@
 # @nl-design-system-community/theme-wizard-website
 
+## 0.0.11
+
+### Patch Changes
+
+- 329d763: Minor and patch updates except for vitest in design-tokens-schema
+- Updated dependencies [bfc4235]
+- Updated dependencies [329d763]
+  - @nl-design-system-community/theme-wizard-app@1.1.0
+  - @nl-design-system-community/theme-wizard-templates@1.0.7
+
 ## 0.0.10
 
 ### Patch Changes

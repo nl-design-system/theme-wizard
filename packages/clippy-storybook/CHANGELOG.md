@@ -1,5 +1,11 @@
 # @nl-design-system-community/clippy-storybook
 
+## 1.1.1
+
+### Patch Changes
+
+- 329d763: Minor and patch updates except for vitest in design-tokens-schema
+
 ## 1.1.0
 
 ### Minor Changes

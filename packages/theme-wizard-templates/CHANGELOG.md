@@ -1,5 +1,16 @@
 # @nl-design-system-community/theme-wizard-templates
 
+## 1.0.7
+
+### Patch Changes
+
+- 329d763: Minor and patch updates except for vitest in design-tokens-schema
+- Updated dependencies [bfc4235]
+- Updated dependencies [329d763]
+  - @nl-design-system-community/clippy-components@2.1.0
+  - @nl-design-system-community/theme-wizard-app@1.1.0
+  - @nl-design-system-community/design-tokens-schema@2.1.1
+
 ## 1.0.6
 
 ### Patch Changes
