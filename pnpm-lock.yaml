@@ -757,8 +757,8 @@ importers:
         specifier: 1.0.9
         version: 1.0.9(@babel/runtime@7.28.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@utrecht/web-component-library-react':
-        specifier: 3.0.12
-        version: 3.0.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.0.2
+        version: 4.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@utrecht/web-component-library-stencil':
         specifier: 3.7.0
         version: 3.7.0
@@ -4051,12 +4051,6 @@ packages:
 
   '@utrecht/vega-visualization-css@1.4.2':
     resolution: {integrity: sha512-JTTx1DsKIeYZz95+H34HGfocKjDpbVOsFdPK1f/b3U3C5ivdC75fTkzU1+tVp6ijPwKnWPNr6eiIXTY9tHj5Kg==}
-
-  '@utrecht/web-component-library-react@3.0.12':
-    resolution: {integrity: sha512-MrnnMCg9NZxFWoBjOH4jxduhX96H+QqfwogNlldy8xqJtUXmO21TZY8T29Q1y7DHQT5by+Br0IDIMuarWsY0AQ==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
 
   '@utrecht/web-component-library-react@4.0.2':
     resolution: {integrity: sha512-1MTK/d11AYV+jMIl171nKyRJ359dw8o+jYNaK5mc1MhK0IHghgqNX0wF6zNINFY/en2DbRxDsR0prn56qJXeew==}
@@ -12138,12 +12132,6 @@ snapshots:
   '@utrecht/url-data-css@2.0.1': {}
 
   '@utrecht/vega-visualization-css@1.4.2': {}
-
-  '@utrecht/web-component-library-react@3.0.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@utrecht/web-component-library-stencil': 3.7.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@utrecht/web-component-library-react@4.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
