@@ -27,9 +27,10 @@
     "start": "astro dev --port 9493",
     "build": "astro build",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
-    "lint:astro": "astro check",
     "lint:css": "stylelint './src/**/*.{css,astro}'",
     "lint:js": "eslint",
+    "lint-build": "pnpm run --sequential '/^lint-build:.+$/'",
+    "lint-build:astro": "astro check",
     "lint-fix:js": "eslint --fix",
     "clean": "rimraf dist .astro build"
   },
