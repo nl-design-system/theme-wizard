@@ -72,11 +72,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        # Run build before lint because Typescript v6+ requires types even for file
-        # that we download for their side effects (like clippy-components)
-        run: |
-          pnpm run build
-          pnpm run lint
+        run: pnpm run lint
 
   build:
     runs-on: ubuntu-latest
