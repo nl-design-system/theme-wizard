@@ -205,7 +205,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     this.emit('input');
   };
 
-
   readonly #handleKeydown = ({ key }: KeyboardEvent) => {
     const index = this.activeIndex;
     const count = this.filteredOptions.length;
