@@ -1,47 +1,13 @@
 import type { CodeBlockProps } from '@nl-design-system-candidate/code-block-react';
-import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
 
-type Story = StoryObj<CodeBlockProps>;
 
 const codeBlockSampleText = `import { CodeBlock } from '@nl-design-system-candidate/code-block-react';`;
 
 const createCodeBlockTokens = (entries: Record<string, string>) => createPresetTokens('nl.code-block', entries);
 
-const createPresetStory = ({
-  name,
-  args,
-  description,
-  options,
-  order,
-  question,
-}: {
-  args: CodeBlockProps;
-  description?: string;
-  name: string;
-  options: PresetOption<Record<string, unknown> | null>[];
-  order: number;
-  question: string;
-}): Story => ({
-  name,
-  args,
-  parameters: {
-    presets: [
-      {
-        ...(description ? { description } : {}),
-        name: question,
-        options,
-      },
-    ],
-    wizard: {
-      order,
-      previewStoryIds: ['WizardPreview'],
-      type: 'preset',
-    },
-  },
-});
 
-export const CodeBlockKleur: Story = createPresetStory({
+export const CodeBlockKleur = createPresetStory({
   name: 'Kleur',
   args: {
     children: codeBlockSampleText,
@@ -66,7 +32,7 @@ export const CodeBlockKleur: Story = createPresetStory({
   question: 'Kies de kleur voor het Code Block',
 });
 
-export const CodeBlockVorm: Story = createPresetStory({
+export const CodeBlockVorm = createPresetStory({
   name: 'Vorm',
   args: {
     children: codeBlockSampleText,
@@ -103,7 +69,7 @@ export const CodeBlockVorm: Story = createPresetStory({
   question: 'Kies de vorm van het Code Block',
 });
 
-export const CodeBlockPadding: Story = createPresetStory({
+export const CodeBlockPadding = createPresetStory({
   name: 'Padding',
   args: {
     children: codeBlockSampleText,
@@ -134,7 +100,7 @@ export const CodeBlockPadding: Story = createPresetStory({
   question: 'Kies de padding van het Code Block',
 });
 
-export const CodeBlockTekstgrootte: Story = createPresetStory({
+export const CodeBlockTekstgrootte = createPresetStory({
   name: 'Tekstgrootte',
   args: {
     children: codeBlockSampleText,
@@ -145,7 +111,7 @@ export const CodeBlockTekstgrootte: Story = createPresetStory({
   question: 'Kies de tekstgrootte van het Code Block',
 });
 
-export const CodeBlockLettertype: Story = createPresetStory({
+export const CodeBlockLettertype = createPresetStory({
   name: 'Lettertype',
   args: {
     children: codeBlockSampleText,

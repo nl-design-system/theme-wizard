@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { components } from './components';
 
 export type DerivedTokenReference = {
@@ -112,6 +113,7 @@ export type StoryWizardParameters = {
         advancedTitle?: string;
         description?: string;
         order: number;
+        previewStoryIds?: string[];
         question?: string;
         stepTitle: string;
       };
@@ -125,3 +127,14 @@ export type StoryWizardStory = {
 };
 
 export type StoryEntry = [id: string, story: StoryWizardStory];
+
+export type WizardPreviewLayoutProps = {
+  children: ReactNode;
+  css?: string;
+  states?: Record<string, string[]>;
+};
+
+export type WizardPreviewSectionProps = {
+  children: ReactNode;
+  label: string;
+};

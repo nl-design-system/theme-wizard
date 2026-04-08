@@ -1,50 +1,16 @@
 import type { NumberBadgeProps } from '@nl-design-system-candidate/number-badge-react';
-import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
 
-type Story = StoryObj<NumberBadgeProps>;
 
 const createNumberBadgeTokens = (entries: Record<string, string>) => createPresetTokens('nl.number-badge', entries);
 
-const createPresetStory = ({
-  name,
-  args,
-  description,
-  options,
-  order,
-  question,
-}: {
-  args: NumberBadgeProps;
-  description?: string;
-  name: string;
-  options: PresetOption<Record<string, unknown> | null>[];
-  order: number;
-  question: string;
-}): Story => ({
-  name,
-  args,
-  parameters: {
-    presets: [
-      {
-        ...(description ? { description } : {}),
-        name: question,
-        options,
-      },
-    ],
-    wizard: {
-      order,
-      previewStoryIds: ['WizardPreview'],
-      type: 'preset',
-    },
-  },
-});
 
 const defaultArgs = {
   children: '42',
   label: '42 ongelezen berichten',
 };
 
-export const NumberBadgeAfmeting: Story = createPresetStory({
+export const NumberBadgeAfmeting = createPresetStory({
   name: 'Afmeting',
   args: defaultArgs,
   description: 'De minimale hoogte en breedte bepalen hoe compact of nadrukkelijk de Number Badge oogt.',
@@ -67,7 +33,7 @@ export const NumberBadgeAfmeting: Story = createPresetStory({
   question: 'Kies de minimale afmeting van de Number Badge',
 });
 
-export const NumberBadgePadding: Story = createPresetStory({
+export const NumberBadgePadding = createPresetStory({
   name: 'Padding',
   args: defaultArgs,
   description: 'De binnenruimte bepaalt hoe veel lucht rondom het cijfer zit.',
@@ -90,7 +56,7 @@ export const NumberBadgePadding: Story = createPresetStory({
   question: 'Kies de padding van de Number Badge',
 });
 
-export const NumberBadgeLettertype: Story = createPresetStory({
+export const NumberBadgeLettertype = createPresetStory({
   name: 'Lettertype',
   args: defaultArgs,
   description: 'Kies of de Number Badge het documentlettertype volgt of juist een monospace-lettertype gebruikt.',
@@ -112,7 +78,7 @@ export const NumberBadgeLettertype: Story = createPresetStory({
   question: 'Kies het lettertype van de Number Badge',
 });
 
-export const NumberBadgeTekstgrootte: Story = createPresetStory({
+export const NumberBadgeTekstgrootte = createPresetStory({
   name: 'Tekstgrootte',
   args: defaultArgs,
   description: 'De tekstgrootte van de badge blijft in verhouding tot de ingestelde paragraph-grootte.',
@@ -121,7 +87,7 @@ export const NumberBadgeTekstgrootte: Story = createPresetStory({
   question: 'Kies de tekstgrootte van de Number Badge',
 });
 
-export const NumberBadgeKleur: Story = createPresetStory({
+export const NumberBadgeKleur = createPresetStory({
   name: 'Kleur',
   args: defaultArgs,
   description: 'De achtergrondkleur en tekstkleur bepalen hoe sterk de Number Badge opvalt.',
@@ -152,7 +118,7 @@ export const NumberBadgeKleur: Story = createPresetStory({
   question: 'Kies de kleur van de Number Badge',
 });
 
-export const NumberBadgeVorm: Story = createPresetStory({
+export const NumberBadgeVorm = createPresetStory({
   name: 'Vorm',
   args: defaultArgs,
   description: 'De afronding bepaalt of de Number Badge hoekig, afgerond of rond oogt.',
@@ -202,7 +168,7 @@ export const NumberBadgeVorm: Story = createPresetStory({
   question: 'Kies de vorm van de Number Badge',
 });
 
-export const NumberBadgeRand: Story = createPresetStory({
+export const NumberBadgeRand = createPresetStory({
   name: 'Rand',
   args: defaultArgs,
   description: 'De rand kan onzichtbaar blijven of juist meer nadruk geven aan de Number Badge.',

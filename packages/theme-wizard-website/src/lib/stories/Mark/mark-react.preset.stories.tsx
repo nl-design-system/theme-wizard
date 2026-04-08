@@ -1,49 +1,15 @@
 import type { MarkProps } from '@nl-design-system-candidate/mark-react';
-import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createPresetStory, type PresetOption } from '../story-helpers';
 
-type Story = StoryObj<MarkProps>;
 
 const createMarkTokens = (entries: Record<string, string>) => createPresetTokens('nl.mark', entries);
 
-const createPresetStory = ({
-  name,
-  args,
-  description,
-  options,
-  order,
-  question,
-}: {
-  args: MarkProps;
-  description?: string;
-  name: string;
-  options: PresetOption<Record<string, unknown> | null>[];
-  order: number;
-  question: string;
-}): Story => ({
-  name,
-  args,
-  parameters: {
-    presets: [
-      {
-        ...(description ? { description } : {}),
-        name: question,
-        options,
-      },
-    ],
-    wizard: {
-      order,
-      previewStoryIds: ['WizardPreview'],
-      type: 'preset',
-    },
-  },
-});
 
 const defaultArgs = {
   children: 'Gemarkeerde tekst',
 };
 
-export const MarkKleur: Story = createPresetStory({
+export const MarkKleur = createPresetStory({
   name: 'Kleur',
   args: defaultArgs,
   description: 'De achtergrondkleur en tekstkleur bepalen hoe sterk gemarkeerde tekst opvalt.',

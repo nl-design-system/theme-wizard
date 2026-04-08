@@ -1,45 +1,11 @@
 import type { DataBadgeProps } from '@nl-design-system-candidate/data-badge-react';
-import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
 
-type Story = StoryObj<DataBadgeProps>;
 
 const createDataBadgeTokens = (entries: Record<string, string>) => createPresetTokens('nl.data-badge', entries);
 
-const createPresetStory = ({
-  name,
-  args,
-  description,
-  options,
-  order,
-  question,
-}: {
-  args: DataBadgeProps;
-  description?: string;
-  name: string;
-  options: PresetOption<Record<string, unknown> | null>[];
-  order: number;
-  question: string;
-}): Story => ({
-  name,
-  args,
-  parameters: {
-    presets: [
-      {
-        ...(description ? { description } : {}),
-        name: question,
-        options,
-      },
-    ],
-    wizard: {
-      order,
-      previewStoryIds: ['WizardPreview'],
-      type: 'preset',
-    },
-  },
-});
 
-export const DataBadgeKleur: Story = createPresetStory({
+export const DataBadgeKleur = createPresetStory({
   name: 'Kleur',
   args: {
     children: '42',
@@ -64,7 +30,7 @@ export const DataBadgeKleur: Story = createPresetStory({
   question: 'Kies de kleur voor de Data Badge',
 });
 
-export const DataBadgeVorm: Story = createPresetStory({
+export const DataBadgeVorm = createPresetStory({
   name: 'Vorm',
   args: {
     children: 'Nieuwe melding',
@@ -101,7 +67,7 @@ export const DataBadgeVorm: Story = createPresetStory({
   question: 'Kies de vorm van de Data Badge',
 });
 
-export const DataBadgeGrootte: Story = createPresetStory({
+export const DataBadgeGrootte = createPresetStory({
   name: 'Grootte',
   args: {
     children: '42',
@@ -148,7 +114,7 @@ export const DataBadgeGrootte: Story = createPresetStory({
   question: 'Kies de grootte van de Data Badge',
 });
 
-export const DataBadgeTypografie: Story = createPresetStory({
+export const DataBadgeTypografie = createPresetStory({
   name: 'Typografie',
   args: {
     children: '42',
@@ -168,7 +134,7 @@ export const DataBadgeTypografie: Story = createPresetStory({
   question: 'Kies de typografie van de Data Badge',
 });
 
-export const DataBadgeRand: Story = createPresetStory({
+export const DataBadgeRand = createPresetStory({
   name: 'Rand',
   args: {
     children: '42',
