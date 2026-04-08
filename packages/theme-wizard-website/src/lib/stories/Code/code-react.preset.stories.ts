@@ -1,47 +1,13 @@
 import type { CodeProps } from '@nl-design-system-candidate/code-react';
-import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
 
-type Story = StoryObj<CodeProps>;
 
 const codeSampleText = `import { Code } from '@nl-design-system-candidate/code-react';`;
 
 const createCodeTokens = (entries: Record<string, string>) => createPresetTokens('nl.code', entries);
 
-const createPresetStory = ({
-  name,
-  args,
-  description,
-  options,
-  order,
-  question,
-}: {
-  args: CodeProps;
-  description?: string;
-  name: string;
-  options: PresetOption<Record<string, unknown> | null>[];
-  order: number;
-  question: string;
-}): Story => ({
-  name,
-  args,
-  parameters: {
-    presets: [
-      {
-        ...(description ? { description } : {}),
-        name: question,
-        options,
-      },
-    ],
-    wizard: {
-      order,
-      previewStoryIds: ['WizardPreview'],
-      type: 'preset',
-    },
-  },
-});
 
-export const CodeFontSize: Story = createPresetStory({
+export const CodeFontSize = createPresetStory({
   name: 'Font size',
   args: {
     children: codeSampleText,
@@ -52,7 +18,7 @@ export const CodeFontSize: Story = createPresetStory({
   question: 'Kies de grootte van inline code',
 });
 
-export const CodeFontFamily: Story = createPresetStory({
+export const CodeFontFamily = createPresetStory({
   name: 'Font family',
   args: {
     children: codeSampleText,
@@ -76,7 +42,7 @@ export const CodeFontFamily: Story = createPresetStory({
   question: 'Kies het lettertype van inline code',
 });
 
-export const CodeColor: Story = createPresetStory({
+export const CodeColor = createPresetStory({
   name: 'Kleur',
   args: {
     children: codeSampleText,
@@ -107,7 +73,7 @@ export const CodeColor: Story = createPresetStory({
   question: 'Kies de tekstkleur van inline code',
 });
 
-export const CodeBackgroundColor: Story = createPresetStory({
+export const CodeBackgroundColor = createPresetStory({
   name: 'Achtergrondkleur',
   args: {
     children: codeSampleText,

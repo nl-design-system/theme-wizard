@@ -232,14 +232,16 @@ const resolveStepPreviewStories = (
 ): StoryWizardPreview[] => {
   const wizard = story.parameters!.wizard!;
 
-  if (wizard.type === 'advanced') {
-    return [toPreviewStory(id, story)];
+  const previewStoryIds = wizard.type === 'advanced' ? (wizard.previewStoryIds ?? []) : wizard.previewStoryIds;
+
+  if (previewStoryIds.length > 0) {
+    return previewStoryIds.flatMap((previewStoryId) => {
+      const previewStory = storyMap.get(previewStoryId);
+      return previewStory ? [toPreviewStory(previewStoryId, previewStory)] : [];
+    });
   }
 
-  return wizard.previewStoryIds.flatMap((previewStoryId) => {
-    const previewStory = storyMap.get(previewStoryId);
-    return previewStory ? [toPreviewStory(previewStoryId, previewStory)] : [];
-  });
+  return [toPreviewStory(id, story)];
 };
 
 const toPreviewStory = (id: string, story: StoryWizardStory): StoryWizardPreview => {
