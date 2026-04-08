@@ -1,43 +1,9 @@
 import type { SkipLinkProps } from '@nl-design-system-candidate/skip-link-react';
-import type { StoryObj } from '@storybook/react-vite';
-import { createPresetTokens, createRelativeFontSizePresetOptions, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
 
-type Story = StoryObj<SkipLinkProps>;
 
 const createSkipLinkTokens = (entries: Record<string, string>) => createPresetTokens('nl.skip-link', entries);
 
-const createPresetStory = ({
-  name,
-  args,
-  description,
-  options,
-  order,
-  question,
-}: {
-  args: SkipLinkProps;
-  description?: string;
-  name: string;
-  options: PresetOption<Record<string, unknown> | null>[];
-  order: number;
-  question: string;
-}): Story => ({
-  name,
-  args,
-  parameters: {
-    presets: [
-      {
-        ...(description ? { description } : {}),
-        name: question,
-        options,
-      },
-    ],
-    wizard: {
-      order,
-      previewStoryIds: ['WizardPreview'],
-      type: 'preset',
-    },
-  },
-});
 
 const defaultArgs = {
   children: 'Naar de inhoud',
@@ -48,7 +14,7 @@ const defaultArgs = {
   },
 };
 
-export const SkipLinkAfmeting: Story = createPresetStory({
+export const SkipLinkAfmeting = createPresetStory({
   name: 'Afmeting',
   args: defaultArgs,
   description: 'De minimale hoogte en breedte bepalen hoe gemakkelijk de skip link te raken is.',
@@ -71,7 +37,7 @@ export const SkipLinkAfmeting: Story = createPresetStory({
   question: 'Kies de minimale afmeting van de Skip Link',
 });
 
-export const SkipLinkPadding: Story = createPresetStory({
+export const SkipLinkPadding = createPresetStory({
   name: 'Padding',
   args: defaultArgs,
   description: 'De binnenruimte bepaalt hoeveel lucht rondom de tekst zit.',
@@ -102,7 +68,7 @@ export const SkipLinkPadding: Story = createPresetStory({
   question: 'Kies de padding van de Skip Link',
 });
 
-export const SkipLinkTekstgrootte: Story = createPresetStory({
+export const SkipLinkTekstgrootte = createPresetStory({
   name: 'Tekstgrootte',
   args: defaultArgs,
   description: 'De tekstgrootte van de skip link blijft in verhouding tot de ingestelde paragraph-grootte.',
@@ -111,7 +77,7 @@ export const SkipLinkTekstgrootte: Story = createPresetStory({
   question: 'Kies de tekstgrootte van de Skip Link',
 });
 
-export const SkipLinkAchtergrondkleur: Story = createPresetStory({
+export const SkipLinkAchtergrondkleur = createPresetStory({
   name: 'Achtergrondkleur',
   args: defaultArgs,
   description: 'De achtergrondkleur en tekstkleur bepalen hoe zichtbaar de skip link is wanneer hij in beeld komt.',
