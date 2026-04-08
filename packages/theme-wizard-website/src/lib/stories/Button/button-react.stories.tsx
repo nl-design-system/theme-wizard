@@ -3,7 +3,7 @@ import css from '@nl-design-system-candidate/button-css/button.css?inline';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import tokens from '@nl-design-system-candidate/button-tokens';
 import { type ComponentType } from 'react';
-import { WizardPreviewSection } from '../story-helpers';
+import { WizardPreviewLayout, WizardPreviewSection } from '../story-helpers';
 import {
   ButtonVariantsWithStates,
   Icon,
@@ -76,36 +76,29 @@ export const WizardPreview: Story = {
   },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div style={{ columnGap: '1.5rem', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', rowGap: '1.5rem' }}>
+      <WizardPreviewLayout>
         <WizardPreviewSection label="Normaal">
           <ButtonComponent label="Klik mij!" />
         </WizardPreviewSection>
-
         <WizardPreviewSection label="Met emoji">
           <ButtonComponent iconStart="❤️" label="Klik mij!" />
         </WizardPreviewSection>
-
         <WizardPreviewSection label="Icon only">
           <ButtonComponent iconOnly iconStart={<Icon />} label="Klik mij!" />
         </WizardPreviewSection>
-
         <WizardPreviewSection label="Disabled">
           <ButtonComponent disabled label="Klik mij!" />
         </WizardPreviewSection>
-
         <WizardPreviewSection label="Toggle gesloten en open">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <ButtonComponent label="Meer tonen" pressed={false} />
             <ButtonComponent label="Meer tonen" pressed />
           </div>
         </WizardPreviewSection>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <WizardPreviewSection label="Hover en active">
-          <ButtonVariantsWithStates iconStart="❤️" label="Klik mij!" />
-        </WizardPreviewSection>
-      </div>
+      </WizardPreviewLayout>
+      <WizardPreviewSection label="Hover en active">
+        <ButtonVariantsWithStates iconStart="❤️" label="Klik mij!" />
+      </WizardPreviewSection>
     </div>
   ),
 };

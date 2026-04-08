@@ -106,7 +106,7 @@ export const ButtonShape: Story = createButtonPresetStory({
       options: [
         {
           name: 'Aanbevolen',
-          description: 'Gebruik de standaard uit het startthema.',
+          description: 'Gebruik de standaard uit het startthema. Licht afgerond.',
           tokens: null,
         },
         {
@@ -127,17 +127,6 @@ export const ButtonShape: Story = createButtonPresetStory({
             nl: {
               button: {
                 'border-radius': { $value: '{basis.border-radius.sm}' },
-              },
-            },
-          },
-        },
-        {
-          name: 'Licht afgerond',
-          description: 'Subtiel afgeronde hoeken.',
-          tokens: {
-            nl: {
-              button: {
-                'border-radius': { $value: '{basis.border-radius.md}' },
               },
             },
           },
