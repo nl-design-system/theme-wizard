@@ -1,6 +1,7 @@
+import css from '@nl-design-system-candidate/button-css/button.css?inline';
 import { Button as ButtonComponent, type ButtonProps } from '@nl-design-system-candidate/button-react';
 import { type ReactNode } from 'react';
-import { WizardPreviewSection } from '../story-helpers';
+import { buildForcedPseudoStateStyles, WizardPreviewSection } from '../story-helpers';
 
 export const Icon = () => (
   <span className="nl-icon">
@@ -25,82 +26,81 @@ export const Icon = () => (
 
 export const ButtonPrimary = ({ ...props }: ButtonProps) => <ButtonComponent {...props} purpose="primary" />;
 
+const getButtonStateStyle = (purpose: ButtonProps['purpose'], hint: ButtonProps['hint'], state: 'active' | 'hover') => {
+  const variant = purpose ?? 'default';
+  const hintSegment = hint ? `-${hint}` : '';
+  const cssVarBase = `--nl-button-${variant}${hintSegment}-${state}`;
+
+  return {
+    backgroundColor: `var(${cssVarBase}-background-color)`,
+    borderColor: `var(${cssVarBase}-border-color)`,
+    color: `var(${cssVarBase}-color)`,
+  };
+};
+
+const isBaseButtonStateSelector = (selector: string) =>
+  !selector.includes('--pressed') && !selector.includes('--positive') && !selector.includes('--negative');
+
+const isDefaultButtonHoverSelector = (selector: string) =>
+  !selector.includes('--primary') &&
+  !selector.includes('--secondary') &&
+  !selector.includes('--subtle') &&
+  !selector.includes('--pressed');
+
+const isPrimaryButtonHoverSelector = (selector: string) =>
+  selector.includes('--primary') && isBaseButtonStateSelector(selector);
+
+const isSecondaryButtonHoverSelector = (selector: string) =>
+  selector.includes('--secondary') && isBaseButtonStateSelector(selector);
+
+const buttonHoverStyles = buildForcedPseudoStateStyles(css, {
+  'button-default-hover': {
+    pseudos: ['hover'],
+    selectorFilter: isDefaultButtonHoverSelector,
+  },
+  'button-primary-hover': {
+    pseudos: ['hover'],
+    selectorFilter: isPrimaryButtonHoverSelector,
+  },
+  'button-secondary-hover': {
+    pseudos: ['hover'],
+    selectorFilter: isSecondaryButtonHoverSelector,
+  },
+});
+
 export const ButtonVariantsWithStates = ({ ...props }: ButtonProps) => (
-  <div
-    style={{
-      alignItems: 'center',
-      columnGap: '1rem',
-      display: 'grid',
-      gridTemplateColumns: 'auto repeat(3, max-content)',
-      rowGap: '0.75rem',
-    }}
-  >
-    <span />
-    <strong>Normaal</strong>
-    <strong>Hover</strong>
-    <strong>Active</strong>
+  <>
+    <style>{buttonHoverStyles}</style>
+    <div
+      style={{
+        alignItems: 'center',
+        columnGap: '1rem',
+        display: 'grid',
+        gridTemplateColumns: 'max-content repeat(3, max-content)',
+        rowGap: '0.75rem',
+      }}
+    >
+      <span />
+      <strong>Normaal</strong>
+      <strong>Hover</strong>
+      <strong>Active</strong>
 
-    <strong>Default</strong>
-    <ButtonComponent {...props} />
-    <ButtonComponent
-      {...props}
-      style={{
-        backgroundColor: 'var(--nl-button-default-hover-background-color)',
-        borderColor: 'var(--nl-button-default-hover-border-color)',
-        color: 'var(--nl-button-default-hover-color)',
-      }}
-    />
-    <ButtonComponent
-      {...props}
-      style={{
-        backgroundColor: 'var(--nl-button-default-active-background-color)',
-        borderColor: 'var(--nl-button-default-active-border-color)',
-        color: 'var(--nl-button-default-active-color)',
-      }}
-    />
+      <strong>Default</strong>
+      <ButtonComponent {...props} />
+      <ButtonComponent {...props} id="button-default-hover" />
+      <ButtonComponent {...props} style={getButtonStateStyle(undefined, undefined, 'active')} />
 
-    <strong>Primary</strong>
-    <ButtonComponent {...props} purpose="primary" />
-    <ButtonComponent
-      {...props}
-      purpose="primary"
-      style={{
-        backgroundColor: 'var(--nl-button-primary-hover-background-color)',
-        borderColor: 'var(--nl-button-primary-hover-border-color)',
-        color: 'var(--nl-button-primary-hover-color)',
-      }}
-    />
-    <ButtonComponent
-      {...props}
-      purpose="primary"
-      style={{
-        backgroundColor: 'var(--nl-button-primary-active-background-color)',
-        borderColor: 'var(--nl-button-primary-active-border-color)',
-        color: 'var(--nl-button-primary-active-color)',
-      }}
-    />
+      <strong>Primary</strong>
+      <ButtonComponent {...props} purpose="primary" />
+      <ButtonComponent {...props} id="button-primary-hover" purpose="primary" />
+      <ButtonComponent {...props} purpose="primary" style={getButtonStateStyle('primary', undefined, 'active')} />
 
-    <strong>Secondary</strong>
-    <ButtonComponent {...props} purpose="secondary" />
-    <ButtonComponent
-      {...props}
-      purpose="secondary"
-      style={{
-        backgroundColor: 'var(--nl-button-secondary-hover-background-color)',
-        borderColor: 'var(--nl-button-secondary-hover-border-color)',
-        color: 'var(--nl-button-secondary-hover-color)',
-      }}
-    />
-    <ButtonComponent
-      {...props}
-      purpose="secondary"
-      style={{
-        backgroundColor: 'var(--nl-button-secondary-active-background-color)',
-        borderColor: 'var(--nl-button-secondary-active-border-color)',
-        color: 'var(--nl-button-secondary-active-color)',
-      }}
-    />
-  </div>
+      <strong>Secondary</strong>
+      <ButtonComponent {...props} purpose="secondary" />
+      <ButtonComponent {...props} id="button-secondary-hover" purpose="secondary" />
+      <ButtonComponent {...props} purpose="secondary" style={getButtonStateStyle('secondary', undefined, 'active')} />
+    </div>
+  </>
 );
 
 export const RenderButtonFocusVisible = ({ ...props }: ButtonProps) => (
@@ -161,18 +161,6 @@ const StatePreviewItem = ({ children, label }: { children: ReactNode; label: str
     {children}
   </div>
 );
-
-const getButtonStateStyle = (purpose: ButtonProps['purpose'], hint: ButtonProps['hint'], state: 'active' | 'hover') => {
-  const variant = purpose ?? 'default';
-  const hintSegment = hint ? `-${hint}` : '';
-  const cssVarBase = `--nl-button-${variant}${hintSegment}-${state}`;
-
-  return {
-    backgroundColor: `var(${cssVarBase}-background-color)`,
-    borderColor: `var(${cssVarBase}-border-color)`,
-    color: `var(${cssVarBase}-color)`,
-  };
-};
 
 export const RenderButtonStates = ({ ...props }: ButtonProps) => (
   <div style={statePreviewStyle}>
