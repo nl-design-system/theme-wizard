@@ -49,12 +49,6 @@ export const buttonWizardStepNegativePressed: WizardStep = { order: 16, stepTitl
 
 export const defaultButtonVariantOptions: ButtonPresetOptionConfig[] = [
   {
-    name: 'Gevuld',
-    description: 'De standaard button heeft een ingevulde neutrale achtergrond.',
-    family: 'basis.color.default',
-    mode: 'filled',
-  },
-  {
     name: 'Outlined',
     description: 'De standaard button heeft alleen een lijn en geen vulling.',
     family: 'basis.color.default',
@@ -70,13 +64,6 @@ export const defaultButtonVariantOptions: ButtonPresetOptionConfig[] = [
 
 export const primaryButtonVariantOptions: ButtonPresetOptionConfig[] = [
   {
-    name: 'Gevuld',
-    description: 'De primary button krijgt een duidelijke ingevulde accentkleur.',
-    family: 'basis.color.action-1-inverse',
-    filledBorderTransparent: true,
-    mode: 'filled',
-  },
-  {
     name: 'Outlined',
     description: 'De primary button krijgt een accentkleurige lijn en transparante achtergrond.',
     family: 'basis.color.action-1',
@@ -91,13 +78,6 @@ export const primaryButtonVariantOptions: ButtonPresetOptionConfig[] = [
 ];
 
 export const secondaryButtonVariantOptions: ButtonPresetOptionConfig[] = [
-  {
-    name: 'Gevuld',
-    description: 'De secondary button krijgt een lichte ingevulde stijl.',
-    family: 'basis.color.action-1',
-    filledBorderTransparent: true,
-    mode: 'filled',
-  },
   {
     name: 'Outlined',
     description: 'De secondary button krijgt een duidelijke lijn en transparante achtergrond.',
