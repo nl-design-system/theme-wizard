@@ -383,8 +383,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.1
-        version: 2.4.1
+        specifier: 5.1.0
+        version: 5.1.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 10.0.0
         version: 10.0.0
@@ -500,8 +500,8 @@ importers:
         specifier: 1.9.0
         version: 1.9.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.1
-        version: 2.4.1
+        specifier: 5.1.0
+        version: 5.1.0
       '@storybook/react-vite':
         specifier: 10.3.4
         version: 10.3.4(esbuild@0.27.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.60.1)(storybook@10.3.4(prettier@3.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@6.0.2)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
@@ -739,8 +739,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 2.4.1
-        version: 2.4.1
+        specifier: 5.1.0
+        version: 5.1.0
       '@tabler/icons-react':
         specifier: 3.41.1
         version: 3.41.1(react@18.3.1)
@@ -2562,8 +2562,8 @@ packages:
   '@nl-design-system-unstable/documentation@1.9.0':
     resolution: {integrity: sha512-acE07cKgCESCmFzroyK+qDPtOQjcLtpfZq/lWwD2zxbkKFMCEbqjXG3eDjaPxCa4ho+7azigHSQVvRrqlPuUkg==}
 
-  '@nl-design-system-unstable/start-design-tokens@2.4.1':
-    resolution: {integrity: sha512-ZNj5bRH8WHA55xxUcl/Ih77BISVES2r2616qUTMlgHx4iOGi6bEbVI2D/uJysbIPaXzK1OfvI5aXowDahpG8aQ==}
+  '@nl-design-system-unstable/start-design-tokens@5.1.0':
+    resolution: {integrity: sha512-CldysbfatzQUf8M9xYTuee537TjxtHhoLC0DurZLOMoQq50u6Wop98qfj6sPY91zwK13TpCUQAYV5GLWhXoSsA==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@10.0.0':
     resolution: {integrity: sha512-4MaPsxhY8DltSxJFirDEoMj3lqYRcVYP3NyfqnzkNWfc5H4Z7Y/Cya6tcTD3MGmtfR46Oq778VfUWTHwj9r9dg==}
@@ -10552,7 +10552,7 @@ snapshots:
 
   '@nl-design-system-unstable/documentation@1.9.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@2.4.1': {}
+  '@nl-design-system-unstable/start-design-tokens@5.1.0': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@10.0.0': {}
 

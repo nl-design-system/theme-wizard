@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@nl-design-system-community/ma-design-tokens": "4.1.0",
-    "@nl-design-system-unstable/start-design-tokens": "2.4.1",
+    "@nl-design-system-unstable/start-design-tokens": "5.1.0",
     "@nl-design-system-unstable/voorbeeld-design-tokens": "10.0.0",
     "@types/dlv": "1.1.5",
     "@vitest/coverage-v8": "4.1.0",
