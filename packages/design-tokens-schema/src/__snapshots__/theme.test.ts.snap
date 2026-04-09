@@ -85323,6 +85323,726 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$value": "auto",
       },
     },
+    "date-input": {
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.form-control.background-color}",
+      },
+      "border-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.34509803921568627,
+              0.4235294117647059,
+              0.5333333333333333,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.form-control.border-color}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-width",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 0.0625,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.border-width}",
+      },
+      "calendar-picker-indicator": {
+        "background-image": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36' fill='%23004699'><path d='M28 6V2h-4v4H12V2H8v4H2v28h32V6zm2 24H6V14h24z'/><path d='M10 17h4v4h-4zm6 0h4v4h-4zm6 0h4v4h-4zm-12 6h4v4h-4zm6 0h4v4h-4z'/></svg>")",
+        },
+        "cursor": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "default",
+        },
+      },
+      "color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0.10196078431372549,
+              0.25098039215686274,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.form-control.color}",
+      },
+      "disabled": {
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.7529411764705882,
+                0.7803921568627451,
+                0.8235294117647058,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.disabled.border-color}",
+        },
+        "calendar-picker-indicator": {
+          "background-image": {
+            "$description": "[code-only]",
+            "$type": "other",
+            "$value": "url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36' fill='%23767676'><path d='M28 6V2h-4v4H12V2H8v4H2v28h32V6zm2 24H6V14h24z'/><path d='M10 17h4v4h-4zm6 0h4v4h-4zm6 0h4v4h-4zm-12 6h4v4h-4zm6 0h4v4h-4z'/></svg>")",
+          },
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.34509803921568627,
+                0.4235294117647059,
+                0.5333333333333333,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.disabled.color}",
+        },
+        "cursor": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "disabled",
+        },
+      },
+      "font-family": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": [
+            "Noto Sans",
+            "sans-serif",
+          ],
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": "{basis.form-control.font-family}",
+      },
+      "font-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-size",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 1,
+          },
+          "studio.tokens": {
+            "originalType": "fontSizes",
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.font-size}",
+      },
+      "font-weight": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
+          "nl.nldesignsystem.value-resolved-as": 400,
+          "studio.tokens": {
+            "originalType": "fontWeights",
+          },
+        },
+        "$type": "number",
+        "$value": "{basis.form-control.font-weight}",
+      },
+      "hover": {
+        "box-shadow": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "boxShadow",
+            },
+          },
+          "$type": "shadow",
+          "$value": "inset 0 0 0 0.125rem #3d5374",
+        },
+        "calendar-picker-indicator": {
+          "background-image": {
+            "$description": "[code-only]",
+            "$type": "other",
+            "$value": "url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36' fill='%23003677'><path d='M28 6V2h-4v4H12V2H8v4H2v28h32V6zm2 24H6V14h24z'/><path d='M10 17h4v4h-4zm6 0h4v4h-4zm6 0h4v4h-4zm-12 6h4v4h-4zm6 0h4v4h-4z'/></svg>")",
+          },
+        },
+      },
+      "invalid": {
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.803921568627451,
+                0.14901960784313725,
+                0.17647058823529413,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.invalid.border-color}",
+        },
+        "hover": {
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.6274509803921569,
+                  0.11372549019607843,
+                  0.13725490196078433,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.negative.border-hover}",
+          },
+          "box-shadow": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "boxShadow",
+              },
+            },
+            "$type": "shadow",
+            "$value": "inset 0 0 0 0.125rem #a01d23",
+          },
+        },
+      },
+      "line-height": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "line-height",
+          "nl.nldesignsystem.value-resolved-as": 1.5,
+          "studio.tokens": {
+            "originalType": "lineHeights",
+          },
+        },
+        "$type": "number",
+        "$value": "{basis.form-control.line-height}",
+      },
+      "min-block-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 3,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.pointer-target.min-block-size}",
+      },
+      "min-inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "rem",
+          "value": 10,
+        },
+      },
+      "outline-offset": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "auto",
+      },
+      "padding-block": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.padding-block-start}",
+      },
+      "padding-inline": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.padding-inline-start}",
+      },
+    },
+    "description-list": {
+      "color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0.10196078431372549,
+              0.25098039215686274,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.color-document}",
+      },
+      "column-gap": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 24,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.column.3xl}",
+      },
+      "description": {
+        "font-weight": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
+            "nl.nldesignsystem.value-resolved-as": 400,
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.font-weight.default}",
+        },
+        "padding-inline-start": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "font-family": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": [
+            "Noto Sans",
+            "sans-serif",
+          ],
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": "{basis.text.font-family.default}",
+      },
+      "font-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-size",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 1,
+          },
+          "studio.tokens": {
+            "originalType": "fontSizes",
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.text.font-size.md}",
+      },
+      "grid-template-columns": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "auto 1fr",
+      },
+      "inverse": {
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default-inverse.color-document}",
+        },
+      },
+      "line-height": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "line-height",
+          "nl.nldesignsystem.value-resolved-as": 1.5,
+          "studio.tokens": {
+            "originalType": "lineHeights",
+          },
+        },
+        "$type": "number",
+        "$value": "{basis.text.line-height.md}",
+      },
+      "medium": {
+        "grid-template-columns": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "1fr 2fr",
+        },
+      },
+      "narrow": {
+        "grid-template-columns": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "1fr 4fr",
+        },
+      },
+      "row-gap": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 16,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.row.xl}",
+      },
+      "section": {
+        "column-gap": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.column.xl}",
+        },
+      },
+      "term": {
+        "font-weight": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
+            "nl.nldesignsystem.value-resolved-as": 700,
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.font-weight.bold}",
+        },
+      },
+      "wide": {
+        "grid-template-columns": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "1fr 1fr",
+        },
+      },
+    },
+    "dialog": {
+      "backdrop": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+          },
+          "$type": "color",
+          "$value": {
+            "alpha": 0.2,
+            "colorSpace": "srgb",
+            "components": [
+              0.13333333333333333,
+              0.23529411764705882,
+              0.3803921568627451,
+            ],
+          },
+        },
+      },
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.bg-document}",
+      },
+      "body": {
+        "medium": {
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 0,
+          },
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "border-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.7529411764705882,
+              0.7803921568627451,
+              0.8235294117647058,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.border-subtle}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-width",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 0.0625,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "footer": {
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 24,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.3xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 24,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.3xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "header": {
+        "gap": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.column.xl}",
+        },
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 328,
+        },
+      },
+      "max-block-size": {
+        "$description": "[code-only]",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": "80vh",
+      },
+      "max-inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 640,
+        },
+      },
+      "medium": {
+        "inline-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 640,
+          },
+        },
+        "max-block-size": {
+          "$description": "[code-only]",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": "80vh",
+        },
+      },
+    },
     "figure": {
       "caption": {
         "color": {
@@ -85797,20 +86517,23 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$type": "number",
         "$value": "{basis.heading.font-weight}",
       },
-      "inverse-color": {
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1,
-            ],
+      "inverse": {
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1,
+              ],
+            },
           },
+          "$type": "color",
+          "$value": "{basis.color.default-inverse.color-document}",
         },
-        "$type": "color",
-        "$value": "{basis.color.default-inverse.color-document}",
       },
       "level": {
         "1": {
@@ -85819,7 +86542,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "nl.nldesignsystem.token-subtype": "font-size",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "rem",
-                "value": 2.5,
+                "value": 2,
               },
               "studio.tokens": {
                 "originalType": "fontSizes",
@@ -85846,7 +86569,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               "nl.nldesignsystem.token-subtype": "font-size",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "rem",
-                "value": 2,
+                "value": 1.75,
               },
               "studio.tokens": {
                 "originalType": "fontSizes",
@@ -86499,6 +87222,245 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "unit": "px",
             "value": 96,
           },
+        },
+      },
+    },
+    "password-input": {
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.form-control.background-color}",
+      },
+      "border-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.34509803921568627,
+              0.4235294117647059,
+              0.5333333333333333,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.form-control.border-color}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-width",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 0.0625,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.border-width}",
+      },
+      "color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0.10196078431372549,
+              0.25098039215686274,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.form-control.color}",
+      },
+      "disabled": {
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.34509803921568627,
+                0.4235294117647059,
+                0.5333333333333333,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.disabled.color}",
+        },
+        "cursor": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "disabled",
+        },
+      },
+      "font-family": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": [
+            "Noto Sans",
+            "sans-serif",
+          ],
+          "studio.tokens": {
+            "originalType": "fontFamilies",
+          },
+        },
+        "$type": "fontFamily",
+        "$value": "{basis.form-control.font-family}",
+      },
+      "font-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-size",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 1,
+          },
+          "studio.tokens": {
+            "originalType": "fontSizes",
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.font-size}",
+      },
+      "font-weight": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "font-weight",
+          "nl.nldesignsystem.value-resolved-as": 400,
+          "studio.tokens": {
+            "originalType": "fontWeights",
+          },
+        },
+        "$type": "number",
+        "$value": "{basis.form-control.font-weight}",
+      },
+      "hover": {
+        "box-shadow": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "boxShadow",
+            },
+          },
+          "$type": "shadow",
+          "$value": "inset 0 0 0 0.125rem #3d5374",
+        },
+      },
+      "invalid": {
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.803921568627451,
+                0.14901960784313725,
+                0.17647058823529413,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.invalid.border-color}",
+        },
+        "hover": {
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.6274509803921569,
+                  0.11372549019607843,
+                  0.13725490196078433,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.negative.border-hover}",
+          },
+          "box-shadow": {
+            "$extensions": {
+              "studio.tokens": {
+                "originalType": "boxShadow",
+              },
+            },
+            "$type": "shadow",
+            "$value": "inset 0 0 0 0.125rem #a01d23",
+          },
+        },
+      },
+      "line-height": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "line-height",
+          "nl.nldesignsystem.value-resolved-as": 1.5,
+          "studio.tokens": {
+            "originalType": "lineHeights",
+          },
+        },
+        "$type": "number",
+        "$value": "{basis.form-control.line-height}",
+      },
+      "outline-offset": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "auto",
+      },
+      "padding-block": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.padding-block-start}",
+      },
+      "padding-inline": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.form-control.padding-inline-start}",
+      },
+      "placeholder": {
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.34509803921568627,
+                0.4235294117647059,
+                0.5333333333333333,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.form-control.placeholder.color}",
         },
       },
     },
@@ -97403,7 +98365,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$type": "dimension",
           "$value": {
             "unit": "rem",
-            "value": 2.5,
+            "value": 2,
           },
         },
         "3xl": {
@@ -97413,7 +98375,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$type": "dimension",
           "$value": {
             "unit": "rem",
-            "value": 3,
+            "value": 2.5,
           },
         },
         "4xl": {
@@ -98778,7 +99740,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$type": "dimension",
           "$value": {
             "unit": "rem",
-            "value": 2,
+            "value": 1.75,
           },
         },
         "3xl": {
@@ -98791,7 +99753,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$type": "dimension",
           "$value": {
             "unit": "rem",
-            "value": 2.5,
+            "value": 2,
           },
         },
         "4xl": {
@@ -98804,7 +99766,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$type": "dimension",
           "$value": {
             "unit": "rem",
-            "value": 3,
+            "value": 2.5,
           },
         },
         "lg": {
@@ -98911,7 +99873,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             },
           },
           "$type": "number",
-          "$value": 1.1,
+          "$value": 1.25,
         },
         "lg": {
           "$extensions": {
@@ -98958,6 +99920,18 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
   },
   "denhaag": {
     "action": {
+      "actions": {
+        "gap": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 8,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.row.md}",
+        },
+      },
       "background-color": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "background-color",
@@ -98991,6 +99965,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$value": "{basis.color.default.border-subtle}",
       },
       "border-style": {
+        "$description": "[code-only]",
         "$type": "other",
         "$value": "solid",
       },
@@ -99036,6 +100011,30 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
         },
       },
+      "context": {
+        "gap": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 8,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.row.md}",
+        },
+        "lg": {
+          "gap": {
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.column.xl}",
+          },
+        },
+      },
       "date": {
         "color": {
           "$extensions": {
@@ -99072,7 +100071,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.row.md}",
+          "$value": "{basis.space.column.md}",
         },
         "warning": {
           "color": {
@@ -99110,7 +100109,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               },
             },
             "$type": "dimension",
-            "$value": "{basis.space.row.md}",
+            "$value": "{basis.space.column.md}",
           },
         },
       },
@@ -99137,44 +100136,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "$value": "{basis.space.column.xl}",
           },
         },
-      },
-      "font-familiy": {
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": [
-            "Noto Sans",
-            "sans-serif",
-          ],
-          "studio.tokens": {
-            "originalType": "fontFamilies",
-          },
-        },
-        "$type": "fontFamily",
-        "$value": "{basis.text.font-family.default}",
-      },
-      "font-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "font-size",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "rem",
-            "value": 1,
-          },
-          "studio.tokens": {
-            "originalType": "fontSizes",
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.text.font-size.md}",
-      },
-      "font-weight": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "font-weight",
-          "nl.nldesignsystem.value-resolved-as": 700,
-          "studio.tokens": {
-            "originalType": "fontWeights",
-          },
-        },
-        "$type": "number",
-        "$value": "{basis.text.font-weight.bold}",
       },
       "gap": {
         "$extensions": {
@@ -99220,45 +100181,32 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$value": "{basis.space.block.xl}",
         },
       },
-      "line-height": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "line-height",
-          "nl.nldesignsystem.value-resolved-as": 1.5,
-          "studio.tokens": {
-            "originalType": "lineHeights",
+      "link-icon": {
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.33725490196078434,
+                0.5450980392156862,
+              ],
+            },
           },
+          "$type": "color",
+          "$value": "{basis.color.action-2.color-default}",
         },
-        "$type": "number",
-        "$value": "{basis.text.line-height.md}",
-      },
-      "link": {
-        "icon": {
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0.33725490196078434,
-                  0.5450980392156862,
-                ],
-              },
+        "width": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1.5,
             },
-            "$type": "color",
-            "$value": "{basis.color.action-2.color-default}",
           },
-          "width": {
-            "$extensions": {
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 1.5,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.size.icon.md}",
-          },
+          "$type": "dimension",
+          "$value": "{basis.size.icon.md}",
         },
       },
       "padding-block-end": {
@@ -99315,18 +100263,18 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
               },
             },
             "$type": "dimension",
-            "$value": "{basis.space.row.md}",
+            "$value": "{basis.space.column.md}",
           },
           "lg": {
             "gap": {
               "$extensions": {
                 "nl.nldesignsystem.value-resolved-as": {
                   "unit": "px",
-                  "value": 8,
+                  "value": 16,
                 },
               },
               "$type": "dimension",
-              "$value": "{basis.space.row.md}",
+              "$value": "{basis.space.column.xl}",
             },
           },
         },
@@ -99393,34 +100341,32 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$value": "{basis.space.inline.xl}",
         },
       },
-      "warning": {
-        "icon": {
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.6274509803921569,
-                  0.11372549019607843,
-                  0.13725490196078433,
-                ],
-              },
+      "warning-icon": {
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.6274509803921569,
+                0.11372549019607843,
+                0.13725490196078433,
+              ],
             },
-            "$type": "color",
-            "$value": "{basis.color.negative.color-default}",
           },
-          "width": {
-            "$extensions": {
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 1.5,
-              },
+          "$type": "color",
+          "$value": "{basis.color.negative.color-default}",
+        },
+        "width": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1.5,
             },
-            "$type": "dimension",
-            "$value": "{basis.size.icon.md}",
           },
+          "$type": "dimension",
+          "$value": "{basis.size.icon.md}",
         },
       },
     },
@@ -106789,7 +107735,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "nl.nldesignsystem.token-subtype": "font-size",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "rem",
-              "value": 2.5,
+              "value": 2,
             },
             "studio.tokens": {
               "originalType": "fontSizes",
@@ -106878,7 +107824,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "nl.nldesignsystem.token-subtype": "font-size",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "rem",
-              "value": 2,
+              "value": 1.75,
             },
             "studio.tokens": {
               "originalType": "fontSizes",
@@ -108680,6 +109626,25 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
       },
     },
+    "calendar": {
+      "table": {
+        "days-item-day": {
+          "disabled": {
+            "font-weight": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "font-weight",
+                "nl.nldesignsystem.value-resolved-as": 400,
+                "studio.tokens": {
+                  "originalType": "fontWeights",
+                },
+              },
+              "$type": "number",
+              "$value": "{basis.text.font-weight.default}",
+            },
+          },
+        },
+      },
+    },
     "case-card": {
       "active": {
         "background-color": {
@@ -109842,41 +110807,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
       },
     },
-    "checkbox-group": {
-      "padding-block-end": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 8,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.block.md}",
-      },
-      "padding-block-start": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 8,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.block.md}",
-      },
-      "row-gap": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 16,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.row.xl}",
-      },
-    },
     "contact-timeline": {
       "step-header": {
         "toggle": {
@@ -109899,6 +110829,29 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             },
           },
         },
+      },
+    },
+    "dialog": {
+      "border-radius": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-radius",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 16,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-radius.lg}",
+      },
+      "box-shadow": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": "0 16px 48px 0 #3d5374",
+          "studio.tokens": {
+            "originalType": "boxShadow",
+          },
+        },
+        "$type": "shadow",
+        "$value": "{basis.box-shadow.lg}",
       },
     },
     "drawer": {
@@ -110286,19 +111239,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$value": "{basis.space.row.md}",
       },
     },
-    "form-field-checkbox-option": {
-      "column-gap": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 8,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.column.md}",
-      },
-    },
     "form-field-error-message": {
       "column-gap": {
         "$extensions": {
@@ -110325,84 +111265,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
       },
     },
-    "form-field-label": {
-      "color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0,
-              0.10196078431372549,
-              0.25098039215686274,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.color-document}",
-      },
-      "column-gap": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 8,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.text.md}",
-      },
-      "font-family": {
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": [
-            "Noto Sans",
-            "sans-serif",
-          ],
-          "studio.tokens": {
-            "originalType": "fontFamilies",
-          },
-        },
-        "$type": "fontFamily",
-        "$value": "{basis.text.font-family.default}",
-      },
-      "font-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "font-size",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "rem",
-            "value": 1,
-          },
-          "studio.tokens": {
-            "originalType": "fontSizes",
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.text.font-size.md}",
-      },
-      "font-weight": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "font-weight",
-          "nl.nldesignsystem.value-resolved-as": 700,
-          "studio.tokens": {
-            "originalType": "fontWeights",
-          },
-        },
-        "$type": "number",
-        "$value": "{basis.text.font-weight.bold}",
-      },
-      "line-height": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "line-height",
-          "nl.nldesignsystem.value-resolved-as": 1.5,
-          "studio.tokens": {
-            "originalType": "lineHeights",
-          },
-        },
-        "$type": "number",
-        "$value": "{basis.text.line-height.md}",
-      },
-    },
     "form-field-label-suffix": {
       "color": {
         "$extensions": {
@@ -110420,53 +111282,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$type": "color",
         "$value": "{basis.color.default.color-document}",
       },
-      "font-weight": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "font-weight",
-          "nl.nldesignsystem.value-resolved-as": 400,
-          "studio.tokens": {
-            "originalType": "fontWeights",
-          },
-        },
-        "$type": "number",
-        "$value": "{basis.text.font-weight.default}",
-      },
-    },
-    "form-field-option-label": {
-      "color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0,
-              0.10196078431372549,
-              0.25098039215686274,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.color-document}",
-      },
-      "disabled": {
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.34509803921568627,
-                0.4235294117647059,
-                0.5333333333333333,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.disabled.color-subtle}",
-        },
-      },
       "font-family": {
         "$extensions": {
           "nl.nldesignsystem.value-resolved-as": [
@@ -110516,18 +111331,16 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$type": "number",
         "$value": "{basis.text.line-height.md}",
       },
-    },
-    "form-field-radio-option": {
-      "column-gap": {
+      "margin-inline-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 4,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.column.md}",
+        "$value": "{basis.space.inline.sm}",
       },
     },
     "form-summary": {
@@ -111030,379 +111843,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "$type": "color",
           "$value": "{basis.focus.color}",
-        },
-      },
-    },
-    "modal-dialog": {
-      "background-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "background-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.bg-document}",
-      },
-      "border-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0.7529411764705882,
-              0.7803921568627451,
-              0.8235294117647058,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.border-subtle}",
-      },
-      "border-radius": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-radius",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 16,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-radius.lg}",
-      },
-      "border-width": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-width",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "rem",
-            "value": 0.0625,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-width.sm}",
-      },
-      "box-shadow": {
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "0 16px 48px 0 #3d5374",
-          "studio.tokens": {
-            "originalType": "boxShadow",
-          },
-        },
-        "$type": "shadow",
-        "$value": "{basis.box-shadow.lg}",
-      },
-      "color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0,
-              0.10196078431372549,
-              0.25098039215686274,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.color-document}",
-      },
-      "content": {
-        "padding-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 24,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.3xl}",
-        },
-        "padding-block-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 24,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.3xl}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "footer": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.transparent}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.transparent}",
-        },
-        "border-width": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-width",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 0.0625,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-width.sm}",
-        },
-        "padding-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.xl}",
-        },
-        "padding-block-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.xl}",
-        },
-        "padding-inline-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-        "padding-inline-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "header": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.transparent}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.7529411764705882,
-                0.7803921568627451,
-                0.8235294117647058,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.default.border-subtle}",
-        },
-        "border-width": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-width",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 0.0625,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-width.sm}",
-        },
-        "column-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 8,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.column.md}",
-        },
-        "label": {
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0.10196078431372549,
-                  0.25098039215686274,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.default.color-document}",
-          },
-          "font-family": {
-            "$extensions": {
-              "nl.nldesignsystem.value-resolved-as": [
-                "Noto Sans",
-                "sans-serif",
-              ],
-              "studio.tokens": {
-                "originalType": "fontFamilies",
-              },
-            },
-            "$type": "fontFamily",
-            "$value": "{basis.text.font-family.default}",
-          },
-          "font-size": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "font-size",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "rem",
-                "value": 1,
-              },
-              "studio.tokens": {
-                "originalType": "fontSizes",
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.text.font-size.md}",
-          },
-          "font-weight": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "font-weight",
-              "nl.nldesignsystem.value-resolved-as": 700,
-              "studio.tokens": {
-                "originalType": "fontWeights",
-              },
-            },
-            "$type": "number",
-            "$value": "{basis.text.font-weight.bold}",
-          },
-          "line-height": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "line-height",
-              "nl.nldesignsystem.value-resolved-as": 1.5,
-              "studio.tokens": {
-                "originalType": "lineHeights",
-              },
-            },
-            "$type": "number",
-            "$value": "{basis.text.line-height.md}",
-          },
-        },
-        "padding-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 8,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.md}",
-        },
-        "padding-block-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 8,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.md}",
-        },
-        "padding-inline-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 8,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.md}",
-        },
-        "padding-inline-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
         },
       },
     },
@@ -114265,41 +114705,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
       },
     },
-    "radio-group": {
-      "padding-block-end": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 8,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.block.md}",
-      },
-      "padding-block-start": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 8,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.block.md}",
-      },
-      "row-gap": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 16,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.space.row.xl}",
-      },
-    },
     "side-navigation": {
       "link": {
         "hover": {
@@ -114692,455 +115097,6 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
       },
     },
-    "switch": {
-      "icon": {
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                1,
-                1,
-                1,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.default.bg-document}",
-        },
-        "disabled": {
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.34509803921568627,
-                  0.4235294117647059,
-                  0.5333333333333333,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.disabled.color-subtle}",
-          },
-        },
-        "focus-visible": {
-          "color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.043137254901960784,
-                  0.047058823529411764,
-                  0.047058823529411764,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.focus.color}",
-          },
-        },
-        "size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 1.5,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.size.icon.md}",
-        },
-      },
-      "thumb": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-          },
-          "$type": "color",
-          "$value": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1,
-            ],
-          },
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.transparent}",
-        },
-        "border-radius": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-radius",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 999,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-radius.round}",
-        },
-        "border-width": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-width",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 0.0625,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-width.sm}",
-        },
-        "box-shadow": {
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": "0 2px 6px 0 #3d5374",
-            "studio.tokens": {
-              "originalType": "boxShadow",
-            },
-          },
-          "$type": "shadow",
-          "$value": "{basis.box-shadow.sm}",
-        },
-        "disabled": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-            },
-            "$type": "color",
-            "$value": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                1,
-                1,
-                1,
-              ],
-            },
-          },
-          "box-shadow": {
-            "$extensions": {
-              "nl.nldesignsystem.value-resolved-as": "0 2px 6px 0 #3d5374",
-              "studio.tokens": {
-                "originalType": "boxShadow",
-              },
-            },
-            "$type": "shadow",
-            "$value": "{basis.box-shadow.sm}",
-          },
-        },
-        "focus-visible": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.043137254901960784,
-                  0.047058823529411764,
-                  0.047058823529411764,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.focus.color}",
-          },
-        },
-        "min-block-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 32,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.size.sm}",
-        },
-        "min-inline-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 32,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.size.sm}",
-        },
-      },
-      "track": {
-        "active": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.13333333333333333,
-                  0.23529411764705882,
-                  0.3803921568627451,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.default-inverse.bg-active}",
-          },
-        },
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.23921568627450981,
-                0.3254901960784314,
-                0.4549019607843137,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.default-inverse.bg-default}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.transparent}",
-        },
-        "border-radius": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-radius",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 999,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-radius.round}",
-        },
-        "border-width": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-width",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 0.0625,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-width.sm}",
-        },
-        "checked": {
-          "active": {
-            "background-color": {
-              "$extensions": {
-                "nl.nldesignsystem.token-subtype": "background-color",
-                "nl.nldesignsystem.value-resolved-as": {
-                  "alpha": 1,
-                  "colorSpace": "srgb",
-                  "components": [
-                    0.047058823529411764,
-                    0.27058823529411763,
-                    0.10980392156862745,
-                  ],
-                },
-              },
-              "$type": "color",
-              "$value": "{basis.color.positive-inverse.bg-active}",
-            },
-          },
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.06274509803921569,
-                  0.37254901960784315,
-                  0.14901960784313725,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.positive-inverse.bg-default}",
-          },
-          "disabled": {
-            "background-color": {
-              "$extensions": {
-                "nl.nldesignsystem.token-subtype": "background-color",
-                "nl.nldesignsystem.value-resolved-as": {
-                  "alpha": 1,
-                  "colorSpace": "srgb",
-                  "components": [
-                    0.7529411764705882,
-                    0.7803921568627451,
-                    0.8235294117647058,
-                  ],
-                },
-              },
-              "$type": "color",
-              "$value": "{basis.color.disabled-inverse.color-subtle}",
-            },
-          },
-          "focus-visible": {
-            "background-color": {
-              "$extensions": {
-                "nl.nldesignsystem.token-subtype": "background-color",
-                "nl.nldesignsystem.value-resolved-as": {
-                  "alpha": 1,
-                  "colorSpace": "srgb",
-                  "components": [
-                    1,
-                    0.8666666666666667,
-                    0,
-                  ],
-                },
-              },
-              "$type": "color",
-              "$value": "{basis.focus.background-color}",
-            },
-          },
-          "hover": {
-            "background-color": {
-              "$extensions": {
-                "nl.nldesignsystem.token-subtype": "background-color",
-                "nl.nldesignsystem.value-resolved-as": {
-                  "alpha": 1,
-                  "colorSpace": "srgb",
-                  "components": [
-                    0.047058823529411764,
-                    0.27058823529411763,
-                    0.10980392156862745,
-                  ],
-                },
-              },
-              "$type": "color",
-              "$value": "{basis.color.positive-inverse.bg-hover}",
-            },
-          },
-        },
-        "disabled": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.7529411764705882,
-                  0.7803921568627451,
-                  0.8235294117647058,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.disabled-inverse.color-subtle}",
-          },
-        },
-        "focus-visible": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  1,
-                  0.8666666666666667,
-                  0,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.focus.background-color}",
-          },
-        },
-        "hover": {
-          "background-color": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "background-color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.13333333333333333,
-                  0.23529411764705882,
-                  0.3803921568627451,
-                ],
-              },
-            },
-            "$type": "color",
-            "$value": "{basis.color.default-inverse.bg-hover}",
-          },
-        },
-        "inline-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-          },
-          "$type": "dimension",
-          "$value": {
-            "unit": "rem",
-            "value": 5,
-          },
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 4,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.sm}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 4,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.sm}",
-        },
-      },
-    },
     "table": {
       "container": {
         "box-inline-end-shadow": {
@@ -115523,10 +115479,10 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
     "components/breadcrumb-nav/todo",
     "components/button/nl",
     "components/button/utrecht",
+    "components/calendar",
     "components/card-as-link",
     "components/case-card",
     "components/checkbox",
-    "components/checkbox-group",
     "components/code/nl",
     "components/code/utrecht",
     "components/code-block/nl",
@@ -115537,22 +115493,21 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
     "components/data-badge/nl",
     "components/data-badge/utrecht",
     "components/data-summary",
+    "components/date-input",
+    "components/description-list",
     "components/drawer/utrecht",
     "components/drawer/todo",
     "components/dot-badge",
+    "components/fieldset",
     "components/figure/amsterdam",
     "components/figure/utrecht",
     "components/file",
     "components/file-input",
     "components/form-field",
-    "components/form-field-checkbox-option",
     "components/form-field-description",
     "components/form-field-error-message",
-    "components/form-field-label/utrecht",
-    "components/form-field-label/todo",
+    "components/form-field-label",
     "components/form-field-label-suffix",
-    "components/form-field-option-label",
-    "components/form-field-radio-option",
     "components/form-summary",
     "components/heading/nl",
     "components/heading/amsterdam",
@@ -115583,11 +115538,11 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
     "components/page-number-navigation/todo",
     "components/paragraph/nl",
     "components/paragraph/utrecht",
+    "components/password-input",
     "components/pre-heading",
     "components/progress-list/den-haag",
     "components/progress-list/todo",
     "components/radio-button",
-    "components/radio-group",
     "components/select",
     "components/separator",
     "components/side-navigation",
@@ -118936,6 +118891,675 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         },
       },
     },
+    "calendar": {
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.bg-document}",
+      },
+      "icon": {
+        "size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1.5,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.size.icon.md}",
+        },
+      },
+      "navigation": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 0,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.3176470588235294,
+                0.08235294117647059,
+                0.9372549019607843,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.action-1.color-default}",
+        },
+        "label": {
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0.10196078431372549,
+                  0.25098039215686274,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.default.color-document}",
+          },
+          "font-size": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "font-size",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 1,
+              },
+              "studio.tokens": {
+                "originalType": "fontSizes",
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.text.font-size.md}",
+          },
+        },
+        "padding-block-end": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 0,
+          },
+        },
+        "padding-block-start": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 12,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+      },
+      "table": {
+        "days-item-day": {
+          "active": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.9058823529411765,
+                    0.8705882352941177,
+                    1,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1.bg-active}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.23137254901960785,
+                    0.058823529411764705,
+                    0.6901960784313725,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1.color-active}",
+            },
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+          "border-width": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-width",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 0.0625,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.border-width.sm}",
+          },
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.3176470588235294,
+                  0.08235294117647059,
+                  0.9372549019607843,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.action-1.color-default}",
+          },
+          "disabled": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.34509803921568627,
+                    0.4235294117647059,
+                    0.5333333333333333,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.disabled.color-default}",
+            },
+          },
+          "emphasis": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    0.9450980392156862,
+                    0.7333333333333333,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.highlight.bg-default}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.3803921568627451,
+                    0.3176470588235294,
+                    0.09019607843137255,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.highlight.color-default}",
+            },
+            "font-weight": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "font-weight",
+                "nl.nldesignsystem.value-resolved-as": 700,
+                "studio.tokens": {
+                  "originalType": "fontWeights",
+                },
+              },
+              "$type": "number",
+              "$value": "{basis.text.font-weight.bold}",
+            },
+          },
+          "focus": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    0.8666666666666667,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.focus.background-color}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.contrast-with": [
+                  {
+                    "color": {
+                      "$extensions": {
+                        "nl.nldesignsystem.value-resolved-as": {
+                          "alpha": 1,
+                          "colorSpace": "srgb",
+                          "components": [
+                            1,
+                            0.8666666666666667,
+                            0,
+                          ],
+                        },
+                        "nl.nldesignsystem.value-resolved-from": "{utrecht.calendar.table.days-item-day.focus.background-color}",
+                      },
+                      "$type": "color",
+                      "$value": "{basis.focus.background-color}",
+                    },
+                    "expectedRatio": 4.5,
+                  },
+                ],
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.043137254901960784,
+                    0.047058823529411764,
+                    0.047058823529411764,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.focus.color}",
+            },
+          },
+          "hover": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.9058823529411765,
+                    0.8705882352941177,
+                    1,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1.bg-hover}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.23137254901960785,
+                    0.058823529411764705,
+                    0.6901960784313725,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1.color-hover}",
+            },
+          },
+          "is-today": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.4549019607843137,
+                    0.24705882352941178,
+                    1,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1.border-default}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.3176470588235294,
+                    0.08235294117647059,
+                    0.9372549019607843,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1.color-default}",
+            },
+            "font-weight": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "font-weight",
+                "nl.nldesignsystem.value-resolved-as": 700,
+                "studio.tokens": {
+                  "originalType": "fontWeights",
+                },
+              },
+              "$type": "number",
+              "$value": "{basis.text.font-weight.bold}",
+            },
+          },
+          "out-of-the-month": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.34509803921568627,
+                    0.4235294117647059,
+                    0.5333333333333333,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.disabled.color-subtle}",
+            },
+          },
+          "selected": {
+            "background-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "background-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0.3176470588235294,
+                    0.08235294117647059,
+                    0.9372549019607843,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.bg-default}",
+            },
+            "border-color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "border-color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 0,
+                  "colorSpace": "srgb",
+                  "components": [
+                    0,
+                    0,
+                    0,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.transparent}",
+            },
+            "color": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "color",
+                "nl.nldesignsystem.value-resolved-as": {
+                  "alpha": 1,
+                  "colorSpace": "srgb",
+                  "components": [
+                    1,
+                    1,
+                    1,
+                  ],
+                },
+              },
+              "$type": "color",
+              "$value": "{basis.color.action-1-inverse.color-default}",
+            },
+            "font-weight": {
+              "$extensions": {
+                "nl.nldesignsystem.token-subtype": "font-weight",
+                "nl.nldesignsystem.value-resolved-as": 700,
+                "studio.tokens": {
+                  "originalType": "fontWeights",
+                },
+              },
+              "$type": "number",
+              "$value": "{basis.text.font-weight.bold}",
+            },
+          },
+          "size": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "size",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 3,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.pointer-target.min-inline-size}",
+          },
+        },
+        "padding-block-end": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 12,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "padding-block-start": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 12,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "weeks-item": {
+          "width": {
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "rem",
+                "value": 3,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.pointer-target.min-inline-size}",
+          },
+        },
+      },
+      "width": {
+        "$description": "[code-only]",
+        "$type": "dimension",
+        "$value": "fit-content",
+      },
+    },
     "checkbox": {
       "active": {
         "background-color": {
@@ -119338,6 +119962,17 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "$type": "dimension",
           "$value": "{basis.form-control.invalid.border-width}",
         },
+      },
+      "margin-inline-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 8,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.md}",
       },
       "size": {
         "$extensions": {
@@ -120217,18 +120852,17 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$value": "{basis.text.line-height.md}",
       },
       "margin-block-end": {
-        "$description": "[code-only]",
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
         },
         "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 0,
-        },
+        "$value": "{basis.space.block.lg}",
       },
       "margin-block-start": {
-        "$description": "[code-only]",
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
         },
@@ -120322,18 +120956,17 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$value": "{basis.text.line-height.md}",
       },
       "margin-block-end": {
-        "$description": "[code-only]",
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
         },
         "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 0,
-        },
+        "$value": "{basis.space.block.lg}",
       },
       "margin-block-start": {
-        "$description": "[code-only]",
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
         },
@@ -120381,6 +121014,210 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$value": {
           "unit": "px",
           "value": 0,
+        },
+      },
+    },
+    "form-fieldset": {
+      "invalid": {
+        "border-inline-start-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.803921568627451,
+                0.14901960784313725,
+                0.17647058823529413,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.negative.border-default}",
+        },
+        "border-inline-start-width": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-width",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 0.125,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.border-width.md}",
+        },
+        "padding-inline-start": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "legend": {
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.10196078431372549,
+                0.25098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
+        },
+        "disabled": {
+          "color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.34509803921568627,
+                  0.4235294117647059,
+                  0.5333333333333333,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.disabled.color-subtle}",
+          },
+        },
+        "font-family": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": [
+              "Noto Sans",
+              "sans-serif",
+            ],
+            "studio.tokens": {
+              "originalType": "fontFamilies",
+            },
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+        },
+        "font-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 1,
+            },
+            "studio.tokens": {
+              "originalType": "fontSizes",
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.text.font-size.md}",
+        },
+        "font-weight": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "font-weight",
+            "nl.nldesignsystem.value-resolved-as": 700,
+            "studio.tokens": {
+              "originalType": "fontWeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.font-weight.bold}",
+        },
+        "line-height": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "line-height",
+            "nl.nldesignsystem.value-resolved-as": 1.5,
+            "studio.tokens": {
+              "originalType": "lineHeights",
+            },
+          },
+          "$type": "number",
+          "$value": "{basis.text.line-height.md}",
+        },
+        "margin-block-end": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 12,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+        },
+        "margin-block-start": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 0,
+          },
+        },
+      },
+      "margin-block-end": {
+        "$description": "[code-only]",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "margin-block-start": {
+        "$description": "[code-only]",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "section": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 0,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.10196078431372549,
+                0.25098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
         },
       },
     },
@@ -120486,6 +121323,17 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
       },
+      "margin-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
+      },
       "radio": {
         "color": {
           "$extensions": {
@@ -120513,6 +121361,450 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           },
           "$type": "number",
           "$value": "{basis.text.font-weight.default}",
+        },
+      },
+    },
+    "form-toggle": {
+      "accent-color": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.23921568627450981,
+              0.3254901960784314,
+              0.4549019607843137,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default-inverse.bg-default}",
+      },
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.23921568627450981,
+              0.3254901960784314,
+              0.4549019607843137,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{utrecht.form-toggle.accent-color}",
+      },
+      "border-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 0,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.transparent}",
+      },
+      "border-radius": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-radius",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 999,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-radius.round}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-width",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 0.0625,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "checked": {
+        "accent-color": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.06274509803921569,
+                0.37254901960784315,
+                0.14901960784313725,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.positive-inverse.bg-default}",
+        },
+      },
+      "color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0.10196078431372549,
+              0.25098039215686274,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.color-document}",
+      },
+      "disabled": {
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 0,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "border-style": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "solid",
+        },
+        "border-width": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-width",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 0.0625,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.border-width.sm}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.34509803921568627,
+                0.4235294117647059,
+                0.5333333333333333,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.disabled.color-document}",
+        },
+      },
+      "focus": {
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 0,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "border-style": {
+          "$description": "[code-only]",
+          "$type": "other",
+          "$value": "solid",
+        },
+        "border-width": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-width",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "rem",
+              "value": 0.0625,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.border-width.sm}",
+        },
+      },
+      "height": {
+        "$type": "dimension",
+        "$value": {
+          "unit": "rem",
+          "value": 2.5,
+        },
+      },
+      "hover": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.13333333333333333,
+                0.23529411764705882,
+                0.3803921568627451,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default-inverse.bg-hover}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.10196078431372549,
+                0.25098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
+        },
+      },
+      "padding-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "padding-block-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "padding-inline-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "padding-inline-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "thumb": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.9372549019607843,
+                0.9450980392156862,
+                0.9529411764705882,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default.bg-default}",
+        },
+        "border-radius": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-radius",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 999,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.border-radius.round}",
+        },
+        "box-shadow": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": "0 2px 6px 0 #3d5374",
+            "studio.tokens": {
+              "originalType": "boxShadow",
+            },
+          },
+          "$type": "shadow",
+          "$value": "{basis.box-shadow.sm}",
+        },
+        "disabled": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.9372549019607843,
+                  0.9450980392156862,
+                  0.9529411764705882,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.disabled.bg-default}",
+          },
+          "box-shadow": {
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": "0 2px 6px 0 #3d5374",
+              "studio.tokens": {
+                "originalType": "boxShadow",
+              },
+            },
+            "$type": "shadow",
+            "$value": "{basis.box-shadow.sm}",
+          },
+        },
+        "margin-inline-end": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 4,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.sm}",
+        },
+        "margin-inline-start": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 4,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.sm}",
+        },
+        "min-inline-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 32,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.size.sm}",
+        },
+      },
+      "track": {
+        "border-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 0,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.transparent}",
+        },
+        "border-radius": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-radius",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 999,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.border-radius.round}",
+        },
+        "disabled": {
+          "background-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.7529411764705882,
+                  0.7803921568627451,
+                  0.8235294117647058,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.disabled-inverse.color-subtle}",
+          },
+          "border-color": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "border-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0,
+                ],
+              },
+            },
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+          },
+        },
+      },
+      "width": {
+        "$type": "dimension",
+        "$value": {
+          "unit": "rem",
+          "value": 5,
         },
       },
     },
@@ -120551,7 +121843,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "nl.nldesignsystem.token-subtype": "font-size",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "rem",
-            "value": 2.5,
+            "value": 2,
           },
           "studio.tokens": {
             "originalType": "fontSizes",
@@ -120640,7 +121932,7 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "nl.nldesignsystem.token-subtype": "font-size",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "rem",
-            "value": 2,
+            "value": 1.75,
           },
           "studio.tokens": {
             "originalType": "fontSizes",
@@ -121888,15 +123180,48 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
         "$value": "{basis.color.default.color-document}",
       },
       "content": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.9764705882352941,
+                0.9764705882352941,
+                0.9803921568627451,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default.bg-subtle}",
+        },
+        "color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.10196078431372549,
+                0.25098039215686274,
+              ],
+            },
+          },
+          "$type": "color",
+          "$value": "{basis.color.default.color-document}",
+        },
         "max-inline-size": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 1140,
+            },
           },
           "$type": "dimension",
-          "$value": {
-            "unit": "px",
-            "value": 1184,
-          },
+          "$value": "{basis.page.max-inline-size}",
         },
       },
       "link": {
@@ -121905,22 +123230,22 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.md}",
+          "$value": "{basis.space.block.lg}",
         },
         "padding-block-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.md}",
+          "$value": "{basis.space.block.lg}",
         },
         "padding-inline-end": {
           "$extensions": {
@@ -123829,6 +125154,17 @@ exports[`strictly validate known basis themes > Voorbeeld theme 1`] = `
           "unit": "px",
           "value": 0,
         },
+      },
+      "margin-inline-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 8,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.md}",
       },
       "size": {
         "$extensions": {
