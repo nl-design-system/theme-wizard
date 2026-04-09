@@ -165,6 +165,11 @@ export const addBasisContrastExtensions = (rootConfig: Record<string, unknown>) 
 type ComponentConfig = { color: ColorToken; 'background-color': ColorToken };
 
 /**
+ * Ignore-list to skip comparing color-contrast for color combinations at the given path
+ */
+const componentColorContrastIgnoreList = new Set(['utrecht.form-toggle.hover']);
+
+/**
  * Add "nl.nldesignsystem.contrast-with" to color $extensions for background/foreground colors in component tokens that
  * are defined on the same level/depth
  */
@@ -175,7 +180,12 @@ export const addComponentContrastExtensions = (rootConfig: Record<string, unknow
       // Basis tokens have their own contrast settings
       if (path.at(0) === 'basis') return false;
 
-      if (isValueObject(obj) && isColorToken(obj['color']) && isColorToken(obj['background-color'])) {
+      if (
+        isValueObject(obj) &&
+        isColorToken(obj['color']) &&
+        isColorToken(obj['background-color']) &&
+        !componentColorContrastIgnoreList.has(path.join('.'))
+      ) {
         // Make sure we only get to compare colors where alpha=1
         const value = isRef(obj['background-color'].$value)
           ? dlv(rootConfig, extractRef(obj['background-color'].$value))?.$value
