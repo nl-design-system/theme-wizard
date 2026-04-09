@@ -58,8 +58,8 @@ importers:
         specifier: 20.0.0
         version: 20.0.0
       npm-package-json-lint:
-        specifier: 10.0.0
-        version: 10.0.0(typescript@6.0.2)
+        specifier: 10.2.0
+        version: 10.2.0(typescript@6.0.2)
       postcss:
         specifier: 8.5.8
         version: 8.5.8
@@ -6907,8 +6907,8 @@ packages:
     engines: {node: '>=20.0.0', npm: '>=8.12.1'}
     hasBin: true
 
-  npm-package-json-lint@10.0.0:
-    resolution: {integrity: sha512-7k0boq7lzh1u8sFlUqdpYcAUDI6Mw8RU6fCVbjsKRjgj0zz9rq1sr0W93VTpUv0YmVwPuLdgXymDHbDsS3ht9g==}
+  npm-package-json-lint@10.2.0:
+    resolution: {integrity: sha512-p0fKe65OyXsJslOxGIcnqSo3tyMddH0n3X8AI7Ab0BSxVPc2eZ0ey1z6/L9Rh59k+BW9mHJNK9LKr4k+pA8Ojg==}
     engines: {node: '>=22.0.0', npm: '>=10.0.0'}
     hasBin: true
 
@@ -16041,7 +16041,7 @@ snapshots:
 
   npm-check-updates@20.0.0: {}
 
-  npm-package-json-lint@10.0.0(typescript@6.0.2):
+  npm-package-json-lint@10.2.0(typescript@6.0.2):
     dependencies:
       ajv: 6.12.6
       ajv-errors: 1.0.1(ajv@6.12.6)
