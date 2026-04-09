@@ -8,7 +8,6 @@ import CloseIcon from '@tabler/icons/outline/x.svg?raw';
 import { LitElement, html, unsafeCSS, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { dialogStyles } from './styles';
 
 let dialogInstanceCounter = 0;
 
@@ -57,7 +56,7 @@ export class ClippyModal extends LitElement {
 
   private previouslyFocusedElement: HTMLElement | null = null;
 
-  static override readonly styles = [dialogStyles, unsafeCSS(amsDialogStyles), unsafeCSS(buttonStyles)];
+  static override readonly styles = [unsafeCSS(amsDialogStyles), unsafeCSS(buttonStyles)];
 
   readonly open = () => {
     if (!this.dialogElement) return;
