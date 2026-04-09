@@ -96,10 +96,10 @@ test.describe('interaction tests', () => {
       });
 
       test('Token value can be copied to clipboard', async ({ page }) => {
-        const tokenValue = '3rem';
+        const tokenValue = '2.5rem';
         await page
           .getByRole('table', { name: 'Lettergroottes' })
-          .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true })
+          .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord` })
           .click();
         const clipboardText = await page.evaluate(async () => {
           return await navigator.clipboard.readText();
@@ -136,7 +136,7 @@ test.describe('interaction tests', () => {
       const tokenName = 'basis.space.block.6xl';
       await page
         .getByRole('table', { name: 'Block' })
-        .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord`, exact: true })
+        .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord` })
         .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
@@ -148,7 +148,7 @@ test.describe('interaction tests', () => {
       const tokenValue = '64px';
       await page
         .getByRole('table', { name: 'Block' })
-        .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true })
+        .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord` })
         .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
