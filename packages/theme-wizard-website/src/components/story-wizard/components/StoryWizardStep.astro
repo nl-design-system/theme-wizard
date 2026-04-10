@@ -9,7 +9,7 @@ interface Props {
   totalSteps: number;
 }
 
-const { step, stepIndex, totalSteps } = Astro.props;
+const { step } = Astro.props;
 ---
 
 <section
@@ -19,21 +19,13 @@ const { step, stepIndex, totalSteps } = Astro.props;
   data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
   data-step-label={step.title}
 >
-  <div class="wizard-story-section__intro">
-    <h2 class="nl-heading nl-heading--level-3 wizard-story-section__step-title">{step.title}</h2>
-    {
-      step.intro ? (
-        <p class="nl-paragraph wizard-story-section__step-help">{step.intro}</p>
-      ) : (
-        <p class="nl-paragraph wizard-story-section__step-help">
-          Kies wat het beste past. Je kunt dit later altijd nog aanpassen.
-        </p>
-      )
-    }
-  </div>
-
   <div class="wizard-story-section__layout">
     <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
+      <div class="wizard-story-section__intro">
+        <h2 class="nl-heading nl-heading--level-3 wizard-story-section__step-title">{step.title}</h2>
+        {step.intro && <p class="nl-paragraph wizard-story-section__step-help">{step.intro}</p>}
+      </div>
+
       {
         step.groups.map((group) =>
           group.type === 'preset' ? (
@@ -49,7 +41,6 @@ const { step, stepIndex, totalSteps } = Astro.props;
       {
         step.previewStories.length > 0 && (
           <section class="wizard-story-preview-panel" aria-label={`${step.title} previews`}>
-            <div class="wizard-story-preview-panel__header"></div>
             <div class="wizard-story-section__variants">
               {step.previewStories.map((previewStory) => (
                 <div class="wizard-story-section__variant">

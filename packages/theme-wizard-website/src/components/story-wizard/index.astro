@@ -1,5 +1,15 @@
 ---
 import type { StoryWizardViewModel } from '@/lib/types';
+import brushIcon from '@tabler/icons/outline/brush.svg?raw';
+import dimensionsIcon from '@tabler/icons/outline/dimensions.svg?raw';
+import mouseIcon from '@tabler/icons/outline/mouse.svg?raw';
+import settingsIcon from '@tabler/icons/outline/adjustments-horizontal.svg?raw';
+import resizeIcon from '@tabler/icons/outline/resize.svg?raw';
+import paddingIcon from '@tabler/icons/outline/arrow-autofit-content.svg?raw';
+import fontIcon from '@tabler/icons/outline/abc.svg?raw';
+import borderRadiusIcon from '@tabler/icons/outline/border-radius.svg?raw';
+import borderStyleIcon from '@tabler/icons/outline/border-style.svg?raw';
+import textSizeIcon from '@tabler/icons/outline/text-size.svg?raw';
 import StoryWizardStep from './components/StoryWizardStep.astro';
 import StoryWizardStepper from './components/StoryWizardStepper/index.astro';
 
@@ -8,6 +18,110 @@ interface Props {
 }
 
 const { wizard } = Astro.props;
+
+const presetSteps = wizard.steps.filter((step) => step.type === 'preset');
+const advancedSteps = wizard.steps.filter((step) => step.type === 'advanced');
+
+const getOverviewCardIcon = (title: string) => {
+  const normalizedTitle = title.toLowerCase();
+
+  if (normalizedTitle.includes('afmeting')) {
+    return dimensionsIcon;
+  }
+
+  if (normalizedTitle.includes('grootte') && !normalizedTitle.includes('tekst')) {
+    return resizeIcon;
+  }
+
+  if (normalizedTitle.includes('kleur') || normalizedTitle.includes('color')) {
+    return brushIcon;
+  }
+
+  if (normalizedTitle.includes('hover')) {
+    return mouseIcon;
+  }
+
+  if (
+    normalizedTitle.includes('tekstgrootte') ||
+    normalizedTitle.includes('typografie') ||
+    normalizedTitle.includes('tekst')
+  ) {
+    return textSizeIcon;
+  }
+
+  if (normalizedTitle.includes('border') || normalizedTitle.includes('rand') || normalizedTitle.includes('lijn')) {
+    return borderStyleIcon;
+  }
+
+  if (normalizedTitle.includes('vorm') || normalizedTitle.includes('afrond') || normalizedTitle.includes('hoek')) {
+    return borderRadiusIcon;
+  }
+
+  if (
+    normalizedTitle.includes('padding') ||
+    normalizedTitle.includes('witruimte') ||
+    normalizedTitle.includes('ruimte')
+  ) {
+    return paddingIcon;
+  }
+
+  if (normalizedTitle.includes('lettertype') || normalizedTitle.includes('font')) {
+    return fontIcon;
+  }
+
+  return null;
+};
+
+const sortedPresetSteps = [...presetSteps].sort((a, b) => a.order - b.order);
+
+// Group preset steps by flowGroup. Steps with a unique flowGroup (= their own id) are standalone.
+// Steps that share a flowGroup are rendered together on one row with flowTitle as heading.
+type SingleRow = { type: 'single'; step: (typeof presetSteps)[0] };
+type GroupRow = { type: 'group'; flowGroup: string; flowTitle: string; steps: typeof presetSteps };
+type PresetRow = SingleRow | GroupRow;
+
+const presetRows = (() => {
+  const rows: PresetRow[] = [];
+  const seen = new Map<string, number>(); // flowGroup → index in rows
+
+  for (const step of sortedPresetSteps) {
+    const isGrouped = step.flowGroup !== step.id;
+    if (isGrouped) {
+      const existing = seen.get(step.flowGroup);
+      if (existing !== undefined) {
+        (rows[existing] as GroupRow).steps.push(step);
+      } else {
+        seen.set(step.flowGroup, rows.length);
+        rows.push({ type: 'group', flowGroup: step.flowGroup, flowTitle: step.flowTitle, steps: [step] });
+      }
+    } else {
+      rows.push({ type: 'single', step });
+    }
+  }
+
+  return rows;
+})();
+
+const singleSteps = presetRows.filter((r): r is SingleRow => r.type === 'single').map((r) => r.step);
+const groupRows = presetRows.filter((r): r is GroupRow => r.type === 'group');
+
+const getHeadingLevel = (title: string) => {
+  const match = title.match(/(?:heading\s*|h)([1-6])/i);
+  return match ? Number(match[1]) : null;
+};
+
+const headingRows =
+  wizard.componentId === 'heading'
+    ? Array.from({ length: 6 }, (_, index) => index + 1)
+        .map((level) => ({
+          level,
+          steps: sortedPresetSteps.filter((step) => {
+            const title = step.groups[0]?.name ?? step.title;
+            return getHeadingLevel(title) === level;
+          }),
+        }))
+        .filter((row) => row.steps.length > 0)
+    : [];
 ---
 
 <div slot="page-content" class="wizard-page-content">
@@ -21,34 +135,236 @@ const { wizard } = Astro.props;
     </div>
 
     <div class="wizard-steps-overview" data-steps-overview>
-      <p class="nl-paragraph wizard-steps-overview__intro">
-        Kies een categorie om te beginnen. Je kunt altijd terugkomen om een keuze te wijzigen.
-      </p>
+      <div class="wizard-steps-overview__lead">
+        <h2 class="nl-heading nl-heading--level-3">{presetSteps.length} presets</h2>
+        <p class="nl-paragraph wizard-steps-overview__intro">Kies eerst een onderwerp om de basis goed te zetten.</p>
+      </div>
 
-      <ul class="wizard-steps-overview__list">
-        {
-          wizard.steps.map((step, i) => (
-            <li class="wizard-steps-overview__item">
-              <button
-                class="wizard-step-overview-card nl-button nl-button--secondary"
-                type="button"
-                data-jump-to-step={i}
-                data-step-overview-card
-              >
-                <span class="wizard-step-overview-card__title">{step.title}</span>
+      {
+        wizard.componentId === 'heading' ? (
+          <div class="wizard-steps-overview__rows">
+            {headingRows.map((row) => (
+              <section class="wizard-steps-overview__row" aria-labelledby={`heading-row-h${row.level}`}>
+                <h3
+                  class="nl-heading nl-heading--level-4 wizard-steps-overview__row-title"
+                  id={`heading-row-h${row.level}`}
+                >
+                  H{row.level}
+                </h3>
 
-                <span class="wizard-step-overview-card__kind">
-                  {step.type === 'advanced' ? 'Geavanceerd' : 'Presets'}
-                </span>
+                <ul class="wizard-steps-overview__list">
+                  {row.steps.map((step) => {
+                    const stepIndex = wizard.steps.findIndex((candidate) => candidate.id === step.id);
+                    const group = step.groups[0];
+                    const cardTitle = group?.name ?? step.title;
+                    const description = group?.description ?? step.intro;
+                    const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
+                    const cardIcon = getOverviewCardIcon(cardTitle);
 
-                <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
-                  ✓
-                </span>
-              </button>
-            </li>
-          ))
-        }
-      </ul>
+                    return (
+                      <li class="wizard-steps-overview__item">
+                        <article class="wizard-step-overview-card">
+                          <div
+                            class:list={[
+                              'wizard-step-overview-card__preview',
+                              cardIcon && 'wizard-step-overview-card__preview--with-icon',
+                            ]}
+                          >
+                            {cardIcon && (
+                              <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={cardIcon} />
+                            )}
+                            <wizard-story-preview>
+                              <wizard-reset-theme>
+                                <wizard-preview-theme>
+                                  <div data-story-container={cardPreviewStoryId} />
+                                </wizard-preview-theme>
+                              </wizard-reset-theme>
+                            </wizard-story-preview>
+                          </div>
+
+                          <div class="wizard-step-overview-card__body">
+                            <span class="wizard-step-overview-card__title">{cardTitle}</span>
+                            {description && <span class="wizard-step-overview-card__description">{description}</span>}
+                          </div>
+
+                          <div class="wizard-step-overview-card__footer">
+                            <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
+                              ✓
+                            </span>
+
+                            <button
+                              class="wizard-step-overview-card__action nl-button nl-button--primary"
+                              type="button"
+                              data-jump-to-step={stepIndex}
+                              data-step-overview-card
+                            >
+                              Stel in
+                            </button>
+                          </div>
+                        </article>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            ))}
+          </div>
+        ) : (
+          <div class="wizard-steps-overview__rows">
+            {(() => {
+              const renderCard = (step: SingleRow['step']) => {
+                const stepIndex = wizard.steps.findIndex((candidate) => candidate.id === step.id);
+                const group = step.groups[0];
+                const cardTitle = group?.name ?? step.title;
+                const description = group?.description ?? step.intro;
+                const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
+                const cardIcon = getOverviewCardIcon(cardTitle);
+
+                return (
+                  <li class="wizard-steps-overview__item">
+                    <article class="wizard-step-overview-card">
+                      <div
+                        class:list={[
+                          'wizard-step-overview-card__preview',
+                          cardIcon && 'wizard-step-overview-card__preview--with-icon',
+                        ]}
+                      >
+                        {cardIcon && (
+                          <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={cardIcon} />
+                        )}
+                        <wizard-story-preview>
+                          <wizard-reset-theme>
+                            <wizard-preview-theme>
+                              <div data-story-container={cardPreviewStoryId} />
+                            </wizard-preview-theme>
+                          </wizard-reset-theme>
+                        </wizard-story-preview>
+                      </div>
+
+                      <div class="wizard-step-overview-card__body">
+                        <span class="wizard-step-overview-card__title">{cardTitle}</span>
+                        {description && <span class="wizard-step-overview-card__description">{description}</span>}
+                      </div>
+
+                      <div class="wizard-step-overview-card__footer">
+                        <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
+                          ✓
+                        </span>
+                        <button
+                          class="wizard-step-overview-card__action nl-button nl-button--primary"
+                          type="button"
+                          data-jump-to-step={stepIndex}
+                          data-step-overview-card
+                        >
+                          Stel in
+                        </button>
+                      </div>
+                    </article>
+                  </li>
+                );
+              };
+
+              return (
+                <>
+                  {singleSteps.length > 0 && (
+                    <section class="wizard-steps-overview__row">
+                      <ul class="wizard-steps-overview__list">{singleSteps.map(renderCard)}</ul>
+                    </section>
+                  )}
+                  {groupRows.map((row) => (
+                    <section
+                      class="wizard-steps-overview__row wizard-steps-overview__row--group"
+                      aria-labelledby={`group-${row.flowGroup}`}
+                    >
+                      <h3
+                        class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title"
+                        id={`group-${row.flowGroup}`}
+                      >
+                        {row.flowTitle}
+                      </h3>
+                      <ul class="wizard-steps-overview__list">{row.steps.map(renderCard)}</ul>
+                    </section>
+                  ))}
+                </>
+              );
+            })()}
+          </div>
+        )
+      }
+
+      {
+        advancedSteps.length > 0 && (
+          <details class="wizard-steps-overview__advanced">
+            <summary class="wizard-steps-overview__advanced-summary">
+              <span class="wizard-steps-overview__advanced-heading">
+                <span class="wizard-steps-overview__advanced-icon" aria-hidden="true" set:html={settingsIcon} />
+                <span class="wizard-steps-overview__advanced-label">Geavanceerd</span>
+              </span>
+              <span class="wizard-steps-overview__advanced-meta">
+                Optioneel · {advancedSteps.length} extra {advancedSteps.length === 1 ? 'onderdeel' : 'onderdelen'}
+              </span>
+            </summary>
+
+            <p class="nl-paragraph wizard-steps-overview__advanced-intro">
+              Pas hier extra details aan als je meer controle wilt. Je hebt dit niet nodig om een goede basis neer te
+              zetten.
+            </p>
+
+            <ul class="wizard-steps-overview__list">
+              {advancedSteps.map((step) => {
+                const stepIndex = wizard.steps.findIndex((candidate) => candidate.id === step.id);
+                const cardTitle = step.title;
+                const description = step.intro;
+                const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
+                const cardIcon = getOverviewCardIcon(cardTitle);
+
+                return (
+                  <li class="wizard-steps-overview__item">
+                    <article class="wizard-step-overview-card">
+                      <div
+                        class:list={[
+                          'wizard-step-overview-card__preview',
+                          cardIcon && 'wizard-step-overview-card__preview--with-icon',
+                        ]}
+                      >
+                        {cardIcon && (
+                          <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={cardIcon} />
+                        )}
+                        <wizard-story-preview>
+                          <wizard-reset-theme>
+                            <wizard-preview-theme>
+                              <div data-story-container={cardPreviewStoryId} />
+                            </wizard-preview-theme>
+                          </wizard-reset-theme>
+                        </wizard-story-preview>
+                      </div>
+
+                      <div class="wizard-step-overview-card__body">
+                        <span class="wizard-step-overview-card__title">{cardTitle}</span>
+                        {description && <span class="wizard-step-overview-card__description">{description}</span>}
+                      </div>
+
+                      <div class="wizard-step-overview-card__footer">
+                        <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
+                          ✓
+                        </span>
+                        <button
+                          class="wizard-step-overview-card__action nl-button nl-button--primary"
+                          type="button"
+                          data-jump-to-step={stepIndex}
+                          data-step-overview-card
+                        >
+                          Stel in
+                        </button>
+                      </div>
+                    </article>
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        )
+      }
     </div>
 
     {
