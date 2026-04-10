@@ -47,3 +47,11 @@ export type StoryWizardThemeHost = HTMLElement & {
     defaults?: unknown;
   };
 };
+
+export interface StoryWizardStepState {
+  step: any; // Using any for now to avoid circular dependency if StoryWizardStep is not yet imported, or import it if needed.
+  summaries: StoryWizardSelectionSummary[];
+  isDone: boolean;
+  isConfirmedAdvanced: boolean;
+}
+
