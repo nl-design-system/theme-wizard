@@ -9,6 +9,7 @@ import {
   Icon,
   RenderAllButtonPurposesPreview,
   RenderButtonPurposePreview,
+  RenderSingleButtonPreview,
 } from './button-react.story-components';
 
 const meta = {
@@ -134,6 +135,16 @@ export const DefaultButtonPurposePreview: Story = {
   render: RenderButtonPurposePreview,
 };
 
+export const DefaultButtonCardPreview: Story = {
+  name: 'Default Button Card Preview',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: undefined,
+  },
+  render: RenderSingleButtonPreview,
+};
+
 export const PrimaryButtonPurposePreview: Story = {
   name: 'Primary Button Purpose Preview',
   args: {
@@ -172,6 +183,26 @@ export const SecondaryButtonPurposePreview: Story = {
     purpose: 'secondary',
   },
   render: RenderButtonPurposePreview,
+};
+
+export const PrimaryButtonCardPreview: Story = {
+  name: 'Primary Button Card Preview',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: 'primary',
+  },
+  render: RenderSingleButtonPreview,
+};
+
+export const SecondaryButtonCardPreview: Story = {
+  name: 'Secondary Button Card Preview',
+  args: {
+    iconStart: '❤️',
+    label: 'Klik mij!',
+    purpose: 'secondary',
+  },
+  render: RenderSingleButtonPreview,
 };
 
 export const AllButtonPurposesPreview: Story = {

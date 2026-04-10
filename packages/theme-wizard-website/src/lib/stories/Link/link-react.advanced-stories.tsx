@@ -54,7 +54,7 @@ export const AdvancedLinkStates: Story = {
       previewStoryIds: ['WizardPreview'],
       question: 'Wil je de linkstates verder verfijnen?',
       step: 'link:advanced',
-      stepTitle: 'Link geavanceerd',
+
       type: 'advanced',
     },
   },
@@ -89,7 +89,7 @@ export const AdvancedLinkDisabled: Story = {
       previewStoryIds: ['WizardPreviewDisabled'],
       question: 'Wil je de disabled link verder verfijnen?',
       step: 'link:advanced',
-      stepTitle: 'Link geavanceerd',
+
       type: 'advanced',
     },
   },
@@ -123,7 +123,7 @@ export const AdvancedLinkCurrent: Story = {
       previewStoryIds: ['WizardPreviewCurrent'],
       question: 'Wil je de current link verder verfijnen?',
       step: 'link:advanced',
-      stepTitle: 'Link geavanceerd',
+
       type: 'advanced',
     },
   },

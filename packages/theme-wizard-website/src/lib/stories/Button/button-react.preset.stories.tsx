@@ -47,6 +47,7 @@ export const ButtonMinimumSize: Story = createButtonPresetStory({
       ],
     },
   ],
+  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   previewStoryIds: ['WizardPreview'],
   render: ButtonPrimary,
 });
@@ -59,7 +60,7 @@ export const ButtonDefaultVariantStyle = createButtonVariantStory({
   },
   options: defaultButtonVariantOptions,
   order: 2,
-  previewStoryId: 'DefaultButtonPurposePreview',
+  previewStoryId: 'DefaultButtonCardPreview',
   question: 'Welke stijl wil je voor de standaard button?',
   render: RenderButtonPurposePreview,
 });
@@ -73,7 +74,7 @@ export const ButtonPrimaryVariantStyle = createButtonVariantStory({
   },
   options: primaryButtonVariantOptions,
   order: 3,
-  previewStoryId: 'PrimaryButtonPurposePreview',
+  previewStoryId: 'PrimaryButtonCardPreview',
   question: 'Welke stijl wil je voor de primary button?',
   render: RenderButtonPurposePreview,
 });
@@ -87,7 +88,7 @@ export const ButtonSecondaryVariantStyle = createButtonVariantStory({
   },
   options: secondaryButtonVariantOptions,
   order: 4,
-  previewStoryId: 'SecondaryButtonPurposePreview',
+  previewStoryId: 'SecondaryButtonCardPreview',
   question: 'Welke stijl wil je voor de secondary button?',
   render: RenderButtonPurposePreview,
 });
@@ -157,6 +158,7 @@ export const ButtonShape: Story = createButtonPresetStory({
       question: 'Hoe afgerond mogen de hoeken van buttons zijn?',
     },
   ],
+  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   previewStoryIds: ['AllButtonPurposesPreview'],
   render: ButtonPrimary,
 });
@@ -183,6 +185,7 @@ export const ButtonTextSize: Story = createButtonPresetStory({
       question: 'Kies de tekstgrootte van alle buttons',
     },
   ],
+  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   previewStoryIds: ['AllButtonPurposesPreview'],
   render: ButtonPrimary,
 });
