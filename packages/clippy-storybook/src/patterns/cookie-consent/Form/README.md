@@ -560,13 +560,6 @@ Voor juridische informatie over cookies, toestemming en gerechtvaardigd belang, 
 
 ## Referenties
 
-### Technische documentatie
-
 - **[Utrecht Design System](https://www.utrecht.nl/)** - Design system componenten
 - **[NL Design System](https://www.nldesignsystem.nl/)** - Design system community
 - **[Utrecht Components React](https://github.com/nl-design-system/utrecht/tree/main/packages/components-react)** - React componenten
-
-### Toegankelijkheid
-
-- **[WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)** - Web Content Accessibility Guidelines
-- **[ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)** - Best practices voor ARIA gebruik

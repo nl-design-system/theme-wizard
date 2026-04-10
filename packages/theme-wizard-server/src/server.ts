@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import type { AddressInfo } from 'net';
+import type { AddressInfo } from 'node:net';
 import { serve } from '@hono/node-server';
 import app from './index.js';
 
