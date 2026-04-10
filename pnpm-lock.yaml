@@ -935,11 +935,11 @@ importers:
         specifier: 3.41.1
         version: 3.41.1(react@18.3.1)
       '@utrecht/body-css':
-        specifier: 2.0.1
-        version: 2.0.1
+        specifier: 4.0.0
+        version: 4.0.0
       '@utrecht/root-css':
-        specifier: 2.0.1
-        version: 2.0.1
+        specifier: 4.0.0
+        version: 4.0.0
       '@vercel/related-projects':
         specifier: 1.0.1
         version: 1.0.1
@@ -3566,11 +3566,11 @@ packages:
   '@utrecht/blockquote-css@2.0.1':
     resolution: {integrity: sha512-uiGEhc77nM8OFEsuAR5viABV2NiRGZi3Mve2wUxtvrctPirLV/kQJWn3/pt2NCKSeuFqSnpVvCzgPe46F8PteQ==}
 
-  '@utrecht/body-css@2.0.1':
-    resolution: {integrity: sha512-WQjaF2Ii0eERCnTGYI32Jpjts5ydJpCAQUTtLjVs/jGF2+wHBz7XRDN6SFd8S0xIgp6llMQjHB9rdVp8JxieWA==}
-
   '@utrecht/body-css@3.0.0':
     resolution: {integrity: sha512-OvKBtolyCBmIGwzLjCi5+Ut0rqzUsyEU07PYtw9lTTOJ22XsluChZ8w7FAICVVHBXC3sWJ1DdRo2hUngGZFyFQ==}
+
+  '@utrecht/body-css@4.0.0':
+    resolution: {integrity: sha512-mxI/wcihyEkVVDwp1kirWxcOmUlGH2pwJu3TYWZccnbgzjcQdA0r8SirGZ2IF9LH9cpQmJn4mPOXWFJQsxOskA==}
 
   '@utrecht/breadcrumb-nav-css@2.1.0':
     resolution: {integrity: sha512-BOYqFSnrR5rVzU1mb4eDb4BbpuE9TSEPN5FTlJJduYDvsJr5DLDaxADmFp1p05di7GWV1qTaPBMxw0gEuMAbaQ==}
@@ -3988,11 +3988,11 @@ packages:
   '@utrecht/rich-text-css@2.1.0':
     resolution: {integrity: sha512-JYr/I/wZKufKe6iji6BxQYxtNnNuhyEylOrjFH+Ju5Cz5uqD4KU5zmsjNHhYX7bMIsdUQcje4VnXNtarM4xBkw==}
 
-  '@utrecht/root-css@2.0.1':
-    resolution: {integrity: sha512-mhEyFaHhWHmwxu3HFR1+HpQDdQfGCfETBRKDP9QsGFwxX1t8FDUmL570+0LH3VqBA7db6gz8/krh8MUzCRp8yw==}
-
   '@utrecht/root-css@3.1.2':
     resolution: {integrity: sha512-SA7U9YuEA46hCkiq1NwzjEC3mSipD9/MLqT9bF5dzKNEFHek46GbDRxor0faHDfLS7Lia63xcQIyEza/ADH9yQ==}
+
+  '@utrecht/root-css@4.0.0':
+    resolution: {integrity: sha512-Mz1pkHwzU4jx0YXW/QcRU89KPwJGAJi42grEazQc76pXf7Vb6XFZ0Y3+dsHoGwGAItBQix5jjD7OBfRJyziM0g==}
 
   '@utrecht/search-bar-css@3.0.2':
     resolution: {integrity: sha512-R7hORuwr2u/zVLybHxO72ZpPx0MtTTqoTBBrpLsgLNJGUsbS6s61e83RXGmE+Dr8U9Mokj1K2DTjnNxsYtSxzA==}
@@ -11535,9 +11535,9 @@ snapshots:
 
   '@utrecht/blockquote-css@2.0.1': {}
 
-  '@utrecht/body-css@2.0.1': {}
-
   '@utrecht/body-css@3.0.0': {}
+
+  '@utrecht/body-css@4.0.0': {}
 
   '@utrecht/breadcrumb-nav-css@2.1.0': {}
 
@@ -12102,9 +12102,9 @@ snapshots:
 
   '@utrecht/rich-text-css@2.1.0': {}
 
-  '@utrecht/root-css@2.0.1': {}
-
   '@utrecht/root-css@3.1.2': {}
+
+  '@utrecht/root-css@4.0.0': {}
 
   '@utrecht/search-bar-css@3.0.2': {}
 
