@@ -20,8 +20,43 @@ const { wizard } = Astro.props;
     >
     </div>
 
-    {wizard.steps.map((step) => <StoryWizardStep step={step} />)}
+    <div class="wizard-steps-overview" data-steps-overview>
+      <p class="nl-paragraph wizard-steps-overview__intro">
+        Kies een categorie om te beginnen. Je kunt altijd terugkomen om een keuze te wijzigen.
+      </p>
 
-    <StoryWizardStepper />
+      <ul class="wizard-steps-overview__list">
+        {
+          wizard.steps.map((step, i) => (
+            <li class="wizard-steps-overview__item">
+              <button
+                class="wizard-step-overview-card nl-button nl-button--secondary"
+                type="button"
+                data-jump-to-step={i}
+                data-step-overview-card
+              >
+                <span class="wizard-step-overview-card__title">{step.title}</span>
+
+                <span class="wizard-step-overview-card__kind">
+                  {step.type === 'advanced' ? 'Geavanceerd' : 'Presets'}
+                </span>
+
+                <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
+                  ✓
+                </span>
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {
+      wizard.steps.map((step, index) => (
+        <StoryWizardStep step={step} stepIndex={index} totalSteps={wizard.steps.length} />
+      ))
+    }
+
+    <StoryWizardStepper steps={wizard.steps.map((s) => ({ title: s.title, id: s.id }))} />
   </section>
 </div>

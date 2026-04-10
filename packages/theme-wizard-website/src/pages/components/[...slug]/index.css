@@ -284,8 +284,8 @@
 .wizard-story-section {
   display: flex;
   flex-direction: column;
-  gap: var(--basis-space-row-sm);
-  padding-block-end: var(--basis-space-block-lg);
+  gap: var(--basis-space-row-lg);
+  padding-block-end: var(--basis-space-block-2xl);
   padding-inline: 0;
 }
 
@@ -297,7 +297,35 @@
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--basis-space-column-2xl);
+  gap: var(--basis-space-column-3xl);
+}
+
+.wizard-story-section__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-xs);
+  max-inline-size: 38rem;
+}
+
+.wizard-story-section__step-count {
+  color: var(--basis-color-default-color-subtle);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.wizard-story-section__step-title {
+  margin: 0;
+}
+
+.wizard-story-section__step-help {
+  color: var(--basis-color-default-color-subtle);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  margin: 0;
+  max-inline-size: 34rem;
 }
 
 .wizard-story-section__preview-column {
@@ -332,24 +360,24 @@
   display: flex;
   flex-direction: column;
   gap: var(--basis-space-block-lg);
-  padding-block-start: var(--basis-space-block-md);
+  padding-block-start: var(--basis-space-block-lg);
 }
 
 .wizard-story-section__settings-panel {
   align-self: start;
   background: transparent;
-  border-inline-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 58%, transparent);
+  border-inline-end: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 52%, transparent);
   border-radius: 0;
   display: flex;
   flex: 0 1 23rem;
   flex-direction: column;
-  gap: var(--basis-space-block-lg);
+  gap: var(--basis-space-block-xl);
   inline-size: 23rem;
   inset-block-start: var(--basis-space-block-lg);
   max-inline-size: 100%;
   min-inline-size: 0;
   padding-block: 0;
-  padding-inline: var(--wizard-settings-inline-padding) 0;
+  padding-inline: 0 var(--wizard-settings-inline-padding);
   position: sticky;
 }
 
@@ -420,7 +448,7 @@
 }
 
 .wizard-token-preset + .wizard-token-preset {
-  margin-block-start: 0;
+  margin-block-start: var(--basis-space-block-xl);
 }
 
 .wizard-token-preset__title {
@@ -428,6 +456,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--basis-space-inline-sm);
+  line-height: 1.25;
   margin-block: 0 var(--basis-space-block-sm);
 }
 
@@ -439,6 +468,7 @@
 
 .wizard-token-preset__title-tokens {
   color: var(--basis-color-default-color-subtle);
+  flex-basis: 100%;
 }
 
 .wizard-token-preset__title-tokens-summary {
@@ -469,19 +499,23 @@
 
 .wizard-token-preset__description {
   color: var(--basis-color-default-color-subtle);
+  line-height: 1.55;
   margin-block-end: var(--basis-space-block-lg);
   margin-block-start: 0;
   max-inline-size: none;
 }
 
 .wizard-token-preset__advanced {
-  padding-block: var(--basis-space-block-md);
-  padding-inline: var(--basis-space-inline-md);
+  border-block-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 52%, transparent);
+  margin-block-start: var(--basis-space-block-lg);
+  padding-block: var(--basis-space-block-md) 0;
+  padding-inline: 0;
 }
 
 .wizard-token-preset__advanced-summary {
   color: var(--basis-color-default-color-default);
   cursor: pointer;
+  font-size: 0.875rem;
   font-weight: 700;
   margin-block: 0;
   margin-inline: 0;
@@ -499,10 +533,85 @@
 .wizard-token-preset__options {
   display: flex;
   flex-direction: column;
-  gap: var(--basis-space-block-md);
+  gap: var(--basis-space-block-lg);
   max-inline-size: none;
   padding-inline: 0;
 }
+
+/* ── Categorie-overzicht ─────────────────────────────────────── */
+
+.wizard-steps-overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-lg);
+  padding-block-end: var(--basis-space-block-2xl);
+}
+
+.wizard-steps-overview[hidden] {
+  display: none;
+}
+
+.wizard-steps-overview__intro {
+  color: var(--basis-color-default-color-subtle);
+  margin-block: 0;
+}
+
+.wizard-steps-overview__list {
+  display: grid;
+  gap: var(--basis-space-block-sm);
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  list-style: none;
+  margin-block: 0;
+  padding-inline: 0;
+}
+
+.wizard-step-overview-card {
+  align-items: flex-start;
+  block-size: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-2xs);
+  inline-size: 100%;
+  min-block-size: 0;
+  padding-block: var(--basis-space-block-md);
+  padding-inline: var(--basis-space-inline-md);
+  text-align: start;
+}
+
+.wizard-step-overview-card__title {
+  color: var(--nl-button-secondary-color, var(--basis-color-action-1-color-default));
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.wizard-step-overview-card__kind {
+  color: var(--basis-color-default-color-subtle);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.wizard-step-overview-card__done {
+  align-items: center;
+  background-color: color-mix(in sRGB, var(--basis-color-action-1-color-default) 12%, transparent);
+  block-size: 1.25rem;
+  border-radius: var(--basis-border-radius-round);
+  color: var(--basis-color-action-1-color-default);
+  display: flex;
+  font-size: 0.75rem;
+  font-weight: 700;
+  inline-size: 1.25rem;
+  justify-content: center;
+  margin-block-start: var(--basis-space-block-xs);
+}
+
+.wizard-step-overview-card__done[hidden] {
+  display: none;
+}
+
+/* ── Stepper: step-nav onderaan ──────────────────────────────── */
 
 .wizard-preset-stepper {
   background: var(--basis-color-default-bg-document);
@@ -510,8 +619,61 @@
   display: flex;
   flex-direction: column;
   gap: var(--basis-space-block-sm);
-  padding-block: var(--basis-space-block-md);
+  margin-block-start: var(--basis-space-block-xl);
+  padding-block: var(--basis-space-block-lg);
   padding-inline: 0;
+}
+
+.wizard-step-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-inline-xs);
+}
+
+.wizard-step-nav-btn {
+  align-items: center;
+  block-size: auto;
+  display: inline-flex;
+  gap: var(--basis-space-inline-xs);
+  min-block-size: 0;
+  padding-block: var(--basis-space-block-xs);
+  padding-inline: var(--basis-space-inline-md);
+  text-align: start;
+}
+
+.wizard-step-nav-btn__title {
+  font-size: 0.875rem;
+}
+
+.wizard-step-nav-btn__check {
+  align-items: center;
+  block-size: 1rem;
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: 1rem;
+}
+
+.wizard-step-nav-btn__check[hidden] {
+  display: none;
+}
+
+.wizard-step-nav-btn__check > svg {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+}
+
+.wizard-preset-stepper__footer {
+  align-items: center;
+  display: flex;
+  gap: var(--basis-space-inline-md);
+  justify-content: space-between;
+}
+
+.wizard-preset-stepper__finish-area {
+  align-items: center;
+  display: flex;
+  gap: var(--basis-space-inline-md);
 }
 
 .wizard-preset-transition-note {
@@ -522,26 +684,6 @@
   text-align: inline-start;
 }
 
-.wizard-preset-stepper__actions {
-  align-items: center;
-  display: flex;
-  gap: var(--basis-space-inline-md);
-  justify-content: space-between;
-  margin-block-end: var(--basis-space-block-md);
-}
-
-.wizard-preset-stepper__actions-secondary,
-.wizard-preset-stepper__actions-primary {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--basis-space-inline-sm);
-}
-
-.wizard-preset-stepper__actions-primary {
-  column-gap: var(--basis-space-inline-md);
-  justify-content: flex-end;
-}
 
 @media (width <= 960px) {
   .wizard-story-section__settings-panel {
@@ -576,21 +718,12 @@
     padding-inline: 0;
   }
 
-  .wizard-preset-stepper__actions {
-    align-items: stretch;
-    flex-direction: column;
+  .wizard-step-nav {
+    overflow-x: auto;
+    flex-wrap: nowrap;
   }
 
-  .wizard-preset-stepper__actions-secondary,
-  .wizard-preset-stepper__actions-primary {
-    inline-size: 100%;
-  }
-
-  .wizard-preset-stepper__actions-primary {
-    justify-content: stretch;
-  }
-
-  .wizard-preset-stepper__actions-primary > * {
-    flex: 1 1 0;
+  .wizard-preset-stepper__footer {
+    flex-wrap: wrap;
   }
 }
