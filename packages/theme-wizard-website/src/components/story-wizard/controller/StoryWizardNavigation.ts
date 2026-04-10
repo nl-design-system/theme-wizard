@@ -11,7 +11,6 @@ export interface NavigationCallbacks {
 export class StoryWizardNavigation {
   readonly #finishSafeBtns: HTMLButtonElement[];
   readonly #resetBtns: HTMLButtonElement[];
-  readonly #stepNavBtns: HTMLButtonElement[];
   readonly #overviewCards: HTMLButtonElement[];
   readonly #backOverviewBtns: HTMLButtonElement[];
   readonly #transitionNotes: HTMLElement[];
@@ -22,7 +21,6 @@ export class StoryWizardNavigation {
     this.#steppers = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-stepper'));
     this.#finishSafeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-finish-safe'));
     this.#resetBtns = Array.from(shell.querySelectorAll<HTMLButtonElement>('.wizard-preset-reset'));
-    this.#stepNavBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-step-nav-btn]'));
     this.#overviewCards = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-step-overview-card]'));
     this.#backOverviewBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-back-overview'));
     this.#transitionNotes = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-transition-note'));
@@ -33,11 +31,6 @@ export class StoryWizardNavigation {
     this.#resetBtns.forEach((btn) => btn.addEventListener('click', callbacks.onReset));
     this.#finishSafeBtns.forEach((btn) => btn.addEventListener('click', callbacks.onFinishSafe));
     this.#backOverviewBtns.forEach((btn) => btn.addEventListener('click', callbacks.onShowOverview));
-
-    this.#stepNavBtns.forEach((btn) => {
-      const index = parseInt(btn.dataset.jumpToStep ?? '-1', 10);
-      if (index >= 0) btn.addEventListener('click', () => callbacks.onJumpTo(index));
-    });
 
     this.#overviewCards.forEach((card) => {
       const index = parseInt(card.dataset.jumpToStep ?? '-1', 10);
@@ -61,18 +54,7 @@ export class StoryWizardNavigation {
     this.#overview?.setAttribute('hidden', '');
   }
 
-  public updateStepNavState(currentIndex: number, steps: StoryWizardStep[]) {
-    this.#stepNavBtns.forEach((btn, i) => {
-      const isActive = i === currentIndex;
-      const isDone = steps[i]?.hasChosenSelection() ?? false;
-
-      btn.classList.toggle('nl-button--pressed', isActive);
-      btn.setAttribute('aria-current', isActive ? 'step' : 'false');
-
-      const checkEl = btn.querySelector<HTMLElement>('.wizard-step-nav-btn__check');
-      if (checkEl) checkEl.hidden = !isDone;
-    });
-
+  public updateStepNavState(_currentIndex: number, steps: StoryWizardStep[]) {
     this.#overviewCards.forEach((card, i) => {
       const isDone = steps[i]?.hasChosenSelection() ?? false;
       card.closest('.wizard-step-overview-card')?.classList.toggle('wizard-step-overview-card--done', isDone);
