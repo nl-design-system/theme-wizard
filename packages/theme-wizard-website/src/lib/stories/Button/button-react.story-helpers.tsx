@@ -35,17 +35,17 @@ type ButtonPresetGroup = {
   thumbnail?: boolean;
 };
 
-export const buttonWizardStepBasic: WizardStep = { order: 6, stepTitle: 'Button basis' };
-export const buttonWizardStepStates: WizardStep = { order: 7, stepTitle: 'Button states' };
-export const buttonWizardStepPositiveStates: WizardStep = { order: 8, stepTitle: 'Positieve button states' };
-export const buttonWizardStepNegativeStates: WizardStep = { order: 9, stepTitle: 'Negatieve button states' };
-export const buttonWizardStepVariants: WizardStep = { order: 10, stepTitle: 'Button varianten' };
-export const buttonWizardStepPositiveVariants: WizardStep = { order: 11, stepTitle: 'Positieve button varianten' };
-export const buttonWizardStepNegativeVariants: WizardStep = { order: 12, stepTitle: 'Negatieve button varianten' };
-export const buttonWizardStepDisabled: WizardStep = { order: 13, stepTitle: 'Button disabled' };
-export const buttonWizardStepPressed: WizardStep = { order: 14, stepTitle: 'Button pressed' };
-export const buttonWizardStepPositivePressed: WizardStep = { order: 15, stepTitle: 'Positieve button pressed' };
-export const buttonWizardStepNegativePressed: WizardStep = { order: 16, stepTitle: 'Negatieve button pressed' };
+export const buttonWizardStepBasic: WizardStep = { order: 6 };
+export const buttonWizardStepStates: WizardStep = { order: 7 };
+export const buttonWizardStepPositiveStates: WizardStep = { order: 8 };
+export const buttonWizardStepNegativeStates: WizardStep = { order: 9 };
+export const buttonWizardStepVariants: WizardStep = { order: 10 };
+export const buttonWizardStepPositiveVariants: WizardStep = { order: 11 };
+export const buttonWizardStepNegativeVariants: WizardStep = { order: 12 };
+export const buttonWizardStepDisabled: WizardStep = { order: 13 };
+export const buttonWizardStepPressed: WizardStep = { order: 14 };
+export const buttonWizardStepPositivePressed: WizardStep = { order: 15 };
+export const buttonWizardStepNegativePressed: WizardStep = { order: 16 };
 
 export const defaultButtonVariantOptions: ButtonPresetOptionConfig[] = [
   {
@@ -399,12 +399,18 @@ export const createButtonVariantOption = (purpose: ButtonPresetPurpose, config: 
 export const createButtonPresetStory = ({
   name,
   args,
+  cardPreviewStoryIds,
+  flowGroup,
+  flowTitle,
   order,
   presets,
   previewStoryIds,
   render,
 }: {
   args: ButtonStoryArgs;
+  cardPreviewStoryIds?: string[];
+  flowGroup?: string;
+  flowTitle?: string;
   name: string;
   order: number;
   previewStoryIds: string[];
@@ -417,6 +423,9 @@ export const createButtonPresetStory = ({
     parameters: {
       presets,
       wizard: {
+        ...(cardPreviewStoryIds ? { cardPreviewStoryIds } : {}),
+        ...(flowGroup ? { flowGroup } : {}),
+        ...(flowTitle ? { flowTitle } : {}),
         order,
         previewStoryIds,
         type: 'preset',
@@ -445,6 +454,9 @@ export const createButtonVariantStory = ({
   createButtonPresetStory({
     name,
     args,
+    cardPreviewStoryIds: [previewStoryId],
+    flowGroup: 'button-stijl',
+    flowTitle: 'Stijl',
     order,
     presets: [
       {

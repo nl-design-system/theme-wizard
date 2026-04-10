@@ -1,11 +1,14 @@
 import type { CodeBlockProps } from '@nl-design-system-candidate/code-block-react';
-import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
-
+import {
+  createPresetTokens,
+  createRelativeFontSizePresetOptions,
+  createPresetStory,
+  type PresetOption,
+} from '../story-helpers';
 
 const codeBlockSampleText = `import { CodeBlock } from '@nl-design-system-candidate/code-block-react';`;
 
 const createCodeBlockTokens = (entries: Record<string, string>) => createPresetTokens('nl.code-block', entries);
-
 
 export const CodeBlockKleur = createPresetStory({
   name: 'Kleur',
@@ -32,11 +35,12 @@ export const CodeBlockKleur = createPresetStory({
   question: 'Kies de kleur voor het Code Block',
 });
 
-export const CodeBlockVorm = createPresetStory({
+export const CodeBlockAfronding = createPresetStory({
   name: 'Vorm',
   args: {
     children: codeBlockSampleText,
   },
+  description: 'Selecteer een afronding van de hoeken van het Code Block',
   options: [
     {
       name: 'Aanbevolen',
@@ -66,7 +70,7 @@ export const CodeBlockVorm = createPresetStory({
     },
   ],
   order: 2,
-  question: 'Kies de vorm van het Code Block',
+  question: 'Kies de afronding van het Code Block',
 });
 
 export const CodeBlockPadding = createPresetStory({
@@ -133,5 +137,5 @@ export const CodeBlockLettertype = createPresetStory({
     },
   ],
   order: 5,
-  question: 'Kies het lettertype van het Code Block',
+  question: 'Kies de font family van het Code Block',
 });

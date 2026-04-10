@@ -15,6 +15,7 @@ type Story = StoryObj<HeadingProps>;
 const createHeadingPresetStory = ({
   name,
   args,
+  cardPreviewStoryId,
   description,
   options,
   order,
@@ -22,6 +23,7 @@ const createHeadingPresetStory = ({
   question,
 }: {
   args: HeadingProps;
+  cardPreviewStoryId?: string;
   description: string;
   name: string;
   options: PresetOption<Record<string, unknown> | null>[];
@@ -40,6 +42,7 @@ const createHeadingPresetStory = ({
       },
     ],
     wizard: {
+      ...(cardPreviewStoryId ? { cardPreviewStoryIds: [cardPreviewStoryId] } : {}),
       order,
       previewStoryIds: [previewStoryId],
       type: 'preset',
@@ -71,11 +74,12 @@ const createFontSizeStory = (level: HeadingLevel): Story =>
       children: headingSampleText,
       level,
     },
+    cardPreviewStoryId: `Heading${level}CardPreview`,
     description: `Bepaal hoe groot de H${level} is ten opzichte van de rest van de pagina.`,
     options: createFontSizeOptions(level),
     order: level,
     previewStoryId: `Heading${level}Preview`,
-    question: `Kies de grootte van de H${level}`,
+    question: `Kies de tekstgrootte van de H${level}`,
   });
 
 const createColorOptions = (level: HeadingLevel): PresetOption<Record<string, unknown> | null>[] => [
@@ -98,6 +102,7 @@ const createColorStory = (level: HeadingLevel): Story =>
       children: headingSampleText,
       level,
     },
+    cardPreviewStoryId: `Heading${level}CardPreview`,
     description: `Geef de H${level} een accentkleur of laat hem het standaard documentkleur volgen.`,
     options: createColorOptions(level),
     order: level + 6,
@@ -122,11 +127,5 @@ export const {
   Heading6FontSize,
 } = headingFontSizeStories;
 
-export const {
-  Heading1Color,
-  Heading2Color,
-  Heading3Color,
-  Heading4Color,
-  Heading5Color,
-  Heading6Color,
-} = headingColorStories;
+export const { Heading1Color, Heading2Color, Heading3Color, Heading4Color, Heading5Color, Heading6Color } =
+  headingColorStories;

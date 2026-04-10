@@ -30,8 +30,6 @@ const createAdvancedStory = ({
       description,
       order,
       question,
-      step: 'heading:advanced',
-      stepTitle: 'Heading geavanceerd',
       type: 'advanced',
     },
   },

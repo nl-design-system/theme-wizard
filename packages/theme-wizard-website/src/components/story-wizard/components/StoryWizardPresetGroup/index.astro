@@ -22,24 +22,7 @@ const tokenPaths = Array.from(new Set(group.options.flatMap((option) => collectT
 ---
 
 <section class="wizard-token-preset" data-preset-group data-group-label={group.name}>
-  <h3 class="nl-heading nl-heading--level-4 wizard-token-preset__title">
-    <span>{group.name}</span>
-    {tokenPaths.length === 1 && <code class="wizard-token-preset__title-token">{tokenPaths[0]}</code>}
-    {
-      tokenPaths.length > 1 && (
-        <details class="wizard-token-preset__title-tokens">
-          <summary class="wizard-token-preset__title-tokens-summary">Technische details ({tokenPaths.length})</summary>
-          <ul class="wizard-token-preset__title-token-list">
-            {tokenPaths.map((tokenPath) => (
-              <li class="wizard-token-preset__title-token-list-item">
-                <code class="wizard-token-preset__title-token">{tokenPath}</code>
-              </li>
-            ))}
-          </ul>
-        </details>
-      )
-    }
-  </h3>
+  <h3 class="nl-heading nl-heading--level-4 wizard-token-preset__title">{group.name}</h3>
 
   {group.description && <p class="nl-paragraph wizard-token-preset__description">{group.description}</p>}
 

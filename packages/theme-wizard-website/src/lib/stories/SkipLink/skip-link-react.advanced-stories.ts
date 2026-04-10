@@ -35,8 +35,6 @@ const createAdvancedStory = ({
       description,
       order,
       question,
-      step: 'skip-link:advanced',
-      stepTitle: 'Skip Link geavanceerd',
       type: 'advanced',
     },
   },

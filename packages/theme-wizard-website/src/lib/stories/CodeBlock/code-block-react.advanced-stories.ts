@@ -37,8 +37,6 @@ const createAdvancedStory = ({
       description,
       order,
       question,
-      step: 'code-block:advanced',
-      stepTitle: 'Code Block geavanceerd',
       type: 'advanced',
     },
   },

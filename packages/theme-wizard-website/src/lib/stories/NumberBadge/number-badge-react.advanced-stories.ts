@@ -35,8 +35,6 @@ const createAdvancedStory = ({
       description,
       order,
       question,
-      step: 'number-badge:advanced',
-      stepTitle: 'Number Badge geavanceerd',
       type: 'advanced',
     },
   },

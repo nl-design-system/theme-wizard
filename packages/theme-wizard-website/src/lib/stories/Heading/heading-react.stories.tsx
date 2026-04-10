@@ -96,6 +96,12 @@ export const Heading3Preview: Story = createHeadingPreview('Heading 3 Preview', 
 export const Heading4Preview: Story = createHeadingPreview('Heading 4 Preview', 4);
 export const Heading5Preview: Story = createHeadingPreview('Heading 5 Preview', 5);
 export const Heading6Preview: Story = createHeadingPreview('Heading 6 Preview', 6);
+export const Heading1CardPreview: Story = createHeadingPreview('Heading 1 Card Preview', 1, 'Theme wizard');
+export const Heading2CardPreview: Story = createHeadingPreview('Heading 2 Card Preview', 2, 'Theme wizard');
+export const Heading3CardPreview: Story = createHeadingPreview('Heading 3 Card Preview', 3, 'Theme wizard');
+export const Heading4CardPreview: Story = createHeadingPreview('Heading 4 Card Preview', 4, 'Theme wizard');
+export const Heading5CardPreview: Story = createHeadingPreview('Heading 5 Card Preview', 5, 'Theme wizard');
+export const Heading6CardPreview: Story = createHeadingPreview('Heading 6 Card Preview', 6, 'Theme wizard');
 export const AllHeadingsPreview: Story = createHeadingPreview('All Headings Preview');
 
 export const AdvancedHeadingSizes: Story = {

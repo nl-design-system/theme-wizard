@@ -269,6 +269,12 @@ const getPurposeLabel = (purpose: ButtonProps['purpose']) => {
 
 export const RenderButtonPurposePreview = ({ purpose }: ButtonProps) => <ButtonPurposeMatrix purpose={purpose} />;
 
+export const RenderSingleButtonPreview = ({ ...props }: ButtonProps) => (
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <ButtonComponent {...props} />
+  </div>
+);
+
 export const RenderAllButtonPurposesPreview = () => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
     {([undefined, 'primary', 'secondary'] as const).map((purpose) => (
