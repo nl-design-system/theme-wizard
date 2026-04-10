@@ -49,9 +49,30 @@ export const wizardTokenCSS = css`
     outline-offset: 0.125rem;
   }
 
+  .wizard-token-preset__option-title-row {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--basis-space-inline-sm);
+    justify-content: space-between;
+  }
+
+  .wizard-token-preset__option-default-pill {
+    border: var(--basis-border-width-sm) solid var(--nl-button-secondary-border-color);
+    border-radius: var(--basis-border-radius-round);
+    color: currentColor;
+    font-size: var(--basis-text-font-size-sm);
+    font-weight: var(--basis-text-font-weight-default);
+    padding-block: var(--basis-space-block-xs);
+    padding-inline: var(--basis-space-inline-md);
+  }
+
+  .wizard-token-preset__control:checked + .wizard-token-preset__button .wizard-token-preset__option-default-pill {
+    border-color: var(--nl-button-secondary-pressed-color);
+  }
+
   .wizard-token-preset__option-title {
     color: var(--nl-button-secondary-color, var(--basis-color-action-1-color-default, currentColor));
-    display: block;
     font-family: var(--basis-text-font-family-default);
     font-size: var(--basis-text-font-size-md);
     font-weight: var(--basis-text-font-weight-bold);
@@ -192,6 +213,13 @@ export const wizardTokenCSS = css`
   }
 
   .wizard-token-preset__option-value-token-strong {
+    font-weight: var(--basis-text-font-weight-bold);
+  }
+
+  .wizard-token-preset__option-value-resolved {
+    color: var(--basis-color-default-color-document);
+    font-family: var(--basis-text-font-family-monospace);
+    font-size: var(--basis-text-font-size-sm);
     font-weight: var(--basis-text-font-weight-bold);
   }
 `;

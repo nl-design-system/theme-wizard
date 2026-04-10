@@ -1,30 +1,98 @@
 ---
-import type { StoryWizardStep as StoryWizardStepViewModel } from '@/lib/story-wizard';
+import type { StoryWizardStep as StoryWizardStepViewModel } from '@/lib/types';
+import layoutGridIcon from '@tabler/icons/outline/layout-grid.svg?raw';
 import StoryWizardEditableTokenGroup from './StoryWizardEditableTokenGroup/index.astro';
 import StoryWizardPresetGroup from './StoryWizardPresetGroup/index.astro';
 
 interface Props {
   step: StoryWizardStepViewModel;
+  stepIndex: number;
+  totalSteps: number;
 }
 
 const { step } = Astro.props;
+const focusedPreviewStories = step.cardPreviewStories.length > 0 ? step.cardPreviewStories : step.previewStories;
+const showPreviewModeToggle =
+  step.type === 'preset' &&
+  focusedPreviewStories.length > 0 &&
+  step.previewStories.length > 0 &&
+  (focusedPreviewStories.length !== step.previewStories.length ||
+    focusedPreviewStories.some((story, index) => story.id !== step.previewStories[index]?.id));
 ---
 
 <section
   id={step.id}
   class="wizard-story-section"
   aria-label={step.title}
-  data-step-kind={step.groups.some((group) => group.type === 'editable-tokens') ? 'advanced' : 'safe'}
+  data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
   data-step-label={step.title}
 >
+  <div class="wizard-story-section__header">
+    <a href="#wizard-overview" class="nl-link wizard-back-overview-btn" role="button">
+      <span class="wizard-back-overview-btn__icon" aria-hidden="true" set:html={layoutGridIcon} />
+      <span class="wizard-back-overview-btn__label">Terug naar overzicht</span>
+    </a>
+  </div>
+
   <div class="wizard-story-section__layout">
+    <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
+      <div class="wizard-story-section__intro">
+        <h2 class="nl-heading nl-heading--level-3 wizard-story-section__step-title">{step.title}</h2>
+        {step.intro && <p class="nl-paragraph wizard-story-section__step-help">{step.intro}</p>}
+      </div>
+
+      {
+        step.groups.map((group) =>
+          group.type === 'preset' ? (
+            <StoryWizardPresetGroup group={group} />
+          ) : (
+            <StoryWizardEditableTokenGroup group={group} />
+          ),
+        )
+      }
+    </aside>
+
     <div class="wizard-story-section__preview-column">
       {
         step.previewStories.length > 0 && (
           <section class="wizard-story-preview-panel" aria-label={`${step.title} previews`}>
-            <div class="wizard-story-preview-panel__header">
+            {showPreviewModeToggle && (
+              <div class="wizard-story-preview-panel__controls" role="group" aria-label="Previewweergave">
+                <button
+                  class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+                  type="button"
+                  aria-pressed="true"
+                  data-preview-mode-btn="focused"
+                >
+                  Gericht
+                </button>
+                <button
+                  class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+                  type="button"
+                  aria-pressed="false"
+                  data-preview-mode-btn="all"
+                >
+                  Alles
+                </button>
+              </div>
+            )}
+
+            <div class="wizard-story-section__variants" data-preview-mode-panel="focused" hidden={false}>
+              {focusedPreviewStories.map((previewStory) => (
+                <div class="wizard-story-section__variant">
+                  <p class="nl-paragraph wizard-story-section__variant-label">{previewStory.name}</p>
+                  <wizard-story-preview>
+                    <wizard-reset-theme>
+                      <wizard-preview-theme>
+                        <div data-story-container={previewStory.id} />
+                      </wizard-preview-theme>
+                    </wizard-reset-theme>
+                  </wizard-story-preview>
+                </div>
+              ))}
             </div>
-            <div class="wizard-story-section__variants">
+
+            <div class="wizard-story-section__variants" data-preview-mode-panel="all" hidden={showPreviewModeToggle}>
               {step.previewStories.map((previewStory) => (
                 <div class="wizard-story-section__variant">
                   <p class="nl-paragraph wizard-story-section__variant-label">{previewStory.name}</p>
@@ -42,19 +110,5 @@ const { step } = Astro.props;
         )
       }
     </div>
-
-    <aside class="wizard-story-section__settings-panel" aria-label={`${step.title} instellingen`}>
-      <p class="nl-paragraph wizard-token-preset__description">{step.intro}</p>
-
-      {
-        step.groups.map((group) =>
-          group.type === 'preset' ? (
-            <StoryWizardPresetGroup group={group} />
-          ) : (
-            <StoryWizardEditableTokenGroup group={group} />
-          ),
-        )
-      }
-    </aside>
   </div>
 </section>

@@ -1,0 +1,25 @@
+<!-- Step selection row -->
+<template id="wizard-step-selection-tmpl">
+  <div class="wizard-step-selection">
+    <span class="wizard-step-selection__number" aria-hidden="true"></span>
+    <span class="wizard-step-selection__info">
+      <a class="wizard-step-selection__title nl-link"></a>
+      <span class="wizard-step-selection__value"></span>
+    </span>
+  </div>
+</template>
+
+<!-- Token path:value item -->
+<template id="wizard-token-item-tmpl">
+  <code class="wizard-step-selection__value-token-path"></code>
+  <span class="wizard-step-selection__value-token-separator">:</span>
+  <code class="wizard-step-selection__value-token-value"></code>
+</template>
+
+<!-- Multi-token details -->
+<template id="wizard-value-summary-tmpl">
+  <details class="wizard-step-selection__value-summary">
+    <summary class="wizard-step-selection__value-summary-label"></summary>
+    <ul class="wizard-step-selection__value-summary-list"></ul>
+  </details>
+</template>

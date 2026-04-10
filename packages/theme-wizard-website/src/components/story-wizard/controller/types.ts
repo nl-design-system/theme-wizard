@@ -1,11 +1,27 @@
+import type { DerivedTokenReference } from '@/lib/types';
+
 export type StoryWizardSelectedOption = {
+  derivedTokenReference?: DerivedTokenReference;
+  derivedTokenReferences?: DerivedTokenReference[];
   optionLabel: string;
   previewStyle: string;
   tokens: unknown;
 };
 
+export type StoryWizardPresetOption = {
+  description?: string;
+  derivedTokenReference?: DerivedTokenReference;
+  derivedTokenReferences?: DerivedTokenReference[];
+  name: string;
+  previewStyle?: string;
+  tokens: unknown;
+};
+
 export type WizardTokenPresetInput = HTMLElement & {
+  updateComplete?: Promise<boolean>;
   clearSelection: () => void;
+  defaultIndex: number;
+  options: StoryWizardPresetOption[];
   optionLabel: string;
   previewStyle: string;
   selectedIndex: number;
@@ -31,3 +47,11 @@ export type StoryWizardThemeHost = HTMLElement & {
     defaults?: unknown;
   };
 };
+
+export interface StoryWizardStepState {
+  step: any; // Using any for now to avoid circular dependency if StoryWizardStep is not yet imported, or import it if needed.
+  summaries: StoryWizardSelectionSummary[];
+  isDone: boolean;
+  isConfirmedAdvanced: boolean;
+}
+

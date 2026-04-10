@@ -2,16 +2,11 @@ import type { ClippyModal } from '@nl-design-system-community/clippy-components/
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import type { DesignTokens } from 'style-dictionary/types';
-import {
-  type ColorValue,
-  extractRef,
-  isValueObject,
-  stringifyColor,
-  walkTokensWithRef,
-} from '@nl-design-system-community/design-tokens-schema';
+import { extractRef, walkTokensWithRef } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import type { DisplayToken } from './types';
 import { t } from '../../i18n';
+export { stringifyTokenValue } from '../../lib/token-value';
 
 export function countUsagePerToken(tokens: DesignTokens): Map<string, string[]> {
   const tokenUsage = new Map<string, string[]>();
@@ -23,33 +18,6 @@ export function countUsagePerToken(tokens: DesignTokens): Map<string, string[]> 
     tokenUsage.set(tokenId, stored);
   });
   return tokenUsage;
-}
-
-export function stringifyTokenValue(token: unknown): string {
-  if (typeof token === 'string') return token;
-
-  if (!isValueObject(token)) {
-    return JSON.stringify(token);
-  }
-
-  const value = token['$value'];
-
-  if (value === undefined || value === null) {
-    return '';
-  }
-
-  if (Array.isArray(value)) {
-    return value.map((v) => stringifyTokenValue(v)).join(', ');
-  }
-
-  if (isValueObject(value)) {
-    if (token['$type'] === 'color') {
-      return stringifyColor(value as ColorValue);
-    }
-    return JSON.stringify(value);
-  }
-
-  return value.toString();
 }
 
 export function renderSpacingExample(value: string, space: string = 'block') {

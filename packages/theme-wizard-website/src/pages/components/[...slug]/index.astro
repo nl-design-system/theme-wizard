@@ -1,63 +1,69 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { loadStoryWizardComponentStyles } from '@/components/story-wizard/componentStyles';
 import StoryWizard from '@/components/story-wizard/index.astro';
 import { components } from '@/lib/components';
-import { StoryWizardModel } from '@/lib/story-wizard';
+import { resolveStoryWizardModel } from '@/lib/story-wizard';
 import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
+import '@nl-design-system-candidate/button-css/button.css';
+import '@nl-design-system-candidate/heading-css/heading.css';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import '@nl-design-system-candidate/code-css/code.css';
 
 import './index.css';
 
 export function getStaticPaths() {
-  return Object.keys(components).map(slug => ({
-    params: { slug }
-  }))
+  return Object.keys(components).map((slug) => ({
+    params: { slug },
+  }));
 }
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
-  return {
-    slug,
-    title
-  }
-}))
+const componentList = await Promise.all(
+  Object.entries(components).map(async ([slug, { title }]) => {
+    return {
+      slug,
+      title,
+    };
+  }),
+);
 
-const slug = Astro.params.slug as keyof typeof components
-const { title } = components[slug]
-await loadStoryWizardComponentStyles(slug)
-const wizard = await StoryWizardModel.fromComponentId(slug)
-
+const slug = Astro.params.slug as keyof typeof components;
+const { title } = components[slug];
+const wizard = await resolveStoryWizardModel(slug);
 ---
 
-<BaseLayout title={`${slug} - Theme Wizard`}>
+<BaseLayout title={`${title} - Theme Wizard`}>
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
 
       <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
       <nav slot="sidebar">
-        {componentList.map(({slug: componentSlug, title}) => (
-          <wizard-sidebar-link href={`/components/${componentSlug}`} current={componentSlug === slug ? 'page' : undefined}>{title}</wizard-sidebar-link>
-        ))}
+        {
+          componentList.map(({ slug: componentSlug, title }) => (
+            <wizard-sidebar-link
+              href={`/components/${componentSlug}`}
+              current={componentSlug === slug ? 'page' : undefined}
+            >
+              {title}
+            </wizard-sidebar-link>
+          ))
+        }
       </nav>
       <main slot="main" class="wizard-main">
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a href="/">Wizard</a> /
-          <a href="/components">componenten</a> /
-          <span>{slug}</span>
+          <a href="/components">Componenten</a> /
+          <span>{title}</span>
         </nav>
 
         <div class="wizard-page-header">
           <h1>{title}</h1>
-          <button class="wizard-preset-reset nl-button nl-button--subtle wizard-page-reset" type="button">
-            <span class="wizard-page-reset__icon" aria-hidden="true" set:html={refreshIcon} />
-            Opnieuw beginnen
-          </button>
         </div>
         <StoryWizard wizard={wizard} />
         <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>
       </main>
-     </wizard-layout>
+    </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 

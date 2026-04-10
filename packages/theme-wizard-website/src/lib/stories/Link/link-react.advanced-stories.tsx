@@ -1,40 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import css from '@nl-design-system-candidate/link-css/link.css?inline';
-import description from '@nl-design-system-candidate/link-docs/docs/description.md?raw';
-import { Link as LinkComponent, type LinkProps } from '@nl-design-system-candidate/link-react';
-import tokens from '@nl-design-system-candidate/link-tokens';
-
-const meta: Meta<typeof LinkComponent> = {
-  id: 'link',
-  component: LinkComponent,
-  parameters: {
-    css: [css],
-    docs: {
-      description: {
-        component: description,
-      },
-    },
-    tokens,
-  },
-  title: 'Link',
-} satisfies Meta<typeof LinkComponent>;
-
-export default meta;
+import type { StoryObj } from '@storybook/react-vite';
+import { type LinkProps } from '@nl-design-system-candidate/link-react';
 
 type Story = StoryObj<LinkProps>;
 
-const RenderLinkStates = ({ ...props }: LinkProps) => (
-  <>
-    <LinkComponent {...props} />
-    {' → :hover → '}
-    <LinkComponent {...props} className="nl-link--hover" />
-    {' → :active → '}
-    <LinkComponent {...props} className="nl-link--active" />
-  </>
-);
-
-export const DesignLinkStates: Story = {
-  name: 'Design: Link States',
+export const AdvancedLinkStates: Story = {
+  name: 'Link states',
   args: {
     children: 'example.com',
     href: 'https://example.com/',
@@ -78,12 +48,20 @@ export const DesignLinkStates: Story = {
         },
       },
     },
+    wizard: {
+      description: 'Gebruik deze geavanceerde instellingen om de linkstates en onderstreping precies af te stemmen.',
+      order: 3,
+      previewStoryIds: ['WizardPreview'],
+      question: 'Wil je de linkstates verder verfijnen?',
+      step: 'link:advanced',
+
+      type: 'advanced',
+    },
   },
-  render: RenderLinkStates,
 };
 
-export const DesignLinkDisabled: Story = {
-  name: 'Design: Disabled Link',
+export const AdvancedLinkDisabled: Story = {
+  name: 'Disabled Link',
   args: {
     children: 'voorbeeldsite',
     disabled: true,
@@ -91,11 +69,6 @@ export const DesignLinkDisabled: Story = {
   },
   parameters: {
     designStory: true,
-    docs: {
-      description: {
-        story: 'Een disabled link',
-      },
-    },
     editableTokens: {
       nl: {
         link: {
@@ -110,22 +83,26 @@ export const DesignLinkDisabled: Story = {
         },
       },
     },
+    wizard: {
+      description: 'Gebruik deze geavanceerde instellingen om disabled links precies af te stemmen.',
+      order: 4,
+      previewStoryIds: ['WizardPreviewDisabled'],
+      question: 'Wil je de disabled link verder verfijnen?',
+      step: 'link:advanced',
+
+      type: 'advanced',
+    },
   },
 };
 
-export const DesignLinkCurrent: Story = {
-  name: 'Design: Current Link',
+export const AdvancedLinkCurrent: Story = {
+  name: 'Current Link',
   args: {
     children: 'voorbeeldsite',
     href: 'https://example.com',
   },
   parameters: {
     designStory: true,
-    docs: {
-      description: {
-        story: 'Een current link',
-      },
-    },
     editableTokens: {
       nl: {
         link: {
@@ -139,6 +116,15 @@ export const DesignLinkCurrent: Story = {
           },
         },
       },
+    },
+    wizard: {
+      description: 'Gebruik deze geavanceerde instellingen om current links precies af te stemmen.',
+      order: 5,
+      previewStoryIds: ['WizardPreviewCurrent'],
+      question: 'Wil je de current link verder verfijnen?',
+      step: 'link:advanced',
+
+      type: 'advanced',
     },
   },
 };

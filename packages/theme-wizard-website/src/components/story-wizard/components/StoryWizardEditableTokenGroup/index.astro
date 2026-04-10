@@ -1,5 +1,6 @@
 ---
-import type { StoryWizardEditableTokenGroup } from '@/lib/story-wizard';
+import type { StoryWizardEditableTokenGroup } from '@/lib/types';
+import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
 
 interface Props {
   group: StoryWizardEditableTokenGroup;
@@ -18,14 +19,21 @@ const { group } = Astro.props;
   {group.description && <p class="nl-paragraph wizard-token-preset__description">{group.description}</p>}
 
   <details class="wizard-token-preset__advanced">
-    <summary class="wizard-token-preset__advanced-summary">{group.advancedTitle ?? 'Geavanceerde instellingen'}</summary>
+    <summary class="wizard-token-preset__advanced-summary">
+      <span>{group.advancedTitle ?? 'Extra instellingen'}</span>
+      <span class="wizard-token-preset__advanced-chevron" aria-hidden="true" set:html={chevronDownIcon} />
+    </summary>
 
     <ul class="wizard-secretly-a-list wizard-secretly-a-list--compact">
-      {group.tokens.map((token) => (
-        <li>
-          <wizard-token-field label={token.label} path={token.path}></wizard-token-field>
-        </li>
-      ))}
+      {
+        group.tokens.map((token) => (
+          <li>
+            <div class="wizard-token-preset__token-field">
+              <wizard-token-field label={token.label} path={token.path} />
+            </div>
+          </li>
+        ))
+      }
     </ul>
   </details>
 </section>

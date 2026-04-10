@@ -1,0 +1,34 @@
+---
+import StoryWizardSummaryTemplates from './StoryWizardSummaryTemplates.astro';
+import StoryWizardTokensDialog from './StoryWizardTokensDialog.astro';
+import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
+---
+
+<nav class="wizard-preset-stepper" aria-label="Wizard acties" hidden>
+  <div class="wizard-preset-stepper__footer">
+    <div class="wizard-preset-stepper__finish-area">
+      <p class="nl-paragraph wizard-preset-transition-note" hidden></p>
+      <button class="wizard-preset-finish-safe nl-button nl-button--primary" type="button" hidden>Klaar</button>
+    </div>
+  </div>
+
+  <details class="wizard-step-selections">
+    <summary class="wizard-step-selections__summary">
+      <span class="wizard-step-selections__summary-copy">
+        <span class="wizard-step-selections__summary-title" aria-live="polite" aria-atomic="true">
+          Nog geen keuzes gemaakt
+        </span>
+        <span class="wizard-step-selections__summary-meta">Open om je ingestelde onderdelen te bekijken</span>
+      </span>
+      <span class="wizard-step-selections__summary-actions">
+        <span class="wizard-step-selections__summary-reset"></span>
+        <span class="wizard-step-selections__summary-icon" aria-hidden="true" set:html={chevronDownIcon} />
+      </span>
+    </summary>
+
+    <div class="wizard-step-selections__list"></div>
+  </details>
+</nav>
+
+<StoryWizardSummaryTemplates />
+<StoryWizardTokensDialog />
