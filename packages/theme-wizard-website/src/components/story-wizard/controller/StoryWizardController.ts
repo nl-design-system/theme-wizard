@@ -63,9 +63,9 @@ export class StoryWizardController {
     this.#bindOptionListeners();
     this.#navigation.bind({
       onFinishSafe: () => this.#finishWithSafeChoices(),
-      onNext: () => this.#handleNext(),
-      onPrev: () => this.#handlePrev(),
+      onJumpTo: (index) => this.#showStep(index),
       onReset: () => this.#reset().catch((e) => console.error('Failed to reset Story Wizard', e)),
+      onShowOverview: () => this.#showOverview(),
     });
 
     if (this.#nav.total === 0) {
@@ -75,8 +75,13 @@ export class StoryWizardController {
 
     this.#summary.show();
     this.#navigation.showSteppers();
-    const restoredStepIndex = await this.#presetState.initialize({ restoreStoredState: true });
-    this.#showStep(restoredStepIndex);
+    const { hasStoredState, restoredStepIndex } = await this.#presetState.initialize({ restoreStoredState: true });
+
+    if (hasStoredState) {
+      this.#showStep(restoredStepIndex);
+    } else {
+      this.#showOverview();
+    }
   }
 
   async #reset() {
@@ -86,7 +91,7 @@ export class StoryWizardController {
       .closest('theme-wizard-app')
       ?.dispatchEvent(new CustomEvent('reset-tokens', { bubbles: true, composed: true, detail: { paths } }));
     await this.#presetState.reset();
-    this.#showStep(0);
+    this.#showOverview();
   }
 
   /**
@@ -105,39 +110,20 @@ export class StoryWizardController {
     return [...new Set([...presetPaths, ...editablePaths])];
   }
 
-  // --- Navigation handlers ---
+  // --- Navigation ---
 
-  #handleNext() {
-    this.#steps[this.#nav.currentStep]?.confirmSelections();
-    this.#confirmCurrentAdvancedStep(true);
-
-    if (this.#nav.isLastStep) {
-      this.#refreshSelectionState();
-      this.#finishWithAllChoices();
-    } else {
-      this.#showStep(this.#nav.currentStep + 1);
-    }
-  }
-
-  #handlePrev() {
-    if (!this.#nav.isFirstStep) this.#showStep(this.#nav.currentStep - 1);
-  }
-
-  #confirmCurrentAdvancedStep(force = false) {
-    const currentStep = this.#steps[this.#nav.currentStep];
-    if (!currentStep?.isAdvanced) {
-      return;
-    }
-
-    const hasAdvancedChanges = this.#summary.getAdvancedSummary(currentStep, this.#getTheme()).length > 0;
-    if (force || hasAdvancedChanges) {
-      currentStep.confirmAdvancedSelection();
-    }
+  #showOverview() {
+    this.#confirmCurrentAdvancedStep();
+    this.#steps.forEach((step) => step.hide());
+    this.#navigation.showOverview();
+    this.#navigation.updateStepNavState(-1, this.#steps);
+    this.#persistStepState();
   }
 
   #showStep(index: number) {
     this.#confirmCurrentAdvancedStep();
     this.#nav.goTo(index);
+    this.#navigation.hideOverview();
     this.#updateVisibleStep(index);
     this.#refreshStepNavigation();
     this.#refreshStepView();
@@ -194,8 +180,11 @@ export class StoryWizardController {
   }
 
   #refreshStepNavigation() {
-    this.#navigation.updatePrevState(this.#nav.isFirstStep);
-    this.#updateNavigationState();
+    const currentStep = this.#steps[this.#nav.currentStep];
+    if (!currentStep) return;
+
+    this.#navigation.updateNextState(currentStep, this.#nav);
+    this.#navigation.updateStepNavState(this.#nav.currentStep, this.#steps);
   }
 
   #refreshStepView() {
@@ -210,21 +199,26 @@ export class StoryWizardController {
   #refreshSelectionState() {
     this.#persistStepState();
     this.#updateSummary();
-    this.#updateNavigationState();
+    this.#refreshStepNavigation();
   }
 
   #updateSummary() {
     this.#summary.update(this.#steps, this.#getTheme());
   }
 
-  #updateNavigationState() {
-    const currentStep = this.#steps[this.#nav.currentStep];
-    if (!currentStep) return;
-
-    this.#navigation.updateNextState(currentStep, this.#nav);
-  }
-
   // --- Step helpers ---
+
+  #confirmCurrentAdvancedStep(force = false) {
+    const currentStep = this.#steps[this.#nav.currentStep];
+    if (!currentStep?.isAdvanced) {
+      return;
+    }
+
+    const hasAdvancedChanges = this.#summary.getAdvancedSummary(currentStep, this.#getTheme()).length > 0;
+    if (force || hasAdvancedChanges) {
+      currentStep.confirmAdvancedSelection();
+    }
+  }
 
   #getAllSelectionGroups(includeAdvancedDefaults = false) {
     return this.#steps.flatMap((step) => {

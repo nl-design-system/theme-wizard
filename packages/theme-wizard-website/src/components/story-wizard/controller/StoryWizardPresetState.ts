@@ -61,7 +61,7 @@ export class StoryWizardPresetState {
       this.#runSync(() => this.#restoreDefaultSelections(true));
     }
 
-    return restoredStepIndex;
+    return { hasStoredState, restoredStepIndex };
   }
 
   public async reset() {

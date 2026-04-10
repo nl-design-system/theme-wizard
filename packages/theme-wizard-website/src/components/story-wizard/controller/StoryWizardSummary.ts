@@ -124,7 +124,7 @@ export class StoryWizardSummary {
     if (!this.#summaryElement) return;
 
     const liveRegion = this.#summaryElement.querySelector('[aria-live]') ?? this.#summaryElement;
-    liveRegion.textContent = `Design keuzes (${completed}/${total})`;
+    liveRegion.textContent = `Jouw keuzes (${completed}/${total})`;
   }
 
   // --- DOM construction (templates for complex structures, createElement for simple ones) ---
@@ -150,8 +150,8 @@ export class StoryWizardSummary {
 
   #appendTokensButton(wrapper: HTMLElement, stepLabel: string, groups: StoryWizardSelectionSummary[]) {
     wrapper.appendChild(
-      this.#createTokensButton('Design tokens', () => this.#dialog.show(stepLabel, groups), {
-        ariaLabel: `Design tokens voor: ${stepLabel}`,
+      this.#createTokensButton('Technische details', () => this.#dialog.show(stepLabel, groups), {
+        ariaLabel: `Technische details voor: ${stepLabel}`,
       }),
     );
   }
@@ -162,7 +162,7 @@ export class StoryWizardSummary {
     const wrapper = document.createElement('div');
     wrapper.className = 'wizard-step-selection wizard-step-selection--total';
     wrapper.appendChild(
-      this.#createTokensButton('Alle design tokens', () => this.#dialog.show('Alle design keuzes', allGroups)),
+      this.#createTokensButton('Alle technische details', () => this.#dialog.show('Alle keuzes', allGroups)),
     );
 
     this.#listElement.appendChild(wrapper);
@@ -192,7 +192,7 @@ export class StoryWizardSummary {
 
     if (groups.length === 0) {
       value.textContent =
-        isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet afgerond' : 'Nog niet gekozen';
+        isAdvanced && isCompletedAdvancedStep ? 'Standaard' : isAdvanced ? 'Nog niet ingevuld' : 'Nog niet gekozen';
 
       if (!isAdvanced || !isCompletedAdvancedStep) {
         value.classList.add('wizard-step-selection__value--empty');
@@ -228,7 +228,7 @@ export class StoryWizardSummary {
     const details = cloneTemplate<HTMLDetailsElement>('wizard-value-summary-tmpl', '.wizard-step-selection__value-summary');
 
     details.querySelector('.wizard-step-selection__value-summary-label')!.textContent =
-      `${groups.reduce((count, group) => count + group.tokens.length, 0)} tokens`;
+      `${groups.reduce((count, group) => count + group.tokens.length, 0)} technische details`;
 
     const list = details.querySelector('.wizard-step-selection__value-summary-list')!;
 
