@@ -84,7 +84,6 @@ export const createPresetTokens = (basePath: string, entries: Record<string, str
 
 export type WizardStep = {
   order: number;
-  stepTitle: string;
 };
 
 export const storySampleText = 'Op brute wĳze ving de schooljuf de quasi-kalme lynx.';
