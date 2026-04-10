@@ -68,8 +68,10 @@ export const resolveStoryWizardModel = async (componentId: keyof typeof componen
     }, [])
     .sort((a, b) => a.order - b.order);
 
-  const steps = createFlowSteps(rawSteps);
-  const storyIds = Array.from(new Set(steps.flatMap((step) => [step.id, ...step.previewStories.map((p) => p.id)])));
+  const steps = rawSteps;
+  const storyIds = Array.from(
+    new Set(steps.flatMap((step) => [step.id, ...step.previewStories.map((p) => p.id), ...step.cardPreviewStories.map((p) => p.id)])),
+  );
 
   return {
     componentId,
@@ -78,73 +80,6 @@ export const resolveStoryWizardModel = async (componentId: keyof typeof componen
   };
 };
 
-const createFlowSteps = (rawSteps: StoryWizardStep[]) => {
-  const safeSteps = rawSteps.filter((step) => step.type !== 'advanced');
-  const advancedSteps = rawSteps.filter((step) => step.type === 'advanced');
-
-  return [...safeSteps, ...mergeStepsByFlowGroup(advancedSteps)];
-};
-
-/**
- * Groups and merges individual 'advanced' story-wizard steps based on their shared `flowGroup` (determined by `wizard.stepTitle`).
- * This process allows developers to author small, isolated stories per component/variant,
- * while rendering them together as one logical bundle within the Wizard UI.
- */
-const mergeStepsByFlowGroup = (steps: StoryWizardStep[]) => {
-  if (steps.length === 0) {
-    return [];
-  }
-
-  // 1. Group all steps in a temporary Map.
-  // We explicitly keep track of the original insertion order (`groupOrder`),
-  // to ensure numbered flow steps don't arbitrarily shuffle during the iteration.
-  const groupedSteps = new Map<string, StoryWizardStep[]>();
-  const groupOrder: string[] = [];
-
-  steps.forEach((step) => {
-    const groupKey = step.flowGroup;
-
-    if (!groupedSteps.has(groupKey)) {
-      groupedSteps.set(groupKey, []);
-      groupOrder.push(groupKey);
-    }
-
-    groupedSteps.get(groupKey)?.push(step);
-  });
-
-  // 2. Iterate through our unique ordered keys and build the final array of merged steps
-  return groupOrder
-    .map((groupKey) => {
-      const chunk = groupedSteps.get(groupKey) ?? [];
-
-      // If there's only 1 advanced story in this group, no merging is required.
-      if (chunk.length <= 1) {
-        return chunk[0];
-      }
-
-      const flowTitle = chunk[0].flowTitle;
-
-      // 3. Merge all isolated stories together into a single 'Super-Step'
-      return {
-        // ID is a unique concatenation of all merged stories (e.g. 'button-primary--button-secondary')
-        id: chunk.map((step) => step.id).join('--'),
-        flowGroup: groupKey,
-        flowTitle,
-        groups: chunk.flatMap((step) => step.groups),
-        intro: `Gebruik deze stap om meerdere geavanceerde instellingen binnen ${flowTitle.toLowerCase()} verder te verfijnen.`,
-        // Stack all their individual groups (like editable token lists) and panels on top of one another
-        // Roughly preserve the original sort order (based on the first element found)
-        order: chunk[0].order,
-        // Live previews: Remove duplicates (via Map) so we don't load the same story twice in the preview UI
-        previewStories: Array.from(
-          new Map(chunk.flatMap((step) => step.previewStories).map((s) => [s.id, s])).values(),
-        ),
-        title: flowTitle,
-        type: 'advanced',
-      };
-    })
-    .filter((step): step is StoryWizardStep => Boolean(step));
-};
 
 const createStep = (
   id: string,
@@ -166,9 +101,10 @@ const createStep = (
   }
 
   return {
+    cardPreviewStories: resolveCardPreviewStories(id, story, storyMap),
     id,
-    flowGroup: wizard.type === 'advanced' ? wizard.stepTitle : id,
-    flowTitle: wizard.type === 'advanced' ? wizard.stepTitle : (story.name ?? id),
+    flowGroup: wizard.type === 'preset' && wizard.flowGroup ? wizard.flowGroup : id,
+    flowTitle: wizard.type === 'preset' && wizard.flowTitle ? wizard.flowTitle : (story.name ?? id),
     groups,
     intro: wizard.description,
     order: wizard.order,
@@ -242,6 +178,24 @@ const resolveStepPreviewStories = (
   }
 
   return [toPreviewStory(id, story)];
+};
+
+const resolveCardPreviewStories = (
+  id: string,
+  story: StoryWizardStory,
+  storyMap: Map<string, StoryWizardStory>,
+): StoryWizardPreview[] => {
+  const wizard = story.parameters!.wizard!;
+  const cardPreviewStoryIds = wizard.cardPreviewStoryIds ?? [];
+
+  if (cardPreviewStoryIds.length > 0) {
+    return cardPreviewStoryIds.flatMap((previewStoryId) => {
+      const previewStory = storyMap.get(previewStoryId);
+      return previewStory ? [toPreviewStory(previewStoryId, previewStory)] : [];
+    });
+  }
+
+  return resolveStepPreviewStories(id, story, storyMap);
 };
 
 const toPreviewStory = (id: string, story: StoryWizardStory): StoryWizardPreview => {

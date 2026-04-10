@@ -66,6 +66,7 @@ export type StoryWizardPreview = {
 
 export type StoryWizardStep = {
   type: 'preset' | 'advanced';
+  cardPreviewStories: StoryWizardPreview[];
   flowGroup: string;
   flowTitle: string;
   id: string;
@@ -104,18 +105,21 @@ export type StoryWizardParameters = {
   wizard?:
     | {
         type: 'preset';
+        cardPreviewStoryIds?: string[];
         description?: string;
+        flowGroup?: string;
+        flowTitle?: string;
         order: number;
         previewStoryIds: string[];
       }
     | {
         type: 'advanced';
         advancedTitle?: string;
+        cardPreviewStoryIds?: string[];
         description?: string;
         order: number;
         previewStoryIds?: string[];
         question?: string;
-        stepTitle: string;
       };
   [key: PropertyKey]: unknown;
 };
