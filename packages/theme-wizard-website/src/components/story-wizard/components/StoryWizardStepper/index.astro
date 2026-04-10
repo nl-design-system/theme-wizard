@@ -1,39 +1,10 @@
 ---
-import checkIcon from '@tabler/icons/outline/check.svg?raw';
 import StoryWizardSummaryTemplates from './StoryWizardSummaryTemplates.astro';
 import StoryWizardTokensDialog from './StoryWizardTokensDialog.astro';
-
-interface Props {
-  steps: Array<{ id: string; title: string }>;
-}
-
-const { steps } = Astro.props;
 ---
 
-<nav class="wizard-preset-stepper" aria-label="Navigeer tussen stappen" hidden>
-  <!-- Categorie-knoppen -->
-  <div class="wizard-step-nav" role="list">
-    {
-      steps.map((step, i) => (
-        <div role="listitem">
-          <button
-            class="wizard-step-nav-btn nl-button nl-button--secondary"
-            type="button"
-            data-step-nav-btn
-            data-jump-to-step={i}
-          >
-            <span class="wizard-step-nav-btn__title">{step.title}</span>
-            <span class="wizard-step-nav-btn__check" aria-label="Voltooid" hidden set:html={checkIcon} />
-          </button>
-        </div>
-      ))
-    }
-  </div>
-
+<nav class="wizard-preset-stepper" aria-label="Wizard acties" hidden>
   <div class="wizard-preset-stepper__footer">
-    <button class="wizard-preset-back-overview nl-button nl-button--subtle" type="button">
-      ← Overzicht
-    </button>
     <div class="wizard-preset-stepper__finish-area">
       <p class="nl-paragraph wizard-preset-transition-note" hidden></p>
       <button class="wizard-preset-finish-safe nl-button nl-button--primary" type="button" hidden>Klaar</button>

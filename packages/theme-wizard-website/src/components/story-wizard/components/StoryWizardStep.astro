@@ -2,6 +2,7 @@
 import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import type { StoryWizardStep as StoryWizardStepViewModel } from '@/lib/types';
+import layoutGridIcon from '@tabler/icons/outline/layout-grid.svg?raw';
 import StoryWizardEditableTokenGroup from './StoryWizardEditableTokenGroup/index.astro';
 import StoryWizardPresetGroup from './StoryWizardPresetGroup/index.astro';
 
@@ -21,6 +22,11 @@ const { step } = Astro.props;
   data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
   data-step-label={step.title}
 >
+  <button class="wizard-preset-back-overview wizard-back-overview-btn" type="button">
+    <span class="wizard-back-overview-btn__icon" aria-hidden="true" set:html={layoutGridIcon} />
+    <span class="wizard-back-overview-btn__label">Overzicht</span>
+  </button>
+
   <div class="wizard-story-section__layout">
     <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
       <div class="wizard-story-section__intro">

@@ -775,7 +775,42 @@
   color: var(--basis-color-action-1-color-default);
 }
 
-/* ── Stepper: step-nav onderaan ──────────────────────────────── */
+/* ── Back to overview button (top of detail view) ────────────── */
+
+.wizard-back-overview-btn {
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--basis-color-default-color-subtle);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  gap: var(--basis-space-inline-xs);
+  margin: 0;
+  padding: 0;
+  transition: color 150ms ease;
+}
+
+.wizard-back-overview-btn:hover {
+  color: var(--basis-color-default-color-default);
+}
+
+.wizard-back-overview-btn__icon {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: 1.125rem;
+}
+
+.wizard-back-overview-btn__icon > svg {
+  block-size: 1.125rem;
+  display: block;
+  inline-size: 1.125rem;
+}
+
+/* ── Stepper: finish area ────────────────────────────────────── */
 
 .wizard-preset-stepper {
   background: var(--basis-color-default-bg-document);
@@ -788,50 +823,11 @@
   padding-inline: 0;
 }
 
-.wizard-step-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--basis-space-inline-xs);
-}
-
-.wizard-step-nav-btn {
-  align-items: center;
-  block-size: auto;
-  display: inline-flex;
-  gap: var(--basis-space-inline-xs);
-  min-block-size: 0;
-  padding-block: var(--basis-space-block-xs);
-  padding-inline: var(--basis-space-inline-md);
-  text-align: start;
-}
-
-.wizard-step-nav-btn__title {
-  font-size: 0.875rem;
-}
-
-.wizard-step-nav-btn__check {
-  align-items: center;
-  block-size: 1rem;
-  display: inline-flex;
-  flex-shrink: 0;
-  inline-size: 1rem;
-}
-
-.wizard-step-nav-btn__check[hidden] {
-  display: none;
-}
-
-.wizard-step-nav-btn__check > svg {
-  block-size: 100%;
-  display: block;
-  inline-size: 100%;
-}
-
 .wizard-preset-stepper__footer {
   align-items: center;
   display: flex;
   gap: var(--basis-space-inline-md);
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .wizard-preset-stepper__finish-area {
@@ -879,11 +875,6 @@
   .wizard-story-section {
     padding-block: var(--basis-space-block-xl);
     padding-inline: 0;
-  }
-
-  .wizard-step-nav {
-    overflow-x: auto;
-    flex-wrap: nowrap;
   }
 
   .wizard-preset-stepper__footer {
