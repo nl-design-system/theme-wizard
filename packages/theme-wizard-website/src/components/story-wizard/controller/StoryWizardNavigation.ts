@@ -75,10 +75,16 @@ export class StoryWizardNavigation {
 
     this.#overviewCards.forEach((card, i) => {
       const isDone = steps[i]?.hasChosenSelection() ?? false;
-      card.classList.toggle('wizard-step-overview-card--done', isDone);
+      card.closest('.wizard-step-overview-card')?.classList.toggle('wizard-step-overview-card--done', isDone);
 
-      const checkEl = card.querySelector<HTMLElement>('.wizard-step-overview-card__done');
+      const checkEl = card
+        .closest('.wizard-step-overview-card')
+        ?.querySelector<HTMLElement>('.wizard-step-overview-card__done');
       if (checkEl) checkEl.hidden = !isDone;
+
+      card.textContent = isDone ? 'Aanpassen' : 'Stel in';
+      card.classList.toggle('nl-button--primary', !isDone);
+      card.classList.toggle('nl-button--secondary', isDone);
     });
   }
 
