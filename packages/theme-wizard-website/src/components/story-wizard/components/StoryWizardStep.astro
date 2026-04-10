@@ -5,9 +5,11 @@ import StoryWizardPresetGroup from './StoryWizardPresetGroup/index.astro';
 
 interface Props {
   step: StoryWizardStepViewModel;
+  stepIndex: number;
+  totalSteps: number;
 }
 
-const { step } = Astro.props;
+const { step, stepIndex, totalSteps } = Astro.props;
 ---
 
 <section
@@ -17,7 +19,32 @@ const { step } = Astro.props;
   data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
   data-step-label={step.title}
 >
+  <div class="wizard-story-section__intro">
+    <h2 class="nl-heading nl-heading--level-3 wizard-story-section__step-title">{step.title}</h2>
+    {
+      step.intro ? (
+        <p class="nl-paragraph wizard-story-section__step-help">{step.intro}</p>
+      ) : (
+        <p class="nl-paragraph wizard-story-section__step-help">
+          Kies wat het beste past. Je kunt dit later altijd nog aanpassen.
+        </p>
+      )
+    }
+  </div>
+
   <div class="wizard-story-section__layout">
+    <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
+      {
+        step.groups.map((group) =>
+          group.type === 'preset' ? (
+            <StoryWizardPresetGroup group={group} />
+          ) : (
+            <StoryWizardEditableTokenGroup group={group} />
+          ),
+        )
+      }
+    </aside>
+
     <div class="wizard-story-section__preview-column">
       {
         step.previewStories.length > 0 && (
@@ -41,17 +68,5 @@ const { step } = Astro.props;
         )
       }
     </div>
-
-    <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
-      {
-        step.groups.map((group) =>
-          group.type === 'preset' ? (
-            <StoryWizardPresetGroup group={group} />
-          ) : (
-            <StoryWizardEditableTokenGroup group={group} />
-          ),
-        )
-      }
-    </aside>
   </div>
 </section>
