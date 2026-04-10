@@ -3572,6 +3572,9 @@ packages:
   '@utrecht/body-css@4.0.0':
     resolution: {integrity: sha512-mxI/wcihyEkVVDwp1kirWxcOmUlGH2pwJu3TYWZccnbgzjcQdA0r8SirGZ2IF9LH9cpQmJn4mPOXWFJQsxOskA==}
 
+  '@utrecht/body-css@3.0.0':
+    resolution: {integrity: sha512-OvKBtolyCBmIGwzLjCi5+Ut0rqzUsyEU07PYtw9lTTOJ22XsluChZ8w7FAICVVHBXC3sWJ1DdRo2hUngGZFyFQ==}
+
   '@utrecht/breadcrumb-nav-css@2.1.0':
     resolution: {integrity: sha512-BOYqFSnrR5rVzU1mb4eDb4BbpuE9TSEPN5FTlJJduYDvsJr5DLDaxADmFp1p05di7GWV1qTaPBMxw0gEuMAbaQ==}
 
@@ -3819,6 +3822,9 @@ packages:
   '@utrecht/html-content-css@2.1.0':
     resolution: {integrity: sha512-YG3alKhPumUvBx239ZD+XgF+4UtU1maLYRbHTwKootfx9yITidQN2PeYeZwcMBwLGr2gn/Ajfoy/zyevNTWm9g==}
 
+  '@utrecht/html-content-css@2.1.0':
+    resolution: {integrity: sha512-YG3alKhPumUvBx239ZD+XgF+4UtU1maLYRbHTwKootfx9yITidQN2PeYeZwcMBwLGr2gn/Ajfoy/zyevNTWm9g==}
+
   '@utrecht/iban-data-css@2.0.1':
     resolution: {integrity: sha512-K7kcT1w9JRPLQWWjmj7O0UNDBcTMOv1gAzDWhE7hQwxcbwDrL/e4DAcrrmR7bicH9soParrDTr+wEq4OxNJl8Q==}
 
@@ -3997,8 +4003,11 @@ packages:
   '@utrecht/search-bar-css@3.0.2':
     resolution: {integrity: sha512-R7hORuwr2u/zVLybHxO72ZpPx0MtTTqoTBBrpLsgLNJGUsbS6s61e83RXGmE+Dr8U9Mokj1K2DTjnNxsYtSxzA==}
 
-  '@utrecht/select-css@2.0.2':
-    resolution: {integrity: sha512-00VyDxGCMTqhC+Y98nwrc6zXXezB7hwsRlI78X1Hkl5lywESlT4frBWaCs6dw4e/lgYGskDx7KCpChwMtgYxxg==}
+  '@utrecht/root-css@3.1.1':
+    resolution: {integrity: sha512-VVEgGAsb3a/Ubg0z08XGPN9o5h3G/pw01VaszFllH7VRRjBreLDrItsUv7xUCNjfdueAPS2zV2hR0NzOyM9FWg==}
+
+  '@utrecht/search-bar-css@3.0.1':
+    resolution: {integrity: sha512-ix/dUg05HIUhUptSvCmxghQ7MhXa2ryYj+PWAk/3aWlxmF/jrxx/l2fiqaroBotTfIJrjxBAVuZn5mVQwW0cfg==}
 
   '@utrecht/select-css@3.0.0':
     resolution: {integrity: sha512-zyjkPUBAC7Xy/XDpz4lNxHCF01vLiiXTIlLcpEN40Nf6bf0M6jMTWYvmp6NireuxLEb21NLK6Nq/XrpZEIXKhA==}
@@ -11960,6 +11969,8 @@ snapshots:
   '@utrecht/heading-6-css@2.0.2': {}
 
   '@utrecht/heading-group-css@2.0.1': {}
+
+  '@utrecht/html-content-css@2.1.0': {}
 
   '@utrecht/html-content-css@2.1.0': {}
 
