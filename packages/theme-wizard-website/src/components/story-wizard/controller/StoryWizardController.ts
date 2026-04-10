@@ -1,7 +1,7 @@
 import { presetTokensToUpdateMany } from '@app/lib/Theme/lib';
 import type { components } from '@/lib/components';
 import { initStories } from '@/components/render-stories';
-import type { StoryWizardThemeHost } from './types';
+import type { StoryWizardStepState, StoryWizardThemeHost } from './types';
 import { StoryWizardNavigation } from './StoryWizardNavigation';
 import { StoryWizardNavigationState } from './StoryWizardNavigationState';
 import { StoryWizardPresetState } from './StoryWizardPresetState';
@@ -36,10 +36,17 @@ export class StoryWizardController {
     this.#nav = new StoryWizardNavigationState(this.#steps);
     this.#storage = new StoryWizardStorage(this.#componentId);
     this.#dialog = new StoryWizardTokensDialog();
-    this.#summary = new StoryWizardSummary(root, this.#dialog, (index) => this.#showStep(index));
+    this.#summary = new StoryWizardSummary(
+      root,
+      this.#dialog,
+      (index) => this.#showStep(index),
+      () => this.#reset().catch((e) => console.error('Failed to reset Story Wizard', e)),
+    );
     this.#navigation = new StoryWizardNavigation(root, shell);
     this.#preview = new StoryWizardPreview();
     this.#presetState = new StoryWizardPresetState(this.#steps, this.#storage, () => this.#getTheme());
+
+    window.addEventListener('hashchange', () => this.#syncStateWithHash());
   }
 
   public static init() {
@@ -61,11 +68,17 @@ export class StoryWizardController {
     await this.#presetState.ready();
     initStories(this.#componentId, JSON.parse(this.#container.dataset.storyIds || '[]'));
     this.#bindOptionListeners();
+    this.#bindPreviewModeToggles();
     this.#navigation.bind({
       onFinishSafe: () => this.#finishWithSafeChoices(),
-      onJumpTo: (index) => this.#showStep(index),
+      onJumpTo: (index) => {
+        const step = this.#steps[index];
+        if (step) window.location.hash = (step.element as HTMLElement).id;
+      },
       onReset: () => this.#reset().catch((e) => console.error('Failed to reset Story Wizard', e)),
-      onShowOverview: () => this.#showOverview(),
+      onShowOverview: () => {
+        window.location.hash = 'wizard-overview';
+      },
     });
 
     if (this.#nav.total === 0) {
@@ -76,7 +89,7 @@ export class StoryWizardController {
     this.#summary.show();
     this.#navigation.showSteppers();
     await this.#presetState.initialize({ restoreStoredState: true });
-    this.#showOverview();
+    this.#syncStateWithHash();
   }
 
   async #reset() {
@@ -107,11 +120,27 @@ export class StoryWizardController {
 
   // --- Navigation ---
 
+  #syncStateWithHash() {
+    const hash = window.location.hash.replace('#', '');
+
+    if (!hash || hash === 'wizard-overview') {
+      this.#showOverview();
+      return;
+    }
+
+    const stepIndex = this.#steps.findIndex((step) => step.element.id === hash);
+    if (stepIndex >= 0) {
+      this.#showStep(stepIndex);
+    } else {
+      this.#showOverview();
+    }
+  }
+
   #showOverview() {
     this.#confirmCurrentAdvancedStep();
     this.#steps.forEach((step) => step.hide());
     this.#navigation.showOverview();
-    this.#navigation.updateStepNavState(-1, this.#steps);
+    this.#refreshStepNavigation();
     this.#persistStepState();
   }
 
@@ -168,6 +197,43 @@ export class StoryWizardController {
     });
   }
 
+  #bindPreviewModeToggles() {
+    this.#steps.forEach((step) => {
+      const buttons = Array.from(
+        step.element.querySelectorAll<HTMLButtonElement>('[data-preview-mode-btn]'),
+      );
+      const panels = Array.from(
+        step.element.querySelectorAll<HTMLElement>('[data-preview-mode-panel]'),
+      );
+
+      if (buttons.length === 0 || panels.length === 0) {
+        return;
+      }
+
+      const setMode = (mode: string) => {
+        buttons.forEach((button) => {
+          const isActive = button.dataset.previewModeBtn === mode;
+          button.setAttribute('aria-pressed', String(isActive));
+          button.classList.toggle('wizard-story-preview-panel__toggle--active', isActive);
+        });
+
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.previewModePanel !== mode;
+        });
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const mode = button.dataset.previewModeBtn;
+          if (!mode) return;
+          setMode(mode);
+        });
+      });
+
+      setMode('focused');
+    });
+  }
+
   // --- Summary & navigation updates ---
 
   #updateVisibleStep(index: number) {
@@ -176,10 +242,12 @@ export class StoryWizardController {
 
   #refreshStepNavigation() {
     const currentStep = this.#steps[this.#nav.currentStep];
-    if (!currentStep) return;
+    const stepsState = this.#getSelectionSummary();
 
-    this.#navigation.updateNextState(currentStep, this.#nav);
-    this.#navigation.updateStepNavState(this.#nav.currentStep, this.#steps);
+    if (currentStep) {
+      this.#navigation.updateNextState(currentStep, this.#nav);
+    }
+    this.#navigation.updateStepNavState(this.#nav.currentStep, stepsState);
   }
 
   #refreshStepView() {
@@ -198,7 +266,8 @@ export class StoryWizardController {
   }
 
   #updateSummary() {
-    this.#summary.update(this.#steps, this.#getTheme());
+    const stepsState = this.#getSelectionSummary();
+    this.#summary.update(stepsState, this.#getTheme());
   }
 
   // --- Step helpers ---
@@ -215,15 +284,48 @@ export class StoryWizardController {
     }
   }
 
+  #getSelectionSummary(): StoryWizardStepState[] {
+    const themeHost = this.#getTheme();
+
+    return this.#steps.map((step) => {
+      const liveSelectedGroups = step.isAdvanced
+        ? this.#summary.getAdvancedSummary(step, themeHost)
+        : step.createCurrentSelectionSummary();
+      const confirmedGroups = step.isAdvanced ? liveSelectedGroups : step.createSelectionSummary();
+      const isCompletedAdvancedStep = step.isAdvanced && step.hasBeenVisited();
+      const isConfirmedAdvancedStep = step.isAdvanced && (liveSelectedGroups.length > 0 || isCompletedAdvancedStep);
+
+      const summaries = ((): any[] => {
+        if (!step.isAdvanced) return liveSelectedGroups;
+        if (!isConfirmedAdvancedStep) return [];
+        if (liveSelectedGroups.length > 0) return liveSelectedGroups;
+        return this.#summary.getAdvancedSummary(step, themeHost, { includeUnchangedTokens: true });
+      })();
+
+      const isDone = step.isAdvanced ? isConfirmedAdvancedStep : confirmedGroups.length > 0;
+
+      return {
+        step,
+        summaries,
+        isDone,
+        isConfirmedAdvanced: isConfirmedAdvancedStep,
+      };
+    });
+  }
+
   #getAllSelectionGroups(includeAdvancedDefaults = false) {
-    return this.#steps.flatMap((step) => {
-      if (step.isAdvanced) {
+    const stepsState = this.#getSelectionSummary();
+
+    return stepsState.flatMap((state) => {
+      if (state.step.isAdvanced) {
         return includeAdvancedDefaults
-          ? this.#summary.getAdvancedSummary(step, this.#getTheme(), { includeUnchangedTokens: true })
+          ? state.summaries.length > 0
+            ? state.summaries
+            : this.#summary.getAdvancedSummary(state.step, this.#getTheme(), { includeUnchangedTokens: true })
           : [];
       }
 
-      return step.createSelectionSummary();
+      return state.step.createSelectionSummary();
     });
   }
 }

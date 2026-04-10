@@ -59,10 +59,6 @@ const wizard = await resolveStoryWizardModel(slug);
 
         <div class="wizard-page-header">
           <h1>{title}</h1>
-          <button class="wizard-preset-reset nl-button nl-button--subtle wizard-page-reset" type="button">
-            <span class="wizard-page-reset__icon" aria-hidden="true" set:html={refreshIcon} />
-            Opnieuw beginnen
-          </button>
         </div>
         <StoryWizard wizard={wizard} />
         <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>
