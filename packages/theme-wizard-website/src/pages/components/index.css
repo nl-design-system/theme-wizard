@@ -1,0 +1,155 @@
+.wizard-components-overview {
+  background-color: var(--basis-color-default-bg-document);
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-3xl);
+  padding-block: var(--basis-space-block-3xl);
+  padding-inline: var(--basis-space-inline-4xl);
+}
+
+.wizard-components-hero {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-column-3xl);
+}
+
+.wizard-components-intro {
+  display: flex;
+  flex: 1 1 22rem;
+  flex-direction: column;
+  gap: var(--basis-space-block-md);
+}
+
+.wizard-components-start {
+  background: color-mix(in sRGB, var(--basis-color-action-1-bg-subtle) 32%, white);
+  border: 1px solid color-mix(in sRGB, var(--basis-color-action-1-border-default) 24%, transparent);
+  border-radius: var(--basis-border-radius-md, 6px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-sm);
+  max-inline-size: 34rem;
+  padding: var(--basis-space-block-lg) var(--basis-space-inline-lg);
+}
+
+.wizard-components-start__title {
+  font-size: 1rem;
+}
+
+.wizard-components-start__text {
+  margin-block: 0;
+}
+
+.wizard-components-start__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-inline-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wizard-components-start__link {
+  background: white;
+  border: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 80%, transparent);
+  border-radius: 999px;
+  color: inherit;
+  display: inline-flex;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 0.625rem 0.875rem;
+  text-decoration: none;
+}
+
+.wizard-components-start__link:hover {
+  border-color: var(--basis-color-action-1-border-default, var(--basis-color-action-1-color-default));
+}
+
+.wizard-components-start__link:focus-visible {
+  outline: 2px solid var(--basis-color-action-1-color-default);
+  outline-offset: 2px;
+}
+
+.wizard-components-hero > :last-child {
+  flex: 1 1 26rem;
+  min-inline-size: 0;
+}
+
+.wizard-components-category {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-lg);
+}
+
+.wizard-components-category__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-2xs);
+}
+
+.wizard-components-category__description {
+  color: var(--basis-color-default-color-subtle);
+  margin-block: 0;
+}
+
+.wizard-component-grid {
+  display: grid;
+  gap: var(--basis-space-block-md);
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+
+.wizard-component-card {
+  border: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 80%, transparent);
+  border-radius: var(--basis-border-radius-md, 6px);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-xs);
+  overflow: hidden;
+  padding-block-end: var(--basis-space-block-lg);
+  padding-inline: var(--basis-space-inline-lg);
+  text-decoration: none;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.wizard-component-card:hover {
+  background-color: color-mix(in sRGB, var(--basis-color-action-1-bg-subtle) 30%, transparent);
+  border-color: var(--basis-color-action-1-border-default, var(--basis-color-action-1-color-default));
+}
+
+.wizard-component-card:focus-visible {
+  outline: 2px solid var(--basis-color-action-1-color-default);
+  outline-offset: 2px;
+}
+
+.wizard-component-card__illustration {
+  block-size: auto;
+  display: block;
+  inline-size: calc(100% + 2 * var(--basis-space-inline-lg));
+  margin-block-end: var(--basis-space-block-md);
+  margin-inline-start: calc(-1 * var(--basis-space-inline-lg));
+}
+
+.wizard-component-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.wizard-component-card__description {
+  color: var(--basis-color-default-color-subtle);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.wizard-component-card__action {
+  color: var(--nl-link-color, var(--basis-color-action-1-color-default));
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-block-start: auto;
+}
+
+@media (width <= 720px) {
+  .wizard-components-overview {
+    padding-inline: var(--basis-space-inline-md);
+  }
+}
