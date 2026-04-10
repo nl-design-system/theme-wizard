@@ -1,5 +1,19 @@
 # @nl-design-system-community/theme-wizard-website
 
+## 0.0.11
+
+### Patch Changes
+
+- 6978936: Major version bumps for TypeScript, EsLint, Stylelint, npm-check-updates, npm-package-json-lint
+- f186377: chore(deps): upgrade all `@utrecht` scoped dependencies
+- 329d763: Minor and patch updates except for vitest in design-tokens-schema
+- Updated dependencies [bfc4235]
+- Updated dependencies [6978936]
+- Updated dependencies [f186377]
+- Updated dependencies [329d763]
+  - @nl-design-system-community/theme-wizard-app@1.1.0
+  - @nl-design-system-community/theme-wizard-templates@1.0.7
+
 ## 0.0.10
 
 ### Patch Changes
