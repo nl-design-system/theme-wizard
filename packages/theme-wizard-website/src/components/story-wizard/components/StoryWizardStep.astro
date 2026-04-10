@@ -11,6 +11,13 @@ interface Props {
 }
 
 const { step } = Astro.props;
+const focusedPreviewStories = step.cardPreviewStories.length > 0 ? step.cardPreviewStories : step.previewStories;
+const showPreviewModeToggle =
+  step.type === 'preset' &&
+  focusedPreviewStories.length > 0 &&
+  step.previewStories.length > 0 &&
+  (focusedPreviewStories.length !== step.previewStories.length ||
+    focusedPreviewStories.some((story, index) => story.id !== step.previewStories[index]?.id));
 ---
 
 <section
@@ -20,10 +27,12 @@ const { step } = Astro.props;
   data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
   data-step-label={step.title}
 >
-  <button class="wizard-preset-back-overview wizard-back-overview-btn" type="button">
-    <span class="wizard-back-overview-btn__icon" aria-hidden="true" set:html={layoutGridIcon} />
-    <span class="wizard-back-overview-btn__label">Overzicht</span>
-  </button>
+  <div class="wizard-story-section__header">
+    <a href="#wizard-overview" class="nl-link wizard-back-overview-btn" role="button">
+      <span class="wizard-back-overview-btn__icon" aria-hidden="true" set:html={layoutGridIcon} />
+      <span class="wizard-back-overview-btn__label">Terug naar overzicht</span>
+    </a>
+  </div>
 
   <div class="wizard-story-section__layout">
     <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
@@ -47,7 +56,43 @@ const { step } = Astro.props;
       {
         step.previewStories.length > 0 && (
           <section class="wizard-story-preview-panel" aria-label={`${step.title} previews`}>
-            <div class="wizard-story-section__variants">
+            {showPreviewModeToggle && (
+              <div class="wizard-story-preview-panel__controls" role="group" aria-label="Previewweergave">
+                <button
+                  class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+                  type="button"
+                  aria-pressed="true"
+                  data-preview-mode-btn="focused"
+                >
+                  Gericht
+                </button>
+                <button
+                  class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+                  type="button"
+                  aria-pressed="false"
+                  data-preview-mode-btn="all"
+                >
+                  Alles
+                </button>
+              </div>
+            )}
+
+            <div class="wizard-story-section__variants" data-preview-mode-panel="focused" hidden={false}>
+              {focusedPreviewStories.map((previewStory) => (
+                <div class="wizard-story-section__variant">
+                  <p class="nl-paragraph wizard-story-section__variant-label">{previewStory.name}</p>
+                  <wizard-story-preview>
+                    <wizard-reset-theme>
+                      <wizard-preview-theme>
+                        <div data-story-container={previewStory.id} />
+                      </wizard-preview-theme>
+                    </wizard-reset-theme>
+                  </wizard-story-preview>
+                </div>
+              ))}
+            </div>
+
+            <div class="wizard-story-section__variants" data-preview-mode-panel="all" hidden={showPreviewModeToggle}>
               {step.previewStories.map((previewStory) => (
                 <div class="wizard-story-section__variant">
                   <p class="nl-paragraph wizard-story-section__variant-label">{previewStory.name}</p>

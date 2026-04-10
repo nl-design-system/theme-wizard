@@ -145,4 +145,21 @@ export class StoryWizardStep {
       },
     ];
   }
+
+  public createCurrentSelectionSummary(): StoryWizardSelectionSummary[] {
+    const selectedOptions = this.groups.flatMap((group) => {
+      const option = group.getSelectedOption();
+      return option ? [option] : [];
+    });
+
+    if (selectedOptions.length === 0) return [];
+
+    return [
+      {
+        label: this.stepLabel,
+        optionLabel: selectedOptions.map((o) => o.optionLabel).join(' · '),
+        tokens: selectedOptions.flatMap((o) => flattenDesignTokens(o.tokens)),
+      },
+    ];
+  }
 }

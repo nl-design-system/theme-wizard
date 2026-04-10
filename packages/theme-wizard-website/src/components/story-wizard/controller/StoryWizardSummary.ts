@@ -2,24 +2,32 @@ import { dequal } from 'dequal';
 import dlv from 'dlv';
 import type { StoryWizardStep } from './StoryWizardStep';
 import type { StoryWizardTokensDialog } from './StoryWizardTokensDialog';
-import type { StoryWizardSelectionSummary, StoryWizardThemeHost } from './types';
+import type { StoryWizardSelectionSummary, StoryWizardStepState, StoryWizardThemeHost } from './types';
 import { cloneTemplate } from './cloneTemplate';
+import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
 
 export class StoryWizardSummary {
   readonly #listElement: HTMLElement | null;
   readonly #summaryElement: HTMLElement | null;
+  readonly #summaryResetElement: HTMLElement | null;
+  readonly #overviewResetElement: HTMLElement | null;
   readonly #detailsElement: HTMLElement | null;
   readonly #dialog: StoryWizardTokensDialog;
   readonly #onNavigate: (stepIndex: number) => void;
+  readonly #onReset: () => void;
 
   public constructor(
     root: HTMLElement | Document,
     dialog: StoryWizardTokensDialog,
     onNavigate: (stepIndex: number) => void,
+    onReset: () => void,
   ) {
     this.#dialog = dialog;
     this.#onNavigate = onNavigate;
+    this.#onReset = onReset;
     this.#summaryElement = root.querySelector<HTMLElement>('.wizard-step-selections__summary');
+    this.#summaryResetElement = root.querySelector<HTMLElement>('.wizard-step-selections__summary-reset');
+    this.#overviewResetElement = root.querySelector<HTMLElement>('.wizard-steps-overview__reset');
     this.#listElement = root.querySelector<HTMLElement>('.wizard-step-selections__list');
     this.#detailsElement = root.querySelector<HTMLElement>('.wizard-step-selections');
   }
@@ -33,46 +41,47 @@ export class StoryWizardSummary {
     if (details) details.open = true;
   }
 
-  public update(steps: StoryWizardStep[], themeHost: StoryWizardThemeHost | null) {
+  public update(stepsState: StoryWizardStepState[], themeHost: StoryWizardThemeHost | null) {
     const listElement = this.#listElement;
     if (!listElement) return;
 
     listElement.replaceChildren();
+    this.#summaryResetElement?.replaceChildren();
+    this.#overviewResetElement?.replaceChildren();
     let completedSteps = 0;
     const allSelectedGroups: StoryWizardSelectionSummary[] = [];
+    let hasAnySelections = false;
 
-    steps.forEach((step, index) => {
-      const selectedGroups = step.isAdvanced ? this.getAdvancedSummary(step, themeHost) : step.createSelectionSummary();
-      const isCompletedAdvancedStep = step.isAdvanced && step.hasBeenVisited();
-      const isConfirmedAdvancedStep = step.isAdvanced && (selectedGroups.length > 0 || isCompletedAdvancedStep);
+    stepsState.forEach((state, index) => {
+      const { step, summaries, isDone, isConfirmedAdvanced } = state;
 
-      const getVisibleGroups = (): StoryWizardSelectionSummary[] => {
-        if (!step.isAdvanced) return selectedGroups;
-        if (!isConfirmedAdvancedStep) return [];
-        if (selectedGroups.length > 0) return selectedGroups;
-        return this.getAdvancedSummary(step, themeHost, { includeUnchangedTokens: true });
-      };
-      const visibleGroups = getVisibleGroups();
-      const hasChosenSelection = step.isAdvanced ? isConfirmedAdvancedStep : step.hasChosenSelection();
+      if (summaries.length > 0) {
+        hasAnySelections = true;
+      }
 
-      if (hasChosenSelection) {
+      if (isDone) {
         completedSteps += 1;
-        allSelectedGroups.push(...visibleGroups);
+        allSelectedGroups.push(...summaries);
       }
 
       const stepLabel = step.stepLabel || `Stap ${index + 1}`;
-      const value = this.#createValueElement(visibleGroups, step.isAdvanced, isConfirmedAdvancedStep);
-      const wrapper = this.#createStepWrapper(stepLabel, index, value);
+      const value = this.#createValueElement(summaries, step.isAdvanced, isConfirmedAdvanced);
+      const wrapper = this.#createStepWrapper(stepLabel, index, value, step.element.id);
 
-      if (hasChosenSelection) {
-        this.#appendTokensButton(wrapper, stepLabel, visibleGroups);
+      if (isDone) {
+        this.#appendTokensButton(wrapper, stepLabel, summaries);
       }
 
       listElement.appendChild(wrapper);
     });
 
     this.#appendTotalTokensButton(allSelectedGroups);
-    this.#updateCount(completedSteps, steps.length);
+
+    if (hasAnySelections) {
+      this.#appendResetButton();
+    }
+
+    this.#updateCount(completedSteps, stepsState.length);
   }
 
   public getAdvancedSummary(
@@ -123,21 +132,37 @@ export class StoryWizardSummary {
   #updateCount(completed: number, total: number) {
     if (!this.#summaryElement) return;
 
-    const liveRegion = this.#summaryElement.querySelector('[aria-live]') ?? this.#summaryElement;
-    liveRegion.textContent = `Jouw keuzes (${completed}/${total})`;
+    const title = this.#summaryElement.querySelector<HTMLElement>('.wizard-step-selections__summary-title');
+    const meta = this.#summaryElement.querySelector<HTMLElement>('.wizard-step-selections__summary-meta');
+    const details = this.#detailsElement as HTMLDetailsElement | null;
+
+    if (title) {
+      title.textContent = completed > 0 ? `Bekijk jouw keuzes (${completed}/${total})` : 'Nog geen keuzes gemaakt';
+    }
+
+    if (meta) {
+      meta.textContent =
+        completed > 0
+          ? `${completed} ${completed === 1 ? 'onderdeel is' : 'onderdelen zijn'} ingesteld`
+          : 'Open om je ingestelde onderdelen te bekijken';
+    }
+
+    details?.toggleAttribute('data-has-selections', completed > 0);
   }
 
   // --- DOM construction (templates for complex structures, createElement for simple ones) ---
 
-  #createStepWrapper(stepLabel: string, index: number, value: HTMLElement): HTMLElement {
+  #createStepWrapper(stepLabel: string, index: number, value: HTMLElement, stepId: string): HTMLElement {
     const wrapper = cloneTemplate<HTMLElement>('wizard-step-selection-tmpl', '.wizard-step-selection');
 
     wrapper.querySelector('.wizard-step-selection__number')!.textContent = String(index + 1);
 
-    const title = wrapper.querySelector<HTMLButtonElement>('.wizard-step-selection__title')!;
+    const title = wrapper.querySelector<HTMLAnchorElement>('.wizard-step-selection__title')!;
     title.textContent = stepLabel;
+    title.href = `#${stepId}`;
     title.setAttribute('aria-label', `Ga naar: ${stepLabel}`);
-    title.addEventListener('click', () => {
+    title.addEventListener('click', (e) => {
+      e.preventDefault();
       this.#onNavigate(index);
       const details = this.#detailsElement as HTMLDetailsElement | null;
       if (details) details.open = false;
@@ -179,6 +204,38 @@ export class StoryWizardSummary {
     }
 
     btn.addEventListener('click', onClick);
+    return btn;
+  }
+
+  #appendResetButton() {
+    this.#summaryResetElement?.appendChild(this.#createResetButton());
+    this.#overviewResetElement?.appendChild(this.#createResetButton());
+  }
+
+  #createResetButton() {
+    const btn = document.createElement('button');
+    btn.className = 'wizard-preset-reset nl-button nl-button--subtle wizard-summary-reset';
+    btn.type = 'button';
+
+    const icon = document.createElement('span');
+    icon.className = 'wizard-summary-reset__icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = refreshIcon;
+
+    const label = document.createElement('span');
+    label.textContent = 'Opnieuw beginnen';
+
+    btn.appendChild(icon);
+    btn.appendChild(label);
+
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (window.confirm('Weet je zeker dat je alle keuzes wilt resetten?')) {
+        this.#onReset();
+      }
+    });
+
     return btn;
   }
 
@@ -225,7 +282,10 @@ export class StoryWizardSummary {
   }
 
   #createSummaryDetails(groups: StoryWizardSelectionSummary[]): HTMLDetailsElement {
-    const details = cloneTemplate<HTMLDetailsElement>('wizard-value-summary-tmpl', '.wizard-step-selection__value-summary');
+    const details = cloneTemplate<HTMLDetailsElement>(
+      'wizard-value-summary-tmpl',
+      '.wizard-step-selection__value-summary',
+    );
 
     details.querySelector('.wizard-step-selection__value-summary-label')!.textContent =
       `${groups.reduce((count, group) => count + group.tokens.length, 0)} technische details`;
