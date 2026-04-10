@@ -75,13 +75,8 @@ export class StoryWizardController {
 
     this.#summary.show();
     this.#navigation.showSteppers();
-    const { hasStoredState, restoredStepIndex } = await this.#presetState.initialize({ restoreStoredState: true });
-
-    if (hasStoredState) {
-      this.#showStep(restoredStepIndex);
-    } else {
-      this.#showOverview();
-    }
+    await this.#presetState.initialize({ restoreStoredState: true });
+    this.#showOverview();
   }
 
   async #reset() {
