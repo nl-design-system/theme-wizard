@@ -1,10 +1,9 @@
-import '../wizard-react-element';
+import type { ClippyReactElement } from '@nl-design-system-community/clippy-components/clippy-react-element';
 import { LitElement, html } from 'lit';
 import { createElement } from 'react';
-import type { WizardReactRenderer } from '../wizard-react-element';
 
 export class WizardStoryRenderer extends LitElement {
-  private reactRenderer: WizardReactRenderer | null = null;
+  private reactRenderer: ClippyReactElement | null = null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   story: any = undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,7 +14,7 @@ export class WizardStoryRenderer extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.reactRenderer = document.createElement('wizard-react-element') as WizardReactRenderer;
+    this.reactRenderer = document.createElement('clippy-react-element') as ClippyReactElement;
     this.shadowRoot?.appendChild(this.reactRenderer);
   }
 

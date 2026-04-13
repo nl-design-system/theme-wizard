@@ -64,6 +64,7 @@
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@types/dlv": "1.1.5",
     "@types/react": "18.3.28",
+    "@types/react-dom": "19.2.3",
     "@vitest/browser-playwright": "4.1.2",
     "@vitest/coverage-v8": "4.1.2",
     "glob": "13.0.6",
