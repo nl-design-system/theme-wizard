@@ -1,25 +1,36 @@
 ---
+import type { components } from '@/lib/components';
 import StoryWizardCheckmark from '../StoryWizardCheckmark/index.astro';
-import StoryWizardStepPreview from '../StoryWizardStepPreview/index.astro';
 
 interface Props {
+  componentId: keyof typeof components;
   stepId: string;
   title: string;
   description?: string;
-  previewStoryId: string;
   icon?: string;
   showSummary?: boolean;
 }
 
-const { stepId, title, description, previewStoryId, icon, showSummary = false } = Astro.props;
+const { componentId, stepId, title, description, icon, showSummary = false } = Astro.props;
+const illustrationSrc = `/svg/componenten_overzicht_${componentId}.svg`;
 ---
 
 <article class="wizard-step-overview-card">
-  <div
-    class:list={['wizard-step-overview-card__preview', icon && 'wizard-step-overview-card__preview--with-icon']}
-  >
-    {icon && <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={icon} />}
-    <StoryWizardStepPreview storyId={previewStoryId} />
+  <div class:list={['wizard-step-overview-card__preview', icon && 'wizard-step-overview-card__preview--with-icon']}>
+    {
+      icon && (
+        <span class="wizard-step-overview-card__icon" aria-hidden="true">
+          <Fragment set:html={icon} />
+        </span>
+      )
+    }
+    <img
+      src={illustrationSrc}
+      alt=""
+      class="wizard-step-overview-card__illustration"
+      width="240"
+      height="160"
+    />
   </div>
 
   <div class="wizard-step-overview-card__body">
@@ -30,11 +41,7 @@ const { stepId, title, description, previewStoryId, icon, showSummary = false } 
 
   <div class="wizard-step-overview-card__footer">
     <StoryWizardCheckmark class="wizard-step-overview-card__done" />
-    <a
-      class="wizard-step-overview-card__action nl-button nl-button--primary"
-      href={`#${stepId}`}
-      data-step-overview-card={stepId}
-    >
+    <a class="wizard-step-overview-card__action nl-link" href={`#${stepId}`} data-step-overview-card={stepId}>
       Stel in
     </a>
   </div>

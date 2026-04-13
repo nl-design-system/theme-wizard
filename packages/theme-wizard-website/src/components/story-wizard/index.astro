@@ -25,54 +25,107 @@ const { wizard } = Astro.props;
 const presetSteps = wizard.steps.filter((step) => step.type === 'preset');
 const advancedSteps = wizard.steps.filter((step) => step.type === 'advanced');
 
-const getOverviewCardIcon = (title: string) => {
-  const normalizedTitle = title.toLowerCase();
+const getOverviewCardIcon = (step: StoryWizardViewModel['steps'][number], cardTitle?: string, description?: string) => {
+  const haystack = [
+    cardTitle ?? step.title,
+    description ?? step.intro ?? '',
+    ...step.groups.flatMap((group) =>
+      group.type === 'editable-tokens'
+        ? group.tokens.flatMap((token) => [token.label, token.path, token.cssVar])
+        : [group.name, group.description ?? '', ...group.options.flatMap((option) => [option.name, option.description ?? ''])],
+    ),
+  ]
+    .join(' ')
+    .toLowerCase();
 
-  if (normalizedTitle.includes('afmeting')) {
+  if (haystack.includes('afmeting') || haystack.includes('min-width') || haystack.includes('min-height')) {
     return dimensionsIcon;
   }
 
-  if (normalizedTitle.includes('grootte') && !normalizedTitle.includes('tekst')) {
+  if (
+    (haystack.includes('grootte') && !haystack.includes('tekst')) ||
+    haystack.includes('width') ||
+    haystack.includes('height') ||
+    haystack.includes('size')
+  ) {
     return resizeIcon;
   }
 
-  if (normalizedTitle.includes('kleur') || normalizedTitle.includes('color')) {
+  if (
+    haystack.includes('stijl') ||
+    haystack.includes('variant') ||
+    haystack.includes('standaard button') ||
+    haystack.includes('primary button') ||
+    haystack.includes('secondary button') ||
+    haystack.includes('subtle button') ||
+    haystack.includes('primary') ||
+    haystack.includes('secondary') ||
+    haystack.includes('subtle')
+  ) {
+    return settingsIcon;
+  }
+
+  if (
+    haystack.includes('kleur') ||
+    haystack.includes('color') ||
+    haystack.includes('achtergrond') ||
+    haystack.includes('background')
+  ) {
     return brushIcon;
   }
 
-  if (normalizedTitle.includes('hover')) {
+  if (
+    haystack.includes('hover') ||
+    haystack.includes('focus') ||
+    haystack.includes('active') ||
+    haystack.includes('pressed')
+  ) {
     return mouseIcon;
   }
 
   if (
-    normalizedTitle.includes('tekstgrootte') ||
-    normalizedTitle.includes('typografie') ||
-    normalizedTitle.includes('tekst')
+    haystack.includes('tekstgrootte') ||
+    haystack.includes('font-size') ||
+    haystack.includes('line-height') ||
+    haystack.includes('typografie') ||
+    haystack.includes('tekst')
   ) {
     return textSizeIcon;
   }
 
-  if (normalizedTitle.includes('border') || normalizedTitle.includes('rand') || normalizedTitle.includes('lijn')) {
+  if (
+    haystack.includes('border') ||
+    haystack.includes('rand') ||
+    haystack.includes('lijn') ||
+    haystack.includes('stroke')
+  ) {
     return borderStyleIcon;
   }
 
-  if (normalizedTitle.includes('vorm') || normalizedTitle.includes('afrond') || normalizedTitle.includes('hoek')) {
+  if (
+    haystack.includes('vorm') ||
+    haystack.includes('afrond') ||
+    haystack.includes('hoek') ||
+    haystack.includes('radius')
+  ) {
     return borderRadiusIcon;
   }
 
   if (
-    normalizedTitle.includes('padding') ||
-    normalizedTitle.includes('witruimte') ||
-    normalizedTitle.includes('ruimte')
+    haystack.includes('padding') ||
+    haystack.includes('margin') ||
+    haystack.includes('inset') ||
+    haystack.includes('witruimte') ||
+    haystack.includes('ruimte')
   ) {
     return paddingIcon;
   }
 
-  if (normalizedTitle.includes('lettertype') || normalizedTitle.includes('font')) {
+  if (haystack.includes('lettertype') || haystack.includes('font-family') || haystack.includes('font')) {
     return fontIcon;
   }
 
-  return null;
+  return settingsIcon;
 };
 
 const sortedPresetSteps = [...presetSteps].sort((a, b) => a.order - b.order);
@@ -168,16 +221,15 @@ const headingRows =
                   const group = step.groups[0];
                   const cardTitle = group?.name ?? step.title;
                   const description = group?.description ?? step.intro;
-                  const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
-                  const cardIcon = getOverviewCardIcon(cardTitle);
+                  const cardIcon = getOverviewCardIcon(step, cardTitle, description);
 
                   return (
                     <li class="wizard-steps-overview__item">
                       <StoryWizardOverviewCard
+                        componentId={wizard.componentId}
                         stepId={step.id}
                         title={cardTitle}
                         description={description}
-                        previewStoryId={cardPreviewStoryId}
                         icon={cardIcon || undefined}
                         showSummary
                       />
@@ -196,16 +248,15 @@ const headingRows =
                 const group = step.groups[0];
                 const cardTitle = group?.name ?? step.title;
                 const description = group?.description ?? step.intro;
-                const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
-                const cardIcon = getOverviewCardIcon(cardTitle);
+                const cardIcon = getOverviewCardIcon(step, cardTitle, description);
 
                 return (
                   <li class="wizard-steps-overview__item">
                     <StoryWizardOverviewCard
+                      componentId={wizard.componentId}
                       stepId={step.id}
                       title={cardTitle}
                       description={description}
-                      previewStoryId={cardPreviewStoryId}
                       icon={cardIcon || undefined}
                       showSummary
                     />
@@ -266,16 +317,15 @@ const headingRows =
               {advancedSteps.map((step) => {
                 const cardTitle = step.title;
                 const description = step.intro;
-                const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
-                const cardIcon = getOverviewCardIcon(cardTitle);
+                const cardIcon = getOverviewCardIcon(step, cardTitle, description);
 
                 return (
                   <li class="wizard-steps-overview__item">
                     <StoryWizardOverviewCard
+                      componentId={wizard.componentId}
                       stepId={step.id}
                       title={cardTitle}
                       description={description}
-                      previewStoryId={cardPreviewStoryId}
                       icon={cardIcon || undefined}
                     />
                   </li>
