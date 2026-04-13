@@ -245,17 +245,18 @@ export class App extends LitElement {
    */
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
-    let hasChanges = false;
+    const hasChanges =
+      target instanceof WizardColorscaleInput
+        ? this.#applyColorscaleUpdates(target)
+        : target instanceof WizardTokenCombobox
+          ? this.#applyComboboxUpdate(target)
+          : target instanceof WizardTokenInput
+            ? this.#applyTokenInputUpdate(target)
+            : target instanceof WizardTokenPreset
+              ? this.#applyPresetUpdates()
+              : null;
 
-    if (target instanceof WizardColorscaleInput) {
-      hasChanges = this.#applyColorscaleUpdates(target);
-    } else if (target instanceof WizardTokenCombobox) {
-      hasChanges = this.#applyComboboxUpdate(target);
-    } else if (target instanceof WizardTokenInput) {
-      hasChanges = this.#applyTokenInputUpdate(target);
-    } else if (target instanceof WizardTokenPreset) {
-      hasChanges = this.#applyPresetUpdates();
-    } else {
+    if (hasChanges === null) {
       console.warn('Unhandled token change event target', target);
       return;
     }
