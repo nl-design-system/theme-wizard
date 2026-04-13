@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+  intro?: string;
+}
+
+const { title, intro } = Astro.props;
+---
+
+<div class="wizard-story-section__intro">
+  <h2 class="nl-heading nl-heading--level-3 wizard-story-section__step-title">{title}</h2>
+  {intro && <p class="nl-paragraph wizard-story-section__step-help">{intro}</p>}
+</div>

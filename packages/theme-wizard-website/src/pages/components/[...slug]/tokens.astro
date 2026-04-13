@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import WithPageNav from '@/components/WithPageNav.astro';
-import dlv from 'dlv'
-import { components } from '@/lib/components'
-import { Traverse } from 'neotraverse/modern'
-import { getStories } from '../../../../../theme-wizard-app/src/utils/csf-utils'
-import '@nl-design-system-candidate/paragraph-css/paragraph.css'
-import '@nl-design-system-candidate/link-css/link.css'
+import dlv from 'dlv';
+import { components } from '@/lib/components';
+import { Traverse } from 'neotraverse/modern';
+import { getStories } from '@app/utils/csf-utils';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import '@nl-design-system-candidate/link-css/link.css';
 import './index.css';
 
 type StoryObject = {
@@ -19,119 +19,134 @@ type StoryObject = {
 };
 
 export function getStaticPaths() {
-  return Object.keys(components).map(slug => ({
-    params: { slug }
-  }))
+  return Object.keys(components).map((slug) => ({
+    params: { slug },
+  }));
 }
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
-  return {
-    slug,
-    title,
-  }
-}))
+const componentList = await Promise.all(
+  Object.entries(components).map(async ([slug, { title }]) => {
+    return {
+      slug,
+      title,
+    };
+  }),
+);
 
-const slug = Astro.params.slug as keyof typeof components
-const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl')
-nlDesignSystemDocsUrl.pathname = slug
-const componentModulePromiseFn = components[slug].stories
-const componentModule = await componentModulePromiseFn()
-const { default: meta, ...storyExports } = componentModule
-const stories = getStories(storyExports as unknown as Record<PropertyKey, StoryObject>, meta)
-const storyIds = stories.map(([id]) => id)
+const slug = Astro.params.slug as keyof typeof components;
+const nlDesignSystemDocsUrl = new URL('https://nldesignsystem.nl');
+nlDesignSystemDocsUrl.pathname = slug;
+const componentModulePromiseFn = components[slug].stories;
+const componentModule = await componentModulePromiseFn();
+const { default: meta, ...storyExports } = componentModule;
+const stories = getStories(storyExports as unknown as Record<PropertyKey, StoryObject>, meta);
+const storyIds = stories.map(([id]) => id);
 
 function getTokenLeaves(tokenObj: any) {
-  const leaves: {path: PropertyKey[], value: any}[] = [];
+  const leaves: { path: PropertyKey[]; value: any }[] = [];
   new Traverse(tokenObj).forEach((ctx, node) => {
     if (ctx.isLeaf) {
-      const pathWithoutValue = ctx.path.slice(0, -1)
+      const pathWithoutValue = ctx.path.slice(0, -1);
       leaves.push({
         path: pathWithoutValue,
-        value: node
-      })
+        value: node,
+      });
     }
   });
   return leaves;
 }
 
 const storiesWithTokens = stories.map(([id, story]) => {
-  const storyTokens = (story as any).parameters?.editableTokens
-  return ({
+  const storyTokens = (story as any).parameters?.editableTokens;
+  return {
     id,
     story,
     tokens: storyTokens
-      ? getTokenLeaves(storyTokens).map(leaf => {
-        const token = dlv(componentModule.default.parameters?.tokens, leaf.path.join('.'))
-        return {
-          ...leaf,
-          token
-        }
-      })
-      : []
-  })
-})
+      ? getTokenLeaves(storyTokens).map((leaf) => {
+          const token = dlv(componentModule.default.parameters?.tokens, leaf.path.join('.'));
+          return {
+            ...leaf,
+            token,
+          };
+        })
+      : [],
+  };
+});
 ---
 
-<BaseLayout title=`${slug} - Componenten - Theme Wizard`>
+<BaseLayout title={`${components[slug].title} - Componenten - Theme Wizard`}>
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
 
       <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
       <nav slot="sidebar">
-        {componentList.map(({slug: componentSlug, title}) => (
-          <wizard-sidebar-link href={`/components/${componentSlug}`} current={componentSlug === slug ? 'page' : undefined}>{title}</wizard-sidebar-link>
-        ))}
+        {
+          componentList.map(({ slug: componentSlug, title }) => (
+            <wizard-sidebar-link
+              href={`/components/${componentSlug}`}
+              current={componentSlug === slug ? 'page' : undefined}
+            >
+              {title}
+            </wizard-sidebar-link>
+          ))
+        }
       </nav>
       <main slot="main" class="wizard-main">
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a class="nl-link" href="/">Wizard</a> /
-          <a class="nl-link" href="/components">componenten</a> /
-          <a class="nl-link" href={`/components/${slug}`}>{slug}</a> /
-          <span>tokens</span>
+          <a class="nl-link" href="/components">Componenten</a> /
+          <a class="nl-link" href={`/components/${slug}`}>{components[slug].title}</a> /
+          <span>Tokens</span>
         </nav>
 
         <clippy-heading level="1">{slug}</clippy-heading>
 
         <p class="nl-paragraph">
-          Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank">nldesignsystem.nl</a>.
+          Bekijk de component-documentatie op <a class="nl-link" href={nlDesignSystemDocsUrl.toString()} target="_blank"
+            >nldesignsystem.nl</a
+          >.
         </p>
 
         <WithPageNav>
           <nav slot="page-nav">
-            <wizard-anchor-nav items={JSON.stringify(storiesWithTokens.map(({story, id}) => ({ title: story.name, id })))}></wizard-anchor-nav>
+            <wizard-anchor-nav
+              items={JSON.stringify(storiesWithTokens.map(({ story, id }) => ({ title: story.name, id })))}
+            ></wizard-anchor-nav>
           </nav>
 
           <div slot="page-content" class="wizard-page-content">
             <div id="story-container" data-story-ids={JSON.stringify(storyIds)} data-component-id={slug}></div>
 
-            {storiesWithTokens.map(({id, story, tokens}) => (
-              <section id={id} class="wizard-story-section">
-                <clippy-heading level="2">{story.name}</clippy-heading>
-                <wizard-story-preview>
-                  {/* theme-preview makes sure the CSS generated by theme-wizard config gets applied after reset */}
-                  <wizard-reset-theme>
-                    <wizard-preview-theme>
-                      <div data-story-container={id}></div>
-                    </wizard-preview-theme>
-                  </wizard-reset-theme>
-                </wizard-story-preview>
-                {tokens.length > 0 && (
-                  <ul class="wizard-secretly-a-list">
-                    {tokens.map((token) => (
-                      <li>
-                        <wizard-token-field label={token.path.join('.')} path={token.path.join('.')}></wizard-token-field>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
-            ))}
+            {
+              storiesWithTokens.map(({ id, story, tokens }) => (
+                <section id={id} class="wizard-story-section">
+                  <clippy-heading level="2">{story.name}</clippy-heading>
+                  <wizard-story-preview>
+                    {/* theme-preview makes sure the CSS generated by theme-wizard config gets applied after reset */}
+                    <wizard-reset-theme>
+                      <wizard-preview-theme>
+                        <div data-story-container={id} />
+                      </wizard-preview-theme>
+                    </wizard-reset-theme>
+                  </wizard-story-preview>
+                  {tokens.length > 0 && (
+                    <ul class="wizard-secretly-a-list">
+                      {tokens.map((token) => (
+                        <li>
+                          <wizard-token-field label={token.path.join('.')} path={token.path.join('.')} />
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              ))
+            }
           </div>
         </WithPageNav>
       </main>
-     </wizard-layout>
+    </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 
@@ -172,7 +187,7 @@ const storiesWithTokens = stories.map(([id, story]) => {
   const container = document.getElementById('story-container');
   const storyIds = JSON.parse(container!.dataset.storyIds || '[]');
   // Assertion here is type-safe because that's taken care of by Astro in the top of this file
-  const componentId = container?.dataset.componentId! as keyof typeof components
+  const componentId = container?.dataset.componentId! as keyof typeof components;
 
   initStories(componentId, storyIds);
 </script>

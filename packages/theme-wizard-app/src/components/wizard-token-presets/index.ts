@@ -1,18 +1,23 @@
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import { dequal } from 'dequal';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Theme from '../../lib/Theme';
+import { resolveTokenReferenceChain } from '../../lib/token-value';
 import { ThemeUpdateEvent } from '../app/app';
 import { wizardTokenCSS } from './styles';
 
 const tag = 'wizard-token-preset';
+const themeTag = 'start-theme';
 
+type PresetTokenLeaf = { $value: string };
+type PresetTokenTree = { [key: string]: PresetTokenTree | PresetTokenLeaf };
 type PresetOption = {
   description?: string;
   name: string;
   previewStyle?: string;
-  tokens: unknown;
+  tokens: PresetTokenTree | null;
 };
 
 type FlattenedTokenValue = {
@@ -35,6 +40,9 @@ export class WizardTokenPreset extends LitElement {
 
   private readonly inputName = `${tag}-${Math.random().toString(36).slice(2)}`;
   private readonly handleThemeUpdate = (event: ThemeUpdateEvent) => this.onThemeUpdate(event);
+  private currentTheme = new Theme();
+  private defaultTheme = new Theme();
+  private defaultIndexState = -1;
   private selectedIndexState = -1;
 
   override connectedCallback(): void {
@@ -47,8 +55,18 @@ export class WizardTokenPreset extends LitElement {
     this.ownerDocument.removeEventListener('theme-update', this.handleThemeUpdate);
   }
 
+  override updated(changed: PropertyValues) {
+    if (changed.has('options')) {
+      this.updateSelectionState();
+    }
+  }
+
   get selectedIndex() {
     return this.selectedIndexState;
+  }
+
+  get defaultIndex() {
+    return this.defaultIndexState;
   }
 
   get selectedOption() {
@@ -74,7 +92,9 @@ export class WizardTokenPreset extends LitElement {
   }
 
   get value() {
-    return this.selectedOption?.tokens ?? {};
+    const option = this.options[this.selectedIndex];
+    if (!option) return {};
+    return this.resolveTokens(option);
   }
 
   public clearSelection() {
@@ -121,6 +141,58 @@ export class WizardTokenPreset extends LitElement {
     }
 
     return Object.entries(obj).flatMap(([key, value]) => this.flattenTokenValues(value, [...path, key]));
+  }
+
+  /**
+   * Resolves the tokens for an option. When `tokens` is `null`, builds default token values
+   * from the default theme using token paths defined by sibling options.
+   */
+  private resolveTokens(option: PresetOption): unknown {
+    return option.tokens === null ? this.buildDefaultTokens() : option.tokens;
+  }
+
+  /**
+   * Collects all unique token paths from options that have explicit token values.
+   */
+  private getTokenPathsFromSiblings(): string[] {
+    const paths = new Set<string>();
+    for (const option of this.options) {
+      if (option.tokens !== null && typeof option.tokens === 'object') {
+        for (const { path } of this.flattenTokenValues(option.tokens)) {
+          paths.add(path);
+        }
+      }
+    }
+    return Array.from(paths);
+  }
+
+  /**
+   * Builds a nested token structure with default theme values for all token paths
+   * defined by sibling options. Used when an option has `tokens: null`.
+   */
+  private buildDefaultTokens(): Record<string, unknown> {
+    const paths = this.getTokenPathsFromSiblings();
+    const result: Record<string, unknown> = {};
+
+    for (const path of paths) {
+      const defaultToken = this.defaultTheme.at(path);
+      if (defaultToken?.$value !== undefined) {
+        const parts = path.split('.');
+        let current: Record<string, unknown> = result;
+        for (let i = 0; i < parts.length; i++) {
+          if (i === parts.length - 1) {
+            current[parts[i]] = { $value: defaultToken.$value };
+          } else {
+            if (!current[parts[i]] || typeof current[parts[i]] !== 'object') {
+              current[parts[i]] = {};
+            }
+            current = current[parts[i]] as Record<string, unknown>;
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   private formatTokenPathLabel(path: string) {
@@ -232,7 +304,7 @@ export class WizardTokenPreset extends LitElement {
   }
 
   private collectTokenValueVariants(option: PresetOption) {
-    const tokenValues = this.flattenTokenValues(option.tokens);
+    const tokenValues = this.flattenTokenValues(this.resolveTokens(option));
     const tokenPaths = Array.from(new Set(tokenValues.map((token) => token.path)));
 
     return Object.fromEntries(
@@ -243,21 +315,54 @@ export class WizardTokenPreset extends LitElement {
     );
   }
 
-  private matchesTheme(theme: Theme, tokens: unknown) {
-    let selected = true;
+  private matchesThemeByReferenceChain(theme: Theme, tokens: unknown) {
+    let matches = true;
 
     this.walkPresetTokens(tokens, [], (presetValue, path) => {
-      if (!selected) return;
+      if (!matches) return;
 
-      const themeToken = theme.at(path.join('.'));
+      const tokenPath = path.join('.');
+      const themeToken = theme.at(tokenPath);
+      const themeValue = themeToken ? themeToken['$value'] : null;
+
+      // Direct match
+      if (dequal(themeValue, presetValue)) {
+        return;
+      }
+
+      // Resolve through the token reference chain: if the theme value is a reference,
+      // check if it resolves through to the preset value at any step.
+      // E.g. theme has {basis.heading.color} → {basis.color.default.color-document},
+      // and the preset value is {basis.color.default.color-document}.
+      if (typeof themeValue === 'string' && typeof presetValue === 'string') {
+        const chain = resolveTokenReferenceChain(themeValue, theme);
+        if (chain.includes(presetValue)) {
+          return;
+        }
+      }
+
+      matches = false;
+    });
+
+    return matches;
+  }
+
+  private matchesThemeExactly(theme: Theme, tokens: unknown) {
+    let matches = true;
+
+    this.walkPresetTokens(tokens, [], (presetValue, path) => {
+      if (!matches) return;
+
+      const tokenPath = path.join('.');
+      const themeToken = theme.at(tokenPath);
       const themeValue = themeToken ? themeToken['$value'] : null;
 
       if (!dequal(themeValue, presetValue)) {
-        selected = false;
+        matches = false;
       }
     });
 
-    return selected;
+    return matches;
   }
 
   private setSelectedIndex(index: number) {
@@ -266,19 +371,40 @@ export class WizardTokenPreset extends LitElement {
     this.requestUpdate();
   }
 
-  private updateSelectedIndex(theme: Theme) {
-    const selectedIndex = this.options.findIndex((option) => this.matchesTheme(theme, option.tokens));
-    this.setSelectedIndex(selectedIndex);
+  private updateSelectionState() {
+    this.defaultIndexState = this.options.findIndex((option) =>
+      this.matchesThemeByReferenceChain(this.defaultTheme, this.resolveTokens(option)),
+    );
+    const exactSelectedIndex = this.options.findIndex((option) =>
+      this.matchesThemeExactly(this.currentTheme, this.resolveTokens(option)),
+    );
+    this.setSelectedIndex(
+      exactSelectedIndex >= 0
+        ? exactSelectedIndex
+        : this.options.findIndex((option) =>
+            this.matchesThemeByReferenceChain(this.currentTheme, this.resolveTokens(option)),
+          ),
+    );
   }
 
   private onThemeUpdate(event: CustomEvent) {
     if (event.detail.theme) {
-      this.updateSelectedIndex(event.detail.theme);
+      this.currentTheme = event.detail.theme;
+      if (!dequal(this.defaultTheme.defaults, event.detail.theme.defaults)) {
+        this.defaultTheme = new Theme(event.detail.theme.defaults);
+      }
+      this.updateSelectionState();
     }
   }
 
   private dispatchSelectionChange() {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+  }
+
+  private onOptionClick(index: number) {
+    if (index === this.selectedIndex) {
+      this.dispatchSelectionChange();
+    }
   }
 
   private onOptionChange(index: number) {
@@ -292,6 +418,20 @@ export class WizardTokenPreset extends LitElement {
       this.collectTokenValueVariants(option)[token.path] ?? [token.value],
     );
 
+    // Build the full resolution chain from the token path through the theme,
+    // so intermediate references (e.g. {basis.heading.color}) are shown.
+    const fullChain = resolveTokenReferenceChain(`{${token.path}}`, this.currentTheme);
+
+    // Steps before the preset value are intermediate theme references
+    const presetValueIndex = fullChain.indexOf(token.value);
+    const intermediateSteps = presetValueIndex > 0 ? fullChain.slice(0, presetValueIndex) : [];
+
+    // Steps after the preset value are resolved values
+    const resolvedSteps =
+      presetValueIndex >= 0
+        ? fullChain.slice(presetValueIndex + 1)
+        : resolveTokenReferenceChain(token.value, this.currentTheme);
+
     return html`
       <p class="nl-paragraph wizard-token-preset__option-value">
         <span class="wizard-token-preset__option-value-heading">
@@ -299,6 +439,16 @@ export class WizardTokenPreset extends LitElement {
 
           <code class="wizard-token-preset__option-value-path">${token.path}</code>
         </span>
+
+        ${intermediateSteps.map(
+          (step) => html`
+            <span class="wizard-token-preset__option-value-mapping">
+              <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
+
+              <code class="wizard-token-preset__option-value-resolved">${step}</code>
+            </span>
+          `,
+        )}
 
         <span class="wizard-token-preset__option-value-mapping">
           <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
@@ -309,12 +459,22 @@ export class WizardTokenPreset extends LitElement {
             >${'suffix' in tokenValueParts ? tokenValueParts.suffix : ''}</code
           >
         </span>
+
+        ${resolvedSteps.map(
+          (step) => html`
+            <span class="wizard-token-preset__option-value-mapping">
+              <span class="wizard-token-preset__option-value-mapping-label" aria-hidden="true">↓</span>
+
+              <code class="wizard-token-preset__option-value-resolved">${step}</code>
+            </span>
+          `,
+        )}
       </p>
     `;
   }
 
   private renderTokenDetails(option: PresetOption) {
-    const tokenValues = this.flattenTokenValues(option.tokens);
+    const tokenValues = this.flattenTokenValues(this.resolveTokens(option));
 
     if (tokenValues.length === 0) {
       return nothing;
@@ -345,6 +505,7 @@ export class WizardTokenPreset extends LitElement {
         <legend class="wizard-token-preset__legend">${this.groupLabel || 'Preset opties'}</legend>
         ${this.options.map((option, index) => {
           const isSelected = index === this.selectedIndex;
+          const isDefault = index === this.defaultIndexState;
 
           return html`
             <div class="wizard-token-preset__option">
@@ -355,6 +516,7 @@ export class WizardTokenPreset extends LitElement {
                   name=${this.inputName}
                   .value=${String(index)}
                   ?checked=${isSelected}
+                  @click=${() => this.onOptionClick(index)}
                   @change=${() => this.onOptionChange(index)}
                 />
                 <span
@@ -362,11 +524,16 @@ export class WizardTokenPreset extends LitElement {
                     ? 'nl-button--pressed'
                     : ''}"
                 >
-                  <span class="nl-paragraph wizard-token-preset__option-title">${option.name}</span>
+                  <span class="wizard-token-preset__option-title-row">
+                    <span class="nl-paragraph wizard-token-preset__option-title">${option.name}</span>
+                    ${isDefault
+                      ? html`<span class="wizard-token-preset__option-default-pill">${themeTag}</span>`
+                      : nothing}
+                  </span>
 
                   ${option.description
                     ? html`<span class="nl-paragraph wizard-token-preset__option-description"
-                        >${option.description}</span
+                        >${unsafeHTML(option.description)}</span
                       >`
                     : nothing}
                 </span>

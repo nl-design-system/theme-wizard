@@ -26,10 +26,14 @@ const mount = async (overrides: Partial<WizardTokenPreset> = {}): Promise<Wizard
 const getRadios = (el: WizardTokenPreset): HTMLInputElement[] =>
   Array.from(el.shadowRoot?.querySelectorAll('input[type="radio"]') ?? []);
 
-const dispatchThemeUpdate = (tokens: Record<string, unknown>) => {
+const dispatchThemeUpdate = (
+  tokens: Record<string, unknown>,
+  defaults: Record<string, unknown> = structuredClone(tokens),
+) => {
   const theme = {
     at: (path: string) =>
       path.split('.').reduce((obj: Record<string, unknown>, key) => obj?.[key] as Record<string, unknown>, tokens),
+    defaults,
   };
   document.dispatchEvent(new CustomEvent('theme-update', { detail: { theme } }));
 };
@@ -212,6 +216,20 @@ describe(`<${tag}>`, () => {
       radios[0].dispatchEvent(new Event('change', { bubbles: true }));
       expect(handler).toHaveBeenCalledOnce();
     });
+
+    it('clicking the selected radio dispatches a change event again', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      const handler = vi.fn();
+      el.addEventListener('change', handler);
+
+      el.selectIndex(0);
+      handler.mockClear();
+
+      const radios = getRadios(el);
+      radios[0].dispatchEvent(new Event('click', { bubbles: true }));
+
+      expect(handler).toHaveBeenCalledOnce();
+    });
   });
 
   describe('token details rendering', () => {
@@ -239,6 +257,38 @@ describe(`<${tag}>`, () => {
       await el.updateComplete;
       expect(el.shadowRoot?.querySelector('details')).toBeTruthy();
     });
+
+    it('renders intermediate and resolved steps for token reference chains', async () => {
+      const chainOption = {
+        name: 'Chain',
+        tokens: {
+          heading: {
+            color: {
+              $value: '{color.document}',
+            },
+          },
+        },
+      };
+      const el = await mount({ options: [chainOption] });
+
+      dispatchThemeUpdate({
+        color: { document: { $value: '#000000' } },
+        heading: {
+          'base-color': { $value: '{color.document}' },
+          color: { $value: '{heading.base-color}' },
+        },
+      });
+
+      el.selectIndex(0);
+      await el.updateComplete;
+
+      const resolvedValues = Array.from(
+        el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-value-resolved') ?? [],
+      ).map((node) => node.textContent?.trim());
+
+      expect(resolvedValues).toContain('{heading.base-color}');
+      expect(resolvedValues).toContain('#000000');
+    });
   });
 
   describe('theme-update event', () => {
@@ -246,6 +296,84 @@ describe(`<${tag}>`, () => {
       const el = await mount({ options: [optionA, optionB] });
       dispatchThemeUpdate({ color: { primary: { $value: 'red' } } });
       expect(el.selectedIndex).toBe(1);
+    });
+
+    it('sets defaultIndex to the matching option on initial theme-update', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      expect(el.defaultIndex).toBe(-1);
+
+      dispatchThemeUpdate({ color: { primary: { $value: 'red' } } });
+      await el.updateComplete;
+
+      expect(el.defaultIndex).toBe(1);
+    });
+
+    it('renders the default pill on the matching option', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      dispatchThemeUpdate({ color: { primary: { $value: 'blue' } } });
+      await el.updateComplete;
+
+      const pills = el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-default-pill') ?? [];
+      expect(pills).toHaveLength(1);
+
+      // The pill should be inside the first option (Optie A)
+      const optionWithPill = pills[0]?.closest('.wizard-token-preset__option');
+      const title = optionWithPill?.querySelector('.wizard-token-preset__option-title');
+      expect(title?.textContent?.trim()).toBe('Optie A');
+    });
+
+    it('defaultIndex stays -1 when no option matches the theme', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      dispatchThemeUpdate({ color: { primary: { $value: 'green' } } });
+      await el.updateComplete;
+
+      expect(el.defaultIndex).toBe(-1);
+      const pills = el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-default-pill') ?? [];
+      expect(pills).toHaveLength(0);
+    });
+
+    it('matches a preset when the theme value resolves to it through a reference chain', async () => {
+      // Preset expects "final-value", but the theme has a reference that resolves to it
+      const optionDirect = {
+        name: 'Direct',
+        tokens: { heading: { color: { $value: '{color.document}' } } },
+      };
+      const optionOther = {
+        name: 'Other',
+        tokens: { heading: { color: { $value: 'green' } } },
+      };
+      const el = await mount({ options: [optionDirect, optionOther] });
+
+      // Theme has heading.color → {heading.base-color}, and heading.base-color → {color.document}
+      // So heading.color resolves through the chain to {color.document}
+      dispatchThemeUpdate({
+        color: { document: { $value: '#000000' } },
+        heading: {
+          'base-color': { $value: '{color.document}' },
+          color: { $value: '{heading.base-color}' },
+        },
+      });
+
+      expect(el.selectedIndex).toBe(0);
+    });
+
+    it('sets defaultIndex through a reference chain', async () => {
+      const optionResolved = {
+        name: 'Resolved',
+        tokens: { heading: { color: { $value: '{color.document}' } } },
+      };
+      const el = await mount({ options: [optionResolved] });
+
+      dispatchThemeUpdate({
+        color: { document: { $value: '#000000' } },
+        heading: {
+          'base-color': { $value: '{color.document}' },
+          color: { $value: '{heading.base-color}' },
+        },
+      });
+      await el.updateComplete;
+
+      expect(el.defaultIndex).toBe(0);
     });
 
     it('clears selection when no preset matches the theme', async () => {
@@ -260,6 +388,28 @@ describe(`<${tag}>`, () => {
       el.remove();
       dispatchThemeUpdate({ color: { primary: { $value: 'blue' } } });
       expect(el.selectedIndex).toBe(-1);
+    });
+
+    it('preserves the start-theme default option when the current theme changes', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      const startTheme = { color: { primary: { $value: 'blue' } } };
+      dispatchThemeUpdate(startTheme);
+      await el.updateComplete;
+      expect(el.defaultIndex).toBe(0);
+
+      dispatchThemeUpdate({ color: { primary: { $value: 'red' } } }, startTheme);
+      await el.updateComplete;
+
+      expect(el.selectedIndex).toBe(1);
+      expect(el.defaultIndex).toBe(0);
+
+      const defaultPills = Array.from(
+        el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-default-pill') ?? [],
+      );
+      expect(defaultPills).toHaveLength(1);
+      expect(defaultPills[0]?.textContent?.trim()).toBe('start-theme');
+      const optionTitles = Array.from(el.shadowRoot?.querySelectorAll('.wizard-token-preset__option-title') ?? []);
+      expect(optionTitles[0]?.textContent?.trim()).toBe('Optie A');
     });
   });
 

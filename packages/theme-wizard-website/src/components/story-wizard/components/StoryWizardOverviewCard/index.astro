@@ -1,0 +1,41 @@
+---
+import StoryWizardCheckmark from '../StoryWizardCheckmark/index.astro';
+import StoryWizardStepPreview from '../StoryWizardStepPreview/index.astro';
+
+interface Props {
+  stepId: string;
+  title: string;
+  description?: string;
+  previewStoryId: string;
+  icon?: string;
+  showSummary?: boolean;
+}
+
+const { stepId, title, description, previewStoryId, icon, showSummary = false } = Astro.props;
+---
+
+<article class="wizard-step-overview-card">
+  <div
+    class:list={['wizard-step-overview-card__preview', icon && 'wizard-step-overview-card__preview--with-icon']}
+  >
+    {icon && <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={icon} />}
+    <StoryWizardStepPreview storyId={previewStoryId} />
+  </div>
+
+  <div class="wizard-step-overview-card__body">
+    <span class="wizard-step-overview-card__title">{title}</span>
+    {description && <span class="wizard-step-overview-card__description">{description}</span>}
+    {showSummary && <div class="wizard-step-overview-card__summary-container" data-step-selection-summary hidden />}
+  </div>
+
+  <div class="wizard-step-overview-card__footer">
+    <StoryWizardCheckmark class="wizard-step-overview-card__done" />
+    <a
+      class="wizard-step-overview-card__action nl-button nl-button--primary"
+      href={`#${stepId}`}
+      data-step-overview-card={stepId}
+    >
+      Stel in
+    </a>
+  </div>
+</article>

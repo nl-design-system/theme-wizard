@@ -1,13 +1,54 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro"
-import { components } from '@/lib/components'
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { components, type ComponentCategory } from '@/lib/components';
+import '@nl-design-system-candidate/heading-css/heading.css';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import '@nl-design-system-candidate/link-css/link.css';
 
-const componentList = await Promise.all(Object.entries(components).map(async ([slug, {title}]) => {
-  return {
-    slug,
-    title
-  }
-}))
+import './index.css';
+
+const componentList = Object.entries(components).map(([slug, { title, category }]) => ({
+  slug,
+  title,
+  category,
+}));
+
+const componentDescriptions: Record<string, string> = {
+  button: 'Voor acties zoals verzenden, opslaan of openen.',
+  code: 'Voor korte stukjes code in een lopende tekst.',
+  'code-block': 'Voor langere codevoorbeelden in een apart blok.',
+  'color-sample': 'Voor het tonen en vergelijken van kleuren.',
+  'data-badge': 'Voor labels met tekst, zoals een status of categorie.',
+  heading: 'Voor koppen die structuur geven aan een pagina.',
+  link: 'Voor verwijzingen naar een andere pagina of website.',
+  mark: 'Voor tekst die extra nadruk krijgt met een markering.',
+  'number-badge': 'Voor kleine tellers, zoals meldingen of aantallen.',
+  paragraph: 'Voor gewone lopende tekst op een pagina.',
+  'skip-link': 'Voor een snelle sprong naar de inhoud van de pagina.',
+};
+
+const categories: { key: ComponentCategory; label: string; description: string }[] = [
+  {
+    key: 'navigatie',
+    label: 'Navigatie',
+    description: 'Onderdelen waarmee bezoekers door de website bewegen.',
+  },
+  {
+    key: 'acties',
+    label: 'Acties',
+    description: 'Knoppen en andere onderdelen waarmee bezoekers iets doen, zoals een formulier versturen.',
+  },
+  {
+    key: 'status',
+    label: 'Status en labels',
+    description: 'Kleine labels die een waarde of staat aangeven, zoals een telling of een categorie.',
+  },
+  {
+    key: 'visueel',
+    label: 'Visueel en lezen',
+    description: "Onderdelen voor tekst en opmaak, zoals koppen, alinea's en codeblokken.",
+  },
+];
 ---
 
 <BaseLayout title="Componenten - Theme Wizard">
@@ -15,15 +56,60 @@ const componentList = await Promise.all(Object.entries(components).map(async ([s
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <nav slot="sidebar">
-        {componentList.map(({slug, title}) => (
-          <wizard-sidebar-link href={`/components/${slug}`}>{title}</wizard-sidebar-link>
-        ))}
+        {
+          componentList.map(({ slug, title }) => (
+            <wizard-sidebar-link href={`/components/${slug}`}>{title}</wizard-sidebar-link>
+          ))
+        }
       </nav>
-      <main slot="main">
-        <h1>Componenten</h1>
-        <!-- TODO: show list of components with illustrations -->
-        <!--https://github.com/nl-design-system/documentatie/tree/a55bc644e9eead2a546b7b1194faca949d41b9f4/static/svg -->
+      <main slot="main" class="wizard-main wizard-components-overview">
+        <div class="wizard-components-hero">
+          <div class="wizard-components-intro">
+            <h1 class="nl-heading nl-heading--level-1">Componenten</h1>
+
+            <p class="nl-paragraph--lead">
+              Kies een onderdeel van je website, zoals een knop of link, en stel de stijl in.
+            </p>
+
+            <p class="nl-paragraph">
+              Je kunt beginnen met <strong>kant-en-klare stijlen</strong>. Dat is de makkelijkste keuze. Later kun je
+              ook extra instellingen aanpassen als je meer controle wilt.
+            </p>
+          </div>
+        </div>
+
+        {
+          categories.map(({ key, label, description }) => {
+            const items = componentList.filter((c) => c.category === key);
+            if (items.length === 0) return null;
+            return (
+              <section class="wizard-components-category">
+                <div class="wizard-components-category__header">
+                  <h2 class="nl-heading nl-heading--level-2">{label}</h2>
+                  <p class="nl-paragraph wizard-components-category__description">{description}</p>
+                </div>
+                <nav class="wizard-component-grid" aria-label={label}>
+                  {items.map(({ slug, title }) => (
+                    <a href={`/components/${slug}`} class="wizard-component-card">
+                      <img
+                        src={`/svg/componenten_overzicht_${slug}.svg`}
+                        alt=""
+                        class="wizard-component-card__illustration"
+                        width="240"
+                        height="160"
+                      />
+                      <span class="wizard-component-card__title">{title}</span>
+                      <span class="wizard-component-card__description">
+                        {componentDescriptions[slug] ?? 'Open dit onderdeel en kies een stijl.'}
+                      </span>
+                    </a>
+                  ))}
+                </nav>
+              </section>
+            );
+          })
+        }
       </main>
-     </wizard-layout>
+    </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>

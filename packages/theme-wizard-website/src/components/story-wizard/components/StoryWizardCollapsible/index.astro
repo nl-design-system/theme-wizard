@@ -1,0 +1,49 @@
+---
+import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
+
+interface Props {
+  title?: string;
+  isOpen?: boolean;
+  class?: string;
+  summaryClass?: string;
+  chevronClass?: string;
+  hideChevron?: boolean;
+}
+
+const {
+  title,
+  isOpen = false,
+  class: className,
+  summaryClass,
+  chevronClass,
+  hideChevron = false,
+} = Astro.props;
+---
+
+<details class:list={[className]} open={isOpen}>
+  <summary class:list={[summaryClass]}>
+    <slot name="summary-content">
+      <span>{title}</span>
+    </slot>
+    {
+      !hideChevron && (
+        <span
+          class:list={[chevronClass || 'wizard-collapsible__chevron']}
+          aria-hidden="true"
+          set:html={chevronDownIcon}
+        />
+      )
+    }
+  </summary>
+
+  <slot />
+</details>
+
+<style>
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

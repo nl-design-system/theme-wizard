@@ -1,0 +1,58 @@
+---
+import type { StoryWizardStep as StoryWizardStepViewModel } from '@/lib/types';
+import StoryWizardEditableTokenGroup from '../StoryWizardEditableTokenGroup/index.astro';
+import StoryWizardPresetGroup from '../StoryWizardPresetGroup/index.astro';
+import StoryWizardBackButton from '../StoryWizardBackButton/index.astro';
+import StoryWizardStepHeader from '../StoryWizardStepHeader/index.astro';
+import StoryWizardPreviewSection from '../StoryWizardPreviewSection/index.astro';
+
+interface Props {
+  step: StoryWizardStepViewModel;
+  stepIndex: number;
+  totalSteps: number;
+}
+
+const { step } = Astro.props;
+const focusedPreviewStories = step.cardPreviewStories.length > 0 ? step.cardPreviewStories : step.previewStories;
+const showPreviewModeToggle =
+  step.type === 'preset' &&
+  focusedPreviewStories.length > 0 &&
+  step.previewStories.length > 0 &&
+  (focusedPreviewStories.length !== step.previewStories.length ||
+    focusedPreviewStories.some((story, index) => story.id !== step.previewStories[index]?.id));
+---
+
+<section
+  id={step.id}
+  class="wizard-story-section"
+  aria-label={step.title}
+  data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
+  data-step-label={step.title}
+>
+  <div class="wizard-story-section__header">
+    <StoryWizardBackButton />
+  </div>
+
+  <div class="wizard-story-section__layout">
+    <aside class="wizard-story-section__settings-panel" aria-label={`${step.title}`}>
+      <StoryWizardStepHeader title={step.title} intro={step.intro} />
+
+      {
+        step.groups.map((group) =>
+          group.type === 'preset' ? (
+            <StoryWizardPresetGroup group={group} />
+          ) : (
+            <StoryWizardEditableTokenGroup group={group} />
+          ),
+        )
+      }
+    </aside>
+
+    <StoryWizardPreviewSection
+      title={step.title}
+      previewStories={step.previewStories}
+      focusedPreviewStories={focusedPreviewStories}
+      showPreviewModeToggle={showPreviewModeToggle}
+    />
+  </div>
+</section>

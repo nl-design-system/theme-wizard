@@ -1,6 +1,26 @@
 import type { DesignTokenLeaf, StoryWizardSelectionSummary } from './types';
 import { StoryWizardGroup } from './StoryWizardGroup';
 
+const flattenDesignTokens = (tokens: unknown, path: string[] = []): DesignTokenLeaf[] => {
+  if (!tokens || typeof tokens !== 'object') return [];
+
+  if ('$value' in (tokens as Record<string, unknown>)) {
+    const rawValue = (tokens as { $value: unknown }).$value;
+
+    return [
+      {
+        path: path.join('.'),
+        value:
+          typeof rawValue === 'string' || typeof rawValue === 'number' ? String(rawValue) : JSON.stringify(rawValue),
+      },
+    ];
+  }
+
+  return Object.entries(tokens as Record<string, unknown>).flatMap(([key, value]) =>
+    flattenDesignTokens(value, [...path, key]),
+  );
+};
+
 export class StoryWizardStep {
   public readonly groups: StoryWizardGroup[];
   public readonly editableTokenPaths: string[];
@@ -37,12 +57,12 @@ export class StoryWizardStep {
     this.element.hidden = false;
   }
 
-  public bindOptions(listener: () => void) {
-    this.groups.forEach((group) => group.bindOptions(listener));
-  }
-
   public clearSelections() {
     this.groups.forEach((group) => group.clearSelection());
+  }
+
+  public restoreDefaultSelection(force = false) {
+    this.groups.forEach((group) => group.restoreDefaultSelection(force));
   }
 
   public getStoredSelection() {
@@ -51,7 +71,7 @@ export class StoryWizardStep {
 
   public restoreStoredSelection(selection: number[]) {
     this.groups.forEach((group, groupIndex) => {
-      const selectedIndex = selection?.[groupIndex];
+      const selectedIndex = selection[groupIndex];
       if (typeof selectedIndex !== 'number') return;
       group.restoreSelectedIndex(selectedIndex);
     });
@@ -68,31 +88,37 @@ export class StoryWizardStep {
       .join(';');
   }
 
-  public createSelectionSummary(
-    flattenTokens: (tokens: unknown, path?: string[]) => DesignTokenLeaf[],
-  ): StoryWizardSelectionSummary[] {
-    const selectedGroups = this.groups.flatMap((group) => {
+  public createSelectionSummaryFromChosenSelections(chosenSelections: boolean[]): StoryWizardSelectionSummary[] {
+    const chosenOptions = this.groups.flatMap((group, groupIndex) => {
+      if (!chosenSelections[groupIndex]) return [];
       const option = group.getSelectedOption();
-      if (!option) return [];
-
-      return [
-        {
-          label: group.groupLabel,
-          optionLabel: option.optionLabel,
-          tokens: flattenTokens(option.tokens),
-        },
-      ];
+      return option ? [option] : [];
     });
 
-    if (selectedGroups.length === 0) {
-      return [];
-    }
+    if (chosenOptions.length === 0) return [];
 
     return [
       {
         label: this.stepLabel,
-        optionLabel: selectedGroups.map((group) => group.optionLabel).join(' · '),
-        tokens: selectedGroups.flatMap((group) => group.tokens),
+        optionLabel: chosenOptions.map((o) => o.optionLabel).join(' · '),
+        tokens: chosenOptions.flatMap((o) => flattenDesignTokens(o.tokens)),
+      },
+    ];
+  }
+
+  public createCurrentSelectionSummary(): StoryWizardSelectionSummary[] {
+    const selectedOptions = this.groups.flatMap((group) => {
+      const option = group.getSelectedOption();
+      return option ? [option] : [];
+    });
+
+    if (selectedOptions.length === 0) return [];
+
+    return [
+      {
+        label: this.stepLabel,
+        optionLabel: selectedOptions.map((o) => o.optionLabel).join(' · '),
+        tokens: selectedOptions.flatMap((o) => flattenDesignTokens(o.tokens)),
       },
     ];
   }
