@@ -1,3 +1,7 @@
+---
+import StoryWizardCheckmark from '../StoryWizardCheckmark.astro';
+---
+
 <!-- Step selection row -->
 <template id="wizard-step-selection-tmpl">
   <div class="wizard-step-selection">
@@ -6,7 +10,7 @@
     <span class="wizard-step-selection__info">
       <span class="wizard-step-selection__details">
         <a class="wizard-step-selection__title nl-link"></a>
-        <span class="wizard-step-selection__done" aria-label="Voltooid" hidden>✓</span>
+        <StoryWizardCheckmark class="wizard-step-selection__done" />
       </span>
 
       <span class="wizard-step-selection__value"></span>

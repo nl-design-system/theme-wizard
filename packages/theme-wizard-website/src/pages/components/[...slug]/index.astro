@@ -3,10 +3,10 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import StoryWizard from '@/components/story-wizard/index.astro';
 import { components } from '@/lib/components';
 import { resolveStoryWizardModel } from '@/lib/story-wizard';
-import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
 import '@nl-design-system-candidate/button-css/button.css';
 import '@nl-design-system-candidate/heading-css/heading.css';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import StoryWizardCheckmark from '@/components/story-wizard/components/StoryWizardCheckmark.astro';
 import '@nl-design-system-candidate/code-css/code.css';
 
 import './index.css';
@@ -58,7 +58,7 @@ const wizard = await resolveStoryWizardModel(slug);
         </nav>
 
         <div class="wizard-page-header">
-          <h1>{title}</h1>
+          <h1 class="wizard-page-title">{title} <StoryWizardCheckmark data-wizard-all-done-checkmark /></h1>
         </div>
         <StoryWizard wizard={wizard} />
         <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>

@@ -26,6 +26,12 @@
   justify-content: space-between;
 }
 
+.wizard-page-title {
+  display: flex;
+  align-items: center;
+  gap: var(--basis-space-inline-sm);
+}
+
 .wizard-step-selections {
   margin-block-end: var(--basis-space-block-lg);
   padding-block: 0;
@@ -56,6 +62,12 @@
   flex-direction: column;
   gap: 0.125rem;
   min-inline-size: 0;
+}
+
+.wizard-step-selections__summary-header {
+  display: flex;
+  align-items: center;
+  gap: var(--basis-space-inline-sm);
 }
 
 .wizard-step-selections__summary-title {
@@ -100,6 +112,10 @@
   background: color-mix(in srgb, var(--basis-color-default-bg-subtle) 62%, white);
   border-radius: var(--basis-border-radius-md);
   padding-inline: var(--basis-space-inline-md);
+}
+
+.wizard-step-selections[data-all-done] .wizard-step-selections__summary {
+  background: color-mix(in srgb, var(--basis-color-positive-bg-default) 52%, white);
 }
 
 .wizard-step-selections__summary:hover,
@@ -274,21 +290,7 @@
 }
 
 .wizard-step-selection__done {
-  align-items: center;
-  background: color-mix(in srgb, var(--basis-color-positive-color-default) 14%, white);
-  border-radius: var(--basis-border-radius-round);
-  block-size: 1.25rem;
-  color: var(--basis-color-positive-color-default);
-  display: inline-flex;
-  flex-shrink: 0;
-  font-size: 0.75rem;
-  inline-size: 1.25rem;
-  justify-content: center;
   margin-block-start: 0.125rem;
-}
-
-.wizard-step-selection__done[hidden] {
-  display: none;
 }
 
 .wizard-step-selection__tokens-btn {
@@ -990,25 +992,9 @@
 }
 
 .wizard-step-overview-card__done {
-  align-items: center;
-  background-color: var(--basis-color-positive-color-default, #1a7f4b);
-  block-size: 1.625rem;
-  border-radius: var(--basis-border-radius-round);
-  color: white;
-  display: flex;
-  font-size: 0.75rem;
-  font-weight: 700;
-  gap: 0.25rem;
-  inline-size: auto;
   inset-block-start: var(--basis-space-block-md);
   inset-inline-end: var(--basis-space-inline-md);
-  justify-content: center;
-  padding-inline: 0.625rem;
   position: absolute;
-}
-
-.wizard-step-overview-card__done[hidden] {
-  display: none;
 }
 
 .wizard-step-overview-card:not(.wizard-step-overview-card--done) .wizard-step-overview-card__preview {

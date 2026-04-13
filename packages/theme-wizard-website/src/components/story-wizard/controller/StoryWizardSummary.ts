@@ -16,6 +16,7 @@ export class StoryWizardSummary {
   readonly #dialog: StoryWizardTokensDialog;
   readonly #onNavigate: (stepIndex: number) => void;
   readonly #onReset: () => void;
+  readonly #allDoneCheckmark: HTMLElement | null;
 
   public constructor(
     root: HTMLElement | Document,
@@ -33,6 +34,7 @@ export class StoryWizardSummary {
     this.#overviewResetElement = root.querySelector<HTMLElement>('.wizard-steps-overview__reset');
     this.#listElement = root.querySelector<HTMLElement>('.wizard-step-selections__list');
     this.#detailsElement = root.querySelector<HTMLElement>('.wizard-step-selections');
+    this.#allDoneCheckmark = this.#summaryElement?.querySelector<HTMLElement>('[data-wizard-summary-all-done-checkmark]') ?? null;
   }
 
   public show() {
@@ -72,7 +74,9 @@ export class StoryWizardSummary {
         allSelectedGroups.push(...summaries);
       }
 
-      const stepLabel = step.stepLabel || `Stap ${index + 1}`;
+      const stepLabel = step.isAdvanced
+        ? `Geavanceerd: ${step.stepLabel || `Stap ${index + 1}`}`
+        : (step.stepLabel || `Stap ${index + 1}`);
       const value = this.#createValueElement(summaries, step.isAdvanced, isConfirmedAdvanced);
       const wrapper = this.#createStepWrapper(stepLabel, index, value, step.element.id);
       wrapper.classList.toggle('wizard-step-selection--done', isDone);
@@ -123,7 +127,7 @@ export class StoryWizardSummary {
 
     return [
       {
-        label: step.stepLabel,
+        label: `Geavanceerd: ${step.stepLabel}`,
         optionLabel: hasChanges ? tokens.map((t) => `${t.path}: ${t.value}`).join(' \u00b7 ') : 'Standaard',
         tokens,
       },
@@ -159,6 +163,11 @@ export class StoryWizardSummary {
     }
 
     details?.toggleAttribute('data-has-selections', completed > 0);
+    details?.toggleAttribute('data-all-done', completed === total && total > 0);
+
+    if (this.#allDoneCheckmark) {
+      this.#allDoneCheckmark.hidden = !(completed === total && total > 0);
+    }
   }
 
   // --- DOM construction (templates for complex structures, createElement for simple ones) ---

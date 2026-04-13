@@ -1,6 +1,7 @@
 ---
 import StoryWizardSummaryTemplates from './StoryWizardSummaryTemplates.astro';
 import StoryWizardTokensDialog from './StoryWizardTokensDialog.astro';
+import StoryWizardCheckmark from '../StoryWizardCheckmark.astro';
 import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
 ---
 
@@ -8,9 +9,14 @@ import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
   <details class="wizard-step-selections">
     <summary class="wizard-step-selections__summary">
       <span class="wizard-step-selections__summary-copy">
-        <span class="wizard-step-selections__summary-title" aria-live="polite" aria-atomic="true">
-          Nog geen keuzes gemaakt
-        </span>
+        <div class="wizard-step-selections__summary-header">
+          <span class="wizard-step-selections__summary-title" aria-live="polite" aria-atomic="true">
+            Nog geen keuzes gemaakt
+          </span>
+
+          <StoryWizardCheckmark data-wizard-summary-all-done-checkmark />
+        </div>
+
         <span class="wizard-step-selections__summary-meta">Open om je ingestelde onderdelen te bekijken</span>
       </span>
       <span class="wizard-step-selections__summary-actions">
