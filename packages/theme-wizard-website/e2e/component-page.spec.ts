@@ -30,14 +30,14 @@ test.describe('stories', () => {
   });
 
   test('most stories show input for design tokens', async ({ page }) => {
-    const story = page.locator('section#DesignCodeBlockColor');
+    const story = page.locator('section#AdvancedFocusButton');
     const inputs = story.locator('wizard-token-field');
-    expect(inputs).toHaveCount(2);
+    expect(inputs).toHaveCount(4);
   });
 
   test.describe('inputs show only relevant tokens', () => {
     test('background-color inputs only show background colors', async ({ componentPage }) => {
-      const options = await componentPage.getInputOptions('nl.code-block.background-color');
+      const options = await componentPage.getInputOptions('nl.button.focus.background-color', '', 'AdvancedFocusButton');
 
       expect.soft(await options.count()).toBeGreaterThanOrEqual(1);
       for (const option of await options.all()) {
@@ -48,7 +48,7 @@ test.describe('stories', () => {
     });
 
     test('text color inputs only show text colors', async ({ componentPage }) => {
-      const options = await componentPage.getInputOptions('nl.code-block.color');
+      const options = await componentPage.getInputOptions('nl.button.focus.color', '', 'AdvancedFocusButton');
 
       expect.soft(await options.count()).toBeGreaterThanOrEqual(1);
       for (const option of await options.all()) {
@@ -59,7 +59,7 @@ test.describe('stories', () => {
     });
 
     test('line-height inputs only show line-heights', async ({ componentPage }) => {
-      const options = await componentPage.getInputOptions('nl.code-block.line-height');
+      const options = await componentPage.getInputOptions('nl.button.default.line-height');
 
       expect.soft(await options.count()).toBeGreaterThanOrEqual(1);
       for (const option of await options.all()) {
@@ -70,7 +70,7 @@ test.describe('stories', () => {
     });
 
     test('font-size inputs only show font-sizes', async ({ componentPage }) => {
-      const options = await componentPage.getInputOptions('nl.code-block.font-size');
+      const options = await componentPage.getInputOptions('nl.button.default.font-size');
 
       expect.soft(await options.count()).toBeGreaterThanOrEqual(1);
       for (const option of await options.all()) {
@@ -84,7 +84,7 @@ test.describe('stories', () => {
   test.describe('inputs allow manual input', () => {
     test.describe('color', () => {
       test('updates input value', async ({ page }) => {
-        const input = page.getByLabel('nl.code-block.color');
+        const input = page.getByLabel('nl.button.focus.color');
         expect(await input.inputValue()).not.toBe('#ff0000');
         await input.fill('#ff0000');
         await input.press('Enter');
@@ -92,7 +92,7 @@ test.describe('stories', () => {
       });
 
       test('updates input preview', async ({ componentPage, page }) => {
-        const label = 'nl.code-block.color';
+        const label = 'nl.button.focus.color';
         const preview = componentPage.getComboboxPreviewElement(label);
         const computedBgColor = await componentPage.getComputedProperty(preview, 'color');
         expect(computedBgColor).not.toBe('#ff0000');
@@ -105,37 +105,37 @@ test.describe('stories', () => {
     });
 
     test.describe('dimension (font-size)', () => {
-      test('updates input value', async ({ page }) => {
-        const input = page.getByLabel('nl.code-block.font-size');
+      test('updates input value', async ({ componentPage }) => {
+        const input = componentPage.getScopedInput('nl.button.default.font-size');
         expect(await input.inputValue()).not.toBe('24px');
         await input.fill('24px');
         await input.blur();
         expect(await input.inputValue()).toBe('24px');
       });
 
-      test('updates input preview', async ({ componentPage, page }) => {
-        const label = 'nl.code-block.font-size';
-        const preview = componentPage.getComboboxPreviewElement(label);
+      test('updates input preview', async ({ componentPage }) => {
+        const label = 'nl.button.default.font-size';
+        const preview = componentPage.getComboboxPreviewElement(label, 'AdvancedButtonTypography');
         const computedFontSize = await componentPage.getComputedProperty(preview, 'font-size');
         expect(computedFontSize).not.toBe('24px');
-        await page.getByLabel(label).fill('24px');
-        await page.keyboard.press('Tab');
+        await componentPage.getScopedInput(label).fill('24px');
+        await componentPage.page.keyboard.press('Tab');
         const updatedFontSize = await componentPage.getComputedProperty(preview, 'font-size');
         expect(updatedFontSize).toBe('24px');
       });
     });
 
     test.describe('line-height', () => {
-      test('updates input value (dimension)', async ({ page }) => {
-        const input = page.getByLabel('nl.code-block.line-height');
+      test('updates input value (dimension)', async ({ componentPage }) => {
+        const input = componentPage.getScopedInput('nl.button.default.line-height');
         expect(await input.inputValue()).not.toBe('24px');
         await input.fill('24px');
         await input.blur();
         expect(await input.inputValue()).toBe('24px');
       });
 
-      test('updates input value (number)', async ({ page }) => {
-        const input = page.getByLabel('nl.code-block.line-height');
+      test('updates input value (number)', async ({ componentPage }) => {
+        const input = componentPage.getScopedInput('nl.button.default.line-height');
         expect(await input.inputValue()).not.toBe('1.2');
         await input.fill('1.2');
         await input.blur();
@@ -146,12 +146,12 @@ test.describe('stories', () => {
 
   test.describe('validations', () => {
     test.describe('color contrast', () => {
-      const ERROR_MESSAGE = 'Onvoldoende contrast met nl.code-block.background-color';
+      const ERROR_MESSAGE = 'Onvoldoende contrast met nl.button.focus.background-color';
 
       test('shows validation warning when bg+color tokens have insufficient contrast - basis tokens', async ({
         page,
       }) => {
-        const input = page.getByLabel('nl.code-block.color');
+        const input = page.getByLabel('nl.button.focus.color');
         const OPTION = 'basis.color.accent-1-inverse.color-default';
         await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
@@ -166,7 +166,7 @@ test.describe('stories', () => {
       test('shows validation warning when bg+color tokens have insufficient contrast - absolute value', async ({
         page,
       }) => {
-        const input = page.getByLabel('nl.code-block.color');
+        const input = page.getByLabel('nl.button.focus.color');
         await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
         await input.fill('#fff');
@@ -176,7 +176,7 @@ test.describe('stories', () => {
       });
 
       test('contrast warning goes away after setting valid values', async ({ page }) => {
-        const input = page.getByLabel('nl.code-block.color');
+        const input = page.getByLabel('nl.button.focus.color');
         await input.fill('#fff');
         await input.blur();
         await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
@@ -191,8 +191,8 @@ test.describe('stories', () => {
       const ERROR_MESSAGE =
         'Lettergrootte is te klein. Bekijk richtlijnen. Lettergrootte: 12px. Minimaal vereist: 14px / 0.875rem';
 
-      test('shows min-font-size validation', async ({ page }) => {
-        const input = page.getByLabel('nl.code-block.font-size');
+      test('shows min-font-size validation', async ({ componentPage }) => {
+        const input = componentPage.getScopedInput('nl.button.default.font-size');
         // Make sure there's not already a validation message there
         await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
@@ -201,8 +201,8 @@ test.describe('stories', () => {
         await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
       });
 
-      test('error message is gone after fixing', async ({ page }) => {
-        const input = page.getByLabel('nl.code-block.font-size');
+      test('error message is gone after fixing', async ({ componentPage }) => {
+        const input = componentPage.getScopedInput('nl.button.default.font-size');
         await input.fill('12px');
         await input.blur();
         await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
@@ -214,9 +214,9 @@ test.describe('stories', () => {
     });
 
     test.describe('line-height', () => {
-      test('shows min-line-height validation', async ({ page }) => {
+      test('shows min-line-height validation', async ({ componentPage }) => {
         const ERROR_MESSAGE = 'Regelafstand is te klein. Bekijk richtlijnen. Regelafstand: 1.01. Minimaal vereist: 1.1';
-        const input = page.getByLabel('nl.code-block.line-height');
+        const input = componentPage.getScopedInput('nl.button.default.line-height');
         await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
         await input.fill('1.01');
@@ -224,17 +224,17 @@ test.describe('stories', () => {
         await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
       });
 
-      ['20px', '120%'].forEach((size) => {
-        test(`shows unitless-line-height validation (${size})`, async ({ page }) => {
+      for (const size of ['20px', '120%']) {
+        test(`shows unitless-line-height validation (${size})`, async ({ componentPage }) => {
           const ERROR_MESSAGE = 'Onverwachte eenheid. Gebruik alleen nummers.';
-          const input = page.getByLabel('nl.code-block.line-height');
+          const input = componentPage.getScopedInput('nl.button.default.line-height');
           await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
           await input.fill(size);
           await input.blur();
           await expect(input).toHaveAccessibleErrorMessage(ERROR_MESSAGE);
         });
-      });
+      }
     });
   });
 });
