@@ -1,5 +1,5 @@
 import { presetTokensToUpdateMany } from '@app/lib/Theme/lib';
-import type { components } from '@/lib/components';
+import { components } from '@/lib/components';
 import { initStories } from '@/components/render-stories';
 import type { StoryWizardStepState, StoryWizardThemeHost } from './types';
 import { StoryWizardNavigation } from './StoryWizardNavigation';
@@ -38,6 +38,7 @@ export class StoryWizardController {
     this.#dialog = new StoryWizardTokensDialog();
     this.#summary = new StoryWizardSummary(
       root,
+      components[this.#componentId].title,
       this.#dialog,
       (index) => this.#showStep(index),
       () => this.#reset().catch((e) => console.error('Failed to reset Story Wizard', e)),
@@ -139,7 +140,9 @@ export class StoryWizardController {
   #showOverview() {
     this.#confirmCurrentAdvancedStep();
     this.#steps.forEach((step) => step.hide());
+    this.#summary.hide();
     this.#navigation.showOverview();
+    this.#updateSummary();
     this.#refreshStepNavigation();
     this.#persistStepState();
   }
@@ -148,6 +151,7 @@ export class StoryWizardController {
     this.#confirmCurrentAdvancedStep();
     this.#nav.goTo(index);
     this.#navigation.hideOverview();
+    this.#summary.show();
     this.#updateVisibleStep(index);
     this.#refreshStepNavigation();
     this.#refreshStepView();
@@ -183,7 +187,7 @@ export class StoryWizardController {
   #bindOptionListeners() {
     this.#steps.forEach((step) => {
       step.bindOptions((group) => {
-        if (!this.#presetState.syncing) {
+        if (!this.#presetState.syncing && this.#presetState.isInitialized) {
           group.markAsChosen();
         }
 
@@ -193,6 +197,12 @@ export class StoryWizardController {
     });
 
     document.addEventListener('theme-update', () => {
+      const currentStep = this.#steps[this.#nav.currentStep];
+      if (currentStep?.isAdvanced && this.#summary.getAdvancedSummary(currentStep, this.#getTheme()).length > 0) {
+        currentStep.confirmAdvancedSelection();
+      }
+
+      this.#refreshSelectionState();
       this.#preview.apply(this.#steps);
     });
   }
@@ -290,7 +300,9 @@ export class StoryWizardController {
     return this.#steps.map((step) => {
       const liveSelectedGroups = step.isAdvanced
         ? this.#summary.getAdvancedSummary(step, themeHost)
-        : step.createCurrentSelectionSummary();
+        : step.hasChosenSelection()
+          ? step.createCurrentSelectionSummary()
+          : [];
       const confirmedGroups = step.isAdvanced ? liveSelectedGroups : step.createSelectionSummary();
       const isCompletedAdvancedStep = step.isAdvanced && step.hasBeenVisited();
       const isConfirmedAdvancedStep = step.isAdvanced && (liveSelectedGroups.length > 0 || isCompletedAdvancedStep);
