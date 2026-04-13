@@ -29,6 +29,12 @@ test.describe('stories', () => {
     expect(await page.locator('section:has(wizard-story-preview)').count()).toBeGreaterThanOrEqual(1);
   });
 
+  test('story renders example component', async ({ page }) => {
+    const preview = page.locator('wizard-story-preview').first();
+    const component = preview.locator('clippy-react-element');
+    await expect(component).toBeVisible();
+  });
+
   test('most stories show input for design tokens', async ({ page }) => {
     const story = page.locator('section#DesignCodeBlockColor');
     const inputs = story.locator('wizard-token-field');
