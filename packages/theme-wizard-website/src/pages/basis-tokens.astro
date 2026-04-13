@@ -4,6 +4,8 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme'
+
 export const prerender = false; // enable SSR
 
 const scraperUrl = withRelatedProject({
