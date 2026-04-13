@@ -7,6 +7,7 @@ import { cloneTemplate } from './cloneTemplate';
 import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
 
 export class StoryWizardSummary {
+  readonly #componentTitle: string;
   readonly #listElement: HTMLElement | null;
   readonly #summaryElement: HTMLElement | null;
   readonly #summaryResetElement: HTMLElement | null;
@@ -18,10 +19,12 @@ export class StoryWizardSummary {
 
   public constructor(
     root: HTMLElement | Document,
+    componentTitle: string,
     dialog: StoryWizardTokensDialog,
     onNavigate: (stepIndex: number) => void,
     onReset: () => void,
   ) {
+    this.#componentTitle = componentTitle;
     this.#dialog = dialog;
     this.#onNavigate = onNavigate;
     this.#onReset = onReset;
@@ -36,6 +39,10 @@ export class StoryWizardSummary {
     this.#detailsElement?.removeAttribute('hidden');
   }
 
+  public hide() {
+    this.#detailsElement?.setAttribute('hidden', '');
+  }
+
   public openDetails() {
     const details = this.#detailsElement as HTMLDetailsElement | null;
     if (details) details.open = true;
@@ -48,16 +55,23 @@ export class StoryWizardSummary {
     listElement.replaceChildren();
     this.#summaryResetElement?.replaceChildren();
     this.#overviewResetElement?.replaceChildren();
+    if (this.#overviewResetElement) {
+      this.#overviewResetElement.hidden = true;
+    }
     let completedSteps = 0;
     const allSelectedGroups: StoryWizardSelectionSummary[] = [];
-    let hasAnySelections = false;
+    let hasResettableState = false;
 
     stepsState.forEach((state, index) => {
       const { step, summaries, isDone, isConfirmedAdvanced } = state;
 
-      if (summaries.length > 0) {
-        hasAnySelections = true;
-      }
+      hasResettableState =
+        hasResettableState ||
+        summaries.length > 0 ||
+        isDone ||
+        isConfirmedAdvanced ||
+        step.hasChosenSelection() ||
+        step.hasBeenVisited();
 
       if (isDone) {
         completedSteps += 1;
@@ -67,6 +81,10 @@ export class StoryWizardSummary {
       const stepLabel = step.stepLabel || `Stap ${index + 1}`;
       const value = this.#createValueElement(summaries, step.isAdvanced, isConfirmedAdvanced);
       const wrapper = this.#createStepWrapper(stepLabel, index, value, step.element.id);
+      wrapper.classList.toggle('wizard-step-selection--done', isDone);
+
+      const doneEl = wrapper.querySelector<HTMLElement>('.wizard-step-selection__done');
+      if (doneEl) doneEl.hidden = !isDone;
 
       if (isDone) {
         this.#appendTokensButton(wrapper, stepLabel, summaries);
@@ -77,7 +95,7 @@ export class StoryWizardSummary {
 
     this.#appendTotalTokensButton(allSelectedGroups);
 
-    if (hasAnySelections) {
+    if (hasResettableState) {
       this.#appendResetButton();
     }
 
@@ -96,9 +114,10 @@ export class StoryWizardSummary {
 
     let hasChanges = false;
     const tokens = step.editableTokenPaths.flatMap((path) => {
-      const currentValue = theme.at(path)?.$value;
-      const defaultValue = this.#getDefaultTokenValue(theme.defaults, path);
-      const isChanged = !dequal(currentValue, defaultValue);
+      const currentToken = theme.at(path);
+      const defaultToken = this.#getDefaultToken(theme.defaults, path);
+      const currentValue = currentToken?.$value;
+      const isChanged = !dequal(currentToken, defaultToken);
 
       if (isChanged) hasChanges = true;
       if (!includeUnchangedTokens && !isChanged) return [];
@@ -117,12 +136,10 @@ export class StoryWizardSummary {
     ];
   }
 
-  #getDefaultTokenValue(defaults: unknown, path: string) {
+  #getDefaultToken(defaults: unknown, path: string) {
     const defaultToken = dlv(defaults && typeof defaults === 'object' ? defaults : undefined, path);
 
-    return defaultToken && typeof defaultToken === 'object' && '$value' in (defaultToken as Record<string, unknown>)
-      ? (defaultToken as { $value?: unknown }).$value
-      : undefined;
+    return defaultToken && typeof defaultToken === 'object' ? defaultToken : undefined;
   }
 
   #formatTokenValue(value: unknown) {
@@ -209,7 +226,10 @@ export class StoryWizardSummary {
 
   #appendResetButton() {
     this.#summaryResetElement?.appendChild(this.#createResetButton());
-    this.#overviewResetElement?.appendChild(this.#createResetButton());
+    if (this.#overviewResetElement) {
+      this.#overviewResetElement.hidden = false;
+      this.#overviewResetElement.appendChild(this.#createResetButton());
+    }
   }
 
   #createResetButton() {
@@ -231,7 +251,7 @@ export class StoryWizardSummary {
     btn.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
-      if (window.confirm('Weet je zeker dat je alle keuzes wilt resetten?')) {
+      if (window.confirm(`Weet je zeker dat je alles wilt resetten voor ${this.#componentTitle}?`)) {
         this.#onReset();
       }
     });

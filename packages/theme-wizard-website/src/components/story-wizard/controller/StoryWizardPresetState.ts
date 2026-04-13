@@ -5,6 +5,7 @@ import { StoryWizardStorage } from './StoryWizardStorage';
 
 export class StoryWizardPresetState {
   #isSyncing = false;
+  #isInitialized = false;
   readonly #groups;
   readonly #dynamicGroups;
   readonly #steps: StoryWizardStep[];
@@ -29,6 +30,10 @@ export class StoryWizardPresetState {
 
   public get syncing() {
     return this.#isSyncing;
+  }
+
+  public get isInitialized() {
+    return this.#isInitialized;
   }
 
   public async ready() {
@@ -61,10 +66,12 @@ export class StoryWizardPresetState {
       this.#runSync(() => this.#restoreDefaultSelections(true));
     }
 
+    this.#isInitialized = true;
     return { hasStoredState, restoredStepIndex };
   }
 
   public async reset() {
+    this.#isInitialized = false;
     this.#runSync(() => this.#clearSelections());
     this.#storage.clear();
     await this.initialize({ forceDefaultsAfterSync: true, restoreStoredState: false });
