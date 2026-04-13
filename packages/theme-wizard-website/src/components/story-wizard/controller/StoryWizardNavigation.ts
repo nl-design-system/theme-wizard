@@ -19,6 +19,7 @@ export class StoryWizardNavigation {
   readonly #completedCount: HTMLElement | null;
   readonly #filterBtn: HTMLButtonElement | null;
   readonly #filterCount: HTMLElement | null;
+  readonly #allDoneCheckmark: HTMLElement | null;
   readonly #filterAdvancedBtn: HTMLButtonElement | null;
   readonly #filterAdvancedCount: HTMLElement | null;
   #filterActive = false;
@@ -50,6 +51,7 @@ export class StoryWizardNavigation {
     this.#completedCount = (root as HTMLElement).querySelector?.('[data-completed-count]') ?? null;
     this.#filterBtn = (root as HTMLElement).querySelector?.('[data-filter-todo]') ?? null;
     this.#filterCount = (root as HTMLElement).querySelector?.('[data-filter-count]') ?? null;
+    this.#allDoneCheckmark = shell.querySelector<HTMLElement>('[data-wizard-all-done-checkmark]');
     this.#filterAdvancedBtn = (root as HTMLElement).querySelector?.('[data-filter-todo-advanced]') ?? null;
     this.#filterAdvancedCount = (root as HTMLElement).querySelector?.('[data-filter-count-advanced]') ?? null;
   }
@@ -170,6 +172,11 @@ export class StoryWizardNavigation {
 
     if (this.#completedCount) {
       this.#completedCount.textContent = String(completedPresetCount);
+    }
+
+    if (this.#allDoneCheckmark) {
+      const presetTotal = stepsState.filter((s) => !s.step.isAdvanced).length;
+      this.#allDoneCheckmark.hidden = completedPresetCount < presetTotal || presetTotal === 0;
     }
 
     this.#applyFilter();

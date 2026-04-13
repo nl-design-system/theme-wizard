@@ -12,6 +12,7 @@ import borderStyleIcon from '@tabler/icons/outline/border-style.svg?raw';
 import textSizeIcon from '@tabler/icons/outline/text-size.svg?raw';
 import StoryWizardStep from './components/StoryWizardStep.astro';
 import StoryWizardStepper from './components/StoryWizardStepper/index.astro';
+import StoryWizardCheckmark from './components/StoryWizardCheckmark.astro';
 
 interface Props {
   wizard: StoryWizardViewModel;
@@ -214,9 +215,7 @@ const headingRows =
                           </div>
 
                           <div class="wizard-step-overview-card__footer">
-                            <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
-                              ✓
-                            </span>
+                            <StoryWizardCheckmark class="wizard-step-overview-card__done" />
 
                             <a
                               class="wizard-step-overview-card__action nl-button nl-button--primary"
@@ -280,9 +279,7 @@ const headingRows =
                       </div>
 
                       <div class="wizard-step-overview-card__footer">
-                        <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
-                          ✓
-                        </span>
+                        <StoryWizardCheckmark class="wizard-step-overview-card__done" />
                         <a
                           class="wizard-step-overview-card__action nl-button nl-button--primary"
                           href={`#${step.id}`}
@@ -387,9 +384,7 @@ const headingRows =
                       </div>
 
                       <div class="wizard-step-overview-card__footer">
-                        <span class="wizard-step-overview-card__done" aria-label="Voltooid" hidden>
-                          ✓
-                        </span>
+                        <StoryWizardCheckmark class="wizard-step-overview-card__done" />
                         <a
                           class="wizard-step-overview-card__action nl-button nl-button--primary"
                           href={`#${step.id}`}
