@@ -844,16 +844,16 @@
 }
 
 .wizard-step-overview-card {
-  background: color-mix(in sRGB, var(--basis-color-default-bg-subtle) 60%, white);
+  background: var(--basis-color-default-bg-document);
   block-size: 100%;
-  border: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 50%, transparent);
-  border-radius: var(--basis-border-radius-md, 6px);
+  border: 1px solid var(--basis-color-default-border-subtle);
+  border-radius: var(--basis-border-radius-md);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: var(--basis-space-block-md);
   inline-size: 100%;
-  min-block-size: 24rem;
+  min-block-size: 20rem;
   overflow: hidden;
   padding-block-end: var(--basis-space-block-lg);
   padding-inline: var(--basis-space-inline-lg);
@@ -863,31 +863,22 @@
 .wizard-step-overview-card__preview {
   align-items: center;
   display: flex;
-  justify-content: center;
+  gap: var(--basis-space-inline-md);
+  justify-content: space-between;
   margin-inline: calc(-1 * var(--basis-space-inline-lg));
   overflow: hidden;
   padding-block: calc(var(--basis-space-block-lg) + 2.25rem) var(--basis-space-block-lg);
   padding-inline: var(--basis-space-inline-lg);
   pointer-events: none;
-  position: relative;
 }
 
-.wizard-step-overview-card__preview > wizard-story-preview,
-.wizard-step-overview-card__preview wizard-preview-theme,
-.wizard-step-overview-card__preview [data-story-container],
-.wizard-step-overview-card__preview wizard-story-react {
+.wizard-step-overview-card__illustration {
+  block-size: auto;
   display: block;
   inline-size: 100%;
-  min-inline-size: 0;
-}
-
-.wizard-step-overview-card__preview [data-story-container] {
-  display: flex;
-  justify-content: center;
-}
-
-.wizard-step-overview-card__preview :is(a, button, input, select, textarea) {
-  pointer-events: none;
+  margin-inline-start: auto;
+  max-inline-size: 175px;
+  width: 175px;
 }
 
 .wizard-step-overview-card__body {
@@ -958,20 +949,14 @@
   align-items: center;
   color: var(--basis-color-default-color-default);
   display: inline-flex;
-  inline-size: 1.5rem;
-  inset-block-start: var(--basis-space-block-sm);
-  inset-inline-start: var(--basis-space-inline-sm);
+  flex-shrink: 0;
   justify-content: center;
-  padding-block: 0.375rem;
-  padding-inline: 0.375rem;
-  position: absolute;
-  z-index: 1;
 }
 
 .wizard-step-overview-card__icon > svg {
-  block-size: 1.5rem;
+  block-size: var(--basis-size-icon-4xl);
   display: block;
-  inline-size: 1.5rem;
+  inline-size: var(--basis-size-icon-4xl);
 }
 
 .wizard-step-overview-card__description {
@@ -1079,7 +1064,7 @@
 
 @media (width <= 960px) {
   .wizard-story-section__settings-panel {
-    border-block-start: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 68%, transparent);
+    border-block-start: 1px solid var(--basis-color-default-border-subtle);
     flex-basis: 100%;
     inline-size: 100%;
     inset-block-start: auto;
