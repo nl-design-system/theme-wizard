@@ -29,7 +29,8 @@
   flex-direction: column;
   gap: var(--basis-space-block-sm);
   max-inline-size: 34rem;
-  padding: var(--basis-space-block-lg) var(--basis-space-inline-lg);
+  padding-block: var(--basis-space-block-lg);
+  padding-inline: var(--basis-space-inline-lg);
 }
 
 .wizard-components-start__title {
@@ -45,8 +46,10 @@
   flex-wrap: wrap;
   gap: var(--basis-space-inline-sm);
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
 }
 
 .wizard-components-start__link {
@@ -57,7 +60,8 @@
   display: inline-flex;
   font-size: 0.9375rem;
   font-weight: 700;
-  padding: 0.625rem 0.875rem;
+  padding-block: 0.625rem;
+  padding-inline: 0.875rem;
   text-decoration: none;
 }
 

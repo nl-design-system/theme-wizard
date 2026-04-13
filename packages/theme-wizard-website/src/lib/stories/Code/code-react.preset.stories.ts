@@ -1,5 +1,4 @@
-import type { CodeProps } from '@nl-design-system-candidate/code-react';
-import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
 
 const codeSampleText = `import { Code } from '@nl-design-system-candidate/code-react';`;

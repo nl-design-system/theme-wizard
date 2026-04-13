@@ -17,6 +17,7 @@ export const ButtonMinimumSize: Story = createButtonPresetStory({
   args: {
     label: 'Klik mij!',
   },
+  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   order: 1,
   presets: [
     {
@@ -47,7 +48,6 @@ export const ButtonMinimumSize: Story = createButtonPresetStory({
       ],
     },
   ],
-  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   previewStoryIds: ['WizardPreview'],
   render: ButtonPrimary,
 });
@@ -99,6 +99,7 @@ export const ButtonShape: Story = createButtonPresetStory({
     iconStart: '❤️',
     label: 'Klik mij!',
   },
+  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   order: 5,
   presets: [
     {
@@ -158,7 +159,6 @@ export const ButtonShape: Story = createButtonPresetStory({
       question: 'Hoe afgerond mogen de hoeken van buttons zijn?',
     },
   ],
-  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   previewStoryIds: ['AllButtonPurposesPreview'],
   render: ButtonPrimary,
 });
@@ -169,6 +169,7 @@ export const ButtonTextSize: Story = createButtonPresetStory({
     iconStart: '❤️',
     label: 'Klik mij!',
   },
+  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   order: 6,
   presets: [
     {
@@ -185,7 +186,6 @@ export const ButtonTextSize: Story = createButtonPresetStory({
       question: 'Kies de tekstgrootte van alle buttons',
     },
   ],
-  cardPreviewStoryIds: ['DefaultButtonCardPreview'],
   previewStoryIds: ['AllButtonPurposesPreview'],
   render: ButtonPrimary,
 });

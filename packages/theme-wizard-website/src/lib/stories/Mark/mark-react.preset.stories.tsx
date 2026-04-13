@@ -1,5 +1,4 @@
-import type { MarkProps } from '@nl-design-system-candidate/mark-react';
-import { createPresetTokens, createPresetStory, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createPresetStory } from '../story-helpers';
 
 
 const createMarkTokens = (entries: Record<string, string>) => createPresetTokens('nl.mark', entries);

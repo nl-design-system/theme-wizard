@@ -1,5 +1,4 @@
-import type { DataBadgeProps } from '@nl-design-system-candidate/data-badge-react';
-import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
 
 const createDataBadgeTokens = (entries: Record<string, string>) => createPresetTokens('nl.data-badge', entries);

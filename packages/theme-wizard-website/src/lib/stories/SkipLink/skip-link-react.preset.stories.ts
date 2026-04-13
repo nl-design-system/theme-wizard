@@ -1,5 +1,4 @@
-import type { SkipLinkProps } from '@nl-design-system-candidate/skip-link-react';
-import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
 
 const createSkipLinkTokens = (entries: Record<string, string>) => createPresetTokens('nl.skip-link', entries);
