@@ -7,7 +7,14 @@ import './src/components/wizard-page-nav';
 import './src/components/wizard-preview';
 import './src/components/wizard-preview-picker';
 import './src/components/wizard-preview-theme';
+<<<<<<< HEAD
 import './src/components/wizard-reset-theme';
+||||||| parent of 65661ad4 (replace wizard-reset-theme with clippy-reset-theme)
+import './src/components/wizard-react-element';
+import './src/components/wizard-reset-theme';
+=======
+import './src/components/wizard-react-element';
+>>>>>>> 65661ad4 (replace wizard-reset-theme with clippy-reset-theme)
 import './src/components/wizard-scraped-tokens-preview';
 import './src/components/wizard-scraper';
 import './src/components/wizard-scraper-loader';
