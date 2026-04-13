@@ -1,4 +1,4 @@
-import postcss, { type AtRule, type Container, type Rule } from 'postcss';
+import postcss, { type AtRule, type Container } from 'postcss';
 import type { DerivedTokenReference, WizardPreviewLayoutProps, WizardPreviewSectionProps } from '../types';
 
 export type PresetTokenLeaf = { $value: string };

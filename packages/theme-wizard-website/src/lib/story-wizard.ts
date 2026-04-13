@@ -101,8 +101,8 @@ const createStep = (
   }
 
   return {
-    cardPreviewStories: resolveCardPreviewStories(id, story, storyMap),
     id,
+    cardPreviewStories: resolveCardPreviewStories(id, story, storyMap),
     flowGroup: wizard.type === 'preset' && wizard.flowGroup ? wizard.flowGroup : id,
     flowTitle: wizard.type === 'preset' && wizard.flowTitle ? wizard.flowTitle : (story.name ?? id),
     groups,

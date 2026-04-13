@@ -50,7 +50,7 @@ export class StoryWizardSummary {
     if (details) details.open = true;
   }
 
-  public update(stepsState: StoryWizardStepState[], themeHost: StoryWizardThemeHost | null) {
+  public update(stepsState: StoryWizardStepState[]) {
     const listElement = this.#listElement;
     if (!listElement) return;
 
@@ -254,6 +254,7 @@ export class StoryWizardSummary {
     btn.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
+      // eslint-disable-next-line no-alert
       if (window.confirm(`Weet je zeker dat je alles wilt resetten voor ${this.#componentTitle}?`)) {
         this.#onReset();
       }

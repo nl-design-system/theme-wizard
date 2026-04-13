@@ -73,16 +73,7 @@ export class StoryWizardController {
     initStories(this.#componentId, JSON.parse(this.#container.dataset.storyIds || '[]'));
     this.#bindOptionListeners();
     this.#bindPreviewModeToggles();
-    this.#navigation.bind({
-      onJumpTo: (index) => {
-        const step = this.#steps[index];
-        if (step) window.location.hash = (step.element as HTMLElement).id;
-      },
-      onReset: () => this.#reset().catch((e) => console.error('Failed to reset Story Wizard', e)),
-      onShowOverview: () => {
-        window.location.hash = 'wizard-overview';
-      },
-    });
+    this.#navigation.bind();
 
     if (this.#nav.total === 0) {
       this.#navigation.hideSteppers();
@@ -255,7 +246,7 @@ export class StoryWizardController {
 
   #updateSummary() {
     const stepsState = this.#getSelectionSummary();
-    this.#summary.update(stepsState, this.#getTheme());
+    this.#summary.update(stepsState);
   }
 
   // --- Step helpers ---
@@ -287,7 +278,7 @@ export class StoryWizardController {
       const isCompletedAdvancedStep = step.isAdvanced && this.#state.hasBeenVisited(index);
       const isConfirmedAdvancedStep = step.isAdvanced && (liveSelectedGroups.length > 0 || isCompletedAdvancedStep);
 
-      const summaries = ((): any[] => {
+      const summaries = (() => {
         if (!step.isAdvanced) return liveSelectedGroups;
         if (!isConfirmedAdvancedStep) return [];
         if (liveSelectedGroups.length > 0) return liveSelectedGroups;
@@ -306,19 +297,4 @@ export class StoryWizardController {
     });
   }
 
-  #getAllSelectionGroups(includeAdvancedDefaults = false) {
-    const stepsState = this.#getSelectionSummary();
-
-    return stepsState.flatMap((state, index) => {
-      if (state.step.isAdvanced) {
-        return includeAdvancedDefaults
-          ? state.summaries.length > 0
-            ? state.summaries
-            : this.#summary.getAdvancedSummary(state.step, this.#getTheme(), { includeUnchangedTokens: true })
-          : [];
-      }
-
-      return state.step.createSelectionSummaryFromChosenSelections(this.#state.getChosenSelections(index));
-    });
-  }
 }

@@ -20,9 +20,11 @@ const { class: className, ...rest } = Astro.props;
     flex-shrink: 0;
     inline-size: var(--basis-size-icon-md);
     justify-content: center;
-    padding: 0.125rem;
+    padding-block: 0.125rem;
+    padding-inline: 0.125rem;
   }
 
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
   .wizard-checkmark :global(svg) {
     block-size: 100%;
     inline-size: 100%;

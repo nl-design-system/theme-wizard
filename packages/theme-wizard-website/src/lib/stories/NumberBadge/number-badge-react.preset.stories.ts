@@ -1,5 +1,4 @@
-import type { NumberBadgeProps } from '@nl-design-system-candidate/number-badge-react';
-import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory, type PresetOption } from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
 
 const createNumberBadgeTokens = (entries: Record<string, string>) => createPresetTokens('nl.number-badge', entries);

@@ -1,13 +1,4 @@
-import type { StoryWizardNavigationState } from './StoryWizardNavigationState';
-import type { StoryWizardState } from './StoryWizardState';
-import type { StoryWizardStep } from './StoryWizardStep';
 import type { StoryWizardStepState } from './types';
-
-export interface NavigationCallbacks {
-  onJumpTo: (index: number) => void;
-  onReset: () => void;
-  onShowOverview: () => void;
-}
 
 export class StoryWizardNavigation {
   readonly #overviewCardMap: Map<string, HTMLElement>;
@@ -56,7 +47,7 @@ export class StoryWizardNavigation {
     this.#filterAdvancedCount = (root as HTMLElement).querySelector?.('[data-filter-count-advanced]') ?? null;
   }
 
-  public bind(callbacks: NavigationCallbacks) {
+  public bind() {
     this.#filterBtn?.addEventListener('click', () => {
       this.#filterActive = !this.#filterActive;
       this.#filterBtn!.setAttribute('aria-pressed', String(this.#filterActive));

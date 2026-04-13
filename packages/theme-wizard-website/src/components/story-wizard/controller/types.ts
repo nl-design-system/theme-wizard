@@ -49,7 +49,8 @@ export type StoryWizardThemeHost = HTMLElement & {
 };
 
 export interface StoryWizardStepState {
-  step: any; // Using any for now to avoid circular dependency if StoryWizardStep is not yet imported, or import it if needed.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  step: any; // circular dependency prevents importing StoryWizardStep here
   summaries: StoryWizardSelectionSummary[];
   isDone: boolean;
   isConfirmedAdvanced: boolean;
