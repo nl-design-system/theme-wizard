@@ -1,19 +1,17 @@
 import type { StoryWizardNavigationState } from './StoryWizardNavigationState';
+import type { StoryWizardState } from './StoryWizardState';
 import type { StoryWizardStep } from './StoryWizardStep';
 import type { StoryWizardStepState } from './types';
 
 export interface NavigationCallbacks {
-  onFinishSafe: () => void;
   onJumpTo: (index: number) => void;
   onReset: () => void;
   onShowOverview: () => void;
 }
 
 export class StoryWizardNavigation {
-  readonly #finishSafeBtns: HTMLButtonElement[];
   readonly #overviewCardMap: Map<string, HTMLElement>;
   readonly #originalListMap: Map<string, HTMLElement>;
-  readonly #transitionNotes: HTMLElement[];
   readonly #steppers: HTMLElement[];
   readonly #overview: HTMLElement | null;
   readonly #completedRow: HTMLElement | null;
@@ -29,11 +27,13 @@ export class StoryWizardNavigation {
 
   public constructor(root: HTMLElement | Document, shell: HTMLElement | Document) {
     this.#steppers = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-stepper'));
-    this.#finishSafeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-finish-safe'));
     this.#overviewCardMap = new Map(
       Array.from(root.querySelectorAll<HTMLElement>('[data-step-overview-card]'))
-        .map((card) => [card.dataset.stepOverviewCard!, card])
-        .filter(([id]) => !!id),
+        .map((card): [string, HTMLElement] | null => {
+          const id = card.dataset.stepOverviewCard;
+          return id ? [id, card] : null;
+        })
+        .filter((entry): entry is [string, HTMLElement] => entry !== null),
     );
     this.#originalListMap = new Map(
       Array.from(root.querySelectorAll<HTMLElement>('[data-step-overview-card]'))
@@ -44,7 +44,6 @@ export class StoryWizardNavigation {
         })
         .filter((entry): entry is [string, HTMLElement] => entry !== null),
     );
-    this.#transitionNotes = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-transition-note'));
     this.#overview = (root as HTMLElement).querySelector?.('[data-steps-overview]') ?? null;
     this.#completedRow = (root as HTMLElement).querySelector?.('[data-completed-row]') ?? null;
     this.#completedList = (root as HTMLElement).querySelector?.('[data-completed-list]') ?? null;
@@ -56,8 +55,6 @@ export class StoryWizardNavigation {
   }
 
   public bind(callbacks: NavigationCallbacks) {
-    this.#finishSafeBtns.forEach((btn) => btn.addEventListener('click', callbacks.onFinishSafe));
-
     this.#filterBtn?.addEventListener('click', () => {
       this.#filterActive = !this.#filterActive;
       this.#filterBtn!.setAttribute('aria-pressed', String(this.#filterActive));
@@ -242,23 +239,4 @@ export class StoryWizardNavigation {
       summaryContainer.appendChild(details);
     });
   }
-
-  // Kept for the finish-safe flow in StoryWizardController
-  public updateNextState(step: StoryWizardStep, nav: StoryWizardNavigationState) {
-    const isComplete = step.hasRequiredSelections();
-    const { isLastSafeStep } = nav;
-    const showSafeFinish = isLastSafeStep && isComplete;
-
-    this.#finishSafeBtns.forEach((btn) => {
-      btn.hidden = !showSafeFinish;
-    });
-
-    this.#transitionNotes.forEach((note) => {
-      note.hidden = !isLastSafeStep;
-      note.textContent = isLastSafeStep ? 'Je kunt nu stoppen of nog meer aanpassen.' : '';
-    });
-  }
-
-  // No-op — prev state is no longer used in non-linear navigation
-  public updatePrevState(_isFirstStep: boolean) {}
 }

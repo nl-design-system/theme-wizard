@@ -1,7 +1,6 @@
 import { resolveDynamicPresetOptions } from '@/lib/story-wizard-preset-resolution';
 import type { StoryWizardPresetOption, StoryWizardThemeHost } from './types';
 import { StoryWizardStep } from './StoryWizardStep';
-import { StoryWizardStorage } from './StoryWizardStorage';
 
 export class StoryWizardPresetState {
   #isSyncing = false;
@@ -9,16 +8,10 @@ export class StoryWizardPresetState {
   readonly #groups;
   readonly #dynamicGroups;
   readonly #steps: StoryWizardStep[];
-  readonly #storage: StoryWizardStorage;
   readonly #getTheme: () => StoryWizardThemeHost | null;
 
-  public constructor(
-    steps: StoryWizardStep[],
-    storage: StoryWizardStorage,
-    getTheme: () => StoryWizardThemeHost | null,
-  ) {
+  public constructor(steps: StoryWizardStep[], getTheme: () => StoryWizardThemeHost | null) {
     this.#steps = steps;
-    this.#storage = storage;
     this.#getTheme = getTheme;
     this.#groups = steps.flatMap((step) => step.groups);
     this.#dynamicGroups = this.#groups.filter((group) =>
@@ -43,18 +36,11 @@ export class StoryWizardPresetState {
 
   public async initialize({
     forceDefaultsAfterSync = false,
-    restoreStoredState,
+    hasStoredState = false,
   }: {
     forceDefaultsAfterSync?: boolean;
-    restoreStoredState: boolean;
+    hasStoredState?: boolean;
   }) {
-    let restoredStepIndex = 0;
-    let hasStoredState = false;
-
-    if (restoreStoredState) {
-      ({ hasStoredState, restoredStepIndex } = this.#runSync(() => this.#storage.restore(this.#steps)));
-    }
-
     if (!hasStoredState) {
       this.#runSync(() => this.#restoreDefaultSelections());
     }
@@ -67,14 +53,12 @@ export class StoryWizardPresetState {
     }
 
     this.#isInitialized = true;
-    return { hasStoredState, restoredStepIndex };
   }
 
   public async reset() {
     this.#isInitialized = false;
     this.#runSync(() => this.#clearSelections());
-    this.#storage.clear();
-    await this.initialize({ forceDefaultsAfterSync: true, restoreStoredState: false });
+    await this.initialize({ forceDefaultsAfterSync: true });
   }
 
   public syncDynamicOptions() {

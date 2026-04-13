@@ -24,7 +24,6 @@ const flattenDesignTokens = (tokens: unknown, path: string[] = []): DesignTokenL
 export class StoryWizardStep {
   public readonly groups: StoryWizardGroup[];
   public readonly editableTokenPaths: string[];
-  #wasVisited = false;
 
   public constructor(public readonly element: HTMLElement) {
     this.groups = Array.from(element.querySelectorAll<HTMLElement>('[data-preset-group]')).map(
@@ -58,12 +57,7 @@ export class StoryWizardStep {
     this.element.hidden = false;
   }
 
-  public bindOptions(listener: (group: StoryWizardGroup) => void) {
-    this.groups.forEach((group) => group.bindOptions(listener));
-  }
-
   public clearSelections() {
-    this.#wasVisited = false;
     this.groups.forEach((group) => group.clearSelection());
   }
 
@@ -75,14 +69,6 @@ export class StoryWizardStep {
     return this.groups.map((group) => group.getSelectedIndex());
   }
 
-  public getStoredChosenState() {
-    return this.groups.map((group) => group.getStoredChosenState());
-  }
-
-  public getStoredVisitedState() {
-    return this.#wasVisited;
-  }
-
   public restoreStoredSelection(selection: number[]) {
     this.groups.forEach((group, groupIndex) => {
       const selectedIndex = selection[groupIndex];
@@ -91,34 +77,8 @@ export class StoryWizardStep {
     });
   }
 
-  public restoreChosenState(chosenState: boolean[]) {
-    this.groups.forEach((group, groupIndex) => {
-      group.restoreChosenState(Boolean(chosenState[groupIndex]));
-    });
-  }
-
-  public restoreVisitedState(wasVisited: boolean) {
-    this.#wasVisited = wasVisited;
-  }
-
   public hasRequiredSelections() {
     return this.groups.every((group) => group.hasSelection());
-  }
-
-  public hasChosenSelection() {
-    return this.groups.some((group) => group.hasChosenSelection());
-  }
-
-  public hasBeenVisited() {
-    return this.#wasVisited;
-  }
-
-  public confirmAdvancedSelection() {
-    this.#wasVisited = true;
-  }
-
-  public confirmSelections() {
-    this.groups.forEach((group) => group.confirmSelection());
   }
 
   public getPreviewStyle() {
@@ -128,9 +88,9 @@ export class StoryWizardStep {
       .join(';');
   }
 
-  public createSelectionSummary(): StoryWizardSelectionSummary[] {
-    const chosenOptions = this.groups.flatMap((group) => {
-      if (!group.hasChosenSelection()) return [];
+  public createSelectionSummaryFromChosenSelections(chosenSelections: boolean[]): StoryWizardSelectionSummary[] {
+    const chosenOptions = this.groups.flatMap((group, groupIndex) => {
+      if (!chosenSelections[groupIndex]) return [];
       const option = group.getSelectedOption();
       return option ? [option] : [];
     });

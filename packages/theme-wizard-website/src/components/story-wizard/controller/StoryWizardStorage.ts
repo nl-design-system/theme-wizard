@@ -1,11 +1,4 @@
-import type { StoryWizardStep } from './StoryWizardStep';
-
-interface StoredState {
-  chosenSections: boolean[][];
-  currentStep: number;
-  sections: number[][];
-  visitedSections: boolean[];
-}
+import type { StoryWizardStoredState } from './types';
 
 export class StoryWizardStorage {
   readonly #key: string;
@@ -15,7 +8,7 @@ export class StoryWizardStorage {
     this.#key = `theme-wizard:${componentId}:preset-state`;
   }
 
-  public read(): StoredState | null {
+  public read(): StoryWizardStoredState | null {
     try {
       const raw = globalThis.localStorage?.getItem(this.#key);
       this.#lastSerializedState = raw;
@@ -25,15 +18,8 @@ export class StoryWizardStorage {
     }
   }
 
-  public write(currentStep: number, steps: StoryWizardStep[]) {
+  public write(state: StoryWizardStoredState) {
     try {
-      const state: StoredState = {
-        chosenSections: steps.map((step) => step.getStoredChosenState()),
-        currentStep,
-        sections: steps.map((step) => step.getStoredSelection()),
-        visitedSections: steps.map((step) => step.getStoredVisitedState()),
-      };
-
       const serializedState = JSON.stringify(state);
       if (serializedState === this.#lastSerializedState) {
         return;
@@ -55,31 +41,4 @@ export class StoryWizardStorage {
     }
   }
 
-  public restore(steps: StoryWizardStep[]): { hasStoredState: boolean; restoredStepIndex: number } {
-    const stored = this.read();
-
-    if (!stored) {
-      return { hasStoredState: false, restoredStepIndex: 0 };
-    }
-
-    stored.sections?.forEach((selection: number[], index: number) => {
-      steps[index]?.restoreStoredSelection(selection);
-    });
-
-    stored.chosenSections?.forEach((chosenState: boolean[], index: number) => {
-      steps[index]?.restoreChosenState(chosenState);
-    });
-
-    stored.visitedSections?.forEach((wasVisited: boolean, index: number) => {
-      steps[index]?.restoreVisitedState(wasVisited);
-    });
-
-    const validStep =
-      typeof stored.currentStep === 'number' && stored.currentStep >= 0 && stored.currentStep < steps.length;
-
-    return {
-      hasStoredState: true,
-      restoredStepIndex: validStep ? stored.currentStep : 0,
-    };
-  }
 }

@@ -1,10 +1,10 @@
+import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
 import { dequal } from 'dequal';
 import dlv from 'dlv';
 import type { StoryWizardStep } from './StoryWizardStep';
 import type { StoryWizardTokensDialog } from './StoryWizardTokensDialog';
 import type { StoryWizardSelectionSummary, StoryWizardStepState, StoryWizardThemeHost } from './types';
 import { cloneTemplate } from './cloneTemplate';
-import refreshIcon from '@tabler/icons/outline/refresh.svg?raw';
 
 export class StoryWizardSummary {
   readonly #componentTitle: string;
@@ -63,15 +63,9 @@ export class StoryWizardSummary {
     let hasResettableState = false;
 
     stepsState.forEach((state, index) => {
-      const { step, summaries, isDone, isConfirmedAdvanced } = state;
+      const { isConfirmedAdvanced, isDone, step, summaries } = state;
 
-      hasResettableState =
-        hasResettableState ||
-        summaries.length > 0 ||
-        isDone ||
-        isConfirmedAdvanced ||
-        step.hasChosenSelection() ||
-        step.hasBeenVisited();
+      hasResettableState = hasResettableState || state.hasResettableState || summaries.length > 0 || isDone || isConfirmedAdvanced;
 
       if (isDone) {
         completedSteps += 1;

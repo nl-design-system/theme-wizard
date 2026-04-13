@@ -53,5 +53,16 @@ export interface StoryWizardStepState {
   summaries: StoryWizardSelectionSummary[];
   isDone: boolean;
   isConfirmedAdvanced: boolean;
+  hasResettableState: boolean;
 }
 
+export type StoryWizardStoredStepState = {
+  advancedVisited: boolean;
+  chosenSelections: boolean[];
+  selections: number[];
+};
+
+export type StoryWizardStoredState = {
+  currentStep: number;
+  steps: StoryWizardStoredStepState[];
+};
