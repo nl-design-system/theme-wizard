@@ -331,10 +331,10 @@ describe(`<${appTag}> preset updates`, () => {
     const input = document.createElement('wizard-token-input') as WizardTokenInput;
 
     app.addEventListener('theme-update', themeUpdateHandler);
-    getTheme(app).updateAt('nl.paragraph.font-size', '1rem');
+    getTheme(app).updateAt('nl.paragraph.font-size', { value: 1, unit: 'rem' });
 
     input.name = 'nl.paragraph.font-size';
-    input.value = '1rem';
+    input.value = { value: 1, unit: 'rem' };
     app.appendChild(input);
     input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
 
@@ -349,11 +349,11 @@ describe(`<${appTag}> preset updates`, () => {
     app.addEventListener('theme-update', themeUpdateHandler);
 
     input.name = 'nl.paragraph.font-size';
-    input.value = '1.25rem';
+    input.value = { value: 1.25, unit: 'rem' };
     app.appendChild(input);
     input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
 
-    expect(getTheme(app).at('nl.paragraph.font-size')?.$value).toBe('1.25rem');
+    expect(getTheme(app).at('nl.paragraph.font-size')?.$value).toEqual({ value: 1.25, unit: 'rem' });
     expect(themeUpdateHandler).toHaveBeenCalledOnce();
   });
 
