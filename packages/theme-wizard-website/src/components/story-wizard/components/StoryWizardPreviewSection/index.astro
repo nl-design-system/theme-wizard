@@ -1,0 +1,53 @@
+---
+import StoryWizardVariant from '../StoryWizardVariant/index.astro';
+
+interface Props {
+  title: string;
+  previewStories: { name: string; id: string }[];
+  focusedPreviewStories: { name: string; id: string }[];
+  showPreviewModeToggle: boolean;
+}
+
+const { title, previewStories, focusedPreviewStories, showPreviewModeToggle } = Astro.props;
+---
+
+<div class="wizard-story-section__preview-column">
+  {
+    previewStories.length > 0 && (
+      <section class="wizard-story-preview-panel" aria-label={`${title} previews`}>
+        {showPreviewModeToggle && (
+          <div class="wizard-story-preview-panel__controls" role="group" aria-label="Previewweergave">
+            <button
+              class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+              type="button"
+              aria-pressed="true"
+              data-preview-mode-btn="focused"
+            >
+              Gericht
+            </button>
+            <button
+              class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+              type="button"
+              aria-pressed="false"
+              data-preview-mode-btn="all"
+            >
+              Alles
+            </button>
+          </div>
+        )}
+
+        <div class="wizard-story-section__variants" data-preview-mode-panel="focused" hidden={false}>
+          {focusedPreviewStories.map((previewStory) => (
+            <StoryWizardVariant name={previewStory.name} storyId={previewStory.id} />
+          ))}
+        </div>
+
+        <div class="wizard-story-section__variants" data-preview-mode-panel="all" hidden={showPreviewModeToggle}>
+          {previewStories.map((previewStory) => (
+            <StoryWizardVariant name={previewStory.name} storyId={previewStory.id} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</div>

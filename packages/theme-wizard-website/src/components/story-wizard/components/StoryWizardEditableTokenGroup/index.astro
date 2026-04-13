@@ -1,6 +1,6 @@
 ---
 import type { StoryWizardEditableTokenGroup } from '@/lib/types';
-import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
+import StoryWizardCollapsible from '../StoryWizardCollapsible/index.astro';
 
 interface Props {
   group: StoryWizardEditableTokenGroup;
@@ -18,11 +18,12 @@ const { group } = Astro.props;
 
   {group.description && <p class="nl-paragraph wizard-token-preset__description">{group.description}</p>}
 
-  <details class="wizard-token-preset__advanced">
-    <summary class="wizard-token-preset__advanced-summary">
-      <span>{group.advancedTitle ?? 'Extra instellingen'}</span>
-      <span class="wizard-token-preset__advanced-chevron" aria-hidden="true" set:html={chevronDownIcon} />
-    </summary>
+  <StoryWizardCollapsible
+    class="wizard-token-preset__advanced"
+    summaryClass="wizard-token-preset__advanced-summary"
+    chevronClass="wizard-token-preset__advanced-chevron"
+  >
+    <span slot="summary-content">{group.advancedTitle ?? 'Extra instellingen'}</span>
 
     <ul class="wizard-secretly-a-list wizard-secretly-a-list--compact">
       {
@@ -35,5 +36,5 @@ const { group } = Astro.props;
         ))
       }
     </ul>
-  </details>
+  </StoryWizardCollapsible>
 </section>
