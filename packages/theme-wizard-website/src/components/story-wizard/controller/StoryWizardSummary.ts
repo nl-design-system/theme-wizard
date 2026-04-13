@@ -34,7 +34,8 @@ export class StoryWizardSummary {
     this.#overviewResetElement = root.querySelector<HTMLElement>('.wizard-steps-overview__reset');
     this.#listElement = root.querySelector<HTMLElement>('.wizard-step-selections__list');
     this.#detailsElement = root.querySelector<HTMLElement>('.wizard-step-selections');
-    this.#allDoneCheckmark = this.#summaryElement?.querySelector<HTMLElement>('[data-wizard-summary-all-done-checkmark]') ?? null;
+    this.#allDoneCheckmark =
+      this.#summaryElement?.querySelector<HTMLElement>('[data-wizard-summary-all-done-checkmark]') ?? null;
   }
 
   public show() {
@@ -67,7 +68,8 @@ export class StoryWizardSummary {
     stepsState.forEach((state, index) => {
       const { isConfirmedAdvanced, isDone, step, summaries } = state;
 
-      hasResettableState = hasResettableState || state.hasResettableState || summaries.length > 0 || isDone || isConfirmedAdvanced;
+      hasResettableState =
+        hasResettableState || state.hasResettableState || summaries.length > 0 || isDone || isConfirmedAdvanced;
 
       if (isDone) {
         completedSteps += 1;
@@ -76,7 +78,7 @@ export class StoryWizardSummary {
 
       const stepLabel = step.isAdvanced
         ? `Geavanceerd: ${step.stepLabel || `Stap ${index + 1}`}`
-        : (step.stepLabel || `Stap ${index + 1}`);
+        : step.stepLabel || `Stap ${index + 1}`;
       const value = this.#createValueElement(summaries, step.isAdvanced, isConfirmedAdvanced);
       const wrapper = this.#createStepWrapper(stepLabel, index, value, step.element.id);
       wrapper.classList.toggle('wizard-step-selection--done', isDone);

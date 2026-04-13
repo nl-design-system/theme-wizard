@@ -113,7 +113,9 @@
   padding-block-end: var(--basis-space-block-lg);
   padding-inline: var(--basis-space-inline-lg);
   text-decoration: none;
-  transition: border-color 120ms ease, background-color 120ms ease;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease;
 }
 
 .wizard-component-card:hover {

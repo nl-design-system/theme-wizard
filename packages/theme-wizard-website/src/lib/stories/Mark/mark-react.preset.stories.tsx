@@ -1,8 +1,6 @@
 import { createPresetTokens, createPresetStory } from '../story-helpers';
 
-
 const createMarkTokens = (entries: Record<string, string>) => createPresetTokens('nl.mark', entries);
-
 
 const defaultArgs = {
   children: 'Gemarkeerde tekst',

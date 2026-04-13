@@ -37,7 +37,11 @@ test.describe('stories', () => {
 
   test.describe('inputs show only relevant tokens', () => {
     test('background-color inputs only show background colors', async ({ componentPage }) => {
-      const options = await componentPage.getInputOptions('nl.button.focus.background-color', '', 'AdvancedFocusButton');
+      const options = await componentPage.getInputOptions(
+        'nl.button.focus.background-color',
+        '',
+        'AdvancedFocusButton',
+      );
 
       expect.soft(await options.count()).toBeGreaterThanOrEqual(1);
       for (const option of await options.all()) {

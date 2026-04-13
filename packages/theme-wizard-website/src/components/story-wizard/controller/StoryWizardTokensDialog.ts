@@ -37,8 +37,9 @@ export class StoryWizardTokensDialog {
   #createGroupSection(group: StoryWizardSelectionSummary): HTMLElement {
     const section = cloneTemplate<HTMLElement>('wizard-dialog-group-tmpl', '.wizard-tokens-dialog__group');
 
-    section.querySelector('.wizard-tokens-dialog__group-title')!.textContent =
-      group.label ? `${group.label}: ${group.optionLabel}` : group.optionLabel;
+    section.querySelector('.wizard-tokens-dialog__group-title')!.textContent = group.label
+      ? `${group.label}: ${group.optionLabel}`
+      : group.optionLabel;
 
     const table = section.querySelector('.wizard-tokens-dialog__table')!;
 

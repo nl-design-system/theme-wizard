@@ -1,8 +1,6 @@
 import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
-
 const createDataBadgeTokens = (entries: Record<string, string>) => createPresetTokens('nl.data-badge', entries);
-
 
 export const DataBadgeKleur = createPresetStory({
   name: 'Kleur',

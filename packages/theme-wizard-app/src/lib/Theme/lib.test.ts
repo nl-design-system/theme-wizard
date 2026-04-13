@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { flattenTokens, presetTokensToStyle, presetTokensToUpdateMany, refToCssVariable, styleObjectToString, tokensToStyle } from './lib';
+import {
+  flattenTokens,
+  presetTokensToStyle,
+  presetTokensToUpdateMany,
+  refToCssVariable,
+  styleObjectToString,
+  tokensToStyle,
+} from './lib';
 
 describe('styleObjectToString', () => {
   it('returns an empty string for an empty object', () => {

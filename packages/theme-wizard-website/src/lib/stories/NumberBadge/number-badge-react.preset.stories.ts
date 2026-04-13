@@ -1,8 +1,6 @@
 import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
-
 const createNumberBadgeTokens = (entries: Record<string, string>) => createPresetTokens('nl.number-badge', entries);
-
 
 const defaultArgs = {
   children: '42',
