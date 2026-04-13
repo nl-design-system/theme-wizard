@@ -1,10 +1,8 @@
 import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
-
 const codeSampleText = `import { Code } from '@nl-design-system-candidate/code-react';`;
 
 const createCodeTokens = (entries: Record<string, string>) => createPresetTokens('nl.code', entries);
-
 
 export const CodeFontSize = createPresetStory({
   name: 'Font size',

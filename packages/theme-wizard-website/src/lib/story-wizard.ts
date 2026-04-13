@@ -70,7 +70,13 @@ export const resolveStoryWizardModel = async (componentId: keyof typeof componen
 
   const steps = rawSteps;
   const storyIds = Array.from(
-    new Set(steps.flatMap((step) => [step.id, ...step.previewStories.map((p) => p.id), ...step.cardPreviewStories.map((p) => p.id)])),
+    new Set(
+      steps.flatMap((step) => [
+        step.id,
+        ...step.previewStories.map((p) => p.id),
+        ...step.cardPreviewStories.map((p) => p.id),
+      ]),
+    ),
   );
 
   return {
@@ -79,7 +85,6 @@ export const resolveStoryWizardModel = async (componentId: keyof typeof componen
     storyIds,
   };
 };
-
 
 const createStep = (
   id: string,

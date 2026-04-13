@@ -1,8 +1,6 @@
 import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
-
 const createSkipLinkTokens = (entries: Record<string, string>) => createPresetTokens('nl.skip-link', entries);
-
 
 const defaultArgs = {
   children: 'Naar de inhoud',

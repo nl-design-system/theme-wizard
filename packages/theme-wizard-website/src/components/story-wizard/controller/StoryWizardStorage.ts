@@ -40,5 +40,4 @@ export class StoryWizardStorage {
       // Progressive enhancement: ignore storage failures and keep the wizard usable.
     }
   }
-
 }

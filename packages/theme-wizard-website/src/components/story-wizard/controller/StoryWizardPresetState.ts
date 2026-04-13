@@ -15,9 +15,13 @@ export class StoryWizardPresetState {
     this.#getTheme = getTheme;
     this.#groups = steps.flatMap((step) => step.groups);
     this.#dynamicGroups = this.#groups.filter((group) =>
-      group.getInitialOptions().some(
-        (option) => option.derivedTokenReference || (Array.isArray(option.derivedTokenReferences) && option.derivedTokenReferences.length > 0),
-      ),
+      group
+        .getInitialOptions()
+        .some(
+          (option) =>
+            option.derivedTokenReference ||
+            (Array.isArray(option.derivedTokenReferences) && option.derivedTokenReferences.length > 0),
+        ),
     );
   }
 
@@ -81,9 +85,7 @@ export class StoryWizardPresetState {
   }
 
   async #waitForPresetInputs() {
-    await Promise.all(
-      this.#groups.map((group) => group.input?.updateComplete ?? Promise.resolve())
-    );
+    await Promise.all(this.#groups.map((group) => group.input?.updateComplete ?? Promise.resolve()));
   }
 
   #runSync<T>(callback: () => T): T {

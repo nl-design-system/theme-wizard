@@ -43,7 +43,11 @@ export const createHeadingEditableTokens = (level: number, tokenNames: string[])
   },
 });
 
-export const createHeadingPreview = (name: string, level?: PreviewHeadingLevel, children = headingSampleText): HeadingStory => ({
+export const createHeadingPreview = (
+  name: string,
+  level?: PreviewHeadingLevel,
+  children = headingSampleText,
+): HeadingStory => ({
   name,
   args: {
     children,
