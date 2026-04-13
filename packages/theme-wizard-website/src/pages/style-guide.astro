@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import WithPageNav from '@/components/WithPageNav.astro';
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
 
 const SECTION_IDS = {
   typography: 'typography',
@@ -17,7 +18,7 @@ const SECTION_IDS = {
 
       <div slot="main" class="wizard-main">
         <wizard-container>
-          <wizard-story-preview size="lg">
+          <clippy-story-preview size="lg">
             <wizard-stack size="4xl">
               <clippy-heading level="1">Stijlgids</clippy-heading>
               <WithPageNav>
@@ -52,7 +53,7 @@ const SECTION_IDS = {
                 </wizard-stack>
               </WithPageNav>
             </wizard-stack>
-          </wizard-story-preview>
+          </clippy-story-preview>
         </wizard-container>
       </div>
     </wizard-layout>

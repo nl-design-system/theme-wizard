@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '@nl-design-system-candidate/button-css/button.css'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 ---
 
@@ -10,7 +11,7 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
     <wizard-layout>
       <main slot="main" class="wizard-main">
         <wizard-container size="3xl">
-          <wizard-story-preview size="lg">
+          <clippy-story-preview size="lg">
             <wizard-stack size="5xl">
               <header>
                 <wizard-container size="md" class="header-container">
@@ -41,7 +42,7 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
                   </span>
                 </a>
             </wizard-stack>
-          </wizard-story-preview>
+          </clippy-story-preview>
         </wizard-container>
       </main>
      </wizard-layout>
