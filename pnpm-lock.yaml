@@ -919,6 +919,9 @@ importers:
       '@nl-design-system-candidate/skip-link-tokens':
         specifier: 1.0.4
         version: 1.0.4
+      '@nl-design-system-community/clippy-components':
+        specifier: workspace:*
+        version: link:../clippy-components
       '@nl-design-system-community/ma-design-tokens':
         specifier: 4.1.0
         version: 4.1.0
