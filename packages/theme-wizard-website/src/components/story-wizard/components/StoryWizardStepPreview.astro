@@ -1,0 +1,15 @@
+---
+interface Props {
+  storyId: string;
+}
+
+const { storyId } = Astro.props;
+---
+
+<wizard-story-preview>
+  <wizard-reset-theme>
+    <wizard-preview-theme>
+      <div data-story-container={storyId} />
+    </wizard-preview-theme>
+  </wizard-reset-theme>
+</wizard-story-preview>
