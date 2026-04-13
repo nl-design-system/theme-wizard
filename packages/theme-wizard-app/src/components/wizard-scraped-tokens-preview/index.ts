@@ -1,6 +1,7 @@
 import { consume } from '@lit/context';
 import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
+import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import {
   EXTENSION_AUTHORED_AS,
   EXTENSION_TOKEN_ID,
@@ -132,7 +133,7 @@ export class WizardScrapedTokensPreview extends LitElement {
             t('tokens.types.colors'),
             colors,
             (token) =>
-              html`<wizard-color-sample color=${token.$extensions[EXTENSION_AUTHORED_AS]}></wizard-color-sample>`,
+              html`<clippy-color-sample color=${token.$extensions[EXTENSION_AUTHORED_AS]}></clippy-color-sample>`,
           )}
         </wizard-stack>
       </div>

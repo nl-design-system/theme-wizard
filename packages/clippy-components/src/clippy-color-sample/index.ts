@@ -1,17 +1,18 @@
 import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
+import { safeCustomElement } from '@src/lib/decorators';
 import { LitElement, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
-const tag = 'wizard-color-sample';
+const tag = 'clippy-color-sample';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: WizardColorSample;
+    [tag]: ClippyColorSample;
   }
 }
 
-@customElement(tag)
-export class WizardColorSample extends LitElement {
+@safeCustomElement(tag)
+export class ClippyColorSample extends LitElement {
   static override readonly styles = [unsafeCSS(colorSampleStyles)];
 
   @property() color: string = '';

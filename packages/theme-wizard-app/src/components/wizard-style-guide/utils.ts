@@ -1,4 +1,5 @@
 import type { ClippyModal } from '@nl-design-system-community/clippy-components/clippy-modal';
+import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import type { DesignTokens } from 'style-dictionary/types';
@@ -72,7 +73,7 @@ export function renderSpacingExample(value: string, space: string = 'block') {
 export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
   switch (token.tokenType) {
     case 'color':
-      return html`<wizard-color-sample color=${token.displayValue}></wizard-color-sample>`;
+      return html`<clippy-color-sample color=${token.displayValue}></clippy-color-sample>`;
     case 'fontSize':
       return html`<wizard-font-sample size=${token.displayValue}></wizard-font-sample>`;
     case 'fontFamily':

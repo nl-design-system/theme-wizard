@@ -1,6 +1,5 @@
 import './src/components/app/app';
 import './src/components/wizard-anchor-nav';
-import './src/components/wizard-color-sample';
 import './src/components/wizard-container';
 import './src/components/wizard-font-sample';
 import './src/components/wizard-layout';
