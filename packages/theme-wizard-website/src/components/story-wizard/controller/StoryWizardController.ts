@@ -70,7 +70,6 @@ export class StoryWizardController {
 
   async #start() {
     await this.#presetState.ready();
-    initStories(this.#componentId, JSON.parse(this.#container.dataset.storyIds || '[]'));
     this.#bindOptionListeners();
     this.#bindPreviewModeToggles();
     this.#navigation.bind();
@@ -152,6 +151,9 @@ export class StoryWizardController {
     this.#navigation.hideOverview();
     this.#summary.show();
     this.#updateVisibleStep(index);
+    this.#initStoriesForStep(index).catch((error) => {
+      console.error('Failed to initialize step stories', error);
+    });
     this.#refreshStepNavigation();
     this.#refreshStepView();
     this.#persistStepState();
@@ -247,6 +249,27 @@ export class StoryWizardController {
   #updateSummary() {
     const stepsState = this.#getSelectionSummary();
     this.#summary.update(stepsState);
+  }
+
+  async #initStoriesForStep(index: number) {
+    const step = this.#steps[index];
+    if (!step) {
+      return;
+    }
+
+    const storyIds = [...new Set(
+      Array.from(step.element.querySelectorAll<HTMLElement>('[data-story-container]')).flatMap((container) => {
+        const storyId = container.dataset.storyContainer;
+        return typeof storyId === 'string' && storyId.length > 0 ? [storyId] : [];
+      }),
+    )];
+
+    if (storyIds.length === 0) {
+      return;
+    }
+
+    await initStories(this.#componentId, storyIds, step.element);
+    this.#preview.apply(this.#steps);
   }
 
   // --- Step helpers ---
