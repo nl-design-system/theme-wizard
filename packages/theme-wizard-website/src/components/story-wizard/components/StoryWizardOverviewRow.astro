@@ -1,0 +1,43 @@
+---
+interface Props {
+  title?: string;
+  id?: string;
+  isCompletedRow?: boolean;
+  headingLevel?: 3 | 4;
+}
+
+const { title, id, isCompletedRow = false, headingLevel = 3 } = Astro.props;
+---
+
+<section
+  class:list={[
+    'wizard-steps-overview__row',
+    isCompletedRow && 'wizard-steps-overview__row--completed',
+  ]}
+  aria-labelledby={id}
+  data-completed-row={isCompletedRow || undefined}
+  hidden={isCompletedRow || undefined}
+>
+  {
+    title && (
+      headingLevel === 3 ? (
+        <h3 class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title" id={id}>
+          {title}
+          {isCompletedRow && (
+            <>
+              (<span data-completed-count>0</span>)
+            </>
+          )}
+        </h3>
+      ) : (
+        <h3 class="nl-heading nl-heading--level-4 wizard-steps-overview__row-title" id={id}>
+          {title}
+        </h3>
+      )
+    )
+  }
+
+  <ul class="wizard-steps-overview__list" data-completed-list={isCompletedRow || undefined}>
+    <slot />
+  </ul>
+</section>

@@ -12,7 +12,8 @@ import borderStyleIcon from '@tabler/icons/outline/border-style.svg?raw';
 import textSizeIcon from '@tabler/icons/outline/text-size.svg?raw';
 import StoryWizardStep from './components/StoryWizardStep.astro';
 import StoryWizardStepper from './components/StoryWizardStepper/index.astro';
-import StoryWizardCheckmark from './components/StoryWizardCheckmark.astro';
+import StoryWizardOverviewCard from './components/StoryWizardOverviewCard.astro';
+import StoryWizardOverviewRow from './components/StoryWizardOverviewRow.astro';
 
 interface Props {
   wizard: StoryWizardViewModel;
@@ -158,93 +159,39 @@ const headingRows =
       {
         wizard.componentId === 'heading' ? (
           <div class="wizard-steps-overview__rows">
-            <section class="wizard-steps-overview__row wizard-steps-overview__row--completed" data-completed-row hidden>
-              <h3 class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title">
-                Ingesteld (<span data-completed-count>0</span>)
-              </h3>
-              <ul class="wizard-steps-overview__list" data-completed-list></ul>
-            </section>
+            <StoryWizardOverviewRow title="Ingesteld" isCompletedRow />
 
             {headingRows.map((row) => (
-              <section class="wizard-steps-overview__row" aria-labelledby={`heading-row-h${row.level}`}>
-                <h3
-                  class="nl-heading nl-heading--level-4 wizard-steps-overview__row-title"
-                  id={`heading-row-h${row.level}`}
-                >
-                  H{row.level}
-                </h3>
+              <StoryWizardOverviewRow title={`H${row.level}`} id={`heading-row-h${row.level}`} headingLevel={4}>
+                {row.steps.map((step) => {
+                  const group = step.groups[0];
+                  const cardTitle = group?.name ?? step.title;
+                  const description = group?.description ?? step.intro;
+                  const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
+                  const cardIcon = getOverviewCardIcon(cardTitle);
 
-                <ul class="wizard-steps-overview__list">
-                  {row.steps.map((step) => {
-                    const stepIndex = wizard.steps.findIndex((candidate) => candidate.id === step.id);
-                    const group = step.groups[0];
-                    const cardTitle = group?.name ?? step.title;
-                    const description = group?.description ?? step.intro;
-                    const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
-                    const cardIcon = getOverviewCardIcon(cardTitle);
-
-                    return (
-                      <li class="wizard-steps-overview__item">
-                        <article class="wizard-step-overview-card">
-                          <div
-                            class:list={[
-                              'wizard-step-overview-card__preview',
-                              cardIcon && 'wizard-step-overview-card__preview--with-icon',
-                            ]}
-                          >
-                            {cardIcon && (
-                              <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={cardIcon} />
-                            )}
-                            <wizard-story-preview>
-                              <wizard-reset-theme>
-                                <wizard-preview-theme>
-                                  <div data-story-container={cardPreviewStoryId} />
-                                </wizard-preview-theme>
-                              </wizard-reset-theme>
-                            </wizard-story-preview>
-                          </div>
-
-                          <div class="wizard-step-overview-card__body">
-                            <span class="wizard-step-overview-card__title">{cardTitle}</span>
-                            {description && <span class="wizard-step-overview-card__description">{description}</span>}
-                            <div
-                              class="wizard-step-overview-card__summary-container"
-                              data-step-selection-summary
-                              hidden
-                            />
-                          </div>
-
-                          <div class="wizard-step-overview-card__footer">
-                            <StoryWizardCheckmark class="wizard-step-overview-card__done" />
-
-                            <a
-                              class="wizard-step-overview-card__action nl-button nl-button--primary"
-                              href={`#${step.id}`}
-                              data-step-overview-card={step.id}
-                            >
-                              Stel in
-                            </a>
-                          </div>
-                        </article>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
+                  return (
+                    <li class="wizard-steps-overview__item">
+                      <StoryWizardOverviewCard
+                        stepId={step.id}
+                        title={cardTitle}
+                        description={description}
+                        previewStoryId={cardPreviewStoryId}
+                        icon={cardIcon || undefined}
+                        showSummary
+                      />
+                    </li>
+                  );
+                })}
+              </StoryWizardOverviewRow>
             ))}
           </div>
         ) : (
           <div class="wizard-steps-overview__rows">
-            <section class="wizard-steps-overview__row wizard-steps-overview__row--completed" data-completed-row hidden>
-              <h3 class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title">
-                Ingesteld (<span data-completed-count>0</span>)
-              </h3>
-              <ul class="wizard-steps-overview__list" data-completed-list></ul>
-            </section>
+            <StoryWizardOverviewRow title="Ingesteld" isCompletedRow />
 
             {(() => {
               const renderCard = (step: SingleRow['step']) => {
-                const stepIndex = wizard.steps.findIndex((candidate) => candidate.id === step.id);
                 const group = step.groups[0];
                 const cardTitle = group?.name ?? step.title;
                 const description = group?.description ?? step.intro;
@@ -253,42 +200,14 @@ const headingRows =
 
                 return (
                   <li class="wizard-steps-overview__item">
-                    <article class="wizard-step-overview-card">
-                      <div
-                        class:list={[
-                          'wizard-step-overview-card__preview',
-                          cardIcon && 'wizard-step-overview-card__preview--with-icon',
-                        ]}
-                      >
-                        {cardIcon && (
-                          <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={cardIcon} />
-                        )}
-                        <wizard-story-preview>
-                          <wizard-reset-theme>
-                            <wizard-preview-theme>
-                              <div data-story-container={cardPreviewStoryId} />
-                            </wizard-preview-theme>
-                          </wizard-reset-theme>
-                        </wizard-story-preview>
-                      </div>
-
-                      <div class="wizard-step-overview-card__body">
-                        <span class="wizard-step-overview-card__title">{cardTitle}</span>
-                        {description && <span class="wizard-step-overview-card__description">{description}</span>}
-                        <div class="wizard-step-overview-card__summary-container" data-step-selection-summary hidden />
-                      </div>
-
-                      <div class="wizard-step-overview-card__footer">
-                        <StoryWizardCheckmark class="wizard-step-overview-card__done" />
-                        <a
-                          class="wizard-step-overview-card__action nl-button nl-button--primary"
-                          href={`#${step.id}`}
-                          data-step-overview-card={step.id}
-                        >
-                          Stel in
-                        </a>
-                      </div>
-                    </article>
+                    <StoryWizardOverviewCard
+                      stepId={step.id}
+                      title={cardTitle}
+                      description={description}
+                      previewStoryId={cardPreviewStoryId}
+                      icon={cardIcon || undefined}
+                      showSummary
+                    />
                   </li>
                 );
               };
@@ -296,23 +215,12 @@ const headingRows =
               return (
                 <>
                   {singleSteps.length > 0 && (
-                    <section class="wizard-steps-overview__row">
-                      <ul class="wizard-steps-overview__list">{singleSteps.map(renderCard)}</ul>
-                    </section>
+                    <StoryWizardOverviewRow>{singleSteps.map(renderCard)}</StoryWizardOverviewRow>
                   )}
                   {groupRows.map((row) => (
-                    <section
-                      class="wizard-steps-overview__row wizard-steps-overview__row--group"
-                      aria-labelledby={`group-${row.flowGroup}`}
-                    >
-                      <h3
-                        class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title"
-                        id={`group-${row.flowGroup}`}
-                      >
-                        {row.flowTitle}
-                      </h3>
-                      <ul class="wizard-steps-overview__list">{row.steps.map(renderCard)}</ul>
-                    </section>
+                    <StoryWizardOverviewRow title={row.flowTitle} id={`group-${row.flowGroup}`}>
+                      {row.steps.map(renderCard)}
+                    </StoryWizardOverviewRow>
                   ))}
                 </>
               );
@@ -351,7 +259,6 @@ const headingRows =
 
             <ul class="wizard-steps-overview__list">
               {advancedSteps.map((step) => {
-                const stepIndex = wizard.steps.findIndex((candidate) => candidate.id === step.id);
                 const cardTitle = step.title;
                 const description = step.intro;
                 const cardPreviewStoryId = step.cardPreviewStories[0]?.id ?? step.previewStories[0]?.id ?? step.id;
@@ -359,41 +266,13 @@ const headingRows =
 
                 return (
                   <li class="wizard-steps-overview__item">
-                    <article class="wizard-step-overview-card">
-                      <div
-                        class:list={[
-                          'wizard-step-overview-card__preview',
-                          cardIcon && 'wizard-step-overview-card__preview--with-icon',
-                        ]}
-                      >
-                        {cardIcon && (
-                          <span class="wizard-step-overview-card__icon" aria-hidden="true" set:html={cardIcon} />
-                        )}
-                        <wizard-story-preview>
-                          <wizard-reset-theme>
-                            <wizard-preview-theme>
-                              <div data-story-container={cardPreviewStoryId} />
-                            </wizard-preview-theme>
-                          </wizard-reset-theme>
-                        </wizard-story-preview>
-                      </div>
-
-                      <div class="wizard-step-overview-card__body">
-                        <span class="wizard-step-overview-card__title">{cardTitle}</span>
-                        {description && <span class="wizard-step-overview-card__description">{description}</span>}
-                      </div>
-
-                      <div class="wizard-step-overview-card__footer">
-                        <StoryWizardCheckmark class="wizard-step-overview-card__done" />
-                        <a
-                          class="wizard-step-overview-card__action nl-button nl-button--primary"
-                          href={`#${step.id}`}
-                          data-step-overview-card={step.id}
-                        >
-                          Stel in
-                        </a>
-                      </div>
-                    </article>
+                    <StoryWizardOverviewCard
+                      stepId={step.id}
+                      title={cardTitle}
+                      description={description}
+                      previewStoryId={cardPreviewStoryId}
+                      icon={cardIcon || undefined}
+                    />
                   </li>
                 );
               })}
