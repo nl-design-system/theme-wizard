@@ -1,3 +1,4 @@
+import '@nl-design-system-community/clippy-components/clippy-react-element';
 import type { ClippyReactElement } from '@nl-design-system-community/clippy-components/clippy-react-element';
 import { LitElement, html } from 'lit';
 import { createElement } from 'react';
