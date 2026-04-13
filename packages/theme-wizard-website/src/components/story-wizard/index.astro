@@ -10,10 +10,11 @@ import fontIcon from '@tabler/icons/outline/abc.svg?raw';
 import borderRadiusIcon from '@tabler/icons/outline/border-radius.svg?raw';
 import borderStyleIcon from '@tabler/icons/outline/border-style.svg?raw';
 import textSizeIcon from '@tabler/icons/outline/text-size.svg?raw';
-import StoryWizardStep from './components/StoryWizardStep.astro';
+import StoryWizardStep from './components/StoryWizardStep/index.astro';
 import StoryWizardStepper from './components/StoryWizardStepper/index.astro';
-import StoryWizardOverviewCard from './components/StoryWizardOverviewCard.astro';
-import StoryWizardOverviewRow from './components/StoryWizardOverviewRow.astro';
+import StoryWizardOverviewCard from './components/StoryWizardOverviewCard/index.astro';
+import StoryWizardOverviewRow from './components/StoryWizardOverviewRow/index.astro';
+import StoryWizardCollapsible from './components/StoryWizardCollapsible/index.astro';
 
 interface Props {
   wizard: StoryWizardViewModel;
@@ -231,8 +232,12 @@ const headingRows =
 
       {
         advancedSteps.length > 0 && (
-          <details class="wizard-steps-overview__advanced">
-            <summary class="wizard-steps-overview__advanced-summary">
+          <StoryWizardCollapsible
+            class="wizard-steps-overview__advanced"
+            summaryClass="wizard-steps-overview__advanced-summary"
+            hideChevron
+          >
+            <Fragment slot="summary-content">
               <span class="wizard-steps-overview__advanced-heading">
                 <span class="wizard-steps-overview__advanced-icon" aria-hidden="true" set:html={settingsIcon} />
                 <span class="wizard-steps-overview__advanced-label">Geavanceerd</span>
@@ -240,7 +245,7 @@ const headingRows =
               <span class="wizard-steps-overview__advanced-meta">
                 Optioneel · {advancedSteps.length} extra {advancedSteps.length === 1 ? 'onderdeel' : 'onderdelen'}
               </span>
-            </summary>
+            </Fragment>
 
             <div class="wizard-steps-overview__advanced-lead">
               <p class="nl-paragraph wizard-steps-overview__advanced-intro">
@@ -277,7 +282,7 @@ const headingRows =
                 );
               })}
             </ul>
-          </details>
+          </StoryWizardCollapsible>
         )
       }
     </div>
