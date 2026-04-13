@@ -1,10 +1,4 @@
-import type { CodeBlockProps } from '@nl-design-system-candidate/code-block-react';
-import {
-  createPresetTokens,
-  createRelativeFontSizePresetOptions,
-  createPresetStory,
-  type PresetOption,
-} from '../story-helpers';
+import { createPresetTokens, createRelativeFontSizePresetOptions, createPresetStory } from '../story-helpers';
 
 const codeBlockSampleText = `import { CodeBlock } from '@nl-design-system-candidate/code-block-react';`;
 

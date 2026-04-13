@@ -16,7 +16,6 @@ const meta = {
 export default meta;
 
 export * from './code-block-react.preset.stories';
-export * from './code-block-react.advanced-stories';
 
 type Story = StoryObj<CodeBlockProps>;
 
