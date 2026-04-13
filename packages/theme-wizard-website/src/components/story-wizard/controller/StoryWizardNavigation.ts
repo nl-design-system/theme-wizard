@@ -11,39 +11,65 @@ export interface NavigationCallbacks {
 
 export class StoryWizardNavigation {
   readonly #finishSafeBtns: HTMLButtonElement[];
-  readonly #overviewCards: HTMLElement[];
+  readonly #overviewCardMap: Map<string, HTMLElement>;
+  readonly #originalListMap: Map<string, HTMLElement>;
   readonly #transitionNotes: HTMLElement[];
   readonly #steppers: HTMLElement[];
   readonly #overview: HTMLElement | null;
-  readonly #root: HTMLElement | Document;
+  readonly #completedRow: HTMLElement | null;
+  readonly #completedList: HTMLElement | null;
+  readonly #completedCount: HTMLElement | null;
+  readonly #filterBtn: HTMLButtonElement | null;
+  readonly #filterCount: HTMLElement | null;
+  readonly #filterAdvancedBtn: HTMLButtonElement | null;
+  readonly #filterAdvancedCount: HTMLElement | null;
+  #filterActive = false;
+  #filterAdvancedActive = false;
+  #stepsState: StoryWizardStepState[] = [];
 
   public constructor(root: HTMLElement | Document, shell: HTMLElement | Document) {
-    this.#root = root;
     this.#steppers = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-stepper'));
     this.#finishSafeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.wizard-preset-finish-safe'));
-    this.#overviewCards = Array.from(root.querySelectorAll<HTMLElement>('[data-step-overview-card]'));
+    this.#overviewCardMap = new Map(
+      Array.from(root.querySelectorAll<HTMLElement>('[data-step-overview-card]'))
+        .map((card) => [card.dataset.stepOverviewCard!, card])
+        .filter(([id]) => !!id),
+    );
+    this.#originalListMap = new Map(
+      Array.from(root.querySelectorAll<HTMLElement>('[data-step-overview-card]'))
+        .map((card) => {
+          const id = card.dataset.stepOverviewCard;
+          const list = card.closest<HTMLElement>('.wizard-steps-overview__list');
+          return id && list ? [id, list] : null;
+        })
+        .filter((entry): entry is [string, HTMLElement] => entry !== null),
+    );
     this.#transitionNotes = Array.from(root.querySelectorAll<HTMLElement>('.wizard-preset-transition-note'));
     this.#overview = (root as HTMLElement).querySelector?.('[data-steps-overview]') ?? null;
+    this.#completedRow = (root as HTMLElement).querySelector?.('[data-completed-row]') ?? null;
+    this.#completedList = (root as HTMLElement).querySelector?.('[data-completed-list]') ?? null;
+    this.#completedCount = (root as HTMLElement).querySelector?.('[data-completed-count]') ?? null;
+    this.#filterBtn = (root as HTMLElement).querySelector?.('[data-filter-todo]') ?? null;
+    this.#filterCount = (root as HTMLElement).querySelector?.('[data-filter-count]') ?? null;
+    this.#filterAdvancedBtn = (root as HTMLElement).querySelector?.('[data-filter-todo-advanced]') ?? null;
+    this.#filterAdvancedCount = (root as HTMLElement).querySelector?.('[data-filter-count-advanced]') ?? null;
   }
 
   public bind(callbacks: NavigationCallbacks) {
     this.#finishSafeBtns.forEach((btn) => btn.addEventListener('click', callbacks.onFinishSafe));
 
-    this.#root.addEventListener('click', (e) => {
-      const target = (e.target as HTMLElement).closest<HTMLElement>('a, button');
-      if (!target) return;
+    this.#filterBtn?.addEventListener('click', () => {
+      this.#filterActive = !this.#filterActive;
+      this.#filterBtn!.setAttribute('aria-pressed', String(this.#filterActive));
+      this.#filterBtn!.classList.toggle('nl-button--pressed', this.#filterActive);
+      this.#applyFilter();
+    });
 
-      // For links with hashes, we let the browser change the hash natively.
-      // The StoryWizardController's hashchange listener will pick it up.
-      // We only need to handle buttons or cases where preventDefault is necessary.
-
-      if (target.classList.contains('wizard-back-overview-btn')) {
-        // e.preventDefault() is NOT called, so hash changes natively to #wizard-overview
-      }
-
-      if (target.hasAttribute('data-step-overview-card')) {
-        // e.preventDefault() is NOT called, so hash changes natively to #step-id
-      }
+    this.#filterAdvancedBtn?.addEventListener('click', () => {
+      this.#filterAdvancedActive = !this.#filterAdvancedActive;
+      this.#filterAdvancedBtn!.setAttribute('aria-pressed', String(this.#filterAdvancedActive));
+      this.#filterAdvancedBtn!.classList.toggle('nl-button--pressed', this.#filterAdvancedActive);
+      this.#applyAdvancedFilter();
     });
   }
 
@@ -63,10 +89,63 @@ export class StoryWizardNavigation {
     this.#overview?.setAttribute('hidden', '');
   }
 
+  #applyFilter() {
+    this.#stepsState.forEach((state) => {
+      if (state.step.isAdvanced) return;
+      const card = this.#overviewCardMap.get(state.step.element.id);
+      const item = card?.closest<HTMLElement>('.wizard-steps-overview__item');
+      if (!item) return;
+      item.hidden = this.#filterActive && state.isDone;
+    });
+  }
+
+  #applyAdvancedFilter() {
+    this.#stepsState.forEach((state) => {
+      if (!state.step.isAdvanced) return;
+      const card = this.#overviewCardMap.get(state.step.element.id);
+      const item = card?.closest<HTMLElement>('.wizard-steps-overview__item');
+      if (!item) return;
+      item.hidden = this.#filterAdvancedActive && state.isDone;
+    });
+  }
+
   public updateStepNavState(_currentIndex: number, stepsState: StoryWizardStepState[]) {
-    this.#overviewCards.forEach((card, i) => {
-      const state = stepsState[i];
-      if (!state) return;
+    this.#stepsState = stepsState;
+    let completedPresetCount = 0;
+
+    if (this.#filterCount) {
+      const presetSteps = stepsState.filter((s) => !s.step.isAdvanced);
+      const undoneCount = presetSteps.filter((s) => !s.isDone).length;
+      const shouldShowPresetFilter = undoneCount > 0 && undoneCount < presetSteps.length;
+
+      this.#filterCount.textContent = String(undoneCount);
+      this.#filterBtn?.toggleAttribute('hidden', !shouldShowPresetFilter);
+
+      if (!shouldShowPresetFilter && this.#filterActive) {
+        this.#filterActive = false;
+        this.#filterBtn?.setAttribute('aria-pressed', 'false');
+        this.#filterBtn?.classList.remove('nl-button--pressed');
+      }
+    }
+
+    if (this.#filterAdvancedCount) {
+      const advancedSteps = stepsState.filter((s) => s.step.isAdvanced);
+      const undoneAdvancedCount = advancedSteps.filter((s) => !s.isDone).length;
+      const shouldShowAdvancedFilter = undoneAdvancedCount > 0 && undoneAdvancedCount < advancedSteps.length;
+
+      this.#filterAdvancedCount.textContent = String(undoneAdvancedCount);
+      this.#filterAdvancedBtn?.toggleAttribute('hidden', !shouldShowAdvancedFilter);
+
+      if (!shouldShowAdvancedFilter && this.#filterAdvancedActive) {
+        this.#filterAdvancedActive = false;
+        this.#filterAdvancedBtn?.setAttribute('aria-pressed', 'false');
+        this.#filterAdvancedBtn?.classList.remove('nl-button--pressed');
+      }
+    }
+
+    stepsState.forEach((state) => {
+      const card = this.#overviewCardMap.get(state.step.element.id);
+      if (!card) return;
       const { isDone } = state;
 
       card.closest('.wizard-step-overview-card')?.classList.toggle('wizard-step-overview-card--done', isDone);
@@ -81,7 +160,37 @@ export class StoryWizardNavigation {
       card.classList.toggle('nl-button--secondary', isDone);
 
       this.#updateCardSummary(card, state);
+
+      if (!state.step.isAdvanced) {
+        this.#movePresetCard(state.step.element.id, isDone);
+        if (isDone) completedPresetCount += 1;
+      }
     });
+
+    if (this.#completedRow) {
+      this.#completedRow.hidden = completedPresetCount === 0 || this.#filterActive;
+    }
+
+    if (this.#completedCount) {
+      this.#completedCount.textContent = String(completedPresetCount);
+    }
+
+    this.#applyFilter();
+    this.#applyAdvancedFilter();
+  }
+
+  #movePresetCard(stepId: string, isDone: boolean) {
+    const card = this.#overviewCardMap.get(stepId);
+    const item = card?.closest<HTMLElement>('.wizard-steps-overview__item');
+    if (!item) return;
+
+    if (isDone) {
+      this.#completedList?.appendChild(item);
+      return;
+    }
+
+    const originalList = this.#originalListMap.get(stepId);
+    originalList?.appendChild(item);
   }
 
   #updateCardSummary(btn: HTMLElement, state: StoryWizardStepState) {
@@ -89,7 +198,7 @@ export class StoryWizardNavigation {
     const summaryContainer = card?.querySelector<HTMLElement>('[data-step-selection-summary]');
     if (!summaryContainer) return;
 
-    const { summaries, isDone } = state;
+    const { isDone, summaries } = state;
 
     if (!isDone || summaries.length === 0) {
       summaryContainer.hidden = true;

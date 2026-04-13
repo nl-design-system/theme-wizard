@@ -1,6 +1,6 @@
 ---
 import type { StoryWizardStep as StoryWizardStepViewModel } from '@/lib/types';
-import layoutGridIcon from '@tabler/icons/outline/layout-grid.svg?raw';
+import chevronLeftIcon from '@tabler/icons/outline/chevron-left.svg?raw';
 import StoryWizardEditableTokenGroup from './StoryWizardEditableTokenGroup/index.astro';
 import StoryWizardPresetGroup from './StoryWizardPresetGroup/index.astro';
 
@@ -29,7 +29,7 @@ const showPreviewModeToggle =
 >
   <div class="wizard-story-section__header">
     <a href="#wizard-overview" class="nl-link wizard-back-overview-btn" role="button">
-      <span class="wizard-back-overview-btn__icon" aria-hidden="true" set:html={layoutGridIcon} />
+      <span class="wizard-back-overview-btn__icon" aria-hidden="true" set:html={chevronLeftIcon} />
       <span class="wizard-back-overview-btn__label">Terug naar overzicht</span>
     </a>
   </div>

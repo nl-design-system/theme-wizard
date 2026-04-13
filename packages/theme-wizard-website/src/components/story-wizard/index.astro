@@ -138,7 +138,18 @@ const headingRows =
       <div class="wizard-steps-overview__lead">
         <div class="wizard-steps-overview__lead-row">
           <h2 class="nl-heading nl-heading--level-3">{presetSteps.length} presets</h2>
-          <span class="wizard-steps-overview__reset"></span>
+          <div class="wizard-steps-overview__lead-actions">
+            <button
+              class="nl-button nl-button--secondary wizard-steps-overview__filter-btn"
+              type="button"
+              data-filter-todo
+              aria-pressed="false"
+              hidden
+            >
+              Niet ingesteld (<span data-filter-count>{presetSteps.length}</span>)
+            </button>
+            <div class="wizard-steps-overview__reset" hidden></div>
+          </div>
         </div>
         <p class="nl-paragraph wizard-steps-overview__intro">Kies eerst een onderwerp om de basis goed te zetten.</p>
       </div>
@@ -146,6 +157,13 @@ const headingRows =
       {
         wizard.componentId === 'heading' ? (
           <div class="wizard-steps-overview__rows">
+            <section class="wizard-steps-overview__row wizard-steps-overview__row--completed" data-completed-row hidden>
+              <h3 class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title">
+                Ingesteld (<span data-completed-count>0</span>)
+              </h3>
+              <ul class="wizard-steps-overview__list" data-completed-list></ul>
+            </section>
+
             {headingRows.map((row) => (
               <section class="wizard-steps-overview__row" aria-labelledby={`heading-row-h${row.level}`}>
                 <h3
@@ -188,7 +206,11 @@ const headingRows =
                           <div class="wizard-step-overview-card__body">
                             <span class="wizard-step-overview-card__title">{cardTitle}</span>
                             {description && <span class="wizard-step-overview-card__description">{description}</span>}
-                            <div class="wizard-step-overview-card__summary-container" data-step-selection-summary hidden></div>
+                            <div
+                              class="wizard-step-overview-card__summary-container"
+                              data-step-selection-summary
+                              hidden
+                            />
                           </div>
 
                           <div class="wizard-step-overview-card__footer">
@@ -199,7 +221,7 @@ const headingRows =
                             <a
                               class="wizard-step-overview-card__action nl-button nl-button--primary"
                               href={`#${step.id}`}
-                              data-step-overview-card
+                              data-step-overview-card={step.id}
                             >
                               Stel in
                             </a>
@@ -214,6 +236,13 @@ const headingRows =
           </div>
         ) : (
           <div class="wizard-steps-overview__rows">
+            <section class="wizard-steps-overview__row wizard-steps-overview__row--completed" data-completed-row hidden>
+              <h3 class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title">
+                Ingesteld (<span data-completed-count>0</span>)
+              </h3>
+              <ul class="wizard-steps-overview__list" data-completed-list></ul>
+            </section>
+
             {(() => {
               const renderCard = (step: SingleRow['step']) => {
                 const stepIndex = wizard.steps.findIndex((candidate) => candidate.id === step.id);
@@ -247,7 +276,7 @@ const headingRows =
                       <div class="wizard-step-overview-card__body">
                         <span class="wizard-step-overview-card__title">{cardTitle}</span>
                         {description && <span class="wizard-step-overview-card__description">{description}</span>}
-                        <div class="wizard-step-overview-card__summary-container" data-step-selection-summary hidden></div>
+                        <div class="wizard-step-overview-card__summary-container" data-step-selection-summary hidden />
                       </div>
 
                       <div class="wizard-step-overview-card__footer">
@@ -257,7 +286,7 @@ const headingRows =
                         <a
                           class="wizard-step-overview-card__action nl-button nl-button--primary"
                           href={`#${step.id}`}
-                          data-step-overview-card
+                          data-step-overview-card={step.id}
                         >
                           Stel in
                         </a>
@@ -308,9 +337,20 @@ const headingRows =
               </span>
             </summary>
 
-            <p class="nl-paragraph wizard-steps-overview__advanced-intro">
-              Pas hier extra details aan als je meer controle wilt.
-            </p>
+            <div class="wizard-steps-overview__advanced-lead">
+              <p class="nl-paragraph wizard-steps-overview__advanced-intro">
+                Pas hier extra details aan als je meer controle wilt.
+              </p>
+              <button
+                class="nl-button nl-button--secondary wizard-steps-overview__filter-btn"
+                type="button"
+                data-filter-todo-advanced
+                aria-pressed="false"
+                hidden
+              >
+                Niet ingesteld (<span data-filter-count-advanced>{advancedSteps.length}</span>)
+              </button>
+            </div>
 
             <ul class="wizard-steps-overview__list">
               {advancedSteps.map((step) => {
@@ -353,7 +393,7 @@ const headingRows =
                         <a
                           class="wizard-step-overview-card__action nl-button nl-button--primary"
                           href={`#${step.id}`}
-                          data-step-overview-card
+                          data-step-overview-card={step.id}
                         >
                           Stel in
                         </a>
