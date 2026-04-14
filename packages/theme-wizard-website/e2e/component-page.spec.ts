@@ -30,7 +30,7 @@ test.describe('stories', () => {
   });
 
   test('story renders example component', async ({ page }) => {
-    const preview = page.locator('wizard-story-preview').first();
+    const preview = page.locator('clippy-story-preview').first();
     const component = preview.locator('clippy-react-element');
     await expect(component).toBeVisible();
   });
