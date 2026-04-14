@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import sidebarStyles from './sidebar.css';
+import sidebarStyles from './styles';
 
 const tag = 'wizard-sidebar';
 // Declare the custom element for TypeScript

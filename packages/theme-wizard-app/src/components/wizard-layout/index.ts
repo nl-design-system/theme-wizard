@@ -4,7 +4,7 @@ import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { t } from '../../i18n';
-import '../sidebar/sidebar';
+import '../wizard-sidebar';
 import '../wizard-logo';
 import styles from './styles';
 
