@@ -1,3 +1,4 @@
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import formFieldStyles from '@utrecht/form-field-css?inline';
@@ -109,7 +110,7 @@ export class WizardScraper extends LitElement {
       ${isIdle || isError
         ? html`
             <wizard-stack size="xl">
-              <wizard-story-preview size="lg">
+              <clippy-story-preview size="lg">
                 <wizard-stack size="3xl">
                   <clippy-heading level="1">${t('scraper.title')}</clippy-heading>
                   <p class="nl-paragraph nl-paragraph--lead">${t('scraper.intro')}</p>
@@ -145,7 +146,7 @@ export class WizardScraper extends LitElement {
                     </wizard-stack>
                   </form>
                 </wizard-stack>
-              </wizard-story-preview>
+              </clippy-story-preview>
               <p class="nl-paragraph">${t('scraper.directStart')}</p>
             </wizard-stack>
           `

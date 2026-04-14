@@ -5,7 +5,7 @@ export default css`
     display: block;
   }
 
-  .wizard-story-preview {
+  .clippy-story-preview {
     background-color: var(--basis-color-default-bg-document);
     border-color: var(--basis-color-default-bg-hover);
     border-radius: var(--basis-border-radius-sm);
@@ -20,7 +20,7 @@ export default css`
     position: relative;
   }
 
-  .wizard-story-preview--lg {
+  .clippy-story-preview--lg {
     border-radius: var(--basis-border-radius-lg);
     box-shadow:
       0 8px 16px 0 #0000000f,

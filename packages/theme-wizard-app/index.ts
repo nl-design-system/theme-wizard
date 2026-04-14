@@ -14,7 +14,6 @@ import './src/components/wizard-scraper-loader';
 import './src/components/wizard-scroll-container';
 import './src/components/wizard-sidebar-link';
 import './src/components/wizard-stack';
-import './src/components/wizard-story-preview';
 import './src/components/wizard-story-react';
 import './src/components/wizard-style-guide-typography';
 import './src/components/wizard-style-guide-colors';

@@ -26,7 +26,7 @@ test('page shows an on-page navigation with links to each of the pages sections'
 
 test.describe('stories', () => {
   test('shows 1 or more story sections', async ({ page }) => {
-    expect(await page.locator('section:has(wizard-story-preview)').count()).toBeGreaterThanOrEqual(1);
+    expect(await page.locator('section:has(clippy-story-preview)').count()).toBeGreaterThanOrEqual(1);
   });
 
   test('story renders example component', async ({ page }) => {

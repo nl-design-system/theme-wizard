@@ -3,24 +3,27 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import styles from './styles';
 
-const tag = 'wizard-story-preview';
+const tag = 'clippy-story-preview';
 
-// Declare the custom element for TypeScript
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: WizardStoryPreview;
+    [tag]: ClippyStoryPreview;
   }
 }
 
+/**
+ * A web component to render any sort of content into that very recognizable Storybook-like
+ * white, rounded rectangle with a small box-shadow. Perfect for small demos.
+ */
 @customElement(tag)
-export class WizardStoryPreview extends LitElement {
+export class ClippyStoryPreview extends LitElement {
   static override readonly styles = [styles];
 
   @property({ reflect: true, type: String }) size: string | undefined;
 
   override render() {
     return html`
-      <div class="wizard-story-preview ${classMap({ 'wizard-story-preview--lg': this.size === 'lg' })}">
+      <div class="clippy-story-preview ${classMap({ 'clippy-story-preview--lg': this.size === 'lg' })}">
         <slot></slot>
       </div>
     `;
