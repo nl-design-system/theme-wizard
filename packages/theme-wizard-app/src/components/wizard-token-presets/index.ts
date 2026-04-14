@@ -3,7 +3,7 @@ import { dequal } from 'dequal';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import Theme from '../../lib/Theme';
-import { ThemeUpdateEvent } from '../app/app';
+import { ThemeUpdateEvent } from '../wizard-app';
 import { wizardTokenCSS } from './styles';
 
 const tag = 'wizard-token-preset';
