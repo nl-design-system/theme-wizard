@@ -129,6 +129,12 @@ importers:
       memoize:
         specifier: 11.0.0
         version: 11.0.0
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@nl-design-system-community/design-tokens-schema':
         specifier: workspace:*
@@ -139,6 +145,9 @@ importers:
       '@types/react':
         specifier: 18.3.28
         version: 18.3.28
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@18.3.28)
       '@vitest/browser-playwright':
         specifier: 4.1.2
         version: 4.1.2(playwright@1.59.1)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.2)
@@ -390,7 +399,7 @@ importers:
         version: 1.1.5
       '@vitest/coverage-v8':
         specifier: 4.1.0
-        version: 4.1.0(vitest@4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))
+        version: 4.1.0(vitest@4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2(playwright@1.59.1)(vite@8.0.3(@types/node@24.12.0)(esbuild@0.27.4)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.2))(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))
       dset:
         specifier: 3.1.4
         version: 3.1.4
@@ -408,7 +417,7 @@ importers:
         version: 4.5.4(@types/node@24.12.0)(rollup@4.60.1)(typescript@6.0.2)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
       vitest:
         specifier: 4.1.0
-        version: 4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
+        version: 4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2(playwright@1.59.1)(vite@8.0.3(@types/node@24.12.0)(esbuild@0.27.4)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.2))(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
 
   packages/theme-wizard-app:
     dependencies:
@@ -3348,6 +3357,11 @@ packages:
     resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
     peerDependencies:
       '@types/react': ^18.0.0
+
+  '@types/react-dom@19.2.3':
+    resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
+    peerDependencies:
+      '@types/react': ^19.2.0
 
   '@types/react@18.3.28':
     resolution: {integrity: sha512-z9VXpC7MWrhfWipitjNdgCauoMLRdIILQsAEV+ZesIzBq/oUlxk0m3ApZuMFCXdnS4U7KrI+l3WRUEGQ8K1QKw==}
@@ -11251,6 +11265,10 @@ snapshots:
     dependencies:
       '@types/react': 18.3.28
 
+  '@types/react-dom@19.2.3(@types/react@18.3.28)':
+    dependencies:
+      '@types/react': 18.3.28
+
   '@types/react@18.3.28':
     dependencies:
       '@types/prop-types': 15.7.15
@@ -12602,7 +12620,7 @@ snapshots:
       - vite
     optional: true
 
-  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))':
+  '@vitest/coverage-v8@4.1.0(vitest@4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2(playwright@1.59.1)(vite@8.0.3(@types/node@24.12.0)(esbuild@0.27.4)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.2))(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.1.0
@@ -12614,7 +12632,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
+      vitest: 4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2(playwright@1.59.1)(vite@8.0.3(@types/node@24.12.0)(esbuild@0.27.4)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.2))(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
 
   '@vitest/coverage-v8@4.1.2(@vitest/browser@4.1.2(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.2))(vitest@4.1.2)':
     dependencies:
@@ -17843,7 +17861,7 @@ snapshots:
     optionalDependencies:
       vite: 6.4.1(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)
 
-  vitest@4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2)(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)):
+  vitest@4.1.0(@edge-runtime/vm@3.2.0)(@types/node@24.12.0)(@vitest/browser-playwright@4.1.2(playwright@1.59.1)(vite@8.0.3(@types/node@24.12.0)(esbuild@0.27.4)(tsx@4.21.0)(yaml@2.8.2))(vitest@4.1.2))(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)):
     dependencies:
       '@vitest/expect': 4.1.0
       '@vitest/mocker': 4.1.0(vite@7.3.0(@types/node@24.12.0)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))

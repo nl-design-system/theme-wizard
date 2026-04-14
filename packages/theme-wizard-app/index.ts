@@ -8,7 +8,6 @@ import './src/components/wizard-page-nav';
 import './src/components/wizard-preview';
 import './src/components/wizard-preview-picker';
 import './src/components/wizard-preview-theme';
-import './src/components/wizard-react-element';
 import './src/components/wizard-reset-theme';
 import './src/components/wizard-scraped-tokens-preview';
 import './src/components/wizard-scraper';

@@ -36,6 +36,8 @@ export default defineConfig(() => ({
         'lit/directives/ref.js',
         'lit/directives/style-map.js',
         'lit/directives/unsafe-svg.js',
+        'react',
+        'react-dom',
       ],
       input: getFiles('src/**/index.ts'),
       output: {
