@@ -4,6 +4,13 @@ import { assign, fromPromise, raise, setup } from 'xstate';
 import { t } from '../../i18n';
 import Scraper from '../../lib/Scraper';
 
+const errorNameToMessageKey: Record<string, string> = {
+  ConnectionRefusedError: 'scraper.errors.connectionRefused',
+  ForbiddenError: 'scraper.errors.forbidden',
+  NotFoundError: 'scraper.errors.notFound',
+  TimeoutError: 'scraper.errors.timeOut',
+};
+
 export const scraperMachine = setup({
   actions: {
     assignUrl: assign({
@@ -92,7 +99,13 @@ export const scraperMachine = setup({
         },
         onError: {
           // Exit immediately regardless of where the timer is.
-          actions: assign({ error: ({ context }) => t('scraper.scrapeFailed', { url: context.url }) }),
+          actions: assign({
+            error: ({ event }) => {
+              const [firstError] = (event.error as { errors?: { name: string }[] })?.errors ?? [];
+              const messageKey = firstError?.name && errorNameToMessageKey[firstError.name];
+              return messageKey ? t(messageKey) : t('scraper.errors.error');
+            },
+          }),
           target: 'error',
         },
         src: 'scrapeTokens',

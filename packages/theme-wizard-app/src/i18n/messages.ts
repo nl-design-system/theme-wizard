@@ -41,6 +41,13 @@ export const en = {
   save: 'Save',
   scraper: {
     directStart: html`Begin directly with <a href="/basis-tokens" class="nl-link">basic tokens</a>.`,
+    errors: {
+      connectionRefused: 'This website does not seem to exist.',
+      error: 'Cannot analyze this website',
+      forbidden: 'This website does not allow analysis.',
+      notFound: 'This website or webpage cannot be found.',
+      timeOut: 'It takes too long for this website to respond.',
+    },
     input: {
       description: 'E.g. gemeentevoorbeeld.nl',
       label: 'Website URL',
@@ -388,6 +395,13 @@ export const nl = {
   save: 'Opslaan',
   scraper: {
     directStart: html`Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.`,
+    errors: {
+      connectionRefused: 'Deze website lijkt niet te bestaan.',
+      error: 'Kan deze website niet analyseren',
+      forbidden: 'Deze website staat niet toe om geanalyseerd te worden.',
+      notFound: 'Deze pagina kan niet worden gevonden.',
+      timeOut: 'Deze website reageert te langzaam om te kunnen analyseren',
+    },
     input: {
       description: 'Bijvoorbeeld gemeentevoorbeeld.nl',
       label: 'Website URL',
