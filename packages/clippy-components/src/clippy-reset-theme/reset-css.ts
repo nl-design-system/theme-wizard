@@ -15,12 +15,13 @@ function getTokenPaths(obj: TokenNode, partialTokenPath: TokenPath = []): TokenP
 
 export const tokenPathToCSSCustomProperty = (tokenPath: TokenPath): string => '--' + tokenPath.join('-');
 
-/* Functions to create a reset-theme stylesheet based on design token JSON */
 export const createResetStylesheet = (tokens: TokenNode[], selector = '.reset-theme'): string => {
-  const css = tokens
-    .flatMap((json) => getTokenPaths(json))
-    .map((x) => tokenPathToCSSCustomProperty(x))
-    .map((x) => `${x}: initial;`)
-    .join('\n');
+  const properties = tokens.reduce((set, json) => {
+    for (const path of getTokenPaths(json)) {
+      set.add(tokenPathToCSSCustomProperty(path));
+    }
+    return set;
+  }, new Set<string>());
+  const css = [...properties].map((x) => `${x}: initial;`).join('\n');
   return `${selector} { ${css} }`;
 };

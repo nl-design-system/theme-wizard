@@ -1,6 +1,6 @@
+import type { TokenGroup } from '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import { BaseDesignTokenIdentifier, isTokenLike, walkTokens } from '@nl-design-system-community/design-tokens-schema';
 import { DesignToken, DesignTokens } from 'style-dictionary/types';
-import { TokenGroup } from '../../components/wizard-reset-theme/reset-css';
 
 export const tokenPathToCSSCustomProperty = (tokenPath: BaseDesignTokenIdentifier[]): string =>
   '--' + tokenPath.join('-');

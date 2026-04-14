@@ -1,8 +1,10 @@
 ---
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { TEMPLATES_JSON } from '@nl-design-system-community/theme-wizard-templates';
+
 export const prerender = false; // enable SSR
 
 const scraperUrl = withRelatedProject({
@@ -49,11 +51,11 @@ if (!currentTemplate) {
       <div slot="main" class="wizard-main">
         <wizard-preview-picker class="wizard-preview-picker" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
         <clippy-story-preview size="lg">
-          <wizard-reset-theme>
+          <clippy-reset-theme>
             <wizard-preview-theme>
               <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
             </wizard-preview-theme>
-          </wizard-reset-theme>
+          </clippy-reset-theme>
         </clippy-story-preview>
       </div>
      </wizard-layout>
