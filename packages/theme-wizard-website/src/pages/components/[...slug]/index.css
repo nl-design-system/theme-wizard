@@ -742,6 +742,17 @@
   margin-inline: 0;
 }
 
+.wizard-steps-overview__row-summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  list-style: none;
+}
+
+.wizard-steps-overview__row-summary::-webkit-details-marker {
+  display: none;
+}
+
 .wizard-steps-overview__intro {
   color: var(--basis-color-default-color-subtle);
   margin-block: 0;

@@ -32,7 +32,11 @@ const getOverviewCardIcon = (step: StoryWizardViewModel['steps'][number], cardTi
     ...step.groups.flatMap((group) =>
       group.type === 'editable-tokens'
         ? group.tokens.flatMap((token) => [token.label, token.path, token.cssVar])
-        : [group.name, group.description ?? '', ...group.options.flatMap((option) => [option.name, option.description ?? ''])],
+        : [
+            group.name,
+            group.description ?? '',
+            ...group.options.flatMap((option) => [option.name, option.description ?? '']),
+          ],
     ),
   ]
     .join(' ')
@@ -194,19 +198,12 @@ const headingRows =
       <div class="wizard-steps-overview__lead">
         <div class="wizard-steps-overview__lead-row">
           <h2 class="nl-heading nl-heading--level-3">{presetSteps.length} presets</h2>
+
           <div class="wizard-steps-overview__lead-actions">
-            <button
-              class="nl-button nl-button--secondary wizard-steps-overview__filter-btn"
-              type="button"
-              data-filter-todo
-              aria-pressed="false"
-              hidden
-            >
-              Niet ingesteld (<span data-filter-count>{presetSteps.length}</span>)
-            </button>
             <div class="wizard-steps-overview__reset" hidden></div>
           </div>
         </div>
+
         <p class="nl-paragraph wizard-steps-overview__intro">Kies eerst een onderwerp om de basis goed te zetten.</p>
       </div>
 
@@ -267,7 +264,7 @@ const headingRows =
               return (
                 <>
                   {singleSteps.length > 0 && (
-                    <StoryWizardOverviewRow>{singleSteps.map(renderCard)}</StoryWizardOverviewRow>
+                    <StoryWizardOverviewRow title="Niet ingesteld" initialCount={singleSteps.length}>{singleSteps.map(renderCard)}</StoryWizardOverviewRow>
                   )}
                   {groupRows.map((row) => (
                     <StoryWizardOverviewRow title={row.flowTitle} id={`group-${row.flowGroup}`}>
