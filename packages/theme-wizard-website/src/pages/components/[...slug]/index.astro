@@ -6,6 +6,7 @@ import { resolveStoryWizardModel } from '@/lib/story-wizard';
 import '@nl-design-system-candidate/button-css/button.css';
 import '@nl-design-system-candidate/heading-css/heading.css';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import StoryWizardBackButton from '@/components/story-wizard/components/StoryWizardBackButton/index.astro';
 import StoryWizardCheckmark from '@/components/story-wizard/components/StoryWizardCheckmark/index.astro';
 import '@nl-design-system-candidate/code-css/code.css';
 
@@ -61,6 +62,7 @@ const wizard = await resolveStoryWizardModel(slug);
           <h1 class="wizard-page-title">{title} <StoryWizardCheckmark data-wizard-all-done-checkmark /></h1>
         </div>
         <StoryWizard wizard={wizard} />
+        <StoryWizardBackButton href="/components" data-component-page-back-button />
         <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>
       </main>
     </wizard-layout>
@@ -69,4 +71,23 @@ const wizard = await resolveStoryWizardModel(slug);
 
 <script>
   import '@/components/story-wizard/controller';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-component-page-back-button]').forEach((link) => {
+    if (link.dataset.componentPageBackButtonBound === 'true') {
+      return;
+    }
+
+    link.dataset.componentPageBackButtonBound = 'true';
+
+    link.addEventListener('click', (event) => {
+      const hash = window.location.hash.replace('#', '');
+
+      if (!hash || hash === 'wizard-overview') {
+        return;
+      }
+
+      event.preventDefault();
+      window.location.hash = 'wizard-overview';
+    });
+  });
 </script>

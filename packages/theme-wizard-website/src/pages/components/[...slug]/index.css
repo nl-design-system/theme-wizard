@@ -732,6 +732,10 @@
   gap: var(--basis-space-block-md);
 }
 
+.wizard-steps-overview__row[hidden] {
+  display: none;
+}
+
 .wizard-steps-overview__row--completed {
   border-block-end: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 48%, transparent);
   padding-block-end: var(--basis-space-block-xl);
