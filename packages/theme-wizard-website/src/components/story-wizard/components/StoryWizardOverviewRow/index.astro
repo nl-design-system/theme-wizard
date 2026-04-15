@@ -1,43 +1,55 @@
 ---
+import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
+
 interface Props {
   title?: string;
   id?: string;
   isCompletedRow?: boolean;
   headingLevel?: 3 | 4;
+  initialCount?: number;
 }
 
-const { title, id, isCompletedRow = false, headingLevel = 3 } = Astro.props;
+const { title, id, isCompletedRow = false, headingLevel = 3, initialCount } = Astro.props;
+
+const HeadingTag = headingLevel === 4 ? 'h4' : 'h3';
+const headingClass = `nl-heading nl-heading--level-${headingLevel} wizard-steps-overview__row-title`;
 ---
 
-<section
-  class:list={[
-    'wizard-steps-overview__row',
-    isCompletedRow && 'wizard-steps-overview__row--completed',
-  ]}
-  aria-labelledby={id}
-  data-completed-row={isCompletedRow || undefined}
-  hidden={isCompletedRow || undefined}
->
-  {
-    title && (
-      headingLevel === 3 ? (
-        <h3 class="nl-heading nl-heading--level-3 wizard-steps-overview__row-title" id={id}>
-          {title}
-          {isCompletedRow && (
-            <>
-              (<span data-completed-count>0</span>)
-            </>
-          )}
-        </h3>
-      ) : (
-        <h3 class="nl-heading nl-heading--level-4 wizard-steps-overview__row-title" id={id}>
-          {title}
-        </h3>
-      )
-    )
-  }
-
-  <ul class="wizard-steps-overview__list" data-completed-list={isCompletedRow || undefined}>
-    <slot />
-  </ul>
-</section>
+{
+  isCompletedRow ? (
+    <details
+      class="wizard-steps-overview__row wizard-steps-overview__row--completed"
+      data-completed-row
+      hidden
+      open
+    >
+      <summary class="wizard-steps-overview__row-summary">
+        <HeadingTag class={headingClass}>
+          {title} (<span data-completed-count>0</span>)
+        </HeadingTag>
+        <span class="wizard-collapsible__chevron" aria-hidden="true" set:html={chevronDownIcon} />
+      </summary>
+      <ul class="wizard-steps-overview__list" data-completed-list>
+        <slot />
+      </ul>
+    </details>
+  ) : title ? (
+    <details class="wizard-steps-overview__row" open>
+      <summary class="wizard-steps-overview__row-summary" id={id}>
+        <HeadingTag class={headingClass}>
+          {title}{initialCount !== undefined && <> (<span data-todo-count>{initialCount}</span>)</>}
+        </HeadingTag>
+        <span class="wizard-collapsible__chevron" aria-hidden="true" set:html={chevronDownIcon} />
+      </summary>
+      <ul class="wizard-steps-overview__list">
+        <slot />
+      </ul>
+    </details>
+  ) : (
+    <section class="wizard-steps-overview__row" aria-labelledby={id}>
+      <ul class="wizard-steps-overview__list">
+        <slot />
+      </ul>
+    </section>
+  )
+}

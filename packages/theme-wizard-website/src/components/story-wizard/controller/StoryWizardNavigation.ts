@@ -8,12 +8,10 @@ export class StoryWizardNavigation {
   readonly #completedRow: HTMLElement | null;
   readonly #completedList: HTMLElement | null;
   readonly #completedCount: HTMLElement | null;
-  readonly #filterBtn: HTMLButtonElement | null;
-  readonly #filterCount: HTMLElement | null;
+  readonly #todoCount: HTMLElement | null;
   readonly #allDoneCheckmark: HTMLElement | null;
   readonly #filterAdvancedBtn: HTMLButtonElement | null;
   readonly #filterAdvancedCount: HTMLElement | null;
-  #filterActive = false;
   #filterAdvancedActive = false;
   #stepsState: StoryWizardStepState[] = [];
 
@@ -40,21 +38,13 @@ export class StoryWizardNavigation {
     this.#completedRow = (root as HTMLElement).querySelector?.('[data-completed-row]') ?? null;
     this.#completedList = (root as HTMLElement).querySelector?.('[data-completed-list]') ?? null;
     this.#completedCount = (root as HTMLElement).querySelector?.('[data-completed-count]') ?? null;
-    this.#filterBtn = (root as HTMLElement).querySelector?.('[data-filter-todo]') ?? null;
-    this.#filterCount = (root as HTMLElement).querySelector?.('[data-filter-count]') ?? null;
+    this.#todoCount = (root as HTMLElement).querySelector?.('[data-todo-count]') ?? null;
     this.#allDoneCheckmark = shell.querySelector<HTMLElement>('[data-wizard-all-done-checkmark]');
     this.#filterAdvancedBtn = (root as HTMLElement).querySelector?.('[data-filter-todo-advanced]') ?? null;
     this.#filterAdvancedCount = (root as HTMLElement).querySelector?.('[data-filter-count-advanced]') ?? null;
   }
 
   public bind() {
-    this.#filterBtn?.addEventListener('click', () => {
-      this.#filterActive = !this.#filterActive;
-      this.#filterBtn!.setAttribute('aria-pressed', String(this.#filterActive));
-      this.#filterBtn!.classList.toggle('nl-button--pressed', this.#filterActive);
-      this.#applyFilter();
-    });
-
     this.#filterAdvancedBtn?.addEventListener('click', () => {
       this.#filterAdvancedActive = !this.#filterAdvancedActive;
       this.#filterAdvancedBtn!.setAttribute('aria-pressed', String(this.#filterAdvancedActive));
@@ -79,16 +69,6 @@ export class StoryWizardNavigation {
     this.#overview?.setAttribute('hidden', '');
   }
 
-  #applyFilter() {
-    this.#stepsState.forEach((state) => {
-      if (state.step.isAdvanced) return;
-      const card = this.#overviewCardMap.get(state.step.element.id);
-      const item = card?.closest<HTMLElement>('.wizard-steps-overview__item');
-      if (!item) return;
-      item.hidden = this.#filterActive && state.isDone;
-    });
-  }
-
   #applyAdvancedFilter() {
     this.#stepsState.forEach((state) => {
       if (!state.step.isAdvanced) return;
@@ -102,21 +82,6 @@ export class StoryWizardNavigation {
   public updateStepNavState(_currentIndex: number, stepsState: StoryWizardStepState[]) {
     this.#stepsState = stepsState;
     let completedPresetCount = 0;
-
-    if (this.#filterCount) {
-      const presetSteps = stepsState.filter((s) => !s.step.isAdvanced);
-      const undoneCount = presetSteps.filter((s) => !s.isDone).length;
-      const shouldShowPresetFilter = undoneCount > 0 && undoneCount < presetSteps.length;
-
-      this.#filterCount.textContent = String(undoneCount);
-      this.#filterBtn?.toggleAttribute('hidden', !shouldShowPresetFilter);
-
-      if (!shouldShowPresetFilter && this.#filterActive) {
-        this.#filterActive = false;
-        this.#filterBtn?.setAttribute('aria-pressed', 'false');
-        this.#filterBtn?.classList.remove('nl-button--pressed');
-      }
-    }
 
     if (this.#filterAdvancedCount) {
       const advancedSteps = stepsState.filter((s) => s.step.isAdvanced);
@@ -158,11 +123,16 @@ export class StoryWizardNavigation {
     });
 
     if (this.#completedRow) {
-      this.#completedRow.hidden = completedPresetCount === 0 || this.#filterActive;
+      this.#completedRow.hidden = completedPresetCount === 0;
     }
 
     if (this.#completedCount) {
       this.#completedCount.textContent = String(completedPresetCount);
+    }
+
+    if (this.#todoCount) {
+      const presetTotal = stepsState.filter((s) => !s.step.isAdvanced).length;
+      this.#todoCount.textContent = String(presetTotal - completedPresetCount);
     }
 
     if (this.#allDoneCheckmark) {
@@ -170,7 +140,6 @@ export class StoryWizardNavigation {
       this.#allDoneCheckmark.hidden = completedPresetCount < presetTotal || presetTotal === 0;
     }
 
-    this.#applyFilter();
     this.#applyAdvancedFilter();
   }
 
