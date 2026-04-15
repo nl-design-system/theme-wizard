@@ -1,25 +1,4 @@
-import type { DesignTokenLeaf, StoryWizardSelectionSummary } from './types';
 import { StoryWizardGroup } from './StoryWizardGroup';
-
-const flattenDesignTokens = (tokens: unknown, path: string[] = []): DesignTokenLeaf[] => {
-  if (!tokens || typeof tokens !== 'object') return [];
-
-  if ('$value' in (tokens as Record<string, unknown>)) {
-    const rawValue = (tokens as { $value: unknown }).$value;
-
-    return [
-      {
-        path: path.join('.'),
-        value:
-          typeof rawValue === 'string' || typeof rawValue === 'number' ? String(rawValue) : JSON.stringify(rawValue),
-      },
-    ];
-  }
-
-  return Object.entries(tokens as Record<string, unknown>).flatMap(([key, value]) =>
-    flattenDesignTokens(value, [...path, key]),
-  );
-};
 
 export class StoryWizardStep {
   public readonly groups: StoryWizardGroup[];
@@ -39,10 +18,6 @@ export class StoryWizardStep {
         }
       },
     );
-  }
-
-  public get stepLabel() {
-    return this.element.dataset.stepLabel || '';
   }
 
   public get isAdvanced() {
@@ -77,49 +52,10 @@ export class StoryWizardStep {
     });
   }
 
-  public hasRequiredSelections() {
-    return this.groups.every((group) => group.hasSelection());
-  }
-
   public getPreviewStyle() {
     return this.groups
       .map((group) => group.getSelectedOption()?.previewStyle || '')
       .filter(Boolean)
       .join(';');
-  }
-
-  public createSelectionSummaryFromChosenSelections(chosenSelections: boolean[]): StoryWizardSelectionSummary[] {
-    const chosenOptions = this.groups.flatMap((group, groupIndex) => {
-      if (!chosenSelections[groupIndex]) return [];
-      const option = group.getSelectedOption();
-      return option ? [option] : [];
-    });
-
-    if (chosenOptions.length === 0) return [];
-
-    return [
-      {
-        label: this.stepLabel,
-        optionLabel: chosenOptions.map((o) => o.optionLabel).join(' · '),
-        tokens: chosenOptions.flatMap((o) => flattenDesignTokens(o.tokens)),
-      },
-    ];
-  }
-
-  public createCurrentSelectionSummary(): StoryWizardSelectionSummary[] {
-    const selectedOptions = this.groups.flatMap((group) => {
-      const option = group.getSelectedOption();
-      return option ? [option] : [];
-    });
-
-    if (selectedOptions.length === 0) return [];
-
-    return [
-      {
-        label: this.stepLabel,
-        optionLabel: selectedOptions.map((o) => o.optionLabel).join(' · '),
-        tokens: selectedOptions.flatMap((o) => flattenDesignTokens(o.tokens)),
-      },
-    ];
   }
 }
