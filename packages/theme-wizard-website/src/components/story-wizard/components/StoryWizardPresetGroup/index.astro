@@ -1,24 +1,11 @@
 ---
 import type { StoryWizardPresetGroup } from '@/lib/types';
 
-const collectTokenPaths = (tokens: unknown, path: string[] = []): string[] => {
-  if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return [];
-
-  const obj = tokens as Record<string, unknown>;
-
-  if (Object.hasOwn(obj, '$value')) {
-    return [path.join('.')];
-  }
-
-  return Object.entries(obj).flatMap(([key, value]) => collectTokenPaths(value, [...path, key]));
-};
-
 interface Props {
   group: StoryWizardPresetGroup;
 }
 
 const { group } = Astro.props;
-const tokenPaths = Array.from(new Set(group.options.flatMap((option) => collectTokenPaths(option.tokens))));
 ---
 
 <section class="wizard-token-preset" data-preset-group data-group-label={group.name}>
