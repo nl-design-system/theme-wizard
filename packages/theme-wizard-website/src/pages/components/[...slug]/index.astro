@@ -36,9 +36,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const componentList = await Promise.all(
-  Object.entries(components).map(async ([slug, { title }]) => ({ slug, title })),
-);
+const componentList = await Promise.all(Object.entries(components).map(async ([slug, { title }]) => ({ slug, title })));
 
 const { wizard, stepId, stepGlobalIndex } = Astro.props;
 const slugParts = (Astro.params.slug as string).split('/');
@@ -46,7 +44,7 @@ const componentSlug = slugParts[0] as keyof typeof components;
 const { title } = components[componentSlug];
 
 const isStepPage = stepId !== null;
-const currentStep = isStepPage ? wizard.steps.find((s) => s.id === stepId) ?? null : null;
+const currentStep = isStepPage ? (wizard.steps.find((s) => s.id === stepId) ?? null) : null;
 const overviewHref = `/components/${componentSlug}`;
 ---
 
@@ -75,7 +73,13 @@ const overviewHref = `/components/${componentSlug}`;
           <a href="/">Wizard</a> /
           <a href="/components">Componenten</a> /
           {isStepPage ? <a href={overviewHref}>{title}</a> : <span>{title}</span>}
-          {isStepPage && currentStep && <> / <span>{currentStep.title}</span></>}
+          {
+            isStepPage && currentStep && (
+              <>
+                / <span>{currentStep.title}</span>
+              </>
+            )
+          }
         </nav>
 
         {
@@ -86,11 +90,7 @@ const overviewHref = `/components/${componentSlug}`;
               </div>
               <section data-story-wizard-root>
                 <div id="story-wizard" data-component-id={componentSlug} hidden />
-                <StoryWizardStep
-                  step={currentStep}
-                  stepGlobalIndex={stepGlobalIndex!}
-                  overviewHref={overviewHref}
-                />
+                <StoryWizardStep step={currentStep} stepGlobalIndex={stepGlobalIndex!} overviewHref={overviewHref} />
               </section>
             </>
           ) : (
@@ -108,16 +108,8 @@ const overviewHref = `/components/${componentSlug}`;
       </main>
     </wizard-layout>
   </theme-wizard-app>
-</BaseLayout>
 
-{
-  isStepPage ? (
-    <script>
-      import '@/components/story-wizard/controller/step';
-    </script>
-  ) : (
-    <script>
-      import '@/components/story-wizard/controller/overview';
-    </script>
-  )
-}
+  <script>
+    import '@/components/story-wizard/controller/init';
+  </script>
+</BaseLayout>
