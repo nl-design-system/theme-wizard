@@ -1,8 +1,14 @@
 ---
 import chevronLeftIcon from '@tabler/icons/outline/chevron-left.svg?raw';
+
+interface Props {
+  href?: string;
+}
+
+const { href = '#wizard-overview', ...attrs } = Astro.props;
 ---
 
-<a href="#wizard-overview" class="nl-link wizard-back-overview-btn" role="button">
+<a href={href} class="nl-link wizard-back-overview-btn" role="button" {...attrs}>
   <span class="wizard-back-overview-btn__icon" aria-hidden="true" set:html={chevronLeftIcon} />
   <span class="wizard-back-overview-btn__label">Terug naar overzicht</span>
 </a>

@@ -8,6 +8,7 @@ export class StoryWizardNavigation {
   readonly #completedRow: HTMLElement | null;
   readonly #completedList: HTMLElement | null;
   readonly #completedCount: HTMLElement | null;
+  readonly #todoRow: HTMLElement | null;
   readonly #todoCount: HTMLElement | null;
   readonly #allDoneCheckmark: HTMLElement | null;
   readonly #filterAdvancedBtn: HTMLButtonElement | null;
@@ -38,6 +39,7 @@ export class StoryWizardNavigation {
     this.#completedRow = (root as HTMLElement).querySelector?.('[data-completed-row]') ?? null;
     this.#completedList = (root as HTMLElement).querySelector?.('[data-completed-list]') ?? null;
     this.#completedCount = (root as HTMLElement).querySelector?.('[data-completed-count]') ?? null;
+    this.#todoRow = (root as HTMLElement).querySelector?.('[data-todo-row]') ?? null;
     this.#todoCount = (root as HTMLElement).querySelector?.('[data-todo-count]') ?? null;
     this.#allDoneCheckmark = shell.querySelector<HTMLElement>('[data-wizard-all-done-checkmark]');
     this.#filterAdvancedBtn = (root as HTMLElement).querySelector?.('[data-filter-todo-advanced]') ?? null;
@@ -130,13 +132,18 @@ export class StoryWizardNavigation {
       this.#completedCount.textContent = String(completedPresetCount);
     }
 
+    const presetTotal = stepsState.filter((s) => !s.step.isAdvanced).length;
+    const todoPresetCount = presetTotal - completedPresetCount;
+
     if (this.#todoCount) {
-      const presetTotal = stepsState.filter((s) => !s.step.isAdvanced).length;
-      this.#todoCount.textContent = String(presetTotal - completedPresetCount);
+      this.#todoCount.textContent = String(todoPresetCount);
+    }
+
+    if (this.#todoRow) {
+      this.#todoRow.hidden = todoPresetCount === 0;
     }
 
     if (this.#allDoneCheckmark) {
-      const presetTotal = stepsState.filter((s) => !s.step.isAdvanced).length;
       this.#allDoneCheckmark.hidden = completedPresetCount < presetTotal || presetTotal === 0;
     }
 

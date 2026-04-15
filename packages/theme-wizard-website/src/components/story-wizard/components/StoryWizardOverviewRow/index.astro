@@ -17,27 +17,35 @@ const headingClass = `nl-heading nl-heading--level-${headingLevel} wizard-steps-
 
 {
   isCompletedRow ? (
-    <details
-      class="wizard-steps-overview__row wizard-steps-overview__row--completed"
-      data-completed-row
-      hidden
-      open
-    >
+    <details class="wizard-steps-overview__row wizard-steps-overview__row--completed" data-completed-row hidden open>
       <summary class="wizard-steps-overview__row-summary">
         <HeadingTag class={headingClass}>
           {title} (<span data-completed-count>0</span>)
         </HeadingTag>
+
         <span class="wizard-collapsible__chevron" aria-hidden="true" set:html={chevronDownIcon} />
       </summary>
+
       <ul class="wizard-steps-overview__list" data-completed-list>
         <slot />
       </ul>
     </details>
   ) : title ? (
-    <details class="wizard-steps-overview__row" open>
+    <details
+      class="wizard-steps-overview__row"
+      data-todo-row={initialCount !== undefined || undefined}
+      hidden={initialCount === 0 || undefined}
+      open
+    >
       <summary class="wizard-steps-overview__row-summary" id={id}>
         <HeadingTag class={headingClass}>
-          {title}{initialCount !== undefined && <> (<span data-todo-count>{initialCount}</span>)</>}
+          {title}
+          {initialCount !== undefined && (
+            <>
+              {' '}
+              (<span data-todo-count>{initialCount}</span>)
+            </>
+          )}
         </HeadingTag>
         <span class="wizard-collapsible__chevron" aria-hidden="true" set:html={chevronDownIcon} />
       </summary>
