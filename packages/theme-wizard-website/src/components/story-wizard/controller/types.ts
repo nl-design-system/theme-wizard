@@ -30,32 +30,12 @@ export type WizardTokenPresetInput = HTMLElement & {
   value: unknown;
 };
 
-export type DesignTokenLeaf = {
-  path: string;
-  value: string;
-};
-
-export type StoryWizardSelectionSummary = {
-  label: string;
-  optionLabel: string;
-  tokens: DesignTokenLeaf[];
-};
-
 export type StoryWizardThemeHost = HTMLElement & {
   theme?: {
     at: (path: string) => { $value?: unknown } | undefined;
     defaults?: unknown;
   };
 };
-
-export interface StoryWizardStepState {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  step: any; // circular dependency prevents importing StoryWizardStep here
-  summaries: StoryWizardSelectionSummary[];
-  isDone: boolean;
-  isConfirmedAdvanced: boolean;
-  hasResettableState: boolean;
-}
 
 export type StoryWizardStoredStepState = {
   advancedVisited: boolean;

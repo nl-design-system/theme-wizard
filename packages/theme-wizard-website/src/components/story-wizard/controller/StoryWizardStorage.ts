@@ -31,13 +31,4 @@ export class StoryWizardStorage {
       // Progressive enhancement: ignore storage failures and keep the wizard usable.
     }
   }
-
-  public clear() {
-    try {
-      globalThis.localStorage?.removeItem(this.#key);
-      this.#lastSerializedState = null;
-    } catch {
-      // Progressive enhancement: ignore storage failures and keep the wizard usable.
-    }
-  }
 }
