@@ -1,14 +1,7 @@
 import type { HeadingLevel, HeadingProps } from '@nl-design-system-candidate/heading-react';
 import type { StoryObj } from '@storybook/react-vite';
 import type { PresetOption } from '../story-helpers';
-import {
-  createHeadingToken,
-  headingFontSizes,
-  headingLevels,
-  headingSampleText,
-  type AccentNumber,
-  type PreviewHeadingLevel,
-} from './heading-react.story-helpers';
+import { headingFontSizes, headingSampleText } from './heading-react.story-helpers';
 
 type Story = StoryObj<HeadingProps>;
 
@@ -17,32 +10,33 @@ const createHeadingPresetStory = ({
   args,
   cardPreviewStoryId,
   description,
-  options,
   order,
+  presets,
   previewStoryId,
-  question,
 }: {
   args: HeadingProps;
   cardPreviewStoryId?: string;
   description: string;
   name: string;
-  options: PresetOption<Record<string, unknown> | null>[];
   order: number;
+  presets: {
+    description: string;
+    options: PresetOption<Record<string, unknown> | null>[];
+    question: string;
+  }[];
   previewStoryId: string;
-  question: string;
 }): Story => ({
   name,
   args,
   parameters: {
-    presets: [
-      {
-        name: question,
-        description,
-        options,
-      },
-    ],
+    presets: presets.map((preset) => ({
+      name: preset.question,
+      description: preset.description,
+      options: preset.options,
+    })),
     wizard: {
       ...(cardPreviewStoryId ? { cardPreviewStoryIds: [cardPreviewStoryId] } : {}),
+      description,
       order,
       previewStoryIds: [previewStoryId],
       type: 'preset',
@@ -50,82 +44,120 @@ const createHeadingPresetStory = ({
   },
 });
 
-const createFontSizeOptions = (level: HeadingLevel): PresetOption<Record<string, unknown> | null>[] => {
-  const targetPath = `nl.heading.level-${level}.font-size`;
+// --- Font size scale ---
 
-  return headingFontSizes.map(({ label, step }) => ({
-    name: label,
-    derivedTokenReference: {
-      offset: 0,
-      scalePath: 'basis.text.font-size',
-      sourcePath: targetPath,
-      targetKey: step,
-      targetPath,
-    },
-    description: `Gebruik de maat ${label.toLowerCase()} voor deze heading.`,
-    tokens: {},
-  }));
+type FontSizeStep = (typeof headingFontSizes)[number]['step'];
+type HeadingScale = [HeadingLevel, FontSizeStep][];
+
+const makeSizeDerivedRef = (level: HeadingLevel, targetKey: FontSizeStep) => {
+  const targetPath = `nl.heading.level-${level}.font-size`;
+  return {
+    offset: 0,
+    scalePath: 'basis.text.font-size',
+    sourcePath: targetPath,
+    targetKey,
+    targetPath,
+  };
 };
 
-const createFontSizeStory = (level: HeadingLevel): Story =>
-  createHeadingPresetStory({
-    name: `Heading ${level} font-size`,
-    args: {
-      children: headingSampleText,
-      level,
-    },
-    cardPreviewStoryId: `Heading${level}CardPreview`,
-    description: `Bepaal hoe groot de H${level} is ten opzichte van de rest van de pagina.`,
-    options: createFontSizeOptions(level),
-    order: level,
-    previewStoryId: `Heading${level}Preview`,
-    question: `Kies de tekstgrootte van de H${level}`,
-  });
+const makeScale = (pairs: HeadingScale) => pairs.map(([level, step]) => makeSizeDerivedRef(level, step));
 
-const createColorOptions = (level: HeadingLevel): PresetOption<Record<string, unknown> | null>[] => [
+const headingSizeOptions: PresetOption<Record<string, unknown> | null>[] = [
   {
-    name: 'Standaard',
-    description: 'Gebruik het documentkleur uit het startthema.',
-    tokens: null,
+    name: 'Uitgespreid',
+    derivedTokenReferences: makeScale([
+      [1, '4xl'],
+      [2, '3xl'],
+      [3, '2xl'],
+      [4, 'xl'],
+      [5, 'lg'],
+      [6, 'md'],
+    ]),
+    description: 'H1 is heel groot en elke heading wordt een stap kleiner. Grote visuele hiërarchie.',
+    tokens: {},
   },
-  ...([1, 2, 3] as const).map((accentNumber: AccentNumber) => ({
-    name: `Accentkleur ${accentNumber}`,
-    description: `Geef headings accentkleur ${accentNumber}.`,
-    tokens: createHeadingToken(level, 'color', `{basis.color.accent-${accentNumber}.color-document}`),
-  })),
+  {
+    name: 'Gebalanceerd',
+    derivedTokenReferences: makeScale([
+      [1, '3xl'],
+      [2, '2xl'],
+      [3, 'xl'],
+      [4, 'lg'],
+      [5, 'md'],
+      [6, 'sm'],
+    ]),
+    description: 'Rustige schaal waarbij headings duidelijk van elkaar onderscheiden zijn.',
+    tokens: {},
+  },
+  {
+    name: 'Compact',
+    derivedTokenReferences: makeScale([
+      [1, '2xl'],
+      [2, 'xl'],
+      [3, 'lg'],
+      [4, 'md'],
+      [5, 'sm'],
+      [6, 'sm'],
+    ]),
+    description: "Subtiele verschillen tussen headings. Geschikt voor zakelijke of informatiedichte pagina's.",
+    tokens: {},
+  },
 ];
 
-const createColorStory = (level: HeadingLevel): Story =>
-  createHeadingPresetStory({
-    name: `Heading ${level} kleur`,
-    args: {
-      children: headingSampleText,
-      level,
+export const HeadingSizes: Story = createHeadingPresetStory({
+  name: 'Heading sizes',
+  args: {
+    children: headingSampleText,
+    level: 1,
+  },
+  cardPreviewStoryId: 'AllHeadingsPreview',
+  description: 'Kies een schaal voor H1 t/m H6. Elke heading wordt één stap kleiner dan de vorige.',
+  order: 1,
+  presets: [
+    {
+      description: 'Kies hoe groot H1 wordt — de overige headings volgen automatisch stapsgewijs.',
+      options: headingSizeOptions,
+      question: 'Kies de schaal voor alle headings',
     },
-    cardPreviewStoryId: `Heading${level}CardPreview`,
-    description: `Geef de H${level} een accentkleur of laat hem het standaard documentkleur volgen.`,
-    options: createColorOptions(level),
-    order: level + 6,
-    previewStoryId: `Heading${level}Preview`,
-    question: `Kies de kleur van de H${level}`,
-  });
+  ],
+  previewStoryId: 'AllHeadingsPreview',
+});
 
-const headingFontSizeStories = Object.fromEntries(
-  headingLevels.map((level) => [`Heading${level}FontSize`, createFontSizeStory(level)]),
-) as Record<`Heading${PreviewHeadingLevel}FontSize`, Story>;
+// --- Color ---
 
-const headingColorStories = Object.fromEntries(
-  headingLevels.map((level) => [`Heading${level}Color`, createColorStory(level)]),
-) as Record<`Heading${PreviewHeadingLevel}Color`, Story>;
+const allHeadingsColor = (accent: 1 | 2 | 3) => ({
+  nl: {
+    heading: Object.fromEntries(
+      ([1, 2, 3, 4, 5, 6] as HeadingLevel[]).map((level) => [
+        `level-${level}`,
+        { color: { $value: `{basis.color.accent-${accent}.color-document}` } },
+      ]),
+    ),
+  },
+});
 
-export const {
-  Heading1FontSize,
-  Heading2FontSize,
-  Heading3FontSize,
-  Heading4FontSize,
-  Heading5FontSize,
-  Heading6FontSize,
-} = headingFontSizeStories;
+const headingColorOptions: PresetOption<Record<string, unknown> | null>[] = [
+  { name: 'Documentkleur', description: 'Alle headings volgen het documentkleur uit het startthema.', tokens: null },
+  { name: 'Accentkleur 1', description: 'Alle headings krijgen accentkleur 1.', tokens: allHeadingsColor(1) },
+  { name: 'Accentkleur 2', description: 'Alle headings krijgen accentkleur 2.', tokens: allHeadingsColor(2) },
+  { name: 'Accentkleur 3', description: 'Alle headings krijgen accentkleur 3.', tokens: allHeadingsColor(3) },
+];
 
-export const { Heading1Color, Heading2Color, Heading3Color, Heading4Color, Heading5Color, Heading6Color } =
-  headingColorStories;
+export const HeadingColors: Story = createHeadingPresetStory({
+  name: 'Heading colors',
+  args: {
+    children: headingSampleText,
+    level: 1,
+  },
+  cardPreviewStoryId: 'AllHeadingsPreview',
+  description: 'Geef alle headings dezelfde kleur of laat ze het documentkleur volgen.',
+  order: 2,
+  presets: [
+    {
+      description: 'Alle headings krijgen dezelfde kleur. Kies een variant of houd het documentkleur aan.',
+      options: headingColorOptions,
+      question: 'Kies de kleur voor alle headings',
+    },
+  ],
+  previewStoryId: 'AllHeadingsPreview',
+});

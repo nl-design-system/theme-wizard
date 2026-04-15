@@ -1,35 +1,53 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StoryWizard from '@/components/story-wizard/index.astro';
+import StoryWizardStep from '@/components/story-wizard/components/StoryWizardStep/index.astro';
 import { components } from '@/lib/components';
 import { resolveStoryWizardModel } from '@/lib/story-wizard';
 import '@nl-design-system-candidate/button-css/button.css';
 import '@nl-design-system-candidate/heading-css/heading.css';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
-import StoryWizardBackButton from '@/components/story-wizard/components/StoryWizardBackButton/index.astro';
 import StoryWizardCheckmark from '@/components/story-wizard/components/StoryWizardCheckmark/index.astro';
 import '@nl-design-system-candidate/code-css/code.css';
 
 import './index.css';
 
-export function getStaticPaths() {
-  return Object.keys(components).map((slug) => ({
-    params: { slug },
-  }));
+export async function getStaticPaths() {
+  const paths = [];
+
+  for (const [slug] of Object.entries(components)) {
+    const wizard = await resolveStoryWizardModel(slug as keyof typeof components);
+
+    // Overview page
+    paths.push({
+      params: { slug },
+      props: { wizard, stepId: null as string | null, stepGlobalIndex: null as number | null },
+    });
+
+    // Individual step pages
+    for (const [stepGlobalIndex, step] of wizard.steps.entries()) {
+      paths.push({
+        params: { slug: `${slug}/${step.id}` },
+        props: { wizard, stepId: step.id, stepGlobalIndex },
+      });
+    }
+  }
+
+  return paths;
 }
 
 const componentList = await Promise.all(
-  Object.entries(components).map(async ([slug, { title }]) => {
-    return {
-      slug,
-      title,
-    };
-  }),
+  Object.entries(components).map(async ([slug, { title }]) => ({ slug, title })),
 );
 
-const slug = Astro.params.slug as keyof typeof components;
-const { title } = components[slug];
-const wizard = await resolveStoryWizardModel(slug);
+const { wizard, stepId, stepGlobalIndex } = Astro.props;
+const slugParts = (Astro.params.slug as string).split('/');
+const componentSlug = slugParts[0] as keyof typeof components;
+const { title } = components[componentSlug];
+
+const isStepPage = stepId !== null;
+const currentStep = isStepPage ? wizard.steps.find((s) => s.id === stepId) ?? null : null;
+const overviewHref = `/components/${componentSlug}`;
 ---
 
 <BaseLayout title={`${title} - Theme Wizard`}>
@@ -40,54 +58,66 @@ const wizard = await resolveStoryWizardModel(slug);
       <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
       <nav slot="sidebar">
         {
-          componentList.map(({ slug: componentSlug, title }) => (
+          componentList.map(({ slug: componentSlug2, title: componentTitle }) => (
             <wizard-sidebar-link
-              href={`/components/${componentSlug}`}
-              current={componentSlug === slug ? 'page' : undefined}
+              href={`/components/${componentSlug2}`}
+              current={componentSlug2 === componentSlug ? 'page' : undefined}
             >
-              {title}
+              {componentTitle}
             </wizard-sidebar-link>
           ))
         }
       </nav>
+
       <main slot="main" class="wizard-main">
         <!-- TODO: make proper breadcrumb https://github.com/nl-design-system/theme-wizard/issues/531 -->
         <nav>
           <a href="/">Wizard</a> /
           <a href="/components">Componenten</a> /
-          <span>{title}</span>
+          {isStepPage ? <a href={overviewHref}>{title}</a> : <span>{title}</span>}
+          {isStepPage && currentStep && <> / <span>{currentStep.title}</span></>}
         </nav>
 
-        <div class="wizard-page-header">
-          <h1 class="wizard-page-title">{title} <StoryWizardCheckmark data-wizard-all-done-checkmark /></h1>
-        </div>
-        <StoryWizard wizard={wizard} />
-        <StoryWizardBackButton href="/components" data-component-page-back-button />
-        <a href={`/components/${slug}/tokens`}>Ga naar alle component tokens</a>
+        {
+          isStepPage && currentStep ? (
+            <>
+              <div class="wizard-page-header">
+                <h1 class="wizard-page-title">{currentStep.title}</h1>
+              </div>
+              <section data-story-wizard-root>
+                <div id="story-wizard" data-component-id={componentSlug} hidden />
+                <StoryWizardStep
+                  step={currentStep}
+                  stepGlobalIndex={stepGlobalIndex!}
+                  overviewHref={overviewHref}
+                />
+              </section>
+            </>
+          ) : (
+            <>
+              <div class="wizard-page-header">
+                <h1 class="wizard-page-title">
+                  {title} <StoryWizardCheckmark data-wizard-all-done-checkmark />
+                </h1>
+              </div>
+              <StoryWizard wizard={wizard} />
+              <a href={`/components/${componentSlug}/tokens`}>Ga naar alle component tokens</a>
+            </>
+          )
+        }
       </main>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
 
-<script>
-  import '@/components/story-wizard/controller';
-
-  document.querySelectorAll<HTMLAnchorElement>('[data-component-page-back-button]').forEach((link) => {
-    if (link.dataset.componentPageBackButtonBound === 'true') {
-      return;
-    }
-
-    link.dataset.componentPageBackButtonBound = 'true';
-
-    link.addEventListener('click', (event) => {
-      const hash = window.location.hash.replace('#', '');
-
-      if (!hash || hash === 'wizard-overview') {
-        return;
-      }
-
-      event.preventDefault();
-      window.location.hash = 'wizard-overview';
-    });
-  });
-</script>
+{
+  isStepPage ? (
+    <script>
+      import '@/components/story-wizard/controller/step';
+    </script>
+  ) : (
+    <script>
+      import '@/components/story-wizard/controller/overview';
+    </script>
+  )
+}

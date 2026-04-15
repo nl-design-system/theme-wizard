@@ -5,32 +5,26 @@ import StoryWizardCheckmark from '../StoryWizardCheckmark/index.astro';
 interface Props {
   componentId: keyof typeof components;
   stepId: string;
+  stepIndex: number;
+  stepType: 'preset' | 'advanced';
   title: string;
   description?: string;
   icon?: string;
   showSummary?: boolean;
 }
 
-const { componentId, stepId, title, description, icon, showSummary = false } = Astro.props;
+const { componentId, stepId, stepIndex, stepType, title, description, icon, showSummary = false } = Astro.props;
 const illustrationSrc = `/svg/componenten_overzicht_${componentId}.svg`;
 ---
 
 <article class="wizard-step-overview-card">
   <div class:list={['wizard-step-overview-card__preview', icon && 'wizard-step-overview-card__preview--with-icon']}>
-    {
-      icon && (
-        <span class="wizard-step-overview-card__icon" aria-hidden="true">
-          <Fragment set:html={icon} />
-        </span>
-      )
-    }
-    <img
-      src={illustrationSrc}
-      alt=""
-      class="wizard-step-overview-card__illustration"
-      width="240"
-      height="160"
-    />
+    {icon && (
+      <span class="wizard-step-overview-card__icon" aria-hidden="true">
+        <Fragment set:html={icon} />
+      </span>
+    )}
+    <img src={illustrationSrc} alt="" class="wizard-step-overview-card__illustration" width="240" height="160" />
   </div>
 
   <div class="wizard-step-overview-card__body">
@@ -41,7 +35,13 @@ const illustrationSrc = `/svg/componenten_overzicht_${componentId}.svg`;
 
   <div class="wizard-step-overview-card__footer">
     <StoryWizardCheckmark class="wizard-step-overview-card__done" />
-    <a class="wizard-step-overview-card__action nl-link" href={`#${stepId}`} data-step-overview-card={stepId}>
+    <a
+      class="wizard-step-overview-card__action nl-link nl-button--primary"
+      href={`/components/${componentId}/${stepId}`}
+      data-step-overview-card={stepId}
+      data-step-index={stepIndex}
+      data-step-type={stepType}
+    >
       Stel in
     </a>
   </div>

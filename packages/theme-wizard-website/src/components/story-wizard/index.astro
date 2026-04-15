@@ -10,8 +10,6 @@ import fontIcon from '@tabler/icons/outline/abc.svg?raw';
 import borderRadiusIcon from '@tabler/icons/outline/border-radius.svg?raw';
 import borderStyleIcon from '@tabler/icons/outline/border-style.svg?raw';
 import textSizeIcon from '@tabler/icons/outline/text-size.svg?raw';
-import StoryWizardStep from './components/StoryWizardStep/index.astro';
-import StoryWizardStepper from './components/StoryWizardStepper/index.astro';
 import StoryWizardOverviewCard from './components/StoryWizardOverviewCard/index.astro';
 import StoryWizardOverviewRow from './components/StoryWizardOverviewRow/index.astro';
 import StoryWizardCollapsible from './components/StoryWizardCollapsible/index.astro';
@@ -24,6 +22,10 @@ const { wizard } = Astro.props;
 
 const presetSteps = wizard.steps.filter((step) => step.type === 'preset');
 const advancedSteps = wizard.steps.filter((step) => step.type === 'advanced');
+const stepIndexMap = new Map(wizard.steps.map((step, i) => [step.id, i]));
+
+// Map step ID → global index in wizard.steps for use in overview cards
+
 
 const getOverviewCardIcon = (step: StoryWizardViewModel['steps'][number], cardTitle?: string, description?: string) => {
   const haystack = [
@@ -32,124 +34,100 @@ const getOverviewCardIcon = (step: StoryWizardViewModel['steps'][number], cardTi
     ...step.groups.flatMap((group) =>
       group.type === 'editable-tokens'
         ? group.tokens.flatMap((token) => [token.label, token.path, token.cssVar])
-        : [
-            group.name,
-            group.description ?? '',
-            ...group.options.flatMap((option) => [option.name, option.description ?? '']),
-          ],
+        : [group.name, group.description ?? '', ...group.options.flatMap((o) => [o.name, o.description ?? ''])],
     ),
   ]
     .join(' ')
     .toLowerCase();
 
-  if (haystack.includes('afmeting') || haystack.includes('min-width') || haystack.includes('min-height')) {
+  if (haystack.includes('afmeting') || haystack.includes('min-width') || haystack.includes('min-height'))
     return dimensionsIcon;
-  }
-
   if (
     (haystack.includes('grootte') && !haystack.includes('tekst')) ||
     haystack.includes('width') ||
     haystack.includes('height') ||
     haystack.includes('size')
-  ) {
+  )
     return resizeIcon;
-  }
-
   if (
     haystack.includes('stijl') ||
     haystack.includes('variant') ||
-    haystack.includes('standaard button') ||
-    haystack.includes('primary button') ||
-    haystack.includes('secondary button') ||
-    haystack.includes('subtle button') ||
     haystack.includes('primary') ||
     haystack.includes('secondary') ||
     haystack.includes('subtle')
-  ) {
+  )
     return settingsIcon;
-  }
-
   if (
     haystack.includes('kleur') ||
     haystack.includes('color') ||
     haystack.includes('achtergrond') ||
     haystack.includes('background')
-  ) {
+  )
     return brushIcon;
-  }
-
   if (
     haystack.includes('hover') ||
     haystack.includes('focus') ||
     haystack.includes('active') ||
     haystack.includes('pressed')
-  ) {
+  )
     return mouseIcon;
-  }
-
   if (
     haystack.includes('tekstgrootte') ||
     haystack.includes('font-size') ||
     haystack.includes('line-height') ||
     haystack.includes('typografie') ||
     haystack.includes('tekst')
-  ) {
+  )
     return textSizeIcon;
-  }
-
   if (
     haystack.includes('border') ||
     haystack.includes('rand') ||
     haystack.includes('lijn') ||
     haystack.includes('stroke')
-  ) {
+  )
     return borderStyleIcon;
-  }
-
   if (
     haystack.includes('vorm') ||
     haystack.includes('afrond') ||
     haystack.includes('hoek') ||
     haystack.includes('radius')
-  ) {
+  )
     return borderRadiusIcon;
-  }
-
   if (
     haystack.includes('padding') ||
     haystack.includes('margin') ||
     haystack.includes('inset') ||
     haystack.includes('witruimte') ||
     haystack.includes('ruimte')
-  ) {
+  )
     return paddingIcon;
-  }
-
-  if (haystack.includes('lettertype') || haystack.includes('font-family') || haystack.includes('font')) {
-    return fontIcon;
-  }
-
+  if (haystack.includes('lettertype') || haystack.includes('font-family') || haystack.includes('font')) return fontIcon;
   return settingsIcon;
+};
+
+const getCardMeta = (step: StoryWizardViewModel['steps'][number]) => {
+  const firstGroup = step.groups[0];
+  const single = step.groups.length === 1;
+  return {
+    title: single ? (firstGroup?.name ?? step.title) : step.title,
+    description: single ? (firstGroup?.description ?? step.intro) : step.intro,
+  };
 };
 
 const sortedPresetSteps = [...presetSteps].sort((a, b) => a.order - b.order);
 
-// Group preset steps by flowGroup. Steps with a unique flowGroup (= their own id) are standalone.
-// Steps that share a flowGroup are rendered together on one row with flowTitle as heading.
 type SingleRow = { type: 'single'; step: (typeof presetSteps)[0] };
 type GroupRow = { type: 'group'; flowGroup: string; flowTitle: string; steps: typeof presetSteps };
-type PresetRow = SingleRow | GroupRow;
 
 const presetRows = (() => {
-  const rows: PresetRow[] = [];
-  const seen = new Map<string, number>(); // flowGroup → index in rows
-
+  const rows: (SingleRow | GroupRow)[] = [];
+  const seen = new Map<string, number>();
   for (const step of sortedPresetSteps) {
     const isGrouped = step.flowGroup !== step.id;
     if (isGrouped) {
-      const existing = seen.get(step.flowGroup);
-      if (existing !== undefined) {
-        (rows[existing] as GroupRow).steps.push(step);
+      const idx = seen.get(step.flowGroup);
+      if (idx !== undefined) {
+        (rows[idx] as GroupRow).steps.push(step);
       } else {
         seen.set(step.flowGroup, rows.length);
         rows.push({ type: 'group', flowGroup: step.flowGroup, flowTitle: step.flowTitle, steps: [step] });
@@ -158,125 +136,68 @@ const presetRows = (() => {
       rows.push({ type: 'single', step });
     }
   }
-
   return rows;
 })();
 
 const singleSteps = presetRows.filter((r): r is SingleRow => r.type === 'single').map((r) => r.step);
 const groupRows = presetRows.filter((r): r is GroupRow => r.type === 'group');
-
-const getHeadingLevel = (title: string) => {
-  const match = title.match(/(?:heading\s*|h)([1-6])/i);
-  return match ? Number(match[1]) : null;
-};
-
-const headingRows =
-  wizard.componentId === 'heading'
-    ? Array.from({ length: 6 }, (_, index) => index + 1)
-        .map((level) => ({
-          level,
-          steps: sortedPresetSteps.filter((step) => {
-            const title = step.groups[0]?.name ?? step.title;
-            return getHeadingLevel(title) === level;
-          }),
-        }))
-        .filter((row) => row.steps.length > 0)
-    : [];
 ---
 
 <div slot="page-content" class="wizard-page-content">
   <section data-story-wizard-root>
-    <div
-      id="story-wizard"
-      data-story-ids={JSON.stringify(wizard.storyIds)}
-      data-component-id={wizard.componentId}
-      hidden
-    >
-    </div>
+    <div id="story-wizard" data-component-id={wizard.componentId} hidden></div>
 
     <div id="wizard-overview" class="wizard-steps-overview" data-steps-overview>
       <div class="wizard-steps-overview__lead">
         <div class="wizard-steps-overview__lead-row">
           <h2 class="nl-heading nl-heading--level-3">{presetSteps.length} presets</h2>
-
           <div class="wizard-steps-overview__lead-actions">
             <div class="wizard-steps-overview__reset" hidden></div>
           </div>
         </div>
-
         <p class="nl-paragraph wizard-steps-overview__intro">Kies eerst een onderwerp om de basis goed te zetten.</p>
       </div>
 
-      {
-        wizard.componentId === 'heading' ? (
-          <div class="wizard-steps-overview__rows">
-            <StoryWizardOverviewRow title="Ingesteld" isCompletedRow />
+      <div class="wizard-steps-overview__rows">
+        <StoryWizardOverviewRow title="Ingesteld" isCompletedRow />
 
-            {headingRows.map((row) => (
-              <StoryWizardOverviewRow title={`H${row.level}`} id={`heading-row-h${row.level}`} headingLevel={4}>
-                {row.steps.map((step) => {
-                  const group = step.groups[0];
-                  const cardTitle = group?.name ?? step.title;
-                  const description = group?.description ?? step.intro;
-                  const cardIcon = getOverviewCardIcon(step, cardTitle, description);
-
-                  return (
-                    <li class="wizard-steps-overview__item">
-                      <StoryWizardOverviewCard
-                        componentId={wizard.componentId}
-                        stepId={step.id}
-                        title={cardTitle}
-                        description={description}
-                        icon={cardIcon || undefined}
-                        showSummary
-                      />
-                    </li>
-                  );
-                })}
-              </StoryWizardOverviewRow>
-            ))}
-          </div>
-        ) : (
-          <div class="wizard-steps-overview__rows">
-            <StoryWizardOverviewRow title="Ingesteld" isCompletedRow />
-
-            {(() => {
-              const renderCard = (step: SingleRow['step']) => {
-                const group = step.groups[0];
-                const cardTitle = group?.name ?? step.title;
-                const description = group?.description ?? step.intro;
-                const cardIcon = getOverviewCardIcon(step, cardTitle, description);
-
-                return (
-                  <li class="wizard-steps-overview__item">
-                    <StoryWizardOverviewCard
-                      componentId={wizard.componentId}
-                      stepId={step.id}
-                      title={cardTitle}
-                      description={description}
-                      icon={cardIcon || undefined}
-                      showSummary
-                    />
-                  </li>
-                );
-              };
-
+        {
+          (() => {
+            const renderCard = (step: (typeof presetSteps)[0]) => {
+              const { title, description } = getCardMeta(step);
               return (
-                <>
-                  {singleSteps.length > 0 && (
-                    <StoryWizardOverviewRow title="Niet ingesteld" initialCount={singleSteps.length}>{singleSteps.map(renderCard)}</StoryWizardOverviewRow>
-                  )}
-                  {groupRows.map((row) => (
-                    <StoryWizardOverviewRow title={row.flowTitle} id={`group-${row.flowGroup}`}>
-                      {row.steps.map(renderCard)}
-                    </StoryWizardOverviewRow>
-                  ))}
-                </>
+                <li class="wizard-steps-overview__item">
+                  <StoryWizardOverviewCard
+                    componentId={wizard.componentId}
+                    stepId={step.id}
+                    stepIndex={stepIndexMap.get(step.id) ?? 0}
+                    stepType="preset"
+                    title={title}
+                    description={description}
+                    icon={getOverviewCardIcon(step, title, description) || undefined}
+                    showSummary
+                  />
+                </li>
               );
-            })()}
-          </div>
-        )
-      }
+            };
+
+            return (
+              <>
+                {singleSteps.length > 0 && (
+                  <StoryWizardOverviewRow title="Niet ingesteld" initialCount={singleSteps.length}>
+                    {singleSteps.map(renderCard)}
+                  </StoryWizardOverviewRow>
+                )}
+                {groupRows.map((row) => (
+                  <StoryWizardOverviewRow title={row.flowTitle} id={`group-${row.flowGroup}`}>
+                    {row.steps.map(renderCard)}
+                  </StoryWizardOverviewRow>
+                ))}
+              </>
+            );
+          })()
+        }
+      </div>
 
       {
         advancedSteps.length > 0 && (
@@ -299,47 +220,26 @@ const headingRows =
               <p class="nl-paragraph wizard-steps-overview__advanced-intro">
                 Pas hier extra details aan als je meer controle wilt.
               </p>
-              <button
-                class="nl-button nl-button--secondary wizard-steps-overview__filter-btn"
-                type="button"
-                data-filter-todo-advanced
-                aria-pressed="false"
-                hidden
-              >
-                Niet ingesteld (<span data-filter-count-advanced>{advancedSteps.length}</span>)
-              </button>
             </div>
 
             <ul class="wizard-steps-overview__list">
-              {advancedSteps.map((step) => {
-                const cardTitle = step.title;
-                const description = step.intro;
-                const cardIcon = getOverviewCardIcon(step, cardTitle, description);
-
-                return (
-                  <li class="wizard-steps-overview__item">
-                    <StoryWizardOverviewCard
-                      componentId={wizard.componentId}
-                      stepId={step.id}
-                      title={cardTitle}
-                      description={description}
-                      icon={cardIcon || undefined}
-                    />
-                  </li>
-                );
-              })}
+              {advancedSteps.map((step) => (
+                <li class="wizard-steps-overview__item">
+                  <StoryWizardOverviewCard
+                    componentId={wizard.componentId}
+                    stepId={step.id}
+                    stepIndex={stepIndexMap.get(step.id) ?? 0}
+                    stepType="advanced"
+                    title={step.title}
+                    description={step.intro}
+                    icon={getOverviewCardIcon(step) || undefined}
+                  />
+                </li>
+              ))}
             </ul>
           </StoryWizardCollapsible>
         )
       }
     </div>
-
-    {
-      wizard.steps.map((step, index) => (
-        <StoryWizardStep step={step} stepIndex={index} totalSteps={wizard.steps.length} />
-      ))
-    }
-
-    <StoryWizardStepper />
   </section>
 </div>

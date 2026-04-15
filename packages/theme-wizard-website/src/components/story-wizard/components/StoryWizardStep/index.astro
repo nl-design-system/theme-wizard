@@ -8,11 +8,11 @@ import StoryWizardPreviewSection from '../StoryWizardPreviewSection/index.astro'
 
 interface Props {
   step: StoryWizardStepViewModel;
-  stepIndex: number;
-  totalSteps: number;
+  stepGlobalIndex: number;
+  overviewHref: string;
 }
 
-const { step } = Astro.props;
+const { step, stepGlobalIndex, overviewHref } = Astro.props;
 const focusedPreviewStories = step.cardPreviewStories.length > 0 ? step.cardPreviewStories : step.previewStories;
 const showPreviewModeToggle =
   step.type === 'preset' &&
@@ -28,9 +28,10 @@ const showPreviewModeToggle =
   aria-label={step.title}
   data-step-kind={step.type === 'advanced' ? 'advanced' : 'safe'}
   data-step-label={step.title}
+  data-step-global-index={stepGlobalIndex}
 >
   <div class="wizard-story-section__header">
-    <StoryWizardBackButton />
+    <StoryWizardBackButton href={overviewHref} />
   </div>
 
   <div class="wizard-story-section__layout">
