@@ -41,7 +41,7 @@ test.describe('scraping css design tokens', () => {
   test('errors on an invalid URL', async ({ homePage }) => {
     await homePage.scrapeUrl('https://.com');
     await expect.soft(homePage.input).toHaveAttribute('aria-invalid', 'true');
-    await expect.soft(homePage.input).toHaveAccessibleErrorMessage('Kan "https://.com" niet analyseren.');
+    await expect.soft(homePage.input).toHaveAccessibleErrorMessage('Deze website lijkt niet te bestaan.');
   });
 
   test('errors when no URL is entered', async ({ homePage }) => {

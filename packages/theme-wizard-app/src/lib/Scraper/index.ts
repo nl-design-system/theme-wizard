@@ -28,7 +28,10 @@ export default class Scraper {
   async getTokens(url: URL): Promise<ScrapedDesignToken[]> {
     const response = await this.#get(this.#requestTokenUrl, url);
     if (!response.ok) {
-      throw new Error('Scraping design tokens failed');
+      const body = await response.json().catch(() => ({}));
+      throw Object.assign(new Error('Scraping design tokens failed'), {
+        errors: body.errors ?? [],
+      });
     }
     return response.json();
   }
