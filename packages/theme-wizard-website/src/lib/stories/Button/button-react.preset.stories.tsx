@@ -36,9 +36,11 @@ export const ButtonMinimumSize: Story = createButtonPresetStory({
             nl: {
               button: {
                 'min-block-size': {
+                  $type: 'dimension',
                   $value: '1.5rem',
                 },
                 'min-inline-size': {
+                  $type: 'dimension',
                   $value: '1.5rem',
                 },
               },

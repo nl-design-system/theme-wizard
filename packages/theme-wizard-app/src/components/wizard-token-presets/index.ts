@@ -1,4 +1,5 @@
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
+import { stringifyDimension } from '@nl-design-system-community/design-tokens-schema';
 import { dequal } from 'dequal';
 import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -357,9 +358,22 @@ export class WizardTokenPreset extends LitElement {
       const themeToken = theme.at(tokenPath);
       const themeValue = themeToken ? themeToken['$value'] : null;
 
-      if (!dequal(themeValue, presetValue)) {
-        matches = false;
+      if (dequal(themeValue, presetValue)) return;
+
+      // Dimension tokens are stored as { value, unit } objects after processing,
+      // but presets may use legacy string form (e.g. '1.5rem'). Normalize for comparison.
+      if (
+        typeof presetValue === 'string' &&
+        themeValue !== null &&
+        typeof themeValue === 'object' &&
+        'value' in themeValue &&
+        'unit' in themeValue &&
+        stringifyDimension(themeValue as { value: number; unit: string }) === presetValue
+      ) {
+        return;
       }
+
+      matches = false;
     });
 
     return matches;
