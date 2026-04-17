@@ -80,7 +80,36 @@ export default class PersistentStorage {
   }
 
   setItem(key: string, value: string, prefix: string = '') {
-    this.#backend.setItem(this.path(prefix, key), value);
+    const fullKey = this.path(prefix, key);
+    try {
+      this.#backend.setItem(fullKey, value);
+    } catch (e) {
+      if (e instanceof DOMException && e.name === 'QuotaExceededError') {
+        // Clear all keys owned by this storage instance to free space, then retry once.
+        this.#clearNamespace();
+        try {
+          this.#backend.setItem(fullKey, value);
+        } catch {
+          console.warn(`PersistentStorage: quota exceeded, could not save key "${fullKey}".`);
+        }
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  #clearNamespace() {
+    const namespacePrefix = `${this.path()}${SEPARATOR}`;
+    const storedKeys: string[] = [];
+    for (let i = 0; i < this.#backend.length; i++) {
+      const storedKey = this.#backend.key(i);
+      if (storedKey && storedKey.startsWith(namespacePrefix)) {
+        storedKeys.push(storedKey);
+      }
+    }
+    for (const storedKey of storedKeys) {
+      this.#backend.removeItem(storedKey);
+    }
   }
 
   setJSON(key: string, value: ObjectOrArray): void;
