@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mockLocalStorage, mockSessionStorage } from '../../../test/mocks/Storage';
 import PersistentStorage, { STORAGE_TYPES } from './index';
 
@@ -147,5 +147,69 @@ describe('PersistentStorage', () => {
     });
     const [itemA, itemB] = storages.map((storage) => storage.getJSON(key));
     expect(itemA).not.toMatchObject(itemB);
+  });
+
+  describe('quota exceeded handling', () => {
+    const quotaError = new DOMException('QuotaExceededError', 'QuotaExceededError');
+
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    it('retries after clearing namespace keys when quota is exceeded', () => {
+      const storage = new PersistentStorage({ prefix: 'test' });
+      storage.setItem('existing', 'data');
+
+      const original = mockLocalStorage.setItem.bind(mockLocalStorage);
+      vi.spyOn(mockLocalStorage, 'setItem')
+        .mockImplementationOnce(() => {
+          throw quotaError;
+        })
+        .mockImplementation(original);
+
+      storage.setItem('key', 'value');
+
+      expect(storage.getItem('key')).toBe('value');
+      expect(storage.getItem('existing')).toBeNull();
+    });
+
+    it('only clears keys in its own namespace when handling quota error', () => {
+      const storageA = new PersistentStorage({ prefix: 'A' });
+      const storageB = new PersistentStorage({ prefix: 'B' });
+      storageA.setItem('key', 'valueA');
+      storageB.setItem('key', 'valueB');
+
+      const original = mockLocalStorage.setItem.bind(mockLocalStorage);
+      vi.spyOn(mockLocalStorage, 'setItem')
+        .mockImplementationOnce(() => {
+          throw quotaError;
+        })
+        .mockImplementation(original);
+
+      storageA.setItem('key2', 'valueA2');
+
+      expect(storageB.getItem('key')).toBe('valueB');
+    });
+
+    it('logs a warning and does not throw when quota persists after namespace clear', () => {
+      const storage = new PersistentStorage({ prefix: 'test' });
+      vi.spyOn(mockLocalStorage, 'setItem').mockImplementation(() => {
+        throw quotaError;
+      });
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      expect(() => storage.setItem('key', 'value')).not.toThrow();
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('quota exceeded'));
+    });
+
+    it('re-throws non-quota errors', () => {
+      const storage = new PersistentStorage({ prefix: 'test' });
+      const otherError = new Error('some other error');
+      vi.spyOn(mockLocalStorage, 'setItem').mockImplementation(() => {
+        throw otherError;
+      });
+
+      expect(() => storage.setItem('key', 'value')).toThrow('some other error');
+    });
   });
 });
