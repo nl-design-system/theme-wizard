@@ -23,6 +23,7 @@ export class StoryWizardOverviewController {
     const completedCount = this.#root.querySelector<HTMLElement>('[data-completed-count]');
     const todoCount = this.#root.querySelector<HTMLElement>('[data-todo-count]');
     const allDoneCheckmark = document.querySelector<HTMLElement>('[data-wizard-all-done-checkmark]');
+    const progressLabel = this.#root.querySelector<HTMLElement>('[data-progress-label]');
 
     // Build original-list map before moving any cards
     const originalListMap = new Map<string, HTMLElement>();
@@ -61,6 +62,13 @@ export class StoryWizardOverviewController {
       card.classList.toggle('nl-button--primary', !isDone);
       card.classList.toggle('nl-button--secondary', isDone);
 
+      const statusTag = article?.querySelector<HTMLElement>('[data-step-status-tag]');
+      if (statusTag) {
+        const labels = stepState?.selectionLabels?.filter(Boolean) ?? [];
+        statusTag.textContent = labels.length > 0 ? labels.join(', ') : 'Aangepast';
+        statusTag.hidden = !isDone;
+      }
+
       if (!isAdvanced) {
         const item = card.closest<HTMLElement>('.wizard-steps-overview__item');
         if (!item) return;
@@ -77,6 +85,11 @@ export class StoryWizardOverviewController {
     if (todoCount) todoCount.textContent = String(presetTotal - completedPresetCount);
     if (allDoneCheckmark) {
       allDoneCheckmark.hidden = completedPresetCount < presetTotal || presetTotal === 0;
+    }
+
+    if (progressLabel && presetTotal > 0) {
+      progressLabel.hidden = false;
+      progressLabel.textContent = `${completedPresetCount} van ${presetTotal} ingesteld`;
     }
   }
 }

@@ -26,7 +26,6 @@ const stepIndexMap = new Map(wizard.steps.map((step, i) => [step.id, i]));
 
 // Map step ID → global index in wizard.steps for use in overview cards
 
-
 const getOverviewCardIcon = (step: StoryWizardViewModel['steps'][number], cardTitle?: string, description?: string) => {
   const haystack = [
     cardTitle ?? step.title,
@@ -115,32 +114,6 @@ const getCardMeta = (step: StoryWizardViewModel['steps'][number]) => {
 };
 
 const sortedPresetSteps = [...presetSteps].sort((a, b) => a.order - b.order);
-
-type SingleRow = { type: 'single'; step: (typeof presetSteps)[0] };
-type GroupRow = { type: 'group'; flowGroup: string; flowTitle: string; steps: typeof presetSteps };
-
-const presetRows = (() => {
-  const rows: (SingleRow | GroupRow)[] = [];
-  const seen = new Map<string, number>();
-  for (const step of sortedPresetSteps) {
-    const isGrouped = step.flowGroup !== step.id;
-    if (isGrouped) {
-      const idx = seen.get(step.flowGroup);
-      if (idx !== undefined) {
-        (rows[idx] as GroupRow).steps.push(step);
-      } else {
-        seen.set(step.flowGroup, rows.length);
-        rows.push({ type: 'group', flowGroup: step.flowGroup, flowTitle: step.flowTitle, steps: [step] });
-      }
-    } else {
-      rows.push({ type: 'single', step });
-    }
-  }
-  return rows;
-})();
-
-const singleSteps = presetRows.filter((r): r is SingleRow => r.type === 'single').map((r) => r.step);
-const groupRows = presetRows.filter((r): r is GroupRow => r.type === 'group');
 ---
 
 <div slot="page-content" class="wizard-page-content">
@@ -152,6 +125,7 @@ const groupRows = presetRows.filter((r): r is GroupRow => r.type === 'group');
         <div class="wizard-steps-overview__lead-row">
           <h2 class="nl-heading nl-heading--level-3">{presetSteps.length} presets</h2>
           <div class="wizard-steps-overview__lead-actions">
+            <span class="wizard-steps-overview__progress-label" data-progress-container data-progress-label hidden></span>
             <div class="wizard-steps-overview__reset" hidden></div>
           </div>
         </div>
@@ -159,7 +133,7 @@ const groupRows = presetRows.filter((r): r is GroupRow => r.type === 'group');
       </div>
 
       <div class="wizard-steps-overview__rows">
-        <StoryWizardOverviewRow title="Ingesteld" isCompletedRow />
+        <StoryWizardOverviewRow title="Jouw keuzes" isCompletedRow />
 
         {
           (() => {
@@ -183,16 +157,11 @@ const groupRows = presetRows.filter((r): r is GroupRow => r.type === 'group');
 
             return (
               <>
-                {singleSteps.length > 0 && (
-                  <StoryWizardOverviewRow title="Niet ingesteld" initialCount={singleSteps.length}>
-                    {singleSteps.map(renderCard)}
+                {sortedPresetSteps.length > 0 && (
+                  <StoryWizardOverviewRow title="Startwaarden" initialCount={sortedPresetSteps.length}>
+                    {sortedPresetSteps.map(renderCard)}
                   </StoryWizardOverviewRow>
                 )}
-                {groupRows.map((row) => (
-                  <StoryWizardOverviewRow title={row.flowTitle} id={`group-${row.flowGroup}`}>
-                    {row.steps.map(renderCard)}
-                  </StoryWizardOverviewRow>
-                ))}
               </>
             );
           })()

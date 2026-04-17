@@ -701,7 +701,6 @@
   align-items: center;
   display: flex;
   gap: var(--basis-space-inline-md);
-  justify-content: space-between;
 }
 
 .wizard-steps-overview__lead-row > .nl-heading {
@@ -760,6 +759,15 @@
 .wizard-steps-overview__intro {
   color: var(--basis-color-default-color-subtle);
   margin-block: 0;
+}
+
+.wizard-steps-overview__progress-label {
+  color: var(--basis-color-default-color-subtle);
+  font-size: 0.875rem;
+}
+
+.wizard-steps-overview__progress-label[hidden] {
+  display: none;
 }
 
 .wizard-steps-overview__list {
@@ -972,6 +980,15 @@
   block-size: var(--basis-size-icon-4xl);
   display: block;
   inline-size: var(--basis-size-icon-4xl);
+}
+
+.wizard-step-overview-card__status-tag {
+  align-self: flex-start;
+  color: var(--basis-color-action-1-color-default);
+}
+
+.wizard-step-overview-card__status-tag[hidden] {
+  display: none;
 }
 
 .wizard-step-overview-card__description {
