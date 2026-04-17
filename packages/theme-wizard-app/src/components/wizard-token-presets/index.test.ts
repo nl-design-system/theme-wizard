@@ -242,10 +242,10 @@ describe(`<${tag}>`, () => {
       const el = await mount({ options: [optionA] });
       el.selectIndex(0);
       await el.updateComplete;
-      expect(el.shadowRoot?.querySelector('.wizard-token-preset__option-values')).toBeTruthy();
+      expect(el.shadowRoot?.querySelector('.wizard-token-preset__details')).toBeTruthy();
     });
 
-    it('renders a details element for options with multiple tokens', async () => {
+    it('renders a details element for selected options with token values', async () => {
       const multiTokenOption = {
         name: 'Multi',
         tokens: {
@@ -256,6 +256,16 @@ describe(`<${tag}>`, () => {
       el.selectIndex(0);
       await el.updateComplete;
       expect(el.shadowRoot?.querySelector('details')).toBeTruthy();
+    });
+
+    it('renders technical details only once for the currently selected option', async () => {
+      const el = await mount({ options: [optionA, optionB] });
+      el.selectIndex(1);
+      await el.updateComplete;
+
+      const summary = el.shadowRoot?.querySelector('.wizard-token-preset__details-summary');
+      expect(summary?.textContent).toContain('Technische details van "Optie B"');
+      expect(el.shadowRoot?.querySelectorAll('.wizard-token-preset__details')).toHaveLength(1);
     });
 
     it('renders intermediate and resolved steps for token reference chains', async () => {
