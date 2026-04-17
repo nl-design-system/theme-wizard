@@ -41,6 +41,7 @@ export type StoryWizardStoredStepState = {
   advancedVisited: boolean;
   chosenSelections: boolean[];
   selections: number[];
+  selectionLabels?: string[];
 };
 
 export type StoryWizardStoredState = {

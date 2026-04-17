@@ -10,9 +10,9 @@ export class StoryWizardStepController {
   public static init() {
     const container = document.getElementById('story-wizard');
     if (!container) return;
-    new StoryWizardStepController(container).#start().catch((e) =>
-      console.error('Failed to initialize Story Wizard step', e),
-    );
+    new StoryWizardStepController(container)
+      .#start()
+      .catch((e) => console.error('Failed to initialize Story Wizard step', e));
   }
 
   readonly #componentId: keyof typeof components;
@@ -28,8 +28,7 @@ export class StoryWizardStepController {
     this.#componentId = container.dataset.componentId as keyof typeof components;
     this.#storage = new StoryWizardStorage(this.#componentId);
 
-    const root =
-      container.closest<HTMLElement>('[data-story-wizard-root]') ?? container.parentElement ?? document.body;
+    const root = container.closest<HTMLElement>('[data-story-wizard-root]') ?? container.parentElement ?? document.body;
     const stepEl = root.querySelector<HTMLElement>('.wizard-story-section');
     if (!stepEl) throw new Error('No wizard step element found');
 
@@ -83,9 +82,7 @@ export class StoryWizardStepController {
   }
 
   #bindPreviewModeToggles() {
-    const buttons = Array.from(
-      this.#step.element.querySelectorAll<HTMLButtonElement>('[data-preview-mode-btn]'),
-    );
+    const buttons = Array.from(this.#step.element.querySelectorAll<HTMLButtonElement>('[data-preview-mode-btn]'));
     const panels = Array.from(this.#step.element.querySelectorAll<HTMLElement>('[data-preview-mode-panel]'));
     if (!buttons.length || !panels.length) return;
 
@@ -120,10 +117,12 @@ export class StoryWizardStepController {
       if (sel < 0) return false;
       return existing.chosenSelections[i] ?? false;
     });
+    const selectionLabels = this.#step.groups.map((group) => group.input?.optionLabel ?? '');
 
     stored.steps[this.#globalIndex] = {
       advancedVisited: existing.advancedVisited,
       chosenSelections,
+      selectionLabels,
       selections,
     };
     stored.currentStep = this.#globalIndex;

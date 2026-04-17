@@ -30,6 +30,7 @@ const illustrationSrc = `/svg/componenten_overzicht_${componentId}.svg`;
   <div class="wizard-step-overview-card__body">
     <span class="wizard-step-overview-card__title">{title}</span>
     {description && <span class="wizard-step-overview-card__description">{description}</span>}
+    {showSummary && <span class="wizard-step-overview-card__status-tag" data-step-status-tag hidden />}
     {showSummary && <div class="wizard-step-overview-card__summary-container" data-step-selection-summary hidden />}
   </div>
 

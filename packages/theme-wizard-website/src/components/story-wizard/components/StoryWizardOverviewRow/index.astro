@@ -52,6 +52,7 @@ const headingClass = `nl-heading nl-heading--level-${headingLevel} wizard-steps-
       <ul class="wizard-steps-overview__list">
         <slot />
       </ul>
+      <slot name="groups" />
     </details>
   ) : (
     <section class="wizard-steps-overview__row" aria-labelledby={id}>
