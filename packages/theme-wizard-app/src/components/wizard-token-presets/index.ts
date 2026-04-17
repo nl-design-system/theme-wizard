@@ -494,17 +494,13 @@ export class WizardTokenPreset extends LitElement {
       return nothing;
     }
 
-    if (tokenValues.length === 1) {
-      return html`<div class="wizard-token-preset__option-values">
-        ${this.renderTokenValue(option, tokenValues[0])}
-      </div>`;
-    }
-
     return html`
-      <details class="wizard-token-preset__option-values wizard-token-preset__option-values--summary">
-        <summary class="wizard-token-preset__option-values-summary">Tokens (${tokenValues.length})</summary>
+      <details class="wizard-token-preset__details">
+        <summary class="wizard-token-preset__details-summary">
+          Technische details van "${option.name}" (${tokenValues.length})
+        </summary>
 
-        <div class="wizard-token-preset__option-values-list">
+        <div class="wizard-token-preset__details-panel">
           ${tokenValues.map((token) => this.renderTokenValue(option, token))}
         </div>
       </details>
@@ -514,6 +510,8 @@ export class WizardTokenPreset extends LitElement {
   static override readonly styles = [unsafeCSS(buttonCss), wizardTokenCSS];
 
   override render() {
+    const selectedOption = this.options[this.selectedIndex];
+
     return html`
       <fieldset class="wizard-token-preset__group">
         <legend class="wizard-token-preset__legend">${this.groupLabel || 'Preset opties'}</legend>
@@ -552,10 +550,10 @@ export class WizardTokenPreset extends LitElement {
                     : nothing}
                 </span>
               </label>
-              ${isSelected ? this.renderTokenDetails(option) : nothing}
             </div>
           `;
         })}
+        ${selectedOption ? this.renderTokenDetails(selectedOption) : nothing}
       </fieldset>
     `;
   }

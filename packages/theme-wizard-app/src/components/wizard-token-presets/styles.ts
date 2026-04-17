@@ -138,21 +138,24 @@ export const wizardTokenCSS = css`
     color: var(--nl-button-secondary-pressed-active-color, currentColor);
   }
 
-  .wizard-token-preset__option-values {
+  .wizard-token-preset__details {
+    border-block-start: var(--basis-border-width-sm) solid
+      color-mix(in sRGB, var(--basis-color-default-border-subtle) 45%, transparent);
     display: block;
-    margin-block-start: var(--basis-space-block-sm);
-    padding-inline-start: var(--basis-space-inline-lg);
+    margin-block-start: var(--basis-space-block-md);
+    padding-block-start: var(--basis-space-block-sm);
   }
 
-  .wizard-token-preset__option-values-summary {
+  .wizard-token-preset__details-summary {
     color: var(--basis-color-default-color-subtle);
     cursor: pointer;
     font-size: var(--basis-text-font-size-sm);
     font-weight: var(--basis-text-font-weight-bold);
   }
 
-  .wizard-token-preset__option-values--summary[open] .wizard-token-preset__option-values-list {
-    margin-block-start: var(--basis-space-block-xs);
+  .wizard-token-preset__details-panel {
+    margin-block-start: var(--basis-space-block-sm);
+    padding-inline-start: var(--basis-space-inline-lg);
   }
 
   .wizard-token-preset__option-value {
