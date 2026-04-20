@@ -9,11 +9,12 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('wizard questions keep the intended order', async () => {
-  await expect(wizard.legends).toHaveCount(6);
-  await expect(wizard.legends.nth(0)).toHaveText('Kies de minimale afmeting');
-  await expect(wizard.legends.nth(1)).toHaveText('Welke stijl wil je voor de standaard button?');
-  await expect(wizard.legends.nth(2)).toHaveText('Welke stijl wil je voor de primary button?');
-  await expect(wizard.legends.nth(3)).toHaveText('Welke stijl wil je voor de secondary button?');
-  await expect(wizard.legends.nth(4)).toHaveText('Hoe afgerond mogen de hoeken van buttons zijn?');
-  await expect(wizard.legends.nth(5)).toHaveText('Kies de tekstgrootte van alle buttons');
+  const startwaardenRow = wizard.page.locator('[data-todo-row]').filter({ hasText: 'Startwaarden' });
+  const overviewTitles = startwaardenRow.locator('.wizard-step-overview-card__title');
+
+  await expect(overviewTitles).toHaveCount(4);
+  await expect(overviewTitles.nth(0)).toHaveText('Kies de minimale afmeting');
+  await expect(overviewTitles.nth(1)).toHaveText('Kies de stijlrichting voor alle buttons');
+  await expect(overviewTitles.nth(2)).toHaveText('Hoe afgerond mogen de hoeken van buttons zijn?');
+  await expect(overviewTitles.nth(3)).toHaveText('Kies de tekstgrootte van alle buttons');
 });
