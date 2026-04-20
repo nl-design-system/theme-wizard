@@ -462,17 +462,38 @@
 }
 
 .wizard-story-preview-panel {
+  background: var(--basis-color-default-bg-subtle);
+  border: 1px solid var(--basis-color-default-border-subtle);
+  border-radius: var(--basis-border-radius-lg);
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   gap: var(--basis-space-row-sm);
   min-block-size: 100%;
+  padding-block: var(--basis-space-block-lg);
+  padding-inline: var(--basis-space-inline-lg);
+}
+
+.wizard-story-preview-panel__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-2xs);
+}
+
+.wizard-story-preview-panel__title {
+  margin-block: 0;
+}
+
+.wizard-story-preview-panel__intro {
+  color: var(--basis-color-default-color-subtle);
+  margin-block: 0;
+  max-inline-size: 34rem;
 }
 
 .wizard-story-preview-panel__controls {
   align-self: flex-end;
-  background: color-mix(in sRGB, var(--basis-color-default-bg-subtle) 72%, white);
-  border: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle) 70%, transparent);
+  background: var(--basis-color-default-bg-document);
+  border: 1px solid var(--basis-color-default-border-subtle);
   border-radius: var(--basis-border-radius-round);
   display: inline-flex;
   gap: var(--basis-space-inline-xs);
@@ -499,8 +520,7 @@
   text-align: center;
 }
 
-.wizard-story-preview-panel__toggle[aria-pressed="true"],
-.wizard-story-preview-panel__toggle--active {
+.wizard-story-preview-panel__toggle[aria-pressed="true"] {
   background: white;
   box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
   color: var(--basis-color-default-color-default);
@@ -516,10 +536,6 @@
   flex: 1 1 auto;
   flex-direction: column;
   gap: var(--basis-space-block-xl);
-}
-
-.wizard-story-section__variants[hidden] {
-  display: none;
 }
 
 .wizard-story-section__settings-panel {
@@ -766,10 +782,6 @@
   font-size: 0.875rem;
 }
 
-.wizard-steps-overview__progress-label[hidden] {
-  display: none;
-}
-
 .wizard-steps-overview__list {
   display: grid;
   gap: var(--basis-space-block-lg);
@@ -784,10 +796,6 @@
   margin-block: 0;
   margin-inline: 0;
   min-inline-size: 0;
-}
-
-.wizard-steps-overview__item[hidden] {
-  display: none;
 }
 
 .wizard-steps-overview__advanced {
@@ -985,10 +993,6 @@
 .wizard-step-overview-card__status-tag {
   align-self: flex-start;
   color: var(--basis-color-action-1-color-default);
-}
-
-.wizard-step-overview-card__status-tag[hidden] {
-  display: none;
 }
 
 .wizard-step-overview-card__description {
