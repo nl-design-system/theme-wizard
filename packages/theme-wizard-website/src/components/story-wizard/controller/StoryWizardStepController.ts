@@ -90,7 +90,6 @@ export class StoryWizardStepController {
       buttons.forEach((btn) => {
         const isActive = btn.dataset.previewModeBtn === mode;
         btn.setAttribute('aria-pressed', String(isActive));
-        btn.classList.toggle('wizard-story-preview-panel__toggle--active', isActive);
       });
       panels.forEach((panel) => {
         panel.hidden = panel.dataset.previewModePanel !== mode;
