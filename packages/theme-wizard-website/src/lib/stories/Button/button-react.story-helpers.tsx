@@ -23,6 +23,12 @@ export type ButtonPresetOptionConfig = {
   name: 'Gevuld' | 'Outlined' | 'Subtle';
 };
 
+export type ButtonStyleSuggestionConfig = {
+  default: Omit<ButtonPresetOptionConfig, 'description' | 'name'>;
+  primary: Omit<ButtonPresetOptionConfig, 'description' | 'name'>;
+  secondary: Omit<ButtonPresetOptionConfig, 'description' | 'name'>;
+};
+
 type ButtonPresetOption = PresetOption<unknown> & {
   description?: string;
 };
@@ -379,7 +385,7 @@ const createVariantStateTokens = ({
   };
 };
 
-const createButtonPurposeTokens = (
+export const createButtonPurposeTokens = (
   purpose: ButtonPresetPurpose,
   config: Omit<ButtonPresetOptionConfig, 'description' | 'name'>,
 ) => ({
@@ -434,41 +440,24 @@ export const createButtonPresetStory = ({
     render,
   }) as ButtonStory;
 
-export const createButtonVariantStory = ({
+export const createButtonStyleSuggestionOption = ({
+  config,
+  description,
   name,
-  args,
-  options,
-  order,
-  previewStoryId,
-  question,
-  render,
 }: {
-  args: ButtonVariantStoryArgs;
+  config: ButtonStyleSuggestionConfig;
+  description: string;
   name: string;
-  options: ButtonPresetOptionConfig[];
-  order: number;
-  previewStoryId: string;
-  question: string;
-  render: ButtonStory['render'];
-}): ButtonStory =>
-  createButtonPresetStory({
-    name,
-    args,
-    cardPreviewStoryIds: [previewStoryId],
-    flowGroup: 'button-stijl',
-    flowTitle: 'Stijl',
-    order,
-    presets: [
-      {
-        name: question,
-        options: [
-          { name: 'Aanbevolen', description: 'Gebruik de standaard uit het startthema.', tokens: null },
-          ...options.map((option) => createButtonVariantOption(args.purpose ?? 'default', option)),
-        ],
-        question,
-        thumbnail: false,
+}) => ({
+  name,
+  description,
+  tokens: {
+    nl: {
+      button: {
+        ...createButtonPurposeTokens('default', config.default).nl.button,
+        ...createButtonPurposeTokens('primary', config.primary).nl.button,
+        ...createButtonPurposeTokens('secondary', config.secondary).nl.button,
       },
-    ],
-    previewStoryIds: [previewStoryId],
-    render,
-  });
+    },
+  },
+});
