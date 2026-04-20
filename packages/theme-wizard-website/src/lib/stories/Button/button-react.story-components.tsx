@@ -179,9 +179,10 @@ export const RenderButtonStates = ({ ...props }: ButtonProps) => (
 );
 
 const ButtonPurposeMatrix = ({ purpose }: { purpose: ButtonProps['purpose'] }) => {
+  const purposeLabel = getPurposeLabel(purpose);
   const baseProps: ButtonProps = {
     iconStart: undefined,
-    label: 'Klik mij!',
+    label: purposeLabel,
     purpose,
   };
 
@@ -205,13 +206,13 @@ const ButtonPurposeMatrix = ({ purpose }: { purpose: ButtonProps['purpose'] }) =
 
   const closedProps: ButtonProps = {
     ...baseProps,
-    label: 'Meer tonen',
+    label: purposeLabel,
     pressed: false,
   };
 
   const openProps: ButtonProps = {
     ...baseProps,
-    label: 'Meer tonen',
+    label: purposeLabel,
     pressed: true,
   };
 

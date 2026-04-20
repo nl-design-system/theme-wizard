@@ -4,10 +4,7 @@ import { createRelativeFontSizePresetOptions } from '../story-helpers';
 import { ButtonPrimary, RenderButtonPurposePreview } from './button-react.story-components';
 import {
   createButtonPresetStory,
-  createButtonVariantStory,
-  defaultButtonVariantOptions,
-  primaryButtonVariantOptions,
-  secondaryButtonVariantOptions,
+  createButtonStyleSuggestionOption,
 } from './button-react.story-helpers';
 
 type Story = StoryObj<ButtonProps>;
@@ -54,44 +51,83 @@ export const ButtonMinimumSize: Story = createButtonPresetStory({
   render: ButtonPrimary,
 });
 
-export const ButtonDefaultVariantStyle = createButtonVariantStory({
-  name: 'Stijl standaard button',
+export const ButtonVariantStyles = createButtonPresetStory({
+  name: 'Stijl van buttons',
   args: {
     iconStart: '❤️',
     label: 'Klik mij!',
   },
-  options: defaultButtonVariantOptions,
   order: 2,
-  previewStoryId: 'DefaultButtonCardPreview',
-  question: 'Welke stijl wil je voor de standaard button?',
-  render: RenderButtonPurposePreview,
-});
-
-export const ButtonPrimaryVariantStyle = createButtonVariantStory({
-  name: 'Stijl primary button',
-  args: {
-    iconStart: '❤️',
-    label: 'Klik mij!',
-    purpose: 'primary',
-  },
-  options: primaryButtonVariantOptions,
-  order: 3,
-  previewStoryId: 'PrimaryButtonCardPreview',
-  question: 'Welke stijl wil je voor de primary button?',
-  render: RenderButtonPurposePreview,
-});
-
-export const ButtonSecondaryVariantStyle = createButtonVariantStory({
-  name: 'Stijl secondary button',
-  args: {
-    iconStart: '❤️',
-    label: 'Klik mij!',
-    purpose: 'secondary',
-  },
-  options: secondaryButtonVariantOptions,
-  order: 4,
-  previewStoryId: 'SecondaryButtonCardPreview',
-  question: 'Welke stijl wil je voor de secondary button?',
+  cardPreviewStoryIds: ['AllButtonPurposesPreview'],
+  presets: [
+    {
+      name: 'Kies de stijlrichting voor alle buttons',
+      description: 'Kies een samenhangende set voor standaard, primary en secondary buttons.',
+      options: [
+        {
+          name: 'Aanbevolen',
+          description: 'Gebruik de standaard uit het startthema.',
+          tokens: null,
+        },
+        createButtonStyleSuggestionOption({
+          name: 'Klassieke hiërarchie',
+          description: 'Drie duidelijke niveaus: primary is gevuld, secondary heeft een lijn, standaard blijft rustig.',
+          config: {
+            default: { family: 'basis.color.default', mode: 'subtle' },
+            primary: { family: 'basis.color.action-1', mode: 'filled' },
+            secondary: { family: 'basis.color.action-1', mode: 'outlined' },
+          },
+        }),
+        createButtonStyleSuggestionOption({
+          name: 'Eén sterke actie',
+          description: 'Alleen de primary button springt eruit. Secundaire acties stappen terug.',
+          config: {
+            default: { family: 'basis.color.default', mode: 'subtle' },
+            primary: { family: 'basis.color.action-1', mode: 'filled' },
+            secondary: { family: 'basis.color.action-1', mode: 'subtle' },
+          },
+        }),
+        createButtonStyleSuggestionOption({
+          name: 'Twee sterke acties',
+          description: 'Primary en secondary zijn beide prominent. Standaard acties stappen terug.',
+          config: {
+            default: { family: 'basis.color.default', mode: 'subtle' },
+            primary: { family: 'basis.color.action-1', mode: 'filled' },
+            secondary: { family: 'basis.color.action-1', mode: 'filled' },
+          },
+        }),
+        createButtonStyleSuggestionOption({
+          name: 'Lijn als stijl',
+          description: 'Geen gevulde buttons — de primary onderscheidt zich via lijn en kleur, de rest is rustig.',
+          config: {
+            default: { family: 'basis.color.default', mode: 'subtle' },
+            primary: { family: 'basis.color.action-1', mode: 'outlined' },
+            secondary: { family: 'basis.color.action-1', mode: 'subtle' },
+          },
+        }),
+        createButtonStyleSuggestionOption({
+          name: 'Strak',
+          description: 'Primary is gevuld, standaard en secondary hebben een lijn. Zakelijk en gestructureerd.',
+          config: {
+            default: { family: 'basis.color.default', mode: 'outlined' },
+            primary: { family: 'basis.color.action-1', mode: 'filled' },
+            secondary: { family: 'basis.color.action-1', mode: 'outlined' },
+          },
+        }),
+        createButtonStyleSuggestionOption({
+          name: 'Gelijkwaardig',
+          description: 'Alle buttons zijn subtiel. Hiërarchie ontstaat door plaatsing en context, niet door kleurvlak.',
+          config: {
+            default: { family: 'basis.color.default', mode: 'subtle' },
+            primary: { family: 'basis.color.action-1', mode: 'subtle' },
+            secondary: { family: 'basis.color.action-1', mode: 'subtle' },
+          },
+        }),
+      ],
+      question: 'Kies de stijlrichting voor alle buttons',
+    },
+  ],
+  previewStoryIds: ['AllButtonPurposesPreview'],
   render: RenderButtonPurposePreview,
 });
 
@@ -102,7 +138,7 @@ export const ButtonShape: Story = createButtonPresetStory({
     label: 'Klik mij!',
   },
   cardPreviewStoryIds: ['DefaultButtonCardPreview'],
-  order: 5,
+  order: 3,
   presets: [
     {
       name: 'Kies de vorm van de Buttons',
@@ -172,7 +208,7 @@ export const ButtonTextSize: Story = createButtonPresetStory({
     label: 'Klik mij!',
   },
   cardPreviewStoryIds: ['DefaultButtonCardPreview'],
-  order: 6,
+  order: 4,
   presets: [
     {
       name: 'Kies de tekstgrootte van alle buttons',
