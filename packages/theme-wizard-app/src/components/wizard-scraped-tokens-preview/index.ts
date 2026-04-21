@@ -55,21 +55,17 @@ export class WizardScrapedTokensPreview extends LitElement {
     );
   };
 
-  readonly #groupColors = (colors: StagedDesignToken[]) => {
-    return Object.entries(
-      colors.reduce(
-        (acc, color) => {
-          const converted = convertColor(color.$extensions[EXTENSION_AUTHORED_AS]);
-          const group = colorGroupName(converted);
-          if (!Array.isArray(acc[group])) {
-            acc[group] = [];
-          }
-          acc[group].push(color);
-          return acc;
-        },
-        {} as Record<string, StagedDesignToken[]>,
-      ),
-    );
+  readonly #groupColors = (colors: StagedDesignToken[]): [string, StagedDesignToken[]][] => {
+    const groups: Record<string, StagedDesignToken[]> = {};
+
+    for (const color of colors) {
+      const normalized = convertColor(color.$extensions[EXTENSION_AUTHORED_AS]);
+      const group = colorGroupName(normalized);
+      groups[group] ??= [];
+      groups[group].push(color);
+    }
+
+    return Object.entries(groups);
   };
 
   readonly #renderTable = (
