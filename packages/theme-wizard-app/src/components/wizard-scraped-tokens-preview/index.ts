@@ -8,7 +8,9 @@ import {
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import { html, LitElement, TemplateResult, unsafeCSS } from 'lit';
+import { color_group as colorGroupName, convert as convertColor } from 'color-sorter';
+import Color from 'colorjs.io';
+import { html, LitElement, nothing, TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
@@ -53,10 +55,28 @@ export class WizardScrapedTokensPreview extends LitElement {
     );
   };
 
+  readonly #groupColors = (colors: StagedDesignToken[]) => {
+    return Object.entries(
+      colors.reduce(
+        (acc, color) => {
+          const converted = convertColor(color.$extensions[EXTENSION_AUTHORED_AS]);
+          const group = colorGroupName(converted);
+          if (!Array.isArray(acc[group])) {
+            acc[group] = [];
+          }
+          acc[group].push(color);
+          return acc;
+        },
+        {} as Record<string, StagedDesignToken[]>,
+      ),
+    );
+  };
+
   readonly #renderTable = (
     caption: string | TemplateResult,
     tokens: StagedDesignToken[],
     renderSample: (token: StagedDesignToken) => TemplateResult,
+    renderValue: (token: StagedDesignToken) => TemplateResult | typeof nothing,
   ) => html`
     <wizard-table-scroller>
       <table class="utrecht-table">
@@ -84,9 +104,7 @@ export class WizardScrapedTokensPreview extends LitElement {
                   />
                 </td>
                 <td class="utrecht-table__cell">${renderSample(token)}</td>
-                <td class="utrecht-table__cell">
-                  <code class="nl-code">${token.$extensions[EXTENSION_AUTHORED_AS]}</code>
-                </td>
+                <td class="utrecht-table__cell">${renderValue(token)}</td>
                 <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
               </tr>
             `,
@@ -100,7 +118,7 @@ export class WizardScrapedTokensPreview extends LitElement {
     const families = this.scrapedTokens
       .filter((token) => token.$type === 'fontFamily')
       .toSorted((a, b) => {
-        return a.$extensions[EXTENSION_AUTHORED_AS].localeCompare(b.$extensions[EXTENSION_AUTHORED_AS]);
+        return a.$value[0].localeCompare(b.$value[0]);
       });
     const sizes = this.scrapedTokens
       .filter((token) => token.$type === 'dimension')
@@ -110,10 +128,13 @@ export class WizardScrapedTokensPreview extends LitElement {
         return normalizedB.value - normalizedA.value;
       });
     const colors = this.scrapedTokens.filter((token) => token.$type === 'color');
+    const groups = this.#groupColors(colors);
 
     return html`
       <div class="wizard-scraped-tokens-preview">
         <wizard-stack size="5xl">
+          <clippy-heading level="2">${t('tokens.types.typography')}</clippy-heading>
+
           ${this.#renderTable(
             t('tokens.types.fontFamilies'),
             families,
@@ -122,19 +143,40 @@ export class WizardScrapedTokensPreview extends LitElement {
                 family=${token.$extensions[EXTENSION_AUTHORED_AS]}
                 size="var(--basis-text-font-size-xl)"
               ></wizard-font-sample>`,
+            (token) => (Array.isArray(token.$value) ? html`<code class="nl-code">${token.$value[0]}</code>` : nothing),
           )}
           ${this.#renderTable(
             t('tokens.types.fontSizes'),
             sizes,
             (token) =>
               html`<wizard-font-sample size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}></wizard-font-sample>`,
+            (token) => html`<code class="nl-code">${token.$extensions?.[EXTENSION_AUTHORED_AS]}</code>`,
           )}
-          ${this.#renderTable(
-            t('tokens.types.colors'),
-            colors,
-            (token) =>
-              html`<clippy-color-sample color=${token.$extensions[EXTENSION_AUTHORED_AS]}></clippy-color-sample>`,
-          )}
+
+          <clippy-heading level="2">${t('tokens.types.colors')}</clippy-heading>
+          ${groups.map(([colorGroupName, tokens]) => {
+            return this.#renderTable(
+              t(`colors.${colorGroupName}`),
+              tokens,
+              (token) =>
+                html`<clippy-color-sample color=${token.$extensions[EXTENSION_AUTHORED_AS]}></clippy-color-sample>`,
+              (token) => {
+                const parsedColor = new Color(token.$extensions[EXTENSION_AUTHORED_AS]);
+                return html`
+                  Rgb:
+                  <code class="nl-code"
+                    >${parsedColor.toString({
+                      collapse: false,
+                      format: 'rgb',
+                      precision: 3,
+                    })}</code
+                  >
+                  <br />
+                  Hex: <code class="nl-code">${parsedColor.toString({ format: 'hex' })}</code>
+                `;
+              },
+            );
+          })}
         </wizard-stack>
       </div>
     `;

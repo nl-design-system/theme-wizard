@@ -333,8 +333,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@projectwallace/css-design-tokens':
-        specifier: 0.11.2
-        version: 0.11.2
+        specifier: 0.11.4
+        version: 0.11.4
       '@projectwallace/css-parser':
         specifier: 0.13.11
         version: 0.13.11
@@ -574,6 +574,9 @@ importers:
       '@vanillawc/wc-markdown':
         specifier: 1.6.11
         version: 1.6.11
+      color-sorter:
+        specifier: 8.0.0
+        version: 8.0.0
       colorjs.io:
         specifier: 0.6.1
         version: 0.6.1
@@ -2768,16 +2771,19 @@ packages:
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
 
-  '@projectwallace/css-analyzer@9.3.0':
-    resolution: {integrity: sha512-1a6YLRi2GQASvs1i2lk9G33I/RtL3Avf1PpaiqFTw/vO59hBhX0rIrdU767rJZ0CYDZustHLN/ZsQ/5vftASjA==}
+  '@projectwallace/css-analyzer@9.6.3':
+    resolution: {integrity: sha512-ni3HPWfZUj7dQDBlhQ0fJH0ZdLmcSi3Xo4/8yTNQ+E+TKMStviymi+gX+ImRp8ED9FTZ3vOuSuDA7Y7vIYFURw==}
     engines: {node: '>=18.0.0'}
 
-  '@projectwallace/css-design-tokens@0.11.2':
-    resolution: {integrity: sha512-+1pBqHy4h6zsquQde2S8dp/4zXUQNdxvPCdCN3GO9wTzL/5cjV+qQCVJ9Kb/GVhtvvTBjV2Tt/Ar+cEP4ZfMpA==}
+  '@projectwallace/css-design-tokens@0.11.4':
+    resolution: {integrity: sha512-84I1IV1snAEIpvn0Wq/FRMBxnCBZTdJ/zSzzmniZbOTZ7cmxmQER/hU20RdKfWfuS9x1edmqg3oyCstoJzwOfA==}
     engines: {node: '>=22'}
 
   '@projectwallace/css-parser@0.13.11':
     resolution: {integrity: sha512-UHGmnSX7u84IMWOuAiIf8YqHDirb6MXWriiHFPBJK3QqIEK5BuJ0R2/P42mWbcW2hZf25Kqwya8I6WDeFBL3XQ==}
+
+  '@projectwallace/css-parser@0.14.10':
+    resolution: {integrity: sha512-zE9boYHnGLk+6nn2hTz+QQs67E+BVOkPqDmBry/sUVWho+g/ZICBuSRssvRsCa+5ZCPhL1SkeupDqM8BEi85hA==}
 
   '@publint/pack@0.1.4':
     resolution: {integrity: sha512-HDVTWq3H0uTXiU0eeSQntcVUTPP3GamzeXI41+x7uU9J65JgWQh3qWZHblR1i0npXfFtF+mxBiU2nJH8znxWnQ==}
@@ -4930,8 +4936,8 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-  color-sorter@7.0.2:
-    resolution: {integrity: sha512-WIp9uvH3FId8qDmmglb4cHDy9hL/qJuXsrJap1hJ3cMKGBdzdFRqUw2MATs4puP3yA+f4PK7RPZOWKjw9zpCQg==}
+  color-sorter@8.0.0:
+    resolution: {integrity: sha512-r/z8JVApp28hQ0zrFfzKFlKC+hplWg9sEbu0lYXivsaiqYU/HXri4wIvs9zCf09E0h5wUM9Tith580J9iUcsbQ==}
     engines: {node: '>=18.0.0'}
 
   colord@2.9.3:
@@ -10689,19 +10695,21 @@ snapshots:
 
   '@polka/url@1.0.0-next.29': {}
 
-  '@projectwallace/css-analyzer@9.3.0':
+  '@projectwallace/css-analyzer@9.6.3':
     dependencies:
-      '@projectwallace/css-parser': 0.13.11
+      '@projectwallace/css-parser': 0.14.10
 
-  '@projectwallace/css-design-tokens@0.11.2':
+  '@projectwallace/css-design-tokens@0.11.4':
     dependencies:
-      '@projectwallace/css-analyzer': 9.3.0
-      '@projectwallace/css-parser': 0.13.11
-      color-sorter: 7.0.2
+      '@projectwallace/css-analyzer': 9.6.3
+      '@projectwallace/css-parser': 0.14.10
+      color-sorter: 8.0.0
       colorjs.io: 0.6.1
       css-time-sort: 3.0.1
 
   '@projectwallace/css-parser@0.13.11': {}
+
+  '@projectwallace/css-parser@0.14.10': {}
 
   '@publint/pack@0.1.4': {}
 
@@ -13610,7 +13618,7 @@ snapshots:
 
   color-name@1.1.4: {}
 
-  color-sorter@7.0.2:
+  color-sorter@8.0.0:
     dependencies:
       colorjs.io: 0.6.1
 

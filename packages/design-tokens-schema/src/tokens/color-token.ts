@@ -45,7 +45,10 @@ export const ColorAlphaSchema = z.number().gte(0).lte(1);
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorAlpha = z.infer<typeof ColorAlphaSchema>;
 
-export const ColorHexFallbackSchema = z.string().regex(/^#[0-9a-f]{6}$/i);
+export const ColorHexFallbackSchema = z
+  .string()
+  .trim()
+  .regex(/^#[0-9a-f]{6}$/i);
 
 /** @see https://www.designtokens.org/tr/drafts/color/#format */
 export type ColorHexFallback = z.infer<typeof ColorHexFallbackSchema>;

@@ -98,13 +98,21 @@ export class App extends LitElement {
     if (!(event.target instanceof WizardScraper)) return;
     const { result } = (event as CustomEvent<{ result: ScrapedDesignToken[] }>).detail;
 
-    this.scrapedTokens = result.map((token) => ({
-      ...token,
-      $extensions: {
-        ...token.$extensions,
-        [EXTENSION_TOKEN_STAGED]: true,
-      },
-    }));
+    this.scrapedTokens = result
+      .filter((token) => {
+        // Skip colors with transparency
+        if (token.$type === 'color' && token.$value.alpha !== undefined && token.$value.alpha < 1) {
+          return false;
+        }
+        return true;
+      })
+      .map((token) => ({
+        ...token,
+        $extensions: {
+          ...token.$extensions,
+          [EXTENSION_TOKEN_STAGED]: true,
+        },
+      }));
     this.#scrapedTokensStorage.setJSON(this.scrapedTokens);
     this.dispatchEvent(new Event('scrape-success'));
   };
