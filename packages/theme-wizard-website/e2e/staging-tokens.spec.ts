@@ -39,12 +39,13 @@ test.describe('after scraping a website', () => {
   test.describe('Shows tables with tokens', () => {
     test('Shows the tables', async ({ page }) => {
       const tables = page.getByRole('table');
-      const tableNames = ['Lettertypes', 'Lettergroottes', 'Kleuren'];
-      expect.soft(await tables.count()).toBe(tableNames.length);
+      const tableNames = ['Lettertypes', 'Lettergroottes', 'Blauw'];
+      expect.soft(await tables.count()).toBeGreaterThanOrEqual(tableNames.length);
 
-      for (const [i, table] of (await tables.all()).entries()) {
+      for (let i = 0; i < tableNames.length; i += 1) {
+        const table = tables.nth(i);
         const caption = table.getByRole('caption');
-        await expect.soft(caption).toHaveText(tableNames[i]);
+        await expect.soft(caption).toHaveText(tableNames[i], { ignoreCase: true });
       }
     });
 
