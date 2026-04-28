@@ -181,7 +181,7 @@ describe('/api/v1', () => {
           $extensions: {
             'nl.nldesignsystem.theme-wizard.css-authored-as': 'Georgia, "Times New Roman", serif',
             'nl.nldesignsystem.theme-wizard.css-properties': ['font-family'],
-            'nl.nldesignsystem.theme-wizard.token-id': 'fontFamily-c0fc8c3a',
+            'nl.nldesignsystem.theme-wizard.token-id': 'fontFamily-5e8578be',
             'nl.nldesignsystem.theme-wizard.usage-count': 1,
           },
           $type: 'fontFamily',

@@ -66,8 +66,8 @@ export class WizardFontInput extends WizardTokenInput {
       ...this.scrapedTokens.reduce<FontOption[]>((acc, token) => {
         if (token.$extensions?.[EXTENSION_TOKEN_STAGED] === true && token.$type === 'fontFamily') {
           acc.push({
-            label: token.$value.join(', '),
-            value: token.$value,
+            label: token.$value[0],
+            value: token.$value.slice(0, 1),
           });
         }
         return acc;

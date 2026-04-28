@@ -3,6 +3,8 @@ import { css } from 'lit';
 export default css`
   :host {
     --utrecht-table-caption-text-align: start;
+    --nl-code-background-color: var(--basis-color-transparent);
+    --nl-code-font-family: var(--basis-text-font-family-default);
   }
 
   .utrecht-table__header-cell {

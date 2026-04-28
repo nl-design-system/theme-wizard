@@ -756,7 +756,7 @@ describe('getDesignTokens', () => {
         $extensions: {
           'nl.nldesignsystem.theme-wizard.css-authored-as': 'Arial, system-ui, sans-serif',
           'nl.nldesignsystem.theme-wizard.css-properties': ['font-family'],
-          'nl.nldesignsystem.theme-wizard.token-id': 'fontFamily-4aaee372',
+          'nl.nldesignsystem.theme-wizard.token-id': 'fontFamily-3c96063',
           'nl.nldesignsystem.theme-wizard.usage-count': 1,
         },
         $type: 'fontFamily',
