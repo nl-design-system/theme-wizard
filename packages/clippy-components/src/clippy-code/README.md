@@ -1,5 +1,21 @@
 # `<clippy-code>`
 
-Computercode die onderdeel is van lopende tekst.
+Wraps inline text in a styled `<code>` element using NL Design System code styles.
 
-De [Code component](https://nldesignsystem.nl/code/) is een web component van `nl-code`.
+Based on [`@nl-design-system-candidate/code-css`](https://www.npmjs.com/package/@nl-design-system-candidate/code-css). See the [NL Design System code documentation](https://nldesignsystem.nl/code) for available design tokens and guidelines.
+
+## Usage
+
+```js
+import '@nl-design-system-community/clippy-components/clippy-code';
+```
+
+```html
+<p>Set the <clippy-code>color</clippy-code> token to apply your brand color.</p>
+```
+
+## Slots
+
+| Slot        | Description  |
+| ----------- | ------------ |
+| _(default)_ | Code content |
