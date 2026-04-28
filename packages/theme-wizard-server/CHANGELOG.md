@@ -1,5 +1,21 @@
 # @nl-design-system-community/theme-wizard-server
 
+## 1.2.3
+
+### Patch Changes
+
+- 6978936: Major version bumps for TypeScript, EsLint, Stylelint, npm-check-updates, npm-package-json-lint
+- 329d763: Minor and patch updates except for vitest in design-tokens-schema
+- 9798082: - update Vite
+  - update Typescript
+  - update Hono.
+  - Add Publint for checking build output.
+  - Replace vite-plugin-dts with unplugin-dts.
+- Updated dependencies [bfc4235]
+- Updated dependencies [6978936]
+- Updated dependencies [9798082]
+  - @nl-design-system-community/css-scraper@1.2.0
+
 ## 1.2.2
 
 ### Patch Changes
