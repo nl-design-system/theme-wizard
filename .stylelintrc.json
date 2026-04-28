@@ -1,5 +1,5 @@
 {
-  "extends": ["stylelint-config-standard-scss"],
+  "extends": ["stylelint-config-standard-scss", "@projectwallace/stylelint-plugin/configs/recommended"],
   "plugins": ["stylelint-order"],
   "rules": {
     "order/order": ["custom-properties", "declarations"],
@@ -121,6 +121,10 @@
     "declaration-block-no-redundant-longhand-properties": null,
     "at-rule-empty-line-before": null,
     "rule-empty-line-before": null,
-    "property-no-vendor-prefix": null
+    "property-no-vendor-prefix": null,
+    "projectwallace/no-unknown-custom-property": null,
+    "projectwallace/no-unused-custom-properties": null,
+    "projectwallace/no-property-shorthand": null,
+    "projectwallace/max-declarations-per-rule": 16
   }
 }

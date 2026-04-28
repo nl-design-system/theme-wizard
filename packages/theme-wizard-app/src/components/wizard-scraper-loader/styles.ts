@@ -21,6 +21,27 @@ export default css`
     font-size: var(--wizard-scraper-loader-emoji-size);
     justify-content: center;
     position: relative;
+
+    &::after {
+      animation-duration: var(--wizard-scraper-loader-animation-duration);
+      animation-iteration-count: infinite;
+      animation-name: --wizard-shadow;
+      animation-timing-function: var(--wizard-scraper-loader-animation-timing-function);
+      background: rgb(0 0 0 / 30%);
+      block-size: var(--basis-size-sm);
+      border-radius: 50%;
+      content: '';
+      filter: blur(4px);
+      inline-size: var(--wizard-scraper-loader-emoji-size);
+      inset-block-end: 0;
+      inset-inline-start: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+
+      @media (prefers-reduced-motion: reduce) {
+        animation-name: --wizard-fade-in-out;
+      }
+    }
   }
 
   @keyframes --wizard-fade-in-out {
@@ -30,27 +51,6 @@ export default css`
     }
     50% {
       opacity: 100%;
-    }
-  }
-
-  .wizard-scraper-loader__emoji::after {
-    animation-duration: var(--wizard-scraper-loader-animation-duration);
-    animation-iteration-count: infinite;
-    animation-name: --wizard-shadow;
-    animation-timing-function: var(--wizard-scraper-loader-animation-timing-function);
-    background: rgb(0 0 0 / 30%);
-    block-size: var(--basis-size-sm);
-    border-radius: 50%;
-    content: '';
-    filter: blur(4px);
-    inline-size: var(--wizard-scraper-loader-emoji-size);
-    inset-block-end: 0;
-    inset-inline-start: 50%;
-    position: absolute;
-    transform: translateX(-50%);
-
-    @media (prefers-reduced-motion: reduce) {
-      animation-name: --wizard-fade-in-out;
     }
   }
 
