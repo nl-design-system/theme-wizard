@@ -100,8 +100,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/code-css':
-        specifier: 2.0.5
-        version: 2.0.5
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/code-tokens':
         specifier: 2.0.4
         version: 2.0.4
@@ -476,8 +476,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/code-css':
-        specifier: 2.0.5
-        version: 2.0.5
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/code-tokens':
         specifier: 2.0.4
         version: 2.0.4
@@ -872,8 +872,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/code-css':
-        specifier: 2.0.5
-        version: 2.0.5
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/code-docs':
         specifier: 1.1.2
         version: 1.1.2
@@ -2469,8 +2469,8 @@ packages:
   '@nl-design-system-candidate/code-block-tokens@2.0.3':
     resolution: {integrity: sha512-cMaLJRxJFbgbxG18E+Dky8mABMCJR/KwugqlfF8ERK7S4K06m4dwHQk3Al18adISuRReApfueJ2CiMTSJL40GQ==}
 
-  '@nl-design-system-candidate/code-css@2.0.5':
-    resolution: {integrity: sha512-KYRoiv389rTyGEb1xK1jFkzmQ4v3H6B82OOMafVqm3L5+ntr2f3tbJNYBkep3XYjAEq8VmNLkkJQYJZHiEo2ng==}
+  '@nl-design-system-candidate/code-css@3.0.0':
+    resolution: {integrity: sha512-W+7AG3fyNN1IPpaCf0fFAgTqHW59DKfrY055tzlwmQ/TmZK3oOJ3hvAvjh/esRhz9KxsQpVlGxVasCXwIP8aAg==}
 
   '@nl-design-system-candidate/code-docs@1.1.2':
     resolution: {integrity: sha512-aJO9YuAV9bhqj/nv/pPI3oAY26ePC7a9OAxEEFPUL3w9Jpk7Qz3c97j9DYlDExtPUjSLksKpkDriL0bb8X9LTA==}
@@ -10488,7 +10488,7 @@ snapshots:
 
   '@nl-design-system-candidate/code-block-tokens@2.0.3': {}
 
-  '@nl-design-system-candidate/code-css@2.0.5': {}
+  '@nl-design-system-candidate/code-css@3.0.0': {}
 
   '@nl-design-system-candidate/code-docs@1.1.2': {}
 
