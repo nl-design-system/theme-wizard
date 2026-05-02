@@ -878,8 +878,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2
       '@nl-design-system-candidate/code-react':
-        specifier: 1.2.7
-        version: 1.2.7(@babel/runtime@7.29.2)(react@18.3.1)
+        specifier: 2.0.0
+        version: 2.0.0(@babel/runtime@7.29.2)(react@18.3.1)
       '@nl-design-system-candidate/code-tokens':
         specifier: 2.0.4
         version: 2.0.4
@@ -2472,11 +2472,14 @@ packages:
   '@nl-design-system-candidate/code-css@2.0.5':
     resolution: {integrity: sha512-KYRoiv389rTyGEb1xK1jFkzmQ4v3H6B82OOMafVqm3L5+ntr2f3tbJNYBkep3XYjAEq8VmNLkkJQYJZHiEo2ng==}
 
+  '@nl-design-system-candidate/code-css@3.0.0':
+    resolution: {integrity: sha512-W+7AG3fyNN1IPpaCf0fFAgTqHW59DKfrY055tzlwmQ/TmZK3oOJ3hvAvjh/esRhz9KxsQpVlGxVasCXwIP8aAg==}
+
   '@nl-design-system-candidate/code-docs@1.1.2':
     resolution: {integrity: sha512-aJO9YuAV9bhqj/nv/pPI3oAY26ePC7a9OAxEEFPUL3w9Jpk7Qz3c97j9DYlDExtPUjSLksKpkDriL0bb8X9LTA==}
 
-  '@nl-design-system-candidate/code-react@1.2.7':
-    resolution: {integrity: sha512-ansOFc7d3Xla9RJO2OLRn0O5kwXYNUTStnQEzqZF/C8rq4ux63XyVSrhNf1rFjVCpD/cElX9mpHv/CnVRmWWdA==}
+  '@nl-design-system-candidate/code-react@2.0.0':
+    resolution: {integrity: sha512-Ja+nfM6IKy5eC33ztGHlYM6AwdD6M2kYnaJ9TUIykOrdk7sG7S3ALkSXoWcEL0N3yhW9iUCVD8P4cUfQktWbTA==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18 || ^19
@@ -10490,11 +10493,14 @@ snapshots:
 
   '@nl-design-system-candidate/code-css@2.0.5': {}
 
+  '@nl-design-system-candidate/code-css@3.0.0': {}
+
   '@nl-design-system-candidate/code-docs@1.1.2': {}
 
-  '@nl-design-system-candidate/code-react@1.2.7(@babel/runtime@7.29.2)(react@18.3.1)':
+  '@nl-design-system-candidate/code-react@2.0.0(@babel/runtime@7.29.2)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.29.2
+      '@nl-design-system-candidate/code-css': 3.0.0
       react: 18.3.1
 
   '@nl-design-system-candidate/code-tokens@2.0.4': {}
