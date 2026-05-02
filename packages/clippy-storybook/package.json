@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@amsterdam/design-system-assets": "2.2.0",
-    "@amsterdam/design-system-react": "3.3.0",
+    "@amsterdam/design-system-react": "4.1.0",
     "@amsterdam/design-system-tokens": "3.4.0",
     "@nl-design-system-candidate/heading-react": "1.1.7",
     "@nl-design-system-candidate/link-react": "1.1.8",
