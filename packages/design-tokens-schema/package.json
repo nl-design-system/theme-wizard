@@ -52,7 +52,7 @@
   "dependencies": {
     "@nl-design-system-candidate/button-tokens": "1.0.0",
     "@nl-design-system-candidate/code-block-tokens": "2.0.3",
-    "@nl-design-system-candidate/code-tokens": "2.0.4",
+    "@nl-design-system-candidate/code-tokens": "3.0.0",
     "@nl-design-system-candidate/color-sample-tokens": "2.0.3",
     "@nl-design-system-candidate/data-badge-tokens": "2.0.3",
     "@nl-design-system-candidate/heading-tokens": "1.1.2",

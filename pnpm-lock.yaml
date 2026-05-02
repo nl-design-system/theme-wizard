@@ -103,8 +103,8 @@ importers:
         specifier: 2.0.5
         version: 2.0.5
       '@nl-design-system-candidate/code-tokens':
-        specifier: 2.0.4
-        version: 2.0.4
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/color-sample-css':
         specifier: 1.0.5
         version: 1.0.5
@@ -376,8 +376,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@nl-design-system-candidate/code-tokens':
-        specifier: 2.0.4
-        version: 2.0.4
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/color-sample-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -479,8 +479,8 @@ importers:
         specifier: 2.0.5
         version: 2.0.5
       '@nl-design-system-candidate/code-tokens':
-        specifier: 2.0.4
-        version: 2.0.4
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/color-sample-css':
         specifier: 1.0.5
         version: 1.0.5
@@ -881,8 +881,8 @@ importers:
         specifier: 1.2.7
         version: 1.2.7(@babel/runtime@7.29.2)(react@18.3.1)
       '@nl-design-system-candidate/code-tokens':
-        specifier: 2.0.4
-        version: 2.0.4
+        specifier: 3.0.0
+        version: 3.0.0
       '@nl-design-system-candidate/color-sample-css':
         specifier: 1.0.5
         version: 1.0.5
@@ -2481,8 +2481,8 @@ packages:
       '@babel/runtime': ^7
       react: ^18 || ^19
 
-  '@nl-design-system-candidate/code-tokens@2.0.4':
-    resolution: {integrity: sha512-6RmljcilQog/IXmo+aLaqpe3cZ22GOE8HknmLgACK+b+NVmkhtdf+HwgtnEgg235Ucf2kbDpbERKppEHKfikUA==}
+  '@nl-design-system-candidate/code-tokens@3.0.0':
+    resolution: {integrity: sha512-uPjCHB5mvFMFXDjxjAhWk9zmPxdDdRrrza2vUROmB8jSszxP/37f2tPMqEa+F/ugZTyBOt9AYWk/feBfOruhmQ==}
 
   '@nl-design-system-candidate/color-sample-css@1.0.5':
     resolution: {integrity: sha512-ork71HMKs0Maiqd6bhYB1YNxFcHpxKUWp6Pi2GoEQZuo9zobSI750ja8Qi8g1NIExVIlCAm3rSjdiIHZXNeolg==}
@@ -10497,7 +10497,7 @@ snapshots:
       '@babel/runtime': 7.29.2
       react: 18.3.1
 
-  '@nl-design-system-candidate/code-tokens@2.0.4': {}
+  '@nl-design-system-candidate/code-tokens@3.0.0': {}
 
   '@nl-design-system-candidate/color-sample-css@1.0.5': {}
 
