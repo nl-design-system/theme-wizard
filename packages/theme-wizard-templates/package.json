@@ -35,7 +35,7 @@
     "clean": "rimraf dist .astro build"
   },
   "dependencies": {
-    "@amsterdam/design-system-css": "3.3.0",
+    "@amsterdam/design-system-css": "4.1.0",
     "@amsterdam/design-system-react": "3.3.0",
     "@astrojs/react": "5.0.2",
     "@gemeente-denhaag/action": "4.1.3",
