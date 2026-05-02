@@ -89,7 +89,7 @@ importers:
     dependencies:
       '@amsterdam/design-system-css':
         specifier: 3.3.0
-        version: 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0)
+        version: 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1)
       '@nl-design-system-candidate/button-css':
         specifier: 1.1.0
         version: 1.1.0
@@ -219,10 +219,10 @@ importers:
         version: 2.2.0
       '@amsterdam/design-system-react':
         specifier: 3.3.0
-        version: 3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@amsterdam/design-system-tokens':
-        specifier: 3.4.0
-        version: 3.4.0
+        specifier: 4.0.1
+        version: 4.0.1
       '@nl-design-system-candidate/heading-react':
         specifier: 1.1.7
         version: 1.1.7(@babel/runtime@7.29.2)(react@18.3.1)
@@ -238,7 +238,7 @@ importers:
     devDependencies:
       '@amsterdam/design-system-css':
         specifier: 3.3.0
-        version: 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0)
+        version: 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1)
       '@nl-design-system-candidate/button-css':
         specifier: 1.1.0
         version: 1.1.0
@@ -707,10 +707,10 @@ importers:
     dependencies:
       '@amsterdam/design-system-css':
         specifier: 3.3.0
-        version: 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0)
+        version: 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1)
       '@amsterdam/design-system-react':
         specifier: 3.3.0
-        version: 3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@astrojs/react':
         specifier: 5.0.2
         version: 5.0.2(@types/node@24.12.0)(@types/react-dom@18.3.1)(@types/react@19.2.7)(lightningcss@1.32.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tsx@4.21.0)(yaml@2.8.2)
@@ -1072,8 +1072,8 @@ packages:
       react: 16 - 19
       react-dom: 16 - 19
 
-  '@amsterdam/design-system-tokens@3.4.0':
-    resolution: {integrity: sha512-Zrbjg++EntU3gu5sW7FwLTG8C1vUr6dL2VJK66ZqYGqaShqfOllUol7pkDrqCm1mTIniOd9pi27gWbQBBbggNw==}
+  '@amsterdam/design-system-tokens@4.0.1':
+    resolution: {integrity: sha512-/SF3GD3VSjELCKkeQhDOEnTnZkWsZHMzsraiUAchBdiybnHB+yhuNlJV8DmdvmhrT3b/T8I7RX3ZdVeg2+ZxVQ==}
 
   '@asteasolutions/zod-to-openapi@8.5.0':
     resolution: {integrity: sha512-SABbKiObg5dLRiTFnqiW1WWwGcg1BJfmHtT2asIBnBHg6Smy/Ms2KHc650+JI4Hw7lSkdiNebEGXpwoxfben8Q==}
@@ -9066,26 +9066,26 @@ snapshots:
 
   '@amsterdam/design-system-assets@2.2.0': {}
 
-  '@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0)':
+  '@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1)':
     dependencies:
       '@amsterdam/design-system-assets': 2.2.0
-      '@amsterdam/design-system-tokens': 3.4.0
+      '@amsterdam/design-system-tokens': 4.0.1
 
   '@amsterdam/design-system-react-icons@2.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@amsterdam/design-system-react@3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@amsterdam/design-system-react@3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@amsterdam/design-system-css': 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@3.4.0)
+      '@amsterdam/design-system-css': 3.3.0(@amsterdam/design-system-assets@2.2.0)(@amsterdam/design-system-tokens@4.0.1)
       '@amsterdam/design-system-react-icons': 2.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@babel/runtime': 7.29.2
       clsx: 2.1.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@amsterdam/design-system-tokens@3.4.0': {}
+  '@amsterdam/design-system-tokens@4.0.1': {}
 
   '@asteasolutions/zod-to-openapi@8.5.0(zod@4.3.6)':
     dependencies:
