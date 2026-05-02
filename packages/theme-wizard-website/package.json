@@ -75,7 +75,7 @@
     "@utrecht/body-css": "4.0.0",
     "@utrecht/root-css": "4.0.0",
     "@vercel/related-projects": "1.0.1",
-    "astro": "5.18.1",
+    "astro": "6.2.1",
     "dequal": "2.0.3",
     "dlv": "1.1.3",
     "neotraverse": "0.6.18",
