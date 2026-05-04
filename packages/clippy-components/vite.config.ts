@@ -38,6 +38,7 @@ export default defineConfig(() => ({
         'lit/directives/unsafe-svg.js',
         'react',
         'react-dom',
+        'react-dom/client',
       ],
       input: getFiles('src/**/index.ts'),
       output: {

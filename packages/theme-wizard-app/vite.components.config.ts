@@ -40,6 +40,9 @@ export default defineConfig(({ mode }) => ({
         'lit/directives/ref.js',
         'lit/directives/style-map.js',
         'lit/directives/unsafe-svg.js',
+        'react',
+        'react-dom',
+        'react-dom/client',
       ],
       input: getFiles('src/**/index.ts'),
       output: {
