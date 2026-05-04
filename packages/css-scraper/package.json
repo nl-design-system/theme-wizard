@@ -43,8 +43,13 @@
     "@vitest/coverage-v8": "4.1.5",
     "publint": "0.3.18",
     "rimraf": "6.1.3",
+<<<<<<< dependabot/npm_and_yarn/patch-and-minor-dependencies-06df96fb63
     "typescript": "6.0.3",
     "unplugin-dts": "1.0.0-beta.6",
+=======
+    "typescript": "6.0.2",
+    "unplugin-dts": "1.0.0",
+>>>>>>> main
     "vite": "8.0.3",
     "vitest": "4.1.5"
   },
