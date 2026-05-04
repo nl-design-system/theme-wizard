@@ -34,9 +34,6 @@ export const DesignCodeTypography: Story = {
           'font-family': {
             $value: '',
           },
-          'font-size': {
-            $value: '',
-          },
         },
       },
     },
