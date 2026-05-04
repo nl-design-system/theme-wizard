@@ -29,8 +29,8 @@ export class ClippyModal extends LitElement {
   /**
    * When loading the page, the dialog is not open by default.
    */
-  @property({ type: Boolean })
-  'standard-open' = false;
+  @property({ type: Boolean, attribute: 'standard-open' })
+  standardOpen = false;
   @property({ type: String }) override title = '';
   @property({ type: String }) closedBy = 'any';
   /**
@@ -46,8 +46,8 @@ export class ClippyModal extends LitElement {
    * Button labels for confirm/cancel actions. Consumers can override these,
    * e.g. with localized strings.
    */
-  @property({ type: String }) 'confirm-label' = 'OK';
-  @property({ type: String }) 'cancel-label' = 'Cancel';
+  @property({ type: String, attribute: 'confirm-label' }) confirmLabel = 'OK';
+  @property({ type: String, attribute: 'cancel-label' }) cancelLabel = 'Cancel';
 
   @query('dialog')
   readonly dialogElement!: HTMLDialogElement;
@@ -117,7 +117,7 @@ export class ClippyModal extends LitElement {
         aria-describedby=${this.ariaDescribedby || undefined}
         @close=${this.onDialogClose}
         @cancel=${this.onDialogCancel}
-        ?open=${this['standard-open']}
+        ?open=${this.standardOpen}
       >
         <form method="dialog" novalidate>
           <header class="ams-dialog__header">
@@ -137,14 +137,14 @@ export class ClippyModal extends LitElement {
             ${this.actions === 'confirm' || this.actions === 'both'
               ? html`
                   <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
-                    ${this['confirm-label']}
+                    ${this.confirmLabel}
                   </button>
                 `
               : nothing}
             ${this.actions === 'cancel' || this.actions === 'both'
               ? html`
                   <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
-                    ${this['cancel-label']}
+                    ${this.cancelLabel}
                   </button>
                 `
               : nothing}
