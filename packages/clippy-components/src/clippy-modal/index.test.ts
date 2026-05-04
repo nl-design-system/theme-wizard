@@ -84,7 +84,7 @@ describe(`<${tag}>`, () => {
 
     it('uses custom confirm label', async () => {
       modal.actions = 'confirm';
-      modal['confirm-label'] = 'Do it!';
+      modal.confirmLabel = 'Do it!';
       await modal.updateComplete;
 
       const confirmButton = modal.shadowRoot?.querySelector('button[value="confirm"]');
@@ -93,7 +93,7 @@ describe(`<${tag}>`, () => {
 
     it('uses custom cancel label', async () => {
       modal.actions = 'cancel';
-      modal['cancel-label'] = "Don't do it!";
+      modal.cancelLabel = "Don't do it!";
       await modal.updateComplete;
 
       const cancelButton = modal.shadowRoot?.querySelector('button[value="cancel"]');
