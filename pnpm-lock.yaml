@@ -218,8 +218,8 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       '@amsterdam/design-system-react':
-        specifier: 3.3.0
-        version: 3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.1.0
+        version: 4.1.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@amsterdam/design-system-tokens':
         specifier: 3.4.0
         version: 3.4.0
@@ -709,8 +709,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0)
       '@amsterdam/design-system-react':
-        specifier: 3.3.0
-        version: 3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.1.0
+        version: 4.1.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@astrojs/react':
         specifier: 5.0.4
         version: 5.0.4(@types/node@24.12.2)(@types/react-dom@18.3.1)(@types/react@19.2.7)(lightningcss@1.32.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tsx@4.21.0)(yaml@2.8.4)
@@ -1065,10 +1065,10 @@ packages:
       react: 16 - 19
       react-dom: 16 - 19
 
-  '@amsterdam/design-system-react@3.3.0':
-    resolution: {integrity: sha512-o9jk6t18GYSF9abKmSAd6zzIk3u1Jz3sLXlnj6uLRvHBFpQOEcmp3RVAPLlw+7OZuLpubJB7dYVC8FVj186aLg==}
+  '@amsterdam/design-system-react@4.1.0':
+    resolution: {integrity: sha512-IOmo5FwtXWGxISrOnwl/oM6BaGjdVLNjAUMJYDF5cIEp1TGGBvfK5jQ4yr/AbH+Udb91QvGfE4J2CJk7H47xRw==}
     peerDependencies:
-      '@amsterdam/design-system-css': 3.3.0
+      '@amsterdam/design-system-css': 4.1.0
       react: 16 - 19
       react-dom: 16 - 19
 
@@ -9596,7 +9596,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@amsterdam/design-system-react@3.3.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@amsterdam/design-system-react@4.1.0(@amsterdam/design-system-css@3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@amsterdam/design-system-css': 3.3.0(@amsterdam/design-system-assets@2.3.0)(@amsterdam/design-system-tokens@3.4.0)
       '@amsterdam/design-system-react-icons': 2.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
