@@ -41,8 +41,8 @@ export class WizardThemeResetButton extends LitElement {
       <clippy-modal
         .title=${t('themeResetDialog.title')}
         actions="both"
-        .confirm-label=${t('themeResetDialog.confirm')}
-        .cancel-label=${t('themeResetDialog.cancel')}
+        .confirmLabel=${t('themeResetDialog.confirm')}
+        .cancelLabel=${t('themeResetDialog.cancel')}
         @close=${this.#handleDialogClose}
       >
         <p>${t('themeResetDialog.body')}</p>
