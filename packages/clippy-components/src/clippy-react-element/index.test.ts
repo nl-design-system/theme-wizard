@@ -5,7 +5,7 @@ import './index';
 
 const tag = 'clippy-react-element';
 
-const waitForReactRender = () => new Promise((resolve) => setTimeout(resolve, 0));
+const waitForReactRender = () => new Promise((resolve) => setTimeout(resolve, 50));
 
 describe(`<${tag}>`, () => {
   afterEach(() => {
