@@ -29,7 +29,7 @@ export class ClippyModal extends LitElement {
   /**
    * When loading the page, the dialog is not open by default.
    */
-  @property({ type: Boolean, attribute: 'standard-open' })
+  @property({ attribute: 'standard-open', type: Boolean })
   standardOpen = false;
   @property({ type: String }) override title = '';
   @property({ type: String }) closedBy = 'any';
@@ -46,8 +46,8 @@ export class ClippyModal extends LitElement {
    * Button labels for confirm/cancel actions. Consumers can override these,
    * e.g. with localized strings.
    */
-  @property({ type: String, attribute: 'confirm-label' }) confirmLabel = 'OK';
-  @property({ type: String, attribute: 'cancel-label' }) cancelLabel = 'Cancel';
+  @property({ attribute: 'confirm-label', type: String }) confirmLabel = 'OK';
+  @property({ attribute: 'cancel-label', type: String }) cancelLabel = 'Cancel';
 
   @query('dialog')
   readonly dialogElement!: HTMLDialogElement;

@@ -29,7 +29,10 @@ const config: StorybookConfig = {
         // Vite 8's native OXC transform reads that tsconfig, preserves JSX, and then
         // rolldown fails to parse the preserved JSX output. Setting jsx explicitly here
         // overrides the tsconfig setting for the Storybook build.
-        jsx: { runtime: 'automatic', importSource: 'react' },
+        jsx: {
+          importSource: 'react',
+          runtime: 'automatic',
+        },
       },
     }),
 };
