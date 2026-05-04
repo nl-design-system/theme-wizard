@@ -1,22 +1,214 @@
 ---
-import type { StoryWizardViewModel } from '@/lib/story-wizard';
-import StoryWizardStep from './components/StoryWizardStep.astro';
-import StoryWizardStepper from './components/StoryWizardStepper.astro';
+import type { StoryWizardViewModel } from '@/lib/types';
+import brushIcon from '@tabler/icons/outline/brush.svg?raw';
+import dimensionsIcon from '@tabler/icons/outline/dimensions.svg?raw';
+import mouseIcon from '@tabler/icons/outline/mouse.svg?raw';
+import settingsIcon from '@tabler/icons/outline/adjustments-horizontal.svg?raw';
+import resizeIcon from '@tabler/icons/outline/resize.svg?raw';
+import paddingIcon from '@tabler/icons/outline/arrow-autofit-content.svg?raw';
+import fontIcon from '@tabler/icons/outline/abc.svg?raw';
+import borderRadiusIcon from '@tabler/icons/outline/border-radius.svg?raw';
+import borderStyleIcon from '@tabler/icons/outline/border-style.svg?raw';
+import textSizeIcon from '@tabler/icons/outline/text-size.svg?raw';
+import StoryWizardOverviewCard from './components/StoryWizardOverviewCard/index.astro';
+import StoryWizardOverviewRow from './components/StoryWizardOverviewRow/index.astro';
+import StoryWizardCollapsible from './components/StoryWizardCollapsible/index.astro';
 
 interface Props {
   wizard: StoryWizardViewModel;
 }
 
 const { wizard } = Astro.props;
+
+const presetSteps = wizard.steps.filter((step) => step.type === 'preset');
+const advancedSteps = wizard.steps.filter((step) => step.type === 'advanced');
+const stepIndexMap = new Map(wizard.steps.map((step, i) => [step.id, i]));
+
+// Map step ID → global index in wizard.steps for use in overview cards
+
+const getOverviewCardIcon = (step: StoryWizardViewModel['steps'][number], cardTitle?: string, description?: string) => {
+  const haystack = [
+    cardTitle ?? step.title,
+    description ?? step.intro ?? '',
+    ...step.groups.flatMap((group) =>
+      group.type === 'editable-tokens'
+        ? group.tokens.flatMap((token) => [token.label, token.path, token.cssVar])
+        : [group.name, group.description ?? '', ...group.options.flatMap((o) => [o.name, o.description ?? ''])],
+    ),
+  ]
+    .join(' ')
+    .toLowerCase();
+
+  if (haystack.includes('afmeting') || haystack.includes('min-width') || haystack.includes('min-height'))
+    return dimensionsIcon;
+  if (
+    (haystack.includes('grootte') && !haystack.includes('tekst')) ||
+    haystack.includes('width') ||
+    haystack.includes('height') ||
+    haystack.includes('size')
+  )
+    return resizeIcon;
+  if (
+    haystack.includes('stijl') ||
+    haystack.includes('variant') ||
+    haystack.includes('primary') ||
+    haystack.includes('secondary') ||
+    haystack.includes('subtle')
+  )
+    return settingsIcon;
+  if (
+    haystack.includes('kleur') ||
+    haystack.includes('color') ||
+    haystack.includes('achtergrond') ||
+    haystack.includes('background')
+  )
+    return brushIcon;
+  if (
+    haystack.includes('hover') ||
+    haystack.includes('focus') ||
+    haystack.includes('active') ||
+    haystack.includes('pressed')
+  )
+    return mouseIcon;
+  if (
+    haystack.includes('tekstgrootte') ||
+    haystack.includes('font-size') ||
+    haystack.includes('line-height') ||
+    haystack.includes('typografie') ||
+    haystack.includes('tekst')
+  )
+    return textSizeIcon;
+  if (
+    haystack.includes('border') ||
+    haystack.includes('rand') ||
+    haystack.includes('lijn') ||
+    haystack.includes('stroke')
+  )
+    return borderStyleIcon;
+  if (
+    haystack.includes('vorm') ||
+    haystack.includes('afrond') ||
+    haystack.includes('hoek') ||
+    haystack.includes('radius')
+  )
+    return borderRadiusIcon;
+  if (
+    haystack.includes('padding') ||
+    haystack.includes('margin') ||
+    haystack.includes('inset') ||
+    haystack.includes('witruimte') ||
+    haystack.includes('ruimte')
+  )
+    return paddingIcon;
+  if (haystack.includes('lettertype') || haystack.includes('font-family') || haystack.includes('font')) return fontIcon;
+  return settingsIcon;
+};
+
+const getCardMeta = (step: StoryWizardViewModel['steps'][number]) => {
+  const firstGroup = step.groups[0];
+  const single = step.groups.length === 1;
+  return {
+    title: single ? (firstGroup?.name ?? step.title) : step.title,
+    description: single ? (firstGroup?.description ?? step.intro) : step.intro,
+  };
+};
+
+const sortedPresetSteps = [...presetSteps].sort((a, b) => a.order - b.order);
 ---
 
 <div slot="page-content" class="wizard-page-content">
   <section data-story-wizard-root>
-    <div id="story-wizard" data-story-ids={JSON.stringify(wizard.storyIds)} data-component-id={wizard.componentId} hidden>
+    <div id="story-wizard" data-component-id={wizard.componentId} hidden></div>
+
+    <div id="wizard-overview" class="wizard-steps-overview" data-steps-overview>
+      <div class="wizard-steps-overview__lead">
+        <div class="wizard-steps-overview__lead-row">
+          <h2 class="nl-heading nl-heading--level-3">{presetSteps.length} presets</h2>
+          <div class="wizard-steps-overview__lead-actions">
+            <span class="wizard-steps-overview__progress-label" data-progress-container data-progress-label hidden></span>
+            <div class="wizard-steps-overview__reset" hidden></div>
+          </div>
+        </div>
+        <p class="nl-paragraph wizard-steps-overview__intro">Kies eerst een onderwerp om de basis goed te zetten.</p>
+      </div>
+
+      <div class="wizard-steps-overview__rows">
+        <StoryWizardOverviewRow title="Jouw keuzes" isCompletedRow />
+
+        {
+          (() => {
+            const renderCard = (step: (typeof presetSteps)[0]) => {
+              const { title, description } = getCardMeta(step);
+              return (
+                <li class="wizard-steps-overview__item">
+                  <StoryWizardOverviewCard
+                    componentId={wizard.componentId}
+                    stepId={step.id}
+                    stepIndex={stepIndexMap.get(step.id) ?? 0}
+                    stepType="preset"
+                    title={title}
+                    description={description}
+                    icon={getOverviewCardIcon(step, title, description) || undefined}
+                    showSummary
+                  />
+                </li>
+              );
+            };
+
+            return (
+              <>
+                {sortedPresetSteps.length > 0 && (
+                  <StoryWizardOverviewRow title="Startwaarden" initialCount={sortedPresetSteps.length}>
+                    {sortedPresetSteps.map(renderCard)}
+                  </StoryWizardOverviewRow>
+                )}
+              </>
+            );
+          })()
+        }
+      </div>
+
+      {
+        advancedSteps.length > 0 && (
+          <StoryWizardCollapsible
+            class="wizard-steps-overview__advanced"
+            summaryClass="wizard-steps-overview__advanced-summary"
+            hideChevron
+          >
+            <Fragment slot="summary-content">
+              <span class="wizard-steps-overview__advanced-heading">
+                <span class="wizard-steps-overview__advanced-icon" aria-hidden="true" set:html={settingsIcon} />
+                <span class="wizard-steps-overview__advanced-label">Geavanceerd</span>
+              </span>
+              <span class="wizard-steps-overview__advanced-meta">
+                Optioneel · {advancedSteps.length} extra {advancedSteps.length === 1 ? 'onderdeel' : 'onderdelen'}
+              </span>
+            </Fragment>
+
+            <div class="wizard-steps-overview__advanced-lead">
+              <p class="nl-paragraph wizard-steps-overview__advanced-intro">
+                Pas hier extra details aan als je meer controle wilt.
+              </p>
+            </div>
+
+            <ul class="wizard-steps-overview__list">
+              {advancedSteps.map((step) => (
+                <li class="wizard-steps-overview__item">
+                  <StoryWizardOverviewCard
+                    componentId={wizard.componentId}
+                    stepId={step.id}
+                    stepIndex={stepIndexMap.get(step.id) ?? 0}
+                    stepType="advanced"
+                    title={step.title}
+                    description={step.intro}
+                    icon={getOverviewCardIcon(step) || undefined}
+                  />
+                </li>
+              ))}
+            </ul>
+          </StoryWizardCollapsible>
+        )
+      }
     </div>
-
-    {wizard.steps.map((step) => <StoryWizardStep step={step} />)}
-
-    <StoryWizardStepper />
   </section>
 </div>

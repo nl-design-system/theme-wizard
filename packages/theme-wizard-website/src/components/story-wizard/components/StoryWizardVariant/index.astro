@@ -1,0 +1,15 @@
+---
+import StoryWizardStepPreview from '../StoryWizardStepPreview/index.astro';
+
+interface Props {
+  name: string;
+  storyId: string;
+}
+
+const { name, storyId } = Astro.props;
+---
+
+<div class="wizard-story-section__variant">
+  <p class="nl-paragraph wizard-story-section__variant-label">{name}</p>
+  <StoryWizardStepPreview storyId={storyId} />
+</div>
