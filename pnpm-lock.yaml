@@ -359,7 +359,7 @@ importers:
         version: 6.0.3
       unplugin-dts:
         specifier: 1.0.0
-        version: 1.0.0(@microsoft/api-extractor@7.53.0(@types/node@24.12.0))(esbuild@0.27.7)(rollup@4.60.1)(typescript@6.0.2)(vite@8.0.3(@types/node@24.12.0)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.2))
+        version: 1.0.0(@microsoft/api-extractor@7.53.0(@types/node@24.12.2))(esbuild@0.27.7)(rollup@4.60.2)(typescript@6.0.3)(vite@8.0.3(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
       vite:
         specifier: 8.0.3
         version: 8.0.3(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4)
@@ -13516,9 +13516,9 @@ snapshots:
       obug: 2.1.1
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.5(@edge-runtime/vm@3.2.0)(@types/node@24.12.2)(@vitest/browser-playwright@4.1.5)(@vitest/coverage-v8@4.1.5)(vite@7.3.0(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))
+      vitest: 4.1.5(@edge-runtime/vm@3.2.0)(@types/node@24.12.2)(@vitest/browser-playwright@4.1.5)(@vitest/coverage-v8@4.1.5)(vite@7.3.1(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))
     optionalDependencies:
-      '@vitest/browser': 4.1.5(vite@7.3.0(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))(vitest@4.1.5)
+      '@vitest/browser': 4.1.5(vite@7.3.1(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))(vitest@4.1.5)
 
   '@vitest/eslint-plugin@1.6.16(@typescript-eslint/eslint-plugin@8.59.1(@typescript-eslint/parser@8.59.1(eslint@10.3.0)(typescript@6.0.3))(eslint@10.3.0)(typescript@6.0.3))(eslint@10.3.0)(typescript@6.0.3)(vitest@4.1.5)':
     dependencies:
@@ -18490,17 +18490,10 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-<<<<<<< dependabot/npm_and_yarn/patch-and-minor-dependencies-06df96fb63
-  unplugin-dts@1.0.0-beta.6(@microsoft/api-extractor@7.53.0(@types/node@24.12.2))(esbuild@0.27.7)(rollup@4.60.2)(typescript@6.0.3)(vite@8.0.3(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4)):
+  unplugin-dts@1.0.0(@microsoft/api-extractor@7.53.0(@types/node@24.12.2))(esbuild@0.27.7)(rollup@4.60.2)(typescript@6.0.3)(vite@8.0.3(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4)):
     dependencies:
       '@rollup/pluginutils': 5.3.0(rollup@4.60.2)
-      '@volar/typescript': 2.4.26
-=======
-  unplugin-dts@1.0.0(@microsoft/api-extractor@7.53.0(@types/node@24.12.0))(esbuild@0.27.7)(rollup@4.60.1)(typescript@6.0.2)(vite@8.0.3(@types/node@24.12.0)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.2)):
-    dependencies:
-      '@rollup/pluginutils': 5.3.0(rollup@4.60.1)
       '@volar/typescript': 2.4.28
->>>>>>> main
       compare-versions: 6.1.1
       debug: 4.4.3
       kolorist: 1.8.0
