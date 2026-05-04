@@ -20,7 +20,7 @@ const ICON_COMPONENTS: Record<IconName, ReactElement> = {
   werken: React.createElement('utrecht-icon-werken', { suppressHydrationWarning: true }),
 };
 
-const renderIcon = (iconName: string): JSX.Element | null => {
+const renderIcon = (iconName: string): ReactElement | null => {
   const icon = ICON_COMPONENTS[iconName as IconName];
   return icon ?? null;
 };

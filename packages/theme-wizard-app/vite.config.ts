@@ -9,7 +9,7 @@ export default defineConfig(() => ({
     },
     minify: false,
     rollupOptions: {
-      external: (id) => /^@?lit(-\w+)?($|\/.+)/.test(id),
+      external: (id) => /^@?lit(-\w+)?($|\/.+)/.test(id) || /^react(-dom)?(\/.*)?$/.test(id),
     },
   },
 }));

@@ -1,4 +1,4 @@
-import { parse, walk } from '@projectwallace/css-parser';
+import { is_atrule, is_atrule_prelude, is_url, parse, walk } from '@projectwallace/css-parser';
 import { parseHTML } from 'linkedom';
 import type {
   CSSImportResource,
@@ -40,8 +40,8 @@ export const getImportUrls = (css: string): string[] => {
     parse_values: false,
   });
   walk(ast, (node) => {
-    if (node.type_name === 'Atrule' && node.name === 'import' && node.prelude) {
-      const urlNode = node.prelude.children?.find((child) => child.type_name === 'Url');
+    if (is_atrule(node) && node.name === 'import' && node.prelude && is_atrule_prelude(node.prelude)) {
+      const urlNode = node.prelude.children?.find((child) => is_url(child));
       if (typeof urlNode?.value === 'string') {
         urls.push(unquote(urlNode.value));
       }
