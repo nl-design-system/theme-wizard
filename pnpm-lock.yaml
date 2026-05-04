@@ -419,11 +419,11 @@ importers:
         version: 4.3.6
     devDependencies:
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.1.0
+        version: 4.1.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 5.2.0
-        version: 5.2.0
+        specifier: 5.1.0
+        version: 5.1.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 10.1.0
         version: 10.1.0
@@ -530,14 +530,14 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.1.0
+        version: 4.1.0
       '@nl-design-system-unstable/documentation':
         specifier: 1.9.0
         version: 1.9.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 5.2.0
-        version: 5.2.0
+        specifier: 5.1.0
+        version: 5.1.0
       '@storybook/react-vite':
         specifier: 10.3.6
         version: 10.3.6(esbuild@0.27.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@6.0.3)(vite@7.3.0(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))
@@ -763,14 +763,14 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.1.0
+        version: 4.1.0
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 5.2.0
-        version: 5.2.0
+        specifier: 5.1.0
+        version: 5.1.0
       '@tabler/icons-react':
         specifier: 3.41.1
         version: 3.41.1(react@18.3.1)
@@ -968,8 +968,8 @@ importers:
         specifier: workspace:*
         version: link:../clippy-components
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.1.0
+        version: 4.1.0
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -2753,14 +2753,14 @@ packages:
   '@nl-design-system-candidate/skip-link-tokens@1.0.4':
     resolution: {integrity: sha512-MD1+m55nRqkj2eATcBNOLE8N5jWfvjJg2ax+POX8zXm49wJcBGTS6B/kK4kzIPbMuivYnxVtNlmA+Cz/upFBZA==}
 
-  '@nl-design-system-community/ma-design-tokens@4.2.0':
-    resolution: {integrity: sha512-jItCTY9/ijmi9VYcPSIZMa2WufphGYGzHXdM8fqDRP6pcM0pe5ACEqQpo9AemtU4wtCAaiYVRA/dnlHdVunfNw==}
+  '@nl-design-system-community/ma-design-tokens@4.1.0':
+    resolution: {integrity: sha512-HW/SbCkt6Sxfnn8odMy+c0p4fE4ehFcIcQzWvdd7Ed6PgBDDb1d6DJc0lr1FX0/rKCp3YSAKDuTB4nqlCbrKcw==}
 
   '@nl-design-system-unstable/documentation@1.9.0':
     resolution: {integrity: sha512-acE07cKgCESCmFzroyK+qDPtOQjcLtpfZq/lWwD2zxbkKFMCEbqjXG3eDjaPxCa4ho+7azigHSQVvRrqlPuUkg==}
 
-  '@nl-design-system-unstable/start-design-tokens@5.2.0':
-    resolution: {integrity: sha512-H7PD9qNZCHmgI9M9Pm8CuQh+q63TnUrpHyFUS5n+oO/SFHVHkyim6gukSuwsmRumLgibFq1S7XJwtD1Fw+nZYg==}
+  '@nl-design-system-unstable/start-design-tokens@5.1.0':
+    resolution: {integrity: sha512-CldysbfatzQUf8M9xYTuee537TjxtHhoLC0DurZLOMoQq50u6Wop98qfj6sPY91zwK13TpCUQAYV5GLWhXoSsA==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@10.1.0':
     resolution: {integrity: sha512-NjutTvLWz14iDoE5zkK43+jiGSK3DYCVyKXOii/sDemO+9dQtJdRp0O1PNRgIlEa2bvPjgKaIq9Y+EhdoO22IQ==}
@@ -11191,11 +11191,11 @@ snapshots:
 
   '@nl-design-system-candidate/skip-link-tokens@1.0.4': {}
 
-  '@nl-design-system-community/ma-design-tokens@4.2.0': {}
+  '@nl-design-system-community/ma-design-tokens@4.1.0': {}
 
   '@nl-design-system-unstable/documentation@1.9.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@5.2.0': {}
+  '@nl-design-system-unstable/start-design-tokens@5.1.0': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@10.1.0': {}
 
@@ -13516,9 +13516,9 @@ snapshots:
       obug: 2.1.1
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.5(@edge-runtime/vm@3.2.0)(@types/node@24.12.2)(@vitest/browser-playwright@4.1.5)(@vitest/coverage-v8@4.1.5)(vite@7.3.1(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))
+      vitest: 4.1.5(@edge-runtime/vm@3.2.0)(@types/node@24.12.2)(@vitest/browser-playwright@4.1.5)(@vitest/coverage-v8@4.1.5)(vite@7.3.0(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))
     optionalDependencies:
-      '@vitest/browser': 4.1.5(vite@7.3.1(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))(vitest@4.1.5)
+      '@vitest/browser': 4.1.5(vite@7.3.0(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))(vitest@4.1.5)
 
   '@vitest/eslint-plugin@1.6.16(@typescript-eslint/eslint-plugin@8.59.1(@typescript-eslint/parser@8.59.1(eslint@10.3.0)(typescript@6.0.3))(eslint@10.3.0)(typescript@6.0.3))(eslint@10.3.0)(typescript@6.0.3)(vitest@4.1.5)':
     dependencies:
