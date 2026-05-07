@@ -1,0 +1,59 @@
+{
+  "name": "@nl-design-system-community/design-tokens-lint",
+  "version": "0.0.0",
+  "author": "Community for NL Design System",
+  "description": "Linting of Design Tokens JSON for the NL Design System community",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "expertteam-digitale-toegankelijkheid",
+    "nl-design-system"
+  ],
+  "type": "module",
+  "module": "./dist/index.mjs",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "bin": {
+    "theme-wizard-server": "./dist/server.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
+    "directory": "packages/design-tokens-lint"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "test": "pnpm run '/^test:.*/'",
+    "test:1": "node src/index.ts --exclude-parent-keys ma-tokens.json",
+    "test:2": "node src/index.ts tokens.json",
+    "test:invalid:small-text": "node src/index.ts test/invalid/small-text-complete.tokens.json",
+    "test:invalid:missing-multiple": "node src/index.ts test/valid/brand.tokens.json test/valid/component.tokens.json",
+    "test:invalid:low-contrast": "node src/index.ts test/invalid/low-contrast.tokens.json",
+    "test:invalid": "node src/index.ts test/invalid/tokens.json",
+    "test:valid": "node src/index.ts test/valid/tokens.json",
+    "test:multiple": "node src/index.ts --multiple test/valid/brand.tokens.json test/valid/component.tokens.json",
+    "test:vitest": "vitest",
+    "build": "tsc",
+    "clean": "rimraf dist/"
+  },
+  "devDependencies": {
+    "es-toolkit": "1.46.1",
+    "rimraf": "6.1.3",
+    "typescript": "6.0.3",
+    "vitest": "4.1.5"
+  },
+  "dependencies": {
+    "@nl-design-system-community/design-tokens-schema": "workspace:*"
+  }
+}

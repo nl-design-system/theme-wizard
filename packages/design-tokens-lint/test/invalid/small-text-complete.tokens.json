@@ -1,0 +1,12 @@
+{
+  "basis": {
+    "text": {
+      "font-size": {
+        "sm": {
+          "$type": "fontSizes",
+          "$value": "10px"
+        }
+      }
+    }
+  }
+}

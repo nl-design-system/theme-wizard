@@ -1,0 +1,12 @@
+{
+  "example": {
+    "color": {
+      "primary-bg": {
+        "$value": "blue"
+      },
+      "primary-white": {
+        "$value": "white"
+      }
+    }
+  }
+}
