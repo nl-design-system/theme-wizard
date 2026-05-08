@@ -1648,7 +1648,7 @@ describe('strictly validate known basis themes', () => {
 
   it('Start theme', () => {
     const result = StrictThemeSchema.safeParse(startTokens);
-    expect(result.success).toEqual(true);
+    expect(result.success, result.error).toEqual(true);
     expect(result.data).toMatchSnapshot();
   });
 });

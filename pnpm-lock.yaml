@@ -422,8 +422,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 5.1.0
-        version: 5.1.0
+        specifier: 5.2.0
+        version: 5.2.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 10.1.0
         version: 10.1.0
@@ -536,8 +536,8 @@ importers:
         specifier: 1.9.0
         version: 1.9.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 5.1.0
-        version: 5.1.0
+        specifier: 5.2.0
+        version: 5.2.0
       '@storybook/react-vite':
         specifier: 10.3.6
         version: 10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
@@ -769,8 +769,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 5.1.0
-        version: 5.1.0
+        specifier: 5.2.0
+        version: 5.2.0
       '@tabler/icons-react':
         specifier: 3.41.1
         version: 3.41.1(react@19.2.5)
@@ -2440,8 +2440,8 @@ packages:
   '@nl-design-system-unstable/documentation@1.9.0':
     resolution: {integrity: sha512-acE07cKgCESCmFzroyK+qDPtOQjcLtpfZq/lWwD2zxbkKFMCEbqjXG3eDjaPxCa4ho+7azigHSQVvRrqlPuUkg==}
 
-  '@nl-design-system-unstable/start-design-tokens@5.1.0':
-    resolution: {integrity: sha512-CldysbfatzQUf8M9xYTuee537TjxtHhoLC0DurZLOMoQq50u6Wop98qfj6sPY91zwK13TpCUQAYV5GLWhXoSsA==}
+  '@nl-design-system-unstable/start-design-tokens@5.2.0':
+    resolution: {integrity: sha512-H7PD9qNZCHmgI9M9Pm8CuQh+q63TnUrpHyFUS5n+oO/SFHVHkyim6gukSuwsmRumLgibFq1S7XJwtD1Fw+nZYg==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@10.1.0':
     resolution: {integrity: sha512-NjutTvLWz14iDoE5zkK43+jiGSK3DYCVyKXOii/sDemO+9dQtJdRp0O1PNRgIlEa2bvPjgKaIq9Y+EhdoO22IQ==}
@@ -9895,7 +9895,7 @@ snapshots:
 
   '@nl-design-system-unstable/documentation@1.9.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@5.1.0': {}
+  '@nl-design-system-unstable/start-design-tokens@5.2.0': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@10.1.0': {}
 
