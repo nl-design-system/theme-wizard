@@ -18,7 +18,7 @@ const ColorIdentifierSchema = BaseDesignTokenIdentifierSchema;
 export const BrandSchema = z.looseObject({
   name: z.looseObject({
     $type: z.literal('text'),
-    $value: z.string(),
+    $value: z.string().trim(),
   }),
   color: z.record(ColorIdentifierSchema, ColorOrColorScaleSchema).optional(),
 });

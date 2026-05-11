@@ -10,6 +10,7 @@ import numberBadgeTokens from '@nl-design-system-candidate/number-badge-tokens';
 import paragraphTokens from '@nl-design-system-candidate/paragraph-tokens';
 import skipLinkTokens from '@nl-design-system-candidate/skip-link-tokens';
 import dlv from 'dlv';
+import { merge } from 'es-toolkit/object';
 import * as z from 'zod';
 import {
   type ForegroundColorKey,
@@ -44,6 +45,25 @@ export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-pos
 
 export const MIN_CONTRAST_DISABLED = 3;
 export const MIN_CONTRAST_FUNCTIONAL = 4.5;
+
+export const unwrapKeys = (
+  tokens: Record<string, unknown>,
+  wrapperKeys: (string | ((key: string) => boolean))[],
+): Record<string, unknown> => {
+  const shouldUnwrap = (key: string) =>
+    wrapperKeys.some((matcher) => (typeof matcher === 'function' ? matcher(key) : matcher === key));
+
+  let result: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(tokens)) {
+    if (shouldUnwrap(key) && isValueObject(value)) {
+      // uses mutating `merge()` because result is a newly created object
+      result = merge(result, value);
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
+};
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
   resolveRefs(rootConfig, rootConfig);
@@ -266,6 +286,7 @@ const ThemeShapeSchema = z.looseObject({
 const preprocessTheme = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
   // Apply transformations in order
+  data = unwrapKeys(data, ['brand', 'common', (key) => key.startsWith('components/')]);
   data = useOriginalValue(data);
   return data;
 };
@@ -276,17 +297,20 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
  */
 const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
-  // Step 1: Get `$extensions['original']['$value'] from Style Dictionary and place it in $value
+
+  // Normalize wrapper keys (e.g. { brand: { leiden: {...} } } → { leiden: {...} })
+  data = unwrapKeys(data, ['brand', 'common', (key) => key.startsWith('components/')]);
+  // Get `$extensions['original']['$value'] from Style Dictionary and place it in $value
   data = useOriginalValue(data);
-  // Step 2: Clean up non-token properties for faster processing
+  // Clean up non-token properties for faster processing
   data = removeNonTokenProperties(data);
-  // Step 3: Upgrade legacy token formats
+  // Upgrade legacy token formats
   data = upgradeLegacyTokens(data);
-  // Step 4: Add extensions
+  // Add extensions
   data = addBasisContrastExtensions(data);
   data = addBasisColorScalePositionExtensions(data);
   data = addComponentContrastExtensions(data);
-  // Step 5: Add $value of referenced token in $extensions['resolved-as']
+  // Add $value of referenced token in $extensions['resolved-as']
   data = resolveConfigRefs(data);
   return data;
 };
@@ -305,18 +329,14 @@ export const StrictThemeSchema = z
   .pipe(ThemeShapeSchema)
   .superRefine((root, ctx) => {
     // Validation 1: Check that all token references are valid
-    try {
-      validateRefs(root, root);
-    } catch (error) {
-      // Later on we can throw customized ValidationErrors that also contain the `path` so we can add it to the issue
+    validateRefs(root, root, (error) => {
       ctx.addIssue({
         code: 'custom',
         ERROR_CODE: ERROR_CODES.INVALID_REF,
-        // The next line is type-safe, but because of that we don't cover all branches
-        /* v8 ignore next */
-        message: error instanceof Error ? error.message : 'Invalid token reference',
+        message: error.message,
+        path: error.path,
       } satisfies InvalidRefIssue);
-    }
+    });
 
     // Validation 2: Check that colors have sufficient contrast
     walkColors(root, (token, path) => {

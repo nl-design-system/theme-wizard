@@ -67,6 +67,14 @@ const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
   return isRef(obj['$value']);
 };
 
+export type TokenRefError = {
+  code: 'ref_not_found' | 'ref_not_a_token' | 'ref_type_mismatch';
+  path: string[];
+  referencedPath: string;
+  referencedToken: unknown;
+  message: string;
+};
+
 /**
  * A predicate function that checks if a given ref in our schema is valid.
  * Note that it either throws an error or returns a boolean:
@@ -79,29 +87,47 @@ export const isTokenWithRef = (
   token: unknown,
   root: Record<string, unknown>,
   path: string[],
+  onError: (error: TokenRefError) => void,
 ): token is TokenWithRefLike => {
   // Check that we're dealing with a token-like object with a ref in the $value
   if (!isTokenWithRefLike(token)) return false;
 
   // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
-  const refPath = extractRef(token.$value);
-  const referencedToken = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
+  const referencedPath = extractRef(token.$value);
+  const referencedToken = dlv(root, referencedPath) || dlv(root, `brand.${referencedPath}`);
 
   if (!referencedToken) {
-    throw new Error(`Invalid token reference: can not find "${refPath}"`);
+    onError({
+      code: 'ref_not_found',
+      message: `Invalid token reference: can not find "${referencedPath}"`,
+      path,
+      referencedPath,
+      referencedToken,
+    });
+    return false;
   }
 
   if (!isTokenLike(referencedToken)) {
-    throw new Error(
-      `Invalid token reference: expected "{${refPath}}" to have a "$value" and "$type" property (referenced from "${path.join('.')}")`,
-    );
+    onError({
+      code: 'ref_not_a_token',
+      message: `Invalid token reference: expected "{${referencedPath}}" to have a "$value" and "$type" property (referenced from "${path.join('.')}")`,
+      path,
+      referencedPath,
+      referencedToken,
+    });
+    return false;
   }
 
   // make sure the $type of the referenced token is the same type
   if (token.$type !== referencedToken.$type) {
-    throw new Error(
-      `Invalid token reference: $type "${token['$type']}" of "${JSON.stringify(token)}" at "${path.join('.')}" does not match the $type on reference {${refPath}}. Types "${token.$type}" and "${referencedToken.$type}" do not match.`,
-    );
+    onError({
+      code: 'ref_type_mismatch',
+      message: `Invalid token reference: $type "${token['$type']}" of "${JSON.stringify(token)}" at "${path.join('.')}" does not match the $type on reference {${referencedPath}}. Types "${token.$type}" and "${referencedToken.$type}" do not match.`,
+      path,
+      referencedPath,
+      referencedToken,
+    });
+    return false;
   }
 
   return true;
