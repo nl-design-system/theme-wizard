@@ -22,6 +22,7 @@ jobs:
           # Make sure that history is available to Codecov
           fetch-depth: 0
 
+          persist-credentials: false
       - name: Install pnpm package manager
         uses: pnpm/action-setup@26f6d4f2c533a43e6b5da0b4a5dd983f98f7b49a # v6.0.4
 
