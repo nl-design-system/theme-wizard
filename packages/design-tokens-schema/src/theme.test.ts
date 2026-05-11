@@ -1747,7 +1747,7 @@ describe('strictly validate known basis themes', () => {
           expect(result.error?.issues[index]).toMatchObject({
             code: 'unrecognized_keys',
             keys: expectedErroneousKeys,
-            message: `Unrecognized keys: ${expectedErroneousKeys.map((key) => `"${key}"`).join(', ')}`,
+            message: `Unrecognized keys: ${expectedErroneousKeys.map((key) => '"' + key + '"').join(', ')}`,
             path: expectedErrorPaths[index],
           });
         }

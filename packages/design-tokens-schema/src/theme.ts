@@ -278,6 +278,8 @@ const ThemeShapeSchema = z.looseObject({
   brand: BrandsSchema.optional(),
 });
 
+const defaultKeysToUnwrap = ['brand', 'common', (key: string) => key.startsWith('components/')];
+
 /**
  * Preprocessing pipeline: applies all transformations before Zod validation.
  * This ensures data is normalized before schema validation.
@@ -286,7 +288,7 @@ const ThemeShapeSchema = z.looseObject({
 const preprocessTheme = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
   // Apply transformations in order
-  data = unwrapKeys(data, ['brand', 'common', (key) => key.startsWith('components/')]);
+  data = unwrapKeys(data, defaultKeysToUnwrap);
   data = useOriginalValue(data);
   return data;
 };
@@ -299,7 +301,7 @@ const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
 
   // Normalize wrapper keys (e.g. { brand: { leiden: {...} } } → { leiden: {...} })
-  data = unwrapKeys(data, ['brand', 'common', (key) => key.startsWith('components/')]);
+  data = unwrapKeys(data, defaultKeysToUnwrap);
   // Get `$extensions['original']['$value'] from Style Dictionary and place it in $value
   data = useOriginalValue(data);
   // Clean up non-token properties for faster processing
