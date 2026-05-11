@@ -50,10 +50,15 @@ export const MIN_CONTRAST_FUNCTIONAL = 4.5;
  * Strip the top-level 'layer' of properties and merge their children into the top-level
  */
 export const excludeParentKeys = (tokens: Record<string, unknown>) => {
-  return Object.entries(tokens)
-    .filter(([key]) => !key.startsWith('$'))
-    .map(([, value]) => value as Record<PropertyKey, unknown>)
-    .reduce((acc, value) => merge(acc, value), {} as Record<string, unknown>);
+  return Object.entries(tokens).reduce(
+    (result, [property, value]) => {
+      if (property.startsWith('$')) {
+        return result;
+      }
+      return merge(result, value as Record<PropertyKey, unknown>);
+    },
+    {} as Record<string, unknown>,
+  );
 };
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
