@@ -1,9 +1,5 @@
 import maTokens from '@nl-design-system-community/ma-design-tokens/dist/tokens';
 import maSourceTokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
-import purmerendTokens from '@nl-design-system-community/purmerend-design-tokens/dist/tokens.json';
-import purmerendSourceTokens from '@nl-design-system-community/purmerend-design-tokens/figma/figma.tokens.json';
-import leidenTokens from '@nl-design-system-unstable/leiden-design-tokens/dist/tokens.json';
-import leidenSourceTokens from '@nl-design-system-unstable/leiden-design-tokens/figma/leiden.tokens.json';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
 import startSourceTokens from '@nl-design-system-unstable/start-design-tokens/figma/start.tokens.json';
 import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
@@ -19,7 +15,7 @@ import {
   EXTENSION_CONTRAST_WITH,
   EXTENSION_COLOR_SCALE_POSITION,
   type ContrastExtension,
-  unwrapKeys,
+  excludeParentKeys,
 } from './theme';
 import { parseColor, type ColorToken } from './tokens/color-token';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
@@ -1647,165 +1643,20 @@ describe('line-height validations', () => {
   });
 });
 
-describe('unwrap', () => {
-  describe('unwrapKeys', () => {
-    it('hoists single child of named wrapper to top level', () => {
-      const input = { brand: { leiden: { color: { $type: 'color', $value: '#000' } } } };
-      expect(unwrapKeys(input, ['brand'])).toEqual({ leiden: { color: { $type: 'color', $value: '#000' } } });
-    });
-
-    it('hoists multiple children of named wrapper to top level', () => {
-      const input = { brand: { leiden: { a: 1 }, utrecht: { b: 2 } } };
-      expect(unwrapKeys(input, ['brand'])).toEqual({ leiden: { a: 1 }, utrecht: { b: 2 } });
-    });
-
-    it('unwraps multiple wrapper keys in one call', () => {
-      const input = { brand: { leiden: { a: 1 } }, common: { basis: { b: 2 } } };
-      expect(unwrapKeys(input, ['brand', 'common'])).toEqual({ basis: { b: 2 }, leiden: { a: 1 } });
-    });
-
-    it('leaves non-wrapper keys intact', () => {
-      const input = { brand: { leiden: { a: 1 } }, other: { c: 3 } };
-      expect(unwrapKeys(input, ['brand'])).toEqual({ leiden: { a: 1 }, other: { c: 3 } });
-    });
-
-    it('ignores wrapper keys not present in input', () => {
-      const input = { other: { c: 3 } };
-      expect(unwrapKeys(input, ['brand'])).toEqual({ other: { c: 3 } });
-    });
-
-    it('returns empty object for empty input', () => {
-      expect(unwrapKeys({}, ['brand'])).toEqual({});
-    });
-
-    it('unwraps keys matching a predicate', () => {
-      const input = { 'components/denhaag/input': { b: 2 }, 'components/utrecht/button': { a: 1 }, other: { c: 3 } };
-      expect(unwrapKeys(input, [(key) => key.startsWith('components/')])).toEqual({ a: 1, b: 2, other: { c: 3 } });
-    });
-
-    it('deep-merges when two wrapper keys share a sub-key', () => {
-      const input = {
-        brand: { basis: { color: { $type: 'color', $value: '#000' } } },
-        'components/nav-bar': { basis: { spacing: { $type: 'dimension', $value: '8px' } } },
-      };
-      expect(unwrapKeys(input, ['brand', (key) => key.startsWith('components/')])).toEqual({
-        basis: {
-          color: { $type: 'color', $value: '#000' },
-          spacing: { $type: 'dimension', $value: '8px' },
-        },
-      });
-    });
-
-    it('unwraps keys matching a mix of strings and predicates', () => {
-      const input = { brand: { leiden: { a: 1 } }, 'components/utrecht/button': { b: 2 }, other: { c: 3 } };
-      expect(unwrapKeys(input, ['brand', (key) => key.startsWith('components/')])).toEqual({
-        b: 2,
-        leiden: { a: 1 },
-        other: { c: 3 },
-      });
-    });
-  });
-});
-
 describe('strictly validate known basis themes', () => {
   describe('source files', () => {
-    describe('Purmerend', () => {
-      it('errors', () => {
-        const result = StrictThemeSchema.safeParse(purmerendSourceTokens);
-        expect(result.success).toEqual(false);
-        expect(result.error?.issues).toHaveLength(9);
-      });
-
-      it('has outdated color names', () => {
-        const result = StrictThemeSchema.safeParse(purmerendSourceTokens);
-        const expectedErroneousKeys = [
-          'bg-1',
-          'bg-2',
-          'interactive-1',
-          'interactive-2',
-          'interactive-3',
-          'border-1',
-          'border-2',
-          'border-3',
-          'fill-1',
-          'fill-2',
-          'text-1',
-          'text-2',
-        ];
-        const expectedErrorPaths = [
-          ['basis', 'color', 'disabled'],
-          ['basis', 'color', 'disabled-inverse'],
-          ['basis', 'color', 'highlight'],
-          ['basis', 'color', 'info'],
-          ['basis', 'color', 'info-inverse'],
-          ['basis', 'color', 'selected'],
-          ['basis', 'color', 'warning'],
-          ['basis', 'color', 'warning-inverse'],
-        ];
-
-        for (let index = 0; index < expectedErrorPaths.length; index++) {
-          expect(result.error?.issues[index]).toMatchObject({
-            code: 'unrecognized_keys',
-            keys: expectedErroneousKeys,
-            message: `Unrecognized keys: ${expectedErroneousKeys.map((key) => '"' + key + '"').join(', ')}`,
-            path: expectedErrorPaths[index],
-          });
-        }
-      });
-
-      it('has outdated color group names', () => {
-        // Purmerend uses .text, .error for color names, instead of .default and .negative
-        const result = StrictThemeSchema.safeParse(purmerendSourceTokens);
-        expect(result.error?.issues[result.error.issues.length - 1]).toEqual({
-          code: 'unrecognized_keys',
-          keys: [
-            'text',
-            'primary',
-            'secondary',
-            'error',
-            'success',
-            'mark',
-            'text-inverse',
-            'primary-inverse',
-            'secondary-inverse',
-            'error-inverse',
-            'success-inverse',
-          ],
-          message:
-            'Unrecognized keys: "text", "primary", "secondary", "error", "success", "mark", "text-inverse", "primary-inverse", "secondary-inverse", "error-inverse", "success-inverse"',
-          path: ['basis', 'color'],
-        });
-      });
-    });
-
-    describe('Leiden', () => {
-      it('errors', () => {
-        const result = StrictThemeSchema.safeParse(leidenSourceTokens);
-        expect(result.success).toBe(false);
-
-        // Leiden's only flaw is that they have defined `common.basis.color.box-shadow: { $type: 'color' }`
-        expect(result.error?.issues).toHaveLength(1);
-        expect(result.error?.issues[0]).toEqual({
-          code: 'unrecognized_keys',
-          keys: ['box-shadow'],
-          message: 'Unrecognized key: "box-shadow"',
-          path: ['basis', 'color'],
-        });
-      });
-    });
-
     it('validates Start theme', () => {
-      const result = StrictThemeSchema.safeParse(startSourceTokens);
+      const result = StrictThemeSchema.safeParse(excludeParentKeys(startSourceTokens));
       expect(result.success).toBe(true);
     });
 
     it('validates Mooi & Anders theme', () => {
-      const result = StrictThemeSchema.safeParse(maSourceTokens);
+      const result = StrictThemeSchema.safeParse(excludeParentKeys(maSourceTokens));
       expect(result.success).toBe(true);
     });
 
     it('validates Voorbeeld theme', () => {
-      const result = StrictThemeSchema.safeParse(voorbeeldSourceTokens);
+      const result = StrictThemeSchema.safeParse(excludeParentKeys(voorbeeldSourceTokens));
       expect(result.success).toBe(true);
     });
   });
@@ -1827,20 +1678,6 @@ describe('strictly validate known basis themes', () => {
       const result = StrictThemeSchema.safeParse(startTokens);
       expect(result.success).toEqual(true);
       expect(result.data).toMatchSnapshot();
-    });
-
-    it('Leiden theme', () => {
-      const result = StrictThemeSchema.safeParse(leidenTokens);
-      expect(result.success).toEqual(false);
-      expect(result.error?.issues).toHaveLength(1);
-      expect(result.error?.issues[0].code).toBe('unrecognized_keys');
-    });
-
-    it('Purmerend theme', () => {
-      const result = StrictThemeSchema.safeParse(purmerendTokens);
-      expect(result.success).toEqual(false);
-      // Similar to the the source file tests above, Purmerend only has issues with outdated keys
-      expect(result.error?.issues.every((issue) => issue.code === 'unrecognized_keys')).toBe(true);
     });
   });
 });

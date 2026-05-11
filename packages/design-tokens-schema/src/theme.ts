@@ -10,7 +10,7 @@ import numberBadgeTokens from '@nl-design-system-candidate/number-badge-tokens';
 import paragraphTokens from '@nl-design-system-candidate/paragraph-tokens';
 import skipLinkTokens from '@nl-design-system-candidate/skip-link-tokens';
 import dlv from 'dlv';
-import { merge } from 'es-toolkit/object';
+import { merge } from 'es-toolkit/compat';
 import * as z from 'zod';
 import {
   type ForegroundColorKey,
@@ -46,23 +46,16 @@ export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-pos
 export const MIN_CONTRAST_DISABLED = 3;
 export const MIN_CONTRAST_FUNCTIONAL = 4.5;
 
-export const unwrapKeys = (
-  tokens: Record<string, unknown>,
-  wrapperKeys: (string | ((key: string) => boolean))[],
-): Record<string, unknown> => {
-  const shouldUnwrap = (key: string) =>
-    wrapperKeys.some((matcher) => (typeof matcher === 'function' ? matcher(key) : matcher === key));
-
-  let result: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(tokens)) {
-    if (shouldUnwrap(key) && isValueObject(value)) {
-      // uses mutating `merge()` because result is a newly created object
-      result = merge(result, value);
-    } else {
-      result[key] = value;
-    }
-  }
-  return result;
+/**
+ * Strip the top-level 'layer' of properties and merge their children into the top-level
+ */
+export const excludeParentKeys = (tokens: Record<string, unknown>) => {
+  return merge(
+    {},
+    ...Object.entries(tokens)
+      .filter(([key]) => !key.startsWith('$'))
+      .map(([, value]) => value),
+  );
 };
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
@@ -278,8 +271,6 @@ const ThemeShapeSchema = z.looseObject({
   brand: BrandsSchema.optional(),
 });
 
-const defaultKeysToUnwrap = ['brand', 'common', (key: string) => key.startsWith('components/')];
-
 /**
  * Preprocessing pipeline: applies all transformations before Zod validation.
  * This ensures data is normalized before schema validation.
@@ -288,7 +279,6 @@ const defaultKeysToUnwrap = ['brand', 'common', (key: string) => key.startsWith(
 const preprocessTheme = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
   // Apply transformations in order
-  data = unwrapKeys(data, defaultKeysToUnwrap);
   data = useOriginalValue(data);
   return data;
 };
@@ -300,8 +290,6 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
 const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
 
-  // Normalize wrapper keys (e.g. { brand: { leiden: {...} } } → { leiden: {...} })
-  data = unwrapKeys(data, defaultKeysToUnwrap);
   // Get `$extensions['original']['$value'] from Style Dictionary and place it in $value
   data = useOriginalValue(data);
   // Clean up non-token properties for faster processing
