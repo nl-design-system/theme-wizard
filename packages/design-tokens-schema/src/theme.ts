@@ -10,7 +10,7 @@ import numberBadgeTokens from '@nl-design-system-candidate/number-badge-tokens';
 import paragraphTokens from '@nl-design-system-candidate/paragraph-tokens';
 import skipLinkTokens from '@nl-design-system-candidate/skip-link-tokens';
 import dlv from 'dlv';
-import { merge } from 'es-toolkit/compat';
+import { merge } from 'es-toolkit/object';
 import * as z from 'zod';
 import {
   type ForegroundColorKey,
@@ -50,12 +50,10 @@ export const MIN_CONTRAST_FUNCTIONAL = 4.5;
  * Strip the top-level 'layer' of properties and merge their children into the top-level
  */
 export const excludeParentKeys = (tokens: Record<string, unknown>) => {
-  return merge(
-    {},
-    ...Object.entries(tokens)
-      .filter(([key]) => !key.startsWith('$'))
-      .map(([, value]) => value),
-  );
+  return Object.entries(tokens)
+    .filter(([key]) => !key.startsWith('$'))
+    .map(([, value]) => value as Record<PropertyKey, unknown>)
+    .reduce((acc, value) => merge(acc, value), {} as Record<string, unknown>);
 };
 
 export const resolveConfigRefs = (rootConfig: Theme) => {
