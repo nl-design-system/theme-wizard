@@ -1,7 +1,14 @@
 import { BaseDesignToken } from './tokens/base-token';
 import { ColorToken } from './tokens/color-token';
 import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
-import { isRef, isTokenLike, isTokenWithRef, isValueObject, type TokenRefError, type TokenWithRefLike } from './tokens/token-reference';
+import {
+  isRef,
+  isTokenLike,
+  isTokenWithRef,
+  isValueObject,
+  type TokenRefError,
+  type TokenWithRefLike,
+} from './tokens/token-reference';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 
 /** Return from a walkObject/walkTokens callback to skip recursing into children */
