@@ -50,16 +50,6 @@ export const resolveConfigRefs = (rootConfig: Theme) => {
   return rootConfig;
 };
 
-const KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS = new Map<string, string>([
-  ['basis.text.font-size.sm', 'basis.text.line-height.sm'],
-  ['basis.text.font-size.md', 'basis.text.line-height.md'],
-  ['basis.text.font-size.lg', 'basis.text.line-height.lg'],
-  ['basis.text.font-size.xl', 'basis.text.line-height.xl'],
-  ['basis.text.font-size.2xl', 'basis.text.line-height.2xl'],
-  ['basis.text.font-size.3xl', 'basis.text.line-height.3xl'],
-  ['basis.text.font-size.4xl', 'basis.text.line-height.4xl'],
-]);
-
 export const addComponentFontSizeLineHeightPairs = (initialMap: Map<string, string>) => {
   const result = new Map(initialMap);
   const componentsTokens = [
@@ -89,6 +79,18 @@ export const addComponentFontSizeLineHeightPairs = (initialMap: Map<string, stri
   }
   return result;
 };
+
+const ALL_LINE_HEIGHT_FONT_SIZE_PAIRS = addComponentFontSizeLineHeightPairs(
+  new Map([
+    ['basis.text.font-size.sm', 'basis.text.line-height.sm'],
+    ['basis.text.font-size.md', 'basis.text.line-height.md'],
+    ['basis.text.font-size.lg', 'basis.text.line-height.lg'],
+    ['basis.text.font-size.xl', 'basis.text.line-height.xl'],
+    ['basis.text.font-size.2xl', 'basis.text.line-height.2xl'],
+    ['basis.text.font-size.3xl', 'basis.text.line-height.3xl'],
+    ['basis.text.font-size.4xl', 'basis.text.line-height.4xl'],
+  ]),
+);
 
 export const addBasisColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
@@ -404,8 +406,7 @@ export const StrictThemeSchema = z
     });
 
     // Validation 5: check that contextual line-heights are large enough
-    const knownLineHeightFontSizePairs = addComponentFontSizeLineHeightPairs(KNOWN_LINE_HEIGHT_FONT_SIZE_COMBOS);
-    for (const [fontSizePath, lineHeightPath] of knownLineHeightFontSizePairs) {
+    for (const [fontSizePath, lineHeightPath] of ALL_LINE_HEIGHT_FONT_SIZE_PAIRS) {
       const fontSizeToken = dlv(root, fontSizePath);
       const lineHeightToken = dlv(root, lineHeightPath);
 
