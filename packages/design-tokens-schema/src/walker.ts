@@ -1,7 +1,14 @@
 import { BaseDesignToken } from './tokens/base-token';
 import { ColorToken } from './tokens/color-token';
 import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
-import { isRef, isTokenLike, isTokenWithRef, isValueObject, type TokenWithRefLike } from './tokens/token-reference';
+import {
+  isRef,
+  isTokenLike,
+  isTokenWithRef,
+  isValueObject,
+  type TokenRefError,
+  type TokenWithRefLike,
+} from './tokens/token-reference';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 
 /** Return from a walkObject/walkTokens callback to skip recursing into children */
@@ -67,17 +74,11 @@ export const walkTokensWithRef = (
   root: unknown,
   config: Record<string, unknown>,
   callback: (token: TokenWithRefLike, path: string[]) => void | typeof SKIP,
+  onError: (error: TokenRefError) => void = () => {},
 ): void => {
   walkObject<TokenWithRefLike>(
     root,
-    (token, path): token is TokenWithRefLike => {
-      try {
-        return isTokenWithRef(token, config, path);
-      } catch {
-        // If the ref is invalid, skip it - validation will catch it later
-        return false;
-      }
-    },
+    (token, path): token is TokenWithRefLike => isTokenWithRef(token, config, path, onError),
     callback,
   );
 };

@@ -1,9 +1,11 @@
 import maTokens from '@nl-design-system-community/ma-design-tokens/dist/tokens';
+import maSourceTokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
+import startSourceTokens from '@nl-design-system-unstable/start-design-tokens/figma/start.tokens.json';
 import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
+import voorbeeldSourceTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/figma/voorbeeld.tokens.json';
 import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
-import * as z from 'zod';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
 import { EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import {
@@ -13,6 +15,7 @@ import {
   EXTENSION_CONTRAST_WITH,
   EXTENSION_COLOR_SCALE_POSITION,
   type ContrastExtension,
+  excludeParentKeys,
 } from './theme';
 import { parseColor, type ColorToken } from './tokens/color-token';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
@@ -314,11 +317,15 @@ describe('resolving Design Token refs', () => {
     expect(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBeFalsy();
-    expect.soft(z.flattenError(result.error!)).toMatchObject({
-      formErrors: [
-        'Invalid token reference: expected "{ma.color.indigo}" to have a "$value" and "$type" property (referenced from "basis.color.default.bg-document")',
-      ],
-    });
+    expect.soft(result.error!.issues).toMatchObject([
+      {
+        code: 'custom',
+        ERROR_CODE: 'invalid_ref',
+        message:
+          'Invalid token reference: expected "{ma.color.indigo}" to have a "$value" and "$type" property (referenced from "basis.color.default.bg-document")',
+        path: ['basis', 'color', 'default', 'bg-document'],
+      },
+    ]);
   });
 
   it('marks as invalid when a font-family token reference points to an existing non-font-family token', () => {
@@ -337,11 +344,14 @@ describe('resolving Design Token refs', () => {
 
     const result = StrictThemeSchema.safeParse(config);
     expect.soft(result.success).toEqual(false);
-    expect.soft(z.flattenError(result.error!)).toMatchObject({
-      formErrors: [
-        `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" at "basis.heading.font-family" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
-      ],
-    });
+    expect.soft(result.error!.issues).toMatchObject([
+      {
+        code: 'custom',
+        ERROR_CODE: 'invalid_ref',
+        message: `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" at "basis.heading.font-family" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
+        path: ['basis', 'heading', 'font-family'],
+      },
+    ]);
   });
 });
 
@@ -1634,21 +1644,40 @@ describe('line-height validations', () => {
 });
 
 describe('strictly validate known basis themes', () => {
-  it('Mooi & Anders theme', () => {
-    const result = StrictThemeSchema.safeParse(maTokens);
-    expect(result.success).toEqual(true);
-    expect(result.data).toMatchSnapshot();
+  describe('source files', () => {
+    it('validates Start theme', () => {
+      const result = StrictThemeSchema.safeParse(excludeParentKeys(startSourceTokens));
+      expect(result.success).toBe(true);
+    });
+
+    it('validates Mooi & Anders theme', () => {
+      const result = StrictThemeSchema.safeParse(excludeParentKeys(maSourceTokens));
+      expect(result.success).toBe(true);
+    });
+
+    it('validates Voorbeeld theme', () => {
+      const result = StrictThemeSchema.safeParse(excludeParentKeys(voorbeeldSourceTokens));
+      expect(result.success).toBe(true);
+    });
   });
 
-  it('Voorbeeld theme', () => {
-    const result = StrictThemeSchema.safeParse(voorbeeldTokens);
-    expect(result.success).toEqual(true);
-    expect(result.data).toMatchSnapshot();
-  });
+  describe('dist files', () => {
+    it('Mooi & Anders theme', () => {
+      const result = StrictThemeSchema.safeParse(maTokens);
+      expect(result.success).toEqual(true);
+      expect(result.data).toMatchSnapshot();
+    });
 
-  it('Start theme', () => {
-    const result = StrictThemeSchema.safeParse(startTokens);
-    expect(result.success).toEqual(true);
-    expect(result.data).toMatchSnapshot();
+    it('Voorbeeld theme', () => {
+      const result = StrictThemeSchema.safeParse(voorbeeldTokens);
+      expect(result.success).toEqual(true);
+      expect(result.data).toMatchSnapshot();
+    });
+
+    it('Start theme', () => {
+      const result = StrictThemeSchema.safeParse(startTokens);
+      expect(result.success).toEqual(true);
+      expect(result.data).toMatchSnapshot();
+    });
   });
 });

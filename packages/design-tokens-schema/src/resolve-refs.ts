@@ -3,6 +3,7 @@ import type { BaseDesignToken } from './tokens/base-token';
 import { setExtension } from './extensions';
 import {
   TokenReference,
+  type TokenRefError,
   type TokenWithRefLike,
   isTokenWithRef,
   isRef,
@@ -63,6 +64,10 @@ export const resolveRefs = (config: unknown, root: Record<string, unknown>): voi
  * Recursively loop over `config` to look for {ma.color.indigo.5} -like token refs
  * and check that they have actual values in `root` and that the $type overlaps
  */
-export const validateRefs = (config: unknown, root: Record<string, unknown>): void => {
-  walkObject<TokenWithRefLike>(config, (data, path) => isTokenWithRef(data, root, path));
+export const validateRefs = (
+  config: unknown,
+  root: Record<string, unknown>,
+  onError: (error: TokenRefError) => void = () => {},
+): void => {
+  walkObject<TokenWithRefLike>(config, (data, path) => isTokenWithRef(data, root, path, onError));
 };
