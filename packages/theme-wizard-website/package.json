@@ -72,7 +72,7 @@
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@storybook/react-vite": "10.3.6",
-    "@tabler/icons-react": "3.41.1",
+    "@tabler/icons-react": "3.44.0",
     "@utrecht/body-css": "4.0.0",
     "@utrecht/checkbox-css": "3.0.0",
     "@utrecht/form-field-css": "3.0.0",

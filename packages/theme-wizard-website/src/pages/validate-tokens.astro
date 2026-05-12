@@ -1,15 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '@nl-design-system-candidate/button-css/button.css'
-import '@nl-design-system-candidate/link-css/link.css'
-import '@nl-design-system-candidate/paragraph-css/paragraph.css'
-import '@nl-design-system-community/clippy-components/clippy-story-preview';
-import '@utrecht/form-field-css/dist/index.css';
-import '@utrecht/form-field-error-message-css/dist/index.css';
-import '@utrecht/form-label-css/dist/index.css';
-import '@utrecht/textbox-css/dist/index.css';
-import '@utrecht/textarea-css/dist/index.css';
-import '@utrecht/checkbox-css/dist/index.css';
 ---
 
 <BaseLayout title="Theme Wizard">
@@ -17,53 +7,11 @@ import '@utrecht/checkbox-css/dist/index.css';
     <wizard-layout>
       <main slot="main" class="wizard-main">
         <wizard-stack size="4xl">
-          <wizard-container size="2xl">
+          <wizard-container>
             <clippy-story-preview size="lg">
-              <wizard-stack size="2xl">
-                <clippy-heading level="1">Valideer je thema</clippy-heading>
-                <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard jouw thema (.json) valideren.</p>
-                <form>
-                  <wizard-stack size="3xl">
-                    <div class="utrecht-form-field utrecht-form-field--text">
-                      <div class="utrecht-form-field__label">
-                        <label for="input-file" class="utrecht-form-label">Thema toevoegen</label>
-                      </div>
-                      <input type="file" required accept=".json" id="input-file" name="input-file">
-                    </div>
-
-                    <div class="utrecht-form-field utrecht-form-field--checkbox">
-                      <div class="utrecht-form-field__label utrecht-form-field__label--checkbox">
-                        <label for="exclude-parent-keys" class="utrecht-form-label utrecht-form-label--checkbox">
-                          <input
-                            type="checkbox"
-                            name="exclude-parent-keys"
-                            id="exclude-parent-keys"
-                            class="utrecht-checkbox utrecht-checkbox--html-input utrecht-checkbox--custom utrecht-form-field__input"
-                          >
-                          Dit is een brondbestand (niet gegenereerd door Style Dictionary).
-                        </label>
-                      </div>
-                    </div>
-
-                    <button class="nl-button nl-button--primary" type="submit">Valideer thema</button>
-                  </wizard-stack>
-                </form>
-
-                <output id="output" hidden>
-                  <div class="utrecht-form-field utrecht-form-field--text">
-                    <div class="utrecht-form-field__label">
-                      <label for="validation-result" class="utrecht-form-label">Validatieresultaat</label>
-                    </div>
-                    <div class="utrecht-form-field__input">
-                      <textarea
-                        dir="auto"
-                        readonly
-                        class="wizard-validation-output utrecht-textarea utrecht-textarea--html-textarea utrecht-textarea--invalid" id="validation-result"
-                      ></textarea>
-                    </div>
-                  </div>
-                </output>
-              </wizard-stack>
+              <clippy-heading level="1">Valideer je thema</clippy-heading>
+              <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard jouw thema (.json) valideren.</p>
+              <wizard-token-validation-form></wizard-token-validation-form>
             </clippy-story-preview>
           </wizard-container>
         </wizard-stack>
@@ -80,94 +28,4 @@ import '@utrecht/checkbox-css/dist/index.css';
   wizard-container {
     margin-inline: auto;
   }
-
-  clippy-story-preview {
-    width: 100%;
-  }
-
-  input[type="file"] {
-    border: var(--basis-border-width-md) dashed var(--basis-color-default-border-subtle);
-    box-sizing: border-box;
-    inline-size: 100%;
-    margin-block-start: var(--basis-space-block-md);
-    padding-block: var(--basis-space-block-2xl);
-    padding-inline: var(--basis-space-inline-2xl);
-  }
-
-  /* Inline copy of nl-button-css because we can't extend the CSS in another way */
-  input[type="file"]::file-selector-button {
-    background-color: var(--nl-button-secondary-background-color);
-    border-color: var(--nl-button-secondary-border-color);
-    border-radius: var(--nl-button-border-radius);
-    border-style: solid;
-    border-width: var(--nl-button-secondary-border-width);
-    box-sizing: border-box;
-    color: var(--nl-button-secondary-color);
-    cursor: pointer;
-    font-family: var(--nl-button-font-family);
-    font-size: var(--nl-button-secondary-font-size);
-    font-weight: var(--nl-button-secondary-font-weight);
-    line-height: var(--nl-button-secondary-line-height);
-    margin-inline-end: 1rem;
-    min-block-size: var(--nl-button-min-block-size, max(44px, fit-content));
-    padding-block-end: var(--nl-button-padding-block-end);
-    padding-block-start: var(--nl-button-padding-block-start);
-    padding-inline-end: var(--nl-button-padding-inline-end);
-    padding-inline-start: var(--nl-button-padding-inline-start);
-  }
-
-  input[type="file"]::file-selector-button:hover {
-    background-color: var(--nl-button-secondary-hover-background-color);
-    border-color: var(--nl-button-secondary-hover-border-color);
-    color: var(--nl-button-secondary-hover-color);
-  }
-
-  input[type="file"]::file-selector-button:active {
-    background-color: var(--nl-button-secondary-active-background-color);
-    border-color: var(--nl-button-secondary-active-border-color);
-    color: var(--nl-button-secondary-active-color);
-  }
-
-  .wizard-validation-output {
-    border: var(--basis-border-width-sm) solid var(--basis-color-default-border-default);
-    field-sizing: content;
-    font-family: var(--basis-text-font-family-monospace);
-    margin-block-start: var(--basis-space-block-sm);
-    min-block-size: calc(2 * var(--basis-size-2xl));
-    white-space: pre;
-  }
 </style>
-
-<script>
-  import { StrictThemeSchema, excludeParentKeys } from '@nl-design-system-community/design-tokens-schema';
-
-  const form = document.querySelector('form')
-  const output = document.getElementById('output') as HTMLElement | null
-  const field = output!.querySelector('.utrecht-form-field')!
-  const validationResult = document.getElementById('validation-result')as HTMLTextAreaElement | null
-
-  form?.addEventListener('submit', async (event) => {
-    event.preventDefault()
-    const data = new FormData(event.target as HTMLFormElement)
-    const file = data.get('input-file') as File | null
-    const shouldExcludeParentKeys = data.get('exclude-parent-keys')
-    if (!file || !validationResult || !output) return
-
-    const contents = await file.text()
-    let tokens = JSON.parse(contents)
-    if (shouldExcludeParentKeys) {
-      tokens = excludeParentKeys(tokens)
-    }
-    const result = StrictThemeSchema.safeParse(tokens)
-    field.classList.toggle('utrecht-form-field--invalid', !result.success)
-    output.removeAttribute('hidden')
-
-    if (result.success) {
-      validationResult.removeAttribute('aria-invalid')
-      validationResult.value = JSON.stringify(result.data, null, 2)
-    } else {
-      validationResult.setAttribute('aria-invalid', 'true')
-      validationResult.value = result.error.message
-    }
-  })
-</script>

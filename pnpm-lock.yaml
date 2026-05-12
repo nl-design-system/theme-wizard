@@ -551,8 +551,11 @@ importers:
         specifier: 10.3.6
         version: 10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
       '@tabler/icons':
-        specifier: 3.41.1
-        version: 3.41.1
+        specifier: 3.44.0
+        version: 3.44.0
+      '@utrecht/checkbox-css':
+        specifier: 3.0.0
+        version: 3.0.0
       '@utrecht/form-field-css':
         specifier: 3.0.0
         version: 3.0.0
@@ -574,6 +577,9 @@ importers:
       '@utrecht/table-css':
         specifier: 3.0.0
         version: 3.0.0
+      '@utrecht/textarea-css':
+        specifier: 4.0.0
+        version: 4.0.0
       '@utrecht/textbox-css':
         specifier: 4.0.0
         version: 4.0.0
@@ -992,8 +998,8 @@ importers:
         specifier: 10.3.6
         version: 10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
       '@tabler/icons-react':
-        specifier: 3.41.1
-        version: 3.41.1(react@19.2.5)
+        specifier: 3.44.0
+        version: 3.44.0(react@19.2.5)
       '@utrecht/body-css':
         specifier: 4.0.0
         version: 4.0.0
@@ -3136,8 +3142,16 @@ packages:
     peerDependencies:
       react: '>= 16'
 
+  '@tabler/icons-react@3.44.0':
+    resolution: {integrity: sha512-8+rvzBbVm/1Z3sG3x7GUNAaxIKxwgz8xaMhRs23nrCnMTKRFAhEC+82zAIFeAA0seXdrAGX5HFCkaLpGK2rVHg==}
+    peerDependencies:
+      react: '>= 16'
+
   '@tabler/icons@3.41.1':
     resolution: {integrity: sha512-OaRnVbRmH2nHtFeg+RmMJ/7m2oBIF9XCJAUD5gQnMrpK9f05ydj8MZrAf3NZQqOXyxGN1UBL0D5IKLLEUfr74Q==}
+
+  '@tabler/icons@3.44.0':
+    resolution: {integrity: sha512-Wn0AOZG9sg0L+bjfMqq4eNhC6pQjIrk94LvvWYNYkY8KH8wC3YILRzQlrnVJc4FUeMxH/AK97QsYCX35H3LndA==}
 
   '@testing-library/jest-dom@6.9.1':
     resolution: {integrity: sha512-zIcONa+hVtVSSep9UT3jZ5rizo2BsxgyDYU7WFD5eICBE7no3881HGeb/QkGfsJs6JTkY1aQhT7rIPC7e+0nnA==}
@@ -10423,7 +10437,14 @@ snapshots:
       '@tabler/icons': 3.41.1
       react: 19.2.5
 
+  '@tabler/icons-react@3.44.0(react@19.2.5)':
+    dependencies:
+      '@tabler/icons': 3.44.0
+      react: 19.2.5
+
   '@tabler/icons@3.41.1': {}
+
+  '@tabler/icons@3.44.0': {}
 
   '@testing-library/jest-dom@6.9.1':
     dependencies:
