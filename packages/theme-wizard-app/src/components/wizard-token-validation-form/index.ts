@@ -8,6 +8,7 @@ import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '../wizard-stack';
+import '../wizard-file-input';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { $ZodIssue } from 'zod/v4/core';
 import { t } from '../../i18n';
@@ -93,7 +94,7 @@ export class WizardTokenValidationForm extends LitElement {
               <div class="utrecht-form-field__label">
                 <label for="input-file" class="utrecht-form-label">${t('tokenValidationForm.fileInput.label')}</label>
               </div>
-              <input type="file" required accept=".json" id="input-file" name="input-file" />
+              <wizard-file-input required accept=".json" id="input-file" name="input-file"></wizard-file-input>
             </div>
 
             <div class="utrecht-form-field utrecht-form-field--checkbox">

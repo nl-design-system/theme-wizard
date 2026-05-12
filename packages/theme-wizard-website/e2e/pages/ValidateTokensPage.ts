@@ -13,5 +13,3 @@ export class ValidateTokensPage {
 
   async selectFile(contents: string) {}
 }
-
-// Create a new `wizard-file-input` component, take along all the styles from packages/theme-wizard-app/src/components/wizard-token-validation-form/styles.ts. Must be form associated
