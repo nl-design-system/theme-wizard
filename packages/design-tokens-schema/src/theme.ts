@@ -92,18 +92,16 @@ const ALL_LINE_HEIGHT_FONT_SIZE_PAIRS = addComponentFontSizeLineHeightPairs(
   ]),
 );
 
+const COLOR_KEY_POSITION = new Map<string, number>(COLOR_KEYS.map((key, i) => [key, i + 1]));
+
 export const addBasisColorScalePositionExtensions = (rootConfig: Record<string, unknown>) => {
   walkColors(rootConfig, (color, path) => {
     const lastPath = path.at(-1)!;
 
-    // Find if the token name ends with any COLOR_KEYS value
-    const matchingColorKeyIndex = COLOR_KEYS.findIndex((colorKey) => lastPath.endsWith(colorKey));
+    const position = COLOR_KEY_POSITION.get(lastPath);
+    if (position === undefined) return undefined;
 
-    // If no match found, skip this token
-    if (matchingColorKeyIndex === -1) return undefined;
-
-    // Add the extension with the index
-    setExtension(color, EXTENSION_COLOR_SCALE_POSITION, matchingColorKeyIndex + 1);
+    setExtension(color, EXTENSION_COLOR_SCALE_POSITION, position);
     return SKIP;
   });
   return rootConfig;
