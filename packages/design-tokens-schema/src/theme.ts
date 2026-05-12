@@ -331,7 +331,7 @@ export const StrictThemeSchema = z
         const contrast = compareContrast(baseColor, compareColor);
         const tokenAPath = path.join('.');
         const tokenBPathRaw = background.$extensions?.[EXTENSION_RESOLVED_FROM] as string | undefined;
-        const tokenBPath = tokenBPathRaw?.replaceAll(/(^\{)|(\}$)/g, '');
+        const tokenBPath = tokenBPathRaw ? extractRef(tokenBPathRaw as TokenReference) : undefined;
 
         if (contrast < expectedRatio) {
           ctx.addIssue(
