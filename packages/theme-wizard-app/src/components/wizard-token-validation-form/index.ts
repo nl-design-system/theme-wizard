@@ -45,7 +45,9 @@ export class WizardTokenValidationForm extends LitElement {
     if (!file) return;
 
     let tokens = JSON.parse(await file.text());
-    if (data.get('exclude-parent-keys')) tokens = excludeParentKeys(tokens);
+    if (data.get('exclude-parent-keys')) {
+      tokens = excludeParentKeys(tokens);
+    }
 
     const parsed = StrictThemeSchema.safeParse(tokens);
     this.result = parsed.success
