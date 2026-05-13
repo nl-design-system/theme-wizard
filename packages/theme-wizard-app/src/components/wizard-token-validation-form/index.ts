@@ -8,10 +8,9 @@ import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import '../wizard-stack';
-import '../wizard-file-input';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { $ZodIssue } from 'zod/v4/core';
 import { t } from '../../i18n';
+import fileInputStyles from '../wizard-file-input/styles';
 import styles from './styles';
 
 const tag = 'wizard-token-validation-form';
@@ -33,6 +32,7 @@ export class WizardTokenValidationForm extends LitElement {
     unsafeCSS(formLabelCss),
     unsafeCSS(textareaCss),
     styles,
+    fileInputStyles,
   ];
 
   @state()
@@ -75,8 +75,8 @@ export class WizardTokenValidationForm extends LitElement {
               readonly
               class="wizard-validation-output utrecht-textarea utrecht-textarea--html-textarea utrecht-textarea--invalid"
               id="validation-result"
-              aria-describedby=${ifDefined(result.success === false && 'validation-error-msg')}
-              aria-invalid=${ifDefined(result.success === false)}
+              aria-describedby="validation-error-msg"
+              aria-invalid=${result.success ? nothing : true}
               .value=${JSON.stringify(result.success ? result.data : result.error, null, 2)}
             ></textarea>
           </div>
@@ -94,7 +94,7 @@ export class WizardTokenValidationForm extends LitElement {
               <div class="utrecht-form-field__label">
                 <label for="input-file" class="utrecht-form-label">${t('tokenValidationForm.fileInput.label')}</label>
               </div>
-              <wizard-file-input required accept=".json" id="input-file" name="input-file"></wizard-file-input>
+              <input type="file" class="wizard-file-input" required accept=".json" id="input-file" name="input-file" />
             </div>
 
             <div class="utrecht-form-field utrecht-form-field--checkbox">

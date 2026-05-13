@@ -1,11 +1,7 @@
 import { css } from 'lit';
 
 export default css`
-  :host {
-    display: block;
-  }
-
-  input[type='file'] {
+  .wizard-file-input {
     border: var(--basis-border-width-md) dashed var(--basis-color-default-border-subtle);
     box-sizing: border-box;
     inline-size: 100%;
@@ -15,7 +11,7 @@ export default css`
   }
 
   /* Inline copy of nl-button-css because we can't extend the CSS in another way */
-  input[type='file']::file-selector-button {
+  .wizard-file-input::file-selector-button {
     background-color: var(--nl-button-secondary-background-color);
     border-color: var(--nl-button-secondary-border-color);
     border-radius: var(--nl-button-border-radius);
@@ -36,13 +32,13 @@ export default css`
     padding-inline-start: var(--nl-button-padding-inline-start);
   }
 
-  input[type='file']::file-selector-button:hover {
+  .wizard-file-input::file-selector-button:hover {
     background-color: var(--nl-button-secondary-hover-background-color);
     border-color: var(--nl-button-secondary-hover-border-color);
     color: var(--nl-button-secondary-hover-color);
   }
 
-  input[type='file']::file-selector-button:active {
+  .wizard-file-input::file-selector-button:active {
     background-color: var(--nl-button-secondary-active-background-color);
     border-color: var(--nl-button-secondary-active-border-color);
     color: var(--nl-button-secondary-active-color);
