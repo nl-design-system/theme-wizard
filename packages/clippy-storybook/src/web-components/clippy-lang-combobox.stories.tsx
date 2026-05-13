@@ -83,7 +83,7 @@ const meta = {
     React.createElement('clippy-lang-combobox', {
       format,
       lang,
-      options: JSON.stringify(options, null, 2),
+      options,
     }),
   tags: ['autodocs'],
   title: 'Clippy/Combobox/Language Combobox',

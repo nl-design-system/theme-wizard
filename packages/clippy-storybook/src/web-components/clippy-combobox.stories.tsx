@@ -40,7 +40,7 @@ const meta = {
   },
   render: ({ options }: ComboboxStoryArgs) =>
     React.createElement('clippy-combobox', {
-      options: JSON.stringify(options, null, 2),
+      options,
     }),
   tags: ['autodocs'],
   title: 'Clippy/Combobox',

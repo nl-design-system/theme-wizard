@@ -105,7 +105,7 @@ const meta = {
   render: ({ lang, options }: ColorComboboxStoryArgs) =>
     React.createElement('clippy-color-combobox', {
       lang,
-      options: JSON.stringify(options, null, 2),
+      options,
     }),
   tags: ['autodocs'],
   title: 'Clippy/Combobox/Color Combobox',
