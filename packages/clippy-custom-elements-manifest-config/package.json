@@ -10,15 +10,9 @@
   ],
   "private": true,
   "type": "module",
-  "module": "./dist/index.js",
-  "exports": {
-    "./*": {
-      "import": "./dist/*/index.js",
-      "types": "./dist/*/index.d.ts"
-    }
-  },
+  "module": "./src/index.mjs",
   "files": [
-    "dist/"
+    "src/"
   ],
   "repository": {
     "type": "git+ssh",
@@ -26,15 +20,9 @@
     "directory": "packages/clippy-custom-elements-manifest-config"
   },
   "scripts": {
-    "dev": "vite build --watch --mode development",
-    "types": "tsc -p tsconfig.json --emitDeclarationOnly",
-    "type-check": "tsc --noEmit --project tsconfig.json",
-    "build": "pnpm type-check && pnpm clean && vite build",
-    "clean": "rimraf dist/",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
     "lint:js": "eslint",
-    "lint-fix:js": "eslint --fix",
-    "lint-build": "tsc --noEmit --project tsconfig.json"
+    "lint-fix:js": "eslint --fix"
   },
   "devDependencies": {
     "glob": "13.0.6",
@@ -43,8 +31,6 @@
     "vite-plugin-dts": "5.0.0"
   },
   "dependencies": {
-    "@wc-toolkit/type-parser": "1.2.0",
-    "command-line-args": "6.0.2",
-    "comment-parser": "1.4.6"
+    "@wc-toolkit/type-parser": "1.2.0"
   }
 }
