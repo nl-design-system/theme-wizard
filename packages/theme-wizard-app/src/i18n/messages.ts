@@ -42,6 +42,9 @@ export const en = {
       contact: 'Contact',
       privacyStatement: 'Privacy statement',
     },
+    otherLinks: {
+      validateTokens: 'Validate tokens',
+    },
   },
   loading: 'Loading...',
   moreInformation: 'More information about {{text}}',
@@ -424,6 +427,9 @@ export const nl = {
       accessibilityStatement: 'Toegankelijkheid',
       contact: 'Contact',
       privacyStatement: 'Privacyverklaring',
+    },
+    otherLinks: {
+      validateTokens: 'Valideer tokens',
     },
   },
   loading: 'Laden...',
