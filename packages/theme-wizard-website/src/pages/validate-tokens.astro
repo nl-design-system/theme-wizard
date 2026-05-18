@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Valideer Thema - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <main slot="main" class="wizard-main">
+        <wizard-stack size="4xl">
+          <wizard-container>
+            <clippy-story-preview size="lg">
+              <clippy-heading level="1">Valideer je thema</clippy-heading>
+              <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard jouw thema (.json) valideren.</p>
+              <wizard-token-validation-form></wizard-token-validation-form>
+            </clippy-story-preview>
+          </wizard-container>
+        </wizard-stack>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-main {
+    padding-block: var(--basis-space-block-5xl);
+  }
+
+  wizard-container {
+    margin-inline: auto;
+  }
+</style>

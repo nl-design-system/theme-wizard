@@ -3,6 +3,7 @@ import { BasisTokensPage } from '../pages/BasisTokensPage';
 import { ComponentPage } from '../pages/ComponentPage';
 import { HomePage } from '../pages/HomePage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
+import { ValidateTokensPage } from '../pages/ValidateTokensPage';
 
 type MatcherResult =
   | {
@@ -70,6 +71,7 @@ export const test = baseTest.extend<{
   homePage: HomePage;
   stagingTokensPage: StagingTokensPage;
   componentPage: ComponentPage;
+  validateTokensPage: ValidateTokensPage;
 }>({
   basisTokensPage: async ({ page }, use) => {
     const themeWizard = new BasisTokensPage(page);
@@ -86,5 +88,9 @@ export const test = baseTest.extend<{
   stagingTokensPage: async ({ page }, use) => {
     const stagingTokensPage = new StagingTokensPage(page);
     await use(stagingTokensPage);
+  },
+  validateTokensPage: async ({ page }, use) => {
+    const validateTokensPage = new ValidateTokensPage(page);
+    await use(validateTokensPage);
   },
 });

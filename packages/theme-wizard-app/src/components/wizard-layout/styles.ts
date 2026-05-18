@@ -83,6 +83,7 @@ export default css`
    FOOTER
    ============================================ */
   .wizard-layout__footer {
+    align-items: start;
     background-color: var(--wizard-layout-nav-background-color);
     color: var(--basis-color-accent-1-inverse-color-default);
     column-gap: var(--basis-space-column-4xl);
@@ -98,12 +99,12 @@ export default css`
     }
 
     @container (inline-size > 44rem) {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
-    @container (inline-size > 80rem) {
+    @container (inline-size > 86rem) {
       column-gap: var(--basis-space-column-5xl);
-      grid-template-columns: repeat(auto-fit, 24rem);
+      grid-template-columns: repeat(auto-fit, fit-content);
     }
 
     :any-link {

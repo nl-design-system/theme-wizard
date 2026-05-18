@@ -72,6 +72,11 @@ export class WizardLayout extends LitElement {
               ${t('footer.colophon.accessibilityStatement')}
             </a>
           </nav>
+          <nav class="wizard-layout__footer-nav">
+            <a class="nl-link wizard-layout__footer-nav-link" href="/validate-tokens">
+              ${t('footer.otherLinks.validateTokens')}
+            </a>
+          </nav>
         </footer>
       </div>
     `;
