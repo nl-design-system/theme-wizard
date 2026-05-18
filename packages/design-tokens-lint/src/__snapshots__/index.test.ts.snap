@@ -3,7 +3,12 @@
 exports[`--help > --help exits 0 and prints help to stdout 1`] = `
 [
   "USAGE
-design-tokens-lint [options] <file>
+design-tokens-lint [options] <file> [files...]
+EXAMPLES
+design-tokens-lint tokens.json
+design-tokens-lint base.json theme.json
+design-tokens-lint --exclude-parent-keys figma/figma.tokens.json
+design-tokens-lint --out result.json tokens.json
 OPTIONS
 --exclude-parent-keys   Exclude parent keys from validation
 --out, -o <file>        Write output to file
@@ -16,7 +21,12 @@ OPTIONS
 exports[`--help > -h exits 0 and prints help to stdout 1`] = `
 [
   "USAGE
-design-tokens-lint [options] <file>
+design-tokens-lint [options] <file> [files...]
+EXAMPLES
+design-tokens-lint tokens.json
+design-tokens-lint base.json theme.json
+design-tokens-lint --exclude-parent-keys figma/figma.tokens.json
+design-tokens-lint --out result.json tokens.json
 OPTIONS
 --exclude-parent-keys   Exclude parent keys from validation
 --out, -o <file>        Write output to file
