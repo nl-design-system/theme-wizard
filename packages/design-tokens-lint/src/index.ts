@@ -5,15 +5,35 @@ import { validateTokens } from './validate.ts';
 // Use `stderr.write()` to write 'noise' (debug/verbose)
 // Use `stdout.write()` to write relevant data
 
+function help(): string {
+  return `
+${styleText('bold', 'USAGE')}
+  design-tokens-lint [options] <file>
+
+${styleText('bold', 'OPTIONS')}
+  --exclude-parent-keys   Exclude parent keys from validation
+  --out, -o <file>        Write output to file
+  --verbose               Print verbose output
+  --debug                 Print debug output
+  --help, -h              Show this help
+  `.trim()
+}
+
 const { positionals, values } = parseArgs({
   allowPositionals: true,
   options: {
     debug: { default: false, type: 'boolean' },
     'exclude-parent-keys': { default: false, type: 'boolean' },
+    help: { default: false, short: 'h', type: 'boolean' },
     out: { short: 'o', type: 'string' },
     verbose: { default: false, type: 'boolean' },
   },
 });
+
+if (values['help']) {
+  process.stdout.write(help() + '\n');
+  process.exit(0);
+}
 
 if (positionals.length === 0) {
   process.stderr.write('Error: no input file provided\nUsage: design-tokens-lint [options] <file>\n');
