@@ -9,16 +9,8 @@
     "nl-design-system"
   ],
   "type": "module",
-  "module": "./dist/index.mjs",
-  "types": "./dist/src/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/src/index.d.ts",
-      "import": "./dist/index.mjs"
-    }
-  },
   "bin": {
-    "theme-wizard-server": "./dist/server.js"
+    "design-tokens-lint": "./dist/index.js"
   },
   "files": [
     "dist/"
@@ -33,24 +25,18 @@
     "directory": "packages/design-tokens-lint"
   },
   "scripts": {
-    "start": "node src/index.ts",
-    "test": "pnpm run '/^test:.*/'",
-    "test:1": "node src/index.ts --exclude-parent-keys ma-tokens.json",
-    "test:2": "node src/index.ts tokens.json",
-    "test:invalid:small-text": "node src/index.ts test/invalid/small-text-complete.tokens.json",
-    "test:invalid:missing-multiple": "node src/index.ts test/valid/brand.tokens.json test/valid/component.tokens.json",
-    "test:invalid:low-contrast": "node src/index.ts test/invalid/low-contrast.tokens.json",
-    "test:invalid": "node src/index.ts test/invalid/tokens.json",
-    "test:valid": "node src/index.ts test/valid/tokens.json",
-    "test:multiple": "node src/index.ts --multiple test/valid/brand.tokens.json test/valid/component.tokens.json",
-    "test:vitest": "vitest",
-    "build": "tsc",
+    "test": "vitest run",
+    "build": "vite build",
     "clean": "rimraf dist/"
   },
   "devDependencies": {
-    "es-toolkit": "1.46.1",
+    "@gmrchk/cli-testing-library": "0.1.2",
+    "@nl-design-system-unstable/start-design-tokens": "5.1.0",
+    "ansivision": "0.2.7",
+    "dset": "3.1.4",
     "rimraf": "6.1.3",
     "typescript": "6.0.3",
+    "vite": "8.0.10",
     "vitest": "4.1.5"
   },
   "dependencies": {
