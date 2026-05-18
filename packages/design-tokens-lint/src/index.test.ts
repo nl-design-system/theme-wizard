@@ -18,7 +18,7 @@ it('exits 0 and prints success for valid tokens', async () => {
 
   expect(code).toBe(0);
   expect(stderr).toEqual([]);
-  const frames = await renderStringToFrames(stdout.join('\n'));
+  const frames = await renderStringToFrames(stdout.join(' '));
   expect(frames).toMatchSnapshot();
 
   await cleanup();
@@ -118,7 +118,7 @@ describe('--out', () => {
 
     expect(code).toBe(0);
     expect(stderr).toEqual([]);
-    const frames = await renderStringToFrames(stdout.join('\n'));
+    const frames = await renderStringToFrames(stdout.join(' '));
     expect(frames).toMatchSnapshot();
     const written = JSON.parse(await readFile('result.json'));
     expect(written.success).toBe(true);

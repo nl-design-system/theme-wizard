@@ -94,13 +94,18 @@ if (outPath) {
 }
 
 if (result.success) {
-  process.stdout.write(styleText('green', '✓ Tokens are valid\n'));
+  process.stdout.write(styleText('green', '✓'));
+  process.stdout.write(' No issues found\n');
   process.exit(0);
 }
 
+const issueWord = result.issues.length === 1 ? 'issue' : 'issues';
+process.stderr.write(styleText('red', `✗`));
+process.stderr.write(` ${result.issues.length} ${issueWord} found:\n`);
+
 for (const issue of result.issues) {
   const prefix = issue.path.length ? issue.path.join('.') + ': ' : '';
-  process.stderr.write(styleText('red', `✗ ${prefix}${issue.message}\n`));
+  process.stderr.write(`• ${prefix}${issue.message}\n`);
 }
 
 process.exit(1);
