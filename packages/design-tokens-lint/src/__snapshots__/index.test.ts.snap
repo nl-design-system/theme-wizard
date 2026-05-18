@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`design-tokens-lint CLI > exits 0 and prints success for valid tokens 1`] = `
+[
+  "✓ Tokens are valid",
+]
+`;
+
+exports[`design-tokens-lint CLI > exits 1 and prints issues for invalid tokens 1`] = `
+[
+  "✗ basis.color.transparent: Invalid token reference: can not find "this.does.not.exist"",
+]
+`;

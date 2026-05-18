@@ -1,105 +1,97 @@
-import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
-import { it, expect, afterEach } from 'vitest';
-import packageJSON from '../package.json' with { type: 'json' };
+import { prepareEnvironment } from '@gmrchk/cli-testing-library';
+import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
+import { renderStringToFrames } from 'ansivision';
+import { dset } from 'dset';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { describe, expect, it } from 'vitest';
 
-const command = Object.values(packageJSON.bin)[0];
-console.log('command', command);
-const startLintProcess = async (
-  args?: string[],
-): Promise<{
-  process: ChildProcessWithoutNullStreams;
-  output: string;
-  errorOutput: string;
-  started: boolean;
-  exitState: number;
-}> => {
-  const env = { ...process.env };
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const srcIndex = path.resolve(__dirname, 'index.ts');
+const nodeExec = process.execPath;
 
-  // Use process.execPath to get the absolute path to the Node.js executable
-  // This satisfies security requirements by avoiding PATH lookup while remaining
-  // cross-platform compatible (works with nvm, system Node, Docker, etc.)
-  const testProcess = spawn(process.execPath, [command], { env });
-  let stdoutData = '';
-  let stderrData = '';
-  let exitState = 0;
-  const started = false;
+describe('design-tokens-lint CLI', () => {
+  it('exits 0 and prints success for valid tokens', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    await writeFile('tokens.json', JSON.stringify(startTokens));
 
-  const startPromise = new Promise<void>((resolve) => {
-    testProcess.stdout?.on('data', (data) => {
-      stdoutData += data.toString();
-    });
-    testProcess.stderr?.on('data', (data) => {
-      stderrData += data.toString();
-    });
+    const { code, stderr, stdout } = await execute(nodeExec, `${srcIndex} tokens.json`);
 
-    testProcess.on('exit', (evt) => {
-      console.log('exit', evt);
-      if (typeof evt === 'number') {
-        exitState = evt;
-      }
-      resolve();
-    });
-    testProcess.on('close', () => {
-      console.log('close');
-      resolve();
-    });
-    testProcess.on('error', () => {
-      console.log('error');
-      resolve();
-    });
+    expect(code).toBe(0);
+    expect(stderr).toEqual([]);
+    const frames = await renderStringToFrames(stdout.join('\n'));
+    expect(frames).toMatchSnapshot();
+
+    await cleanup();
   });
 
-  const timeoutPromise = new Promise<void>((resolve) => {
-    setTimeout(resolve, 3000);
+  it('exits 1 and prints issues for invalid tokens', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+
+    // Create a bad tokens file
+    const bad = structuredClone(startTokens) as Record<string, unknown>;
+    dset(bad, 'basis.color.transparent.$value', '{this.does.not.exist}');
+    await writeFile('tokens.json', JSON.stringify(bad));
+
+    const { code, stderr, stdout } = await execute(nodeExec, `${srcIndex} tokens.json`);
+
+    expect(code).toBe(1);
+    expect(stderr.length).toBeGreaterThan(0);
+    const frames = await renderStringToFrames(stderr.join('\n'));
+    expect(frames).toMatchSnapshot();
+    expect(stdout).toEqual([]);
+
+    await cleanup();
   });
 
-  await Promise.race([startPromise, timeoutPromise]);
+  it('exits 1 with usage message when no file is given', async () => {
+    const { cleanup, execute } = await prepareEnvironment();
 
-  return { errorOutput: stderrData, exitState, output: stdoutData, process: testProcess, started };
-};
+    const { code, stderr } = await execute(nodeExec, srcIndex);
 
-const stopServer = async (testProcess: ChildProcessWithoutNullStreams): Promise<void> => {
-  testProcess.kill('SIGINT');
+    expect(code).toBe(1);
+    expect(stderr.join(' ')).toContain('no input file provided');
 
-  await new Promise<void>((resolve) => {
-    const exitHandler = () => {
-      testProcess.removeListener('exit', exitHandler);
-      resolve();
-    };
-    testProcess.on('exit', exitHandler);
-    setTimeout(() => {
-      testProcess.removeListener('exit', exitHandler);
-      resolve();
-    }, 2000);
+    await cleanup();
   });
-};
 
-let runningProcess: ChildProcessWithoutNullStreams | null = null;
+  it('--verbose writes step messages to stderr', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    await writeFile('tokens.json', JSON.stringify(startTokens));
 
-it('should start process to check a file', async () => {
-  const { output, process: testProcess, started } = await startLintProcess(['test/invalid/tokens.json']);
-  runningProcess = testProcess;
+    const { code, stderr } = await execute(nodeExec, `${srcIndex} --verbose tokens.json`);
 
-  expect(started).toBe(true);
-  expect(output).toContain('Starting Theme Wizard server...');
-  expect(output).toContain('http://[::]:9999');
+    expect(code).toBe(0);
+    expect(stderr.join(' ')).toContain('Loading:');
+    expect(stderr.join(' ')).toContain('Validating tokens');
 
-  await stopServer(testProcess);
-});
+    await cleanup();
+  });
 
-it('should execute with default port 8080 when PORT env is not set', async () => {
-  const { output, process: testProcess, started } = await startServer();
-  runningProcess = testProcess;
+  it('--debug writes intermediate JSON to stderr', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    // Use minimal tokens to avoid huge debug output overflowing the process buffer
+    const minimalTokens = { basis: { color: { transparent: { $type: 'color', $value: 'rgba(0,0,0,0)' } } } };
+    await writeFile('tokens.json', JSON.stringify(minimalTokens));
 
-  expect(started).toBe(true);
-  expect(output).toContain('Starting Theme Wizard server...');
-  expect(output).toContain('http://[::]:8080/');
+    const { code, stderr } = await execute(nodeExec, `${srcIndex} --debug tokens.json`);
 
-  await stopServer(testProcess);
-});
+    expect(code).toBe(0);
+    expect(stderr.join(' ')).toContain('Parsed JSON:');
+    expect(stderr.join(' ')).toContain('Validation result:');
 
-afterEach(() => {
-  if (runningProcess) {
-    stopServer(runningProcess);
-  }
+    await cleanup();
+  });
+
+  it('--exclude-parent-keys validates tokens wrapped in a layer', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    const layered = { 'my-layer': startTokens };
+    await writeFile('tokens.json', JSON.stringify(layered));
+
+    const { code } = await execute(nodeExec, `${srcIndex} --exclude-parent-keys tokens.json`);
+
+    expect(code).toBe(0);
+
+    await cleanup();
+  });
 });

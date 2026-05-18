@@ -1,80 +1,67 @@
-#!/usr/bin/env node
-import { type Theme, StrictThemeSchema } from '@nl-design-system-community/design-tokens-schema';
-import { merge } from 'es-toolkit/compat';
-import { readFile, writeFile } from 'node:fs/promises';
-import { parseArgs } from 'node:util';
+import { readFile } from 'node:fs/promises';
+import { parseArgs, styleText } from 'node:util';
+import { validateTokens } from './validate.ts';
+
+// 1. Use `console.error()` to write 'noise' (debug/verbose) to process.stderr
+// 2. Use `console.log()` to write relevant data to process.stdout
 
 const { positionals, values } = parseArgs({
   allowPositionals: true,
   options: {
-    debug: {
-      type: 'boolean',
-    },
-    'exclude-parent-keys': {
-      type: 'boolean',
-    },
-    /* Merge multiple JSON files into one */
-    multiple: {
-      type: 'boolean',
-    },
-    strict: {
-      type: 'boolean',
-    },
-    verbose: {
-      type: 'boolean',
-    },
+    debug: { default: false, type: 'boolean' },
+    'exclude-parent-keys': { default: false, type: 'boolean' },
+    verbose: { default: false, type: 'boolean' },
   },
 });
 
-let jsons: object[] = await Promise.all(
-  positionals.map(async (path) => {
-    console.log(`Loading: ${path}`);
-    return JSON.parse(await readFile(path, 'utf8'));
-  }),
-);
+if (positionals.length === 0) {
+  console.error('Error: no input file provided\nUsage: design-tokens-lint [options] <file>');
+  process.exit(1);
+}
+if (positionals.length > 1) {
+  console.error('Error: only one input file is supported');
+  process.exit(1);
+}
 
+const [filePath] = positionals;
 const verbose = values['verbose'];
 const debug = values['debug'];
 
-const excludeParentKeys = values['exclude-parent-keys'];
-
-if (values['multiple']) {
-  jsons = [merge({}, ...jsons)];
+if (verbose) {
+  console.error(`Loading: ${filePath}`);
 }
 
-jsons.forEach(async (json) => {
-  let tokens = json;
-  if (verbose) {
-    console.log('Checking JSON');
-  }
+let tokens: unknown;
+try {
+  tokens = JSON.parse(await readFile(filePath, 'utf8'));
+} catch {
+  console.error(`Error: could not read or parse: ${filePath}`);
+  process.exit(1);
+}
 
-  if (excludeParentKeys) {
-    tokens = merge(
-      {},
-      ...Object.entries(json as object)
-        .filter(([key]) => !key.startsWith('$'))
-        .map(([, value]) => value),
-    );
+if (debug) {
+  console.error(`Parsed JSON:\n${JSON.stringify(tokens, null, 2)}`);
+}
+if (values['exclude-parent-keys'] && verbose) {
+  console.error('Excluding parent keys');
+}
+if (verbose) {
+  console.error('Validating tokens');
+}
 
-    await writeFile('./tmp.json', JSON.stringify(tokens, null, 2));
-  }
+const result = validateTokens(tokens, { excludeParentKeys: values['exclude-parent-keys'] });
 
-  const strictConfig = StrictThemeSchema.safeParse(tokens) satisfies Theme;
+if (debug) {
+  console.error(`Validation result:\n${JSON.stringify(result, null, 2)}`);
+}
 
-  if (debug) {
-    console.log(strictConfig);
-  }
+if (result.success) {
+  console.log(styleText('green', '✓ Tokens are valid'));
+  process.exit(0);
+}
 
-  if (!strictConfig.success) {
-    const error = JSON.parse(strictConfig.error.message);
-    if (Array.isArray(error)) {
-      error.forEach((e) => {
-        process.stderr.write(e.message);
-        process.stderr.write('\n');
-      });
-    }
-    process.exit(1);
-  }
-});
-
-process.stderr.write('Everything is valid!\n');
+for (const issue of result.issues) {
+  const prefix = issue.path.length ? issue.path.join('.') + ': ' : '';
+  console.error(styleText('red', `✗ ${prefix}${issue.message}`));
+}
+process.exit(1);
