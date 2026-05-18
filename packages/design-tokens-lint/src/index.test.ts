@@ -94,4 +94,54 @@ describe('design-tokens-lint CLI', () => {
 
     await cleanup();
   });
+
+  it.each(['-o', '--out'])('%s writes result JSON to file on success', async (flag) => {
+    const { cleanup, execute, readFile, writeFile } = await prepareEnvironment();
+    await writeFile('tokens.json', JSON.stringify(startTokens));
+
+    const { code, stderr, stdout } = await execute(nodeExec, `${srcIndex} ${flag} result.json tokens.json`);
+
+    expect(code).toBe(0);
+    expect(stderr).toEqual([]);
+    const frames = await renderStringToFrames(stdout.join('\n'));
+    expect(frames).toMatchSnapshot();
+    const written = JSON.parse(await readFile('result.json'));
+    expect(written.success).toBe(true);
+
+    await cleanup();
+  });
+
+  it('--out writes result JSON with issues on failure', async () => {
+    const { cleanup, execute, readFile, writeFile } = await prepareEnvironment();
+    const bad = structuredClone(startTokens) as Record<string, unknown>;
+    dset(bad, 'basis.color.transparent.$value', '{this.does.not.exist}');
+    await writeFile('tokens.json', JSON.stringify(bad));
+
+    const { code, stderr, stdout } = await execute(nodeExec, `${srcIndex} --out result.json tokens.json`);
+
+    expect(code).toBe(1);
+    expect(stderr.length).toBeGreaterThan(0);
+    expect(stdout).toEqual([]);
+    const written = JSON.parse(await readFile('result.json'));
+    expect(written.success).toBe(false);
+    expect(written.issues.length).toBeGreaterThan(0);
+
+    await cleanup();
+  });
+
+  it('--out exits 1 when output path is not writable', async () => {
+    const { cleanup, execute, writeFile } = await prepareEnvironment();
+    await writeFile('tokens.json', JSON.stringify(startTokens));
+
+    const { code, stderr, stdout } = await execute(
+      nodeExec,
+      `${srcIndex} --out /nonexistent/dir/result.json tokens.json`,
+    );
+
+    expect(code).toBe(1);
+    expect(stderr.join(' ')).toContain('could not write output file');
+    expect(stdout).toEqual([]);
+
+    await cleanup();
+  });
 });
