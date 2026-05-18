@@ -1,24 +1,50 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`design-tokens-lint CLI > --out writes result JSON to file on success 1`] = `
+exports[`--help > --help exits 0 and prints help to stdout 1`] = `
+[
+  "USAGE
+design-tokens-lint [options] <file>
+OPTIONS
+--exclude-parent-keys   Exclude parent keys from validation
+--out, -o <file>        Write output to file
+--verbose               Print verbose output
+--debug                 Print debug output
+--help, -h              Show this help",
+]
+`;
+
+exports[`--help > -h exits 0 and prints help to stdout 1`] = `
+[
+  "USAGE
+design-tokens-lint [options] <file>
+OPTIONS
+--exclude-parent-keys   Exclude parent keys from validation
+--out, -o <file>        Write output to file
+--verbose               Print verbose output
+--debug                 Print debug output
+--help, -h              Show this help",
+]
+`;
+
+exports[`--out > --out writes result JSON to file on success 1`] = `
 [
   "✓ Tokens are valid",
 ]
 `;
 
-exports[`design-tokens-lint CLI > -o writes result JSON to file on success 1`] = `
+exports[`--out > -o writes result JSON to file on success 1`] = `
 [
   "✓ Tokens are valid",
 ]
 `;
 
-exports[`design-tokens-lint CLI > exits 0 and prints success for valid tokens 1`] = `
+exports[`exits 0 and prints success for valid tokens 1`] = `
 [
   "✓ Tokens are valid",
 ]
 `;
 
-exports[`design-tokens-lint CLI > exits 1 and prints issues for invalid tokens 1`] = `
+exports[`exits 1 and prints issues for invalid tokens 1`] = `
 [
   "✗ basis.color.transparent: Invalid token reference: can not find "this.does.not.exist"",
 ]
