@@ -16,7 +16,7 @@ ${styleText('bold', 'OPTIONS')}
   --verbose               Print verbose output
   --debug                 Print debug output
   --help, -h              Show this help
-  `.trim()
+  `.trim();
 }
 
 const { positionals, values } = parseArgs({
@@ -39,6 +39,7 @@ if (positionals.length === 0) {
   process.stderr.write('Error: no input file provided\nUsage: design-tokens-lint [options] <file>\n');
   process.exit(1);
 }
+
 if (positionals.length > 1) {
   process.stderr.write('Error: only one input file is supported\n');
   process.exit(1);
@@ -64,9 +65,11 @@ try {
 if (debug) {
   process.stderr.write(`Parsed JSON:\n${JSON.stringify(tokens, null, 2)}\n`);
 }
+
 if (values['exclude-parent-keys'] && verbose) {
   process.stderr.write('Excluding parent keys\n');
 }
+
 if (verbose) {
   process.stderr.write('Validating tokens\n');
 }
@@ -81,6 +84,7 @@ if (outPath) {
   if (verbose) {
     process.stderr.write(`Writing output: ${outPath}\n`);
   }
+
   try {
     await writeFile(outPath, JSON.stringify(result, null, 2), 'utf8');
   } catch {
@@ -98,4 +102,5 @@ for (const issue of result.issues) {
   const prefix = issue.path.length ? issue.path.join('.') + ': ' : '';
   process.stderr.write(styleText('red', `✗ ${prefix}${issue.message}\n`));
 }
+
 process.exit(1);
