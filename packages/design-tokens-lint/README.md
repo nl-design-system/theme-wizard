@@ -30,7 +30,7 @@ design-tokens-lint --exclude-parent-keys figma/figma.tokens.json
 
 ### Write output to file
 
-Write output to file instead of stderr/stdout. This works for both successful and failed validations. In case of success the entire tokens tree is written, including additional NLDS extensions and upgraded tokens that match [the spec](https://www.designtokens.org/tr/2025.10/format/). In case of failure the issues are written to file as JSON.
+Write output to file instead of stderr/stdout. This works for both successful and failed validations. In case of success the entire tokens tree is written, including additional NL Design System extensions and upgraded tokens that match [the Design Tokens JSON format](https://www.designtokens.org/tr/2025.10/format/). In case of failure the issues are written to file as JSON.
 
 ```shell
 design-tokens-lint --out result.json src/tokens.json
