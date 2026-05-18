@@ -28,24 +28,26 @@ OPTIONS
 
 exports[`--out > --out writes result JSON to file on success 1`] = `
 [
-  "✓ Tokens are valid",
+  "✓ No issues found",
 ]
 `;
 
 exports[`--out > -o writes result JSON to file on success 1`] = `
 [
-  "✓ Tokens are valid",
+  "✓ No issues found",
 ]
 `;
 
 exports[`exits 0 and prints success for valid tokens 1`] = `
 [
-  "✓ Tokens are valid",
+  "✓ No issues found",
 ]
 `;
 
 exports[`exits 1 and prints issues for invalid tokens 1`] = `
 [
-  "✗ basis.color.transparent: Invalid token reference: can not find "this.does.not.exist"",
+  "✗
+1 issue found:
+• basis.color.transparent: Invalid token reference: can not find "this.does.not.exist"",
 ]
 `;
