@@ -1,5 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`design-tokens-lint CLI > --out writes result JSON to file on success 1`] = `
+[
+  "✓ Tokens are valid",
+]
+`;
+
+exports[`design-tokens-lint CLI > -o writes result JSON to file on success 1`] = `
+[
+  "✓ Tokens are valid",
+]
+`;
+
 exports[`design-tokens-lint CLI > exits 0 and prints success for valid tokens 1`] = `
 [
   "✓ Tokens are valid",
