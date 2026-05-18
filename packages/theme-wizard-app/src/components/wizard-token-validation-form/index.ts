@@ -1,5 +1,5 @@
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
-import { StrictThemeSchema, excludeParentKeys } from '@nl-design-system-community/design-tokens-schema';
+import { StrictThemeSchema, excludeParentKeys, mergeTokens } from '@nl-design-system-community/design-tokens-schema';
 import checkboxCss from '@utrecht/checkbox-css/dist/index.css?inline';
 import formFieldCss from '@utrecht/form-field-css/dist/index.css?inline';
 import formLabelCss from '@utrecht/form-label-css/dist/index.css?inline';
@@ -41,10 +41,14 @@ export class WizardTokenValidationForm extends LitElement {
   private readonly handleSubmit = async (event: SubmitEvent) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget as HTMLFormElement);
-    const file = data.get('input-file') as File | null;
-    if (!file) return;
+    const files = data.getAll('input-file') as File[];
+    if (files.length === 0) {
+      return;
+    }
 
-    let tokens = JSON.parse(await file.text());
+    const fileTexts = await Promise.all(files.map((file) => file.text()));
+    const tokenGroups = fileTexts.map((text) => JSON.parse(text));
+    let tokens = mergeTokens(tokenGroups);
     if (data.get('exclude-parent-keys')) {
       tokens = excludeParentKeys(tokens);
     }
@@ -96,7 +100,15 @@ export class WizardTokenValidationForm extends LitElement {
               <div class="utrecht-form-field__label">
                 <label for="input-file" class="utrecht-form-label">${t('tokenValidationForm.fileInput.label')}</label>
               </div>
-              <input type="file" class="wizard-file-input" required accept=".json" id="input-file" name="input-file" />
+              <input
+                type="file"
+                class="wizard-file-input"
+                required
+                multiple
+                accept=".json"
+                id="input-file"
+                name="input-file"
+              />
             </div>
 
             <div class="utrecht-form-field utrecht-form-field--checkbox">

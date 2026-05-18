@@ -11,13 +11,21 @@ pnpm add @nl-design-system-community/design-tokens-lint
 ## Usage
 
 ```shell
-design-tokens-lint [options] <file>
+design-tokens-lint [options] <file> [files...]
 ```
 
 ### Validate a tokens file
 
 ```shell
 design-tokens-lint src/tokens.json
+```
+
+### Validate multiple files
+
+Multiple files are deep-merged in order before validation. Later files overwrite earlier ones on conflict.
+
+```shell
+design-tokens-lint base.json theme.json overrides.json
 ```
 
 ### Tokens Studio

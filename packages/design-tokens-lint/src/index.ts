@@ -1,3 +1,4 @@
+import { mergeTokens } from '@nl-design-system-community/design-tokens-schema';
 import { readFile, writeFile } from 'node:fs/promises';
 import { parseArgs, styleText } from 'node:util';
 import { validateTokens } from './validate.ts';
@@ -8,7 +9,13 @@ import { validateTokens } from './validate.ts';
 function help(): string {
   return `
 ${styleText('bold', 'USAGE')}
-  design-tokens-lint [options] <file>
+  design-tokens-lint [options] <file> [files...]
+
+${styleText('bold', 'EXAMPLES')}
+  design-tokens-lint tokens.json
+  design-tokens-lint base.json theme.json
+  design-tokens-lint --exclude-parent-keys figma/figma.tokens.json
+  design-tokens-lint --out result.json tokens.json
 
 ${styleText('bold', 'OPTIONS')}
   --exclude-parent-keys   Exclude parent keys from validation
@@ -36,31 +43,30 @@ if (values['help']) {
 }
 
 if (positionals.length === 0) {
-  process.stderr.write('Error: no input file provided\nUsage: design-tokens-lint [options] <file>\n');
+  process.stderr.write('Error: no input files provided\nUsage: design-tokens-lint [options] <file> [files...]\n');
   process.exit(1);
 }
 
-if (positionals.length > 1) {
-  process.stderr.write('Error: only one input file is supported\n');
-  process.exit(1);
-}
-
-const [filePath] = positionals;
 const verbose = values['verbose'];
 const debug = values['debug'];
 const outPath = values['out'];
 
-if (verbose) {
-  process.stderr.write(`Loading: ${filePath}\n`);
+const tokenGroups: Record<string, unknown>[] = [];
+for (const filePath of positionals) {
+  if (verbose) {
+    process.stderr.write(`Loading: ${filePath}\n`);
+  }
+
+  try {
+    const text = await readFile(filePath, 'utf8');
+    tokenGroups.push(JSON.parse(text));
+  } catch {
+    process.stderr.write(`Error: could not read or parse: ${filePath}\n`);
+    process.exit(1);
+  }
 }
 
-let tokens: unknown;
-try {
-  tokens = JSON.parse(await readFile(filePath, 'utf8'));
-} catch {
-  process.stderr.write(`Error: could not read or parse: ${filePath}\n`);
-  process.exit(1);
-}
+const tokens = mergeTokens(tokenGroups);
 
 if (debug) {
   process.stderr.write(`Parsed JSON:\n${JSON.stringify(tokens, null, 2)}\n`);

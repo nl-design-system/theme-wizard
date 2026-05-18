@@ -49,7 +49,22 @@ it('exits 1 with usage message when no file is given', async () => {
   const { code, stderr } = await execute(nodeExec, srcIndex);
 
   expect(code).toBe(1);
-  expect(stderr.join(' ')).toContain('no input file provided');
+  expect(stderr.join(' ')).toContain('no input files provided');
+
+  await cleanup();
+});
+
+it('merges multiple files and exits 0 when all are valid', async () => {
+  const { cleanup, execute, writeFile } = await prepareEnvironment();
+  const half = Object.fromEntries(Object.entries(startTokens).slice(0, 1));
+  const other = Object.fromEntries(Object.entries(startTokens).slice(1));
+  await writeFile('a.json', JSON.stringify(half));
+  await writeFile('b.json', JSON.stringify(other));
+
+  const { code, stderr } = await execute(nodeExec, `${srcIndex} a.json b.json`);
+
+  expect(code).toBe(0);
+  expect(stderr).toEqual([]);
 
   await cleanup();
 });
