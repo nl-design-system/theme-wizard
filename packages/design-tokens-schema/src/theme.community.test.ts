@@ -17,7 +17,9 @@ describe('source files', () => {
     it('errors', () => {
       const result = StrictThemeSchema.safeParse(purmerendTokens);
       expect(result.success).toEqual(false);
-      expect(result.error?.issues).toHaveLength(9);
+      // Purmerend is missing many required color groups (invalid_type),
+      // has outdated color keys (unrecognized_keys), and legacy color formats (invalid_union)
+      expect(result.error?.issues).toHaveLength(156);
     });
 
     it('has outdated color names', () => {
@@ -47,8 +49,13 @@ describe('source files', () => {
         ['basis', 'color', 'warning-inverse'],
       ];
 
+      // Filter to unrecognized_keys at color group level (path length 3)
+      const colorGroupIssues = result.error?.issues.filter(
+        (i) => i.code === 'unrecognized_keys' && i.path[0] === 'basis' && i.path[1] === 'color' && i.path.length === 3,
+      );
+
       for (let index = 0; index < expectedErrorPaths.length; index++) {
-        expect(result.error?.issues[index]).toMatchObject({
+        expect(colorGroupIssues?.[index]).toMatchObject({
           code: 'unrecognized_keys',
           keys: expectedErroneousKeys,
           message: `Unrecognized keys: ${expectedErroneousKeys.map((key) => '"' + key + '"').join(', ')}`,
@@ -60,7 +67,11 @@ describe('source files', () => {
     it('has outdated color group names', () => {
       // Purmerend uses .text, .error for color names, instead of .default and .negative
       const result = StrictThemeSchema.safeParse(purmerendTokens);
-      expect(result.error?.issues[result.error.issues.length - 1]).toEqual({
+      // Find the unrecognized_keys issue at ['basis', 'color'] (wrong color group names)
+      const colorGroupNamesIssue = result.error?.issues.find(
+        (i) => i.code === 'unrecognized_keys' && i.path.length === 2 && i.path[0] === 'basis' && i.path[1] === 'color',
+      );
+      expect(colorGroupNamesIssue).toEqual({
         code: 'unrecognized_keys',
         keys: [
           'text',
@@ -87,13 +98,19 @@ describe('source files', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(leidenSourceTokens));
       expect(result.success).toBe(false);
 
-      // Leiden's only flaw is that they have defined `common.basis.color.box-shadow: { $type: 'color' }`
-      expect(result.error?.issues).toHaveLength(1);
+      expect(result.error?.issues).toHaveLength(2);
       expect(result.error?.issues[0]).toEqual({
         code: 'unrecognized_keys',
         keys: ['box-shadow'],
         message: 'Unrecognized key: "box-shadow"',
         path: ['basis', 'color'],
+      });
+      // Leiden defines a 'more-space' line-height variant not in the schema
+      expect(result.error?.issues[1]).toEqual({
+        code: 'unrecognized_keys',
+        keys: ['more-space'],
+        message: 'Unrecognized key: "more-space"',
+        path: ['basis', 'text', 'line-height'],
       });
     });
   });
@@ -103,14 +120,16 @@ describe('dist files', () => {
   it('Leiden theme', () => {
     const result = StrictThemeSchema.safeParse(leidenTokens);
     expect(result.success).toEqual(false);
-    expect(result.error?.issues).toHaveLength(1);
+    expect(result.error?.issues).toHaveLength(2);
     expect(result.error?.issues[0].code).toBe('unrecognized_keys');
+    expect(result.error?.issues[1].code).toBe('unrecognized_keys');
   });
 
   it('Purmerend theme', () => {
     const result = StrictThemeSchema.safeParse(purmerendTokens);
     expect(result.success).toEqual(false);
-    // Similar to the the source file tests above, Purmerend only has issues with outdated keys
-    expect(result.error?.issues.every((issue) => issue.code === 'unrecognized_keys')).toBe(true);
+    // Purmerend is missing required color groups (invalid_type),
+    // has legacy color formats (invalid_union), and outdated color keys (unrecognized_keys)
+    expect(result.error?.issues).toHaveLength(156);
   });
 });

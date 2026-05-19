@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { BrandsSchema, BrandSchema, BasisTokensSchema, BasisColorSchema } from './basis-tokens';
+import { BrandsSchema, BrandSchema, BasisTokensSchema, BasisColorSchema, BASIS_COLOR_NAMES, COLOR_KEYS } from './basis-tokens';
+
+const modernWhite = { $type: 'color', $value: { alpha: 1, colorSpace: 'srgb', components: [1, 1, 1] } };
+const validColorName = Object.fromEntries(COLOR_KEYS.map((key) => [key, modernWhite]));
+const validBasisColor = {
+  ...Object.fromEntries(BASIS_COLOR_NAMES.map((name) => [name, validColorName])),
+  transparent: modernWhite,
+};
 
 describe('brand', () => {
   it('no brands present', () => {
@@ -58,7 +65,7 @@ describe('brand', () => {
       const config = {
         color: {},
       };
-      expect(BrandSchema.safeParse(config).success).toBeFalsy();
+      expect(BrandSchema.safeParse(config).success).toBeTruthy();
     });
 
     it('incorrect name type', () => {
@@ -192,13 +199,13 @@ describe('brand', () => {
 });
 
 describe('basis', () => {
-  it('basis config allows unknown properties', () => {
-    expect(BasisTokensSchema.safeParse({ unknownField: {} }).success).toBeTruthy();
+  it('basis config does not allow unknown properties', () => {
+    expect(BasisTokensSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
   });
 
   describe('color', () => {
     it('allows known color names', () => {
-      expect(BasisColorSchema.safeParse({ 'accent-1': {} }).success).toBeTruthy();
+      expect(BasisColorSchema.safeParse(validBasisColor).success).toBeTruthy();
     });
 
     it('does not allow unknown properties', () => {
@@ -206,13 +213,10 @@ describe('basis', () => {
     });
 
     it('allows references to other tokens in the schema', () => {
-      const config = {
-        default: {
-          'bg-document': {
-            $type: 'color',
-            $value: '{brand.ma.color.indigo.1}',
-          },
-        },
+      const config = structuredClone(validBasisColor) as Record<string, Record<string, unknown>>;
+      config['default']['bg-document'] = {
+        $type: 'color',
+        $value: '{brand.ma.color.indigo.1}',
       };
       const result = BasisColorSchema.safeParse(config);
       expect.soft(result.success).toEqual(true);

@@ -1,4 +1,6 @@
 import Color from 'colorjs.io';
+import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
+import { dset } from 'dset';
 import { describe, it, expect, expectTypeOf } from 'vitest';
 import { StrictThemeSchema } from '../theme';
 import {
@@ -91,22 +93,14 @@ describe('color token validation', () => {
 
   describe('legacy color preprocessing (via theme schema)', () => {
     it('upgrade legacy color to modern (via theme)', () => {
-      const config = {
-        basis: {
-          color: {
-            'accent-1': {
-              'bg-default': {
-                $type: 'color',
-                $value: '#f00',
-              },
-            },
-          },
-        },
-      };
+      // Use disabled group (skips basis contrast validation).
+      // Use only the basis portion to avoid component-token contrast checks.
+      const config = { basis: structuredClone((startTokens as Record<string, unknown>)['basis']) };
+      dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: '#f00' });
       const result = StrictThemeSchema.safeParse(config);
 
       expect(result.success).toBeTruthy();
-      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+      expect(result.data?.basis?.color?.['disabled']?.['bg-default']?.$value).toEqual({
         alpha: 1,
         colorSpace: 'srgb',
         components: [1, 0, 0],
@@ -114,21 +108,12 @@ describe('color token validation', () => {
     });
 
     it('convert `transparent` to fully transparent black (via theme)', () => {
-      const config = {
-        basis: {
-          color: {
-            'accent-1': {
-              'bg-default': {
-                $type: 'color',
-                $value: 'transparent',
-              },
-            },
-          },
-        },
-      };
+      // Use disabled group which skips contrast validation
+      const config = structuredClone(startTokens);
+      dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: 'transparent' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBeTruthy();
-      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+      expect(result.data?.basis?.color?.['disabled']?.['bg-default']?.$value).toEqual({
         alpha: 0,
         colorSpace: 'srgb',
         components: [0, 0, 0],
@@ -136,21 +121,12 @@ describe('color token validation', () => {
     });
 
     it('convert `rgba(0, 0, 0, 0)` to fully transparent black (via theme)', () => {
-      const config = {
-        basis: {
-          color: {
-            'accent-1': {
-              'bg-default': {
-                $type: 'color',
-                $value: 'rgba(0, 0, 0, 0)',
-              },
-            },
-          },
-        },
-      };
+      // Use disabled group which skips contrast validation
+      const config = structuredClone(startTokens);
+      dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: 'rgba(0, 0, 0, 0)' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBeTruthy();
-      expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+      expect(result.data?.basis?.color?.['disabled']?.['bg-default']?.$value).toEqual({
         alpha: 0,
         colorSpace: 'srgb',
         components: [0, 0, 0],
