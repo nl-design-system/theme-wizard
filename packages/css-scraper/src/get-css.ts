@@ -54,7 +54,7 @@ export const getImportUrls = (css: string): string[] => {
 const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number) => {
   // TODO: pass error cause
   if (error instanceof Error) {
-    if (error.name === 'AbortError') {
+    if (error.name === 'TimeoutError') {
       throw new TimeoutError(url, timeout);
     }
 
@@ -240,16 +240,13 @@ export const getCssResources = async (
     throw new InvalidUrlError(url);
   }
 
-  // Setup a timeout and abortcontroller so we can stop in-flight fetch requests when we've crossed the timeout limit
-  const abortController = new AbortController();
-  const timeoutId = setTimeout(() => abortController.abort(), timeout);
+  const signal = AbortSignal.timeout(timeout);
 
   try {
-    const response = await fetchHtml(resolvedUrl, abortController.signal, userAgent);
+    const response = await fetchHtml(resolvedUrl, signal, userAgent);
     let body = response.body;
 
     if (response.contentType?.includes('text/css')) {
-      clearTimeout(timeoutId);
       return [
         {
           css: body,
@@ -264,12 +261,8 @@ export const getCssResources = async (
     }
 
     const resources = getCssFromHtml(body, resolvedUrl);
-    const result = processResources(resources, abortController.signal, userAgent);
-
-    clearTimeout(timeoutId);
-    return result;
+    return processResources(resources, signal, userAgent);
   } catch (error: unknown) {
-    clearTimeout(timeoutId);
     handleFetchError(error, resolvedUrl, timeout);
     return [];
   }

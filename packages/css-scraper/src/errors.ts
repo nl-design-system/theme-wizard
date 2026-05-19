@@ -4,7 +4,7 @@ export type UrlLike = URL | string;
 
 export class ScrapingError extends Error {
   // @ts-expect-error This is a private, unused field
-  private url: UrlLike;
+  private readonly url: UrlLike;
 
   constructor(message: string, url: UrlLike) {
     super(message);

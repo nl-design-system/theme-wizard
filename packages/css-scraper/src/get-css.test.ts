@@ -247,7 +247,7 @@ describe('getCssResources', () => {
     });
 
     it('TimeoutError', async () => {
-      (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
+      (fetch as Mock).mockRejectedValueOnce(new DOMException('signal timed out', 'TimeoutError'));
       await expect(getCssResources('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
     });
   });
@@ -291,7 +291,7 @@ describe('getCss', () => {
   });
 
   it('custom timeout with TimeoutError', async () => {
-    (fetch as Mock).mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'));
+    (fetch as Mock).mockRejectedValueOnce(new DOMException('signal timed out', 'TimeoutError'));
     await expect(getCss('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
   });
 
