@@ -207,7 +207,7 @@ describe('getCssResources', () => {
 
   describe('errors', () => {
     it('InvalidUrlError', async () => {
-      await expect(getCssResources('')).rejects.toThrowError(InvalidUrlError);
+      await expect(getCssResources('')).rejects.toThrow(InvalidUrlError);
     });
 
     it('NotFoundError', async () => {
@@ -216,7 +216,7 @@ describe('getCssResources', () => {
         status: 404,
         statusText: 'Not Found',
       });
-      await expect(getCssResources('http://example.com')).rejects.toThrowError(NotFoundError);
+      await expect(getCssResources('http://example.com')).rejects.toThrow(NotFoundError);
     });
 
     it('ForbiddenError', async () => {
@@ -225,7 +225,7 @@ describe('getCssResources', () => {
         status: 403,
         statusText: 'Forbidden',
       });
-      await expect(getCssResources('http://example.com')).rejects.toThrowError(ForbiddenError);
+      await expect(getCssResources('http://example.com')).rejects.toThrow(ForbiddenError);
     });
 
     it('ConnectionRefusedError', async () => {
@@ -234,7 +234,7 @@ describe('getCssResources', () => {
         status: 400,
         statusText: 'fetch failed',
       });
-      await expect(getCssResources('http://example.com')).rejects.toThrowError(ConnectionRefusedError);
+      await expect(getCssResources('http://example.com')).rejects.toThrow(ConnectionRefusedError);
     });
 
     it('ConnectionRefusedError (localhost)', async () => {
@@ -243,12 +243,24 @@ describe('getCssResources', () => {
         status: 400,
         statusText: 'fetch failed',
       });
-      await expect(getCssResources('http://localhost:8080')).rejects.toThrowError(ConnectionRefusedError);
+      await expect(getCssResources('http://localhost:8080')).rejects.toThrow(ConnectionRefusedError);
     });
 
     it('TimeoutError', async () => {
       (fetch as Mock).mockRejectedValueOnce(new DOMException('signal timed out', 'TimeoutError'));
-      await expect(getCssResources('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
+      await expect(getCssResources('http://example.com/style.css', { timeout: 0 })).rejects.toThrow(TimeoutError);
+    });
+
+    it('returns [] when fetch throws a non-Error', async () => {
+      (fetch as Mock).mockRejectedValueOnce('network failure');
+      const result = await getCssResources('http://example.com');
+      expect(result).toEqual([]);
+    });
+
+    it('returns [] when fetch throws an Error with unrecognized message', async () => {
+      (fetch as Mock).mockRejectedValueOnce(new Error('503 Service Unavailable'));
+      const result = await getCssResources('http://example.com');
+      expect(result).toEqual([]);
     });
   });
 });
@@ -292,7 +304,7 @@ describe('getCss', () => {
 
   it('custom timeout with TimeoutError', async () => {
     (fetch as Mock).mockRejectedValueOnce(new DOMException('signal timed out', 'TimeoutError'));
-    await expect(getCss('http://example.com/style.css', { timeout: 0 })).rejects.toThrowError(TimeoutError);
+    await expect(getCss('http://example.com/style.css', { timeout: 0 })).rejects.toThrow(TimeoutError);
   });
 
   it('accepts both custom user agent and timeout options', async () => {
@@ -648,6 +660,10 @@ describe('getImportUrls', () => {
     it.each(imports)('%s', (imprt) => {
       expect(getImportUrls(imprt)).toEqual(['test.css']);
     });
+  });
+
+  it('skips @import with a null URL value (unterminated string)', () => {
+    expect(getImportUrls('@import url("unterminated)')).toEqual([]);
   });
 
   describe('invalid CSS cases that we do not care about', () => {
