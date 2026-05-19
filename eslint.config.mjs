@@ -5,6 +5,7 @@ import vitest from '@vitest/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import perfectionist from 'eslint-plugin-perfectionist';
 import react from 'eslint-plugin-react';
+import sonarjs from 'eslint-plugin-sonarjs';
 import eslintPluginZod from 'eslint-plugin-zod';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
@@ -86,6 +87,14 @@ export default defineConfig([
   {
     name: 'eslint-plugin-zod',
     ...eslintPluginZod.configs.recommended,
+  },
+  {
+    name: 'eslint-plugin-sonarjs',
+    files: ['**/*.{js,cjs,mjs,jsx,ts,tsx}'],
+    ...sonarjs.configs.recommended,
+    rules: {
+      'sonarjs/todo-tag': 0,
+    },
   },
   {
     name: '@vitest',
