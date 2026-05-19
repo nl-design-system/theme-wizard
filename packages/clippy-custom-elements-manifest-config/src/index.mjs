@@ -60,29 +60,29 @@ export default {
     },
 
     // Translate module paths to dist/ instead of src/
-    {
-      name: 'clippy-translate-module-paths',
-      packageLinkPhase({ customElementsManifest }) {
-        customElementsManifest?.modules?.forEach((mod) => {
-          const terms = [{ from: /^src\//, to: 'dist/' }];
+    // {
+    //   name: 'clippy-translate-module-paths',
+    //   packageLinkPhase({ customElementsManifest }) {
+    //     customElementsManifest?.modules?.forEach((mod) => {
+    //       const terms = [{ from: /^src\//, to: 'dist/' }];
 
-          mod.path = replace(mod.path, terms);
+    //       mod.path = replace(mod.path, terms);
 
-          for (const ex of mod.exports ?? []) {
-            ex.declaration.module = replace(ex.declaration.module, terms);
-          }
+    //       for (const ex of mod.exports ?? []) {
+    //         ex.declaration.module = replace(ex.declaration.module, terms);
+    //       }
 
-          for (const dec of mod.declarations ?? []) {
-            if (dec.kind === 'class') {
-              for (const member of dec.members ?? []) {
-                if (member.inheritedFrom) {
-                  member.inheritedFrom.module = replace(member.inheritedFrom.module, terms);
-                }
-              }
-            }
-          }
-        });
-      },
-    },
+    //       for (const dec of mod.declarations ?? []) {
+    //         if (dec.kind === 'class') {
+    //           for (const member of dec.members ?? []) {
+    //             if (member.inheritedFrom) {
+    //               member.inheritedFrom.module = replace(member.inheritedFrom.module, terms);
+    //             }
+    //           }
+    //         }
+    //       }
+    //     });
+    //   },
+    // },
   ],
 };
