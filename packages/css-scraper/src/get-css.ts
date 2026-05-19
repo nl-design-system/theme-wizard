@@ -21,10 +21,6 @@ import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback.js';
 
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
-// TODO: add test coverage for else if branch on line 187
-// and remove this ignore file comment
-/* v8 ignore file -- @preserve */
-
 const unquote = (input: string = ''): string => {
   return input.replaceAll(/(^['"])|(['"]$)/g, '');
 };
@@ -51,7 +47,7 @@ export const getImportUrls = (css: string): string[] => {
   return urls;
 };
 
-const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number) => {
+const handleFetchError = (error: unknown, url: UrlLike, timeout: number) => {
   // TODO: pass error cause
   if (error instanceof Error) {
     if (error.name === 'TimeoutError') {
@@ -68,7 +64,6 @@ const handleFetchError = (error: unknown | Error, url: UrlLike, timeout: number)
       throw new ConnectionRefusedError(url);
     }
 
-    // TODO: add test cases for this
     if (message === 'Not Found') {
       throw new NotFoundError(url);
     }
@@ -155,8 +150,7 @@ export const getCssFromHtml = (
         url: url.toString(),
       };
       resources.push(styleResource);
-      /* v8 ignore next -- @preserve */
-    } else if (node.hasAttribute('style')) {
+    } else {
       let declarations = (node.getAttribute('style') || '').trim();
       // Avoid processing empty style attributes
       if (declarations.length === 0) continue;
