@@ -1,7 +1,7 @@
 import type { ClippyHeading } from '@nl-design-system-community/clippy-components/clippy-heading';
 import type { ArgTypes, Meta, StoryObj } from '@storybook/web-components-vite';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-// import '@nl-design-system-community/clippy-components/src/clippy-heading/clippy-heading.custom-element.js';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-heading/README.md?raw';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 const { args, argTypes, template } = getStorybookHelpers<ClippyHeading>('clippy-heading');
@@ -26,7 +26,13 @@ const meta: Meta<ClippyHeading & typeof args> = {
     },
   },
   component: 'clippy-heading',
-
+  parameters: {
+    docs: {
+      description: {
+        component: readme,
+      },
+    },
+  },
   render: (args) => template(args),
   title: 'clippy/Heading',
 };

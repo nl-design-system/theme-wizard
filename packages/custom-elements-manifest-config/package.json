@@ -1,8 +1,8 @@
 {
-  "name": "@nl-design-system-community/clippy-custom-elements-manifest-config",
+  "name": "@nl-design-system-community/custom-elements-manifest-config",
   "version": "1.0.0",
   "author": "Community for NL Design System",
-  "description": "Custom elements manifest config for Clippy Components",
+  "description": "Custom elements manifest config for Web Components",
   "license": "EUPL-1.2",
   "keywords": [
     "expertteam-digitale-toegankelijkheid",
@@ -17,7 +17,7 @@
   "repository": {
     "type": "git+ssh",
     "url": "git@github.com:nl-design-system/theme-wizard.git",
-    "directory": "packages/clippy-custom-elements-manifest-config"
+    "directory": "packages/custom-elements-manifest-config"
   },
   "scripts": {
     "lint": "pnpm run --sequential '/^lint:.+$/'",
