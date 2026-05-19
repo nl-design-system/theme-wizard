@@ -1,14 +1,20 @@
-import { safeCustomElement } from '@lib/decorators';
+import { ClippyElement } from '@lib/clippy-element';
 import headingCss from '@nl-design-system-candidate/heading-css/heading.css?inline';
-import { LitElement, unsafeCSS } from 'lit';
+import { unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { html, unsafeStatic } from 'lit/static-html.js';
 
 const tag = 'clippy-heading';
 
-@safeCustomElement(tag)
-export class ClippyHeading extends LitElement {
+/**
+ * ClippyHeading
+ * @element clippy-heading
+ * @slot - Slot to place the text in
+ */
+export class ClippyHeading extends ClippyElement {
   @property({ type: Number }) level = 1;
+
+  static override readonly tagName = tag;
 
   static override readonly styles = [unsafeCSS(headingCss)];
 
@@ -19,6 +25,7 @@ export class ClippyHeading extends LitElement {
   }
 }
 
+ClippyHeading.define();
 declare global {
   interface HTMLElementTagNameMap {
     [tag]: ClippyHeading;
