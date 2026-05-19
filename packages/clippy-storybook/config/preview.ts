@@ -1,15 +1,19 @@
 import type { Preview } from '@storybook/web-components-vite';
 import type { StorybookHelpersOptions } from '@wc-toolkit/storybook-helpers';
-import customElementsManifest from '@nl-design-system-community/clippy-components/dist/custom-elements.json' with { type: 'json' };
+import customElementsManifest from '@nl-design-system-community/clippy-components/custom-elements.json' with { type: 'json' };
 // import { DocsPage } from '../src/DocsPage';
 import '@nl-design-system-community/theme-wizard-app/theme.css';
 // import { StoryRootDecorator } from '@nl-design-system-candidate/storybook-shared/src/StoryRootDecorator';
 import { formatHtml } from '@rijkshuisstijl-community/storybook-tooling/formatHtml';
 import { setCustomElementsManifest } from '@storybook/web-components-vite';
+import { setStorybookHelpersConfig } from '@wc-toolkit/storybook-helpers';
 import { addThemeClasses } from './decorators';
 import { THEMES } from './themes/theme-data';
 
 setCustomElementsManifest(customElementsManifest);
+
+const wcToolkitStorybookHelpersOptions: StorybookHelpersOptions = {};
+setStorybookHelpersConfig(wcToolkitStorybookHelpersOptions);
 
 const preview: Preview = {
   decorators: [
@@ -40,7 +44,7 @@ const preview: Preview = {
     },
   },
   parameters: {
-    controls: { expanded: false },
+    controls: { expanded: true },
     docs: {
       canvas: {
         sourceState: 'shown',

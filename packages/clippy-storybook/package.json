@@ -52,6 +52,7 @@
     "@utrecht/component-library-css": "9.0.11",
     "@utrecht/component-library-react": "14.0.0",
     "@utrecht/web-component-library-react": "4.0.4",
+    "@wc-toolkit/storybook-helpers": "10.3.0",
     "@whitespace/storybook-addon-html": "9.0.0",
     "lit": "3.3.2",
     "prettier": "3.8.3",

@@ -321,6 +321,9 @@ importers:
       '@utrecht/web-component-library-react':
         specifier: 4.0.4
         version: 4.0.4(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@wc-toolkit/storybook-helpers':
+        specifier: 10.3.0
+        version: 10.3.0(lit@3.3.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
       '@whitespace/storybook-addon-html':
         specifier: 9.0.0
         version: 9.0.0(prettier@3.8.3)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
@@ -4295,6 +4298,12 @@ packages:
 
   '@vscode/l10n@0.0.18':
     resolution: {integrity: sha512-KYSIHVmslkaCDyw013pphY+d7x1qV8IZupYfeIfzNA+nsaWHbn5uPuQRvdRFsa9zFzGeudPuoGoZ1Op4jrJXIQ==}
+
+  '@wc-toolkit/storybook-helpers@10.3.0':
+    resolution: {integrity: sha512-eMZfFVRFcgZREgt37/yQpHOEV7Vdoi2//akT65cdat0jk9yT4f2/AL8696BnRDkJvr3wup6irZSawarg+8bpXg==}
+    peerDependencies:
+      lit: ^2.0.0 || ^3.0.0
+      storybook: '>=10.1.11-0 <11.0.0-0'
 
   '@wc-toolkit/type-parser@1.2.0':
     resolution: {integrity: sha512-d1Vsf4bk3+fIzca14Mtg5h9rZxOATLv5V9r0KArgJYIc59HiegkyII9v4SnVw55hBVSD0j3O7RMuCAprU5572A==}
@@ -12249,6 +12258,11 @@ snapshots:
       vscode-uri: 3.1.0
 
   '@vscode/l10n@0.0.18': {}
+
+  '@wc-toolkit/storybook-helpers@10.3.0(lit@3.3.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
+    dependencies:
+      lit: 3.3.2
+      storybook: 10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
 
   '@wc-toolkit/type-parser@1.2.0': {}
 

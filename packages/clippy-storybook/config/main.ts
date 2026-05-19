@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/react-vite';
+import type { StorybookConfig } from '@storybook/web-components-vite';
 import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
@@ -11,16 +11,16 @@ const config: StorybookConfig = {
     defaultName: 'Documentatie',
   },
   framework: {
-    name: '@storybook/react-vite',
+    name: '@storybook/web-components-vite',
     options: {},
   },
   stories: ['../src/**/*stories.@(ts|tsx)', '../docs/**/*.mdx'],
   typescript: {
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      // Only scan component files in the patterns and templates folder
-      include: ['../src/pattterns/**', '../src/templates/**'],
-    },
+    // reactDocgen: 'react-docgen-typescript',
+    // reactDocgenTypescriptOptions: {
+    //   // Only scan component files in the patterns and templates folder
+    //   include: ['../src/pattterns/**', '../src/templates/**'],
+    // },
   },
   viteFinal: async (config) =>
     mergeConfig(config, {
