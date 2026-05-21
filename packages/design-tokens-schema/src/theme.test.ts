@@ -11,7 +11,9 @@ import { BrandSchema, COLOR_KEYS } from './basis-tokens';
 import { EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import {
   type Theme,
+  ThemeSchema,
   StrictThemeSchema,
+  addBasisContrastExtensions,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_COLOR_SCALE_POSITION,
   type ContrastExtension,
@@ -174,6 +176,14 @@ describe('adding contrast-with extensions', () => {
       undefined,
     );
   });
+
+  it('skips extension when background token is absent from config', () => {
+    // color-document IS in the CONTRAST map (needs bg-subtle), but bg-subtle is not set
+    const config: Record<string, unknown> = {};
+    dset(config, 'basis.color.default.color-document', { $type: 'color', $value: parseColor('#000') });
+    addBasisContrastExtensions(config);
+    expect(dlv(config, 'basis.color.default.color-document.$extensions')?.[EXTENSION_CONTRAST_WITH]).toBeUndefined();
+  });
 });
 
 describe('resolving Design Token refs', () => {
@@ -304,6 +314,36 @@ describe('Style Dictionary specifics', () => {
       colorSpace: 'srgb',
       components: [1, 1, 1],
     });
+  });
+});
+
+describe('ThemeSchema (non-strict preprocessing)', () => {
+  const modernWhite = { alpha: 1, colorSpace: 'srgb', components: [1, 1, 1] };
+
+  it('replaces token.$value with token.original.$value', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = {};
+    dset(config, 'ma.color.white', {
+      $type: 'color',
+      $value: modernWhite,
+      original: { $type: 'color', $value: '{ma.color.indigo.1}' },
+    });
+    const result = ThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+    expect(dlv(result.data, 'ma.color.white.$value')).toBe('{ma.color.indigo.1}');
+  });
+
+  it('does not mutate the input', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = {};
+    dset(config, 'ma.color.white', {
+      $type: 'color',
+      $value: modernWhite,
+      original: { $type: 'color', $value: '{ma.color.indigo.1}' },
+    });
+    const originalValue = structuredClone(config.ma.color.white.$value);
+    ThemeSchema.safeParse(config);
+    expect(config.ma.color.white.$value).toEqual(originalValue);
   });
 });
 
