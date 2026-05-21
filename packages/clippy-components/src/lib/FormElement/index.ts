@@ -19,7 +19,7 @@ export class FormElement<V = string> extends LitElement {
     converter: (value) => {
       if (typeof value !== 'string') {
         console.error(
-          `Reimplement value setter with property decorator. The inherited implementation only supports string values by design.`,
+          'Reimplement value setter with property decorator. The inherited implementation only supports string values by design.',
         );
         return null;
       }

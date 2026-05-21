@@ -53,7 +53,7 @@ export const Button: Story = {
   parameters: {
     docs: {
       description: {
-        story: `Een standaard Button`,
+        story: 'Een standaard Button',
       },
     },
     editableTokens: {
@@ -495,7 +495,7 @@ export const DesignButtonBorders: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Er is 1 instelling voor de border-radius van alle soorten buttons.`,
+        story: 'Er is 1 instelling voor de border-radius van alle soorten buttons.',
       },
     },
     editableTokens: {
@@ -542,7 +542,7 @@ export const DesignButtonTypography: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Buttons op 'n rijtje.`,
+        story: "Buttons op 'n rijtje.",
       },
     },
     editableTokens: {
@@ -612,7 +612,7 @@ export const DesignButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een standaard Button, met hover en active states.`,
+        story: 'Een standaard Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -669,7 +669,7 @@ export const DesignPrimaryButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Primary Button, met hover en active states.`,
+        story: 'Een Primary Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -726,7 +726,7 @@ export const DesignSecondaryButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Secondary Button, met hover en active states.`,
+        story: 'Een Secondary Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -783,7 +783,7 @@ export const DesignSubtleButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Subtle Button, met hover en active states.`,
+        story: 'Een Subtle Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -841,7 +841,7 @@ export const DesignPrimaryPositiveButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Primary Positive Button, met hover en active states.`,
+        story: 'Een Primary Positive Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -900,7 +900,7 @@ export const DesignSecondaryPositiveButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Secondary Positive Button, met hover en active states.`,
+        story: 'Een Secondary Positive Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -959,7 +959,7 @@ export const DesignSubtlePositiveButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Subtle Positive Button, met hover en active states.`,
+        story: 'Een Subtle Positive Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -1019,7 +1019,7 @@ export const DesignPrimaryNegativeButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Primary Negative Button, met hover en active states.`,
+        story: 'Een Primary Negative Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -1078,7 +1078,7 @@ export const DesignSecondaryNegativeButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Secondary Negative Button, met hover en active states.`,
+        story: 'Een Secondary Negative Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -1137,7 +1137,7 @@ export const DesignSubtleNegativeButtonStates: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een Subtle Negative Button, met hover en active states.`,
+        story: 'Een Subtle Negative Button, met hover en active states.',
       },
     },
     editableTokens: {
@@ -1217,7 +1217,7 @@ export const DesignPrimaryButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `... `,
+        story: '... ',
       },
     },
     editableTokens: {
@@ -1521,7 +1521,7 @@ export const DesignFocusButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `...`,
+        story: '...',
       },
     },
     editableTokens: {
@@ -1579,7 +1579,7 @@ export const DesignDisabledButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `...`,
+        story: '...',
       },
     },
     editableTokens: {
@@ -1617,7 +1617,7 @@ export const DesignPrimaryDisabledButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte Primary Button.`,
+        story: 'Een ingedrukte Primary Button.',
       },
     },
     editableTokens: {
@@ -1656,7 +1656,7 @@ export const DesignSecondaryDisabledButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte Secondary Button`,
+        story: 'Een ingedrukte Secondary Button',
       },
     },
     editableTokens: {
@@ -1695,7 +1695,7 @@ export const DesignSubtleDisabledButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte Subtle Button.`,
+        story: 'Een ingedrukte Subtle Button.',
       },
     },
     editableTokens: {
@@ -1733,7 +1733,7 @@ export const AlleenEenIcon: Story = {
   parameters: {
     docs: {
       description: {
-        story: `Een button met alleen een icon. Het label is niet zichtbaar, maar wel aanwezig voor toegankelijkheid.`,
+        story: 'Een button met alleen een icon. Het label is niet zichtbaar, maar wel aanwezig voor toegankelijkheid.',
       },
     },
   },
@@ -1750,7 +1750,8 @@ export const DesignAlleenEenIcon: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een button met alleen een icon. Als de icon niet in het midden staat, dan moet je mogelijk een kleinere padding kiezen.`,
+        story:
+          'Een button met alleen een icon. Als de icon niet in het midden staat, dan moet je mogelijk een kleinere padding kiezen.',
       },
     },
     editableTokens: {
@@ -1804,7 +1805,7 @@ export const IconVoorHetLabel: Story = {
   parameters: {
     docs: {
       description: {
-        story: `Een button met een icon voor het label`,
+        story: 'Een button met een icon voor het label',
       },
     },
     editableTokens: {
@@ -1833,7 +1834,7 @@ export const IconAchterHetLabel: Story = {
   parameters: {
     docs: {
       description: {
-        story: `Een button met een icon achter het label`,
+        story: 'Een button met een icon achter het label',
       },
     },
     editableTokens: {
@@ -1900,7 +1901,7 @@ export const PressedButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: `Een ingedrukte Button.`,
+        story: 'Een ingedrukte Button.',
       },
     },
   },
@@ -1916,7 +1917,7 @@ export const DesignPressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte Button.`,
+        story: 'Een ingedrukte Button.',
       },
     },
     editableTokens: {
@@ -1954,7 +1955,7 @@ export const DesignPrimaryPressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte Primary Button.`,
+        story: 'Een ingedrukte Primary Button.',
       },
     },
     editableTokens: {
@@ -1993,7 +1994,7 @@ export const DesignSecondaryPressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte Secondary Button`,
+        story: 'Een ingedrukte Secondary Button',
       },
     },
     editableTokens: {
@@ -2032,7 +2033,7 @@ export const DesignSubtlePressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte Subtle Button.`,
+        story: 'Een ingedrukte Subtle Button.',
       },
     },
     editableTokens: {
@@ -2071,7 +2072,7 @@ export const DesignPrimaryPositiveButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte positieve Primary Button.`,
+        story: 'Een ingedrukte positieve Primary Button.',
       },
     },
     editableTokens: {
@@ -2130,7 +2131,7 @@ export const DesignPrimaryNegativeButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte negative Primary Button.`,
+        story: 'Een ingedrukte negative Primary Button.',
       },
     },
     editableTokens: {
@@ -2189,7 +2190,7 @@ export const DesignSecondaryPositiveButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte positieve Secondary Button.`,
+        story: 'Een ingedrukte positieve Secondary Button.',
       },
     },
     editableTokens: {
@@ -2248,7 +2249,7 @@ export const DesignSecondaryNegativeButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte negative Secondary Button.`,
+        story: 'Een ingedrukte negative Secondary Button.',
       },
     },
     editableTokens: {
@@ -2307,7 +2308,7 @@ export const DesignSubtlePositiveButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte positieve Subtle Button.`,
+        story: 'Een ingedrukte positieve Subtle Button.',
       },
     },
     editableTokens: {
@@ -2366,7 +2367,7 @@ export const DesignSubtleNegativeButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte negative Subtle Button.`,
+        story: 'Een ingedrukte negative Subtle Button.',
       },
     },
     editableTokens: {
@@ -2426,7 +2427,7 @@ export const DesignPrimaryPositivePressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte positieve Primary Button.`,
+        story: 'Een ingedrukte positieve Primary Button.',
       },
     },
     editableTokens: {
@@ -2489,7 +2490,7 @@ export const DesignPrimaryNegativePressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte negative Primary Button.`,
+        story: 'Een ingedrukte negative Primary Button.',
       },
     },
     editableTokens: {
@@ -2552,7 +2553,7 @@ export const DesignSecondaryPositivePressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte positieve Secondary Button.`,
+        story: 'Een ingedrukte positieve Secondary Button.',
       },
     },
     editableTokens: {
@@ -2615,7 +2616,7 @@ export const DesignSecondaryNegativePressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte negative Secondary Button.`,
+        story: 'Een ingedrukte negative Secondary Button.',
       },
     },
     editableTokens: {
@@ -2678,7 +2679,7 @@ export const DesignSubtlePositivePressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte positieve Subtle Button.`,
+        story: 'Een ingedrukte positieve Subtle Button.',
       },
     },
     editableTokens: {
@@ -2741,7 +2742,7 @@ export const DesignSubtleNegativePressedButton: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Een ingedrukte negative Subtle Button.`,
+        story: 'Een ingedrukte negative Subtle Button.',
       },
     },
     editableTokens: {
@@ -2801,7 +2802,8 @@ export const VolleBreedte: Story = {
   parameters: {
     docs: {
       description: {
-        story: `De parent van een button kan de breedte van de button bepalen. De button schaalt mee met de beschikbare ruimte.`,
+        story:
+          'De parent van een button kan de breedte van de button bepalen. De button schaalt mee met de beschikbare ruimte.',
       },
     },
 
@@ -2862,7 +2864,7 @@ export const DesignButtonSize: Story = {
   parameters: {
     docs: {
       description: {
-        story: `..`,
+        story: '..',
       },
     },
     editableTokens: {

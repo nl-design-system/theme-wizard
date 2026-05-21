@@ -24,7 +24,7 @@ export const Code: Story = Stories.Code;
 export const DesignCodeTypography: Story = {
   name: 'Design: Code Typography',
   args: {
-    children: `import { Code } from '@nl-design-system-candidate/code-react';`,
+    children: "import { Code } from '@nl-design-system-candidate/code-react';",
   },
   parameters: {
     designStory: true,
@@ -43,7 +43,7 @@ export const DesignCodeTypography: Story = {
 export const DesignCodeColor: Story = {
   name: 'Design: Code Color',
   args: {
-    children: `import { Code } from '@nl-design-system-candidate/code-react';`,
+    children: "import { Code } from '@nl-design-system-candidate/code-react';",
   },
   parameters: {
     designStory: true,

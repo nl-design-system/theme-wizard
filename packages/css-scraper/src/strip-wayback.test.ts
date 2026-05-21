@@ -29,7 +29,7 @@ describe('isWaybackUrl', () => {
   });
 });
 
-describe(`removeWaybackInsertions`, () => {
+describe('removeWaybackInsertions', () => {
   it('removes toolbar html', () => {
     const html = `
       <!doctype>

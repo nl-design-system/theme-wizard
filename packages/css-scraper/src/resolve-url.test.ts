@@ -15,7 +15,7 @@ describe('valid urls', () => {
     ['example.com/path?query=1#fragment', new URL('https://example.com/path?query=1#fragment')],
   ];
 
-  it.each(fixtures)(`%s => %s}`, (input, expected) => {
+  it.each(fixtures)('%s => %s}', (input, expected) => {
     expect(resolveUrl(input)).toEqual(expected);
   });
 
@@ -49,7 +49,7 @@ describe('valid urls', () => {
 
 describe('invalid urls', () => {
   const fixtures: string[] = ['', 'example', '//example.com', 'a { color: red; } b { font-size: 12px; }'];
-  it.each(fixtures)(`%s`, (input) => {
+  it.each(fixtures)('%s', (input) => {
     expect(resolveUrl(input)).toBeUndefined();
   });
 });
