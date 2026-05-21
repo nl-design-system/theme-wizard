@@ -7,8 +7,12 @@ import { templateToHtml } from '../utils/templateToHtml';
 
 const OPTIONS: ClippyTokenComboboxOption[] = [
   {
-    label: 'test.token',
+    label: 'test.token.1',
     value: { type: 'color', value: '#000000' },
+  },
+  {
+    label: 'test.token.2',
+    value: { type: 'color', value: '#ff0000' },
   },
 ];
 

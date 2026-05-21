@@ -141,6 +141,9 @@ importers:
       '@nl-design-system-candidate/skip-link-tokens':
         specifier: 1.0.4
         version: 1.0.4
+      '@projectwallace/css-parser':
+        specifier: 0.15.0
+        version: 0.15.0
       '@tabler/icons':
         specifier: 3.41.1
         version: 3.41.1
