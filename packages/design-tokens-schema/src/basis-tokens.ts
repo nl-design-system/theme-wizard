@@ -16,10 +16,12 @@ export type ColorOrColorScale = z.infer<typeof ColorOrColorScaleSchema>;
 const ColorIdentifierSchema = BaseDesignTokenIdentifierSchema;
 
 export const BrandSchema = z.looseObject({
-  name: z.looseObject({
-    $type: z.literal('text'),
-    $value: z.string().trim(),
-  }),
+  name: z
+    .looseObject({
+      $type: z.literal('text'),
+      $value: z.string().trim(),
+    })
+    .optional(),
   color: z.record(ColorIdentifierSchema, ColorOrColorScaleSchema).optional(),
 });
 export type Brand = z.infer<typeof BrandSchema>;
@@ -56,7 +58,7 @@ export const COLOR_KEYS = [...BACKGROUND_COLOR_KEYS, ...BORDER_COLOR_KEYS, ...FO
 export type ColorNameKey = (typeof COLOR_KEYS)[number];
 
 export const ColorNameSchema = z.strictObject(
-  Object.fromEntries(COLOR_KEYS.map((key) => [key, ColorTokenValidationSchema.optional()])),
+  Object.fromEntries(COLOR_KEYS.map((key) => [key, ColorTokenValidationSchema])),
 );
 export type ColorName = z.infer<typeof ColorNameSchema>;
 
@@ -119,92 +121,81 @@ export const BASIS_COLOR_NAMES = [
 ];
 
 export const BasisColorSchema = z
-  .strictObject(Object.fromEntries(BASIS_COLOR_NAMES.map((key) => [key, ColorNameSchema.optional()])))
+  .strictObject(Object.fromEntries(BASIS_COLOR_NAMES.map((key) => [key, ColorNameSchema])))
   .extend({
-    transparent: ColorTokenValidationSchema.optional(),
+    transparent: ColorTokenValidationSchema,
   });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
-export const FontSizeScaleSchema = z.looseObject({
+export const FontSizeScaleSchema = z.strictObject({
   /* eslint-disable perfectionist/sort-objects */
-  sm: DimensionTokenSchema.optional(),
-  md: DimensionTokenSchema.optional(),
-  lg: DimensionTokenSchema.optional(),
-  xl: DimensionTokenSchema.optional(),
-  '2xl': DimensionTokenSchema.optional(),
-  '3xl': DimensionTokenSchema.optional(),
-  '4xl': DimensionTokenSchema.optional(),
+  sm: DimensionTokenSchema,
+  md: DimensionTokenSchema,
+  lg: DimensionTokenSchema,
+  xl: DimensionTokenSchema,
+  '2xl': DimensionTokenSchema,
+  '3xl': DimensionTokenSchema,
+  '4xl': DimensionTokenSchema,
 });
 
-export const BasisTextSchema = z.looseObject({
-  'font-family': z
-    .looseObject({
-      default: FontFamilyTokenSchema.optional(),
-      monospace: FontFamilyTokenSchema.optional(),
-    })
-    .optional(),
-  'font-size': FontSizeScaleSchema.optional(),
-  'font-weight': z
-    .looseObject({
-      default: NumberTokenSchema.optional(),
-      bold: NumberTokenSchema.optional(),
-    })
-    .optional(),
-  'line-height': z
-    .looseObject({
-      /* eslint-disable perfectionist/sort-objects */
-      sm: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
-      md: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
-      lg: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
-      xl: z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
-      '2xl': z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
-      '3xl': z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
-      '4xl': z.union([DimensionTokenSchema, NumberTokenSchema]).optional(),
-    })
-    .optional(),
+export const BasisTextSchema = z.strictObject({
+  'font-family': z.strictObject({
+    default: FontFamilyTokenSchema,
+    monospace: FontFamilyTokenSchema,
+  }),
+  'font-size': FontSizeScaleSchema,
+  'font-weight': z.strictObject({
+    default: NumberTokenSchema,
+    bold: NumberTokenSchema,
+  }),
+  'line-height': z.strictObject({
+    /* eslint-disable perfectionist/sort-objects */
+    sm: z.union([DimensionTokenSchema, NumberTokenSchema]),
+    md: z.union([DimensionTokenSchema, NumberTokenSchema]),
+    lg: z.union([DimensionTokenSchema, NumberTokenSchema]),
+    xl: z.union([DimensionTokenSchema, NumberTokenSchema]),
+    '2xl': z.union([DimensionTokenSchema, NumberTokenSchema]),
+    '3xl': z.union([DimensionTokenSchema, NumberTokenSchema]),
+    '4xl': z.union([DimensionTokenSchema, NumberTokenSchema]),
+  }),
 });
 
 export const FormControlStateSchema = z.looseObject({
-  'accent-color': ColorTokenValidationSchema.optional(),
-  'background-color': ColorTokenValidationSchema.optional(),
-  'border-color': ColorTokenValidationSchema.optional(),
-  color: ColorTokenValidationSchema.optional(),
+  'background-color': ColorTokenValidationSchema,
+  'border-color': ColorTokenValidationSchema,
+  color: ColorTokenValidationSchema,
 });
 export type FormControlState = z.infer<typeof FormControlStateSchema>;
 
 export const BasisTokensSchema = z.looseObject({
-  color: BasisColorSchema.optional(),
+  color: BasisColorSchema,
   // action: z.strictObject({}),
   // 'border-radius': z.strictObject({}),
   // 'border-width': z.strictObject({}),
   // 'box-shadow': z.strictObject({}),
-  // dataset: z.strictObject({}),
   // focus: z.strictObject({}),
-  'form-control': z
-    .looseObject({
-      ...BasisTextSchema.shape,
-      ...FormControlStateSchema.shape,
-      active: FormControlStateSchema.optional(),
-      disabled: FormControlStateSchema.optional(),
-      focus: FormControlStateSchema.optional(),
-      'font-family': FontFamilyTokenSchema.optional(),
-      hover: FormControlStateSchema.optional(),
-      invalid: FormControlStateSchema.optional(),
-      placeholder: z
-        .looseObject({
-          color: ColorTokenValidationSchema.optional(),
-        })
-        .optional(),
-      'read-only': FormControlStateSchema.optional(),
-    })
-    .optional(),
-  heading: z
-    .looseObject({
-      'font-size': FontSizeScaleSchema.optional(),
-      'font-family': FontFamilyTokenSchema.optional(),
-      color: ColorTokenValidationSchema.optional(),
-    })
-    .optional(),
+  'form-control': z.looseObject({
+    ...BasisTextSchema.shape,
+    ...FormControlStateSchema.shape,
+    active: FormControlStateSchema,
+    disabled: FormControlStateSchema,
+    focus: FormControlStateSchema,
+    'font-family': FontFamilyTokenSchema,
+    'font-size': DimensionTokenSchema,
+    'font-weight': NumberTokenSchema,
+    'line-height': z.union([DimensionTokenSchema, NumberTokenSchema]),
+    hover: FormControlStateSchema,
+    invalid: FormControlStateSchema,
+    placeholder: z.strictObject({
+      color: ColorTokenValidationSchema,
+    }),
+    'read-only': FormControlStateSchema,
+  }),
+  heading: z.strictObject({
+    color: ColorTokenValidationSchema,
+    'font-family': FontFamilyTokenSchema,
+    'font-weight': NumberTokenSchema,
+  }),
   // page: z.strictObject({}),
   // 'pointer-target': z.strictObject({}),
   // size: z.strictObject({}),
@@ -215,6 +206,6 @@ export const BasisTokensSchema = z.looseObject({
   //   row: {},
   //   text: {},
   // }),
-  text: BasisTextSchema.optional(),
+  text: BasisTextSchema,
 });
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;

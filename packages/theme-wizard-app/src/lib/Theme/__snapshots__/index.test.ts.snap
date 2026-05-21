@@ -19461,8 +19461,6 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "font-size": {
         "key": "{basis.form-control.font-size}",
-        "$type": "dimension",
-        "$value": "1rem",
         "$extensions": {
           "studio.tokens": {
             "originalType": "fontSizes"
@@ -19473,9 +19471,9 @@ exports[`Theme > can export to JSON token file 1`] = `
             "unit": "rem"
           }
         },
+        "$type": "dimension",
+        "$value": "1rem",
         "original": {
-          "$type": "dimension",
-          "$value": "{basis.text.font-size.md}",
           "$extensions": {
             "studio.tokens": {
               "originalType": "fontSizes"
@@ -19486,6 +19484,8 @@ exports[`Theme > can export to JSON token file 1`] = `
               "unit": "rem"
             }
           },
+          "$type": "dimension",
+          "$value": "{basis.text.font-size.md}",
           "key": "{basis.form-control.font-size}"
         },
         "name": "font-size",
@@ -19498,8 +19498,6 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "font-weight": {
         "key": "{basis.form-control.font-weight}",
-        "$type": "fontWeight",
-        "$value": 400,
         "$extensions": {
           "studio.tokens": {
             "originalType": "fontWeights"
@@ -19507,9 +19505,9 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 400
         },
+        "$type": "fontWeight",
+        "$value": 400,
         "original": {
-          "$type": "fontWeight",
-          "$value": "{basis.text.font-weight.default}",
           "$extensions": {
             "studio.tokens": {
               "originalType": "fontWeights"
@@ -19517,6 +19515,8 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 400
           },
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.default}",
           "key": "{basis.form-control.font-weight}"
         },
         "name": "font-weight",
@@ -19529,8 +19529,6 @@ exports[`Theme > can export to JSON token file 1`] = `
       },
       "line-height": {
         "key": "{basis.form-control.line-height}",
-        "$type": "lineHeight",
-        "$value": 1.5,
         "$extensions": {
           "studio.tokens": {
             "originalType": "lineHeights"
@@ -19538,9 +19536,9 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.token-subtype": "line-height",
           "nl.nldesignsystem.value-resolved-as": 1.5
         },
+        "$type": "lineHeight",
+        "$value": 1.5,
         "original": {
-          "$type": "lineHeight",
-          "$value": "{basis.text.line-height.md}",
           "$extensions": {
             "studio.tokens": {
               "originalType": "lineHeights"
@@ -19548,6 +19546,8 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.token-subtype": "line-height",
             "nl.nldesignsystem.value-resolved-as": 1.5
           },
+          "$type": "lineHeight",
+          "$value": "{basis.text.line-height.md}",
           "key": "{basis.form-control.line-height}"
         },
         "name": "line-height",
@@ -19556,45 +19556,6 @@ exports[`Theme > can export to JSON token file 1`] = `
           "basis",
           "form-control",
           "line-height"
-        ]
-      },
-      "accent-color": {
-        "key": "{basis.form-control.accent-color}",
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0.10588235294117647,
-              0.34901960784313724,
-              0.6431372549019608
-            ]
-          }
-        },
-        "$type": "color",
-        "$value": "#1b59a4",
-        "original": {
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.10588235294117647,
-                0.34901960784313724,
-                0.6431372549019608
-              ]
-            }
-          },
-          "$type": "color",
-          "$value": "{basis.color.action-1.color-default}",
-          "key": "{basis.form-control.accent-color}"
-        },
-        "name": "accent-color",
-        "attributes": {},
-        "path": [
-          "basis",
-          "form-control",
-          "accent-color"
         ]
       },
       "background-color": {
@@ -19721,46 +19682,6 @@ exports[`Theme > can export to JSON token file 1`] = `
         ]
       },
       "active": {
-        "accent-color": {
-          "key": "{basis.form-control.active.accent-color}",
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0.23137254901960785,
-                0.5058823529411764
-              ]
-            }
-          },
-          "$type": "color",
-          "$value": "#003b81",
-          "original": {
-            "$extensions": {
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0,
-                  0.23137254901960785,
-                  0.5058823529411764
-                ]
-              }
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1.color-active}",
-            "key": "{basis.form-control.active.accent-color}"
-          },
-          "name": "accent-color",
-          "attributes": {},
-          "path": [
-            "basis",
-            "form-control",
-            "active",
-            "accent-color"
-          ]
-        },
         "background-color": {
           "key": "{basis.form-control.active.background-color}",
           "$extensions": {
@@ -19887,6 +19808,46 @@ exports[`Theme > can export to JSON token file 1`] = `
             "color"
           ]
         },
+        "accent-color": {
+          "key": "{basis.form-control.active.accent-color}",
+          "$type": "color",
+          "$value": "#003b81",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0.23137254901960785,
+                0.5058823529411764
+              ]
+            }
+          },
+          "original": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.color-active}",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0.23137254901960785,
+                  0.5058823529411764
+                ]
+              }
+            },
+            "key": "{basis.form-control.active.accent-color}"
+          },
+          "name": "accent-color",
+          "attributes": {},
+          "path": [
+            "basis",
+            "form-control",
+            "active",
+            "accent-color"
+          ]
+        },
         "border-width": {
           "key": "{basis.form-control.active.border-width}",
           "$type": "dimension",
@@ -19921,46 +19882,6 @@ exports[`Theme > can export to JSON token file 1`] = `
         }
       },
       "disabled": {
-        "accent-color": {
-          "key": "{basis.form-control.disabled.accent-color}",
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.9450980392156862,
-                0.9450980392156862,
-                0.9450980392156862
-              ]
-            }
-          },
-          "$type": "color",
-          "$value": "#f1f1f1",
-          "original": {
-            "$extensions": {
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.9450980392156862,
-                  0.9450980392156862,
-                  0.9450980392156862
-                ]
-              }
-            },
-            "$type": "color",
-            "$value": "{basis.color.disabled.bg-default}",
-            "key": "{basis.form-control.disabled.accent-color}"
-          },
-          "name": "accent-color",
-          "attributes": {},
-          "path": [
-            "basis",
-            "form-control",
-            "disabled",
-            "accent-color"
-          ]
-        },
         "background-color": {
           "key": "{basis.form-control.disabled.background-color}",
           "$extensions": {
@@ -20085,6 +20006,46 @@ exports[`Theme > can export to JSON token file 1`] = `
             "form-control",
             "disabled",
             "color"
+          ]
+        },
+        "accent-color": {
+          "key": "{basis.form-control.disabled.accent-color}",
+          "$type": "color",
+          "$value": "#f1f1f1",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.9450980392156862,
+                0.9450980392156862,
+                0.9450980392156862
+              ]
+            }
+          },
+          "original": {
+            "$type": "color",
+            "$value": "{basis.color.disabled.bg-default}",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.9450980392156862,
+                  0.9450980392156862,
+                  0.9450980392156862
+                ]
+              }
+            },
+            "key": "{basis.form-control.disabled.accent-color}"
+          },
+          "name": "accent-color",
+          "attributes": {},
+          "path": [
+            "basis",
+            "form-control",
+            "disabled",
+            "accent-color"
           ]
         }
       },
@@ -20249,46 +20210,6 @@ exports[`Theme > can export to JSON token file 1`] = `
         }
       },
       "hover": {
-        "accent-color": {
-          "key": "{basis.form-control.hover.accent-color}",
-          "$extensions": {
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.01568627450980392,
-                0.28627450980392155,
-                0.6039215686274509
-              ]
-            }
-          },
-          "$type": "color",
-          "$value": "#04499a",
-          "original": {
-            "$extensions": {
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.01568627450980392,
-                  0.28627450980392155,
-                  0.6039215686274509
-                ]
-              }
-            },
-            "$type": "color",
-            "$value": "{basis.color.action-1.color-hover}",
-            "key": "{basis.form-control.hover.accent-color}"
-          },
-          "name": "accent-color",
-          "attributes": {},
-          "path": [
-            "basis",
-            "form-control",
-            "hover",
-            "accent-color"
-          ]
-        },
         "background-color": {
           "key": "{basis.form-control.hover.background-color}",
           "$extensions": {
@@ -20413,6 +20334,46 @@ exports[`Theme > can export to JSON token file 1`] = `
             "form-control",
             "hover",
             "color"
+          ]
+        },
+        "accent-color": {
+          "key": "{basis.form-control.hover.accent-color}",
+          "$type": "color",
+          "$value": "#04499a",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.01568627450980392,
+                0.28627450980392155,
+                0.6039215686274509
+              ]
+            }
+          },
+          "original": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.color-hover}",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.01568627450980392,
+                  0.28627450980392155,
+                  0.6039215686274509
+                ]
+              }
+            },
+            "key": "{basis.form-control.hover.accent-color}"
+          },
+          "name": "accent-color",
+          "attributes": {},
+          "path": [
+            "basis",
+            "form-control",
+            "hover",
+            "accent-color"
           ]
         },
         "border-width": {
@@ -20780,6 +20741,45 @@ exports[`Theme > can export to JSON token file 1`] = `
           ]
         }
       },
+      "accent-color": {
+        "key": "{basis.form-control.accent-color}",
+        "$type": "color",
+        "$value": "#1b59a4",
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.10588235294117647,
+              0.34901960784313724,
+              0.6431372549019608
+            ]
+          }
+        },
+        "original": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.color-default}",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.10588235294117647,
+                0.34901960784313724,
+                0.6431372549019608
+              ]
+            }
+          },
+          "key": "{basis.form-control.accent-color}"
+        },
+        "name": "accent-color",
+        "attributes": {},
+        "path": [
+          "basis",
+          "form-control",
+          "accent-color"
+        ]
+      },
       "border-radius": {
         "key": "{basis.form-control.border-radius}",
         "$type": "dimension",
@@ -20983,41 +20983,6 @@ exports[`Theme > can export to JSON token file 1`] = `
       }
     },
     "heading": {
-      "font-family": {
-        "key": "{basis.heading.font-family}",
-        "$extensions": {
-          "studio.tokens": {
-            "originalType": "fontFamilies"
-          },
-          "nl.nldesignsystem.value-resolved-as": [
-            "IBM Plex Sans",
-            "sans-serif"
-          ]
-        },
-        "$type": "fontFamily",
-        "$value": "\\"IBM Plex Sans\\",sans-serif",
-        "original": {
-          "$extensions": {
-            "studio.tokens": {
-              "originalType": "fontFamilies"
-            },
-            "nl.nldesignsystem.value-resolved-as": [
-              "IBM Plex Sans",
-              "sans-serif"
-            ]
-          },
-          "$type": "fontFamily",
-          "$value": "{basis.text.font-family.default}",
-          "key": "{basis.heading.font-family}"
-        },
-        "name": "font-family",
-        "attributes": {},
-        "path": [
-          "basis",
-          "heading",
-          "font-family"
-        ]
-      },
       "color": {
         "key": "{basis.heading.color}",
         "$extensions": {
@@ -21059,10 +21024,43 @@ exports[`Theme > can export to JSON token file 1`] = `
           "color"
         ]
       },
+      "font-family": {
+        "key": "{basis.heading.font-family}",
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies"
+          },
+          "nl.nldesignsystem.value-resolved-as": [
+            "IBM Plex Sans",
+            "sans-serif"
+          ]
+        },
+        "$type": "fontFamily",
+        "$value": "\\"IBM Plex Sans\\",sans-serif",
+        "original": {
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontFamilies"
+            },
+            "nl.nldesignsystem.value-resolved-as": [
+              "IBM Plex Sans",
+              "sans-serif"
+            ]
+          },
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+          "key": "{basis.heading.font-family}"
+        },
+        "name": "font-family",
+        "attributes": {},
+        "path": [
+          "basis",
+          "heading",
+          "font-family"
+        ]
+      },
       "font-weight": {
         "key": "{basis.heading.font-weight}",
-        "$type": "fontWeight",
-        "$value": 700,
         "$extensions": {
           "studio.tokens": {
             "originalType": "fontWeights"
@@ -21070,9 +21068,9 @@ exports[`Theme > can export to JSON token file 1`] = `
           "nl.nldesignsystem.token-subtype": "font-weight",
           "nl.nldesignsystem.value-resolved-as": 700
         },
+        "$type": "fontWeight",
+        "$value": 700,
         "original": {
-          "$type": "fontWeight",
-          "$value": "{basis.text.font-weight.bold}",
           "$extensions": {
             "studio.tokens": {
               "originalType": "fontWeights"
@@ -21080,6 +21078,8 @@ exports[`Theme > can export to JSON token file 1`] = `
             "nl.nldesignsystem.token-subtype": "font-weight",
             "nl.nldesignsystem.value-resolved-as": 700
           },
+          "$type": "fontWeight",
+          "$value": "{basis.text.font-weight.bold}",
           "key": "{basis.heading.font-weight}"
         },
         "name": "font-weight",

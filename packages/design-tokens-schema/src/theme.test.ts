@@ -4,14 +4,16 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import startSourceTokens from '@nl-design-system-unstable/start-design-tokens/figma/start.tokens.json';
 import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
 import voorbeeldSourceTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/figma/voorbeeld.tokens.json';
+import dlv from 'dlv';
 import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
 import { EXTENSION_RESOLVED_AS, EXTENSION_RESOLVED_FROM } from './resolve-refs';
 import {
-  ThemeSchema,
   type Theme,
+  ThemeSchema,
   StrictThemeSchema,
+  addBasisContrastExtensions,
   EXTENSION_CONTRAST_WITH,
   EXTENSION_COLOR_SCALE_POSITION,
   type ContrastExtension,
@@ -21,6 +23,8 @@ import { parseColor, type ColorToken } from './tokens/color-token';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
+
+const getBasis = () => structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>;
 
 const createToken = (type: string, value: unknown, extensions?: Record<PropertyKey, unknown>) => {
   return {
@@ -65,21 +69,11 @@ const brandConfig = {
 
 describe('upgrades legacy colors', () => {
   it('converts legacy color strings in basis tokens', () => {
-    const config = {
-      basis: {
-        color: {
-          'accent-1': {
-            'bg-default': {
-              $type: 'color',
-              $value: '#ffffff',
-            },
-          },
-        },
-      },
-    };
+    const config = { basis: getBasis() };
+    dset(config, 'basis.color.accent-1.bg-default', { $type: 'color', $value: '#ffffff' });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    const color = result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value;
+    const color = dlv(result.data, 'basis.color.accent-1.bg-default.$value');
     expect(color).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
@@ -100,8 +94,7 @@ describe('upgrades legacy colors', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const color = (result.data as any)?.ma?.color?.white?.$value;
+    const color = dlv(result.data, 'ma.color.white.$value');
     expect(color).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
@@ -124,8 +117,7 @@ describe('upgrades legacy colors', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const color = (result.data as any)?.ma?.color?.indigo?.['1']?.$value;
+    const color = dlv(result.data, 'ma.color.indigo.1.$value');
     expect(color).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
@@ -136,32 +128,17 @@ describe('upgrades legacy colors', () => {
 
 describe('adding contrast-with extensions', () => {
   it('adds contrast-with extensions for tokens that we know', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'bg-subtle': {
-              $type: 'color',
-              $value: '{ma.color.indigo.1}',
-            },
-            'color-document': {
-              $type: 'color',
-              $value: `{ma.color.indigo.5}`,
-              // the transformation will add an $extension here
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.color.default.bg-subtle', { $type: 'color', $value: '{ma.color.indigo.1}' });
+    dset(config, 'basis.color.default.color-document', { $type: 'color', $value: '{ma.color.indigo.5}' });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(result.data?.basis?.color?.['default']?.['color-document']?.$extensions).toMatchObject({
+    expect(dlv(result.data, 'basis.color.default.color-document.$extensions')).toMatchObject({
       [EXTENSION_CONTRAST_WITH]: [
         {
           color: {
             $extensions: {
-              [EXTENSION_RESOLVED_AS]: config.brand.ma.color.indigo['1'].$value,
+              [EXTENSION_RESOLVED_AS]: brandConfig.ma.color.indigo['1'].$value,
             },
             $type: 'color',
             $value: '{ma.color.indigo.1}',
@@ -173,80 +150,47 @@ describe('adding contrast-with extensions', () => {
   });
 
   it('contrast-with extensions do not mess with existing extensions', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'bg-subtle': {
-              $type: 'color',
-              $value: '{ma.color.indigo.1}',
-            },
-            'color-document': {
-              $extensions: {
-                // the transformation will add an extra contrast color here
-                [EXTENSION_CONTRAST_WITH]: [
-                  {
-                    color: {
-                      $type: 'color',
-                      $value: '{ma.color.indigo.5}',
-                    },
-                    ratio: 1,
-                  },
-                ],
-              },
-              $type: 'color',
-              $value: `{ma.color.indigo.5}`,
-            },
-          },
-        },
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.color.default.bg-subtle', { $type: 'color', $value: '{ma.color.indigo.1}' });
+    dset(config, 'basis.color.default.color-document', {
+      $extensions: {
+        [EXTENSION_CONTRAST_WITH]: [{ color: { $type: 'color', $value: '{ma.color.indigo.5}' }, ratio: 1 }],
       },
-      brand: brandConfig,
-    };
+      $type: 'color',
+      $value: '{ma.color.indigo.5}',
+    });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(
-      result.data?.basis?.color?.['default']?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
-    ).toHaveLength(2);
+    expect(dlv(result.data, 'basis.color.default.color-document.$extensions')?.[EXTENSION_CONTRAST_WITH]).toHaveLength(
+      2,
+    );
   });
 
   it('does not add extension when corresponding token does not exist', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'color-document': {
-              $type: 'color',
-              $value: `{ma.color.indigo.5}`,
-              // contrast-with extension would be added here but this object has no bg-subtle
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    // color-subtle has no entry in the CONTRAST map, so no contrast-with extension is added
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.color.default.color-subtle', { $type: 'color', $value: '{ma.color.indigo.5}' });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(result.data?.basis?.color?.['default']?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH]).toEqual(
+    expect(dlv(result.data, 'basis.color.default.color-subtle.$extensions')?.[EXTENSION_CONTRAST_WITH]).toEqual(
       undefined,
     );
+  });
+
+  it('skips extension when background token is absent from config', () => {
+    // color-document IS in the CONTRAST map (needs bg-subtle), but bg-subtle is not set
+    const config: Record<string, unknown> = {};
+    dset(config, 'basis.color.default.color-document', { $type: 'color', $value: parseColor('#000') });
+    addBasisContrastExtensions(config);
+    expect(dlv(config, 'basis.color.default.color-document.$extensions')?.[EXTENSION_CONTRAST_WITH]).toBeUndefined();
   });
 });
 
 describe('resolving Design Token refs', () => {
   describe('resolve color ref', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'bg-document': {
-              $type: 'color',
-              $value: `{ma.color.indigo.5}`,
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: `{ma.color.indigo.5}` });
 
     it('does not mutate the input config', () => {
       const originalConfig = structuredClone(config);
@@ -266,33 +210,21 @@ describe('resolving Design Token refs', () => {
       const result = StrictThemeSchema.safeParse(config);
       const expectedColor = brandConfig.ma.color.indigo[5];
       expect
-        .soft(result.data?.basis?.color?.['default']?.['bg-document'])
+        .soft(dlv(result.data, 'basis.color.default.bg-document'))
         .toMatchObject(config.basis.color.default['bg-document']);
 
       expect
-        .soft(result.data?.basis?.color?.['default']?.['bg-document']?.$extensions?.[EXTENSION_RESOLVED_AS])
+        .soft(dlv(result.data, 'basis.color.default.bg-document.$extensions')?.[EXTENSION_RESOLVED_AS])
         .toEqual(expectedColor.$value);
     });
   });
 
   it('marks as invalid if resolving to an nonexistent object', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'bg-document': {
-              $type: 'color',
-              $value: `{non.existent.token}`,
-            },
-            'bg-subtle': {
-              $type: 'color',
-              $value: `{incomplete.ref`,
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = { basis: getBasis(), brand: brandConfig };
+    // Use tokens not involved in contrast pairs to avoid crashing the contrast checker with invalid refs
+    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: `{non.existent.token}` });
+    dset(config, 'basis.color.default.color-subtle', { $type: 'color', $value: `{incomplete.ref` });
 
     expect.soft(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
     const result = StrictThemeSchema.safeParse(config);
@@ -300,19 +232,9 @@ describe('resolving Design Token refs', () => {
   });
 
   it('marks as invalid if resolving to an existing object without a $value property', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'bg-document': {
-              $type: 'color',
-              $value: `{ma.color.indigo}`,
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: `{ma.color.indigo}` });
 
     expect(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
     const result = StrictThemeSchema.safeParse(config);
@@ -329,18 +251,13 @@ describe('resolving Design Token refs', () => {
   });
 
   it('marks as invalid when a font-family token reference points to an existing non-font-family token', () => {
-    const config = {
-      basis: {
-        heading: {
-          'font-family': {
-            $type: 'fontFamily',
-            // this points to a color token instead of a fontFamily
-            $value: '{ma.color.indigo.5}',
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.heading.font-family', {
+      $type: 'fontFamily',
+      // this points to a color token instead of a fontFamily
+      $value: '{ma.color.indigo.5}',
+    });
 
     const result = StrictThemeSchema.safeParse(config);
     expect.soft(result.success).toEqual(false);
@@ -362,44 +279,26 @@ describe('Style Dictionary specifics', () => {
     components: [1, 1, 1],
   };
 
-  const config = {
-    basis: {
-      color: {
-        'accent-1': {
-          'bg-default': {
-            $type: 'color',
-            $value: modernWhite,
-            original: {
-              $type: 'color',
-              $value: '{ma.color.white}',
-            },
-          },
-        },
-      },
-    },
-    ma: {
-      color: {
-        white: {
-          $type: 'color',
-          $value: modernWhite,
-        },
-      },
-    },
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const config: any = { basis: getBasis(), ma: { color: { white: { $type: 'color', $value: modernWhite } } } };
+  dset(config, 'basis.color.accent-1.bg-default', {
+    $type: 'color',
+    $value: modernWhite,
+    original: { $type: 'color', $value: '{ma.color.white}' },
+  });
 
   it('replaces token.$value with token.original.$value', () => {
-    const result = ThemeSchema.safeParse(config);
+    const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$value')).toBe('{ma.color.white}');
   });
 
   it('ignores incomplete `original` objects', () => {
     const incompleteConfig = structuredClone(config);
-    // @ts-expect-error what we're doing here is unexpeced, type-wise
     delete incompleteConfig.basis.color['accent-1']['bg-default'].original.$value;
-    const result = ThemeSchema.safeParse(incompleteConfig);
+    const result = StrictThemeSchema.safeParse(incompleteConfig);
     expect(result.success).toBe(true);
-    expect((result.data as Theme)?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$value')).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
       components: [1, 1, 1],
@@ -409,12 +308,42 @@ describe('Style Dictionary specifics', () => {
   it('adds resolved-as extension in StrictTheme', () => {
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
-    expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$extensions?.[EXTENSION_RESOLVED_AS]).toEqual({
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$value')).toBe('{ma.color.white}');
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$extensions')?.[EXTENSION_RESOLVED_AS]).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
       components: [1, 1, 1],
     });
+  });
+});
+
+describe('ThemeSchema (non-strict preprocessing)', () => {
+  const modernWhite = { alpha: 1, colorSpace: 'srgb', components: [1, 1, 1] };
+
+  it('replaces token.$value with token.original.$value', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = {};
+    dset(config, 'ma.color.white', {
+      $type: 'color',
+      $value: modernWhite,
+      original: { $type: 'color', $value: '{ma.color.indigo.1}' },
+    });
+    const result = ThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+    expect(dlv(result.data, 'ma.color.white.$value')).toBe('{ma.color.indigo.1}');
+  });
+
+  it('does not mutate the input', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = {};
+    dset(config, 'ma.color.white', {
+      $type: 'color',
+      $value: modernWhite,
+      original: { $type: 'color', $value: '{ma.color.indigo.1}' },
+    });
+    const originalValue = structuredClone(config.ma.color.white.$value);
+    ThemeSchema.safeParse(config);
+    expect(config.ma.color.white.$value).toEqual(originalValue);
   });
 });
 
@@ -425,29 +354,16 @@ describe('validating color contrast', () => {
   const lightGray = { $type: 'color', $value: parseColor('#ccc') } satisfies ColorToken;
 
   describe('basis tokens', () => {
-    const config = {
-      basis: {
-        color: {
-          // This is where each test case will write their own needs
-          default: Object.create(null),
-        },
-      },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const config: any = {
+      basis: getBasis(),
       brand: {
         ma: {
-          name: {
-            $type: 'text',
-            $value: 'Mooi & Anders',
-          },
-          color: {
-            black,
-            gray: {
-              2: lightGray,
-            },
-            white,
-          },
+          name: { $type: 'text', $value: 'Mooi & Anders' },
+          color: { black, gray: { 2: lightGray }, white },
         },
       },
-    } satisfies Theme;
+    };
 
     it('passes when contrast is sufficient', () => {
       const testConfig = structuredClone(config);
@@ -624,7 +540,7 @@ describe('validating color contrast', () => {
     });
 
     it('fails when contrast is insufficient (ref values)', () => {
-      const config = {};
+      const config = { basis: getBasis() };
       dset(config, 'basis.color.default.color-subtle', lightGray);
       dset(config, 'basis.color.default.bg-default', white);
       dset(config, 'clippy.button.color', { $type: 'color', $value: '{basis.color.default.color-subtle}' });
@@ -692,37 +608,21 @@ it('finds both ref and contrast issues at once', () => {
   const white = parseColor('#ffffff');
   const lightGray = parseColor('#cccccc');
 
-  const themeWithBothErrors: Theme = {
-    basis: {
+  const testBrand = {
+    test: {
+      name: { $type: 'text', $value: 'Test' },
       color: {
-        default: {
-          // Invalid ref - this token doesn't exist
-          'bg-document': {
-            $type: 'color',
-            $value: '{test.color.nonexistent}',
-          },
-          // Insufficient contrast - gray on white is too low
-          'bg-subtle': {
-            $type: 'color',
-            $value: '{test.color.white}',
-          },
-          'color-document': {
-            $type: 'color',
-            $value: '{test.color.gray}',
-          },
-        },
-      },
-    },
-    brand: {
-      test: {
-        name: { $type: 'text', $value: 'Test' },
-        color: {
-          gray: { $type: 'color', $value: lightGray },
-          white: { $type: 'color', $value: white },
-        },
+        gray: { $type: 'color', $value: lightGray },
+        white: { $type: 'color', $value: white },
       },
     },
   };
+  const themeWithBothErrors = { basis: getBasis(), brand: testBrand };
+  // Invalid ref - this token doesn't exist
+  dset(themeWithBothErrors, 'basis.color.default.bg-document', { $type: 'color', $value: '{test.color.nonexistent}' });
+  // Insufficient contrast - gray on white is too low
+  dset(themeWithBothErrors, 'basis.color.default.bg-subtle', { $type: 'color', $value: '{test.color.white}' });
+  dset(themeWithBothErrors, 'basis.color.default.color-document', { $type: 'color', $value: '{test.color.gray}' });
 
   const result = StrictThemeSchema.safeParse(themeWithBothErrors);
   expect(result.success).toBe(false);
@@ -741,42 +641,22 @@ it('finds both ref and contrast issues at once', () => {
 
 describe('remove non-token properties', () => {
   it('removes Style Dictionary metadata', () => {
-    const theme = {
-      basis: {
-        color: {
-          default: {
-            'bg-document': {
-              $type: 'color',
-              $value: {
-                colorSpace: 'srgb',
-                components: [0, 0, 0],
-              },
-              // object
-              attributes: {
-                category: 'basis',
-                item: 'default',
-                type: 'color',
-              },
-              // string
-              filePath: 'tokens.json',
-              // boolean
-              isSource: true,
-              // object with tokens inside
-              original: {
-                $type: 'color',
-                $value: {
-                  colorSpace: 'srgb',
-                  components: [0, 0, 0],
-                },
-              },
-            },
-          },
-        },
-      },
-    } satisfies Theme;
+    const theme = { basis: getBasis() };
+    dset(theme, 'basis.color.default.bg-document', {
+      $type: 'color',
+      $value: { colorSpace: 'srgb', components: [0, 0, 0] },
+      // object
+      attributes: { category: 'basis', item: 'default', type: 'color' },
+      // string
+      filePath: 'tokens.json',
+      // boolean
+      isSource: true,
+      // object with tokens inside
+      original: { $type: 'color', $value: { colorSpace: 'srgb', components: [0, 0, 0] } },
+    });
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
-    const actual = result.data?.basis?.color?.['default']?.['bg-document'];
+    const actual = dlv(result.data, 'basis.color.default.bg-document');
     expect(actual?.$type).toBe('color');
     expect(actual?.$value).toEqual({
       colorSpace: 'srgb',
@@ -790,35 +670,17 @@ describe('remove non-token properties', () => {
   });
 
   it('does not remove information from $extensions (which could hold any sort of data)', () => {
-    const theme = {
-      basis: {
-        color: {
-          default: {
-            'bg-document': {
-              $extensions: {
-                [EXTENSION_CONTRAST_WITH]: [
-                  {
-                    color: {
-                      $type: 'color',
-                      $value: parseColor('#fff'),
-                    },
-                    expectedRatio: 4.5,
-                  },
-                ],
-              },
-              $type: 'color',
-              $value: {
-                colorSpace: 'srgb',
-                components: [0, 0, 0],
-              },
-            },
-          },
-        },
+    const theme = { basis: getBasis() };
+    dset(theme, 'basis.color.default.bg-document', {
+      $extensions: {
+        [EXTENSION_CONTRAST_WITH]: [{ color: { $type: 'color', $value: parseColor('#fff') }, expectedRatio: 4.5 }],
       },
-    } satisfies Theme;
+      $type: 'color',
+      $value: { colorSpace: 'srgb', components: [0, 0, 0] },
+    });
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
-    const extensions = result.data?.basis?.color?.['default']?.['bg-document']?.$extensions;
+    const extensions = dlv(result.data, 'basis.color.default.bg-document.$extensions');
     expect(Array.isArray(extensions?.[EXTENSION_CONTRAST_WITH])).toBeTruthy();
     expect(extensions?.[EXTENSION_CONTRAST_WITH]).toHaveLength(1);
     const extension = (extensions?.[EXTENSION_CONTRAST_WITH] as ContrastExtension[])[0];
@@ -849,33 +711,17 @@ describe('remove non-token properties', () => {
 
 describe('color scale position extension', () => {
   it('adds color-scale-position extensions for tokens with known color names', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'bg-document': {
-              $type: 'color',
-              $value: parseColor('#ffffff'),
-            },
-            'border-default': {
-              $type: 'color',
-              $value: parseColor('#cccccc'),
-            },
-            'color-hover': {
-              $type: 'color',
-              $value: parseColor('#000000'),
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: parseColor('#ffffff') });
+    // Use black for border-default to maintain sufficient contrast vs bg-default (#f1f1f1 from startTokens)
+    dset(config, 'basis.color.default.border-default', { $type: 'color', $value: parseColor('#000000') });
+    dset(config, 'basis.color.default.color-hover', { $type: 'color', $value: parseColor('#000000') });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
 
-    const bgDocToken = result.data?.basis?.color?.['default']?.['bg-document'];
-    const colorHoverToken = result.data?.basis?.color?.['default']?.['color-hover'];
-    const borderDefaultToken = result.data?.basis?.color?.['default']?.['border-default'];
+    const bgDocToken = dlv(result.data, 'basis.color.default.bg-document');
+    const colorHoverToken = dlv(result.data, 'basis.color.default.color-hover');
+    const borderDefaultToken = dlv(result.data, 'basis.color.default.border-default');
 
     // Verify extensions are added for all known color names
     expect(bgDocToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
@@ -896,28 +742,14 @@ describe('color scale position extension', () => {
   });
 
   it('only adds extensions to tokens with names in COLOR_KEYS', () => {
-    const config = {
-      basis: {
-        color: {
-          default: {
-            'bg-active': {
-              $type: 'color',
-              $value: parseColor('#ffffff'),
-            },
-            'color-hover': {
-              $type: 'color',
-              $value: parseColor('#000000'),
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-    };
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.color.default.bg-active', { $type: 'color', $value: parseColor('#ffffff') });
+    dset(config, 'basis.color.default.color-hover', { $type: 'color', $value: parseColor('#000000') });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
 
-    const bgActiveToken = result.data?.basis?.color?.['default']?.['bg-active'];
-    const colorHoverToken = result.data?.basis?.color?.['default']?.['color-hover'];
+    const bgActiveToken = dlv(result.data, 'basis.color.default.bg-active');
+    const colorHoverToken = dlv(result.data, 'basis.color.default.color-hover');
 
     // Both tokens should have the extension since they're both in COLOR_KEYS
     expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
@@ -929,39 +761,18 @@ describe('color scale position extension', () => {
 
     // Both indices should be within the COLOR_KEYS range
     const positionCount = COLOR_KEYS.length;
-    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeGreaterThanOrEqual(0);
-    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
-    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeGreaterThanOrEqual(0);
-    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
+    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeGreaterThanOrEqual(0);
+    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeLessThan(positionCount);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeGreaterThanOrEqual(0);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeLessThan(positionCount);
   });
 });
 
 describe('validate minimum font-size', () => {
   it('passes refs', () => {
-    const config = {
-      basis: {
-        text: {
-          'font-size': {
-            md: {
-              $type: 'dimension',
-              $value: {
-                unit: 'px',
-                value: 18,
-              },
-            },
-          },
-        },
-      },
-      brand: brandConfig,
-      nl: {
-        button: {
-          'font-size': {
-            $type: 'dimension',
-            $value: '{basis.text.font-size.md}',
-          },
-        },
-      },
-    };
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'basis.text.font-size.md', { $type: 'dimension', $value: { unit: 'px', value: 18 } });
+    dset(config, 'nl.button.font-size', { $type: 'dimension', $value: '{basis.text.font-size.md}' });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
   });
@@ -1034,103 +845,41 @@ describe('validate minimum font-size', () => {
         message: 'Font-size should be 14px or 0.875rem minimum (got: "10px")',
         minimum: '14px / 0.875rem',
         origin: 'number',
-        path: ['basis', 'text', 'font-size', 'xs', '$value'],
+        path: ['basis', 'text', 'font-size', 'md', '$value'],
       },
     ];
 
     it('flags modern syntax', () => {
-      const config = {
-        basis: {
-          text: {
-            'font-size': {
-              sm: {
-                $type: 'dimension',
-                $value: {
-                  unit: 'rem',
-                  value: 0.8,
-                },
-              },
-              xs: {
-                $type: 'dimension',
-                $value: {
-                  unit: 'px',
-                  value: 10,
-                },
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.font-size.sm', { $type: 'dimension', $value: { unit: 'rem', value: 0.8 } });
+      dset(config, 'basis.text.font-size.md', { $type: 'dimension', $value: { unit: 'px', value: 10 } });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual(expectedErrors);
     });
 
     it('flags legacy syntax ($type=dimension, $value=string)', () => {
-      const config = {
-        basis: {
-          text: {
-            'font-size': {
-              sm: {
-                $type: 'dimension',
-                $value: '0.8rem',
-              },
-              xs: {
-                $type: 'dimension',
-                $value: '10px',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.font-size.sm', { $type: 'dimension', $value: '0.8rem' });
+      dset(config, 'basis.text.font-size.md', { $type: 'dimension', $value: '10px' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual(expectedErrors);
     });
 
     it('flags legacy syntax ($type=fontSize, $value=string)', () => {
-      const config = {
-        basis: {
-          text: {
-            'font-size': {
-              sm: {
-                $type: 'fontSize',
-                $value: '0.8rem',
-              },
-              xs: {
-                $type: 'fontSize',
-                $value: '10px',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.font-size.sm', { $type: 'fontSize', $value: '0.8rem' });
+      dset(config, 'basis.text.font-size.md', { $type: 'fontSize', $value: '10px' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual(expectedErrors);
     });
 
     it('allows legacy syntax ($type=fontSize, $value=string)', () => {
-      const config = {
-        basis: {
-          text: {
-            'font-size': {
-              sm: {
-                $type: 'fontSize',
-                $value: '1rem',
-              },
-              xs: {
-                $type: 'fontSize',
-                $value: '16px',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.font-size.sm', { $type: 'fontSize', $value: '1rem' });
+      dset(config, 'basis.text.font-size.md', { $type: 'fontSize', $value: '16px' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
     });
@@ -1140,59 +889,24 @@ describe('validate minimum font-size', () => {
 describe('line-height validations', () => {
   describe('validate unitless line-height preference', () => {
     it('Does not report line-heights that use a unitless number', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: 1.5,
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
     });
 
     it('Does not report line-heights that are a ref', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: 1.5,
-              },
-              sm: {
-                $type: 'lineHeight',
-                $value: '{basis.text.line-height.md}',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 1.5 });
+      dset(config, 'basis.text.line-height.sm', { $type: 'lineHeight', $value: '{basis.text.line-height.md}' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
     });
 
     it('flags line-heights that use units', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: '20px',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: '20px' });
+      dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual([
@@ -1207,14 +921,9 @@ describe('line-height validations', () => {
     });
 
     it('flags line-heights that use dimensions', () => {
-      const config = {};
-      dset(config, 'basis.text.line-height.md', {
-        $type: 'dimension',
-        $value: {
-          unit: 'px',
-          value: 20,
-        },
-      });
+      const config = { basis: getBasis() };
+      dset(config, 'basis.text.line-height.md', { $type: 'dimension', $value: { unit: 'px', value: 20 } });
+      dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual([
@@ -1260,59 +969,23 @@ describe('line-height validations', () => {
 
   describe('validate minimum line-height preference', () => {
     it('Does not report line-heights that comply', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: 1.5,
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
     });
 
     it('Does not report line-heights that are a ref', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: 1.5,
-              },
-              sm: {
-                $type: 'lineHeight',
-                $value: '{basis.text.line-height.md}',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 1.5 });
+      dset(config, 'basis.text.line-height.sm', { $type: 'lineHeight', $value: '{basis.text.line-height.md}' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
     });
 
     it('flags line-heights that are too small', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: 1,
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 1 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues).toEqual([
@@ -1361,88 +1034,42 @@ describe('line-height validations', () => {
 
   describe('upgrades legacy line-heights', () => {
     it('leaves lineHeights that are already numbers intact', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: 1.5,
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      const token = dlv(result.data, 'basis.text.line-height.md');
       expect(token.$type).toEqual('number');
       expect(token.$value).toEqual(1.5);
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
     });
 
     it('converts stringified numbers to numbers', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: '1.5',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: '1.5' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      const token = dlv(result.data, 'basis.text.line-height.md');
       expect(token.$type).toEqual('number');
       expect(token.$value).toEqual(1.5);
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
     });
 
     it('coverts percentages to numbers', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: '150%',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: '150%' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      const token = dlv(result.data, 'basis.text.line-height.md');
       expect(token.$type).toEqual('number');
       expect(token.$value).toEqual(1.5);
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
     });
 
     it('converts dimension strings to dimension', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: '20px',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: '20px' });
+      dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
       expect(result.error?.issues.length).toBe(1);
@@ -1454,27 +1081,12 @@ describe('line-height validations', () => {
     });
 
     it('sets the correct type based on what token a reference points to', () => {
-      const config = {
-        basis: {
-          text: {
-            'line-height': {
-              md: {
-                $type: 'lineHeight',
-                $value: 2,
-              },
-              sm: {
-                $type: 'lineHeight',
-                $value: '{basis.text.line-height.md}',
-              },
-            },
-          },
-        },
-        brand: brandConfig,
-      };
+      const config = { basis: getBasis(), brand: brandConfig };
+      dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 2 });
+      dset(config, 'basis.text.line-height.sm', { $type: 'lineHeight', $value: '{basis.text.line-height.md}' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).sm;
+      const token = dlv(result.data, 'basis.text.line-height.sm');
       expect(token.$type).toEqual('number');
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
     });
@@ -1489,7 +1101,7 @@ describe('line-height validations', () => {
     };
 
     it('invalid line-height: $type=dimension; px/px', () => {
-      const config = {};
+      const config = { basis: getBasis() };
       dset(config, 'basis.text.font-size.sm', createDimension(16, 'px'));
       dset(config, 'basis.text.line-height.sm', createDimension(16, 'px'));
 
@@ -1505,7 +1117,7 @@ describe('line-height validations', () => {
     });
 
     it('invalid line-height: $type=dimension; px/rem', () => {
-      const config = {};
+      const config = { basis: getBasis() };
       dset(config, 'basis.text.font-size.sm', createDimension(16, 'px'));
       dset(config, 'basis.text.line-height.sm', createDimension(1, 'rem'));
 
@@ -1521,7 +1133,7 @@ describe('line-height validations', () => {
     });
 
     it('invalid line-height: $type=dimension; rem/px', () => {
-      const config = {};
+      const config = { basis: getBasis() };
       dset(config, 'basis.text.font-size.sm', createDimension(1, 'rem'));
       dset(config, 'basis.text.line-height.sm', createDimension(16, 'px'));
 
@@ -1537,7 +1149,7 @@ describe('line-height validations', () => {
     });
 
     it('valid line-height: $type=dimension; rem/px', () => {
-      const config = {};
+      const config = { basis: getBasis() };
       dset(config, 'basis.text.font-size.sm', createDimension(1, 'rem'));
       dset(config, 'basis.text.line-height.sm', createDimension(24, 'px'));
 
@@ -1548,13 +1160,14 @@ describe('line-height validations', () => {
     });
 
     it('valid line-height: $type=dimension; rem/px; with font-size ref', () => {
-      const config = {};
+      const config = { basis: getBasis() };
       dset(config, 'basis.text.font-size.sm', createDimension(1, 'rem'));
       dset(config, 'basis.text.font-size.md', {
         $type: 'dimension',
         $value: '{basis.text.font-size.sm}',
       });
       dset(config, 'basis.text.line-height.md', createDimension(24, 'px'));
+      dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
@@ -1563,13 +1176,14 @@ describe('line-height validations', () => {
     });
 
     it('valid line-height: $type=dimension; rem/px; with line-height ref', () => {
-      const config = {};
+      const config = { basis: getBasis() };
       dset(config, 'basis.text.font-size.md', createDimension(1, 'rem'));
       dset(config, 'basis.text.line-height.sm', createDimension(24, 'px'));
       dset(config, 'basis.text.line-height.md', {
         $type: 'dimension',
         $value: '{basis.text.line-height.sm}',
       });
+      dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
