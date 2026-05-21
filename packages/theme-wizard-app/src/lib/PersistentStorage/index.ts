@@ -100,10 +100,10 @@ export default class PersistentStorage {
       storage.setItem(x, x);
       storage.removeItem(x);
       return true;
-    } catch (e) {
+    } catch (error) {
       return (
-        e instanceof DOMException &&
-        e.name === 'QuotaExceededError' &&
+        error instanceof DOMException &&
+        error.name === 'QuotaExceededError' &&
         // acknowledge QuotaExceededError only if there's something already stored
         storage &&
         storage.length !== 0

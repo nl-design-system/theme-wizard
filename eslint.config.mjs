@@ -8,6 +8,7 @@ import perfectionist from 'eslint-plugin-perfectionist';
 import react from 'eslint-plugin-react';
 import regexpPlugin from 'eslint-plugin-regexp';
 import sonarjs from 'eslint-plugin-sonarjs';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import eslintPluginZod from 'eslint-plugin-zod';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
@@ -112,6 +113,15 @@ export default defineConfig([
   {
     files: ['**/*.{js,cjs,mjs,jsx,ts,tsx}'],
     ...regexpPlugin.configs.recommended,
+  },
+  {
+    files: ['**/*.{js,cjs,mjs,jsx,ts,tsx}'],
+    ...eslintPluginUnicorn.configs.recommended,
+    rules: {
+      'unicorn/import-style': 'off',
+      'unicorn/no-array-reduce': 'off',
+      'unicorn/no-null': 'off',
+    },
   },
   {
     name: '@vitest',
