@@ -17,5 +17,6 @@
     "experimentalDecorators": true
   },
   "include": ["src"],
-  "exclude": ["**/*.test.ts"]
+  "exclude": ["**/*.test.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
