@@ -16,7 +16,7 @@ permissions: {}
 jobs:
   test-e2e:
     runs-on: ubuntu-latest
-    environment: Issues
+    environment: Maintenance
     permissions:
       contents: read
 
@@ -73,7 +73,7 @@ jobs:
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     needs: test-e2e
-    environment: Issues
+    environment: Maintenance
     permissions:
       contents: read
 
