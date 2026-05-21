@@ -1,5 +1,6 @@
-import Color from 'colorjs.io';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
+import Color from 'colorjs.io';
+import dlv from 'dlv';
 import { dset } from 'dset';
 import { describe, it, expect, expectTypeOf } from 'vitest';
 import { StrictThemeSchema } from '../theme';
@@ -100,7 +101,7 @@ describe('color token validation', () => {
       const result = StrictThemeSchema.safeParse(config);
 
       expect(result.success).toBeTruthy();
-      expect(result.data?.basis?.color?.['disabled']?.['bg-default']?.$value).toEqual({
+      expect(dlv(result.data, 'basis.color.disabled.bg-default.$value')).toEqual({
         alpha: 1,
         colorSpace: 'srgb',
         components: [1, 0, 0],
@@ -113,7 +114,7 @@ describe('color token validation', () => {
       dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: 'transparent' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBeTruthy();
-      expect(result.data?.basis?.color?.['disabled']?.['bg-default']?.$value).toEqual({
+      expect(dlv(result.data, 'basis.color.disabled.bg-default.$value')).toEqual({
         alpha: 0,
         colorSpace: 'srgb',
         components: [0, 0, 0],
@@ -126,7 +127,7 @@ describe('color token validation', () => {
       dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: 'rgba(0, 0, 0, 0)' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBeTruthy();
-      expect(result.data?.basis?.color?.['disabled']?.['bg-default']?.$value).toEqual({
+      expect(dlv(result.data, 'basis.color.disabled.bg-default.$value')).toEqual({
         alpha: 0,
         colorSpace: 'srgb',
         components: [0, 0, 0],

@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { BrandsSchema, BrandSchema, BasisTokensSchema, BasisColorSchema, BASIS_COLOR_NAMES, COLOR_KEYS } from './basis-tokens';
+import {
+  BrandsSchema,
+  BrandSchema,
+  BasisTokensSchema,
+  BasisColorSchema,
+  BASIS_COLOR_NAMES,
+  COLOR_KEYS,
+} from './basis-tokens';
 
 const modernWhite = { $type: 'color', $value: { alpha: 1, colorSpace: 'srgb', components: [1, 1, 1] } };
 const validColorName = Object.fromEntries(COLOR_KEYS.map((key) => [key, modernWhite]));

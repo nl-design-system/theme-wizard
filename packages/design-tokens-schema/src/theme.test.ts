@@ -4,6 +4,7 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import startSourceTokens from '@nl-design-system-unstable/start-design-tokens/figma/start.tokens.json';
 import voorbeeldTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/dist/tokens';
 import voorbeeldSourceTokens from '@nl-design-system-unstable/voorbeeld-design-tokens/figma/voorbeeld.tokens.json';
+import dlv from 'dlv';
 import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
 import { BrandSchema, COLOR_KEYS } from './basis-tokens';
@@ -70,7 +71,7 @@ describe('upgrades legacy colors', () => {
     dset(config, 'basis.color.accent-1.bg-default', { $type: 'color', $value: '#ffffff' });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    const color = result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value;
+    const color = dlv(result.data, 'basis.color.accent-1.bg-default.$value');
     expect(color).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
@@ -91,8 +92,7 @@ describe('upgrades legacy colors', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const color = (result.data as any)?.ma?.color?.white?.$value;
+    const color = dlv(result.data, 'ma.color.white.$value');
     expect(color).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
@@ -115,8 +115,7 @@ describe('upgrades legacy colors', () => {
     };
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const color = (result.data as any)?.ma?.color?.indigo?.['1']?.$value;
+    const color = dlv(result.data, 'ma.color.indigo.1.$value');
     expect(color).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
@@ -132,7 +131,7 @@ describe('adding contrast-with extensions', () => {
     dset(config, 'basis.color.default.color-document', { $type: 'color', $value: '{ma.color.indigo.5}' });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(result.data?.basis?.color?.['default']?.['color-document']?.$extensions).toMatchObject({
+    expect(dlv(result.data, 'basis.color.default.color-document.$extensions')).toMatchObject({
       [EXTENSION_CONTRAST_WITH]: [
         {
           color: {
@@ -153,18 +152,16 @@ describe('adding contrast-with extensions', () => {
     dset(config, 'basis.color.default.bg-subtle', { $type: 'color', $value: '{ma.color.indigo.1}' });
     dset(config, 'basis.color.default.color-document', {
       $extensions: {
-        [EXTENSION_CONTRAST_WITH]: [
-          { color: { $type: 'color', $value: '{ma.color.indigo.5}' }, ratio: 1 },
-        ],
+        [EXTENSION_CONTRAST_WITH]: [{ color: { $type: 'color', $value: '{ma.color.indigo.5}' }, ratio: 1 }],
       },
       $type: 'color',
       $value: '{ma.color.indigo.5}',
     });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(
-      result.data?.basis?.color?.['default']?.['color-document']?.$extensions?.[EXTENSION_CONTRAST_WITH],
-    ).toHaveLength(2);
+    expect(dlv(result.data, 'basis.color.default.color-document.$extensions')?.[EXTENSION_CONTRAST_WITH]).toHaveLength(
+      2,
+    );
   });
 
   it('does not add extension when corresponding token does not exist', () => {
@@ -173,7 +170,7 @@ describe('adding contrast-with extensions', () => {
     dset(config, 'basis.color.default.color-subtle', { $type: 'color', $value: '{ma.color.indigo.5}' });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
-    expect(result.data?.basis?.color?.['default']?.['color-subtle']?.$extensions?.[EXTENSION_CONTRAST_WITH]).toEqual(
+    expect(dlv(result.data, 'basis.color.default.color-subtle.$extensions')?.[EXTENSION_CONTRAST_WITH]).toEqual(
       undefined,
     );
   });
@@ -203,11 +200,11 @@ describe('resolving Design Token refs', () => {
       const result = StrictThemeSchema.safeParse(config);
       const expectedColor = brandConfig.ma.color.indigo[5];
       expect
-        .soft(result.data?.basis?.color?.['default']?.['bg-document'])
+        .soft(dlv(result.data, 'basis.color.default.bg-document'))
         .toMatchObject(config.basis.color.default['bg-document']);
 
       expect
-        .soft(result.data?.basis?.color?.['default']?.['bg-document']?.$extensions?.[EXTENSION_RESOLVED_AS])
+        .soft(dlv(result.data, 'basis.color.default.bg-document.$extensions')?.[EXTENSION_RESOLVED_AS])
         .toEqual(expectedColor.$value);
     });
   });
@@ -283,7 +280,7 @@ describe('Style Dictionary specifics', () => {
   it('replaces token.$value with token.original.$value', () => {
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$value')).toBe('{ma.color.white}');
   });
 
   it('ignores incomplete `original` objects', () => {
@@ -291,7 +288,7 @@ describe('Style Dictionary specifics', () => {
     delete incompleteConfig.basis.color['accent-1']['bg-default'].original.$value;
     const result = StrictThemeSchema.safeParse(incompleteConfig);
     expect(result.success).toBe(true);
-    expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toEqual({
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$value')).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
       components: [1, 1, 1],
@@ -301,8 +298,8 @@ describe('Style Dictionary specifics', () => {
   it('adds resolved-as extension in StrictTheme', () => {
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBe(true);
-    expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$value).toBe('{ma.color.white}');
-    expect(result.data?.basis?.color?.['accent-1']?.['bg-default']?.$extensions?.[EXTENSION_RESOLVED_AS]).toEqual({
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$value')).toBe('{ma.color.white}');
+    expect(dlv(result.data, 'basis.color.accent-1.bg-default.$extensions')?.[EXTENSION_RESOLVED_AS]).toEqual({
       alpha: 1,
       colorSpace: 'srgb',
       components: [1, 1, 1],
@@ -619,7 +616,7 @@ describe('remove non-token properties', () => {
     });
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
-    const actual = result.data?.basis?.color?.['default']?.['bg-document'];
+    const actual = dlv(result.data, 'basis.color.default.bg-document');
     expect(actual?.$type).toBe('color');
     expect(actual?.$value).toEqual({
       colorSpace: 'srgb',
@@ -643,7 +640,7 @@ describe('remove non-token properties', () => {
     });
     const result = StrictThemeSchema.safeParse(theme);
     expect(result.success).toBeTruthy();
-    const extensions = result.data?.basis?.color?.['default']?.['bg-document']?.$extensions;
+    const extensions = dlv(result.data, 'basis.color.default.bg-document.$extensions');
     expect(Array.isArray(extensions?.[EXTENSION_CONTRAST_WITH])).toBeTruthy();
     expect(extensions?.[EXTENSION_CONTRAST_WITH]).toHaveLength(1);
     const extension = (extensions?.[EXTENSION_CONTRAST_WITH] as ContrastExtension[])[0];
@@ -682,9 +679,9 @@ describe('color scale position extension', () => {
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
 
-    const bgDocToken = result.data?.basis?.color?.['default']?.['bg-document'];
-    const colorHoverToken = result.data?.basis?.color?.['default']?.['color-hover'];
-    const borderDefaultToken = result.data?.basis?.color?.['default']?.['border-default'];
+    const bgDocToken = dlv(result.data, 'basis.color.default.bg-document');
+    const colorHoverToken = dlv(result.data, 'basis.color.default.color-hover');
+    const borderDefaultToken = dlv(result.data, 'basis.color.default.border-default');
 
     // Verify extensions are added for all known color names
     expect(bgDocToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
@@ -711,8 +708,8 @@ describe('color scale position extension', () => {
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toEqual(true);
 
-    const bgActiveToken = result.data?.basis?.color?.['default']?.['bg-active'];
-    const colorHoverToken = result.data?.basis?.color?.['default']?.['color-hover'];
+    const bgActiveToken = dlv(result.data, 'basis.color.default.bg-active');
+    const colorHoverToken = dlv(result.data, 'basis.color.default.color-hover');
 
     // Both tokens should have the extension since they're both in COLOR_KEYS
     expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeDefined();
@@ -724,10 +721,10 @@ describe('color scale position extension', () => {
 
     // Both indices should be within the COLOR_KEYS range
     const positionCount = COLOR_KEYS.length;
-    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeGreaterThanOrEqual(0);
-    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
-    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeGreaterThanOrEqual(0);
-    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION] as number).toBeLessThan(positionCount);
+    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeGreaterThanOrEqual(0);
+    expect(bgActiveToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeLessThan(positionCount);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeGreaterThanOrEqual(0);
+    expect(colorHoverToken?.$extensions?.[EXTENSION_COLOR_SCALE_POSITION]).toBeLessThan(positionCount);
   });
 });
 
@@ -1001,8 +998,7 @@ describe('line-height validations', () => {
       dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      const token = dlv(result.data, 'basis.text.line-height.md');
       expect(token.$type).toEqual('number');
       expect(token.$value).toEqual(1.5);
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
@@ -1013,8 +1009,7 @@ describe('line-height validations', () => {
       dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: '1.5' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      const token = dlv(result.data, 'basis.text.line-height.md');
       expect(token.$type).toEqual('number');
       expect(token.$value).toEqual(1.5);
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
@@ -1025,8 +1020,7 @@ describe('line-height validations', () => {
       dset(config, 'basis.text.line-height.md', { $type: 'lineHeight', $value: '150%' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).md;
+      const token = dlv(result.data, 'basis.text.line-height.md');
       expect(token.$type).toEqual('number');
       expect(token.$value).toEqual(1.5);
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
@@ -1052,8 +1046,7 @@ describe('line-height validations', () => {
       dset(config, 'basis.text.line-height.sm', { $type: 'lineHeight', $value: '{basis.text.line-height.md}' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const token = (result.data?.basis?.text?.['line-height'] as any).sm;
+      const token = dlv(result.data, 'basis.text.line-height.sm');
       expect(token.$type).toEqual('number');
       expect(token.$extensions?.[EXTENSION_TOKEN_SUBTYPE]).toEqual('line-height');
     });

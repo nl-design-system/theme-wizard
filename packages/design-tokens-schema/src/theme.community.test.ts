@@ -1,3 +1,6 @@
+// So we can use Object.groupBy()
+/// <reference lib="es2024" />
+
 import purmerendTokens from '@nl-design-system-community/purmerend-design-tokens/dist/tokens.json';
 import purmerendSourceTokens from '@nl-design-system-community/purmerend-design-tokens/figma/figma.tokens.json';
 import leidenTokens from '@nl-design-system-unstable/leiden-design-tokens/dist/tokens.json';
@@ -19,7 +22,10 @@ describe('source files', () => {
       expect(result.success).toEqual(false);
       // Purmerend is missing many required color groups (invalid_type),
       // has outdated color keys (unrecognized_keys), and legacy color formats (invalid_union)
-      expect(result.error?.issues).toHaveLength(156);
+      const issuesByCode = Object.groupBy(result.error?.issues ?? [], (i) => i.code);
+      expect(issuesByCode['invalid_type']).toHaveLength(25);
+      expect(issuesByCode['invalid_union']).toHaveLength(122);
+      expect(issuesByCode['unrecognized_keys']).toHaveLength(9);
     });
 
     it('has outdated color names', () => {
@@ -121,8 +127,7 @@ describe('dist files', () => {
     const result = StrictThemeSchema.safeParse(leidenTokens);
     expect(result.success).toEqual(false);
     expect(result.error?.issues).toHaveLength(2);
-    expect(result.error?.issues[0].code).toBe('unrecognized_keys');
-    expect(result.error?.issues[1].code).toBe('unrecognized_keys');
+    expect(result.error?.issues.every((issue) => issue.code === 'unrecognized_keys')).toBeTruthy();
   });
 
   it('Purmerend theme', () => {
@@ -130,6 +135,9 @@ describe('dist files', () => {
     expect(result.success).toEqual(false);
     // Purmerend is missing required color groups (invalid_type),
     // has legacy color formats (invalid_union), and outdated color keys (unrecognized_keys)
-    expect(result.error?.issues).toHaveLength(156);
+    const issuesByCode = Object.groupBy(result.error?.issues ?? [], (i) => i.code);
+    expect(issuesByCode['invalid_type']).toHaveLength(25);
+    expect(issuesByCode['invalid_union']).toHaveLength(122);
+    expect(issuesByCode['unrecognized_keys']).toHaveLength(9);
   });
 });
