@@ -6,6 +6,7 @@ import vitest from '@vitest/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import perfectionist from 'eslint-plugin-perfectionist';
 import react from 'eslint-plugin-react';
+import regexpPlugin from 'eslint-plugin-regexp';
 import sonarjs from 'eslint-plugin-sonarjs';
 import eslintPluginZod from 'eslint-plugin-zod';
 import { defineConfig, globalIgnores } from 'eslint/config';
@@ -107,6 +108,10 @@ export default defineConfig([
     rules: {
       'sonarjs/todo-tag': 0,
     },
+  },
+  {
+    files: ['**/*.{js,cjs,mjs,jsx,ts,tsx}'],
+    ...regexpPlugin.configs.recommended,
   },
   {
     name: '@vitest',
