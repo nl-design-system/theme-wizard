@@ -357,8 +357,10 @@ export class StoryWizardController {
     `;
 
     dialog.querySelector('.wizard-tokens-dialog__close')!.addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', (e) => {
-      if (e.target === dialog) dialog.close();
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) {
+        dialog.close();
+      }
     });
 
     (document.querySelector('theme-wizard-app') ?? document.body).appendChild(dialog);
