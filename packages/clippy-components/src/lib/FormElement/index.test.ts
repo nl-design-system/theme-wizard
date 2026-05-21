@@ -9,7 +9,7 @@ document.body.innerHTML = `
   </form>
 `;
 
-describe(`FormElement`, () => {
+describe('FormElement', () => {
   beforeAll(() => {
     // FormElement is meant as a base class,
     // therefore it is not exported with a function to define it as a Custom Element.

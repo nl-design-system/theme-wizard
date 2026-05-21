@@ -408,12 +408,12 @@ describe('getCssFromHtml', () => {
     });
 
     it('empty style tag', () => {
-      const html = `<style></style>`;
+      const html = '<style></style>';
       expect(getCssFromHtml(html, 'example.com')).toEqual([]);
     });
 
     it('empty style tag with whitespace', () => {
-      const html = `<style> </style>`;
+      const html = '<style> </style>';
       expect(getCssFromHtml(html, 'example.com')).toEqual([]);
     });
   });
@@ -521,7 +521,7 @@ describe('getCssFromHtml', () => {
 
   describe('inline `style=".." attributes', () => {
     it('a single element with a style attribute', () => {
-      const html = `<p style="font-size: 20px; font-weight: bold;">I am h1</p>`;
+      const html = '<p style="font-size: 20px; font-weight: bold;">I am h1</p>';
       expect(getCssFromHtml(html, 'example.com')).toEqual([
         {
           css: ':where([css-scraper-inline-styles]) { font-size: 20px; font-weight: bold; }',
@@ -574,11 +574,11 @@ describe('getCssFromHtml', () => {
 describe('getImportUrls', () => {
   describe('1 @import', () => {
     it('no url(), single quotes', () => {
-      expect(getImportUrls(`@import 'test.css';`)).toEqual(['test.css']);
+      expect(getImportUrls("@import 'test.css';")).toEqual(['test.css']);
     });
 
     it('no url(), double quotes', () => {
-      expect(getImportUrls(`@import "test.css";`)).toEqual(['test.css']);
+      expect(getImportUrls('@import "test.css";')).toEqual(['test.css']);
     });
 
     it('url() w/o quotes', () => {
@@ -586,11 +586,11 @@ describe('getImportUrls', () => {
     });
 
     it('url() w/ single quotes', () => {
-      expect(getImportUrls(`@import url('test.css');`)).toEqual(['test.css']);
+      expect(getImportUrls("@import url('test.css');")).toEqual(['test.css']);
     });
 
     it('url() w/ double quotes', () => {
-      expect(getImportUrls(`@import url("test.css");`)).toEqual(['test.css']);
+      expect(getImportUrls('@import url("test.css");')).toEqual(['test.css']);
     });
   });
 
@@ -621,21 +621,21 @@ describe('getImportUrls', () => {
 
   describe('with layer()', () => {
     it('@import with layer', () => {
-      expect(getImportUrls(`@import url("test.css") layer;`)).toEqual(['test.css']);
+      expect(getImportUrls('@import url("test.css") layer;')).toEqual(['test.css']);
     });
 
     it('@import url() layer(test)', () => {
-      expect(getImportUrls(`@import url("test.css") layer(test);`)).toEqual(['test.css']);
+      expect(getImportUrls('@import url("test.css") layer(test);')).toEqual(['test.css']);
     });
 
     it('@import url() layer(test.me.nested)', () => {
-      expect(getImportUrls(`@import url("test.css") layer(test.me.nested);`)).toEqual(['test.css']);
+      expect(getImportUrls('@import url("test.css") layer(test.me.nested);')).toEqual(['test.css']);
     });
   });
 
   describe('with supports()', () => {
     it('@import url("test.css") supports(display: grid);', () => {
-      expect(getImportUrls(`@import url("test.css") supports(display: grid);`)).toEqual(['test.css']);
+      expect(getImportUrls('@import url("test.css") supports(display: grid);')).toEqual(['test.css']);
     });
   });
 
