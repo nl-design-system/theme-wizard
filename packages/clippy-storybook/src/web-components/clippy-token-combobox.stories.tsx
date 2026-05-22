@@ -1,15 +1,7 @@
 import type { ClippyTokenComboboxOption } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import {
-  type TokenReference,
-  type ColorToken,
-  walkColors,
-  EXTENSION_RESOLVED_AS,
-  isRef,
-  extractRef,
-  resolveRef,
-} from '@nl-design-system-community/design-tokens-schema';
+import { type ColorToken, walkColors, isRef, resolveRef } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { html } from 'lit';
 import React from 'react';
