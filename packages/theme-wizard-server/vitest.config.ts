@@ -2,6 +2,9 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    typecheck: {
+      tsconfig: './tsconfig.node.json',
+    },
     coverage: {
       provider: 'v8',
       thresholds: {
