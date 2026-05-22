@@ -31,21 +31,22 @@ const DTCG_TYPE_TO_SCHEMA: Record<string, z.ZodTypeAny> = {
 
 export const EXTENSION_CSS_PROPERTY_SYNTAX = 'nl.nldesignsystem.css-property-syntax';
 
+const MODERN_SYNTAX_PATH = ['$extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
+const LEGACY_SYNTAX_PATH = ['extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
+
 export const buildSchemaFromNode = (node: Record<string, unknown>): z.ZodTypeAny => {
   if ('$type' in node) {
     // Look in both legacy extensions and modern $extensions because some design token JSON files
     // might use the legacy format.
-    const syntax =
-      dlv(node, ['$extensions', EXTENSION_CSS_PROPERTY_SYNTAX]) ??
-      dlv(node, ['extensions', EXTENSION_CSS_PROPERTY_SYNTAX]);
+    const syntax = dlv(node, MODERN_SYNTAX_PATH) ?? dlv(node, LEGACY_SYNTAX_PATH);
     const dtcgType = typeof syntax === 'string' ? CSS_SYNTAX_TO_DTCG_TYPE[syntax] : undefined;
-    // Get the correct schema or fallback to BaseDesignTokenSchema
     return DTCG_TYPE_TO_SCHEMA[dtcgType ?? ''] ?? BaseDesignTokenSchema;
   }
-  const shape = Object.fromEntries(
-    Object.entries(node)
-      .filter(([k]) => !k.startsWith('$'))
-      .map(([k, v]) => [k, buildSchemaFromNode(v as Record<string, unknown>)]),
-  );
+  const shape: Record<string, z.ZodTypeAny> = {};
+  for (const [key, value] of Object.entries(node)) {
+    if (!key.startsWith('$')) {
+      shape[key] = buildSchemaFromNode(value as Record<string, unknown>);
+    }
+  }
   return z.strictObject(shape);
 };
