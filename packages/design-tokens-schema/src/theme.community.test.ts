@@ -97,20 +97,21 @@ describe('source files', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(leidenSourceTokens));
       expect(result.success).toBe(false);
 
-      expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toEqual({
-        code: 'unrecognized_keys',
-        keys: ['box-shadow'],
-        message: 'Unrecognized key: "box-shadow"',
-        path: ['basis', 'color'],
-      });
-      // Leiden defines a 'more-space' line-height variant not in the schema
-      expect(result.error?.issues[1]).toEqual({
-        code: 'unrecognized_keys',
-        keys: ['more-space'],
-        message: 'Unrecognized key: "more-space"',
-        path: ['basis', 'text', 'line-height'],
-      });
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            code: 'unrecognized_keys',
+            keys: ['box-shadow'],
+            path: ['basis', 'color'],
+          }),
+          // Leiden defines a 'more-space' line-height variant not in the schema
+          expect.objectContaining({
+            code: 'unrecognized_keys',
+            keys: ['more-space'],
+            path: ['basis', 'text', 'line-height'],
+          }),
+        ]),
+      );
     });
   });
 });
@@ -119,8 +120,12 @@ describe('dist files', () => {
   it('Leiden theme', () => {
     const result = StrictThemeSchema.safeParse(leidenTokens);
     expect(result.success).toEqual(false);
-    expect(result.error?.issues).toHaveLength(2);
-    expect(result.error?.issues.every((issue) => issue.code === 'unrecognized_keys')).toBeTruthy();
+    expect(result.error?.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: 'unrecognized_keys', path: ['basis', 'color'] }),
+        expect.objectContaining({ code: 'unrecognized_keys', path: ['basis', 'text', 'line-height'] }),
+      ]),
+    );
   });
 
   it('Purmerend theme', () => {

@@ -92,11 +92,33 @@ describe('color token validation', () => {
     expect(result.success).toBeFalsy();
   });
 
+  const addMissingBasisTokens = (basis: Record<string, unknown>) => {
+    delete (basis['border-radius'] as Record<string, unknown>)['none'];
+    delete (basis['space'] as Record<string, unknown>)['none'];
+    dset(basis, 'focus.outline-offset', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
+    dset(basis, 'border-radius.square', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
+    dset(basis, 'form-control.focus.accent-color', {
+      $type: 'color',
+      $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
+    });
+    dset(basis, 'form-control.invalid.accent-color', {
+      $type: 'color',
+      $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
+    });
+    dset(basis, 'form-control.read-only.accent-color', {
+      $type: 'color',
+      $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
+    });
+  };
+
   describe('legacy color preprocessing (via theme schema)', () => {
     it('upgrade legacy color to modern (via theme)', () => {
       // Use disabled group (skips basis contrast validation).
       // Use only the basis portion to avoid component-token contrast checks.
-      const config = { basis: structuredClone((startTokens as Record<string, unknown>)['basis']) };
+      const config = {
+        basis: structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>,
+      };
+      addMissingBasisTokens(config.basis);
       dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: '#f00' });
       const result = StrictThemeSchema.safeParse(config);
 
@@ -110,7 +132,10 @@ describe('color token validation', () => {
 
     it('convert `transparent` to fully transparent black (via theme)', () => {
       // Use disabled group which skips contrast validation
-      const config = structuredClone(startTokens);
+      const config = {
+        basis: structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>,
+      };
+      addMissingBasisTokens(config.basis);
       dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: 'transparent' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBeTruthy();
@@ -123,7 +148,10 @@ describe('color token validation', () => {
 
     it('convert `rgba(0, 0, 0, 0)` to fully transparent black (via theme)', () => {
       // Use disabled group which skips contrast validation
-      const config = structuredClone(startTokens);
+      const config = {
+        basis: structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>,
+      };
+      addMissingBasisTokens(config.basis);
       dset(config, 'basis.color.disabled.bg-default', { $type: 'color', $value: 'rgba(0, 0, 0, 0)' });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBeTruthy();
@@ -202,7 +230,8 @@ describe('stringify token to string', () => {
   });
 
   it('stringifies a non-color without throwing', () => {
-    const result = stringifyColor(undefined as unknown as ColorValue);
+    // @ts-expect-error - Cannot pass undefined, but this test exists as a safe-guard
+    const result = stringifyColor(undefined);
     expect(result).toBe('#0000');
   });
 });

@@ -47,9 +47,31 @@ it('accepts modern token', () => {
   expect.soft(result.data).toEqual(token);
 });
 
+const addMissingBasisTokens = (basis: Record<string, unknown>) => {
+  delete (basis['border-radius'] as Record<string, unknown>)['none'];
+  delete (basis['space'] as Record<string, unknown>)['none'];
+  dset(basis, 'focus.outline-offset', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
+  dset(basis, 'border-radius.square', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
+  dset(basis, 'form-control.focus.accent-color', {
+    $type: 'color',
+    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
+  });
+  dset(basis, 'form-control.invalid.accent-color', {
+    $type: 'color',
+    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
+  });
+  dset(basis, 'form-control.read-only.accent-color', {
+    $type: 'color',
+    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
+  });
+};
+
 describe('legacy token format preprocessing (via theme schema)', () => {
   it('upgrades legacy fontFamilies token', () => {
-    const config = structuredClone(startTokens);
+    const config = {
+      basis: structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>,
+    };
+    addMissingBasisTokens(config.basis);
     dset(config, 'basis.heading.font-family', {
       $type: 'fontFamilies',
       $value: 'Source Sans Pro, Helvetica, Arial, sans-serif',
@@ -63,7 +85,10 @@ describe('legacy token format preprocessing (via theme schema)', () => {
   });
 
   it('upgrades fontFamily token with legacy string value', () => {
-    const config = structuredClone(startTokens);
+    const config = {
+      basis: structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>,
+    };
+    addMissingBasisTokens(config.basis);
     dset(config, 'basis.heading.font-family', {
       $type: 'fontFamily',
       $value: 'IBM Plex Sans, monospace',

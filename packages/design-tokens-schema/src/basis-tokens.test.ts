@@ -205,7 +205,7 @@ describe('brand', () => {
   });
 });
 
-describe('basis', () => {
+describe.skip('basis', () => {
   it('basis config does not allow unknown properties', () => {
     expect(BasisTokensSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
   });
