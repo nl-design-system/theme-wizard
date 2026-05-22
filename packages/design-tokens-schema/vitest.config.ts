@@ -2,9 +2,6 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    typecheck: {
-      tsconfig: './tsconfig.node.json',
-    },
     coverage: {
       exclude: [
         // Temporary workaround to fix coverage reporting for this file,
@@ -20,6 +17,9 @@ export default defineConfig({
         lines: 100,
         statements: 100,
       },
+    },
+    typecheck: {
+      tsconfig: './tsconfig.node.json',
     },
   },
 });
