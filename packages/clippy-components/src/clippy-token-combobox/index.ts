@@ -14,11 +14,11 @@ import { allowedValuesConverter } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import Color from 'colorjs.io';
 import { dequal } from 'dequal';
-import { nothing, unsafeCSS } from 'lit';
+import { nothing, TemplateResult, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit/static-html.js';
-import { DesignToken } from 'style-dictionary/types';
+import { type DesignToken } from 'style-dictionary/types';
 import { ClippyCombobox } from '../clippy-combobox';
 import * as libColor from './color';
 import * as libDimension from './dimension';
@@ -26,6 +26,7 @@ import * as libFontFamily from './font-family';
 import * as libNumber from './number';
 import styles from './styles';
 
+// TODO: update DesignToken with BaseDesignToken from @nl-design-system-community/design-tokens-schema
 export type ClippyTokenComboboxOption = {
   label: string;
   description?: string;
@@ -187,7 +188,7 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     }
   }
 
-  override renderEntry(option: ClippyTokenComboboxOption, index?: number) {
+  override renderEntry(option: ClippyTokenComboboxOption, index?: number): TemplateResult {
     const { description, label, value } = option;
     const labelClasses = {
       'nl-data-badge': isRef(value?.$value),

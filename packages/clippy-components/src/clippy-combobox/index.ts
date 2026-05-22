@@ -4,7 +4,7 @@ import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
 import { dequal } from 'dequal';
-import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -277,7 +277,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    * By default, it renders the label and description (if available) in the listbox options,
    * and only the label in the input when an option is selected (by virtue of `index` being `undefined`).
    */
-  renderEntry({ description, label }: Option, index?: number) {
+  renderEntry({ description, label }: Option, index?: number): TemplateResult {
     return html`
       <div>${label}</div>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
