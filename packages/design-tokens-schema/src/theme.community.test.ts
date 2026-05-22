@@ -19,6 +19,13 @@ describe('source files', () => {
       // has outdated color keys (unrecognized_keys), and legacy color formats (invalid_union)
       const result = StrictThemeSchema.safeParse(purmerendTokens);
       expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: 'unrecognized_keys' }),
+          expect.objectContaining({ code: 'invalid_type' }),
+          expect.objectContaining({ code: 'invalid_union' }),
+        ]),
+      );
     });
 
     it('has outdated color names', () => {
@@ -133,5 +140,12 @@ describe('dist files', () => {
     // has legacy color formats (invalid_union), and outdated color keys (unrecognized_keys)
     const result = StrictThemeSchema.safeParse(purmerendTokens);
     expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: 'unrecognized_keys' }),
+        expect.objectContaining({ code: 'invalid_type' }),
+        expect.objectContaining({ code: 'invalid_union' }),
+      ]),
+    );
   });
 });
