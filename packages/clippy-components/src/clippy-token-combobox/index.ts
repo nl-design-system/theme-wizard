@@ -6,23 +6,25 @@ import {
   type ModernDimensionToken,
   type FontFamilyToken,
   type ResolvedToken,
+  type BaseDesignToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import { allowedValuesConverter } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
-import { unsafeCSS } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
-import { type DesignToken } from 'style-dictionary/types';
+import { classMap } from 'lit/directives/class-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
+import * as libColor from './color';
 import styles from './styles';
 
-// TODO: update DesignToken with BaseDesignToken from @nl-design-system-community/design-tokens-schema
 export type ClippyTokenComboboxOption = {
   label: string;
   description?: string;
-  value: ColorToken | ModernDimensionToken | FontFamilyToken | ResolvedToken | DesignToken;
+  value: ColorToken | ModernDimensionToken | FontFamilyToken | ResolvedToken | BaseDesignToken;
 };
 
 // Allow custom overrides
+const defaultAllowance = 'other';
 const types = ['color', 'dimension', 'fontFamily', 'number'] as const;
 
 const tag = 'clippy-token-combobox';
@@ -32,6 +34,9 @@ class C extends ClippyCombobox<ClippyTokenComboboxOption> {}
 
 @safeCustomElement(tag)
 export class ClippyTokenCombobox extends LocalizationMixin(C) {
+  @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
+  override allow: (typeof ClippyCombobox.allowances)[number] = defaultAllowance;
+
   static override readonly styles = [
     styles,
     ...ClippyCombobox.styles,
@@ -60,6 +65,27 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
 
   override set options(value: ClippyTokenComboboxOption[]) {
     this.#options = value;
+  }
+
+  renderPreview(option: ClippyTokenComboboxOption) {
+    // TODO fix type safety by making sure option type is inferred from `option.value.$type`
+    switch (option.value.$type) {
+      case 'color':
+        return libColor.preview(option as ClippyTokenComboboxOption & { value: ColorToken });
+      default:
+        return nothing;
+    }
+  }
+
+  override renderEntry(option: ClippyTokenComboboxOption, index?: number) {
+    const { description, label } = option;
+    return html`
+      <span class="wizard-token-combobox__option">
+        ${this.renderPreview(option)}
+        <span>${label}</span>
+      </span>
+      ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
+    `;
   }
 }
 
