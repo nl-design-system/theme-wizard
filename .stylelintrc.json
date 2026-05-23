@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "stylelint-config-standard-scss",
-    "@projectwallace/stylelint-plugin/configs/recommended"
-  ],
+  "extends": ["stylelint-config-standard-scss", "@projectwallace/stylelint-plugin/configs/recommended"],
   "plugins": ["stylelint-order"],
   "rules": {
     "order/order": ["custom-properties", "declarations"],
@@ -135,18 +132,13 @@
     "projectwallace/no-prefixed-properties": [
       true,
       {
-        "ignore": [
-          "-webkit-box-orient",
-          "-webkit-line-clamp"
-        ]
+        "ignore": ["-webkit-box-orient", "-webkit-line-clamp"]
       }
     ],
     "projectwallace/no-prefixed-values": [
       true,
       {
-        "ignore": [
-          "-webkit-box"
-        ]
+        "ignore": ["-webkit-box"]
       }
     ]
   }
