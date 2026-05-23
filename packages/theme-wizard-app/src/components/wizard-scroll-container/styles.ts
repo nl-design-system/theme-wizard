@@ -33,8 +33,7 @@ export default css`
     scrollbar-width: var(--wizard-scroll-container-scrollbar-width, var(--_wizard-scroll-container-scrollbar-width));
   }
 
-  .wizard-scroll-container::before,
-  .wizard-scroll-container::after {
+  .wizard-scroll-container:is(::before, ::after) {
     --_wizard-scroller-visibility-if-can-scroll: var(--_wizard-scroller-can-scroll) visible;
     --_wizard-scroller-visibility-if-cannot-scroll: hidden;
 
