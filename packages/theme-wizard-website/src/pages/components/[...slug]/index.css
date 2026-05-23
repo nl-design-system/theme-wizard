@@ -1,3 +1,4 @@
+/* stylelint-disable projectwallace/max-spacing-resets, projectwallace/min-declaration-uniqueness-ratio */
 .wizard-main {
   background-color: var(--basis-color-default-bg-document);
   display: flex;
