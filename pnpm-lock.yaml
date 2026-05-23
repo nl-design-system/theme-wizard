@@ -23,7 +23,10 @@ importers:
         version: 2.0.0
       '@nl-design-system/eslint-config':
         specifier: 2.2.0
-        version: 2.2.0(eslint@10.4.1)(typescript@6.0.3)
+        version: 2.2.0(eslint@10.3.0)(typescript@6.0.3)
+      '@projectwallace/stylelint-plugin':
+        specifier: 0.4.5
+        version: 0.4.5(stylelint@17.6.0(typescript@6.0.3))
       '@stylistic/eslint-plugin':
         specifier: 5.10.0
         version: 5.10.0(eslint@10.4.1)
@@ -2999,6 +3002,15 @@ packages:
   '@projectwallace/css-time-sort@3.1.0':
     resolution: {integrity: sha512-hG6zILMK9OJpsvkCkbF9GIW+bAHAxKGB0AsyR5N5T+n8bCKPgWhZGwPlDMP1FrLsBkuRq7U7+fqB19qzUJq5hQ==}
     engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
+
+  '@projectwallace/css-parser@0.16.0':
+    resolution: {integrity: sha512-4WJOIU/6Zbscp5snGGvqx2UobIgYOfBaZDGbx6Mj7b7PjcMz34fFufus7h3AbDFlS7nXEkHHlPDZJl/Qu5gumg==}
+    engines: {pnpm: '>=11.0.0'}
+
+  '@projectwallace/stylelint-plugin@0.4.5':
+    resolution: {integrity: sha512-gikxkiRDIFoCNamhvI1idGYBso68Fvh5hgoM68rdsQAeYEeFIOOorrWsa9LJQOJVMTjCL9/DHgzeyUyRkYbReQ==}
+    peerDependencies:
+      stylelint: ^17.0.0
 
   '@publint/pack@0.1.4':
     resolution: {integrity: sha512-HDVTWq3H0uTXiU0eeSQntcVUTPP3GamzeXI41+x7uU9J65JgWQh3qWZHblR1i0npXfFtF+mxBiU2nJH8znxWnQ==}
@@ -10775,6 +10787,14 @@ snapshots:
   '@projectwallace/css-parser@0.16.0': {}
 
   '@projectwallace/css-time-sort@3.1.0': {}
+
+  '@projectwallace/css-parser@0.16.0': {}
+
+  '@projectwallace/stylelint-plugin@0.4.5(stylelint@17.6.0(typescript@6.0.3))':
+    dependencies:
+      '@projectwallace/css-analyzer': 9.8.2
+      '@projectwallace/css-parser': 0.16.0
+      stylelint: 17.6.0(typescript@6.0.3)
 
   '@publint/pack@0.1.4': {}
 

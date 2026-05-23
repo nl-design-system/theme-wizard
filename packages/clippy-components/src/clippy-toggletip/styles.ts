@@ -32,10 +32,7 @@ export default css`
 
   .clippy-toggletip__popup {
     background-color: var(--clippy-toggletip-background-color);
-    border-end-end-radius: var(--clippy-toggletip-border-radius);
-    border-end-start-radius: var(--clippy-toggletip-border-radius);
-    border-start-end-radius: var(--clippy-toggletip-border-radius);
-    border-start-start-radius: var(--clippy-toggletip-border-radius);
+    border-radius: var(--clippy-toggletip-border-radius);
     color: var(--clippy-toggletip-color);
     font-size: var(--clippy-toggletip-font-size);
     inline-size: max-content;
