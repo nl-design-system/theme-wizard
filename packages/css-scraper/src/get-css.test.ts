@@ -1,6 +1,14 @@
 import { expect, describe, vi, beforeEach, Mock, it } from 'vitest';
 import { ForbiddenError, NotFoundError, ConnectionRefusedError, InvalidUrlError, TimeoutError } from './errors';
-import { getCssFromHtml, getImportUrls, getCssFile, getCssResources, getCss, getDesignTokens } from './get-css';
+import {
+  getCssFromHtml,
+  getImportUrls,
+  getCssFile,
+  getCssResources,
+  getCss,
+  getDesignTokens,
+  USER_AGENT,
+} from './get-css';
 
 const CSS_FILE_REPONSE_MOCK = {
   headers: new Headers({ 'Content-Type': 'text/css' }),
@@ -293,7 +301,7 @@ describe('getCss', () => {
 
     const callArgs = (fetch as Mock).mock.calls[0];
     expect((callArgs[0] as URL).href).toBe('https://example.com/style.css');
-    expect(callArgs[1].headers['User-Agent']).toBe(customUserAgent);
+    expect((callArgs[1].headers as Headers).get('User-Agent')).toBe(customUserAgent);
   });
 
   it('accepts custom timeout option', async () => {
@@ -324,7 +332,7 @@ describe('getCss', () => {
 
     const callArgs = (fetch as Mock).mock.calls[0];
     expect((callArgs[0] as URL).href).toBe('https://example.com/style.css');
-    expect(callArgs[1].headers['User-Agent']).toBe(customUserAgent);
+    expect((callArgs[1].headers as Headers).get('User-Agent')).toBe(customUserAgent);
   });
 
   it('uses default user agent when no custom option is provided', async () => {
@@ -333,7 +341,7 @@ describe('getCss', () => {
 
     const callArgs = (fetch as Mock).mock.calls[0];
     expect((callArgs[0] as URL).href).toBe('https://example.com/style.css');
-    expect(callArgs[1].headers['User-Agent']).toBe('NL Design System CSS Scraper/1.0');
+    expect((callArgs[1].headers as Headers).get('User-Agent')).toBe('NL Design System CSS Scraper/1.0');
   });
 
   it('respects custom user agent in linked stylesheets', async () => {
@@ -364,11 +372,35 @@ describe('getCss', () => {
 
     // First call should be the HTML fetch with custom user agent
     const firstCall = (fetch as Mock).mock.calls[0];
-    expect(firstCall[1].headers['User-Agent']).toBe(customUserAgent);
+    expect((firstCall[1].headers as Headers).get('User-Agent')).toBe(customUserAgent);
 
     // Second call should be the CSS file fetch with custom user agent
     const secondCall = (fetch as Mock).mock.calls[1];
-    expect(secondCall[1].headers['User-Agent']).toBe(customUserAgent);
+    expect((secondCall[1].headers as Headers).get('User-Agent')).toBe(customUserAgent);
+  });
+
+  it('passes extraHeaders to fetch', async () => {
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
+    await getCss('https://example.com/style.css', { extraHeaders: { 'X-Custom': 'value' } });
+    const callArgs = (fetch as Mock).mock.calls[0];
+    expect((callArgs[1].headers as Headers).get('X-Custom')).toBe('value');
+  });
+
+  it('extraHeaders User-Agent overrides deprecated userAgent option', async () => {
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
+    await getCss('https://example.com/style.css', {
+      extraHeaders: { 'User-Agent': 'New Agent/2.0' },
+      userAgent: 'Old Agent/1.0',
+    });
+    const callArgs = (fetch as Mock).mock.calls[0];
+    expect((callArgs[1].headers as Headers).get('User-Agent')).toBe('New Agent/2.0');
+  });
+
+  it('accepts a Headers instance as extraHeaders', async () => {
+    (fetch as Mock).mockResolvedValueOnce(CSS_FILE_REPONSE_MOCK);
+    await getCss('https://example.com/style.css', { extraHeaders: new Headers({ 'X-Token': 'abc' }) });
+    const callArgs = (fetch as Mock).mock.calls[0];
+    expect((callArgs[1].headers as Headers).get('X-Token')).toBe('abc');
   });
 });
 
@@ -701,11 +733,6 @@ describe('getCssFile', () => {
     vi.clearAllMocks();
   });
 
-  const REQUEST_HEADERS = {
-    Accept: 'text/css,*/*;q=0.1',
-    'User-Agent': 'NL Design System CSS Scraper/1.0',
-  };
-
   it('fetches CSS content successfully', async () => {
     const mockResponse = 'body { margin: 0; }';
     (fetch as Mock).mockResolvedValueOnce({
@@ -715,10 +742,10 @@ describe('getCssFile', () => {
 
     const controller = new AbortController();
     const result = await getCssFile('http://example.com/style.css', controller.signal);
-    expect(fetch).toHaveBeenCalledWith('http://example.com/style.css', {
-      headers: REQUEST_HEADERS,
-      signal: controller.signal,
-    });
+    const callArgs = (fetch as Mock).mock.calls[0];
+    const headers = callArgs[1].headers as Headers;
+    expect(headers.get('Accept')).toBe('text/css,*/*;q=0.1');
+    expect(headers.get('User-Agent')).toBe('NL Design System CSS Scraper/1.0');
     expect(result).toEqual(mockResponse);
   });
 
@@ -740,6 +767,14 @@ describe('getCssFile', () => {
 
     const result = await getCssFile('http://example.com/style.css', controller.signal);
     expect(result).toEqual('');
+  });
+
+  it('sends extraHeaders in the request', async () => {
+    (fetch as Mock).mockResolvedValueOnce({ ok: true, text: async () => '' });
+    const controller = new AbortController();
+    await getCssFile('http://example.com/style.css', controller.signal, USER_AGENT, { 'X-Custom': 'value' });
+    const headers = (fetch as Mock).mock.calls[0][1].headers as Headers;
+    expect(headers.get('X-Custom')).toBe('value');
   });
 });
 
