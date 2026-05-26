@@ -1,19 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  BrandsSchema,
-  BrandSchema,
-  BasisTokensSchema,
-  BasisColorSchema,
-  BASIS_COLOR_NAMES,
-  COLOR_KEYS,
-} from './basis-tokens';
-
-const modernWhite = { $type: 'color', $value: { alpha: 1, colorSpace: 'srgb', components: [1, 1, 1] } };
-const validColorName = Object.fromEntries(COLOR_KEYS.map((key) => [key, modernWhite]));
-const validBasisColor = {
-  ...Object.fromEntries(BASIS_COLOR_NAMES.map((name) => [name, validColorName])),
-  transparent: modernWhite,
-};
+import { BrandsSchema, BrandSchema } from './basis-tokens';
 
 describe('brand', () => {
   it('no brands present', () => {
@@ -201,32 +187,6 @@ describe('brand', () => {
       };
       const result = BrandSchema.safeParse(config);
       expect.soft(result.success).toBeFalsy();
-    });
-  });
-});
-
-describe.skip('basis', () => {
-  it('basis config does not allow unknown properties', () => {
-    expect(BasisTokensSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
-  });
-
-  describe('color', () => {
-    it('allows known color names', () => {
-      expect(BasisColorSchema.safeParse(validBasisColor).success).toBeTruthy();
-    });
-
-    it('does not allow unknown properties', () => {
-      expect(BasisColorSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
-    });
-
-    it('allows references to other tokens in the schema', () => {
-      const config = structuredClone(validBasisColor) as Record<string, Record<string, unknown>>;
-      config['default']['bg-document'] = {
-        $type: 'color',
-        $value: '{brand.ma.color.indigo.1}',
-      };
-      const result = BasisColorSchema.safeParse(config);
-      expect.soft(result.success).toEqual(true);
     });
   });
 });

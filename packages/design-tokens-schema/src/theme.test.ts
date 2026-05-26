@@ -1294,7 +1294,7 @@ describe('line-height validations', () => {
   });
 });
 
-// TODO: these themes are missing required basis tokens (border-radius.square,
+// TODO: these themes are missing required basis tokens (border-radius.none,
 // form-control.{focus,invalid,read-only}.accent-color) as of start/MA/Voorbeeld v6/v5/v10.
 // Update expectations to toBe(true) once the packages include those tokens.
 describe('strictly validate known basis themes', () => {

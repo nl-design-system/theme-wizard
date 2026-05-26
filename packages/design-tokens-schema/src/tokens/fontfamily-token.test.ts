@@ -47,6 +47,7 @@ it('accepts modern token', () => {
   expect.soft(result.data).toEqual(token);
 });
 
+// Remove this when Start/Voorbeeld/MA/Basis themes have been upgraded and contain these values themselves
 const addMissingBasisTokens = (basis: Record<string, unknown>) => {
   delete (basis['border-radius'] as Record<string, unknown>)['none'];
   delete (basis['space'] as Record<string, unknown>)['none'];
