@@ -20,6 +20,11 @@ type Option = {
   value: unknown;
 };
 
+/**
+ * Allowances
+ * - options: the user can only select from options
+ * - other: the user can save/commit the search query as the input value
+ */
 const allowances = ['options', 'other'] as const;
 const defaultAllowance = 'options';
 type Allowance = (typeof allowances)[number];
