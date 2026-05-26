@@ -465,8 +465,8 @@ importers:
         version: 4.3.6
     devDependencies:
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.0.1
+        version: 5.0.1
       '@nl-design-system-community/purmerend-design-tokens':
         specifier: 1.2.3
         version: 1.2.3
@@ -582,8 +582,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.0.1
+        version: 5.0.1
       '@nl-design-system-unstable/documentation':
         specifier: 1.9.0
         version: 1.9.0
@@ -821,8 +821,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.0.1
+        version: 5.0.1
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -1029,8 +1029,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.0.1
+        version: 5.0.1
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -2507,8 +2507,8 @@ packages:
   '@nl-design-system-candidate/skip-link-tokens@1.0.4':
     resolution: {integrity: sha512-MD1+m55nRqkj2eATcBNOLE8N5jWfvjJg2ax+POX8zXm49wJcBGTS6B/kK4kzIPbMuivYnxVtNlmA+Cz/upFBZA==}
 
-  '@nl-design-system-community/ma-design-tokens@4.1.0':
-    resolution: {integrity: sha512-HW/SbCkt6Sxfnn8odMy+c0p4fE4ehFcIcQzWvdd7Ed6PgBDDb1d6DJc0lr1FX0/rKCp3YSAKDuTB4nqlCbrKcw==}
+  '@nl-design-system-community/ma-design-tokens@5.0.1':
+    resolution: {integrity: sha512-f9g5DnlOuyikwE54cPrYaiXRZ875kdhO0egOpbldbGggPQOUxZ20vnyhymIiUwtMX/PvAXm5zKLhdxUI+FcktQ==}
 
   '@nl-design-system-community/purmerend-design-tokens@1.2.3':
     resolution: {integrity: sha512-fV7scMOjHmJBR6DF0vCY0GLLllqAAJdtTjLQMWOpwgtEmtZ6DST1kGB5wJSxfZPJuzeROP+2lEplQHP5vXgm/Q==}
@@ -10388,7 +10388,7 @@ snapshots:
 
   '@nl-design-system-candidate/skip-link-tokens@1.0.4': {}
 
-  '@nl-design-system-community/ma-design-tokens@4.1.0': {}
+  '@nl-design-system-community/ma-design-tokens@5.0.1': {}
 
   '@nl-design-system-community/purmerend-design-tokens@1.2.3': {}
 

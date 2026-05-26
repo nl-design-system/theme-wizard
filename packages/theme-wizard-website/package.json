@@ -68,7 +68,7 @@
     "@nl-design-system-candidate/skip-link-tokens": "1.0.4",
     "@nl-design-system-community/clippy-components": "workspace:*",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
-    "@nl-design-system-community/ma-design-tokens": "4.1.0",
+    "@nl-design-system-community/ma-design-tokens": "5.0.1",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
     "@nl-design-system-community/theme-wizard-templates": "workspace:*",
     "@storybook/react-vite": "10.3.6",
