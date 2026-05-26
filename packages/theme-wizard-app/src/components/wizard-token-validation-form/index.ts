@@ -100,9 +100,13 @@ export class WizardTokenValidationForm extends LitElement {
           </div>
         </div>
       </output>
-      <button type="button" class="nl-button nl-button--secondary" @click=${this.downloadTokens}>
-        ${t('tokenValidationForm.downloadTokens')}
-      </button>
+      ${result.success
+        ? html`
+            <button type="button" class="nl-button nl-button--secondary" @click=${this.downloadTokens}>
+              ${t('tokenValidationForm.downloadTokens')}
+            </button>
+          `
+        : nothing}
     `;
   }
 
