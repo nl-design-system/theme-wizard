@@ -716,13 +716,13 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: 2.0.1
-        version: 2.0.1(hono@4.12.16)
+        version: 2.0.1(hono@4.12.23)
       '@hono/swagger-ui':
         specifier: 0.6.1
-        version: 0.6.1(hono@4.12.16)
+        version: 0.6.1(hono@4.12.23)
       '@hono/zod-openapi':
         specifier: 1.3.0
-        version: 1.3.0(hono@4.12.16)(zod@4.3.6)
+        version: 1.3.0(hono@4.12.23)(zod@4.3.6)
       '@nl-design-system-community/css-scraper':
         specifier: workspace:*
         version: link:../css-scraper
@@ -730,15 +730,15 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       hono:
-        specifier: 4.12.16
-        version: 4.12.16
+        specifier: 4.12.23
+        version: 4.12.23
       zod:
         specifier: 4.3.6
         version: 4.3.6
     devDependencies:
       '@hono/vite-dev-server':
         specifier: 0.25.3
-        version: 0.25.3(hono@4.12.16)
+        version: 0.25.3(hono@4.12.23)
       '@types/node':
         specifier: 24.12.2
         version: 24.12.2
@@ -904,7 +904,7 @@ importers:
         version: 5.0.4(@types/node@24.12.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(lightningcss@1.32.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0)(yaml@2.8.4)
       '@astrojs/vercel':
         specifier: 10.0.6
-        version: 10.0.6(astro@6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.4))(react@19.2.5)(rollup@4.60.2)
+        version: 10.0.6(astro@6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.8.4))(react@19.2.5)(rollup@4.60.2)
       '@fontsource/fira-sans':
         specifier: 5.2.7
         version: 5.2.7
@@ -1039,7 +1039,7 @@ importers:
         version: link:../theme-wizard-templates
       '@storybook/react-vite':
         specifier: 10.3.6
-        version: 10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@5.9.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
+        version: 10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
       '@tabler/icons-react':
         specifier: 3.44.0
         version: 3.44.0(react@19.2.5)
@@ -1054,7 +1054,7 @@ importers:
         version: 1.1.0
       astro:
         specifier: 6.2.1
-        version: 6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.4)
+        version: 6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.8.4)
       dequal:
         specifier: 2.0.3
         version: 2.0.3
@@ -3469,6 +3469,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@utrecht/accordion-css@4.0.0':
     resolution: {integrity: sha512-yhSykfRnQRX7E7DBpH4p2Av3cSNmuku4iCWHCl7fTSvWoD9hyGDopTcQxviekQxEk2OKs6EkOIAcb74Pon08Zw==}
@@ -5660,8 +5661,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  hono@4.12.16:
-    resolution: {integrity: sha512-jN0ZewiNAWSe5khM3EyCmBb250+b40wWbwNILNfEvq84VREWwOIkuUsFONk/3i3nqkz7Oe1PcpM2mwQEK2L9Kg==}
+  hono@4.12.23:
+    resolution: {integrity: sha512-eIaZ9qDgu7XV0pxOCrg7/WhnQ6Ivm22UcxhXx/A3dcbqbbYgBEkc6e/J/s7j2tS96zoB0S9VBdLwQNCWwUo4LA==}
     engines: {node: '>=16.9.0'}
 
   hookified@1.15.1:
@@ -8874,14 +8875,14 @@ snapshots:
       is-wsl: 3.1.1
       which-pm-runs: 1.1.0
 
-  '@astrojs/vercel@10.0.6(astro@6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.4))(react@19.2.5)(rollup@4.60.2)':
+  '@astrojs/vercel@10.0.6(astro@6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.8.4))(react@19.2.5)(rollup@4.60.2)':
     dependencies:
       '@astrojs/internal-helpers': 0.9.0
       '@vercel/analytics': 1.6.1(react@19.2.5)
       '@vercel/functions': 3.5.0
       '@vercel/nft': 1.5.0(rollup@4.60.2)
       '@vercel/routing-utils': 5.3.3
-      astro: 6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.4)
+      astro: 6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.8.4)
       esbuild: 0.27.7
       tinyglobby: 0.2.16
     transitivePeerDependencies:
@@ -9604,35 +9605,35 @@ snapshots:
     dependencies:
       keycode: 2.2.1
 
-  '@hono/node-server@1.19.12(hono@4.12.16)':
+  '@hono/node-server@1.19.12(hono@4.12.23)':
     dependencies:
-      hono: 4.12.16
+      hono: 4.12.23
 
-  '@hono/node-server@2.0.1(hono@4.12.16)':
+  '@hono/node-server@2.0.1(hono@4.12.23)':
     dependencies:
-      hono: 4.12.16
+      hono: 4.12.23
 
-  '@hono/swagger-ui@0.6.1(hono@4.12.16)':
+  '@hono/swagger-ui@0.6.1(hono@4.12.23)':
     dependencies:
-      hono: 4.12.16
+      hono: 4.12.23
 
-  '@hono/vite-dev-server@0.25.3(hono@4.12.16)':
+  '@hono/vite-dev-server@0.25.3(hono@4.12.23)':
     dependencies:
-      '@hono/node-server': 1.19.12(hono@4.12.16)
-      hono: 4.12.16
+      '@hono/node-server': 1.19.12(hono@4.12.23)
+      hono: 4.12.23
       minimatch: 9.0.9
 
-  '@hono/zod-openapi@1.3.0(hono@4.12.16)(zod@4.3.6)':
+  '@hono/zod-openapi@1.3.0(hono@4.12.23)(zod@4.3.6)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.5.0(zod@4.3.6)
-      '@hono/zod-validator': 0.7.6(hono@4.12.16)(zod@4.3.6)
-      hono: 4.12.16
+      '@hono/zod-validator': 0.7.6(hono@4.12.23)(zod@4.3.6)
+      hono: 4.12.23
       openapi3-ts: 4.5.0
       zod: 4.3.6
 
-  '@hono/zod-validator@0.7.6(hono@4.12.16)(zod@4.3.6)':
+  '@hono/zod-validator@0.7.6(hono@4.12.23)(zod@4.3.6)':
     dependencies:
-      hono: 4.12.16
+      hono: 4.12.23
       zod: 4.3.6
 
   '@humanfs/core@0.19.2':
@@ -9766,14 +9767,6 @@ snapshots:
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
       minipass: 7.1.3
-
-  '@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@5.9.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))':
-    dependencies:
-      glob: 13.0.6
-      react-docgen-typescript: 2.4.0(typescript@5.9.3)
-      vite: 8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4)
-    optionalDependencies:
-      typescript: 5.9.3
 
   '@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))':
     dependencies:
@@ -10535,28 +10528,6 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
       storybook: 10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
 
-  '@storybook/react-vite@10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@5.9.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))':
-    dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.7.0(typescript@5.9.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
-      '@rollup/pluginutils': 5.3.0(rollup@4.60.2)
-      '@storybook/builder-vite': 10.3.6(esbuild@0.27.7)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
-      '@storybook/react': 10.3.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@5.9.3)
-      empathic: 2.0.0
-      magic-string: 0.30.21
-      react: 19.2.5
-      react-docgen: 8.0.3
-      react-dom: 19.2.5(react@19.2.5)
-      resolve: 1.22.12
-      storybook: 10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      tsconfig-paths: 4.2.0
-      vite: 8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4)
-    transitivePeerDependencies:
-      - esbuild
-      - rollup
-      - supports-color
-      - typescript
-      - webpack
-
   '@storybook/react-vite@10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))':
     dependencies:
       '@joshwooding/vite-plugin-react-docgen-typescript': 0.7.0(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
@@ -10578,20 +10549,6 @@ snapshots:
       - supports-color
       - typescript
       - webpack
-
-  '@storybook/react@10.3.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@5.9.3)':
-    dependencies:
-      '@storybook/global': 5.0.0
-      '@storybook/react-dom-shim': 10.3.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
-      react: 19.2.5
-      react-docgen: 8.0.3
-      react-docgen-typescript: 2.4.0(typescript@5.9.3)
-      react-dom: 19.2.5(react@19.2.5)
-      storybook: 10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-    optionalDependencies:
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - supports-color
 
   '@storybook/react@10.3.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)':
     dependencies:
@@ -12343,99 +12300,6 @@ snapshots:
 
   astral-regex@2.0.0: {}
 
-  astro@6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.4):
-    dependencies:
-      '@astrojs/compiler': 4.0.0
-      '@astrojs/internal-helpers': 0.9.0
-      '@astrojs/markdown-remark': 7.1.1
-      '@astrojs/telemetry': 3.3.1
-      '@capsizecss/unpack': 4.0.0
-      '@clack/prompts': 1.3.0
-      '@oslojs/encoding': 1.1.0
-      '@rollup/pluginutils': 5.3.0(rollup@4.60.2)
-      aria-query: 5.3.2
-      axobject-query: 4.1.0
-      ci-info: 4.4.0
-      clsx: 2.1.1
-      common-ancestor-path: 2.0.0
-      cookie: 1.1.1
-      devalue: 5.8.0
-      diff: 8.0.4
-      dset: 3.1.4
-      es-module-lexer: 2.1.0
-      esbuild: 0.27.7
-      flattie: 1.1.1
-      fontace: 0.4.1
-      github-slugger: 2.0.0
-      html-escaper: 3.0.3
-      http-cache-semantics: 4.2.0
-      js-yaml: 4.1.1
-      magic-string: 0.30.21
-      magicast: 0.5.2
-      mrmime: 2.0.1
-      neotraverse: 0.6.18
-      obug: 2.1.1
-      p-limit: 7.3.0
-      p-queue: 9.2.0
-      package-manager-detector: 1.6.0
-      piccolore: 0.1.3
-      picomatch: 4.0.4
-      rehype: 13.0.2
-      semver: 7.7.4
-      shiki: 4.0.2
-      smol-toml: 1.6.0
-      svgo: 4.0.1
-      tinyclip: 0.1.12
-      tinyexec: 1.1.2
-      tinyglobby: 0.2.16
-      tsconfck: 3.1.6(typescript@5.9.3)
-      ultrahtml: 1.6.0
-      unifont: 0.7.4
-      unist-util-visit: 5.1.0
-      unstorage: 1.17.5(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)
-      vfile: 6.0.3
-      vite: 7.3.2(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4)
-      vitefu: 1.1.3(vite@7.3.2(@types/node@24.12.2)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.4))
-      xxhash-wasm: 1.1.0
-      yargs-parser: 22.0.0
-      zod: 4.3.6
-    optionalDependencies:
-      sharp: 0.34.5
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@types/node'
-      - '@upstash/redis'
-      - '@vercel/blob'
-      - '@vercel/functions'
-      - '@vercel/kv'
-      - aws4fetch
-      - db0
-      - idb-keyval
-      - ioredis
-      - jiti
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - typescript
-      - uploadthing
-      - yaml
-
   astro@6.2.1(@types/node@24.12.2)(@vercel/blob@2.3.0)(@vercel/functions@3.5.0)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.8.4):
     dependencies:
       '@astrojs/compiler': 4.0.0
@@ -13928,7 +13792,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  hono@4.12.16: {}
+  hono@4.12.23: {}
 
   hookified@1.15.1: {}
 
@@ -15623,10 +15487,6 @@ snapshots:
       iconv-lite: 0.4.24
       unpipe: 1.0.0
 
-  react-docgen-typescript@2.4.0(typescript@5.9.3):
-    dependencies:
-      typescript: 5.9.3
-
   react-docgen-typescript@2.4.0(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
@@ -16662,10 +16522,6 @@ snapshots:
       code-block-writer: 10.1.1
 
   ts-toolbelt@6.15.5: {}
-
-  tsconfck@3.1.6(typescript@5.9.3):
-    optionalDependencies:
-      typescript: 5.9.3
 
   tsconfck@3.1.6(typescript@6.0.3):
     optionalDependencies:
