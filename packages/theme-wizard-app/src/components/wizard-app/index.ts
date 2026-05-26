@@ -1,5 +1,6 @@
 import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { provide } from '@lit/context';
+import { ClippyTokenCombobox } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -12,7 +13,6 @@ import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
-import { WizardTokenCombobox } from '../wizard-token-combobox';
 import { WizardTokenInput } from '../wizard-token-input';
 import { WizardTokenPreset } from '../wizard-token-presets';
 
@@ -157,7 +157,7 @@ export class App extends LitElement {
       for (const groupPath of [target.name, ...siblingGroupsWithOnlyRefsToSelf]) {
         this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, target.seedColor);
       }
-    } else if (target instanceof WizardTokenCombobox) {
+    } else if (target instanceof ClippyTokenCombobox) {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);
