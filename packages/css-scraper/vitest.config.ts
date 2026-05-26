@@ -11,5 +11,8 @@ export default defineConfig({
         statements: 100,
       },
     },
+    typecheck: {
+      tsconfig: './tsconfig.node.json',
+    },
   },
 });

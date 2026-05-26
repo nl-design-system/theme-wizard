@@ -100,7 +100,7 @@ export class WizardStyleGuideTypography extends LitElement {
         <wizard-table-scroller>
           <table class="utrecht-table">
             <caption class="utrecht-table__caption">
-              ${t(`styleGuide.sections.typography.families.title`)}
+              ${t('styleGuide.sections.typography.families.title')}
             </caption>
             <thead class="utrecht-table__header">
               <tr class="utrecht-table__row">
@@ -184,7 +184,7 @@ export class WizardStyleGuideTypography extends LitElement {
         <wizard-table-scroller>
           <table class="utrecht-table">
             <caption class="utrecht-table__caption">
-              ${t(`styleGuide.sections.typography.sizes.title`)}
+              ${t('styleGuide.sections.typography.sizes.title')}
             </caption>
             <thead class="utrecht-table__header">
               <tr class="utrecht-table__row">
@@ -257,7 +257,7 @@ export class WizardStyleGuideTypography extends LitElement {
         <wizard-table-scroller>
           <table class="utrecht-table">
             <caption class="utrecht-table__caption">
-              ${t(`styleGuide.sections.typography.headings.title`)}
+              ${t('styleGuide.sections.typography.headings.title')}
             </caption>
             <thead class="utrecht-table__header">
               <tr class="utrecht-table__row">

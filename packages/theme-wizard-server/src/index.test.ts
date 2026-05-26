@@ -106,7 +106,7 @@ describe('/api/v1', () => {
       });
     });
 
-    it.each(endpoints)(`contains server-timing (%s)`, async (url) => {
+    it.each(endpoints)('contains server-timing (%s)', async (url) => {
       vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
       const response = await app.request(`${url}?url=example.com`);
       const timingHeader = response.headers.get('server-timing');

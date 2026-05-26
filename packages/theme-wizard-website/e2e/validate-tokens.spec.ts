@@ -30,9 +30,10 @@ test.describe('interactive', () => {
   });
 
   test('Marks invalid files invalid', async ({ validateTokensPage }) => {
-    await validateTokensPage.selectFile(
-      JSON.stringify({ basis: { color: { 'box-shadow': { $type: 'color', $value: '#000000' } } } }),
-    );
+    const tokens = { basis: structuredClone(maTokens.basis) };
+    // @ts-expect-error We're doing something illegal here, so an error is expected
+    tokens.basis.color['box-shadow'] = { $type: 'color', $value: '#000000' };
+    await validateTokensPage.selectFile(JSON.stringify(tokens));
     await validateTokensPage.validate();
 
     await expect(validateTokensPage.resultOutput).toBeVisible();

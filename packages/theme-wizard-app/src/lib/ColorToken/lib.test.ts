@@ -49,7 +49,7 @@ describe('ColorToken/getCSSColorComponents', () => {
     },
     {
       name: 'supports negative values',
-      input: `color(srgb 1e3 -1e-3 -0)`,
+      input: 'color(srgb 1e3 -1e-3 -0)',
       result: '1000,-0.001,0',
     },
   ];

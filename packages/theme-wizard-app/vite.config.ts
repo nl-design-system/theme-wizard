@@ -1,4 +1,8 @@
+import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vite';
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const deps = Object.keys({ ...pkg.dependencies, ...pkg.peerDependencies });
 
 export default defineConfig(() => ({
   build: {
@@ -9,7 +13,8 @@ export default defineConfig(() => ({
     },
     minify: false,
     rollupOptions: {
-      external: (id) => /^@?lit(-\w+)?($|\/.+)/.test(id) || /^react(-dom)?(\/.*)?$/.test(id),
+      // Auto-externalize dependencies from package.json instead of relying on hardcoded regexes
+      external: (id) => deps.some((dep) => id === dep || id.startsWith(`${dep}/`)),
     },
   },
 }));

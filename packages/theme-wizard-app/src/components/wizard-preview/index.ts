@@ -55,7 +55,7 @@ export class ThemePreview extends LitElement {
     // Execute scripts after content is rendered
     if (changedProperties.has('htmlContent') && this.htmlContent) {
       requestAnimationFrame(() => {
-        const container = this.shadowRoot?.querySelector(`[data-testid="preview"]`) as HTMLElement;
+        const container = this.shadowRoot?.querySelector('[data-testid="preview"]') as HTMLElement;
         if (container) {
           this.#executeScripts(container);
         }

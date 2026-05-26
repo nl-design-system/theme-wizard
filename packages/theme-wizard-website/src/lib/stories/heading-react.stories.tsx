@@ -97,7 +97,7 @@ export const DesignHeadingSizes: Story = {
     designStory: true,
     docs: {
       description: {
-        story: `Gebruik dit overzicht om de \`font-size\` van elke Heading op elkaar af te stemmen.`,
+        story: 'Gebruik dit overzicht om de `font-size` van elke Heading op elkaar af te stemmen.',
       },
     },
     editableTokens: {
