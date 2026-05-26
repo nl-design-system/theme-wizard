@@ -12,7 +12,6 @@ import { allowedValuesConverter } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import { html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import * as libColor from './color';
 import styles from './styles';
