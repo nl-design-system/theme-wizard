@@ -16,9 +16,9 @@ walkColors(startTokens, (token, path) => {
   });
 });
 
-const colorOptions = colorTokens.map(({ path, token }) => ({
+const colorOptions = colorTokens.slice(0, 20).map(({ path, token }) => ({
   label: path.join('.'),
-  value: isRef(token.$value) ? resolveRef(startTokens, token.$value) : token.$value,
+  value: isRef(token.$value) ? (resolveRef(startTokens, token.$value) as ColorToken) : token.$value,
 }));
 
 console.log('colorOptions', colorOptions);
