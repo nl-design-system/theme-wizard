@@ -1,5 +1,4 @@
-import type { Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
-import '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import type { Option, Types } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   type ColorToken,
@@ -18,6 +17,7 @@ import { templateToHtml } from '../utils/templateToHtml';
 
 // Flatten start tokens
 const parsedTokens = StrictThemeSchema.parse(startTokens);
+
 const colorTokens: Array<{ token: ColorToken; path: string[] }> = [];
 walkColors(parsedTokens, (token, path) => {
   colorTokens.push({
@@ -48,15 +48,21 @@ const options = colorTokens.map(({ path, token }) => {
 
 interface TokenComboboxStoryArgs {
   options: Option[];
+  type: Types;
 }
 
-const createTemplate = (options: TokenComboboxStoryArgs['options']) =>
-  html`<clippy-token-combobox type="color" .value=${options[0].value} .options=${options}></clippy-token-combobox>`;
+const createTemplate = (args: TokenComboboxStoryArgs) =>
+  html`<clippy-token-combobox
+    type=${args.type}
+    .value=${args.options[0].value}
+    .options=${options}
+  ></clippy-token-combobox>`;
 
 const meta = {
   id: 'clippy-token-combobox',
   args: {
-    options: options,
+    options: options.slice(0, 50),
+    type: 'color',
   },
   parameters: {
     docs: {
@@ -65,9 +71,10 @@ const meta = {
       },
     },
   },
-  render: ({ options }: TokenComboboxStoryArgs) =>
+  render: ({ options, type }: TokenComboboxStoryArgs) =>
     React.createElement('clippy-token-combobox', {
       options,
+      type,
     }),
   tags: ['autodocs'],
   title: 'Clippy/Combobox/Token Combobox',
@@ -83,7 +90,7 @@ export const Default: Story = {
     docs: {
       source: {
         transform: (_code: string, storyContext: { args: TokenComboboxStoryArgs }) => {
-          const template = createTemplate(storyContext.args.options);
+          const template = createTemplate(storyContext.args);
           return templateToHtml(template);
         },
         type: 'code',

@@ -35,6 +35,7 @@ export type Option = {
 // Allow custom overrides
 const defaultAllowance = 'other';
 const types = ['color', 'dimension', 'fontFamily', 'number'] as const;
+export type Types = (typeof types)[number];
 
 const tag = 'clippy-token-combobox';
 
@@ -52,7 +53,7 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
   @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
   override allow: (typeof ClippyCombobox.allowances)[number] = defaultAllowance;
   #options: Option[] = [];
-  #type?: (typeof types)[number] = undefined;
+  #type?: Types = undefined;
 
   static override readonly styles = [
     styles,
