@@ -5,9 +5,7 @@ import {
   parseColor,
   stringifyColor,
   colorTokenValueToColorJS,
-  resolveRef,
   EXTENSION_RESOLVED_AS,
-  isColorToken,
   ColorValueSchema,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
@@ -56,7 +54,7 @@ export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $valu
   return stringifyColor($value);
 };
 
-export const preview = <T extends { value: ColorToken; color?: Color }>({ color, value }: T) => {
+export const preview = <T extends { value: ColorToken }>({ value }: T) => {
   if (!value) {
     return nothing;
   }

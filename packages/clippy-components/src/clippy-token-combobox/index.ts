@@ -149,7 +149,7 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
   override willUpdate(changed: PropertyValues) {
     // Query value in input is dependent on both `options` and `value`.
     if ((changed.has('options') && changed.get('options')) || (changed.has('value') && changed.get('value'))) {
-      this.query = this.valueToQuery({ $value: this.value }) ?? '';
+      this.query = this.valueToQuery({ $value: this.value?.$value }) ?? '';
     }
   }
 
