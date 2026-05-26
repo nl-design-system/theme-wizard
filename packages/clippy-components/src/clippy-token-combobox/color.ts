@@ -5,6 +5,8 @@ import {
   parseColor,
   stringifyColor,
   colorTokenValueToColorJS,
+  EXTENSION_RESOLVED_AS,
+  ColorValueSchema,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { html, nothing } from 'lit';
@@ -52,17 +54,20 @@ export const valueToQuery = <T extends { $value: ColorToken['$value'] }>({ $valu
   return stringifyColor($value);
 };
 
-export const preview = <T extends { value: ColorToken; color?: Color }>({ color, value }: T) => {
+export const preview = <T extends { value: ColorToken }>({ value }: T) => {
   if (!value) {
     return nothing;
   }
-  const colorValue = color?.toString() ?? stringifyColor(value?.$value);
+  const resolvedColor = isRef(value.$value) ? value.$extensions?.[EXTENSION_RESOLVED_AS] : value.$value;
+  const parsedColor = ColorValueSchema.safeParse(resolvedColor);
+  if (!parsedColor.success) return nothing;
+  const colorValue = stringifyColor(parsedColor.data);
   return colorValue
     ? html`
         <svg
           role="img"
           xmlns="http://www.w3.org/2000/svg"
-          class="wizard-token-combobox__preview nl-color-sample"
+          class="clippy-token-combobox__preview nl-color-sample"
           style=${styleMap({ color: colorValue })}
         >
           <path d="M0 0H32V32H0Z" fill="currentcolor" />

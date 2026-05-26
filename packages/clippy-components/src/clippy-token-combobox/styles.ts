@@ -7,14 +7,14 @@ export default css`
     --nl-color-sample-inline-size: var(--basis-size-xs);
   }
 
-  .wizard-token-combobox__option {
+  .clippy-token-combobox__option {
     align-items: center;
     display: flex;
-    gap: var(--wizard-token-combobox-option-gap, var(--basis-space-inline-md));
+    gap: var(--clippy-token-combobox-option-gap, var(--basis-space-inline-md));
   }
 
-  .wizard-token-combobox__preview--font-family,
-  .wizard-token-combobox__preview--font-size {
+  .clippy-token-combobox__preview--font-family,
+  .clippy-token-combobox__preview--font-size {
     align-items: center;
     block-size: var(--nl-color-sample-block-size);
     display: inline-flex;

@@ -123,6 +123,9 @@ importers:
       '@nl-design-system-candidate/color-sample-tokens':
         specifier: 2.0.3
         version: 2.0.3
+      '@nl-design-system-candidate/data-badge-css':
+        specifier: 1.0.5
+        version: 1.0.5
       '@nl-design-system-candidate/data-badge-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -147,6 +150,9 @@ importers:
       '@nl-design-system-candidate/skip-link-tokens':
         specifier: 1.0.4
         version: 1.0.4
+      '@projectwallace/css-parser':
+        specifier: 0.15.0
+        version: 0.15.0
       '@tabler/icons':
         specifier: 3.41.1
         version: 3.41.1
@@ -180,6 +186,9 @@ importers:
       react-dom:
         specifier: 19.2.5
         version: 19.2.5(react@19.2.5)
+      style-dictionary:
+        specifier: 5.4.0
+        version: 5.4.0
     devDependencies:
       '@nl-design-system-community/design-tokens-schema':
         specifier: workspace:*
@@ -244,6 +253,9 @@ importers:
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.2)(react@19.2.5)
+      '@nl-design-system-unstable/start-design-tokens':
+        specifier: 5.1.0
+        version: 5.1.0
       '@utrecht/fieldset-react':
         specifier: 1.0.12
         version: 1.0.12(@babel/runtime@7.29.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -263,6 +275,9 @@ importers:
       '@nl-design-system-community/clippy-components':
         specifier: workspace:*
         version: link:../clippy-components
+      '@nl-design-system-community/design-tokens-schema':
+        specifier: workspace:*
+        version: link:../design-tokens-schema
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app

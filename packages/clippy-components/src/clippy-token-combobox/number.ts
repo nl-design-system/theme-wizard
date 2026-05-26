@@ -1,4 +1,4 @@
-import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@src/clippy-html-image';
 import {
   type NumberToken,
   EXTENSION_RESOLVED_AS,
@@ -90,7 +90,7 @@ export const preview = <T extends { label: string; value: NumberToken }>({ value
   };
   return html`
     <clippy-html-image>
-      <span class="wizard-token-combobox__preview wizard-token-combobox__preview--font-weight" style=${styleMap(styles)}
+      <span class="clippy-token-combobox__preview clippy-token-combobox__preview--font-weight" style=${styleMap(styles)}
         >${PREVIEW_VALUE}</span
       >
     </clippy-html-image>

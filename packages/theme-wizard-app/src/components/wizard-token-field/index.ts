@@ -1,5 +1,7 @@
 import { consume } from '@lit/context';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
+import { type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import {
   EXTENSION_RESOLVED_AS,
   EXTENSION_TOKEN_SUBTYPE,
@@ -7,7 +9,6 @@ import {
   isRef,
   type TokenReference,
 } from '@nl-design-system-community/design-tokens-schema';
-import '../wizard-token-combobox';
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -16,7 +17,6 @@ import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import Theme from '../../lib/Theme';
 import { EXTENSION_TOKEN_STAGED } from '../../utils';
-import { type Option } from '../wizard-token-combobox';
 import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
@@ -146,7 +146,7 @@ export class WizardTokenField extends WizardTokenNavigator {
 
   renderField(type: NonNullable<typeof this.type>, label: string) {
     // TODO: better a11y for combobox, move label and errors into the combobox itself rather than relying on visual proximity.
-    return html`<wizard-token-combobox
+    return html`<clippy-token-combobox
       name=${this.path}
       hidden-label=${label}
       type=${type}
@@ -160,7 +160,7 @@ export class WizardTokenField extends WizardTokenNavigator {
             ${t(`validation.error.${this.pathErrors[0].code}.compact`, this.pathErrors[0])}
           </div>`
         : nothing}
-    </wizard-token-combobox>`;
+    </clippy-token-combobox>`;
   }
 
   override render() {

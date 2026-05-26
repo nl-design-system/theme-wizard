@@ -22,7 +22,7 @@ export class ComponentPage {
   }
 
   getComboboxPreviewElement(label: string): Locator {
-    const combobox = this.page.locator(`wizard-token-combobox[name="${label}"]`);
-    return combobox.locator('.clippy-combobox__current-option .wizard-token-combobox__preview');
+    const combobox = this.page.locator(`clippy-token-combobox[name="${label}"]`);
+    return combobox.locator('.clippy-combobox__current-option .clippy-token-combobox__preview');
   }
 }

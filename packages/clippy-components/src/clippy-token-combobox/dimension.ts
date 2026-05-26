@@ -1,4 +1,4 @@
-import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@src/clippy-html-image';
 import {
   type DimensionToken,
   type ModernDimensionValue,
@@ -60,7 +60,7 @@ export const preview = <T extends { label: string; value: DimensionToken }>({ va
   };
   return html`
     <clippy-html-image>
-      <span class="wizard-token-combobox__preview wizard-token-combobox__preview--font-size" style=${styleMap(styles)}
+      <span class="clippy-token-combobox__preview clippy-token-combobox__preview--font-size" style=${styleMap(styles)}
         >${PREVIEW_VALUE}</span
       >
     </clippy-html-image>

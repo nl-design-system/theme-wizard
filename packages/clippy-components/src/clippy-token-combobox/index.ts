@@ -1,8 +1,7 @@
+import { allowedValuesConverter } from '@lib/converters';
+import LocalizationMixin from '@lib/LocalizationMixin';
 import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import { ClippyCombobox } from '@nl-design-system-community/clippy-components/clippy-combobox';
-import { allowedValuesConverter } from '@nl-design-system-community/clippy-components/lib/converters';
-import LocalizationMixin from '@nl-design-system-community/clippy-components/lib/LocalizationMixin';
 import {
   EXTENSION_RESOLVED_AS,
   isRef,
@@ -13,9 +12,10 @@ import {
   type ResolvedToken,
   NumberToken,
 } from '@nl-design-system-community/design-tokens-schema';
+import { ClippyCombobox } from '@src/clippy-combobox';
 import Color from 'colorjs.io';
 import { dequal } from 'dequal';
-import { html, nothing, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { DesignToken } from 'style-dictionary/types';
@@ -35,12 +35,13 @@ export type Option = {
 // Allow custom overrides
 const defaultAllowance = 'other';
 const types = ['color', 'dimension', 'fontFamily', 'number'] as const;
+export type Types = (typeof types)[number];
 
-const tag = 'wizard-token-combobox';
+const tag = 'clippy-token-combobox';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: WizardTokenCombobox;
+    [tag]: ClippyTokenCombobox;
   }
 }
 
@@ -48,11 +49,11 @@ declare global {
 class C extends ClippyCombobox<Option> {}
 
 @customElement(tag)
-export class WizardTokenCombobox extends LocalizationMixin(C) {
+export class ClippyTokenCombobox extends LocalizationMixin(C) {
   @property({ converter: allowedValuesConverter(ClippyCombobox.allowances, defaultAllowance) })
   override allow: (typeof ClippyCombobox.allowances)[number] = defaultAllowance;
   #options: Option[] = [];
-  #type?: (typeof types)[number] = undefined;
+  #type?: Types = undefined;
 
   static override readonly styles = [
     styles,
@@ -146,6 +147,13 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
     return option;
   }
 
+  override willUpdate(changed: PropertyValues) {
+    // Query value in input is dependent on both `options` and `value`.
+    if ((changed.has('options') && changed.get('options')) || (changed.has('value') && changed.get('value'))) {
+      this.query = this.valueToQuery({ $value: this.value?.$value }) ?? '';
+    }
+  }
+
   /**
    * @description customize how the user input is resolved to a value
    */
@@ -223,7 +231,7 @@ export class WizardTokenCombobox extends LocalizationMixin(C) {
       'nl-data-badge': isRef(value?.$value),
     };
     return html`
-      <span class="wizard-token-combobox__option">
+      <span class="clippy-token-combobox__option">
         ${this.renderPreview(option)}
         <span class=${classMap(labelClasses)}>${label}</span>
       </span>

@@ -161,7 +161,7 @@ test.describe('stories', () => {
         const OPTION = 'basis.color.accent-1-inverse.color-default';
         await expect(input).not.toHaveAccessibleErrorMessage(ERROR_MESSAGE);
 
-        // First fill in a color name to get <wizard-token-combobox> to show options
+        // First fill in a color name to get <clippy-token-combobox> to show options
         // Otherwise the next step fails because it wouldn't show any options
         await input.fill(OPTION);
         // Then click the option that is shown
