@@ -14,6 +14,7 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
+import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 
 // Flatten start tokens
 const parsedTokens = StrictThemeSchema.parse(startTokens);
@@ -52,11 +53,7 @@ interface TokenComboboxStoryArgs {
 }
 
 const createTemplate = (args: TokenComboboxStoryArgs) =>
-  html`<clippy-token-combobox
-    type=${args.type}
-    .value=${args.options[0].value}
-    .options=${options}
-  ></clippy-token-combobox>`;
+  html`<clippy-token-combobox type=${args.type} .options=${options}></clippy-token-combobox>`;
 
 const meta = {
   id: 'clippy-token-combobox',
