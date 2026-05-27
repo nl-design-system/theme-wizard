@@ -1,5 +1,7 @@
 import { safeCustomElement } from '@lib/decorators';
+import ChevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
 import comboboxStyles from '@utrecht/combobox-css?inline';
+import utrechtCustomizableTextInputStyles from '@utrecht/customizable-text-input-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
 import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
@@ -8,11 +10,13 @@ import { html, nothing, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import memoize from 'memoize';
 import { allowedValuesConverter, arrayFromTokenList } from '../lib/converters';
 import { FormElement } from '../lib/FormElement';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
+import './../clippy-icon';
 
 type Option = {
   label: string;
@@ -66,6 +70,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     unsafeCSS(comboboxStyles),
     unsafeCSS(listboxStyles),
     unsafeCSS(textboxStyles),
+    unsafeCSS(utrechtCustomizableTextInputStyles),
   ];
 
   @state() activeIndex = -1;
@@ -330,7 +335,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       {} as Record<string, Element>,
     );
     return html`
-      <div class="utrecht-combobox">
+      <div>
         <label for="${this.#id}" class=${classMap(labelClasses)}>
           <slot name="label">${this.hiddenLabel || this.name}</slot>
         </label>
@@ -344,65 +349,79 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
               <slot name="error"></slot>
             </div>`
           : nothing}
-        <div class="clippy-combobox__input-container">
-          ${currentOption
-            ? html`<div
-                role="presentation"
-                class=${classMap({ 'clippy-combobox__current-option': true, ...textboxClasses })}
+        <div class="utrecht-combobox">
+          <div class="utrecht-customizable-text-input">
+            <div class="utrecht-customizable-text-input__inner">
+              <label
+                for="${this.#id}"
+                class="utrecht-customizable-text-input__slot utrecht-customizable-text-input__slot--end utrecht-customizable-text-input__slot--label"
+                aria-hidden="true"
               >
-                ${this.renderEntry(currentOption)}
-              </div>`
-            : nothing}
-          <input
-            id=${this.#id}
-            name=${this.name}
-            autocomplete="off"
-            role="combobox"
-            aria-autocomplete="list"
-            aria-haspopup="listbox"
-            aria-controls=${this.#listId}
-            aria-expanded=${this.open}
-            aria-activedescendant=${ifDefined(this.#getOptionId())}
-            aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-            aria-errormessage=${ifDefined(populatedSlots['error'] ? `${this.#id}-error` : undefined)}
-            aria-describedby=${ifDefined(populatedSlots['description'] ? `${this.#id}-description` : undefined)}
-            type="text"
-            class=${classMap(textboxClasses)}
-            dir="auto"
-            .value=${this.query}
-            @input=${this.#handleInput}
-            @focus=${this.#handleFocus}
-            @blur=${this.#handleBlur}
-            @keydown=${this.#handleKeydown}
-          />
-        </div>
-        <div
-          id=${this.#listId}
-          class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}"
-          role="listbox"
-          tabindex="-1"
-        >
-          <ul class="utrecht-listbox__list" role="none">
-            ${this.filteredOptions.map((option, index) => {
-              const active = index === this.activeIndex;
-              const selected = dequal(option, currentOption);
-              const interactionClasses = {
-                'utrecht-listbox__option--active': active,
-                'utrecht-listbox__option--selected': selected,
-              };
-              return html`<li
-                class="clippy-combobox__option utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
-                  interactionClasses,
-                )}"
-                role="option"
-                id=${ifDefined(this.#getOptionId(index))}
-                aria-selected=${selected}
-                @click=${() => this.#commitActiveItem(index)}
-              >
-                ${this.renderEntry(option, index)}
-              </li>`;
-            })}
-          </ul>
+                <clippy-icon>${unsafeSVG(ChevronDownIcon)}</clippy-icon>
+              </label>
+
+              <div class="utrecht-customizable-text-input__wrap-input">
+                ${currentOption
+                  ? html`<div
+                      role="presentation"
+                      class=${classMap({ 'clippy-combobox__current-option': true, ...textboxClasses })}
+                    >
+                      ${this.renderEntry(currentOption)}
+                    </div>`
+                  : nothing}
+                <input
+                  id=${this.#id}
+                  name=${this.name}
+                  autocomplete="off"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-haspopup="listbox"
+                  aria-controls=${this.#listId}
+                  aria-expanded=${this.open}
+                  aria-activedescendant=${ifDefined(this.#getOptionId())}
+                  aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
+                  aria-errormessage=${ifDefined(populatedSlots['error'] ? `${this.#id}-error` : undefined)}
+                  aria-describedby=${ifDefined(populatedSlots['description'] ? `${this.#id}-description` : undefined)}
+                  type="text"
+                  class=${classMap(textboxClasses)}
+                  dir="auto"
+                  .value=${this.query}
+                  @input=${this.#handleInput}
+                  @focus=${this.#handleFocus}
+                  @blur=${this.#handleBlur}
+                  @keydown=${this.#handleKeydown}
+                />
+              </div>
+            </div>
+            <div
+              id=${this.#listId}
+              class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}"
+              role="listbox"
+              tabindex="-1"
+            >
+              <ul class="utrecht-listbox__list" role="none">
+                ${this.filteredOptions.map((option, index) => {
+                  const active = index === this.activeIndex;
+                  const selected = dequal(option, currentOption);
+                  const interactionClasses = {
+                    'utrecht-listbox__option--active': active,
+                    'utrecht-listbox__option--selected': selected,
+                  };
+                  return html`<li
+                    class="clippy-combobox__option utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
+                      interactionClasses,
+                    )}"
+                    role="option"
+                    id=${ifDefined(this.#getOptionId(index))}
+                    aria-selected=${selected}
+                    @click=${() => this.#commitActiveItem(index)}
+                  >
+                    ${this.renderEntry(option, index)}
+                  </li>`;
+                })}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     `;
