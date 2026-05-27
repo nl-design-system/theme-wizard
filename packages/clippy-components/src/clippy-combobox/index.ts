@@ -1,5 +1,6 @@
 import { safeCustomElement } from '@lib/decorators';
 import ChevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
+import ZoomIcon from '@tabler/icons/outline/zoom.svg?raw';
 import comboboxStyles from '@utrecht/combobox-css?inline';
 import utrechtCustomizableTextInputStyles from '@utrecht/customizable-text-input-css?inline';
 import listboxStyles from '@utrecht/listbox-css?inline';
@@ -294,6 +295,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     `;
   }
 
+  renderIconStartSlot(): undefined | TemplateResult<1> {
+    return html`<clippy-icon>${unsafeSVG(ZoomIcon)}</clippy-icon>`;
+  }
+
   override willUpdate(changed: PropertyValues) {
     super.willUpdate(changed);
     // Query value in input is dependent on both `options` and `value`.
@@ -334,6 +339,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       }),
       {} as Record<string, Element>,
     );
+
+    const iconStartSlotRendered = this.renderIconStartSlot();
+
     return html`
       <div>
         <label for="${this.#id}" class=${classMap(labelClasses)}>
@@ -352,12 +360,22 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         <div class="utrecht-combobox">
           <div class="utrecht-customizable-text-input">
             <div class="utrecht-customizable-text-input__inner">
+              ${iconStartSlotRendered || populatedSlots['icon-start']
+                ? html`<label
+                    for="${this.#id}"
+                    class="clippy-combobox__slot | utrecht-customizable-text-input__slot utrecht-customizable-text-input__slot--start utrecht-customizable-text-input__slot--label"
+                    aria-hidden="true"
+                  >
+                    <slot name="icon-start"> ${iconStartSlotRendered} </slot>
+                  </label>`
+                : nothing}
+
               <label
                 for="${this.#id}"
-                class="utrecht-customizable-text-input__slot utrecht-customizable-text-input__slot--end utrecht-customizable-text-input__slot--label"
+                class="clippy-combobox__slot | utrecht-customizable-text-input__slot utrecht-customizable-text-input__slot--end utrecht-customizable-text-input__slot--label"
                 aria-hidden="true"
               >
-                <clippy-icon>${unsafeSVG(ChevronDownIcon)}</clippy-icon>
+                <slot name="icon-end"><clippy-icon>${unsafeSVG(ChevronDownIcon)}</clippy-icon></slot>
               </label>
 
               <div class="utrecht-customizable-text-input__wrap-input">
