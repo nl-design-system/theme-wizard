@@ -243,7 +243,21 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
 
   override renderIconStartSlot() {
     if (this.value) {
-      return undefined;
+      const option = this.getOptionForValue(this.value);
+      if (!option) return nothing;
+
+      switch (option.value.$type) {
+        case 'color':
+          return this.renderPreview(option);
+        case 'fontFamily':
+          return libFontFamily.defaultIconStartPreview();
+        case 'dimension':
+          return libDimension.defaultIconStartPreview();
+        case 'number':
+          return libNumber.defaultIconStartPreview();
+        default:
+          return nothing;
+      }
     }
 
     switch (this.type) {
@@ -256,7 +270,7 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
       case 'number':
         return libNumber.defaultIconStartPreview();
       default:
-        return undefined;
+        return nothing;
     }
   }
 }

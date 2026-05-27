@@ -1,6 +1,12 @@
 import { css } from 'lit';
 export default css`
+  .clippy-combobox__wrap-input {
+    outline: 1px solid red;
+  }
+
   .clippy-combobox__slot {
+    --clippy-icon-size: var(--nl-color-sample-inline-size);
+
     --_clippy-combobox-slot-action-border-width: var(
       --utrecht-textbox-border-width,
       var(--utrecht-form-control-border-width)

@@ -295,7 +295,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     `;
   }
 
-  renderIconStartSlot(): undefined | TemplateResult {
+  renderIconStartSlot(): typeof nothing | TemplateResult {
     return html`<clippy-icon>${unsafeSVG(ZoomIcon)}</clippy-icon>`;
   }
 
@@ -378,7 +378,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                 <slot name="icon-end"><clippy-icon>${unsafeSVG(ChevronDownIcon)}</clippy-icon></slot>
               </label>
 
-              <div class="utrecht-customizable-text-input__wrap-input">
+              <div class="clippy-combobox__wrap-input | utrecht-customizable-text-input__wrap-input">
                 ${currentOption
                   ? html`<div
                       role="presentation"
