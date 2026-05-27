@@ -1,1 +1,1 @@
-# `<clippy-customizable-text-input>`
+# `<clippy-customizable-text-input-slot>`

@@ -19,6 +19,14 @@ export class ClippyCustomizableTextInput extends LitElement {
   ];
 
   override render() {
-    return html`<slot></slot>`;
+    return html`<span part="container" class="clippy-customizable-text-input | utrecht-customizable-text-input">
+      <span class="utrecht-customizable-text-input__inner">
+        <slot name="start"></slot>
+
+        <span className="utrecht-customizable-text-input__wrap-input" part="wrap-input"><slot></slot></span>
+
+        <slot name="end"></slot>
+      </span>
+    </span>`;
   }
 }
