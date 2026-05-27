@@ -1,7 +1,9 @@
 import { EXTENSION_RESOLVED_AS, FontFamilyToken, isRef } from '@nl-design-system-community/design-tokens-schema';
 import '@src/clippy-html-image';
+import FileTypographyIcon from '@tabler/icons/outline/file-typography.svg?raw';
 import { html, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
 const getActualValue = (token: FontFamilyToken) => {
   const { $extensions, $value } = token;
@@ -55,4 +57,8 @@ export const preview = <T extends { label: string; value: FontFamilyToken }>({ v
       >
     </clippy-html-image>
   `;
+};
+
+export const defaultIconStartPreview = () => {
+  return html`<clippy-icon>${unsafeSVG(FileTypographyIcon)}</clippy-icon>`;
 };

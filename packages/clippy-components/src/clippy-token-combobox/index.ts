@@ -18,12 +18,14 @@ import { dequal } from 'dequal';
 import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { DesignToken } from 'style-dictionary/types';
 import * as libColor from './color';
 import * as libDimension from './dimension';
 import * as libFontFamily from './font-family';
 import * as libNumber from './number';
 import styles from './styles';
+import './../clippy-icon';
 
 export type Option = {
   label: string;
@@ -237,5 +239,24 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
       </span>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
     `;
+  }
+
+  override renderIconStartSlot() {
+    if (this.value) {
+      return undefined;
+    }
+
+    switch (this.type) {
+      case 'color':
+        return libColor.defaultIconStartPreview();
+      case 'fontFamily':
+        return libFontFamily.defaultIconStartPreview();
+      case 'dimension':
+        return libDimension.defaultIconStartPreview();
+      case 'number':
+        return libNumber.defaultIconStartPreview();
+      default:
+        return undefined;
+    }
   }
 }
