@@ -1,9 +1,11 @@
 import { arrayFromTokenList } from '@src/lib/converters';
 import { safeCustomElement } from '@src/lib/decorators';
 import LocalizationMixin from '@src/lib/LocalizationMixin';
+import LanguageIcon from '@tabler/icons/outline/language.svg?raw';
 import { html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import languages, { direction, type LangCode } from './languages';
 
@@ -119,5 +121,9 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
       }
       return html`<div class="${classes[i]}" lang=${ifDefined(lang)} dir=${ifDefined(dir)}>${content}</div>`;
     })}`;
+  }
+
+  override renderIconStartSlot() {
+    return html`<clippy-icon>${unsafeSVG(LanguageIcon)}</clippy-icon>`;
   }
 }
