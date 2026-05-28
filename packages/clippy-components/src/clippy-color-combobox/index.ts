@@ -1,9 +1,11 @@
 import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/color-sample.css?inline';
 import { colorTokenValueToColorJS, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
+import PaletteIcon from '@tabler/icons/outline/palette.svg?raw';
 import Color from 'colorjs.io';
-import { html, unsafeCSS } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import { allowedValuesConverter } from '../lib/converters';
 import { safeCustomElement } from '../lib/decorators';
@@ -132,22 +134,42 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     return super.queryToValue(query);
   }
 
-  override renderOption(option: Option) {
+  renderPreview(option: Option) {
     const color = option.color?.toString();
+    return html`<svg
+      role="img"
+      width="32"
+      height="32"
+      xmlns="http://www.w3.org/2000/svg"
+      class="nl-color-sample"
+      style=${styleMap({ color })}
+    >
+      <path d="M0 0H32V32H0Z" fill="currentcolor" />
+    </svg>`;
+  }
+
+  #renderOptionTemplate({ option, preview }: { option: Option; preview?: boolean }) {
     return html`
       <span class="clippy-color-combobox__option">
-        <svg
-          role="img"
-          width="32"
-          height="32"
-          xmlns="http://www.w3.org/2000/svg"
-          class="nl-color-sample"
-          style=${styleMap({ color })}
-        >
-          <path d="M0 0H32V32H0Z" fill="currentcolor" />
-        </svg>
+        ${preview ? this.renderPreview(option) : nothing}
         <span>${option.label}</span>
       </span>
     `;
+  }
+
+  override renderOption(option: Option) {
+    return this.#renderOptionTemplate({ option, preview: true });
+  }
+
+  override renderSelectedOption(option: Option) {
+    return this.#renderOptionTemplate({ option, preview: false });
+  }
+
+  override renderIconStartSlot() {
+    if (this.value) {
+      const option = this.getOptionForValue(this.value);
+      return option?.color ? this.renderPreview(option) : nothing;
+    }
+    return html`<clippy-icon>${unsafeSVG(PaletteIcon)}</clippy-icon>`;
   }
 }
