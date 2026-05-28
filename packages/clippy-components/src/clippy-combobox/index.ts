@@ -380,10 +380,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
               <div class="clippy-combobox__wrap-input | utrecht-customizable-text-input__wrap-input">
                 ${currentOption
-                  ? html`<div
-                      role="presentation"
-                      class=${classMap({ 'clippy-combobox__current-option': true, ...textboxClasses })}
-                    >
+                  ? html`<div role="presentation" class="clippy-combobox__current-option">
                       ${this.renderEntry(currentOption)}
                     </div>`
                   : nothing}
