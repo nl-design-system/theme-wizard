@@ -1,9 +1,11 @@
 import { safeCustomElement } from '@lib/decorators';
+import FileTypographyIcon from '@tabler/icons/outline/file-typography.svg?raw';
 import { html, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import { allowedValuesConverter, arrayFromCommaList } from '../lib/converters';
 
@@ -105,5 +107,9 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
       <div ${ref(observeElement)} style=${styleMap(styles)} data-css-url=${ifDefined(cssUrl)}>${label}</div>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
     `;
+  }
+
+  override renderIconStartSlot() {
+    return html`<clippy-icon>${unsafeSVG(FileTypographyIcon)}</clippy-icon>`;
   }
 }
