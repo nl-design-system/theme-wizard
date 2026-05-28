@@ -100,7 +100,7 @@ export class ClippyLangCombobox extends LocalizationMixin(C) {
     return this.#options;
   }
 
-  override renderEntry(option: Option, index?: number) {
+  override renderOption(option: Option, index?: number) {
     const formatArray = this.format.split('-') as ('autonym' | 'exonym')[];
     const classes = ['clippy-lang-combobox__option-label', 'clippy-lang-combobox__option-description'];
 

@@ -93,7 +93,7 @@ export class ClippyFontCombobox extends ClippyCombobox<Option> {
     return this.options.find((option) => option.value.every((entry, index) => value?.[index] === entry));
   }
 
-  override renderEntry({ cssUrl, description, label, value }: Option, index: number) {
+  override renderOption({ cssUrl, description, label, value }: Option, index: number) {
     const styles = { fontFamily: value.toString(), fontSizeAdjust: 0.5 };
 
     const observeElement = (element?: Element) => {

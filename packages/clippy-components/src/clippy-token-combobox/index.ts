@@ -18,7 +18,6 @@ import { dequal } from 'dequal';
 import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { DesignToken } from 'style-dictionary/types';
 import * as libColor from './color';
 import * as libDimension from './dimension';
@@ -227,7 +226,7 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     }
   }
 
-  override renderEntry(option: Option, index?: number) {
+  override renderOption(option: Option, index?: number) {
     const { description, label, value } = option;
     const labelClasses = {
       'nl-data-badge': isRef(value?.$value),
@@ -241,7 +240,25 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     `;
   }
 
+  override renderSelectedOption(option: Option, index?: number) {
+    const { description, label, value } = option;
+    const labelClasses = {
+      'nl-data-badge': isRef(value?.$value),
+    };
+    return html`
+      <span class="clippy-token-combobox__option">
+        <span class=${classMap(labelClasses)}>${label}</span>
+      </span>
+      ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
+    `;
+  }
+
   override renderIconStartSlot() {
+    if (this.value) {
+      const option = this.getOptionForValue(this.value);
+      return option?.value.$type ? this.renderPreview(option) : nothing;
+    }
+
     switch (this.type) {
       case 'color':
         return libColor.defaultIconStartPreview();

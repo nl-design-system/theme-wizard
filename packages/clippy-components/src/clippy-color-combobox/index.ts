@@ -132,7 +132,7 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     return super.queryToValue(query);
   }
 
-  override renderEntry(option: Option) {
+  override renderOption(option: Option) {
     const color = option.color?.toString();
     return html`
       <span class="clippy-color-combobox__option">
