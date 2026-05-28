@@ -1,17 +1,15 @@
 import { css } from 'lit';
 export default css`
-  .clippy-combobox__wrap-input {
-    outline: 1px solid red;
-  }
-
-  .clippy-combobox__slot {
+  .clippy-combobox {
     --clippy-icon-size: var(--nl-color-sample-inline-size);
 
     --_clippy-combobox-slot-action-border-width: var(
       --utrecht-textbox-border-width,
       var(--utrecht-form-control-border-width)
     );
+  }
 
+  .clippy-combobox__slot {
     min-block-size: var(--basis-pointer-target-min-block-size, 44px);
 
     &:where(.utrecht-customizable-text-input__slot--start) {
