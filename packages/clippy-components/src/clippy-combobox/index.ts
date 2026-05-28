@@ -284,15 +284,24 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   }
 
   /**
-   * Override this function to customize the rendering of combobox options and selected value.
-   * By default, it renders the label and description (if available) in the listbox options,
-   * and only the label in the input when an option is selected (by virtue of `index` being `undefined`).
+   * Renders an option in the combobox listbox.
+   * Override this function to customize the rendering of combobox options.
    */
-  renderEntry({ description, label }: Option, index?: number): TemplateResult {
+  renderOption(option: Option, index?: number): TemplateResult {
+    const { description, label } = option;
     return html`
       <div>${label}</div>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
     `;
+  }
+
+  /**
+   * Renders the selected option in the combobox input.
+   * Defaults to `renderOption`.
+   * Override this function to customize the rendering of the selected option.
+   */
+  renderSelectedOption(option: Option, index?: number): TemplateResult {
+    return this.renderOption(option, index);
   }
 
   renderIconStartSlot(): typeof nothing | TemplateResult {
@@ -381,7 +390,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
               <div class="clippy-combobox__wrap-input | utrecht-customizable-text-input__wrap-input">
                 ${currentOption
                   ? html`<div role="presentation" class="clippy-combobox__current-option">
-                      ${this.renderEntry(currentOption)}
+                      ${this.renderSelectedOption(currentOption)}
                     </div>`
                   : nothing}
                 <input
@@ -431,7 +440,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                     aria-selected=${selected}
                     @click=${() => this.#commitActiveItem(index)}
                   >
-                    ${this.renderEntry(option, index)}
+                    ${this.renderOption(option, index)}
                   </li>`;
                 })}
               </ul>
