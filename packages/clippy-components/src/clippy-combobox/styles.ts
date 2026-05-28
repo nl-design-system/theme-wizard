@@ -54,14 +54,28 @@ export default css`
     }
   }
 
+  .clippy-combobox__wrap-input {
+    position: relative;
+  }
+
   .clippy-combobox__current-option {
+    position: absolute;
+    white-space: nowrap;
     align-items: center;
     display: flex;
     inline-size: 100%;
+    block-size: 100%;
     overflow: hidden;
     pointer-events: none;
-    position: absolute;
-    white-space: nowrap;
+    background-color: var(--utrecht-textbox-background-color, var(--utrecht-form-control-background-color));
+    padding-inline-start: var(
+      --utrecht-textbox-padding-inline-start,
+      var(--utrecht-form-control-padding-inline-start, initial)
+    );
+    padding-inline-end: var(
+      --utrecht-textbox-padding-inline-end,
+      var(--utrecht-form-control-padding-inline-end, initial)
+    );
   }
 
   .clippy-combobox__current-option:has(+ input:focus) {
