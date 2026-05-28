@@ -58,6 +58,10 @@ export default css`
     position: relative;
   }
 
+  /**
+   * TODO: this reuses a lot from utrecht-textbox. Best option is just to use the utrecht-textbox classes directly.
+   * But currently that creates a specificity battle.
+   */
   .clippy-combobox__current-option {
     box-sizing: border-box;
     position: absolute;
@@ -68,6 +72,11 @@ export default css`
     block-size: 100%;
     overflow: hidden;
     pointer-events: none;
+    font-family: var(--utrecht-textbox-font-family, var(--utrecht-form-control-font-family));
+    font-size: var(--utrecht-textbox-font-size, var(--utrecht-form-control-font-size, inherit));
+    font-weight: var(--utrecht-textbox-font-weight, var(--utrecht-form-control-font-weight, initial));
+    line-height: var(--utrecht-textbox-line-height, var(--utrecht-form-control-line-height, initial));
+
     background-color: var(--utrecht-textbox-background-color, var(--utrecht-form-control-background-color));
     padding-inline-start: var(
       --utrecht-textbox-padding-inline-start,
