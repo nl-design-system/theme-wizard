@@ -69,7 +69,7 @@ export default css`
     position: absolute;
     white-space: nowrap;
     align-items: center;
-    display: flex;
+    display: grid;
     inline-size: 100%;
     block-size: 100%;
     overflow: hidden;
