@@ -59,6 +59,18 @@ export class WizardTokenValidationForm extends LitElement {
       : { error: parsed.error.issues, success: false };
   };
 
+  private readonly downloadTokens = () => {
+    if (!this.result?.success) return;
+    const data = this.result.data;
+    const encoded = encodeURIComponent(JSON.stringify(data));
+    const href = `data:application/json,${encoded}`;
+    const anchor = document.createElement('a');
+    anchor.download = 'tokens.json';
+    anchor.href = href;
+    anchor.click();
+    anchor.remove();
+  };
+
   private renderResult(result: Exclude<Result, null>) {
     return html`
       <output>
@@ -88,6 +100,13 @@ export class WizardTokenValidationForm extends LitElement {
           </div>
         </div>
       </output>
+      ${result.success
+        ? html`
+            <button type="button" class="nl-button nl-button--secondary" @click=${this.downloadTokens}>
+              ${t('tokenValidationForm.downloadTokens')}
+            </button>
+          `
+        : nothing}
     `;
   }
 
