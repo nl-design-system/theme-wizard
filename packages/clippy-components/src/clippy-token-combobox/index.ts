@@ -15,7 +15,7 @@ import {
 import { ClippyCombobox } from '@src/clippy-combobox';
 import Color from 'colorjs.io';
 import { dequal } from 'dequal';
-import { html, nothing, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { DesignToken } from 'style-dictionary/types';
