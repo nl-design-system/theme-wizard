@@ -59,19 +59,8 @@ export class WizardTokenValidationForm extends LitElement {
       : { error: parsed.error.issues, success: false };
   };
 
-  private readonly downloadTokens = () => {
-    if (!this.result?.success) return;
-    const data = this.result.data;
-    const encoded = encodeURIComponent(JSON.stringify(data));
-    const href = `data:application/json,${encoded}`;
-    const anchor = document.createElement('a');
-    anchor.download = 'tokens.json';
-    anchor.href = href;
-    anchor.click();
-    anchor.remove();
-  };
-
   private renderResult(result: Exclude<Result, null>) {
+    const json = JSON.stringify(result.success ? result.data : result.error, null, 2);
     return html`
       <output>
         <div
@@ -95,16 +84,20 @@ export class WizardTokenValidationForm extends LitElement {
               id="validation-result"
               aria-describedby="validation-error-msg"
               aria-invalid=${result.success ? nothing : true}
-              .value=${JSON.stringify(result.success ? result.data : result.error, null, 2)}
+              .value=${json}
             ></textarea>
           </div>
         </div>
       </output>
       ${result.success
         ? html`
-            <button type="button" class="nl-button nl-button--secondary" @click=${this.downloadTokens}>
+            <a
+              href=${`data:application/json;charset=utf-8,${encodeURIComponent(json)}`}
+              download="tokens.json"
+              class="nl-button nl-button--secondary"
+            >
               ${t('tokenValidationForm.downloadTokens')}
-            </button>
+            </a>
           `
         : nothing}
     `;
