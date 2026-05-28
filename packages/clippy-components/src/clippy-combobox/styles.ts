@@ -1,6 +1,8 @@
 import { css } from 'lit';
 export default css`
-  .clippy-combobox {
+  :host {
+    --nl-color-sample-block-size: var(--basis-size-xs);
+    --nl-color-sample-inline-size: var(--basis-size-xs);
     --clippy-icon-size: var(--nl-color-sample-inline-size);
 
     --_clippy-combobox-slot-action-border-width: var(

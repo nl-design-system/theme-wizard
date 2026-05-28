@@ -3,8 +3,6 @@ import { css } from 'lit';
 export default css`
   :host {
     --nl-color-sample-border-radius: var(--basis-border-radius-round);
-    --nl-color-sample-block-size: var(--basis-size-xs);
-    --nl-color-sample-inline-size: var(--basis-size-xs);
   }
 
   .clippy-token-combobox__option {
