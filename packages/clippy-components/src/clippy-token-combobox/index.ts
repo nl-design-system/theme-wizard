@@ -15,7 +15,7 @@ import {
 import { ClippyCombobox } from '@src/clippy-combobox';
 import Color from 'colorjs.io';
 import { dequal } from 'dequal';
-import { html, nothing, PropertyValues, unsafeCSS } from 'lit';
+import { html, nothing, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { DesignToken } from 'style-dictionary/types';
@@ -226,31 +226,26 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     }
   }
 
-  override renderOption(option: Option, index?: number) {
+  #renderOptionTemplate({ index, option, preview }: { option: Option; index?: number; preview?: boolean }) {
     const { description, label, value } = option;
     const labelClasses = {
       'nl-data-badge': isRef(value?.$value),
     };
     return html`
       <span class="clippy-token-combobox__option">
-        ${this.renderPreview(option)}
+        ${preview ? this.renderPreview(option) : nothing}
         <span class=${classMap(labelClasses)}>${label}</span>
       </span>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
     `;
   }
 
+  override renderOption(option: Option, index?: number) {
+    return this.#renderOptionTemplate({ index, option, preview: true });
+  }
+
   override renderSelectedOption(option: Option, index?: number) {
-    const { description, label, value } = option;
-    const labelClasses = {
-      'nl-data-badge': isRef(value?.$value),
-    };
-    return html`
-      <span class="clippy-token-combobox__option">
-        <span class=${classMap(labelClasses)}>${label}</span>
-      </span>
-      ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
-    `;
+    return this.#renderOptionTemplate({ index, option, preview: false });
   }
 
   override renderIconStartSlot() {
