@@ -343,7 +343,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const iconStartSlotRendered = this.renderIconStartSlot();
 
     return html`
-      <div>
+      <div class="clippy-combobox">
         <label for="${this.#id}" class=${classMap(labelClasses)}>
           <slot name="label">${this.hiddenLabel || this.name}</slot>
         </label>
