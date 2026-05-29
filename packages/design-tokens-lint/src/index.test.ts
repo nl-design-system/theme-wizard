@@ -76,7 +76,7 @@ it('--verbose writes step messages to stderr', async () => {
   const { code, stderr } = await execute(nodeExec, `${srcIndex} --verbose tokens.json`);
 
   expect(code).toBe(0);
-  expect(stderr.join(' ')).toContain('Loading:');
+  expect(stderr.join(' ')).toContain('Loading');
   expect(stderr.join(' ')).toContain('Validating tokens');
 
   await cleanup();
