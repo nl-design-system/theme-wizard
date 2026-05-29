@@ -1,4 +1,4 @@
-import { mergeTokens } from '@nl-design-system-community/design-tokens-schema';
+import { mergeTokens, walkTokens, SKIP } from '@nl-design-system-community/design-tokens-schema';
 import { readFile, writeFile } from 'node:fs/promises';
 import { parseArgs, styleText } from 'node:util';
 import { validateTokens } from './validate.ts';
@@ -54,7 +54,7 @@ const outPath = values['out'];
 const tokenGroups: Record<string, unknown>[] = [];
 for (const filePath of positionals) {
   if (verbose) {
-    process.stderr.write(`Loading: ${filePath}\n`);
+    process.stderr.write(`Loading ${filePath}\n`);
   }
 
   try {
@@ -77,6 +77,13 @@ if (values['exclude-parent-keys'] && verbose) {
 }
 
 if (verbose) {
+  let numTokens = 0;
+  walkTokens(tokens, () => {
+    numTokens += 1;
+    return SKIP;
+  });
+  process.stderr.write(`Found ${numTokens} tokens\n`);
+
   process.stderr.write('Validating tokens\n');
 }
 
@@ -106,7 +113,7 @@ if (result.success) {
 }
 
 const issueWord = result.issues.length === 1 ? 'issue' : 'issues';
-process.stderr.write(styleText('red', `✗`));
+process.stderr.write(styleText('red', '✗'));
 process.stderr.write(` ${result.issues.length} ${issueWord} found:\n`);
 
 for (const issue of result.issues) {
