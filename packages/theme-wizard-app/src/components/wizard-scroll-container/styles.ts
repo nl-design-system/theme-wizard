@@ -12,6 +12,7 @@ export default css`
     display: block;
   }
 
+  /* stylelint-disable projectwallace/min-selector-uniqueness-ratio */
   :host {
     --_wizard-scroll-container-scrollbar-color: var(--basis-color-accent-1-color-default) transparent;
     --_wizard-scroll-container-scrollbar-width: thin;
@@ -33,7 +34,8 @@ export default css`
     scrollbar-color: var(--wizard-scroll-container-scrollbar-color, var(--_wizard-scroll-container-scrollbar-color));
     scrollbar-width: var(--wizard-scroll-container-scrollbar-width, var(--_wizard-scroll-container-scrollbar-width));
 
-    &:is(::before, ::after) {
+    &::before,
+    &::after {
       --_wizard-scroller-visibility-if-can-scroll: var(--_wizard-scroller-can-scroll) visible;
       --_wizard-scroller-visibility-if-cannot-scroll: hidden;
 
