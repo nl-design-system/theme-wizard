@@ -56,8 +56,29 @@ export default css`
     }
   }
 
+  /**
+   * 1. By default the customizable text input is displayed as an inline-block element,
+   *    In the combobox we want it to be displayed as a block element.
+   */
+  .clippy-combobox__customizable-text-input {
+    display: block; /* [1] */
+  }
+
+  /**
+   * 1. To override utrecht-customizable-text-input styles, we need to grow in the flex container.
+   */
   .clippy-combobox__wrap-input {
     position: relative;
+    flex: 1; /* [1] */
+  }
+
+  /**
+   * Stretches the input to fill the available width.
+   * TODO: refactor double selector for double specificity to override utrecht-customizable-text-input styles.
+   */
+  .clippy-combobox__input.clippy-combobox__input {
+    inline-size: 100%;
+    inline-size: stretch;
   }
 
   /**
