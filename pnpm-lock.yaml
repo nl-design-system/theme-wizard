@@ -25,8 +25,8 @@ importers:
         specifier: 2.2.0
         version: 2.2.0(eslint@10.3.0)(typescript@6.0.3)
       '@projectwallace/stylelint-plugin':
-        specifier: 0.4.6
-        version: 0.4.6(stylelint@17.6.0(typescript@6.0.3))
+        specifier: 0.5.0
+        version: 0.5.0(stylelint@17.6.0(typescript@6.0.3))
       '@stylistic/eslint-plugin':
         specifier: 5.10.0
         version: 5.10.0(eslint@10.4.1)
@@ -3007,8 +3007,8 @@ packages:
     resolution: {integrity: sha512-4WJOIU/6Zbscp5snGGvqx2UobIgYOfBaZDGbx6Mj7b7PjcMz34fFufus7h3AbDFlS7nXEkHHlPDZJl/Qu5gumg==}
     engines: {pnpm: '>=11.0.0'}
 
-  '@projectwallace/stylelint-plugin@0.4.6':
-    resolution: {integrity: sha512-50Vu8GHa4e1aRfGZiOI2LDwsE4Qo+RRaqQ/v98OriBri0ESf3vRXGpI6nv6uZJVf8AEipEFGv2M7wNPk4PRP3A==}
+  '@projectwallace/stylelint-plugin@0.5.0':
+    resolution: {integrity: sha512-ksH8PGE7eVJiTaigt6so0GptoWBM3cVyAl3gOPehxcbcOcg7XUE0YEzNYwrO30RlQA/J49hjOtc3l7Z89SyZvw==}
     engines: {node: '>=22'}
     peerDependencies:
       stylelint: ^16.0.0 || ^17.0.0
@@ -10791,7 +10791,7 @@ snapshots:
 
   '@projectwallace/css-parser@0.16.0': {}
 
-  '@projectwallace/stylelint-plugin@0.4.6(stylelint@17.6.0(typescript@6.0.3))':
+  '@projectwallace/stylelint-plugin@0.5.0(stylelint@17.6.0(typescript@6.0.3))':
     dependencies:
       '@projectwallace/css-analyzer': 9.8.2
       '@projectwallace/css-parser': 0.16.0

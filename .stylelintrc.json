@@ -124,22 +124,12 @@
     "property-no-vendor-prefix": null,
 
     "projectwallace/max-average-declarations-per-rule": 9,
-    "projectwallace/no-unknown-custom-property": null,
+    "projectwallace/no-unknown-custom-properties": null,
     "projectwallace/no-unused-custom-properties": null,
     "projectwallace/no-property-shorthand": null,
     "projectwallace/max-declarations-per-rule": 16,
     "projectwallace/max-nesting-depth": 2,
-    "projectwallace/no-prefixed-properties": [
-      true,
-      {
-        "ignore": ["-webkit-box-orient", "-webkit-line-clamp"]
-      }
-    ],
-    "projectwallace/no-prefixed-values": [
-      true,
-      {
-        "ignore": ["-webkit-box"]
-      }
-    ]
+    "projectwallace/no-prefixed-properties": null,
+    "projectwallace/no-prefixed-values": null
   }
 }
