@@ -5,6 +5,7 @@ export default css`
     display: block;
   }
 
+  /* stylelint-disable projectwallace/min-selector-uniqueness-ratio */
   /**
    * Scroll detection taken from
    * https://www.bram.us/2023/09/16/solved-by-css-scroll-driven-animations-detect-if-an-element-can-scroll-or-not/
@@ -31,46 +32,47 @@ export default css`
     scroll-timeline: --_wizard-scroller-scroll-timeline y;
     scrollbar-color: var(--wizard-scroll-container-scrollbar-color, var(--_wizard-scroll-container-scrollbar-color));
     scrollbar-width: var(--wizard-scroll-container-scrollbar-width, var(--_wizard-scroll-container-scrollbar-width));
-  }
 
-  .wizard-scroll-container:is(::before, ::after) {
-    --_wizard-scroller-visibility-if-can-scroll: var(--_wizard-scroller-can-scroll) visible;
-    --_wizard-scroller-visibility-if-cannot-scroll: hidden;
+    &::before,
+    &::after {
+      --_wizard-scroller-visibility-if-can-scroll: var(--_wizard-scroller-can-scroll) visible;
+      --_wizard-scroller-visibility-if-cannot-scroll: hidden;
 
-    animation-fill-mode: both;
-    animation-name: --wizard-scroll-container-reveal;
-    animation-timeline: --_wizard-scroller-scroll-timeline;
-    block-size: var(--_wizard-scroll-container-shadow-size);
-    content: '';
-    display: block;
-    inset-inline: 0;
-    pointer-events: none;
-    position: sticky;
-    visibility: var(--_wizard-scroller-visibility-if-can-scroll, var(--_wizard-scroller-visibility-if-cannot-scroll));
-    z-index: 1;
-  }
+      animation-fill-mode: both;
+      animation-name: --wizard-scroll-container-reveal;
+      animation-timeline: --_wizard-scroller-scroll-timeline;
+      block-size: var(--_wizard-scroll-container-shadow-size);
+      content: '';
+      display: block;
+      inset-inline: 0;
+      pointer-events: none;
+      position: sticky;
+      visibility: var(--_wizard-scroller-visibility-if-can-scroll, var(--_wizard-scroller-visibility-if-cannot-scroll));
+      z-index: 1;
+    }
 
-  .wizard-scroll-container::before {
-    animation-range: 1em 2em;
-    background: radial-gradient(
-      farthest-side at 50% 0,
-      var(--_wizard-scroll-container-shadow-color),
-      var(--basis-color-transparent)
-    );
-    inset-block-start: 0;
-    margin-block-end: calc(-1 * var(--_wizard-scroll-container-shadow-size));
-  }
+    &::before {
+      animation-range: 1em 2em;
+      background: radial-gradient(
+        farthest-side at 50% 0,
+        var(--_wizard-scroll-container-shadow-color),
+        var(--basis-color-transparent)
+      );
+      inset-block-start: 0;
+      margin-block-end: calc(-1 * var(--_wizard-scroll-container-shadow-size));
+    }
 
-  .wizard-scroll-container::after {
-    animation-direction: reverse;
-    animation-range: calc(100% - 2em) calc(100% - 1em);
-    background: radial-gradient(
-      farthest-side at 50% 100%,
-      var(--_wizard-scroll-container-shadow-color),
-      var(--basis-color-transparent)
-    );
-    inset-block-end: 0;
-    margin-block-start: calc(-1 * var(--_wizard-scroll-container-shadow-size));
+    &::after {
+      animation-direction: reverse;
+      animation-range: calc(100% - 2em) calc(100% - 1em);
+      background: radial-gradient(
+        farthest-side at 50% 100%,
+        var(--_wizard-scroll-container-shadow-color),
+        var(--basis-color-transparent)
+      );
+      inset-block-end: 0;
+      margin-block-start: calc(-1 * var(--_wizard-scroll-container-shadow-size));
+    }
   }
 
   @keyframes --wizard-scroll-container-reveal {
