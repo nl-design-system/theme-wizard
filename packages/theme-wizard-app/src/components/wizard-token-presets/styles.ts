@@ -1,7 +1,7 @@
 import { css } from 'lit';
 
 export const wizardTokenCSS = css`
-  :host:not([hidden]) {
+  :host(:not([hidden])) {
     display: block;
   }
 

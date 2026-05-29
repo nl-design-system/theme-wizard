@@ -1,7 +1,7 @@
 import { css } from 'lit';
 
 export default css`
-  :host:not([hidden]) {
+  :host(:not([hidden])) {
     display: flex;
   }
 

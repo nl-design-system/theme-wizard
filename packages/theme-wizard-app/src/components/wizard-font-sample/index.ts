@@ -11,7 +11,7 @@ declare global {
 }
 
 const styles = css`
-  :host:not([hidden]) {
+  :host(:not([hidden])) {
     display: block;
   }
 
