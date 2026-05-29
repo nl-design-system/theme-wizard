@@ -11,6 +11,10 @@ declare global {
 }
 
 const styles = css`
+  :host:not([hidden]) {
+    display: block;
+  }
+
   .wizard-font-sample {
     -webkit-box-orient: vertical;
     display: -webkit-box;

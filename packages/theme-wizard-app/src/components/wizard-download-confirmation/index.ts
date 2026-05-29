@@ -4,7 +4,7 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import type { GroupedIssues } from '../../lib/ValidationIssue';
 import { t } from '../../i18n';
-import { dialogStyles } from './styles';
+import componentStyles from './styles';
 
 const tag = 'wizard-download-confirmation';
 const ariaDescribedby = 'wizard-download-confirmation-description';
@@ -17,7 +17,7 @@ export class WizardDownloadConfirmation extends LitElement {
   @query('clippy-modal')
   private readonly modalDialog!: ClippyModal;
 
-  static override readonly styles = dialogStyles;
+  static override readonly styles = componentStyles;
 
   open() {
     this.modalDialog?.open();

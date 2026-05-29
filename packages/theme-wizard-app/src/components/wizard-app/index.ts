@@ -15,6 +15,7 @@ import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colo
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
 import { WizardTokenPreset } from '../wizard-token-presets';
+import componentStyles from './styles';
 
 const tag = 'theme-wizard-app';
 
@@ -33,6 +34,8 @@ declare global {
 
 @customElement(tag)
 export class App extends LitElement {
+  static override readonly styles = componentStyles;
+
   readonly #themeStorage = new PersistentStorage({
     onChange: () => {
       const tokens = this.#themeStorage.getJSON();

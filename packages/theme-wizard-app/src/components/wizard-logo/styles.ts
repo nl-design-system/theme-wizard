@@ -1,10 +1,13 @@
 import { css } from 'lit';
 
 export default css`
+  :host:not([hidden]) {
+    display: flex;
+  }
+
   :host {
     align-items: center;
     background-color: var(--basis-color-accent-1-inverse-bg-default);
-    display: flex;
   }
 
   .wizard-logo {

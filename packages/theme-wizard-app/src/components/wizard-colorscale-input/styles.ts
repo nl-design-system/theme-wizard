@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host:not([hidden]) {
+    display: block;
+  }
+
   :host {
     --nl-color-sample-border-radius: var(--basis-border-radius-round);
     --nl-color-sample-block-size: var(--basis-size-xs);

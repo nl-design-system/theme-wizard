@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host:not([hidden]) {
+    display: block;
+  }
+
   .wizard-anchor-nav {
     border-inline-start: 1px solid var(--basis-color-default-border-subtle);
     display: grid;

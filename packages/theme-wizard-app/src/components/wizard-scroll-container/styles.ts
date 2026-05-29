@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host:not([hidden]) {
+    display: block;
+  }
+
   /**
    * Scroll detection taken from
    * https://www.bram.us/2023/09/16/solved-by-css-scroll-driven-animations-detect-if-an-element-can-scroll-or-not/

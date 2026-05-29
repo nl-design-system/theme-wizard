@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host:not([hidden]) {
+    display: block;
+  }
+
   :host {
     --wizard-scroll-container-max-size: 65vh;
   }

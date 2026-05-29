@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host:not([hidden]) {
+    display: block;
+  }
+
   .wizard-layout {
     --wizard-layout-nav-padding-block: var(--basis-space-block-md);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);

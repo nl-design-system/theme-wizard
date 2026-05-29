@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host:not([hidden]) {
+    display: block;
+  }
+
   :host {
     --nl-heading-level-1-font-size: var(--basis-text-font-size-2xl);
   }
