@@ -1,6 +1,6 @@
 import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
 import * as z from 'zod';
-import { buildSchemaFromNode } from './schema-builder';
+import { buildSchema } from './schema-builder';
 import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 
@@ -126,5 +126,5 @@ export const BasisColorSchema = z
   });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
-export const BasisTokensSchema = buildSchemaFromNode(basisTokens.basis);
+export const BasisTokensSchema = buildSchema(basisTokens.basis);
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;

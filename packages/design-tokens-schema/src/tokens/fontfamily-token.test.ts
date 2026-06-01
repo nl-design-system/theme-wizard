@@ -1,4 +1,5 @@
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
+import dlv from 'dlv';
 import { dset } from 'dset';
 import { describe, it, expect, expectTypeOf } from 'vitest';
 import { StrictThemeSchema } from '../theme';
@@ -47,57 +48,33 @@ it('accepts modern token', () => {
   expect.soft(result.data).toEqual(token);
 });
 
-// Remove this when Start/Voorbeeld/MA/Basis themes have been upgraded and contain these values themselves
-const addMissingBasisTokens = (basis: Record<string, unknown>) => {
-  delete (basis['border-radius'] as Record<string, unknown>)['none'];
-  delete (basis['space'] as Record<string, unknown>)['none'];
-  dset(basis, 'focus.outline-offset', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
-  dset(basis, 'border-radius.square', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
-  dset(basis, 'form-control.focus.accent-color', {
-    $type: 'color',
-    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
-  });
-  dset(basis, 'form-control.invalid.accent-color', {
-    $type: 'color',
-    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
-  });
-  dset(basis, 'form-control.read-only.accent-color', {
-    $type: 'color',
-    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
-  });
-};
-
 describe('legacy token format preprocessing (via theme schema)', () => {
   it('upgrades legacy fontFamilies token', () => {
     const config = {
-      basis: structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>,
+      basis: structuredClone((startTokens as Record<string, unknown>)['basis']),
     };
-    addMissingBasisTokens(config.basis);
     dset(config, 'basis.heading.font-family', {
       $type: 'fontFamilies',
       $value: 'Source Sans Pro, Helvetica, Arial, sans-serif',
     });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBeTruthy();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const token = (result.data as any)?.basis?.heading?.['font-family'];
+    const token = dlv(result.data, 'basis.heading.font-family');
     expect(token?.$type).toEqual('fontFamily');
     expect(token?.$value).toEqual(['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif']);
   });
 
   it('upgrades fontFamily token with legacy string value', () => {
     const config = {
-      basis: structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>,
+      basis: structuredClone((startTokens as Record<string, unknown>)['basis']),
     };
-    addMissingBasisTokens(config.basis);
     dset(config, 'basis.heading.font-family', {
       $type: 'fontFamily',
       $value: 'IBM Plex Sans, monospace',
     });
     const result = StrictThemeSchema.safeParse(config);
     expect(result.success).toBeTruthy();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const token = (result.data as any)?.basis?.heading?.['font-family'];
+    const token = dlv(result.data, 'basis.heading.font-family');
     expect(token?.$type).toEqual('fontFamily');
     expect(token?.$value).toEqual(['IBM Plex Sans', 'monospace']);
   });

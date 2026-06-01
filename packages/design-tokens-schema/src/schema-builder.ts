@@ -5,6 +5,9 @@ import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
 
+/**
+ * Map all known `css-syntax` extensions to one of the documented DTCG token $types
+ */
 const CSS_SYNTAX_TO_DTCG_TYPE: Record<string, string> = {
   '["<cursor-image>", "<cursor-predefined>"]': 'cursor',
   '["<family-name>", "<generic-name>"]': 'fontFamily',
@@ -17,6 +20,10 @@ const CSS_SYNTAX_TO_DTCG_TYPE: Record<string, string> = {
   '<number>': 'number',
 };
 
+/**
+ * Map each of the documented DTCG $types to one of our schemas,
+ * using BaseDesignTokenSchema when we don't have a dedicated one
+ */
 const DTCG_TYPE_TO_SCHEMA: Record<string, z.ZodTypeAny> = {
   boxShadow: BaseDesignTokenSchema,
   color: ColorTokenValidationSchema,
@@ -34,7 +41,7 @@ export const EXTENSION_CSS_PROPERTY_SYNTAX = 'nl.nldesignsystem.css-property-syn
 const MODERN_SYNTAX_PATH = ['$extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
 const LEGACY_SYNTAX_PATH = ['extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
 
-export const buildSchemaFromNode = (node: Record<string, unknown>): z.ZodTypeAny => {
+export const buildSchema = (node: Record<string, unknown>): z.ZodTypeAny => {
   if ('$type' in node) {
     // Look in both legacy extensions and modern $extensions because some design token JSON files
     // might use the legacy format.
@@ -45,7 +52,7 @@ export const buildSchemaFromNode = (node: Record<string, unknown>): z.ZodTypeAny
   const shape: Record<string, z.ZodTypeAny> = {};
   for (const [key, value] of Object.entries(node)) {
     if (!key.startsWith('$')) {
-      shape[key] = buildSchemaFromNode(value as Record<string, unknown>);
+      shape[key] = buildSchema(value as Record<string, unknown>);
     }
   }
   return z.strictObject(shape);

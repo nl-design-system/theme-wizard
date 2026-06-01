@@ -26,26 +26,6 @@ import { MINIMUM_LINE_HEIGHT } from './validations';
 
 const getBasis = () => {
   const basis = structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>;
-  // start-design-tokens v6.0.1 vs basis-design-tokens v3.1.0 mismatches:
-  // - border-radius.none and space.none added in start v6 but not in basis schema
-  delete (basis['border-radius'] as Record<string, unknown>)['none'];
-  delete (basis['space'] as Record<string, unknown>)['none'];
-  // - focus.outline-offset has $type:"other" in start v6, but basis schema expects dimension
-  dset(basis, 'focus.outline-offset', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
-  // - tokens missing from start v6 that are required by basis schema
-  dset(basis, 'border-radius.square', { $type: 'dimension', $value: { unit: 'px', value: 0 } });
-  dset(basis, 'form-control.focus.accent-color', {
-    $type: 'color',
-    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
-  });
-  dset(basis, 'form-control.invalid.accent-color', {
-    $type: 'color',
-    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
-  });
-  dset(basis, 'form-control.read-only.accent-color', {
-    $type: 'color',
-    $value: { alpha: 1, colorSpace: 'srgb', components: [0, 0, 0] },
-  });
   return basis;
 };
 
@@ -1294,41 +1274,38 @@ describe('line-height validations', () => {
   });
 });
 
-// TODO: these themes are missing required basis tokens (border-radius.none,
-// form-control.{focus,invalid,read-only}.accent-color) as of start/MA/Voorbeeld v6/v5/v10.
-// Update expectations to toBe(true) once the packages include those tokens.
 describe('strictly validate known basis themes', () => {
   describe('source files', () => {
     it('validates Start theme', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(startSourceTokens));
-      expect(result.success).toBe(false);
+      expect(result.success).toBe(true);
     });
 
     it('validates Mooi & Anders theme', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(maSourceTokens));
-      expect(result.success).toBe(false);
+      expect(result.success).toBe(true);
     });
 
     it('validates Voorbeeld theme', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(voorbeeldSourceTokens));
-      expect(result.success).toBe(false);
+      expect(result.success).toBe(true);
     });
   });
 
   describe('dist files', () => {
     it('Mooi & Anders theme', () => {
       const result = StrictThemeSchema.safeParse(maTokens);
-      expect(result.success).toEqual(false);
+      expect(result.success).toEqual(true);
     });
 
     it('Voorbeeld theme', () => {
       const result = StrictThemeSchema.safeParse(voorbeeldTokens);
-      expect(result.success).toEqual(false);
+      expect(result.success).toEqual(true);
     });
 
     it('Start theme', () => {
       const result = StrictThemeSchema.safeParse(startTokens);
-      expect(result.success).toEqual(false);
+      expect(result.success).toEqual(true);
     });
   });
 });
