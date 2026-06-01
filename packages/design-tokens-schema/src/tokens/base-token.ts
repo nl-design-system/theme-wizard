@@ -33,13 +33,13 @@ export type TokenPath = BaseDesignTokenIdentifier[];
 
 export const BaseDesignTokenSchema = z.looseObject({
   /** @see 5.2.4 Deprecated https://www.designtokens.org/tr/drafts/format/#deprecated */
-  $deprecated: z.union([z.boolean(), z.string()]).optional(),
+  $deprecated: z.union([z.boolean(), z.string().trim()]).optional(),
   /** @see 5.2.1 Description https://www.designtokens.org/tr/drafts/format/#description */
-  $description: z.string().optional(),
+  $description: z.string().trim().optional(),
   /** @see 5.2.3 Extensions https://www.designtokens.org/tr/drafts/format/#extensions */
   $extensions: ExtensionsSchema.optional(),
   /** @see 5.2.2 Type https://www.designtokens.org/tr/drafts/format/#type-0 */
-  $type: z.string().nonoptional(),
+  $type: z.string().trim().nonoptional(),
   $value: z.unknown().nonoptional(), // refine exact shape in concrete token types
 });
 export type BaseDesignToken = z.infer<typeof BaseDesignTokenSchema>;

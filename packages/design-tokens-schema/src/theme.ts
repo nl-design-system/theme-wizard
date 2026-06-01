@@ -27,7 +27,7 @@ import { setExtension } from './extensions';
 import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
-import { TokenReference, extractRef, isRef, isValueObject } from './tokens/token-reference';
+import { TokenReference, createReference, extractRef, isRef, isValueObject } from './tokens/token-reference';
 import { EXTENSION_TOKEN_SUBTYPE, upgradeLegacyTokens } from './upgrade-legacy-tokens';
 import {
   ERROR_CODES,
@@ -221,7 +221,7 @@ export const addComponentContrastExtensions = (rootConfig: Record<string, unknow
       const contrastExtension = {
         color: {
           $extensions: {
-            [EXTENSION_RESOLVED_FROM]: `{${[...path, 'background-color'].join('.')}}`,
+            [EXTENSION_RESOLVED_FROM]: createReference([...path, 'background-color']),
           },
           $type: 'color',
           $value: getActualValue(bgColor),
@@ -290,7 +290,7 @@ const preprocessTheme = (input: unknown): Record<string, unknown> => {
  * Strict preprocessing pipeline: includes all preprocessing for validation.
  * Clones input to avoid mutating the original object.
  */
-const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
+export const preprocessThemeStrict = (input: unknown): Record<string, unknown> => {
   let data = structuredClone(input as Record<string, unknown>);
 
   // Get `$extensions['original']['$value'] from Style Dictionary and place it in $value
