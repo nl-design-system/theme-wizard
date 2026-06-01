@@ -41,6 +41,11 @@ export const EXTENSION_CSS_PROPERTY_SYNTAX = 'nl.nldesignsystem.css-property-syn
 const MODERN_SYNTAX_PATH = ['$extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
 const LEGACY_SYNTAX_PATH = ['extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
 
+/**
+ * Generate a Design Tokens Zod schema on the fly by passing in token definitions as commonly used in NL Design System
+ * @param node An NL Design System tokens.json definition structure
+ * @returns Zod schema with all node-based validations for all supported design tokens
+ */
 export const buildSchema = (node: Record<string, unknown>): z.ZodTypeAny => {
   if ('$type' in node) {
     // Look in both legacy extensions and modern $extensions because some design token JSON files
