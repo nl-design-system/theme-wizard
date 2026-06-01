@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@gmrchk/cli-testing-library": "0.1.2",
-    "@nl-design-system-unstable/start-design-tokens": "6.0.1",
+    "@nl-design-system-unstable/start-design-tokens": "6.1.0",
     "ansivision": "0.2.7",
     "dset": "3.1.4",
     "rimraf": "6.1.3",

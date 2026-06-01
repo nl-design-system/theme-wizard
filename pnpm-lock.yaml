@@ -254,8 +254,8 @@ importers:
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.2)(react@19.2.5)
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 5.1.0
-        version: 5.1.0
+        specifier: 6.1.0
+        version: 6.1.0
       '@utrecht/fieldset-react':
         specifier: 1.0.12
         version: 1.0.12(@babel/runtime@7.29.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -404,8 +404,8 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.0.1
-        version: 6.0.1
+        specifier: 6.1.0
+        version: 6.1.0
       ansivision:
         specifier: 0.2.7
         version: 0.2.7
@@ -483,8 +483,8 @@ importers:
         version: 4.3.6
     devDependencies:
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.1.0
+        version: 5.1.0
       '@nl-design-system-community/purmerend-design-tokens':
         specifier: 1.2.3
         version: 1.2.3
@@ -492,11 +492,11 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.0.1
-        version: 6.0.1
+        specifier: 6.1.0
+        version: 6.1.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
-        specifier: 10.1.0
-        version: 10.1.0
+        specifier: 11.1.0
+        version: 11.1.0
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -600,14 +600,14 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.1.0
+        version: 5.1.0
       '@nl-design-system-unstable/documentation':
         specifier: 1.9.0
         version: 1.9.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.0.1
-        version: 6.0.1
+        specifier: 6.1.0
+        version: 6.1.0
       '@storybook/react-vite':
         specifier: 10.3.6
         version: 10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.4.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
@@ -839,14 +839,14 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.1.0
+        version: 5.1.0
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.0.1
-        version: 6.0.1
+        specifier: 6.1.0
+        version: 6.1.0
       '@tabler/icons-react':
         specifier: 3.41.1
         version: 3.41.1(react@19.2.5)
@@ -1047,8 +1047,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.1.0
+        version: 5.1.0
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -2525,8 +2525,8 @@ packages:
   '@nl-design-system-candidate/skip-link-tokens@1.0.4':
     resolution: {integrity: sha512-MD1+m55nRqkj2eATcBNOLE8N5jWfvjJg2ax+POX8zXm49wJcBGTS6B/kK4kzIPbMuivYnxVtNlmA+Cz/upFBZA==}
 
-  '@nl-design-system-community/ma-design-tokens@4.1.0':
-    resolution: {integrity: sha512-HW/SbCkt6Sxfnn8odMy+c0p4fE4ehFcIcQzWvdd7Ed6PgBDDb1d6DJc0lr1FX0/rKCp3YSAKDuTB4nqlCbrKcw==}
+  '@nl-design-system-community/ma-design-tokens@5.1.0':
+    resolution: {integrity: sha512-T0DYDeiaqqcOy5aafWXBpfQuWFzBmrT/kcXIoZxiLPbkuy7ADsn6aJSPtzuvv0z+B8fTY8HvdWvcgIYzi2dXOw==}
 
   '@nl-design-system-community/purmerend-design-tokens@1.2.3':
     resolution: {integrity: sha512-fV7scMOjHmJBR6DF0vCY0GLLllqAAJdtTjLQMWOpwgtEmtZ6DST1kGB5wJSxfZPJuzeROP+2lEplQHP5vXgm/Q==}
@@ -2540,14 +2540,11 @@ packages:
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0':
     resolution: {integrity: sha512-txcrXfIEMuid+OxJaDB4LYYLbYXjUwXwWUiq3YpdXRPKfsBlHSCx9lY8zKbTXn2pnymIa+DK2HiRGv9VsynOdA==}
 
-  '@nl-design-system-unstable/start-design-tokens@5.1.0':
-    resolution: {integrity: sha512-CldysbfatzQUf8M9xYTuee537TjxtHhoLC0DurZLOMoQq50u6Wop98qfj6sPY91zwK13TpCUQAYV5GLWhXoSsA==}
+  '@nl-design-system-unstable/start-design-tokens@6.1.0':
+    resolution: {integrity: sha512-owIkIXYJwC1eSfqKUHe8GKb7u02cOncZlSYsDjW5IMLs70b+c1LdcMk8pmFPocL6dMzkXdqObuD6JuW0i5UNkQ==}
 
-  '@nl-design-system-unstable/start-design-tokens@6.0.1':
-    resolution: {integrity: sha512-fkIl35uCvXdggpz8px+PmkSShfwLeQHP8b62duGzK2BaEgLpXcnZgUpyd+7hwS7nkCvSC54yfV/2V2jJZKCimg==}
-
-  '@nl-design-system-unstable/voorbeeld-design-tokens@10.1.0':
-    resolution: {integrity: sha512-NjutTvLWz14iDoE5zkK43+jiGSK3DYCVyKXOii/sDemO+9dQtJdRp0O1PNRgIlEa2bvPjgKaIq9Y+EhdoO22IQ==}
+  '@nl-design-system-unstable/voorbeeld-design-tokens@11.1.0':
+    resolution: {integrity: sha512-9IsS03HN32dmHP4t0xmGbrbFg2u/UZkh8oafhlr0mSg+32Bkkq4vhGNB/fZztDrcYFTXOx6tW6l9kgYJEZaKyQ==}
 
   '@nl-design-system/eslint-config@2.2.0':
     resolution: {integrity: sha512-vZVbEkOQviJoiOdQT5zOi0GuSCaFrcz9/Awg/iXsmaNoXLkD5WOPVXR7RNlqeP4fPRmrHUvnVPsTDKLeIwbn2w==}
@@ -10412,7 +10409,7 @@ snapshots:
 
   '@nl-design-system-candidate/skip-link-tokens@1.0.4': {}
 
-  '@nl-design-system-community/ma-design-tokens@4.1.0': {}
+  '@nl-design-system-community/ma-design-tokens@5.1.0': {}
 
   '@nl-design-system-community/purmerend-design-tokens@1.2.3': {}
 
@@ -10422,11 +10419,9 @@ snapshots:
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@5.1.0': {}
+  '@nl-design-system-unstable/start-design-tokens@6.1.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@6.0.1': {}
-
-  '@nl-design-system-unstable/voorbeeld-design-tokens@10.1.0': {}
+  '@nl-design-system-unstable/voorbeeld-design-tokens@11.1.0': {}
 
   '@nl-design-system/eslint-config@2.2.0(eslint@10.3.0)(typescript@6.0.3)':
     dependencies:
