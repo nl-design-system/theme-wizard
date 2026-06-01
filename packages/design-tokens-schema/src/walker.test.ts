@@ -293,6 +293,29 @@ describe('walkTokens', () => {
     });
     expect(calls).toBe(1);
   });
+
+  it("does not recurse into a token's $extensions", () => {
+    let calls = 0;
+    const root = {
+      color: {
+        black: {
+          $extensions: {
+            // Should not recurse into this one
+            'link-to-some-other-token': {
+              $type: 'color',
+              $value: '#ffffff',
+            },
+          },
+          $type: 'color',
+          $value: '#000000',
+        },
+      },
+    };
+    walkTokens(root, () => {
+      calls++;
+    });
+    expect(calls).toBe(1);
+  });
 });
 
 describe('walkTokensWithRef', () => {

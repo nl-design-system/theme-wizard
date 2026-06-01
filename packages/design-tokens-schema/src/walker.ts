@@ -112,5 +112,8 @@ export const walkTokens = (
   root: unknown,
   callback: (token: BaseDesignToken, path: string[]) => void | typeof SKIP,
 ): void => {
-  walkObject<BaseDesignToken>(root, isTokenLike, callback);
+  walkObject<BaseDesignToken>(root, isTokenLike, (token, path) => {
+    callback(token, path);
+    return SKIP;
+  });
 };
