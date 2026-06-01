@@ -49,7 +49,7 @@ export const buildSchema = (node: Record<string, unknown>): z.ZodTypeAny => {
     const dtcgType = typeof syntax === 'string' ? CSS_SYNTAX_TO_DTCG_TYPE[syntax] : undefined;
     return DTCG_TYPE_TO_SCHEMA[dtcgType ?? ''] ?? BaseDesignTokenSchema;
   }
-  const shape: Record<string, z.ZodTypeAny> = {};
+  const shape: Record<string, z.ZodTypeAny> = Object.create(null);
   for (const [key, value] of Object.entries(node)) {
     if (!key.startsWith('$')) {
       shape[key] = buildSchema(value as Record<string, unknown>);

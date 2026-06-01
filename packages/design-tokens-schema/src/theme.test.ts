@@ -1279,16 +1279,19 @@ describe('strictly validate known basis themes', () => {
     it('validates Start theme', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(startSourceTokens));
       expect(result.success).toBe(true);
+      expect(result.data).toMatchSnapshot();
     });
 
     it('validates Mooi & Anders theme', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(maSourceTokens));
       expect(result.success).toBe(true);
+      expect(result.data).toMatchSnapshot();
     });
 
     it('validates Voorbeeld theme', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(voorbeeldSourceTokens));
       expect(result.success).toBe(true);
+      expect(result.data).toMatchSnapshot();
     });
   });
 
