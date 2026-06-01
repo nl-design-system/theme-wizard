@@ -461,8 +461,8 @@ importers:
         specifier: 1.0.4
         version: 1.0.4
       '@nl-design-system-unstable/basis-design-tokens':
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       '@projectwallace/css-parser':
         specifier: 0.15.0
         version: 0.15.0
@@ -2531,8 +2531,8 @@ packages:
   '@nl-design-system-community/purmerend-design-tokens@1.2.3':
     resolution: {integrity: sha512-fV7scMOjHmJBR6DF0vCY0GLLllqAAJdtTjLQMWOpwgtEmtZ6DST1kGB5wJSxfZPJuzeROP+2lEplQHP5vXgm/Q==}
 
-  '@nl-design-system-unstable/basis-design-tokens@3.1.0':
-    resolution: {integrity: sha512-thgrlshfMvTYrzC47QutNYcvrEBIhNSRSyO3paGXlmo/H9+eY9iNJciQiBqAx/t9i8yatarzj5LXUDcEn1s/4g==}
+  '@nl-design-system-unstable/basis-design-tokens@3.1.1':
+    resolution: {integrity: sha512-eENh3scHg7ZXGERZy9SL7wdVi56sg1gqnSEAhC2QpWf60pd5p3FClPoQTI4/hISFnpFKvlHLsl4xJgjT/gLsmg==}
 
   '@nl-design-system-unstable/documentation@1.9.0':
     resolution: {integrity: sha512-acE07cKgCESCmFzroyK+qDPtOQjcLtpfZq/lWwD2zxbkKFMCEbqjXG3eDjaPxCa4ho+7azigHSQVvRrqlPuUkg==}
@@ -10413,7 +10413,7 @@ snapshots:
 
   '@nl-design-system-community/purmerend-design-tokens@1.2.3': {}
 
-  '@nl-design-system-unstable/basis-design-tokens@3.1.0': {}
+  '@nl-design-system-unstable/basis-design-tokens@3.1.1': {}
 
   '@nl-design-system-unstable/documentation@1.9.0': {}
 
