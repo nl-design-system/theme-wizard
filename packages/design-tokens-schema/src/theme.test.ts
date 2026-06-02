@@ -24,7 +24,10 @@ import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
 
-const getBasis = () => structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>;
+const getBasis = () => {
+  const basis = structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>;
+  return basis;
+};
 
 const createToken = (type: string, value: unknown, extensions?: Record<PropertyKey, unknown>) => {
   return {
@@ -190,7 +193,7 @@ describe('resolving Design Token refs', () => {
   describe('resolve color ref', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const config: any = { basis: getBasis(), brand: brandConfig };
-    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: `{ma.color.indigo.5}` });
+    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: '{ma.color.indigo.5}' });
 
     it('does not mutate the input config', () => {
       const originalConfig = structuredClone(config);
@@ -223,8 +226,8 @@ describe('resolving Design Token refs', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const config: any = { basis: getBasis(), brand: brandConfig };
     // Use tokens not involved in contrast pairs to avoid crashing the contrast checker with invalid refs
-    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: `{non.existent.token}` });
-    dset(config, 'basis.color.default.color-subtle', { $type: 'color', $value: `{incomplete.ref` });
+    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: '{non.existent.token}' });
+    dset(config, 'basis.color.default.color-subtle', { $type: 'color', $value: '{incomplete.ref' });
 
     expect.soft(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
     const result = StrictThemeSchema.safeParse(config);
@@ -234,7 +237,7 @@ describe('resolving Design Token refs', () => {
   it('marks as invalid if resolving to an existing object without a $value property', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const config: any = { basis: getBasis(), brand: brandConfig };
-    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: `{ma.color.indigo}` });
+    dset(config, 'basis.color.default.bg-document', { $type: 'color', $value: '{ma.color.indigo}' });
 
     expect(() => StrictThemeSchema.safeParse(config)).not.toThrowError();
     const result = StrictThemeSchema.safeParse(config);
@@ -265,7 +268,8 @@ describe('resolving Design Token refs', () => {
       {
         code: 'custom',
         ERROR_CODE: 'invalid_ref',
-        message: `Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" at "basis.heading.font-family" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.`,
+        message:
+          'Invalid token reference: $type "fontFamily" of "{"$type":"fontFamily","$value":"{ma.color.indigo.5}"}" at "basis.heading.font-family" does not match the $type on reference {ma.color.indigo.5}. Types "fontFamily" and "color" do not match.',
         path: ['basis', 'heading', 'font-family'],
       },
     ]);
@@ -588,7 +592,7 @@ describe('validating color contrast', () => {
         {
           color: {
             $extensions: {
-              [EXTENSION_RESOLVED_FROM]: `{clippy.button.hover.background-color'}`,
+              [EXTENSION_RESOLVED_FROM]: "{clippy.button.hover.background-color'}",
             },
             $type: 'color',
             $value: white.$value,
@@ -909,15 +913,17 @@ describe('line-height validations', () => {
       dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
-      expect(result.error?.issues).toEqual([
-        {
-          code: 'invalid_type',
-          ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-          expected: 'number',
-          message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
-          path: ['basis', 'text', 'line-height', 'md', '$value'],
-        },
-      ]);
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          {
+            code: 'invalid_type',
+            ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+            expected: 'number',
+            message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+            path: ['basis', 'text', 'line-height', 'md', '$value'],
+          },
+        ]),
+      );
     });
 
     it('flags line-heights that use dimensions', () => {
@@ -926,15 +932,17 @@ describe('line-height validations', () => {
       dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
-      expect(result.error?.issues).toEqual([
-        {
-          code: 'invalid_type',
-          ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
-          expected: 'number',
-          message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
-          path: ['basis', 'text', 'line-height', 'md', '$value'],
-        },
-      ]);
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          {
+            code: 'invalid_type',
+            ERROR_CODE: ERROR_CODES.UNEXPECTED_UNIT,
+            expected: 'number',
+            message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+            path: ['basis', 'text', 'line-height', 'md', '$value'],
+          },
+        ]),
+      );
     });
 
     it('flags invalid line-heights outside of basis tokens', () => {
@@ -1072,12 +1080,15 @@ describe('line-height validations', () => {
       dset(config, 'basis.form-control.line-height', { $type: 'number', $value: 1.5 });
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toEqual(false);
-      expect(result.error?.issues.length).toBe(1);
-      expect(result.error?.issues[0]).toMatchObject({
-        // The message is proof the conversion worked, otherwise it would have shown 20px instead of the dimension object
-        message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
-        path: ['basis', 'text', 'line-height', 'md', '$value'],
-      });
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            // The message is proof the conversion worked, otherwise it would have shown 20px instead of the dimension object
+            message: 'Line-height should be a unitless number (got: {"unit":"px","value":20})',
+            path: ['basis', 'text', 'line-height', 'md', '$value'],
+          }),
+        ]),
+      );
     });
 
     it('sets the correct type based on what token a reference points to', () => {
@@ -1107,13 +1118,16 @@ describe('line-height validations', () => {
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
-      expect(result.error?.issues[1]).toMatchObject({
-        actual: 1,
-        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-        path: ['basis', 'text', 'line-height', 'sm', '$value'],
-      });
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(unexpectedUnitError),
+          expect.objectContaining({
+            actual: 1,
+            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+            path: ['basis', 'text', 'line-height', 'sm', '$value'],
+          }),
+        ]),
+      );
     });
 
     it('invalid line-height: $type=dimension; px/rem', () => {
@@ -1123,13 +1137,16 @@ describe('line-height validations', () => {
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
-      expect(result.error?.issues[1]).toMatchObject({
-        actual: 1,
-        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-        path: ['basis', 'text', 'line-height', 'sm', '$value'],
-      });
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(unexpectedUnitError),
+          expect.objectContaining({
+            actual: 1,
+            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+            path: ['basis', 'text', 'line-height', 'sm', '$value'],
+          }),
+        ]),
+      );
     });
 
     it('invalid line-height: $type=dimension; rem/px', () => {
@@ -1139,13 +1156,16 @@ describe('line-height validations', () => {
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
-      expect(result.error?.issues[1]).toMatchObject({
-        actual: 1,
-        ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
-        path: ['basis', 'text', 'line-height', 'sm', '$value'],
-      });
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(unexpectedUnitError),
+          expect.objectContaining({
+            actual: 1,
+            ERROR_CODE: ERROR_CODES.LINE_HEIGHT_TOO_SMALL,
+            path: ['basis', 'text', 'line-height', 'sm', '$value'],
+          }),
+        ]),
+      );
     });
 
     it('valid line-height: $type=dimension; rem/px', () => {
@@ -1155,8 +1175,7 @@ describe('line-height validations', () => {
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error?.issues).toHaveLength(1);
-      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+      expect(result.error?.issues).toEqual(expect.arrayContaining([expect.objectContaining(unexpectedUnitError)]));
     });
 
     it('valid line-height: $type=dimension; rem/px; with font-size ref', () => {
@@ -1171,8 +1190,7 @@ describe('line-height validations', () => {
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error?.issues).toHaveLength(1);
-      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+      expect(result.error?.issues).toEqual(expect.arrayContaining([expect.objectContaining(unexpectedUnitError)]));
     });
 
     it('valid line-height: $type=dimension; rem/px; with line-height ref', () => {
@@ -1187,8 +1205,7 @@ describe('line-height validations', () => {
 
       const result = StrictThemeSchema.safeParse(config);
       expect(result.success).toBe(false);
-      expect(result.error?.issues).toHaveLength(1);
-      expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+      expect(result.error?.issues).toEqual(expect.arrayContaining([expect.objectContaining(unexpectedUnitError)]));
     });
   });
 

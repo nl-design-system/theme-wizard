@@ -27,6 +27,10 @@ export class ValidateTokensPage {
     return this.page.getByLabel('Validatieresultaat');
   }
 
+  get downloadButton(): Locator {
+    return this.page.getByRole('link', { name: 'Download thema (JSON)' });
+  }
+
   async selectFile(contents: string) {
     await this.fileInput.setInputFiles({
       name: 'tokens.json',

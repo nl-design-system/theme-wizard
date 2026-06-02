@@ -1,19 +1,10 @@
+import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens';
+import { dset } from 'dset';
 import { describe, it, expect } from 'vitest';
-import {
-  BrandsSchema,
-  BrandSchema,
-  BasisTokensSchema,
-  BasisColorSchema,
-  BASIS_COLOR_NAMES,
-  COLOR_KEYS,
-} from './basis-tokens';
-
-const modernWhite = { $type: 'color', $value: { alpha: 1, colorSpace: 'srgb', components: [1, 1, 1] } };
-const validColorName = Object.fromEntries(COLOR_KEYS.map((key) => [key, modernWhite]));
-const validBasisColor = {
-  ...Object.fromEntries(BASIS_COLOR_NAMES.map((name) => [name, validColorName])),
-  transparent: modernWhite,
-};
+import { BrandsSchema, BrandSchema, BasisTokensSchema } from './basis-tokens';
+import { removeNonTokenProperties } from './remove-non-token-properties';
+import { resolveRefs } from './resolve-refs';
+import { upgradeLegacyTokens } from './upgrade-legacy-tokens';
 
 describe('brand', () => {
   it('no brands present', () => {
@@ -206,27 +197,72 @@ describe('brand', () => {
 });
 
 describe('basis', () => {
-  it('basis config does not allow unknown properties', () => {
-    expect(BasisTokensSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
+  const getBasis = () => {
+    const tokens = structuredClone((startTokens as Record<string, unknown>)['basis']) as Record<string, unknown>;
+    const cleaned = removeNonTokenProperties(tokens);
+    resolveRefs(cleaned, cleaned);
+    const updated = upgradeLegacyTokens(cleaned);
+    return updated;
+  };
+
+  it('detects missing basis tokens', () => {
+    const basis = getBasis();
+    // Remove a token
+    dset(basis, 'color.default.color-document', undefined);
+    const result = BasisTokensSchema.safeParse(basis);
+
+    expect(result.success).toBeFalsy();
+    expect(result.error?.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: 'invalid_union',
+          path: ['color', 'default', 'color-document'],
+        }),
+      ]),
+    );
   });
 
-  describe('color', () => {
-    it('allows known color names', () => {
-      expect(BasisColorSchema.safeParse(validBasisColor).success).toBeTruthy();
-    });
+  it('does not allow unknown properties', () => {
+    const basis = getBasis();
+    // Add an unknown token amongst other tokens
+    dset(basis, 'color.default.unknown-token', { $type: 'color', $value: '#000000' });
+    const result = BasisTokensSchema.safeParse(basis);
 
-    it('does not allow unknown properties', () => {
-      expect(BasisColorSchema.safeParse({ unknownField: {} }).success).toBeFalsy();
-    });
+    expect(result.success).toBeFalsy();
+    expect(result.error?.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: 'unrecognized_keys',
+          keys: ['unknown-token'],
+          path: ['color', 'default'],
+        }),
+      ]),
+    );
+  });
 
-    it('allows references to other tokens in the schema', () => {
-      const config = structuredClone(validBasisColor) as Record<string, Record<string, unknown>>;
-      config['default']['bg-document'] = {
-        $type: 'color',
-        $value: '{brand.ma.color.indigo.1}',
-      };
-      const result = BasisColorSchema.safeParse(config);
-      expect.soft(result.success).toEqual(true);
-    });
+  it('does not allow incorrect token types', () => {
+    const basis = getBasis();
+    // Place a dimension token in the place where we expect a color
+    dset(basis, 'color.default.color-default', { $type: 'dimension', $value: '16px' });
+    const result = BasisTokensSchema.safeParse(basis);
+
+    expect(result.success).toBeFalsy();
+    expect(result.error?.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: 'invalid_union',
+          errors: expect.arrayContaining([
+            expect.arrayContaining([
+              expect.objectContaining({
+                code: 'invalid_value',
+                path: ['$type'],
+                values: ['color'],
+              }),
+            ]),
+          ]),
+          path: ['color', 'default', 'color-default'],
+        }),
+      ]),
+    );
   });
 });

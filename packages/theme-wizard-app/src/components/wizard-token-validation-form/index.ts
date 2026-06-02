@@ -60,6 +60,7 @@ export class WizardTokenValidationForm extends LitElement {
   };
 
   private renderResult(result: Exclude<Result, null>) {
+    const json = JSON.stringify(result.success ? result.data : result.error, null, 2);
     return html`
       <output>
         <div
@@ -83,11 +84,22 @@ export class WizardTokenValidationForm extends LitElement {
               id="validation-result"
               aria-describedby="validation-error-msg"
               aria-invalid=${result.success ? nothing : true}
-              .value=${JSON.stringify(result.success ? result.data : result.error, null, 2)}
+              .value=${json}
             ></textarea>
           </div>
         </div>
       </output>
+      ${result.success
+        ? html`
+            <a
+              href=${`data:application/json;charset=utf-8,${encodeURIComponent(json)}`}
+              download="tokens.json"
+              class="nl-button nl-button--secondary"
+            >
+              ${t('tokenValidationForm.downloadTokens')}
+            </a>
+          `
+        : nothing}
     `;
   }
 

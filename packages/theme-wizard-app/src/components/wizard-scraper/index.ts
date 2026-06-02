@@ -1,4 +1,5 @@
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
+import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import formFieldStyles from '@utrecht/form-field-css?inline';
@@ -30,6 +31,7 @@ export class WizardScraper extends LitElement {
     unsafeCSS(textboxStyles),
     unsafeCSS(paragraphStyles),
     unsafeCSS(linkStyles),
+    unsafeCSS(buttonStyles),
     unsafeCSS(formFieldErrorCss),
     styles,
   ];
@@ -140,9 +142,7 @@ export class WizardScraper extends LitElement {
                         </div>
                       </div>
 
-                      <utrecht-button appearance="primary-action-button" type="submit">
-                        ${t('scraper.submit')}
-                      </utrecht-button>
+                      <button class="nl-button nl-button--primary" type="submit">${t('scraper.submit')}</button>
                     </wizard-stack>
                   </form>
                 </wizard-stack>
