@@ -64,8 +64,6 @@ const fontFamilyOptions = resolveRefs(fontFamilyTokens);
 const borderWidthOptions = resolveRefs(borderWidthTokens);
 const lineHeightOptions = resolveRefs(lineHeightTokens);
 
-console.log(lineHeightOptions);
-
 interface TokenComboboxStoryArgs {
   options: Option[];
   type: Types;

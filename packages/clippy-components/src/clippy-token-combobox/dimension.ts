@@ -10,7 +10,7 @@ import {
 } from '@nl-design-system-community/design-tokens-schema';
 import { parse_dimension } from '@projectwallace/css-parser/parse-dimension';
 import RulerMeasureIcon from '@tabler/icons/outline/ruler-measure.svg?raw';
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
