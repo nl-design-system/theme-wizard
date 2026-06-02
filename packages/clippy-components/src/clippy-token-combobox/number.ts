@@ -81,7 +81,7 @@ export const valueToQuery = <T extends { $value: NumberToken['$value'] | Dimensi
 
 export const preview = <T extends { label: string; value: NumberToken }>({ value }: T) => {
   if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-weight') {
-    return nothing;
+    return defaultIconStartPreview();
   }
 
   const PREVIEW_VALUE = 'Ag';
