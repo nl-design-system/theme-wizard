@@ -52,7 +52,7 @@ export const valueToQuery = <T extends { $value: DimensionToken['$value'] }>({ $
 
 export const preview = <T extends { label: string; value: DimensionToken }>({ value }: T) => {
   if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') {
-    return nothing;
+    return defaultIconStartPreview();
   }
 
   const PREVIEW_VALUE = 'Ag';
