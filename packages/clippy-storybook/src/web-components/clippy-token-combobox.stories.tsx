@@ -2,14 +2,12 @@ import type { Option, Types } from '@nl-design-system-community/clippy-component
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   type ColorToken,
-  walkColors,
   isRef,
   TokenReference,
   EXTENSION_RESOLVED_AS,
   extractRef,
   StrictThemeSchema,
   SKIP,
-  walkDimensions,
   DimensionToken,
   EXTENSION_TOKEN_SUBTYPE,
   walkTokens,
@@ -103,7 +101,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  name: 'Example token color combobox',
+  name: 'Color token combobox',
   parameters: {
     docs: {
       source: {
@@ -117,8 +115,8 @@ export const Default: Story = {
   },
 };
 
-export const Dimension: Story = {
-  name: 'Example token dimension combobox',
+export const DimensionValue: Story = {
+  name: 'Dimension token combobox',
   args: {
     options: borderWidthOptions.slice(0, 50),
     type: 'dimension',
@@ -136,8 +134,8 @@ export const Dimension: Story = {
   },
 };
 
-export const FontFamily: Story = {
-  name: 'Example token font family combobox',
+export const FontFamilyValue: Story = {
+  name: 'Font family token combobox',
   args: {
     options: fontFamilyOptions.slice(0, 50),
     type: 'fontFamily',
@@ -155,8 +153,8 @@ export const FontFamily: Story = {
   },
 };
 
-export const Number: Story = {
-  name: 'Example token number combobox',
+export const NumberValue: Story = {
+  name: 'Number token combobox',
   args: {
     options: lineHeightOptions.slice(0, 50),
     type: 'number',
