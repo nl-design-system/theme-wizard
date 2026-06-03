@@ -4,7 +4,6 @@ export default css`
     --nl-color-sample-block-size: var(--basis-size-xs);
     --nl-color-sample-inline-size: var(--basis-size-xs);
     --clippy-icon-size: var(--nl-color-sample-inline-size);
-
     --_clippy-combobox-slot-action-border-width: var(
       --utrecht-textbox-border-width,
       var(--utrecht-form-control-border-width)
@@ -36,8 +35,8 @@ export default css`
 
   .clippy-combobox__slot--action {
     border-inline-color: var(--utrecht-textbox-border-color, var(--utrecht-form-control-border-color));
-    border-inline-width: 0;
     border-inline-style: solid;
+    border-inline-width: 0;
 
     &:where(.utrecht-customizable-text-input__slot--start) {
       border-inline-end-width: var(--_clippy-combobox-slot-action-border-width);
@@ -68,8 +67,8 @@ export default css`
    * 1. To override utrecht-customizable-text-input styles, we need to grow in the flex container.
    */
   .clippy-combobox__wrap-input {
-    position: relative;
     flex: 1; /* [1] */
+    position: relative;
   }
 
   /**
@@ -88,30 +87,29 @@ export default css`
    *    the current-option needs to look the same as the input, so we reset the font-size-adjust to none.
    */
   .clippy-combobox__current-option {
-    box-sizing: border-box;
-    position: absolute;
-    white-space: nowrap;
     align-items: center;
-    display: grid;
-    inline-size: 100%;
+    background-color: var(--utrecht-textbox-background-color, var(--utrecht-form-control-background-color));
     block-size: 100%;
-    overflow: hidden;
-    pointer-events: none;
+    box-sizing: border-box;
+    display: grid;
     font-family: var(--utrecht-textbox-font-family, var(--utrecht-form-control-font-family));
     font-size: var(--utrecht-textbox-font-size, var(--utrecht-form-control-font-size, inherit));
     font-size-adjust: none; /* [1] */
     font-weight: var(--utrecht-textbox-font-weight, var(--utrecht-form-control-font-weight, initial));
+    inline-size: 100%;
     line-height: var(--utrecht-textbox-line-height, var(--utrecht-form-control-line-height, initial));
-
-    background-color: var(--utrecht-textbox-background-color, var(--utrecht-form-control-background-color));
-    padding-inline-start: var(
-      --utrecht-textbox-padding-inline-start,
-      var(--utrecht-form-control-padding-inline-start, initial)
-    );
+    overflow: hidden;
     padding-inline-end: var(
       --utrecht-textbox-padding-inline-end,
       var(--utrecht-form-control-padding-inline-end, initial)
     );
+    padding-inline-start: var(
+      --utrecht-textbox-padding-inline-start,
+      var(--utrecht-form-control-padding-inline-start, initial)
+    );
+    pointer-events: none;
+    position: absolute;
+    white-space: nowrap;
   }
 
   .clippy-combobox__current-option:has(+ input:focus) {
