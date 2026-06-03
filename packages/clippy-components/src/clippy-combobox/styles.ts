@@ -84,6 +84,8 @@ export default css`
   /**
    * TODO: this reuses a lot from utrecht-textbox. Best option is just to use the utrecht-textbox classes directly.
    * But currently that creates a specificity battle.
+   * 1. utrecht-root sets a font-size-adjust, but is overridden on the input element by user-agent styles in the shadow DOM.
+   *    the current-option needs to look the same as the input, so we reset the font-size-adjust to none.
    */
   .clippy-combobox__current-option {
     box-sizing: border-box;
@@ -97,6 +99,7 @@ export default css`
     pointer-events: none;
     font-family: var(--utrecht-textbox-font-family, var(--utrecht-form-control-font-family));
     font-size: var(--utrecht-textbox-font-size, var(--utrecht-form-control-font-size, inherit));
+    font-size-adjust: none; /* [1] */
     font-weight: var(--utrecht-textbox-font-weight, var(--utrecht-form-control-font-weight, initial));
     line-height: var(--utrecht-textbox-line-height, var(--utrecht-form-control-line-height, initial));
 
