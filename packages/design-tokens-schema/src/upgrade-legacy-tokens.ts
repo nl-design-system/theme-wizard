@@ -161,7 +161,7 @@ const upgradeNumberToken = (token: BaseDesignToken, path: string[]): void => {
  */
 const upgradeLegacyFontFamiliesToken = (token: BaseDesignToken): void => {
   token.$type = 'fontFamily';
-  if (typeof token.$value === 'string') {
+  if (typeof token.$value === 'string' && !isRef(token.$value)) {
     token.$value = splitFontFamily(token.$value);
   }
 };

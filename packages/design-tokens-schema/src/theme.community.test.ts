@@ -2,8 +2,10 @@ import purmerendTokens from '@nl-design-system-community/purmerend-design-tokens
 import purmerendSourceTokens from '@nl-design-system-community/purmerend-design-tokens/figma/figma.tokens.json';
 import leidenTokens from '@nl-design-system-unstable/leiden-design-tokens/dist/tokens.json';
 import leidenSourceTokens from '@nl-design-system-unstable/leiden-design-tokens/figma/leiden.tokens.json';
+import startTokens from '@nl-design-system-unstable/start-design-tokens/figma/start.tokens.json';
 import { describe, it, expect } from 'vitest';
-import { excludeParentKeys, StrictThemeSchema } from './theme';
+import { findReusableCandidates } from './reuse-tokens';
+import { excludeParentKeys, preprocessThemeStrict, StrictThemeSchema } from './theme';
 
 // NOTE!
 //
@@ -145,6 +147,43 @@ describe('dist files', () => {
         expect.objectContaining({ code: 'unrecognized_keys' }),
         expect.objectContaining({ code: 'invalid_type' }),
         expect.objectContaining({ code: 'invalid_union' }),
+      ]),
+    );
+  });
+});
+
+describe('reuse basis tokens suggestions', () => {
+  it('Start', () => {
+    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(startTokens)));
+    expect(suggestions.length).toBeGreaterThanOrEqual(1);
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: ['ams', 'tabs', 'button', 'cursor'],
+          suggestion: expect.objectContaining({
+            path: ['basis', 'action', 'activate', 'cursor'],
+          }),
+        }),
+      ]),
+    );
+  });
+
+  it('Purmerend', () => {
+    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(purmerendTokens)));
+    expect(suggestions).toHaveLength(0);
+  });
+
+  it('Leiden', () => {
+    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(leidenSourceTokens)));
+    expect(suggestions.length).toBeGreaterThanOrEqual(1);
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: ['utrecht', 'drawer', 'border-radius'],
+          suggestion: expect.objectContaining({
+            path: ['basis', 'border-radius', 'none'],
+          }),
+        }),
       ]),
     );
   });
