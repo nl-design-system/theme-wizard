@@ -432,7 +432,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                   'utrecht-listbox__option--selected': selected,
                 };
                 return html`<li
-                  class="clippy-combobox__option utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
+                  class="clippy-combobox__option | utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
                     interactionClasses,
                   )}"
                   role="option"

@@ -117,9 +117,19 @@ export default css`
   }
 
   /* added specificity to override the align-items now that the flex direction changes */
-  .clippy-combobox__option[class] {
+  .clippy-combobox__option.clippy-combobox__option {
+    --utrecht-listbox-option-padding-inline-start: var(
+      --utrecht-textbox-padding-inline-start,
+      var(--utrecht-form-control-padding-inline-start, initial)
+    );
+    --utrecht-listbox-option-padding-inline-end: var(
+      --utrecht-textbox-padding-inline-end,
+      var(--utrecht-form-control-padding-inline-end, initial)
+    );
     align-items: unset;
     display: flex;
     flex-direction: column;
+    min-block-size: var(--basis-pointer-target-min-block-size, 44px);
+    justify-content: center;
   }
 `;
