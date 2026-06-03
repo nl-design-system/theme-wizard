@@ -126,10 +126,11 @@ export default css`
       --utrecht-textbox-padding-inline-end,
       var(--utrecht-form-control-padding-inline-end, initial)
     );
+
     align-items: unset;
     display: flex;
     flex-direction: column;
-    min-block-size: var(--basis-pointer-target-min-block-size, 44px);
     justify-content: center;
+    min-block-size: var(--basis-pointer-target-min-block-size, 44px);
   }
 `;
