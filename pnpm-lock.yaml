@@ -159,6 +159,9 @@ importers:
       '@utrecht/combobox-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/customizable-text-input-css':
+        specifier: 1.0.0
+        version: 1.0.0
       '@utrecht/listbox-css':
         specifier: 3.0.1
         version: 3.0.1

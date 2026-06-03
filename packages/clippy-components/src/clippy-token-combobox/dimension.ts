@@ -9,8 +9,10 @@ import {
   EXTENSION_TOKEN_SUBTYPE,
 } from '@nl-design-system-community/design-tokens-schema';
 import { parse_dimension } from '@projectwallace/css-parser/parse-dimension';
-import { html, nothing } from 'lit';
+import RulerMeasureIcon from '@tabler/icons/outline/ruler-measure.svg?raw';
+import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
 const getActualValue = (token: DimensionToken): DimensionToken['$value'] => {
   const { $extensions, $value } = token;
@@ -50,7 +52,7 @@ export const valueToQuery = <T extends { $value: DimensionToken['$value'] }>({ $
 
 export const preview = <T extends { label: string; value: DimensionToken }>({ value }: T) => {
   if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') {
-    return nothing;
+    return defaultIconStartPreview();
   }
 
   const PREVIEW_VALUE = 'Ag';
@@ -65,4 +67,8 @@ export const preview = <T extends { label: string; value: DimensionToken }>({ va
       >
     </clippy-html-image>
   `;
+};
+
+export const defaultIconStartPreview = () => {
+  return html`<clippy-icon>${unsafeSVG(RulerMeasureIcon)}</clippy-icon>`;
 };

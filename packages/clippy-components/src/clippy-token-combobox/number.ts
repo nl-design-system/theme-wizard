@@ -9,9 +9,10 @@ import {
   parseFontWeight,
 } from '@nl-design-system-community/design-tokens-schema';
 import { parse_dimension } from '@projectwallace/css-parser/parse-dimension';
-import { html, nothing } from 'lit';
+import NumberIcon from '@tabler/icons/outline/number.svg?raw';
+import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
-
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 const stringifyValue = (value: string | number | DimensionToken['$value']): string => {
   if (typeof value === 'number' || typeof value === 'string') {
     return value.toString();
@@ -80,7 +81,7 @@ export const valueToQuery = <T extends { $value: NumberToken['$value'] | Dimensi
 
 export const preview = <T extends { label: string; value: NumberToken }>({ value }: T) => {
   if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-weight') {
-    return nothing;
+    return defaultIconStartPreview();
   }
 
   const PREVIEW_VALUE = 'Ag';
@@ -95,4 +96,8 @@ export const preview = <T extends { label: string; value: NumberToken }>({ value
       >
     </clippy-html-image>
   `;
+};
+
+export const defaultIconStartPreview = () => {
+  return html`<clippy-icon>${unsafeSVG(NumberIcon)}</clippy-icon>`;
 };
