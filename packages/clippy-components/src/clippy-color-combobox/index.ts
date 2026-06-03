@@ -116,7 +116,7 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
     if (value === null) return undefined;
     const option = super.getOptionForValue(value);
     // option.color is pre-parsed in the setter; a missing color means it's not a valid option
-    return option?.color ? option : undefined;
+    return option?.color || option?.value ? option : undefined;
   }
 
   override queryToValue(query: string): Option['value'] | null {
@@ -135,7 +135,7 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
   }
 
   renderPreview(option: Option) {
-    const color = option.color?.toString();
+    const color = option.color ? option.color?.toString() : option.value.toString();
     return html`<svg
       role="img"
       width="32"
@@ -167,8 +167,10 @@ export class ClippyColorCombobox extends LocalizationMixin(C) {
 
   override renderIconStartSlot() {
     if (this.value) {
-      const option = this.getOptionForValue(this.value);
-      return option?.color ? this.renderPreview(option) : nothing;
+      const optionFromValue = this.getOptionForValue(this.value);
+      const returnValue =
+        optionFromValue?.color || optionFromValue?.value ? this.renderPreview(optionFromValue) : nothing;
+      return returnValue;
     }
     return html`<clippy-icon>${unsafeSVG(PaletteIcon)}</clippy-icon>`;
   }
