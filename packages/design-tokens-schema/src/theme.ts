@@ -133,6 +133,19 @@ export type ContrastExtension = {
 };
 
 /**
+ * Remove previously computed contrast extensions (identified by EXTENSION_RESOLVED_FROM on the
+ * embedded color) so that re-running the adder functions is idempotent. User-provided contrast
+ * extensions (no EXTENSION_RESOLVED_FROM) are left intact.
+ */
+const clearComputedContrastExtensions = (token: ColorToken) => {
+  const existing = token.$extensions?.[EXTENSION_CONTRAST_WITH] as ContrastExtension[] | undefined;
+  if (!Array.isArray(existing)) return;
+  token.$extensions![EXTENSION_CONTRAST_WITH] = existing.filter(
+    (ext) => !ext.color?.$extensions?.[EXTENSION_RESOLVED_FROM],
+  );
+};
+
+/**
  * Add "nl.nldesignsystem.contrast-with" to color $extensions for known background/foreground colors in basis tokens
  */
 export const addBasisContrastExtensions = (rootConfig: Record<string, unknown>) => {
@@ -150,14 +163,15 @@ export const addBasisContrastExtensions = (rootConfig: Record<string, unknown>) 
     const parentPath = path.at(-2);
     if (parentPath !== undefined && SKIP_CONTRAST_EXTENSION.has(parentPath)) return;
 
+    clearComputedContrastExtensions(color);
+
     // Loop over the expected ratios:
     for (const [backgroundName, expectedRatio] of Object.entries(CONTRAST[lastPath])) {
       // Build the path to the background color relative to where we found the foreground
-      // path.slice(1, -1) removes the first element (basis) and last element (the color name)
-      const refPath = `${path.slice(1, -1).join('.')}.${backgroundName}`;
+      // path.slice(0, -1) removes the last element (the color name)
+      const lookupPath = `${path.slice(0, -1).join('.')}.${backgroundName}`;
 
       // Look for background in the same location as foreground (basis at root)
-      const lookupPath = `basis.${refPath}`;
       const background = dlv(rootConfig, lookupPath);
       if (!background) continue;
 
@@ -217,6 +231,8 @@ export const addComponentContrastExtensions = (rootConfig: Record<string, unknow
 
       const foregroundColor = obj['color'];
       const bgColor = obj['background-color'];
+
+      clearComputedContrastExtensions(foregroundColor);
 
       const contrastExtension = {
         color: {

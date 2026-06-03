@@ -604,6 +604,45 @@ describe('validating color contrast', () => {
       expect(result.success).toBe(false);
       expect(result.error!.issues).toEqual(expectedIssues);
     });
+
+    it('does not crash when re-validating pre-processed tokens with hex-string contrast extensions', () => {
+      // Regression test: toTokensJSON calls toLegacyTokens which converts ColorJS $value
+      // objects back to hex strings, including inside contrast extension color objects.
+      // When that downloaded JSON is re-uploaded, the stale hex-string contrast extension
+      // must not reach superRefine as-is — it would crash with "color.components is undefined".
+      const downloadedJson = {};
+      dset(downloadedJson, 'clippy.button.color', {
+        $extensions: {
+          [EXTENSION_CONTRAST_WITH]: [
+            {
+              // Stale contrast extension from a previous preprocessing run,
+              // as serialized by toLegacyTokens: $value converted back to hex string.
+              color: {
+                $extensions: {
+                  [EXTENSION_RESOLVED_FROM]: '{clippy.button.background-color}',
+                },
+                $type: 'color',
+                $value: '#ffffff', // hex, not a ColorJS object — stale from toLegacyTokens
+              },
+              expectedRatio: 4.5,
+            },
+          ],
+        },
+        $type: 'color',
+        $value: '#cccccc', // lightGray
+      });
+      dset(downloadedJson, 'clippy.button.background-color', {
+        $type: 'color',
+        $value: '#ffffff', // white — insufficient contrast with lightGray
+      });
+
+      // Must not throw TypeError: "can't access property 'map', color.components is undefined"
+      expect(() => StrictThemeSchema.safeParse(downloadedJson)).not.toThrow();
+
+      const result = StrictThemeSchema.safeParse(downloadedJson);
+      expect(result.success).toBe(false);
+      expect(result.error!.issues).toEqual(expectedIssues);
+    });
   });
 });
 

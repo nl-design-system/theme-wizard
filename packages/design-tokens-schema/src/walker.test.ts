@@ -294,7 +294,7 @@ describe('walkTokens', () => {
     expect(calls).toBe(1);
   });
 
-  it("does not recurse into a token's $extensions", () => {
+  it("recurses into a token's $extensions", () => {
     let calls = 0;
     const root = {
       color: {
@@ -314,7 +314,7 @@ describe('walkTokens', () => {
     walkTokens(root, () => {
       calls++;
     });
-    expect(calls).toBe(1);
+    expect(calls).toBe(2);
   });
 });
 
