@@ -18,7 +18,6 @@ import { html } from 'lit';
 import React from 'react';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { templateToHtml } from '../utils/templateToHtml';
-import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 
 const resolveRefs = (tokens: Array<{ token: ColorToken | DimensionToken | BaseDesignToken; path: string[] }>) =>
   tokens.map(({ path, token }) => {
