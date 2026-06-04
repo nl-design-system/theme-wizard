@@ -8,7 +8,10 @@ export default css`
   .clippy-token-combobox__option {
     align-items: center;
     display: flex;
-    gap: var(--clippy-token-combobox-option-gap, var(--basis-space-inline-md));
+    gap: var(
+      --clippy-token-combobox-option-gap,
+      var(--utrecht-textbox-padding-inline-end, var(--utrecht-form-control-padding-inline-end, initial))
+    );
   }
 
   .clippy-token-combobox__preview--font-family,
