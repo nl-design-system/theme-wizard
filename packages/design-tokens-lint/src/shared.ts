@@ -37,6 +37,7 @@ export async function loadAndValidate(files: string[], opts: LoadOptions): Promi
     let numTokens = 0;
     walkTokens(tokens, () => {
       numTokens += 1;
+      // do not recurse into nested tokens inside $extensions
       return SKIP;
     });
     process.stderr.write(`Found ${numTokens} tokens\n`);
