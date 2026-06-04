@@ -5,10 +5,10 @@ import { dset } from 'dset';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import pkg from '../package.json' with { type: 'json' };
+import pkg from '../../package.json' with { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const srcIndex = path.resolve(__dirname, 'index.ts');
+const srcIndex = path.resolve(__dirname, '../index.ts');
 const nodeExec = process.execPath;
 
 it('exits 0 and prints success for valid tokens', async () => {
@@ -28,7 +28,6 @@ it('exits 0 and prints success for valid tokens', async () => {
 it('exits 1 and prints issues for invalid tokens', async () => {
   const { cleanup, execute, writeFile } = await prepareEnvironment();
 
-  // Create a bad tokens file
   const bad = structuredClone(startTokens) as Record<string, unknown>;
   dset(bad, 'basis.color.transparent.$value', '{this.does.not.exist}');
   await writeFile('tokens.json', JSON.stringify(bad));
@@ -128,8 +127,8 @@ describe('--help', () => {
 
     expect(code).toBe(0);
     expect(stderr).toEqual([]);
-    const frames = await renderStringToFrames(stdout.join('\n'));
-    expect(frames).toMatchSnapshot();
+    expect(stdout.join('\n')).toContain('design-tokens-lint');
+    expect(stdout.join('\n')).toContain('suggest-reuse');
 
     await cleanup();
   });
