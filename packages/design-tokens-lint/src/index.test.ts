@@ -5,6 +5,7 @@ import { dset } from 'dset';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import pkg from '../package.json' with { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const srcIndex = path.resolve(__dirname, 'index.ts');
@@ -76,7 +77,7 @@ it('--verbose writes step messages to stderr', async () => {
   const { code, stderr } = await execute(nodeExec, `${srcIndex} --verbose tokens.json`);
 
   expect(code).toBe(0);
-  expect(stderr.join(' ')).toContain('Loading:');
+  expect(stderr.join(' ')).toContain('Loading');
   expect(stderr.join(' ')).toContain('Validating tokens');
 
   await cleanup();
@@ -103,6 +104,20 @@ it('--exclude-parent-keys validates tokens wrapped in a layer', async () => {
   expect(code).toBe(0);
 
   await cleanup();
+});
+
+describe('--version', () => {
+  it.each(['--version', '-V'])('%s exits 0 and prints version to stdout', async (flag) => {
+    const { cleanup, execute } = await prepareEnvironment();
+
+    const { code, stderr, stdout } = await execute(nodeExec, `${srcIndex} ${flag}`);
+
+    expect(code).toBe(0);
+    expect(stderr).toEqual([]);
+    expect(stdout.join('')).toContain(pkg.version);
+
+    await cleanup();
+  });
 });
 
 describe('--help', () => {

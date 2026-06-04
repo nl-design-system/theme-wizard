@@ -1,7 +1,19 @@
-import { mergeTokens } from '@nl-design-system-community/design-tokens-schema';
+import { mergeTokens, walkTokens, SKIP } from '@nl-design-system-community/design-tokens-schema';
 import { readFile, writeFile } from 'node:fs/promises';
 import { parseArgs, styleText } from 'node:util';
 import { validateTokens } from './validate.ts';
+
+declare const __VERSION__: string;
+
+// In tests we spawn an entirely new node process that doesn't have access
+// to __VERSION__ so for those cases we have the catch block.
+function getVersion(): string {
+  try {
+    return __VERSION__;
+  } catch {
+    return process.env['npm_package_version'] ?? '0.0.0';
+  }
+}
 
 // Use `stderr.write()` to write 'noise' (debug/verbose)
 // Use `stdout.write()` to write relevant data
@@ -23,6 +35,7 @@ ${styleText('bold', 'OPTIONS')}
   --verbose               Print verbose output
   --debug                 Print debug output
   --help, -h              Show this help
+  --version, -V           Print version
   `.trim();
 }
 
@@ -34,11 +47,17 @@ const { positionals, values } = parseArgs({
     help: { default: false, short: 'h', type: 'boolean' },
     out: { short: 'o', type: 'string' },
     verbose: { default: false, type: 'boolean' },
+    version: { default: false, short: 'V', type: 'boolean' },
   },
 });
 
 if (values['help']) {
   process.stdout.write(help() + '\n');
+  process.exit(0);
+}
+
+if (values['version']) {
+  process.stdout.write(getVersion() + '\n');
   process.exit(0);
 }
 
@@ -54,7 +73,7 @@ const outPath = values['out'];
 const tokenGroups: Record<string, unknown>[] = [];
 for (const filePath of positionals) {
   if (verbose) {
-    process.stderr.write(`Loading: ${filePath}\n`);
+    process.stderr.write(`Loading ${filePath}\n`);
   }
 
   try {
@@ -77,6 +96,13 @@ if (values['exclude-parent-keys'] && verbose) {
 }
 
 if (verbose) {
+  let numTokens = 0;
+  walkTokens(tokens, () => {
+    numTokens += 1;
+    return SKIP;
+  });
+  process.stderr.write(`Found ${numTokens} tokens\n`);
+
   process.stderr.write('Validating tokens\n');
 }
 
@@ -106,7 +132,7 @@ if (result.success) {
 }
 
 const issueWord = result.issues.length === 1 ? 'issue' : 'issues';
-process.stderr.write(styleText('red', `✗`));
+process.stderr.write(styleText('red', '✗'));
 process.stderr.write(` ${result.issues.length} ${issueWord} found:\n`);
 
 for (const issue of result.issues) {

@@ -1,11 +1,10 @@
+import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
 import * as z from 'zod';
+import { buildSchema } from './schema-builder';
 import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
-import { DimensionTokenSchema } from './tokens/dimension-token';
-import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
-import { NumberTokenSchema } from './tokens/number-token';
 
-export const ColorOrColorScaleSchema = z.union([
+const ColorOrColorScaleSchema = z.union([
   ColorTokenValidationSchema,
   // For now we allow basic design tokens names, eventually we may want to consider only allowing
   // 1 | 2 | 3 | 5..12 | accent
@@ -127,85 +126,5 @@ export const BasisColorSchema = z
   });
 export type BasisColor = z.infer<typeof BasisColorSchema>;
 
-export const FontSizeScaleSchema = z.strictObject({
-  /* eslint-disable perfectionist/sort-objects */
-  sm: DimensionTokenSchema,
-  md: DimensionTokenSchema,
-  lg: DimensionTokenSchema,
-  xl: DimensionTokenSchema,
-  '2xl': DimensionTokenSchema,
-  '3xl': DimensionTokenSchema,
-  '4xl': DimensionTokenSchema,
-});
-
-export const BasisTextSchema = z.strictObject({
-  'font-family': z.strictObject({
-    default: FontFamilyTokenSchema,
-    monospace: FontFamilyTokenSchema,
-  }),
-  'font-size': FontSizeScaleSchema,
-  'font-weight': z.strictObject({
-    default: NumberTokenSchema,
-    bold: NumberTokenSchema,
-  }),
-  'line-height': z.strictObject({
-    /* eslint-disable perfectionist/sort-objects */
-    sm: z.union([DimensionTokenSchema, NumberTokenSchema]),
-    md: z.union([DimensionTokenSchema, NumberTokenSchema]),
-    lg: z.union([DimensionTokenSchema, NumberTokenSchema]),
-    xl: z.union([DimensionTokenSchema, NumberTokenSchema]),
-    '2xl': z.union([DimensionTokenSchema, NumberTokenSchema]),
-    '3xl': z.union([DimensionTokenSchema, NumberTokenSchema]),
-    '4xl': z.union([DimensionTokenSchema, NumberTokenSchema]),
-  }),
-});
-
-export const FormControlStateSchema = z.looseObject({
-  'background-color': ColorTokenValidationSchema,
-  'border-color': ColorTokenValidationSchema,
-  color: ColorTokenValidationSchema,
-});
-export type FormControlState = z.infer<typeof FormControlStateSchema>;
-
-export const BasisTokensSchema = z.looseObject({
-  color: BasisColorSchema,
-  // action: z.strictObject({}),
-  // 'border-radius': z.strictObject({}),
-  // 'border-width': z.strictObject({}),
-  // 'box-shadow': z.strictObject({}),
-  // focus: z.strictObject({}),
-  'form-control': z.looseObject({
-    ...BasisTextSchema.shape,
-    ...FormControlStateSchema.shape,
-    active: FormControlStateSchema,
-    disabled: FormControlStateSchema,
-    focus: FormControlStateSchema,
-    'font-family': FontFamilyTokenSchema,
-    'font-size': DimensionTokenSchema,
-    'font-weight': NumberTokenSchema,
-    'line-height': z.union([DimensionTokenSchema, NumberTokenSchema]),
-    hover: FormControlStateSchema,
-    invalid: FormControlStateSchema,
-    placeholder: z.strictObject({
-      color: ColorTokenValidationSchema,
-    }),
-    'read-only': FormControlStateSchema,
-  }),
-  heading: z.strictObject({
-    color: ColorTokenValidationSchema,
-    'font-family': FontFamilyTokenSchema,
-    'font-weight': NumberTokenSchema,
-  }),
-  // page: z.strictObject({}),
-  // 'pointer-target': z.strictObject({}),
-  // size: z.strictObject({}),
-  // space: z.strictObject({
-  //   block: {},
-  //   columns: {},
-  //   inline: {},
-  //   row: {},
-  //   text: {},
-  // }),
-  text: BasisTextSchema,
-});
+export const BasisTokensSchema = buildSchema(basisTokens.basis);
 export type BasisTokens = z.infer<typeof BasisTokensSchema>;

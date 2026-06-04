@@ -16,7 +16,7 @@ export const SKIP = Symbol('skip');
 
 /**
  * @param root The object you want to traverse
- * @param predicate Predicate function that returns true when data is a <T>-shape object
+ * @param predicate Predicate function that returns true when data is a `<T>`-shape object
  * @param callback Is called whenever the predicate returns true. Return SKIP to stop recursing into children.
  */
 export const walkObject = <T = unknown>(

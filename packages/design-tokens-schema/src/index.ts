@@ -10,6 +10,7 @@ export * from './basis-tokens';
 export * from './extensions';
 export * from './remove-non-token-properties';
 export * from './resolve-refs';
+export * from './reuse-tokens';
 export * from './theme';
 export * from './upgrade-legacy-tokens';
 export * from './walker';

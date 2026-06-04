@@ -2,8 +2,10 @@ import purmerendTokens from '@nl-design-system-community/purmerend-design-tokens
 import purmerendSourceTokens from '@nl-design-system-community/purmerend-design-tokens/figma/figma.tokens.json';
 import leidenTokens from '@nl-design-system-unstable/leiden-design-tokens/dist/tokens.json';
 import leidenSourceTokens from '@nl-design-system-unstable/leiden-design-tokens/figma/leiden.tokens.json';
+import startTokens from '@nl-design-system-unstable/start-design-tokens/figma/start.tokens.json';
 import { describe, it, expect } from 'vitest';
-import { excludeParentKeys, StrictThemeSchema } from './theme';
+import { findReusableCandidates } from './reuse-tokens';
+import { excludeParentKeys, preprocessThemeStrict, StrictThemeSchema } from './theme';
 
 // NOTE!
 //
@@ -19,6 +21,13 @@ describe('source files', () => {
       // has outdated color keys (unrecognized_keys), and legacy color formats (invalid_union)
       const result = StrictThemeSchema.safeParse(purmerendTokens);
       expect(result.success).toEqual(false);
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: 'unrecognized_keys' }),
+          expect.objectContaining({ code: 'invalid_type' }),
+          expect.objectContaining({ code: 'invalid_union' }),
+        ]),
+      );
     });
 
     it('has outdated color names', () => {
@@ -97,20 +106,21 @@ describe('source files', () => {
       const result = StrictThemeSchema.safeParse(excludeParentKeys(leidenSourceTokens));
       expect(result.success).toBe(false);
 
-      expect(result.error?.issues).toHaveLength(2);
-      expect(result.error?.issues[0]).toEqual({
-        code: 'unrecognized_keys',
-        keys: ['box-shadow'],
-        message: 'Unrecognized key: "box-shadow"',
-        path: ['basis', 'color'],
-      });
-      // Leiden defines a 'more-space' line-height variant not in the schema
-      expect(result.error?.issues[1]).toEqual({
-        code: 'unrecognized_keys',
-        keys: ['more-space'],
-        message: 'Unrecognized key: "more-space"',
-        path: ['basis', 'text', 'line-height'],
-      });
+      expect(result.error?.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            code: 'unrecognized_keys',
+            keys: ['box-shadow'],
+            path: ['basis', 'color'],
+          }),
+          // Leiden defines a 'more-space' line-height variant not in the schema
+          expect.objectContaining({
+            code: 'unrecognized_keys',
+            keys: ['more-space'],
+            path: ['basis', 'text', 'line-height'],
+          }),
+        ]),
+      );
     });
   });
 });
@@ -119,8 +129,12 @@ describe('dist files', () => {
   it('Leiden theme', () => {
     const result = StrictThemeSchema.safeParse(leidenTokens);
     expect(result.success).toEqual(false);
-    expect(result.error?.issues).toHaveLength(2);
-    expect(result.error?.issues.every((issue) => issue.code === 'unrecognized_keys')).toBeTruthy();
+    expect(result.error?.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: 'unrecognized_keys', path: ['basis', 'color'] }),
+        expect.objectContaining({ code: 'unrecognized_keys', path: ['basis', 'text', 'line-height'] }),
+      ]),
+    );
   });
 
   it('Purmerend theme', () => {
@@ -128,5 +142,49 @@ describe('dist files', () => {
     // has legacy color formats (invalid_union), and outdated color keys (unrecognized_keys)
     const result = StrictThemeSchema.safeParse(purmerendTokens);
     expect(result.success).toEqual(false);
+    expect(result.error?.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: 'unrecognized_keys' }),
+        expect.objectContaining({ code: 'invalid_type' }),
+        expect.objectContaining({ code: 'invalid_union' }),
+      ]),
+    );
+  });
+});
+
+describe('reuse basis tokens suggestions', () => {
+  it('Start', () => {
+    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(startTokens)));
+    expect(suggestions.length).toBeGreaterThanOrEqual(1);
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: ['ams', 'tabs', 'button', 'cursor'],
+          suggestion: expect.objectContaining({
+            path: ['basis', 'action', 'activate', 'cursor'],
+          }),
+        }),
+      ]),
+    );
+  });
+
+  it('Purmerend', () => {
+    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(purmerendTokens)));
+    expect(suggestions).toHaveLength(0);
+  });
+
+  it('Leiden', () => {
+    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(leidenSourceTokens)));
+    expect(suggestions.length).toBeGreaterThanOrEqual(1);
+    expect(suggestions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: ['utrecht', 'drawer', 'border-radius'],
+          suggestion: expect.objectContaining({
+            path: ['basis', 'border-radius', 'none'],
+          }),
+        }),
+      ]),
+    );
   });
 });

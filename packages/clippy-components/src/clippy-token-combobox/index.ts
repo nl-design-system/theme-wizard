@@ -24,6 +24,7 @@ import * as libDimension from './dimension';
 import * as libFontFamily from './font-family';
 import * as libNumber from './number';
 import styles from './styles';
+import './../clippy-icon';
 
 export type Option = {
   label: string;
@@ -225,17 +226,45 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     }
   }
 
-  override renderEntry(option: Option, index?: number) {
+  #renderOptionTemplate({ index, option, preview }: { option: Option; index?: number; preview?: boolean }) {
     const { description, label, value } = option;
     const labelClasses = {
       'nl-data-badge': isRef(value?.$value),
     };
     return html`
       <span class="clippy-token-combobox__option">
-        ${this.renderPreview(option)}
+        ${preview ? this.renderPreview(option) : nothing}
         <span class=${classMap(labelClasses)}>${label}</span>
       </span>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
     `;
+  }
+
+  override renderOption(option: Option, index?: number) {
+    return this.#renderOptionTemplate({ index, option, preview: true });
+  }
+
+  override renderSelectedOption(option: Option, index?: number) {
+    return this.#renderOptionTemplate({ index, option, preview: false });
+  }
+
+  override renderIconStartSlot() {
+    if (this.value) {
+      const option = this.getOptionForValue(this.value);
+      return option?.value.$type ? this.renderPreview(option) : nothing;
+    }
+
+    switch (this.type) {
+      case 'color':
+        return libColor.defaultIconStartPreview();
+      case 'fontFamily':
+        return libFontFamily.defaultIconStartPreview();
+      case 'dimension':
+        return libDimension.defaultIconStartPreview();
+      case 'number':
+        return libNumber.defaultIconStartPreview();
+      default:
+        return nothing;
+    }
   }
 }

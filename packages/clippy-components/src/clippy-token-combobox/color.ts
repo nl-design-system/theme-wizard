@@ -11,8 +11,10 @@ import {
 import Color from 'colorjs.io';
 import { html, nothing } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 const DELTA_E_THRESHOLD = 20;
 const BROAD_COLOR_NAMES = new Set(['red', 'green', 'blue']);
+import PaletteIcon from '@tabler/icons/outline/palette.svg?raw';
 
 /**
  * Try parsing token $value using colorjs.io, returning null if parsing fails.
@@ -74,4 +76,8 @@ export const preview = <T extends { value: ColorToken }>({ value }: T) => {
         </svg>
       `
     : nothing;
+};
+
+export const defaultIconStartPreview = () => {
+  return html`<clippy-icon>${unsafeSVG(PaletteIcon)}</clippy-icon>`;
 };

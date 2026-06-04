@@ -1,6 +1,6 @@
 import dlv from 'dlv';
 import * as z from 'zod';
-import { BaseDesignTokenIdentifierSchema, type BaseDesignToken } from './base-token';
+import { BaseDesignTokenIdentifierSchema, TokenPath, type BaseDesignToken } from './base-token';
 
 // A Design Token ref:
 // - Starts with {
@@ -23,6 +23,10 @@ export const TokenReferenceSchema = z
 
 // Not inferring the type from the zod schema because that would be a plain string
 export type TokenReference = `{${string}}`;
+
+export const createReference = (path: TokenPath): TokenReference => {
+  return `{${path.join('.')}}`;
+};
 
 export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj !== null && typeof obj === 'object';

@@ -3,14 +3,15 @@ import { css } from 'lit';
 export default css`
   :host {
     --nl-color-sample-border-radius: var(--basis-border-radius-round);
-    --nl-color-sample-block-size: var(--basis-size-xs);
-    --nl-color-sample-inline-size: var(--basis-size-xs);
   }
 
   .clippy-token-combobox__option {
     align-items: center;
     display: flex;
-    gap: var(--clippy-token-combobox-option-gap, var(--basis-space-inline-md));
+    gap: var(
+      --clippy-token-combobox-option-gap,
+      var(--utrecht-textbox-padding-inline-end, var(--utrecht-form-control-padding-inline-end, initial))
+    );
   }
 
   .clippy-token-combobox__preview--font-family,
