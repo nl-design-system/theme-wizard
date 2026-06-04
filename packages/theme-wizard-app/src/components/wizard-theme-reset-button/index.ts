@@ -7,6 +7,7 @@ import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { isClippyModal } from '../../utils/assertions';
+import componentStyles from './styles';
 
 const tag = 'wizard-theme-reset-button';
 
@@ -18,6 +19,8 @@ declare global {
 
 @customElement(tag)
 export class WizardThemeResetButton extends LitElement {
+  static override readonly styles = componentStyles;
+
   @consume({ context: themeContext, subscribe: true })
   private readonly theme!: Theme;
 

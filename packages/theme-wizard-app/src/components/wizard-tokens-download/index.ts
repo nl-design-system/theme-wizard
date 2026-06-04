@@ -15,6 +15,7 @@ import type { WizardDownloadConfirmation } from '../wizard-download-confirmation
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import componentStyles from './styles';
 
 const tag = 'wizard-tokens-download';
 
@@ -26,7 +27,7 @@ declare global {
 
 @customElement(tag)
 export class WizardTokensDownload extends LitElement {
-  static override readonly styles = [unsafeCSS(buttonLinkStyles)];
+  static override readonly styles = [componentStyles, unsafeCSS(buttonLinkStyles)];
 
   @consume({ context: themeContext, subscribe: true })
   private readonly theme!: Theme;

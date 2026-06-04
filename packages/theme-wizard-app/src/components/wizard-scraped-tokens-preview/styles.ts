@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host(:not([hidden])) {
+    display: block;
+  }
+
   :host {
     --utrecht-table-caption-text-align: start;
     --nl-code-background-color: var(--basis-color-transparent);

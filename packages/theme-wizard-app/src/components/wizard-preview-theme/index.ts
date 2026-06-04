@@ -3,6 +3,7 @@ import { html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
+import componentStyles from './styles';
 
 const tag = 'wizard-preview-theme';
 
@@ -14,6 +15,8 @@ declare global {
 
 @customElement(tag)
 export class PreviewTheme extends LitElement {
+  static override readonly styles = componentStyles;
+
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;

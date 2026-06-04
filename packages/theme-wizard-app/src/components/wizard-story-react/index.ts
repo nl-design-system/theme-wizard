@@ -2,8 +2,10 @@ import '@nl-design-system-community/clippy-components/clippy-react-element';
 import type { ClippyReactElement } from '@nl-design-system-community/clippy-components/clippy-react-element';
 import { LitElement, html } from 'lit';
 import { createElement } from 'react';
+import componentStyles from './styles';
 
 export class WizardStoryRenderer extends LitElement {
+  static override readonly styles = componentStyles;
   private reactRenderer: ClippyReactElement | null = null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   story: any = undefined;

@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host(:not([hidden])) {
+    display: block;
+  }
+
   .wizard-style-guide {
     --utrecht-table-caption-text-align: start;
     --utrecht-table-caption-font-size: var(--basis-text-font-size-xl);

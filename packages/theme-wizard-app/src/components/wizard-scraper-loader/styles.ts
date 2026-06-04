@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host(:not([hidden])) {
+    display: block;
+  }
+
   .wizard-scraper-loader {
     --wizard-scraper-loader-animation-duration: 2000ms;
     --wizard-scraper-loader-animation-timing-function: ease-in-out;

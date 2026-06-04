@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
 export default css`
+  :host(:not([hidden])) {
+    display: block;
+  }
+
   .wizard-sidebar-link {
     border-inline-start: 4px solid transparent;
     color: var(--basis-color-accent-1-color-default);
