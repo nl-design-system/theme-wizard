@@ -29,8 +29,8 @@ ${styleText('bold', 'EXAMPLES')}
   design-tokens-lint --exclude-parent-keys figma/figma.tokens.json
   design-tokens-lint --out result.json tokens.json
   design-tokens-lint suggest-reuse tokens.json
-  design-tokens-lint suggest-reuse --fix tokens.json
-  design-tokens-lint suggest-reuse --out candidates.json tokens.json
+  design-tokens-lint suggest-reuse tokens.json --fix
+  design-tokens-lint suggest-reuse tokens.json --out candidates.json
 
 ${styleText('bold', 'SUBCOMMANDS')}
   suggest-reuse           Find (and optionally apply) reusable basis token candidates
