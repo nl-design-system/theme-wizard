@@ -14,7 +14,8 @@ OPTIONS
 --out, -o <file>        Write output to file
 --verbose               Print verbose output
 --debug                 Print debug output
---help, -h              Show this help",
+--help, -h              Show this help
+--version, -V           Print version",
 ]
 `;
 
@@ -32,7 +33,8 @@ OPTIONS
 --out, -o <file>        Write output to file
 --verbose               Print verbose output
 --debug                 Print debug output
---help, -h              Show this help",
+--help, -h              Show this help
+--version, -V           Print version",
 ]
 `;
 
