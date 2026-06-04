@@ -73,14 +73,18 @@ export default css`
 
   /**
    * Stretches the input to fill the available width.
-   * TODO: refactor double selector for double specificity to override utrecht-customizable-text-input styles.
+   * 1. Specificity 0,2,0 instead of 0,1,0 to override utrecht-customizable-text-input styles.
+   *    TODO: needs refactoring
    */
-  .clippy-combobox__input.clippy-combobox__input {
+  .clippy-combobox__input[class] /* [1] */ {
     inline-size: 100%;
     inline-size: stretch;
   }
 
   /**
+   * Current option
+   * Styled to look the same as and placed on top of the input.
+
    * TODO: this reuses a lot from utrecht-textbox. Best option is just to use the utrecht-textbox classes directly.
    * But currently that creates a specificity battle.
    * 1. utrecht-root sets a font-size-adjust, but is overridden on the input element by user-agent styles in the shadow DOM.
@@ -116,8 +120,11 @@ export default css`
     display: none;
   }
 
-  /* added specificity to override the align-items now that the flex direction changes */
-  .clippy-combobox__option.clippy-combobox__option {
+  /**
+   * 1. Specificity 0,2,0 instead of 0,1,0 to override utrecht-listbox__option styles.
+   *    TODO: needs refactoring
+   */
+  .clippy-combobox__option[class] /* [1] */ {
     --utrecht-listbox-option-padding-inline-start: var(
       --utrecht-textbox-padding-inline-start,
       var(--utrecht-form-control-padding-inline-start, initial)
