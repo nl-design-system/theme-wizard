@@ -1,5 +1,8 @@
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
+
+const { version } = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 export default defineConfig({
   build: {
@@ -15,5 +18,10 @@ export default defineConfig({
         entryFileNames: '[name].js',
       },
     },
+  },
+  define: {
+    // We *could* import package.json in our module, but then Vite
+    // inlines all of package.json. Using `define` we only get what we need.
+    __VERSION__: JSON.stringify(version),
   },
 });

@@ -8,9 +8,13 @@
     "expertteam-digitale-toegankelijkheid",
     "nl-design-system"
   ],
+  "engines": {
+    "node": ">=20.12.0"
+  },
   "type": "module",
   "bin": {
-    "design-tokens-lint": "./dist/index.js"
+    "design-tokens-lint": "./dist/index.js",
+    "dtl": "./dist/index.js"
   },
   "files": [
     "dist/"
