@@ -1,15 +1,36 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Option } from '@nl-design-system-community/clippy-components/clippy-font-combobox';
 import '@nl-design-system-community/clippy-components/clippy-font-combobox';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 
-type FontComboboxStoryArgs = Record<string, never>;
+type FontComboboxStoryArgs = {
+  options: Option[];
+};
 
-const createTemplate = () => html`<clippy-font-combobox></clippy-font-combobox>`;
+const OPTIONS = [
+  {
+    label: 'Arial',
+    value: ['Arial', 'sans-serif'],
+  },
+  {
+    label: 'Courier New',
+    value: ['Courier New', 'monospace'],
+  },
+  {
+    label: 'Zapf Dingbats',
+    value: ['Zapf Dingbats'],
+  },
+];
+
+const createTemplate = () => html`<clippy-font-combobox options=${OPTIONS}></clippy-font-combobox>`;
 
 const meta = {
   id: 'clippy-font-combobox',
+  args: {
+    options: OPTIONS,
+  },
   parameters: {
     docs: {
       description: {
@@ -17,7 +38,10 @@ const meta = {
       },
     },
   },
-  render: () => React.createElement('clippy-font-combobox', null),
+  render: ({ options }: FontComboboxStoryArgs) =>
+    React.createElement('clippy-font-combobox', {
+      options,
+    }),
   tags: ['autodocs'],
   title: 'Clippy/Combobox/Font Combobox',
 } satisfies Meta<FontComboboxStoryArgs>;
