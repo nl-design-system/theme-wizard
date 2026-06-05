@@ -63,7 +63,7 @@ const collectBasisTokens = (root: Record<string, unknown>): BasisEntry[] => {
  * Skips basis-namespace tokens and tokens whose `$value` is already a reference.
  * Does not mutate `tokens`.
  */
-export const findReusableCandidates = (tokens: Record<string, unknown>): TokenCandidate[] => {
+export const findReusableTokens = (tokens: Record<string, unknown>): TokenCandidate[] => {
   const basisEntries = collectBasisTokens(tokens);
   const candidates: TokenCandidate[] = [];
 
@@ -93,7 +93,7 @@ export const findReusableCandidates = (tokens: Record<string, unknown>): TokenCa
  * Replaces each candidate's hard-coded `$value` with a reference to the suggested
  * basis token. Returns a deep clone — `tokens` is never mutated.
  */
-export const applyReusableCandidates = (
+export const applyReusableTokens = (
   tokens: Record<string, unknown>,
   candidates: TokenCandidate[],
 ): Record<string, unknown> => {
@@ -106,6 +106,6 @@ export const applyReusableCandidates = (
 
 /** Shorthand for `applyReusableCandidates(tokens, findReusableCandidates(tokens))`. */
 export const reuseBasisTokens = (tokens: Record<string, unknown>): Record<string, unknown> => {
-  const candidates = findReusableCandidates(tokens);
-  return applyReusableCandidates(tokens, candidates);
+  const candidates = findReusableTokens(tokens);
+  return applyReusableTokens(tokens, candidates);
 };

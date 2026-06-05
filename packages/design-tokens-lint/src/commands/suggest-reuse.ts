@@ -1,4 +1,4 @@
-import { findReusableCandidates, applyReusableCandidates } from '@nl-design-system-community/design-tokens-schema';
+import { findReusableTokens, applyReusableTokens } from '@nl-design-system-community/design-tokens-schema';
 import { loadAndValidate, writeOutput, type LoadOptions } from '../shared.ts';
 
 export type SuggestReuseOptions = LoadOptions & {
@@ -20,7 +20,7 @@ export async function suggestReuse(files: string[], opts: SuggestReuseOptions): 
     process.stderr.write('Finding reusable candidates\n');
   }
 
-  const candidates = findReusableCandidates(result.data);
+  const candidates = findReusableTokens(result.data);
 
   if (opts.debug) {
     process.stderr.write(`Reusable candidates:\n${JSON.stringify(candidates, null, 2)}\n`);
@@ -30,7 +30,7 @@ export async function suggestReuse(files: string[], opts: SuggestReuseOptions): 
     if (opts.verbose) {
       process.stderr.write('Applying reusable candidates\n');
     }
-    await writeOutput(applyReusableCandidates(result.data, candidates), opts.outPath, opts.verbose);
+    await writeOutput(applyReusableTokens(result.data, candidates), opts.outPath, opts.verbose);
   } else {
     await writeOutput(candidates, opts.outPath, opts.verbose);
   }
