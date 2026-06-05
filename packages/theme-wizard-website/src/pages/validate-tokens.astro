@@ -6,15 +6,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <theme-wizard-app>
     <wizard-layout>
       <main slot="main" class="wizard-main">
-        <wizard-stack size="4xl">
-          <wizard-container>
-            <clippy-story-preview size="lg">
-              <clippy-heading level="1">Valideer je thema</clippy-heading>
-              <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard jouw thema (.json) valideren.</p>
-              <wizard-token-validation-form></wizard-token-validation-form>
-            </clippy-story-preview>
-          </wizard-container>
-        </wizard-stack>
+        <wizard-container size="xl">
+          <clippy-story-preview size="lg">
+            <clippy-heading level="1">Valideer je thema</clippy-heading>
+            <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard jouw thema (.json) valideren.</p>
+            <wizard-token-validation-form></wizard-token-validation-form>
+          </clippy-story-preview>
+        </wizard-container>
       </main>
      </wizard-layout>
   </theme-wizard-app>
