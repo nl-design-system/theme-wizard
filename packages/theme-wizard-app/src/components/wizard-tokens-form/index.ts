@@ -109,46 +109,6 @@ export class WizardTokensForm extends LitElement {
   };
 
   override render() {
-    if (this.displayMode === 'initial') {
-      const buttons: Array<{ id: Exclude<DisplayMode, 'initial'>; title: string | TemplateResult }> = [
-        { id: 'fonts', title: t('tokens.fieldLabels.basis.typography') },
-        { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
-        { id: 'spacing', title: t('tokens.fieldLabels.basis.spacing') },
-      ];
-      return html`
-        <wizard-stack size="4xl">
-          <clippy-heading level="3">${t('nav.configure')}</clippy-heading>
-          <div class="wizard-tokens-form__section-links">
-            ${buttons.map(
-              ({ id, title }) => html`
-                <button
-                  type="button"
-                  class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
-                  @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
-                >
-                  ${title}
-                  <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
-                </button>
-              `,
-            )}
-          </div>
-
-          <wizard-stack>
-            <wizard-tokens-download></wizard-tokens-download>
-            <a
-              class="nl-button nl-button--secondary"
-              href=${`data:text/css;charset=utf-8,${encodeURIComponent(this.theme.css)}`}
-              download="theme-wizard-tokens.css"
-            >
-              <span class="nl-button__icon-start">${unsafeSVG(Download)}</span>
-              <span class="nl-button__label">${t('tokenDownloadCss.triggerText')}</span>
-            </a>
-            <wizard-theme-reset-button></wizard-theme-reset-button>
-          </wizard-stack>
-        </wizard-stack>
-      `;
-    }
-
     if (this.displayMode === 'fonts') {
       const fonts = [
         {
@@ -236,22 +196,40 @@ export class WizardTokensForm extends LitElement {
       `;
     }
 
-    // TODO: We don't have inputs to control spacing yet, but we can render the section
+    const buttons: Array<{ id: Exclude<DisplayMode, 'initial'>; title: string | TemplateResult }> = [
+      { id: 'fonts', title: t('tokens.fieldLabels.basis.typography') },
+      { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
+    ];
     return html`
       <wizard-stack size="4xl">
-        ${this.renderBackLink()}
-        <clippy-heading level="3">${t('tokens.fieldLabels.basis.spacing')}</clippy-heading>
+        <clippy-heading level="3">${t('nav.configure')}</clippy-heading>
+        <div class="wizard-tokens-form__section-links">
+          ${buttons.map(
+            ({ id, title }) => html`
+              <button
+                type="button"
+                class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
+                @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
+              >
+                ${title}
+                <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
+              </button>
+            `,
+          )}
+        </div>
 
-        <wizard-scroll-container>
-          <div
-            aria-hidden="true"
-            style="block-size: var(--basis-size-2xl); border: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle); background-color: var(--basis-color-accent-1-bg-default);"
+        <wizard-stack>
+          <wizard-tokens-download></wizard-tokens-download>
+          <a
+            class="nl-button nl-button--secondary"
+            href=${`data:text/css;charset=utf-8,${encodeURIComponent(this.theme.css)}`}
+            download="theme-wizard-tokens.css"
           >
-            Placeholder (add controls here)
-          </div>
-        </wizard-scroll-container>
-
-        ${this.renderSaveButton()}
+            <span class="nl-button__icon-start">${unsafeSVG(Download)}</span>
+            <span class="nl-button__label">${t('tokenDownloadCss.triggerText')}</span>
+          </a>
+          <wizard-theme-reset-button></wizard-theme-reset-button>
+        </wizard-stack>
       </wizard-stack>
     `;
   }
