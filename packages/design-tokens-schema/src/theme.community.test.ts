@@ -4,7 +4,7 @@ import leidenTokens from '@nl-design-system-unstable/leiden-design-tokens/dist/t
 import leidenSourceTokens from '@nl-design-system-unstable/leiden-design-tokens/figma/leiden.tokens.json';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/figma/start.tokens.json';
 import { describe, it, expect } from 'vitest';
-import { findReusableCandidates } from './reuse-tokens';
+import { findReusableTokens } from './reuse-tokens';
 import { excludeParentKeys, preprocessThemeStrict, StrictThemeSchema } from './theme';
 
 // NOTE!
@@ -154,7 +154,7 @@ describe('dist files', () => {
 
 describe('reuse basis tokens suggestions', () => {
   it('Start', () => {
-    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(startTokens)));
+    const suggestions = findReusableTokens(preprocessThemeStrict(excludeParentKeys(startTokens)));
     expect(suggestions.length).toBeGreaterThanOrEqual(1);
     expect(suggestions).toEqual(
       expect.arrayContaining([
@@ -169,12 +169,12 @@ describe('reuse basis tokens suggestions', () => {
   });
 
   it('Purmerend', () => {
-    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(purmerendTokens)));
+    const suggestions = findReusableTokens(preprocessThemeStrict(excludeParentKeys(purmerendTokens)));
     expect(suggestions).toHaveLength(0);
   });
 
   it('Leiden', () => {
-    const suggestions = findReusableCandidates(preprocessThemeStrict(excludeParentKeys(leidenSourceTokens)));
+    const suggestions = findReusableTokens(preprocessThemeStrict(excludeParentKeys(leidenSourceTokens)));
     expect(suggestions.length).toBeGreaterThanOrEqual(1);
     expect(suggestions).toEqual(
       expect.arrayContaining([
