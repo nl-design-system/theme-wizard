@@ -1,5 +1,4 @@
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
-import { StrictThemeSchema, excludeParentKeys, mergeTokens } from '@nl-design-system-community/design-tokens-schema';
 import checkboxCss from '@utrecht/checkbox-css/dist/index.css?inline';
 import formFieldCss from '@utrecht/form-field-css/dist/index.css?inline';
 import formLabelCss from '@utrecht/form-label-css/dist/index.css?inline';
@@ -7,9 +6,10 @@ import textareaCss from '@utrecht/textarea-css/dist/index.css?inline';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import '../wizard-download-button';
 import '../wizard-stack';
-import { $ZodIssue } from 'zod/v4/core';
 import { t } from '../../i18n';
+import { type TokenFileResult, parseTokenFiles } from '../../lib/TokenFiles';
 import fileInputStyles from '../wizard-file-input/styles';
 import styles from './styles';
 
@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-type Result = { success: true; data: unknown } | { success: false; error: $ZodIssue[] } | null;
+type Result = TokenFileResult | null;
 
 @customElement(tag)
 export class WizardTokenValidationForm extends LitElement {
@@ -45,18 +45,7 @@ export class WizardTokenValidationForm extends LitElement {
     if (files.length === 0) {
       return;
     }
-
-    const fileTexts = await Promise.all(files.map((file) => file.text()));
-    const tokenGroups = fileTexts.map((text) => JSON.parse(text));
-    let tokens = mergeTokens(tokenGroups);
-    if (data.get('exclude-parent-keys')) {
-      tokens = excludeParentKeys(tokens);
-    }
-
-    const parsed = StrictThemeSchema.safeParse(tokens);
-    this.result = parsed.success
-      ? { data: parsed.data, success: true }
-      : { error: parsed.error.issues, success: false };
+    this.result = await parseTokenFiles(files, Boolean(data.get('exclude-parent-keys')));
   };
 
   private renderResult(result: Exclude<Result, null>) {
@@ -89,17 +78,9 @@ export class WizardTokenValidationForm extends LitElement {
           </div>
         </div>
       </output>
-      ${result.success
-        ? html`
-            <a
-              href=${`data:application/json;charset=utf-8,${encodeURIComponent(json)}`}
-              download="tokens.json"
-              class="nl-button nl-button--secondary"
-            >
-              ${t('tokenValidationForm.downloadTokens')}
-            </a>
-          `
-        : nothing}
+      <wizard-download-button .content=${result.success ? json : ''}>
+        ${t('tokenValidationForm.downloadTokens')}
+      </wizard-download-button>
     `;
   }
 
