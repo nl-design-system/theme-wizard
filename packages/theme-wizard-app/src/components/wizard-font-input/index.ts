@@ -3,6 +3,7 @@ import '@nl-design-system-community/clippy-components/clippy-font-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import {
+  BaseDesignToken,
   EXTENSION_RESOLVED_AS,
   isRef,
   ModernFontFamilyToken,
@@ -11,15 +12,13 @@ import {
   walkTokens,
 } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import Theme from '../../lib/Theme';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
-
-export type FontOption = { label: string; value: ModernFontFamilyToken['$value'] };
 
 export const DEFAULT_FONT_OPTIONS: Option[] = [
   {
@@ -80,6 +79,8 @@ export class WizardFontInput extends WizardTokenInput {
   @property() optionsLabel = 'Opties';
   @property({ type: Array }) options: Option[] = [];
 
+  #options: Option[] = [];
+
   readonly #token: ModernFontFamilyToken = {
     $type: 'fontFamily',
     $value: [],
@@ -111,31 +112,41 @@ export class WizardFontInput extends WizardTokenInput {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   };
 
-  override render() {
-    const themeTokens: ModernFontFamilyToken[] = [];
-    walkTokens(this.theme.tokens['basis'], (token) => {
+  /**
+   *
+   */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    // Collect basis tokens and convert them to options
+    const basisTokens = this.theme.tokens['basis'];
+    const basisOptions: Option[] = [];
+    walkTokens(basisTokens, (token) => {
       if (token.$type === 'fontFamily' && !isRef(token.$value)) {
-        themeTokens.push(token as ModernFontFamilyToken);
+        basisOptions.push({
+          label: token.$value[0],
+          value: token,
+        });
       }
     });
 
-    const options: Option[] = [
-      ...this.scrapedTokens.reduce<Option[]>((acc, token) => {
-        if (token.$extensions?.[EXTENSION_TOKEN_STAGED] === true && token.$type === 'fontFamily') {
-          acc.push({
-            label: token.$value[0],
-            value: token,
-          });
-        }
-        return acc;
-      }, []),
-      ...themeTokens.map((token) => ({
-        label: token.$value[0],
-        value: token,
-      })),
-      ...DEFAULT_FONT_OPTIONS,
-    ];
+    // Collect scraped tokens and convert them to options
+    const scrapedOptions = this.scrapedTokens.reduce<Option[]>((acc, token) => {
+      if (token.$extensions?.[EXTENSION_TOKEN_STAGED] === true && token.$type === 'fontFamily') {
+        acc.push({
+          label: token.$value[0],
+          value: token,
+        });
+      }
+      return acc;
+    }, []);
 
+    // Combine all options
+    this.#options = [...this.options, ...scrapedOptions, ...basisOptions, ...DEFAULT_FONT_OPTIONS];
+  }
+
+  override render() {
+    // Check if the value is a reference and resolve it
     const resolvedValueToken: ModernFontFamilyToken = { $type: 'fontFamily', $value: this.value };
     const resolvedRef = this.value;
     if (isRef(resolvedRef)) {
@@ -160,7 +171,7 @@ export class WizardFontInput extends WizardTokenInput {
           name=${this.name}
           @change=${this.#handleChange}
           .value=${resolvedValueToken}
-          .options=${options}
+          .options=${this.#options}
           aria-invalid=${this.hasErrors ? 'true' : nothing}
           aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
         ></clippy-token-combobox>
