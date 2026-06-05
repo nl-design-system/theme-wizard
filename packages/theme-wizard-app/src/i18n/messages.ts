@@ -174,6 +174,22 @@ export const en = {
     title: 'Theme contains errors',
     triggerText: 'Download tokens as JSON',
   },
+  tokenReuseForm: {
+    applySuggestions: {
+      submit: 'Apply suggestions',
+    },
+    submit: 'Find reusable tokens',
+    suggestions: {
+      label: 'Suggested token reuse',
+      table: {
+        header: {
+          suggestedTokenPath: 'Suggested token',
+          tokenPath: 'Token',
+          tokenValue: 'Value',
+        },
+      },
+    },
+  },
   tokens: {
     backToOverview: 'Back to overview',
     fieldLabels: {
@@ -560,6 +576,22 @@ export const nl = {
     downloadAnyway: 'Toch downloaden',
     title: 'Thema bevat nog fouten',
     triggerText: 'Thema downloaden (JSON)',
+  },
+  tokenReuseForm: {
+    applySuggestions: {
+      submit: 'Suggesties toepassen',
+    },
+    submit: 'Herbruikbare tokens zoeken',
+    suggestions: {
+      label: 'Suggesties voor hergebruik',
+      table: {
+        header: {
+          suggestedTokenPath: 'Voorgestelde token',
+          tokenPath: 'Token',
+          tokenValue: 'Waarde',
+        },
+      },
+    },
   },
   tokens: {
     backToOverview: 'Terug naar overzicht',

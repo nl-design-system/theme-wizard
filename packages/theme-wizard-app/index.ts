@@ -23,5 +23,7 @@ import './src/components/wizard-table-scroller';
 import './src/components/wizard-theme-reset-button';
 import './src/components/wizard-token-presets';
 import './src/components/wizard-tokens-download';
+import './src/components/wizard-download-button';
 import './src/components/wizard-token-validation-form';
 import './src/components/wizard-tokens-form';
+import './src/components/wizard-tokens-reuse-form';
