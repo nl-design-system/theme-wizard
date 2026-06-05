@@ -9,7 +9,7 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ClippyCombobox } from '../clippy-combobox';
 import { allowedValuesConverter, arrayFromCommaList } from '../lib/converters';
 
-type Option = {
+export type Option = {
   label: string;
   value: string[];
   description?: string;
