@@ -106,6 +106,43 @@ export class WizardTokensForm extends LitElement {
   };
 
   override render() {
+    if (this.displayMode === 'initial') {
+      const buttons: Array<{ id: Exclude<DisplayMode, 'initial'>; title: string | TemplateResult }> = [
+        { id: 'fonts', title: t('tokens.fieldLabels.basis.typography') },
+        { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
+      ];
+      return html`
+        <wizard-stack size="4xl">
+          <clippy-heading level="3">${t('nav.configure')}</clippy-heading>
+          <div class="wizard-tokens-form__section-links">
+            ${buttons.map(
+              ({ id, title }) => html`
+                <button
+                  type="button"
+                  class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
+                  @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
+                >
+                  ${title}
+                  <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
+                </button>
+              `,
+            )}
+          </div>
+
+          <wizard-stack>
+            <wizard-tokens-download></wizard-tokens-download>
+            <wizard-download-button
+              content=${this.theme.css}
+              filename="theme-wizard-tokens.css"
+              content-type="text/css"
+            >
+              ${t('tokenDownloadCss.triggerText')}
+            </wizard-download-button>
+            <wizard-theme-reset-button></wizard-theme-reset-button>
+          </wizard-stack>
+        </wizard-stack>
+      `;
+    }
     if (this.displayMode === 'fonts') {
       const fonts = [
         {
@@ -217,14 +254,9 @@ export class WizardTokensForm extends LitElement {
 
         <wizard-stack>
           <wizard-tokens-download></wizard-tokens-download>
-          <a
-            class="nl-button nl-button--secondary"
-            href=${`data:text/css;charset=utf-8,${encodeURIComponent(this.theme.css)}`}
-            download="theme-wizard-tokens.css"
-          >
-            <span class="nl-button__icon-start">${unsafeSVG(Download)}</span>
-            <span class="nl-button__label">${t('tokenDownloadCss.triggerText')}</span>
-          </a>
+          <wizard-download-button content=${this.theme.css} filename="theme-wizard-tokens.css" content-type="text/css">
+            ${t('tokenDownloadCss.triggerText')}
+          </wizard-download-button>
           <wizard-theme-reset-button></wizard-theme-reset-button>
         </wizard-stack>
       </wizard-stack>
