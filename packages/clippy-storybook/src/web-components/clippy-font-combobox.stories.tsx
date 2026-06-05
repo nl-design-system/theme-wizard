@@ -22,7 +22,7 @@ const OPTIONS = [
     label: 'Zapf Dingbats',
     value: ['Zapf Dingbats'],
   },
-];
+] satisfies Option[];
 
 const createTemplate = () => html`<clippy-font-combobox options=${OPTIONS}></clippy-font-combobox>`;
 
