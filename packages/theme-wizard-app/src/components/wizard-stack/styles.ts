@@ -2,59 +2,58 @@ import { css } from 'lit';
 
 export default css`
   :host(:not([hidden])) {
-    display: block;
+    display: flex;
   }
 
-  .wizard-stack {
-    display: flex;
+  :host {
     flex-direction: column;
   }
 
-  .wizard-stack--none {
+  :host([size='none' i]) {
     gap: 0;
   }
 
-  .wizard-stack--2xs {
+  :host([size='2xs' i]) {
     gap: var(--basis-space-row-2xs);
   }
 
-  .wizard-stack--xs {
+  :host([size='xs' i]) {
     gap: var(--basis-space-row-xs);
   }
 
-  .wizard-stack--sm {
+  :host([size='sm' i]) {
     gap: var(--basis-space-row-sm);
   }
 
-  .wizard-stack--md {
+  :host([size='md' i]) {
     gap: var(--basis-space-row-md);
   }
 
-  .wizard-stack--lg {
+  :host([size='lg' i]) {
     gap: var(--basis-space-row-lg);
   }
 
-  .wizard-stack--xl {
+  :host([size='xl' i]) {
     gap: var(--basis-space-row-xl);
   }
 
-  .wizard-stack--2xl {
+  :host([size='2xl' i]) {
     gap: var(--basis-space-row-2xl);
   }
 
-  .wizard-stack--3xl {
+  :host([size='3xl' i]) {
     gap: var(--basis-space-row-3xl);
   }
 
-  .wizard-stack--4xl {
+  :host([size='4xl' i]) {
     gap: var(--basis-space-row-4xl);
   }
 
-  .wizard-stack--5xl {
+  :host([size='5xl' i]) {
     gap: var(--basis-space-row-5xl);
   }
 
-  .wizard-stack--6xl {
+  :host([size='6xl' i]) {
     gap: var(--basis-space-row-6xl);
   }
 `;
