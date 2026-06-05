@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyReusableCandidates, findReusableCandidates, reuseBasisTokens } from './reuse-tokens';
+import { applyReusableTokens, findReusableTokens, reuseBasisTokens } from './reuse-tokens';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 
 const SUBTYPE = EXTENSION_TOKEN_SUBTYPE;
@@ -12,12 +12,12 @@ const createDimensionToken = (value: number, unit: string, subtype: string) => (
 
 const basisToken = (value: number, unit: string, subtype: string) => createDimensionToken(value, unit, subtype);
 
-describe('findReusableCandidates', () => {
+describe('findReusableTokens', () => {
   it('returns empty when no basis tokens', () => {
     const theme = {
       utrecht: { button: { 'padding-block': createDimensionToken(4, 'px', 'space-block') } },
     };
-    expect(findReusableCandidates(theme)).toEqual([]);
+    expect(findReusableTokens(theme)).toEqual([]);
   });
 
   it('returns empty when component token is already a ref', () => {
@@ -33,7 +33,7 @@ describe('findReusableCandidates', () => {
         },
       },
     };
-    expect(findReusableCandidates(theme)).toEqual([]);
+    expect(findReusableTokens(theme)).toEqual([]);
   });
 
   it('returns empty when component token has no subtype', () => {
@@ -45,7 +45,7 @@ describe('findReusableCandidates', () => {
         },
       },
     };
-    expect(findReusableCandidates(theme)).toEqual([]);
+    expect(findReusableTokens(theme)).toEqual([]);
   });
 
   it('returns empty when value does not match any basis token', () => {
@@ -53,7 +53,7 @@ describe('findReusableCandidates', () => {
       basis: { space: { block: { xs: basisToken(4, 'px', 'space-block') } } },
       utrecht: { button: { 'padding-block': createDimensionToken(8, 'px', 'space-block') } },
     };
-    expect(findReusableCandidates(theme)).toEqual([]);
+    expect(findReusableTokens(theme)).toEqual([]);
   });
 
   it('returns empty when subtype does not match', () => {
@@ -61,7 +61,7 @@ describe('findReusableCandidates', () => {
       basis: { space: { block: { xs: basisToken(4, 'px', 'space-block') } } },
       utrecht: { button: { 'padding-inline': createDimensionToken(4, 'px', 'space-inline') } },
     };
-    expect(findReusableCandidates(theme)).toEqual([]);
+    expect(findReusableTokens(theme)).toEqual([]);
   });
 
   it('finds a matching component token', () => {
@@ -72,18 +72,18 @@ describe('findReusableCandidates', () => {
       utrecht: { button: { 'padding-block': componentToken } },
     };
 
-    const candidates = findReusableCandidates(theme);
+    const Tokens = findReusableTokens(theme);
 
-    expect(candidates).toHaveLength(1);
-    expect(candidates[0]).toMatchObject({
+    expect(Tokens).toHaveLength(1);
+    expect(Tokens[0]).toMatchObject({
       path: ['utrecht', 'button', 'padding-block'],
       suggestion: {
         path: ['basis', 'space', 'block', 'xs'],
       },
     });
-    expect(candidates[0].suggestion.token).toBe(basisXs);
-    expect(candidates[0].token).toBe(componentToken);
-    expect(candidates[0].token.$value).toEqual(basisXs.$value);
+    expect(Tokens[0].suggestion.token).toBe(basisXs);
+    expect(Tokens[0].token).toBe(componentToken);
+    expect(Tokens[0].token.$value).toEqual(basisXs.$value);
   });
 
   it('finds multiple component tokens matching the same basis token', () => {
@@ -95,8 +95,8 @@ describe('findReusableCandidates', () => {
       },
     };
 
-    const candidates = findReusableCandidates(theme);
-    expect(candidates).toHaveLength(2);
+    const Tokens = findReusableTokens(theme);
+    expect(Tokens).toHaveLength(2);
   });
 
   it('returns first basis token when multiple basis tokens share same subtype+value', () => {
@@ -112,9 +112,9 @@ describe('findReusableCandidates', () => {
       utrecht: { button: { 'border-radius': createDimensionToken(0, 'px', 'border-radius') } },
     };
 
-    const candidates = findReusableCandidates(theme);
-    expect(candidates).toHaveLength(1);
-    expect(candidates[0].suggestion.path).toEqual(['basis', 'space', 'block', 'none']);
+    const Tokens = findReusableTokens(theme);
+    expect(Tokens).toHaveLength(1);
+    expect(Tokens[0].suggestion.path).toEqual(['basis', 'space', 'block', 'none']);
   });
 
   it('finds a matching color token', () => {
@@ -126,11 +126,11 @@ describe('findReusableCandidates', () => {
       utrecht: { button: { color: componentColor } },
     };
 
-    const candidates = findReusableCandidates(theme);
+    const Tokens = findReusableTokens(theme);
 
-    expect(candidates).toHaveLength(1);
-    expect(candidates[0].path).toEqual(['utrecht', 'button', 'color']);
-    expect(candidates[0].suggestion.path).toEqual(['basis', 'color', 'action', 'basisColor']);
+    expect(Tokens).toHaveLength(1);
+    expect(Tokens[0].path).toEqual(['utrecht', 'button', 'color']);
+    expect(Tokens[0].suggestion.path).toEqual(['basis', 'color', 'action', 'basisColor']);
   });
 
   it('finds a matching font-family token', () => {
@@ -142,11 +142,11 @@ describe('findReusableCandidates', () => {
       utrecht: { button: { 'font-family': componentFontFamily } },
     };
 
-    const candidates = findReusableCandidates(theme);
+    const Tokens = findReusableTokens(theme);
 
-    expect(candidates).toHaveLength(1);
-    expect(candidates[0].path).toEqual(['utrecht', 'button', 'font-family']);
-    expect(candidates[0].suggestion.path).toEqual(['basis', 'font-family', 'sans']);
+    expect(Tokens).toHaveLength(1);
+    expect(Tokens[0].path).toEqual(['utrecht', 'button', 'font-family']);
+    expect(Tokens[0].suggestion.path).toEqual(['basis', 'font-family', 'sans']);
   });
 
   it('ignores basis tokens whose $value is a ref', () => {
@@ -162,13 +162,13 @@ describe('findReusableCandidates', () => {
       utrecht: { button: { 'padding-block': createDimensionToken(4, 'px', 'space-block') } },
     };
 
-    const candidates = findReusableCandidates(theme);
+    const Tokens = findReusableTokens(theme);
 
-    expect(candidates).toHaveLength(1);
-    expect(candidates[0].suggestion.path).toEqual(['basis', 'space', 'block', 'xs']);
+    expect(Tokens).toHaveLength(1);
+    expect(Tokens[0].suggestion.path).toEqual(['basis', 'space', 'block', 'xs']);
   });
 
-  it('does not return basis tokens themselves as candidates', () => {
+  it('does not return basis tokens themselves as Tokens', () => {
     const theme = {
       basis: {
         space: {
@@ -179,11 +179,11 @@ describe('findReusableCandidates', () => {
         },
       },
     };
-    expect(findReusableCandidates(theme)).toEqual([]);
+    expect(findReusableTokens(theme)).toEqual([]);
   });
 });
 
-describe('applyReusableCandidates', () => {
+describe('applyReusableTokens', () => {
   it('replaces $value with a ref for each candidate', () => {
     const basisXs = basisToken(4, 'px', 'space-block');
     const componentToken = createDimensionToken(4, 'px', 'space-block');
@@ -192,8 +192,8 @@ describe('applyReusableCandidates', () => {
       utrecht: { button: { 'padding-block': componentToken } },
     };
 
-    const candidates = findReusableCandidates(theme);
-    const result = applyReusableCandidates(theme, candidates);
+    const Tokens = findReusableTokens(theme);
+    const result = applyReusableTokens(theme, Tokens);
 
     expect(result['utrecht']).toMatchObject({
       button: { 'padding-block': { $value: '{basis.space.block.xs}' } },
@@ -205,15 +205,15 @@ describe('applyReusableCandidates', () => {
       basis: { space: { block: { xs: basisToken(4, 'px', 'space-block') } } },
       utrecht: { button: { 'padding-block': createDimensionToken(4, 'px', 'space-block') } },
     };
-    const candidates = findReusableCandidates(theme);
-    applyReusableCandidates(theme, candidates);
+    const Tokens = findReusableTokens(theme);
+    applyReusableTokens(theme, Tokens);
 
     expect(theme.utrecht.button['padding-block'].$value).toEqual({ unit: 'px', value: 4 });
   });
 
-  it('returns input unchanged when candidates is empty', () => {
+  it('returns input unchanged when Tokens is empty', () => {
     const theme = { utrecht: { button: { 'padding-block': createDimensionToken(4, 'px', 'space-block') } } };
-    const result = applyReusableCandidates(theme, []);
+    const result = applyReusableTokens(theme, []);
     expect(result).toEqual(theme);
   });
 });
