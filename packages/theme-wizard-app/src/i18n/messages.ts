@@ -43,6 +43,7 @@ export const en = {
       privacyStatement: 'Privacy statement',
     },
     otherLinks: {
+      reuseTokens: 'Reuse tokens',
       validateTokens: 'Validate tokens',
     },
   },
@@ -446,6 +447,7 @@ export const nl = {
       privacyStatement: 'Privacyverklaring',
     },
     otherLinks: {
+      reuseTokens: 'Hergebruik tokens',
       validateTokens: 'Valideer tokens',
     },
   },
