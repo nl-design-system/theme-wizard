@@ -44,9 +44,9 @@ export default css`
     padding-inline: var(--clippy-toggletip-padding-inline);
     pointer-events: none;
     position: absolute;
-    transition:
-      opacity 120ms ease,
-      visibility 120ms ease;
+    transition-duration: 120ms;
+    transition-property: opacity, visibility;
+    transition-timing-function: ease;
     visibility: hidden;
     z-index: var(--clippy-toggletip-z-index);
   }
