@@ -29,7 +29,11 @@ test.describe('change fonts', () => {
     await basisTokensPage.goto();
     await page.getByRole('button', { name: 'Typografie' }).click();
     const options = await basisTokensPage.getInputOptions('Koppen');
-    const optionFamilies = (await options.allTextContents()).map((s) => s.trim());
+    const optionFamilies = await Promise.all(
+      (await options.all()).map(async (s) => {
+        return (await s.getByTestId('option-label').textContent())?.trim();
+      }),
+    );
 
     expect(optionFamilies).toEqual(expect.arrayContaining(stagedFamilies));
   });

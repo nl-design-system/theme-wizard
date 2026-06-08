@@ -69,10 +69,12 @@ export class BasisTokensPage {
     return Promise.all(stops.map((stop) => stop.getAttribute('data-value')));
   }
 
-  async getInputOptions(label: string, value = '') {
+  async getInputOptions(label: string) {
     const input = this.page.getByLabel(label);
-    await input.fill(value); // trigger the dropdown with options
-    return this.page.getByRole('option');
+    const field = this.page.locator(`[label="${label}"]`);
+
+    await input.focus(); // trigger the dropdown with options
+    return field.getByRole('option');
   }
 
   getErrorAlert(): Locator {

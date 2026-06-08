@@ -1,23 +1,67 @@
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-font-combobox';
-import { ClippyFontCombobox } from '@nl-design-system-community/clippy-components/clippy-font-combobox';
-import { ModernFontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
+import '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import {
+  EXTENSION_RESOLVED_AS,
+  isRef,
+  ModernFontFamilyToken,
+  resolveRef,
+  setExtension,
+  walkFontFamilies,
+} from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
+import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import Theme from '../../lib/Theme';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 
-export type FontOption = { label: string; value: ModernFontFamilyToken['$value'] };
-
-export const DEFAULT_FONT_OPTIONS: FontOption[] = [
-  { label: 'System UI', value: ['system-ui', 'sans-serif'] },
-  { label: 'Arial', value: ['Arial', 'sans-serif'] },
-  { label: 'Georgia', value: ['Georgia', 'serif'] },
-  { label: 'Times New Roman', value: ['Times New Roman', 'serif'] },
-  { label: 'Courier New', value: ['Courier New', 'monospace'] },
-  { label: 'Verdana', value: ['Verdana', 'sans-serif'] },
+export const DEFAULT_FONT_OPTIONS: Option[] = [
+  {
+    label: 'System UI',
+    value: {
+      $type: 'fontFamily',
+      $value: ['system-ui', 'sans-serif'],
+    },
+  },
+  {
+    label: 'Arial',
+    value: {
+      $type: 'fontFamily',
+      $value: ['Arial', 'sans-serif'],
+    },
+  },
+  {
+    label: 'Georgia',
+    value: {
+      $type: 'fontFamily',
+      $value: ['Georgia', 'serif'],
+    },
+  },
+  {
+    label: 'Times New Roman',
+    value: {
+      $type: 'fontFamily',
+      $value: ['Times New Roman', 'serif'],
+    },
+  },
+  {
+    label: 'Courier New',
+    value: {
+      $type: 'fontFamily',
+      $value: ['Courier New', 'monospace'],
+    },
+  },
+  {
+    label: 'Verdana',
+    value: {
+      $type: 'fontFamily',
+      $value: ['Verdana', 'sans-serif'],
+    },
+  },
 ];
 
 const tag = 'wizard-font-input';
@@ -32,15 +76,22 @@ declare global {
 export class WizardFontInput extends WizardTokenInput {
   @property() defaultOptionsLabel = 'Standaardopties';
   @property() optionsLabel = 'Opties';
-  @property({ type: Array }) options: FontOption[] = [];
+  @property({ type: Array }) options: Option[] = [];
+
+  #options: Option[] = [];
+
   readonly #token: ModernFontFamilyToken = {
     $type: 'fontFamily',
-    $value: '',
+    $value: [],
   };
 
   @consume({ context: scrapedTokensContext, subscribe: true })
   @property({ attribute: false })
   scrapedTokens: StagedDesignToken[] = [];
+
+  @consume({ context: themeContext, subscribe: true })
+  @property({ attribute: false })
+  private readonly theme!: Theme;
 
   override get value() {
     return this.#token.$value;
@@ -55,25 +106,55 @@ export class WizardFontInput extends WizardTokenInput {
 
   readonly #handleChange = (event: Event) => {
     const target = event.target;
-    if (!(target instanceof ClippyFontCombobox)) return;
-    this.value = target.value ?? '';
+    if (!(target instanceof ClippyTokenCombobox)) return;
+    this.value = target?.value?.$value ?? '';
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   };
 
+  /**
+   *
+   */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    // Collect basis tokens and convert them to options
+    const basisTokens = this.theme?.tokens['basis'] || [];
+    const basisOptions: Option[] = [];
+    walkFontFamilies(basisTokens, (token) => {
+      if (!isRef(token.$value)) {
+        basisOptions.push({
+          label: token.$value[0],
+          value: token,
+        });
+      }
+    });
+
+    // Collect scraped tokens and convert them to options
+    const scrapedOptions = this.scrapedTokens.reduce<Option[]>((acc, token) => {
+      if (token.$extensions?.[EXTENSION_TOKEN_STAGED] === true && token.$type === 'fontFamily') {
+        acc.push({
+          label: token.$value[0],
+          value: token,
+        });
+      }
+      return acc;
+    }, []);
+
+    // Combine all options
+    this.#options = [...this.options, ...scrapedOptions, ...basisOptions, ...DEFAULT_FONT_OPTIONS];
+  }
+
   override render() {
-    const value = Array.isArray(this.value) ? this.value : [this.value];
-    const options: FontOption[] = [
-      ...this.scrapedTokens.reduce<FontOption[]>((acc, token) => {
-        if (token.$extensions?.[EXTENSION_TOKEN_STAGED] === true && token.$type === 'fontFamily') {
-          acc.push({
-            label: token.$value[0],
-            value: token.$value.slice(0, 1),
-          });
-        }
-        return acc;
-      }, []),
-      ...DEFAULT_FONT_OPTIONS,
-    ];
+    // By default put the value into token format
+    const resolvedValueToken: ModernFontFamilyToken = { $type: 'fontFamily', $value: this.value };
+    // Check if the value is a reference and resolve it
+    if (isRef(this.value)) {
+      const resolvedToken = resolveRef(this.theme.tokens, this.value);
+
+      if (resolvedToken) {
+        setExtension(resolvedValueToken, EXTENSION_RESOLVED_AS, resolvedToken.$value);
+      }
+    }
 
     return html`
       <div class="utrecht-form-field__input">
@@ -83,15 +164,16 @@ export class WizardFontInput extends WizardTokenInput {
               ${t(`validation.error.${error.code}.compact`, error)}
             </div>`,
         )}
-        <clippy-font-combobox
+        <clippy-token-combobox
+          type="fontFamily"
           hidden-label="${this.label}"
           name=${this.name}
           @change=${this.#handleChange}
-          .value=${value}
-          .options=${options}
+          .value=${resolvedValueToken}
+          .options=${this.#options}
           aria-invalid=${this.hasErrors ? 'true' : nothing}
           aria-errormessage=${this.hasErrors ? this.errors.map((error) => error.id).join(' ') : nothing}
-        ></clippy-font-combobox>
+        ></clippy-token-combobox>
       </div>
     `;
   }
