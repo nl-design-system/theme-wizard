@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { TokenPath } from './tokens/base-token';
 import { MINIMUM_LINE_HEIGHT } from './validations';
 
 export const ERROR_CODES = {
@@ -13,7 +14,7 @@ export type ContrastIssue = z.core.$ZodSuperRefineIssue & {
   ERROR_CODE: typeof ERROR_CODES.INSUFFICIENT_CONTRAST;
   actual: number;
   tokens: [string] | [string, string];
-  path: string[];
+  path: TokenPath;
   code: 'too_small';
   message: 'Insufficient contrast';
   minimum: number;
@@ -30,14 +31,14 @@ export type LineHeightUnitIssue = z.core.$ZodSuperRefineIssue & {
   ERROR_CODE: typeof ERROR_CODES.UNEXPECTED_UNIT;
   code: 'invalid_type';
   message: string;
-  path: string[];
+  path: TokenPath;
 };
 
 export type MinimumLineHeightIssue = z.core.$ZodSuperRefineIssue & {
   ERROR_CODE: typeof ERROR_CODES.LINE_HEIGHT_TOO_SMALL;
   code: 'too_small';
   message: string;
-  path: string[];
+  path: TokenPath;
   minimum: number;
   expected: 'number';
   input: number;
@@ -48,7 +49,7 @@ export const createMinLineHeightIssue = ({
   actual,
   path,
 }: {
-  path: string[];
+  path: TokenPath;
   actual: number;
 }): MinimumLineHeightIssue => {
   return {
@@ -69,7 +70,7 @@ export type MinFontSizeIssue = z.core.$ZodSuperRefineIssue & {
   code: 'custom';
   message: string;
   actual: string;
-  path: string[];
+  path: TokenPath;
   minimum: string;
 };
 
@@ -90,7 +91,7 @@ export const createContrastIssue = ({
 }: {
   actual: number;
   tokens: [string] | [string, string];
-  path: string[];
+  path: TokenPath;
   minimum: number;
 }): ContrastIssue => {
   return {

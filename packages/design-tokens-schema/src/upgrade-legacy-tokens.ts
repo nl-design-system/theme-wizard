@@ -1,5 +1,5 @@
 import { parse_dimension } from '@projectwallace/css-parser';
-import type { BaseDesignToken } from './tokens/base-token';
+import type { BaseDesignToken, TokenPath } from './tokens/base-token';
 import { setExtension } from './extensions';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
@@ -63,7 +63,7 @@ const upgradeDimensionToken = (token: BaseDesignToken): void => {
   token.$value = parseDimensionValue(token.$value);
 };
 
-const addDimensionSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
+const addDimensionSubType = (token: BaseDesignToken, tokenPath: TokenPath): void => {
   const path = tokenPath.join('.');
 
   if (path.includes('font-size')) {
@@ -148,7 +148,7 @@ const upgradeColorToken = (token: BaseDesignToken): void => {
 /**
  * @description Upgrade a number token (set line-height subtype if applicable)
  */
-const upgradeNumberToken = (token: BaseDesignToken, path: string[]): void => {
+const upgradeNumberToken = (token: BaseDesignToken, path: TokenPath): void => {
   if (path.includes('line-height')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
   } else if (path.includes('font-weight')) {
@@ -175,7 +175,7 @@ const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignToken): void => 
   }
 };
 
-const addColorSubType = (token: BaseDesignToken, tokenPath: string[]): void => {
+const addColorSubType = (token: BaseDesignToken, tokenPath: TokenPath): void => {
   const path = tokenPath.join('.');
 
   if (path.includes('.bg-') || path.endsWith('.background-color')) {
