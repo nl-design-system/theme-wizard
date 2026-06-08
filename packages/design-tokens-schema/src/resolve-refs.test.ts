@@ -42,18 +42,46 @@ describe('resolveRef', () => {
     const root = {
       color: { base: { $type: 'color', $value: '#aabbcc' } },
     };
-    expect(resolveRef(root, '{color.base}')).toEqual({ $type: 'color', $value: '#aabbcc' });
+    expect(resolveRef(root, '{color.base}')).toEqual(root.color.base);
   });
 
-  it('returns non-token-like value directly', () => {
+  it('returns undefined when resolved value is not a token', () => {
     const root = {
       color: { raw: 'not-a-token' },
     };
-    expect(resolveRef(root, '{color.raw}')).toBe('not-a-token');
+    expect(resolveRef(root, '{color.raw}')).toBeUndefined();
   });
 
   it('returns undefined when ref not found', () => {
     expect(resolveRef({}, '{nonexistent.token}')).toBeUndefined();
+  });
+
+  it('returns undefined on direct self-reference (circular)', () => {
+    const root = {
+      color: { a: { $type: 'color', $value: '{color.a}' } },
+    };
+    expect(resolveRef(root, '{color.a}')).toBeUndefined();
+  });
+
+  it('returns undefined on two-token cycle (a → b → a)', () => {
+    const root = {
+      color: {
+        a: { $type: 'color', $value: '{color.b}' },
+        b: { $type: 'color', $value: '{color.a}' },
+      },
+    };
+    expect(resolveRef(root, '{color.a}')).toBeUndefined();
+  });
+
+  it('returns undefined on longer cycle (a → b → c → a)', () => {
+    const root = {
+      color: {
+        a: { $type: 'color', $value: '{color.b}' },
+        b: { $type: 'color', $value: '{color.c}' },
+        c: { $type: 'color', $value: '{color.a}' },
+      },
+    };
+    expect(resolveRef(root, '{color.a}')).toBeUndefined();
   });
 });
 

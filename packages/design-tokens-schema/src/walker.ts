@@ -1,6 +1,7 @@
-import { BaseDesignToken } from './tokens/base-token';
+import { BaseDesignToken, TokenPath } from './tokens/base-token';
 import { ColorToken } from './tokens/color-token';
 import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
+import { FontFamilyToken, FontFamilyTokenSchema } from './tokens/fontfamily-token';
 import {
   isRef,
   isTokenLike,
@@ -21,12 +22,12 @@ export const SKIP = Symbol('skip');
  */
 export const walkObject = <T = unknown>(
   root: unknown,
-  predicate: (data: unknown, path: string[]) => data is T,
-  callback?: (data: T, path: string[]) => void | typeof SKIP,
+  predicate: (data: unknown, path: TokenPath) => data is T,
+  callback?: (data: T, path: TokenPath) => void | typeof SKIP,
 ): void => {
   const visited = new WeakSet();
 
-  function traverse(currentData: unknown, path: string[]): void {
+  function traverse(currentData: unknown, path: TokenPath): void {
     // Check if current data matches
     if (predicate(currentData, path)) {
       if (callback?.(currentData, path) === SKIP) return;
@@ -65,7 +66,7 @@ export const isColorToken = (token: unknown): token is ColorToken => {
 
 export const walkColors = (
   root: unknown,
-  callback: (token: ColorToken, path: string[]) => void | typeof SKIP,
+  callback: (token: ColorToken, path: TokenPath) => void | typeof SKIP,
 ): void => {
   walkObject<ColorToken>(root, isColorToken, callback);
 };
@@ -73,7 +74,7 @@ export const walkColors = (
 export const walkTokensWithRef = (
   root: unknown,
   config: Record<string, unknown>,
-  callback: (token: TokenWithRefLike, path: string[]) => void | typeof SKIP,
+  callback: (token: TokenWithRefLike, path: TokenPath) => void | typeof SKIP,
   onError: (error: TokenRefError) => void = () => {},
 ): void => {
   walkObject<TokenWithRefLike>(
@@ -89,7 +90,7 @@ const isLineHeightToken = (token: unknown): token is BaseDesignToken => {
 
 export const walkLineHeights = (
   root: unknown,
-  callback: (token: BaseDesignToken, path: string[]) => void | typeof SKIP,
+  callback: (token: BaseDesignToken, path: TokenPath) => void | typeof SKIP,
 ): void => {
   walkObject<BaseDesignToken>(root, isLineHeightToken, callback);
 };
@@ -100,7 +101,7 @@ const isDimensionToken = (token: unknown): token is DimensionToken => {
 
 export const walkDimensions = (
   root: unknown,
-  callback: (token: DimensionToken, path: string[]) => void | typeof SKIP,
+  callback: (token: DimensionToken, path: TokenPath) => void | typeof SKIP,
 ): void => {
   walkObject<DimensionToken>(root, isDimensionToken, (token, path) => {
     const dimension = DimensionTokenSchema.safeParse(token);
@@ -108,9 +109,23 @@ export const walkDimensions = (
   });
 };
 
+const isFontFamilyToken = (token: unknown): token is FontFamilyToken => {
+  return isTokenLike(token) && FontFamilyTokenSchema.safeParse(token).success;
+};
+
+export const walkFontFamilies = (
+  root: unknown,
+  callback: (token: FontFamilyToken, path: TokenPath) => void | typeof SKIP,
+): void => {
+  walkObject<FontFamilyToken>(root, isFontFamilyToken, (token, path) => {
+    const fontFamily = FontFamilyTokenSchema.safeParse(token);
+    return callback(fontFamily.data!, path);
+  });
+};
+
 export const walkTokens = (
   root: unknown,
-  callback: (token: BaseDesignToken, path: string[]) => void | typeof SKIP,
+  callback: (token: BaseDesignToken, path: TokenPath) => void | typeof SKIP,
 ): void => {
   walkObject<BaseDesignToken>(root, isTokenLike, callback);
 };

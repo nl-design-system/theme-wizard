@@ -1,6 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
-import { SKIP, walkObject, walkColors, walkDimensions, walkLineHeights, walkTokens, walkTokensWithRef } from './walker';
+import {
+  SKIP,
+  walkObject,
+  walkColors,
+  walkDimensions,
+  walkFontFamilies,
+  walkLineHeights,
+  walkTokens,
+  walkTokensWithRef,
+} from './walker';
 
 describe('walkObject', () => {
   it('calls callback when predicate matches', () => {
@@ -237,6 +246,67 @@ describe('walkLineHeights', () => {
   it('stops recursing when callback returns SKIP', () => {
     let calls = 0;
     walkLineHeights({ lh: lineHeightToken }, () => {
+      calls++;
+      return SKIP;
+    });
+    expect(calls).toBe(1);
+  });
+});
+
+describe('walkFontFamilies', () => {
+  const singleToken = { $type: 'fontFamily', $value: 'Inter' };
+  const arrayToken = { $type: 'fontFamily', $value: ['Inter', 'sans-serif'] };
+  const refToken = { $type: 'fontFamily', $value: '{brand.font}' };
+
+  it('finds font family token with single string $value', () => {
+    const found: unknown[] = [];
+    walkFontFamilies({ font: singleToken }, (token) => {
+      found.push(token);
+    });
+    expect(found).toHaveLength(1);
+    expect(found[0]).toEqual(singleToken);
+  });
+
+  it('finds font family token with array $value', () => {
+    const found: unknown[] = [];
+    walkFontFamilies({ font: arrayToken }, (token) => {
+      found.push(token);
+    });
+    expect(found).toHaveLength(1);
+    expect(found[0]).toEqual(arrayToken);
+  });
+
+  it('finds font family token with ref $value', () => {
+    const found: unknown[] = [];
+    walkFontFamilies({ font: refToken }, (token) => {
+      found.push(token);
+    });
+    expect(found).toHaveLength(1);
+  });
+
+  it('skips non-fontFamily tokens', () => {
+    const callback = vi.fn();
+    walkFontFamilies({ size: { $type: 'dimension', $value: { unit: 'px', value: 16 } } }, callback);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('skips tokens with comma in font name', () => {
+    const callback = vi.fn();
+    walkFontFamilies({ font: { $type: 'fontFamily', $value: 'Inter, sans-serif' } }, callback);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('passes correct path to callback', () => {
+    const paths: string[][] = [];
+    walkFontFamilies({ typography: { body: singleToken } }, (_, path) => {
+      paths.push(path);
+    });
+    expect(paths).toContainEqual(['typography', 'body']);
+  });
+
+  it('stops recursing when callback returns SKIP', () => {
+    let calls = 0;
+    walkFontFamilies({ font: singleToken }, () => {
       calls++;
       return SKIP;
     });
