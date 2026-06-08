@@ -1,7 +1,12 @@
-import { StrictThemeSchema, excludeParentKeys, mergeTokens } from '@nl-design-system-community/design-tokens-schema';
+import {
+  StrictThemeSchema,
+  excludeParentKeys,
+  mergeTokens,
+  type Theme,
+} from '@nl-design-system-community/design-tokens-schema';
 import { $ZodIssue } from 'zod/v4/core';
 
-export type TokenFileResult = { success: true; data: unknown } | { success: false; error: $ZodIssue[] };
+export type TokenFileResult = { success: true; data: Theme } | { success: false; error: $ZodIssue[] };
 
 export async function parseTokenFiles(files: File[], shouldExcludeParentKeys: boolean): Promise<TokenFileResult> {
   const fileTexts = await Promise.all(files.map((file) => file.text()));
