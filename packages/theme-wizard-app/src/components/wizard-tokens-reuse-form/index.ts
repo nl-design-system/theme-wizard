@@ -4,6 +4,7 @@ import {
   type TokenCandidate,
   findReusableTokens,
   applyReusableTokens,
+  stringifyToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import checkboxCss from '@utrecht/checkbox-css/dist/index.css?inline';
 import formFieldCss from '@utrecht/form-field-css/dist/index.css?inline';
@@ -18,7 +19,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { $ZodIssue } from 'zod/v4/core';
 import { t } from '../../i18n';
 import { type TokenFileResult, parseTokenFiles } from '../../lib/TokenFiles';
-import { stringifyToken } from '../../utils/token-utils';
 import fileInputStyles from '../wizard-file-input/styles';
 import '../wizard-table-scroller';
 import styles from './styles';

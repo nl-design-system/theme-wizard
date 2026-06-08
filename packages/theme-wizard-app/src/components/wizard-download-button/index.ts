@@ -35,7 +35,6 @@ export class WizardDownloadButton extends LitElement {
         href=${`data:${this.contentType};charset=utf-8,${encodeURIComponent(this.content)}`}
         download=${this.filename}
         class="nl-button nl-button--secondary"
-        role="button"
       >
         <span class="nl-button__icon-start">${unsafeSVG(Download)}</span>
         <slot></slot>
