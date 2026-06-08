@@ -20,6 +20,7 @@ export class WizardFormFieldCheckbox extends LitElement {
   @property({ type: String })
   name = '';
 
+  // No shadow root: native input must be in the same shadow root as its ancestor form to participate in form submission.
   override createRenderRoot() {
     return this;
   }
