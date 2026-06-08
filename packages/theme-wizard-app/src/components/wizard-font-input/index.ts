@@ -118,7 +118,7 @@ export class WizardFontInput extends WizardTokenInput {
     super.connectedCallback();
 
     // Collect basis tokens and convert them to options
-    const basisTokens = this.theme.tokens['basis'];
+    const basisTokens = this.theme?.tokens['basis'] || [];
     const basisOptions: Option[] = [];
     walkFontFamilies(basisTokens, (token) => {
       if (!isRef(token.$value)) {
