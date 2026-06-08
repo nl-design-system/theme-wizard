@@ -2,6 +2,7 @@ import { expect as baseExpect, test as baseTest, type Locator } from '@playwrigh
 import { BasisTokensPage } from '../pages/BasisTokensPage';
 import { ComponentPage } from '../pages/ComponentPage';
 import { HomePage } from '../pages/HomePage';
+import { ReuseTokensPage } from '../pages/ReuseTokensPage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
 import { ValidateTokensPage } from '../pages/ValidateTokensPage';
 
@@ -69,6 +70,7 @@ export const expect = baseExpect.extend({
 export const test = baseTest.extend<{
   basisTokensPage: BasisTokensPage;
   homePage: HomePage;
+  reuseTokensPage: ReuseTokensPage;
   stagingTokensPage: StagingTokensPage;
   componentPage: ComponentPage;
   validateTokensPage: ValidateTokensPage;
@@ -84,6 +86,10 @@ export const test = baseTest.extend<{
   homePage: async ({ page }, use) => {
     const homePage = new HomePage(page);
     await use(homePage);
+  },
+  reuseTokensPage: async ({ page }, use) => {
+    const reuseTokensPage = new ReuseTokensPage(page);
+    await use(reuseTokensPage);
   },
   stagingTokensPage: async ({ page }, use) => {
     const stagingTokensPage = new StagingTokensPage(page);

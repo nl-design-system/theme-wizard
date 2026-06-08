@@ -84,7 +84,7 @@ export class WizardTokensReuseForm extends LitElement {
     const checkedPaths = new Set(data.getAll('suggestion'));
     const stagedSuggestions = this.suggestedReusableTokens.filter((token) => checkedPaths.has(token.path.join('.')));
 
-    this.updatedTokens = applyReusableTokens(this.parsedTokens!.data as Record<string, unknown>, stagedSuggestions);
+    this.updatedTokens = applyReusableTokens(this.parsedTokens?.data as Record<string, unknown>, stagedSuggestions);
     this.requestUpdate();
   };
 
