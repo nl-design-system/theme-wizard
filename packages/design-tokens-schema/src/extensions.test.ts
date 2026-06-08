@@ -31,6 +31,26 @@ describe('single value', () => {
   });
 });
 
+describe('prototype pollution prevention', () => {
+  it('ignores __proto__ key', () => {
+    const token: BaseDesignToken = { $type: 'number', $value: 1 };
+    setExtension(token, '__proto__', { polluted: true });
+    expect(({} as Record<string, unknown>)['polluted']).toBeUndefined();
+  });
+
+  it('ignores constructor key', () => {
+    const token: BaseDesignToken = { $type: 'number', $value: 1 };
+    setExtension(token, 'constructor', { polluted: true });
+    expect(({} as Record<string, unknown>)['polluted']).toBeUndefined();
+  });
+
+  it('ignores prototype key', () => {
+    const token: BaseDesignToken = { $type: 'number', $value: 1 };
+    setExtension(token, 'prototype', { polluted: true });
+    expect(({} as Record<string, unknown>)['polluted']).toBeUndefined();
+  });
+});
+
 describe('extension arrays', () => {
   it('sets an extension when no extension is on the object yet', () => {
     const token: BaseDesignToken = {

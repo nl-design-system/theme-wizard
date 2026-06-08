@@ -17,6 +17,8 @@
 
 import { dequal } from 'dequal';
 import { dset } from 'dset';
+
+const PROTO_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 import { BaseDesignToken, TokenPath } from './tokens/base-token';
 import { isRef, createReference } from './tokens/token-reference';
 import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
@@ -99,6 +101,7 @@ export const applyReusableTokens = (
 ): Record<string, unknown> => {
   const result = structuredClone(tokens);
   for (const { path, suggestion } of candidates) {
+    if (path.some((segment) => PROTO_KEYS.has(segment))) continue;
     dset(result, [...path, '$value'], createReference(suggestion.path));
   }
   return result;

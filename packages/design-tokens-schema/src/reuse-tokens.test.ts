@@ -216,6 +216,32 @@ describe('applyReusableTokens', () => {
     const result = applyReusableTokens(theme, []);
     expect(result).toEqual(theme);
   });
+
+  it('skips candidates with __proto__ in path', () => {
+    const basis = basisToken(4, 'px', 'space-block');
+    const theme = { basis: { space: { xs: basis } } };
+    applyReusableTokens(theme, [
+      {
+        path: ['__proto__', 'polluted'] as string[],
+        suggestion: { path: ['basis', 'space', 'xs'], token: basis },
+        token: basisToken(4, 'px', 'space-block'),
+      },
+    ]);
+    expect(({} as Record<string, unknown>)['polluted']).toBeUndefined();
+  });
+
+  it('skips candidates with constructor in path', () => {
+    const basis = basisToken(4, 'px', 'space-block');
+    const theme = { basis: { space: { xs: basis } } };
+    applyReusableTokens(theme, [
+      {
+        path: ['constructor', 'polluted'] as string[],
+        suggestion: { path: ['basis', 'space', 'xs'], token: basis },
+        token: basisToken(4, 'px', 'space-block'),
+      },
+    ]);
+    expect(({} as Record<string, unknown>)['polluted']).toBeUndefined();
+  });
 });
 
 describe('reuseBasisTokens', () => {
