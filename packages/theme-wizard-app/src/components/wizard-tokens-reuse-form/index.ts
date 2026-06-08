@@ -89,7 +89,10 @@ export class WizardTokensReuseForm extends LitElement {
   };
 
   private readonly renderSuggestionsForm = (suggestions: TokenCandidate[]) => {
-    // TODO: handle 0-suggestions-found, show some sort of empty state
+    if (suggestions.length === 0) {
+      return html`<p>${t('tokenReuseForm.suggestions.notFound')}</p>`;
+    }
+
     return html`
       <form @submit=${this.handleApplySuggestions}>
         <wizard-stack size="3xl">
