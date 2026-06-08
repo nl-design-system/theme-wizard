@@ -55,7 +55,7 @@ describe(`<${tag}>`, () => {
     await component.updateComplete;
 
     const shadowRoot = component.shadowRoot!;
-    const input = shadowRoot.querySelector('clippy-font-combobox')!;
+    const input = shadowRoot.querySelector('clippy-token-combobox')!;
 
     expect(input.getAttribute('aria-invalid')).not.toBe(null);
   });
@@ -71,7 +71,7 @@ describe(`<${tag}>`, () => {
     await component.updateComplete;
 
     const shadowRoot = component.shadowRoot!;
-    const input = shadowRoot.querySelector('clippy-font-combobox')!;
+    const input = shadowRoot.querySelector('clippy-token-combobox')!;
 
     expect(input.getAttribute('aria-invalid')).toBe(null);
   });
