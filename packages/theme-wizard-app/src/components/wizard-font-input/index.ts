@@ -145,11 +145,11 @@ export class WizardFontInput extends WizardTokenInput {
   }
 
   override render() {
-    // Check if the value is a reference and resolve it
+    // By default put the value into token format
     const resolvedValueToken: ModernFontFamilyToken = { $type: 'fontFamily', $value: this.value };
-    const resolvedRef = this.value;
-    if (isRef(resolvedRef)) {
-      const resolvedToken = resolveRef(this.theme.tokens, resolvedRef) as ModernFontFamilyToken;
+    // Check if the value is a reference and resolve it
+    if (isRef(this.value)) {
+      const resolvedToken = resolveRef(this.theme.tokens, this.value);
 
       if (resolvedToken) {
         setExtension(resolvedValueToken, EXTENSION_RESOLVED_AS, resolvedToken.$value);
