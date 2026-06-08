@@ -22,8 +22,17 @@ export type ResolvedToken = BaseDesignToken & {
   };
 };
 
-export const resolveRef = (root: object, path: TokenReference): unknown => {
+export const resolveRef = (
+  root: object,
+  path: TokenReference,
+  visited = new Set<string>(),
+): BaseDesignToken | undefined => {
   const refPath = extractRef(path);
+
+  // Keep track of visited paths to prevent infinite loops on circular references
+  if (visited.has(refPath)) return undefined;
+  visited.add(refPath);
+
   // Look up path.to.ref in root or in `brand` because NL Design System tokens don't always include the `.brand` part
   const resolved = dlv(root, refPath) || dlv(root, `brand.${refPath}`);
 
@@ -31,11 +40,12 @@ export const resolveRef = (root: object, path: TokenReference): unknown => {
     const tokenValue = resolved.$value;
     // If the resolved value is a token object with a $value that is itself a reference, recursively resolve it
     if (typeof tokenValue === 'string' && isRef(tokenValue)) {
-      return resolveRef(root, tokenValue);
+      return resolveRef(root, tokenValue, visited);
     }
+    return resolved;
   }
 
-  return resolved;
+  return undefined;
 };
 
 /**

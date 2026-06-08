@@ -69,7 +69,7 @@ export const stringifyFontFamily = (value: FontFamilyValue): string => {
  * //=> `"Roboto Sans", sans-serif`
  * ```
  */
-export const legacyToModernFontFamily = z.codec(z.string(), ModernFontFamilyValueSchema, {
+export const legacyToModernFontFamily = z.codec(z.string().trim(), ModernFontFamilyValueSchema, {
   decode: (value) => {
     const array = splitFontFamily(value);
     return array.length === 1 ? array[0] : array;

@@ -73,7 +73,7 @@ const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
 
 export type TokenRefError = {
   code: 'ref_not_found' | 'ref_not_a_token' | 'ref_type_mismatch';
-  path: string[];
+  path: TokenPath;
   referencedPath: string;
   referencedToken: unknown;
   message: string;
@@ -90,7 +90,7 @@ export type TokenRefError = {
 export const isTokenWithRef = (
   token: unknown,
   root: Record<string, unknown>,
-  path: string[],
+  path: TokenPath,
   onError: (error: TokenRefError) => void,
 ): token is TokenWithRefLike => {
   // Check that we're dealing with a token-like object with a ref in the $value
