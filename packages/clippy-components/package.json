@@ -73,7 +73,7 @@
     "memoize": "11.0.0",
     "react": "19.2.6",
     "react-dom": "19.2.6",
-    "style-dictionary": "5.4.2"
+    "style-dictionary": "5.4.4"
   },
   "devDependencies": {
     "@nl-design-system-community/design-tokens-schema": "workspace:*",

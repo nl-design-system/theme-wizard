@@ -31,6 +31,7 @@ minimumReleaseAgeExclude:
   - '@utrecht/*'
   - '@projectwallace/*'
   - 'color-sorter'
+  - 'style-dictionary@5.4.4' # GHSA-vj5c-m527-mpff
 
 # Configure pnpm to save exact version numbers (not including ^ or ~) in package.json. Lock dependencies to specific
 # versions to ensure reproducible installs and prevent automatic upgrades to newer minor or patch releases.
