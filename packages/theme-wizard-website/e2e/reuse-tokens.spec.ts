@@ -72,6 +72,16 @@ test.describe('interactive', () => {
     });
   });
 
+  test('shows empty state when no suggestions found', async ({ reuseTokensPage }) => {
+    // maTokens.basis.text has no `basis` key after JSON.stringify, so
+    // collectBasisTokens returns [] and findReusableTokens returns no candidates.
+    await reuseTokensPage.selectFile(JSON.stringify(maTokens.basis.text));
+    await reuseTokensPage.findReusableTokens();
+
+    await expect(reuseTokensPage.applySuggestionsButton).not.toBeVisible();
+    await expect(reuseTokensPage.suggestionRows).not.toBeVisible();
+  });
+
   test.describe('invalid input', () => {
     test.beforeEach(async ({ reuseTokensPage }) => {
       const tokens = { basis: structuredClone(maTokens.basis) };

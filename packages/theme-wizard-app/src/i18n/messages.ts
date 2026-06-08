@@ -182,6 +182,7 @@ export const en = {
     submit: 'Find reusable tokens',
     suggestions: {
       label: 'Suggested token reuse',
+      notFound: 'No suggestions found',
       table: {
         header: {
           suggestedTokenPath: 'Suggested token',
@@ -586,6 +587,7 @@ export const nl = {
     submit: 'Herbruikbare tokens zoeken',
     suggestions: {
       label: 'Suggesties voor hergebruik',
+      notFound: 'Geen suggesties gevonden',
       table: {
         header: {
           suggestedTokenPath: 'Voorgestelde token',
