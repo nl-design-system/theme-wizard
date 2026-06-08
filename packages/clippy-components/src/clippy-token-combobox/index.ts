@@ -235,7 +235,9 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     return html`
       <span class="clippy-token-combobox__option">
         ${preview ? this.renderPreview(option) : nothing}
-        <span class=${classMap(labelClasses)}>${isRef(label) ? extractRef(label) : label}</span>
+        <span data-testid="option-label" class=${classMap(labelClasses)}
+          >${isRef(label) ? extractRef(label) : label}</span
+        >
       </span>
       ${description && index !== undefined ? html`<div>${description}</div>` : nothing}
     `;
