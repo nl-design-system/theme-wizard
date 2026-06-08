@@ -23,10 +23,10 @@ importers:
         version: 2.0.0
       '@nl-design-system/eslint-config':
         specifier: 2.2.0
-        version: 2.2.0(eslint@10.3.0)(typescript@6.0.3)
+        version: 2.2.0(eslint@10.4.1)(typescript@6.0.3)
       '@projectwallace/stylelint-plugin':
-        specifier: 0.5.0
-        version: 0.5.0(stylelint@17.6.0(typescript@6.0.3))
+        specifier: 0.6.2
+        version: 0.6.2(stylelint@17.12.0(typescript@6.0.3))
       '@stylistic/eslint-plugin':
         specifier: 5.10.0
         version: 5.10.0(eslint@10.4.1)
@@ -2991,6 +2991,10 @@ packages:
     resolution: {integrity: sha512-yBl4lhtCoRDxIxJq8SeTH1lfT8EP8W0D7SiXlLxoiBg40rVf8JjGLEZlrbVox5SZ5tPY070A1nyP61GApY83iQ==}
     engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
 
+  '@projectwallace/css-analyzer@9.9.0':
+    resolution: {integrity: sha512-Hsnf8AhnEGA0r1a410zKg/qF8KGT++ENdKNQYgnYCJP/BIbV2MbuZ3WVno+IzO2VSQOsJf9klROGiZhEcQRgNw==}
+    engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
+
   '@projectwallace/css-design-tokens@0.11.6':
     resolution: {integrity: sha512-SIDDkxGx43R22//XNqWsIHzN1U0r85U1L1t6v4DYk+TrZdHX+8ZzxvUJKFRTkYTUuGYZU/JCE0J83r4YTikiug==}
     engines: {node: '>=22', pnpm: '>=10.0.0'}
@@ -3003,13 +3007,9 @@ packages:
     resolution: {integrity: sha512-hG6zILMK9OJpsvkCkbF9GIW+bAHAxKGB0AsyR5N5T+n8bCKPgWhZGwPlDMP1FrLsBkuRq7U7+fqB19qzUJq5hQ==}
     engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
 
-  '@projectwallace/css-parser@0.16.0':
-    resolution: {integrity: sha512-4WJOIU/6Zbscp5snGGvqx2UobIgYOfBaZDGbx6Mj7b7PjcMz34fFufus7h3AbDFlS7nXEkHHlPDZJl/Qu5gumg==}
-    engines: {pnpm: '>=11.0.0'}
-
-  '@projectwallace/stylelint-plugin@0.5.0':
-    resolution: {integrity: sha512-ksH8PGE7eVJiTaigt6so0GptoWBM3cVyAl3gOPehxcbcOcg7XUE0YEzNYwrO30RlQA/J49hjOtc3l7Z89SyZvw==}
-    engines: {node: '>=22'}
+  '@projectwallace/stylelint-plugin@0.6.2':
+    resolution: {integrity: sha512-YsV2xP6ksmnU5QQfraa4MTAHeJCjCJxToYrBi2+4/lDP9qkcPrqgLOhlzFd/X9yLFuFf77SIDuYesx7o+8g48Q==}
+    engines: {node: '>=18'}
     peerDependencies:
       stylelint: ^16.0.0 || ^17.0.0
 
@@ -10777,6 +10777,10 @@ snapshots:
     dependencies:
       '@projectwallace/css-parser': 0.16.0
 
+  '@projectwallace/css-analyzer@9.9.0':
+    dependencies:
+      '@projectwallace/css-parser': 0.16.0
+
   '@projectwallace/css-design-tokens@0.11.6':
     dependencies:
       '@projectwallace/css-analyzer': 9.8.2
@@ -10789,13 +10793,11 @@ snapshots:
 
   '@projectwallace/css-time-sort@3.1.0': {}
 
-  '@projectwallace/css-parser@0.16.0': {}
-
-  '@projectwallace/stylelint-plugin@0.5.0(stylelint@17.6.0(typescript@6.0.3))':
+  '@projectwallace/stylelint-plugin@0.6.2(stylelint@17.12.0(typescript@6.0.3))':
     dependencies:
-      '@projectwallace/css-analyzer': 9.8.2
+      '@projectwallace/css-analyzer': 9.9.0
       '@projectwallace/css-parser': 0.16.0
-      stylelint: 17.6.0(typescript@6.0.3)
+      stylelint: 17.12.0(typescript@6.0.3)
 
   '@publint/pack@0.1.4': {}
 
@@ -11099,19 +11101,7 @@ snapshots:
       '@types/react': 19.2.15
       '@types/react-dom': 19.2.3(@types/react@19.2.15)
 
-<<<<<<< HEAD
   '@storybook/react-vite@10.4.1(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(esbuild@0.27.7)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(rollup@4.60.4)(storybook@10.4.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/react@19.2.15)(prettier@3.8.3)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(typescript@6.0.3)(vite@8.0.16(@types/node@24.12.4)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0))':
-||||||| parent of eba61210 (fix lockfile)
-  '@storybook/react-vite@10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.3.6(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))':
-=======
-  '@storybook/react-dom-shim@10.3.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(storybook@10.4.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
-    dependencies:
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
-      storybook: 10.4.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-
-  '@storybook/react-vite@10.3.6(esbuild@0.27.7)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rollup@4.60.2)(storybook@10.4.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/react@19.2.14)(prettier@3.8.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@6.0.3)(vite@8.0.10(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))':
->>>>>>> eba61210 (fix lockfile)
     dependencies:
       '@joshwooding/vite-plugin-react-docgen-typescript': 0.7.0(typescript@6.0.3)(vite@8.0.16(@types/node@24.12.4)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0))
       '@rollup/pluginutils': 5.4.0(rollup@4.60.4)

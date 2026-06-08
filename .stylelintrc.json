@@ -126,10 +126,14 @@
     "projectwallace/max-average-declarations-per-rule": 9,
     "projectwallace/no-unknown-custom-properties": null,
     "projectwallace/no-unused-custom-properties": null,
-    "projectwallace/no-property-shorthand": null,
-    "projectwallace/max-declarations-per-rule": 16,
+    "projectwallace/no-property-shorthand": [
+      true,
+      { "ignore": ["single-value", "grid-area", "outline", "border", "text-decoration"] }
+    ],
+    "projectwallace/max-declarations-per-rule": 20,
     "projectwallace/max-nesting-depth": 2,
     "projectwallace/no-prefixed-properties": null,
-    "projectwallace/no-prefixed-values": null
+    "projectwallace/no-prefixed-values": null,
+    "projectwallace/max-average-selector-complexity": 4
   }
 }

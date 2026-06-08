@@ -6,6 +6,7 @@ export default css`
   }
 
   /* stylelint-disable projectwallace/min-selector-uniqueness-ratio */
+
   /**
    * Scroll detection taken from
    * https://www.bram.us/2023/09/16/solved-by-css-scroll-driven-animations-detect-if-an-element-can-scroll-or-not/
