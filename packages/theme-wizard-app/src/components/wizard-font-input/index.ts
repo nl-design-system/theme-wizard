@@ -3,16 +3,15 @@ import '@nl-design-system-community/clippy-components/clippy-font-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import {
-  BaseDesignToken,
   EXTENSION_RESOLVED_AS,
   isRef,
   ModernFontFamilyToken,
   resolveRef,
   setExtension,
-  walkTokens,
+  walkFontFamilies,
 } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
@@ -121,8 +120,8 @@ export class WizardFontInput extends WizardTokenInput {
     // Collect basis tokens and convert them to options
     const basisTokens = this.theme.tokens['basis'];
     const basisOptions: Option[] = [];
-    walkTokens(basisTokens, (token) => {
-      if (token.$type === 'fontFamily' && !isRef(token.$value)) {
+    walkFontFamilies(basisTokens, (token) => {
+      if (!isRef(token.$value)) {
         basisOptions.push({
           label: token.$value[0],
           value: token,
