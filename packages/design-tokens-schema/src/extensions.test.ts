@@ -38,18 +38,21 @@ describe('prototype pollution prevention', () => {
     const token: BaseDesignToken = { $type: 'number', $value: 1 };
     setExtension(token, '__proto__', { polluted: true });
     expect(token.$extensions).toBeUndefined();
+    expect(({} as Record<PropertyKey, unknown>)['polluted']).toBeUndefined();
   });
 
   it('ignores constructor key', () => {
     const token: BaseDesignToken = { $type: 'number', $value: 1 };
     setExtension(token, 'constructor', { polluted: true });
     expect(token.$extensions).toBeUndefined();
+    expect(({} as Record<PropertyKey, unknown>)['polluted']).toBeUndefined();
   });
 
   it('ignores prototype key', () => {
     const token: BaseDesignToken = { $type: 'number', $value: 1 };
     setExtension(token, 'prototype', { polluted: true });
     expect(token.$extensions).toBeUndefined();
+    expect(({} as Record<PropertyKey, unknown>)['polluted']).toBeUndefined();
   });
 });
 

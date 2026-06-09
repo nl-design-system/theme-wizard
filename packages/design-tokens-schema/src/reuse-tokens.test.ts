@@ -224,7 +224,7 @@ describe('applyReusableTokens', () => {
     // our guard must prevent even that partial write.
     const result = applyReusableTokens(theme, [
       {
-        path: ['newKey', '__proto__'] as string[],
+        path: ['newKey', '__proto__'],
         suggestion: { path: ['basis', 'space', 'xs'], token: basis },
         token: basisToken(4, 'px', 'space-block'),
       },
@@ -237,7 +237,7 @@ describe('applyReusableTokens', () => {
     const theme = { basis: { space: { xs: basis } } };
     const result = applyReusableTokens(theme, [
       {
-        path: ['newKey', 'constructor'] as string[],
+        path: ['newKey', 'constructor'],
         suggestion: { path: ['basis', 'space', 'xs'], token: basis },
         token: basisToken(4, 'px', 'space-block'),
       },
