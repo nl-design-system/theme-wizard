@@ -101,7 +101,9 @@ export const applyReusableTokens = (
 ): Record<string, unknown> => {
   const result = structuredClone(tokens);
   for (const { path, suggestion } of candidates) {
-    if (path.some((segment) => PROTO_KEYS.has(segment))) continue;
+    if (path.some((segment) => PROTO_KEYS.has(segment))) {
+      continue;
+    }
     dset(result, [...path, '$value'], createReference(suggestion.path));
   }
   return result;
