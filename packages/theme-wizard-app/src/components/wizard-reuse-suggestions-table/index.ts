@@ -26,6 +26,15 @@ declare global {
   }
 }
 
+/**
+ * Renders a table of token reuse suggestions. Each row shows the component
+ * token path, the suggested basis token path, and the current value. The user
+ * selects suggestions via checkboxes and submits the form; the component calls
+ * `applyReusableTokens()` to produce the updated token file and shows the
+ * result inline via `wizard-token-output`.
+ *
+ * @element wizard-reuse-suggestions-table
+ */
 @customElement(tag)
 export class WizardReuseSuggestionsTable extends LitElement {
   static override readonly styles = [

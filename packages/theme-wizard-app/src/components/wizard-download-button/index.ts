@@ -13,6 +13,12 @@ declare global {
   }
 }
 
+/**
+ * Renders a styled anchor as a download button using a `data:` URL built from
+ * the `content` property. Renders nothing when `content` is empty.
+ *
+ * @element wizard-download-button
+ */
 @customElement(tag)
 export class WizardDownloadButton extends LitElement {
   static override readonly styles = [unsafeCSS(buttonCss), styles];

@@ -19,6 +19,13 @@ declare global {
 
 type Result = TokenFileResult | null;
 
+/**
+ * Top-level orchestrator for the token reuse suggestions flow.
+ * Accepts a token file upload, calls `findReusableTokens()` from the schema
+ * package, and passes the results to `wizard-reuse-suggestions-table`.
+ *
+ * @element wizard-tokens-reuse-form
+ */
 @customElement(tag)
 export class WizardTokensReuseForm extends LitElement {
   static override readonly styles = [styles];
