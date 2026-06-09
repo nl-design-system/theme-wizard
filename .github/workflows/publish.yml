@@ -29,13 +29,6 @@ jobs:
         uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
 
       - name: Check for known security issues with npm packages
-        if: vars.ENABLE_PNPM_AUDIT_V11 == '1'
-        run: |
-          echo "Auditing npm dependencies with pnpm v11 before installing them. For more information, see: https://nldesignsystem.nl/pnpm-audit"
-          pnpm dlx pnpm@11.0.0-rc.2 --config.manage-package-manager-versions=false audit --audit-level critical
-
-      - name: Check for known security issues with npm packages
-        if: vars.ENABLE_PNPM_AUDIT_V11 != '1'
         run: |
           echo "Auditing npm dependencies before installing them. For more information, see: https://nldesignsystem.nl/pnpm-audit"
           pnpm audit --audit-level critical
