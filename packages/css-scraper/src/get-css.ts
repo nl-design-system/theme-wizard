@@ -19,6 +19,7 @@ import {
 import { resolveUrl } from './resolve-url.js';
 import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback.js';
 
+// IMPORTANT: When updating this, we need to inform other parties involved about this change.
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
 const unquote = (input: string = ''): string => {
@@ -70,13 +71,23 @@ const handleFetchError = (error: unknown, url: UrlLike, timeout: number) => {
   }
 };
 
-export const getCssFile = async (url: string | URL, abortSignal: AbortSignal, userAgent: string = USER_AGENT) => {
+export const getCssFile = async (
+  url: string | URL,
+  abortSignal: AbortSignal,
+  userAgent: string = USER_AGENT,
+  extraHeaders: HeadersInit = {},
+) => {
   try {
+    const headers = new Headers({
+      Accept: 'text/css,*/*;q=0.1',
+      'User-Agent': userAgent,
+    });
+    // We allow User-Agent to be overridden here, because we want people to use extraHeaders instead of userAgent
+    for (const [key, value] of new Headers(extraHeaders)) {
+      headers.set(key, value);
+    }
     const response = await fetch(url, {
-      headers: {
-        Accept: 'text/css,*/*;q=0.1',
-        'User-Agent': userAgent,
-      },
+      headers,
       // If aborted early try to return an empty string so we can continue with just the content we have
       signal: abortSignal,
     });
@@ -176,14 +187,18 @@ export const getCssFromHtml = (
   return resources;
 };
 
-const fetchHtml = async (url: string | URL, signal: AbortSignal, userAgent: string = USER_AGENT) => {
-  const response = await fetch(url, {
-    headers: {
-      Accept: 'text/html,*/*;q=0.1',
-      'User-Agent': userAgent,
-    },
-    signal,
-  });
+const fetchHtml = async (
+  url: string | URL,
+  signal: AbortSignal,
+  /** @deprecated use extraHeaders to set the user agent */
+  userAgent: string = USER_AGENT,
+  extraHeaders: HeadersInit = {},
+) => {
+  const headers = new Headers({ Accept: 'text/html,*/*;q=0.1', 'User-Agent': userAgent });
+  for (const [key, value] of new Headers(extraHeaders)) {
+    headers.set(key, value);
+  }
+  const response = await fetch(url, { headers, signal });
 
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -199,19 +214,20 @@ const processResources = async (
   resources: (PartialCSSLinkResource | CSSLinkResource | CSSStyleTagResource | CSSInlineStyleResource)[],
   abortSignal: AbortSignal,
   userAgent: string = USER_AGENT,
+  extraHeaders: HeadersInit = {},
 ) => {
   const result: (CSSLinkResource | CSSImportResource | CSSStyleTagResource | CSSInlineStyleResource)[] = [];
 
   for (const resource of resources) {
     if (resource.type === 'link' && !resource.css) {
-      resource.css = await getCssFile(resource.url, abortSignal, userAgent);
+      resource.css = await getCssFile(resource.url, abortSignal, userAgent, extraHeaders);
       result.push(resource as CSSLinkResource);
     } else {
       result.push(resource);
     }
 
     for (const importUrl of getImportUrls(resource.css as string)) {
-      const css = await getCssFile(importUrl, abortSignal, userAgent);
+      const css = await getCssFile(importUrl, abortSignal, userAgent, extraHeaders);
       result.push({
         css,
         href: importUrl,
@@ -224,9 +240,16 @@ const processResources = async (
   return result;
 };
 
+export interface GetCssOptions {
+  extraHeaders?: HeadersInit;
+  timeout?: number;
+  /** @deprecated Use `extraHeaders` with the `User-Agent` key instead. */
+  userAgent?: string;
+}
+
 export const getCssResources = async (
   url: string,
-  { timeout = 10000, userAgent = USER_AGENT } = {},
+  { extraHeaders = {}, timeout = 10000, userAgent = USER_AGENT }: GetCssOptions = {},
 ): Promise<CSSResource[]> => {
   const resolvedUrl = resolveUrl(url);
 
@@ -237,7 +260,7 @@ export const getCssResources = async (
   const signal = AbortSignal.timeout(timeout);
 
   try {
-    const response = await fetchHtml(resolvedUrl, signal, userAgent);
+    const response = await fetchHtml(resolvedUrl, signal, userAgent, extraHeaders);
     let body = response.body;
 
     if (response.contentType?.includes('text/css')) {
@@ -255,22 +278,18 @@ export const getCssResources = async (
     }
 
     const resources = getCssFromHtml(body, resolvedUrl);
-    return processResources(resources, signal, userAgent);
+    return processResources(resources, signal, userAgent, extraHeaders);
   } catch (error: unknown) {
     handleFetchError(error, resolvedUrl, timeout);
     return [];
   }
 };
 
-export { ScrapingError } from './errors.js';
-
-export const getCss = async (
-  url: string,
-  { timeout, userAgent }: { timeout?: number; userAgent?: string } = {},
-): Promise<string> => {
-  const resources = await getCssResources(url, { timeout, userAgent });
+export const getCss = async (url: string, options: GetCssOptions = {}): Promise<string> => {
+  const resources = await getCssResources(url, options);
   return resources.map(({ css }) => css).join('');
 };
 
 export * from './design-tokens.js';
+export { ScrapingError } from './errors.js';
 export { resolveUrl } from './resolve-url.js';

@@ -1,5 +1,5 @@
 import * as cssScraper from '@nl-design-system-community/css-scraper';
-import { it, expect, describe, vi, beforeEach } from 'vitest';
+import { it, expect, describe, vi, beforeEach, afterEach } from 'vitest';
 
 vi.mock('@vercel/related-projects', () => ({
   withRelatedProject: vi.fn(),
@@ -122,6 +122,33 @@ describe('/api/v1', () => {
 
       const poweredBy = response.headers.get('X-Powered-By');
       expect.soft(poweredBy).toBeNull();
+    });
+  });
+
+  describe('OPEN_ONLINE_TOKEN', () => {
+    const endpoints = ['/api/v1/css', '/api/v1/css-design-tokens'];
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    afterEach(() => {
+      delete process.env['OPEN_ONLINE_TOKEN'];
+    });
+
+    it.each(endpoints)('sends X-Theme-Wizard-Token header when env var is set (%s)', async (endpoint) => {
+      process.env['OPEN_ONLINE_TOKEN'] = 'my-token';
+      const spy = vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
+      await app.request(`${endpoint}?url=example.com`);
+      const extraHeaders = spy.mock.calls[0][1]?.extraHeaders as Headers;
+      expect(extraHeaders.get('X-Theme-Wizard-Token')).toBe('my-token');
+    });
+
+    it.each(endpoints)('omits X-Theme-Wizard-Token header when env var is not set (%s)', async (endpoint) => {
+      const spy = vi.spyOn(cssScraper, 'getCss').mockResolvedValueOnce(mockedGetCssData);
+      await app.request(`${endpoint}?url=example.com`);
+      const extraHeaders = spy.mock.calls[0][1]?.extraHeaders as Headers;
+      expect(extraHeaders.get('X-Theme-Wizard-Token')).toBeNull();
     });
   });
 
