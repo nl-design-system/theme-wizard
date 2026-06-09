@@ -9,6 +9,13 @@ declare global {
   }
 }
 
+/**
+ * NL Design System styled checkbox form field. Uses no shadow root
+ * (`createRenderRoot` returns `this`) so the native `<input>` participates in
+ * ancestor form submission.
+ *
+ * @element wizard-form-field-checkbox
+ */
 @customElement(tag)
 export class WizardFormFieldCheckbox extends LitElement {
   @property({ type: Boolean })

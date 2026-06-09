@@ -16,6 +16,12 @@ declare global {
   }
 }
 
+/**
+ * Displays a readonly textarea containing token JSON and a download button.
+ * Hidden download button when `downloadJson` is empty.
+ *
+ * @element wizard-token-output
+ */
 @customElement(tag)
 export class WizardTokenOutput extends LitElement {
   static override readonly styles = [unsafeCSS(formFieldCss), unsafeCSS(formLabelCss), unsafeCSS(textareaCss), styles];

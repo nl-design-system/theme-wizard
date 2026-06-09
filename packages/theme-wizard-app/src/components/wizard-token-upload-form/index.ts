@@ -25,6 +25,14 @@ declare global {
   }
 }
 
+/**
+ * Reusable token file upload form. Emits a `wizard-upload` CustomEvent with
+ * the selected files and the "exclude parent keys" checkbox state, so multiple
+ * pages can share the same upload UX without duplication.
+ *
+ * @element wizard-token-upload-form
+ * @fires {CustomEvent<WizardUploadEventDetail>} wizard-upload - Fired on form submit with the selected files and options.
+ */
 @customElement(tag)
 export class WizardTokenUploadForm extends LitElement {
   static override readonly styles = [
