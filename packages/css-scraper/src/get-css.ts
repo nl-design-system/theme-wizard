@@ -19,6 +19,7 @@ import {
 import { resolveUrl } from './resolve-url.js';
 import { isWaybackUrl, removeWaybackToolbar } from './strip-wayback.js';
 
+// IMPORTANT: When updating this, we need to inform other parties involved about this change.
 export const USER_AGENT = 'NL Design System CSS Scraper/1.0';
 
 const unquote = (input: string = ''): string => {
