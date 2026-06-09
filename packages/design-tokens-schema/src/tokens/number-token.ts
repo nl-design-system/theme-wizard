@@ -13,3 +13,7 @@ export const NumberTokenSchema = z.looseObject({
   $value: z.union([z.number(), TokenReferenceSchema]),
 });
 export type NumberToken = z.infer<typeof NumberTokenSchema>;
+
+export const stringifyNumber = (value: number): string => {
+  return value.toString();
+};
