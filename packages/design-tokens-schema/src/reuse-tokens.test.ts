@@ -216,6 +216,34 @@ describe('applyReusableTokens', () => {
     const result = applyReusableTokens(theme, []);
     expect(result).toEqual(theme);
   });
+
+  it('skips candidates with __proto__ in path without partial mutation', () => {
+    const basis = basisToken(4, 'px', 'space-block');
+    const theme = { basis: { space: { xs: basis } } };
+    // dset breaks on __proto__ but still creates the ancestor key before breaking;
+    // our guard must prevent even that partial write.
+    const result = applyReusableTokens(theme, [
+      {
+        path: ['newKey', '__proto__'],
+        suggestion: { path: ['basis', 'space', 'xs'], token: basis },
+        token: basisToken(4, 'px', 'space-block'),
+      },
+    ]);
+    expect(result).toEqual(theme);
+  });
+
+  it('skips candidates with constructor in path without partial mutation', () => {
+    const basis = basisToken(4, 'px', 'space-block');
+    const theme = { basis: { space: { xs: basis } } };
+    const result = applyReusableTokens(theme, [
+      {
+        path: ['newKey', 'constructor'],
+        suggestion: { path: ['basis', 'space', 'xs'], token: basis },
+        token: basisToken(4, 'px', 'space-block'),
+      },
+    ]);
+    expect(result).toEqual(theme);
+  });
 });
 
 describe('reuseBasisTokens', () => {
