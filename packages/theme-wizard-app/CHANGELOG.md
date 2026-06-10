@@ -1,5 +1,25 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 2.1.0
+
+### Minor Changes
+
+- f38687e: Moved wizard-token-combobox to clippy-components
+- 94d37bc: Allow multiple JSON input files for validation
+
+### Patch Changes
+
+- Updated dependencies [f755621]
+- Updated dependencies [f38687e]
+- Updated dependencies [ac22f7c]
+- Updated dependencies [1f6a092]
+- Updated dependencies [6203f8b]
+- Updated dependencies [94d37bc]
+- Updated dependencies [99705bb]
+  - @nl-design-system-community/design-tokens-schema@2.2.0
+  - @nl-design-system-community/clippy-components@3.0.0
+  - @nl-design-system-community/css-scraper@1.2.1
+
 ## 2.0.0
 
 ### Major Changes

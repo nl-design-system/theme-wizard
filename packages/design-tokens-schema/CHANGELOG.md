@@ -1,5 +1,13 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.2.0
+
+### Minor Changes
+
+- f755621: Stel alle tokens die we weten verplicht ipv stilletjes missende tokens toe te laten
+- 6203f8b: zorg dat ook figma.tokens.json gevalideerd kunnen worden
+- 94d37bc: Allow multiple JSON input files for validation
+
 ## 2.1.1
 
 ### Patch Changes
