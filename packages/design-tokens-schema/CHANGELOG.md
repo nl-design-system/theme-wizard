@@ -1,5 +1,12 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.1.1
+
+### Patch Changes
+
+- 6978936: Major version bumps for TypeScript, EsLint, Stylelint, npm-check-updates, npm-package-json-lint
+- 329d763: Minor and patch updates except for vitest in design-tokens-schema
+
 ## 2.1.0
 
 ### Minor Changes
