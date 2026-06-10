@@ -76,6 +76,9 @@ export class WizardLayout extends LitElement {
             <a class="nl-link wizard-layout__footer-nav-link" href="/validate-tokens">
               ${t('footer.otherLinks.validateTokens')}
             </a>
+            <a class="nl-link wizard-layout__footer-nav-link" href="/reuse-tokens">
+              ${t('footer.otherLinks.reuseTokens')}
+            </a>
           </nav>
         </footer>
       </div>

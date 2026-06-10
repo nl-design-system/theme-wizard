@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Hergebruik tokens - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <main slot="main" class="wizard-main">
+        <wizard-container size="xl">
+          <clippy-story-preview size="lg">
+            <clippy-heading level="1">Hergebruik design tokens</clippy-heading>
+            <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard suggesties doen om je design tokens zo optimaal mogelijk te hergebruiken. Voorwaarde is wel dat je tokens bestand valide is. Gebruik eventueel de <a href="/validate-tokens" class="nl-link">validatie-tool</a> om dat te controleren.</p>
+            <wizard-tokens-reuse-form></wizard-tokens-reuse-form>
+          </clippy-story-preview>
+        </wizard-container>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-main {
+    padding-block: var(--basis-space-block-5xl);
+  }
+
+  wizard-container {
+    margin-inline: auto;
+  }
+</style>

@@ -1,5 +1,4 @@
 import { consume } from '@lit/context';
-import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
@@ -19,7 +18,6 @@ import selectedDocs from '@nl-design-system-unstable/documentation/handboek/huis
 import warningDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-warning-intro.md?raw';
 import ChevronLeft from '@tabler/icons/outline/chevron-left.svg?raw';
 import ChevronRight from '@tabler/icons/outline/chevron-right.svg?raw';
-import Download from '@tabler/icons/outline/download.svg?raw';
 import buttonLinkCss from '@utrecht/link-button-css/dist/index.css?inline';
 import '../wizard-layout';
 import '../wizard-preview';
@@ -72,7 +70,6 @@ export class WizardTokensForm extends LitElement {
     unsafeCSS(linkCss),
     unsafeCSS(paragraphCss),
     unsafeCSS(buttonLinkCss),
-    unsafeCSS(buttonCss),
     styles,
   ];
 
@@ -220,14 +217,9 @@ export class WizardTokensForm extends LitElement {
 
         <wizard-stack>
           <wizard-tokens-download></wizard-tokens-download>
-          <a
-            class="nl-button nl-button--secondary"
-            href=${`data:text/css;charset=utf-8,${encodeURIComponent(this.theme.css)}`}
-            download="theme-wizard-tokens.css"
-          >
-            <span class="nl-button__icon-start">${unsafeSVG(Download)}</span>
-            <span class="nl-button__label">${t('tokenDownloadCss.triggerText')}</span>
-          </a>
+          <wizard-download-button content=${this.theme.css} filename="theme-wizard-tokens.css" content-type="text/css">
+            ${t('tokenDownloadCss.triggerText')}
+          </wizard-download-button>
           <wizard-theme-reset-button></wizard-theme-reset-button>
         </wizard-stack>
       </wizard-stack>
