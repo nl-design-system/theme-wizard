@@ -129,6 +129,21 @@ describe('upgrades legacy colors', () => {
   });
 });
 
+describe('upgrades number tokens', () => {
+  it('converts string value to number for a number token', () => {
+    const config = {
+      basis: getBasis(),
+      brand: brandConfig,
+      org: { component: { 'column-count': { $type: 'number', $value: '3' } } },
+    };
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toEqual(true);
+    const token = dlv(result.data, 'org.component.column-count');
+    expect(token.$type).toEqual('number');
+    expect(token.$value).toEqual(3);
+  });
+});
+
 describe('adding contrast-with extensions', () => {
   it('adds contrast-with extensions for tokens that we know', () => {
     const config = { basis: getBasis(), brand: brandConfig };

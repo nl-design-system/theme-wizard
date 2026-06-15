@@ -154,6 +154,13 @@ const upgradeNumberToken = (token: BaseDesignToken, path: TokenPath): void => {
   } else if (path.includes('font-weight')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-weight');
   }
+
+  if (typeof token.$value === 'string' && !isRef(token.$value)) {
+    const parsedValue = Number(token.$value);
+    if (Number.isFinite(parsedValue)) {
+      token.$value = parsedValue;
+    }
+  }
 };
 
 /**
