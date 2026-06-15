@@ -39,7 +39,7 @@ test.describe('after scraping a website', () => {
   test.describe('Shows tables with tokens', () => {
     test('Shows the tables', async ({ page }) => {
       const tables = page.getByRole('table');
-      const tableNames = ['Lettertypes', 'Lettergroottes', 'Blauw'];
+      const tableNames = ['Lettertypes', 'Lettergroottes', 'Grijs'];
       expect.soft(await tables.count()).toBeGreaterThanOrEqual(tableNames.length);
 
       for (let i = 0; i < tableNames.length; i += 1) {
