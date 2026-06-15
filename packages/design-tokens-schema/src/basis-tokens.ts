@@ -64,7 +64,7 @@ export type ColorName = z.infer<typeof ColorNameSchema>;
 export type ContrastRequirement = Partial<
   Record<ForegroundColorKey | BorderColorKey, Partial<Record<BackgroundColorKey, number>>>
 >;
-/** @see https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#as-2-toepassing */
+/** @see https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#as-2-toepassing */
 export const CONTRAST: ContrastRequirement = {
   'border-active': {
     'bg-active': 3,

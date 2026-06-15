@@ -180,55 +180,55 @@ export const en = {
       basis: {
         color: {
           'accent-1': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#accent-1-accent-2-en-accent-3',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
             label: 'Accent 1',
           },
           'accent-2': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#accent-1-accent-2-en-accent-3',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
             label: 'Accent 2',
           },
           'accent-3': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#accent-1-accent-2-en-accent-3',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
             label: 'Accent 3',
           },
           'action-1': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#action-1-en-action-2',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#action-1-en-action-2',
             label: 'Action 1',
           },
           'action-2': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#action-1-en-action-2',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#action-1-en-action-2',
             label: 'Action 2',
           },
           default: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#default',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#default',
             label: 'Default',
           },
           disabled: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#disabled',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#disabled',
             label: 'Disabled',
           },
           highlight: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#highlight--selected',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#highlight--selected',
             label: 'Highlight',
           },
           info: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Info',
           },
           negative: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Negative',
           },
           positive: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Positive',
           },
           selected: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#highlight--selected',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#highlight--selected',
             label: 'Selected',
           },
           warning: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Warning',
           },
         },
@@ -567,55 +567,55 @@ export const nl = {
       basis: {
         color: {
           'accent-1': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#accent-1-accent-2-en-accent-3',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
             label: 'Accent 1',
           },
           'accent-2': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#accent-1-accent-2-en-accent-3',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
             label: 'Accent 2',
           },
           'accent-3': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#accent-1-accent-2-en-accent-3',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
             label: 'Accent 3',
           },
           'action-1': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#action-1-en-action-2',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#action-1-en-action-2',
             label: 'Actie 1',
           },
           'action-2': {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#action-1-en-action-2',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#action-1-en-action-2',
             label: 'Actie 2',
           },
           default: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#default',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#default',
             label: 'Standaard',
           },
           disabled: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#disabled',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#disabled',
             label: 'Uitgeschakeld',
           },
           highlight: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#highlight--selected',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#highlight--selected',
             label: 'Markering',
           },
           info: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Info',
           },
           negative: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Negatief',
           },
           positive: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Positief',
           },
           selected: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#highlight--selected',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#highlight--selected',
             label: 'Geselecteerd',
           },
           warning: {
-            docs: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#info-negative-warning-positive',
+            docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#info-negative-warning-positive',
             label: 'Waarschuwing',
           },
         },
