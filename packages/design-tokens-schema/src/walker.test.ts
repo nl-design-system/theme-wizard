@@ -74,6 +74,20 @@ describe('walkObject', () => {
     const isNumber = (v: unknown): v is number => typeof v === 'number';
     expect(() => walkObject({ a: 1 }, isNumber)).not.toThrow();
   });
+
+  it('does not traverse inherited prototype properties', () => {
+    const paths: string[][] = [];
+    const isString = (v: unknown): v is string => typeof v === 'string';
+    const proto = { inherited: 'should-not-visit' };
+    const obj = Object.create(proto) as Record<string, unknown>;
+    obj['own'] = 'visited';
+    walkObject(obj, isString, (_, path) => {
+      paths.push(path);
+    });
+    const visited = paths.map((p) => p[0]);
+    expect(visited).toContain('own');
+    expect(visited).not.toContain('inherited');
+  });
 });
 
 describe('walkColors', () => {
