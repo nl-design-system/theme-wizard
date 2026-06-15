@@ -1,0 +1,3182 @@
+[
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f5f6f7",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-100", "--docsearch-modal-background"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6663932a",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9607843137254902, 0.9647058823529412, 0.9686274509803922],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#dadde1",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-300"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-f66ab5b8",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8549019607843137, 0.8666666666666667, 0.8823529411764706],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ccd0d5",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-400"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-bc507db5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8, 0.8156862745098039, 0.8352941176470589],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#bec3c9",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-500", "--docsearch-hit-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-779ee749",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7450980392156863, 0.7647058823529411, 0.788235294117647],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#8d949e",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-600"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-a56707ff",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5529411764705883, 0.5803921568627451, 0.6196078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#606770",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-700"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-99e54f2b",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3764705882352941, 0.403921568627451, 0.4392156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#444950",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-800", "--docsearch-hit-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-86065ee4",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.26666666666666666, 0.28627450980392155, 0.3137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#1c1e21",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-gray-900"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-25d667cb",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.10980392156862745, 0.11764705882352941, 0.12941176470588237],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#525860",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-content-secondary"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-489886c9",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3215686274509804, 0.34509803921568627, 0.3764705882352941],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f6f7f8",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-code-background"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-27436bd1",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9647058823529412, 0.9686274509803922, 0.9725490196078431],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#829b9b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-code-block-comment-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ad8c7d9e",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5098039215686274, 0.6078431372549019, 0.6078431372549019],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#637777",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--nlds-code-block-prolog-color",
+        "--nlds-code-block-cdata-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-a987fa92",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.38823529411764707, 0.4666666666666667, 0.4666666666666667],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#b2ccd6",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-code-block-namespace-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-62e4ca49",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6980392156862745, 0.8, 0.8392156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#82aaff",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--nlds-code-block-constant-color",
+        "--nlds-code-block-function-color",
+        "--nlds-code-block-builtin-color",
+        "--nlds-code-block-char-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-234a9ceb",
+      "nl.nldesignsystem.theme-wizard.usage-count": 4,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5098039215686274, 0.6666666666666666, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#36395a",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--docsearch-text-color",
+        "--docsearch-background-color",
+        "--docsearch-key-background"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-177f16b8",
+      "nl.nldesignsystem.theme-wizard.usage-count": 3,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.21176470588235294, 0.2235294117647059, 0.35294117647058826],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#15172a",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-modal-background"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-9478f56d",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.08235294117647059, 0.09019607843137255, 0.16470588235294117],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#2c2e40",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-modal-shadow"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-e8d14792",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.17254901960784313, 0.1803921568627451, 0.25098039215686274],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#000309",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-modal-shadow"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-3c63d774",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.011764705882352941, 0.03529411764705882],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#090a11",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-hit-background"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-bf340d29",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.03529411764705882, 0.0392156862745098, 0.06666666666666667],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#7f8497",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-muted-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-54a28d02",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.4980392156862745, 0.5176470588235295, 0.592156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#00303d",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ifm-color-primary",
+        "--ifm-color-primary-dark",
+        "--ifm-color-primary-darker",
+        "--ifm-color-primary-darkest",
+        "--ifm-navbar-background-color",
+        "color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-304c89af",
+      "nl.nldesignsystem.theme-wizard.usage-count": 6,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.18823529411764706, 0.23921568627450981],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d1dfe3",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--utrecht-table-row-border-block-end-color",
+        "--utrecht-table-header-border-block-end-color",
+        "--utrecht-table-border-color",
+        "--utrecht-spotlight-section-background-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-e0a84c4e",
+      "nl.nldesignsystem.theme-wizard.usage-count": 4,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8196078431372549, 0.8745098039215686, 0.8901960784313725],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#0d1f2a",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--utrecht-page-footer-background-color",
+        "--utrecht-button-color",
+        "--utrecht-document-color",
+        "--nlds-menu-item-selected-background-color",
+        "--nlds-page-header-background-color",
+        "--nlds-document-inverse-background-color",
+        "--nlds-document-color",
+        "--nlds-focus-inverse-outline-color",
+        "--nlds-focus-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-5a85bdf5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 9,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.050980392156862744, 0.12156862745098039, 0.16470588235294117],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#006fa3",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--utrecht-breadcrumb-nav-link-focus-color",
+        "--utrecht-breadcrumb-nav-link-color",
+        "--utrecht-link-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-7f58d2e3",
+      "nl.nldesignsystem.theme-wizard.usage-count": 3,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.43529411764705883, 0.6392156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#52757e",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--utrecht-link-text-decoration-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-4893b6a6",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3215686274509804, 0.4588235294117647, 0.49411764705882355],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#004152",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--nlds-mobile-sidebar-background-color",
+        "--nlds-status-help-wanted-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-cfcf51d8",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.2549019607843137, 0.3215686274509804],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#0070a3",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-interaction-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6b43c9df",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.4392156862745098, 0.6392156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d0dee2",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-container-border-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-69d55b88",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8156862745098039, 0.8705882352941177, 0.8862745098039215],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#53767f",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-document-subtle-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-2b102d4c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3254901960784314, 0.4627450980392157, 0.4980392156862745],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#0076ad",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-status-community-background-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-b60c6bea",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.4627450980392157, 0.6784313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#c8d7da",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-status-help-wanted-background-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-58593056",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7843137254901961, 0.8431372549019608, 0.8549019607843137],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#285f8f",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-2c685da4",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.1568627450980392, 0.37254901960784315, 0.5607843137254902],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#001a29",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-950"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6311fa17",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.10196078431372549, 0.1607843137254902],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#002a44",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-900"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-e6a1eafa",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.16470588235294117, 0.26666666666666666],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#00436c",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-800"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-c71d0988",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.2627450980392157, 0.4235294117647059],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#00588f",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-700"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-7009b9",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.34509803921568627, 0.5607843137254902],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#0071b7",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-600"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-668de026",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.44313725490196076, 0.7176470588235294],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#008de4",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-500"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ae10a605",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.5529411764705883, 0.8941176470588236],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#3eacef",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-400"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-b0a9f511",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.24313725490196078, 0.6745098039215687, 0.9372549019607843],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#abdbf8",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-300"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-d58e2802",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6705882352941176, 0.8588235294117647, 0.9725490196078431],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d0ebfb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-200"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-f7acdfc2",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8156862745098039, 0.9215686274509803, 0.984313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#e9f5fd",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-100"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-abe9acc6",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9137254901960784, 0.9607843137254902, 0.9921568627450981],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f4fafe",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-blue-50"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-f3303546",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9568627450980393, 0.9803921568627451, 0.996078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#001737",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-950"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-87361e19",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.09019607843137255, 0.21568627450980393],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#0a2750",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-900"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6a60dee0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.0392156862745098, 0.15294117647058825, 0.3137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#274065",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-800"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-dea86d60",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.15294117647058825, 0.25098039215686274, 0.396078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#3f5676",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-700"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-975ebf9c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.24705882352941178, 0.33725490196078434, 0.4627450980392157],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#5b6e8a",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-600"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-e2782596",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3568627450980392, 0.43137254901960786, 0.5411764705882353],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#7a8aa0",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-500"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-8945746",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.47843137254901963, 0.5411764705882353, 0.6274509803921569],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#98a4b6",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-400"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-b9a51eb9",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.596078431372549, 0.6431372549019608, 0.7137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#cfd5dd",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["border-color", "--voorbeeld-color-gray-300"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-76cd5647",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8117647058823529, 0.8352941176470589, 0.8666666666666667],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#e4e7ec",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-200"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-a5bf65cf",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8941176470588236, 0.9058823529411765, 0.9254901960784314],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f2f4f6",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-100"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-cd6900ff",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9490196078431372, 0.9568627450980393, 0.9647058823529412],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f9f9fa",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-gray-50"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-97525277",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9764705882352941, 0.9764705882352941, 0.9803921568627451],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#588dbb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-earth-sky-7-colors-6"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ce746994",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.34509803921568627, 0.5529411764705883, 0.7333333333333333],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#bfdbef",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-earth-sky-7-colors-5"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-a2db03c4",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7490196078431373, 0.8588235294117647, 0.9372549019607843],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#4478a7",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-earth-sky-19-colors-18"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-e0800df0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.26666666666666666, 0.47058823529411764, 0.6549019607843137],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#5e92c1",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-earth-sky-19-colors-17"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-90000ab7",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3686274509803922, 0.5725490196078431, 0.7568627450980392],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#77abdb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-earth-sky-19-colors-16"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-b576b164",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.4666666666666667, 0.6705882352941176, 0.8588235294117647],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#aed5f5",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-earth-sky-19-colors-14"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-acabe893",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6823529411764706, 0.8352941176470589, 0.9607843137254902],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d3e4ea",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-earth-sky-19-colors-13"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-acbab1f7",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8274509803921568, 0.8941176470588236, 0.9176470588235294],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#bcbbea",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-divergent-sentiment-7-colors-3",
+        "--basis-dataset-divergent-sentiment-19-colors-7"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-2cb58499",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7372549019607844, 0.7333333333333333, 0.9176470588235294],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#737cdc",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-divergent-sentiment-7-colors-2",
+        "--basis-dataset-divergent-sentiment-19-colors-4"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-97d45058",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.45098039215686275, 0.48627450980392156, 0.8627450980392157],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#45439b",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-divergent-sentiment-7-colors-1",
+        "--basis-dataset-divergent-sentiment-19-colors-1",
+        "--ma-color-indigo-9"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-5a95d9f5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 3,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.27058823529411763, 0.2627450980392157, 0.6078431372549019],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d3d1e9",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-8"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-824e10c2",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8274509803921568, 0.8196078431372549, 0.9137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#a4a5e8",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-6"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-2d68ca3d",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6431372549019608, 0.6470588235294118, 0.9098039215686274],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#8b90e4",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-5"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ee2c9348",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5450980392156862, 0.5647058823529412, 0.8941176470588236],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#5c68cf",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-3"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6b20a0e0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3607843137254902, 0.40784313725490196, 0.8117647058823529],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#4a55bb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-2"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-a943493",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.2901960784313726, 0.3333333333333333, 0.7333333333333333],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#00429d",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-sequential-marine-7-colors-7",
+        "--basis-dataset-sequential-marine-19-colors-19"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-29b11a9d",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.25882352941176473, 0.615686274509804],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#3761ab",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-sequential-marine-7-colors-6",
+        "--basis-dataset-sequential-marine-19-colors-16"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-5f59fcb",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.21568627450980393, 0.3803921568627451, 0.6705882352941176],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#5681b9",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-sequential-marine-7-colors-5",
+        "--basis-dataset-sequential-marine-19-colors-13"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-24f451d5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.33725490196078434, 0.5058823529411764, 0.7254901960784313],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#73a2c6",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-sequential-marine-7-colors-4",
+        "--basis-dataset-sequential-marine-19-colors-10"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-878c156d",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.45098039215686275, 0.6352941176470588, 0.7764705882352941],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#93c4d2",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-sequential-marine-7-colors-3",
+        "--basis-dataset-sequential-marine-19-colors-7"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-933bfe77",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5764705882352941, 0.7686274509803922, 0.8235294117647058],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#6a9aaf",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-border-color-4"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-939583bf",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.41568627450980394, 0.6039215686274509, 0.6862745098039216],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#68979e",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-border-color-3"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ccc4d5ac",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.40784313725490196, 0.592156862745098, 0.6196078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#1c4ca2",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-18"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-4ac2a40c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.10980392156862745, 0.2980392156862745, 0.6352941176470588],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#2b57a7",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-17"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-cb9a4937",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.16862745098039217, 0.3411764705882353, 0.6549019607843137],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#426cb0",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-15"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-5fdcc9aa",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.25882352941176473, 0.4235294117647059, 0.6901960784313725],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#4c76b5",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-14"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-beac47b0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.2980392156862745, 0.4627450980392157, 0.7098039215686275],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#608cbe",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-12"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-49e9e633",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3764705882352941, 0.5490196078431373, 0.7450980392156863],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#6997c2",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-11"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ea617c54",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.4117647058823529, 0.592156862745098, 0.7607843137254902],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#7daeca",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-9"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-29aa2ab7",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.49019607843137253, 0.6823529411764706, 0.792156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#88b9cf",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-8"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-12611fee",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5333333333333333, 0.7254901960784313, 0.8117647058823529],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#9ecfd6",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-marine-19-colors-6"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-acf0848f",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6196078431372549, 0.8117647058823529, 0.8392156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#002a97",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-sequential-sunset-7-colors-7",
+        "--basis-dataset-sequential-sunset-19-colors-19"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6b05c685",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.16470588235294117, 0.592156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#2a309d",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-sequential-sunset-19-colors-18"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-693ae377",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.16470588235294117, 0.18823529411764706, 0.615686274509804],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#1d1f24",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-12"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6bb2d2fa",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.11372549019607843, 0.12156862745098039, 0.1411764705882353],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#303338",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-11"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ce15eb0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.18823529411764706, 0.2, 0.2196078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#45484d",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-10"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-2715a351",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.27058823529411763, 0.2823529411764706, 0.30196078431372547],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#b4b7bd",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-5"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ba2178ff",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7058823529411765, 0.7176470588235294, 0.7411764705882353],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#c9ccd2",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-4"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-c15367f3",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.788235294117647, 0.8, 0.8235294117647058],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d9dce2",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-3"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-4c0c1717",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8509803921568627, 0.8627450980392157, 0.8862745098039215],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#e6eaf0",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-2"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-88a791ee",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9019607843137255, 0.9176470588235294, 0.9411764705882353],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f3f7fe",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-neutral-1"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-318fd64",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9529411764705882, 0.9686274509803922, 0.996078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#99cfff",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ma-color-blauw-accent",
+        "--ma-card-illustration-background-color",
+        "--ma-card-illustration-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-5a24e0d8",
+      "nl.nldesignsystem.theme-wizard.usage-count": 3,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6, 0.8117647058823529, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#15314a",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-12"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-85788df4",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.08235294117647059, 0.19215686274509805, 0.2901960784313726],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#1f4769",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-11"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-91091928",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.12156862745098039, 0.2784313725490196, 0.4117647058823529],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#275d8b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-10"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-fd2b3803",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.15294117647058825, 0.36470588235294116, 0.5450980392156862],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#3273ab",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-9"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-c3b3ff4e",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.19607843137254902, 0.45098039215686275, 0.6705882352941176],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#3585ca",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-8"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-99ecc984",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.20784313725490197, 0.5215686274509804, 0.792156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#4598e0",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-7"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-620d3928",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.27058823529411763, 0.596078431372549, 0.8784313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#56a7f1",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-6"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ab68d0b2",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.33725490196078434, 0.6549019607843137, 0.9450980392156862],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#7bbcf9",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-5"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-15cc20b0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.4823529411764706, 0.7372549019607844, 0.9764705882352941],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#a0cefb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-4"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-aea339ad",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6274509803921569, 0.807843137254902, 0.984313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#c7e3ff",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-3"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6e998b55",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7803921568627451, 0.8901960784313725, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#edf6ff",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-2"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-ae528592",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9294117647058824, 0.9647058823529412, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f6faff",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-blauw-1"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-98f55e6b",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9647058823529412, 0.9803921568627451, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#523cd1",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-accent"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-50359ad0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3215686274509804, 0.23529411764705882, 0.8196078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#1f203e",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-12"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-699a01c2",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.12156862745098039, 0.12549019607843137, 0.24313725490196078],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#2a2b59",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-11"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-5b5076a3",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.16470588235294117, 0.16862745098039217, 0.34901960784313724],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#343476",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-10"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-45bafec9",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.20392156862745098, 0.20392156862745098, 0.4627450980392157],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#5854c8",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-8"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-2aad6ee",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.34509803921568627, 0.32941176470588235, 0.7843137254901961],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#6d69ee",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-7"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-97125e56",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.42745098039215684, 0.4117647058823529, 0.9333333333333333],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#8689f3",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-6"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-b56a4bba",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5254901960784314, 0.5372549019607843, 0.9529411764705882],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#a1a7f7",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-5"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-f5bdd31b",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6313725490196078, 0.6549019607843137, 0.9686274509803922],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#bcc2fb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-4"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-fe1d7146",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7372549019607844, 0.7607843137254902, 0.984313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d6dafb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-3"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-fd23e55a",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8392156862745098, 0.8549019607843137, 0.984313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#eaecfb",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-2"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-8cf15394",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9176470588235294, 0.9254901960784314, 0.984313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f6f6ff",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-indigo-1"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-99a824d4",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9647058823529412, 0.9647058823529412, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#003dff",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--docsearch-highlight-color",
+        "--docsearch-logo-color",
+        "--docsearch-primary-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-5b7cef2a",
+      "nl.nldesignsystem.theme-wizard.usage-count": 3,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.23921568627450981, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d6d6e7",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-subtle-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-73746144",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8392156862745098, 0.8392156862745098, 0.9058823529411765],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#5a5e9a",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--docsearch-secondary-text-color",
+        "--docsearch-icon-color",
+        "--docsearch-key-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-72bb4abc",
+      "nl.nldesignsystem.theme-wizard.usage-count": 3,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.35294117647058826, 0.3686274509803922, 0.6039215686274509],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f5f5fa",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-background-color", "--docsearch-key-background"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-1538160f",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9607843137254902, 0.9607843137254902, 0.9803921568627451],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#005fcc",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-focus-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-c158d56d",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0.37254901960784315, 0.8],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#9698c3",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-muted-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-6504fdeb",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5882352941176471, 0.596078431372549, 0.7647058823529411],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f0f0ff",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-cardgroup-card-background-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-1b9d43d8",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9411764705882353, 0.9411764705882353, 1],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#9ba0a7",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-cardgroup-card-border-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-4ce1b80b",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6078431372549019, 0.6274509803921569, 0.6549019607843137],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#011c33",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ma-card-illustration-background-color",
+        "--ma-card-illustration-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "blue-920d0e4e",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.00392156862745098, 0.10980392156862745, 0.2],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ef5350",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--docsearch-error-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-e75a74eb",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9372549019607843, 0.3254901960784314, 0.3137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fa383e",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-danger"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-eacb1dd",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9803921568627451, 0.2196078431372549, 0.24313725490196078],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#e13238",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-danger-dark"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-dcf43ca4",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8823529411764706, 0.19607843137254902, 0.2196078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d53035",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-danger-darker"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-eb079bb2",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8352941176470589, 0.18823529411764706, 0.20784313725490197],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#af272b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-danger-darkest"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-7a79548e",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6862745098039216, 0.15294117647058825, 0.16862745098039217],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fb565b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-danger-light"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-cd9a2022",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.984313725490196, 0.33725490196078434, 0.3568627450980392],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fb7478",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-danger-lighter"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-74bd7e87",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.984313725490196, 0.4549019607843137, 0.47058823529411764],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fd9c9f",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-danger-lightest"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-6e4a9db0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9921568627450981, 0.611764705882353, 0.6235294117647059],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffebec",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ifm-color-danger-contrast-background",
+        "--ifm-color-danger-contrast-foreground"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-a8680d75",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.9215686274509803, 0.9254901960784314],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#4b1113",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ifm-color-danger-contrast-background",
+        "--ifm-color-danger-contrast-foreground"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-ff563160",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.29411764705882354, 0.06666666666666667, 0.07450980392156863],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f78c6c",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-code-block-number-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-5533af5a",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9686274509803922, 0.5490196078431373, 0.4235294117647059],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#271208",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-orange-950"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-ed0de54c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.15294117647058825, 0.07058823529411765, 0.03137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#431d0d",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-orange-900"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-5f3cde66",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.2627450980392157, 0.11372549019607843, 0.050980392156862744],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#6a2e13",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-orange-800"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-dc61be98",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.41568627450980394, 0.1803921568627451, 0.07450980392156863],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#8b3e18",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-orange-700"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-55bf3298",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.5450980392156862, 0.24313725490196078, 0.09411764705882353],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#b2501f",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-orange-600"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-80c38d99",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6980392156862745, 0.3137254901960784, 0.12156862745098039],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#dd6525",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-orange-500"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-ea1caf0f",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8666666666666667, 0.396078431372549, 0.1450980392156863],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#31090b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-950"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-43971302",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.19215686274509805, 0.03529411764705882, 0.043137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#500f12",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-900"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-406c7a04",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3137254901960784, 0.058823529411764705, 0.07058823529411765],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#7e171c",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-800"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-f3d1ccbc",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.49411764705882355, 0.09019607843137255, 0.10980392156862745],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#a41e24",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-700"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-457941d",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6431372549019608, 0.11764705882352941, 0.1411764705882353],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d2262e",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-600"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-bc7e0faf",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8235294117647058, 0.14901960784313725, 0.1803921568627451],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f7464e",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-500"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-8d16d142",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9686274509803922, 0.27450980392156865, 0.3058823529411765],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f97d83",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-400"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-7c87bbf0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9764705882352941, 0.49019607843137253, 0.5137254901960784],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fdc7ca",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-300"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-dc4a509a",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9921568627450981, 0.7803921568627451, 0.792156862745098],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fee0e1",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-200"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-83ced946",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.996078431372549, 0.8784313725490196, 0.8823529411764706],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fef0f1",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-100"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-b9ab45d6",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.996078431372549, 0.9411764705882353, 0.9450980392156862],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fff8f8",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-red-50"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-57a74654",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.9725490196078431, 0.9725490196078431],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f89496",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-divergent-purple-berry-7-colors-3",
+        "--basis-dataset-divergent-purple-berry-19-colors-7"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-75c794bd",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9725490196078431, 0.5803921568627451, 0.5882352941176471],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#c44056",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-divergent-purple-berry-7-colors-2",
+        "--basis-dataset-divergent-purple-berry-19-colors-4"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-cf0a875",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7686274509803922, 0.25098039215686274, 0.33725490196078434],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffd3d3",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-purple-berry-19-colors-9"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-8e95b0f8",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.8274509803921568, 0.8274509803921568],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffb3b3",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-purple-berry-19-colors-8"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-ee92230",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.7019607843137254, 0.7019607843137254],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#eb777d",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-purple-berry-19-colors-6"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-87a52055",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9215686274509803, 0.4666666666666667, 0.49019607843137253],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#da5a68",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-purple-berry-19-colors-5"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-9571622b",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8549019607843137, 0.35294117647058826, 0.40784313725490196],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffa59e",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-divergent-sentiment-7-colors-5",
+        "--basis-dataset-divergent-sentiment-19-colors-13"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-a17c5878",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.6470588235294118, 0.6196078431372549],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#cb7f79",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--basis-dataset-divergent-sentiment-19-colors-border-color-13"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-4dec1a1c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.796078431372549, 0.4980392156862745, 0.4745098039215686],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ed6976",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-15"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-127f7650",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9294117647058824, 0.4117647058823529, 0.4627450980392157],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f98689",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-14"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-ed7a577c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9764705882352941, 0.5254901960784314, 0.5372549019607843],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffc4b4",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--basis-dataset-divergent-sentiment-19-colors-12"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-3ae33773",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.7686274509803922, 0.7058823529411765],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffb8ba",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ma-color-roze-accent",
+        "--ma-card-illustration-background-color",
+        "--ma-card-illustration-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-f3fb7ac8",
+      "nl.nldesignsystem.theme-wizard.usage-count": 3,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.7215686274509804, 0.7294117647058823],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#5e1d25",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-12"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-64b2b535",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.3686274509803922, 0.11372549019607843, 0.1450980392156863],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#70212c",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-11"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-c7a28a95",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.4392156862745098, 0.12941176470588237, 0.17254901960784313],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ac2f3b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-9"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-778113cb",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6745098039215687, 0.1843137254901961, 0.23137254901960785],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#c83d4a",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-8"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-96d61f3",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7843137254901961, 0.23921568627450981, 0.2901960784313726],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#df535a",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-7"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-96f0fdae",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8745098039215686, 0.3254901960784314, 0.35294117647058826],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f37579",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-6"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-f8a9505e",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9529411764705882, 0.4588235294117647, 0.4745098039215686],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f69a9a",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-5"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-e6a04944",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9647058823529412, 0.6039215686274509, 0.6039215686274509],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffbebc",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-4"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-b6ff4d98",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.7450980392156863, 0.7372549019607844],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffd8d8",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-3"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-ec1dfea0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.8470588235294118, 0.8470588235294118],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fff3f3",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-2"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-e1c0cf2a",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.9529411764705882, 0.9529411764705882],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fff9f9",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ma-color-roze-1"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-b129b2ae",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.9764705882352941, 0.9764705882352941],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#febdc5",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["border"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-2fd0739f",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.996078431372549, 0.7411764705882353, 0.7725490196078432],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#991b1b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-2a46fd13",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.6, 0.10588235294117647, 0.10588235294117647],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "red",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-edecb2da",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0, 0],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#35050d",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ma-card-illustration-background-color",
+        "--ma-card-illustration-color"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "red-e0828dd5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.20784313725490197, 0.0196078431372549, 0.050980392156862744],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffba00",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-warning"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-728598b4",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.7294117647058823, 0],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#e6a700",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-warning-dark"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-87713454",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9019607843137255, 0.6549019607843137, 0],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#d99e00",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-warning-darker"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-6fafa563",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.8509803921568627, 0.6196078431372549, 0],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#b38200",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-warning-darkest"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-a6ad5103",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.7019607843137254, 0.5098039215686274, 0],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffc426",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-warning-light"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-a20d6d12",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.7686274509803922, 0.14901960784313725],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffcf4d",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-warning-lighter"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-d6a19944",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.8117647058823529, 0.30196078431372547],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffdd80",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--ifm-color-warning-lightest"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-ad74d005",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.8666666666666667, 0.5019607843137255],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#fff8e6",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ifm-color-warning-contrast-background",
+        "--ifm-color-warning-contrast-foreground"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-c35a5823",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.9725490196078431, 0.9019607843137255],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#4d3800",
+      "nl.nldesignsystem.theme-wizard.css-properties": [
+        "--ifm-color-warning-contrast-background",
+        "--ifm-color-warning-contrast-foreground"
+      ],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-3266370c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.30196078431372547, 0.2196078431372549, 0],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ffcb8b",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-code-block-attr-value-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-466eb6b0",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.796078431372549, 0.5450980392156862],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#f2ebe4",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--nlds-blog-post-footer-background-color"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-19416e5c",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.9490196078431372, 0.9215686274509803, 0.8941176470588236],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "#ff7a2a",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["--voorbeeld-color-orange-400"],
+      "nl.nldesignsystem.theme-wizard.token-id": "orange-a907efb5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0.47843137254901963, 0.16470588235294117],
+      "alpha": 1
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "Fira Code VF,\n  monospace",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-family"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontFamily-ba839dd5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 2,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "fontFamily",
+    "$value": ["Fira Code VF", "monospace"]
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "Fira Sans",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-family"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontFamily-5c085dc1",
+      "nl.nldesignsystem.theme-wizard.usage-count": 112,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "fontFamily",
+    "$value": ["Fira Sans"]
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "Source Sans Pro",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-family"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontFamily-799b87e5",
+      "nl.nldesignsystem.theme-wizard.usage-count": 84,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "fontFamily",
+    "$value": ["Source Sans Pro"]
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "Fira Code",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-family"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontFamily-5c014b1b",
+      "nl.nldesignsystem.theme-wizard.usage-count": 5,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "fontFamily",
+    "$value": ["Fira Code"]
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "system-ui,\n  -apple-system,\n  sans-serif",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-family"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontFamily-434c62f2",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "fontFamily",
+    "$value": ["system-ui", "-apple-system", "sans-serif"]
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "ui-monospace,\n  SFMono-Regular,\n  SF Mono,\n  Menlo,\n  Consolas,\n  Liberation Mono,\n  monospace",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-family"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontFamily-318cd40a",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "fontFamily",
+    "$value": ["ui-monospace", "SFMono-Regular", "SF Mono", "Menlo", "Consolas", "Liberation Mono", "monospace"]
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "2.4rem",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-size"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontSize-57f3e422",
+      "nl.nldesignsystem.theme-wizard.token-subtype": "font-size",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "dimension",
+    "$value": {
+      "value": 2.4,
+      "unit": "rem"
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "1.4rem",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-size"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontSize-563f0b83",
+      "nl.nldesignsystem.theme-wizard.token-subtype": "font-size",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "dimension",
+    "$value": {
+      "value": 1.4,
+      "unit": "rem"
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "1.2rem",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-size"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontSize-563e22c5",
+      "nl.nldesignsystem.theme-wizard.token-subtype": "font-size",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "dimension",
+    "$value": {
+      "value": 1.2,
+      "unit": "rem"
+    }
+  },
+  {
+    "$extensions": {
+      "nl.nldesignsystem.theme-wizard.css-authored-as": "2rem",
+      "nl.nldesignsystem.theme-wizard.css-properties": ["font-size"],
+      "nl.nldesignsystem.theme-wizard.token-id": "fontSize-187328",
+      "nl.nldesignsystem.theme-wizard.token-subtype": "font-size",
+      "nl.nldesignsystem.theme-wizard.usage-count": 1,
+      "nl.nldesignsystem.theme-wizard.token-staged": true
+    },
+    "$type": "dimension",
+    "$value": {
+      "value": 2,
+      "unit": "rem"
+    }
+  }
+]
