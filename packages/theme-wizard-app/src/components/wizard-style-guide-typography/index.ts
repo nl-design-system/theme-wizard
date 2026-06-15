@@ -174,7 +174,7 @@ export class WizardStyleGuideTypography extends LitElement {
         <p class="nl-paragraph">
           <a
             class="nl-link"
-            href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype"
+            href="https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#lettertype"
             target="_blank"
           >
             docs
@@ -247,7 +247,7 @@ export class WizardStyleGuideTypography extends LitElement {
         <p class="nl-paragraph">
           <a
             class="nl-link"
-            href="https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettergrootte"
+            href="https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#lettergrootte"
             target="_blank"
           >
             docs
