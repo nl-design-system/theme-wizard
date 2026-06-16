@@ -1,16 +1,11 @@
-import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
-import { StrictThemeSchema, excludeParentKeys, mergeTokens } from '@nl-design-system-community/design-tokens-schema';
-import checkboxCss from '@utrecht/checkbox-css/dist/index.css?inline';
-import formFieldCss from '@utrecht/form-field-css/dist/index.css?inline';
-import formLabelCss from '@utrecht/form-label-css/dist/index.css?inline';
-import textareaCss from '@utrecht/textarea-css/dist/index.css?inline';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
-import '../wizard-stack';
-import { $ZodIssue } from 'zod/v4/core';
+import type { WizardUploadEventDetail } from '../wizard-token-upload-form';
 import { t } from '../../i18n';
-import fileInputStyles from '../wizard-file-input/styles';
+import { type TokenFileResult, parseTokenFiles } from '../../lib/TokenFiles';
+import '../wizard-stack';
+import '../wizard-token-output';
+import '../wizard-token-upload-form';
 import styles from './styles';
 
 const tag = 'wizard-token-validation-form';
@@ -21,125 +16,42 @@ declare global {
   }
 }
 
-type Result = { success: true; data: unknown } | { success: false; error: $ZodIssue[] } | null;
+type Result = TokenFileResult | null;
 
 @customElement(tag)
 export class WizardTokenValidationForm extends LitElement {
-  static override readonly styles = [
-    unsafeCSS(buttonCss),
-    unsafeCSS(checkboxCss),
-    unsafeCSS(formFieldCss),
-    unsafeCSS(formLabelCss),
-    unsafeCSS(textareaCss),
-    styles,
-    fileInputStyles,
-  ];
+  static override readonly styles = [styles];
 
   @state()
   private result: Result = null;
 
-  private readonly handleSubmit = async (event: SubmitEvent) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget as HTMLFormElement);
-    const files = data.getAll('input-file') as File[];
-    if (files.length === 0) {
-      return;
-    }
-
-    const fileTexts = await Promise.all(files.map((file) => file.text()));
-    const tokenGroups = fileTexts.map((text) => JSON.parse(text));
-    let tokens = mergeTokens(tokenGroups);
-    if (data.get('exclude-parent-keys')) {
-      tokens = excludeParentKeys(tokens);
-    }
-
-    const parsed = StrictThemeSchema.safeParse(tokens);
-    this.result = parsed.success
-      ? { data: parsed.data, success: true }
-      : { error: parsed.error.issues, success: false };
+  private readonly handleUpload = async (event: CustomEvent<WizardUploadEventDetail>) => {
+    const { excludeParentKeys, files } = event.detail;
+    this.result = await parseTokenFiles(files, excludeParentKeys);
   };
 
-  private renderResult(result: Exclude<Result, null>) {
+  private renderResult(result: NonNullable<Result>) {
     const json = JSON.stringify(result.success ? result.data : result.error, null, 2);
+    const description = result.success
+      ? t('tokenValidationForm.result.noErrors')
+      : t('tokenValidationForm.result.errors', { count: result.error.length });
     return html`
-      <output>
-        <div
-          class="utrecht-form-field utrecht-form-field--text ${classMap({
-            'utrecht-form-field--invalid': result.success === false,
-          })}"
-        >
-          <div class="utrecht-form-field__label">
-            <label for="validation-result" class="utrecht-form-label">${t('tokenValidationForm.result.label')}</label>
-          </div>
-          <div id="validation-error-msg" class="utrecht-form-field-description utrecht-form-field__description">
-            ${result.success
-              ? t('tokenValidationForm.result.noErrors')
-              : t('tokenValidationForm.result.errors', { count: result.error.length })}
-          </div>
-          <div class="utrecht-form-field__input">
-            <textarea
-              dir="auto"
-              readonly
-              class="wizard-validation-output utrecht-textarea utrecht-textarea--html-textarea utrecht-textarea--invalid"
-              id="validation-result"
-              aria-describedby="validation-error-msg"
-              aria-invalid=${result.success ? nothing : true}
-              .value=${json}
-            ></textarea>
-          </div>
-        </div>
-      </output>
-      ${result.success
-        ? html`
-            <a
-              href=${`data:application/json;charset=utf-8,${encodeURIComponent(json)}`}
-              download="tokens.json"
-              class="nl-button nl-button--secondary"
-            >
-              ${t('tokenValidationForm.downloadTokens')}
-            </a>
-          `
-        : nothing}
+      <wizard-token-output
+        .json=${json}
+        .downloadJson=${result.success ? json : ''}
+        ?invalid=${!result.success}
+        description=${description}
+      ></wizard-token-output>
     `;
   }
 
   override render() {
     return html`
       <wizard-stack size="3xl">
-        <form @submit=${this.handleSubmit}>
-          <wizard-stack size="3xl">
-            <div class="utrecht-form-field utrecht-form-field--text">
-              <div class="utrecht-form-field__label">
-                <label for="input-file" class="utrecht-form-label">${t('tokenValidationForm.fileInput.label')}</label>
-              </div>
-              <input
-                type="file"
-                class="wizard-file-input"
-                required
-                multiple
-                accept=".json"
-                id="input-file"
-                name="input-file"
-              />
-            </div>
-
-            <div class="utrecht-form-field utrecht-form-field--checkbox">
-              <div class="utrecht-form-field__label utrecht-form-field__label--checkbox">
-                <label for="exclude-parent-keys" class="utrecht-form-label utrecht-form-label--checkbox">
-                  <input
-                    type="checkbox"
-                    name="exclude-parent-keys"
-                    id="exclude-parent-keys"
-                    class="utrecht-checkbox utrecht-checkbox--html-input utrecht-checkbox--custom utrecht-form-field__input"
-                  />
-                  ${t('tokenValidationForm.excludeParentKeys.label')}
-                </label>
-              </div>
-            </div>
-
-            <button class="nl-button nl-button--primary" type="submit">${t('tokenValidationForm.submit')}</button>
-          </wizard-stack>
-        </form>
+        <wizard-token-upload-form
+          @wizard-upload=${this.handleUpload}
+          submit-label=${t('tokenValidationForm.submit')}
+        ></wizard-token-upload-form>
 
         ${this.result === null ? nothing : this.renderResult(this.result)}
       </wizard-stack>

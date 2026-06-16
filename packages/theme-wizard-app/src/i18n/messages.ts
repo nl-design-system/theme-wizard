@@ -43,6 +43,7 @@ export const en = {
       privacyStatement: 'Privacy statement',
     },
     otherLinks: {
+      reuseTokens: 'Reuse tokens',
       validateTokens: 'Validate tokens',
     },
   },
@@ -173,6 +174,23 @@ export const en = {
     downloadAnyway: 'Download anyway',
     title: 'Theme contains errors',
     triggerText: 'Download tokens as JSON',
+  },
+  tokenReuseForm: {
+    applySuggestions: {
+      submit: 'Apply suggestions',
+    },
+    submit: 'Find reusable tokens',
+    suggestions: {
+      label: 'Suggested token reuse',
+      notFound: 'No suggestions found',
+      table: {
+        header: {
+          suggestedTokenPath: 'Suggested token',
+          tokenPath: 'Token',
+          tokenValue: 'Value',
+        },
+      },
+    },
   },
   tokens: {
     backToOverview: 'Back to overview',
@@ -430,6 +448,7 @@ export const nl = {
       privacyStatement: 'Privacyverklaring',
     },
     otherLinks: {
+      reuseTokens: 'Hergebruik tokens',
       validateTokens: 'Valideer tokens',
     },
   },
@@ -560,6 +579,23 @@ export const nl = {
     downloadAnyway: 'Toch downloaden',
     title: 'Thema bevat nog fouten',
     triggerText: 'Thema downloaden (JSON)',
+  },
+  tokenReuseForm: {
+    applySuggestions: {
+      submit: 'Suggesties toepassen',
+    },
+    submit: 'Herbruikbare tokens zoeken',
+    suggestions: {
+      label: 'Suggesties voor hergebruik',
+      notFound: 'Geen suggesties gevonden',
+      table: {
+        header: {
+          suggestedTokenPath: 'Voorgestelde token',
+          tokenPath: 'Token',
+          tokenValue: 'Waarde',
+        },
+      },
+    },
   },
   tokens: {
     backToOverview: 'Terug naar overzicht',
