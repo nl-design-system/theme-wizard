@@ -1,4 +1,7 @@
-import { LitElement, html } from 'lit';
+import checkboxCss from '@utrecht/checkbox-css/dist/index.css?inline';
+import formFieldCss from '@utrecht/form-field-css/dist/index.css?inline';
+import formLabelCss from '@utrecht/form-label-css/dist/index.css?inline';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 const tag = 'wizard-form-field-checkbox';
@@ -18,6 +21,17 @@ declare global {
  */
 @customElement(tag)
 export class WizardFormFieldCheckbox extends LitElement {
+  static override readonly styles = [unsafeCSS(checkboxCss), unsafeCSS(formFieldCss), unsafeCSS(formLabelCss)];
+
+  static readonly formAssociated = true;
+
+  private readonly internals_: ElementInternals;
+
+  constructor() {
+    super();
+    this.internals_ = this.attachInternals();
+  }
+
   @property({ type: Boolean })
   checked = false;
 
@@ -27,9 +41,17 @@ export class WizardFormFieldCheckbox extends LitElement {
   @property({ type: String })
   name = '';
 
-  // No shadow root: native input must be in the same shadow root as its ancestor form to participate in form submission.
-  override createRenderRoot() {
-    return this;
+  @property({ type: String })
+  value = 'on';
+
+  override firstUpdated() {
+    this.internals_.setFormValue(this.checked ? this.value : null);
+  }
+
+  private handleChange(e: Event) {
+    const input = e.target as HTMLInputElement;
+    this.checked = input.checked;
+    this.internals_.setFormValue(this.checked ? this.value : null);
   }
 
   override render() {
@@ -43,6 +65,7 @@ export class WizardFormFieldCheckbox extends LitElement {
               id=${this.name}
               class="utrecht-checkbox utrecht-checkbox--html-input utrecht-checkbox--custom utrecht-form-field__input"
               ?checked=${this.checked}
+              @change=${this.handleChange}
             />
             ${this.label}
           </label>
