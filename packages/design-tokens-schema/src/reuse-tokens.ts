@@ -26,7 +26,7 @@ import { walkTokens } from './walker';
  * A component token paired with the basis token it could reference instead.
  * `path` / `suggestion.path` are absolute paths in the tree.
  */
-type TokenCandidate = {
+export type TokenCandidate = {
   path: TokenPath;
   token: BaseDesignToken;
   suggestion: {
