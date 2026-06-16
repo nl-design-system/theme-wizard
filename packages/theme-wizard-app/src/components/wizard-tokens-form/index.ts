@@ -217,9 +217,9 @@ export class WizardTokensForm extends LitElement {
 
         <wizard-stack>
           <wizard-tokens-download></wizard-tokens-download>
-          <wizard-download-button content=${this.theme.css} filename="theme-wizard-tokens.css" content-type="text/css">
+          <wizard-download-link content=${this.theme.css} filename="theme-wizard-tokens.css" content-type="text/css">
             ${t('tokenDownloadCss.triggerText')}
-          </wizard-download-button>
+          </wizard-download-link>
           <wizard-theme-reset-button></wizard-theme-reset-button>
         </wizard-stack>
       </wizard-stack>

@@ -5,7 +5,7 @@ import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { t } from '../../i18n';
-import '../wizard-download-button';
+import '../wizard-download-link';
 import styles from './styles';
 
 const tag = 'wizard-token-output';
@@ -71,9 +71,9 @@ export class WizardTokenOutput extends LitElement {
           </div>
         </div>
       </output>
-      <wizard-download-button .content=${this.downloadJson}>
+      <wizard-download-link .content=${this.downloadJson}>
         ${t('tokenValidationForm.downloadTokens')}
-      </wizard-download-button>
+      </wizard-download-link>
     `;
   }
 }

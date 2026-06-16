@@ -5,11 +5,11 @@ import { customElement, property } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import styles from './styles';
 
-const tag = 'wizard-download-button';
+const tag = 'wizard-download-link';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: WizardDownloadButton;
+    [tag]: WizardDownloadLink;
   }
 }
 
@@ -17,10 +17,10 @@ declare global {
  * Renders a styled anchor as a download button using a `data:` URL built from
  * the `content` property. Renders nothing when `content` is empty.
  *
- * @element wizard-download-button
+ * @element wizard-download-link
  */
 @customElement(tag)
-export class WizardDownloadButton extends LitElement {
+export class WizardDownloadLink extends LitElement {
   static override readonly styles = [unsafeCSS(buttonCss), styles];
 
   @property({ type: String })
