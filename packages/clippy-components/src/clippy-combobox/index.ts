@@ -319,7 +319,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   override connectedCallback() {
     super.connectedCallback();
     document.addEventListener('click', this.#handleDocumentClick);
-    this.query = this.valueToQuery(this.value) ?? '';
   }
 
   override disconnectedCallback() {
@@ -352,8 +351,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     );
 
     const iconStartSlotRendered = this.renderIconStartSlot();
-
-    console.log('this.query', this.query);
 
     return html`
       <div class="clippy-combobox">
