@@ -1,6 +1,5 @@
 import type { $ZodIssue } from 'zod/v4/core';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
-import checkboxCss from '@utrecht/checkbox-css/dist/index.css?inline';
 import formFieldCss from '@utrecht/form-field-css/dist/index.css?inline';
 import formLabelCss from '@utrecht/form-label-css/dist/index.css?inline';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
@@ -37,7 +36,6 @@ declare global {
 export class WizardTokenUploadForm extends LitElement {
   static override readonly styles = [
     unsafeCSS(buttonCss),
-    unsafeCSS(checkboxCss),
     unsafeCSS(formFieldCss),
     unsafeCSS(formLabelCss),
     fileInputStyles,

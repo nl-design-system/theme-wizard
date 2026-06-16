@@ -13,9 +13,7 @@ declare global {
 }
 
 /**
- * NL Design System styled checkbox form field. Uses no shadow root
- * (`createRenderRoot` returns `this`) so the native `<input>` participates in
- * ancestor form submission.
+ * NL Design System styled checkbox form field.
  *
  * @element wizard-form-field-checkbox
  */
