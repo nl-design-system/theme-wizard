@@ -229,6 +229,9 @@ export class WizardColorscaleInput extends WizardTokenInput {
   override render() {
     const resolvedValueToken: ColorTokenType = { $type: 'color', $value: parseColor(this.currentColorValue) };
 
+    console.log('this.currentColorValue', this.currentColorValue);
+    console.log('resolvedValueToken', resolvedValueToken);
+
     return html`
       <div class="wizard-colorscale-input">
         <clippy-token-combobox
