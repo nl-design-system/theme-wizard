@@ -240,10 +240,10 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
   }
 
   #renderOptionTemplate({ index, option, preview }: { option: Option; index?: number; preview?: boolean }) {
-    const { description, label } = option;
+    const { description, label, value } = option;
 
     const labelClasses = {
-      'nl-data-badge': isRef(label),
+      'nl-data-badge': isRef(label) || isRef(value?.$value),
     };
     return html`
       <span class="clippy-token-combobox__option">
