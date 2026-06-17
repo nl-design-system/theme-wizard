@@ -28,6 +28,8 @@ test.describe('change fonts', () => {
 
     await basisTokensPage.goto();
     await page.getByRole('button', { name: 'Typografie' }).click();
+    const input = page.getByLabel('Koppen');
+    await input.fill('');
     const options = await basisTokensPage.getInputOptions('Koppen');
     const optionFamilies = await Promise.all(
       (await options.all()).map(async (s) => {
