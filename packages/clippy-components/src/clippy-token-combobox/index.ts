@@ -168,11 +168,15 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
    * @description customize how the user input is resolved to a value
    */
   override queryToValue(query: string): Option['value'] | null {
+    this.invalid = false;
+    if (!query) {
+      this.invalid = true;
+      return this.value;
+    }
     if (this.allow === 'other') {
       const existingOption = this.options.find((o) => o.label === query);
       if (existingOption) return existingOption.value;
       try {
-        this.invalid = false;
         const value = ((query: string) => {
           switch (this.type) {
             case 'color':
