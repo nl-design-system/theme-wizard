@@ -156,6 +156,14 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     }
   }
 
+  // If there is a value, set the query to the value's label so it appears in the input field.
+  override connectedCallback() {
+    super.connectedCallback();
+    if (this.value) {
+      this.query = this.valueToQuery(this.value) ?? '';
+    }
+  }
+
   /**
    * @description customize how the user input is resolved to a value
    */
