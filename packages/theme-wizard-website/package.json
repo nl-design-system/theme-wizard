@@ -29,6 +29,7 @@
     "@astrojs/vercel": "10.0.8",
     "@fontsource/fira-sans": "5.2.7",
     "@fontsource/source-sans-pro": "5.2.5",
+    "@gemeente-denhaag/design-tokens": "1.2.1",
     "@nl-design-system-candidate/button-css": "1.1.0",
     "@nl-design-system-candidate/button-react": "1.1.0",
     "@nl-design-system-candidate/button-tokens": "1.0.0",
