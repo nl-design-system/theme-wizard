@@ -156,6 +156,14 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
     }
   }
 
+  // If there is a value, set the query to the value's label so it appears in the input field.
+  override connectedCallback() {
+    super.connectedCallback();
+    if (this.value) {
+      this.query = this.valueToQuery(this.value) ?? '';
+    }
+  }
+
   /**
    * @description customize how the user input is resolved to a value
    */
@@ -164,7 +172,8 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
       const existingOption = this.options.find((o) => o.label === query);
       if (existingOption) return existingOption.value;
       try {
-        this.invalid = false;
+        if (!query) throw new Error('Query is empty');
+
         const value = ((query: string) => {
           switch (this.type) {
             case 'color':
@@ -183,7 +192,6 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
         return option?.value ?? value;
       } catch (error) {
         console.warn(error);
-        this.invalid = true;
         return this.value; // Return the current value to avoid losing it on invalid input, allowing the user to correct it.
       }
     }
@@ -229,8 +237,9 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
 
   #renderOptionTemplate({ index, option, preview }: { option: Option; index?: number; preview?: boolean }) {
     const { description, label, value } = option;
+
     const labelClasses = {
-      'nl-data-badge': isRef(value?.$value),
+      'nl-data-badge': isRef(label) || isRef(value?.$value),
     };
     return html`
       <span class="clippy-token-combobox__option">

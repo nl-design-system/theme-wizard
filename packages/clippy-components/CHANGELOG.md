@@ -1,5 +1,11 @@
 # @nl-design-system-community/clippy-components
 
+## 3.1.0
+
+### Minor Changes
+
+- 7ea0e0b: Export @safeCustomElement decorator from clippy-components package
+
 ## 3.0.0
 
 ### Major Changes

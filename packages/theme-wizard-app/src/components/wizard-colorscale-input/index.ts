@@ -1,6 +1,7 @@
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-color-combobox';
-import { ClippyColorCombobox } from '@nl-design-system-community/clippy-components/clippy-color-combobox';
+import '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import {
   COLOR_KEYS,
@@ -81,6 +82,8 @@ declare global {
 export class WizardColorscaleInput extends WizardTokenInput {
   readonly #scale = new ColorScale(DEFAULT_FROM);
   #value = this.#scale.toObject();
+
+  #options: Option[] = [];
 
   readonly supportsCSSColorValues = getSupportsCSSColorValues();
 
@@ -185,11 +188,21 @@ export class WizardColorscaleInput extends WizardTokenInput {
     super.connectedCallback();
     this.value = this.#scale.toObject();
     this.currentColorValue = stringifyColor(this.#scale.from.$value);
+
+    this.#options = this.scrapedTokens.reduce((acc, token) => {
+      if (token.$type === 'color' && token.$extensions[EXTENSION_TOKEN_STAGED] !== false) {
+        acc.push({
+          label: token.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(token.$value),
+          value: token,
+        });
+      }
+      return acc;
+    }, [] as Option[]);
   }
 
   readonly handleColorChange = (event: Event) => {
     const target = event.target;
-    if (target instanceof ClippyColorCombobox && target.value) {
+    if (target instanceof ClippyTokenCombobox && target.value) {
       const rawValue = target.value;
       let color: Color;
       let value: ColorValue;
@@ -197,8 +210,8 @@ export class WizardColorscaleInput extends WizardTokenInput {
         color = new Color(rawValue);
         value = colorJSToColorValue(color);
       } else {
-        color = colorTokenValueToColorJS(rawValue);
-        value = rawValue;
+        color = colorTokenValueToColorJS(rawValue.$value);
+        value = rawValue.$value;
       }
       const newColorValue: string = colorJSToHex(color);
       // Skip initialization-triggered events where the value hasn't actually changed
@@ -215,23 +228,19 @@ export class WizardColorscaleInput extends WizardTokenInput {
   };
 
   override render() {
+    const resolvedValueToken: ColorTokenType = { $type: 'color', $value: parseColor(this.currentColorValue) };
+
     return html`
       <div class="wizard-colorscale-input">
-        <clippy-color-combobox
+        <clippy-token-combobox
+          type="color"
           hidden-label=${this.label}
           name=${this.name}
-          .options=${this.scrapedTokens
-            .filter((token) => token.$type === 'color')
-            .filter((token) => token.$extensions[EXTENSION_TOKEN_STAGED] !== false)
-            .map((color) => ({
-              /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
-              label: color.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(color.$value),
-              value: color.$value,
-            }))}
-          .value=${this.currentColorValue}
+          .options=${this.#options}
+          .value=${resolvedValueToken}
           @change=${this.handleColorChange}
         >
-        </clippy-color-combobox>
+        </clippy-token-combobox>
         <div role="presentation" class="wizard-colorscale-input__list">
           ${this.#scale.list().map((stop, index) => {
             const cssColor = stop.toCSSColorFunction();
