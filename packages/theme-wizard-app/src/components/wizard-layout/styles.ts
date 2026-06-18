@@ -43,9 +43,9 @@ export default css`
 
   .wizard-layout__sidebar {
     grid-area: sidebar;
+    overflow-y: auto;
     padding-block: var(--basis-space-block-2xl);
     padding-inline: var(--basis-space-inline-2xl);
-    overflow-y: auto;
   }
 
   .wizard-layout__logo {
