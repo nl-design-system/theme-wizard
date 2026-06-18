@@ -15,10 +15,6 @@ export class WizardSidebar extends LitElement {
   static override readonly styles = [sidebarStyles];
 
   override render() {
-    return html`
-      <div class="wizard-sidebar">
-        <slot></slot>
-      </div>
-    `;
+    return html`<slot></slot>`;
   }
 }
