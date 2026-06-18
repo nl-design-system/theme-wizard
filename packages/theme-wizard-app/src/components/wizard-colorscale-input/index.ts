@@ -189,14 +189,15 @@ export class WizardColorscaleInput extends WizardTokenInput {
     this.value = this.#scale.toObject();
     this.currentColorValue = stringifyColor(this.#scale.from.$value);
 
-    this.#options = this.scrapedTokens
-      .filter((token) => token.$type === 'color')
-      .filter((token) => token.$extensions[EXTENSION_TOKEN_STAGED] !== false)
-      .map((token) => ({
-        /* Use the authored name if available for better UX, otherwise fall back to hex encoding */
-        label: token.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(token.$value),
-        value: token,
-      }));
+    this.#options = this.scrapedTokens.reduce((acc, token) => {
+      if (token.$type === 'color' && token.$extensions[EXTENSION_TOKEN_STAGED] !== false) {
+        acc.push({
+          label: token.$extensions?.[EXTENSION_AUTHORED_AS] || stringifyColor(token.$value),
+          value: token,
+        });
+      }
+      return acc;
+    }, [] as Option[]);
   }
 
   readonly handleColorChange = (event: Event) => {
