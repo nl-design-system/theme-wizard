@@ -4,7 +4,6 @@ import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { t } from '../../i18n';
-import '../wizard-sidebar';
 import '../wizard-logo';
 import styles from './styles';
 
@@ -43,9 +42,9 @@ export class WizardLayout extends LitElement {
           </div>
         </header>
 
-        <wizard-sidebar class="wizard-layout__sidebar" ?hidden=${!this.hasSidebar}>
+        <div class="wizard-layout__sidebar" ?hidden=${!this.hasSidebar}>
           <slot name="sidebar" @slotchange=${this.onSidebarSlotChange}></slot>
-        </wizard-sidebar>
+        </div>
 
         <section class="wizard-layout__main">
           <slot name="main"></slot>

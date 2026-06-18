@@ -12,7 +12,6 @@ import './src/components/wizard-scraped-tokens-preview';
 import './src/components/wizard-scraper';
 import './src/components/wizard-scraper-loader';
 import './src/components/wizard-scroll-container';
-import './src/components/wizard-sidebar';
 import './src/components/wizard-sidebar-link';
 import './src/components/wizard-stack';
 import './src/components/wizard-story-react';
