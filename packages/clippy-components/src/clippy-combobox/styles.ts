@@ -120,6 +120,16 @@ export default css`
     display: none;
   }
 
+  .clippy-combobox__current-option:has(+ input[aria-invalid='true']) {
+    background-color: var(
+      --utrecht-textbox-invalid-background-color,
+      var(
+        --utrecht-form-control-invalid-background-color,
+        var(--utrecht-textbox-background-color, var(--utrecht-form-control-background-color))
+      )
+    );
+  }
+
   /**
    * 1. Specificity 0,2,0 instead of 0,1,0 to override utrecht-listbox__option styles.
    *    TODO: needs refactoring
