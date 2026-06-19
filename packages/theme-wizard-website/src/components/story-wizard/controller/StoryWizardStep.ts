@@ -1,4 +1,3 @@
-import type { DesignTokenLeaf, StoryWizardSelectionSummary } from './types';
 import { StoryWizardGroup } from './StoryWizardGroup';
 
 export class StoryWizardStep {
@@ -21,10 +20,6 @@ export class StoryWizardStep {
     );
   }
 
-  public get stepLabel() {
-    return this.element.dataset.stepLabel || '';
-  }
-
   public get isAdvanced() {
     return this.element.dataset.stepKind === 'advanced';
   }
@@ -37,12 +32,12 @@ export class StoryWizardStep {
     this.element.hidden = false;
   }
 
-  public bindOptions(listener: () => void) {
-    this.groups.forEach((group) => group.bindOptions(listener));
-  }
-
   public clearSelections() {
     this.groups.forEach((group) => group.clearSelection());
+  }
+
+  public restoreDefaultSelection(force = false) {
+    this.groups.forEach((group) => group.restoreDefaultSelection(force));
   }
 
   public getStoredSelection() {
@@ -51,14 +46,10 @@ export class StoryWizardStep {
 
   public restoreStoredSelection(selection: number[]) {
     this.groups.forEach((group, groupIndex) => {
-      const selectedIndex = selection?.[groupIndex];
+      const selectedIndex = selection[groupIndex];
       if (typeof selectedIndex !== 'number') return;
       group.restoreSelectedIndex(selectedIndex);
     });
-  }
-
-  public hasRequiredSelections() {
-    return this.groups.every((group) => group.hasSelection());
   }
 
   public getPreviewStyle() {
@@ -66,34 +57,5 @@ export class StoryWizardStep {
       .map((group) => group.getSelectedOption()?.previewStyle || '')
       .filter(Boolean)
       .join(';');
-  }
-
-  public createSelectionSummary(
-    flattenTokens: (tokens: unknown, path?: string[]) => DesignTokenLeaf[],
-  ): StoryWizardSelectionSummary[] {
-    const selectedGroups = this.groups.flatMap((group) => {
-      const option = group.getSelectedOption();
-      if (!option) return [];
-
-      return [
-        {
-          label: group.groupLabel,
-          optionLabel: option.optionLabel,
-          tokens: flattenTokens(option.tokens),
-        },
-      ];
-    });
-
-    if (selectedGroups.length === 0) {
-      return [];
-    }
-
-    return [
-      {
-        label: this.stepLabel,
-        optionLabel: selectedGroups.map((group) => group.optionLabel).join(' · '),
-        tokens: selectedGroups.flatMap((group) => group.tokens),
-      },
-    ];
   }
 }

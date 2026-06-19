@@ -12,6 +12,7 @@
     ".": "./index.ts",
     "./components": "./src/components/index.ts",
     "./pages": "./src/pages/index.ts",
+    "./preview-theme.css": "./src/styles/preview-theme.css",
     "./react": "./src/react/index.ts"
   },
   "files": [

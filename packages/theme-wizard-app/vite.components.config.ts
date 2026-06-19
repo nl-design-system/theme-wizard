@@ -17,6 +17,8 @@ export function getFiles(pattern: string | string[], relativeTo = 'src') {
 }
 
 const thisDir = fileURLToPath(new URL('.', import.meta.url));
+const clippyComponentsSrc = resolve(thisDir, '../clippy-components/src');
+const clippyComponentsAssets = resolve(thisDir, '../clippy-components/assets');
 
 export default defineConfig(({ mode }) => ({
   build: {
@@ -64,8 +66,11 @@ export default defineConfig(({ mode }) => ({
   ],
   resolve: {
     alias: {
-      '@lib': resolve(thisDir, 'src/lib'),
-      '@src': resolve(thisDir, 'src'),
+      '@lib': resolve(clippyComponentsSrc, 'lib'),
+      // More-specific alias must come first: clippy assets live next to src/, not inside it.
+      '@nl-design-system-community/clippy-components/assets': clippyComponentsAssets,
+      '@nl-design-system-community/clippy-components': clippyComponentsSrc,
+      '@src': clippyComponentsSrc,
     },
   },
 }));

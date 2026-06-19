@@ -1,0 +1,72 @@
+---
+import StoryWizardVariant from '../StoryWizardVariant/index.astro';
+
+interface Props {
+  title: string;
+  previewStories: { name: string; id: string }[];
+  focusedPreviewStories: { name: string; id: string }[];
+  showPreviewModeToggle: boolean;
+}
+
+const { title, previewStories, focusedPreviewStories, showPreviewModeToggle } = Astro.props;
+const previewHeadingId = `${title.toLowerCase().replaceAll(/\s+/g, '-')}-voorvertoning`;
+---
+
+<div class="wizard-story-section__preview-column">
+  {
+    previewStories.length > 0 && (
+      <section class="wizard-story-preview-panel" aria-labelledby={previewHeadingId}>
+        <div class="wizard-story-preview-panel__header">
+          <h2 id={previewHeadingId} class="nl-heading nl-heading--level-3 wizard-story-preview-panel__title">
+            Voorvertoning
+          </h2>
+          <p class="nl-paragraph wizard-story-preview-panel__intro">
+            Zo kan deze keuze eruitzien in de interface.
+          </p>
+        </div>
+        {showPreviewModeToggle && (
+          <div class="wizard-story-preview-panel__controls" role="group" aria-label="Previewweergave">
+            <button
+              class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+              type="button"
+              aria-pressed="true"
+              data-preview-mode-btn="focused"
+            >
+              Gericht
+            </button>
+            <button
+              class="wizard-story-preview-panel__toggle nl-button nl-button--secondary"
+              type="button"
+              aria-pressed="false"
+              data-preview-mode-btn="all"
+            >
+              Alles
+            </button>
+          </div>
+        )}
+
+        {showPreviewModeToggle ? (
+          <>
+            <div class="wizard-story-section__variants" data-preview-mode-panel="focused">
+              {focusedPreviewStories.map((previewStory) => (
+                <StoryWizardVariant name={previewStory.name} storyId={previewStory.id} />
+              ))}
+            </div>
+
+            <div class="wizard-story-section__variants" data-preview-mode-panel="all" hidden>
+              {previewStories.map((previewStory) => (
+                <StoryWizardVariant name={previewStory.name} storyId={previewStory.id} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div class="wizard-story-section__variants" data-preview-mode-panel="all">
+            {previewStories.map((previewStory) => (
+              <StoryWizardVariant name={previewStory.name} storyId={previewStory.id} />
+            ))}
+          </div>
+        )}
+      </section>
+    )
+  }
+</div>

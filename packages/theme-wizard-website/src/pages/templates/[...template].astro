@@ -1,5 +1,6 @@
 ---
 import type { PageModule } from '@/types';
+import TemplatePresetContextMenu from '@/components/template-preset-context-menu/TemplatePresetContextMenu.astro';
 
 const param = Astro.params.template;
 const rel = Array.isArray(param) ? param.join('/') : (param as string);
@@ -36,3 +37,17 @@ if (!TemplatePage) return new Response(`Template page ${rel} not found`, { statu
 ---
 
 <TemplatePage />
+
+<theme-wizard-app data-template-preview-host></theme-wizard-app>
+
+<TemplatePresetContextMenu />
+
+<style is:global>
+  theme-wizard-app[data-template-preview-host] {
+    display: contents;
+  }
+</style>
+
+<script>
+  import '@app/components/wizard-app';
+</script>

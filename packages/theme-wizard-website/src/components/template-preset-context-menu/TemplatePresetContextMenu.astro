@@ -1,0 +1,219 @@
+---
+import '@nl-design-system-candidate/heading-css/heading.css';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+import '@/lib/components-overview.css';
+import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
+import { resolveStoryWizardPresetGroups } from '@/lib/story-wizard-preset-engine';
+import { resolveStoryWizardModel } from '@/lib/story-wizard';
+import { components, componentCategories } from '@/lib/components';
+
+const supportedComponents = ['paragraph', 'link'] as const;
+
+const presetStepsByComponent = Object.fromEntries(
+  await Promise.all(
+    supportedComponents.map(async (componentId) => {
+      const wizard = await resolveStoryWizardModel(componentId);
+      const steps = wizard.steps
+        .filter((step) => step.type === 'preset')
+        .map((step) => ({
+          id: step.id,
+          title: step.title,
+          intro: step.intro,
+          groups: resolveStoryWizardPresetGroups({
+            defaults: startTokens,
+            groups: step.groups.filter((group) => group.type === 'preset'),
+          }),
+        }));
+      return [componentId, steps] as const;
+    }),
+  ),
+);
+
+const overviewData = {
+  supportedIds: [...supportedComponents],
+  categories: componentCategories.map(({ key, label }) => ({
+    key,
+    label,
+    components: Object.entries(components)
+      .filter(([, meta]) => meta.category === key)
+      .map(([id, meta]) => ({
+        id,
+        title: meta.title,
+        description: meta.description,
+      })),
+  })),
+};
+
+const drawerData = { presetStepsByComponent, overview: overviewData };
+---
+
+<script id="template-preset-groups" type="application/json" set:html={JSON.stringify(drawerData)} is:inline />
+
+<script>
+  import '@/components/template-preset-context-menu/controller';
+</script>
+
+<style is:global>
+  :root {
+    --template-preset-drawer-header-block-size: 3.5rem;
+    --template-preset-drawer-inline-size: min(28rem, calc(100vw - 2rem));
+  }
+
+  /* When the drawer is open, reserve inline space on the body so page content
+     reflows next to the drawer instead of being covered by it. */
+  body {
+    transition: margin-inline-end 240ms ease;
+  }
+
+  html.template-preset-drawer-open body {
+    margin-inline-end: var(--template-preset-drawer-inline-size);
+  }
+
+  .template-preset-drawer {
+    background-color: var(--basis-color-default-bg-document, #fff);
+    block-size: 100vh;
+    border: 0;
+    border-inline-start: 1px solid var(--basis-color-default-border-subtle, #e5e7eb);
+    box-sizing: border-box;
+    box-shadow: -0.25rem 0 1.5rem rgb(0 0 0 / 6%);
+    color: var(--basis-color-default-color-default, #1f2937);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    inline-size: var(--template-preset-drawer-inline-size);
+    inset-block: 0;
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+    margin: 0;
+    max-block-size: 100vh;
+    max-inline-size: var(--template-preset-drawer-inline-size);
+    overflow: hidden;
+    padding: 0;
+    position: fixed;
+    transform: translateX(0);
+    transition: transform 240ms ease;
+    z-index: 1000;
+  }
+
+  .template-preset-drawer.is-entering,
+  .template-preset-drawer.is-leaving {
+    transform: translateX(100%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body,
+    .template-preset-drawer {
+      transition: none;
+    }
+  }
+
+  .template-preset-drawer__header {
+    align-items: center;
+    background: var(--basis-color-accent-1-inverse-bg-default, #5b1d6c);
+    block-size: var(--template-preset-drawer-header-block-size);
+    box-sizing: border-box;
+    color: var(--basis-color-accent-1-inverse-color-default, #fff);
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    margin: 0;
+    padding-block: 0;
+    padding-inline: var(--basis-space-inline-lg, 1.5rem);
+  }
+
+  .template-preset-drawer__title {
+    color: inherit;
+    margin: 0;
+  }
+
+  .template-preset-drawer__close {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .template-preset-drawer__close:hover,
+  .template-preset-drawer__close:focus-visible {
+    background: rgb(255 255 255 / 12%);
+    border-radius: 0.25rem;
+    outline: 0;
+  }
+
+  .template-preset-drawer__body {
+    display: grid;
+    gap: var(--basis-space-block-md, 1rem);
+    grid-auto-rows: min-content;
+    overflow-y: auto;
+    padding-block-end: var(--basis-space-block-lg, 1.5rem);
+    padding-block-start: var(--basis-space-block-lg, 1.5rem);
+    padding-inline: var(--basis-space-inline-lg, 1.5rem);
+  }
+
+  .template-preset-drawer__empty {
+    color: var(--basis-color-default-color-subtle, #4b5563);
+    margin: 0;
+  }
+
+  .template-preset-drawer__footer {
+    border-block-start: 1px solid var(--basis-color-default-border-subtle, #e5e7eb);
+    margin-block-start: var(--basis-space-block-md, 1rem);
+    padding-block-start: var(--basis-space-block-md, 1rem);
+  }
+
+  .template-preset-drawer__nav-link {
+    background: transparent;
+    border: 0;
+    color: var(--basis-color-action-2-color-default, #0077c8);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .template-preset-drawer__nav-link:hover,
+  .template-preset-drawer__nav-link:focus-visible {
+    color: var(--basis-color-action-2-color-hover, #005a9c);
+    outline: 0;
+  }
+
+  .template-preset-drawer .wizard-components-category + .wizard-components-category {
+    margin-block-start: var(--basis-space-block-md, 1rem);
+  }
+
+  .template-preset-drawer .wizard-token-preset {
+    display: block;
+  }
+
+  .template-preset-drawer .wizard-token-preset + .wizard-token-preset {
+    margin-block-start: var(--basis-space-block-xl, 2rem);
+  }
+
+  .template-preset-drawer .wizard-token-preset__title {
+    line-height: 1.25;
+    margin-block: 0 var(--basis-space-block-sm, 0.5rem);
+  }
+
+  .template-preset-drawer .wizard-token-preset__description {
+    color: var(--basis-color-default-color-subtle, #4b5563);
+    line-height: 1.55;
+    margin-block: 0 var(--basis-space-block-md, 1rem);
+    max-inline-size: none;
+  }
+
+  .template-preset-drawer .wizard-token-preset__layout {
+    display: block;
+  }
+
+  .template-preset-drawer .wizard-token-preset__options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--basis-space-block-md, 1rem);
+    max-inline-size: none;
+    padding-inline: 0;
+  }
+</style>

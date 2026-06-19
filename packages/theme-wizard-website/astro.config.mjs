@@ -30,6 +30,9 @@ const thisDir = dirname(fileURLToPath(import.meta.url));
 const srcDir = resolve(thisDir, 'src');
 const templatesRoot = resolve(thisDir, '../theme-wizard-templates');
 const templatesSrc = resolve(templatesRoot, 'src');
+const appSrc = resolve(thisDir, '../theme-wizard-app/src');
+const clippyComponentsRoot = resolve(thisDir, '../clippy-components');
+const clippyComponentsSrc = resolve(clippyComponentsRoot, 'src');
 
 // Dynamically find all @fontsource packages in .pnpm
 // This prevents breaking the path when we update the @fontsource packages because their version number is in the path
@@ -52,12 +55,16 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': srcDir,
+        '@app': appSrc,
+        '@lib': resolve(clippyComponentsSrc, 'lib'),
+        '@nl-design-system-community/clippy-components': clippyComponentsSrc,
+        '@src': clippyComponentsSrc,
         '@templates': templatesSrc,
       },
     },
     server: {
       fs: {
-        allow: [srcDir, templatesRoot, templatesSrc, ...fontDirs],
+        allow: [srcDir, templatesRoot, templatesSrc, appSrc, clippyComponentsRoot, clippyComponentsSrc, ...fontDirs],
       },
     },
   },
