@@ -16,12 +16,51 @@ import '@nl-design-system-candidate/paragraph-css/paragraph.css'
           <clippy-story-preview size="lg">
             <clippy-heading level="1">Lettertype voor tekst kiezen</clippy-heading>
             <p class="nl-paragraph nl-paragraph--lead">Dit lettertype wordt bijvoorbeeld toegepast op alinea's, knoppen, en formulier elementen. Je kunt dit later altijd aanpassen.</p>
+
+            <form action="" method="POST">
+              <fieldset>
+                <legend>Tokens doen</legend>
+
+                <input type="radio" name="basis.text.font-family.default" value="sans-serif" id="sans-serif" />
+                <label for="sans-serif">Optie</label>
+
+                <input type="radio" name="basis.text.font-family.default" value="serif" id="serif" />
+                <label for="serif">Optie</label>
+
+                <input type="radio" name="basis.text.font-family.default" value="'Comic Sans MS'" id="comic-sans" />
+                <label for="comic-sans">Optie</label>
+              </fieldset>
+
+              <button>Opslaan</button>
+              <a href="./">Annuleren</a>
+            </form>
           </clippy-story-preview>
         </wizard-container>
       </main>
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<script>
+  // TODO: nieuwe wizard form custom element
+  // - 2 modi: onchange of onsubmit
+  // - emit 1 event type: tokens-updated die heel plat de FormData entries als event.detail meegeeft (dubbelchecken though)
+  // - modus onchange emit tokens-updated event voor de changed token voor elke change (event.target === input)
+  // - modus onsubmit emit pas een event als de form gesubmit is (event.target === form)
+  // - bij beide modi worden alle encapsulated/interne change events NIET naar de buitenwereld gepropageerd (event.stopProgation())
+  //
+  const form = document.querySelector<HTMLFormElement>('form')
+
+  form.onsubmit = (event) => {
+    event.preventDefault()
+    const data = new FormData(event.target)
+
+    form?.dispatchEvent(new Event('tokens-updated', {
+      detail: data.entries()
+    }))
+    console.log(data)
+  }
+</script>
 
 <style>
   .wizard-main {

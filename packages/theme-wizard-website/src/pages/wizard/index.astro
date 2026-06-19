@@ -36,6 +36,13 @@ import { IconChevronRight, IconCircleDashed } from '@tabler/icons-react';
   </theme-wizard-app>
 </BaseLayout>
 
+<script>
+  import type { WizardApp } from '@nl-design-system-community/theme-wizard-app'
+  const app = document.querySelector<WizardApp>('theme-wizard-app')
+  console.log(app)
+  console.log(app?.scrapedTokens)
+</script>
+
 <style>
   .wizard-main {
     padding-block: var(--basis-space-block-5xl);
