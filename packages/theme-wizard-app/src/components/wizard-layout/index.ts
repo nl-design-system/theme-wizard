@@ -40,13 +40,12 @@ export class WizardLayout extends LitElement {
           </div>
         </header>
 
-        <div class="wizard-layout__sidebar" ?hidden=${!this.hasSidebar}>
-          <slot name="sidebar" @slotchange=${this.onSidebarSlotChange}></slot>
+        <div class="wizard-layout__body">
+          <div class="wizard-layout__sidebar">
+            <slot name="sidebar" @slotchange=${this.onSidebarSlotChange}></slot>
+          </div>
+          <section class="wizard-layout__main"><slot name="main"></slot></section>
         </div>
-
-        <section class="wizard-layout__main">
-          <slot name="main"></slot>
-        </section>
 
         <footer class="wizard-layout__footer">
           <div class="wizard-layout__footer-logo">

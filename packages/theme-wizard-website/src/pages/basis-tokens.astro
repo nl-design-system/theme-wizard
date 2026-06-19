@@ -25,7 +25,8 @@ if (!currentTemplate) {
 <style>
   .wizard-main {
     display: grid;
-    padding-block: var(--basis-space-block-lg);
+    grid-template-rows: minmax(var(--basis-size-md), auto) 1fr;
+    padding-block-end: var(--basis-space-block-lg);
     row-gap: var(--basis-space-row-lg);
   }
 
@@ -39,9 +40,7 @@ if (!currentTemplate) {
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
 
-      <div slot="sidebar">
-        <wizard-tokens-form></wizard-tokens-form>
-      </div>
+      <wizard-tokens-form slot="sidebar"></wizard-tokens-form>
 
       <div slot="main" class="wizard-main">
         <wizard-preview-picker class="wizard-preview-picker" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>

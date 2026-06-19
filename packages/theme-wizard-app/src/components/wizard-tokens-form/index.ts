@@ -41,7 +41,7 @@ const colorDocs: Record<string, string> = {
   selected: selectedDocs,
   warning: warningDocs,
 };
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
@@ -105,65 +105,105 @@ export class WizardTokensForm extends LitElement {
     return html` <clippy-button purpose="primary" @click=${this.showInitialMode}> ${t('save')} </clippy-button> `;
   };
 
-  override render() {
-    if (this.displayMode === 'fonts') {
-      const fonts = [
-        {
-          docsUrl: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype',
-          label: t('tokens.fieldLabels.headingFont'),
-          path: HEADING_FONT_TOKEN_REF,
-          token: this.theme.at(HEADING_FONT_TOKEN_REF),
-        },
-        {
-          docsUrl: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype',
-          label: t('tokens.fieldLabels.bodyFont'),
-          path: BODY_FONT_TOKEN_REF,
-          token: this.theme.at(BODY_FONT_TOKEN_REF),
-        },
-      ];
-      return html`
+  private readonly renderSidebar = ({ items, title }: { title: string | TemplateResult; items: TemplateResult }) => {
+    return html`
+      <wizard-scroll-container>
         <wizard-stack size="4xl">
-          ${this.renderBackLink()}
-          <clippy-heading level="3">${t('tokens.fieldLabels.basis.typography')}</clippy-heading>
-
-          <wizard-scroll-container>
-            <wizard-stack size="2xl">
-              ${fonts.map(
-                ({ docsUrl, label, path, token }) =>
-                  html`<wizard-stack class="wizard-form__field">
-                    <clippy-heading level="4">${label}</clippy-heading>
-                    <wizard-font-input
-                      .errors=${this.theme.issues.filter((error) => error.path === path)}
-                      .value=${token.$value}
-                      label=${label}
-                      name=${path}
-                    >
-                      <div slot="label">${label}</div>
-                    </wizard-font-input>
-                    <p class="nl-paragraph">
-                      <a href=${docsUrl} target="_blank" class="nl-link">
-                        <span aria-hidden="true">${t('moreInformationCompact')}</span>
-                        <span class="sr-only">${t('moreInformation', { text: label })}</span>
-                      </a>
-                    </p>
-                  </wizard-stack>`,
-              )}
-            </wizard-stack>
-          </wizard-scroll-container>
-
-          ${this.renderSaveButton()}
+          <clippy-heading level="3">${title}</clippy-heading>
+          <wizard-stack size="4xl">${items}</wizard-stack>
         </wizard-stack>
-      `;
-    }
+      </wizard-scroll-container>
+      ${this.renderSaveButton()}
+    `;
+  };
 
-    if (this.displayMode === 'colors') {
-      return html`
-        <wizard-stack size="4xl">
-          ${this.renderBackLink()}
-          <clippy-heading level="3">${t('tokens.fieldLabels.basis.colors')}</clippy-heading>
+  override render() {
+    const buttons: Array<{ id: Exclude<DisplayMode, 'initial'>; title: string | TemplateResult }> = [
+      { id: 'fonts', title: t('tokens.fieldLabels.basis.typography') },
+      { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
+    ];
 
-          <wizard-scroll-container>
-            <wizard-stack size="3xl">
+    const fonts = [
+      {
+        docsUrl: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype',
+        label: t('tokens.fieldLabels.headingFont'),
+        path: HEADING_FONT_TOKEN_REF,
+        token: this.theme.at(HEADING_FONT_TOKEN_REF),
+      },
+      {
+        docsUrl: 'https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema/#lettertype',
+        label: t('tokens.fieldLabels.bodyFont'),
+        path: BODY_FONT_TOKEN_REF,
+        token: this.theme.at(BODY_FONT_TOKEN_REF),
+      },
+    ];
+
+    return html`
+      <div class="wizard-tokens-form__header">
+        ${this.displayMode !== 'initial'
+          ? this.renderBackLink()
+          : html`<clippy-heading level="3">${t('nav.configure')}</clippy-heading>`}
+      </div>
+
+      ${this.displayMode === 'initial'
+        ? html`
+            <wizard-scroll-container>
+              <nav>
+                ${buttons.map(
+                  ({ id, title }) => html`
+                    <button
+                      type="button"
+                      class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
+                      @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
+                    >
+                      ${title}
+                      <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
+                    </button>
+                  `,
+                )}
+              </nav>
+            </wizard-scroll-container>
+            <wizard-stack>
+              <wizard-tokens-download></wizard-tokens-download>
+              <wizard-download-link
+                content=${this.theme.css}
+                filename="theme-wizard-tokens.css"
+                content-type="text/css"
+              >
+                ${t('tokenDownloadCss.triggerText')}
+              </wizard-download-link>
+              <wizard-theme-reset-button></wizard-theme-reset-button>
+            </wizard-stack>
+          `
+        : nothing}
+      ${this.displayMode === 'fonts'
+        ? this.renderSidebar({
+            items: html`${fonts.map(
+              ({ docsUrl, label, path, token }) =>
+                html`<wizard-stack class="wizard-form__field">
+                  <clippy-heading level="4">${label}</clippy-heading>
+                  <wizard-font-input
+                    .errors=${this.theme.issues.filter((error) => error.path === path)}
+                    .value=${token.$value}
+                    label=${label}
+                    name=${path}
+                  >
+                    <div slot="label">${label}</div>
+                  </wizard-font-input>
+                  <p class="nl-paragraph">
+                    <a href=${docsUrl} target="_blank" class="nl-link">
+                      <span aria-hidden="true">${t('moreInformationCompact')}</span>
+                      <span class="sr-only">${t('moreInformation', { text: label })}</span>
+                    </a>
+                  </p>
+                </wizard-stack>`,
+            )}`,
+            title: t('tokens.fieldLabels.basis.typography'),
+          })
+        : nothing}
+      ${this.displayMode === 'colors'
+        ? this.renderSidebar({
+            items: html`
               ${Object.entries(colorDocs).map(
                 ([colorKey, docs]) => html`
                   <wizard-stack size="lg" class="wizard-form__field">
@@ -185,44 +225,10 @@ export class WizardTokensForm extends LitElement {
                   </wizard-stack>
                 `,
               )}
-            </wizard-stack>
-          </wizard-scroll-container>
-
-          ${this.renderSaveButton()}
-        </wizard-stack>
-      `;
-    }
-
-    const buttons: Array<{ id: Exclude<DisplayMode, 'initial'>; title: string | TemplateResult }> = [
-      { id: 'fonts', title: t('tokens.fieldLabels.basis.typography') },
-      { id: 'colors', title: t('tokens.fieldLabels.basis.colors') },
-    ];
-    return html`
-      <wizard-stack size="4xl">
-        <clippy-heading level="3">${t('nav.configure')}</clippy-heading>
-        <div class="wizard-tokens-form__section-links">
-          ${buttons.map(
-            ({ id, title }) => html`
-              <button
-                type="button"
-                class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
-                @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
-              >
-                ${title}
-                <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
-              </button>
             `,
-          )}
-        </div>
-
-        <wizard-stack>
-          <wizard-tokens-download></wizard-tokens-download>
-          <wizard-download-link content=${this.theme.css} filename="theme-wizard-tokens.css" content-type="text/css">
-            ${t('tokenDownloadCss.triggerText')}
-          </wizard-download-link>
-          <wizard-theme-reset-button></wizard-theme-reset-button>
-        </wizard-stack>
-      </wizard-stack>
+            title: t('tokens.fieldLabels.basis.colors'),
+          })
+        : nothing}
     `;
   }
 }

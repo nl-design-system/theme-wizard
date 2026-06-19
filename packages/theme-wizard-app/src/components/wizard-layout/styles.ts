@@ -10,17 +10,14 @@ export default css`
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
 
     background-color: var(--basis-color-accent-1-bg-subtle);
+    column-gap: var(--basis-space-inline-lg);
     container-type: inline-size;
     display: grid;
     font-family: var(--basis-text-font-family-default, inherit);
-    grid-template-areas: 'header header' 'main main' 'footer footer';
-    grid-template-columns: minmax(20rem, 24rem) 1fr;
+    grid-template-areas: 'header' 'main' 'footer';
+    grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     min-block-size: 100vh;
-  }
-
-  .wizard-layout--has-sidebar {
-    grid-template-areas: 'header header' 'sidebar main' 'footer footer';
   }
 
   .wizard-layout__header {
@@ -40,11 +37,20 @@ export default css`
     }
   }
 
+  .wizard-layout__body {
+    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--basis-space-column-4xl);
+    grid-area: main;
+    padding-block: var(--basis-space-block-xl);
+    padding-inline: var(--basis-space-inline-xl);
+  }
+
   .wizard-layout__sidebar {
-    grid-area: sidebar;
-    overflow-y: auto;
-    padding-block: var(--basis-space-block-2xl);
-    padding-inline: var(--basis-space-inline-2xl);
+    display: grid;
+    flex-basis: 20rem;
+    flex-grow: 1;
   }
 
   .wizard-layout__logo {
@@ -56,16 +62,10 @@ export default css`
    ============================================ */
 
   .wizard-layout__main {
-    block-size: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    grid-area: main;
-    inline-size: 100%;
-    min-block-size: 100%;
-    min-inline-size: 0;
-    padding-inline: var(--basis-space-inline-xl);
-    scroll-margin: var(--basis-space-block-6xl);
+    display: grid;
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: 75%;
   }
 
   @media print {

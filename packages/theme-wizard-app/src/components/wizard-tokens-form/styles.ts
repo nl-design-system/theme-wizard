@@ -2,11 +2,22 @@ import { css } from 'lit';
 
 export default css`
   :host(:not([hidden])) {
-    display: block;
+    display: grid;
   }
 
   :host {
-    --wizard-scroll-container-max-size: 65vh;
+    --wizard-scroll-container-max-size: none;
+
+    grid-template-rows: minmax(var(--basis-size-md), auto) 1fr;
+
+    /* TODO: get page nav block size and --basis-space-block-xl from parent */
+    max-block-size: calc(100svb - var(--wizard-page-nav-block-size, 3.5rem) - var(--basis-space-block-xl) * 2);
+    outline: 2px solid red;
+    row-gap: var(--basis-space-row-lg);
+  }
+
+  .wizard-tokens-form__header {
+    align-self: center;
   }
 
   .wizard-tokens-form__markdown {
@@ -14,10 +25,6 @@ export default css`
       color: var(--basis-color-default-color-subtle);
       margin-block: 0;
     }
-  }
-
-  .wizard-tokens-form__section-links {
-    border-block-start: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle);
   }
 
   .wizard-tokens-form__section-link {
