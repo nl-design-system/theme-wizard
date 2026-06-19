@@ -3,7 +3,7 @@ import { safeCustomElement } from '@lib/decorators';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
-import taskNavigationStyles from './styles';
+import styles from './styles';
 
 const tag = 'clippy-task-navigation';
 
@@ -17,7 +17,7 @@ declare global {
 export class ClippyTaskNavigation extends LitElement {
   @property({ type: String }) href = '';
 
-  static override readonly styles = [unsafeCSS(linkStyles), unsafeCSS(actionCss), taskNavigationStyles];
+  static override readonly styles = [unsafeCSS(linkStyles), unsafeCSS(actionCss), styles];
 
   override render() {
     return html`

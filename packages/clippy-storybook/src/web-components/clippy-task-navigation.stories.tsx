@@ -96,3 +96,18 @@ export const WithIconBefore: Story = {
       React.createElement('span', { slot: 'actions' }, '→'),
     ),
 };
+
+export const WithLongContent: Story = {
+  name: 'Long content',
+  parameters: {
+    controls: { disable: true },
+  },
+  render: () =>
+    React.createElement(
+      'clippy-task-navigation',
+      { href: '#' },
+      React.createElement('span', { slot: 'iconStart' }, '📋'),
+      'Icon before and a lot of content that should surely make this task navigation item wrap, but some more words appear here, just in case.',
+      React.createElement('span', { slot: 'actions' }, '→'),
+    ),
+};

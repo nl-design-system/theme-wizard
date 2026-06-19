@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '@nl-design-system-candidate/link-css/link.css'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
-import { IconChevronRight, IconCircleDashed } from '@tabler/icons-react';
+import { IconChevronRight, IconCircleDashed, IconCircleCheckFilled, IconFileTypography } from '@tabler/icons-react';
 ---
 
 <script>
@@ -15,20 +15,39 @@ import { IconChevronRight, IconCircleDashed } from '@tabler/icons-react';
       <main slot="main" class="wizard-main">
         <wizard-container size="lg">
           <clippy-story-preview size="lg">
-            <clippy-heading level="1">Maak de eerste keuzes voor je thema</clippy-heading>
-            <p class="nl-paragraph nl-paragraph--lead">Voor een optimaal werkend thema maak je eerst keuzes op hoog niveau.</p>
-            <nav>
-              <clippy-heading level="2">Maak stapsgewijs keuzes</clippy-heading>
-              <clippy-task-navigation href="/wizard/basis-text-font-family-default">
-                <span slot="iconStart">
-                  <IconCircleDashed />
-                </span>
-                Lettertype voor tekst
-                <span slot="actions">
-                  <IconChevronRight />
-                </span>
-              </clippy-task-navigation>
-            </nav>
+            <wizard-stack size="3xl">
+              <header>
+                <clippy-heading level="1">Maak de eerste keuzes voor je thema</clippy-heading>
+                <p class="nl-paragraph nl-paragraph--lead">Voor een optimaal werkend thema maak je eerst keuzes op hoog niveau.</p>
+              </header>
+              <nav>
+                <wizard-stack size="lg">
+                  <clippy-heading level="2">Maak stapsgewijs keuzes</clippy-heading>
+                  <div>
+                    <clippy-task-navigation href="/wizard/basis-text-font-family-default">
+                      <span slot="iconStart">
+                        <IconCircleCheckFilled />
+                      </span>
+                      Lettertype voor tekst
+                      <span slot="actions">
+                        <IconChevronRight />
+                      </span>
+                    </clippy-task-navigation>
+                    <clippy-task-navigation href="/wizard/basis-text-font-family-default">
+                      <span slot="iconStart">
+                        <div class="icon-stack">
+                          <IconCircleDashed />
+                        </div>
+                      </span>
+                      Lettertype voor tekst
+                      <span slot="actions">
+                        <IconChevronRight />
+                      </span>
+                    </clippy-task-navigation>
+                  </div>
+                </wizard-stack>
+              </nav>
+            </wizard-stack>
           </clippy-story-preview>
         </wizard-container>
       </main>
@@ -43,9 +62,5 @@ import { IconChevronRight, IconCircleDashed } from '@tabler/icons-react';
 
   wizard-container {
     margin-inline: auto;
-  }
-
-  nav {
-    margin-block-start: var(--basis-space-block-xl);
   }
 </style>
