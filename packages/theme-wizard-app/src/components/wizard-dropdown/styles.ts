@@ -10,6 +10,7 @@ export default css`
     .utrecht-select {
       background-color: var(--basis-color-transparent);
       border-color: var(--basis-color-transparent);
+      border-width: 0;
       border-radius: var(--basis-border-radius-sm);
       color: var(--basis-color-accent-1-color-default);
       font-weight: var(--basis-text-font-weight-bold);
