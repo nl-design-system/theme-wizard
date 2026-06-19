@@ -23,12 +23,6 @@ if (!currentTemplate) {
 ---
 
 <style>
-  .wizard-theme-sidebar {
-    display: grid;
-    gap: 2rem;
-    padding-block: var(--basis-space-block-lg);
-  }
-
   .wizard-main {
     display: grid;
     padding-block: var(--basis-space-block-lg);
@@ -44,7 +38,8 @@ if (!currentTemplate) {
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
-      <div slot="sidebar" class="wizard-theme-sidebar">
+
+      <div slot="sidebar">
         <wizard-tokens-form></wizard-tokens-form>
       </div>
 
