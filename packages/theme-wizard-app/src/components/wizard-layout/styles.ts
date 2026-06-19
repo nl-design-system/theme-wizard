@@ -6,7 +6,6 @@ export default css`
   }
 
   .wizard-layout {
-    --wizard-layout-nav-padding-block: var(--basis-space-block-md);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
 
@@ -49,12 +48,7 @@ export default css`
   }
 
   .wizard-layout__logo {
-    padding-block: var(--wizard-layout-nav-padding-block);
-
-    & a {
-      display: inline-block;
-      text-decoration: none;
-    }
+    text-decoration: none;
   }
 
   /* ============================================

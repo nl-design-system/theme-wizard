@@ -31,11 +31,9 @@ export class WizardLayout extends LitElement {
     return html`
       <div class="ma-theme wizard-layout ${classMap({ 'wizard-layout--has-sidebar': this.hasSidebar })}">
         <header class="wizard-layout__header">
-          <div class="wizard-layout__logo">
-            <a href="/">
-              <wizard-logo></wizard-logo>
-            </a>
-          </div>
+          <a class="wizard-layout__logo" href="/">
+            <wizard-logo></wizard-logo>
+          </a>
 
           <div class="wizard-layout__nav">
             <slot name="page-nav"></slot>
