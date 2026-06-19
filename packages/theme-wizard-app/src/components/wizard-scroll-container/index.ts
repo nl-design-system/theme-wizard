@@ -22,10 +22,6 @@ export class WizardScrollContainer extends LitElement {
   static override readonly styles = [styles];
 
   override render() {
-    return html`
-      <div class="wizard-scroll-container">
-        <slot></slot>
-      </div>
-    `;
+    return html`<slot></slot>`;
   }
 }
