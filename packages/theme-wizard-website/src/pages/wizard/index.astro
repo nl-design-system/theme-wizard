@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '@nl-design-system-candidate/link-css/link.css'
+import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import { IconChevronRight, IconCircleDashed, IconCircleCheckFilled, IconFileTypography } from '@tabler/icons-react';
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-task-navigation';
+</script>
+
+<BaseLayout title="Wizard - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <main slot="main" class="wizard-main">
+        <wizard-container size="lg">
+          <clippy-story-preview size="lg">
+            <wizard-stack size="3xl">
+              <header>
+                <clippy-heading level="1">Maak de eerste keuzes voor je thema</clippy-heading>
+                <p class="nl-paragraph nl-paragraph--lead">Voor een optimaal werkend thema maak je eerst keuzes op hoog niveau.</p>
+              </header>
+              <nav>
+                <wizard-stack size="lg">
+                  <clippy-heading level="2">Maak stapsgewijs keuzes</clippy-heading>
+                  <div>
+                    <clippy-task-navigation href="/wizard/basis-text-font-family-default">
+                      <span slot="iconStart">
+                        <IconCircleCheckFilled />
+                      </span>
+                      Lettertype voor tekst
+                      <span slot="actions">
+                        <IconChevronRight />
+                      </span>
+                    </clippy-task-navigation>
+                    <clippy-task-navigation href="/wizard/basis-text-font-family-default">
+                      <span slot="iconStart">
+                        <div class="icon-stack">
+                          <IconCircleDashed />
+                        </div>
+                      </span>
+                      Lettertype voor tekst
+                      <span slot="actions">
+                        <IconChevronRight />
+                      </span>
+                    </clippy-task-navigation>
+                  </div>
+                </wizard-stack>
+              </nav>
+            </wizard-stack>
+          </clippy-story-preview>
+        </wizard-container>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-main {
+    padding-block: var(--basis-space-block-5xl);
+  }
+
+  wizard-container {
+    margin-inline: auto;
+  }
+</style>
