@@ -1,0 +1,18 @@
+---
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
+
+interface Props {
+  storyId: string;
+}
+
+const { storyId } = Astro.props;
+---
+
+<clippy-story-preview>
+  <clippy-reset-theme>
+    <wizard-preview-theme>
+      <div data-story-container={storyId} />
+    </wizard-preview-theme>
+  </clippy-reset-theme>
+</clippy-story-preview>

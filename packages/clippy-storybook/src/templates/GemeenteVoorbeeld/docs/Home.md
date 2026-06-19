@@ -61,7 +61,7 @@ Deze template combineert componenten uit meerdere NL Design System libraries:
 
 ## Clippy design tokens (gebruikt in deze template)
 
-Deze startpagina gebruikt een **subset** van de Clippy design tokens (CSS custom properties) om styling consistent te houden in Storybook/preview. De tokens worden gezet in `@nl-design-system-community/theme-wizard-app/clippy-tokens.css` binnen de `.preview-theme` scope (die voor templates op `#storybook-root` wordt gezet).
+Deze startpagina gebruikt een **subset** van de Clippy design tokens (CSS custom properties) om styling consistent te houden in Storybook/preview. De tokens worden gezet in `@nl-design-system-community/theme-wizard-templates/preview-theme.css` binnen de `.preview-theme` scope (die voor templates op `#storybook-root` wordt gezet).
 
 De Clippy tokens die **direct** terugkomen in de Gemeentevoorbeeld styles zijn:
 
@@ -72,7 +72,7 @@ De Clippy tokens die **direct** terugkomen in de Gemeentevoorbeeld styles zijn:
   - `--clippy-voorbeeld-card-padding-inline`
   - `--clippy-voorbeeld-card-row-gap`
 
-De Clippy tokens die **indirect** gebruikt worden (via mapping naar Utrecht tokens in `@nl-design-system-community/theme-wizard-app/theme.css`) zijn o.a.:
+De Clippy tokens die **indirect** gebruikt worden (via mapping naar Utrecht tokens in `@nl-design-system-community/theme-wizard-templates/preview-theme.css`) zijn o.a.:
 
 - **Page/layout** (o.a. gebruikt door Utrecht “page” componenten en/of in `gemeentevoorbeeld/styles.css`)
   - `--clippy-page-content-padding-block-start`
@@ -84,7 +84,7 @@ De Clippy tokens die **indirect** gebruikt worden (via mapping naar Utrecht toke
   - `--clippy-page-secondary-background-color`
   - `--clippy-nav-bar-content-max-inline-size`
 
-NB: in `@nl-design-system-community/theme-wizard-app/theme.css` worden Clippy tokens **gemapt** naar `--utrecht-*` en `--denhaag-*` tokens, zodat componenten die die token-names verwachten dezelfde waarden gebruiken. Tokens voor breadcrumb/side-navigation staan wel in `clippy-tokens.css`, maar worden door de Gemeentevoorbeeld startpagina niet expliciet gebruikt.
+NB: in `@nl-design-system-community/theme-wizard-templates/preview-theme.css` worden Clippy tokens **gemapt** naar `--utrecht-*` en `--denhaag-*` tokens, zodat componenten die die token-names verwachten dezelfde waarden gebruiken. Tokens voor breadcrumb/side-navigation staan wel in die preview-theme CSS, maar worden door de Gemeentevoorbeeld startpagina niet expliciet gebruikt.
 
 ## Toegankelijkheid: hoe werken de onderdelen samen?
 

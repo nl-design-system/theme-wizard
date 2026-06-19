@@ -1,0 +1,64 @@
+---
+import chevronDownIcon from '@tabler/icons/outline/chevron-down.svg?raw';
+
+interface Props {
+  title?: string;
+  id?: string;
+  isCompletedRow?: boolean;
+  headingLevel?: 3 | 4;
+  initialCount?: number;
+}
+
+const { title, id, isCompletedRow = false, headingLevel = 3, initialCount } = Astro.props;
+
+const HeadingTag = headingLevel === 4 ? 'h4' : 'h3';
+const headingClass = `nl-heading nl-heading--level-${headingLevel} wizard-steps-overview__row-title`;
+---
+
+{
+  isCompletedRow ? (
+    <details class="wizard-steps-overview__row wizard-steps-overview__row--completed" data-completed-row hidden open>
+      <summary class="wizard-steps-overview__row-summary">
+        <HeadingTag class={headingClass}>
+          {title} (<span data-completed-count>0</span>)
+        </HeadingTag>
+
+        <span class="wizard-collapsible__chevron" aria-hidden="true" set:html={chevronDownIcon} />
+      </summary>
+
+      <ul class="wizard-steps-overview__list" data-completed-list>
+        <slot />
+      </ul>
+    </details>
+  ) : title ? (
+    <details
+      class="wizard-steps-overview__row"
+      data-todo-row={initialCount !== undefined || undefined}
+      hidden={initialCount === 0 || undefined}
+      open
+    >
+      <summary class="wizard-steps-overview__row-summary" id={id}>
+        <HeadingTag class={headingClass}>
+          {title}
+          {initialCount !== undefined && (
+            <>
+              {' '}
+              (<span data-todo-count>{initialCount}</span>)
+            </>
+          )}
+        </HeadingTag>
+        <span class="wizard-collapsible__chevron" aria-hidden="true" set:html={chevronDownIcon} />
+      </summary>
+      <ul class="wizard-steps-overview__list">
+        <slot />
+      </ul>
+      <slot name="groups" />
+    </details>
+  ) : (
+    <section class="wizard-steps-overview__row" aria-labelledby={id}>
+      <ul class="wizard-steps-overview__list">
+        <slot />
+      </ul>
+    </section>
+  )
+}

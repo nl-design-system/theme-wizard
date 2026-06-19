@@ -1,0 +1,123 @@
+.preview-theme {
+  /* Clippy side navigation tokens */
+  --clippy-side-navigation-display: flex;
+  --clippy-side-navigation-flex-direction: column;
+  --clippy-side-navigation-row-gap: var(--basis-space-row-3xl);
+  --clippy-side-navigation-min-inline-size: 240px;
+
+  /* Clippy space tokens */
+  --clippy-space-around: var(--basis-space-inline-sm, 4px);
+
+  /* Clippy voorbeeld card tokens */
+  --clippy-voorbeeld-card-background-color: var(--basis-color-default-bg-subtle);
+  --clippy-voorbeeld-card-outline: var(--basis-color-default-border-subtle);
+  --clippy-voorbeeld-card-padding-block: var(--basis-space-block-3xl);
+  --clippy-voorbeeld-card-padding-inline: var(--basis-space-inline-3xl);
+  --clippy-voorbeeld-card-row-gap: var(--basis-space-row-xl);
+
+  /* Clippy page padding tokens */
+  --clippy-page-content-padding-block-start: var(--basis-space-row-2xl);
+  --clippy-page-content-padding-block-end: var(--basis-space-row-2xl);
+  --clippy-page-padding-inline-start: var(--basis-space-inline-lg);
+  --clippy-page-padding-inline-end: var(--basis-space-inline-lg);
+  --clippy-page-header-padding-block-start: var(--basis-space-row-lg);
+  --clippy-page-header-padding-block-end: var(--basis-space-row-lg);
+
+  /* Clippy section/page/nav-bar tokens */
+  --clippy-page-secondary-background-color: var(--basis-color-default-border-subtle);
+  --clippy-nav-bar-content-max-inline-size: 1140px;
+
+  /* Denhaag side navigation tokens (mapping) */
+  --denhaag-side-navigation-display: var(--clippy-side-navigation-display);
+  --denhaag-side-navigation-flex-direction: var(--clippy-side-navigation-flex-direction);
+  --denhaag-side-navigation-row-gap: var(--clippy-side-navigation-row-gap);
+  --denhaag-side-navigation-min-width: var(--clippy-side-navigation-min-inline-size);
+
+  /* Utrecht page tokens (mapping) */
+  --utrecht-page-content-padding-block-start: var(--clippy-page-content-padding-block-start);
+  --utrecht-page-content-padding-block-end: var(--clippy-page-content-padding-block-end);
+  --utrecht-page-header-padding-block-start: var(--clippy-page-header-padding-block-start);
+  --utrecht-page-header-padding-block-end: var(--clippy-page-header-padding-block-end);
+
+  /* Utrecht space tokens (mapping) */
+  --utrecht-space-around: var(--clippy-space-around);
+}
+
+.theme-wizard-collage-component {
+  border-block-end: 1px solid var(--basis-color-default-border-default);
+  display: flex;
+  flex-direction: column;
+  padding: var(--basis-space-block-xl) var(--basis-space-inline-lg);
+}
+
+.theme-wizard-collage-component-header {
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto", sans-serif;
+  gap: var(--basis-space-block-sm);
+  margin-block-end: var(--basis-space-block-lg);
+}
+
+.theme-wizard-collage-component-header h2 {
+  color: var(--basis-color-default-color-default);
+  font-size: var(--basis-text-font-size-lg);
+  font-weight: var(--basis-text-font-weight-bold);
+  line-height: var(--basis-text-line-height-md);
+  margin: 0;
+}
+
+.theme-wizard-collage-component-header p {
+  color: var(--basis-color-default-color-subtle);
+  font-family: "Roboto", sans-serif;
+  font-size: var(--basis-text-font-size-md);
+  font-weight: var(--basis-text-font-weight-regular);
+  line-height: var(--basis-text-line-height-md);
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+.theme-wizard-collage-component-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-block-sm);
+}
+
+.theme-wizard-collage-component-content.theme-wizard-collage-component-content--stacked {
+  flex-direction: column;
+  gap: var(--basis-space-block-sm);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  display: flex;
+}
+
+.layout-main > theme-wizard-side-nav {
+  flex: 0 0 var(--denhaag-sidenav-min-width, 240px);
+}
+
+.layout-main > utrecht-page-content {
+  flex: 1;
+}
+
+.todo-card-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--basis-space-column-xl);
+}
+
+.footer-grid {
+  display: flex;
+  gap: var(--basis-space-column-md);
+}
+
+.footer-grid > * {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--basis-space-column-lg);
+}

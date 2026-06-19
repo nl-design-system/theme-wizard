@@ -10,6 +10,11 @@
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "outDir": "dist",
+    "paths": {
+      "@lib/*": ["../clippy-components/src/lib/*"],
+      "@nl-design-system-community/clippy-components/*": ["../clippy-components/src/*"],
+      "@src/*": ["../clippy-components/src/*"]
+    },
     "types": ["vite/client"],
     "importHelpers": false,
     "useDefineForClassFields": false,

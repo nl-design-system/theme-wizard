@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/web-components-vite';
 // import { StoryRootDecorator } from '@nl-design-system-candidate/storybook-shared/src/StoryRootDecorator';
 import { formatHtml } from '@rijkshuisstijl-community/storybook-tooling/formatHtml';
 // import { DocsPage } from '../src/DocsPage';
-import '@nl-design-system-community/theme-wizard-app/theme.css';
+import '@nl-design-system-community/theme-wizard-templates/preview-theme.css';
 import { addThemeClasses } from './decorators';
 import { THEMES } from './themes/theme-data';
 

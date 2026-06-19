@@ -4,7 +4,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@templates/*": ["../theme-wizard-templates/src/*", "../../theme-wizard-templates/src/*"]
+      "@lib/*": ["../clippy-components/src/lib/*"],
+      "@nl-design-system-community/clippy-components/*": ["../clippy-components/src/*"],
+      "@src/*": ["../clippy-components/src/*"],
+      "@templates/*": ["../theme-wizard-templates/src/*", "../../theme-wizard-templates/src/*"],
+      "@app/*": ["../theme-wizard-app/src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"

@@ -9,9 +9,7 @@ import {
   Heading2,
   HeadingGroup,
   Icon,
-  Link,
   LinkButton,
-  Paragraph,
   PreHeading,
 } from '@utrecht/component-library-react/dist/css-module';
 export const detail = { name: 'Stap 2', value: 'step-2', module: 'Meerstapformulier' };
@@ -19,21 +17,25 @@ export const detail = { name: 'Stap 2', value: 'step-2', module: 'Meerstapformul
 
 <PageLayout cookieBanner={false}>
   <main id="main" slot="content">
-    <Link href="/#" className="voorbeeld-back-link">
+    <template-link href="/#" class="voorbeeld-back-link">
       <Icon>
         <IconArrowLeft />
       </Icon>
       Terug
-    </Link>
+    </template-link>
+
     <Heading1>Vraag aan de gemeente</Heading1>
+
     <HeadingGroup>
       <PreHeading>Stap 2 van 4</PreHeading>
       <Heading2>Uw gegevens</Heading2>
     </HeadingGroup>
-    <Paragraph>
+
+    <template-paragraph>
       Om u zo goed mogelijk te kunnen helpen, ontvangen we graag uw contactgegevens. Deze gegevens worden niet met
       anderen gedeeld.
-    </Paragraph>
+    </template-paragraph>
+
     <FormFieldTextbox label="Naam" id="nameField" autoComplete="name" required />
     <FormFieldTextbox label="Straat" id="streetField" autoComplete="street-address" required />
     <FormFieldTextbox label="Huisnummer" id="houseField" required />
@@ -53,12 +55,10 @@ export const detail = { name: 'Stap 2', value: 'step-2', module: 'Meerstapformul
       <Button type="submit" className="voorbeeld-button-spacing" appearance="primary-action-button">
         Volgende stap
       </Button>
-      <LinkButton inline className="voorbeeld-button-link">
-        Opslaan en later verder
-      </LinkButton>
-      <LinkButton inline className="voorbeeld-button-link">
-        Stoppen met formulier
-      </LinkButton>
+
+      <LinkButton inline className="voorbeeld-button-link"> Opslaan en later verder </LinkButton>
+
+      <LinkButton inline className="voorbeeld-button-link"> Stoppen met formulier </LinkButton>
     </ButtonGroup>
   </main>
 </PageLayout>

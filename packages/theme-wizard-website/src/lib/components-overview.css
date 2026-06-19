@@ -1,0 +1,146 @@
+.wizard-components-category {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-lg, 1.5rem);
+}
+
+.wizard-components-category__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-2xs, 0.25rem);
+}
+
+.wizard-components-category__description {
+  color: var(--basis-color-default-color-subtle, #4b5563);
+  margin-block: 0;
+}
+
+/* Layout variants — grid for the components page, single-column list for the drawer.
+   `container-type: inline-size` opts the container into container queries so cards
+   can switch to a horizontal layout when their container is narrow. */
+.wizard-component-grid {
+  box-sizing: border-box;
+  container-type: inline-size;
+  display: grid;
+  gap: var(--basis-space-block-md, 1rem);
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+
+.wizard-component-list {
+  box-sizing: border-box;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--basis-space-block-sm, 0.75rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wizard-component-list > li {
+  margin: 0;
+}
+
+/* Card visuals — neutral on element type (works on <a> and <button>). */
+.wizard-component-card {
+  appearance: none;
+  background: transparent;
+  border: 1px solid color-mix(in sRGB, var(--basis-color-default-border-subtle, #d0d7de) 80%, transparent);
+  border-radius: var(--basis-border-radius-md, 6px);
+  box-sizing: border-box;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  gap: var(--basis-space-block-xs, 0.5rem);
+  inline-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
+  padding-block-end: var(--basis-space-block-lg, 1.5rem);
+  padding-inline: var(--basis-space-inline-lg, 1.5rem);
+  text-align: start;
+  text-decoration: none;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease;
+}
+
+.wizard-component-card:hover:not(:disabled),
+.wizard-component-card:focus-visible:not(:disabled) {
+  background-color: color-mix(in sRGB, var(--basis-color-action-1-bg-subtle, #eef7ff) 30%, transparent);
+  border-color: var(--basis-color-action-1-border-default, var(--basis-color-action-1-color-default, #0077c8));
+}
+
+.wizard-component-card:focus-visible {
+  outline: 2px solid var(--basis-color-action-1-color-default, #0077c8);
+  outline-offset: 2px;
+}
+
+.wizard-component-card:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.wizard-component-card[aria-current='true'] {
+  background-color: color-mix(in sRGB, var(--basis-color-action-1-bg-subtle, #eef7ff) 50%, transparent);
+  border-color: var(--basis-color-action-1-border-default, var(--basis-color-action-1-color-default, #0077c8));
+}
+
+.wizard-component-card__illustration {
+  block-size: auto;
+  box-sizing: border-box;
+  display: block;
+  inline-size: calc(100% + 2 * var(--basis-space-inline-lg, 1.5rem));
+  margin-block-end: var(--basis-space-block-md, 1rem);
+  margin-inline-start: calc(-1 * var(--basis-space-inline-lg, 1.5rem));
+}
+
+.wizard-component-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.wizard-component-card__description {
+  color: var(--basis-color-default-color-subtle, #4b5563);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+/* Horizontal layout for narrow containers (drawer, mobile /components).
+   Image left in a square thumbnail, title + description right. */
+@container (max-width: 28rem) {
+  .wizard-component-card {
+    align-items: center;
+    column-gap: var(--basis-space-inline-md, 1rem);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    padding-block: var(--basis-space-block-md, 1rem);
+    padding-inline: var(--basis-space-inline-md, 1rem);
+    row-gap: var(--basis-space-block-2xs, 0.25rem);
+  }
+
+  .wizard-component-card__illustration {
+    align-self: center;
+    block-size: 4rem;
+    border-radius: var(--basis-border-radius-md, 6px);
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    inline-size: 4rem;
+    margin: 0;
+    object-fit: cover;
+  }
+
+  .wizard-component-card__title {
+    align-self: end;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .wizard-component-card__description {
+    align-self: start;
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
