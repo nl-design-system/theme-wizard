@@ -25,6 +25,10 @@
     "./components/*": {
       "import": "./dist/components/*/index.js",
       "types": "./dist/components/*/index.d.ts"
+    },
+    "./utils": {
+      "types": "./src/utils/index.ts",
+      "import": "./dist/utils/index.js"
     }
   },
   "files": [
