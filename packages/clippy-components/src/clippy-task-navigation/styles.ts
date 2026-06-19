@@ -5,7 +5,7 @@ export default css`
     display: block;
   }
 
-  slot[name='iconStart'] {
+  ::slotted([slot="iconStart"]) {
     align-self: var(--clippy-task-navigation-icon-start-align, center);
   }
 `;
