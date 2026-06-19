@@ -12,14 +12,14 @@ declare global {
   }
 }
 
-export type AnchorNavItem = {
+export type PageNavItem = {
   href: string;
   title: string | TemplateResult;
 };
 
 @customElement(tag)
 export class WizardPageNav extends LitElement {
-  @property({ type: Array }) items: AnchorNavItem[] = [
+  @property({ type: Array }) items: PageNavItem[] = [
     { href: '/basis-tokens', title: t('nav.configure') },
     { href: '/components', title: t('nav.components') },
     { href: '/style-guide', title: t('nav.styleGuide') },
