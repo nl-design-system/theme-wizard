@@ -1,4 +1,5 @@
 import './src/components/wizard-app';
+export type { WizardApp } from './src/components/wizard-app';
 import './src/components/wizard-anchor-nav';
 import './src/components/wizard-container';
 import './src/components/wizard-download-link';

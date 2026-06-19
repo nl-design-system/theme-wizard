@@ -28,12 +28,12 @@ declare global {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: App;
+    [tag]: WizardApp;
   }
 }
 
 @customElement(tag)
-export class App extends LitElement {
+export class WizardApp extends LitElement {
   static override readonly styles = componentStyles;
 
   readonly #themeStorage = new PersistentStorage({
@@ -53,14 +53,18 @@ export class App extends LitElement {
   readonly #scrapedTokensStorage = new PersistentStorage({
     onChange: () => {
       const tokens = this.#scrapedTokensStorage.getJSON();
-      this.scrapedTokens = tokens;
+      this._scrapedTokens = tokens;
     },
     prefix: 'scraped-tokens',
   });
 
   @provide({ context: scrapedTokensContext })
   @state()
-  scrapedTokens: StagedDesignToken[] = [];
+  private _scrapedTokens: StagedDesignToken[] = [];
+
+  get scrapedTokens(): ReadonlyArray<StagedDesignToken> {
+    return this._scrapedTokens;
+  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -73,7 +77,7 @@ export class App extends LitElement {
 
     const previousScrapedTokens = this.#scrapedTokensStorage.getJSON();
     if (previousScrapedTokens) {
-      this.scrapedTokens = previousScrapedTokens;
+      this._scrapedTokens = previousScrapedTokens;
     }
 
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
@@ -101,7 +105,7 @@ export class App extends LitElement {
     if (!(event.target instanceof WizardScraper)) return;
     const { result } = (event as CustomEvent<{ result: ScrapedDesignToken[] }>).detail;
 
-    this.scrapedTokens = result
+    this._scrapedTokens = result
       .filter((token) => {
         // Skip colors with transparency
         if (token.$type === 'color' && token.$value.alpha !== undefined && token.$value.alpha < 1) {
@@ -116,7 +120,7 @@ export class App extends LitElement {
           [EXTENSION_TOKEN_STAGED]: true,
         },
       }));
-    this.#scrapedTokensStorage.setJSON(this.scrapedTokens);
+    this.#scrapedTokensStorage.setJSON(this._scrapedTokens);
     this.dispatchEvent(new Event('scrape-success'));
   };
 
