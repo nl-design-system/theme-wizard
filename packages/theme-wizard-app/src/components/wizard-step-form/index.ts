@@ -16,6 +16,7 @@ import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../..
 import { EXTENSION_TOKEN_STAGED, type StagedDesignToken } from '../../utils/types';
 import { markStepComplete } from '../../utils/wizard-steps-storage';
 import styles from './styles';
+import '../wizard-color-description';
 
 export { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 export type { SubmitSaveTokenFormEvent } from '../../utils/events';
@@ -162,6 +163,9 @@ export class WizardStepForm extends LitElement {
                         ? html`<clippy-color-sample color=${stringified}></clippy-color-sample>`
                         : nothing}
                       ${stringified}
+                      ${tokenType === 'color'
+                        ? html`&nbsp;&mdash; <wizard-color-description color=${stringified}></wizard-color-description>`
+                        : nothing}
                     </label>
                     <p id=${`description-${index}`} class="nl-paragraph">
                       ${token.$extensions?.['nl.nldesignsystem.theme-wizard.usage-count']} keer gebruikt op je website.
