@@ -12,6 +12,10 @@ const STEPS = [
     label: 'Kleur voor tekst',
     path: 'basis.color.default.color-document',
   },
+  {
+    label: 'Lettertype voor koppen',
+    path: 'basis.heading.font-family',
+  },
 ] as const;
 
 const tag = 'wizard-step-form-task-navigation-list';
