@@ -1,34 +1,12 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import '@nl-design-system-candidate/link-css/link.css'
-import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import WizardLayout from '../../layouts/WizardLayout.astro';
+import '@nl-design-system-candidate/button-css/button.css'
 ---
 
-<script>
-  import '@nl-design-system-community/clippy-components/clippy-task-navigation';
-</script>
+<WizardLayout title="Lettertype voor tekst">
+  <header slot="header">
+    <p class="nl-paragraph nl-paragraph--lead">Dit lettertype wordt bijvoorbeeld toegepast op alinea's, knoppen, en formulier elementen. Je kunt dit later altijd aanpassen.</p>
+  </header>
 
-<BaseLayout title="Wizard - Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <main slot="main" class="wizard-main">
-        <wizard-container size="lg">
-          <clippy-story-preview size="lg">
-            <clippy-heading level="1">Lettertype voor tekst kiezen</clippy-heading>
-            <p class="nl-paragraph nl-paragraph--lead">Dit lettertype wordt bijvoorbeeld toegepast op alinea's, knoppen, en formulier elementen. Je kunt dit later altijd aanpassen.</p>
-          </clippy-story-preview>
-        </wizard-container>
-      </main>
-     </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<style>
-  .wizard-main {
-    padding-block: var(--basis-space-block-5xl);
-  }
-
-  wizard-container {
-    margin-inline: auto;
-  }
-</style>
+  <wizard-step-form returnUrl="./" path="basis.text.font-family.default"></wizard-step-form>
+</WizardLayout>
