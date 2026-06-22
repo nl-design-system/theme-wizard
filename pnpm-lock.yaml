@@ -24,6 +24,9 @@ importers:
       '@nl-design-system/eslint-config':
         specifier: 2.2.0
         version: 2.2.0(eslint@10.4.1)(typescript@6.0.3)
+      '@projectwallace/stylelint-plugin':
+        specifier: 0.6.2
+        version: 0.6.2(stylelint@17.12.0(typescript@6.0.3))
       '@stylistic/eslint-plugin':
         specifier: 5.10.0
         version: 5.10.0(eslint@10.4.1)
@@ -3100,6 +3103,10 @@ packages:
     resolution: {integrity: sha512-yBl4lhtCoRDxIxJq8SeTH1lfT8EP8W0D7SiXlLxoiBg40rVf8JjGLEZlrbVox5SZ5tPY070A1nyP61GApY83iQ==}
     engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
 
+  '@projectwallace/css-analyzer@9.9.0':
+    resolution: {integrity: sha512-Hsnf8AhnEGA0r1a410zKg/qF8KGT++ENdKNQYgnYCJP/BIbV2MbuZ3WVno+IzO2VSQOsJf9klROGiZhEcQRgNw==}
+    engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
+
   '@projectwallace/css-design-tokens@0.11.6':
     resolution: {integrity: sha512-SIDDkxGx43R22//XNqWsIHzN1U0r85U1L1t6v4DYk+TrZdHX+8ZzxvUJKFRTkYTUuGYZU/JCE0J83r4YTikiug==}
     engines: {node: '>=22', pnpm: '>=10.0.0'}
@@ -3111,6 +3118,12 @@ packages:
   '@projectwallace/css-time-sort@3.1.0':
     resolution: {integrity: sha512-hG6zILMK9OJpsvkCkbF9GIW+bAHAxKGB0AsyR5N5T+n8bCKPgWhZGwPlDMP1FrLsBkuRq7U7+fqB19qzUJq5hQ==}
     engines: {node: '>=18.0.0', pnpm: '>=11.0.0'}
+
+  '@projectwallace/stylelint-plugin@0.6.2':
+    resolution: {integrity: sha512-YsV2xP6ksmnU5QQfraa4MTAHeJCjCJxToYrBi2+4/lDP9qkcPrqgLOhlzFd/X9yLFuFf77SIDuYesx7o+8g48Q==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      stylelint: ^16.0.0 || ^17.0.0
 
   '@publint/pack@0.1.4':
     resolution: {integrity: sha512-HDVTWq3H0uTXiU0eeSQntcVUTPP3GamzeXI41+x7uU9J65JgWQh3qWZHblR1i0npXfFtF+mxBiU2nJH8znxWnQ==}
@@ -10975,6 +10988,10 @@ snapshots:
     dependencies:
       '@projectwallace/css-parser': 0.16.0
 
+  '@projectwallace/css-analyzer@9.9.0':
+    dependencies:
+      '@projectwallace/css-parser': 0.16.0
+
   '@projectwallace/css-design-tokens@0.11.6':
     dependencies:
       '@projectwallace/css-analyzer': 9.8.2
@@ -10986,6 +11003,12 @@ snapshots:
   '@projectwallace/css-parser@0.16.0': {}
 
   '@projectwallace/css-time-sort@3.1.0': {}
+
+  '@projectwallace/stylelint-plugin@0.6.2(stylelint@17.12.0(typescript@6.0.3))':
+    dependencies:
+      '@projectwallace/css-analyzer': 9.9.0
+      '@projectwallace/css-parser': 0.16.0
+      stylelint: 17.12.0(typescript@6.0.3)
 
   '@publint/pack@0.1.4': {}
 

@@ -29,6 +29,7 @@
     "@eslint/js": "10.0.1",
     "@eslint/json": "2.0.0",
     "@nl-design-system/eslint-config": "2.2.0",
+    "@projectwallace/stylelint-plugin": "0.6.2",
     "@stylistic/eslint-plugin": "5.10.0",
     "@types/node": "24.13.1",
     "@vitest/eslint-plugin": "1.6.19",
