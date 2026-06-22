@@ -73,6 +73,7 @@ export class WizardLayout extends LitElement {
             <a class="nl-link wizard-layout__footer-nav-link" href="/reuse-tokens">
               ${t('footer.otherLinks.reuseTokens')}
             </a>
+            <a class="nl-link wizard-layout__footer-nav-link" href="/wizard">${t('footer.otherLinks.wizard')}</a>
           </nav>
         </footer>
       </div>

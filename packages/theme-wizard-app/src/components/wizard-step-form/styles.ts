@@ -17,6 +17,10 @@ export default css`
   }
 
   .wizard-card-as-input {
+    --nl-color-sample-border-radius: var(--basis-border-radius-round);
+    --nl-color-sample-inline-size: var(--basis-size-xs);
+    --nl-color-sample-block-size: var(--basis-size-xs);
+
     background-color: var(--wizard-card-as-input-bg-color, var(--basis-color-default-bg-document));
     border-color: var(--wizard-card-as-input-border-color, var(--basis-color-default-border-subtle));
     border-radius: var(--wizard-card-as-input-border-radius, var(--basis-border-radius-md));
@@ -28,7 +32,7 @@ export default css`
     padding-block: var(--wizard-card-as-input-padding-block, var(--basis-space-block-lg));
     padding-inline: var(--wizard-card-as-input-padding-inline, var(--basis-space-inline-xl));
     position: relative;
-    row-gap: var(--wizard-card-as-input-row-gap, var(--basis-space-row-lg));
+    row-gap: var(--wizard-card-as-input-row-gap, var(--basis-space-row-md));
 
     @media (hover: hover) {
       &:hover {
@@ -64,10 +68,22 @@ export default css`
       grid-column: 2;
     }
 
-    & label::after {
-      content: '';
-      inset: 0;
-      position: absolute;
+    & label {
+      align-items: center;
+      display: inline-flex;
+      flex-wrap: wrap;
+      font-weight: var(--basis-text-font-weight-bold);
+      column-gap: var(--basis-space-inline-md);
+
+      & > * {
+        display: inline-flex;
+      }
+
+      &::after {
+        content: '';
+        inset: 0;
+        position: absolute;
+      }
     }
 
     wizard-font-sample {

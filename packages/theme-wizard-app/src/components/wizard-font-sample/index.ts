@@ -30,12 +30,14 @@ export class WizardFontSample extends LitElement {
 
   @property({ type: String }) size: string = '';
   @property({ type: String }) family: string = '';
+  @property({ type: String }) color: string = '';
   @property({ type: Boolean }) wrap: boolean = false;
 
   override render() {
     const fontStyles = [
       this.size && `--nl-paragraph-font-size: ${this.size}`,
       this.family && `--nl-paragraph-font-family: ${this.family}`,
+      this.color && `--nl-paragraph-color: ${this.color}`,
     ]
       .filter(Boolean)
       .join(';');
