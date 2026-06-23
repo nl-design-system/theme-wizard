@@ -25,7 +25,7 @@ if (!currentTemplate) {
 <style>
   .wizard-main {
     display: grid;
-    grid-template-rows: minmax(var(--basis-size-md), auto) 1fr;
+    grid-template-rows: var(--wizard-layout-body-template-rows, none);
     padding-block-end: var(--basis-space-block-lg);
     row-gap: var(--basis-space-row-lg);
   }

@@ -6,6 +6,7 @@ export default css`
   }
 
   .wizard-layout {
+    --wizard-layout-body-template-rows: minmax(var(--basis-size-md), auto) 1fr;
     --wizard-layout-nav-padding-block: var(--basis-space-block-md);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);

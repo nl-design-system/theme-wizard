@@ -8,10 +8,10 @@ export default css`
   :host {
     --wizard-scroll-container-max-size: none;
 
-    grid-template-rows: minmax(var(--basis-size-md), auto) 1fr;
+    grid-template-rows: var(--wizard-layout-body-template-rows, none);
 
     /* TODO: get page nav block size and --basis-space-block-xl from parent */
-    max-block-size: calc(100svb - var(--wizard-page-nav-block-size, 3.5rem) - var(--basis-space-block-xl) * 2);
+    max-block-size: calc(100svb - var(--wizard-page-nav-block-size, 3rem) - var(--basis-space-block-xl) * 2);
     outline: 2px solid red;
     row-gap: var(--basis-space-row-lg);
   }
