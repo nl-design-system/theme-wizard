@@ -172,29 +172,34 @@ export class WizardStepForm extends LitElement {
                     <p id=${`description-${index}`} class="nl-paragraph">
                       ${token.$extensions?.['nl.nldesignsystem.theme-wizard.usage-count']} keer gebruikt op je website.
                     </p>
-                    ${path.includes('heading')
-                      ? html`
-                          <clippy-html-image>
-                            <clippy-heading
-                              style=${styleMap({
-                                '--nl-heading-level-2-font-family':
-                                  tokenType === 'fontFamily' ? stringified : undefined,
-                              })}
-                              level="2"
-                            >
-                              Voorbeeld van een koptekst.
-                            </clippy-heading>
-                          </clippy-html-image>
-                        `
-                      : html`
-                          <wizard-font-sample
-                            wrap
-                            family=${tokenType === 'fontFamily' ? stringified : undefined}
-                            color=${tokenType === 'color' ? stringified : undefined}
-                          >
-                            Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                          </wizard-font-sample>
-                        `}
+                    <clippy-reset-theme>
+                      <wizard-preview-theme>
+                        ${path.includes('heading')
+                          ? html`
+                              <clippy-html-image>
+                                <clippy-heading
+                                  style=${styleMap({
+                                    '--nl-heading-level-2-color': tokenType === 'color' ? stringified : undefined,
+                                    '--nl-heading-level-2-font-family':
+                                      tokenType === 'fontFamily' ? stringified : undefined,
+                                  })}
+                                  level="2"
+                                >
+                                  Voorbeeld van een koptekst.
+                                </clippy-heading>
+                              </clippy-html-image>
+                            `
+                          : html`
+                              <wizard-font-sample
+                                wrap
+                                family=${tokenType === 'fontFamily' ? stringified : undefined}
+                                color=${tokenType === 'color' ? stringified : undefined}
+                              >
+                                Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
+                              </wizard-font-sample>
+                            `}
+                      </wizard-preview-theme>
+                    </clippy-reset-theme>
                   </div>
                 `;
               })}
