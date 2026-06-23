@@ -35,9 +35,7 @@ export class WizardLayout extends LitElement {
             <wizard-logo></wizard-logo>
           </a>
 
-          <div class="wizard-layout__nav">
-            <slot name="page-nav"></slot>
-          </div>
+          <slot name="page-nav"></slot>
         </header>
 
         <div class="wizard-layout__body">

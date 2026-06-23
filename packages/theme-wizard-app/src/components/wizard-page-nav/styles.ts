@@ -2,7 +2,12 @@ import { css } from 'lit';
 
 export default css`
   :host(:not([hidden])) {
-    display: block;
+    display: flex;
+  }
+
+  :host {
+    align-self: stretch;
+    justify-content: center;
   }
 
   .wizard-page-nav {
@@ -24,7 +29,7 @@ export default css`
     display: block;
     font-weight: var(--basis-text-font-weight-bold);
     min-block-size: 100%;
-    padding-block: var(--basis-space-block-xl);
+    padding-block: var(--basis-space-block-lg);
     padding-inline: var(--basis-space-inline-lg);
 
     &:hover {
