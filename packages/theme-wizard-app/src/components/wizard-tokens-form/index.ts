@@ -110,7 +110,7 @@ export class WizardTokensForm extends LitElement {
       <wizard-scroll-container>
         <wizard-stack size="4xl">
           <clippy-heading level="3">${title}</clippy-heading>
-          <wizard-stack size="4xl">${items}</wizard-stack>
+          <div class="wizard-tokens-form__input-group">${items}</div>
         </wizard-stack>
       </wizard-scroll-container>
       ${this.renderSaveButton()}

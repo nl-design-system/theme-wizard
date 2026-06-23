@@ -9,11 +9,24 @@ export default css`
     --wizard-scroll-container-max-size: none;
 
     grid-template-rows: var(--wizard-layout-body-template-rows, none);
-
-    /* TODO: get page nav block size and --basis-space-block-xl from parent */
-    max-block-size: calc(100svb - var(--wizard-page-nav-block-size, 3rem) - var(--basis-space-block-xl) * 2);
-    outline: 2px solid red;
     row-gap: var(--basis-space-row-lg);
+
+    @media (height >= 40rem) and (orientation: landscape) {
+      /* TODO: get page nav block size from parent */
+      max-block-size: calc(
+        100svb - var(--wizard-page-nav-block-size, 3rem) - var(
+            --wizard-layout-body-padding-block,
+            var(--basis-space-block-xl)
+          ) *
+          2
+      );
+    }
+  }
+
+  wizard-scroll-container {
+    @media (height < 40rem) and (orientation: landscape) {
+      overflow: visible;
+    }
   }
 
   .wizard-tokens-form__header {
@@ -54,6 +67,13 @@ export default css`
   .wizard-tokens-form__section-link-icon {
     color: var(--basis-color-accent-1-color-subtle);
     transition: transform 100ms ease-out;
+  }
+
+  .wizard-tokens-form__input-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    row-gap: var(--basis-space-block-4xl);
+    column-gap: var(--basis-space-block-4xl);
   }
 
   .wizard-form__field {

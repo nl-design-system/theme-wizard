@@ -6,6 +6,7 @@ export default css`
   }
 
   .wizard-layout {
+    --wizard-layout-body-padding-block: var(--basis-space-block-xl);
     --wizard-layout-body-template-rows: minmax(var(--basis-size-md), auto) 1fr;
     --wizard-layout-nav-padding-block: var(--basis-space-block-md);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
@@ -45,7 +46,7 @@ export default css`
     flex-wrap: wrap;
     gap: var(--basis-space-column-4xl);
     grid-area: main;
-    padding-block: var(--basis-space-block-xl);
+    padding-block: var(--wizard-layout-body-padding-block);
     padding-inline: var(--basis-space-inline-xl);
   }
 
@@ -68,7 +69,7 @@ export default css`
     display: grid;
     flex-basis: 0;
     flex-grow: 999;
-    min-inline-size: 75%;
+    min-inline-size: 64%;
   }
 
   @media print {
