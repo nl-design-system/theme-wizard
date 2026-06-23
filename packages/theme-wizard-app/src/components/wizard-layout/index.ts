@@ -39,7 +39,7 @@ export class WizardLayout extends LitElement {
         </header>
 
         <div class="wizard-layout__body">
-          <div class="wizard-layout__sidebar">
+          <div class="wizard-layout__sidebar" ?hidden=${!this.hasSidebar}>
             <slot name="sidebar" @slotchange=${this.onSidebarSlotChange}></slot>
           </div>
           <section class="wizard-layout__main"><slot name="main"></slot></section>

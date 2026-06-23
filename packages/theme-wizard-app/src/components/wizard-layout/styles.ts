@@ -48,7 +48,7 @@ export default css`
     padding-inline: var(--basis-space-inline-xl);
   }
 
-  .wizard-layout__sidebar {
+  .wizard-layout__sidebar:not([hidden]) {
     display: grid;
     flex-basis: 20rem;
     flex-grow: 1;
