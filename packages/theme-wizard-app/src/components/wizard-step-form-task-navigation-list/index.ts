@@ -22,7 +22,7 @@ const STEPS = [
   },
   {
     label: 'Kleur voor knoppen',
-    path: 'basis.color.accent-1.background-color',
+    path: 'basis.color.action-1.background-color',
   },
 ] as const;
 

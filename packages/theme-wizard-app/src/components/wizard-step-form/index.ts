@@ -121,6 +121,49 @@ export class WizardStepForm extends LitElement {
       );
   }
 
+  private renderSample(token: BaseDesignToken) {
+    const tokenType = this.tokenAt!.$type;
+    const stringified = stringifyToken(token);
+
+    if (this.path.includes('heading')) {
+      return html`
+        <clippy-html-image>
+          <clippy-heading
+            style=${styleMap({
+              '--nl-heading-level-2-color': tokenType === 'color' ? stringified : undefined,
+              '--nl-heading-level-2-font-family': tokenType === 'fontFamily' ? stringified : undefined,
+            })}
+            level="2"
+          >
+            Voorbeeld van een koptekst.
+          </clippy-heading>
+        </clippy-html-image>
+      `;
+    }
+
+    if (this.path.includes('action-1.bg-default')) {
+      return html`
+        <clippy-html-image style=${styleMap({
+          '--nl-button-primary-background-color': tokenType === 'color' ? stringified : undefined,
+          '--nl-button-primary-color':
+            tokenType === 'color' ? `color-mix(in hsl, contrast-color(${stringified}) 95%, ${stringified})` : undefined,
+        })}>
+          <clippy-button purpose="primary">Voorbeeld van knop</clippy-button>
+        </clipy-html-image>
+      `;
+    }
+
+    return html`
+      <wizard-font-sample
+        wrap
+        family=${tokenType === 'fontFamily' ? stringified : undefined}
+        color=${tokenType === 'color' ? stringified : undefined}
+      >
+        Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
+      </wizard-font-sample>
+    `;
+  }
+
   override render() {
     const path = this.path;
     const tokenAt = this.tokenAt;
@@ -173,32 +216,7 @@ export class WizardStepForm extends LitElement {
                       ${token.$extensions?.['nl.nldesignsystem.theme-wizard.usage-count']} keer gebruikt op je website.
                     </p>
                     <clippy-reset-theme>
-                      <wizard-preview-theme>
-                        ${path.includes('heading')
-                          ? html`
-                              <clippy-html-image>
-                                <clippy-heading
-                                  style=${styleMap({
-                                    '--nl-heading-level-2-color': tokenType === 'color' ? stringified : undefined,
-                                    '--nl-heading-level-2-font-family':
-                                      tokenType === 'fontFamily' ? stringified : undefined,
-                                  })}
-                                  level="2"
-                                >
-                                  Voorbeeld van een koptekst.
-                                </clippy-heading>
-                              </clippy-html-image>
-                            `
-                          : html`
-                              <wizard-font-sample
-                                wrap
-                                family=${tokenType === 'fontFamily' ? stringified : undefined}
-                                color=${tokenType === 'color' ? stringified : undefined}
-                              >
-                                Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                              </wizard-font-sample>
-                            `}
-                      </wizard-preview-theme>
+                      <wizard-preview-theme> ${this.renderSample(token)} </wizard-preview-theme>
                     </clippy-reset-theme>
                   </div>
                 `;
