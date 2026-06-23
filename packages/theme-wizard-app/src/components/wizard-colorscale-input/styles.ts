@@ -18,6 +18,7 @@ export default css`
   .wizard-colorscale-input__list {
     display: flex;
     inline-size: 100%;
+    max-inline-size: min(100%, var(--utrecht-textbox-max-inline-size, var(--utrecht-form-control-max-inline-size)));
     justify-content: stretch;
   }
 
