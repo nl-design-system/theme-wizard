@@ -20,6 +20,10 @@ const STEPS = [
     label: 'Kleur voor koppen',
     path: 'basis.heading.color',
   },
+  {
+    label: 'Kleur voor knoppen',
+    path: 'basis.color.accent-1.background-color',
+  },
 ] as const;
 
 const tag = 'wizard-step-form-task-navigation-list';
