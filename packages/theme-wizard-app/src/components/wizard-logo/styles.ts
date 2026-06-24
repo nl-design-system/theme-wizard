@@ -18,6 +18,7 @@ export default css`
 
     & > svg {
       block-size: var(--basis-size-sm);
+      inline-size: auto;
     }
   }
 

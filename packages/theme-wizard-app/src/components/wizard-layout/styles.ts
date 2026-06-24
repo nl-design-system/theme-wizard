@@ -6,9 +6,10 @@ export default css`
   }
 
   .wizard-layout {
+    --wizard-layout-padding-inline: var(--basis-space-inline-xl);
     --wizard-layout-body-padding-block: var(--basis-space-block-xl);
     --wizard-layout-body-template-rows: minmax(var(--basis-size-md), auto) 1fr;
-    --wizard-layout-nav-padding-block: var(--basis-space-block-md);
+    --wizard-layout-nav-padding-block: var(--basis-space-block-xl);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
 
@@ -31,7 +32,7 @@ export default css`
     grid-area: header;
     grid-template-columns: auto 1fr;
     inset-block-start: 0;
-    padding-inline: var(--basis-space-inline-lg);
+    padding-inline: var(--wizard-layout-padding-inline);
     position: sticky;
     z-index: 1;
 
@@ -47,7 +48,7 @@ export default css`
     gap: var(--basis-space-column-4xl);
     grid-area: content;
     padding-block: var(--wizard-layout-body-padding-block);
-    padding-inline: var(--basis-space-inline-xl);
+    padding-inline: var(--wizard-layout-padding-inline);
   }
 
   .wizard-layout__sidebar:not([hidden]) {
@@ -96,7 +97,7 @@ export default css`
     grid-area: footer;
     padding-block-end: var(--basis-space-block-6xl);
     padding-block-start: var(--basis-space-block-5xl);
-    padding-inline: var(--basis-space-inline-lg);
+    padding-inline: var(--wizard-layout-padding-inline);
     row-gap: var(--basis-space-row-2xl);
 
     @media (forced-colors: active) {
