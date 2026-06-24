@@ -12,10 +12,10 @@ export default css`
     row-gap: var(--basis-space-row-lg);
 
     @media (height >= 35rem) and (orientation: landscape) {
-      position: sticky;
       block-size: 100%;
+
       /* TODO: get page nav block size from parent */
-      top: calc(
+      inset-block-start: calc(
         var(--wizard-page-nav-block-size, 4rem) + var(--wizard-layout-body-padding-block, var(--basis-space-block-xl))
       );
       max-block-size: calc(
@@ -25,6 +25,7 @@ export default css`
           ) *
           2
       );
+      position: sticky;
     }
   }
 
