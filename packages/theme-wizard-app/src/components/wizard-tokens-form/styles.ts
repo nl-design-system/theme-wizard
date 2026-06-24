@@ -8,10 +8,15 @@ export default css`
   :host {
     --wizard-scroll-container-max-size: none;
 
-    grid-template-rows: var(--wizard-layout-body-template-rows, none);
+    grid-template-rows: var(--wizard-layout-body-template-rows, none) auto;
     row-gap: var(--basis-space-row-lg);
 
-    @media (height >= 40rem) and (orientation: landscape) {
+    @media (height >= 35rem) and (orientation: landscape) {
+      position: sticky;
+      top: calc(
+        var(--wizard-page-nav-block-size, 3rem) + var(--wizard-layout-body-padding-block, var(--basis-space-block-xl))
+      );
+      block-size: 100%;
       /* TODO: get page nav block size from parent */
       max-block-size: calc(
         100svb - var(--wizard-page-nav-block-size, 3rem) - var(
@@ -24,7 +29,7 @@ export default css`
   }
 
   wizard-scroll-container {
-    @media (height < 40rem) and (orientation: landscape) {
+    @media ((height < 35rem) and (orientation: landscape)) or (orientation: portrait) {
       overflow: visible;
     }
   }
@@ -67,13 +72,6 @@ export default css`
   .wizard-tokens-form__section-link-icon {
     color: var(--basis-color-accent-1-color-subtle);
     transition: transform 100ms ease-out;
-  }
-
-  .wizard-tokens-form__input-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
-    row-gap: var(--basis-space-block-4xl);
-    column-gap: var(--basis-space-block-4xl);
   }
 
   .wizard-form__field {

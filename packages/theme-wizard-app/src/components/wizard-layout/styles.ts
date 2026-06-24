@@ -17,7 +17,7 @@ export default css`
     container-type: inline-size;
     display: grid;
     font-family: var(--basis-text-font-family-default, inherit);
-    grid-template-areas: 'header' 'main' 'footer';
+    grid-template-areas: 'header' 'content' 'footer';
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     min-block-size: 100vh;
@@ -40,18 +40,17 @@ export default css`
     }
   }
 
+  /* Currently non-responsive, add flex-wrap: wrap to enable wrapping */
   .wizard-layout__body {
-    align-items: start;
+    align-items: stretch;
     display: flex;
-    flex-wrap: wrap;
     gap: var(--basis-space-column-4xl);
-    grid-area: main;
+    grid-area: content;
     padding-block: var(--wizard-layout-body-padding-block);
     padding-inline: var(--basis-space-inline-xl);
   }
 
   .wizard-layout__sidebar:not([hidden]) {
-    display: grid;
     flex-basis: 20rem;
     flex-grow: 1;
   }
@@ -87,6 +86,7 @@ export default css`
   /* ============================================
    FOOTER
    ============================================ */
+
   .wizard-layout__footer {
     align-items: start;
     background-color: var(--wizard-layout-nav-background-color);
