@@ -13,13 +13,13 @@ export default css`
 
     @media (height >= 35rem) and (orientation: landscape) {
       position: sticky;
-      top: calc(
-        var(--wizard-page-nav-block-size, 3rem) + var(--wizard-layout-body-padding-block, var(--basis-space-block-xl))
-      );
       block-size: 100%;
       /* TODO: get page nav block size from parent */
+      top: calc(
+        var(--wizard-page-nav-block-size, 4rem) + var(--wizard-layout-body-padding-block, var(--basis-space-block-xl))
+      );
       max-block-size: calc(
-        100svb - var(--wizard-page-nav-block-size, 3rem) - var(
+        100svb - var(--wizard-page-nav-block-size, 4rem) - var(
             --wizard-layout-body-padding-block,
             var(--basis-space-block-xl)
           ) *
