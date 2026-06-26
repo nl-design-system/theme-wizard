@@ -8,7 +8,7 @@ export default css`
   :host {
     --wizard-scroll-container-max-size: none;
 
-    grid-template-rows: var(--wizard-layout-body-template-rows, none) auto;
+    grid-template-rows: var(--wizard-layout-body-template-rows, 1fr) auto;
     row-gap: var(--basis-space-row-lg);
   }
 

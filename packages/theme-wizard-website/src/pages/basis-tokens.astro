@@ -23,11 +23,16 @@ if (!currentTemplate) {
 ---
 
 <style>
+  /**
+   * We need the browser-preview to adjust its height with taking the page-nav, paddings, and picker controls in mind.
+   * This also needs to be sticky.
+   * So we need a bit of CSS magic and variables to achieve the desired effect.
+   */
   .wizard-main {
     --wizard-main-block-start-correction: calc(
       /* Layout header */
       var(--wizard-page-nav-block-size, 4rem) +
-      /* layout-body-padding-block */
+      /* layout-body-padding-block top */
       var(
         --wizard-layout-body-padding-block,
         var(--basis-space-block-xl)
@@ -46,6 +51,10 @@ if (!currentTemplate) {
     justify-self: end;
   }
 
+  /**
+   * 1. We could simplify this by setting the size on the wizard-main class, but instead
+   *    we need to place the sizing on the preview because the preview is also resizable.
+   */
   .wizard-preview {
     --wizard-scroll-container-max-size: 100%;
 
@@ -53,14 +62,25 @@ if (!currentTemplate) {
     flex-direction: column;
     background-color: Canvas;
     transition: none;
+    max-inline-size: 100%;
+
 
     @media (min-height: 40rem) {
       block-size: calc(
-        100dvb - var(--wizard-main-block-start-correction) - var(--basis-size-md) - var(--basis-space-row-lg) - var(
+        /* Dynamic viewport */
+        100dvb -
+        /* Header + layout padding */
+        var(--wizard-main-block-start-correction) -
+        /* Preview picker size */
+        var(--basis-size-md) -
+        /* space between picker and preview */
+        var(--basis-space-row-lg) -
+        /* layout-body-padding-block bottom */
+        var(
           --wizard-layout-body-padding-block,
           var(--basis-space-block-xl)
         )
-      );
+      ); /* [1] */
     }
 
     &::part(content) {
