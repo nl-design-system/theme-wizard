@@ -17,11 +17,11 @@ export default css`
   }
 
   .wizard-tokens-form__footer {
-    @media (min-height: 40rem) {
-      position: sticky;
+    @media (height >= 40rem) {
+      background-color: var(--basis-color-accent-1-bg-subtle);
       inset-block-end: 0;
       padding-block: var(--basis-space-block-lg);
-      background-color: var(--basis-color-accent-1-bg-subtle);
+      position: sticky;
     }
   }
 
