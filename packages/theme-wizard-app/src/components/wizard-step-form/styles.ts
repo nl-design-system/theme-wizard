@@ -33,4 +33,8 @@ export default css`
       padding-inline: var(--basis-space-inline-2xl);
     }
   }
+
+  .sample:has(clippy-button) clippy-html-image {
+    text-align: center;
+  }
 `;

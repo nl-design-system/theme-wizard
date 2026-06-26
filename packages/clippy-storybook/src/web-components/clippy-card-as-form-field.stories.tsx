@@ -23,7 +23,7 @@ const meta: Meta<CardAsFormFieldStoryArgs> = {
     docs: {
       description: {
         component:
-          '`<clippy-card-radio-group>` is a form-associated radio group. Each `<clippy-card-radio-option-option>` child is a selectable card option. Only one card can be selected at a time. The group reports its value to the parent `<form>` via ElementInternals.',
+          '`<clippy-card-radio-group>` is a form-associated radio group. Each `<clippy-card-radio-option>` child is a selectable card option. Only one card can be selected at a time. The group reports its value to the parent `<form>` via ElementInternals.',
       },
     },
   },
@@ -47,6 +47,46 @@ export const Default: Story = {
       React.createElement('clippy-card-radio-option', { value: 'sans' }, 'Sans Serif'),
       React.createElement('clippy-card-radio-option', { value: 'serif' }, 'Serif'),
       React.createElement('clippy-card-radio-option', { value: 'mono' }, 'Monospace'),
+    ),
+};
+
+export const MultipleGroups: Story = {
+  name: 'Multiple groups',
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          'Two independent groups with the same option values. Selecting an option in one group never affects the other — each `<clippy-card-radio-option>` belongs to exactly one parent group.',
+      },
+    },
+  },
+  render: () =>
+    React.createElement(
+      'div',
+      { style: { alignItems: 'flex-start', display: 'flex', gap: '1rem' } },
+      React.createElement(
+        'fieldset',
+        null,
+        React.createElement('legend', null, 'Character'),
+        React.createElement(
+          'clippy-card-radio-group',
+          { name: 'character' },
+          React.createElement('clippy-card-radio-option', { value: 'wallace' }, 'Wallace'),
+          React.createElement('clippy-card-radio-option', { value: 'gromit' }, 'Gromit'),
+        ),
+      ),
+      React.createElement(
+        'fieldset',
+        null,
+        React.createElement('legend', null, 'Snack'),
+        React.createElement(
+          'clippy-card-radio-group',
+          { name: 'snack' },
+          React.createElement('clippy-card-radio-option', { value: 'tea' }, 'Tea'),
+          React.createElement('clippy-card-radio-option', { value: 'crackers-and-cheese' }, 'Crackers & Cheese'),
+        ),
+      ),
     ),
 };
 
