@@ -92,7 +92,7 @@ export class ClippyCardRadio extends LitElement {
         @change=${this.#handleChange}
         aria-describedby=${descriptionId}
       />
-      <div class="clippy-card-radio__header ${classMap({ 'clippy-card-radio__header-with-start': this.hasStart })}">
+      <div class="clippy-card-radio__header ${classMap({ 'clippy-card-radio__header--with-start': this.hasStart })}">
         ${this.hasStart ? html`<span class="clippy-card-radio__start">${startSlot}</span>` : startSlot}
         <label class="clippy-card-radio__label" for=${this.#inputId}>
           <slot></slot>

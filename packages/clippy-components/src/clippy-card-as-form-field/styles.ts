@@ -16,42 +16,23 @@ export const radioStyles = css`
     display: block;
   }
 
+  /* ELEMENTS */
+
+  /**
+   * TODO:
+   * - --basis-form-control-border-radius does not give the radius we want
+   * - Which tokens do we want to make configurable?
+   */
   :host {
     background-color: var(--basis-form-control-background-color);
-    border-radius: var(--basis-border-radius-md); /* var(--basis-form-control-border-radius) */
+    border-color: var(--basis-form-control-border-color);
+    border-radius: var(--basis-form-control-border-radius);
+    border-style: solid;
+    border-width: var(--basis-form-control-border-width);
     min-inline-size: var(--basis-pointer-target-min-inline-size);
     padding-block: var(--basis-space-block-md);
     padding-inline: var(--basis-space-inline-lg);
     position: relative;
-  }
-
-  .clippy-card-radio__header {
-    align-items: start;
-    display: grid;
-    grid-template-rows: auto auto;
-    justify-content: start;
-    min-block-size: var(--basis-pointer-target-min-block-size);
-  }
-
-  .clippy-card-radio__header-with-start {
-    align-items: center;
-    grid-template-columns: min-content minmax(0, 1fr);
-    column-gap: var(--basis-space-column-lg);
-
-    .clippy-card-radio__start {
-      grid-column: 1;
-      grid-row: 1 / -1;
-    }
-
-    .clippy-card-radio__label {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    .clippy-card-radio__description {
-      grid-column: 2;
-      grid-row: 2;
-    }
   }
 
   .clippy-card-radio__start {
@@ -63,12 +44,10 @@ export const radioStyles = css`
     line-height: var(--basis-text-line-height-md);
 
     &::after {
-      border-color: var(
-        --basis-color-default-border-subtle
-      ); /* should be --basis-form-control-border-color but it's too dark */
-      border-radius: var(--basis-border-radius-md); /* var(--basis-form-control-border-radius) */
+      border-color: var(--basis-form-control-border-color);
+      border-radius: var(--basis-form-control-border-radius);
       border-style: solid;
-      border-width: var(--basis-form-control-border-width);
+      border-width: var(--basis-border-width-none);
       content: '';
       cursor: pointer;
       inset: 0;
@@ -81,6 +60,35 @@ export const radioStyles = css`
     line-height: var(--basis-text-line-height-md);
   }
 
+  .clippy-card-radio__header {
+    align-items: start;
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-content: start;
+    min-block-size: var(--basis-pointer-target-min-block-size);
+  }
+
+  .clippy-card-radio__header--with-start {
+    align-items: center;
+    column-gap: var(--basis-space-column-lg);
+    grid-template-columns: min-content minmax(0, 1fr);
+
+    & .clippy-card-radio__start {
+      grid-column: 1;
+      grid-row: 1 / -1;
+    }
+
+    & .clippy-card-radio__label {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    & .clippy-card-radio__description {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+
   .clippy-radio-card__body {
     margin-block-start: var(--basis-space-block-md);
   }
@@ -89,14 +97,14 @@ export const radioStyles = css`
     margin-block-start: var(--basis-space-block-md);
   }
 
-  /* STATES */
+  /* HOST STATES */
 
   :host([checked]),
   :host(:hover),
   :host(:active) {
     & .clippy-card-radio__label::after {
       border-color: var(--basis-form-control-active-border-color);
-      border-width: var(--basis-form-control-active-border-width);
+      border-width: var(--basis-border-width-sm);
     }
   }
 
