@@ -20,12 +20,8 @@ declare global {
  * Radio option styled as a card. The `<input type="radio">` is sr-only; the card is the
  * visual surface. `delegatesFocus: true` forwards host focus to the hidden input.
  *
- * `focus-visible` is mirrored as a host attribute when the inner input matches
- * `:focus-visible`, so card styles can react to keyboard focus without piercing shadow DOM.
- *
  * `inputTabIndex` is controlled by the parent `ClippyCardAsFormField` for roving tabindex.
- * `focusInput()` lets the parent move focus programmatically during arrow-key navigation
- * and forces `focus-visible` on.
+ * `focusInput()` lets the parent move focus programmatically during arrow-key navigation.
  *
  * Slots: default (label), `start` (leading icon), `description` (aria-describedby), `body`, `footer`.
  */
@@ -52,28 +48,12 @@ export class ClippyCardRadio extends LitElement {
     this.hasStart = slot.assignedNodes({ flatten: true }).length > 0;
   };
 
-  readonly #handleInputFocus = (event: FocusEvent) => {
-    this.toggleAttribute('focus-visible', (event.target as HTMLElement).matches(':focus-visible'));
-  };
-
-  readonly #handleInputBlur = () => {
-    this.toggleAttribute('focus-visible', false);
-  };
-
-  override firstUpdated() {
-    const input = this.shadowRoot?.querySelector('input');
-    input?.addEventListener('focus', this.#handleInputFocus);
-    input?.addEventListener('blur', this.#handleInputBlur);
-  }
-
   focusInput() {
     const input = this.shadowRoot?.querySelector('input');
     if (!input) {
       return;
     }
-    input.focus({ focusVisible: true });
-    // focusInput() is always called from keyboard navigation, so focus-visible is always correct
-    this.toggleAttribute('focus-visible', true);
+    input.focus();
   }
 
   override render() {
@@ -143,20 +123,28 @@ export class ClippyCardAsFormField extends FormElement<string> {
 
   readonly #handleKeyDown = (event: KeyboardEvent) => {
     const { key } = event;
+
     if (key !== 'ArrowDown' && key !== 'ArrowUp' && key !== 'ArrowLeft' && key !== 'ArrowRight') {
       return;
     }
+
     const cards = this.#cards;
     const currentIndex = cards.findIndex((card) => card.matches(':focus-within'));
+
     if (currentIndex === -1) {
       return;
     }
+
     const delta = key === 'ArrowDown' || key === 'ArrowRight' ? 1 : -1;
     const nextCard = cards.at((currentIndex + delta + cards.length) % cards.length);
+
     if (!nextCard) {
       return;
     }
+
+    // Prevent page scroll by pressing an arrow key
     event.preventDefault();
+
     this.#selectCard(nextCard);
     nextCard.focusInput();
   };

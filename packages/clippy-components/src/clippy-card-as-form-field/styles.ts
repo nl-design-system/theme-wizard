@@ -104,7 +104,7 @@ export const radioStyles = css`
   :host(:active) {
     & .clippy-card-radio__label::after {
       border-color: var(--basis-form-control-active-border-color);
-      border-width: var(--basis-border-width-sm);
+      border-width: var(--basis-border-width-md);
     }
   }
 
@@ -113,7 +113,10 @@ export const radioStyles = css`
     background-color: var(--basis-color-default-bg-hover);
   }
 
-  :host([focus-visible]) {
+  /* :host(:focus-visible-within) would be ideal but is not yet spec'd (w3c/csswg-drafts#3080).
+     :host(:has(:focus-visible)) also fails — browsers don't re-invalidate shadow styles
+     when dynamic pseudo-classes change on shadow children inside :has() (w3c/csswg-drafts#5893). */
+  :host(:focus-within) {
     background-color: var(--basis-form-control-focus-background-color);
     border-color: var(--basis-form-control-focus-border-color);
     color: var(--basis-form-control-focus-color);
