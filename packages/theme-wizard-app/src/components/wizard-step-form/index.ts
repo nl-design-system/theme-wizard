@@ -2,7 +2,7 @@ import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
-import '@nl-design-system-community/clippy-components/clippy-card-as-form-field';
+import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import { BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
@@ -206,11 +206,11 @@ export class WizardStepForm extends LitElement {
             <wizard-stack size="xl">
               <legend>Gevonden waardes op website</legend>
 
-              <clippy-card-as-form-field name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
+              <clippy-card-radio-group name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
                 ${this.tokens.slice(0, itemsToShow).map((token, index) => {
                   const stringified = stringifyToken(token);
                   return html`
-                    <clippy-card-radio value=${String(index)}>
+                    <clippy-card-radio-option value=${String(index)}>
                       ${token.$type === 'color'
                         ? html`<clippy-color-sample slot="start" color=${stringified}></clippy-color-sample>`
                         : nothing}
@@ -237,10 +237,10 @@ export class WizardStepForm extends LitElement {
                       <clippy-reset-theme slot="body">
                         <wizard-preview-theme>${this.renderSample(token)}</wizard-preview-theme>
                       </clippy-reset-theme>
-                    </clippy-card-radio>
+                    </clippy-card-radio-option>
                   `;
                 })}
-              </clippy-card-as-form-field>
+              </clippy-card-radio-group>
               ${itemsToShow === Infinity
                 ? nothing
                 : html`

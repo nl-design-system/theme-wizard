@@ -28,7 +28,7 @@ export default css`
       border-width: var(--basis-border-width-sm);
     }
 
-    clippy-card-radio [slot='body'] & {
+    clippy-card-radio-option [slot='body'] & {
       padding-block: var(--basis-space-block-xl);
       padding-inline: var(--basis-space-inline-2xl);
     }

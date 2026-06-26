@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import '@nl-design-system-community/clippy-components/clippy-card-as-form-field';
+import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import React from 'react';
 
 interface CardAsFormFieldStoryArgs {
@@ -8,7 +8,7 @@ interface CardAsFormFieldStoryArgs {
 }
 
 const meta: Meta<CardAsFormFieldStoryArgs> = {
-  id: 'clippy-card-as-form-field',
+  id: 'clippy-card-radio-group',
   argTypes: {
     name: {
       control: 'text',
@@ -23,12 +23,12 @@ const meta: Meta<CardAsFormFieldStoryArgs> = {
     docs: {
       description: {
         component:
-          '`<clippy-card-as-form-field>` is a form-associated radio group. Each `<clippy-card-radio>` child is a selectable card option. Only one card can be selected at a time. The group reports its value to the parent `<form>` via ElementInternals.',
+          '`<clippy-card-radio-group>` is a form-associated radio group. Each `<clippy-card-radio-option-option>` child is a selectable card option. Only one card can be selected at a time. The group reports its value to the parent `<form>` via ElementInternals.',
       },
     },
   },
   tags: ['autodocs'],
-  title: 'clippy/Card as Form Field',
+  title: 'clippy/Card Radio Group',
 };
 
 export default meta;
@@ -42,11 +42,11 @@ export const Default: Story = {
   },
   render: ({ name, value }) =>
     React.createElement(
-      'clippy-card-as-form-field',
+      'clippy-card-radio-group',
       { name, value },
-      React.createElement('clippy-card-radio', { value: 'sans' }, 'Sans Serif'),
-      React.createElement('clippy-card-radio', { value: 'serif' }, 'Serif'),
-      React.createElement('clippy-card-radio', { value: 'mono' }, 'Monospace'),
+      React.createElement('clippy-card-radio-option', { value: 'sans' }, 'Sans Serif'),
+      React.createElement('clippy-card-radio-option', { value: 'serif' }, 'Serif'),
+      React.createElement('clippy-card-radio-option', { value: 'mono' }, 'Monospace'),
     ),
 };
 
@@ -57,11 +57,11 @@ export const PreselectedValue: Story = {
   },
   render: () =>
     React.createElement(
-      'clippy-card-as-form-field',
+      'clippy-card-radio-group',
       { name: 'color', value: 'blue' },
-      React.createElement('clippy-card-radio', { value: 'red' }, 'Red'),
-      React.createElement('clippy-card-radio', { value: 'blue' }, 'Blue'),
-      React.createElement('clippy-card-radio', { value: 'green' }, 'Green'),
+      React.createElement('clippy-card-radio-option', { value: 'red' }, 'Red'),
+      React.createElement('clippy-card-radio-option', { value: 'blue' }, 'Blue'),
+      React.createElement('clippy-card-radio-option', { value: 'green' }, 'Green'),
     ),
 };
 
@@ -77,16 +77,16 @@ export const SlotStart: Story = {
   },
   render: () =>
     React.createElement(
-      'clippy-card-as-form-field',
+      'clippy-card-radio-group',
       { name: 'shape' },
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'circle' },
         React.createElement('span', { slot: 'start' }, '⬤'),
         'Circle',
       ),
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'square' },
         React.createElement('span', { slot: 'start' }, '■'),
         'Square',
@@ -106,16 +106,16 @@ export const SlotDescription: Story = {
   },
   render: () =>
     React.createElement(
-      'clippy-card-as-form-field',
+      'clippy-card-radio-group',
       { name: 'style' },
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'minimal' },
         'Minimal',
         React.createElement('span', { slot: 'description' }, 'Clean, lots of whitespace'),
       ),
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'expressive' },
         'Expressive',
         React.createElement('span', { slot: 'description' }, 'Bold colors and large type'),
@@ -135,16 +135,16 @@ export const SlotBody: Story = {
   },
   render: () =>
     React.createElement(
-      'clippy-card-as-form-field',
+      'clippy-card-radio-group',
       { name: 'typeface' },
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'sans' },
         'Sans Serif',
         React.createElement('div', { slot: 'body', style: { fontFamily: 'sans-serif', fontSize: '2rem' } }, 'Aa'),
       ),
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'serif' },
         'Serif',
         React.createElement('div', { slot: 'body', style: { fontFamily: 'serif', fontSize: '2rem' } }, 'Aa'),
@@ -164,16 +164,16 @@ export const SlotFooter: Story = {
   },
   render: () =>
     React.createElement(
-      'clippy-card-as-form-field',
+      'clippy-card-radio-group',
       { name: 'color-pick' },
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: '#007BC7' },
         '#007BC7',
         React.createElement('small', { slot: 'footer' }, 'Used 34× on your site'),
       ),
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: '#154273' },
         '#154273',
         React.createElement('small', { slot: 'footer' }, 'Used 12× on your site'),
@@ -193,10 +193,10 @@ export const AllSlots: Story = {
   },
   render: () =>
     React.createElement(
-      'clippy-card-as-form-field',
+      'clippy-card-radio-group',
       { name: 'full-example', value: 'option-a' },
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'option-a' },
         React.createElement('span', { slot: 'start' }, '🎨'),
         'Option A',
@@ -205,7 +205,7 @@ export const AllSlots: Story = {
         React.createElement('small', { slot: 'footer' }, 'Additional metadata'),
       ),
       React.createElement(
-        'clippy-card-radio',
+        'clippy-card-radio-option',
         { value: 'option-b' },
         React.createElement('span', { slot: 'start' }, '✏️'),
         'Option B',
