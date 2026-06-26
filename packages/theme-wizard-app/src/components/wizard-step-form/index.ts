@@ -2,6 +2,7 @@ import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
+import '@nl-design-system-community/clippy-components/clippy-card-as-form-field';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import { BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
@@ -127,22 +128,28 @@ export class WizardStepForm extends LitElement {
 
     if (this.path.includes('heading')) {
       return html`
-        <clippy-html-image>
-          <clippy-heading
-            style=${styleMap({
-              '--nl-heading-level-2-color': tokenType === 'color' ? stringified : undefined,
-              '--nl-heading-level-2-font-family': tokenType === 'fontFamily' ? stringified : undefined,
-            })}
-            level="2"
-          >
-            Voorbeeld van een koptekst.
-          </clippy-heading>
-        </clippy-html-image>
+        <div class="sample">
+          <clippy-html-image>
+            <clippy-heading
+              style=${styleMap({
+                '--nl-heading-level-2-color': tokenType === 'color' ? stringified : undefined,
+                '--nl-heading-level-2-font-family': tokenType === 'fontFamily' ? stringified : undefined,
+              })}
+              level="2"
+            >
+              Voorbeeld van een koptekst.
+            </clippy-heading>
+            <wizard-font-sample>
+              Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
+            </wizard-font-sample>
+          </clippy-html-image>
+        </div>
       `;
     }
 
     if (this.path.includes('action-1.bg-default')) {
       return html`
+      <div class="sample">
         <clippy-html-image style=${styleMap({
           '--nl-button-primary-background-color': tokenType === 'color' ? stringified : undefined,
           '--nl-button-primary-color':
@@ -150,17 +157,20 @@ export class WizardStepForm extends LitElement {
         })}>
           <clippy-button purpose="primary">Voorbeeld van knop</clippy-button>
         </clipy-html-image>
+        </div>
       `;
     }
 
     return html`
-      <wizard-font-sample
-        wrap
-        family=${tokenType === 'fontFamily' ? stringified : undefined}
-        color=${tokenType === 'color' ? stringified : undefined}
-      >
-        Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
-      </wizard-font-sample>
+      <div class="sample">
+        <wizard-font-sample
+          wrap
+          family=${tokenType === 'fontFamily' ? stringified : undefined}
+          color=${tokenType === 'color' ? stringified : undefined}
+        >
+          Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
+        </wizard-font-sample>
+      </div>
     `;
   }
 
@@ -183,6 +193,8 @@ export class WizardStepForm extends LitElement {
       return html`<p class="nl-paragraph">Geen aanbevelingen om te tonen.</p>`;
     }
 
+    const checkedIndex = this.tokens.findIndex((t) => tokenEquals(t, tokenAt));
+
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
         <wizard-stack size="4xl">
@@ -190,37 +202,41 @@ export class WizardStepForm extends LitElement {
             <wizard-stack size="xl">
               <legend>Gevonden waardes op website</legend>
 
-              ${this.tokens.slice(0, itemsToShow).map((token, index) => {
-                const stringified = stringifyToken(token);
-                return html`
-                  <div class="wizard-card-as-input">
-                    <input
-                      type="radio"
-                      name=${path}
-                      value=${index}
-                      id=${index}
-                      ?checked=${tokenEquals(token, tokenAt)}
-                      aria-describedby=${`description-${index}`}
-                    />
-                    <label for=${index}>
+              <clippy-card-as-form-field name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
+                ${this.tokens.slice(0, itemsToShow).map((token, index) => {
+                  const stringified = stringifyToken(token);
+                  return html`
+                    <clippy-card-radio value=${String(index)}>
                       ${token.$type === 'color'
-                        ? html`<clippy-color-sample color=${stringified}></clippy-color-sample>`
+                        ? html`<clippy-color-sample slot="start" color=${stringified}></clippy-color-sample>`
                         : nothing}
-                      ${tokenType === 'color'
-                        ? html`<wizard-color-description color=${stringified}></wizard-color-description
-                            >&nbsp;&mdash;&nbsp;`
+                      ${token.$type === 'fontFamily'
+                        ? html`
+                            <div class="sample" slot="start">
+                              <clippy-reset-theme>
+                                <wizard-preview-theme>
+                                  <wizard-font-sample size="var(--basis-text-font-size-lg)" family=${stringified}
+                                    >Ag</wizard-font-sample
+                                  >
+                                </wizard-preview-theme>
+                              </clippy-reset-theme>
+                            </div>
+                          `
                         : nothing}
                       ${stringified}
-                    </label>
-                    <p id=${`description-${index}`} class="nl-paragraph">
-                      ${token.$extensions?.['nl.nldesignsystem.theme-wizard.usage-count']} keer gebruikt op je website.
-                    </p>
-                    <clippy-reset-theme>
-                      <wizard-preview-theme> ${this.renderSample(token)} </wizard-preview-theme>
-                    </clippy-reset-theme>
-                  </div>
-                `;
-              })}
+                      ${tokenType === 'color'
+                        ? html`<wizard-color-description
+                            color=${stringified}
+                            slot="description"
+                          ></wizard-color-description>`
+                        : nothing}
+                      <clippy-reset-theme slot="body">
+                        <wizard-preview-theme>${this.renderSample(token)}</wizard-preview-theme>
+                      </clippy-reset-theme>
+                    </clippy-card-radio>
+                  `;
+                })}
+              </clippy-card-as-form-field>
               ${itemsToShow === Infinity
                 ? nothing
                 : html`
