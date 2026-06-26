@@ -107,13 +107,11 @@ export class WizardTokensForm extends LitElement {
 
   private readonly renderSidebar = ({ items, title }: { title: string | TemplateResult; items: TemplateResult }) => {
     return html`
-      <wizard-scroll-container>
-        <wizard-stack size="4xl">
-          <clippy-heading level="3">${title}</clippy-heading>
-          <wizard-stack size="2xl">${items}</wizard-stack>
-        </wizard-stack>
-      </wizard-scroll-container>
-      ${this.renderSaveButton()}
+      <wizard-stack size="4xl">
+        <clippy-heading level="3">${title}</clippy-heading>
+        <wizard-stack size="2xl">${items}</wizard-stack>
+      </wizard-stack>
+      <div class="wizard-tokens-form__footer">${this.renderSaveButton()}</div>
     `;
   };
 
@@ -147,23 +145,21 @@ export class WizardTokensForm extends LitElement {
 
       ${this.displayMode === 'initial'
         ? html`
-            <wizard-scroll-container>
-              <nav>
-                ${buttons.map(
-                  ({ id, title }) => html`
-                    <button
-                      type="button"
-                      class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
-                      @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
-                    >
-                      ${title}
-                      <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
-                    </button>
-                  `,
-                )}
-              </nav>
-            </wizard-scroll-container>
-            <wizard-stack>
+            <nav>
+              ${buttons.map(
+                ({ id, title }) => html`
+                  <button
+                    type="button"
+                    class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
+                    @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
+                  >
+                    ${title}
+                    <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
+                  </button>
+                `,
+              )}
+            </nav>
+            <wizard-stack class="wizard-tokens-form__footer">
               <wizard-tokens-download></wizard-tokens-download>
               <wizard-download-link
                 content=${this.theme.css}

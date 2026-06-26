@@ -24,6 +24,18 @@ if (!currentTemplate) {
 
 <style>
   .wizard-main {
+    --wizard-main-block-start-correction: calc(
+      /* Layout header */
+      var(--wizard-page-nav-block-size, 4rem) +
+      /* layout-body-padding-block */
+      var(
+        --wizard-layout-body-padding-block,
+        var(--basis-space-block-xl)
+      )
+    );
+    align-self: flex-start;
+    position: sticky;
+    inset-block-start: var(--wizard-main-block-start-correction);
     display: grid;
     grid-template-rows: var(--wizard-layout-body-template-rows, none);
     padding-block-end: var(--basis-space-block-lg);
@@ -32,6 +44,28 @@ if (!currentTemplate) {
 
   .wizard-preview-picker {
     justify-self: end;
+  }
+
+  .wizard-preview {
+    --wizard-scroll-container-max-size: 100%;
+
+    display: flex;
+    flex-direction: column;
+    background-color: Canvas;
+    transition: none;
+
+    @media (min-height: 40rem) {
+      block-size: calc(
+        100svb - var(--wizard-main-block-start-correction) - var(--basis-size-md) - var(--basis-space-row-lg) - var(
+          --wizard-layout-body-padding-block,
+          var(--basis-space-block-xl)
+        )
+      );
+    }
+
+    &::part(content) {
+      overflow: auto;
+    }
   }
 </style>
 
@@ -44,13 +78,15 @@ if (!currentTemplate) {
 
       <div slot="main" class="wizard-main">
         <wizard-preview-picker class="wizard-preview-picker" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
-        <clippy-story-preview size="lg">
-          <clippy-reset-theme>
-            <wizard-preview-theme>
-              <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
-            </wizard-preview-theme>
-          </clippy-reset-theme>
-        </clippy-story-preview>
+        <browser-window shadow url="https://gemeentevoorbeeld.nl" class="wizard-preview">
+          <wizard-scroll-container>
+            <clippy-reset-theme>
+              <wizard-preview-theme>
+                <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
+              </wizard-preview-theme>
+            </clippy-reset-theme>
+          </wizard-scroll-container>
+        </browser-window>
       </div>
      </wizard-layout>
   </theme-wizard-app>

@@ -10,33 +10,19 @@ export default css`
 
     grid-template-rows: var(--wizard-layout-body-template-rows, none) auto;
     row-gap: var(--basis-space-row-lg);
-
-    @media (height >= 35rem) and (orientation: landscape) {
-      block-size: 100%;
-
-      /* TODO: get page nav block size from parent */
-      inset-block-start: calc(
-        var(--wizard-page-nav-block-size, 4rem) + var(--wizard-layout-body-padding-block, var(--basis-space-block-xl))
-      );
-      max-block-size: calc(
-        100svb - var(--wizard-page-nav-block-size, 4rem) - var(
-            --wizard-layout-body-padding-block,
-            var(--basis-space-block-xl)
-          ) *
-          2
-      );
-      position: sticky;
-    }
-  }
-
-  wizard-scroll-container {
-    @media ((height < 35rem) and (orientation: landscape)) or (orientation: portrait) {
-      overflow: visible;
-    }
   }
 
   .wizard-tokens-form__header {
     align-self: center;
+  }
+
+  .wizard-tokens-form__footer {
+    @media (min-height: 40rem) {
+      position: sticky;
+      inset-block-end: 0;
+      padding-block: var(--basis-space-block-lg);
+      background-color: var(--basis-color-accent-1-bg-subtle);
+    }
   }
 
   .wizard-tokens-form__markdown {
