@@ -38,12 +38,13 @@ if (!currentTemplate) {
         var(--basis-space-block-xl)
       )
     );
+
     align-self: flex-start;
-    position: sticky;
-    inset-block-start: var(--wizard-main-block-start-correction);
     display: grid;
     grid-template-rows: var(--wizard-layout-body-template-rows, none);
+    inset-block-start: var(--wizard-main-block-start-correction);
     padding-block-end: var(--basis-space-block-lg);
+    position: sticky;
     row-gap: var(--basis-space-row-lg);
   }
 
@@ -58,14 +59,14 @@ if (!currentTemplate) {
   .wizard-preview {
     --wizard-scroll-container-max-size: 100%;
 
+    background-color: Canvas;
     display: flex;
     flex-direction: column;
-    background-color: Canvas;
-    transition: none;
     max-inline-size: 100%;
+    transition: none;
 
 
-    @media (min-height: 40rem) {
+    @media (height >= 40rem) {
       block-size: calc(
         /* Dynamic viewport */
         100dvb -
