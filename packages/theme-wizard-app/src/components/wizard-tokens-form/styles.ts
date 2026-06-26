@@ -19,7 +19,7 @@ export default css`
         var(--wizard-page-nav-block-size, 4rem) + var(--wizard-layout-body-padding-block, var(--basis-space-block-xl))
       );
       max-block-size: calc(
-        100svb - var(--wizard-page-nav-block-size, 4rem) - var(
+        100dvb - var(--wizard-page-nav-block-size, 4rem) - var(
             --wizard-layout-body-padding-block,
             var(--basis-space-block-xl)
           ) *
