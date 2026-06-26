@@ -16,9 +16,23 @@ declare global {
   }
 }
 
+/**
+ * Radio option styled as a card. The `<input type="radio">` is sr-only; the card is the
+ * visual surface. `delegatesFocus: true` forwards host focus to the hidden input.
+ *
+ * `focus-visible` is mirrored as a host attribute when the inner input matches
+ * `:focus-visible`, so card styles can react to keyboard focus without piercing shadow DOM.
+ *
+ * `inputTabIndex` is controlled by the parent `ClippyCardAsFormField` for roving tabindex.
+ * `focusInput()` lets the parent move focus programmatically during arrow-key navigation
+ * and forces `focus-visible` on.
+ *
+ * Slots: default (label), `start` (leading icon), `description` (aria-describedby), `body`, `footer`.
+ */
 @safeCustomElement(radioTag)
 export class ClippyCardRadio extends LitElement {
   static override readonly styles = [srOnly, radioStyles];
+  static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String }) value = '';
   @property({ type: String }) name = '';
@@ -38,8 +52,28 @@ export class ClippyCardRadio extends LitElement {
     this.hasStart = slot.assignedNodes({ flatten: true }).length > 0;
   };
 
+  readonly #handleInputFocus = (event: FocusEvent) => {
+    this.toggleAttribute('focus-visible', (event.target as HTMLElement).matches(':focus-visible'));
+  };
+
+  readonly #handleInputBlur = () => {
+    this.toggleAttribute('focus-visible', false);
+  };
+
+  override firstUpdated() {
+    const input = this.shadowRoot?.querySelector('input');
+    input?.addEventListener('focus', this.#handleInputFocus);
+    input?.addEventListener('blur', this.#handleInputBlur);
+  }
+
   focusInput() {
-    this.shadowRoot?.querySelector('input')?.focus({ focusVisible: true });
+    const input = this.shadowRoot?.querySelector('input');
+    if (!input) {
+      return;
+    }
+    input.focus({ focusVisible: true });
+    // focusInput() is always called from keyboard navigation, so focus-visible is always correct
+    this.toggleAttribute('focus-visible', true);
   }
 
   override render() {
@@ -77,6 +111,24 @@ export class ClippyCardRadio extends LitElement {
   }
 }
 
+/**
+ * Form-associated radiogroup wrapping `<clippy-card-radio>` children. Extends
+ * `FormElement<string>` for native form participation. Sets `internals_.role =
+ * 'radiogroup'` in `connectedCallback` so the role exists before first render.
+ *
+ * **Tab roving:** `#syncTabIndex()` gives `tabindex="0"` to the checked card (or first
+ * card if none checked) and `-1` to all others — Tab enters/exits the group in one step.
+ *
+ * **Keyboard navigation:** Arrow keys move selection and focus, wrapping at both ends.
+ * `:focus-within` locates the active card; wrapping modulo picks the next; `#selectCard()`
+ * + `focusInput()` commit the move. `preventDefault()` suppresses page scroll.
+ *
+ * **Name propagation:** `name` changes are pushed to all child radios via `#syncName()`
+ * so inputs share a group name for form submission and native mutual-exclusion.
+ *
+ * **Value sync:** Programmatic `value` changes in `updated()` find and select the
+ * matching card to keep checked state and tabindex consistent.
+ */
 @safeCustomElement(groupTag)
 export class ClippyCardAsFormField extends FormElement<string> {
   static override readonly styles = [groupStyles];
@@ -161,7 +213,12 @@ export class ClippyCardAsFormField extends FormElement<string> {
     this.#syncTabIndex();
   }
 
+  readonly #onSlotChange = () => {
+    this.#syncName();
+    this.#syncTabIndex();
+  };
+
   override render() {
-    return html`<slot></slot>`;
+    return html`<slot @slotchange=${this.#onSlotChange}></slot>`;
   }
 }

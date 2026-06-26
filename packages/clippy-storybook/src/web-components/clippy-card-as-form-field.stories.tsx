@@ -5,7 +5,6 @@ import React from 'react';
 interface CardAsFormFieldStoryArgs {
   name: string;
   value: string;
-  disabled: boolean;
 }
 
 const meta: Meta<CardAsFormFieldStoryArgs> = {
@@ -14,10 +13,6 @@ const meta: Meta<CardAsFormFieldStoryArgs> = {
     name: {
       control: 'text',
       description: 'Form field name shared across all radio options',
-    },
-    disabled: {
-      control: 'boolean',
-      description: 'Disable all options in the group',
     },
     value: {
       control: 'text',
@@ -43,13 +38,12 @@ export const Default: Story = {
   name: 'Basic group',
   args: {
     name: 'font',
-    disabled: false,
     value: '',
   },
-  render: ({ name, disabled, value }) =>
+  render: ({ name, value }) =>
     React.createElement(
       'clippy-card-as-form-field',
-      { name, disabled, value },
+      { name, value },
       React.createElement('clippy-card-radio', { value: 'sans' }, 'Sans Serif'),
       React.createElement('clippy-card-radio', { value: 'serif' }, 'Serif'),
       React.createElement('clippy-card-radio', { value: 'mono' }, 'Monospace'),
@@ -219,24 +213,5 @@ export const AllSlots: Story = {
         React.createElement('div', { slot: 'body' }, 'Different preview content'),
         React.createElement('small', { slot: 'footer' }, 'Other metadata'),
       ),
-    ),
-};
-
-export const Disabled: Story = {
-  name: 'Disabled group',
-  parameters: {
-    controls: { disable: true },
-    docs: {
-      description: {
-        story: 'Set `disabled` on the group to prevent any selection.',
-      },
-    },
-  },
-  render: () =>
-    React.createElement(
-      'clippy-card-as-form-field',
-      { name: 'disabled-example', disabled: true },
-      React.createElement('clippy-card-radio', { value: 'a' }, 'Option A'),
-      React.createElement('clippy-card-radio', { value: 'b' }, 'Option B'),
     ),
 };

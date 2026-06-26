@@ -70,10 +70,10 @@ export class WizardStepForm extends LitElement {
 
     const tokens: UpdateDesignTokensDetail = Array.from(formData.entries()).flatMap(([path, value]) => {
       const token = this.tokens[Number(value)];
-      return {
-        path,
-        value: token.$value,
-      };
+      if (!token) {
+        return [];
+      }
+      return [{ path, value: token.$value }];
     });
 
     // Emit custom event that lets Theme do updateMany()
@@ -149,14 +149,18 @@ export class WizardStepForm extends LitElement {
 
     if (this.path.includes('action-1.bg-default')) {
       return html`
-      <div class="sample">
-        <clippy-html-image style=${styleMap({
-          '--nl-button-primary-background-color': tokenType === 'color' ? stringified : undefined,
-          '--nl-button-primary-color':
-            tokenType === 'color' ? `color-mix(in hsl, contrast-color(${stringified}) 95%, ${stringified})` : undefined,
-        })}>
-          <clippy-button purpose="primary">Voorbeeld van knop</clippy-button>
-        </clipy-html-image>
+        <div class="sample">
+          <clippy-html-image
+            style=${styleMap({
+              '--nl-button-primary-background-color': tokenType === 'color' ? stringified : undefined,
+              '--nl-button-primary-color':
+                tokenType === 'color'
+                  ? `color-mix(in hsl, contrast-color(${stringified}) 95%, ${stringified})`
+                  : undefined,
+            })}
+          >
+            <clippy-button purpose="primary">Voorbeeld van knop</clippy-button>
+          </clippy-html-image>
         </div>
       `;
     }

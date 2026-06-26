@@ -17,26 +17,26 @@ export const radioStyles = css`
   }
 
   :host {
-    position: relative;
+    background-color: var(--basis-form-control-background-color);
+    border-radius: var(--basis-border-radius-md); /* var(--basis-form-control-border-radius) */
+    min-inline-size: var(--basis-pointer-target-min-inline-size);
     padding-block: var(--basis-space-block-md);
     padding-inline: var(--basis-space-inline-lg);
-    min-inline-size: var(--basis-pointer-target-min-inline-size);
-    background-color: var(--basis-form-control-background-color);
+    position: relative;
   }
 
   .clippy-card-radio__header {
+    align-items: start;
     display: grid;
     grid-template-rows: auto auto;
-    align-items: start;
     justify-content: start;
     min-block-size: var(--basis-pointer-target-min-block-size);
   }
 
   .clippy-card-radio__header-with-start {
-    column-gap: var(--basis-space-column-sm);
+    align-items: center;
     grid-template-columns: min-content minmax(0, 1fr);
     column-gap: var(--basis-space-column-lg);
-    align-items: center;
 
     .clippy-card-radio__start {
       grid-column: 1;
@@ -63,17 +63,16 @@ export const radioStyles = css`
     line-height: var(--basis-text-line-height-md);
 
     &::after {
-      z-index: 1;
-      content: '';
-      cursor: pointer;
-      position: absolute;
-      inset: 0;
-      border-style: solid;
-      border-width: var(--basis-form-control-border-width);
       border-color: var(
         --basis-color-default-border-subtle
       ); /* should be --basis-form-control-border-color but it's too dark */
       border-radius: var(--basis-border-radius-md); /* var(--basis-form-control-border-radius) */
+      border-style: solid;
+      border-width: var(--basis-form-control-border-width);
+      content: '';
+      cursor: pointer;
+      inset: 0;
+      position: absolute;
     }
   }
 
@@ -96,13 +95,23 @@ export const radioStyles = css`
   :host(:hover),
   :host(:active) {
     & .clippy-card-radio__label::after {
-      border-width: var(--basis-form-control-active-border-width);
       border-color: var(--basis-form-control-active-border-color);
+      border-width: var(--basis-form-control-active-border-width);
     }
   }
 
   :host(:hover),
   :host(:active) {
     background-color: var(--basis-color-default-bg-hover);
+  }
+
+  :host([focus-visible]) {
+    background-color: var(--basis-form-control-focus-background-color);
+    border-color: var(--basis-form-control-focus-border-color);
+    color: var(--basis-form-control-focus-color);
+    outline-color: var(--basis-focus-outline-color);
+    outline-offset: var(--basis-focus-outline-offset);
+    outline-style: var(--basis-focus-outline-style);
+    outline-width: var(--basis-focus-outline-width);
   }
 `;
