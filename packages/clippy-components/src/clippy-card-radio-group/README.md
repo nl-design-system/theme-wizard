@@ -40,13 +40,10 @@ group.value = 'pro';
 
 ## Attributes & properties
 
-| Attribute / Property | Type    | Default |
-| -------------------- | ------- | ------- |
-| `name`               | string  | `''`    |
-| `value`              | string  | `null`  |
-| `disabled`           | boolean | `false` |
-| `readonly`           | boolean | `false` |
-| `hidden-label`       | string  | `''`    |
+| Attribute / Property | Type   | Default |
+| -------------------- | ------ | ------- |
+| `name`               | string | `''`    |
+| `value`              | string | `null`  |
 
 ## Events
 
