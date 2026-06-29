@@ -8,7 +8,7 @@ import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
 import { dequal } from 'dequal';
 import { html, nothing, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property, query as queryDecorator, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
@@ -58,6 +58,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   position: Position = defaultPosition;
   @property({ reflect: true, type: Boolean })
   invalid = false;
+
+  @queryDecorator('.clippy-combobox__popover')
+  listBoxPopover!: HTMLElement;
 
   get #id() {
     return `${tag}-${this.name}`;
@@ -199,6 +202,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   };
 
   readonly #handleFocus = () => {
+    // this.listBoxPopover?.showPopover();
     this.open = true;
     this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
@@ -331,10 +335,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       'clippy-combobox__label': true,
       'sr-only': !this.children.length, // If there are no slotted children, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
     };
-    const popoverClasses = {
-      [`utrecht-combobox__popover--${this.position}`]: this.position,
-      'utrecht-combobox__popover--hidden': !this.open,
-    };
     const textboxClasses = {
       'clippy-combobox__input': true,
       'utrecht-combobox__input': true,
@@ -368,7 +368,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             </div>`
           : nothing}
         <div class="clippy-combobox__customizable-text-input | utrecht-combobox | utrecht-customizable-text-input">
-          <div class="utrecht-customizable-text-input__inner">
+          <div class="clippy-combobox__customizable-text-input__inner | utrecht-customizable-text-input__inner">
             ${iconStartSlotRendered || populatedSlots['icon-start']
               ? html`<label
                   for="${this.#id}"
@@ -419,9 +419,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
           </div>
           <div
             id=${this.#listId}
-            class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}"
+            class="clippy-combobox__popover | utrecht-listbox"
             role="listbox"
             tabindex="-1"
+            ?hidden=${!this.open}
           >
             <ul class="utrecht-listbox__list" role="none">
               ${this.filteredOptions.map((option, index) => {

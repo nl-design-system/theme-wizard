@@ -8,6 +8,8 @@ export default css`
       --utrecht-textbox-border-width,
       var(--utrecht-form-control-border-width)
     );
+
+    anchor-scope: --clippy-combobox-input;
   }
 
   .clippy-combobox__slot {
@@ -61,6 +63,10 @@ export default css`
    */
   .clippy-combobox__customizable-text-input {
     display: block; /* [1] */
+  }
+
+  .clippy-combobox__customizable-text-input__inner {
+    anchor-name: --clippy-combobox-input;
   }
 
   /**
@@ -128,6 +134,35 @@ export default css`
         var(--utrecht-textbox-background-color, var(--utrecht-form-control-background-color))
       )
     );
+  }
+
+  .clippy-combobox__popover[class] {
+    block-size: stretch;
+    display: none;
+    inline-size: anchor-size(self-inline);
+    inset: auto;
+    margin-block-end: var(--basis-space-block-xl);
+    max-block-size: calc(var(var(--basis-size-2xl)) * 3);
+    min-block-size: var(--basis-size-2xl);
+    position: fixed;
+    position-anchor: --clippy-combobox-input;
+    position-area: self-block-end span-self-inline-end;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+    position-try-order: most-block-size;
+
+    &:not([hidden]) {
+      display: flex;
+    }
+
+    /* &:popover-open {
+      display: flex;
+    }
+    &.clippy-combobox__popover--hidden {
+      display: none;
+    } */
   }
 
   /**
