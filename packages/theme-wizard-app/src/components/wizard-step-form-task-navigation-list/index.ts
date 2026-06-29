@@ -5,24 +5,29 @@ import { stepsStorage } from '../../utils/wizard-steps-storage';
 
 const STEPS = [
   {
+    icon: 'typography',
     label: 'Lettertype voor tekst',
     path: 'basis.text.font-family.default',
   },
   {
+    icon: 'palette',
     label: 'Kleur voor tekst',
     path: 'basis.color.default.color-document',
   },
   {
+    icon: 'typography',
     label: 'Lettertype voor koppen',
     path: 'basis.heading.font-family',
   },
   {
+    icon: 'palette',
     label: 'Kleur voor koppen',
     path: 'basis.heading.color',
   },
   {
+    icon: 'palette',
     label: 'Kleur voor knoppen',
-    path: 'basis.color.action-1.background-color',
+    path: 'basis.color.action-1.bg-default',
   },
 ] as const;
 
@@ -48,11 +53,11 @@ export class WizardStepFormTaskNavigationList extends LitElement {
 
   override render() {
     return html`
-      ${STEPS.map(({ label, path }) => {
-        const href = `/wizard/${path.replaceAll('.', '-')}`;
+      ${STEPS.map((step) => {
+        const href = `/wizard/${step.path.replaceAll('.', '-')}`;
         return html`
-          <wizard-step-form-task-navigation href=${href} ?done=${this.completedPaths.has(path)}>
-            ${label}
+          <wizard-step-form-task-navigation href=${href} ?done=${this.completedPaths.has(step.path)} icon=${step.icon}>
+            ${step.label}
           </wizard-step-form-task-navigation>
         `;
       })}
