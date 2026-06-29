@@ -11,6 +11,7 @@ export default css`
       background-color: var(--basis-color-transparent);
       border-color: var(--basis-color-transparent);
       border-radius: var(--basis-border-radius-sm);
+      border-width: 0;
       color: var(--basis-color-accent-1-color-default);
       font-weight: var(--basis-text-font-weight-bold);
 

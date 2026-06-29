@@ -2,11 +2,27 @@ import { css } from 'lit';
 
 export default css`
   :host(:not([hidden])) {
-    display: block;
+    display: grid;
   }
 
   :host {
-    --wizard-scroll-container-max-size: 65vh;
+    --wizard-scroll-container-max-size: none;
+
+    grid-template-rows: var(--wizard-layout-body-template-rows, 1fr) auto;
+    row-gap: var(--basis-space-row-lg);
+  }
+
+  .wizard-tokens-form__header {
+    align-self: center;
+  }
+
+  .wizard-tokens-form__footer {
+    @media (height >= 40rem) {
+      background-color: var(--basis-color-accent-1-bg-subtle);
+      inset-block-end: 0;
+      padding-block: var(--basis-space-block-lg);
+      position: sticky;
+    }
   }
 
   .wizard-tokens-form__markdown {
@@ -14,10 +30,6 @@ export default css`
       color: var(--basis-color-default-color-subtle);
       margin-block: 0;
     }
-  }
-
-  .wizard-tokens-form__section-links {
-    border-block-start: var(--basis-border-width-sm) solid var(--basis-color-accent-1-border-subtle);
   }
 
   .wizard-tokens-form__section-link {

@@ -23,20 +23,71 @@ if (!currentTemplate) {
 ---
 
 <style>
-  .wizard-theme-sidebar {
-    display: grid;
-    gap: 2rem;
-    padding-block: var(--basis-space-block-lg);
-  }
-
+  /**
+   * We need the browser-preview to adjust its height with taking the page-nav, paddings, and picker controls in mind.
+   * This also needs to be sticky.
+   * So we need a bit of CSS magic and variables to achieve the desired effect.
+   */
   .wizard-main {
+    --wizard-main-block-start-correction: calc(
+      /* Layout header */
+      var(--wizard-page-nav-block-size, 4rem) +
+      /* layout-body-padding-block top */
+      var(
+        --wizard-layout-body-padding-block,
+        var(--basis-space-block-xl)
+      )
+    );
+
+    align-self: flex-start;
     display: grid;
-    padding-block: var(--basis-space-block-lg);
+    grid-template-rows: var(--wizard-layout-body-template-rows, none);
+    inset-block-start: var(--wizard-main-block-start-correction);
+    padding-block-end: var(--basis-space-block-lg);
+    position: sticky;
     row-gap: var(--basis-space-row-lg);
   }
 
   .wizard-preview-picker {
     justify-self: end;
+  }
+
+  /**
+   * 1. `browser-window` applies a `transition: all`. We dont want that (esp. with screne resizing).
+   * 2. Calculate the preview height. We could simplify this by setting the size on the
+   *    `wizard-main` class, but instead we need to place the sizing on the preview
+   *    because the preview is also resizable.
+   */
+  .wizard-preview {
+    --wizard-scroll-container-max-size: 100%;
+
+    background-color: Canvas;
+    display: flex;
+    flex-direction: column;
+    max-inline-size: 100%;
+    transition: none; /* [1] */
+
+    @media (height >= 40rem) {
+      block-size: calc(
+        /* Dynamic viewport */
+        100dvb -
+        /* Header + layout padding */
+        var(--wizard-main-block-start-correction) -
+        /* Preview picker size */
+        var(--basis-size-md) -
+        /* space between picker and preview */
+        var(--basis-space-row-lg) -
+        /* layout-body-padding-block bottom */
+        var(
+          --wizard-layout-body-padding-block,
+          var(--basis-space-block-xl)
+        )
+      ); /* [2] */
+    }
+
+    &::part(content) {
+      overflow: auto;
+    }
   }
 </style>
 
@@ -44,20 +95,25 @@ if (!currentTemplate) {
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
-      <div slot="sidebar" class="wizard-theme-sidebar">
-        <wizard-tokens-form></wizard-tokens-form>
-      </div>
+
+      <wizard-tokens-form slot="sidebar"></wizard-tokens-form>
 
       <div slot="main" class="wizard-main">
         <wizard-preview-picker class="wizard-preview-picker" templates={TEMPLATES_JSON} value={currentTemplate}></wizard-preview-picker>
-        <clippy-story-preview size="lg">
-          <clippy-reset-theme>
-            <wizard-preview-theme>
-              <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
-            </wizard-preview-theme>
-          </clippy-reset-theme>
-        </clippy-story-preview>
+        <browser-window shadow url="https://gemeentevoorbeeld.nl" class="wizard-preview">
+          <wizard-scroll-container>
+            <clippy-reset-theme>
+              <wizard-preview-theme>
+                <wizard-preview url={currentTemplate} scraperUrl={scraperUrl}></wizard-preview>
+              </wizard-preview-theme>
+            </clippy-reset-theme>
+          </wizard-scroll-container>
+        </browser-window>
       </div>
      </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<script>
+  import '@profpowell/browser-window';
+</script>

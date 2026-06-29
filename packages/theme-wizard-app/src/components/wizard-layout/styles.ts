@@ -6,22 +6,22 @@ export default css`
   }
 
   .wizard-layout {
-    --wizard-layout-nav-padding-block: var(--basis-space-block-md);
+    --wizard-layout-padding-inline: var(--basis-space-inline-xl);
+    --wizard-layout-body-padding-block: var(--basis-space-block-xl);
+    --wizard-layout-body-template-rows: minmax(var(--basis-size-md), auto) 1fr;
+    --wizard-layout-nav-padding-block: var(--basis-space-block-xl);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
 
     background-color: var(--basis-color-accent-1-bg-subtle);
+    column-gap: var(--basis-space-inline-lg);
     container-type: inline-size;
     display: grid;
     font-family: var(--basis-text-font-family-default, inherit);
-    grid-template-areas: 'header header' 'main main' 'footer footer';
-    grid-template-columns: minmax(20rem, 24rem) 1fr;
+    grid-template-areas: 'header' 'content' 'footer';
+    grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     min-block-size: 100vh;
-  }
-
-  .wizard-layout--has-sidebar {
-    grid-template-areas: 'header header' 'sidebar main' 'footer footer';
   }
 
   .wizard-layout__header {
@@ -32,7 +32,7 @@ export default css`
     grid-area: header;
     grid-template-columns: auto 1fr;
     inset-block-start: 0;
-    padding-inline: var(--basis-space-inline-lg);
+    padding-inline: var(--wizard-layout-padding-inline);
     position: sticky;
     z-index: 1;
 
@@ -41,20 +41,24 @@ export default css`
     }
   }
 
-  .wizard-layout__sidebar {
-    grid-area: sidebar;
-    overflow-y: auto;
-    padding-block: var(--basis-space-block-2xl);
-    padding-inline: var(--basis-space-inline-2xl);
+  /* Currently non-responsive, add flex-wrap: wrap to enable wrapping */
+  .wizard-layout__body {
+    align-items: stretch;
+    display: flex;
+    gap: var(--basis-space-column-4xl);
+    grid-area: content;
+    padding-block: var(--wizard-layout-body-padding-block);
+    padding-inline: var(--wizard-layout-padding-inline);
+  }
+
+  .wizard-layout__sidebar:not([hidden]) {
+    flex-basis: 20rem;
+    flex-grow: 1;
   }
 
   .wizard-layout__logo {
     padding-block: var(--wizard-layout-nav-padding-block);
-
-    & a {
-      display: inline-block;
-      text-decoration: none;
-    }
+    text-decoration: none;
   }
 
   /* ============================================
@@ -62,16 +66,10 @@ export default css`
    ============================================ */
 
   .wizard-layout__main {
-    block-size: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    grid-area: main;
-    inline-size: 100%;
-    min-block-size: 100%;
-    min-inline-size: 0;
-    padding-inline: var(--basis-space-inline-xl);
-    scroll-margin: var(--basis-space-block-6xl);
+    display: grid;
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: 64%;
   }
 
   @media print {
@@ -89,6 +87,7 @@ export default css`
   /* ============================================
    FOOTER
    ============================================ */
+
   .wizard-layout__footer {
     align-items: start;
     background-color: var(--wizard-layout-nav-background-color);
@@ -98,7 +97,7 @@ export default css`
     grid-area: footer;
     padding-block-end: var(--basis-space-block-6xl);
     padding-block-start: var(--basis-space-block-5xl);
-    padding-inline: var(--basis-space-inline-lg);
+    padding-inline: var(--wizard-layout-padding-inline);
     row-gap: var(--basis-space-row-2xl);
 
     @media (forced-colors: active) {

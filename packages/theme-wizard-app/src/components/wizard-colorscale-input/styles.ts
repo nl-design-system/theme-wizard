@@ -19,6 +19,7 @@ export default css`
     display: flex;
     inline-size: 100%;
     justify-content: stretch;
+    max-inline-size: min(100%, var(--utrecht-textbox-max-inline-size, var(--utrecht-form-control-max-inline-size)));
   }
 
   .wizard-colorscale-input__stop {

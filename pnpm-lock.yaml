@@ -1070,6 +1070,9 @@ importers:
       '@nl-design-system-community/theme-wizard-templates':
         specifier: workspace:*
         version: link:../theme-wizard-templates
+      '@profpowell/browser-window':
+        specifier: 1.4.7
+        version: 1.4.7
       '@storybook/react-vite':
         specifier: 10.4.2
         version: 10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.27.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rollup@4.61.1)(storybook@10.4.2(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(typescript@6.0.3)(vite@8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0))
@@ -3095,6 +3098,9 @@ packages:
 
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
+
+  '@profpowell/browser-window@1.4.7':
+    resolution: {integrity: sha512-/JW7uNSc9aFYyaKDHMRBw0NeJo4dsradXjR3IbP+JzG6fhyhmFkSYVxvPnvxsoQDe/EKQvluhVdKuSDIUodfYA==}
 
   '@projectwallace/css-analyzer@9.8.2':
     resolution: {integrity: sha512-yBl4lhtCoRDxIxJq8SeTH1lfT8EP8W0D7SiXlLxoiBg40rVf8JjGLEZlrbVox5SZ5tPY070A1nyP61GApY83iQ==}
@@ -8133,6 +8139,7 @@ packages:
 
   stream-to-promise@2.2.0:
     resolution: {integrity: sha512-HAGUASw8NT0k8JvIVutB2Y/9iBk7gpgEyAudXwNJmZERdMITGdajOa4VJfD/kNiA3TppQpTP4J+CtcHwdzKBAw==}
+    deprecated: Deprecated. Use node:stream/promises and node:stream/consumers instead.
 
   stream@0.0.3:
     resolution: {integrity: sha512-aMsbn7VKrl4A2T7QAQQbzgN7NVc70vgF5INQrBXqn4dCXN1zy3L9HGgLO5s7PExmdrzTJ8uR/27aviW8or8/+A==}
@@ -10970,6 +10977,8 @@ snapshots:
       playwright: 1.60.0
 
   '@polka/url@1.0.0-next.29': {}
+
+  '@profpowell/browser-window@1.4.7': {}
 
   '@projectwallace/css-analyzer@9.8.2':
     dependencies:
