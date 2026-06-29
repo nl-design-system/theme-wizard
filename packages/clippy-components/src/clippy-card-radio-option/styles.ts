@@ -109,16 +109,34 @@ export const radioStyles = css`
      :host(:has(:focus-visible)) also fails — browsers don't re-invalidate shadow styles
      when dynamic pseudo-classes change on shadow children inside :has() (w3c/csswg-drafts#5893). */
   :host(:focus-within) {
+    background-color: var(--basis-form-control-focus-background-color);
+    color: var(--basis-form-control-focus-color);
     outline-color: var(--basis-focus-outline-color);
     outline-offset: var(--basis-focus-outline-offset);
     outline-style: var(--basis-focus-outline-style);
     outline-width: var(--basis-focus-outline-width);
-    background-color: var(--basis-form-control-focus-background-color);
-    color: var(--basis-form-control-focus-color);
 
     & .clippy-card-radio-option__label::after {
       border-color: var(--basis-form-control-focus-border-color);
       border-width: var(--basis-form-control-focus-border-width);
+    }
+  }
+
+  :host(:hover) {
+    background-color: var(--basis-form-control-hover-background-color);
+
+    & .clippy-card-radio-option__label::after {
+      border-color: var(--basis-form-control-hover-border-color);
+      border-width: var(--basis-border-width-md);
+    }
+  }
+
+  :host(:active) {
+    background-color: var(--basis-form-control-active-background-color);
+
+    & .clippy-card-radio-option__label::after {
+      border-color: var(--basis-form-control-active-border-color);
+      border-width: var(--basis-border-width-md);
     }
   }
 
@@ -141,24 +159,6 @@ export const radioStyles = css`
   }
 
   :host([checked]:active) {
-    background-color: var(--basis-form-control-active-background-color);
-
-    & .clippy-card-radio-option__label::after {
-      border-color: var(--basis-form-control-active-border-color);
-      border-width: var(--basis-border-width-md);
-    }
-  }
-
-  :host(:hover) {
-    background-color: var(--basis-form-control-hover-background-color);
-
-    & .clippy-card-radio-option__label::after {
-      border-color: var(--basis-form-control-hover-border-color);
-      border-width: var(--basis-border-width-md);
-    }
-  }
-
-  :host(:active) {
     background-color: var(--basis-form-control-active-background-color);
 
     & .clippy-card-radio-option__label::after {
