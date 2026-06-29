@@ -53,8 +53,10 @@ if (!currentTemplate) {
   }
 
   /**
-   * 1. We could simplify this by setting the size on the wizard-main class, but instead
-   *    we need to place the sizing on the preview because the preview is also resizable.
+   * 1. `browser-window` applies a `transition: all`. We dont want that (esp. with screne resizing).
+   * 2. Calculate the preview height. We could simplify this by setting the size on the
+   *    `wizard-main` class, but instead we need to place the sizing on the preview
+   *    because the preview is also resizable.
    */
   .wizard-preview {
     --wizard-scroll-container-max-size: 100%;
@@ -63,8 +65,7 @@ if (!currentTemplate) {
     display: flex;
     flex-direction: column;
     max-inline-size: 100%;
-    transition: none;
-
+    transition: none; /* [1] */
 
     @media (height >= 40rem) {
       block-size: calc(
@@ -81,7 +82,7 @@ if (!currentTemplate) {
           --wizard-layout-body-padding-block,
           var(--basis-space-block-xl)
         )
-      ); /* [1] */
+      ); /* [2] */
     }
 
     &::part(content) {
