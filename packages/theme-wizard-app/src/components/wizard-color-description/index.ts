@@ -1,6 +1,8 @@
+import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import { ColorSpace, HSL as HSLSpace, sRGB, parse, to } from 'colorjs.io/fn';
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
+import { t } from '../../i18n';
 
 ColorSpace.register(sRGB);
 ColorSpace.register(HSLSpace);
@@ -19,6 +21,44 @@ interface HSL {
   saturation: number;
 }
 
+type HueKey =
+  | 'blue'
+  | 'cyan'
+  | 'green'
+  | 'indigo'
+  | 'limeGreen'
+  | 'magenta'
+  | 'orange'
+  | 'pink'
+  | 'purple'
+  | 'red'
+  | 'violet'
+  | 'yellow';
+
+type LightnessKey =
+  | 'almostBlack'
+  | 'almostWhite'
+  | 'dark'
+  | 'light'
+  | 'medium'
+  | 'slightlyDarker'
+  | 'veryDark'
+  | 'veryLight';
+
+type SaturationKey =
+  | 'almostGray'
+  | 'dull'
+  | 'fairlyBright'
+  | 'fairlyDeep'
+  | 'gray'
+  | 'somewhatDull'
+  | 'somewhatWashedOut'
+  | 'veryBright'
+  | 'veryDeep'
+  | 'veryDull'
+  | 'veryWashedOut'
+  | 'washedOut';
+
 function colorToHSL(colorString: string): HSL {
   const [rawHue, rawSaturation, rawLightness] = to(parse(colorString), 'hsl').coords;
   return {
@@ -28,30 +68,30 @@ function colorToHSL(colorString: string): HSL {
   };
 }
 
-function hueLabel(hue: number): string {
+function hueKey(hue: number): HueKey | null {
   if ((hue >= 0 && hue <= 14) || hue >= 345) {
-    return 'rood';
+    return 'red';
   }
   if (hue === 15) {
-    return '';
+    return null;
   }
   if (hue <= 45) {
-    return 'oranje';
+    return 'orange';
   }
   if (hue <= 70) {
-    return 'geel';
+    return 'yellow';
   }
   if (hue <= 79) {
-    return 'limoengroen';
+    return 'limeGreen';
   }
   if (hue <= 163) {
-    return 'groen';
+    return 'green';
   }
   if (hue <= 193) {
-    return 'cyaan';
+    return 'cyan';
   }
   if (hue <= 240) {
-    return 'blauw';
+    return 'blue';
   }
   if (hue <= 260) {
     return 'indigo';
@@ -60,110 +100,129 @@ function hueLabel(hue: number): string {
     return 'violet';
   }
   if (hue <= 291) {
-    return 'paars';
+    return 'purple';
   }
   if (hue <= 326) {
     return 'magenta';
   }
   if (hue <= 344) {
-    return 'roze';
-  }
-  return '';
-}
-
-function lightnessLabel(lightness: number): string {
-  if (lightness <= 9) {
-    return 'bijna zwarte ';
-  }
-  if (lightness <= 22) {
-    return 'heel donker ';
-  }
-  if (lightness <= 30) {
-    return 'donker';
-  }
-  if (lightness <= 60) {
-    return '';
-  }
-  if (lightness <= 80) {
-    return 'licht';
-  }
-  if (lightness <= 94) {
-    return 'heel licht ';
-  }
-  return 'bijna witte ';
-}
-
-function saturationLabel(lightness: number, lightnessText: string, saturation: number): string {
-  let saturationText = '';
-
-  if (saturation <= 3) {
-    saturationText = 'grijze ';
-  } else if (saturation <= 10 && lightnessText !== 'bijna zwarte ') {
-    saturationText = 'bijna grijze ';
-  } else if (saturation <= 30) {
-    saturationText = 'erg doffe ';
-  } else if (saturation <= 46) {
-    saturationText = 'doffe ';
-  } else if (saturation <= 60) {
-    saturationText = 'enigszins doffe ';
-  }
-
-  if (lightness >= 61) {
-    saturationText = saturationText.replace('doffe', 'fletse');
-  }
-
-  if (saturation >= 61 && saturation <= 80) {
-    saturationText = 'tamelijk diepe ';
-  } else if (saturation > 80) {
-    saturationText = 'erg diepe ';
-  }
-
-  if (lightness >= 61) {
-    saturationText = saturationText.replace('diepe', 'heldere');
-  }
-
-  return saturationText;
-}
-
-function resolveNamedColor(hue: number, lightness: number, saturation: number): string | null {
-  if (hue === 0 && saturation === 100) {
-    if (lightness === 0) {
-      return 'zwart';
-    }
-    if (lightness === 25) {
-      return 'kastanjebruin';
-    }
-    if (lightness === 50) {
-      return 'rood';
-    }
-    if (lightness === 100) {
-      return 'wit';
-    }
-  }
-  if (hue === 60 && saturation === 100 && lightness === 25) {
-    return 'olijfgroen';
-  }
-  if (hue === 240 && saturation === 100 && lightness === 25) {
-    return 'marineblauw';
+    return 'pink';
   }
   return null;
 }
 
-function resolveAchromatic(hue: number, lightness: number, lightnessText: string, saturation: number): string | null {
-  if (hue !== 0 || saturation > 1) {
-    return null;
+function lightnessKey(lightness: number): LightnessKey {
+  if (lightness <= 9) {
+    return 'almostBlack';
   }
-  if (lightness === 0) {
-    return 'zwart';
+  if (lightness <= 22) {
+    return 'veryDark';
   }
-  if (lightness === 100) {
-    return 'wit';
+  if (lightness <= 30) {
+    return 'dark';
   }
-  const prefix = lightness >= 31 && lightness <= 60 ? 'iets donkerder ' : lightnessText;
-  return `${prefix}grijs`.trim();
+  if (lightness <= 60) {
+    return 'medium';
+  }
+  if (lightness <= 80) {
+    return 'light';
+  }
+  if (lightness <= 94) {
+    return 'veryLight';
+  }
+  return 'almostWhite';
 }
 
-export function describeColor(colorString: string): string {
+function saturationKeyDark(lightness: number, saturation: number): SaturationKey {
+  if (saturation <= 3) {
+    return 'gray';
+  }
+  if (saturation <= 10 && lightness > 9) {
+    return 'almostGray';
+  }
+  if (saturation <= 30) {
+    return 'veryDull';
+  }
+  if (saturation <= 46) {
+    return 'dull';
+  }
+  if (saturation <= 60) {
+    return 'somewhatDull';
+  }
+  if (saturation <= 80) {
+    return 'fairlyDeep';
+  }
+  return 'veryDeep';
+}
+
+function saturationKeyLight(lightness: number, saturation: number): SaturationKey {
+  if (saturation <= 3) {
+    return 'gray';
+  }
+  if (saturation <= 10 && lightness > 9) {
+    return 'almostGray';
+  }
+  if (saturation <= 30) {
+    return 'veryWashedOut';
+  }
+  if (saturation <= 46) {
+    return 'washedOut';
+  }
+  if (saturation <= 60) {
+    return 'somewhatWashedOut';
+  }
+  if (saturation <= 80) {
+    return 'fairlyBright';
+  }
+  return 'veryBright';
+}
+
+function saturationKey(lightness: number, saturation: number): SaturationKey {
+  if (lightness >= 61) {
+    return saturationKeyLight(lightness, saturation);
+  } else {
+    return saturationKeyDark(lightness, saturation);
+  }
+}
+
+function resolveNamedColorKey(hue: number, lightness: number, saturation: number): string | null {
+  if (hue === 0 && saturation === 100) {
+    if (lightness === 0) {
+      return 'black';
+    }
+    if (lightness === 25) {
+      return 'maroon';
+    }
+    if (lightness === 50) {
+      return 'red';
+    }
+    if (lightness === 100) {
+      return 'white';
+    }
+  }
+  if (hue === 60 && saturation === 100 && lightness === 25) {
+    return 'oliveGreen';
+  }
+  if (hue === 240 && saturation === 100 && lightness === 25) {
+    return 'navyBlue';
+  }
+  return null;
+}
+
+function describeAchromatic(lightness: number, translate: (key: string) => string): string {
+  if (lightness === 0) {
+    return translate('colorDescription.namedColors.black');
+  }
+  if (lightness === 100) {
+    return translate('colorDescription.namedColors.white');
+  }
+  const resolvedLightnessKey = lightness >= 31 && lightness <= 60 ? 'slightlyDarker' : lightnessKey(lightness);
+  const prefix =
+    resolvedLightnessKey === 'medium' ? '' : translate(`colorDescription.lightness.${resolvedLightnessKey}`);
+  return `${prefix}${translate('colorDescription.gray')}`.trim();
+}
+
+export function describeColor(colorString: string, translate: (key: string) => string): string {
   let hsl: HSL;
   try {
     hsl = colorToHSL(colorString);
@@ -173,24 +232,28 @@ export function describeColor(colorString: string): string {
 
   const { hue, lightness, saturation } = hsl;
 
-  const namedColor = resolveNamedColor(hue, lightness, saturation);
-  if (namedColor !== null) {
-    return namedColor;
+  const namedColorKey = resolveNamedColorKey(hue, lightness, saturation);
+  if (namedColorKey !== null) {
+    return translate(`colorDescription.namedColors.${namedColorKey}`);
   }
 
-  const lightnessText = lightnessLabel(lightness);
-
-  const achromatic = resolveAchromatic(hue, lightness, lightnessText, saturation);
-  if (achromatic !== null) {
-    return achromatic;
+  if (hue === 0 && saturation <= 1) {
+    return describeAchromatic(lightness, translate);
   }
 
-  const saturationText = saturationLabel(lightness, lightnessText, saturation);
-  const hueName = hueLabel(hue);
+  const saturationText = translate(`colorDescription.saturation.${saturationKey(lightness, saturation)}`);
 
-  if (hueName === '' && saturation >= 46 && lightness >= 70) {
-    return 'zalm';
+  const resolvedLightnessKey = lightnessKey(lightness);
+  const lightnessText =
+    resolvedLightnessKey === 'medium' ? '' : translate(`colorDescription.lightness.${resolvedLightnessKey}`);
+
+  const resolvedHueKey = hueKey(hue);
+
+  if (resolvedHueKey === null && saturation >= 46 && lightness >= 70) {
+    return translate('colorDescription.namedColors.salmon');
   }
+
+  const hueName = resolvedHueKey === null ? '' : translate(`colorDescription.hue.${resolvedHueKey}`);
 
   return `${saturationText} ${lightnessText}${hueName}`.replace(/\s+/g, ' ').trim();
 }
@@ -200,12 +263,12 @@ export function describeColor(colorString: string): string {
  *
  * @see https://www.200ok.nl/tips/kleurnamen/
  */
-@customElement(tag)
+@safeCustomElement(tag)
 export class WizardColorDescription extends LitElement {
   @property({ type: String })
   color = '';
 
   override render() {
-    return html`${describeColor(this.color)}`;
+    return html`${describeColor(this.color, (key) => t(key) as string)}`;
   }
 }
