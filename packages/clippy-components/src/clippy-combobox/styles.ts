@@ -8,6 +8,12 @@ export default css`
       --utrecht-textbox-border-width,
       var(--utrecht-form-control-border-width)
     );
+    --_clippy-combobox-popover-viewport-margin: var(
+      --clippy-combobox-popover-viewport-margin,
+      var(--basis-space-block-xl)
+    );
+    --_clippy-combobox-popover-min-size: var(--basis-size-2xl);
+    --_clippy-combobox-popover-max-size: 19rem; /* 304px, closest to utrecht 300px max size */
 
     anchor-scope: --clippy-combobox-input;
   }
@@ -136,14 +142,19 @@ export default css`
     );
   }
 
+  /**
+   * The popover, relies on anchor positioning with a static fallback.
+   */
   .clippy-combobox__popover[class] {
     block-size: stretch;
     display: none;
     inline-size: anchor-size(self-inline);
     inset: auto;
-    margin-block-end: var(--basis-space-block-xl);
-    max-block-size: calc(var(var(--basis-size-2xl)) * 3);
-    min-block-size: var(--basis-size-2xl);
+    max-block-size: min(
+      calc(100% - var(--_clippy-combobox-popover-viewport-margin)),
+      var(--_clippy-combobox-popover-max-size)
+    );
+    min-block-size: var(--_clippy-combobox-popover-min-size);
     position: fixed;
     position-anchor: --clippy-combobox-input;
     position-area: self-block-end span-self-inline-end;
@@ -152,17 +163,24 @@ export default css`
       flip-inline,
       flip-block flip-inline;
     position-try-order: most-block-size;
+    z-index: 2;
 
     &:not([hidden]) {
       display: flex;
     }
 
-    /* &:popover-open {
-      display: flex;
+    @supports (min-block-size: calc-size(fit-content, min(size, 1px))) {
+      min-block-size: calc-size(fit-content, min(size, var(--_clippy-combobox-popover-min-size)));
+      max-block-size: calc-size(stretch, min(size, var(--_clippy-combobox-popover-max-size)));
+      margin-block-end: var(--_clippy-combobox-popover-viewport-margin);
     }
-    &.clippy-combobox__popover--hidden {
-      display: none;
-    } */
+
+    @supports not (min-block-size: calc-size(fit-content, min(size, 1px))) {
+      &:not(:has(:where(.clippy-combobox__option:nth-of-type(4)))) {
+        min-block-size: 0;
+        max-block-size: fit-content;
+      }
+    }
   }
 
   /**

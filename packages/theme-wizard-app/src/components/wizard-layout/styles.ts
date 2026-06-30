@@ -34,7 +34,7 @@ export default css`
     inset-block-start: 0;
     padding-inline: var(--wizard-layout-padding-inline);
     position: sticky;
-    z-index: 1;
+    z-index: 10;
 
     @media (forced-colors: active) {
       border-block-end: var(--basis-border-width-sm) solid;

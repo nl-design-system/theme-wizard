@@ -424,27 +424,31 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             tabindex="-1"
             ?hidden=${!this.open}
           >
-            <ul class="utrecht-listbox__list" role="none">
-              ${this.filteredOptions.map((option, index) => {
-                const active = index === this.activeIndex;
-                const selected = dequal(option, currentOption);
-                const interactionClasses = {
-                  'utrecht-listbox__option--active': active,
-                  'utrecht-listbox__option--selected': selected,
-                };
-                return html`<li
-                  class="clippy-combobox__option | utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
-                    interactionClasses,
-                  )}"
-                  role="option"
-                  id=${ifDefined(this.#getOptionId(index))}
-                  aria-selected=${selected}
-                  @click=${() => this.#commitActiveItem(index)}
-                >
-                  ${this.renderOption(option, index)}
-                </li>`;
-              })}
-            </ul>
+            ${this.filteredOptions.length === 0
+              ? html`<div class="clippy-combobox__empty">No results found</div>`
+              : html`
+                  <ul class="utrecht-listbox__list" role="none">
+                    ${this.filteredOptions.map((option, index) => {
+                      const active = index === this.activeIndex;
+                      const selected = dequal(option, currentOption);
+                      const interactionClasses = {
+                        'utrecht-listbox__option--active': active,
+                        'utrecht-listbox__option--selected': selected,
+                      };
+                      return html`<li
+                        class="clippy-combobox__option | utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
+                          interactionClasses,
+                        )}"
+                        role="option"
+                        id=${ifDefined(this.#getOptionId(index))}
+                        aria-selected=${selected}
+                        @click=${() => this.#commitActiveItem(index)}
+                      >
+                        ${this.renderOption(option, index)}
+                      </li>`;
+                    })}
+                  </ul>
+                `}
           </div>
         </div>
       </div>
