@@ -19,10 +19,6 @@ export const radioStyles = css`
     position: relative;
   }
 
-  .clippy-card-radio-option__start {
-    align-self: center;
-  }
-
   /**
    * 1. Pseudo element that overlays the entire radio card to make it entirely mouse-interactive;
    *    This element also takes care of the additional border-width on interaction and [checked] state.
@@ -57,9 +53,9 @@ export const radioStyles = css`
   }
 
   .clippy-card-radio-option__header {
-    align-items: start;
-    display: grid;
-    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: var(--basis-space-inline-lg);
+    display: flex;
     justify-content: start;
     min-block-size: var(--basis-pointer-target-min-block-size);
     padding-block-end: var(--basis-space-inline-lg);
@@ -68,25 +64,17 @@ export const radioStyles = css`
     padding-inline-start: var(--basis-space-inline-xl);
   }
 
-  .clippy-card-radio-option__header--with-start {
-    align-items: center;
-    column-gap: var(--basis-space-inline-lg);
-    grid-template-columns: min-content minmax(0, 1fr);
+  .clippy-card-radio-option__start {
+    align-self: center;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
 
-    & .clippy-card-radio-option__start {
-      grid-column: 1;
-      grid-row: 1 / -1;
-    }
-
-    & .clippy-card-radio-option__label {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    & .clippy-card-radio-option__description {
-      grid-column: 2;
-      grid-row: 2;
-    }
+  .clippy-card-radio-option__header-body {
+    align-self: start;
+    flex: 1;
+    min-inline-size: 0;
   }
 
   .clippy-radio-card__body {

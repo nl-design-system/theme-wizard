@@ -80,25 +80,6 @@ describe(`<${tag}>`, () => {
       expect(footerSlot).toBeTruthy();
     });
 
-    it('start slot absent: no --with-start class on header', async () => {
-      const option = await setup(`<${tag}>Label</${tag}>`);
-      await option.updateComplete;
-      const header = option.shadowRoot!.querySelector('.clippy-card-radio-option__header');
-      expect(header!.classList.contains('clippy-card-radio-option__header--with-start')).toBe(false);
-    });
-
-    it('start slot filled: adds --with-start class on header', async () => {
-      const option = await setup(`
-        <${tag}>
-          <img slot="start" src="icon.png" alt="" />
-          Label
-        </${tag}>
-      `);
-      await option.updateComplete;
-      const header = option.shadowRoot!.querySelector('.clippy-card-radio-option__header');
-      expect(header!.classList.contains('clippy-card-radio-option__header--with-start')).toBe(true);
-    });
-
     it('start slot filled: start content wrapped in span', async () => {
       const option = await setup(`
         <${tag}>
@@ -111,10 +92,10 @@ describe(`<${tag}>`, () => {
       expect(startSpan).toBeTruthy();
     });
 
-    it('start slot empty: no start span rendered', async () => {
+    it('start slot empty: empty start span rendered', async () => {
       const option = await setup(`<${tag}>Label</${tag}>`);
       const startSpan = option.shadowRoot!.querySelector('.clippy-card-radio-option__start');
-      expect(startSpan).toBeNull();
+      expect(startSpan).toBeTruthy();
     });
   });
 

@@ -1,7 +1,6 @@
 import { safeCustomElement } from '@lib/decorators';
 import { LitElement, html } from 'lit';
-import { property, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { property, query, state } from 'lit/decorators.js';
 import srOnly from '../lib/sr-only';
 import { radioStyles } from './styles';
 
@@ -31,9 +30,9 @@ export class ClippyCardRadioOption extends LitElement {
   @property({ type: String }) name = '';
   @property({ reflect: true, type: Boolean }) checked = false;
   @property({ attribute: false, type: Number }) inputTabIndex = -1;
-  @state() private hasStart = false;
   @state() private hasBody = false;
   @state() private hasFooter = false;
+  @query('input') input!: HTMLInputElement;
 
   readonly #inputId = crypto.randomUUID();
 
@@ -41,11 +40,6 @@ export class ClippyCardRadioOption extends LitElement {
     this.checked = true;
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
-
-  readonly #onStartSlotChange = (event: Event) => {
-    const slot = event.target as HTMLSlotElement;
-    this.hasStart = slot.assignedNodes({ flatten: true }).length > 0;
-  };
 
   readonly #onBodySlotChange = (event: Event) => {
     const slot = event.target as HTMLSlotElement;
@@ -58,15 +52,10 @@ export class ClippyCardRadioOption extends LitElement {
   };
 
   focusInput() {
-    const input = this.shadowRoot?.querySelector('input');
-    if (!input) {
-      return;
-    }
-    input.focus();
+    this.input.focus();
   }
 
   override render() {
-    const startSlot = html`<slot name="start" @slotchange=${this.#onStartSlotChange}></slot>`;
     const descriptionId = `${this.#inputId}-description`;
 
     return html`
@@ -81,17 +70,15 @@ export class ClippyCardRadioOption extends LitElement {
         @change=${this.#handleChange}
         aria-describedby=${descriptionId}
       />
-      <div
-        class="clippy-card-radio-option__header ${classMap({
-          'clippy-card-radio-option__header--with-start': this.hasStart,
-        })}"
-      >
-        ${this.hasStart ? html`<span class="clippy-card-radio-option__start">${startSlot}</span>` : startSlot}
-        <label class="clippy-card-radio-option__label" for=${this.#inputId}>
-          <slot></slot>
-        </label>
-        <div class="clippy-card-radio-option__description" id=${descriptionId}>
-          <slot name="description"></slot>
+      <div class="clippy-card-radio-option__header">
+        <slot name="start" class="clippy-card-radio-option__start"></slot>
+        <div class="clippy-card-radio-option__header-body">
+          <label class="clippy-card-radio-option__label" for=${this.#inputId}>
+            <slot></slot>
+          </label>
+          <div class="clippy-card-radio-option__description" id=${descriptionId}>
+            <slot name="description"></slot>
+          </div>
         </div>
       </div>
       ${this.hasBody
