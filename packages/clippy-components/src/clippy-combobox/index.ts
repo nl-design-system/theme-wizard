@@ -8,7 +8,7 @@ import textboxStyles from '@utrecht/textbox-css?inline';
 import debounce from 'debounce';
 import { dequal } from 'dequal';
 import { html, nothing, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
-import { property, query as queryDecorator, state } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
@@ -58,9 +58,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   position: Position = defaultPosition;
   @property({ reflect: true, type: Boolean })
   invalid = false;
-
-  @queryDecorator('.clippy-combobox__popover')
-  listBoxPopover!: HTMLElement;
 
   get #id() {
     return `${tag}-${this.name}`;
@@ -202,7 +199,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   };
 
   readonly #handleFocus = () => {
-    // this.listBoxPopover?.showPopover();
     this.open = true;
     this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
