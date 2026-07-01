@@ -5,14 +5,8 @@ export default css`
     display: grid;
   }
 
-  /**
-   * 1. We want to collapse the combobox popover earlier than normal because or page nav is sticky.
-   */
   :host {
     --wizard-scroll-container-max-size: none;
-    --clippy-combobox-popover-viewport-margin: calc(
-      var(--wizard-page-nav-block-size, 4rem) + var(--wizard-layout-body-padding-block, var(--basis-space-block-xl))
-    ); /* [1] */
 
     grid-template-rows: var(--wizard-layout-body-template-rows, 1fr) auto;
     row-gap: var(--basis-space-row-lg);

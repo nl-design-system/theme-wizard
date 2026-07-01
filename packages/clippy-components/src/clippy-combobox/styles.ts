@@ -146,7 +146,6 @@ export default css`
    * The popover, relies on anchor positioning with a static fallback.
    */
   .clippy-combobox__popover[class] {
-    block-size: stretch;
     display: none;
     inline-size: anchor-size(self-inline);
     inset: auto;
@@ -157,7 +156,7 @@ export default css`
     min-block-size: var(--_clippy-combobox-popover-min-size);
     position: fixed;
     position-anchor: --clippy-combobox-input;
-    position-area: self-block-end span-self-inline-end;
+    position-area: block-end center;
     position-try-fallbacks:
       flip-block,
       flip-inline,
