@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@gmrchk/cli-testing-library": "0.1.2",
-    "@nl-design-system-unstable/start-design-tokens": "6.1.0",
+    "@nl-design-system-unstable/start-design-tokens": "6.2.0",
     "@types/dlv": "1.1.5",
     "ansivision": "0.4.0",
     "dlv": "1.1.3",
