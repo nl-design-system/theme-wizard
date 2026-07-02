@@ -463,6 +463,19 @@ export const en = {
       aria_label: 'Jump to {{token}}',
     },
   },
+  wizard: {
+    stepForm: {
+      errorNoToken: 'Error: no token at path {{path}}, make sure to use a correct token path.',
+      foundValues: 'Found values on website',
+      noRecommendations: 'No recommendations to show.',
+      sample: {
+        button: 'Example button',
+        heading: 'Example of a heading.',
+        paragraph: 'Example text. The quick brown fox jumps over the lazy dog.',
+      },
+      showAllTokens: 'Show all tokens',
+    },
+  },
 };
 
 export const nl = {
@@ -910,6 +923,19 @@ export const nl = {
     title: 'Thema validatie fouten',
     token_link: {
       aria_label: 'Spring naar {{token}}',
+    },
+  },
+  wizard: {
+    stepForm: {
+      errorNoToken: 'Error: geen token op pad {{path}}, zorg dat er een token bestaat op dit pad.',
+      foundValues: 'Gevonden waardes op website',
+      noRecommendations: 'Geen aanbevelingen om te tonen.',
+      sample: {
+        button: 'Voorbeeld van knop',
+        heading: 'Voorbeeld van een koptekst.',
+        paragraph: 'Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.',
+      },
+      showAllTokens: 'Toon alle tokens',
     },
   },
 } satisfies typeof en;

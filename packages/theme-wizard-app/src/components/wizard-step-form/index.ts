@@ -4,6 +4,7 @@ import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
+import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import { BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
 import { dequal } from 'dequal';
@@ -13,12 +14,13 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
+import { t } from '../../i18n';
 import Theme from '../../lib/Theme';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { EXTENSION_TOKEN_STAGED, type StagedDesignToken } from '../../utils/types';
 import { markStepComplete } from '../../utils/wizard-steps-storage';
-import styles from './styles';
 import '../wizard-color-description';
+import styles from './styles';
 
 export { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 export type { SubmitSaveTokenFormEvent } from '../../utils/events';
@@ -68,6 +70,7 @@ export class WizardStepForm extends LitElement {
     }
     const formData = new FormData(event.target);
 
+    // Make a list of path+token based on what's inside FormData
     const tokens: UpdateDesignTokensDetail = Array.from(formData.entries()).flatMap(([path, value]) => {
       const token = this.tokens[Number(value)];
       if (!token) {
@@ -102,24 +105,22 @@ export class WizardStepForm extends LitElement {
 
   get tokens() {
     return this.scrapedTokens
-      .filter((token) => token.$extensions?.[EXTENSION_TOKEN_STAGED] === true)
-      .filter((token) => token.$type === this.tokenAt?.$type)
       .filter((token) => {
-        const subType = this.subType;
-        if (!subType) {
-          return true;
+        const isStaged = token.$extensions?.[EXTENSION_TOKEN_STAGED] === true;
+        if (!isStaged) {
+          return false;
         }
-        const properties = token.$extensions?.['nl.nldesignsystem.theme-wizard.css-properties'];
-        if (!Array.isArray(properties)) {
-          return true;
+
+        const isSameType = token.$type === this.tokenAt?.$type;
+        if (!isSameType) {
+          return false;
         }
-        return properties.includes(subType);
+
+        const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
+        const matchesSubType = !this.subType || !Array.isArray(cssProperties) || cssProperties.includes(this.subType);
+        return matchesSubType;
       })
-      .sort(
-        (a, b) =>
-          b.$extensions?.['nl.nldesignsystem.theme-wizard.usage-count'] -
-          a.$extensions?.['nl.nldesignsystem.theme-wizard.usage-count'],
-      );
+      .toSorted((a, b) => b.$extensions?.[EXTENSION_USAGE_COUNT] - a.$extensions?.[EXTENSION_USAGE_COUNT]);
   }
 
   private renderSample(token: BaseDesignToken) {
@@ -127,54 +128,47 @@ export class WizardStepForm extends LitElement {
     const stringified = stringifyToken(token);
 
     if (this.path.includes('heading')) {
+      const color = tokenType === 'color' ? stringified : undefined;
+      const fontFamily = tokenType === 'fontFamily' ? stringified : undefined;
       return html`
-        <div class="sample">
-          <clippy-html-image>
-            <clippy-heading
-              style=${styleMap({
-                '--nl-heading-level-2-color': tokenType === 'color' ? stringified : undefined,
-                '--nl-heading-level-2-font-family': tokenType === 'fontFamily' ? stringified : undefined,
-              })}
-              level="2"
-            >
-              Voorbeeld van een koptekst.
-            </clippy-heading>
-            <wizard-font-sample>
-              Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
-            </wizard-font-sample>
-          </clippy-html-image>
-        </div>
+        <clippy-html-image>
+          <clippy-heading
+            style=${styleMap({
+              '--nl-heading-level-2-color': color,
+              '--nl-heading-level-2-font-family': fontFamily,
+            })}
+            level="2"
+          >
+            ${t('wizard.stepForm.headingSample')}
+          </clippy-heading>
+        </clippy-html-image>
+        <wizard-font-sample>${t('wizard.stepForm.textSample')}</wizard-font-sample>
       `;
     }
 
-    if (this.path.includes('action-1.bg-default')) {
+    if (this.path.includes('action-1.bg-default') && token.$type === 'color') {
+      const color =
+        token.$type === 'color' ? `color-mix(in hsl, contrast-color(${stringified}) 95%, ${stringified})` : undefined;
       return html`
-        <div class="sample">
-          <clippy-html-image
-            style=${styleMap({
-              '--nl-button-primary-background-color': tokenType === 'color' ? stringified : undefined,
-              '--nl-button-primary-color':
-                tokenType === 'color'
-                  ? `color-mix(in hsl, contrast-color(${stringified}) 95%, ${stringified})`
-                  : undefined,
-            })}
-          >
-            <clippy-button purpose="primary">Voorbeeld van knop</clippy-button>
-          </clippy-html-image>
-        </div>
+        <clippy-html-image
+          style=${styleMap({
+            '--nl-button-primary-background-color': stringified,
+            '--nl-button-primary-color': color,
+          })}
+        >
+          <clippy-button purpose="primary">${t('wizard.stepForm.buttonSample')}</clippy-button>
+        </clippy-html-image>
       `;
     }
 
     return html`
-      <div class="sample">
-        <wizard-font-sample
-          wrap
-          family=${tokenType === 'fontFamily' ? stringified : undefined}
-          color=${tokenType === 'color' ? stringified : undefined}
-        >
-          Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.
-        </wizard-font-sample>
-      </div>
+      <wizard-font-sample
+        wrap
+        family=${tokenType === 'fontFamily' ? stringified : undefined}
+        color=${tokenType === 'color' ? stringified : undefined}
+      >
+        ${t('wizard.stepForm.textSample')}
+      </wizard-font-sample>
     `;
   }
 
@@ -187,24 +181,23 @@ export class WizardStepForm extends LitElement {
         : WizardStepForm.defaultItemsToShow;
 
     if (!tokenAt) {
-      // TODO: better messaging
-      return html`ERR: no token at ${this.path}`;
+      return html`${t('wizard.stepForm.errorNoToken', { path: this.path })}`;
     }
 
     const tokenType = tokenAt.$type;
 
     if (this.tokens.length === 0) {
-      return html`<p class="nl-paragraph">Geen aanbevelingen om te tonen.</p>`;
+      return html`<p class="nl-paragraph">${t('wizard.stepForm.noRecommendations')}</p>`;
     }
 
-    const checkedIndex = this.tokens.findIndex((t) => tokenEquals(t, tokenAt));
+    const checkedIndex = this.tokens.findIndex((token) => tokenEquals(token, tokenAt));
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
         <wizard-stack size="4xl">
           <fieldset>
             <wizard-stack size="xl">
-              <legend>Gevonden waardes op website</legend>
+              <legend>${t('wizard.stepForm.foundValues')}</legend>
 
               <clippy-card-radio-group name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
                 ${this.tokens.slice(0, itemsToShow).map((token, index) => {
@@ -235,7 +228,9 @@ export class WizardStepForm extends LitElement {
                           ></wizard-color-description>`
                         : nothing}
                       <clippy-reset-theme slot="body">
-                        <wizard-preview-theme>${this.renderSample(token)}</wizard-preview-theme>
+                        <wizard-preview-theme>
+                          <div class="sample">${this.renderSample(token)}</div>
+                        </wizard-preview-theme>
                       </clippy-reset-theme>
                     </clippy-card-radio-option>
                   `;
@@ -246,16 +241,16 @@ export class WizardStepForm extends LitElement {
                 : html`
                     <clippy-button purpose="subtle" type="button" @click=${() => (this.showAll = true)}>
                       <span slot="iconStart">${unsafeSVG(ChevronDown)}</span>
-                      Toon alle tokens
+                      ${t('wizard.stepForm.showAllTokens')}
                     </clippy-button>
                   `}
             </wizard-stack>
           </fieldset>
 
           <div class="utrecht-action-group utrecht-action-group--row">
-            <button class="nl-button nl-button--primary" type="submit">Opslaan</button>
+            <button class="nl-button nl-button--primary" type="submit">${t('save')}</button>
             <a href=${this.returnUrl} class="nl-button nl-button--secondary">
-              <span class="nl-button__label">Annuleren</span>
+              <span class="nl-button__label">${t('cancel')}</span>
             </a>
           </div>
         </wizard-stack>

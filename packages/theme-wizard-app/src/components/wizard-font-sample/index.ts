@@ -16,7 +16,7 @@ const styles = css`
     display: block;
   }
 
-  .wizard-font-sample:not(.wrap) {
+  .wizard-font-sample:not(.wizard-font-sample--wrap) {
     -webkit-box-orient: vertical;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -44,7 +44,10 @@ export class WizardFontSample extends LitElement {
 
     return html`
       <clippy-html-image>
-        <p class="nl-paragraph wizard-font-sample ${classMap({ wrap: this.wrap })}" style="${fontStyles}">
+        <p
+          class="nl-paragraph wizard-font-sample ${classMap({ 'wizard-font-sample--wrap': this.wrap })}"
+          style="${fontStyles}"
+        >
           <slot>Op brute wijze ving de schooljuf de quasi-kalme lynx.</slot>
         </p>
       </clippy-html-image>
