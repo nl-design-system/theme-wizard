@@ -8,6 +8,14 @@ export default css`
       --utrecht-textbox-border-width,
       var(--utrecht-form-control-border-width)
     );
+    --_clippy-combobox-popover-viewport-margin: var(
+      --clippy-combobox-popover-viewport-margin,
+      var(--basis-space-block-xl)
+    );
+    --_clippy-combobox-popover-min-size: var(--basis-size-2xl);
+    --_clippy-combobox-popover-max-size: 19rem; /* 304px, closest to utrecht 300px max size */
+
+    anchor-scope: --clippy-combobox-input;
   }
 
   .clippy-combobox__slot {
@@ -61,6 +69,10 @@ export default css`
    */
   .clippy-combobox__customizable-text-input {
     display: block; /* [1] */
+  }
+
+  .clippy-combobox__customizable-text-input__inner {
+    anchor-name: --clippy-combobox-input;
   }
 
   /**
@@ -128,6 +140,46 @@ export default css`
         var(--utrecht-textbox-background-color, var(--utrecht-form-control-background-color))
       )
     );
+  }
+
+  /**
+   * The popover, relies on anchor positioning with a static fallback.
+   */
+  .clippy-combobox__popover[class] {
+    display: none;
+    inline-size: anchor-size(self-inline);
+    inset: auto;
+    max-block-size: min(
+      calc(100% - var(--_clippy-combobox-popover-viewport-margin)),
+      var(--_clippy-combobox-popover-max-size)
+    );
+    min-block-size: var(--_clippy-combobox-popover-min-size);
+    position: fixed;
+    position-anchor: --clippy-combobox-input;
+    position-area: block-end center;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      flip-block flip-inline;
+    position-try-order: normal;
+    z-index: 2;
+
+    &:not([hidden]) {
+      display: flex;
+    }
+
+    @supports (min-block-size: calc-size(fit-content, min(size, 1px))) {
+      min-block-size: calc-size(fit-content, min(size, var(--_clippy-combobox-popover-min-size)));
+      max-block-size: calc-size(stretch, min(size, var(--_clippy-combobox-popover-max-size)));
+      margin-block-end: var(--_clippy-combobox-popover-viewport-margin);
+    }
+
+    @supports not (min-block-size: calc-size(fit-content, min(size, 1px))) {
+      &:not(:has(:where(.clippy-combobox__option:nth-of-type(4)))) {
+        min-block-size: 0;
+        max-block-size: fit-content;
+      }
+    }
   }
 
   /**
