@@ -1,6 +1,7 @@
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 const tag = 'wizard-font-sample';
 
@@ -15,7 +16,7 @@ const styles = css`
     display: block;
   }
 
-  .wizard-font-sample {
+  .wizard-font-sample:not(.wizard-font-sample--wrap) {
     -webkit-box-orient: vertical;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -29,18 +30,24 @@ export class WizardFontSample extends LitElement {
 
   @property({ type: String }) size: string = '';
   @property({ type: String }) family: string = '';
+  @property({ type: String }) color: string = '';
+  @property({ type: Boolean }) wrap: boolean = false;
 
   override render() {
     const fontStyles = [
       this.size && `--nl-paragraph-font-size: ${this.size}`,
       this.family && `--nl-paragraph-font-family: ${this.family}`,
+      this.color && `--nl-paragraph-color: ${this.color}`,
     ]
       .filter(Boolean)
       .join(';');
 
     return html`
       <clippy-html-image>
-        <p class="nl-paragraph wizard-font-sample" style="${fontStyles}">
+        <p
+          class="nl-paragraph wizard-font-sample ${classMap({ 'wizard-font-sample--wrap': this.wrap })}"
+          style="${fontStyles}"
+        >
           <slot>Op brute wijze ving de schooljuf de quasi-kalme lynx.</slot>
         </p>
       </clippy-html-image>

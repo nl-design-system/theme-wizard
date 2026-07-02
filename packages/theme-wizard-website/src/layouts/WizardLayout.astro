@@ -1,0 +1,58 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '@nl-design-system-candidate/link-css/link.css'
+import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import { IconArrowLeft } from '@tabler/icons-react';
+
+export interface Props {
+  title?: string;
+}
+
+const { title = 'Wizard - Theme Wizard' } = Astro.props;
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-task-navigation';
+</script>
+
+<BaseLayout title={`${title} - Wizard - Theme Wizard`}>
+  <theme-wizard-app>
+    <wizard-layout>
+      <main slot="main" class="wizard-main">
+        <wizard-container size="lg">
+          <clippy-story-preview size="lg">
+            <wizard-stack size="3xl">
+                <a class="nl-link wizard-back-link" href="./">
+                  <IconArrowLeft />
+                  Vorige stap
+                </a>
+              <header>
+                <wizard-stack size="xl">
+                  <clippy-heading level="1">{title}</clippy-heading>
+                  <slot name="header" />
+                </wizard-stack>
+              </header>
+              <slot />
+            </wizard-stack>
+          </clippy-story-preview>
+        </wizard-container>
+      </main>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-main {
+    padding-block: var(--basis-space-block-5xl);
+  }
+
+  wizard-container {
+    margin-inline: auto;
+  }
+
+  .wizard-back-link {
+    align-items: center;
+    display: flex;
+    gap: var(--basis-space-column-sm);
+  }
+</style>
