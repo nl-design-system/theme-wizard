@@ -37,7 +37,7 @@
   "dependencies": {
     "@amsterdam/design-system-css": "4.1.0",
     "@amsterdam/design-system-react": "4.1.0",
-    "@astrojs/react": "5.0.7",
+    "@astrojs/react": "6.0.0",
     "@gemeente-denhaag/action": "4.2.1",
     "@gemeente-denhaag/card": "5.0.6",
     "@gemeente-denhaag/side-navigation": "4.1.0",

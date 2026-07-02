@@ -25,7 +25,7 @@
     "test-e2e": "playwright test"
   },
   "dependencies": {
-    "@astrojs/react": "5.0.7",
+    "@astrojs/react": "6.0.0",
     "@astrojs/vercel": "10.0.8",
     "@fontsource/fira-sans": "5.2.7",
     "@fontsource/source-sans-pro": "5.2.5",
