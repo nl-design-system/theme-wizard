@@ -136,6 +136,10 @@ export class App extends LitElement {
     this.#themeStorage.setJSON(this.theme.tokens);
   };
 
+  /**
+   * @deprecated Use `this.handleUpdateTokens()` instead in the future.
+   * This implies that all token changes should become `SubmitSaveTokenFormEvent` events.
+   */
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 

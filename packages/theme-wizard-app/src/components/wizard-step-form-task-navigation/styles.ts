@@ -30,6 +30,7 @@ export default css`
 
   /**
    * 1. Add border in the same color as background: this helps with adding a border in high contrast mode
+   *    and keeps the size the same as the 'checked' state.
    */
   .wizard-step-form-task-navigation-icon-start--checked {
     background-color: var(--basis-color-positive-inverse-bg-default);

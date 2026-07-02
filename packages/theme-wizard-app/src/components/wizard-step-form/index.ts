@@ -7,8 +7,9 @@ import '@nl-design-system-community/clippy-components/clippy-html-image';
 import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import { BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
+import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
 import { dequal } from 'dequal';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
@@ -63,6 +64,33 @@ export class WizardStepForm extends LitElement {
   @state()
   showAll: boolean = false;
 
+  private _tokens: StagedDesignToken[] = [];
+
+  override willUpdate(changed: PropertyValues) {
+    if (changed.has('scrapedTokens') || changed.has('path') || changed.has('subType') || changed.has('theme')) {
+      const requestedType = this.tokenAt?.$type;
+      const requestedSubType = this.subType;
+
+      this._tokens = this.scrapedTokens
+        .filter((token) => {
+          if (token.$extensions?.[EXTENSION_TOKEN_STAGED] !== true) {
+            return false;
+          }
+          if (token.$type !== requestedType) {
+            return false;
+          }
+          if (!requestedSubType) {
+            return true;
+          }
+          const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
+          return !Array.isArray(cssProperties) || cssProperties.includes(requestedSubType);
+        })
+        .toSorted(
+          (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
+        );
+    }
+  }
+
   private handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     if (!(event.target instanceof HTMLFormElement)) {
@@ -72,6 +100,9 @@ export class WizardStepForm extends LitElement {
 
     // Make a list of path+token based on what's inside FormData
     const tokens: UpdateDesignTokensDetail = Array.from(formData.entries()).flatMap(([path, value]) => {
+      if (typeof value !== 'string' || value === '') {
+        return [];
+      }
       const token = this.tokens[Number(value)];
       if (!token) {
         return [];
@@ -92,7 +123,9 @@ export class WizardStepForm extends LitElement {
       markStepComplete(path);
     }
 
-    location.assign(this.returnUrl);
+    if (this.returnUrl) {
+      location.assign(this.returnUrl);
+    }
   }
 
   get tokenAt() {
@@ -104,23 +137,7 @@ export class WizardStepForm extends LitElement {
   }
 
   get tokens() {
-    return this.scrapedTokens
-      .filter((token) => {
-        const isStaged = token.$extensions?.[EXTENSION_TOKEN_STAGED] === true;
-        if (!isStaged) {
-          return false;
-        }
-
-        const isSameType = token.$type === this.tokenAt?.$type;
-        if (!isSameType) {
-          return false;
-        }
-
-        const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
-        const matchesSubType = !this.subType || !Array.isArray(cssProperties) || cssProperties.includes(this.subType);
-        return matchesSubType;
-      })
-      .toSorted((a, b) => b.$extensions?.[EXTENSION_USAGE_COUNT] - a.$extensions?.[EXTENSION_USAGE_COUNT]);
+    return this._tokens;
   }
 
   private renderSample(token: BaseDesignToken) {
@@ -139,14 +156,14 @@ export class WizardStepForm extends LitElement {
             })}
             level="2"
           >
-            ${t('wizard.stepForm.headingSample')}
+            ${t('wizard.stepForm.sample.heading')}
           </clippy-heading>
         </clippy-html-image>
-        <wizard-font-sample>${t('wizard.stepForm.textSample')}</wizard-font-sample>
+        <wizard-font-sample>${t('wizard.stepForm.sample.paragraph')}</wizard-font-sample>
       `;
     }
 
-    if (this.path.includes('action-1.bg-default') && token.$type === 'color') {
+    if (this.path.includes('action-1.bg-default') && tokenType === 'color') {
       const color =
         token.$type === 'color' ? `color-mix(in hsl, contrast-color(${stringified}) 95%, ${stringified})` : undefined;
       return html`
@@ -156,7 +173,7 @@ export class WizardStepForm extends LitElement {
             '--nl-button-primary-color': color,
           })}
         >
-          <clippy-button purpose="primary">${t('wizard.stepForm.buttonSample')}</clippy-button>
+          <clippy-button purpose="primary">${t('wizard.stepForm.sample.button')}</clippy-button>
         </clippy-html-image>
       `;
     }
@@ -167,89 +184,102 @@ export class WizardStepForm extends LitElement {
         family=${tokenType === 'fontFamily' ? stringified : undefined}
         color=${tokenType === 'color' ? stringified : undefined}
       >
-        ${t('wizard.stepForm.textSample')}
+        ${t('wizard.stepForm.sample.paragraph')}
       </wizard-font-sample>
     `;
   }
 
+  private renderIconStart(tokenType: string, value: string) {
+    if (tokenType === 'color') {
+      return html`<clippy-color-sample slot="start" color=${value}></clippy-color-sample>`;
+    }
+
+    if (tokenType === 'fontFamily') {
+      return html`
+        <div class="wizard-step-form__sample wizard-step-form__sample-start" slot="start">
+          <clippy-reset-theme>
+            <wizard-preview-theme>
+              <wizard-font-sample size="var(--basis-text-font-size-lg)" family=${value}>Ag</wizard-font-sample>
+            </wizard-preview-theme>
+          </clippy-reset-theme>
+        </div>
+      `;
+    }
+    return nothing;
+  }
+
+  private renderRadioCardOption(token: BaseDesignToken, index: number, tokenType: BaseDesignToken['$type']) {
+    const stringified = stringifyToken(token);
+    return html` <clippy-card-radio-option value=${String(index)}>
+      ${this.renderIconStart(tokenType, stringified)} ${stringified}
+      ${tokenType === 'color'
+        ? html`<wizard-color-description color=${stringified} slot="description"></wizard-color-description>`
+        : nothing}
+      <clippy-reset-theme slot="body">
+        <wizard-preview-theme>
+          <div class="wizard-step-form__sample wizard-step-form__sample-body">${this.renderSample(token)}</div>
+        </wizard-preview-theme>
+      </clippy-reset-theme>
+    </clippy-card-radio-option>`;
+  }
+
+  private renderShowMoreButton() {
+    const tokenCount = this.tokens.length;
+    if (tokenCount <= WizardStepForm.defaultItemsToShow) {
+      return nothing;
+    }
+    const showLess = this.showAll && tokenCount >= WizardStepForm.defaultItemsToShow;
+    const showMoreButtonText = showLess
+      ? t('wizard.stepForm.showFewerTokens')
+      : t('wizard.stepForm.showMoreTokens', {
+          tokenCount: tokenCount - WizardStepForm.defaultItemsToShow,
+        });
+    const showMoreButtonIcon = showLess ? ChevronUp : ChevronDown;
+    return html`
+      <clippy-button purpose="subtle" type="button" @click=${() => (this.showAll = !this.showAll)}>
+        <span slot="iconStart">${unsafeSVG(showMoreButtonIcon)}</span>
+        ${showMoreButtonText}
+      </clippy-button>
+    `;
+  }
+
   override render() {
-    const path = this.path;
-    const tokenAt = this.tokenAt;
-    const itemsToShow =
-      this.showAll || this.tokens.length < WizardStepForm.defaultItemsToShow
-        ? Infinity
-        : WizardStepForm.defaultItemsToShow;
+    const { path, tokenAt, tokens } = this;
+    const tokenCount = tokens.length;
 
     if (!tokenAt) {
       return html`${t('wizard.stepForm.errorNoToken', { path: this.path })}`;
     }
 
-    const tokenType = tokenAt.$type;
-
-    if (this.tokens.length === 0) {
+    if (tokenCount === 0) {
       return html`<p class="nl-paragraph">${t('wizard.stepForm.noRecommendations')}</p>`;
     }
 
-    const checkedIndex = this.tokens.findIndex((token) => tokenEquals(token, tokenAt));
+    const tokenType = tokenAt.$type;
+    const tokenCountToShow =
+      !this.showAll || tokens.length < WizardStepForm.defaultItemsToShow ? WizardStepForm.defaultItemsToShow : Infinity;
+    const checkedIndex: number | undefined = tokens.findIndex((token) => tokenEquals(token, tokenAt));
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
         <wizard-stack size="4xl">
-          <fieldset>
+          <fieldset class="wizard-step-form__fieldset">
             <wizard-stack size="xl">
-              <legend>${t('wizard.stepForm.foundValues')}</legend>
+              <legend class="wizard-step-form__legend">${t('wizard.stepForm.foundValues')}</legend>
 
               <clippy-card-radio-group name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
-                ${this.tokens.slice(0, itemsToShow).map((token, index) => {
-                  const stringified = stringifyToken(token);
-                  return html`
-                    <clippy-card-radio-option value=${String(index)}>
-                      ${token.$type === 'color'
-                        ? html`<clippy-color-sample slot="start" color=${stringified}></clippy-color-sample>`
-                        : nothing}
-                      ${token.$type === 'fontFamily'
-                        ? html`
-                            <div class="sample" slot="start">
-                              <clippy-reset-theme>
-                                <wizard-preview-theme>
-                                  <wizard-font-sample size="var(--basis-text-font-size-lg)" family=${stringified}
-                                    >Ag</wizard-font-sample
-                                  >
-                                </wizard-preview-theme>
-                              </clippy-reset-theme>
-                            </div>
-                          `
-                        : nothing}
-                      ${stringified}
-                      ${tokenType === 'color'
-                        ? html`<wizard-color-description
-                            color=${stringified}
-                            slot="description"
-                          ></wizard-color-description>`
-                        : nothing}
-                      <clippy-reset-theme slot="body">
-                        <wizard-preview-theme>
-                          <div class="sample">${this.renderSample(token)}</div>
-                        </wizard-preview-theme>
-                      </clippy-reset-theme>
-                    </clippy-card-radio-option>
-                  `;
+                ${tokens.slice(0, tokenCountToShow).map((token, index) => {
+                  return this.renderRadioCardOption(token, index, tokenType);
                 })}
               </clippy-card-radio-group>
-              ${itemsToShow === Infinity
-                ? nothing
-                : html`
-                    <clippy-button purpose="subtle" type="button" @click=${() => (this.showAll = true)}>
-                      <span slot="iconStart">${unsafeSVG(ChevronDown)}</span>
-                      ${t('wizard.stepForm.showAllTokens')}
-                    </clippy-button>
-                  `}
+
+              ${this.renderShowMoreButton()}
             </wizard-stack>
           </fieldset>
 
           <div class="utrecht-action-group utrecht-action-group--row">
             <button class="nl-button nl-button--primary" type="submit">${t('save')}</button>
-            <a href=${this.returnUrl} class="nl-button nl-button--secondary">
+            <a href=${this.returnUrl || nothing} class="nl-button nl-button--secondary">
               <span class="nl-button__label">${t('cancel')}</span>
             </a>
           </div>

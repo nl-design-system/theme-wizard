@@ -473,7 +473,8 @@ export const en = {
         heading: 'Example of a heading.',
         paragraph: 'Example text. The quick brown fox jumps over the lazy dog.',
       },
-      showAllTokens: 'Show all tokens',
+      showFewerTokens: 'Show fewer options',
+      showMoreTokens: 'Show all options ({{tokenCount}})',
     },
   },
 };
@@ -935,7 +936,8 @@ export const nl = {
         heading: 'Voorbeeld van een koptekst.',
         paragraph: 'Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.',
       },
-      showAllTokens: 'Toon alle tokens',
+      showFewerTokens: 'Toon minder opties',
+      showMoreTokens: 'Toon meer opties ({{tokenCount}})',
     },
   },
 } satisfies typeof en;

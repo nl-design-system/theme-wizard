@@ -5,19 +5,18 @@ export default css`
     --nl-color-sample-border-radius: var(--basis-border-radius-round);
   }
 
-  fieldset {
+  .wizard-step-form__fieldset {
     border: none;
     padding: var(--basis-space-none);
   }
 
-  legend {
+  .wizard-step-form__legend {
     font-family: var(--basis-heading-font-family);
     font-size: var(--basis-text-font-size-2xl);
     font-weight: var(--basis-text-font-weight-bold);
   }
 
-  /* TODO: Always align ALL samples vertically. Small [start] samples also align horizontally (text-center) */
-  .sample {
+  .wizard-step-form__sample {
     background-color: var(--basis-color-default-bg-subtle);
     border-color: var(--basis-color-default-border-subtle);
     border-style: solid;
@@ -26,24 +25,23 @@ export default css`
     padding-inline: var(--basis-space-inline-sm);
     min-inline-size: var(--basis-size-sm);
     min-block-size: var(--basis-size-sm);
-
-    & clippy-html-image {
-      & > *:not(:first-child) {
-        margin-top: var(--basis-space-row-md);
-      }
-    }
-
-    clippy-card-radio-option [slot='start'] & {
-      text-align: center; /* TODO fix alignment on both axes */
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    row-gap: var(--basis-space-block-sm);
 
     @media (forced-colors: active) {
       border-width: var(--basis-border-width-sm);
     }
+  }
 
-    clippy-card-radio-option [slot='body'] & {
-      padding-block: var(--basis-space-block-lg);
-      padding-inline: var(--basis-space-inline-xl);
-    }
+  .wizard-step-form__sample-start {
+    align-items: center;
+  }
+
+  .wizard-step-form__sample-body {
+    padding-block: var(--basis-space-block-lg);
+    padding-inline: var(--basis-space-inline-xl);
   }
 `;
