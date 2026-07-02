@@ -125,7 +125,6 @@ export const radioStyles = css`
     & .clippy-card-radio-option__label::after {
       border-color: var(--basis-form-control-active-border-color);
       border-width: var(--basis-border-width-md);
-      border-left-width: 0.5em;
     }
   }
 

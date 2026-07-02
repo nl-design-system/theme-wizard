@@ -66,6 +66,9 @@ export class WizardStepForm extends LitElement {
 
   private _tokens: StagedDesignToken[] = [];
 
+  /**
+   * Updating this._tokens here so we don't re-compute this array for each sub-render in this element
+   */
   override willUpdate(changed: PropertyValues) {
     if (changed.has('scrapedTokens') || changed.has('path') || changed.has('subType') || changed.has('theme')) {
       const requestedType = this.tokenAt?.$type;
