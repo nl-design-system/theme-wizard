@@ -161,7 +161,7 @@ export default css`
       flip-block,
       flip-inline,
       flip-block flip-inline;
-    position-try-order: most-block-size;
+    position-try-order: normal;
     z-index: 2;
 
     &:not([hidden]) {
