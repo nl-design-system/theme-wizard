@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@astrojs/react": "5.0.7",
-    "@astrojs/vercel": "10.0.8",
+    "@astrojs/vercel": "11.0.0",
     "@fontsource/fira-sans": "5.2.7",
     "@fontsource/source-sans-pro": "5.2.5",
     "@gemeente-denhaag/design-tokens": "1.2.1",
