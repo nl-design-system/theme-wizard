@@ -38,7 +38,7 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-regexp": "3.1.0",
     "eslint-plugin-sonarjs": "4.0.3",
-    "eslint-plugin-unicorn": "64.0.0",
+    "eslint-plugin-unicorn": "69.0.0",
     "eslint-plugin-zod": "4.7.0",
     "husky": "9.1.7",
     "lint-staged": "17.0.7",
