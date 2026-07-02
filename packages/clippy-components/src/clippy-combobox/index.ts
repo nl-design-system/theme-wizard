@@ -59,6 +59,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   @property({ reflect: true, type: Boolean })
   invalid = false;
 
+  @state() activeIndex = -1;
+  @state() query = ''; // Query is what the user types to filter options.
+  @state() virtualKeyboardOpen = false;
+
   get #id() {
     return `${tag}-${this.name}`;
   }
@@ -74,8 +78,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     srOnly,
   ];
 
-  @state() activeIndex = -1;
-  @state() query = ''; // Query is what the user types to filter options.
+  #resizeObserver?: ResizeObserver;
+  #resizeTimeout: number | null = null;
+
   @state() get filteredOptions(): T[] {
     if (this.query.length === 0) {
       return this.options;
@@ -185,6 +190,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         this.#commitQuery();
       }
       this.open = false;
+      this.#shutDownVirtualKeyboardDetection();
       this.emit('blur');
     }
   };
@@ -194,11 +200,13 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     if (!path.some((element) => element instanceof Node && this.contains(element))) {
       // When a click happens outside of this web-component, treat it as a blur.
       this.open = false;
+      this.#shutDownVirtualKeyboardDetection();
       this.emit('blur');
     }
   };
 
   readonly #handleFocus = () => {
+    this.#setupVirtualKeyboardDetection();
     this.open = true;
     this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
@@ -244,6 +252,54 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   };
 
+  /**
+   * Setup an eventListener for the visualViewport
+   */
+  #setupVirtualKeyboardDetection() {
+    if (!window.visualViewport) return;
+
+    this.#checkVirtualKeyboard();
+
+    window.visualViewport.addEventListener('resize', this.#handleViewportResize);
+  }
+
+  /**
+   * Remove the eventListener for the visualViewport & do a final check if the virtual keyboard is still open
+   */
+  #shutDownVirtualKeyboardDetection() {
+    if (this.#resizeObserver) this.#resizeObserver.disconnect();
+    if (this.#resizeTimeout) window.clearTimeout(this.#resizeTimeout);
+    window.visualViewport?.removeEventListener('resize', this.#handleViewportResize);
+    this.#resizeTimeout = window.setTimeout(() => {
+      this.#checkVirtualKeyboard();
+      if (this.#resizeTimeout) window.clearTimeout(this.#resizeTimeout);
+    }, 350); // Arbitrary delay to make sure the keyboard is fully closed
+  }
+
+  /**
+   * Handle the viewport resize event, debouncing to avoid rapid firing during keyboard animation
+   */
+  #handleViewportResize = () => {
+    if (this.#resizeTimeout) window.clearTimeout(this.#resizeTimeout);
+    this.#resizeTimeout = window.setTimeout(() => this.#checkVirtualKeyboard(), 50);
+  };
+
+  /**
+   * Check if the virtual keyboard is open and update the state accordingly
+   */
+  #checkVirtualKeyboard() {
+    if (!window.visualViewport) return;
+
+    // Keyboard is open if visual viewport is significantly smaller than window
+    const threshold = window.innerHeight * 0.15; // 15% reduction = keyboard open
+    const isOpen = window.innerHeight - window.visualViewport.height > threshold;
+
+    if (isOpen !== this.virtualKeyboardOpen) {
+      this.virtualKeyboardOpen = isOpen;
+      this.requestUpdate();
+    }
+  }
+
   #setActiveItem(index: number, open: boolean = false) {
     this.open = open;
     this.activeIndex = index > -1 ? index % this.filteredOptions.length : -1;
@@ -263,6 +319,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       this.emit('change');
     }
     this.open = false;
+    this.#shutDownVirtualKeyboardDetection();
   }
 
   #commitActiveItem(index: number) {
@@ -323,6 +380,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   override disconnectedCallback() {
     super.disconnectedCallback();
+    this.#shutDownVirtualKeyboardDetection();
     document.removeEventListener('click', this.#handleDocumentClick);
   }
 
@@ -337,6 +395,9 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       'utrecht-textbox': true,
       'utrecht-textbox--invalid': this.invalid,
     };
+    const comboboxClasses = {
+      'clippy-combobox--virtual-keyboard-open': this.virtualKeyboardOpen,
+    };
     const currentOption = this.getOptionForValue(this.value);
     const populatedSlots = Array.from(this.children).reduce(
       (acc, child) => ({
@@ -349,7 +410,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const iconStartSlotRendered = this.renderIconStartSlot();
 
     return html`
-      <div class="clippy-combobox">
+      <div class="clippy-combobox ${classMap(comboboxClasses)}">
         <label for="${this.#id}" class=${classMap(labelClasses)}>
           <slot name="label">${this.hiddenLabel || this.name}</slot>
         </label>
