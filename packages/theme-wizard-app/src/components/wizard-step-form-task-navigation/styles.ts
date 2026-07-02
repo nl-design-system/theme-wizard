@@ -2,24 +2,21 @@ import { css } from 'lit';
 
 export default css`
   .wizard-step-form-task-navigation-icon-start {
+    align-items: center;
+    block-size: var(--basis-size-md);
     border-radius: var(--basis-border-radius-round);
+    border-width: var(--basis-border-width-md);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    align-items: center;
-    justify-content: center;
-    place-content: center;
     inline-size: var(--basis-size-md);
-    block-size: var(--basis-size-md);
-    border-width: var(--basis-border-width-md);
+    justify-content: center;
     text-align: center;
 
     & svg {
-      --wizard-task-navigation-icon-size: var(--basis-size-icon-md);
-      inline-size: var(--wizard-task-navigation-icon-size);
-      block-size: var(--wizard-task-navigation-icon-size);
-      width: 100%;
+      block-size: var(--basis-size-icon-md);
       color: inherit;
+      inline-size: 100%;
     }
   }
 

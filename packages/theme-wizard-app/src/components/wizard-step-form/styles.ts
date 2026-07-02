@@ -7,7 +7,8 @@ export default css`
 
   .wizard-step-form__fieldset {
     border: none;
-    padding: var(--basis-space-none);
+    padding-block: var(--basis-space-none);
+    padding-inline: var(--basis-space-none);
   }
 
   .wizard-step-form__legend {
@@ -17,18 +18,18 @@ export default css`
   }
 
   .wizard-step-form__sample {
+    align-items: start;
     background-color: var(--basis-color-default-bg-subtle);
     border-color: var(--basis-color-default-border-subtle);
     border-style: solid;
     border-width: var(--basis-border-width-none);
-    padding-block: var(--basis-space-block-sm);
-    padding-inline: var(--basis-space-inline-sm);
-    min-inline-size: var(--basis-size-sm);
-    min-block-size: var(--basis-size-sm);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    min-block-size: var(--basis-size-sm);
+    min-inline-size: var(--basis-size-sm);
+    padding-block: var(--basis-space-block-sm);
+    padding-inline: var(--basis-space-inline-sm);
     row-gap: var(--basis-space-block-sm);
 
     @media (forced-colors: active) {

@@ -26,7 +26,7 @@ const STEPS = [
   },
   {
     icon: 'palette',
-    label: 'Kleur voor knoppen',
+    label: 'Achtergrondkleur voor knoppen',
     path: 'basis.color.action-1.bg-default',
   },
 ] as const;
