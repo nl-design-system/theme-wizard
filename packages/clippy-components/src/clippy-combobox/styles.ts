@@ -22,6 +22,7 @@ export default css`
     );
 
     anchor-scope: --clippy-combobox-input;
+    scroll-margin-block-start: var(--_clippy-combobox-popover-viewport-margin);
   }
 
   .clippy-combobox__slot {

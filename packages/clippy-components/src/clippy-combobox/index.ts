@@ -80,6 +80,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   #resizeObserver?: ResizeObserver;
   #resizeTimeout: number | null = null;
+  #scrollContainer: HTMLElement | Window = window;
 
   @state() get filteredOptions(): T[] {
     if (this.query.length === 0) {
@@ -207,7 +208,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   readonly #handleFocus = () => {
     this.#setupVirtualKeyboardDetection();
-    setTimeout(() => this.#scrollInputIntoView(), 50);
+    const input = this.shadowRoot?.querySelector('input');
+    if (input) {
+      input.style.opacity = '0';
+      setTimeout(() => {
+        input.style.opacity = '1';
+        this.#scrollInputIntoPlace();
+      });
+    }
     this.open = true;
     this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
@@ -253,9 +261,30 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   };
 
-  readonly #scrollInputIntoView = () => {
-    console.log('scrollInputIntoView');
-    this.querySelector('input')?.scrollIntoView({ block: 'start' });
+  readonly #setupScrollContainer = () => {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let parent: HTMLElement | null = this;
+    while (parent && parent !== document.body) {
+      const style = window.getComputedStyle(parent);
+      if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+        this.#scrollContainer = parent;
+        return;
+      }
+      parent = parent.parentElement;
+    }
+  };
+
+  readonly #scrollInputIntoPlace = () => {
+    const inputRect = this.shadowRoot?.querySelector('input')?.getBoundingClientRect();
+    if (!inputRect) return;
+
+    const container =
+      this.#scrollContainer === window ? document.documentElement : (this.#scrollContainer as HTMLElement);
+
+    const scrollMargin = window.getComputedStyle(this).getPropertyValue('scroll-margin-block-start');
+
+    const scrollTop = container.scrollTop + inputRect.top - parseInt(scrollMargin, 10);
+    container.scrollTo({ top: scrollTop });
   };
 
   /**
@@ -388,6 +417,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   override connectedCallback() {
     super.connectedCallback();
+    this.#setupScrollContainer();
     document.addEventListener('click', this.#handleDocumentClick);
   }
 
