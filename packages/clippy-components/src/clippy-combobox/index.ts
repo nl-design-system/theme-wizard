@@ -207,6 +207,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   readonly #handleFocus = () => {
     this.#setupVirtualKeyboardDetection();
+    setTimeout(() => this.#scrollInputIntoView(), 50);
     this.open = true;
     this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
@@ -250,6 +251,11 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       default:
         return undefined;
     }
+  };
+
+  readonly #scrollInputIntoView = () => {
+    console.log('scrollInputIntoView');
+    this.querySelector('input')?.scrollIntoView({ block: 'start' });
   };
 
   /**
