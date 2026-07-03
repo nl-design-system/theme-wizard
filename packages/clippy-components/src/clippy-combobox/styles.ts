@@ -14,6 +14,12 @@ export default css`
     );
     --_clippy-combobox-popover-min-size: var(--basis-size-2xl);
     --_clippy-combobox-popover-max-size: 19rem; /* 304px, closest to utrecht 300px max size */
+    --_clippy-combobox-visual-viewport-size: calc(
+      var(--clippy-combobox-visual-viewport-size, 100svb) - var(--_clippy-combobox-popover-viewport-margin) - var(
+          --basis-pointer-target-min-block-size,
+          44px
+        )
+    );
 
     anchor-scope: --clippy-combobox-input;
   }
@@ -150,6 +156,7 @@ export default css`
     inline-size: anchor-size(self-inline);
     inset: auto;
     max-block-size: min(
+      calc(var(--_clippy-combobox-visual-viewport-size) - var(--_clippy-combobox-popover-viewport-margin)),
       calc(100% - var(--_clippy-combobox-popover-viewport-margin)),
       var(--_clippy-combobox-popover-max-size)
     );
@@ -170,7 +177,10 @@ export default css`
 
     @supports (min-block-size: calc-size(fit-content, min(size, 1px))) {
       min-block-size: calc-size(fit-content, min(size, var(--_clippy-combobox-popover-min-size)));
-      max-block-size: calc-size(stretch, min(size, var(--_clippy-combobox-popover-max-size)));
+      max-block-size: calc-size(
+        stretch,
+        min(size, min(var(--_clippy-combobox-popover-max-size), var(--_clippy-combobox-visual-viewport-size)))
+      );
       margin-block-end: var(--_clippy-combobox-popover-viewport-margin);
     }
 

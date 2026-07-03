@@ -289,13 +289,20 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
    */
   #checkVirtualKeyboard() {
     if (!window.visualViewport) return;
+    const visualViewportHeight = window.visualViewport.height;
 
     // Keyboard is open if visual viewport is significantly smaller than window
     const threshold = window.innerHeight * 0.15; // 15% reduction = keyboard open
-    const isOpen = window.innerHeight - window.visualViewport.height > threshold;
+    const isOpen = window.innerHeight - visualViewportHeight > threshold;
 
     if (isOpen !== this.virtualKeyboardOpen) {
       this.virtualKeyboardOpen = isOpen;
+      if (isOpen) {
+        this.style.setProperty('--clippy-combobox-visual-viewport-size', `${visualViewportHeight}px`);
+      } else {
+        this.style.removeProperty('--clippy-combobox-visual-viewport-size');
+      }
+      this.classList.toggle('clippy-combobox--virtual-keyboard-open', isOpen);
       this.requestUpdate();
     }
   }
@@ -395,9 +402,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       'utrecht-textbox': true,
       'utrecht-textbox--invalid': this.invalid,
     };
-    const comboboxClasses = {
-      'clippy-combobox--virtual-keyboard-open': this.virtualKeyboardOpen,
-    };
     const currentOption = this.getOptionForValue(this.value);
     const populatedSlots = Array.from(this.children).reduce(
       (acc, child) => ({
@@ -410,7 +414,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const iconStartSlotRendered = this.renderIconStartSlot();
 
     return html`
-      <div class="clippy-combobox ${classMap(comboboxClasses)}">
+      <div class="clippy-combobox">
         <label for="${this.#id}" class=${classMap(labelClasses)}>
           <slot name="label">${this.hiddenLabel || this.name}</slot>
         </label>
