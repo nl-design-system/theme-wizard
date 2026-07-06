@@ -50,15 +50,17 @@ jobs:
         id: find-existing-issue
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
         run: |
-          ISSUE=$(gh issue list --author "${{ steps.app-token.outputs.app-slug }}[bot]" --state open --search "🛠 Vers en veilig" --limit 1 --json number --jq first.number)
+          ISSUE=$(gh issue list --author "${APP_SLUG}[bot]" --state open --search "🛠 Vers en veilig" --limit 1 --json number --jq first.number)
           echo "issue=${ISSUE}" | tee -a $GITHUB_OUTPUT
 
       - name: Close existing issue
         if: ${{ steps.find-existing-issue.outputs.issue != '' }}
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: gh issue close ${{ steps.find-existing-issue.outputs.issue }}
+          ISSUE_NUMBER: ${{ steps.find-existing-issue.outputs.issue }}
+        run: gh issue close "${ISSUE_NUMBER}"
 
       - name: Create new issue
         env:
