@@ -8,7 +8,7 @@ on:
     # Add `workflow_dispatch` so this can be run manually in case it was not run as scheduled
 
 env:
-  issue_title_prefix: "Probleem op productie:"
+  ISSUE_TITLE_PREFIX: "Probleem op productie:"
   MAINTAINERS: "matijs,eslook,Robbert"
 
 jobs:
@@ -93,17 +93,19 @@ jobs:
         id: find-existing-issue
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
         run: |
-          ISSUE=$(gh issue list --author "${{ steps.app-token.outputs.app-slug }}[bot]" --state open --search "${{ env.issue_title_prefix }}" --limit 1 --json number --jq first.number)
+          ISSUE=$(gh issue list --author "${APP_SLUG}[bot]" --state open --search "${ISSUE_TITLE_PREFIX}" --limit 1 --json number --jq first.number)
           echo "issue=${ISSUE}" | tee -a $GITHUB_OUTPUT
 
       - name: Close existing issue
         if: ${{ steps.find-existing-issue.outputs.issue != '' }}
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: gh issue close ${{ steps.find-existing-issue.outputs.issue }}
+          ISSUE_NUMBER: ${{ steps.find-existing-issue.outputs.issue }}
+        run: gh issue close "${ISSUE_NUMBER}"
 
       - name: Create new issue
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: gh issue create --title "${{ env.issue_title_prefix }} Falende test op $(LC_TIME=nl_NL.UTF-8 date -u +'%e %B %Y om %H:%M')" --assignee "${MAINTAINERS}" --body-file .github/workflows/periodic-e2e.md
+        run: gh issue create --title "${ISSUE_TITLE_PREFIX} Falende test op $(LC_TIME=nl_NL.UTF-8 date -u +'%e %B %Y om %H:%M')" --assignee "${MAINTAINERS}" --body-file .github/workflows/periodic-e2e.md
