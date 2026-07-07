@@ -21,7 +21,7 @@ jobs:
       E2E_TIMEOUT_GLOBAL: 250000
       E2E_TIMEOUT_TEST: 30000
       E2E_TIMEOUT_EXPECT: 10000
-      E2E_TARGET_URL: https://theme-wizard.nl-design-system-community.nl/
+      E2E_TARGET_URL: https://theme-wizard.nl-design-system-community.nl
 
     steps:
       - name: Checkout
