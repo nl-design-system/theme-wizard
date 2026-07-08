@@ -2,27 +2,26 @@ import { css } from 'lit';
 
 export default css`
   .wizard-step-form-task-navigation-icon-start {
-    align-items: center;
-    block-size: var(--basis-size-md);
+    --wizard-step-form-task-navigation-border-style: dashed;
+    --wizard-step-form-task-navigation-border-color: var(--basis-color-default-border-subtle);
+    --wizard-step-form-task-navigation-background-color: transparent;
+    --wizard-step-form-task-navigation-color: currentColor;
+
+    aspect-ratio: 1 / 1;
+    color: var(--wizard-step-form-task-navigation-color);
+    background-color: var(--wizard-step-form-task-navigation-background-color);
+    border-color: var(--wizard-step-form-task-navigation-border-color);
     border-radius: var(--basis-border-radius-round);
+    border-style: var(--wizard-step-form-task-navigation-border-style);
     border-width: var(--basis-border-width-md);
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
     inline-size: var(--basis-size-md);
-    justify-content: center;
-    text-align: center;
 
     & svg {
       block-size: var(--basis-size-icon-md);
       color: inherit;
-      inline-size: 100%;
+      place-self: center center;
     }
-  }
-
-  .wizard-step-form-task-navigation-icon-start:not(.wizard-step-form-task-navigation-icon-start--checked) {
-    border-color: var(--basis-color-default-border-subtle);
-    border-style: dashed;
   }
 
   /**
@@ -30,9 +29,9 @@ export default css`
    *    and keeps the size the same as the 'checked' state.
    */
   .wizard-step-form-task-navigation-icon-start--checked {
-    background-color: var(--basis-color-positive-inverse-bg-default);
-    border-color: var(--basis-color-positive-inverse-bg-default); /* [1] */
-    border-style: solid;
-    color: var(--basis-color-positive-inverse-color-default);
+    --wizard-step-form-task-navigation-color: var(--basis-color-positive-inverse-color-default);
+    --wizard-step-form-task-navigation-background-color: var(--basis-color-positive-inverse-bg-default);
+    --wizard-step-form-task-navigation-border-color: var(--wizard-step-form-task-navigation-background-color); /* [1] */
+    --wizard-step-form-task-navigation-border-style: solid;
   }
 `;
