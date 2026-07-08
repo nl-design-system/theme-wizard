@@ -59,6 +59,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
   @property({ reflect: true, type: Boolean })
   invalid = false;
 
+  @state() activeIndex = -1;
+  @state() query = ''; // Query is what the user types to filter options.
+  @state() virtualKeyboardOpen = false;
+
   get #id() {
     return `${tag}-${this.name}`;
   }
@@ -74,8 +78,10 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     srOnly,
   ];
 
-  @state() activeIndex = -1;
-  @state() query = ''; // Query is what the user types to filter options.
+  #resizeObserver?: ResizeObserver;
+  #resizeTimeout: number | null = null;
+  #scrollContainer: HTMLElement | Window = window;
+
   @state() get filteredOptions(): T[] {
     if (this.query.length === 0) {
       return this.options;
@@ -185,6 +191,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         this.#commitQuery();
       }
       this.open = false;
+      this.#shutDownVirtualKeyboardDetection();
       this.emit('blur');
     }
   };
@@ -194,11 +201,21 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     if (!path.some((element) => element instanceof Node && this.contains(element))) {
       // When a click happens outside of this web-component, treat it as a blur.
       this.open = false;
+      this.#shutDownVirtualKeyboardDetection();
       this.emit('blur');
     }
   };
 
   readonly #handleFocus = () => {
+    this.#setupVirtualKeyboardDetection();
+    const input = this.shadowRoot?.querySelector('input');
+    if (input) {
+      input.style.opacity = '0';
+      setTimeout(() => {
+        input.style.opacity = '1';
+        this.#scrollInputIntoPlace();
+      });
+    }
     this.open = true;
     this.invalid = false; // reset invalid state on focus to allow retrying after an invalid input
     this.emit('focus');
@@ -244,6 +261,87 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   };
 
+  readonly #setupScrollContainer = () => {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let parent: HTMLElement | null = this;
+    while (parent && parent !== document.body) {
+      const style = window.getComputedStyle(parent);
+      if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+        this.#scrollContainer = parent;
+        return;
+      }
+      parent = parent.parentElement;
+    }
+  };
+
+  readonly #scrollInputIntoPlace = () => {
+    const inputRect = this.shadowRoot?.querySelector('input')?.getBoundingClientRect();
+    if (!inputRect) return;
+
+    const container =
+      this.#scrollContainer === window ? document.documentElement : (this.#scrollContainer as HTMLElement);
+
+    const scrollMargin = window.getComputedStyle(this).getPropertyValue('scroll-margin-block-start');
+
+    const scrollTop = container.scrollTop + inputRect.top - parseInt(scrollMargin, 10);
+    container.scrollTo({ top: scrollTop });
+  };
+
+  /**
+   * Setup an eventListener for the visualViewport
+   */
+  #setupVirtualKeyboardDetection() {
+    if (!window.visualViewport) return;
+
+    this.#checkVirtualKeyboard();
+
+    window.visualViewport.addEventListener('resize', this.#handleViewportResize);
+  }
+
+  /**
+   * Remove the eventListener for the visualViewport & do a final check if the virtual keyboard is still open
+   */
+  #shutDownVirtualKeyboardDetection() {
+    if (this.#resizeObserver) this.#resizeObserver.disconnect();
+    if (this.#resizeTimeout) window.clearTimeout(this.#resizeTimeout);
+    window.visualViewport?.removeEventListener('resize', this.#handleViewportResize);
+    this.#resizeTimeout = window.setTimeout(() => {
+      this.#checkVirtualKeyboard();
+      if (this.#resizeTimeout) window.clearTimeout(this.#resizeTimeout);
+    }, 350); // Arbitrary delay to make sure the keyboard is fully closed
+  }
+
+  /**
+   * Handle the viewport resize event, debouncing to avoid rapid firing during keyboard animation
+   */
+  #handleViewportResize = () => {
+    if (this.#resizeTimeout) window.clearTimeout(this.#resizeTimeout);
+    this.#resizeTimeout = window.setTimeout(() => this.#checkVirtualKeyboard(), 50);
+  };
+
+  /**
+   * Check if the virtual keyboard is open and update the state accordingly
+   */
+  #checkVirtualKeyboard() {
+    if (!window.visualViewport) return;
+    const visualViewportHeight = window.visualViewport.height;
+
+    // Keyboard is open if visual viewport is significantly smaller than window
+    const threshold = window.innerHeight * 0.15; // 15% reduction = keyboard open
+    const isOpen = window.innerHeight - visualViewportHeight > threshold;
+
+    if (isOpen !== this.virtualKeyboardOpen) {
+      this.virtualKeyboardOpen = isOpen;
+      if (isOpen) {
+        this.style.setProperty('--clippy-combobox-visual-viewport-size', `${visualViewportHeight}px`);
+      } else {
+        this.style.removeProperty('--clippy-combobox-visual-viewport-size');
+      }
+      this.classList.toggle('clippy-combobox--virtual-keyboard-open', isOpen);
+      this.requestUpdate();
+    }
+  }
+
   #setActiveItem(index: number, open: boolean = false) {
     this.open = open;
     this.activeIndex = index > -1 ? index % this.filteredOptions.length : -1;
@@ -263,6 +361,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
       this.emit('change');
     }
     this.open = false;
+    this.#shutDownVirtualKeyboardDetection();
   }
 
   #commitActiveItem(index: number) {
@@ -318,11 +417,13 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
 
   override connectedCallback() {
     super.connectedCallback();
+    this.#setupScrollContainer();
     document.addEventListener('click', this.#handleDocumentClick);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
+    this.#shutDownVirtualKeyboardDetection();
     document.removeEventListener('click', this.#handleDocumentClick);
   }
 
@@ -330,10 +431,6 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     const labelClasses = {
       'clippy-combobox__label': true,
       'sr-only': !this.children.length, // If there are no slotted children, the label is only for screen readers, otherwise it's expected that the slotted content provides the label.
-    };
-    const popoverClasses = {
-      [`utrecht-combobox__popover--${this.position}`]: this.position,
-      'utrecht-combobox__popover--hidden': !this.open,
     };
     const textboxClasses = {
       'clippy-combobox__input': true,
@@ -368,7 +465,7 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             </div>`
           : nothing}
         <div class="clippy-combobox__customizable-text-input | utrecht-combobox | utrecht-customizable-text-input">
-          <div class="utrecht-customizable-text-input__inner">
+          <div class="clippy-combobox__customizable-text-input__inner | utrecht-customizable-text-input__inner">
             ${iconStartSlotRendered || populatedSlots['icon-start']
               ? html`<label
                   for="${this.#id}"
@@ -419,31 +516,36 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
           </div>
           <div
             id=${this.#listId}
-            class="utrecht-listbox utrecht-combobox__popover ${classMap(popoverClasses)}"
+            class="clippy-combobox__popover | utrecht-listbox"
             role="listbox"
             tabindex="-1"
+            ?hidden=${!this.open}
           >
-            <ul class="utrecht-listbox__list" role="none">
-              ${this.filteredOptions.map((option, index) => {
-                const active = index === this.activeIndex;
-                const selected = dequal(option, currentOption);
-                const interactionClasses = {
-                  'utrecht-listbox__option--active': active,
-                  'utrecht-listbox__option--selected': selected,
-                };
-                return html`<li
-                  class="clippy-combobox__option | utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
-                    interactionClasses,
-                  )}"
-                  role="option"
-                  id=${ifDefined(this.#getOptionId(index))}
-                  aria-selected=${selected}
-                  @click=${() => this.#commitActiveItem(index)}
-                >
-                  ${this.renderOption(option, index)}
-                </li>`;
-              })}
-            </ul>
+            ${this.filteredOptions.length === 0
+              ? html`<div class="clippy-combobox__empty">No results found</div>`
+              : html`
+                  <ul class="utrecht-listbox__list" role="none">
+                    ${this.filteredOptions.map((option, index) => {
+                      const active = index === this.activeIndex;
+                      const selected = dequal(option, currentOption);
+                      const interactionClasses = {
+                        'utrecht-listbox__option--active': active,
+                        'utrecht-listbox__option--selected': selected,
+                      };
+                      return html`<li
+                        class="clippy-combobox__option | utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
+                          interactionClasses,
+                        )}"
+                        role="option"
+                        id=${ifDefined(this.#getOptionId(index))}
+                        aria-selected=${selected}
+                        @click=${() => this.#commitActiveItem(index)}
+                      >
+                        ${this.renderOption(option, index)}
+                      </li>`;
+                    })}
+                  </ul>
+                `}
           </div>
         </div>
       </div>

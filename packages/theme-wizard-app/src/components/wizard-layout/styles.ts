@@ -5,6 +5,9 @@ export default css`
     display: block;
   }
 
+  /**
+   * 1. We want to collapse any combobox popover earlier than normal because or page nav is sticky.
+   */
   .wizard-layout {
     --wizard-layout-padding-inline: var(--basis-space-inline-xl);
     --wizard-layout-body-padding-block: var(--basis-space-block-xl);
@@ -12,6 +15,9 @@ export default css`
     --wizard-layout-nav-padding-block: var(--basis-space-block-xl);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
+    --clippy-combobox-popover-viewport-margin: calc(
+      var(--wizard-page-nav-block-size, 4rem) + var(--wizard-layout-body-padding-block)
+    ); /* [1] */
 
     background-color: var(--basis-color-accent-1-bg-subtle);
     column-gap: var(--basis-space-inline-lg);
@@ -34,7 +40,7 @@ export default css`
     inset-block-start: 0;
     padding-inline: var(--wizard-layout-padding-inline);
     position: sticky;
-    z-index: 1;
+    z-index: 10;
 
     @media (forced-colors: active) {
       border-block-end: var(--basis-border-width-sm) solid;
