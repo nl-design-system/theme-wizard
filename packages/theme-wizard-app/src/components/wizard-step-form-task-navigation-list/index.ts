@@ -1,5 +1,7 @@
 import '../wizard-step-form-task-navigation';
-import { LitElement, html } from 'lit';
+import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
+import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
+import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { stepsStorage } from '../../utils/wizard-steps-storage';
 
@@ -41,6 +43,7 @@ declare global {
 
 @customElement(tag)
 export class WizardStepFormTaskNavigationList extends LitElement {
+  static override readonly styles = [unsafeCSS(buttonCss)];
   @state() private completedPaths: Set<string> = new Set();
 
   override connectedCallback() {
@@ -53,14 +56,31 @@ export class WizardStepFormTaskNavigationList extends LitElement {
 
   override render() {
     return html`
-      ${STEPS.map((step) => {
-        const href = `/wizard/${step.path.replaceAll('.', '-')}`;
-        return html`
-          <wizard-step-form-task-navigation href=${href} ?done=${this.completedPaths.has(step.path)} icon=${step.icon}>
-            ${step.label}
-          </wizard-step-form-task-navigation>
-        `;
-      })}
+      <wizard-stack size="3xl">
+        <div>
+          ${STEPS.map((step) => {
+            const href = `/wizard/${step.path.replaceAll('.', '-')}`;
+            return html`
+              <wizard-step-form-task-navigation
+                href=${href}
+                ?done=${this.completedPaths.has(step.path)}
+                icon=${step.icon}
+              >
+                ${step.label}
+              </wizard-step-form-task-navigation>
+            `;
+          })}
+        </div>
+        ${this.completedPaths.size > 0
+          ? html`
+              <div class="utrecht-action-group utrecht-action-group--row">
+                <a href="/basis-tokens" class="nl-button nl-button--primary">
+                  <span class="nl-button__label">Volgende stap</span>
+                </a>
+              </div>
+            `
+          : nothing}
+      </wizard-stack>
     `;
   }
 }
