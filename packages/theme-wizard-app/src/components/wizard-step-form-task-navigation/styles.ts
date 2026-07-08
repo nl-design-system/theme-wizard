@@ -8,12 +8,12 @@ export default css`
     --wizard-step-form-task-navigation-color: currentColor;
 
     aspect-ratio: 1 / 1;
-    color: var(--wizard-step-form-task-navigation-color);
     background-color: var(--wizard-step-form-task-navigation-background-color);
     border-color: var(--wizard-step-form-task-navigation-border-color);
     border-radius: var(--basis-border-radius-round);
     border-style: var(--wizard-step-form-task-navigation-border-style);
     border-width: var(--basis-border-width-md);
+    color: var(--wizard-step-form-task-navigation-color);
     display: grid;
     inline-size: var(--basis-size-md);
 
