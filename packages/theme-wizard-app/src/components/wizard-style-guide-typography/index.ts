@@ -118,6 +118,7 @@ export class WizardStyleGuideTypography extends LitElement {
                       <wizard-font-sample
                         family=${displayValue}
                         size="var(--basis-text-font-size-xl)"
+                        truncate
                       ></wizard-font-sample>
                       ${googleFontsSpecimen
                         ? html`<p class="nl-paragraph">
@@ -199,7 +200,7 @@ export class WizardStyleGuideTypography extends LitElement {
                 ({ name, displayValue, tokenId, usage }) => html`
                   <tr class="utrecht-table__row">
                     <td class="utrecht-table__cell">
-                      <wizard-font-sample size=${displayValue}></wizard-font-sample>
+                      <wizard-font-sample size=${displayValue} truncate></wizard-font-sample>
                     </td>
                     <td class="utrecht-table__cell">
                       <span class="nl-data-badge" id="${`basis-text-font-size-${name}`}">${tokenId}</span>

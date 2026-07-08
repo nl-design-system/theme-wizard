@@ -138,6 +138,7 @@ export class WizardScrapedTokensPreview extends LitElement {
               html`<wizard-font-sample
                 family=${token.$extensions[EXTENSION_AUTHORED_AS]}
                 size="var(--basis-text-font-size-xl)"
+                truncate
               ></wizard-font-sample>`,
             (token) => (Array.isArray(token.$value) ? html`<code class="nl-code">${token.$value[0]}</code>` : nothing),
           )}
