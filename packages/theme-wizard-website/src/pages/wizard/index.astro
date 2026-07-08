@@ -2,7 +2,7 @@
 import WizardLayout from '../../layouts/WizardLayout.astro';
 ---
 
-<WizardLayout title="Maak de eerste keuzes voor je thema">
+<WizardLayout title="Maak de eerste keuzes voor je thema" backLink={{ href: '/staging-tokens', label: 'Vorige stap' }}>
   <p class="nl-paragraph nl-paragraph--lead">Voor een optimaal werkend thema maak je eerst keuzes op hoog niveau.</p>
   <nav aria-labelledby="wizard-nav-title">
     <wizard-stack size="lg">

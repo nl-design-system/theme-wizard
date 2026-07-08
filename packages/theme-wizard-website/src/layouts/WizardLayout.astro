@@ -6,9 +6,13 @@ import { IconArrowLeft } from '@tabler/icons-react';
 
 export interface Props {
   title?: string;
+  backLink?: {
+    href: string;
+    label: string;
+  }
 }
 
-const { title = 'Wizard - Theme Wizard' } = Astro.props;
+const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
 ---
 
 <script>
@@ -22,9 +26,9 @@ const { title = 'Wizard - Theme Wizard' } = Astro.props;
         <wizard-container size="lg">
           <clippy-story-preview size="lg">
             <wizard-stack size="3xl">
-                <a class="nl-link wizard-back-link" href="./">
+                <a class="nl-link wizard-back-link" href={backLink?.href ?? './'}>
                   <IconArrowLeft />
-                  Vorige stap
+                  {backLink?.label ?? 'Naar overzicht'}
                 </a>
               <header>
                 <wizard-stack size="xl">
