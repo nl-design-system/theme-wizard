@@ -74,14 +74,20 @@ export class WizardStepForm extends LitElement {
       const requestedType = this.tokenAt?.$type;
       const requestedSubType = this.subType;
 
-      this._tokens = this.scrapedTokens
+      // First filter staged tokens by type
+      const stagedTypeTokens = this.scrapedTokens.filter((token) => {
+        if (token.$extensions?.[EXTENSION_TOKEN_STAGED] !== true) {
+          return false;
+        }
+        if (token.$type !== requestedType) {
+          return false;
+        }
+        return true;
+      });
+
+      // Then filter by subType if requested
+      const stagedSubTypeTokens = stagedTypeTokens
         .filter((token) => {
-          if (token.$extensions?.[EXTENSION_TOKEN_STAGED] !== true) {
-            return false;
-          }
-          if (token.$type !== requestedType) {
-            return false;
-          }
           if (!requestedSubType) {
             return true;
           }
@@ -91,6 +97,14 @@ export class WizardStepForm extends LitElement {
         .toSorted(
           (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
         );
+
+      // If no tokens were found for the subType, fall back to the original type tokens
+      const filteredTokens = stagedSubTypeTokens.length ? stagedSubTypeTokens : stagedTypeTokens;
+
+      // Store the sorted tokens
+      this._tokens = filteredTokens.toSorted(
+        (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
+      );
     }
   }
 
