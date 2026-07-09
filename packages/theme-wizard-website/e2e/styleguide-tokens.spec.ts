@@ -1,7 +1,7 @@
 import { test, expect } from './fixtures/fixtures';
 
 test('page has accessibility basics', async ({ page }) => {
-  await page.goto('/style-guide');
+  await page.goto('/style-guide/design-tokens');
 
   // Has <title>
   const title = await page.title();
@@ -11,6 +11,11 @@ test('page has accessibility basics', async ({ page }) => {
   await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 });
 
+test('shows sidebar with all styleguide pages', async ({ page }) => {
+  await page.goto('/style-guide/design-tokens');
+  await expect(page.locator('wizard-sidebar-link')).not.toHaveCount(0);
+});
+
 test('page uses values as stored by the configuration page', async ({ basisTokensPage, page }) => {
   // Set Accent 1 to red
   await basisTokensPage.goto();
@@ -18,7 +23,7 @@ test('page uses values as stored by the configuration page', async ({ basisToken
   await basisTokensPage.changeColor('Accent 1', '#ff0000');
 
   // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
-  await page.goto('/style-guide');
+  await page.goto('/style-guide/design-tokens');
   const table = page.getByRole('table', { name: 'Accent 1' });
   await expect(table).toBeVisible();
   await expect(table.getByRole('button', { name: 'Kopieer "#ff0000" naar klembord' })).toBeVisible();
@@ -28,9 +33,9 @@ test.describe('interaction tests', () => {
   test.beforeEach(async ({ context, page }) => {
     // Enable clipboard access to we can test working of copy-to-clipboard buttons
     await context.grantPermissions(['clipboard-write', 'clipboard-read']);
-    await page.goto('/style-guide');
+    await page.goto('/style-guide/design-tokens');
     // Make sure to wait for page to be fully rendered
-    await expect(page.getByRole('heading', { name: 'Stijlgids' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Design Tokens' })).toBeVisible();
   });
 
   test.describe('colors', () => {
