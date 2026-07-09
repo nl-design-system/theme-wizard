@@ -1,0 +1,13 @@
+---
+const slug = Astro.url.pathname;
+const pages: { title: string; slug: string }[] = [
+  { title: 'Kleur systeem', slug: '/style-guide/color-system' },
+  { title: 'Design tokens', slug: '/style-guide/design-tokens' },
+];
+---
+
+<nav slot="sidebar">
+  {pages.map((page) => (
+    <wizard-sidebar-link href={page.slug} current={page.slug === slug ? 'page' : undefined}>{page.title}</wizard-sidebar-link>
+  ))}
+</nav>

@@ -1,0 +1,19 @@
+---
+import StyleGuideNav from '@/components/StyleGuideNav.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
+
+---
+
+<BaseLayout title="Stijlgids kleur systeem - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
+
+      <div slot="main">
+        <h1>Kleur systeem</h1>
+      </div>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
