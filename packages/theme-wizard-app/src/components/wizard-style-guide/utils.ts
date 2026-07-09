@@ -75,11 +75,12 @@ export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
     case 'color':
       return html`<clippy-color-sample color=${token.displayValue}></clippy-color-sample>`;
     case 'fontSize':
-      return html`<wizard-font-sample size=${token.displayValue}></wizard-font-sample>`;
+      return html`<wizard-font-sample size=${token.displayValue} truncate></wizard-font-sample>`;
     case 'fontFamily':
       return html`<wizard-font-sample
         family=${token.displayValue}
         size="var(--basis-text-font-size-xl)"
+        truncate
       ></wizard-font-sample>`;
     case 'dimension':
       return renderSpacingExample(token.displayValue, token.metadata?.['space']);

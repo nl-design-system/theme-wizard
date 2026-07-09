@@ -931,10 +931,10 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: 5.0.7
-        version: 5.0.7(@types/node@24.13.1)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(lightningcss@1.32.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(tsx@4.21.0)(yaml@2.9.0)
+        version: 5.0.7(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@astrojs/vercel':
         specifier: 10.0.8
-        version: 10.0.8(astro@6.4.4(@types/node@24.13.1)(@vercel/blob@2.4.0)(@vercel/functions@3.6.1)(lightningcss@1.32.0)(rollup@4.61.1)(tsx@4.21.0)(yaml@2.9.0))(react@19.2.7)(rollup@4.61.1)
+        version: 10.0.8(astro@6.4.4(@vercel/functions@3.6.1)(rollup@4.61.1))(react@19.2.7)(rollup@4.61.1)
       '@fontsource/fira-sans':
         specifier: 5.2.7
         version: 5.2.7
@@ -949,7 +949,7 @@ importers:
         version: 1.1.0
       '@nl-design-system-candidate/button-react':
         specifier: 1.1.0
-        version: 1.1.0(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.1.0(react@19.2.7)
       '@nl-design-system-candidate/button-tokens':
         specifier: 1.0.0
         version: 1.0.0
@@ -958,7 +958,7 @@ importers:
         version: 1.2.0
       '@nl-design-system-candidate/code-block-react':
         specifier: 1.4.0
-        version: 1.4.0(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.4.0(react@19.2.7)
       '@nl-design-system-candidate/code-block-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -970,7 +970,7 @@ importers:
         version: 1.1.2
       '@nl-design-system-candidate/code-react':
         specifier: 2.0.0
-        version: 2.0.0(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 2.0.0(react@19.2.7)
       '@nl-design-system-candidate/code-tokens':
         specifier: 3.0.0
         version: 3.0.0
@@ -982,7 +982,7 @@ importers:
         version: 1.2.2
       '@nl-design-system-candidate/color-sample-react':
         specifier: 1.2.2
-        version: 1.2.2(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.2.2(react@19.2.7)
       '@nl-design-system-candidate/color-sample-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -991,7 +991,7 @@ importers:
         version: 1.0.5
       '@nl-design-system-candidate/data-badge-react':
         specifier: 1.1.7
-        version: 1.1.7(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.1.7(react@19.2.7)
       '@nl-design-system-candidate/data-badge-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -1000,7 +1000,7 @@ importers:
         version: 1.1.3
       '@nl-design-system-candidate/heading-react':
         specifier: 1.1.7
-        version: 1.1.7(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.1.7(react@19.2.7)
       '@nl-design-system-candidate/heading-tokens':
         specifier: 1.1.2
         version: 1.1.2
@@ -1012,7 +1012,7 @@ importers:
         version: 1.2.1
       '@nl-design-system-candidate/link-react':
         specifier: 1.1.8
-        version: 1.1.8(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.1.8(react@19.2.7)
       '@nl-design-system-candidate/link-tokens':
         specifier: 3.0.3
         version: 3.0.3
@@ -1024,7 +1024,7 @@ importers:
         version: 1.2.1
       '@nl-design-system-candidate/mark-react':
         specifier: 1.1.7
-        version: 1.1.7(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.1.7(react@19.2.7)
       '@nl-design-system-candidate/mark-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -1033,7 +1033,7 @@ importers:
         version: 1.1.5
       '@nl-design-system-candidate/number-badge-react':
         specifier: 1.3.2
-        version: 1.3.2(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.3.2(react@19.2.7)
       '@nl-design-system-candidate/number-badge-tokens':
         specifier: 2.0.3
         version: 2.0.3
@@ -1042,7 +1042,7 @@ importers:
         version: 2.1.3
       '@nl-design-system-candidate/paragraph-react':
         specifier: 2.2.2
-        version: 2.2.2(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 2.2.2(react@19.2.7)
       '@nl-design-system-candidate/paragraph-tokens':
         specifier: 1.1.3
         version: 1.1.3
@@ -1051,7 +1051,7 @@ importers:
         version: 1.0.5
       '@nl-design-system-candidate/skip-link-react':
         specifier: 1.1.7
-        version: 1.1.7(@babel/runtime@7.29.7)(react@19.2.7)
+        version: 1.1.7(react@19.2.7)
       '@nl-design-system-candidate/skip-link-tokens':
         specifier: 1.0.4
         version: 1.0.4
@@ -1075,7 +1075,7 @@ importers:
         version: 1.4.7
       '@storybook/react-vite':
         specifier: 10.4.2
-        version: 10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.27.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rollup@4.61.1)(storybook@10.4.2(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(typescript@6.0.3)(vite@8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0))
+        version: 10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.27.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rollup@4.61.1)(vite@7.3.5)
       '@tabler/icons-react':
         specifier: 3.44.0
         version: 3.44.0(react@19.2.7)
@@ -1090,7 +1090,7 @@ importers:
         version: 1.1.0
       astro:
         specifier: 6.4.4
-        version: 6.4.4(@types/node@24.13.1)(@vercel/blob@2.4.0)(@vercel/functions@3.6.1)(lightningcss@1.32.0)(rollup@4.61.1)(tsx@4.21.0)(yaml@2.9.0)
+        version: 6.4.4(@vercel/functions@3.6.1)(rollup@4.61.1)
       dequal:
         specifier: 2.0.3
         version: 2.0.3
@@ -9351,6 +9351,31 @@ snapshots:
       - tsx
       - yaml
 
+  '@astrojs/react@5.0.7(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      '@astrojs/internal-helpers': 0.10.0
+      '@types/react': 19.2.17
+      '@types/react-dom': 19.2.3(@types/react@19.2.17)
+      '@vitejs/plugin-react': 5.2.0(vite@7.3.5)
+      devalue: 5.8.1
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
+      ultrahtml: 1.6.0
+      vite: 7.3.5
+    transitivePeerDependencies:
+      - '@types/node'
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
   '@astrojs/telemetry@3.3.2':
     dependencies:
       ci-info: 4.4.0
@@ -9359,14 +9384,14 @@ snapshots:
       is-wsl: 3.1.1
       which-pm-runs: 1.1.0
 
-  '@astrojs/vercel@10.0.8(astro@6.4.4(@types/node@24.13.1)(@vercel/blob@2.4.0)(@vercel/functions@3.6.1)(lightningcss@1.32.0)(rollup@4.61.1)(tsx@4.21.0)(yaml@2.9.0))(react@19.2.7)(rollup@4.61.1)':
+  '@astrojs/vercel@10.0.8(astro@6.4.4(@vercel/functions@3.6.1)(rollup@4.61.1))(react@19.2.7)(rollup@4.61.1)':
     dependencies:
       '@astrojs/internal-helpers': 0.10.0
       '@vercel/analytics': 1.6.1(react@19.2.7)
       '@vercel/functions': 3.6.1
       '@vercel/nft': 1.10.2(rollup@4.61.1)
       '@vercel/routing-utils': 5.3.3
-      astro: 6.4.4(@types/node@24.13.1)(@vercel/blob@2.4.0)(@vercel/functions@3.6.1)(lightningcss@1.32.0)(rollup@4.61.1)(tsx@4.21.0)(yaml@2.9.0)
+      astro: 6.4.4(@vercel/functions@3.6.1)(rollup@4.61.1)
       esbuild: 0.27.7
       tinyglobby: 0.2.17
     transitivePeerDependencies:
@@ -10345,6 +10370,12 @@ snapshots:
     optionalDependencies:
       typescript: 6.0.3
 
+  '@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(vite@7.3.5)':
+    dependencies:
+      glob: 13.0.6
+      react-docgen-typescript: 2.4.0
+      vite: 7.3.5
+
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -10624,13 +10655,17 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.7
 
+  '@nl-design-system-candidate/button-react@1.1.0(react@19.2.7)':
+    dependencies:
+      clsx: 2.1.1
+      react: 19.2.7
+
   '@nl-design-system-candidate/button-tokens@1.0.0': {}
 
   '@nl-design-system-candidate/code-block-css@1.2.0': {}
 
-  '@nl-design-system-candidate/code-block-react@1.4.0(@babel/runtime@7.29.7)(react@19.2.7)':
+  '@nl-design-system-candidate/code-block-react@1.4.0(react@19.2.7)':
     dependencies:
-      '@babel/runtime': 7.29.7
       '@nl-design-system-candidate/code-block-css': 1.2.0
       clsx: 2.1.1
       react: 19.2.7
@@ -10641,9 +10676,8 @@ snapshots:
 
   '@nl-design-system-candidate/code-docs@1.1.2': {}
 
-  '@nl-design-system-candidate/code-react@2.0.0(@babel/runtime@7.29.7)(react@19.2.7)':
+  '@nl-design-system-candidate/code-react@2.0.0(react@19.2.7)':
     dependencies:
-      '@babel/runtime': 7.29.7
       '@nl-design-system-candidate/code-css': 3.0.0
       react: 19.2.7
 
@@ -10653,18 +10687,16 @@ snapshots:
 
   '@nl-design-system-candidate/color-sample-docs@1.2.2': {}
 
-  '@nl-design-system-candidate/color-sample-react@1.2.2(@babel/runtime@7.29.7)(react@19.2.7)':
+  '@nl-design-system-candidate/color-sample-react@1.2.2(react@19.2.7)':
     dependencies:
-      '@babel/runtime': 7.29.7
       react: 19.2.7
 
   '@nl-design-system-candidate/color-sample-tokens@2.0.3': {}
 
   '@nl-design-system-candidate/data-badge-css@1.0.5': {}
 
-  '@nl-design-system-candidate/data-badge-react@1.1.7(@babel/runtime@7.29.7)(react@19.2.7)':
+  '@nl-design-system-candidate/data-badge-react@1.1.7(react@19.2.7)':
     dependencies:
-      '@babel/runtime': 7.29.7
       react: 19.2.7
 
   '@nl-design-system-candidate/data-badge-tokens@2.0.3': {}
@@ -10674,6 +10706,10 @@ snapshots:
   '@nl-design-system-candidate/heading-react@1.1.7(@babel/runtime@7.29.7)(react@19.2.7)':
     dependencies:
       '@babel/runtime': 7.29.7
+      react: 19.2.7
+
+  '@nl-design-system-candidate/heading-react@1.1.7(react@19.2.7)':
+    dependencies:
       react: 19.2.7
 
   '@nl-design-system-candidate/heading-tokens@1.1.2': {}
@@ -10688,15 +10724,19 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.7
 
+  '@nl-design-system-candidate/link-react@1.1.8(react@19.2.7)':
+    dependencies:
+      clsx: 2.1.1
+      react: 19.2.7
+
   '@nl-design-system-candidate/link-tokens@3.0.3': {}
 
   '@nl-design-system-candidate/mark-css@1.0.5': {}
 
   '@nl-design-system-candidate/mark-docs@1.2.1': {}
 
-  '@nl-design-system-candidate/mark-react@1.1.7(@babel/runtime@7.29.7)(react@19.2.7)':
+  '@nl-design-system-candidate/mark-react@1.1.7(react@19.2.7)':
     dependencies:
-      '@babel/runtime': 7.29.7
       react: 19.2.7
 
   '@nl-design-system-candidate/mark-tokens@2.0.3': {}
@@ -10706,6 +10746,10 @@ snapshots:
   '@nl-design-system-candidate/number-badge-react@1.3.2(@babel/runtime@7.29.7)(react@19.2.7)':
     dependencies:
       '@babel/runtime': 7.29.7
+      react: 19.2.7
+
+  '@nl-design-system-candidate/number-badge-react@1.3.2(react@19.2.7)':
+    dependencies:
       react: 19.2.7
 
   '@nl-design-system-candidate/number-badge-tokens@2.0.3': {}
@@ -10718,6 +10762,11 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.7
 
+  '@nl-design-system-candidate/paragraph-react@2.2.2(react@19.2.7)':
+    dependencies:
+      clsx: 2.1.1
+      react: 19.2.7
+
   '@nl-design-system-candidate/paragraph-tokens@1.1.3': {}
 
   '@nl-design-system-candidate/skip-link-css@1.0.5': {}
@@ -10725,6 +10774,11 @@ snapshots:
   '@nl-design-system-candidate/skip-link-react@1.1.7(@babel/runtime@7.29.7)(react@19.2.7)':
     dependencies:
       '@babel/runtime': 7.29.7
+      clsx: 2.1.1
+      react: 19.2.7
+
+  '@nl-design-system-candidate/skip-link-react@1.1.7(react@19.2.7)':
+    dependencies:
       clsx: 2.1.1
       react: 19.2.7
 
@@ -11273,6 +11327,16 @@ snapshots:
       - rollup
       - webpack
 
+  '@storybook/builder-vite@10.4.2(esbuild@0.27.7)(rollup@4.61.1)(vite@7.3.5)':
+    dependencies:
+      '@storybook/csf-plugin': 10.4.2(esbuild@0.27.7)(rollup@4.61.1)(vite@7.3.5)
+      ts-dedent: 2.2.0
+      vite: 7.3.5
+    transitivePeerDependencies:
+      - esbuild
+      - rollup
+      - webpack
+
   '@storybook/csf-plugin@10.4.2(esbuild@0.27.7)(rollup@4.61.1)(storybook@10.4.2(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(vite@8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       storybook: 10.4.2(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -11282,12 +11346,28 @@ snapshots:
       rollup: 4.61.1
       vite: 8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0)
 
+  '@storybook/csf-plugin@10.4.2(esbuild@0.27.7)(rollup@4.61.1)(vite@7.3.5)':
+    dependencies:
+      unplugin: 2.3.11
+    optionalDependencies:
+      esbuild: 0.27.7
+      rollup: 4.61.1
+      vite: 7.3.5
+
   '@storybook/global@5.0.0': {}
 
   '@storybook/icons@2.0.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
+
+  '@storybook/react-dom-shim@10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
+    optionalDependencies:
+      '@types/react': 19.2.17
+      '@types/react-dom': 19.2.3(@types/react@19.2.17)
 
   '@storybook/react-dom-shim@10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(storybook@10.4.2(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))':
     dependencies:
@@ -11321,6 +11401,43 @@ snapshots:
       - supports-color
       - typescript
       - webpack
+
+  '@storybook/react-vite@10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.27.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rollup@4.61.1)(vite@7.3.5)':
+    dependencies:
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.7.0(vite@7.3.5)
+      '@rollup/pluginutils': 5.4.0(rollup@4.61.1)
+      '@storybook/builder-vite': 10.4.2(esbuild@0.27.7)(rollup@4.61.1)(vite@7.3.5)
+      '@storybook/react': 10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      empathic: 2.0.1
+      magic-string: 0.30.21
+      react: 19.2.7
+      react-docgen: 8.0.3
+      react-dom: 19.2.7(react@19.2.7)
+      resolve: 1.22.12
+      tsconfig-paths: 4.2.0
+      vite: 7.3.5
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - esbuild
+      - rollup
+      - supports-color
+      - typescript
+      - webpack
+
+  '@storybook/react@10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      '@storybook/global': 5.0.0
+      '@storybook/react-dom-shim': 10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react: 19.2.7
+      react-docgen: 8.0.3
+      react-docgen-typescript: 2.4.0
+      react-dom: 19.2.7(react@19.2.7)
+    optionalDependencies:
+      '@types/react': 19.2.17
+      '@types/react-dom': 19.2.3(@types/react@19.2.17)
+    transitivePeerDependencies:
+      - supports-color
 
   '@storybook/react@10.4.2(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(storybook@10.4.2(@types/react@19.2.17)(prettier@3.8.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(typescript@6.0.3)':
     dependencies:
@@ -12733,6 +12850,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@vitejs/plugin-react@5.2.0(vite@7.3.5)':
+    dependencies:
+      '@babel/core': 7.29.7
+      '@babel/plugin-transform-react-jsx-self': 7.29.7(@babel/core@7.29.7)
+      '@babel/plugin-transform-react-jsx-source': 7.29.7(@babel/core@7.29.7)
+      '@rolldown/pluginutils': 1.0.0-rc.3
+      '@types/babel__core': 7.20.5
+      react-refresh: 0.18.0
+      vite: 7.3.5
+    transitivePeerDependencies:
+      - supports-color
+
   '@vitest/browser-playwright@4.1.8(playwright@1.60.0)(vite@8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0))(vitest@4.1.8)':
     dependencies:
       '@vitest/browser': 4.1.8(vite@8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0))(vitest@4.1.8)
@@ -13147,6 +13276,99 @@ snapshots:
       vfile: 6.0.3
       vite: 7.3.5(@types/node@24.13.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.9.0)
       vitefu: 1.1.3(vite@7.3.5(@types/node@24.13.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.9.0))
+      xxhash-wasm: 1.1.0
+      yargs-parser: 22.0.0
+      zod: 4.4.3
+    optionalDependencies:
+      sharp: 0.34.5
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@capacitor/preferences'
+      - '@deno/kv'
+      - '@netlify/blobs'
+      - '@planetscale/database'
+      - '@types/node'
+      - '@upstash/redis'
+      - '@vercel/blob'
+      - '@vercel/functions'
+      - '@vercel/kv'
+      - aws4fetch
+      - db0
+      - idb-keyval
+      - ioredis
+      - jiti
+      - less
+      - lightningcss
+      - rollup
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - uploadthing
+      - yaml
+
+  astro@6.4.4(@vercel/functions@3.6.1)(rollup@4.61.1):
+    dependencies:
+      '@astrojs/compiler': 4.0.0
+      '@astrojs/internal-helpers': 0.10.0
+      '@astrojs/markdown-remark': 7.2.0
+      '@astrojs/telemetry': 3.3.2
+      '@capsizecss/unpack': 4.0.0
+      '@clack/prompts': 1.5.1
+      '@oslojs/encoding': 1.1.0
+      '@rollup/pluginutils': 5.4.0(rollup@4.61.1)
+      aria-query: 5.3.2
+      axobject-query: 4.1.0
+      ci-info: 4.4.0
+      clsx: 2.1.1
+      common-ancestor-path: 2.0.0
+      cookie: 1.1.1
+      devalue: 5.8.1
+      diff: 8.0.4
+      dset: 3.1.4
+      es-module-lexer: 2.1.0
+      esbuild: 0.27.7
+      flattie: 1.1.1
+      fontace: 0.4.1
+      get-tsconfig: 5.0.0-beta.4
+      github-slugger: 2.0.0
+      html-escaper: 3.0.3
+      http-cache-semantics: 4.2.0
+      js-yaml: 4.2.0
+      jsonc-parser: 3.3.1
+      magic-string: 0.30.21
+      magicast: 0.5.3
+      mrmime: 2.0.1
+      neotraverse: 0.6.18
+      obug: 2.1.2
+      p-limit: 7.3.0
+      p-queue: 9.3.0
+      package-manager-detector: 1.6.0
+      piccolore: 0.1.3
+      picomatch: 4.0.4
+      rehype: 13.0.2
+      semver: 7.8.3
+      shiki: 4.2.0
+      smol-toml: 1.6.1
+      svgo: 4.0.1
+      tinyclip: 0.1.14
+      tinyexec: 1.2.4
+      tinyglobby: 0.2.17
+      ultrahtml: 1.6.0
+      unifont: 0.7.4
+      unist-util-visit: 5.1.0
+      unstorage: 1.17.5(@vercel/functions@3.6.1)
+      vfile: 6.0.3
+      vite: 7.3.5
+      vitefu: 1.1.3(vite@7.3.5)
       xxhash-wasm: 1.1.0
       yargs-parser: 22.0.0
       zod: 4.4.3
@@ -16370,6 +16592,8 @@ snapshots:
       iconv-lite: 0.4.24
       unpipe: 1.0.0
 
+  react-docgen-typescript@2.4.0: {}
+
   react-docgen-typescript@2.4.0(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
@@ -17640,6 +17864,19 @@ snapshots:
       '@vercel/blob': 2.4.0
       '@vercel/functions': 3.6.1
 
+  unstorage@1.17.5(@vercel/functions@3.6.1):
+    dependencies:
+      anymatch: 3.1.3
+      chokidar: 5.0.0
+      destr: 2.0.5
+      h3: 1.15.11
+      lru-cache: 11.5.1
+      node-fetch-native: 1.6.7
+      ofetch: 1.5.1
+      ufo: 1.6.4
+    optionalDependencies:
+      '@vercel/functions': 3.6.1
+
   update-browserslist-db@1.2.3(browserslist@4.28.2):
     dependencies:
       browserslist: 4.28.2
@@ -17757,6 +17994,17 @@ snapshots:
       - typescript
       - webpack
 
+  vite@7.3.5:
+    dependencies:
+      esbuild: 0.27.7
+      fdir: 6.5.0(picomatch@4.0.4)
+      picomatch: 4.0.4
+      postcss: 8.5.15
+      rollup: 4.61.1
+      tinyglobby: 0.2.17
+    optionalDependencies:
+      fsevents: 2.3.3
+
   vite@7.3.5(@types/node@24.13.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.9.0):
     dependencies:
       esbuild: 0.27.7
@@ -17789,6 +18037,10 @@ snapshots:
   vitefu@1.1.3(vite@7.3.5(@types/node@24.13.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.9.0)):
     optionalDependencies:
       vite: 7.3.5(@types/node@24.13.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.9.0)
+
+  vitefu@1.1.3(vite@7.3.5):
+    optionalDependencies:
+      vite: 7.3.5
 
   vitest@4.1.8(@edge-runtime/vm@3.2.0)(@types/node@24.13.1)(@vitest/browser-playwright@4.1.8)(@vitest/coverage-v8@4.1.8)(vite@8.0.16(@types/node@24.13.1)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.9.0)):
     dependencies:

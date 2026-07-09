@@ -10,6 +10,7 @@ import { getSiblingGroupsWithOnlyRefsTo } from '../../lib/ColorScale/siblings';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
+import { UPDATE_DESIGN_TOKENS_EVENT, type SubmitSaveTokenFormEvent } from '../../utils/events';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
@@ -77,6 +78,7 @@ export class App extends LitElement {
     }
 
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
+    this.addEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
   }
@@ -84,6 +86,7 @@ export class App extends LitElement {
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('wizard-scraper-done', this.#handleScrapeDone);
+    this.removeEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
   }
@@ -95,6 +98,13 @@ export class App extends LitElement {
     this.theme = this.theme.clone();
     this.requestUpdate();
     this.dispatchEvent(new CustomEvent('theme-update', { bubbles: true, detail: { theme: this.theme } }));
+  };
+
+  readonly #handleUpdateTokens = (event: Event) => {
+    const { detail } = event as SubmitSaveTokenFormEvent;
+    this.theme.updateMany(detail);
+    this.#forceUpdateTokens();
+    this.#themeStorage.setJSON(this.theme.tokens);
   };
 
   readonly #handleScrapeDone = (event: Event) => {
@@ -126,6 +136,10 @@ export class App extends LitElement {
     this.#themeStorage.setJSON(this.theme.tokens);
   };
 
+  /**
+   * @deprecated Use `this.handleUpdateTokens()` instead in the future.
+   * This implies that all token changes should become `SubmitSaveTokenFormEvent` events.
+   */
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 

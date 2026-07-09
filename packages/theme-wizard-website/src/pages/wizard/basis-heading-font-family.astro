@@ -1,0 +1,11 @@
+---
+import WizardLayout from '../../layouts/WizardLayout.astro';
+---
+
+<WizardLayout title="Lettertype voor koppen">
+  <header slot="header">
+    <p class="nl-paragraph nl-paragraph--lead">Dit lettertype wordt specifiek toegepast op koppen. Je kunt hetzelfde lettertype gebruiken als voor tekst, of juist net even iets anders kiezen.</p>
+  </header>
+
+  <wizard-step-form returnUrl="./" path="basis.heading.font-family"></wizard-step-form>
+</WizardLayout>

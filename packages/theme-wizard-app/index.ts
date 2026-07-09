@@ -1,6 +1,7 @@
 export * from './src/components/wizard-anchor-nav';
 export * from './src/components/wizard-app';
 export * from './src/components/wizard-colorscale-input';
+export * from './src/components/wizard-color-description';
 export * from './src/components/wizard-container';
 export * from './src/components/wizard-download-confirmation';
 export * from './src/components/wizard-download-link';
@@ -21,6 +22,9 @@ export * from './src/components/wizard-scraper-loader';
 export * from './src/components/wizard-scroll-container';
 export * from './src/components/wizard-sidebar-link';
 export * from './src/components/wizard-stack';
+export * from './src/components/wizard-step-form';
+export * from './src/components/wizard-step-form-task-navigation';
+export * from './src/components/wizard-step-form-task-navigation-list';
 export * from './src/components/wizard-story-react';
 export * from './src/components/wizard-style-guide-colors';
 export * from './src/components/wizard-style-guide-components';
@@ -39,3 +43,5 @@ export * from './src/components/wizard-tokens-download';
 export * from './src/components/wizard-tokens-form';
 export * from './src/components/wizard-tokens-reuse-form';
 export * from './src/components/wizard-validation-issues-alert';
+
+export * from './src/utils/index';
