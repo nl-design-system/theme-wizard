@@ -26,14 +26,14 @@ test.describe('after scraping a website', () => {
     const link = page.getByRole('link', { name: 'Vorige stap' });
     await expect(link).toBeVisible();
     await link.click();
-    expect(page.url()).toBe(baseURL + homePage.url);
+    expect(page.url()).toBe(new URL(homePage.url, baseURL).toString());
   });
 
   test('page allows to skip staging and go to basis tokens', async ({ baseURL, page, wizardPage }) => {
     const link = page.getByRole('link', { name: 'Huisstijl vastleggen' }).first(); // there are 2 identical buttons on this page
     await expect.soft(link).toBeVisible();
     await link.click();
-    expect(page.url()).toBe(baseURL + wizardPage.url);
+    expect(page.url()).toBe(new URL(wizardPage.url, baseURL).toString());
   });
 
   test.describe('Shows tables with tokens', () => {
