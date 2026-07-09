@@ -1,0 +1,16 @@
+---
+import StyleGuideNav from "@/components/StyleGuideNav.astro"
+import BaseLayout from "@/layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="Style-guide - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
+      <main slot="main">
+        <h1>Styleguide</h1>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>

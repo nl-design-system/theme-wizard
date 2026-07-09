@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import WithPageNav from '@/components/WithPageNav.astro';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
+import StyleGuideNav from '@/components/StyleGuideNav.astro';
 
 const SECTION_IDS = {
   typography: 'typography',
@@ -11,16 +12,17 @@ const SECTION_IDS = {
 }
 ---
 
-<BaseLayout title="Stijlgids - Theme Wizard">
+<BaseLayout title="Stijlgids design tokens - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
 
       <div slot="main" class="wizard-main">
         <wizard-container>
           <clippy-story-preview size="lg">
             <wizard-stack size="4xl">
-              <clippy-heading level="1">Stijlgids</clippy-heading>
+              <clippy-heading level="1">Design tokens</clippy-heading>
               <WithPageNav>
                 <div slot="page-nav">
                   <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
