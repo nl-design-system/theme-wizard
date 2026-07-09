@@ -1,6 +1,4 @@
 name: Continuous Integration
-# Triggers the following workflows:
-# - .github/workflows/codecov.yml
 
 on: pull_request
 
@@ -159,6 +157,12 @@ jobs:
           name: coverage-report
           path: "**/coverage/"
           retention-days: 1
+
+  codecov:
+    needs: test
+    uses: ./.github/workflows/codecov.yml
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   test-e2e:
     runs-on: ubuntu-latest
