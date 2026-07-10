@@ -1,6 +1,7 @@
 ---
 import StyleGuideNav from '@/components/StyleGuideNav.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@nl-design-system-community/clippy-components/clippy-color-table';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 
 ---
@@ -12,7 +13,38 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
       <StyleGuideNav />
 
       <div slot="main">
-        <h1>Kleur systeem</h1>
+        <wizard-container>
+          <wizard-stack size="3xl">
+          <clippy-heading level="1">Kleur systeem</clippy-heading>
+
+          <wizard-stack size="3xl">
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Huisstijl</clippy-heading>
+                <clippy-color-table></clippy-color-table>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Interactie</clippy-heading>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Signaal</clippy-heading>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Structuur</clippy-heading>
+              </clippy-story-preview>
+            </section>
+          </wizard-stack>
+          </wizard-stack>
+        </wizard-container>
       </div>
     </wizard-layout>
   </theme-wizard-app>
