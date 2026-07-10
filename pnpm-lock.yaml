@@ -171,6 +171,9 @@ importers:
       '@utrecht/listbox-css':
         specifier: 3.0.1
         version: 3.0.1
+      '@utrecht/table-css':
+        specifier: 3.0.1
+        version: 3.0.1
       '@utrecht/textbox-css':
         specifier: 4.0.1
         version: 4.0.1
