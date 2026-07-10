@@ -49,6 +49,7 @@ export default css`
     grid-area: content;
     padding-block: var(--wizard-layout-body-padding-block);
     padding-inline: var(--wizard-layout-padding-inline);
+    min-inline-size: 0;
   }
 
   .wizard-layout__sidebar:not([hidden]) {
@@ -70,6 +71,11 @@ export default css`
     flex-basis: 0;
     flex-grow: 999;
     min-inline-size: 64%;
+  }
+
+  /* prevent slotted content from overflowing the grid layout */
+  ::slotted([slot='main']) {
+    min-inline-size: 0;
   }
 
   @media print {
