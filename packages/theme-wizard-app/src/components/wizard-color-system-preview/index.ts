@@ -80,8 +80,6 @@ export class WizardColorSystemPreview extends LitElement {
   }
 
   override render() {
-    return html`<wizard-table-scroller>
-      <clippy-token-color-table .groups=${this.#displayedGroups}></clippy-token-color-table>
-    </wizard-table-scroller>`;
+    return html`<clippy-token-color-table .groups=${this.#displayedGroups}></clippy-token-color-table>`;
   }
 }
