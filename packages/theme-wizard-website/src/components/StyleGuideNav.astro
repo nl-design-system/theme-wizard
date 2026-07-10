@@ -8,6 +8,6 @@ const pages: { title: string; slug: string }[] = [
 
 <nav slot="sidebar">
   {pages.map((page) => (
-    <wizard-sidebar-link href={page.slug} current={page.slug === slug ? 'page' : undefined}>{page.title}</wizard-sidebar-link>
+    <wizard-sidebar-link href={page.slug} current={slug.includes(page.slug) ? 'page' : undefined}>{page.title}</wizard-sidebar-link>
   ))}
 </nav>
