@@ -1,7 +1,7 @@
 import { describe, expect, it, afterEach } from 'vitest';
 import './index';
 
-const tag = 'clippy-color-table';
+const tag = 'clippy-token-color-table';
 
 type ComponentElement = { shadowRoot: ShadowRoot; updateComplete: Promise<boolean> };
 

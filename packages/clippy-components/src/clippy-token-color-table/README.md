@@ -1,0 +1,1 @@
+# `<clippy-token-color-table>`
