@@ -88,7 +88,7 @@ const config: PlaywrightTestConfig = {
         ],
       }),
 
-  workers: CI ? 2 : undefined,
+  workers: CI ? 4 : undefined,
 };
 
 export default config;
