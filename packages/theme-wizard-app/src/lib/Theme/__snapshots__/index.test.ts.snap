@@ -76977,66 +76977,6 @@ exports[`Theme > can export to JSON token file 1`] = `
         }
       }
     },
-    "side-navigation": {
-      "link": {
-        "hover": {
-          "text-decoration": {
-            "key": "{todo.side-navigation.link.hover.text-decoration}",
-            "$type": "textDecoration",
-            "$value": "underline",
-            "original": {
-              "$type": "textDecoration",
-              "$value": "underline",
-              "key": "{todo.side-navigation.link.hover.text-decoration}"
-            },
-            "name": "text-decoration",
-            "attributes": {},
-            "path": [
-              "todo",
-              "side-navigation",
-              "link",
-              "hover",
-              "text-decoration"
-            ]
-          }
-        },
-        "icon": {
-          "size": {
-            "key": "{todo.side-navigation.link.icon.size}",
-            "$type": "dimension",
-            "$value": "1.5rem",
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "size",
-              "nl.nldesignsystem.value-resolved-as": {
-                "value": 1.5,
-                "unit": "rem"
-              }
-            },
-            "original": {
-              "$type": "dimension",
-              "$value": "{basis.size.icon.md}",
-              "$extensions": {
-                "nl.nldesignsystem.token-subtype": "size",
-                "nl.nldesignsystem.value-resolved-as": {
-                  "value": 1.5,
-                  "unit": "rem"
-                }
-              },
-              "key": "{todo.side-navigation.link.icon.size}"
-            },
-            "name": "size",
-            "attributes": {},
-            "path": [
-              "todo",
-              "side-navigation",
-              "link",
-              "icon",
-              "size"
-            ]
-          }
-        }
-      }
-    },
     "skip-link": {
       "font-weight": {
         "key": "{todo.skip-link.font-weight}",
@@ -82818,6 +82758,495 @@ exports[`Theme > can export to JSON token file 1`] = `
               "color"
             ]
           }
+        }
+      }
+    },
+    "grid": {
+      "column-count": {
+        "key": "{ams.grid.column-count}",
+        "$type": "number",
+        "$value": 12,
+        "original": {
+          "$type": "number",
+          "$value": 12,
+          "key": "{ams.grid.column-count}"
+        },
+        "name": "column-count",
+        "attributes": {},
+        "path": [
+          "ams",
+          "grid",
+          "column-count"
+        ]
+      },
+      "column-gap": {
+        "key": "{ams.grid.column-gap}",
+        "$type": "dimension",
+        "$value": "16px",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "value": 16,
+            "unit": "px"
+          }
+        },
+        "original": {
+          "$type": "dimension",
+          "$value": "{basis.space.column.xl}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 16,
+              "unit": "px"
+            }
+          },
+          "key": "{ams.grid.column-gap}"
+        },
+        "name": "column-gap",
+        "attributes": {},
+        "path": [
+          "ams",
+          "grid",
+          "column-gap"
+        ]
+      },
+      "padding-block": {
+        "l": {
+          "key": "{ams.grid.padding-block.l}",
+          "$type": "dimension",
+          "$value": "16px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 16,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.block.xl}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 16,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.padding-block.l}"
+          },
+          "name": "l",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "padding-block",
+            "l"
+          ]
+        },
+        "xl": {
+          "key": "{ams.grid.padding-block.xl}",
+          "$type": "dimension",
+          "$value": "24px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 24,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.block.3xl}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 24,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.padding-block.xl}"
+          },
+          "name": "xl",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "padding-block",
+            "xl"
+          ]
+        },
+        "2xl": {
+          "key": "{ams.grid.padding-block.2xl}",
+          "$type": "dimension",
+          "$value": "64px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 64,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.block.6xl}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 64,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.padding-block.2xl}"
+          },
+          "name": "2xl",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "padding-block",
+            "2xl"
+          ]
+        }
+      },
+      "padding-inline": {
+        "key": "{ams.grid.padding-inline}",
+        "$type": "dimension",
+        "$value": "0px",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "original": {
+          "$type": "dimension",
+          "$value": "{basis.space.none}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "key": "{ams.grid.padding-inline}"
+        },
+        "name": "padding-inline",
+        "attributes": {},
+        "path": [
+          "ams",
+          "grid",
+          "padding-inline"
+        ]
+      },
+      "row-gap": {
+        "l": {
+          "key": "{ams.grid.row-gap.l}",
+          "$type": "dimension",
+          "$value": "16px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 16,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.row.xl}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 16,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.row-gap.l}"
+          },
+          "name": "l",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "row-gap",
+            "l"
+          ]
+        },
+        "xl": {
+          "key": "{ams.grid.row-gap.xl}",
+          "$type": "dimension",
+          "$value": "24px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 24,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.row.3xl}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 24,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.row-gap.xl}"
+          },
+          "name": "xl",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "row-gap",
+            "xl"
+          ]
+        },
+        "2xl": {
+          "key": "{ams.grid.row-gap.2xl}",
+          "$type": "dimension",
+          "$value": "64px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 64,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.row.5xl}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 64,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.row-gap.2xl}"
+          },
+          "name": "2xl",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "row-gap",
+            "2xl"
+          ]
+        }
+      },
+      "vi-medium": {
+        "column-count": {
+          "key": "{ams.grid.vi-medium.column-count}",
+          "$type": "number",
+          "$value": 12,
+          "original": {
+            "$type": "number",
+            "$value": 12,
+            "key": "{ams.grid.vi-medium.column-count}"
+          },
+          "name": "column-count",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "vi-medium",
+            "column-count"
+          ]
+        },
+        "padding-inline": {
+          "key": "{ams.grid.vi-medium.padding-inline}",
+          "$type": "dimension",
+          "$value": "0px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.none}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 0,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.vi-medium.padding-inline}"
+          },
+          "name": "padding-inline",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "vi-medium",
+            "padding-inline"
+          ]
+        }
+      },
+      "vi-wide": {
+        "column-count": {
+          "key": "{ams.grid.vi-wide.column-count}",
+          "$type": "number",
+          "$value": 12,
+          "original": {
+            "$type": "number",
+            "$value": 12,
+            "key": "{ams.grid.vi-wide.column-count}"
+          },
+          "name": "column-count",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "vi-wide",
+            "column-count"
+          ]
+        },
+        "padding-inline": {
+          "key": "{ams.grid.vi-wide.padding-inline}",
+          "$type": "dimension",
+          "$value": "0px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.none}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 0,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.vi-wide.padding-inline}"
+          },
+          "name": "padding-inline",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "vi-wide",
+            "padding-inline"
+          ]
+        }
+      },
+      "cell": {
+        "background-color": {
+          "key": "{ams.grid.cell.background-color}",
+          "$type": "color",
+          "$value": "#00000000",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 0,
+              "colorSpace": "srgb",
+              "components": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "original": {
+            "$type": "color",
+            "$value": "{basis.color.transparent}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "background-color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 0,
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            "key": "{ams.grid.cell.background-color}"
+          },
+          "name": "background-color",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "cell",
+            "background-color"
+          ]
+        },
+        "padding-block": {
+          "key": "{ams.grid.cell.padding-block}",
+          "$type": "dimension",
+          "$value": "0px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.none}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 0,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.cell.padding-block}"
+          },
+          "name": "padding-block",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "cell",
+            "padding-block"
+          ]
+        },
+        "padding-inline": {
+          "key": "{ams.grid.cell.padding-inline}",
+          "$type": "dimension",
+          "$value": "0px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.none}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 0,
+                "unit": "px"
+              }
+            },
+            "key": "{ams.grid.cell.padding-inline}"
+          },
+          "name": "padding-inline",
+          "attributes": {},
+          "path": [
+            "ams",
+            "grid",
+            "cell",
+            "padding-inline"
+          ]
         }
       }
     },
@@ -105997,6 +106426,343 @@ exports[`Theme > can export to JSON token file 1`] = `
         }
       }
     },
+    "icon-button": {
+      "color": {
+        "key": "{denhaag.icon-button.color}",
+        "$type": "color",
+        "$value": "#1b59a4",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.10588235294117647,
+              0.34901960784313724,
+              0.6431372549019608
+            ]
+          }
+        },
+        "original": {
+          "$type": "color",
+          "$value": "{basis.color.action-1.color-default}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.10588235294117647,
+                0.34901960784313724,
+                0.6431372549019608
+              ]
+            }
+          },
+          "key": "{denhaag.icon-button.color}"
+        },
+        "name": "color",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "icon-button",
+          "color"
+        ]
+      },
+      "padding-block-end": {
+        "key": "{denhaag.icon-button.padding-block-end}",
+        "$type": "dimension",
+        "$value": "12px",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "value": 12,
+            "unit": "px"
+          }
+        },
+        "original": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 12,
+              "unit": "px"
+            }
+          },
+          "key": "{denhaag.icon-button.padding-block-end}"
+        },
+        "name": "padding-block-end",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "icon-button",
+          "padding-block-end"
+        ]
+      },
+      "padding-block-start": {
+        "key": "{denhaag.icon-button.padding-block-start}",
+        "$type": "dimension",
+        "$value": "12px",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "value": 12,
+            "unit": "px"
+          }
+        },
+        "original": {
+          "$type": "dimension",
+          "$value": "{basis.space.block.lg}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 12,
+              "unit": "px"
+            }
+          },
+          "key": "{denhaag.icon-button.padding-block-start}"
+        },
+        "name": "padding-block-start",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "icon-button",
+          "padding-block-start"
+        ]
+      },
+      "padding-inline-end": {
+        "key": "{denhaag.icon-button.padding-inline-end}",
+        "$type": "dimension",
+        "$value": "12px",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "value": 12,
+            "unit": "px"
+          }
+        },
+        "original": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.lg}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 12,
+              "unit": "px"
+            }
+          },
+          "key": "{denhaag.icon-button.padding-inline-end}"
+        },
+        "name": "padding-inline-end",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "icon-button",
+          "padding-inline-end"
+        ]
+      },
+      "padding-inline-start": {
+        "key": "{denhaag.icon-button.padding-inline-start}",
+        "$type": "dimension",
+        "$value": "12px",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "value": 12,
+            "unit": "px"
+          }
+        },
+        "original": {
+          "$type": "dimension",
+          "$value": "{basis.space.inline.lg}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 12,
+              "unit": "px"
+            }
+          },
+          "key": "{denhaag.icon-button.padding-inline-start}"
+        },
+        "name": "padding-inline-start",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "icon-button",
+          "padding-inline-start"
+        ]
+      },
+      "focus": {
+        "outline-color": {
+          "key": "{denhaag.icon-button.focus.outline-color}",
+          "$type": "color",
+          "$value": "#0b0c0c",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.043137254901960784,
+                0.047058823529411764,
+                0.047058823529411764
+              ]
+            }
+          },
+          "original": {
+            "$type": "color",
+            "$value": "{basis.focus.outline-color}",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.043137254901960784,
+                  0.047058823529411764,
+                  0.047058823529411764
+                ]
+              }
+            },
+            "key": "{denhaag.icon-button.focus.outline-color}"
+          },
+          "name": "outline-color",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "icon-button",
+            "focus",
+            "outline-color"
+          ]
+        },
+        "outline-offset": {
+          "key": "{denhaag.icon-button.focus.outline-offset}",
+          "$type": "dimension",
+          "$value": "0px",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.focus.outline-offset}",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 0,
+                "unit": "px"
+              }
+            },
+            "key": "{denhaag.icon-button.focus.outline-offset}"
+          },
+          "name": "outline-offset",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "icon-button",
+            "focus",
+            "outline-offset"
+          ]
+        },
+        "outline-style": {
+          "key": "{denhaag.icon-button.focus.outline-style}",
+          "$type": "other",
+          "$value": "dashed",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": "dashed"
+          },
+          "original": {
+            "$type": "other",
+            "$value": "{basis.focus.outline-style}",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": "dashed"
+            },
+            "key": "{denhaag.icon-button.focus.outline-style}"
+          },
+          "name": "outline-style",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "icon-button",
+            "focus",
+            "outline-style"
+          ]
+        },
+        "outline-width": {
+          "key": "{denhaag.icon-button.focus.outline-width}",
+          "$type": "dimension",
+          "$value": "0.125rem",
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0.125,
+              "unit": "rem"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.focus.outline-width}",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 0.125,
+                "unit": "rem"
+              }
+            },
+            "key": "{denhaag.icon-button.focus.outline-width}"
+          },
+          "name": "outline-width",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "icon-button",
+            "focus",
+            "outline-width"
+          ]
+        }
+      },
+      "hover": {
+        "color": {
+          "key": "{denhaag.icon-button.hover.color}",
+          "$type": "color",
+          "$value": "#04499a",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.01568627450980392,
+                0.28627450980392155,
+                0.6039215686274509
+              ]
+            }
+          },
+          "original": {
+            "$type": "color",
+            "$value": "{basis.color.action-1.color-hover}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.01568627450980392,
+                  0.28627450980392155,
+                  0.6039215686274509
+                ]
+              }
+            },
+            "key": "{denhaag.icon-button.hover.color}"
+          },
+          "name": "color",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "icon-button",
+            "hover",
+            "color"
+          ]
+        }
+      }
+    },
     "process-steps": {
       "font-familiy": {
         "key": "{denhaag.process-steps.font-familiy}",
@@ -108042,6 +108808,40 @@ exports[`Theme > can export to JSON token file 1`] = `
       }
     },
     "side-navigation": {
+      "display": {
+        "key": "{denhaag.side-navigation.display}",
+        "$type": "other",
+        "$value": "flex",
+        "original": {
+          "$type": "other",
+          "$value": "flex",
+          "key": "{denhaag.side-navigation.display}"
+        },
+        "name": "display",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "side-navigation",
+          "display"
+        ]
+      },
+      "flex-direction": {
+        "key": "{denhaag.side-navigation.flex-direction}",
+        "$type": "other",
+        "$value": "column",
+        "original": {
+          "$type": "other",
+          "$value": "column",
+          "key": "{denhaag.side-navigation.flex-direction}"
+        },
+        "name": "flex-direction",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "side-navigation",
+          "flex-direction"
+        ]
+      },
       "min-width": {
         "key": "{denhaag.side-navigation.min-width}",
         "$type": "dimension",
@@ -108089,6 +108889,353 @@ exports[`Theme > can export to JSON token file 1`] = `
           "side-navigation",
           "row-gap"
         ]
+      },
+      "mobile": {
+        "display": {
+          "key": "{denhaag.side-navigation.mobile.display}",
+          "$type": "other",
+          "$value": "None",
+          "original": {
+            "$type": "other",
+            "$value": "None",
+            "key": "{denhaag.side-navigation.mobile.display}"
+          },
+          "name": "display",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "mobile",
+            "display"
+          ]
+        }
+      },
+      "expand-button": {
+        "block-size": {
+          "key": "{denhaag.side-navigation.expand-button.block-size}",
+          "$type": "dimension",
+          "$value": "3rem",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 3,
+              "unit": "rem"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.pointer-target.min-block-size}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "size",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 3,
+                "unit": "rem"
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-button.block-size}"
+          },
+          "name": "block-size",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-button",
+            "block-size"
+          ]
+        },
+        "inline-size": {
+          "key": "{denhaag.side-navigation.expand-button.inline-size}",
+          "$type": "dimension",
+          "$value": "3rem",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 3,
+              "unit": "rem"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.pointer-target.min-block-size}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "size",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 3,
+                "unit": "rem"
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-button.inline-size}"
+          },
+          "name": "inline-size",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-button",
+            "inline-size"
+          ]
+        },
+        "transform": {
+          "key": "{denhaag.side-navigation.expand-button.transform}",
+          "$type": "other",
+          "$value": "rotate(0deg)",
+          "original": {
+            "$type": "other",
+            "$value": "rotate(0deg)",
+            "key": "{denhaag.side-navigation.expand-button.transform}"
+          },
+          "name": "transform",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-button",
+            "transform"
+          ]
+        },
+        "transition": {
+          "key": "{denhaag.side-navigation.expand-button.transition}",
+          "$type": "other",
+          "$value": "None",
+          "original": {
+            "$type": "other",
+            "$value": "None",
+            "key": "{denhaag.side-navigation.expand-button.transition}"
+          },
+          "name": "transition",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-button",
+            "transition"
+          ]
+        },
+        "expanded": {
+          "transform": {
+            "key": "{denhaag.side-navigation.expand-button.expanded.transform}",
+            "$type": "other",
+            "$value": "rotate(180deg)",
+            "original": {
+              "$type": "other",
+              "$value": "rotate(180deg)",
+              "key": "{denhaag.side-navigation.expand-button.expanded.transform}"
+            },
+            "name": "transform",
+            "attributes": {},
+            "path": [
+              "denhaag",
+              "side-navigation",
+              "expand-button",
+              "expanded",
+              "transform"
+            ]
+          }
+        }
+      },
+      "expand-separator": {
+        "color": {
+          "key": "{denhaag.side-navigation.expand-separator.color}",
+          "$type": "color",
+          "$value": "#c4c4c4",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "color",
+            "nl.nldesignsystem.value-resolved-as": {
+              "alpha": 1,
+              "colorSpace": "srgb",
+              "components": [
+                0.7686274509803922,
+                0.7686274509803922,
+                0.7686274509803922
+              ]
+            }
+          },
+          "original": {
+            "$type": "color",
+            "$value": "{basis.color.default.border-subtle}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "color",
+              "nl.nldesignsystem.value-resolved-as": {
+                "alpha": 1,
+                "colorSpace": "srgb",
+                "components": [
+                  0.7686274509803922,
+                  0.7686274509803922,
+                  0.7686274509803922
+                ]
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-separator.color}"
+          },
+          "name": "color",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-separator",
+            "color"
+          ]
+        },
+        "inline-size": {
+          "key": "{denhaag.side-navigation.expand-separator.inline-size}",
+          "$type": "dimension",
+          "$value": "0.0625rem",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0.0625,
+              "unit": "rem"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.border-width.sm}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "size",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 0.0625,
+                "unit": "rem"
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-separator.inline-size}"
+          },
+          "name": "inline-size",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-separator",
+            "inline-size"
+          ]
+        },
+        "margin-inline-end": {
+          "key": "{denhaag.side-navigation.expand-separator.margin-inline-end}",
+          "$type": "dimension",
+          "$value": "8px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 8,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.column.md}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-separator.margin-inline-end}"
+          },
+          "name": "margin-inline-end",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-separator",
+            "margin-inline-end"
+          ]
+        },
+        "margin-inline-start": {
+          "key": "{denhaag.side-navigation.expand-separator.margin-inline-start}",
+          "$type": "dimension",
+          "$value": "8px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 8,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.column.md}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-separator.margin-inline-start}"
+          },
+          "name": "margin-inline-start",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-separator",
+            "margin-inline-start"
+          ]
+        },
+        "padding-block-end": {
+          "key": "{denhaag.side-navigation.expand-separator.padding-block-end}",
+          "$type": "dimension",
+          "$value": "8px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 8,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.block.md}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-separator.padding-block-end}"
+          },
+          "name": "padding-block-end",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-separator",
+            "padding-block-end"
+          ]
+        },
+        "padding-block-start": {
+          "key": "{denhaag.side-navigation.expand-separator.padding-block-start}",
+          "$type": "dimension",
+          "$value": "8px",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 8,
+              "unit": "px"
+            }
+          },
+          "original": {
+            "$type": "dimension",
+            "$value": "{basis.space.block.md}",
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            "key": "{denhaag.side-navigation.expand-separator.padding-block-start}"
+          },
+          "name": "padding-block-start",
+          "attributes": {},
+          "path": [
+            "denhaag",
+            "side-navigation",
+            "expand-separator",
+            "padding-block-start"
+          ]
+        }
       },
       "item": {
         "font-family": {
@@ -108409,38 +109556,6 @@ exports[`Theme > can export to JSON token file 1`] = `
             "color"
           ]
         },
-        "column-gap": {
-          "key": "{denhaag.side-navigation.link.column-gap}",
-          "$type": "dimension",
-          "$value": "8px",
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "value": 8,
-              "unit": "px"
-            }
-          },
-          "original": {
-            "$type": "dimension",
-            "$value": "{basis.space.column.max.md}",
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "value": 8,
-                "unit": "px"
-              }
-            },
-            "key": "{denhaag.side-navigation.link.column-gap}"
-          },
-          "name": "column-gap",
-          "attributes": {},
-          "path": [
-            "denhaag",
-            "side-navigation",
-            "link",
-            "column-gap"
-          ]
-        },
         "padding-block-end": {
           "key": "{denhaag.side-navigation.link.padding-block-end}",
           "$type": "dimension",
@@ -108583,84 +109698,6 @@ exports[`Theme > can export to JSON token file 1`] = `
             ]
           }
         },
-        "current": {
-          "color": {
-            "key": "{denhaag.side-navigation.link.current.color}",
-            "$type": "color",
-            "$value": "#1b1b1b",
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "color",
-              "nl.nldesignsystem.value-resolved-as": {
-                "alpha": 1,
-                "colorSpace": "srgb",
-                "components": [
-                  0.10588235294117647,
-                  0.10588235294117647,
-                  0.10588235294117647
-                ]
-              }
-            },
-            "original": {
-              "$type": "color",
-              "$value": "{basis.color.default.color-document}",
-              "$extensions": {
-                "nl.nldesignsystem.token-subtype": "color",
-                "nl.nldesignsystem.value-resolved-as": {
-                  "alpha": 1,
-                  "colorSpace": "srgb",
-                  "components": [
-                    0.10588235294117647,
-                    0.10588235294117647,
-                    0.10588235294117647
-                  ]
-                }
-              },
-              "key": "{denhaag.side-navigation.link.current.color}"
-            },
-            "name": "color",
-            "attributes": {},
-            "path": [
-              "denhaag",
-              "side-navigation",
-              "link",
-              "current",
-              "color"
-            ]
-          },
-          "font-weight": {
-            "key": "{denhaag.side-navigation.link.current.font-weight}",
-            "$type": "fontWeight",
-            "$value": 700,
-            "$extensions": {
-              "studio.tokens": {
-                "originalType": "fontWeights"
-              },
-              "nl.nldesignsystem.token-subtype": "font-weight",
-              "nl.nldesignsystem.value-resolved-as": 700
-            },
-            "original": {
-              "$type": "fontWeight",
-              "$value": "{basis.text.font-weight.bold}",
-              "$extensions": {
-                "studio.tokens": {
-                  "originalType": "fontWeights"
-                },
-                "nl.nldesignsystem.token-subtype": "font-weight",
-                "nl.nldesignsystem.value-resolved-as": 700
-              },
-              "key": "{denhaag.side-navigation.link.current.font-weight}"
-            },
-            "name": "font-weight",
-            "attributes": {},
-            "path": [
-              "denhaag",
-              "side-navigation",
-              "link",
-              "current",
-              "font-weight"
-            ]
-          }
-        },
         "hover": {
           "color": {
             "key": "{denhaag.side-navigation.link.hover.color}",
@@ -108705,103 +109742,72 @@ exports[`Theme > can export to JSON token file 1`] = `
               "color"
             ]
           }
+        },
+        "label": {
+          "gap": {
+            "key": "{denhaag.side-navigation.link.label.gap}",
+            "$type": "dimension",
+            "$value": "8px",
+            "$extensions": {
+              "nl.nldesignsystem.value-resolved-as": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            "original": {
+              "$type": "dimension",
+              "$value": "{basis.space.column.md}",
+              "$extensions": {
+                "nl.nldesignsystem.value-resolved-as": {
+                  "value": 8,
+                  "unit": "px"
+                }
+              },
+              "key": "{denhaag.side-navigation.link.label.gap}"
+            },
+            "name": "gap",
+            "attributes": {},
+            "path": [
+              "denhaag",
+              "side-navigation",
+              "link",
+              "label",
+              "gap"
+            ]
+          }
         }
       },
       "list": {
-        "padding-block-end": {
-          "key": "{denhaag.side-navigation.list.padding-block-end}",
+        "margin-inline-start": {
+          "key": "{denhaag.side-navigation.list.margin-inline-start}",
           "$type": "dimension",
-          "$value": "0px",
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "value": 0,
-              "unit": "px"
-            }
-          },
-          "original": {
-            "$type": "dimension",
-            "$value": "{basis.space.none}",
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "value": 0,
-                "unit": "px"
-              }
-            },
-            "key": "{denhaag.side-navigation.list.padding-block-end}"
-          },
-          "name": "padding-block-end",
-          "attributes": {},
-          "path": [
-            "denhaag",
-            "side-navigation",
-            "list",
-            "padding-block-end"
-          ]
-        },
-        "padding-block-start": {
-          "key": "{denhaag.side-navigation.list.padding-block-start}",
-          "$type": "dimension",
-          "$value": "0px",
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "value": 0,
-              "unit": "px"
-            }
-          },
-          "original": {
-            "$type": "dimension",
-            "$value": "{basis.space.none}",
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "value": 0,
-                "unit": "px"
-              }
-            },
-            "key": "{denhaag.side-navigation.list.padding-block-start}"
-          },
-          "name": "padding-block-start",
-          "attributes": {},
-          "path": [
-            "denhaag",
-            "side-navigation",
-            "list",
-            "padding-block-start"
-          ]
-        },
-        "padding-inline-start": {
-          "key": "{denhaag.side-navigation.list.padding-inline-start}",
-          "$type": "dimension",
-          "$value": "0px",
+          "$value": "32px",
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
-              "value": 0,
+              "value": 32,
               "unit": "px"
             }
           },
           "original": {
             "$type": "dimension",
-            "$value": "{basis.space.none}",
+            "$value": "{basis.space.inline.4xl}",
             "$extensions": {
               "nl.nldesignsystem.token-subtype": "space-inline",
               "nl.nldesignsystem.value-resolved-as": {
-                "value": 0,
+                "value": 32,
                 "unit": "px"
               }
             },
-            "key": "{denhaag.side-navigation.list.padding-inline-start}"
+            "key": "{denhaag.side-navigation.list.margin-inline-start}"
           },
-          "name": "padding-inline-start",
+          "name": "margin-inline-start",
           "attributes": {},
           "path": [
             "denhaag",
             "side-navigation",
             "list",
-            "padding-inline-start"
+            "margin-inline-start"
           ]
         }
       }
@@ -111627,6 +112633,37 @@ exports[`Theme > can export to JSON token file 1`] = `
           "border-color"
         ]
       },
+      "border-radius": {
+        "key": "{denhaag.action.border-radius}",
+        "$type": "dimension",
+        "$value": "0px",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-radius",
+          "nl.nldesignsystem.value-resolved-as": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "original": {
+          "$type": "dimension",
+          "$value": "{basis.border-radius.none}",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "border-radius",
+            "nl.nldesignsystem.value-resolved-as": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          "key": "{denhaag.action.border-radius}"
+        },
+        "name": "border-radius",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "action",
+          "border-radius"
+        ]
+      },
       "border-style": {
         "key": "{denhaag.action.border-style}",
         "$type": "other",
@@ -111716,6 +112753,41 @@ exports[`Theme > can export to JSON token file 1`] = `
           "denhaag",
           "action",
           "color"
+        ]
+      },
+      "font-family": {
+        "key": "{denhaag.action.font-family}",
+        "$type": "fontFamily",
+        "$value": "\\"IBM Plex Sans\\",sans-serif",
+        "$extensions": {
+          "studio.tokens": {
+            "originalType": "fontFamilies"
+          },
+          "nl.nldesignsystem.value-resolved-as": [
+            "IBM Plex Sans",
+            "sans-serif"
+          ]
+        },
+        "original": {
+          "$type": "fontFamily",
+          "$value": "{basis.text.font-family.default}",
+          "$extensions": {
+            "studio.tokens": {
+              "originalType": "fontFamilies"
+            },
+            "nl.nldesignsystem.value-resolved-as": [
+              "IBM Plex Sans",
+              "sans-serif"
+            ]
+          },
+          "key": "{denhaag.action.font-family}"
+        },
+        "name": "font-family",
+        "attributes": {},
+        "path": [
+          "denhaag",
+          "action",
+          "font-family"
         ]
       },
       "gap": {
@@ -115035,6 +116107,22 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-file-input-outline-offset: auto
 	--ams-file-input-padding-block: var(--basis-space-block-xl)
 	--ams-file-input-padding-inline: var(--basis-space-inline-xl)
+	--ams-grid-cell-background-color: var(--basis-color-transparent)
+	--ams-grid-cell-padding-block: var(--basis-space-none)
+	--ams-grid-cell-padding-inline: var(--basis-space-none)
+	--ams-grid-column-count: 12
+	--ams-grid-column-gap: var(--basis-space-column-xl)
+	--ams-grid-padding-block-2xl: var(--basis-space-block-6xl)
+	--ams-grid-padding-block-l: var(--basis-space-block-xl)
+	--ams-grid-padding-block-xl: var(--basis-space-block-3xl)
+	--ams-grid-padding-inline: var(--basis-space-none)
+	--ams-grid-row-gap-2xl: var(--basis-space-row-5xl)
+	--ams-grid-row-gap-l: var(--basis-space-row-xl)
+	--ams-grid-row-gap-xl: var(--basis-space-row-3xl)
+	--ams-grid-vi-medium-column-count: 12
+	--ams-grid-vi-medium-padding-inline: var(--basis-space-none)
+	--ams-grid-vi-wide-column-count: 12
+	--ams-grid-vi-wide-padding-inline: var(--basis-space-none)
 	--ams-heading-color: var(--basis-heading-color)
 	--ams-heading-font-family: var(--basis-heading-font-family)
 	--ams-heading-font-weight: var(--basis-heading-font-weight)
@@ -115769,6 +116857,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--denhaag-action-actions-gap: var(--basis-space-row-md)
 	--denhaag-action-background-color: var(--basis-color-transparent)
 	--denhaag-action-border-color: var(--basis-color-default-border-subtle)
+	--denhaag-action-border-radius: var(--basis-border-radius-none)
 	--denhaag-action-border-style: solid
 	--denhaag-action-border-width: var(--basis-border-width-sm)
 	--denhaag-action-color: var(--basis-color-default-color-document)
@@ -115783,6 +116872,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--denhaag-action-date-warning-gap: var(--basis-space-column-md)
 	--denhaag-action-details-gap: var(--basis-space-row-md)
 	--denhaag-action-details-lg-gap: var(--basis-space-column-xl)
+	--denhaag-action-font-family: var(--basis-text-font-family-default)
 	--denhaag-action-gap: var(--basis-space-row-md)
 	--denhaag-action-lg-gap: var(--basis-space-column-xl)
 	--denhaag-action-lg-padding-block-end: var(--basis-space-block-xl)
@@ -115871,6 +116961,16 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--denhaag-file-right-padding-block-start: var(--basis-space-block-lg)
 	--denhaag-file-right-padding-inline-end: var(--basis-space-inline-xl)
 	--denhaag-file-right-padding-inline-start: var(--basis-space-inline-xl)
+	--denhaag-icon-button-color: var(--basis-color-action-1-color-default)
+	--denhaag-icon-button-focus-outline-color: var(--basis-focus-outline-color)
+	--denhaag-icon-button-focus-outline-offset: var(--basis-focus-outline-offset)
+	--denhaag-icon-button-focus-outline-style: var(--basis-focus-outline-style)
+	--denhaag-icon-button-focus-outline-width: var(--basis-focus-outline-width)
+	--denhaag-icon-button-hover-color: var(--basis-color-action-1-color-hover)
+	--denhaag-icon-button-padding-block-end: var(--basis-space-block-lg)
+	--denhaag-icon-button-padding-block-start: var(--basis-space-block-lg)
+	--denhaag-icon-button-padding-inline-end: var(--basis-space-inline-lg)
+	--denhaag-icon-button-padding-inline-start: var(--basis-space-inline-lg)
 	--denhaag-process-steps-font-familiy: var(--basis-text-font-family-default)
 	--denhaag-process-steps-font-size: var(--basis-text-font-size-md)
 	--denhaag-process-steps-line-height: var(--basis-text-line-height-md)
@@ -115918,6 +117018,19 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--denhaag-process-steps-sub-step-marker-current-border-color: var(--basis-color-default-border-default)
 	--denhaag-process-steps-sub-step-marker-not-checked-border-color: var(--basis-color-disabled-border-default)
 	--denhaag-process-steps-sub-step-marker-warning-border-color: var(--basis-color-warning-border-default)
+	--denhaag-side-navigation-display: flex
+	--denhaag-side-navigation-expand-button-block-size: var(--basis-pointer-target-min-block-size)
+	--denhaag-side-navigation-expand-button-expanded-transform: rotate(180deg)
+	--denhaag-side-navigation-expand-button-inline-size: var(--basis-pointer-target-min-block-size)
+	--denhaag-side-navigation-expand-button-transform: rotate(0deg)
+	--denhaag-side-navigation-expand-button-transition: None
+	--denhaag-side-navigation-expand-separator-color: var(--basis-color-default-border-subtle)
+	--denhaag-side-navigation-expand-separator-inline-size: var(--basis-border-width-sm)
+	--denhaag-side-navigation-expand-separator-margin-inline-end: var(--basis-space-column-md)
+	--denhaag-side-navigation-expand-separator-margin-inline-start: var(--basis-space-column-md)
+	--denhaag-side-navigation-expand-separator-padding-block-end: var(--basis-space-block-md)
+	--denhaag-side-navigation-expand-separator-padding-block-start: var(--basis-space-block-md)
+	--denhaag-side-navigation-flex-direction: column
 	--denhaag-side-navigation-item-font-family: var(--basis-text-font-family-default)
 	--denhaag-side-navigation-item-font-size: var(--basis-text-font-size-md)
 	--denhaag-side-navigation-item-font-weight: var(--basis-text-font-weight-default)
@@ -115929,16 +117042,13 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--denhaag-side-navigation-link-active-color: var(--basis-color-action-2-color-active)
 	--denhaag-side-navigation-link-active-font-weight: var(--basis-text-font-weight-bold)
 	--denhaag-side-navigation-link-color: var(--basis-color-action-2-color-default)
-	--denhaag-side-navigation-link-column-gap: var(--basis-space-column-max-md)
-	--denhaag-side-navigation-link-current-color: var(--basis-color-default-color-document)
-	--denhaag-side-navigation-link-current-font-weight: var(--basis-text-font-weight-bold)
 	--denhaag-side-navigation-link-hover-color: var(--basis-color-action-2-color-hover)
+	--denhaag-side-navigation-link-label-gap: var(--basis-space-column-md)
 	--denhaag-side-navigation-link-padding-block-end: var(--basis-space-block-lg)
 	--denhaag-side-navigation-link-padding-block-start: var(--basis-space-block-lg)
-	--denhaag-side-navigation-list-padding-block-end: var(--basis-space-none)
-	--denhaag-side-navigation-list-padding-block-start: var(--basis-space-none)
-	--denhaag-side-navigation-list-padding-inline-start: var(--basis-space-none)
+	--denhaag-side-navigation-list-margin-inline-start: var(--basis-space-inline-4xl)
 	--denhaag-side-navigation-min-width: 240px
+	--denhaag-side-navigation-mobile-display: None
 	--denhaag-side-navigation-row-gap: var(--basis-space-row-3xl)
 	--denhaag-step-marker-border-width: var(--basis-border-width-md)
 	--denhaag-step-marker-checked-background-color: var(--basis-color-positive-inverse-bg-default)
@@ -116789,8 +117899,6 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-radio-button-checked-disabled-background-color: var(--basis-form-control-disabled-accent-color)
 	--todo-radio-button-checked-disabled-border-color: var(--basis-form-control-disabled-border-color)
 	--todo-radio-button-checked-disabled-color: var(--basis-form-control-disabled-color)
-	--todo-side-navigation-link-hover-text-decoration: underline
-	--todo-side-navigation-link-icon-size: var(--basis-size-icon-md)
 	--todo-skip-link-font-weight: var(--basis-text-font-weight-bold)
 	--todo-spotlight-section-row-gap: var(--basis-space-row-md)
 	--todo-status-badge-background-color: var(--basis-color-default-bg-default)
@@ -117906,6 +119014,22 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-file-input-outline-offset: auto
 	--ams-file-input-padding-block: var(--basis-space-block-xl)
 	--ams-file-input-padding-inline: var(--basis-space-inline-xl)
+	--ams-grid-cell-background-color: var(--basis-color-transparent)
+	--ams-grid-cell-padding-block: var(--basis-space-none)
+	--ams-grid-cell-padding-inline: var(--basis-space-none)
+	--ams-grid-column-count: 12
+	--ams-grid-column-gap: var(--basis-space-column-xl)
+	--ams-grid-padding-block-2xl: var(--basis-space-block-6xl)
+	--ams-grid-padding-block-l: var(--basis-space-block-xl)
+	--ams-grid-padding-block-xl: var(--basis-space-block-3xl)
+	--ams-grid-padding-inline: var(--basis-space-none)
+	--ams-grid-row-gap-2xl: var(--basis-space-row-5xl)
+	--ams-grid-row-gap-l: var(--basis-space-row-xl)
+	--ams-grid-row-gap-xl: var(--basis-space-row-3xl)
+	--ams-grid-vi-medium-column-count: 12
+	--ams-grid-vi-medium-padding-inline: var(--basis-space-none)
+	--ams-grid-vi-wide-column-count: 12
+	--ams-grid-vi-wide-padding-inline: var(--basis-space-none)
 	--ams-heading-color: var(--basis-heading-color)
 	--ams-heading-font-family: var(--basis-heading-font-family)
 	--ams-heading-font-weight: var(--basis-heading-font-weight)
@@ -118640,6 +119764,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--denhaag-action-actions-gap: var(--basis-space-row-md)
 	--denhaag-action-background-color: var(--basis-color-transparent)
 	--denhaag-action-border-color: var(--basis-color-default-border-subtle)
+	--denhaag-action-border-radius: var(--basis-border-radius-none)
 	--denhaag-action-border-style: solid
 	--denhaag-action-border-width: var(--basis-border-width-sm)
 	--denhaag-action-color: var(--basis-color-default-color-document)
@@ -118654,6 +119779,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--denhaag-action-date-warning-gap: var(--basis-space-column-md)
 	--denhaag-action-details-gap: var(--basis-space-row-md)
 	--denhaag-action-details-lg-gap: var(--basis-space-column-xl)
+	--denhaag-action-font-family: var(--basis-text-font-family-default)
 	--denhaag-action-gap: var(--basis-space-row-md)
 	--denhaag-action-lg-gap: var(--basis-space-column-xl)
 	--denhaag-action-lg-padding-block-end: var(--basis-space-block-xl)
@@ -118742,6 +119868,16 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--denhaag-file-right-padding-block-start: var(--basis-space-block-lg)
 	--denhaag-file-right-padding-inline-end: var(--basis-space-inline-xl)
 	--denhaag-file-right-padding-inline-start: var(--basis-space-inline-xl)
+	--denhaag-icon-button-color: var(--basis-color-action-1-color-default)
+	--denhaag-icon-button-focus-outline-color: var(--basis-focus-outline-color)
+	--denhaag-icon-button-focus-outline-offset: var(--basis-focus-outline-offset)
+	--denhaag-icon-button-focus-outline-style: var(--basis-focus-outline-style)
+	--denhaag-icon-button-focus-outline-width: var(--basis-focus-outline-width)
+	--denhaag-icon-button-hover-color: var(--basis-color-action-1-color-hover)
+	--denhaag-icon-button-padding-block-end: var(--basis-space-block-lg)
+	--denhaag-icon-button-padding-block-start: var(--basis-space-block-lg)
+	--denhaag-icon-button-padding-inline-end: var(--basis-space-inline-lg)
+	--denhaag-icon-button-padding-inline-start: var(--basis-space-inline-lg)
 	--denhaag-process-steps-font-familiy: var(--basis-text-font-family-default)
 	--denhaag-process-steps-font-size: var(--basis-text-font-size-md)
 	--denhaag-process-steps-line-height: var(--basis-text-line-height-md)
@@ -118789,6 +119925,19 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--denhaag-process-steps-sub-step-marker-current-border-color: var(--basis-color-default-border-default)
 	--denhaag-process-steps-sub-step-marker-not-checked-border-color: var(--basis-color-disabled-border-default)
 	--denhaag-process-steps-sub-step-marker-warning-border-color: var(--basis-color-warning-border-default)
+	--denhaag-side-navigation-display: flex
+	--denhaag-side-navigation-expand-button-block-size: var(--basis-pointer-target-min-block-size)
+	--denhaag-side-navigation-expand-button-expanded-transform: rotate(180deg)
+	--denhaag-side-navigation-expand-button-inline-size: var(--basis-pointer-target-min-block-size)
+	--denhaag-side-navigation-expand-button-transform: rotate(0deg)
+	--denhaag-side-navigation-expand-button-transition: None
+	--denhaag-side-navigation-expand-separator-color: var(--basis-color-default-border-subtle)
+	--denhaag-side-navigation-expand-separator-inline-size: var(--basis-border-width-sm)
+	--denhaag-side-navigation-expand-separator-margin-inline-end: var(--basis-space-column-md)
+	--denhaag-side-navigation-expand-separator-margin-inline-start: var(--basis-space-column-md)
+	--denhaag-side-navigation-expand-separator-padding-block-end: var(--basis-space-block-md)
+	--denhaag-side-navigation-expand-separator-padding-block-start: var(--basis-space-block-md)
+	--denhaag-side-navigation-flex-direction: column
 	--denhaag-side-navigation-item-font-family: var(--basis-text-font-family-default)
 	--denhaag-side-navigation-item-font-size: var(--basis-text-font-size-md)
 	--denhaag-side-navigation-item-font-weight: var(--basis-text-font-weight-default)
@@ -118800,16 +119949,13 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--denhaag-side-navigation-link-active-color: var(--basis-color-action-2-color-active)
 	--denhaag-side-navigation-link-active-font-weight: var(--basis-text-font-weight-bold)
 	--denhaag-side-navigation-link-color: var(--basis-color-action-2-color-default)
-	--denhaag-side-navigation-link-column-gap: var(--basis-space-column-max-md)
-	--denhaag-side-navigation-link-current-color: var(--basis-color-default-color-document)
-	--denhaag-side-navigation-link-current-font-weight: var(--basis-text-font-weight-bold)
 	--denhaag-side-navigation-link-hover-color: var(--basis-color-action-2-color-hover)
+	--denhaag-side-navigation-link-label-gap: var(--basis-space-column-md)
 	--denhaag-side-navigation-link-padding-block-end: var(--basis-space-block-lg)
 	--denhaag-side-navigation-link-padding-block-start: var(--basis-space-block-lg)
-	--denhaag-side-navigation-list-padding-block-end: var(--basis-space-none)
-	--denhaag-side-navigation-list-padding-block-start: var(--basis-space-none)
-	--denhaag-side-navigation-list-padding-inline-start: var(--basis-space-none)
+	--denhaag-side-navigation-list-margin-inline-start: var(--basis-space-inline-4xl)
 	--denhaag-side-navigation-min-width: 240px
+	--denhaag-side-navigation-mobile-display: None
 	--denhaag-side-navigation-row-gap: var(--basis-space-row-3xl)
 	--denhaag-step-marker-border-width: var(--basis-border-width-md)
 	--denhaag-step-marker-checked-background-color: var(--basis-color-positive-inverse-bg-default)
@@ -119660,8 +120806,6 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-radio-button-checked-disabled-background-color: var(--basis-form-control-disabled-accent-color)
 	--todo-radio-button-checked-disabled-border-color: var(--basis-form-control-disabled-border-color)
 	--todo-radio-button-checked-disabled-color: var(--basis-form-control-disabled-color)
-	--todo-side-navigation-link-hover-text-decoration: underline
-	--todo-side-navigation-link-icon-size: var(--basis-size-icon-md)
 	--todo-skip-link-font-weight: var(--basis-text-font-weight-bold)
 	--todo-spotlight-section-row-gap: var(--basis-space-row-md)
 	--todo-status-badge-background-color: var(--basis-color-default-bg-default)
