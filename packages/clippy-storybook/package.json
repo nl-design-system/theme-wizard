@@ -55,7 +55,7 @@
     "@utrecht/web-component-library-react": "4.0.5",
     "@whitespace/storybook-addon-html": "9.0.0",
     "lit": "3.3.3",
-    "prettier": "3.8.3",
+    "prettier": "3.9.6",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "rimraf": "6.1.3",
