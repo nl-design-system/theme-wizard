@@ -266,8 +266,8 @@ importers:
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.7)(react@19.2.8)
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.1.0
-        version: 6.1.0
+        specifier: 7.0.0
+        version: 7.0.0
       '@utrecht/fieldset-react':
         specifier: 1.0.13
         version: 1.0.13(@babel/runtime@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -416,8 +416,8 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.1.0
-        version: 6.1.0
+        specifier: 7.0.0
+        version: 7.0.0
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -510,8 +510,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.1.0
-        version: 6.1.0
+        specifier: 7.0.0
+        version: 7.0.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 11.1.0
         version: 11.1.0
@@ -624,8 +624,8 @@ importers:
         specifier: 1.11.0
         version: 1.11.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.1.0
-        version: 6.1.0
+        specifier: 7.0.0
+        version: 7.0.0
       '@tabler/icons':
         specifier: 3.45.0
         version: 3.45.0
@@ -860,8 +860,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 6.1.0
-        version: 6.1.0
+        specifier: 7.0.0
+        version: 7.0.0
       '@tabler/icons-react':
         specifier: 3.45.0
         version: 3.45.0(react@19.2.8)
@@ -2960,8 +2960,8 @@ packages:
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0':
     resolution: {integrity: sha512-txcrXfIEMuid+OxJaDB4LYYLbYXjUwXwWUiq3YpdXRPKfsBlHSCx9lY8zKbTXn2pnymIa+DK2HiRGv9VsynOdA==}
 
-  '@nl-design-system-unstable/start-design-tokens@6.1.0':
-    resolution: {integrity: sha512-owIkIXYJwC1eSfqKUHe8GKb7u02cOncZlSYsDjW5IMLs70b+c1LdcMk8pmFPocL6dMzkXdqObuD6JuW0i5UNkQ==}
+  '@nl-design-system-unstable/start-design-tokens@7.0.0':
+    resolution: {integrity: sha512-50+9g1OlY0HNc0ebzvDPJW9hJqDsoEPypcWINRYIRLDfqDo0GT7gRz+rW7xCSxD3sUjUn9Kdv4XJxySy5YolZw==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@11.1.0':
     resolution: {integrity: sha512-9IsS03HN32dmHP4t0xmGbrbFg2u/UZkh8oafhlr0mSg+32Bkkq4vhGNB/fZztDrcYFTXOx6tW6l9kgYJEZaKyQ==}
@@ -10909,7 +10909,7 @@ snapshots:
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@6.1.0': {}
+  '@nl-design-system-unstable/start-design-tokens@7.0.0': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@11.1.0': {}
 
@@ -11652,7 +11652,7 @@ snapshots:
       '@typescript-eslint/utils': 8.65.0(eslint@10.8.0(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
       '@typescript-eslint/visitor-keys': 8.65.0
       eslint: 10.8.0(supports-color@10.2.2)
-      ignore: 7.0.5
+      ignore: 7.0.6
       natural-compare: 1.4.0
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
