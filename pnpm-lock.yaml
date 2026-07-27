@@ -513,8 +513,8 @@ importers:
         specifier: 6.1.0
         version: 6.1.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
-        specifier: 11.1.0
-        version: 11.1.0
+        specifier: 12.0.0
+        version: 12.0.0
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -2987,8 +2987,8 @@ packages:
   '@nl-design-system-unstable/start-design-tokens@6.1.0':
     resolution: {integrity: sha512-owIkIXYJwC1eSfqKUHe8GKb7u02cOncZlSYsDjW5IMLs70b+c1LdcMk8pmFPocL6dMzkXdqObuD6JuW0i5UNkQ==}
 
-  '@nl-design-system-unstable/voorbeeld-design-tokens@11.1.0':
-    resolution: {integrity: sha512-9IsS03HN32dmHP4t0xmGbrbFg2u/UZkh8oafhlr0mSg+32Bkkq4vhGNB/fZztDrcYFTXOx6tW6l9kgYJEZaKyQ==}
+  '@nl-design-system-unstable/voorbeeld-design-tokens@12.0.0':
+    resolution: {integrity: sha512-cjfcaDrrWsOV05VfPVzMN3hAtvmB7rCfCD/G/1hH3/VOO41KtmfHNpZEySv5G4LFrdKzvnuqbYDW/qeiDueYeg==}
 
   '@nl-design-system/eslint-config@2.2.0':
     resolution: {integrity: sha512-vZVbEkOQviJoiOdQT5zOi0GuSCaFrcz9/Awg/iXsmaNoXLkD5WOPVXR7RNlqeP4fPRmrHUvnVPsTDKLeIwbn2w==}
@@ -11022,7 +11022,7 @@ snapshots:
 
   '@nl-design-system-unstable/start-design-tokens@6.1.0': {}
 
-  '@nl-design-system-unstable/voorbeeld-design-tokens@11.1.0': {}
+  '@nl-design-system-unstable/voorbeeld-design-tokens@12.0.0': {}
 
   '@nl-design-system/eslint-config@2.2.0(eslint@10.4.1(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)':
     dependencies:
