@@ -85,11 +85,13 @@ export class WizardTokenUploadForm extends LitElement {
             <div class="utrecht-form-field__label">
               <label for=${fileInputId} class="utrecht-form-label">${t('tokenValidationForm.fileInput.label')}</label>
             </div>
-            ${this.invalid
-              ? html`<div id=${errorId} class="utrecht-form-field-description utrecht-form-field__description">
-                  ${t('tokenValidationForm.result.errors', { count: this.errors.length })}
-                </div>`
-              : nothing}
+            ${
+              this.invalid
+                ? html`<div id=${errorId} class="utrecht-form-field-description utrecht-form-field__description">
+                    ${t('tokenValidationForm.result.errors', { count: this.errors.length })}
+                  </div>`
+                : nothing
+            }
             <input
               type="file"
               class="wizard-file-input"
@@ -100,11 +102,13 @@ export class WizardTokenUploadForm extends LitElement {
               name=${fileInputId}
               aria-describedby=${this.invalid ? errorId : nothing}
             />
-            ${this.invalid && this.errors.length > 0
-              ? html`<ul>
-                  ${this.errors.map((error) => html`<li>${error.message} (${error.path.join('.')})</li>`)}
-                </ul>`
-              : nothing}
+            ${
+              this.invalid && this.errors.length > 0
+                ? html`<ul>
+                    ${this.errors.map((error) => html`<li>${error.message} (${error.path.join('.')})</li>`)}
+                  </ul>`
+                : nothing
+            }
           </div>
 
           <wizard-form-field-checkbox

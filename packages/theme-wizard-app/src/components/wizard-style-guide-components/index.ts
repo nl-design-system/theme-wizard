@@ -114,9 +114,11 @@ export class WizardStyleGuideComponents extends LitElement {
                             <span class="nl-data-badge">${fullPath}</span>
                           </td>
                           <td class="utrecht-table__cell">
-                            ${isRef(tokenConfig.$value)
-                              ? html`<span class="nl-data-badge">${extractRef(tokenConfig.$value)}</span>`
-                              : nothing}
+                            ${
+                              isRef(tokenConfig.$value)
+                                ? html`<span class="nl-data-badge">${extractRef(tokenConfig.$value)}</span>`
+                                : nothing
+                            }
                           </td>
                           <td class="utrecht-table__cell">
                             <code class="nl-code">${displayValue}</code>

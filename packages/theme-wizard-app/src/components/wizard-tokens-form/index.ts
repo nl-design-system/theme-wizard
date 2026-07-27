@@ -150,17 +150,17 @@ export class WizardTokensForm extends LitElement {
           ? html`
               <nav>
                 ${buttons.map(
-                ({ id, title }) => html`
-                  <button
-                    type="button"
-                    class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
-                    @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
-                  >
-                    ${title}
-                    <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
-                  </button>
-                `,
-              )}
+                  ({ id, title }) => html`
+                    <button
+                      type="button"
+                      class="utrecht-link-button utrecht-link-button--html-button wizard-tokens-form__section-link"
+                      @click=${(event: MouseEvent) => this.handleModeSwitch(event, id)}
+                    >
+                      ${title}
+                      <span class="wizard-tokens-form__section-link-icon"> ${unsafeSVG(ChevronRight)} </span>
+                    </button>
+                  `,
+                )}
               </nav>
               <wizard-stack class="wizard-tokens-form__footer">
                 <wizard-tokens-download></wizard-tokens-download>
@@ -208,26 +208,28 @@ export class WizardTokensForm extends LitElement {
           ? this.renderSidebar({
               items: html`
                 ${Object.entries(colorDocs).map(
-                ([colorKey, docs]) => html`
-                  <wizard-stack size="lg" class="wizard-form__field">
-                    <clippy-heading level="4">${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading>
-                    <wc-markdown class="wizard-tokens-form__markdown" .textContent=${docs}></wc-markdown>
-                    <wizard-colorscale-input
-                      key=${colorKey}
-                      label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
-                      id=${`basis.color.${colorKey}`}
-                      name=${`basis.color.${colorKey}`}
-                    >
-                    </wizard-colorscale-input>
-                    <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
-                      <span aria-hidden="true">${t('moreInformationCompact')}</span>
-                      <span class="sr-only">
-                        ${t('moreInformation', { text: t(`tokens.fieldLabels.basis.color.${colorKey}.label`) })}
-                      </span>
-                    </a>
-                  </wizard-stack>
-                `,
-              )}
+                  ([colorKey, docs]) => html`
+                    <wizard-stack size="lg" class="wizard-form__field">
+                      <clippy-heading level="4"
+                        >${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading
+                      >
+                      <wc-markdown class="wizard-tokens-form__markdown" .textContent=${docs}></wc-markdown>
+                      <wizard-colorscale-input
+                        key=${colorKey}
+                        label=${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}
+                        id=${`basis.color.${colorKey}`}
+                        name=${`basis.color.${colorKey}`}
+                      >
+                      </wizard-colorscale-input>
+                      <a class="nl-link" href=${t(`tokens.fieldLabels.basis.color.${colorKey}.docs`)} target="_blank">
+                        <span aria-hidden="true">${t('moreInformationCompact')}</span>
+                        <span class="sr-only">
+                          ${t('moreInformation', { text: t(`tokens.fieldLabels.basis.color.${colorKey}.label`) })}
+                        </span>
+                      </a>
+                    </wizard-stack>
+                  `,
+                )}
               `,
               title: t('tokens.fieldLabels.basis.colors'),
             })

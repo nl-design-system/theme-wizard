@@ -54,12 +54,14 @@ export class WizardTokensReuseForm extends LitElement {
           submit-label=${t('tokenReuseForm.submit')}
         ></wizard-token-upload-form>
 
-        ${this.parsedTokens?.success
-          ? html`<wizard-reuse-suggestions-table
-              .suggestions=${this.suggestedReusableTokens}
-              .tokens=${this.parsedTokens.data}
-            ></wizard-reuse-suggestions-table>`
-          : nothing}
+        ${
+          this.parsedTokens?.success
+            ? html`<wizard-reuse-suggestions-table
+                .suggestions=${this.suggestedReusableTokens}
+                .tokens=${this.parsedTokens.data}
+              ></wizard-reuse-suggestions-table>`
+            : nothing
+        }
       </wizard-stack>
     `;
   }
