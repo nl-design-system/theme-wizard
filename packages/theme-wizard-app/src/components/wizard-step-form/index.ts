@@ -229,9 +229,11 @@ export class WizardStepForm extends LitElement {
     const stringified = stringifyToken(token);
     return html` <clippy-card-radio-option value=${String(index)}>
       ${this.renderIconStart(tokenType, stringified)} ${stringified}
-      ${tokenType === 'color'
-        ? html`<wizard-color-description color=${stringified} slot="description"></wizard-color-description>`
-        : nothing}
+      ${
+        tokenType === 'color'
+          ? html`<wizard-color-description color=${stringified} slot="description"></wizard-color-description>`
+          : nothing
+      }
       <clippy-reset-theme slot="body">
         <wizard-preview-theme>
           <div class="wizard-step-form__sample wizard-step-form__sample-body">${this.renderSample(token)}</div>

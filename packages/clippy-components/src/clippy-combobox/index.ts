@@ -357,27 +357,33 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
         <label for="${this.#id}" class=${classMap(labelClasses)}>
           <slot name="label">${this.hiddenLabel || this.name}</slot>
         </label>
-        ${populatedSlots['description']
-          ? html` <div id="${this.#id}-description" class="clippy-combobox__description">
-              <slot name="description"></slot>
-            </div>`
-          : nothing}
-        ${populatedSlots['error']
-          ? html` <div id="${this.#id}-error" class="clippy-combobox__error">
-              <slot name="error"></slot>
-            </div>`
-          : nothing}
+        ${
+          populatedSlots['description']
+            ? html` <div id="${this.#id}-description" class="clippy-combobox__description">
+                <slot name="description"></slot>
+              </div>`
+            : nothing
+        }
+        ${
+          populatedSlots['error']
+            ? html` <div id="${this.#id}-error" class="clippy-combobox__error">
+                <slot name="error"></slot>
+              </div>`
+            : nothing
+        }
         <div class="clippy-combobox__customizable-text-input | utrecht-combobox | utrecht-customizable-text-input">
           <div class="utrecht-customizable-text-input__inner">
-            ${iconStartSlotRendered || populatedSlots['icon-start']
-              ? html`<label
-                  for="${this.#id}"
-                  class="clippy-combobox__slot | utrecht-customizable-text-input__slot utrecht-customizable-text-input__slot--start utrecht-customizable-text-input__slot--label"
-                  aria-hidden="true"
-                >
-                  <slot name="icon-start"> ${iconStartSlotRendered} </slot>
-                </label>`
-              : nothing}
+            ${
+              iconStartSlotRendered || populatedSlots['icon-start']
+                ? html`<label
+                    for="${this.#id}"
+                    class="clippy-combobox__slot | utrecht-customizable-text-input__slot utrecht-customizable-text-input__slot--start utrecht-customizable-text-input__slot--label"
+                    aria-hidden="true"
+                  >
+                    <slot name="icon-start"> ${iconStartSlotRendered} </slot>
+                  </label>`
+                : nothing
+            }
 
             <label
               for="${this.#id}"
@@ -388,11 +394,13 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
             </label>
 
             <div class="clippy-combobox__wrap-input | utrecht-customizable-text-input__wrap-input">
-              ${currentOption
-                ? html`<div role="presentation" class="clippy-combobox__current-option">
-                    ${this.renderSelectedOption(currentOption)}
-                  </div>`
-                : nothing}
+              ${
+                currentOption
+                  ? html`<div role="presentation" class="clippy-combobox__current-option">
+                      ${this.renderSelectedOption(currentOption)}
+                    </div>`
+                  : nothing
+              }
               <input
                 id=${this.#id}
                 name=${this.name}

@@ -134,20 +134,24 @@ export class ClippyModal extends LitElement {
           </div>
           <footer class="ams-dialog__footer">
             <!-- using utrecht-button here disrupts the dialog form flow since it's in the shadow DOM. -->
-            ${this.actions === 'confirm' || this.actions === 'both'
-              ? html`
-                  <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
-                    ${this.confirmLabel}
-                  </button>
-                `
-              : nothing}
-            ${this.actions === 'cancel' || this.actions === 'both'
-              ? html`
-                  <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
-                    ${this.cancelLabel}
-                  </button>
-                `
-              : nothing}
+            ${
+              this.actions === 'confirm' || this.actions === 'both'
+                ? html`
+                    <button class="nl-button nl-button--primary" value=${DIALOG_BUTTON_VALUES.confirm}>
+                      ${this.confirmLabel}
+                    </button>
+                  `
+                : nothing
+            }
+            ${
+              this.actions === 'cancel' || this.actions === 'both'
+                ? html`
+                    <button class="nl-button nl-button--secondary" value=${DIALOG_BUTTON_VALUES.cancel}>
+                      ${this.cancelLabel}
+                    </button>
+                  `
+                : nothing
+            }
           </footer>
         </form>
       </dialog>
