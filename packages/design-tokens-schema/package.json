@@ -37,7 +37,7 @@
     "clean": "premove dist/"
   },
   "devDependencies": {
-    "@nl-design-system-community/ma-design-tokens": "5.2.0",
+    "@nl-design-system-community/ma-design-tokens": "6.0.0",
     "@nl-design-system-community/purmerend-design-tokens": "1.2.3",
     "@nl-design-system-unstable/leiden-design-tokens": "3.0.0",
     "@nl-design-system-unstable/start-design-tokens": "6.1.0",
