@@ -88,5 +88,8 @@
     "update-minor": "npm-check-updates --configFileName .ncurc.minor.mjs",
     "update-major": "npm-check-updates --configFileName .ncurc.major.mjs",
     "watch:style-dictionary": "pnpm --filter @nl-design-system-community/design-tokens run watch:style-dictionary"
+  },
+  "dependencies": {
+    "http-server": "14.1.1"
   }
 }
