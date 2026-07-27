@@ -28,14 +28,14 @@ test.describe('scraping css design tokens', () => {
     // This test waits for the loaders to disappear after scraping, which takes several seconds
     test.slow();
     await homePage.scrapeUrl('https://theme-wizard.nl-design-system-community.nl');
-    await expect(page).toHaveURL(new RegExp(stagingTokensPage.url));
+    await expect(page).toHaveURL(new RegExp(stagingTokensPage.url), { timeout: 30_000 });
   });
 
   test('scrapes a valid, non-absolute URL', async ({ homePage, page, stagingTokensPage }) => {
     // This test waits for the loaders to disappear after scraping, which takes several seconds
     test.slow();
     await homePage.scrapeUrl('theme-wizard.nl-design-system-community.nl');
-    await expect(page).toHaveURL(new RegExp(stagingTokensPage.url));
+    await expect(page).toHaveURL(new RegExp(stagingTokensPage.url), { timeout: 30_000 });
   });
 
   test('errors on an invalid URL', async ({ homePage }) => {
