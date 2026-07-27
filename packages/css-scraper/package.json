@@ -10,10 +10,10 @@
   ],
   "type": "module",
   "module": "./dist/css-scraper.js",
-  "types": "./dist/src/get-css.d.ts",
+  "types": "./dist/get-css.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/src/get-css.d.ts",
+      "types": "./dist/get-css.d.ts",
       "import": "./dist/css-scraper.js"
     }
   },

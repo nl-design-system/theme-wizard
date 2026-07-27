@@ -3,19 +3,19 @@ import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
-import accent1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-1-intro.md?raw';
-import accent2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-2-intro.md?raw';
-import accent3Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-accent-3-intro.md?raw';
-import action1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-action-1-intro.md?raw';
-import action2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-action-2-intro.md?raw';
-import defaultDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-default-intro.md?raw';
-import disabledDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-disabled-intro.md?raw';
-import highlightDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-highlight-intro.md?raw';
-import infoDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-info-intro.md?raw';
-import negativeDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-negative-intro.md?raw';
-import positiveDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-positive-intro.md?raw';
-import selectedDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-selected-intro.md?raw';
-import warningDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/themas/_basis-color-warning-intro.md?raw';
+import accent1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-accent-1-intro.md?raw';
+import accent2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-accent-2-intro.md?raw';
+import accent3Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-accent-3-intro.md?raw';
+import action1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-action-1-intro.md?raw';
+import action2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-action-2-intro.md?raw';
+import defaultDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-default-intro.md?raw';
+import disabledDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-disabled-intro.md?raw';
+import highlightDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-highlight-intro.md?raw';
+import infoDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-info-intro.md?raw';
+import negativeDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-negative-intro.md?raw';
+import positiveDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-positive-intro.md?raw';
+import selectedDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-selected-intro.md?raw';
+import warningDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-warning-intro.md?raw';
 import ChevronLeft from '@tabler/icons/outline/chevron-left.svg?raw';
 import ChevronRight from '@tabler/icons/outline/chevron-right.svg?raw';
 import buttonLinkCss from '@utrecht/link-button-css/dist/index.css?inline';
@@ -138,15 +138,18 @@ export class WizardTokensForm extends LitElement {
 
     return html`
       <div class="wizard-tokens-form__header">
-        ${this.displayMode !== 'initial'
-          ? this.renderBackLink()
-          : html`<clippy-heading level="3">${t('nav.configure')}</clippy-heading>`}
+        ${
+          this.displayMode !== 'initial'
+            ? this.renderBackLink()
+            : html`<clippy-heading level="3">${t('nav.configure')}</clippy-heading>`
+        }
       </div>
 
-      ${this.displayMode === 'initial'
-        ? html`
-            <nav>
-              ${buttons.map(
+      ${
+        this.displayMode === 'initial'
+          ? html`
+              <nav>
+                ${buttons.map(
                 ({ id, title }) => html`
                   <button
                     type="button"
@@ -158,49 +161,53 @@ export class WizardTokensForm extends LitElement {
                   </button>
                 `,
               )}
-            </nav>
-            <wizard-stack class="wizard-tokens-form__footer">
-              <wizard-tokens-download></wizard-tokens-download>
-              <wizard-download-link
-                content=${this.theme.css}
-                filename="theme-wizard-tokens.css"
-                content-type="text/css"
-              >
-                ${t('tokenDownloadCss.triggerText')}
-              </wizard-download-link>
-              <wizard-theme-reset-button></wizard-theme-reset-button>
-            </wizard-stack>
-          `
-        : nothing}
-      ${this.displayMode === 'fonts'
-        ? this.renderSidebar({
-            items: html`${fonts.map(
-              ({ docsUrl, label, path, token }) =>
-                html`<wizard-stack class="wizard-form__field">
-                  <clippy-heading level="4">${label}</clippy-heading>
-                  <wizard-font-input
-                    .errors=${this.theme.issues.filter((error) => error.path === path)}
-                    .value=${token.$value}
-                    label=${label}
-                    name=${path}
-                  >
-                    <div slot="label">${label}</div>
-                  </wizard-font-input>
-                  <p class="nl-paragraph">
-                    <a href=${docsUrl} target="_blank" class="nl-link">
-                      <span aria-hidden="true">${t('moreInformationCompact')}</span>
-                      <span class="sr-only">${t('moreInformation', { text: label })}</span>
-                    </a>
-                  </p>
-                </wizard-stack>`,
-            )}`,
-            title: t('tokens.fieldLabels.basis.typography'),
-          })
-        : nothing}
-      ${this.displayMode === 'colors'
-        ? this.renderSidebar({
-            items: html`
-              ${Object.entries(colorDocs).map(
+              </nav>
+              <wizard-stack class="wizard-tokens-form__footer">
+                <wizard-tokens-download></wizard-tokens-download>
+                <wizard-download-link
+                  content=${this.theme.css}
+                  filename="theme-wizard-tokens.css"
+                  content-type="text/css"
+                >
+                  ${t('tokenDownloadCss.triggerText')}
+                </wizard-download-link>
+                <wizard-theme-reset-button></wizard-theme-reset-button>
+              </wizard-stack>
+            `
+          : nothing
+      }
+      ${
+        this.displayMode === 'fonts'
+          ? this.renderSidebar({
+              items: html`${fonts.map(
+                ({ docsUrl, label, path, token }) =>
+                  html`<wizard-stack class="wizard-form__field">
+                    <clippy-heading level="4">${label}</clippy-heading>
+                    <wizard-font-input
+                      .errors=${this.theme.issues.filter((error) => error.path === path)}
+                      .value=${token.$value}
+                      label=${label}
+                      name=${path}
+                    >
+                      <div slot="label">${label}</div>
+                    </wizard-font-input>
+                    <p class="nl-paragraph">
+                      <a href=${docsUrl} target="_blank" class="nl-link">
+                        <span aria-hidden="true">${t('moreInformationCompact')}</span>
+                        <span class="sr-only">${t('moreInformation', { text: label })}</span>
+                      </a>
+                    </p>
+                  </wizard-stack>`,
+              )}`,
+              title: t('tokens.fieldLabels.basis.typography'),
+            })
+          : nothing
+      }
+      ${
+        this.displayMode === 'colors'
+          ? this.renderSidebar({
+              items: html`
+                ${Object.entries(colorDocs).map(
                 ([colorKey, docs]) => html`
                   <wizard-stack size="lg" class="wizard-form__field">
                     <clippy-heading level="4">${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading>
@@ -221,10 +228,11 @@ export class WizardTokensForm extends LitElement {
                   </wizard-stack>
                 `,
               )}
-            `,
-            title: t('tokens.fieldLabels.basis.colors'),
-          })
-        : nothing}
+              `,
+              title: t('tokens.fieldLabels.basis.colors'),
+            })
+          : nothing
+      }
     `;
   }
 }
