@@ -34,13 +34,13 @@
     "lint-fix:js": "eslint --fix",
     "test-build": "vitest run --coverage",
     "build": "tsc",
-    "clean": "rimraf dist/"
+    "clean": "premove dist/"
   },
   "devDependencies": {
     "@hono/vite-dev-server": "0.26.1",
     "@types/node": "24.13.3",
     "@vitest/coverage-v8": "4.1.10",
-    "rimraf": "6.1.3",
+    "premove": "4.0.0",
     "typescript": "6.0.3",
     "vercel": "57.0.0",
     "vite": "8.1.5",

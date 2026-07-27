@@ -53,7 +53,7 @@ export default defineConfig(() => ({
       compilerOptions: { declarationMap: false },
       entryRoot: '.',
       exclude: ['**/*.test.*', '**/styles.ts'],
-      include: ['index.ts', 'src/**/*'],
+      include: ['index.ts'],
     }),
   ],
   resolve: {
