@@ -1,8 +1,9 @@
 import type { ColorGroup } from '@nl-design-system-community/clippy-components/clippy-token-color-table';
 import '@nl-design-system-community/clippy-components/clippy-token-color-table';
+import { consume } from '@lit/context';
 import '../wizard-table-scroller';
 
-import { consume } from '@lit/context';
+import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
 import { stringifyColor } from '@nl-design-system-community/design-tokens-schema';
 import { type ColorToken as ColorTokenType } from '@nl-design-system-community/design-tokens-schema';
@@ -27,13 +28,10 @@ export class WizardColorSystemPreview extends LitElement {
   @state()
   private readonly theme!: Theme;
 
-  #colorGroups: ColorGroup[] = [];
-  #displayedGroups: ColorGroup[] = [];
+  #visibleTokenGroups: ColorGroup[] = [];
 
-  @property()
-  groups: string = '';
-
-  #groups: string[] = [];
+  @property({ converter: arrayFromCommaList })
+  groups: string[] = [];
 
   #prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>): ColorGroup[] {
     return Object.entries(colors)
@@ -57,29 +55,23 @@ export class WizardColorSystemPreview extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    // store groups string in an array
-    if (this.hasAttribute('groups')) {
-      this.#groups = this.getAttribute('groups')!
-        .split(',')
-        .map((group) => group.trim());
-    }
 
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const colors = basis['color'] as Record<string, unknown>;
     const tokenUsage = countUsagePerToken(this.theme.tokens);
 
-    this.#colorGroups = this.#prepareColorGroups(colors, tokenUsage);
-    this.#displayedGroups = this.#filterColorGroups(this.#groups);
+    const colorTokenGroups = this.#prepareColorGroups(colors, tokenUsage);
+    this.#visibleTokenGroups = this.#filterColorGroups(this.groups, colorTokenGroups);
   }
 
-  #filterColorGroups(groups: string[]) {
-    if (groups.length === 0) return this.#colorGroups;
+  #filterColorGroups(groups: string[], colorTokenGroups: ColorGroup[]) {
+    if (groups.length === 0) return colorTokenGroups;
 
-    const foundGroups = groups.map((groupKey) => this.#colorGroups.find((group) => group.key === groupKey));
+    const foundGroups = groups.map((groupKey) => colorTokenGroups.find((group) => group.key === groupKey));
     return foundGroups.filter((group): group is NonNullable<typeof group> => group !== undefined);
   }
 
   override render() {
-    return html`<clippy-token-color-table .groups=${this.#displayedGroups}></clippy-token-color-table>`;
+    return html`<clippy-token-color-table .groups=${this.#visibleTokenGroups}></clippy-token-color-table>`;
   }
 }
