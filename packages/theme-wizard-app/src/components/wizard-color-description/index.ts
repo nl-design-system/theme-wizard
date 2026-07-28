@@ -36,14 +36,7 @@ type HueKey =
   | 'yellow';
 
 type LightnessKey =
-  | 'almostBlack'
-  | 'almostWhite'
-  | 'dark'
-  | 'light'
-  | 'medium'
-  | 'slightlyDarker'
-  | 'veryDark'
-  | 'veryLight';
+  'almostBlack' | 'almostWhite' | 'dark' | 'light' | 'medium' | 'slightlyDarker' | 'veryDark' | 'veryLight';
 
 type SaturationKey =
   | 'almostGray'

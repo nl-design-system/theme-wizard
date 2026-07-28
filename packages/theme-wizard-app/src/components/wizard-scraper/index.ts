@@ -109,68 +109,72 @@ export class WizardScraper extends LitElement {
       : nothing;
 
     return html`
-      ${isIdle || isError
-        ? html`
-            <wizard-stack size="xl">
-              <clippy-story-preview size="lg">
-                <wizard-stack size="3xl">
-                  <clippy-heading level="1">${t('scraper.title')}</clippy-heading>
-                  <p class="nl-paragraph nl-paragraph--lead">${t('scraper.intro')}</p>
-                  <form @submit=${this.#handleSubmit}>
-                    <wizard-stack size="3xl">
-                      <div
-                        class="utrecht-form-field utrecht-form-field--text ${classMap({
-                          'utrecht-form-field--invalid': isError,
-                        })}"
-                      >
-                        <div class="utrecht-form-field__label">
-                          <label for="scraper-url" class="utrecht-form-label">${t('scraper.input.label')}</label>
+      ${
+        isIdle || isError
+          ? html`
+              <wizard-stack size="xl">
+                <clippy-story-preview size="lg">
+                  <wizard-stack size="3xl">
+                    <clippy-heading level="1">${t('scraper.title')}</clippy-heading>
+                    <p class="nl-paragraph nl-paragraph--lead">${t('scraper.intro')}</p>
+                    <form @submit=${this.#handleSubmit}>
+                      <wizard-stack size="3xl">
+                        <div
+                          class="utrecht-form-field utrecht-form-field--text ${classMap({
+                            'utrecht-form-field--invalid': isError,
+                          })}"
+                        >
+                          <div class="utrecht-form-field__label">
+                            <label for="scraper-url" class="utrecht-form-label">${t('scraper.input.label')}</label>
+                          </div>
+                          <div class="utrecht-form-field__description">${t('scraper.input.description')}</div>
+                          ${errorMessage}
+                          <div class="utrecht-form-field__input">
+                            <input
+                              aria-errormessage=${ariaErrorMessage}
+                              aria-invalid=${ariaInvalid}
+                              class="utrecht-textbox utrecht-textbox--html-input"
+                              id="scraper-url"
+                              inputmode="url"
+                              name="url"
+                              type="text"
+                              value=${submittedUrl ?? ''}
+                            />
+                          </div>
                         </div>
-                        <div class="utrecht-form-field__description">${t('scraper.input.description')}</div>
-                        ${errorMessage}
-                        <div class="utrecht-form-field__input">
-                          <input
-                            aria-errormessage=${ariaErrorMessage}
-                            aria-invalid=${ariaInvalid}
-                            class="utrecht-textbox utrecht-textbox--html-input"
-                            id="scraper-url"
-                            inputmode="url"
-                            name="url"
-                            type="text"
-                            value=${submittedUrl ?? ''}
-                          />
-                        </div>
-                      </div>
 
-                      <button class="nl-button nl-button--primary" type="submit">${t('scraper.submit')}</button>
-                    </wizard-stack>
-                  </form>
-                </wizard-stack>
-              </clippy-story-preview>
-              <p class="nl-paragraph">${t('scraper.directStart')}</p>
-            </wizard-stack>
-          `
-        : nothing}
-      ${isLoading
-        ? html`
-            <div class="wizard-scraper__loaders">
-              <wizard-scraper-loader
-                aria-hidden=${loader1AriaHidden}
-                class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader1' })}
-                emoji="🧙"
-                heading=${t('scraper.loaders.loader1.heading')}
-                text=${t('scraper.loaders.loader1.text', { url: submittedUrl })}
-              ></wizard-scraper-loader>
-              <wizard-scraper-loader
-                aria-hidden=${loader2AriaHidden}
-                class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader2' })}
-                emoji="🎨"
-                heading=${t('scraper.loaders.loader2.heading')}
-                text=${t('scraper.loaders.loader2.text', { url: submittedUrl })}
-              ></wizard-scraper-loader>
-            </div>
-          `
-        : nothing}
+                        <button class="nl-button nl-button--primary" type="submit">${t('scraper.submit')}</button>
+                      </wizard-stack>
+                    </form>
+                  </wizard-stack>
+                </clippy-story-preview>
+                <p class="nl-paragraph">${t('scraper.directStart')}</p>
+              </wizard-stack>
+            `
+          : nothing
+      }
+      ${
+        isLoading
+          ? html`
+              <div class="wizard-scraper__loaders">
+                <wizard-scraper-loader
+                  aria-hidden=${loader1AriaHidden}
+                  class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader1' })}
+                  emoji="🧙"
+                  heading=${t('scraper.loaders.loader1.heading')}
+                  text=${t('scraper.loaders.loader1.text', { url: submittedUrl })}
+                ></wizard-scraper-loader>
+                <wizard-scraper-loader
+                  aria-hidden=${loader2AriaHidden}
+                  class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader2' })}
+                  emoji="🎨"
+                  heading=${t('scraper.loaders.loader2.heading')}
+                  text=${t('scraper.loaders.loader2.text', { url: submittedUrl })}
+                ></wizard-scraper-loader>
+              </div>
+            `
+          : nothing
+      }
     `;
   }
 }

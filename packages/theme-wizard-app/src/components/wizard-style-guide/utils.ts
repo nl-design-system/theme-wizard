@@ -58,13 +58,9 @@ export function renderSpacingExample(value: string, space: string = 'block') {
     <clippy-html-image>
       <span slot="label">${t(`styleGuide.sections.space.${space}.sample`)}</span>
       <div
-        style="block-size: ${['block', 'row'].includes(space) ? value : '2rem'}; inline-size: ${[
-          'inline',
-          'column',
-          'text',
-        ].includes(space)
-          ? value
-          : '2rem'}; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
+        style="block-size: ${['block', 'row'].includes(space) ? value : '2rem'}; inline-size: ${
+          ['inline', 'column', 'text'].includes(space) ? value : '2rem'
+        }; background-color: currentColor; cursor: default; forced-color-adjust: none; user-select: none;"
       ></div>
     </clippy-html-image>
   `;
@@ -92,60 +88,66 @@ export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
 export function renderTokenDialog(activeToken: DisplayToken | undefined) {
   return html`
     <clippy-modal id="token-dialog" title=${activeToken?.tokenId} open=${activeToken !== undefined} actions="none">
-      ${activeToken
-        ? html`
-            <clippy-heading level=${3}>${t('styleGuide.sample')}</clippy-heading>
-            ${renderTokenExample(activeToken)}
-            <dl>
-              <dt>Token type</dt>
-              <dd>
-                <code class="nl-code">${activeToken.tokenType}</code>
-              </dd>
-              <dt>Token ID</dt>
-              <dd>
-                <span class="nl-data-badge">${activeToken.tokenId}</span>
-              </dd>
-              <dt>CSS Variable</dt>
-              <dd>
-                <code class="nl-code">${`--${activeToken.tokenId.replaceAll('.', '-')}`}</code>
-              </dd>
-              <dt>${t('styleGuide.value')}</dt>
-              <dd>
-                <code class="nl-code">${activeToken.displayValue}</code>
-              </dd>
-              ${activeToken.metadata
-                ? Object.entries(activeToken.metadata).map(
-                    ([key, value]) => html`
-                      <dt>${key}</dt>
-                      <dd>
-                        <code class="nl-code">${value}</code>
-                      </dd>
-                    `,
-                  )
-                : nothing}
-            </dl>
+      ${
+        activeToken
+          ? html`
+              <clippy-heading level=${3}>${t('styleGuide.sample')}</clippy-heading>
+              ${renderTokenExample(activeToken)}
+              <dl>
+                <dt>Token type</dt>
+                <dd>
+                  <code class="nl-code">${activeToken.tokenType}</code>
+                </dd>
+                <dt>Token ID</dt>
+                <dd>
+                  <span class="nl-data-badge">${activeToken.tokenId}</span>
+                </dd>
+                <dt>CSS Variable</dt>
+                <dd>
+                  <code class="nl-code">${`--${activeToken.tokenId.replaceAll('.', '-')}`}</code>
+                </dd>
+                <dt>${t('styleGuide.value')}</dt>
+                <dd>
+                  <code class="nl-code">${activeToken.displayValue}</code>
+                </dd>
+                ${
+                  activeToken.metadata
+                    ? Object.entries(activeToken.metadata).map(
+                        ([key, value]) => html`
+                          <dt>${key}</dt>
+                          <dd>
+                            <code class="nl-code">${value}</code>
+                          </dd>
+                        `,
+                      )
+                    : nothing
+                }
+              </dl>
 
-            <clippy-heading level=${3}>
-              ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
-              <data>(${activeToken.usage.length}&times;)</data>
-            </clippy-heading>
-            ${activeToken.usage.length > 0
-              ? html`
-                  <ul>
-                    ${activeToken.usage.map(
-                      (referrer) => html`
-                        <li>
-                          <span class="nl-data-badge">${referrer}</span>
-                        </li>
-                      `,
-                    )}
-                  </ul>
-                `
-              : html`
-                  <utrecht-paragraph>${t('styleGuide.detailsDialog.tokenReferenceList.empty')}</utrecht-paragraph>
-                `}
-          `
-        : nothing}
+              <clippy-heading level=${3}>
+                ${t('styleGuide.detailsDialog.tokenReferenceList.title')}
+                <data>(${activeToken.usage.length}&times;)</data>
+              </clippy-heading>
+              ${
+                activeToken.usage.length > 0
+                  ? html`
+                      <ul>
+                        ${activeToken.usage.map(
+                          (referrer) => html`
+                            <li>
+                              <span class="nl-data-badge">${referrer}</span>
+                            </li>
+                          `,
+                        )}
+                      </ul>
+                    `
+                  : html`
+                      <utrecht-paragraph>${t('styleGuide.detailsDialog.tokenReferenceList.empty')}</utrecht-paragraph>
+                    `
+              }
+            `
+          : nothing
+      }
     </clippy-modal>
   `;
 }

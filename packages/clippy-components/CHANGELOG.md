@@ -1,5 +1,15 @@
 # @nl-design-system-community/clippy-components
 
+## 3.2.0
+
+### Minor Changes
+
+- a2373d3: add `clippy-task-navigation`
+
+### Patch Changes
+
+- d690e13: Clippy combobox has better invalid styling
+
 ## 3.1.0
 
 ### Minor Changes

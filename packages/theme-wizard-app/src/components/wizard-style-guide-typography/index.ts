@@ -120,13 +120,15 @@ export class WizardStyleGuideTypography extends LitElement {
                         size="var(--basis-text-font-size-xl)"
                         truncate
                       ></wizard-font-sample>
-                      ${googleFontsSpecimen
-                        ? html`<p class="nl-paragraph">
-                            <a class="nl-link" href=${googleFontsSpecimen} rel="external noreferrer" target="_blank">
-                              ${t('tokens.showOnGoogleFonts')}
-                            </a>
-                          </p>`
-                        : nothing}
+                      ${
+                        googleFontsSpecimen
+                          ? html`<p class="nl-paragraph">
+                              <a class="nl-link" href=${googleFontsSpecimen} rel="external noreferrer" target="_blank">
+                                ${t('tokens.showOnGoogleFonts')}
+                              </a>
+                            </p>`
+                          : nothing
+                      }
                     </td>
                     <td class="utrecht-table__cell">
                       <span class="nl-data-badge" id="${`basis-text-font-family-${name}`}">${tokenId}</span>

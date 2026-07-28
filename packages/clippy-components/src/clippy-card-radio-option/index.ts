@@ -81,16 +81,20 @@ export class ClippyCardRadioOption extends LitElement {
           </div>
         </div>
       </div>
-      ${this.hasBody
-        ? html`<div class="clippy-radio-card__body">
-            <slot name="body" @slotchange=${this.#onBodySlotChange}></slot>
-          </div>`
-        : html`<slot name="body" @slotchange=${this.#onBodySlotChange}></slot>`}
-      ${this.hasFooter
-        ? html`<div class="clippy-radio-card__footer">
-            <slot name="footer" @slotchange=${this.#onFooterSlotChange}></slot>
-          </div>`
-        : html`<slot name="footer" @slotchange=${this.#onFooterSlotChange}></slot>`}
+      ${
+        this.hasBody
+          ? html`<div class="clippy-radio-card__body">
+              <slot name="body" @slotchange=${this.#onBodySlotChange}></slot>
+            </div>`
+          : html`<slot name="body" @slotchange=${this.#onBodySlotChange}></slot>`
+      }
+      ${
+        this.hasFooter
+          ? html`<div class="clippy-radio-card__footer">
+              <slot name="footer" @slotchange=${this.#onFooterSlotChange}></slot>
+            </div>`
+          : html`<slot name="footer" @slotchange=${this.#onFooterSlotChange}></slot>`
+      }
     `;
   }
 }

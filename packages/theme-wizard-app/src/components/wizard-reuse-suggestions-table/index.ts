@@ -124,9 +124,11 @@ export class WizardReuseSuggestionsTable extends LitElement {
           <button class="nl-button nl-button--primary" type="submit">
             ${t('tokenReuseForm.applySuggestions.submit')}
           </button>
-          ${this.updatedTokens
-            ? html`<wizard-token-output .json=${updatedJson} .downloadJson=${updatedJson}></wizard-token-output>`
-            : nothing}
+          ${
+            this.updatedTokens
+              ? html`<wizard-token-output .json=${updatedJson} .downloadJson=${updatedJson}></wizard-token-output>`
+              : nothing
+          }
         </wizard-stack>
       </form>
     `;

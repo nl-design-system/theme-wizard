@@ -155,11 +155,13 @@ export class WizardTokenField extends WizardTokenNavigator {
       .options=${this.options}
     >
       <span slot="label">${label}</span>
-      ${this.#hasErrors && this.pathErrors.length > 0
-        ? html`<div slot="error" class="utrecht-form-field-error-message">
-            ${t(`validation.error.${this.pathErrors[0].code}.compact`, this.pathErrors[0])}
-          </div>`
-        : nothing}
+      ${
+        this.#hasErrors && this.pathErrors.length > 0
+          ? html`<div slot="error" class="utrecht-form-field-error-message">
+              ${t(`validation.error.${this.pathErrors[0].code}.compact`, this.pathErrors[0])}
+            </div>`
+          : nothing
+      }
     </clippy-token-combobox>`;
   }
 
@@ -172,20 +174,22 @@ export class WizardTokenField extends WizardTokenNavigator {
       <div
         class="wizard-token-field ${classMap({ 'wizard-token-field--invalid': this.#hasErrors && type !== undefined })}"
       >
-        ${type
-          ? this.renderField(type, label)
-          : html`<utrecht-paragraph class=${classMap({ 'theme-error': this.#hasErrors })}>${label}</utrecht-paragraph>
-              <ul>
-                ${this.entries.map(([key]) => {
-                  const path = `${this.path}.${key}`;
-                  const depth = this.depth + 1;
-                  return html`
-                    <li key=${key}>
-                      <wizard-token-field path=${path} depth=${depth}></wizard-token-field>
-                    </li>
-                  `;
-                })}
-              </ul>`}
+        ${
+          type
+            ? this.renderField(type, label)
+            : html`<utrecht-paragraph class=${classMap({ 'theme-error': this.#hasErrors })}>${label}</utrecht-paragraph>
+                <ul>
+                  ${this.entries.map(([key]) => {
+                    const path = `${this.path}.${key}`;
+                    const depth = this.depth + 1;
+                    return html`
+                      <li key=${key}>
+                        <wizard-token-field path=${path} depth=${depth}></wizard-token-field>
+                      </li>
+                    `;
+                  })}
+                </ul>`
+        }
       </div>
     `;
   }

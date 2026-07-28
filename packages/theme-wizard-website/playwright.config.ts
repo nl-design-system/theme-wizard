@@ -1,6 +1,8 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
 
+const CI = Boolean(process.env['CI']);
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -13,7 +15,7 @@ const config: PlaywrightTestConfig = {
     timeout: Number(process.env['E2E_TIMEOUT_EXPECT'] || 10_000),
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: Boolean(process.env['CI']),
+  forbidOnly: CI,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Maximum time the entire test suite can run for */
@@ -33,7 +35,7 @@ const config: PlaywrightTestConfig = {
     },
   ],
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env['CI'] ? [['github'], ['list']] : 'list',
+  reporter: CI ? [['github'], ['list']] : 'list',
   retries: Number(process.env['E2E_RETRIES'] || 1),
   testDir: './e2e',
   testMatch: '**/*spec.ts',
@@ -69,7 +71,7 @@ const config: PlaywrightTestConfig = {
             command: 'pnpm run dev',
             cwd: '../theme-wizard-server',
             port: 9491,
-            reuseExistingServer: !process.env['CI'],
+            reuseExistingServer: !CI,
             // Log server errors directly to the main output for easier debugging in CI
             stderr: 'pipe',
             // How long the server can take to start up
@@ -79,15 +81,14 @@ const config: PlaywrightTestConfig = {
             name: 'Website',
             command: 'pnpm run dev',
             port: 9492,
-            reuseExistingServer: !process.env['CI'],
+            reuseExistingServer: !CI,
             // How long the server can take to start up
             timeout: 10_000,
           },
         ],
       }),
 
-  /* Always use 1 worker. Doing more causes CI to be very slow and fail often. */
-  workers: 1,
+  workers: CI ? 4 : undefined,
 };
 
 export default config;

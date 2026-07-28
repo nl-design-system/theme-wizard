@@ -1,4 +1,4 @@
-import { globSync } from 'glob';
+import { globSync } from 'node:fs';
 import { extname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
