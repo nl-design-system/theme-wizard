@@ -30,7 +30,8 @@ export default css`
     max-block-size: var(--wizard-scroll-container-max-size, var(--_wizard-scroll-container-max-size));
     overflow-block: auto;
     position: relative;
-    scroll-timeline: --_wizard-scroller-scroll-timeline y;
+    scroll-timeline-axis: block;
+    scroll-timeline-name: --_wizard-scroller-scroll-timeline;
     scrollbar-color: var(--wizard-scroll-container-scrollbar-color, var(--_wizard-scroll-container-scrollbar-color));
     scrollbar-width: var(--wizard-scroll-container-scrollbar-width, var(--_wizard-scroll-container-scrollbar-width));
 

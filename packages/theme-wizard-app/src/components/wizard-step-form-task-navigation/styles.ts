@@ -20,7 +20,7 @@ export default css`
     & svg {
       block-size: var(--basis-size-icon-md);
       color: inherit;
-      place-self: center center;
+      place-self: center;
     }
   }
 

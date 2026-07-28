@@ -6,7 +6,10 @@ export default css`
   }
 
   :host(.theme-validation-highlight) {
-    animation: theme-validation-glow 2000ms ease-out forwards;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards;
+    animation-name: theme-validation-glow;
+    animation-timing-function: ease-out;
   }
 
   @keyframes theme-validation-glow {
