@@ -58,7 +58,9 @@ export default css`
 
   .wizard-tokens-form__section-link-icon {
     color: var(--basis-color-accent-1-color-subtle);
-    transition: transform 100ms ease-out;
+    transition-duration: 100ms;
+    transition-property: transform;
+    transition-timing-function: ease-out;
   }
 
   .wizard-form__field {

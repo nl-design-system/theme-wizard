@@ -1,6 +1,7 @@
 import { css } from 'lit';
 
 export default css`
+  /* stylelint-disable projectwallace/max-average-declarations-per-rule */
   .wizard-file-input {
     border: var(--basis-border-width-md) dashed var(--basis-color-default-border-subtle);
     box-sizing: border-box;
@@ -11,6 +12,7 @@ export default css`
   }
 
   /* Inline copy of nl-button-css because we can't extend the CSS in another way */
+  /* stylelint-disable projectwallace/max-declarations-per-rule */
   .wizard-file-input::file-selector-button {
     background-color: var(--nl-button-secondary-background-color);
     border-color: var(--nl-button-secondary-border-color);
