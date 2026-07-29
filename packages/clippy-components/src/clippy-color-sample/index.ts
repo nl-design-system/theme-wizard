@@ -2,6 +2,7 @@ import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/colo
 import { safeCustomElement } from '@src/lib/decorators';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
+import styles from './styles';
 
 const tag = 'clippy-color-sample';
 
@@ -13,7 +14,7 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyColorSample extends LitElement {
-  static override readonly styles = [unsafeCSS(colorSampleStyles)];
+  static override readonly styles = [unsafeCSS(colorSampleStyles), styles];
 
   @property() color: string = '';
 
