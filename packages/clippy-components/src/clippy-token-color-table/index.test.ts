@@ -1,4 +1,4 @@
-import { describe, expect, it, afterEach } from 'vitest';
+import { describe, expect, it, afterEach, beforeEach } from 'vitest';
 import './index';
 
 const tag = 'clippy-token-color-table';
@@ -10,15 +10,30 @@ function getComponent() {
 }
 
 describe(`<${tag}>`, () => {
+  beforeEach(() => {
+    document.body.innerHTML = `<${tag}></${tag}>`;
+  });
+
   afterEach(() => {
     document.body.innerHTML = '';
   });
 
   it('renders', async () => {
-    document.body.innerHTML = `<${tag}></${tag}>`;
     const component = getComponent();
     await component.updateComplete;
 
     expect(component.shadowRoot.querySelector('table')).toBeTruthy();
+  });
+
+  it('has three table headers with aria-hidden', () => {
+    const component = getComponent();
+    const headers = component.shadowRoot.querySelectorAll('th[aria-hidden="true"]');
+    expect(headers.length).toBe(3);
+  });
+
+  it('has 14 table headers with scope="col"', () => {
+    const component = getComponent();
+    const headers = component.shadowRoot.querySelectorAll('th[scope="col"]');
+    expect(headers.length).toBe(14);
   });
 });
