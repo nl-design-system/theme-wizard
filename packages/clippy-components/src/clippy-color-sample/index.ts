@@ -22,7 +22,14 @@ export class ClippyColorSample extends LitElement {
 
   override render() {
     return html`
-      <svg role="img" xmlns="http://www.w3.org/2000/svg" class="nl-color-sample" style="color: ${this.color};">
+      <svg
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        class="nl-color-sample"
+        style="color: ${this.color};"
+        width="16"
+        height="16"
+      >
         ${this.label ? html`<title>${this.label}</title>` : null}
         <rect width="100%" height="100%" fill="currentcolor" />
       </svg>
