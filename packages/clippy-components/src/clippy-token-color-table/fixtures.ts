@@ -1,6 +1,6 @@
 import { ColorGroup } from './types';
 
-export const colorgroups: ColorGroup[] = [
+export const colorGroups: ColorGroup[] = [
   {
     colorEntries: [
       {
