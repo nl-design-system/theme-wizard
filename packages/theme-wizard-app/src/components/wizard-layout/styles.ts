@@ -47,9 +47,9 @@ export default css`
     display: flex;
     gap: var(--basis-space-column-4xl);
     grid-area: content;
+    min-inline-size: 0;
     padding-block: var(--wizard-layout-body-padding-block);
     padding-inline: var(--wizard-layout-padding-inline);
-    min-inline-size: 0;
   }
 
   .wizard-layout__sidebar:not([hidden]) {
