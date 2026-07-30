@@ -3,9 +3,9 @@ import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import type { DesignTokens } from 'style-dictionary/types';
-import { type ColorToken as ColorTokenType } from '@nl-design-system-community/design-tokens-schema';
 import {
   type ColorValue,
+  type ColorToken as ColorTokenType,
   extractRef,
   isValueObject,
   stringifyColor,

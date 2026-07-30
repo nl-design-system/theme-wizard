@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-token-color-table';
-import { ColorGroup } from '@nl-design-system-community/clippy-components/clippy-token-color-table';
 import { colorGroups } from '@nl-design-system-community/clippy-components/src/clippy-token-color-table/fixtures.js';
+import { ColorGroup } from '@nl-design-system-community/clippy-components/src/clippy-token-color-table/types.js';
 import React from 'react';
 
 type ColorTableStoryArgs = {
