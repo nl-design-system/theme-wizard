@@ -90,57 +90,123 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
   }
 </script>
 
-<BaseLayout title="Stijlgids kleur systeem - Theme Wizard">
+<BaseLayout title="Stijlgids typografie systeem - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <StyleGuideNav />
 
-      <wizard-container slot="main">
+      <wizard-container size="3xl" slot="main">
         <wizard-stack size="3xl">
-          <clippy-heading level="1">Kleur systeem</clippy-heading>
+          <clippy-heading level="1">Typografie systeem</clippy-heading>
 
           <wizard-stack size="3xl">
             <section>
               <clippy-story-preview>
+                <clippy-heading level="2">Lettertype</clippy-heading>
                 <wizard-stack size="2xl">
-                  <clippy-heading level="2">Huisstijl</clippy-heading>
-                  <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
-
-                  <div data-token-story-matches data-groups="basis.color.accent-1, basis.color.accent-1-inverse, basis.color.accent-2, basis.color.accent-2-inverse, basis.color.accent-3, basis.color.accent-3-inverse"></div>
+                  <clippy-heading level="3">Default</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-family.default"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Monospace</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-family.monospace"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>
 
             <section>
               <clippy-story-preview>
+                <clippy-heading level="2">Lettergewicht</clippy-heading>
+                <clippy-heading level="3">Default</clippy-heading>
                 <wizard-stack size="2xl">
-                  <clippy-heading level="2">Interactie</clippy-heading>
-                  <wizard-color-system-preview groups="action-1, action-2, disabled"></wizard-color-system-preview>
-
-                  <div data-token-story-matches data-groups="basis.color.action-1, basis.color.action-1-inverse, basis.color.action-2, basis.color.action-2-inverse, basis.color.disabled, basis.color.disabled-inverse"></div>
+                  <div data-token-story-matches data-groups="basis.text.font-weight.default"></div>
+                </wizard-stack>
+              <hr>
+                <clippy-heading level="3">Bold</clippy-heading>
+                <wizard-stack size="2xl">
+                  <div data-token-story-matches data-groups="basis.text.font-weight.bold"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>
 
             <section>
               <clippy-story-preview>
+                <clippy-heading level="2">Lettergrootte</clippy-heading>
                 <wizard-stack size="2xl">
-                  <clippy-heading level="2">Signaal</clippy-heading>
-                  <wizard-color-system-preview groups="info, positive, negative, warning"></wizard-color-system-preview>
-
-                  <div data-token-story-matches data-groups="basis.color.info, basis.color.info-inverse, basis.color.positive, basis.color.positive-inverse, basis.color.negative, basis.color.negative-inverse, basis.color.warning, basis.color.warning-inverse"></div>
+                  <clippy-heading level="3">Sm</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-size.sm"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Md</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-size.md"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Lg</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-size.lg"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-size.xl"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">2xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-size.2xl"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">3xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-size.3xl"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">4xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.font-size.4xl"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>
 
             <section>
               <clippy-story-preview>
+                <clippy-heading level="2">Regelhoogte</clippy-heading>
                 <wizard-stack size="2xl">
-                  <clippy-heading level="2">Overig</clippy-heading>
-                  <wizard-color-system-preview groups="highlight, selected"></wizard-color-system-preview>
-
-                  <div data-token-story-matches data-groups="basis.color.highlight, basis.color.highlight-inverse, basis.color.selected, basis.color.selected-inverse"></div>
+                  <clippy-heading level="3">Sm</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.line-height.sm"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Md</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.line-height.md"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Lg</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.line-height.lg"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.line-height.xl"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">2xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.line-height.2xl"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">3xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.line-height.3xl"></div>
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">4xl</clippy-heading>
+                  <div data-token-story-matches data-groups="basis.text.line-height.4xl"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>

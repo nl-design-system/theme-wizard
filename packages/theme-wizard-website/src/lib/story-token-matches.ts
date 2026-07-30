@@ -1,5 +1,5 @@
 // Prototype: find stories whose editable tokens resolve (in the live theme) to a
-// `{basis.color.<group>...}` reference, so we can render "which stories use this basis color" lists.
+// `{basis.<group-path>...}` reference, so we can render "which stories use this basis token" lists.
 import { isRef, extractRef } from '@nl-design-system-community/design-tokens-schema';
 import { getStories } from '@nl-design-system-community/theme-wizard-app/utils';
 import dlv from 'dlv';
@@ -42,10 +42,10 @@ function getEditableTokenPaths(editableTokens: unknown): string[] {
   return paths;
 }
 
-// A basis color reference looks like `basis.color.<group>` or `basis.color.<group>.<rest>`.
-function referencesGroup(ref: string, groupName: string): boolean {
-  const parts = ref.split('.');
-  return parts[0] === 'basis' && parts[1] === 'color' && parts[2] === groupName;
+// A group path is a dot-separated basis token path, e.g. `basis.color.accent-1` or
+// `basis.text.font-family.default`. A ref matches when it *is* that path, or is nested under it.
+function referencesGroup(ref: string, groupPath: string): boolean {
+  return ref === groupPath || ref.startsWith(`${groupPath}.`);
 }
 
 // Refs can chain (e.g. nl.link.color -> basis.color.action-2.color-default -> basis.color.accent-1.color-default),
@@ -54,7 +54,7 @@ function referencesGroup(ref: string, groupName: string): boolean {
 function resolveMatchingRef(
   themeTokens: Record<PropertyKey, unknown>,
   path: string,
-  groupNames: string[],
+  groupPaths: string[],
   seen: Set<string> = new Set(),
 ): string | null {
   if (seen.has(path)) return null;
@@ -65,22 +65,16 @@ function resolveMatchingRef(
   if (!isRef(value)) return null;
 
   const ref = extractRef(value);
-  if (groupNames.some((groupName) => referencesGroup(ref, groupName))) return ref;
+  if (groupPaths.some((groupPath) => referencesGroup(ref, groupPath))) return ref;
 
-  return resolveMatchingRef(themeTokens, ref, groupNames, seen);
-}
-
-// `highlight` should also match stories using `highlight-inverse`, etc.
-function withInverseGroups(groupNames: string[]): string[] {
-  return groupNames.flatMap((groupName) => [groupName, `${groupName}-inverse`]);
+  return resolveMatchingRef(themeTokens, ref, groupPaths, seen);
 }
 
 export async function findMatchingStories(
-  groupNames: string[],
+  groupPaths: string[],
   themeTokens: Record<PropertyKey, unknown>,
 ): Promise<StoryMatch[]> {
   const matches: StoryMatch[] = [];
-  const expandedGroupNames = withInverseGroups(groupNames);
 
   await Promise.all(
     Object.entries(components).map(async ([componentId, { stories }]) => {
@@ -93,7 +87,7 @@ export async function findMatchingStories(
         if (!editableTokens) continue;
 
         const matchedTokens: MatchedToken[] = getEditableTokenPaths(editableTokens)
-          .map((path) => ({ path, ref: resolveMatchingRef(themeTokens, path, expandedGroupNames) }))
+          .map((path) => ({ path, ref: resolveMatchingRef(themeTokens, path, groupPaths) }))
           .filter((entry): entry is MatchedToken => entry.ref !== null);
 
         if (matchedTokens.length > 0) {
