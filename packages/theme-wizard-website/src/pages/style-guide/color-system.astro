@@ -13,9 +13,16 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
   function renderMatches(container: HTMLElement, matches: Awaited<ReturnType<typeof findMatchingStories>>) {
     container.replaceChildren();
 
-    for (const { story, meta } of matches) {
+    for (const { id, story, meta } of matches) {
       const section = document.createElement('section');
       section.className = 'wizard-story-section';
+
+      const heading = document.createElement('clippy-heading')
+      heading.setAttribute('level', '3')
+      heading.textContent = id
+        .replace(/^Design/, '')
+        .replace(/([A-Z])/g, ' $1')
+        .trim()
 
       const preview = document.createElement('clippy-story-preview');
       const reset = document.createElement('clippy-reset-theme');
@@ -29,7 +36,7 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 
       previewTheme.appendChild(storyRenderer);
       reset.appendChild(previewTheme);
-      preview.appendChild(reset);
+      preview.append(heading, reset);
       section.append(preview);
       container.appendChild(section);
     }
@@ -116,3 +123,19 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+
+<style>
+  [data-token-story-matches] {
+    background: whitesmoke;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+
+    --nl-heading-level-3-font-size: 1rem;
+    --nl-heading-level-3-margin-block-end: 0.75rem;
+  }
+</style>
