@@ -2,8 +2,58 @@
 import StyleGuideNav from '@/components/StyleGuideNav.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 
 ---
+
+<script>
+  import { findMatchingStories } from '@/lib/story-token-matches';
+  import { subscribeToLiveTheme } from '@/lib/get-live-theme';
+
+  function renderMatches(container: HTMLElement, matches: Awaited<ReturnType<typeof findMatchingStories>>) {
+    container.replaceChildren();
+
+    for (const { story, meta } of matches) {
+      const section = document.createElement('section');
+      section.className = 'wizard-story-section';
+
+      const preview = document.createElement('clippy-story-preview');
+      const reset = document.createElement('clippy-reset-theme');
+      const previewTheme = document.createElement('wizard-preview-theme');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const storyRenderer = document.createElement('wizard-story-react') as any;
+      storyRenderer.story = story;
+      storyRenderer.componentMeta = meta;
+      storyRenderer.args = (story as { args?: unknown }).args ?? {};
+
+      previewTheme.appendChild(storyRenderer);
+      reset.appendChild(previewTheme);
+      preview.appendChild(reset);
+      section.append(preview);
+      container.appendChild(section);
+    }
+  }
+
+  const containers = [...document.querySelectorAll<HTMLElement>('[data-token-story-matches]')];
+
+  if (containers.length > 0) {
+    // One subscription is enough, the theme is shared across the whole page.
+    subscribeToLiveTheme(containers[0], async (theme) => {
+      for (const container of containers) {
+        const groups = (container.dataset.groups ?? '')
+          .split(',')
+          .map((group) => group.trim())
+          .filter(Boolean);
+
+        if (groups.length === 0) continue;
+
+        const matches = await findMatchingStories(groups, theme.tokens);
+        renderMatches(container, matches);
+      }
+    });
+  }
+</script>
 
 <BaseLayout title="Stijlgids kleur systeem - Theme Wizard">
   <theme-wizard-app>
@@ -21,6 +71,8 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
                 <wizard-stack size="2xl">
                   <clippy-heading level="2">Huisstijl</clippy-heading>
                   <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
+
+                  <div data-token-story-matches data-groups="accent-1, accent-2, accent-3"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>
@@ -30,6 +82,8 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
                 <wizard-stack size="2xl">
                   <clippy-heading level="2">Interactie</clippy-heading>
                   <wizard-color-system-preview groups="action-1, action-2, disabled"></wizard-color-system-preview>
+
+                  <div data-token-story-matches data-groups="action-1, action-2, disabled"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>
@@ -39,6 +93,8 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
                 <wizard-stack size="2xl">
                   <clippy-heading level="2">Signaal</clippy-heading>
                   <wizard-color-system-preview groups="info, positive, negative, warning"></wizard-color-system-preview>
+
+                  <div data-token-story-matches data-groups="info, positive, negative, warning"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>
@@ -48,6 +104,8 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
                 <wizard-stack size="2xl">
                   <clippy-heading level="2">Overig</clippy-heading>
                   <wizard-color-system-preview groups="highlight, selected"></wizard-color-system-preview>
+
+                  <div data-token-story-matches data-groups="highlight, selected"></div>
                 </wizard-stack>
               </clippy-story-preview>
             </section>
