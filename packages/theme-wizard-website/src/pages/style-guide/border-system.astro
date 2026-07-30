@@ -1,0 +1,86 @@
+---
+import StyleGuideNav from '@/components/StyleGuideNav.astro';
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+
+---
+
+<BaseLayout title="Stijlgids border systeem - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
+
+      <wizard-container size="3xl" slot="main">
+        <wizard-stack size="3xl">
+          <clippy-heading level="1">Border systeem</clippy-heading>
+
+          <wizard-stack size="3xl">
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Afgeronde hoeken</clippy-heading>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Geen</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-radius.none" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Sm</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-radius.sm" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Md</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-radius.md" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Lg</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-radius.lg" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Round</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-radius.round" />
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Lijndikte</clippy-heading>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Geen</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-width.none" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Sm</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-width.sm" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Md</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-width.md" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Lg</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-width.lg" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Round</clippy-heading>
+                  <TokenStoryMatches groups="basis.border-width.round" />
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+          </wizard-stack>
+        </wizard-stack>
+      </wizard-container>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>

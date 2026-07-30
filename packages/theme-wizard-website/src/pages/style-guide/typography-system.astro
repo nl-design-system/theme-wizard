@@ -1,94 +1,11 @@
 ---
 import StyleGuideNav from '@/components/StyleGuideNav.astro';
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 
 ---
-
-<script>
-  import { findMatchingStories } from '@/lib/story-token-matches';
-  import { getLiveTheme } from '@/lib/get-live-theme';
-
-  let popoverCount = 0;
-
-  function renderMatches(container: HTMLElement, matches: Awaited<ReturnType<typeof findMatchingStories>>) {
-    container.replaceChildren();
-
-    for (const { id, story, meta, matchedTokens } of matches) {
-      const section = document.createElement('section');
-      section.className = 'wizard-story-section';
-
-      const heading = document.createElement('clippy-heading')
-      heading.setAttribute('level', '3')
-      heading.textContent = id
-        .replace(/^Design/, '')
-        .replace(/([A-Z])/g, ' $1')
-        .trim()
-
-      const preview = document.createElement('clippy-story-preview');
-      const reset = document.createElement('clippy-reset-theme');
-      const previewTheme = document.createElement('wizard-preview-theme');
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const storyRenderer = document.createElement('wizard-story-react') as any;
-      storyRenderer.story = story;
-      storyRenderer.componentMeta = meta;
-      storyRenderer.args = (story as { args?: unknown }).args ?? {};
-
-      const popoverId = `story-tokens-${popoverCount++}`;
-      const anchorName = `--tokens-anchor-${popoverCount}`;
-
-      const button = document.createElement('button');
-      button.classList.add('tokens-toggle')
-      button.type = 'button';
-      button.setAttribute('popovertarget', popoverId);
-      button.textContent = `🕵️‍♂️`;
-      button.style.setProperty('anchor-name', anchorName);
-
-      const popover = document.createElement('div');
-      popover.id = popoverId;
-      popover.className = 'tokens-popover';
-      popover.setAttribute('popover', 'auto');
-      popover.style.setProperty('position-anchor', anchorName);
-      const list = document.createElement('dl');
-      for (const { path, ref } of matchedTokens) {
-        const term = document.createElement('dt');
-        term.textContent = path;
-        const description = document.createElement('dd');
-        description.textContent = ref;
-        list.append(term, description);
-      }
-      popover.append(list);
-
-      previewTheme.appendChild(storyRenderer);
-      reset.appendChild(previewTheme);
-      preview.append(heading, reset, button, popover);
-      section.append(preview);
-
-      container.appendChild(section);
-    }
-  }
-
-  const containers = [...document.querySelectorAll<HTMLElement>('[data-token-story-matches]')];
-
-  if (containers.length > 0) {
-    // One-shot: matches are computed once from the theme at load time, reload to refresh.
-    getLiveTheme(containers[0]).then(async (theme) => {
-      for (const container of containers) {
-        const groups = (container.dataset.groups ?? '')
-          .split(',')
-          .map((group) => group.trim())
-          .filter(Boolean);
-
-        if (groups.length === 0) continue;
-
-        const matches = await findMatchingStories(groups, theme.tokens);
-        renderMatches(container, matches);
-      }
-    });
-  }
-</script>
 
 <BaseLayout title="Stijlgids typografie systeem - Theme Wizard">
   <theme-wizard-app>
@@ -106,12 +23,12 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
                 <clippy-heading level="2">Lettertype</clippy-heading>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Default</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-family.default"></div>
+                  <TokenStoryMatches groups="basis.text.font-family.default" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Monospace</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-family.monospace"></div>
+                  <TokenStoryMatches groups="basis.text.font-family.monospace" />
                 </wizard-stack>
               </clippy-story-preview>
             </section>
@@ -121,12 +38,12 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
                 <clippy-heading level="2">Lettergewicht</clippy-heading>
                 <clippy-heading level="3">Default</clippy-heading>
                 <wizard-stack size="2xl">
-                  <div data-token-story-matches data-groups="basis.text.font-weight.default"></div>
+                  <TokenStoryMatches groups="basis.text.font-weight.default" />
                 </wizard-stack>
               <hr>
                 <clippy-heading level="3">Bold</clippy-heading>
                 <wizard-stack size="2xl">
-                  <div data-token-story-matches data-groups="basis.text.font-weight.bold"></div>
+                  <TokenStoryMatches groups="basis.text.font-weight.bold" />
                 </wizard-stack>
               </clippy-story-preview>
             </section>
@@ -136,37 +53,37 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
                 <clippy-heading level="2">Lettergrootte</clippy-heading>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Sm</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-size.sm"></div>
+                  <TokenStoryMatches groups="basis.text.font-size.sm" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Md</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-size.md"></div>
+                  <TokenStoryMatches groups="basis.text.font-size.md" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Lg</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-size.lg"></div>
+                  <TokenStoryMatches groups="basis.text.font-size.lg" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-size.xl"></div>
+                  <TokenStoryMatches groups="basis.text.font-size.xl" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">2xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-size.2xl"></div>
+                  <TokenStoryMatches groups="basis.text.font-size.2xl" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">3xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-size.3xl"></div>
+                  <TokenStoryMatches groups="basis.text.font-size.3xl" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">4xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.font-size.4xl"></div>
+                  <TokenStoryMatches groups="basis.text.font-size.4xl" />
                 </wizard-stack>
               </clippy-story-preview>
             </section>
@@ -176,37 +93,37 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
                 <clippy-heading level="2">Regelhoogte</clippy-heading>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Sm</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.line-height.sm"></div>
+                  <TokenStoryMatches groups="basis.text.line-height.sm" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Md</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.line-height.md"></div>
+                  <TokenStoryMatches groups="basis.text.line-height.md" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Lg</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.line-height.lg"></div>
+                  <TokenStoryMatches groups="basis.text.line-height.lg" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">Xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.line-height.xl"></div>
+                  <TokenStoryMatches groups="basis.text.line-height.xl" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">2xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.line-height.2xl"></div>
+                  <TokenStoryMatches groups="basis.text.line-height.2xl" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">3xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.line-height.3xl"></div>
+                  <TokenStoryMatches groups="basis.text.line-height.3xl" />
                 </wizard-stack>
                 <hr>
                 <wizard-stack size="2xl">
                   <clippy-heading level="3">4xl</clippy-heading>
-                  <div data-token-story-matches data-groups="basis.text.line-height.4xl"></div>
+                  <TokenStoryMatches groups="basis.text.line-height.4xl" />
                 </wizard-stack>
               </clippy-story-preview>
             </section>
@@ -217,38 +134,3 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-
-<style is:global>
-  [data-token-story-matches] {
-    background: whitesmoke;
-    display: flex;
-    flex-wrap: wrap;
-    row-gap: 1rem;
-    column-gap: 1rem;
-    padding-inline: 1rem;
-    padding-block: 1rem;
-
-    --nl-heading-level-3-font-size: 1rem;
-    --nl-heading-level-3-margin-block-end: 0.75rem;
-  }
-
-  clippy-story-preview {
-    position: relative;
-  }
-
-  .tokens-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
-    opacity: 0.3;
-  }
-
-  .tokens-popover {
-      position-area: block-end span-inline-start;
-  }
-
-  dt {
-    font-weight: bold;
-  }
-</style>
