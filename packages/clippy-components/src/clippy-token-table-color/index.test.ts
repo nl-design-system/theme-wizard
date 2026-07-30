@@ -2,7 +2,7 @@ import { describe, expect, it, afterEach, beforeEach } from 'vitest';
 import './index';
 import { colorGroups } from './fixtures';
 
-const tag = 'clippy-token-color-table';
+const tag = 'clippy-token-table-color';
 
 type ComponentElement = { shadowRoot: ShadowRoot; updateComplete: Promise<boolean> };
 

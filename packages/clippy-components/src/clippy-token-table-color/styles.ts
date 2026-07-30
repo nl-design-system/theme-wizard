@@ -12,7 +12,7 @@ export default css`
     --utrecht-table-cell-padding-inline-start: 0.5rem;
   }
 
-  .clippy-token-color-table__header-cell {
+  .clippy-token-table-color__header-cell {
     &[scope='col'],
     &[scope='row'] {
       white-space: nowrap;
@@ -33,7 +33,7 @@ export default css`
     }
   }
 
-  .clippy-token-color-table__mastheader {
+  .clippy-token-table-color__mastheader {
     border-block-end-color: var(--utrecht-table-row-border-block-end-color, transparent);
     border-block-end-style: solid;
     border-block-end-width: var(--utrecht-table-row-border-block-end-width, 0);
@@ -41,7 +41,7 @@ export default css`
     padding-block-end: var(--utrecht-table-cell-padding-block-end, 0);
   }
 
-  .clippy-token-color-table__cell {
+  .clippy-token-table-color__cell {
     --utrecht-table-row-border-block-end-width: 0px;
   }
 `;

@@ -1,5 +1,5 @@
-import type { ColorGroup } from '@nl-design-system-community/clippy-components/clippy-token-color-table';
-import '@nl-design-system-community/clippy-components/clippy-token-color-table';
+import type { ColorGroup } from '@nl-design-system-community/clippy-components/clippy-token-table-color';
+import '@nl-design-system-community/clippy-components/clippy-token-table-color';
 import { consume } from '@lit/context';
 import '../wizard-table-scroller';
 
@@ -50,6 +50,6 @@ export class WizardColorSystemPreview extends LitElement {
 
   override render() {
     console.log(this.#visibleTokenGroups);
-    return html`<clippy-token-color-table .groups=${this.#visibleTokenGroups}></clippy-token-color-table>`;
+    return html`<clippy-token-table-color .groups=${this.#visibleTokenGroups}></clippy-token-table-color>`;
   }
 }
