@@ -61,11 +61,17 @@ function resolvesToGroup(
   return resolvesToGroup(themeTokens, ref, groupNames, seen);
 }
 
+// `highlight` should also match stories using `highlight-inverse`, etc.
+function withInverseGroups(groupNames: string[]): string[] {
+  return groupNames.flatMap((groupName) => [groupName, `${groupName}-inverse`]);
+}
+
 export async function findMatchingStories(
   groupNames: string[],
   themeTokens: Record<PropertyKey, unknown>,
 ): Promise<StoryMatch[]> {
   const matches: StoryMatch[] = [];
+  const expandedGroupNames = withInverseGroups(groupNames);
 
   await Promise.all(
     Object.entries(components).map(async ([componentId, { stories }]) => {
@@ -77,7 +83,9 @@ export async function findMatchingStories(
         const editableTokens = story.parameters?.editableTokens;
         if (!editableTokens) continue;
 
-        const isMatch = getEditableTokenPaths(editableTokens).some((path) => resolvesToGroup(themeTokens, path, groupNames));
+        const isMatch = getEditableTokenPaths(editableTokens).some((path) =>
+          resolvesToGroup(themeTokens, path, expandedGroupNames),
+        );
 
         if (isMatch) {
           matches.push({ componentId: componentId as keyof typeof components, id, meta, story });

@@ -8,7 +8,7 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 
 <script>
   import { findMatchingStories } from '@/lib/story-token-matches';
-  import { subscribeToLiveTheme } from '@/lib/get-live-theme';
+  import { getLiveTheme } from '@/lib/get-live-theme';
 
   function renderMatches(container: HTMLElement, matches: Awaited<ReturnType<typeof findMatchingStories>>) {
     container.replaceChildren();
@@ -45,8 +45,8 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
   const containers = [...document.querySelectorAll<HTMLElement>('[data-token-story-matches]')];
 
   if (containers.length > 0) {
-    // One subscription is enough, the theme is shared across the whole page.
-    subscribeToLiveTheme(containers[0], async (theme) => {
+    // One-shot: matches are computed once from the theme at load time, reload to refresh.
+    getLiveTheme(containers[0]).then(async (theme) => {
       for (const container of containers) {
         const groups = (container.dataset.groups ?? '')
           .split(',')
