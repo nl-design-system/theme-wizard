@@ -4,6 +4,7 @@ import React from 'react';
 
 type ColorSampleStoryArgs = {
   color?: string;
+  label?: string;
 };
 
 const meta = {
@@ -12,6 +13,10 @@ const meta = {
     color: {
       control: { type: 'color' },
       description: 'De kleur van de color-sample. Ondersteunt alle geldige CSS-kleurwaarden.',
+    },
+    label: {
+      control: { type: 'text' },
+      description: 'De label van de color-sample.',
     },
   },
   parameters: {
@@ -22,7 +27,7 @@ const meta = {
       },
     },
   },
-  render: ({ color }) => React.createElement('clippy-color-sample', { color }),
+  render: ({ color, label }) => React.createElement('clippy-color-sample', { color, label }),
   tags: ['autodocs'],
   title: 'Clippy/Color Sample',
 } satisfies Meta<ColorSampleStoryArgs>;
@@ -36,6 +41,23 @@ export const Default: Story = {
   args: {
     color: '#8a3a9f',
   },
+};
+
+export const Label: Story = {
+  name: 'Label in color-sample',
+  args: {
+    color: '#8a3a9f',
+    label: 'Label',
+  },
+};
+
+export const Rectangle: Story = {
+  name: 'Rechthoekige color-sample',
+  args: {
+    color: '#8a3a9f',
+  },
+  render: ({ color, label }) =>
+    React.createElement('clippy-color-sample', { color, label, style: { '--nl-color-sample-inline-size': '3rem' } }),
 };
 
 export const Multiple: Story = {
