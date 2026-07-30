@@ -10,10 +10,12 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
   import { findMatchingStories } from '@/lib/story-token-matches';
   import { getLiveTheme } from '@/lib/get-live-theme';
 
+  let popoverCount = 0;
+
   function renderMatches(container: HTMLElement, matches: Awaited<ReturnType<typeof findMatchingStories>>) {
     container.replaceChildren();
 
-    for (const { id, story, meta } of matches) {
+    for (const { id, story, meta, matchedTokens } of matches) {
       const section = document.createElement('section');
       section.className = 'wizard-story-section';
 
@@ -34,10 +36,36 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
       storyRenderer.componentMeta = meta;
       storyRenderer.args = (story as { args?: unknown }).args ?? {};
 
+      const popoverId = `story-tokens-${popoverCount++}`;
+      const anchorName = `--tokens-anchor-${popoverCount}`;
+
+      const button = document.createElement('button');
+      button.classList.add('tokens-toggle')
+      button.type = 'button';
+      button.setAttribute('popovertarget', popoverId);
+      button.textContent = `🕵️‍♂️`;
+      button.style.setProperty('anchor-name', anchorName);
+
+      const popover = document.createElement('div');
+      popover.id = popoverId;
+      popover.className = 'tokens-popover';
+      popover.setAttribute('popover', 'auto');
+      popover.style.setProperty('position-anchor', anchorName);
+      const list = document.createElement('dl');
+      for (const { path, ref } of matchedTokens) {
+        const term = document.createElement('dt');
+        term.textContent = path;
+        const description = document.createElement('dd');
+        description.textContent = ref;
+        list.append(term, description);
+      }
+      popover.append(list);
+
       previewTheme.appendChild(storyRenderer);
       reset.appendChild(previewTheme);
-      preview.append(heading, reset);
+      preview.append(heading, reset, button, popover);
       section.append(preview);
+
       container.appendChild(section);
     }
   }
@@ -125,7 +153,7 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 </BaseLayout>
 
 
-<style>
+<style is:global>
   [data-token-story-matches] {
     background: whitesmoke;
     display: flex;
@@ -137,5 +165,24 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 
     --nl-heading-level-3-font-size: 1rem;
     --nl-heading-level-3-margin-block-end: 0.75rem;
+  }
+
+  clippy-story-preview {
+    position: relative;
+  }
+
+  .tokens-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.3;
+  }
+
+  .tokens-popover {
+      position-area: block-end span-inline-start;
+  }
+
+  dt {
+    font-weight: bold;
   }
 </style>

@@ -17,9 +17,17 @@ type StoryObject = {
   [key: PropertyKey]: unknown;
 };
 
+export type MatchedToken = {
+  // Path of the component's own token, e.g. `nl.link.hover.color`.
+  path: string;
+  // The basis ref that satisfied the match, e.g. `basis.color.accent-1.color-hover`.
+  ref: string;
+};
+
 export type StoryMatch = {
   componentId: keyof typeof components;
   id: string;
+  matchedTokens: MatchedToken[];
   meta: unknown;
   story: StoryObject;
 };
@@ -42,23 +50,24 @@ function referencesGroup(ref: string, groupName: string): boolean {
 
 // Refs can chain (e.g. nl.link.color -> basis.color.action-2.color-default -> basis.color.accent-1.color-default),
 // so follow the chain until we find a match, a dead end, or a cycle.
-function resolvesToGroup(
+// Returns the basis ref that matched, so callers can show *why* something matched.
+function resolveMatchingRef(
   themeTokens: Record<PropertyKey, unknown>,
   path: string,
   groupNames: string[],
   seen: Set<string> = new Set(),
-): boolean {
-  if (seen.has(path)) return false;
+): string | null {
+  if (seen.has(path)) return null;
   seen.add(path);
 
   const token = dlv(themeTokens, path) as { $value?: unknown } | undefined;
   const value = token?.$value;
-  if (!isRef(value)) return false;
+  if (!isRef(value)) return null;
 
   const ref = extractRef(value);
-  if (groupNames.some((groupName) => referencesGroup(ref, groupName))) return true;
+  if (groupNames.some((groupName) => referencesGroup(ref, groupName))) return ref;
 
-  return resolvesToGroup(themeTokens, ref, groupNames, seen);
+  return resolveMatchingRef(themeTokens, ref, groupNames, seen);
 }
 
 // `highlight` should also match stories using `highlight-inverse`, etc.
@@ -83,12 +92,12 @@ export async function findMatchingStories(
         const editableTokens = story.parameters?.editableTokens;
         if (!editableTokens) continue;
 
-        const isMatch = getEditableTokenPaths(editableTokens).some((path) =>
-          resolvesToGroup(themeTokens, path, expandedGroupNames),
-        );
+        const matchedTokens: MatchedToken[] = getEditableTokenPaths(editableTokens)
+          .map((path) => ({ path, ref: resolveMatchingRef(themeTokens, path, expandedGroupNames) }))
+          .filter((entry): entry is MatchedToken => entry.ref !== null);
 
-        if (isMatch) {
-          matches.push({ componentId: componentId as keyof typeof components, id, meta, story });
+        if (matchedTokens.length > 0) {
+          matches.push({ componentId: componentId as keyof typeof components, id, matchedTokens, meta, story });
         }
       }
     }),
