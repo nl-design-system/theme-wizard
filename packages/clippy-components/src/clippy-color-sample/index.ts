@@ -2,6 +2,7 @@ import colorSampleStyles from '@nl-design-system-candidate/color-sample-css/colo
 import { safeCustomElement } from '@src/lib/decorators';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
+import styles from './styles';
 
 const tag = 'clippy-color-sample';
 
@@ -13,9 +14,11 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyColorSample extends LitElement {
-  static override readonly styles = [unsafeCSS(colorSampleStyles)];
+  static override readonly styles = [unsafeCSS(colorSampleStyles), styles];
 
   @property() color: string = '';
+
+  @property() label?: string = '';
 
   override render() {
     return html`
@@ -24,11 +27,11 @@ export class ClippyColorSample extends LitElement {
         xmlns="http://www.w3.org/2000/svg"
         class="nl-color-sample"
         style="color: ${this.color};"
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
+        width="16"
+        height="16"
       >
-        <path d="M0 0H32V32H0Z" fill="currentcolor" />
+        ${this.label ? html`<title>${this.label}</title>` : null}
+        <rect width="100%" height="100%" fill="currentcolor" />
       </svg>
     `;
   }
