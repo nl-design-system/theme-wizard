@@ -49,6 +49,7 @@ export class WizardColorSystemPreview extends LitElement {
   }
 
   override render() {
+    console.log(this.#visibleTokenGroups);
     return html`<clippy-token-color-table .groups=${this.#visibleTokenGroups}></clippy-token-color-table>`;
   }
 }
