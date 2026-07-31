@@ -170,7 +170,11 @@ export class ClippyTokenTableColor extends LitElement {
                 ${colorEntries.map((entry) => {
                   const dialogId = `token-dialog-${entry.tokenId.replaceAll('.', '-')}`;
                   return html`<td class="clippy-token-table-color__cell | utrecht-table__cell">
-                    <button type="button" @click=${() => this.#openDialog({ dialogId })}>
+                    <button
+                      class="clippy-token-table-color__button-sample"
+                      type="button"
+                      @click=${() => this.#openDialog({ dialogId })}
+                    >
                       <clippy-color-sample color="${entry.displayValue}"></clippy-color-sample>
                       <span class="sr-only">${entry.tokenId}</span>
                     </button>

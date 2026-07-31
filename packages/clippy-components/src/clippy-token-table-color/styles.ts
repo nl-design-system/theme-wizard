@@ -44,4 +44,11 @@ export default css`
   .clippy-token-table-color__cell {
     --utrecht-table-row-border-block-end-width: 0px;
   }
+
+  .clippy-token-table-color__button-sample {
+    appearance: none;
+    border: none;
+    background: none;
+    padding: 0;
+  }
 `;
