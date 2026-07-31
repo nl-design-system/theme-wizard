@@ -46,9 +46,21 @@ export default css`
   }
 
   .clippy-token-table-color__button-sample {
+    position: relative;
     appearance: none;
     border: none;
     background: none;
     padding: 0;
+    outline: none;
+
+    &:hover,
+    &:focus-visible {
+      outline: var(--nl-color-sample-border-width) solid var(--basis-focus-outline-color);
+      outline-offset: var(--nl-color-sample-border-width);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
