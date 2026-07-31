@@ -11,9 +11,50 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <StyleGuideNav />
 
-      <div slot="main">
-        <h1>Kleur systeem</h1>
-      </div>
+      <wizard-container slot="main">
+        <wizard-stack size="3xl">
+          <clippy-heading level="1">Kleur systeem</clippy-heading>
+
+          <wizard-stack size="3xl">
+            <section>
+              <clippy-story-preview>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="2">Huisstijl</clippy-heading>
+                  <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="2">Interactie</clippy-heading>
+                  <wizard-color-system-preview groups="action-1, action-2, disabled"></wizard-color-system-preview>
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="2">Signaal</clippy-heading>
+                  <wizard-color-system-preview groups="info, positive, negative, warning"></wizard-color-system-preview>
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="2">Overig</clippy-heading>
+                  <wizard-color-system-preview groups="highlight, selected"></wizard-color-system-preview>
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+          </wizard-stack>
+        </wizard-stack>
+      </wizard-container>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>

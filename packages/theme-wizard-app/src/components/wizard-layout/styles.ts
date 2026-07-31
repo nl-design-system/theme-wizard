@@ -47,6 +47,7 @@ export default css`
     display: flex;
     gap: var(--basis-space-column-4xl);
     grid-area: content;
+    min-inline-size: 0;
     padding-block: var(--wizard-layout-body-padding-block);
     padding-inline: var(--wizard-layout-padding-inline);
   }
@@ -70,6 +71,11 @@ export default css`
     flex-basis: 0;
     flex-grow: 999;
     min-inline-size: 64%;
+  }
+
+  /* prevent slotted content from overflowing the grid layout */
+  ::slotted([slot='main']) {
+    min-inline-size: 0;
   }
 
   @media print {

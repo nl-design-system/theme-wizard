@@ -6,7 +6,6 @@ import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-import { type ColorToken as ColorTokenType, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
@@ -16,12 +15,16 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
-import type { ColorGroup, DisplayToken } from '../wizard-style-guide/types';
+import type { DisplayToken } from '../wizard-style-guide/types';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import { resolveColorValue } from '../wizard-colorscale-input';
 import styles from '../wizard-style-guide/styles';
-import { countUsagePerToken, openTokenDialog, renderTokenDialog } from '../wizard-style-guide/utils';
+import {
+  countUsagePerToken,
+  openTokenDialog,
+  prepareColorGroups,
+  renderTokenDialog,
+} from '../wizard-style-guide/utils';
 
 const tag = 'wizard-style-guide-colors';
 
@@ -50,26 +53,6 @@ export class WizardStyleGuideColors extends LitElement {
     styles,
   ];
 
-  #prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>): ColorGroup[] {
-    return Object.entries(colors)
-      .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
-      .filter(([, value]) => typeof value === 'object' && value !== null)
-      .map(([key, value]) => {
-        const colorEntries = Object.entries(value as Record<string, unknown>)
-          .filter(([, token]) => typeof token === 'object' && token !== null && '$value' in token)
-          .map(([colorKey, token]) => {
-            const color = resolveColorValue(token as ColorTokenType);
-            const displayValue = color ? stringifyColor(color) : '#000';
-            const tokenId = `basis.color.${key}.${colorKey}`;
-            const usage = tokenUsage.get(tokenId) || [];
-            const usageCount = usage.length;
-            return { colorKey, displayValue, tokenId, usage, usageCount };
-          })
-          .filter(({ displayValue }) => displayValue !== null);
-        return { colorEntries, key };
-      });
-  }
-
   #openDialog(displayValue: string, tokenId: string, usage: string[]) {
     const color = new Color(displayValue);
     openTokenDialog(
@@ -95,7 +78,7 @@ export class WizardStyleGuideColors extends LitElement {
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const colors = basis['color'] as Record<string, unknown>;
     const tokenUsage = countUsagePerToken(this.theme.tokens);
-    const colorGroups = this.#prepareColorGroups(colors, tokenUsage);
+    const colorGroups = prepareColorGroups(colors, tokenUsage);
 
     return html`
       <div class="wizard-style-guide">

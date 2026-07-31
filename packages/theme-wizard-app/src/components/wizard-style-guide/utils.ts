@@ -5,14 +5,36 @@ import '@nl-design-system-community/clippy-components/clippy-heading';
 import type { DesignTokens } from 'style-dictionary/types';
 import {
   type ColorValue,
+  type ColorToken as ColorTokenType,
   extractRef,
   isValueObject,
   stringifyColor,
   walkTokensWithRef,
 } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
-import type { DisplayToken } from './types';
+import type { ColorGroup, DisplayToken } from './types';
 import { t } from '../../i18n';
+import { resolveColorValue } from '../wizard-colorscale-input';
+
+export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>): ColorGroup[] {
+  return Object.entries(colors)
+    .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
+    .filter(([, value]) => typeof value === 'object' && value !== null)
+    .map(([key, value]) => {
+      const colorEntries = Object.entries(value as Record<string, unknown>)
+        .filter(([, token]) => typeof token === 'object' && token !== null && '$value' in token)
+        .map(([colorKey, token]) => {
+          const color = resolveColorValue(token as ColorTokenType);
+          const displayValue = color ? stringifyColor(color) : '#000';
+          const tokenId = `basis.color.${key}.${colorKey}`;
+          const usage = tokenUsage.get(tokenId) || [];
+          const usageCount = usage.length;
+          return { colorKey, displayValue, tokenId, usage, usageCount };
+        })
+        .filter(({ displayValue }) => displayValue !== null);
+      return { colorEntries, key };
+    });
+}
 
 export function countUsagePerToken(tokens: DesignTokens): Map<string, string[]> {
   const tokenUsage = new Map<string, string[]>();

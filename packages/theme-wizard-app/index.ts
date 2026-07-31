@@ -2,6 +2,7 @@ export * from './src/components/wizard-anchor-nav';
 export * from './src/components/wizard-app';
 export * from './src/components/wizard-colorscale-input';
 export * from './src/components/wizard-color-description';
+export * from './src/components/wizard-color-system-preview';
 export * from './src/components/wizard-container';
 export * from './src/components/wizard-download-confirmation';
 export * from './src/components/wizard-download-link';
