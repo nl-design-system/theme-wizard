@@ -1,0 +1,136 @@
+---
+import StyleGuideNav from '@/components/StyleGuideNav.astro';
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+
+---
+
+<BaseLayout title="Stijlgids typografie systeem - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
+
+      <wizard-container size="3xl" slot="main">
+        <wizard-stack size="3xl">
+          <clippy-heading level="1">Typografie systeem</clippy-heading>
+
+          <wizard-stack size="3xl">
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Lettertype</clippy-heading>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Default</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-family.default" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Monospace</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-family.monospace" />
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Lettergewicht</clippy-heading>
+                <clippy-heading level="3">Default</clippy-heading>
+                <wizard-stack size="2xl">
+                  <TokenStoryMatches groups="basis.text.font-weight.default" />
+                </wizard-stack>
+              <hr>
+                <clippy-heading level="3">Bold</clippy-heading>
+                <wizard-stack size="2xl">
+                  <TokenStoryMatches groups="basis.text.font-weight.bold" />
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Lettergrootte</clippy-heading>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Sm</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-size.sm" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Md</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-size.md" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Lg</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-size.lg" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-size.xl" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">2xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-size.2xl" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">3xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-size.3xl" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">4xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.font-size.4xl" />
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview>
+                <clippy-heading level="2">Regelhoogte</clippy-heading>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Sm</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.line-height.sm" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Md</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.line-height.md" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Lg</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.line-height.lg" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.line-height.xl" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">2xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.line-height.2xl" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">3xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.line-height.3xl" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">4xl</clippy-heading>
+                  <TokenStoryMatches groups="basis.text.line-height.4xl" />
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+          </wizard-stack>
+        </wizard-stack>
+      </wizard-container>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>

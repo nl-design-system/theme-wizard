@@ -1,0 +1,127 @@
+---
+interface Props {
+  groups: string;
+}
+
+const { groups } = Astro.props;
+---
+
+<div data-token-story-matches data-groups={groups}></div>
+
+<script>
+  import { findMatchingStories } from '@/lib/story-token-matches';
+  import { getLiveTheme } from '@/lib/get-live-theme';
+
+  let popoverCount = 0;
+
+  function renderMatches(container: HTMLElement, matches: Awaited<ReturnType<typeof findMatchingStories>>) {
+    container.replaceChildren();
+
+    for (const { id, story, meta, matchedTokens } of matches) {
+      const section = document.createElement('section');
+      section.className = 'wizard-story-section';
+
+      const heading = document.createElement('clippy-heading')
+      heading.setAttribute('level', '3')
+      heading.textContent = id
+        .replace(/^Design/, '')
+        .replace(/([A-Z])/g, ' $1')
+        .trim()
+
+      const preview = document.createElement('clippy-story-preview');
+      const reset = document.createElement('clippy-reset-theme');
+      const previewTheme = document.createElement('wizard-preview-theme');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const storyRenderer = document.createElement('wizard-story-react') as any;
+      storyRenderer.story = story;
+      storyRenderer.componentMeta = meta;
+      storyRenderer.args = (story as { args?: unknown }).args ?? {};
+
+      const popoverId = `story-tokens-${popoverCount++}`;
+      const anchorName = `--tokens-anchor-${popoverCount}`;
+
+      const button = document.createElement('button');
+      button.classList.add('tokens-toggle')
+      button.type = 'button';
+      button.setAttribute('popovertarget', popoverId);
+      button.textContent = `🕵️‍♂️`;
+      button.style.setProperty('anchor-name', anchorName);
+
+      const popover = document.createElement('div');
+      popover.id = popoverId;
+      popover.className = 'tokens-popover';
+      popover.setAttribute('popover', 'auto');
+      popover.style.setProperty('position-anchor', anchorName);
+      const list = document.createElement('dl');
+      for (const { path, ref } of matchedTokens) {
+        const term = document.createElement('dt');
+        term.textContent = path;
+        const description = document.createElement('dd');
+        description.textContent = ref;
+        list.append(term, description);
+      }
+      popover.append(list);
+
+      previewTheme.appendChild(storyRenderer);
+      reset.appendChild(previewTheme);
+      preview.append(heading, reset, button, popover);
+      section.append(preview);
+
+      container.appendChild(section);
+    }
+  }
+
+  const containers = [...document.querySelectorAll<HTMLElement>('[data-token-story-matches]')];
+
+  if (containers.length > 0) {
+    // One-shot: matches are computed once from the theme at load time, reload to refresh.
+    getLiveTheme(containers[0]).then(async (theme) => {
+      for (const container of containers) {
+        const groups = (container.dataset.groups ?? '')
+          .split(',')
+          .map((group) => group.trim())
+          .filter(Boolean);
+
+        if (groups.length === 0) continue;
+
+        const matches = await findMatchingStories(groups, theme.tokens);
+        renderMatches(container, matches);
+      }
+    });
+  }
+</script>
+
+<style is:global>
+  [data-token-story-matches] {
+    background: whitesmoke;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+
+    --nl-heading-level-3-font-size: 1rem;
+    --nl-heading-level-3-margin-block-end: 0.75rem;
+  }
+
+  clippy-story-preview {
+    position: relative;
+  }
+
+  .tokens-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.3;
+  }
+
+  .tokens-popover {
+      position-area: block-end span-inline-start;
+  }
+
+  dt {
+    font-weight: bold;
+  }
+</style>

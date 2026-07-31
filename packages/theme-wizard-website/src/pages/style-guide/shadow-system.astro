@@ -1,0 +1,50 @@
+---
+import StyleGuideNav from '@/components/StyleGuideNav.astro';
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import '@nl-design-system-community/clippy-components/clippy-story-preview';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+
+---
+
+<BaseLayout title="Stijlgids schaduw systeem - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
+
+      <wizard-container size="3xl" slot="main">
+        <wizard-stack size="3xl">
+          <clippy-heading level="1">Schaduw systeem</clippy-heading>
+
+          <wizard-stack size="3xl">
+            <section>
+              <clippy-story-preview>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Geen</clippy-heading>
+                  <TokenStoryMatches groups="basis.box-shadow.none" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Sm</clippy-heading>
+                  <TokenStoryMatches groups="basis.box-shadow.sm" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Md</clippy-heading>
+                  <TokenStoryMatches groups="basis.box-shadow.md" />
+                </wizard-stack>
+                <hr>
+                <wizard-stack size="2xl">
+                  <clippy-heading level="3">Lg</clippy-heading>
+                  <TokenStoryMatches groups="basis.box-shadow.lg" />
+                </wizard-stack>
+              </clippy-story-preview>
+            </section>
+
+          </wizard-stack>
+        </wizard-stack>
+      </wizard-container>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
