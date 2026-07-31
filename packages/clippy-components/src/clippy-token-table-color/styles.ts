@@ -46,12 +46,13 @@ export default css`
   }
 
   .clippy-token-table-color__button-sample {
-    position: relative;
     appearance: none;
-    border: none;
     background: none;
-    padding: 0;
+    border: none;
     outline: none;
+    padding-block: 0;
+    padding-inline: 0;
+    position: relative;
 
     &:hover,
     &:focus-visible {
