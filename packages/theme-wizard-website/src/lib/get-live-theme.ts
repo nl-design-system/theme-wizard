@@ -1,27 +1,14 @@
-// Prototype: grab the live Theme instance provided by `<theme-wizard-app>` without depending on
-// Lit/`@lit/context` from this package — we just speak the context-request protocol directly.
-// See https://github.com/lit/lit/tree/main/packages/context, `createContext('theme')` is just the string 'theme'.
-// One-shot fetch, not a subscription: matched stories are computed once on load and
-// won't refresh if the user edits which basis token a story's colors reference —
-// reload the page to recompute.
-export async function getLiveTheme(host: Element): Promise<any> {
-  // The provider (`<theme-wizard-app>`) has to be upgraded before it can answer a
-  // context-request — there's no ContextRoot buffering unanswered requests in this app.
+// `<theme-wizard-app>` keeps a `<clippy-theme-context>` bridge in its shadow root in sync with
+// its own theme state, so we can just read that instead of speaking `@lit/context`'s
+// `context-request` protocol ourselves.
+export async function getThemeTokens(host: Element): Promise<Record<PropertyKey, unknown> | undefined> {
   await customElements.whenDefined('theme-wizard-app');
 
-  return new Promise((resolve) => {
-    const event = new Event('context-request', { bubbles: true, composed: true }) as Event & {
-      context: string;
-      contextTarget: Element;
-      callback: (theme: unknown, unsubscribe?: () => void) => void;
-      subscribe: boolean;
-    };
+  const app = host.closest('theme-wizard-app') ?? document.querySelector('theme-wizard-app');
+  if (!app) return undefined;
 
-    event.context = 'theme';
-    event.contextTarget = host;
-    event.callback = (theme) => resolve(theme);
-    event.subscribe = false;
+  await (app as unknown as { updateComplete: Promise<boolean> }).updateComplete;
 
-    host.dispatchEvent(event);
-  });
+  const bridge = app.shadowRoot?.querySelector('clippy-theme-context');
+  return (bridge as unknown as { tokens?: Record<PropertyKey, unknown> } | null)?.tokens;
 }

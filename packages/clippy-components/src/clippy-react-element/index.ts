@@ -15,6 +15,7 @@ export class ClippyReactElement extends HTMLElement {
 
   disconnectedCallback() {
     this.root?.unmount();
+    this.root = null;
   }
 
   render(element: ReactElement) {

@@ -9,10 +9,10 @@ const { groups } = Astro.props;
 <div data-token-story-matches data-groups={groups}></div>
 
 <script>
+  import '@nl-design-system-community/clippy-components/clippy-popover';
   import { findMatchingStories } from '@/lib/story-token-matches';
-  import { getLiveTheme } from '@/lib/get-live-theme';
-
-  let popoverCount = 0;
+  import { getThemeTokens } from '@/lib/get-live-theme';
+  import { mountStory } from '@/components/render-stories';
 
   function renderMatches(container: HTMLElement, matches: Awaited<ReturnType<typeof findMatchingStories>>) {
     container.replaceChildren();
@@ -21,38 +21,33 @@ const { groups } = Astro.props;
       const section = document.createElement('section');
       section.className = 'wizard-story-section';
 
-      const heading = document.createElement('clippy-heading')
-      heading.setAttribute('level', '3')
+      const heading = document.createElement('clippy-heading');
+      heading.setAttribute('level', '3');
       heading.textContent = id
         .replace(/^Design/, '')
         .replace(/([A-Z])/g, ' $1')
-        .trim()
+        .trim();
 
       const preview = document.createElement('clippy-story-preview');
       const reset = document.createElement('clippy-reset-theme');
       const previewTheme = document.createElement('wizard-preview-theme');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const storyRenderer = document.createElement('wizard-story-react') as any;
-      storyRenderer.story = story;
-      storyRenderer.componentMeta = meta;
-      storyRenderer.args = (story as { args?: unknown }).args ?? {};
+      mountStory(previewTheme, {
+        args: (story as { args?: unknown }).args ?? {},
+        componentMeta: meta,
+        story,
+      });
 
-      const popoverId = `story-tokens-${popoverCount++}`;
-      const anchorName = `--tokens-anchor-${popoverCount}`;
+      const popover = document.createElement('clippy-popover');
+      popover.className = 'tokens-toggle';
+      popover.setAttribute('trigger-label', 'Toon gekoppelde tokens');
 
-      const button = document.createElement('button');
-      button.classList.add('tokens-toggle')
-      button.type = 'button';
-      button.setAttribute('popovertarget', popoverId);
-      button.textContent = `🕵️‍♂️`;
-      button.style.setProperty('anchor-name', anchorName);
+      const triggerIcon = document.createElement('span');
+      triggerIcon.slot = 'trigger';
+      triggerIcon.setAttribute('aria-hidden', 'true');
+      triggerIcon.textContent = '🕵️‍♂️';
+      popover.appendChild(triggerIcon);
 
-      const popover = document.createElement('div');
-      popover.id = popoverId;
-      popover.className = 'tokens-popover';
-      popover.setAttribute('popover', 'auto');
-      popover.style.setProperty('position-anchor', anchorName);
       const list = document.createElement('dl');
       for (const { path, ref } of matchedTokens) {
         const term = document.createElement('dt');
@@ -61,11 +56,10 @@ const { groups } = Astro.props;
         description.textContent = ref;
         list.append(term, description);
       }
-      popover.append(list);
+      popover.appendChild(list);
 
-      previewTheme.appendChild(storyRenderer);
       reset.appendChild(previewTheme);
-      preview.append(heading, reset, button, popover);
+      preview.append(heading, reset, popover);
       section.append(preview);
 
       container.appendChild(section);
@@ -74,20 +68,55 @@ const { groups } = Astro.props;
 
   const containers = [...document.querySelectorAll<HTMLElement>('[data-token-story-matches]')];
 
+  async function renderAllMatches(themeTokens: Record<PropertyKey, unknown>) {
+    for (const container of containers) {
+      const groups = (container.dataset.groups ?? '')
+        .split(',')
+        .map((group) => group.trim())
+        .filter(Boolean);
+
+      if (groups.length === 0) continue;
+
+      const matches = await findMatchingStories(groups, themeTokens);
+      renderMatches(container, matches);
+    }
+  }
+
+  // Serializes rebuilds and coalesces rapid-fire theme changes (e.g. dragging a color
+  // slider) into a single trailing run, so a rebuild never tears down elements that a
+  // still-in-flight previous rebuild is mid-render on.
+  let isUpdating = false;
+  let pendingTokens: Record<PropertyKey, unknown> | undefined;
+
+  async function updateMatches(themeTokens: Record<PropertyKey, unknown> | undefined) {
+    if (!themeTokens) return;
+
+    if (isUpdating) {
+      pendingTokens = themeTokens;
+      return;
+    }
+
+    isUpdating = true;
+    try {
+      await renderAllMatches(themeTokens);
+    } finally {
+      isUpdating = false;
+    }
+
+    if (pendingTokens) {
+      const next = pendingTokens;
+      pendingTokens = undefined;
+      await updateMatches(next);
+    }
+  }
+
   if (containers.length > 0) {
-    // One-shot: matches are computed once from the theme at load time, reload to refresh.
-    getLiveTheme(containers[0]).then(async (theme) => {
-      for (const container of containers) {
-        const groups = (container.dataset.groups ?? '')
-          .split(',')
-          .map((group) => group.trim())
-          .filter(Boolean);
+    getThemeTokens(containers[0]).then(updateMatches);
 
-        if (groups.length === 0) continue;
-
-        const matches = await findMatchingStories(groups, theme.tokens);
-        renderMatches(container, matches);
-      }
+    // `<clippy-theme-context>` re-dispatches this (bubbling + composed) whenever the
+    // theme changes, so matches stay in sync with live token edits.
+    document.addEventListener('theme-change', (event) => {
+      updateMatches((event as CustomEvent<{ tokens: Record<PropertyKey, unknown> }>).detail.tokens);
     });
   }
 </script>
@@ -115,10 +144,6 @@ const { groups } = Astro.props;
     top: 0;
     right: 0;
     opacity: 0.3;
-  }
-
-  .tokens-popover {
-      position-area: block-end span-inline-start;
   }
 
   dt {

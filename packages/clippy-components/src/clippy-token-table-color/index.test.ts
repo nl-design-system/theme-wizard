@@ -12,7 +12,6 @@ function getComponent() {
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
-    console.log('=== colorGroups', colorGroups);
     document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)}></${tag}>`;
   });
 

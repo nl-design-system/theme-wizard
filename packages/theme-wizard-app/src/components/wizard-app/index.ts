@@ -1,5 +1,6 @@
 import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { provide } from '@lit/context';
+import '@nl-design-system-community/clippy-components/clippy-theme-context';
 import { ClippyTokenCombobox } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
@@ -189,6 +190,9 @@ export class App extends LitElement {
   };
 
   override render() {
-    return html`<slot></slot>`;
+    return html`
+      <slot></slot>
+      <clippy-theme-context theme=${JSON.stringify(this.theme.tokens)}></clippy-theme-context>
+    `;
   }
 }
