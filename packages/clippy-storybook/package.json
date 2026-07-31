@@ -29,7 +29,7 @@
     "lint:css": "stylelint \"**/*.css\" --ignore-path ../../.stylelintignore",
     "lint:js": "eslint",
     "lint-fix:js": "eslint --fix",
-    "storybook": "storybook dev --config-dir ./config/ --port 6006"
+    "storybook": "storybook dev --config-dir ./config/ --port 6006 --no-version-updates"
   },
   "devDependencies": {
     "@amsterdam/design-system-css": "4.3.0",

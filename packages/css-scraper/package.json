@@ -40,6 +40,7 @@
     "clean": "premove dist/"
   },
   "devDependencies": {
+    "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@vitest/coverage-v8": "4.1.10",
     "premove": "4.0.0",
     "publint": "0.3.22",

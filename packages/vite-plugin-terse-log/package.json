@@ -1,0 +1,52 @@
+{
+  "name": "@nl-design-system-community/vite-plugin-terse-log",
+  "version": "1.0.0",
+  "author": "Community for NL Design System",
+  "description": "Shared Vite plugin that quiets dev/watch output down to a single line",
+  "license": "EUPL-1.2",
+  "keywords": [
+    "expertteam-digitale-toegankelijkheid",
+    "nl-design-system"
+  ],
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git+ssh",
+    "url": "git@github.com:nl-design-system/theme-wizard.git",
+    "directory": "packages/vite-plugin-terse-log"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit --project tsconfig.json",
+    "build": "pnpm run type-check && vite build",
+    "lint-build": "tsc --noEmit --project tsconfig.json",
+    "clean": "premove dist/",
+    "lint:js": "eslint",
+    "lint-fix:js": "eslint --fix",
+    "test-build": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "4.1.10",
+    "premove": "4.0.0",
+    "typescript": "6.0.3",
+    "vite": "8.1.5",
+    "vite-plugin-dts": "5.0.3",
+    "vitest": "4.1.10"
+  },
+  "peerDependencies": {
+    "vite": "^8.0.0"
+  }
+}

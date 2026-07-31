@@ -110,6 +110,7 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@projectwallace/css-parser": "0.18.1",
     "@storybook/react-vite": "10.5.4",
     "@types/dlv": "1.1.5",
