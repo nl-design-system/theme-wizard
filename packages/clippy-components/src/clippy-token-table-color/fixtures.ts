@@ -218,8 +218,8 @@ export const colorGroups: ColorGroup[] = [
         colorKey: 'color-hover',
         displayValue: '#360061',
         tokenId: 'basis.color.default.color-hover',
-        usage: ['utrecht.button.hover.color', 'nl.button.default.hover.color'],
-        usageCount: 2,
+        usage: [],
+        usageCount: 0,
       },
       {
         colorKey: 'color-active',
