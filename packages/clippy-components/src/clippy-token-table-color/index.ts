@@ -29,6 +29,18 @@ export class ClippyTokenTableColor extends LitElement {
   @property({ type: Array })
   groups: ColorGroup[] = [];
 
+  /**
+   * Labels for titles, labels, buttons, etc. Consumers can override these,
+   * e.g. with localized strings.
+   */
+  @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
+  @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
+  @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
+  @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
+  @property({ attribute: 'background-label', type: String }) backgroundLabel = 'Background';
+  @property({ attribute: 'border-label', type: String }) borderLabel = 'Borders and lines';
+  @property({ attribute: 'foreground-label', type: String }) foregroundLabel = 'Foreground';
+
   #openDialog({ dialogId }: { dialogId: string }) {
     const dialog = this.shadowRoot?.getElementById(dialogId) as ClippyModal;
     if (!dialog) return;
@@ -39,7 +51,7 @@ export class ClippyTokenTableColor extends LitElement {
     const color = new Color(entry.displayValue);
     return html`
       <clippy-modal id="${dialogId}" title="${entry.tokenId}" actions="none">
-        <clippy-heading level=${3}><mark>Voorbeeld</mark></clippy-heading>
+        <clippy-heading level=${3}>${this.exampleLabel}</clippy-heading>
         <clippy-color-sample color=${entry.displayValue}></clippy-color-sample>
         <dl>
           <dt>Token type</dt>
@@ -54,7 +66,7 @@ export class ClippyTokenTableColor extends LitElement {
           <dd>
             <code class="nl-code">${`--${entry.tokenId.replaceAll('.', '-')}`}</code>
           </dd>
-          <dt><mark>Value</mark></dt>
+          <dt>${this.valueLabel}</dt>
           <dd>
             <code class="nl-code">${entry.displayValue}</code>
           </dd>
@@ -73,7 +85,7 @@ export class ClippyTokenTableColor extends LitElement {
         </dl>
 
         <clippy-heading level=${3}>
-          <mark>Waar wordt deze token gebruikt?</mark>
+          ${this.referenceTitleLabel}
           <data>(${entry.usage.length}&times;)</data>
         </clippy-heading>
 
@@ -90,7 +102,7 @@ export class ClippyTokenTableColor extends LitElement {
                   )}
                 </ul>
               `
-            : html` <utrecht-paragraph><mark>Deze token wordt niet gebruikt</mark></utrecht-paragraph> `
+            : html` <utrecht-paragraph>${this.referenceEmptyLabel}</utrecht-paragraph> `
         }
       </clippy-modal>
     `;
@@ -103,13 +115,13 @@ export class ClippyTokenTableColor extends LitElement {
           <tr class="utrecht-table__row" aria-hidden>
             <th></th>
             <th class="utrecht-table__header-cell" aria-hidden colspan="5">
-              <span class="clippy-token-table-color__mastheader">Achtergrond</span>
+              <span class="clippy-token-table-color__mastheader">${this.backgroundLabel}</span>
             </th>
             <th class="utrecht-table__header-cell" aria-hidden colspan="4">
-              <span class="clippy-token-table-color__mastheader">Kaders & lijnen</span>
+              <span class="clippy-token-table-color__mastheader">${this.borderLabel}</span>
             </th>
             <th class="utrecht-table__header-cell" aria-hidden colspan="5">
-              <span class="clippy-token-table-color__mastheader">Voorgrond</span>
+              <span class="clippy-token-table-color__mastheader">${this.foregroundLabel}</span>
             </th>
           </tr>
           <tr class="utrecht-table__row">
