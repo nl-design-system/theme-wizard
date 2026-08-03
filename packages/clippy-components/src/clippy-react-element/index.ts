@@ -15,6 +15,8 @@ export class ClippyReactElement extends HTMLElement {
 
   disconnectedCallback() {
     this.root?.unmount();
+    // Prevents a late render() call from hitting React's "unmounted root" error.
+    this.root = null;
   }
 
   render(element: ReactElement) {
