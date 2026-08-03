@@ -4,15 +4,23 @@ import { LitElement, html } from 'lit';
 import { createElement } from 'react';
 import componentStyles from './styles';
 
+// Shape of the `story`/`componentMeta`/`args` trio this component renders — also
+// threaded through by wizard-story-example and wizard-story-section on the way here.
+export type StoryRenderProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  story: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  componentMeta: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  args: any;
+};
+
 export class WizardStoryRenderer extends LitElement {
   static override readonly styles = componentStyles;
   private reactRenderer: ClippyReactElement | null = null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  story: any = undefined;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  componentMeta: any = undefined;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  args: any = undefined;
+  story: StoryRenderProps['story'] = undefined;
+  componentMeta: StoryRenderProps['componentMeta'] = undefined;
+  args: StoryRenderProps['args'] = undefined;
   additionalStylesheets: CSSStyleSheet[] = [];
 
   override connectedCallback() {
