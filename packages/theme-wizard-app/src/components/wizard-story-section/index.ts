@@ -14,10 +14,6 @@ declare global {
   }
 }
 
-/**
- * A single example-story entry: a heading plus the themed story preview
- * (`wizard-story-example`), wrapped in the `.wizard-story-section` layout unit.
- */
 @customElement(tag)
 export class WizardStorySection extends LitElement {
   static override readonly styles = [styles];

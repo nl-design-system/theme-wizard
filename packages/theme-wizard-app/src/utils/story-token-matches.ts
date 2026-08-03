@@ -1,5 +1,3 @@
-// Find stories whose editable tokens resolve (in the live theme) to a `{basis.<group-path>...}`
-// reference, so callers can render "which stories use this basis token" lists.
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { DesignTokens } from 'style-dictionary/types';
 import { isRef, extractRef, type TokenPath } from '@nl-design-system-community/design-tokens-schema';
@@ -42,7 +40,7 @@ export type StoryCandidate = {
   meta: Meta<any>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   story: StoryObj<any>;
-  tokenPaths: TokenPath;
+  tokenPaths: string[];
 };
 
 // `editableTokens` leaves are informal `{ $value: ... }` placeholders (no `$type`), so this
@@ -60,9 +58,9 @@ function getEditableTokenPaths(editableTokens: unknown, path: TokenPath = []): s
   return Object.entries(editableTokens).flatMap(([key, value]) => getEditableTokenPaths(value, [...path, key]));
 }
 
-// Loads every component's stories module and extracts editable-token paths. Stories don't
+// Loads every component's stories module and extracts editableToken paths. Stories don't
 // change at runtime, so callers should call this once (e.g. whenever their component registry
-// is set) and reuse the result across theme/group changes, rather than reloading & re-walking
+// is set) and reuse the result across theme/group changes, rather than reloading and re-walking
 // every story on every match run.
 export async function prepareStoryCandidates(components: ComponentStoriesRegistry): Promise<StoryCandidate[]> {
   const candidates: StoryCandidate[] = [];

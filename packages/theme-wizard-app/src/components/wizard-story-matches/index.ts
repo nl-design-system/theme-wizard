@@ -34,6 +34,7 @@ export class WizardStoryMatches extends LitElement {
   @state()
   private readonly theme!: Theme;
 
+  // Consumers will pass in `<wizard-story-matches groups="basis.color.default, basis.color-accent-1">
   @property({ converter: arrayFromCommaList })
   groups: string[] = [];
 
@@ -66,7 +67,9 @@ export class WizardStoryMatches extends LitElement {
   async #prepareCandidates() {
     const run = ++this.#prepareRun;
     const candidates = await prepareStoryCandidates(this.components);
-    if (run !== this.#prepareRun) return;
+    if (run !== this.#prepareRun) {
+      return;
+    }
 
     this.#candidates = candidates;
     this.#recomputeMatches();

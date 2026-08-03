@@ -4,8 +4,6 @@ import { LitElement, html } from 'lit';
 import { createElement } from 'react';
 import componentStyles from './styles';
 
-// Shape of the `story`/`componentMeta`/`args` trio this component renders — also
-// threaded through by wizard-story-example and wizard-story-section on the way here.
 export type StoryRenderProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   story: any;
