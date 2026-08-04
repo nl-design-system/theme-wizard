@@ -62,4 +62,6 @@ describe(`<${tag}>`, () => {
       expect(sample.getAttribute('color')).toBe(entry.displayValue);
     });
   });
+
+  // @TODO: add tests for all the different translatable properties
 });
