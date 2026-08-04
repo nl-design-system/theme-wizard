@@ -52,7 +52,7 @@ describe(`<${tag}>`, () => {
 
   it('the first row in table body has 14 clippy-color-sample elements', () => {
     const component = getComponent();
-    const samples = component.shadowRoot.querySelectorAll('tbody tr:first-child clippy-color-sample');
+    const samples = component.shadowRoot.querySelectorAll('tbody tr:first-child button clippy-color-sample');
     expect(samples).toHaveLength(14);
 
     // Verify that each color sample matches the corresponding color entry
@@ -62,6 +62,4 @@ describe(`<${tag}>`, () => {
       expect(sample.getAttribute('color')).toBe(entry.displayValue);
     });
   });
-
-  // @TODO: add tests for all the different translatable properties
 });
