@@ -1,5 +1,6 @@
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
 import './index';
+import { page, userEvent } from 'vitest/browser';
 import { colorGroups } from './fixtures';
 
 const tag = 'clippy-token-table-color';
@@ -14,7 +15,6 @@ const labels = [
   'example-label',
   'value-label',
   'reference-title-label',
-  'reference-empty-label',
   'background-label',
   'border-label',
   'foreground-label',
@@ -83,5 +83,18 @@ describe(`<${tag}>`, () => {
     const exampleLabelElement = component.shadowRoot.querySelector(`[data-testid="${label}"]`);
     expect(exampleLabelElement).toBeTruthy();
     expect(exampleLabelElement?.textContent).toBe(`${label} label`);
+  });
+
+  it('the reference-empty-label is displayed correctly', async () => {
+    document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)} reference-empty-label="Reference empty label"></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+
+    const buttonWithNoReferences = page.getByRole('button', { name: 'basis.color.default.color-hover' });
+    await userEvent.click(buttonWithNoReferences);
+
+    const exampleLabelElement = component.shadowRoot.querySelector('[data-testid="reference-empty-label"]');
+    expect(exampleLabelElement).toBeTruthy();
+    expect(exampleLabelElement?.textContent).toBe('Reference empty label');
   });
 });
