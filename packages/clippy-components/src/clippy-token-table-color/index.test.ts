@@ -76,14 +76,12 @@ describe(`<${tag}>`, () => {
     });
   });
 
-  labels.forEach((label) => {
-    it(`the ${label} is displayed correctly`, async () => {
-      document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)} ${label}="${label} label"></${tag}>`;
-      const component = getComponent();
-      await component.updateComplete;
-      const exampleLabelElement = component.shadowRoot.querySelector(`[data-testid="${label}"]`);
-      expect(exampleLabelElement).toBeTruthy();
-      expect(exampleLabelElement?.textContent).toBe(`${label} label`);
-    });
+  it.each(labels)('the %s is displayed correctly', async (label) => {
+    document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)} ${label}="${label} label"></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+    const exampleLabelElement = component.shadowRoot.querySelector(`[data-testid="${label}"]`);
+    expect(exampleLabelElement).toBeTruthy();
+    expect(exampleLabelElement?.textContent).toBe(`${label} label`);
   });
 });
