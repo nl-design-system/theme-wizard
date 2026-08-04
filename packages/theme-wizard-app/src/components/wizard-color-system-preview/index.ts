@@ -5,7 +5,7 @@ import '../wizard-table-scroller';
 
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
-import { LitElement, html } from 'lit';
+import { LitElement, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
@@ -31,8 +31,8 @@ export class WizardColorSystemPreview extends LitElement {
   @property({ converter: arrayFromCommaList })
   groups: string[] = [];
 
-  override connectedCallback() {
-    super.connectedCallback();
+  protected override willUpdate(changedProperties: PropertyValues) {
+    if (!changedProperties.has('theme') && !changedProperties.has('groups')) return;
 
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const colors = basis['color'] as Record<string, unknown>;
