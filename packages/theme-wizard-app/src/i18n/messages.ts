@@ -146,6 +146,11 @@ export const en = {
     value: 'Value',
   },
   styleGuide: {
+    colorSystem: {
+      background: 'Background',
+      border: 'Borders and lines',
+      foreground: 'Foreground',
+    },
     details: 'Details',
     detailsDialog: {
       tokenReferenceList: {
@@ -615,6 +620,11 @@ export const nl = {
     value: 'Waarde',
   },
   styleGuide: {
+    colorSystem: {
+      background: 'Achtergrond',
+      border: 'Randen en lijnen',
+      foreground: 'Voorgrond',
+    },
     details: 'Details',
     detailsDialog: {
       tokenReferenceList: {

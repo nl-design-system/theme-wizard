@@ -44,4 +44,24 @@ export default css`
   .clippy-token-table-color__cell {
     --utrecht-table-row-border-block-end-width: 0px;
   }
+
+  .clippy-token-table-color__button-sample {
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    padding-block: 0;
+    padding-inline: 0;
+    position: relative;
+
+    &:hover,
+    &:focus-visible {
+      outline: var(--nl-color-sample-border-width) solid var(--basis-focus-outline-color);
+      outline-offset: var(--nl-color-sample-border-width);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;

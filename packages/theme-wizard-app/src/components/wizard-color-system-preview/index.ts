@@ -9,6 +9,7 @@ import { LitElement, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
+import { t } from '../../i18n';
 import { countUsagePerToken, prepareColorGroups } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-color-system-preview';
@@ -49,6 +50,15 @@ export class WizardColorSystemPreview extends LitElement {
   }
 
   override render() {
-    return html`<clippy-token-table-color .groups=${this.#visibleTokenGroups}></clippy-token-table-color>`;
+    return html`<clippy-token-table-color
+      .groups=${this.#visibleTokenGroups}
+      example-label="${t('styleGuide.sample')}"
+      value-label="${t('styleGuide.value')}"
+      reference-title-label="${t('styleGuide.detailsDialog.tokenReferenceList.title')}"
+      reference-empty-label="${t('styleGuide.detailsDialog.tokenReferenceList.empty')}"
+      background-label="${t('styleGuide.colorSystem.background')}"
+      border-label="${t('styleGuide.colorSystem.border')}"
+      foreground-label="${t('styleGuide.colorSystem.foreground')}"
+    ></clippy-token-table-color>`;
   }
 }
