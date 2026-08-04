@@ -51,7 +51,7 @@ export class ClippyTokenTableColor extends LitElement {
     const color = new Color(entry.displayValue);
     return html`
       <clippy-modal id="${dialogId}" title="${entry.tokenId}" actions="none">
-        <clippy-heading level=${3}>${this.exampleLabel}</clippy-heading>
+        <clippy-heading level=${3} data-testid="example-label">${this.exampleLabel}</clippy-heading>
         <clippy-color-sample color=${entry.displayValue}></clippy-color-sample>
         <dl>
           <dt>Token type</dt>
@@ -66,7 +66,7 @@ export class ClippyTokenTableColor extends LitElement {
           <dd>
             <code class="nl-code">${`--${entry.tokenId.replaceAll('.', '-')}`}</code>
           </dd>
-          <dt>${this.valueLabel}</dt>
+          <dt data-testid="value-label">${this.valueLabel}</dt>
           <dd>
             <code class="nl-code">${entry.displayValue}</code>
           </dd>
@@ -85,7 +85,7 @@ export class ClippyTokenTableColor extends LitElement {
         </dl>
 
         <clippy-heading level=${3}>
-          ${this.referenceTitleLabel}
+          <span data-testid="reference-title-label">${this.referenceTitleLabel}</span>
           <data>(${entry.usage.length}&times;)</data>
         </clippy-heading>
 
@@ -102,7 +102,9 @@ export class ClippyTokenTableColor extends LitElement {
                   )}
                 </ul>
               `
-            : html` <utrecht-paragraph>${this.referenceEmptyLabel}</utrecht-paragraph> `
+            : html`
+                <utrecht-paragraph data-testid="reference-empty-label">${this.referenceEmptyLabel}</utrecht-paragraph>
+              `
         }
       </clippy-modal>
     `;
@@ -115,13 +117,17 @@ export class ClippyTokenTableColor extends LitElement {
           <tr class="utrecht-table__row" aria-hidden>
             <th></th>
             <th class="utrecht-table__header-cell" aria-hidden colspan="5">
-              <span class="clippy-token-table-color__mastheader">${this.backgroundLabel}</span>
+              <span class="clippy-token-table-color__mastheader" data-testid="background-label"
+                >${this.backgroundLabel}</span
+              >
             </th>
             <th class="utrecht-table__header-cell" aria-hidden colspan="4">
-              <span class="clippy-token-table-color__mastheader">${this.borderLabel}</span>
+              <span class="clippy-token-table-color__mastheader" data-testid="border-label">${this.borderLabel}</span>
             </th>
             <th class="utrecht-table__header-cell" aria-hidden colspan="5">
-              <span class="clippy-token-table-color__mastheader">${this.foregroundLabel}</span>
+              <span class="clippy-token-table-color__mastheader" data-testid="foreground-label"
+                >${this.foregroundLabel}</span
+              >
             </th>
           </tr>
           <tr class="utrecht-table__row">

@@ -10,9 +10,18 @@ function getComponent() {
   return document.querySelector(tag) as unknown as ComponentElement;
 }
 
+const labels = [
+  'example-label',
+  'value-label',
+  'reference-title-label',
+  'reference-empty-label',
+  'background-label',
+  'border-label',
+  'foreground-label',
+];
+
 describe(`<${tag}>`, () => {
   beforeEach(() => {
-    console.log('=== colorGroups', colorGroups);
     document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)}></${tag}>`;
   });
 
@@ -27,20 +36,23 @@ describe(`<${tag}>`, () => {
     expect(component.shadowRoot.querySelector('table')).toBeTruthy();
   });
 
-  it('has three table headers with aria-hidden', () => {
+  it('has three table headers with aria-hidden', async () => {
     const component = getComponent();
+    await component.updateComplete;
     const headers = component.shadowRoot.querySelectorAll('th[aria-hidden]');
     expect(headers).toHaveLength(3);
   });
 
-  it('has 14 table headers with scope="col"', () => {
+  it('has 14 table headers with scope="col"', async () => {
     const component = getComponent();
+    await component.updateComplete;
     const headers = component.shadowRoot.querySelectorAll('th[scope="col"]');
     expect(headers).toHaveLength(14);
   });
 
-  it('has 2 table headers with scope="row"', () => {
+  it('has 2 table headers with scope="row"', async () => {
     const component = getComponent();
+    await component.updateComplete;
     const headers = component.shadowRoot.querySelectorAll('th[scope="row"]');
     expect(headers).toHaveLength(2);
 
@@ -50,8 +62,9 @@ describe(`<${tag}>`, () => {
     });
   });
 
-  it('the first row in table body has 14 clippy-color-sample elements', () => {
+  it('the first row in table body has 14 clippy-color-sample elements', async () => {
     const component = getComponent();
+    await component.updateComplete;
     const samples = component.shadowRoot.querySelectorAll('tbody tr:first-child button clippy-color-sample');
     expect(samples).toHaveLength(14);
 
@@ -60,6 +73,17 @@ describe(`<${tag}>`, () => {
       const sample = samples[index];
       expect(sample).toBeTruthy();
       expect(sample.getAttribute('color')).toBe(entry.displayValue);
+    });
+  });
+
+  labels.forEach((label) => {
+    it(`the ${label} is displayed correctly`, async () => {
+      document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)} ${label}="${label} label"></${tag}>`;
+      const component = getComponent();
+      await component.updateComplete;
+      const exampleLabelElement = component.shadowRoot.querySelector(`[data-testid="${label}"]`);
+      expect(exampleLabelElement).toBeTruthy();
+      expect(exampleLabelElement?.textContent).toBe(`${label} label`);
     });
   });
 });
