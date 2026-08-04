@@ -1,9 +1,12 @@
 import { consume } from '@lit/context';
+import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
-import { LitElement, html, type PropertyValues } from 'lit';
+import { LitElement, html, unsafeCSS, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
+import '../wizard-story-section';
+import { t } from '../../i18n';
 import {
   findMatchingStories,
   prepareStoryCandidates,
@@ -11,7 +14,6 @@ import {
   type StoryCandidate,
   type StoryMatch,
 } from '../../utils/story-token-matches';
-import '../wizard-story-section';
 import styles from './styles';
 
 const tag = 'wizard-story-matches';
@@ -28,7 +30,7 @@ declare global {
  */
 @customElement(tag)
 export class WizardStoryMatches extends LitElement {
-  static override readonly styles = [styles];
+  static override readonly styles = [unsafeCSS(paragraphStyles), styles];
 
   @consume({ context: themeContext, subscribe: true })
   @state()
@@ -85,6 +87,10 @@ export class WizardStoryMatches extends LitElement {
   }
 
   override render() {
+    if (this.storyMatches.length === 0) {
+      return html`<p class="nl-paragraph | wizard-story-matches__empty">${t('styleGuide.nothingToShow')}.</p>`;
+    }
+
     return html`
       ${this.storyMatches.map(({ id, meta, story }) => {
         // `DataBadgeColor` → `Data Badge Color`

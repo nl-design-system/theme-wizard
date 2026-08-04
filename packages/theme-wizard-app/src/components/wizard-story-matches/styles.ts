@@ -13,4 +13,8 @@ export default css`
     padding-inline: var(--basis-space-inline-3xl);
     row-gap: var(--basis-space-row-2xl);
   }
+
+  .wizard-story-matches__empty {
+    color: var(--basis-color-default-color-subtle);
+  }
 `;
