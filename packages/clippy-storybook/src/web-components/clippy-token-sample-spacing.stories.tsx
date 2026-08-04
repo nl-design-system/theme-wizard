@@ -5,6 +5,7 @@ import React from 'react';
 
 type TableColorStoryArgs = {
   concept?: Concepts;
+  size?: string;
 };
 
 const meta = {
@@ -16,7 +17,7 @@ const meta = {
       },
     },
   },
-  render: () => React.createElement('clippy-token-sample-spacing', { concept: 'inline' }),
+  render: (args: TableColorStoryArgs) => React.createElement('clippy-token-sample-spacing', args),
   tags: ['autodocs'],
   title: 'Clippy/Token Sample Spacing',
 } satisfies Meta<TableColorStoryArgs>;
@@ -27,4 +28,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Basis token sample spacing',
+  args: {
+    concept: 'inline',
+    size: '3rem',
+  },
 };
