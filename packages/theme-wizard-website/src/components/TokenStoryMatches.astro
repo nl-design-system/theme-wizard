@@ -12,10 +12,6 @@ const { groups } = Astro.props;
   import type { WizardStoryMatches } from '@nl-design-system-community/theme-wizard-app/components/wizard-story-matches';
   import { components } from '@/lib/components';
 
-  // Import (and thus register/upgrade) `wizard-story-matches` only once `theme-wizard-app` (the
-  // theme context provider) is already defined, so its `@consume` context-request always finds a
-  // listener on first try — no need for the component to handle the provider not being ready yet.
-  await customElements.whenDefined('theme-wizard-app');
   await import('@nl-design-system-community/theme-wizard-app/components/wizard-story-matches');
 
   for (const element of document.querySelectorAll<WizardStoryMatches>('wizard-story-matches')) {
