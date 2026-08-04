@@ -6,7 +6,7 @@ import Color from 'colorjs.io';
 import { LitElement, html, unsafeCSS } from 'lit';
 import '../clippy-color-sample';
 import '../clippy-modal';
-import { property } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import type { ColorEntry, ColorGroup } from './types';
 import { ClippyModal } from '../clippy-modal';
 import srOnly from '../lib/sr-only';
@@ -26,8 +26,13 @@ declare global {
 export class ClippyTokenTableColor extends LitElement {
   static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(codeCss), unsafeCSS(tableCss), styles, srOnly];
 
+  @query('clippy-modal')
+  dialog?: ClippyModal;
+
   @property({ type: Array })
   groups: ColorGroup[] = [];
+
+  #currentColorEntry?: ColorEntry = undefined;
 
   /**
    * Labels for titles, labels, buttons, etc. Consumers can override these,
@@ -41,16 +46,21 @@ export class ClippyTokenTableColor extends LitElement {
   @property({ attribute: 'border-label', type: String }) borderLabel = 'Borders and lines';
   @property({ attribute: 'foreground-label', type: String }) foregroundLabel = 'Foreground';
 
-  #openDialog({ dialogId }: { dialogId: string }) {
-    const dialog = this.shadowRoot?.getElementById(dialogId) as ClippyModal;
-    if (!dialog) return;
-    dialog.open();
+  #openDialog({ entry }: { entry: ColorEntry }) {
+    this.#currentColorEntry = entry;
+    this.requestUpdate();
+
+    if (!this.dialog) return;
+    this.dialog.open();
   }
 
-  #renderDialog({ dialogId, entry }: { dialogId: string; entry: ColorEntry }) {
+  #renderDialog() {
+    const entry = this.#currentColorEntry;
+    if (!entry) return html``;
+
     const color = new Color(entry.displayValue);
     return html`
-      <clippy-modal id="${dialogId}" title="${entry.tokenId}" actions="none">
+      <clippy-modal title="${entry.tokenId}" actions="none">
         <clippy-heading level=${3} data-testid="example-label">${this.exampleLabel}</clippy-heading>
         <clippy-color-sample color=${entry.displayValue}></clippy-color-sample>
         <dl>
@@ -110,99 +120,104 @@ export class ClippyTokenTableColor extends LitElement {
     `;
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    this.#currentColorEntry = this.groups[0].colorEntries[0];
+  }
+
   override render() {
     return html`<div class="utrecht-table-container utrecht-table-container--overflow-inline">
-      <table class="utrecht-table">
-        <thead class="utrecht-table__header">
-          <tr class="utrecht-table__row" aria-hidden>
-            <th></th>
-            <th class="utrecht-table__header-cell" aria-hidden colspan="5">
-              <span class="clippy-token-table-color__mastheader" data-testid="background-label"
-                >${this.backgroundLabel}</span
-              >
-            </th>
-            <th class="utrecht-table__header-cell" aria-hidden colspan="4">
-              <span class="clippy-token-table-color__mastheader" data-testid="border-label">${this.borderLabel}</span>
-            </th>
-            <th class="utrecht-table__header-cell" aria-hidden colspan="5">
-              <span class="clippy-token-table-color__mastheader" data-testid="foreground-label"
-                >${this.foregroundLabel}</span
-              >
-            </th>
-          </tr>
-          <tr class="utrecht-table__row">
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell"></th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">background-</span>document
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">background-</span>subtle
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">background-</span>default
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">background-</span>hover
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">background-</span>active
-            </th>
+        <table class="utrecht-table">
+          <thead class="utrecht-table__header">
+            <tr class="utrecht-table__row" aria-hidden>
+              <th></th>
+              <th class="utrecht-table__header-cell" aria-hidden colspan="5">
+                <span class="clippy-token-table-color__mastheader" data-testid="background-label"
+                  >${this.backgroundLabel}</span
+                >
+              </th>
+              <th class="utrecht-table__header-cell" aria-hidden colspan="4">
+                <span class="clippy-token-table-color__mastheader" data-testid="border-label">${this.borderLabel}</span>
+              </th>
+              <th class="utrecht-table__header-cell" aria-hidden colspan="5">
+                <span class="clippy-token-table-color__mastheader" data-testid="foreground-label"
+                  >${this.foregroundLabel}</span
+                >
+              </th>
+            </tr>
+            <tr class="utrecht-table__row">
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell"></th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">background-</span>document
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">background-</span>subtle
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">background-</span>default
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">background-</span>hover
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">background-</span>active
+              </th>
 
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">border-</span>subtle
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">border-</span>default
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">border-</span>hover
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">border-</span>active
-            </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">border-</span>subtle
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">border-</span>default
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">border-</span>hover
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">border-</span>active
+              </th>
 
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">color-</span>subtle
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">color-</span>default
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">color-</span>hover
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">color-</span>active
-            </th>
-            <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
-              <span class="sr-only">color-</span>document
-            </th>
-          </tr>
-        </thead>
-        <tbody class="utrecht-table__body">
-          ${this.groups.map(
-            ({ colorEntries, key: groupName }) =>
-              html`<tr class="utrecht-table__row">
-                <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="row">
-                  ${groupName}
-                </th>
-                ${colorEntries.map((entry) => {
-                  const dialogId = `token-dialog-${entry.tokenId.replaceAll('.', '-')}`;
-                  return html`<td class="clippy-token-table-color__cell | utrecht-table__cell">
-                    <button
-                      class="clippy-token-table-color__button-sample"
-                      type="button"
-                      @click=${() => this.#openDialog({ dialogId })}
-                    >
-                      <clippy-color-sample color="${entry.displayValue}"></clippy-color-sample>
-                      <span class="sr-only">${entry.tokenId}</span>
-                    </button>
-                    ${this.#renderDialog({ dialogId, entry })}
-                  </td>`;
-                })}
-              </tr>`,
-          )}
-        </tbody>
-      </table>
-    </div>`;
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">color-</span>subtle
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">color-</span>default
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">color-</span>hover
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">color-</span>active
+              </th>
+              <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="col">
+                <span class="sr-only">color-</span>document
+              </th>
+            </tr>
+          </thead>
+          <tbody class="utrecht-table__body">
+            ${this.groups.map(
+              ({ colorEntries, key: groupName }) =>
+                html`<tr class="utrecht-table__row">
+                  <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="row">
+                    ${groupName}
+                  </th>
+                  ${colorEntries.map((entry) => {
+                    return html`<td class="clippy-token-table-color__cell | utrecht-table__cell">
+                      <button
+                        class="clippy-token-table-color__button-sample"
+                        type="button"
+                        @click=${() => this.#openDialog({ entry })}
+                      >
+                        <clippy-color-sample color="${entry.displayValue}"></clippy-color-sample>
+                        <span class="sr-only">${entry.tokenId}</span>
+                      </button>
+                    </td>`;
+                  })}
+                </tr>`,
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      ${this.#renderDialog()} `;
   }
 }
