@@ -1,6 +1,8 @@
 import { safeCustomElement } from '@src/lib/decorators';
+import CalendarIcon from '@tabler/icons/outline/calendar.svg?raw';
 import { LitElement, PropertyValues, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type { Concepts } from './types';
 import styles from './styles';
 
@@ -31,7 +33,7 @@ export class ClippyTokenSampleSpacing extends LitElement {
 
   #renderDummy({ icon, slotName }: { icon?: boolean; slotName: string }) {
     return html`<span class="clippy-token-sample-spacing__dummy">
-      <slot name="${slotName}">${icon ? 'icon' : 'label'}</slot>
+      <slot name="${slotName}">${icon ? html`<clippy-icon>${unsafeSVG(CalendarIcon)}</clippy-icon>` : 'label'}</slot>
     </span>`;
   }
 

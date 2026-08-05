@@ -47,7 +47,18 @@ export default css`
     font-family: var(--basis-text-font-family-default);
     font-size: var(--basis-text-font-size-md);
     line-height: var(--basis-text-line-height-md);
-    padding-inline: var(--basis-space-inline-xs);
+
+    &:not(:has(svg)) {
+      padding-inline: var(--basis-space-inline-xs);
+    }
+
+    :where(clippy-icon) {
+      --clippy-icon-size: var(--basis-text-line-height-md);
+    }
+
+    :where(clippy-icon, svg) {
+      display: block;
+    }
   }
 
   :host([concept='inline']),
