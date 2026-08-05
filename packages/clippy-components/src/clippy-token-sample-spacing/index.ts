@@ -1,5 +1,5 @@
 import { safeCustomElement } from '@src/lib/decorators';
-import { LitElement, html } from 'lit';
+import { LitElement, PropertyValues, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import type { Concepts } from './types';
 import styles from './styles';
@@ -29,25 +29,25 @@ export class ClippyTokenSampleSpacing extends LitElement {
   @property({ type: String })
   size?: string = undefined;
 
-  #renderLabel() {
-    return html`<mark class="clippy-token-sample-spacing__label">Label</mark>`;
+  #renderDummy({ icon, slotName }: { icon?: boolean; slotName: string }) {
+    return html`<span class="clippy-token-sample-spacing__dummy">
+      <slot name="${slotName}">${icon ? 'icon' : 'label'}</slot>
+    </span>`;
   }
 
-  #renderIcon() {
-    return html`<mark class="clippy-token-sample-spacing__icon">Icon</mark>`;
-  }
-
-  override willUpdate() {
-    if (this.size) {
-      this.style.setProperty('--clippy-token-sample-spacing-value', this.size);
-      this.requestUpdate();
+  override willUpdate(changed: PropertyValues) {
+    if (changed.has('concept') && this.concept === undefined) {
+      this.concept = 'inline';
+    }
+    if (changed.has('size') && this.size) {
+      this.style.setProperty('--clippy-token-sample-spacing-size', this.size);
     }
   }
 
   override render() {
     return html`
-      ${['text'].includes(this.concept) ? this.#renderIcon() : null} ${this.#renderLabel()}
-      ${['row', 'column'].includes(this.concept) ? this.#renderLabel() : null}
+      ${['row', 'column', 'text'].includes(this.concept) ? this.#renderDummy({ icon: this.concept === 'text', slotName: 'label-start' }) : nothing}
+      ${this.#renderDummy({ slotName: 'label' })}
     `;
   }
 }
