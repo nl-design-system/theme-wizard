@@ -7,17 +7,21 @@ export default css`
   }
 
   :host {
-    --_clippy-token-sample-spacing-color-inline: var(--basis-color-negative-bg-active);
-    --_clippy-token-sample-spacing-color-block: var(--basis-color-negative-border-subtle);
-    --_clippy-token-sample-spacing-color-text: var(--basis-color-positive-border-subtle);
-    --_clippy-token-sample-spacing-color-row: var(--basis-color-info-border-subtle);
-    --_clippy-token-sample-spacing-color-column: var(--basis-color-info-bg-active);
-    --_clippy-token-sample-spacing-border-color: var(--basis-color-default-border-default);
-    --_clippy-token-sample-spacing-background-color: var(
-      --clippy-token-sample-spacing-background-color,
-      var(--_clippy-token-sample-spacing-color-inline)
+    --_clippy-token-sample-spacing-size: var(
+      --clippy-token-sample-spacing-size,
+      var(--_clippy-internal-token-sample-spacing-size, 1rem)
     );
-    --_clippy-token-sample-spacing-size: var(--clippy-token-sample-spacing-size, 1rem);
+    --_clippy-token-sample-spacing-border-color: var(--basis-color-default-border-default);
+    /* Background colors */
+    --_clippy-token-sample-spacing-bg-color-inline: var(--clippy-token-sample-spacing-bg-color-inline, #f2c9dc);
+    --_clippy-token-sample-spacing-bg-color-block: var(--clippy-token-sample-spacing-bg-color-block, #e289b1);
+    --_clippy-token-sample-spacing-bg-color-text: var(--clippy-token-sample-spacing-bg-color-text, #4ad571);
+    --_clippy-token-sample-spacing-bg-color-row: var(--clippy-token-sample-spacing-bg-color-row, #40adef);
+    --_clippy-token-sample-spacing-bg-color-column: var(--clippy-token-sample-spacing-bg-color-column, #abdbf8);
+    --_clippy-token-sample-spacing-bg-color: var(
+      --clippy-token-sample-spacing-bg-color,
+      var(--_clippy-token-sample-spacing-bg-color-inline)
+    );
 
     border-color: var(--_clippy-token-sample-spacing-border-color);
     border-style: solid;
@@ -25,7 +29,7 @@ export default css`
 
     &::before,
     &::after {
-      background-color: var(--_clippy-token-sample-spacing-background-color);
+      background-color: var(--_clippy-token-sample-spacing-bg-color);
       content: '';
       inline-size: var(--_clippy-token-sample-spacing-size);
     }
@@ -111,18 +115,32 @@ export default css`
   }
 
   :host([concept='block']) {
-    --clippy-token-sample-spacing-background-color: var(--_clippy-token-sample-spacing-color-block);
+    --clippy-token-sample-spacing-bg-color: var(--_clippy-token-sample-spacing-bg-color-block);
   }
 
   :host([concept='text']) {
-    --clippy-token-sample-spacing-background-color: var(--_clippy-token-sample-spacing-color-text);
+    --clippy-token-sample-spacing-bg-color: var(--_clippy-token-sample-spacing-bg-color-text);
   }
 
   :host([concept='column']) {
-    --clippy-token-sample-spacing-background-color: var(--_clippy-token-sample-spacing-color-column);
+    --clippy-token-sample-spacing-bg-color: var(--_clippy-token-sample-spacing-bg-color-column);
   }
 
   :host([concept='row']) {
-    --clippy-token-sample-spacing-background-color: var(--_clippy-token-sample-spacing-color-row);
+    --clippy-token-sample-spacing-bg-color: var(--_clippy-token-sample-spacing-bg-color-row);
+  }
+
+  /**
+   * Use the system's accent color for the background when the user has enabled forced colors
+   */
+  @media (forced-colors: active) {
+    :host {
+      --_clippy-token-sample-spacing-bg-color: AccentColor;
+
+      &::before,
+      &::after {
+        forced-color-adjust: none;
+      }
+    }
   }
 `;

@@ -19,7 +19,15 @@ declare global {
  *
  * @property {Concepts} concept - Spacing token concept
  * @property {string} size - Spacing token size
- * @cssprop [--clippy-token-sample-spacing-value] - Size of the spacing illustration
+ * @cssprop [--clippy-token-sample-spacing-size] - Size of the spacing illustration
+ * @cssprop [--clippy-token-sample-spacing-bg-color-inline] - bg-color of the inline spacing illustration
+ * @cssprop [--clippy-token-sample-spacing-bg-color-block] - bg-color of the block spacing illustration
+ * @cssprop [--clippy-token-sample-spacing-bg-color-text] - bg-color of the text spacing illustration
+ * @cssprop [--clippy-token-sample-spacing-bg-color-row] - bg-color of the row spacing illustration
+ * @cssprop [--clippy-token-sample-spacing-bg-color-column] - bg-color of the column spacing illustration
+ * @cssprop [--clippy-token-sample-spacing-bg-color] - bg-color of the illustration (overrides all other colors)
+ * @slot [label] - Slot for the default label
+ * @slot [label-start] - Slot for the secondary label, only available to 'row', 'column' and 'text' concepts.
  */
 @safeCustomElement(tag)
 export class ClippyTokenSampleSpacing extends LitElement {
@@ -42,7 +50,7 @@ export class ClippyTokenSampleSpacing extends LitElement {
       this.concept = 'inline';
     }
     if (changed.has('size') && this.size) {
-      this.style.setProperty('--clippy-token-sample-spacing-size', this.size);
+      this.style.setProperty('--_clippy-internal-token-sample-spacing-size', this.size);
     }
   }
 
