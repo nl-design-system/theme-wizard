@@ -12,6 +12,7 @@ export default css`
       var(--_clippy-internal-token-sample-spacing-size, 1rem)
     );
     --_clippy-token-sample-spacing-border-color: var(--basis-color-default-border-default);
+
     /* Background colors */
     --_clippy-token-sample-spacing-bg-color-inline: var(--clippy-token-sample-spacing-bg-color-inline, #f2c9dc);
     --_clippy-token-sample-spacing-bg-color-block: var(--clippy-token-sample-spacing-bg-color-block, #e289b1);
