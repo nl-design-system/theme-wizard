@@ -26,7 +26,7 @@ export default css`
 
     border-color: var(--_clippy-token-sample-spacing-border-color);
     border-style: solid;
-    border-width: 1px;
+    border-width: var(--basis-border-width-sm);
 
     &::before,
     &::after {
@@ -111,7 +111,7 @@ export default css`
     border-width: 0;
 
     :where(.clippy-token-sample-spacing__dummy) {
-      border-width: 1px;
+      border-width: var(--basis-border-width-sm);
     }
   }
 
