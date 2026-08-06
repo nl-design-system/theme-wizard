@@ -1,3 +1,4 @@
+import { terseLog } from '@nl-design-system-community/vite-plugin-terse-log';
 import { globSync } from 'node:fs';
 import { extname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -53,6 +54,7 @@ export default defineConfig(() => ({
     },
   },
   plugins: [
+    terseLog(),
     dts({
       entryRoot: 'src',
       exclude: ['**/*.test.*', '**/styles.ts'],

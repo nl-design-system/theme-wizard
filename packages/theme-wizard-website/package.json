@@ -9,9 +9,9 @@
   },
   "private": true,
   "scripts": {
-    "dev": "API_HOST=http://localhost:9491 astro dev",
+    "dev": "API_HOST=http://localhost:9491 astro dev --host",
     "build": "pnpm run clean && astro build",
-    "clean": "rm -rf dist .astro build",
+    "clean": "premove dist .astro build",
     "lint": "pnpm run --sequential '/^lint:.+$/'",
     "lint:css": "stylelint .",
     "lint:js": "eslint",
@@ -91,6 +91,7 @@
     "@types/dlv": "1.1.5",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
-    "postcss-html": "1.8.1"
+    "postcss-html": "1.8.1",
+    "premove": "4.0.0"
   }
 }

@@ -208,6 +208,9 @@ importers:
       '@nl-design-system-community/design-tokens-schema':
         specifier: workspace:*
         version: link:../design-tokens-schema
+      '@nl-design-system-community/vite-plugin-terse-log':
+        specifier: workspace:*
+        version: link:../vite-plugin-terse-log
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -384,6 +387,9 @@ importers:
         specifier: 4.4.3
         version: 4.4.3
     devDependencies:
+      '@nl-design-system-community/vite-plugin-terse-log':
+        specifier: workspace:*
+        version: link:../vite-plugin-terse-log
       '@vitest/coverage-v8':
         specifier: 4.1.10
         version: 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
@@ -506,6 +512,9 @@ importers:
       '@nl-design-system-community/purmerend-design-tokens':
         specifier: 1.2.3
         version: 1.2.3
+      '@nl-design-system-community/vite-plugin-terse-log':
+        specifier: workspace:*
+        version: link:../vite-plugin-terse-log
       '@nl-design-system-unstable/leiden-design-tokens':
         specifier: 3.0.0
         version: 3.0.0
@@ -702,6 +711,9 @@ importers:
         specifier: 4.4.3
         version: 4.4.3
     devDependencies:
+      '@nl-design-system-community/vite-plugin-terse-log':
+        specifier: workspace:*
+        version: link:../vite-plugin-terse-log
       '@projectwallace/css-parser':
         specifier: 0.18.1
         version: 0.18.1
@@ -772,6 +784,9 @@ importers:
       '@hono/vite-dev-server':
         specifier: 0.26.1
         version: 0.26.1(hono@4.12.32)
+      '@nl-design-system-community/vite-plugin-terse-log':
+        specifier: workspace:*
+        version: link:../vite-plugin-terse-log
       '@types/node':
         specifier: 24.13.3
         version: 24.13.3
@@ -1125,6 +1140,30 @@ importers:
       postcss-html:
         specifier: 1.8.1
         version: 1.8.1
+      premove:
+        specifier: 4.0.0
+        version: 4.0.0
+
+  packages/vite-plugin-terse-log:
+    devDependencies:
+      '@vitest/coverage-v8':
+        specifier: 4.1.10
+        version: 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
+      premove:
+        specifier: 4.0.0
+        version: 4.0.0
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
+      vite:
+        specifier: 8.1.5
+        version: 8.1.5(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0)
+      vite-plugin-dts:
+        specifier: 5.0.3
+        version: 5.0.3(esbuild@0.28.1)(rolldown@1.1.5)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest:
+        specifier: 4.1.10
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   proprietary/assets: {}
 

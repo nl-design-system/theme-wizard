@@ -1,4 +1,5 @@
 import devServer from '@hono/vite-dev-server';
+import { terseLog } from '@nl-design-system-community/vite-plugin-terse-log';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -11,6 +12,7 @@ export default defineConfig({
     ssr: true,
   },
   plugins: [
+    terseLog(),
     devServer({
       entry: 'src/index.ts',
     }),

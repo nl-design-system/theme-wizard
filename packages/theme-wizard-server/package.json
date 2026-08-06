@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@hono/vite-dev-server": "0.26.1",
+    "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@types/node": "24.13.3",
     "@vitest/coverage-v8": "4.1.10",
     "premove": "4.0.0",
