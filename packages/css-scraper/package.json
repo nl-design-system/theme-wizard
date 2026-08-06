@@ -43,16 +43,16 @@
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@vitest/coverage-v8": "4.1.10",
     "premove": "4.0.0",
-    "publint": "0.3.22",
+    "publint": "0.3.23",
     "typescript": "6.0.3",
     "unplugin-dts": "1.0.3",
-    "vite": "8.1.5",
+    "vite": "8.2.0",
     "vitest": "4.1.10"
   },
   "dependencies": {
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
-    "@projectwallace/css-design-tokens": "0.11.7",
-    "@projectwallace/css-parser": "0.18.1",
+    "@projectwallace/css-design-tokens": "0.11.8",
+    "@projectwallace/css-parser": "0.18.2",
     "linkedom": "0.18.13",
     "zod": "4.4.3"
   }
