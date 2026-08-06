@@ -2,10 +2,17 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-border';
 import React from 'react';
 
-type TokenSampleBorderStoryArgs = {};
+type TokenSampleBorderStoryArgs = {
+  borderRadius?: string;
+  borderWidth?: string;
+};
 
 const meta = {
   id: 'clippy-token-sample-border',
+  args: {
+    borderRadius: '0px',
+    borderWidth: '1px',
+  },
   parameters: {
     docs: {
       description: {
