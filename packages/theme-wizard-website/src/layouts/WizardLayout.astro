@@ -22,6 +22,7 @@ const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
 <BaseLayout title={`${title} - Wizard - Theme Wizard`}>
   <theme-wizard-app>
     <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <main slot="main" class="wizard-main">
         <wizard-container size="lg">
           <clippy-story-preview size="lg">
