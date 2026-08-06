@@ -6,7 +6,7 @@ import {
 } from '@nl-design-system-community/clippy-components/src/clippy-token-sample-spacing/types.js';
 import React from 'react';
 
-type TableColorStoryArgs = {
+type TokenSampleSpacingStoryArgs = {
   concept?: Concepts;
   size?: string;
 };
@@ -31,10 +31,10 @@ const meta = {
       },
     },
   },
-  render: (args: TableColorStoryArgs) => React.createElement('clippy-token-sample-spacing', args),
+  render: (args: TokenSampleSpacingStoryArgs) => React.createElement('clippy-token-sample-spacing', args),
   tags: ['autodocs'],
-  title: 'Clippy/Token Sample Spacing',
-} satisfies Meta<TableColorStoryArgs>;
+  title: 'Clippy/Token Sample: Spacing',
+} satisfies Meta<TokenSampleSpacingStoryArgs>;
 
 export default meta;
 
@@ -81,7 +81,7 @@ export const ConceptRow: Story = {
 
 export const SlotLabel: Story = {
   name: 'Slot: `label`',
-  render: (args: TableColorStoryArgs) =>
+  render: (args: TokenSampleSpacingStoryArgs) =>
     React.createElement('clippy-token-sample-spacing', args, React.createElement('span', { slot: 'label' }, 'item')),
 };
 
@@ -97,7 +97,7 @@ export const SlotLabelStart: Story = {
       },
     },
   },
-  render: (args: TableColorStoryArgs) =>
+  render: (args: TokenSampleSpacingStoryArgs) =>
     React.createElement(
       'clippy-token-sample-spacing',
       args,
