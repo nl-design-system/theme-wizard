@@ -23,6 +23,8 @@ declare global {
  * @cssprop --clippy-token-sample-text-font-weight - Font weight
  * @cssprop --clippy-token-sample-text-line-height - Line height
  * @cssprop --clippy-token-sample-text-color - Color
+ * @cssprop --clippy-token-sample-text-border-highlight - Border highlight color
+ * @cssprop --clippy-token-sample-text-border-subtle - Border subtle color
  */
 @safeCustomElement(tag)
 export class ClippyTokenSampleText extends LitElement {

@@ -26,9 +26,49 @@ export default css`
       --clippy-token-sample-text-color,
       var(--_clippy-internal-token-sample-text-color, var(--basis-color-default-color-document))
     );
+    --_clippy-token-sample-text-border-highlight: var(--clippy-token-sample-text-border-highlight, #f2c9dc);
+    --_clippy-token-sample-text-border-subtle: var(
+      --clippy-token-sample-text-border-subtle,
+      var(--basis-color-default-border-subtle)
+    );
   }
 
-  :host([truncate]) :where(.clippy-token-sample-text__dummy) {
+  /**
+   * When line-height is set, use pseudo elements to simulate the line height
+   */
+  :host(:where([line-height]:not([line-height='']))) :where(.clippy-token-sample-text__dummy) {
+    position: relative;
+
+    &::before,
+    &::after {
+      border-block-width: 1px;
+      border-inline-width: 0;
+      border-style: solid;
+      content: '';
+      display: block;
+      inset-inline-end: 0;
+      inset-inline-start: 0;
+      position: absolute;
+      z-index: -1;
+    }
+
+    &::before {
+      border-color: var(--_clippy-token-sample-text-border-highlight);
+      inset-block-end: 0;
+      inset-block-start: 0;
+    }
+
+    &::after {
+      block-size: 1ex;
+      border-color: var(--_clippy-token-sample-text-border-subtle);
+      inset-block-start: calc(1lh / 2 - 1ex / 2);
+    }
+  }
+
+  /**
+   * When truncate or line-height is set, truncate to a single line
+   */
+  :host(:where([truncate], [line-height]:not([line-height='']))) :where(.clippy-token-sample-text__dummy) {
     -webkit-box-orient: vertical;
     display: -webkit-box;
     -webkit-line-clamp: 1;

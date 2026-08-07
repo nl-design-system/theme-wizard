@@ -50,10 +50,12 @@ import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 
 ## CSS Custom Properties
 
-| Property                                 | Description | Default                                     |
-| ---------------------------------------- | ----------- | ------------------------------------------- |
-| `--clippy-token-sample-text-font-size`   | Font size   | `var(--basis-text-font-size-md)`            |
-| `--clippy-token-sample-text-font-family` | Font family | `var(--basis-text-font-family-default)`     |
-| `--clippy-token-sample-text-font-weight` | Font weight | `var(--basis-text-font-weight-default)`     |
-| `--clippy-token-sample-text-line-height` | Line height | `var(--basis-text-line-height-md)`          |
-| `--clippy-token-sample-text-color`       | Color       | `var(--basis-color-default-color-document)` |
+| Property                                      | Description            | Default                                     |
+| --------------------------------------------- | ---------------------- | ------------------------------------------- |
+| `--clippy-token-sample-text-font-size`        | Font size              | `var(--basis-text-font-size-md)`            |
+| `--clippy-token-sample-text-font-family`      | Font family            | `var(--basis-text-font-family-default)`     |
+| `--clippy-token-sample-text-font-weight`      | Font weight            | `var(--basis-text-font-weight-default)`     |
+| `--clippy-token-sample-text-line-height`      | Line height            | `var(--basis-text-line-height-md)`          |
+| `--clippy-token-sample-text-color`            | Color                  | `var(--basis-color-default-color-document)` |
+| `--clippy-token-sample-text-border-highlight` | Border highlight color | `var(--basis-color-default-color-document)` |
+| `--clippy-token-sample-text-border-subtle`    | Border subtle color    | `var(--basis-color-default-color-document)` |
