@@ -5,6 +5,8 @@ import React from 'react';
 type TokenSampleTextStoryArgs = {
   'font-size'?: string;
   'font-family'?: string;
+  'font-weight'?: string;
+  'line-height'?: string;
   color?: string;
   truncate?: boolean;
 };
@@ -15,6 +17,8 @@ const meta = {
     color: { control: 'text' },
     'font-family': { control: 'text' },
     'font-size': { control: 'text' },
+    'font-weight': { control: 'text' },
+    'line-height': { control: 'text' },
     truncate: { control: 'boolean' },
   },
   parameters: {
@@ -49,6 +53,20 @@ export const Size: Story = {
   name: 'Font Size',
   args: {
     'font-size': '32px',
+  },
+};
+
+export const Weight: Story = {
+  name: 'Font Weight',
+  args: {
+    'font-weight': 'bold',
+  },
+};
+
+export const LineHeight: Story = {
+  name: 'Line Height',
+  args: {
+    'line-height': '4',
   },
 };
 

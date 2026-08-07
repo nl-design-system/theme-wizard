@@ -20,6 +20,8 @@ declare global {
  *
  * @cssprop --clippy-token-sample-text-font-size - Font size
  * @cssprop --clippy-token-sample-text-font-family - Font family
+ * @cssprop --clippy-token-sample-text-font-weight - Font weight
+ * @cssprop --clippy-token-sample-text-line-height - Line height
  * @cssprop --clippy-token-sample-text-color - Color
  */
 @safeCustomElement(tag)
@@ -28,15 +30,24 @@ export class ClippyTokenSampleText extends LitElement {
 
   @property({ attribute: 'font-size', type: String }) size: string = '';
   @property({ attribute: 'font-family', type: String }) family: string = '';
+  @property({ attribute: 'font-weight', type: String }) weight: string = '';
+  @property({ attribute: 'line-height', type: String }) lineheight: string = '';
   @property({ type: String }) color: string = '';
   @property({ reflect: true, type: Boolean }) truncate: boolean = false;
 
   override willUpdate(changed: PropertyValues) {
+    console.log('changed', changed);
     if (changed.has('size')) {
       this.style.setProperty('--_clippy-internal-token-sample-text-font-size', this.size);
     }
     if (changed.has('family')) {
       this.style.setProperty('--_clippy-internal-token-sample-text-font-family', this.family);
+    }
+    if (changed.has('lineheight')) {
+      this.style.setProperty('--_clippy-internal-token-sample-text-line-height', this.lineheight);
+    }
+    if (changed.has('weight')) {
+      this.style.setProperty('--_clippy-internal-token-sample-text-font-weight', this.weight);
     }
     if (changed.has('color')) {
       this.style.setProperty('--_clippy-internal-token-sample-text-color', this.color);

@@ -43,6 +43,26 @@ describe(`<${tag}>`, () => {
     expect(getComputedStyle(dummy).getPropertyValue('font-family')).toBe('monospace');
   });
 
+  it('sets the line-height', async () => {
+    document.body.innerHTML = `<${tag} line-height="4"></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+
+    const dummy = component.shadowRoot?.querySelector('.clippy-token-sample-text__dummy') as HTMLParagraphElement;
+    expect(dummy).toBeDefined();
+    expect(getComputedStyle(dummy).getPropertyValue('line-height')).toBe('64px');
+  });
+
+  it('sets the font-weight', async () => {
+    document.body.innerHTML = `<${tag} font-weight="700"></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+
+    const dummy = component.shadowRoot?.querySelector('.clippy-token-sample-text__dummy') as HTMLParagraphElement;
+    expect(dummy).toBeDefined();
+    expect(getComputedStyle(dummy).getPropertyValue('font-weight')).toBe('700');
+  });
+
   it('sets the color', async () => {
     document.body.innerHTML = `<${tag} color="red"></${tag}>`;
     const component = getComponent();
