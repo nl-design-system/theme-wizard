@@ -27,7 +27,7 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
           <clippy-story-preview>
             <wizard-stack size="5xl">
               <clippy-heading level="2">Lijndiktes</clippy-heading>
-              {/* TODO: add documentation partials here, from https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/ */}
+              {/* TODO: add documentation partials here, from https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#basis-tokens-voor-kader--of-lijndikte */}
               <wizard-stack size="5xl">
                 {widths.map((width) => (
                   <wizard-stack size="3xl">
@@ -35,11 +35,33 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
                     <clippy-graph-paper>
                       <clippy-reset-theme>
                         <wizard-preview-theme>
-                          <clippy-token-sample-border borderWidth={`var(--basis-border-width-${width})`}></clippy-token-sample-border>
+                          <clippy-token-sample-border border-width={`var(--basis-border-width-${width})`} border-radius=""></clippy-token-sample-border>
                         </wizard-preview-theme>
                       </clippy-reset-theme>
                     </clippy-graph-paper>
                     <TokenStoryMatches groups={`basis.border-width.${width}`} />
+                  </wizard-stack>
+                ))}
+              </wizard-stack>
+            </wizard-stack>
+          </clippy-story-preview>
+
+          <clippy-story-preview>
+            <wizard-stack size="5xl">
+              <clippy-heading level="2">Afgeronde hoeken</clippy-heading>
+              {/* TODO: add documentation partials here, from https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#basis-tokens-voor-afgeronde-hoeken */}
+              <wizard-stack size="5xl">
+                {radii.map((radius) => (
+                  <wizard-stack size="3xl">
+                    <clippy-heading level="3">{capitalize(radius)}</clippy-heading>
+                    <clippy-graph-paper>
+                      <clippy-reset-theme>
+                        <wizard-preview-theme>
+                          <clippy-token-sample-border border-radius={`var(--basis-border-radius-${radius})`} border-width="var(--basis-border-width-md)"></clippy-token-sample-border>
+                        </wizard-preview-theme>
+                      </clippy-reset-theme>
+                    </clippy-graph-paper>
+                    <TokenStoryMatches groups={`basis.border-width.${radius}`} />
                   </wizard-stack>
                 ))}
               </wizard-stack>
@@ -54,8 +76,6 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
 
 <style>
   clippy-graph-paper {
-    --clippy-graph-paper-cell-size: var(--basis-size-xs);
-
     padding-block: var(--basis-space-block-4xl);
     padding-inline: var(--basis-space-inline-3xl);
   }
