@@ -14,5 +14,10 @@ export const safeCustomElement = (tagName: string) => {
     if (registry && !registry.get(tagName)) {
       registry.define(tagName, target);
     }
+    // Make sure that updates propagate in Dev mode.
+    // Will be bundled away in Prod mode.
+    else if (import.meta.hot) {
+      import.meta.hot.invalidate();
+    }
   };
 };
