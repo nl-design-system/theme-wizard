@@ -21,7 +21,7 @@ export default css`
   }
 
   :host([truncate]) {
-    :where(.clippy-token-sample-text__paragraph) {
+    :where(.clippy-token-sample-text__dummy) {
       -webkit-box-orient: vertical;
       display: -webkit-box;
       -webkit-line-clamp: 1;

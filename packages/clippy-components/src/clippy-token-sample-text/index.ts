@@ -46,7 +46,7 @@ export class ClippyTokenSampleText extends LitElement {
   override render() {
     return html`
       <clippy-html-image>
-        <p class="clippy-token-sample-text__paragraph | nl-paragraph">
+        <p class="clippy-token-sample-text__dummy | nl-paragraph">
           <slot>Op brute wijze ving de schooljuf de quasi-kalme lynx.</slot>
         </p>
       </clippy-html-image>
