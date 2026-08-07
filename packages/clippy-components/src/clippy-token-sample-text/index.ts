@@ -36,7 +36,6 @@ export class ClippyTokenSampleText extends LitElement {
   @property({ reflect: true, type: Boolean }) truncate: boolean = false;
 
   override willUpdate(changed: PropertyValues) {
-    console.log('changed', changed);
     if (changed.has('size')) {
       this.style.setProperty('--_clippy-internal-token-sample-text-font-size', this.size);
     }
