@@ -1,12 +1,11 @@
 import { consume } from '@lit/context';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
-import { LitElement, html, unsafeCSS, type PropertyValues } from 'lit';
+import { LitElement, html, nothing, unsafeCSS, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import '../wizard-story-section';
-import { t } from '../../i18n';
 import {
   findMatchingStories,
   prepareStoryCandidates,
@@ -47,6 +46,10 @@ export class WizardStoryMatches extends LitElement {
 
   @state() private storyMatches: StoryMatch[] = [];
 
+  // Reflects to the `hidden` attribute so callers can hide surrounding chrome (e.g. a
+  // heading) with `.wrapper:has(wizard-story-matches:not([hidden]))`
+  override hidden = true;
+
   // Stories don't change at runtime, so loading & walking them (`prepareStoryCandidates`) only
   // needs to happen once per `components` assignment — every theme/group change afterwards just
   // re-resolves ref chains against this cached list, which is cheap and synchronous.
@@ -80,15 +83,16 @@ export class WizardStoryMatches extends LitElement {
   #recomputeMatches() {
     if (this.groups.length === 0 || !this.theme) {
       this.storyMatches = [];
-      return;
+    } else {
+      this.storyMatches = findMatchingStories(this.groups, this.theme.tokens, this.#candidates);
     }
 
-    this.storyMatches = findMatchingStories(this.groups, this.theme.tokens, this.#candidates);
+    this.hidden = this.storyMatches.length === 0;
   }
 
   override render() {
     if (this.storyMatches.length === 0) {
-      return html`<p class="nl-paragraph | wizard-story-matches__empty">${t('styleGuide.nothingToShow')}.</p>`;
+      return nothing;
     }
 
     return html`

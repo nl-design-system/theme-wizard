@@ -32,4 +32,8 @@ const { groups } = Astro.props;
     padding-inline: var(--basis-space-inline-4xl);
     row-gap: var(--basis-space-row-3xl);
   }
+
+  .wizard-story-samples:has(wizard-story-matches[hidden]) {
+    display: none;
+  }
 </style>
