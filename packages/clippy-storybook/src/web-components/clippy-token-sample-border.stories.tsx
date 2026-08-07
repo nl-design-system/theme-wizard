@@ -10,7 +10,7 @@ type TokenSampleBorderStoryArgs = {
 const meta = {
   id: 'clippy-token-sample-border',
   args: {
-    borderRadius: '0px',
+    borderRadius: '',
     borderWidth: '1px',
   },
   parameters: {
@@ -32,4 +32,26 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Default',
+};
+
+export const Width: Story = {
+  name: 'Width',
+  args: {
+    borderWidth: '5px',
+  },
+};
+
+export const Radius: Story = {
+  name: 'Radius',
+  args: {
+    borderRadius: '10px',
+  },
+};
+
+export const WidthRadius: Story = {
+  name: 'Width & Radius',
+  args: {
+    borderRadius: '10px',
+    borderWidth: '5px',
+  },
 };
