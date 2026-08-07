@@ -1,0 +1,62 @@
+---
+import StyleGuideNav from "@/components/StyleGuideNav.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+import { capitalize } from 'es-toolkit/string';
+
+const scale = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl'] as const
+const concepts = ['inline', 'block', 'text', 'column', 'row']
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-graph-paper';
+  import '@nl-design-system-community/clippy-components/clippy-token-sample-spacing';
+  import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+</script>
+
+<BaseLayout title="Witruimte systeem - Stijlgids - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
+
+      <wizard-container slot="main">
+        <wizard-stack size="5xl">
+          <clippy-heading level="1">Witruimte systeem</clippy-heading>
+
+          {concepts.map(concept => (
+            <clippy-story-preview>
+              <wizard-stack size="5xl">
+                <clippy-heading level="2">{capitalize(concept)}</clippy-heading>
+                {/* TODO: add documentation partials here, from https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/ */}
+                <wizard-stack size="5xl">
+                  {scale.map((size) => (
+                    <wizard-stack size="3xl">
+                      <clippy-heading level="3">{capitalize(size)}</clippy-heading>
+                      <clippy-graph-paper>
+                        <clippy-reset-theme>
+                          <wizard-preview-theme>
+                            <clippy-token-sample-spacing size={`var(--basis-space-${concept}-${size})`} concept={concept}></clippy-token-sample-spacing>
+                          </wizard-preview-theme>
+                        </clippy-reset-theme>
+                      </clippy-graph-paper>
+                      <TokenStoryMatches groups={`basis.space.${concept}.${size}`} />
+                    </wizard-stack>
+                  ))}
+                </wizard-stack>
+              </wizard-stack>
+            </clippy-story-preview>
+          ))}
+
+        </wizard-stack>
+      </wizard-container>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  clippy-graph-paper {
+    padding-block: var(--basis-space-block-4xl);
+    padding-inline: var(--basis-space-inline-3xl);
+  }
+</style>
