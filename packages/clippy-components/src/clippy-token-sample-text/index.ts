@@ -5,19 +5,19 @@ import { property } from 'lit/decorators.js';
 import '../clippy-html-image';
 import styles from './styles';
 
-const tag = 'clippy-token-sample-typography';
+const tag = 'clippy-token-sample-text';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyTokenSampleTypography;
+    [tag]: ClippyTokenSampleText;
   }
 }
 
 /**
- * Clippy Token Sample Typography Component
+ * Clippy Token Sample Text Component
  */
 @safeCustomElement(tag)
-export class ClippyTokenSampleTypography extends LitElement {
+export class ClippyTokenSampleText extends LitElement {
   static override readonly styles = [unsafeCSS(paragraphStyles), styles];
 
   @property({ type: String }) size: string = '';
@@ -28,7 +28,7 @@ export class ClippyTokenSampleTypography extends LitElement {
   override render() {
     return html`
       <clippy-html-image>
-        <p class="clippy-token-sample-typography__paragraph | nl-paragraph">
+        <p class="clippy-token-sample-text__paragraph | nl-paragraph">
           <slot>Op brute wijze ving de schooljuf de quasi-kalme lynx.</slot>
         </p>
       </clippy-html-image>

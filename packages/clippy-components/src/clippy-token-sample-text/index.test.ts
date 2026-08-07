@@ -1,11 +1,11 @@
 import './index';
 import { describe, expect, it, afterEach } from 'vitest';
-import { ClippyTokenSampleTypography } from './index';
+import { ClippyTokenSampleText } from './index';
 
-const tag = 'clippy-token-sample-typography';
+const tag = 'clippy-token-sample-text';
 
 function getComponent() {
-  return document.querySelector(tag) as unknown as ClippyTokenSampleTypography;
+  return document.querySelector(tag) as unknown as ClippyTokenSampleText;
 }
 
 describe(`<${tag}>`, () => {
