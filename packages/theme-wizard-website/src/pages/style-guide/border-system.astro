@@ -9,9 +9,10 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
 ---
 
 <script>
-  import '@nl-design-system-community/clippy-components/clippy-graph-paper';
   import '@nl-design-system-community/clippy-components/clippy-token-sample-border';
   import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+  import '@nl-design-system-community/clippy-components/clippy-heading';
 </script>
 
 <BaseLayout title="Randen en lijnen systeem - Stijlgids - Theme Wizard">
@@ -32,13 +33,11 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
                 {widths.map((width) => (
                   <wizard-stack size="3xl">
                     <clippy-heading level="3">{capitalize(width)}</clippy-heading>
-                    <clippy-graph-paper>
-                      <clippy-reset-theme>
-                        <wizard-preview-theme>
-                          <clippy-token-sample-border border-width={`var(--basis-border-width-${width})`} border-radius=""></clippy-token-sample-border>
-                        </wizard-preview-theme>
-                      </clippy-reset-theme>
-                    </clippy-graph-paper>
+                    <clippy-reset-theme>
+                      <wizard-preview-theme>
+                        <clippy-token-sample-border border-width={`var(--basis-border-width-${width})`} border-radius=""></clippy-token-sample-border>
+                      </wizard-preview-theme>
+                    </clippy-reset-theme>
                     <TokenStoryMatches groups={`basis.border-width.${width}`} />
                   </wizard-stack>
                 ))}
@@ -54,13 +53,11 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
                 {radii.map((radius) => (
                   <wizard-stack size="3xl">
                     <clippy-heading level="3">{capitalize(radius)}</clippy-heading>
-                    <clippy-graph-paper>
-                      <clippy-reset-theme>
-                        <wizard-preview-theme>
-                          <clippy-token-sample-border border-radius={`var(--basis-border-radius-${radius})`} border-width="var(--basis-border-width-md)"></clippy-token-sample-border>
-                        </wizard-preview-theme>
-                      </clippy-reset-theme>
-                    </clippy-graph-paper>
+                    <clippy-reset-theme>
+                      <wizard-preview-theme>
+                        <clippy-token-sample-border border-radius={`var(--basis-border-radius-${radius})`} border-width="var(--basis-border-width-md)"></clippy-token-sample-border>
+                      </wizard-preview-theme>
+                    </clippy-reset-theme>
                     <TokenStoryMatches groups={`basis.border-width.${radius}`} />
                   </wizard-stack>
                 ))}
@@ -73,10 +70,3 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-<style>
-  clippy-graph-paper {
-    padding-block: var(--basis-space-block-4xl);
-    padding-inline: var(--basis-space-inline-3xl);
-  }
-</style>

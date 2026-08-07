@@ -158,7 +158,7 @@ export const en = {
         title: 'Where is this token used?',
       },
     },
-    nothingToShow: 'Nothing to show',
+    nothingToShow: 'No examples to show',
     reference: 'Reference',
     sample: 'Sample',
     sections: {
@@ -633,7 +633,7 @@ export const nl = {
         title: 'Waar wordt deze token gebruikt?',
       },
     },
-    nothingToShow: 'Niets te tonen',
+    nothingToShow: 'Geen voorbeelden beschikbaar',
     reference: 'Referentie',
     sample: 'Voorbeeld',
     sections: {
