@@ -6,11 +6,15 @@ interface Props {
 const { groups } = Astro.props;
 ---
 
-<wizard-story-matches groups={groups}></wizard-story-matches>
+<section class="wizard-story-samples">
+  <clippy-heading level="4">Voorbeelden</clippy-heading>
+  <wizard-story-matches groups={groups}></wizard-story-matches>
+</section>
 
 <script>
   import type { WizardStoryMatches } from '@nl-design-system-community/theme-wizard-app/components/wizard-story-matches';
   import { components } from '@/lib/components';
+  import '@nl-design-system-community/clippy-components/clippy-heading';
 
   await import('@nl-design-system-community/theme-wizard-app/components/wizard-story-matches');
 
@@ -18,3 +22,14 @@ const { groups } = Astro.props;
     element.components = components;
   }
 </script>
+
+<style>
+  .wizard-story-samples {
+    padding-inline: var(--basis-space-inline-4xl);
+    padding-block: var(--basis-space-block-3xl);
+    background-color: var(--basis-color-default-bg-subtle);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--basis-space-row-3xl);
+  }
+</style>
