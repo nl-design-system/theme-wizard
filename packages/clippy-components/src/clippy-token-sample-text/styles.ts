@@ -37,6 +37,7 @@ export default css`
    * When line-height is set, use pseudo elements to simulate the line height
    */
   :host(:where([line-height]:not([line-height='']))) :where(.clippy-token-sample-text__dummy) {
+    isolation: isolate;
     position: relative;
 
     &::before,
