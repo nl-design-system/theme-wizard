@@ -1128,6 +1128,9 @@ importers:
         specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
     devDependencies:
+      '@nl-design-system-unstable/documentation':
+        specifier: 1.11.0
+        version: 1.11.0
       '@playwright/test':
         specifier: 1.62.1
         version: 1.62.1
@@ -1143,6 +1146,9 @@ importers:
       '@types/react-dom':
         specifier: 19.2.4
         version: 19.2.4(@types/react@19.2.18)
+      '@vanillawc/wc-markdown':
+        specifier: 1.6.11
+        version: 1.6.11
       postcss-html:
         specifier: 1.8.1
         version: 1.8.1

@@ -2,27 +2,92 @@
 import StyleGuideNav from '@/components/StyleGuideNav.astro';
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import '@nl-design-system-community/clippy-components/clippy-story-preview';
-import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+
+import accent1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-accent-1-intro.md?raw';
+import accent2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-accent-2-intro.md?raw';
+import accent3Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-accent-3-intro.md?raw';
+import action1Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-action-1-intro.md?raw';
+import action2Docs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-action-2-intro.md?raw';
+import defaultDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-default-intro.md?raw';
+import disabledDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-disabled-intro.md?raw';
+import highlightDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-highlight-intro.md?raw';
+import infoDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-info-intro.md?raw';
+import negativeDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-negative-intro.md?raw';
+import positiveDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-positive-intro.md?raw';
+import selectedDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-selected-intro.md?raw';
+import warningDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-warning-intro.md?raw';
+
+export const colorDocs: Record<string, string> = {
+  'accent-1': accent1Docs,
+  'accent-2': accent2Docs,
+  'accent-3': accent3Docs,
+  'action-1': action1Docs,
+  'action-2': action2Docs,
+  default: defaultDocs,
+  disabled: disabledDocs,
+  highlight: highlightDocs,
+  info: infoDocs,
+  negative: negativeDocs,
+  positive: positiveDocs,
+  selected: selectedDocs,
+  warning: warningDocs,
+};
 
 ---
 
 <BaseLayout title="Kleur systeem - Stijlgids - Theme Wizard">
+  <script>
+    // @ts-expect-error no type declarations shipped
+    import '@vanillawc/wc-markdown';
+    import '@nl-design-system-community/clippy-components/clippy-story-preview';
+    import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+  </script>
+
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <StyleGuideNav />
 
       <wizard-container slot="main">
-        <wizard-stack size="3xl">
+        <wizard-stack size="5xl">
           <clippy-heading level="1">Kleur systeem</clippy-heading>
 
           <wizard-stack size="3xl">
             <section>
-              <clippy-story-preview>
-                <wizard-stack size="2xl">
+              <clippy-story-preview size="lg">
+                <wizard-stack size="4xl">
                   <clippy-heading level="2">Huisstijl</clippy-heading>
-                  <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
+                  <wizard-color-system-preview id="color-system-preview-identity" groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
+
+                  <div>
+                    <section id="docs-default">
+                      <clippy-heading level="3">Default</clippy-heading>
+                      <wc-markdown>
+                        {colorDocs.default}
+                      </wc-markdown>
+                    </section>
+
+                    <section id="docs-accent-1">
+                      <clippy-heading level="3">Accent 1</clippy-heading>
+                      <wc-markdown>
+                        {colorDocs['accent-1']}
+                      </wc-markdown>
+                    </section>
+
+                    <section id="docs-accent-2">
+                      <clippy-heading level="3">Accent 2</clippy-heading>
+                      <wc-markdown>
+                        {colorDocs['accent-2']}
+                      </wc-markdown>
+                    </section>
+
+                    <section id="docs-accent-3">
+                      <clippy-heading level="3">Accent 3</clippy-heading>
+                      <wc-markdown>
+                        {colorDocs['accent-3']}
+                      </wc-markdown>
+                    </section>
+                  </div>
 
                   <TokenStoryMatches groups="basis.color.default, basis.color.default-inverse, basis.color.accent-1, basis.color.accent-1-inverse, basis.color.accent-2, basis.color.accent-2-inverse, basis.color.accent-3, basis.color.accent-3-inverse" />
                 </wizard-stack>
@@ -68,3 +133,51 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<script>
+  import { getSiblingGroupsWithOnlyRefsTo } from '@nl-design-system-community/theme-wizard-app/utils';
+  import type { WizardColorSystemPreview } from '@nl-design-system-community/theme-wizard-app/components/wizard-color-system-preview';
+
+  type ThemeHost = HTMLElement & { theme?: { tokens: Record<string, unknown> } };
+
+  const accent2Section = document.querySelector<HTMLElement>('#docs-accent-2');
+  const accent3Section = document.querySelector<HTMLElement>('#docs-accent-3');
+
+  function updateAccentVisibility(theme: NonNullable<ThemeHost['theme']>) {
+    const basis = theme.tokens['basis'] as Record<string, unknown> | undefined;
+    const color = basis?.['color'];
+    const siblingsOnlyRefToAccent1 = getSiblingGroupsWithOnlyRefsTo('basis.color.accent-1', color);
+    const siblingsOnlyRefToAccent2 = getSiblingGroupsWithOnlyRefsTo('basis.color.accent-2', color);
+    const hideAccent2 = siblingsOnlyRefToAccent1.includes('basis.color.accent-2');
+    const hideAccent3 = siblingsOnlyRefToAccent1.includes('basis.color.accent-3') || siblingsOnlyRefToAccent2.includes('basis.color.accent-3');
+
+    if (accent2Section) {
+      accent2Section.hidden = hideAccent2;
+    }
+
+    if (accent3Section) {
+      accent3Section.hidden = hideAccent3;
+    }
+
+    const preview = document.querySelector<WizardColorSystemPreview>('#color-system-preview-identity');
+    if (preview) {
+      preview.groups = [
+        'default',
+        'accent-1',
+        ...(hideAccent2 ? [] : ['accent-2']),
+        ...(hideAccent3 ? [] : ['accent-3']),
+      ];
+    }
+  }
+
+  await customElements.whenDefined('theme-wizard-app');
+  const app = document.querySelector<ThemeHost>('theme-wizard-app');
+
+  if (app?.theme) {
+    updateAccentVisibility(app.theme);
+  }
+
+  document.addEventListener('theme-update', (event) => {
+    updateAccentVisibility((event as CustomEvent<{ theme: NonNullable<ThemeHost['theme']> }>).detail.theme);
+  });
+</script>
