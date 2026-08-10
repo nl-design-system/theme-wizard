@@ -16,7 +16,7 @@ import {
   addBasisContrastExtensions,
   upgradeLegacyTokens,
   resolveConfigRefs,
-  useRefAsValue,
+  useOriginalValue,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -113,7 +113,7 @@ export default class Theme {
   }
 
   #runThemeProcessors(tokens: DesignTokens) {
-    useRefAsValue(tokens);
+    useOriginalValue(tokens);
     upgradeLegacyTokens(tokens);
     addComponentContrastExtensions(tokens);
     addBasisContrastExtensions(tokens);

@@ -11,6 +11,7 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
 ---
 
 <script>
+  import '@nl-design-system-community/clippy-components/clippy-code';
   import '@nl-design-system-community/clippy-components/clippy-graph-paper';
   import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 </script>
@@ -32,6 +33,9 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
                 <clippy-story-preview>
                   <wizard-stack size="2xl">
                     <clippy-heading level="3">{capitalize(family)}</clippy-heading>
+                    <clippy-code>
+                      <wizard-token-value path={`basis.text.font-family.${family}`}></wizard-token-value>
+                    </clippy-code>
                     <clippy-graph-paper>
                       <clippy-reset-theme>
                         <wizard-preview-theme>
@@ -55,6 +59,9 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
                 <clippy-story-preview>
                   <wizard-stack size="2xl">
                     <clippy-heading level="3">{capitalize(weight)}</clippy-heading>
+                    <clippy-code>
+                      <wizard-token-value path={`basis.text.font-weight.${weight}`}></wizard-token-value>
+                    </clippy-code>
                     <clippy-graph-paper>
                       <clippy-reset-theme>
                         <wizard-preview-theme>
@@ -78,6 +85,9 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
                 <clippy-story-preview>
                   <wizard-stack size="2xl">
                     <clippy-heading level="3">{capitalize(size)}</clippy-heading>
+                    <clippy-code>
+                      <wizard-token-value path={`basis.text.font-size.${size}`}></wizard-token-value>
+                    </clippy-code>
                     <clippy-graph-paper>
                       <clippy-reset-theme>
                         <wizard-preview-theme>
@@ -101,6 +111,9 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
                 <clippy-story-preview>
                   <wizard-stack size="2xl">
                     <clippy-heading level="3">{capitalize(lineHeight)}</clippy-heading>
+                    <clippy-code>
+                      <wizard-token-value path={`basis.text.line-height.${lineHeight}`}></wizard-token-value>
+                    </clippy-code>
                     <clippy-reset-theme>
                       <wizard-preview-theme>
                         <clippy-token-sample-text line-height={`var(--basis-text-line-height-${lineHeight})`} truncate>

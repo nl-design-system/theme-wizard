@@ -9,7 +9,7 @@ export class ClippyCode extends LitElement {
   static override readonly styles = [unsafeCSS(codeCss)];
 
   override render() {
-    return html`<code class="nl-code"><slot></slot></code>`;
+    return html`<code class="nl-code" translate="no" dir="ltr"><slot></slot></code>`;
   }
 }
 

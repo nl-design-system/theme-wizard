@@ -43,6 +43,7 @@ export * from './src/components/wizard-token-output';
 export * from './src/components/wizard-token-presets';
 export * from './src/components/wizard-token-upload-form';
 export * from './src/components/wizard-token-validation-form';
+export * from './src/components/wizard-token-value';
 export * from './src/components/wizard-tokens-download';
 export * from './src/components/wizard-tokens-form';
 export * from './src/components/wizard-tokens-reuse-form';

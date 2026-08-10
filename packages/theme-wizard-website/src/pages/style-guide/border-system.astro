@@ -9,6 +9,7 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
 ---
 
 <script>
+  import '@nl-design-system-community/clippy-components/clippy-code';
   import '@nl-design-system-community/clippy-components/clippy-token-sample-border';
   import '@nl-design-system-community/clippy-components/clippy-reset-theme';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
@@ -33,6 +34,9 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
                 {widths.map((width) => (
                   <wizard-stack size="3xl">
                     <clippy-heading level="3">{capitalize(width)}</clippy-heading>
+                    <clippy-code>
+                      <wizard-token-value path={`basis.border-width.${width}`}></wizard-token-value>
+                    </clippy-code>
                     <clippy-reset-theme>
                       <wizard-preview-theme>
                         <clippy-token-sample-border border-width={`var(--basis-border-width-${width})`} border-radius=""></clippy-token-sample-border>
@@ -53,6 +57,9 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
                 {radii.map((radius) => (
                   <wizard-stack size="3xl">
                     <clippy-heading level="3">{capitalize(radius)}</clippy-heading>
+                    <clippy-code>
+                      <wizard-token-value path={`basis.border-radius.${radius}`}></wizard-token-value>
+                    </clippy-code>
                     <clippy-reset-theme>
                       <wizard-preview-theme>
                         <clippy-token-sample-border border-radius={`var(--basis-border-radius-${radius})`} border-width="var(--basis-border-width-md)"></clippy-token-sample-border>
