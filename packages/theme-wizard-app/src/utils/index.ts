@@ -1,4 +1,3 @@
-export * from '../lib/ColorScale/siblings';
 export * from './csf-utils';
 export * from './dom-utils';
 export * from './story-token-matches';

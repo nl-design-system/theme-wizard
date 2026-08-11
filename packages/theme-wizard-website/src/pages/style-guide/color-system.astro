@@ -4,6 +4,12 @@ import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+  import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+</script>
+
 <BaseLayout title="Kleur systeem - Stijlgids - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
@@ -19,7 +25,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
               <clippy-story-preview>
                 <wizard-stack size="4xl">
                   <clippy-heading level="2">Huisstijl</clippy-heading>
-                  <wizard-color-system-preview id="color-system-preview-identity" groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
+                  <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3" skip-redundant-groups="accent-2, accent-3"></wizard-color-system-preview>
 
                   <TokenStoryMatches groups="basis.color.default, basis.color.default-inverse, basis.color.accent-1, basis.color.accent-1-inverse, basis.color.accent-2, basis.color.accent-2-inverse, basis.color.accent-3, basis.color.accent-3-inverse" />
                 </wizard-stack>
@@ -30,7 +36,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
               <clippy-story-preview>
                 <wizard-stack size="2xl">
                   <clippy-heading level="2">Interactie</clippy-heading>
-                  <wizard-color-system-preview groups="action-1, action-2, disabled"></wizard-color-system-preview>
+                  <wizard-color-system-preview groups="action-1, action-2, disabled" skip-redundant-groups="action-2"></wizard-color-system-preview>
 
                   <TokenStoryMatches groups="basis.color.action-1, basis.color.action-1-inverse, basis.color.action-2, basis.color.action-2-inverse, basis.color.disabled, basis.color.disabled-inverse" />
                 </wizard-stack>
@@ -65,42 +71,3 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-<script>
-  import '@nl-design-system-community/clippy-components/clippy-heading';
-  import '@nl-design-system-community/clippy-components/clippy-story-preview';
-  import '@nl-design-system-community/clippy-components/clippy-reset-theme';
-  import { getSiblingGroupsWithOnlyRefsTo } from '@nl-design-system-community/theme-wizard-app/utils';
-  import type { WizardApp } from '@nl-design-system-community/theme-wizard-app/components/wizard-app';
-  import type { WizardColorSystemPreview } from '@nl-design-system-community/theme-wizard-app/components/wizard-color-system-preview';
-
-  function updateAccentVisibility(theme: WizardApp['theme']) {
-    const basis = theme.tokens['basis'] as Record<string, unknown> | undefined;
-    const color = basis?.['color'];
-    const siblingsOnlyRefToAccent1 = getSiblingGroupsWithOnlyRefsTo('basis.color.accent-1', color);
-    const siblingsOnlyRefToAccent2 = getSiblingGroupsWithOnlyRefsTo('basis.color.accent-2', color);
-    const hideAccent2 = siblingsOnlyRefToAccent1.includes('basis.color.accent-2');
-    const hideAccent3 = siblingsOnlyRefToAccent1.includes('basis.color.accent-3') || siblingsOnlyRefToAccent2.includes('basis.color.accent-3');
-
-    const preview = document.querySelector<WizardColorSystemPreview>('#color-system-preview-identity');
-    if (preview) {
-      preview.groups = [
-        'default',
-        'accent-1',
-        hideAccent2 ? null : 'accent-2',
-        hideAccent3 ? null : 'accent-3',
-      ].filter((group): group is string => group !== null)
-    }
-  }
-
-  await customElements.whenDefined('theme-wizard-app');
-  const app = document.querySelector<WizardApp>('theme-wizard-app');
-
-  if (app?.theme) {
-    updateAccentVisibility(app.theme);
-  }
-
-  document.addEventListener('theme-update', (event) => {
-    updateAccentVisibility(event.detail.theme);
-  });
-</script>
