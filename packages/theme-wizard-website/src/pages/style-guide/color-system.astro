@@ -59,7 +59,7 @@ export const colorDocs: Record<string, string> = {
                   <clippy-heading level="2">Huisstijl</clippy-heading>
                   <wizard-color-system-preview id="color-system-preview-identity" groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
 
-                  <div>
+                  <div class="wizard-spotlight-section">
                     <section id="docs-default">
                       <clippy-heading level="3">Default</clippy-heading>
                       <wc-markdown>
@@ -134,16 +134,35 @@ export const colorDocs: Record<string, string> = {
   </theme-wizard-app>
 </BaseLayout>
 
+<style>
+  .wizard-spotlight-section {
+    background-color: var(--_utrecht-spotlight-section-background-color, var(--utrecht-spotlight-section-background-color));
+    border-color: var(--_utrecht-spotlight-section-border-color, var(--utrecht-spotlight-section-border-color));
+    border-radius: var(--utrecht-spotlight-section-border-radius, 0);
+    border-style: solid;
+    border-width: var(--_utrecht-spotlight-section-border-width, var(--utrecht-spotlight-section-border-width, 0));
+    color: var(--_utrecht-spotlight-section-color, var(--utrecht-spotlight-section-color));
+    row-gap: var(--utrecht-spotlight-section-row-gap);
+    flex-direction: column;
+    margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-spotlight-section-margin-block-start, 0));
+    margin-block-end: calc(var(--utrecht-space-around, 0) * var(--utrecht-spotlight-section-margin-block-end, 0));
+    padding-block-start: var(--utrecht-spotlight-section-padding-block-start);
+    padding-block-end: var(--utrecht-spotlight-section-padding-block-end);
+    padding-inline-start: var(--utrecht-spotlight-section-padding-inline-start);
+    padding-inline-end: var(--utrecht-spotlight-section-padding-inline-end);
+    display: flex;
+  }
+</style>
+
 <script>
   import { getSiblingGroupsWithOnlyRefsTo } from '@nl-design-system-community/theme-wizard-app/utils';
+  import type { WizardApp } from '@nl-design-system-community/theme-wizard-app/components/wizard-app';
   import type { WizardColorSystemPreview } from '@nl-design-system-community/theme-wizard-app/components/wizard-color-system-preview';
-
-  type ThemeHost = HTMLElement & { theme?: { tokens: Record<string, unknown> } };
 
   const accent2Section = document.querySelector<HTMLElement>('#docs-accent-2');
   const accent3Section = document.querySelector<HTMLElement>('#docs-accent-3');
 
-  function updateAccentVisibility(theme: NonNullable<ThemeHost['theme']>) {
+  function updateAccentVisibility(theme: WizardApp['theme']) {
     const basis = theme.tokens['basis'] as Record<string, unknown> | undefined;
     const color = basis?.['color'];
     const siblingsOnlyRefToAccent1 = getSiblingGroupsWithOnlyRefsTo('basis.color.accent-1', color);
@@ -164,20 +183,20 @@ export const colorDocs: Record<string, string> = {
       preview.groups = [
         'default',
         'accent-1',
-        ...(hideAccent2 ? [] : ['accent-2']),
-        ...(hideAccent3 ? [] : ['accent-3']),
-      ];
+        hideAccent2 ? null : 'accent-2',
+        hideAccent3 ? null : 'accent-3',
+      ].filter((group): group is string => group !== null)
     }
   }
 
   await customElements.whenDefined('theme-wizard-app');
-  const app = document.querySelector<ThemeHost>('theme-wizard-app');
+  const app = document.querySelector<WizardApp>('theme-wizard-app');
 
   if (app?.theme) {
     updateAccentVisibility(app.theme);
   }
 
   document.addEventListener('theme-update', (event) => {
-    updateAccentVisibility((event as CustomEvent<{ theme: NonNullable<ThemeHost['theme']> }>).detail.theme);
+    updateAccentVisibility(event.detail.theme);
   });
 </script>

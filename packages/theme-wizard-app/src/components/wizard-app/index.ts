@@ -29,12 +29,12 @@ declare global {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: App;
+    [tag]: WizardApp;
   }
 }
 
 @customElement(tag)
-export class App extends LitElement {
+export class WizardApp extends LitElement {
   static override readonly styles = componentStyles;
 
   readonly #themeStorage = new PersistentStorage({
@@ -49,7 +49,7 @@ export class App extends LitElement {
 
   @provide({ context: themeContext })
   @state()
-  protected theme: Theme = this.#theme;
+  theme: Theme = this.#theme;
 
   readonly #scrapedTokensStorage = new PersistentStorage({
     onChange: () => {
