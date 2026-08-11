@@ -17,22 +17,6 @@ import positiveDocs from '@nl-design-system-unstable/documentation/handboek/huis
 import selectedDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-selected-intro.md?raw';
 import warningDocs from '@nl-design-system-unstable/documentation/handboek/huisstijl-vastleggen/basis-tokens/_basis-color-warning-intro.md?raw';
 
-export const colorDocs: Record<string, string> = {
-  'accent-1': accent1Docs,
-  'accent-2': accent2Docs,
-  'accent-3': accent3Docs,
-  'action-1': action1Docs,
-  'action-2': action2Docs,
-  default: defaultDocs,
-  disabled: disabledDocs,
-  highlight: highlightDocs,
-  info: infoDocs,
-  negative: negativeDocs,
-  positive: positiveDocs,
-  selected: selectedDocs,
-  warning: warningDocs,
-};
-
 ---
 
 <BaseLayout title="Kleur systeem - Stijlgids - Theme Wizard">
@@ -63,28 +47,28 @@ export const colorDocs: Record<string, string> = {
                     <section id="docs-default">
                       <clippy-heading level="3">Default</clippy-heading>
                       <wc-markdown>
-                        {colorDocs.default}
+                        {defaultDocs}
                       </wc-markdown>
                     </section>
 
                     <section id="docs-accent-1">
                       <clippy-heading level="3">Accent 1</clippy-heading>
                       <wc-markdown>
-                        {colorDocs['accent-1']}
+                        {accent1Docs}
                       </wc-markdown>
                     </section>
 
                     <section id="docs-accent-2">
                       <clippy-heading level="3">Accent 2</clippy-heading>
                       <wc-markdown>
-                        {colorDocs['accent-2']}
+                        {accent2Docs}
                       </wc-markdown>
                     </section>
 
                     <section id="docs-accent-3">
                       <clippy-heading level="3">Accent 3</clippy-heading>
                       <wc-markdown>
-                        {colorDocs['accent-3']}
+                        {accent3Docs}
                       </wc-markdown>
                     </section>
                   </div>
