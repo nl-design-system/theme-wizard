@@ -87,13 +87,11 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@nl-design-system-unstable/documentation": "1.11.0",
     "@playwright/test": "1.62.1",
     "@tabler/icons": "3.46.0",
     "@types/dlv": "1.1.5",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
-    "@vanillawc/wc-markdown": "1.6.11",
     "postcss-html": "1.8.1",
     "premove": "4.0.0"
   }
