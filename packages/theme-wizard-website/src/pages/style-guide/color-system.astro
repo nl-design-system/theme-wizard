@@ -2,10 +2,13 @@
 import StyleGuideNav from '@/components/StyleGuideNav.astro';
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import '@nl-design-system-community/clippy-components/clippy-story-preview';
-import '@nl-design-system-community/clippy-components/clippy-reset-theme';
-
 ---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+  import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+</script>
 
 <BaseLayout title="Kleur systeem - Stijlgids - Theme Wizard">
   <theme-wizard-app>
@@ -14,15 +17,15 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
       <StyleGuideNav />
 
       <wizard-container slot="main">
-        <wizard-stack size="3xl">
+        <wizard-stack size="5xl">
           <clippy-heading level="1">Kleur systeem</clippy-heading>
 
           <wizard-stack size="3xl">
             <section>
               <clippy-story-preview>
-                <wizard-stack size="2xl">
+                <wizard-stack size="4xl">
                   <clippy-heading level="2">Huisstijl</clippy-heading>
-                  <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3"></wizard-color-system-preview>
+                  <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3" skip-redundant-groups="accent-2, accent-3"></wizard-color-system-preview>
 
                   <TokenStoryMatches groups="basis.color.default, basis.color.default-inverse, basis.color.accent-1, basis.color.accent-1-inverse, basis.color.accent-2, basis.color.accent-2-inverse, basis.color.accent-3, basis.color.accent-3-inverse" />
                 </wizard-stack>
@@ -33,7 +36,7 @@ import '@nl-design-system-community/clippy-components/clippy-reset-theme';
               <clippy-story-preview>
                 <wizard-stack size="2xl">
                   <clippy-heading level="2">Interactie</clippy-heading>
-                  <wizard-color-system-preview groups="action-1, action-2, disabled"></wizard-color-system-preview>
+                  <wizard-color-system-preview groups="action-1, action-2, disabled" skip-redundant-groups="action-2"></wizard-color-system-preview>
 
                   <TokenStoryMatches groups="basis.color.action-1, basis.color.action-1-inverse, basis.color.action-2, basis.color.action-2-inverse, basis.color.disabled, basis.color.disabled-inverse" />
                 </wizard-stack>

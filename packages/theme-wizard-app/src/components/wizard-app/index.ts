@@ -29,12 +29,12 @@ declare global {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: App;
+    [tag]: WizardApp;
   }
 }
 
 @customElement(tag)
-export class App extends LitElement {
+export class WizardApp extends LitElement {
   static override readonly styles = componentStyles;
 
   readonly #themeStorage = new PersistentStorage({
