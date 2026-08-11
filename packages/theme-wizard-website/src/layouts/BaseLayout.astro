@@ -12,7 +12,7 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
 ---
 
 <!doctype html>
-<html lang="nl-NL" class="utrecht-root">
+<html lang="nl-NL" class="theme-wizard-root | utrecht-root">
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>
@@ -44,3 +44,10 @@ const { title = 'Theme Wizard', description = 'Preview and analyze website theme
     </script>
   </body>
 </html>
+
+<style>
+/* @TODO: this is a quick fix, we need to find the root cause */
+.theme-wizard-root {
+  overflow-x: hidden;
+}
+</style>
