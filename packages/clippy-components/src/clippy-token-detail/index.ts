@@ -93,7 +93,7 @@ export class ClippyTokenDetail extends LitElement {
             <div class="utrecht-data-list__item">
               <dt class="utrecht-data-list__item-key">Token type</dt>
               <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">color</code>
+                <code class="nl-code">${this.token.tokenType}</code>
               </dd>
             </div>
             <div class="utrecht-data-list__item">
@@ -150,9 +150,7 @@ export class ClippyTokenDetail extends LitElement {
                     )}
                   </ul>
                 `
-              : html`
-                  <utrecht-paragraph data-testid="reference-empty-label">${this.referenceEmptyLabel}</utrecht-paragraph>
-                `
+              : html` <p class="utrecht-paragraph" data-testid="reference-empty-label">${this.referenceEmptyLabel}</p> `
           }
         </clippy-stack>
       </clippy-stack>
