@@ -20,3 +20,5 @@ export type SpacingDisplayToken = DisplayToken & {
 };
 
 export type TextDisplayToken = DisplayToken & {};
+
+export type BorderDisplayToken = DisplayToken & {};

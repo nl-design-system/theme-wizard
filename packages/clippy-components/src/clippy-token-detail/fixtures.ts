@@ -1,5 +1,5 @@
 import Color from 'colorjs.io';
-import { ColorDisplayToken, SpacingDisplayToken, TextDisplayToken } from './types';
+import { BorderDisplayToken, ColorDisplayToken, SpacingDisplayToken, TextDisplayToken } from './types';
 
 const color = new Color('#c9aaf3');
 
@@ -75,4 +75,20 @@ export const textLineHeightFixture: TextDisplayToken = {
   tokenType: 'lineHeight',
   usage: ['basis.form-control.line-height'],
   usageCount: 1,
+};
+
+export const borderWidthFixture: BorderDisplayToken = {
+  displayValue: '0.125rem',
+  tokenId: 'basis.border.width.md',
+  tokenType: 'borderWidth',
+  usage: [],
+  usageCount: 0,
+};
+
+export const borderRadiusFixture: BorderDisplayToken = {
+  displayValue: '0.5rem',
+  tokenId: 'basis.border.radius.md',
+  tokenType: 'borderRadius',
+  usage: [],
+  usageCount: 0,
 };

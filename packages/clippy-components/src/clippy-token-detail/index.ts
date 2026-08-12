@@ -67,6 +67,10 @@ export class ClippyTokenDetail extends LitElement {
           line-height=${this.token.displayValue}
           font-size="var(--basis-text-font-size-xl)"
         ></clippy-token-sample-text>`;
+      case 'borderWidth':
+        return html`<clippy-token-sample-border border-width=${this.token.displayValue}></clippy-token-sample-border>`;
+      case 'borderRadius':
+        return html`<clippy-token-sample-border border-radius=${this.token.displayValue}></clippy-token-sample-border>`;
       case 'dimension':
         return html`<clippy-token-sample-spacing
           size=${this.token.displayValue}

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
+  borderRadiusFixture,
+  borderWidthFixture,
   colorFixture,
   spacingFixture,
   textFontFamilyFixture,
@@ -69,5 +71,17 @@ export const FontWeight: Story = {
 export const LineHeight: Story = {
   args: {
     token: textLineHeightFixture,
+  },
+};
+
+export const BorderWidth: Story = {
+  args: {
+    token: borderWidthFixture,
+  },
+};
+
+export const BorderRadius: Story = {
+  args: {
+    token: borderRadiusFixture,
   },
 };
