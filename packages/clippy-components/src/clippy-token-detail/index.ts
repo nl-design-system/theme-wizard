@@ -1,7 +1,16 @@
 import { safeCustomElement } from '@lib/decorators';
-import { html, LitElement, nothing } from 'lit';
+import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
+import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
+import tableCss from '@utrecht/table-css/dist/index.css?inline';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
+import srOnly from '../lib/sr-only';
+import styles from './styles';
 import { DisplayToken } from './types';
+import '../clippy-color-sample';
+import '../clippy-token-sample-spacing';
+import '../clippy-token-sample-text';
+import '../clippy-heading';
 
 const tag = 'clippy-token-detail';
 
@@ -13,6 +22,8 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyTokenDetail extends LitElement {
+  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(codeCss), unsafeCSS(tableCss), styles, srOnly];
+
   @property({ type: Object })
   token: DisplayToken | undefined = undefined;
 
@@ -22,27 +33,42 @@ export class ClippyTokenDetail extends LitElement {
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
 
   renderTokenExample() {
-    // switch (this.token?.tokenType) {
-    //   case 'color':
-    //     return html`<clippy-color-sample color=${this.token.displayValue}></clippy-color-sample>`;
-    //   case 'fontSize':
-    //     return html`<wizard-font-sample size=${this.token.displayValue} truncate></wizard-font-sample>`;
-    //   case 'fontFamily':
-    //     return html`<wizard-font-sample
-    //       family=${this.token.displayValue}
-    //       size="var(--basis-text-font-size-xl)"
-    //       truncate
-    //     ></wizard-font-sample>`;
-    //   case 'dimension':
-    //     return renderSpacingExample(this.token.displayValue, this.token.metadata?.['space']);
-    //   default:
-    //     return nothing;
-    // }
-    return html`<mark>Samples</mark>`;
+    switch (this.token?.tokenType) {
+      case 'color':
+        return html`<clippy-color-sample color=${this.token.displayValue}></clippy-color-sample>`;
+      case 'fontSize':
+        return html`<clippy-token-sample-text
+          font-size=${this.token.displayValue}
+          truncate
+        ></clippy-token-sample-text>`;
+      case 'fontFamily':
+        return html`<clippy-token-sample-text
+          font-family=${this.token.displayValue}
+          font-size="var(--basis-text-font-size-xl)"
+          truncate
+        ></clippy-token-sample-text>`;
+      case 'fontWeight':
+        return html`<clippy-token-sample-text
+          font-weight=${this.token.displayValue}
+          font-size="var(--basis-text-font-size-xl)"
+          truncate
+        ></clippy-token-sample-text>`;
+      case 'lineHeight':
+        return html`<clippy-token-sample-text
+          line-height=${this.token.displayValue}
+          font-size="var(--basis-text-font-size-xl)"
+        ></clippy-token-sample-text>`;
+      case 'dimension':
+        return html`<clippy-token-sample-spacing
+          size=${this.token.displayValue}
+          concept=${this.token.metadata?.['concept']}
+        ></clippy-token-sample-spacing>`;
+      default:
+        return nothing;
+    }
   }
 
   override render() {
-    console.log('this.token', this.token);
     if (!this.token) return html`<p>No token provided.</p>`;
 
     return html`
