@@ -12,7 +12,7 @@ describe(`<${tag}>`, () => {
     component = document.querySelector(tag) as ClippyTokenDetail;
   });
 
-  it('renders a dialog', async () => {
+  it('renders', async () => {
     await component.updateComplete;
 
     await expect.element(component).toBeInTheDocument();
