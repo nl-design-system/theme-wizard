@@ -36,7 +36,7 @@ export class ClippyTokenDetail extends LitElement {
   ];
 
   @property({ type: Object })
-  token: DisplayToken | undefined = undefined;
+  token?: DisplayToken;
 
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
