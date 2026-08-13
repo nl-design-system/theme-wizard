@@ -1,48 +1,36 @@
+import { removeExtensions, removeNonTokenProperties } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { WizardUploadEventDetail } from '../wizard-token-upload-form';
 import { t } from '../../i18n';
-import { type TokenFileResult, parseTokenFiles } from '../../lib/TokenFiles';
 import '../wizard-stack';
 import '../wizard-token-output';
 import '../wizard-token-upload-form';
-import styles from './styles';
+import { readTokenFiles } from '../../lib/TokenFiles';
 
-const tag = 'wizard-token-validation-form';
+const tag = 'wizard-token-minify-form';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: WizardTokenValidationForm;
+    [tag]: WizardTokenMinifyForm;
   }
 }
 
-type Result = TokenFileResult | null;
+type Result = Record<string, unknown> | null;
 
 @customElement(tag)
-export class WizardTokenValidationForm extends LitElement {
-  static override readonly styles = [styles];
-
+export class WizardTokenMinifyForm extends LitElement {
   @state()
   private result: Result = null;
 
   private readonly handleUpload = async (event: CustomEvent<WizardUploadEventDetail>) => {
     const { excludeParentKeys, files } = event.detail;
-    this.result = await parseTokenFiles(files, excludeParentKeys);
+    this.result = removeNonTokenProperties(removeExtensions(await readTokenFiles(files, excludeParentKeys)));
   };
 
   private renderResult(result: NonNullable<Result>) {
-    const json = JSON.stringify(result.success ? result.data : result.error, null, 2);
-    const description = result.success
-      ? t('tokenMinifyForm.result.noErrors')
-      : t('tokenMinifyForm.result.errors', { count: result.error.length });
-    return html`
-      <wizard-token-output
-        .json=${json}
-        .downloadJson=${result.success ? json : ''}
-        ?invalid=${!result.success}
-        description=${description}
-      ></wizard-token-output>
-    `;
+    const json = JSON.stringify(result, null, 2);
+    return html` <wizard-token-output .json=${json} .downloadJson=${result ? json : ''}></wizard-token-output> `;
   }
 
   override render() {
