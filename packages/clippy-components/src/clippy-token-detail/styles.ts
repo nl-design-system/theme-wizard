@@ -11,9 +11,9 @@ export default css`
     --utrecht-data-list-rows-gap: var(--basis-space-row-md);
     --utrecht-data-list-rows-item-margin-block-start: var(--basis-space-row-lg);
 
+    color: var(--basis-color-default-color-document);
     font-family: var(--basis-text-font-family-default);
     font-size: var(--basis-text-font-size-md);
     line-height: var(--basis-text-line-height-md);
-    color: var(--basis-color-default-color-document);
   }
 `;
