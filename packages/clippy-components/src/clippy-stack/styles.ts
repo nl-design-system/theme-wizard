@@ -13,7 +13,7 @@ export default css`
   }
 
   :host([size='none' i]) {
-    --_clippy-stack-size: 0;
+    --_clippy-stack-size: var(--basis-space-none);
   }
 
   :host([size='2xs' i]) {
