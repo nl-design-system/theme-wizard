@@ -1,6 +1,7 @@
 import { safeCustomElement } from '@lib/decorators';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
+import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import descriptionListCss from '@utrecht/data-list-css/dist/index.css?inline';
 import unorderedListCss from '@utrecht/unordered-list-css/dist/index.css?inline';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
@@ -29,6 +30,7 @@ export class ClippyTokenDetail extends LitElement {
     unsafeCSS(codeCss),
     unsafeCSS(descriptionListCss),
     unsafeCSS(unorderedListCss),
+    unsafeCSS(paragraphCss),
     styles,
     srOnly,
   ];
@@ -150,7 +152,7 @@ export class ClippyTokenDetail extends LitElement {
                     )}
                   </ul>
                 `
-              : html` <p class="utrecht-paragraph" data-testid="reference-empty-label">${this.referenceEmptyLabel}</p> `
+              : html` <p class="nl-paragraph" data-testid="reference-empty-label">${this.referenceEmptyLabel}</p> `
           }
         </clippy-stack>
       </clippy-stack>
