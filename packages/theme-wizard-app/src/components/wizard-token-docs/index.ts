@@ -11,7 +11,7 @@ import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
 import { tokenDocs } from '../../lib/tokenDocs';
-import '../wizard-stack';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 
 const tag = 'wizard-token-docs';
 
@@ -105,10 +105,10 @@ export class WizardTokenDocs extends LitElement {
           if (!docs) return nothing;
 
           return html`
-            <wizard-stack size="none">
+            <clippy-stack size="none">
               <clippy-heading level=${this.headingLevel}>${t(`tokens.fieldLabels.${path}.label`)}</clippy-heading>
               <wc-markdown class="wizard-token-docs__markdown" .textContent=${docs}></wc-markdown>
-            </wizard-stack>
+            </clippy-stack>
           `;
         })}
       </clippy-stack>
