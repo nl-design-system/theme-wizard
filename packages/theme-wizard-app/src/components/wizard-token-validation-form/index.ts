@@ -33,8 +33,8 @@ export class WizardTokenValidationForm extends LitElement {
   private renderResult(result: NonNullable<Result>) {
     const json = JSON.stringify(result.success ? result.data : result.error, null, 2);
     const description = result.success
-      ? t('tokenMinifyForm.result.noErrors')
-      : t('tokenMinifyForm.result.errors', { count: result.error.length });
+      ? t('tokenValidationForm.result.noErrors')
+      : t('tokenValidationForm.result.errors', { count: result.error.length });
     return html`
       <wizard-token-output
         .json=${json}
@@ -50,7 +50,7 @@ export class WizardTokenValidationForm extends LitElement {
       <wizard-stack size="3xl">
         <wizard-token-upload-form
           @wizard-upload=${this.handleUpload}
-          submit-label=${t('tokenMinifyForm.submit')}
+          submit-label=${t('tokenValidationForm.submit')}
         ></wizard-token-upload-form>
 
         ${this.result === null ? nothing : this.renderResult(this.result)}
