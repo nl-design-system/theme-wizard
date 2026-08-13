@@ -12,7 +12,6 @@ import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
 import { tokenDocs } from '../../lib/tokenDocs';
 import '../wizard-stack';
-import styles from './styles';
 
 const tag = 'wizard-token-docs';
 
@@ -45,8 +44,6 @@ const parseGroup = (path: string): ParsedGroup => {
 
 @safeCustomElement(tag)
 export class WizardTokenDocs extends LitElement {
-  static override readonly styles = [styles];
-
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
