@@ -31,8 +31,8 @@ const meta = {
     React.createElement(
       'clippy-stack',
       args,
-      ['The quick brown fox jumps over the lazy dog.', 'The quick brown fox jumps over the lazy dog.'].map((text) =>
-        React.createElement('p', { className: 'nl-paragraph' }, text),
+      Array.from({ length: 2 }, () => 
+        React.createElement('p', { className: 'nl-paragraph' }, 'The quick brown fox jumps over the lazy dog.')),
       ),
     ),
   tags: ['autodocs'],
