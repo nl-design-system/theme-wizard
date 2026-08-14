@@ -1,5 +1,5 @@
 import { it, describe, expect } from 'vitest';
-import { removeExtensions, type RemoveExtensionsOptions } from './remove-extensions';
+import { removeExtensions } from './remove-extensions';
 
 describe('remove all extensions', () => {
   it('removes $extensions from a single token', () => {
@@ -85,7 +85,7 @@ describe('remove specific extensions (only)', () => {
         },
       },
     };
-    removeExtensions(tokens, { only: ['sub-type'] });
+    removeExtensions(tokens, { include: ['sub-type'] });
     expect(tokens.color.red.$extensions).toEqual({ 'contrast-with': ['blue'] });
   });
 
@@ -99,7 +99,7 @@ describe('remove specific extensions (only)', () => {
         },
       },
     };
-    removeExtensions(tokens, { only: ['sub-type', 'contrast-with'] });
+    removeExtensions(tokens, { include: ['sub-type', 'contrast-with'] });
     expect(tokens.color.red.$extensions).toEqual({ other: 'keep' });
   });
 
@@ -113,7 +113,7 @@ describe('remove specific extensions (only)', () => {
         },
       },
     };
-    removeExtensions(tokens, { only: ['sub-type'] });
+    removeExtensions(tokens, { include: ['sub-type'] });
     expect(tokens.color.red).not.toHaveProperty('$extensions');
   });
 
@@ -127,7 +127,7 @@ describe('remove specific extensions (only)', () => {
         },
       },
     };
-    removeExtensions(tokens, { only: ['does-not-exist'] });
+    removeExtensions(tokens, { include: ['does-not-exist'] });
     expect(tokens.color.red.$extensions).toEqual({ 'sub-type': 'brand' });
   });
 
@@ -141,8 +141,8 @@ describe('remove specific extensions (only)', () => {
         },
       },
     };
-    removeExtensions(tokens, { only: ['sub-type'] });
-    removeExtensions(tokens, { only: ['sub-type'] });
+    removeExtensions(tokens, { include: ['sub-type'] });
+    removeExtensions(tokens, { include: ['sub-type'] });
     expect(tokens.color.red.$extensions).toEqual({ 'contrast-with': ['blue'] });
   });
 });
@@ -158,7 +158,7 @@ describe('keep specific extensions (skip removal)', () => {
         },
       },
     };
-    removeExtensions(tokens, { keep: ['sub-type'] });
+    removeExtensions(tokens, { exclude: ['sub-type'] });
     expect(tokens.color.red.$extensions).toEqual({ 'sub-type': 'brand' });
   });
 
@@ -172,7 +172,7 @@ describe('keep specific extensions (skip removal)', () => {
         },
       },
     };
-    removeExtensions(tokens, { keep: ['sub-type', 'contrast-with'] });
+    removeExtensions(tokens, { exclude: ['sub-type', 'contrast-with'] });
     expect(tokens.color.red.$extensions).toEqual({ 'contrast-with': ['blue'], 'sub-type': 'brand' });
   });
 
@@ -186,7 +186,7 @@ describe('keep specific extensions (skip removal)', () => {
         },
       },
     };
-    removeExtensions(tokens, { keep: ['does-not-exist'] });
+    removeExtensions(tokens, { exclude: ['does-not-exist'] });
     expect(tokens.color.red).not.toHaveProperty('$extensions');
   });
 
@@ -200,8 +200,8 @@ describe('keep specific extensions (skip removal)', () => {
         },
       },
     };
-    removeExtensions(tokens, { keep: ['sub-type'] });
-    removeExtensions(tokens, { keep: ['sub-type'] });
+    removeExtensions(tokens, { exclude: ['sub-type'] });
+    removeExtensions(tokens, { exclude: ['sub-type'] });
     expect(tokens.color.red.$extensions).toEqual({ 'sub-type': 'brand' });
   });
 });
@@ -218,9 +218,9 @@ describe('both keep and only given (type-unsafe caller)', () => {
       },
     };
     removeExtensions(tokens, {
-      keep: ['sub-type'],
-      only: ['contrast-with'],
-    } as unknown as RemoveExtensionsOptions);
+      exclude: ['sub-type'],
+      include: ['contrast-with'],
+    });
     expect(tokens.color.red.$extensions).toEqual({ 'sub-type': 'brand' });
   });
 
@@ -235,9 +235,9 @@ describe('both keep and only given (type-unsafe caller)', () => {
       },
     };
     removeExtensions(tokens, {
-      keep: ['sub-type'],
-      only: ['sub-type'],
-    } as unknown as RemoveExtensionsOptions);
+      exclude: ['sub-type'],
+      include: ['sub-type'],
+    });
     expect(tokens.color.red.$extensions).toEqual({ 'sub-type': 'brand' });
   });
 
@@ -251,7 +251,7 @@ describe('both keep and only given (type-unsafe caller)', () => {
         },
       },
     };
-    removeExtensions(tokens, { keep: [], only: ['contrast-with'] } as unknown as RemoveExtensionsOptions);
+    removeExtensions(tokens, { exclude: [], include: ['contrast-with'] });
     expect(tokens.color.red).not.toHaveProperty('$extensions');
   });
 });

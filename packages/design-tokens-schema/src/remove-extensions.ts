@@ -1,14 +1,19 @@
 import { walkTokens } from './walker';
 
-export type RemoveExtensionsOptions = { keep: string[]; only?: never } | { keep?: never; only: string[] };
+export type RemoveExtensionsOptions = {
+  /** Remove all extensions except these (opt-out list) */
+  exclude?: string[];
+  /** Only remove these extensions (opt-in list) */
+  include?: string[];
+};
 
 /**
  * @description
  * Warning: mutates input!
  * Recursively loop over `tokens` and remove `$extensions` from every token.
- * `options.keep` removes every extension key except the ones listed.
- * `options.only` removes only the extension keys listed.
- * If both are given (bypassing the type), `keep` wins and `only` is ignored.
+ * `options.exclude` removes every extension key except the ones listed.
+ * `options.include` removes only the extension keys listed.
+ * If both are given (bypassing the type), `exclude` wins and `include` is ignored.
  * Without `options`, `$extensions` is removed entirely.
  * The `$extensions` object is dropped entirely once it becomes empty.
  */
@@ -19,15 +24,15 @@ export const removeExtensions = (
   walkTokens(tokens, (token) => {
     if (!token.$extensions) return;
 
-    if (options?.keep) {
-      const { keep } = options;
+    if (options?.exclude) {
+      const { exclude: keep } = options;
       for (const key of Object.keys(token.$extensions)) {
         if (!keep.includes(key)) {
           delete token.$extensions[key];
         }
       }
-    } else if (options?.only) {
-      for (const key of options.only) {
+    } else if (options?.include) {
+      for (const key of options.include) {
         delete token.$extensions[key];
       }
     } else {
