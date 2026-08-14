@@ -44,3 +44,27 @@ export function getSiblingGroupsWithOnlyRefsTo(groupPath: string, parentGroup: u
     })
     .map(([siblingKey]) => `${parentPath}.${siblingKey}`);
 }
+
+/**
+ * Drops each group matching `prefixes` that is entirely composed of references into an earlier
+ * group in `groupKeys`, e.g. `accent-2` entirely re-pointing at `accent-1`.
+ */
+export function filterRedundantGroups(
+  groupKeys: string[],
+  colors: Record<string, unknown>,
+  prefixes: string[],
+  basePath = 'basis.color',
+): string[] {
+  const seenGroupKeys: string[] = [];
+
+  return groupKeys.filter((groupKey) => {
+    const isRedundant =
+      prefixes.some((prefix) => groupKey.startsWith(prefix)) &&
+      seenGroupKeys.some((seenGroupKey) =>
+        getSiblingGroupsWithOnlyRefsTo(`${basePath}.${seenGroupKey}`, colors).includes(`${basePath}.${groupKey}`),
+      );
+
+    seenGroupKeys.push(groupKey);
+    return !isRedundant;
+  });
+}

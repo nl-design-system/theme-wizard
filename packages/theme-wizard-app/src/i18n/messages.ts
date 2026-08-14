@@ -251,6 +251,8 @@ export const en = {
     backToOverview: 'Back to overview',
     fieldLabels: {
       basis: {
+        'border-radius': { label: 'Border radius' },
+        'border-width': { label: 'Border width' },
         color: {
           'accent-1': {
             docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
@@ -306,7 +308,26 @@ export const en = {
           },
         },
         colors: 'Colors',
+        space: {
+          block: { label: 'Block' },
+          column: { label: 'Column' },
+          inline: { label: 'Inline' },
+          row: { label: 'Row' },
+          text: { label: 'Text' },
+        },
         spacing: 'Spacing',
+        text: {
+          'font-family': {
+            default: { label: 'Default' },
+            monospace: { label: 'Monospace' },
+          },
+          'font-size': { label: 'Font size' },
+          'font-weight': {
+            bold: { label: 'Bold' },
+            default: { label: 'Default' },
+          },
+          'line-height': { label: 'Line height' },
+        },
         typography: 'Typography',
       },
       bodyFont: 'Running text',
@@ -725,6 +746,8 @@ export const nl = {
     backToOverview: 'Terug naar overzicht',
     fieldLabels: {
       basis: {
+        'border-radius': { label: 'Afgeronde hoeken' },
+        'border-width': { label: 'Kader- of lijndikte' },
         color: {
           'accent-1': {
             docs: 'https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#accent-1-accent-2-en-accent-3',
@@ -780,7 +803,26 @@ export const nl = {
           },
         },
         colors: 'Kleuren',
+        space: {
+          block: { label: 'Block' },
+          column: { label: 'Column' },
+          inline: { label: 'Inline' },
+          row: { label: 'Row' },
+          text: { label: 'Text' },
+        },
         spacing: 'Witruimte',
+        text: {
+          'font-family': {
+            default: { label: 'Standaard' },
+            monospace: { label: 'Monospace' },
+          },
+          'font-size': { label: 'Lettergrootte' },
+          'font-weight': {
+            bold: { label: 'Vet' },
+            default: { label: 'Standaard' },
+          },
+          'line-height': { label: 'Regelhoogte' },
+        },
         typography: 'Typografie',
       },
       bodyFont: 'Lopende tekst',
