@@ -5,7 +5,6 @@ import '../wizard-table-scroller';
 
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
-import { countUsagePerToken } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
@@ -48,9 +47,8 @@ export class WizardColorSystemPreview extends LitElement {
 
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const colors = basis['color'] as Record<string, unknown>;
-    const tokenUsage = countUsagePerToken(this.theme.tokens);
 
-    const colorTokenGroups = prepareColorGroups(colors, tokenUsage);
+    const colorTokenGroups = prepareColorGroups(colors);
     const requestedGroups = this.groups.length > 0 ? this.groups : colorTokenGroups.map((group) => group.key);
     const visibleGroups =
       this.skipRedundantGroups.length > 0

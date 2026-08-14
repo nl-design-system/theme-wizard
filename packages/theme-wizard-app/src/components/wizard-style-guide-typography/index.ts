@@ -8,10 +8,11 @@ import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
-import { type ModernDimensionToken, countUsagePerToken } from '@nl-design-system-community/design-tokens-schema';
+import { EXTENSION_REFERENCED_AT, type ModernDimensionToken } from '@nl-design-system-community/design-tokens-schema';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
+import dlv from 'dlv';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
@@ -55,7 +56,7 @@ export class WizardStyleGuideTypography extends LitElement {
     return `https://fonts.google.com/specimen/${googleFont.label.replaceAll(/\s+/g, '+')}`;
   }
 
-  #prepareFontFamilies(text: Record<string, unknown>, tokenUsage: Map<string, string[]>): FontFamilyToken[] {
+  #prepareFontFamilies(text: Record<string, unknown>): FontFamilyToken[] {
     return Object.entries(text['font-family'] as Record<string, unknown>).map(([name, tokenValue]) => {
       const value = (tokenValue as DesignToken).$value;
       const searchFamily = Array.isArray(value) ? value.at(0) : value;
@@ -63,20 +64,20 @@ export class WizardStyleGuideTypography extends LitElement {
 
       const displayValue = Array.isArray(value) ? value.join(', ') : value;
       const tokenId = `basis.text.font-family.${name}`;
-      const usage = tokenUsage.get(tokenId) || [];
+      const usage = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
       const usageCount = usage.length;
       return { name, displayValue, googleFontsSpecimen, tokenId, usage, usageCount };
     });
   }
 
-  #prepareFontSizes(text: Record<string, unknown>, tokenUsage: Map<string, string[]>): FontSizeToken[] {
+  #prepareFontSizes(text: Record<string, unknown>): FontSizeToken[] {
     return Object.entries(text['font-size'] as Record<string, unknown>)
       .reverse()
       .map(([name, tokenValue]) => {
         const { $value } = tokenValue as ModernDimensionToken;
         const displayValue = $value.value?.toString() + $value.unit;
         const tokenId = `basis.text.font-size.${name}`;
-        const usage = tokenUsage.get(tokenId) || [];
+        const usage = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
         const usageCount = usage.length;
         return { name, displayValue, tokenId, usage, usageCount };
       });
@@ -91,9 +92,8 @@ export class WizardStyleGuideTypography extends LitElement {
   override render() {
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const text = basis['text'] as Record<string, unknown>;
-    const tokenUsage = countUsagePerToken(this.theme.tokens);
-    const fontFamilies = this.#prepareFontFamilies(text, tokenUsage);
-    const fontSizes = this.#prepareFontSizes(text, tokenUsage);
+    const fontFamilies = this.#prepareFontFamilies(text);
+    const fontSizes = this.#prepareFontSizes(text);
 
     return html`
       <div class="wizard-style-guide">

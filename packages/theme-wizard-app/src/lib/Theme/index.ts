@@ -17,6 +17,10 @@ import {
   upgradeLegacyTokens,
   resolveConfigRefs,
   useOriginalValue,
+  removeExtensions,
+  EXTENSION_REFERENCED_AT,
+  EXTENSION_REFERENCE_COUNT,
+  addTokenCountExtensions,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -59,6 +63,7 @@ export default class Theme {
     const [styleSheet, rule] = createStylesheet(stylesheet, DEFAULT_SELECTOR);
     this.#rule = rule;
     this.#stylesheet = styleSheet;
+    this.#runThemeProcessors(this.#defaults);
     this.tokens = structuredClone(this.#defaults);
   }
 
@@ -118,6 +123,8 @@ export default class Theme {
     addComponentContrastExtensions(tokens);
     addBasisContrastExtensions(tokens);
     resolveConfigRefs(tokens);
+    removeExtensions(tokens, { include: [EXTENSION_REFERENCED_AT, EXTENSION_REFERENCE_COUNT] });
+    addTokenCountExtensions(tokens);
     return tokens;
   }
 
