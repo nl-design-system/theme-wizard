@@ -621,7 +621,7 @@ describe('validating color contrast', () => {
     });
 
     it('does not crash when re-validating pre-processed tokens with hex-string contrast extensions', () => {
-      // Regression test: toTokensJSON calls toLegacyTokens which converts ColorJS $value
+      // Regression test: toLegacyTokens converts ColorJS $value
       // objects back to hex strings, including inside contrast extension color objects.
       // When that downloaded JSON is re-uploaded, the stale hex-string contrast extension
       // must not reach superRefine as-is — it would crash with "color.components is undefined".

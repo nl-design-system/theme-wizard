@@ -68,16 +68,16 @@ describe('Theme', () => {
 
   it('has a different JSON output after token update', async () => {
     const theme = new Theme();
-    const initialJSON = await theme.toTokensJSON();
+    const initialTokens = theme.toLegacyTokens();
     theme.updateAt('basis.color.accent-1.color-hover', '{basis.color.accent-1.bg-active}');
-    const updatedJSON = await theme.toTokensJSON();
-    const parsed = JSON.parse(updatedJSON);
-    const sourceValue = dlv(parsed, 'basis.color.accent-1.color-hover.$value');
-    const destinationValue = dlv(parsed, 'basis.color.accent-1.bg-active.$value');
-    const expectedValue = '#dde6f1';
-    expect(sourceValue).toBe(expectedValue);
-    expect(destinationValue).toBe(expectedValue);
-    return expect(initialJSON).not.toMatch(updatedJSON);
+
+    const updatedTokens = theme.toLegacyTokens();
+    const sourceValue = dlv(updatedTokens, 'basis.color.accent-1.color-hover.$value');
+    expect(sourceValue).toBe('{basis.color.accent-1.bg-active}');
+
+    const destinationValue = dlv(updatedTokens, 'basis.color.accent-1.bg-active.$value');
+    expect(destinationValue).toBe('#dde6f1');
+    return expect(initialTokens).not.toEqual(updatedTokens);
   });
 
   it('can reset tokens', async () => {
@@ -105,12 +105,6 @@ describe('Theme', () => {
     const theme = new Theme();
     const css = normalizeCss(await theme.toCSS());
     return expect(css).toMatchSnapshot();
-  });
-
-  it('can export to JSON token file', async () => {
-    const theme = new Theme();
-    const json = await theme.toTokensJSON();
-    return expect(json).toMatchSnapshot();
   });
 
   it('indicates modified state as false on init', () => {
