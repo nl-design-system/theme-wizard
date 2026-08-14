@@ -328,6 +328,9 @@ export const ThemeSchema = z.unknown().transform(preprocessTheme).pipe(ThemeShap
 
 export type Theme = z.infer<typeof ThemeShapeSchema>;
 
+/** Like Theme, but less restrictive and less inference based */
+export type ThemeLike = Record<string, unknown>;
+
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
 };
