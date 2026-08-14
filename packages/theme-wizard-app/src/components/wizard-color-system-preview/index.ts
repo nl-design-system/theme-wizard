@@ -5,14 +5,25 @@ import '../wizard-table-scroller';
 
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
-import { countUsagePerToken } from '@nl-design-system-community/design-tokens-schema';
+import {
+  BaseDesignToken,
+  countUsagePerToken,
+  SKIP,
+  TokenPath,
+  walkTokens,
+} from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { log } from 'xstate';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
-import { prepareColorGroups } from '../wizard-style-guide/utils';
+import {
+  getTokenCollectionByTokenPaths,
+  prepareColorGroups,
+  prepareTokenCollection,
+} from '../wizard-style-guide/utils';
 
 const tag = 'wizard-color-system-preview';
 
@@ -45,38 +56,41 @@ export class WizardColorSystemPreview extends LitElement {
     ) {
       return;
     }
+    console.log('======');
+    const groupPaths: TokenPath[] = this.groups.map((str) => str.split('.'));
+    const colorCollection = getTokenCollectionByTokenPaths(this.theme.tokens, groupPaths);
+    console.log('colorCollection', colorCollection);
 
-    const basis = this.theme.tokens['basis'] as Record<string, unknown>;
-    const colors = basis['color'] as Record<string, unknown>;
-    const tokenUsage = countUsagePerToken(this.theme.tokens);
+    // const tokenUsage = countUsagePerToken(this.theme.tokens);
 
-    const colorTokenGroups = prepareColorGroups(colors, tokenUsage);
-    const requestedGroups = this.groups.length > 0 ? this.groups : colorTokenGroups.map((group) => group.key);
-    const visibleGroups =
-      this.skipRedundantGroups.length > 0
-        ? filterRedundantGroups(requestedGroups, colors, this.skipRedundantGroups)
-        : requestedGroups;
+    // const colorTokenGroups = prepareColorGroups(colors, tokenUsage);
 
-    this.#visibleTokenGroups = this.#filterColorGroups(visibleGroups, colorTokenGroups);
+    // const visibleGroups =
+    //   this.skipRedundantGroups.length > 0
+    //     ? filterRedundantGroups(requestedGroups, colors, this.skipRedundantGroups)
+    //     : requestedGroups;
+
+    // this.#visibleTokenGroups = this.#filterColorGroups(visibleGroups, colorTokenGroups);
   }
 
-  #filterColorGroups(groups: string[], colorTokenGroups: ColorGroup[]) {
-    if (groups.length === 0) return colorTokenGroups;
+  // #filterColorGroups(groups: string[], colorTokenGroups: ColorGroup[]) {
+  //   if (groups.length === 0) return colorTokenGroups;
 
-    const foundGroups = groups.map((groupKey) => colorTokenGroups.find((group) => group.key === groupKey));
-    return foundGroups.filter((group): group is NonNullable<typeof group> => group !== undefined);
-  }
+  //   const foundGroups = groups.map((groupKey) => colorTokenGroups.find((group) => group.key === groupKey));
+  //   return foundGroups.filter((group): group is NonNullable<typeof group> => group !== undefined);
+  // }
 
   override render() {
-    return html`<clippy-token-table-color
-      .groups=${this.#visibleTokenGroups}
-      example-label="${t('styleGuide.sample')}"
-      value-label="${t('styleGuide.value')}"
-      reference-title-label="${t('styleGuide.detailsDialog.tokenReferenceList.title')}"
-      reference-empty-label="${t('styleGuide.detailsDialog.tokenReferenceList.empty')}"
-      background-label="${t('styleGuide.colorSystem.background')}"
-      border-label="${t('styleGuide.colorSystem.border')}"
-      foreground-label="${t('styleGuide.colorSystem.foreground')}"
-    ></clippy-token-table-color>`;
+    return html`<mark>Color table</mark>`;
+    // return html`<clippy-token-table-color
+    //   .groups=${this.#visibleTokenGroups}
+    //   example-label="${t('styleGuide.sample')}"
+    //   value-label="${t('styleGuide.value')}"
+    //   reference-title-label="${t('styleGuide.detailsDialog.tokenReferenceList.title')}"
+    //   reference-empty-label="${t('styleGuide.detailsDialog.tokenReferenceList.empty')}"
+    //   background-label="${t('styleGuide.colorSystem.background')}"
+    //   border-label="${t('styleGuide.colorSystem.border')}"
+    //   foreground-label="${t('styleGuide.colorSystem.foreground')}"
+    // ></clippy-token-table-color>`;
   }
 }

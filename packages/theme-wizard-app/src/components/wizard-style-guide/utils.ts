@@ -1,4 +1,5 @@
 import type { ClippyModal } from '@nl-design-system-community/clippy-components/clippy-modal';
+import type { TokenCollection } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/types.js';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
@@ -7,7 +8,12 @@ import {
   type ColorToken as ColorTokenType,
   isValueObject,
   stringifyColor,
+  ThemeLike,
+  BaseDesignToken,
+  TokenPath,
+  isTokenLike,
 } from '@nl-design-system-community/design-tokens-schema';
+import dlv from 'dlv';
 import { html, nothing } from 'lit';
 import type { ColorGroup, DisplayToken } from './types';
 import { t } from '../../i18n';
@@ -31,6 +37,27 @@ export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: 
         .filter(({ displayValue }) => displayValue !== null);
       return { colorEntries, key };
     });
+}
+
+export function getTokensByPath({ basePath, tokens }: { tokens: ThemeLike; basePath: TokenPath }): BaseDesignToken[] {
+  const result: BaseDesignToken[] = [];
+
+  const tokensAtPath = dlv(tokens, basePath);
+  Object.keys(tokensAtPath).forEach((key) => {
+    const token = tokensAtPath[key];
+    if (isTokenLike(token)) result.push(token);
+  });
+
+  return result;
+}
+
+export function getTokenCollectionByTokenPaths(tokens: ThemeLike, paths: TokenPath[]): TokenCollection {
+  const result: TokenCollection = {};
+  paths.forEach((path) => {
+    const tokensByPath = getTokensByPath({ basePath: path, tokens });
+    if (tokensByPath.length > 0) result[path.join('.')] = tokensByPath;
+  });
+  return result;
 }
 
 export function stringifyTokenValue(token: unknown): string {

@@ -1,3 +1,5 @@
+import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
+
 export type BaseToken = {
   tokenId: string;
   usage: string[];
@@ -13,3 +15,5 @@ export type ColorGroup = {
   colorEntries: ColorEntry[];
   key: string;
 };
+
+export type TokenCollection = Record<string, BaseDesignToken[]>;
