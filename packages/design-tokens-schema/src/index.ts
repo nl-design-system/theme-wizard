@@ -14,5 +14,6 @@ export * from './resolve-refs';
 export * from './reuse-tokens';
 export * from './stringify-token';
 export * from './theme';
+export * from './token-usage';
 export * from './upgrade-legacy-tokens';
 export * from './walker';

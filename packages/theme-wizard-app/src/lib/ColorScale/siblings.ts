@@ -1,4 +1,4 @@
-import { extractRef, isRef, isTokenGroup } from '@nl-design-system-community/design-tokens-schema';
+import { extractRef, isRef, isTokenGroup, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
 
 /**
  * Given a color scale group path (e.g. 'basis.color.accent-1') and its parent group object
@@ -28,8 +28,9 @@ import { extractRef, isRef, isTokenGroup } from '@nl-design-system-community/des
 export function getSiblingGroupsWithOnlyRefsTo(groupPath: string, parentGroup: unknown): string[] {
   if (!parentGroup || typeof parentGroup !== 'object') return [];
 
-  const selfKey = groupPath.split('.').at(-1);
-  const parentPath = groupPath.split('.').slice(0, -1).join('.');
+  const path = groupPath.split('.');
+  const selfKey = path.at(-1);
+  const parentPath = path.slice(0, -1).join('.');
 
   return Object.entries(parentGroup)
     .filter(([siblingKey, siblingGroup]) => {
@@ -39,7 +40,9 @@ export function getSiblingGroupsWithOnlyRefsTo(groupPath: string, parentGroup: u
         Object.entries(siblingGroup)
           .filter(([k]) => !k.startsWith('$')) // skip group-level $type, $extensions, etc.
           // Check that every token's value is a ref starting with groupPath
-          .every(([, token]) => isRef(token.$value) && extractRef(token.$value).startsWith(groupPath))
+          .every(
+            ([, token]) => isTokenLike(token) && isRef(token.$value) && extractRef(token.$value).startsWith(groupPath),
+          )
       );
     })
     .map(([siblingKey]) => `${parentPath}.${siblingKey}`);

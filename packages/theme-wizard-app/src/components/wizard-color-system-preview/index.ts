@@ -5,13 +5,14 @@ import '../wizard-table-scroller';
 
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
+import { countUsagePerToken } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
-import { countUsagePerToken, prepareColorGroups } from '../wizard-style-guide/utils';
+import { prepareColorGroups } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-color-system-preview';
 

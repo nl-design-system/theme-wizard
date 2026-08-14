@@ -2,14 +2,11 @@ import type { ClippyModal } from '@nl-design-system-community/clippy-components/
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import type { DesignTokens } from 'style-dictionary/types';
 import {
   type ColorValue,
   type ColorToken as ColorTokenType,
-  extractRef,
   isValueObject,
   stringifyColor,
-  walkTokensWithRef,
 } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import type { ColorGroup, DisplayToken } from './types';
@@ -34,18 +31,6 @@ export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: 
         .filter(({ displayValue }) => displayValue !== null);
       return { colorEntries, key };
     });
-}
-
-export function countUsagePerToken(tokens: DesignTokens): Map<string, string[]> {
-  const tokenUsage = new Map<string, string[]>();
-  walkTokensWithRef(tokens, tokens, (token, path) => {
-    const tokenId = extractRef(token.$value);
-    if (path.includes('$extensions')) return;
-    const stored = tokenUsage.get(tokenId) || [];
-    stored.push(path.join('.'));
-    tokenUsage.set(tokenId, stored);
-  });
-  return tokenUsage;
 }
 
 export function stringifyTokenValue(token: unknown): string {
