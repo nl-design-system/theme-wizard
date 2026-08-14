@@ -8,6 +8,7 @@ export * from './tokens/token-reference';
 export * from './validation-issue';
 export * from './basis-tokens';
 export * from './extensions';
+export * from './remove-extensions';
 export * from './remove-non-token-properties';
 export * from './resolve-refs';
 export * from './reuse-tokens';
