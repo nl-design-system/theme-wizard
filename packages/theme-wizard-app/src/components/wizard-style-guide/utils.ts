@@ -14,6 +14,8 @@ import {
   isTokenLike,
   EXTENSION_REFERENCED_AT,
   EXTENSION_TOKEN_PATH,
+  isRef,
+  resolveRef,
 } from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
 import { html, nothing } from 'lit';
@@ -47,17 +49,20 @@ export function getTokensByPath({ basePath, tokens }: { tokens: ThemeLike; baseP
   const tokensAtPath = dlv(tokens, basePath);
   Object.keys(tokensAtPath).forEach((key) => {
     const token = tokensAtPath[key];
-    if (isTokenLike(token)) result.push(token);
+    if (isTokenLike(token)) {
+      const resolvedValue = isRef(token.$value) ? resolveRef(tokens, token.$value) : token.$value;
+      result.push({ ...token, $value: resolvedValue });
+    }
   });
 
   return result;
 }
 
 export function getTokenCollectionByTokenPaths(tokens: ThemeLike, paths: TokenPath[]): TokenCollection {
-  const result: TokenCollection = {};
+  const result: TokenCollection = [];
   paths.forEach((path) => {
     const tokensByPath = getTokensByPath({ basePath: path, tokens });
-    if (tokensByPath.length > 0) result[path.join('.')] = tokensByPath;
+    if (tokensByPath.length > 0) result.push({ name: path.join('.'), tokens: tokensByPath });
   });
   return result;
 }

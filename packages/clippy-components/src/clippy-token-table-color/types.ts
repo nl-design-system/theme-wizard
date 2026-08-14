@@ -16,4 +16,7 @@ export type ColorGroup = {
   key: string;
 };
 
-export type TokenCollection = Record<string, BaseDesignToken[]>;
+export type TokenCollection = {
+  name: string;
+  tokens: BaseDesignToken[];
+}[];
