@@ -8,7 +8,7 @@ import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
-import { type ModernDimensionToken } from '@nl-design-system-community/design-tokens-schema';
+import { type ModernDimensionToken, countUsagePerToken } from '@nl-design-system-community/design-tokens-schema';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
@@ -21,7 +21,7 @@ import type { DisplayToken, FontFamilyToken, FontSizeToken } from '../wizard-sty
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import styles from '../wizard-style-guide/styles';
-import { countUsagePerToken, openTokenDialog, renderTokenDialog } from '../wizard-style-guide/utils';
+import { openTokenDialog, renderTokenDialog } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-style-guide-typography';
 
