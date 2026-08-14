@@ -7,13 +7,16 @@ import {
   type ColorToken as ColorTokenType,
   isValueObject,
   stringifyColor,
+  EXTENSION_REFERENCED_AT,
+  EXTENSION_TOKEN_PATH,
 } from '@nl-design-system-community/design-tokens-schema';
+import dlv from 'dlv';
 import { html, nothing } from 'lit';
 import type { ColorGroup, DisplayToken } from './types';
 import { t } from '../../i18n';
 import { resolveColorValue } from '../wizard-colorscale-input';
 
-export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>): ColorGroup[] {
+export function prepareColorGroups(colors: Record<string, unknown>): ColorGroup[] {
   return Object.entries(colors)
     .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
     .filter(([, value]) => typeof value === 'object' && value !== null)
@@ -23,8 +26,8 @@ export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: 
         .map(([colorKey, token]) => {
           const color = resolveColorValue(token as ColorTokenType);
           const displayValue = color ? stringifyColor(color) : '#000';
-          const tokenId = `basis.color.${key}.${colorKey}`;
-          const usage = tokenUsage.get(tokenId) || [];
+          const tokenId = (token && dlv(token, ['$extensions', EXTENSION_TOKEN_PATH])) ?? '';
+          const usage = (token && dlv(token, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
           const usageCount = usage.length;
           return { colorKey, displayValue, tokenId, usage, usageCount };
         })

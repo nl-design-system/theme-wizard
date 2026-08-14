@@ -1,5 +1,5 @@
 import tokens from '@nl-design-system-community/ma-design-tokens/src/tokens.json';
-import { type CSSNode, is_declaration, is_rule, parse as parseCss } from '@projectwallace/css-parser';
+import { is_declaration, is_rule, parse as parseCss } from '@projectwallace/css-parser';
 import dlv from 'dlv';
 import { describe, expect, it } from 'vitest';
 import Theme from './index';
@@ -20,7 +20,7 @@ const normalizeCss = (css: string): string => {
       .filter((child) => is_declaration(child))
       .toSorted((a, b) => a.property.localeCompare(b.property))
       .forEach((declaration) => {
-        newCss.push(`\t${declaration.property}: ${(declaration.value as CSSNode)?.text}`);
+        newCss.push(`\t${declaration.property}: ${declaration.value?.text}`);
       });
     newCss.push('}');
   }
@@ -30,7 +30,15 @@ const normalizeCss = (css: string): string => {
 describe('Theme', () => {
   it('can instantiate with custom defaults', () => {
     const theme = new Theme(tokens);
-    expect(theme.defaults).toMatchObject(tokens);
+    const defaultTheme = new Theme();
+    // The constructor runs the theme processors (upgrading legacy token types, parsing color
+    // values, adding extensions, etc.), so `defaults` won't match the raw input tokens
+    // verbatim anymore. Instead, assert that the given tokens were actually used: the same
+    // set of token paths made it through, and it's not just falling back to the start tokens.
+    const inputPaths = Object.keys(Theme.flatten(tokens)).sort();
+    const defaultPaths = Object.keys(Theme.flatten(theme.defaults)).sort();
+    expect(defaultPaths).toEqual(inputPaths);
+    expect(defaultPaths).not.toEqual(Object.keys(Theme.flatten(defaultTheme.defaults)).sort());
   });
 
   it('can update tokens', async () => {
