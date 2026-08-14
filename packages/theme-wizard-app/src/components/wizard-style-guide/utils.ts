@@ -36,6 +36,7 @@ export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: 
     });
 }
 
+/** @deprecated use `@nl-design-system-community/design-tokens-schema`'s `countUsagePerToken()` instead */
 export function countUsagePerToken(tokens: DesignTokens): Map<string, string[]> {
   const tokenUsage = new Map<string, string[]>();
   walkTokensWithRef(tokens, tokens, (token, path) => {
