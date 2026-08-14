@@ -5,25 +5,14 @@ import '../wizard-table-scroller';
 
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
-import {
-  BaseDesignToken,
-  countUsagePerToken,
-  SKIP,
-  TokenPath,
-  walkTokens,
-} from '@nl-design-system-community/design-tokens-schema';
+import { type TokenPath } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { log } from 'xstate';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
-import {
-  getTokenCollectionByTokenPaths,
-  prepareColorGroups,
-  prepareTokenCollection,
-} from '../wizard-style-guide/utils';
+import { getTokenCollectionByTokenPaths } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-color-system-preview';
 
@@ -38,8 +27,6 @@ export class WizardColorSystemPreview extends LitElement {
   @consume({ context: themeContext, subscribe: true })
   @state()
   private readonly theme!: Theme;
-
-  #visibleTokenGroups: ColorGroup[] = [];
 
   @property({ converter: arrayFromCommaList })
   groups: string[] = [];
@@ -57,13 +44,10 @@ export class WizardColorSystemPreview extends LitElement {
       return;
     }
     console.log('======');
+    console.log('groups', this.groups);
     const groupPaths: TokenPath[] = this.groups.map((str) => str.split('.'));
     const colorCollection = getTokenCollectionByTokenPaths(this.theme.tokens, groupPaths);
     console.log('colorCollection', colorCollection);
-
-    // const tokenUsage = countUsagePerToken(this.theme.tokens);
-
-    // const colorTokenGroups = prepareColorGroups(colors, tokenUsage);
 
     // const visibleGroups =
     //   this.skipRedundantGroups.length > 0
