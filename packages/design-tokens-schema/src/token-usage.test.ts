@@ -138,6 +138,22 @@ describe('addTokenCountExtensions', () => {
 
     const result = addTokenCountExtensions(tokens);
 
-    expect(result).toBe(tokens);
+    expect(result).toEqual(tokens);
+  });
+
+  it('skips usage extension when the tracked usage path does not resolve to a token', () => {
+    // References are resolved with a `brand.` prefix fallback (see isTokenWithRef), so a ref
+    // like `{primary}` resolves to `brand.primary`, but the usage map still stores the
+    // unprefixed path `primary`, which does not exist at the root of `tokens`.
+    const primary: BaseDesignToken = { $type: 'color', $value: { colorSpace: 'srgb', components: [1, 0, 0] } };
+    const tokens = {
+      alias: { $type: 'color', $value: '{primary}' },
+      brand: { primary },
+    };
+
+    const result = addTokenCountExtensions(tokens);
+
+    expect(primary.$extensions).toBeUndefined();
+    expect(result).toEqual(tokens);
   });
 });
