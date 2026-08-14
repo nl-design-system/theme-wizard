@@ -5,7 +5,11 @@ import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-import { type DimensionToken, EXTENSION_REFERENCED_AT } from '@nl-design-system-community/design-tokens-schema';
+import {
+  type DimensionToken,
+  EXTENSION_REFERENCED_AT,
+  EXTENSION_TOKEN_PATH,
+} from '@nl-design-system-community/design-tokens-schema';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
@@ -53,7 +57,7 @@ export class WizardStyleGuideSpacing extends LitElement {
       .map(([name, tokenValue]) => {
         const value = (tokenValue as DimensionToken).$value;
         const stringifiedValue = typeof value === 'string' ? value : value.value + value.unit;
-        const tokenId = `basis.space.${space}.${name}`;
+        const tokenId = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_TOKEN_PATH])) ?? '';
         const usage = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
         const usageCount = usage.length ?? 0;
         return { name, tokenId, usage, usageCount, value: stringifiedValue };

@@ -8,7 +8,11 @@ import '@nl-design-system-community/clippy-components/clippy-toggletip';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
-import { EXTENSION_REFERENCED_AT, type ModernDimensionToken } from '@nl-design-system-community/design-tokens-schema';
+import {
+  EXTENSION_REFERENCED_AT,
+  EXTENSION_TOKEN_PATH,
+  type ModernDimensionToken,
+} from '@nl-design-system-community/design-tokens-schema';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
@@ -63,7 +67,7 @@ export class WizardStyleGuideTypography extends LitElement {
       const googleFontsSpecimen = this.#linkToGoogleFontsSpecimen(searchFamily);
 
       const displayValue = Array.isArray(value) ? value.join(', ') : value;
-      const tokenId = `basis.text.font-family.${name}`;
+      const tokenId = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_TOKEN_PATH])) ?? '';
       const usage = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
       const usageCount = usage.length;
       return { name, displayValue, googleFontsSpecimen, tokenId, usage, usageCount };
@@ -76,7 +80,7 @@ export class WizardStyleGuideTypography extends LitElement {
       .map(([name, tokenValue]) => {
         const { $value } = tokenValue as ModernDimensionToken;
         const displayValue = $value.value?.toString() + $value.unit;
-        const tokenId = `basis.text.font-size.${name}`;
+        const tokenId = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_TOKEN_PATH])) ?? '';
         const usage = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
         const usageCount = usage.length;
         return { name, displayValue, tokenId, usage, usageCount };

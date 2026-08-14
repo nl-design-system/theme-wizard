@@ -21,6 +21,7 @@ import {
   EXTENSION_REFERENCED_AT,
   EXTENSION_REFERENCE_COUNT,
   addTokenCountExtensions,
+  addTokenPathExtensions,
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { dequal } from 'dequal';
@@ -125,6 +126,7 @@ export default class Theme {
     resolveConfigRefs(tokens);
     removeExtensions(tokens, { include: [EXTENSION_REFERENCED_AT, EXTENSION_REFERENCE_COUNT] });
     addTokenCountExtensions(tokens);
+    addTokenPathExtensions(tokens);
     return tokens;
   }
 
