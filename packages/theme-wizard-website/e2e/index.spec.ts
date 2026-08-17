@@ -16,11 +16,10 @@ test('Accessibility basics', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
-test('Allows going to basis tokens without scraping', async ({ basisTokensPage, page }) => {
-  const link = page.getByRole('link', { name: 'basis tokens' });
-  await expect(link).toBeVisible();
-  await link.click();
-  expect(page.url()).toContain(basisTokensPage.url);
+test('Allows going to the wizard without scraping', async ({ page, wizardPage }) => {
+  const link = page.getByRole('link', { name: 'Doorgaan zonder huisstijl ophalen' });
+  await expect.soft(link).toBeVisible();
+  await expect(link).toHaveAttribute('href', wizardPage.url);
 });
 
 test.describe('scraping css design tokens', () => {
