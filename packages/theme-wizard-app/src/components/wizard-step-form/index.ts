@@ -7,7 +7,13 @@ import '@nl-design-system-community/clippy-components/clippy-html-image';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
-import { BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
+import {
+  BaseDesignToken,
+  isColorToken,
+  isRef,
+  stringifyToken,
+  walkTokens,
+} from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
 import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
 import { dequal } from 'dequal';
@@ -28,9 +34,9 @@ import styles from './styles';
 export { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 export type { SubmitSaveTokenFormEvent } from '../../utils/events';
 
-function tokenEquals(a: StagedDesignToken, b: BaseDesignToken): boolean {
+const tokenEquals = (a: BaseDesignToken, b: BaseDesignToken): boolean => {
   return dequal(a.$value, b.$value) && a.$type === b.$type;
-}
+};
 
 const tag = 'wizard-step-form';
 
@@ -66,7 +72,63 @@ export class WizardStepForm extends LitElement {
   @state()
   showAll: boolean = false;
 
-  private _tokens: StagedDesignToken[] = [];
+  private _tokens: BaseDesignToken[] = [];
+  private _suggestedTokensSource: 'scraper' | 'theme' = 'scraper';
+
+  #getRelevantStagedTokens(requestedType: string, requestedSubType: string): BaseDesignToken[] {
+    // First filter staged tokens by type
+    const stagedTypeTokens = this.scrapedTokens.filter((token) => {
+      if (token.$extensions?.[EXTENSION_TOKEN_STAGED] !== true) {
+        return false;
+      }
+      if (token.$type !== requestedType) {
+        return false;
+      }
+      return true;
+    });
+
+    // Then filter by subType if requested
+    const stagedSubTypeTokens = stagedTypeTokens.filter((token) => {
+      if (!requestedSubType) {
+        return true;
+      }
+      const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
+      return !Array.isArray(cssProperties) || cssProperties.includes(requestedSubType);
+    });
+
+    // If no tokens were found for the subType, fall back to the original type tokens
+    const filteredTokens = stagedSubTypeTokens.length > 0 ? stagedSubTypeTokens : stagedTypeTokens;
+
+    return filteredTokens.toSorted(
+      (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
+    );
+  }
+
+  #getRelevantThemeTokens(requestedType: string, requestedSubType: string): BaseDesignToken[] {
+    // Storing tokens in a Map so we get guaranteed unique values
+    const typeTokens: Map<string, BaseDesignToken> = new Map();
+
+    walkTokens(this.theme.tokens, (token) => {
+      if (
+        token.$type === requestedType &&
+        !isRef(token.$value) &&
+        !(isColorToken(token) && token.$value.alpha !== undefined && token.$value.alpha < 1)
+      ) {
+        typeTokens.set(stringifyToken(token), token);
+      }
+    });
+
+    const tokens = Array.from(typeTokens.values());
+    const subTypeTokens = tokens.filter((token) => {
+      if (!requestedSubType) {
+        return true;
+      }
+      const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
+      return !Array.isArray(cssProperties) || cssProperties.includes(requestedSubType);
+    });
+
+    return subTypeTokens.length > 0 ? subTypeTokens : tokens;
+  }
 
   /**
    * Updating this._tokens here so we don't re-compute this array for each sub-render in this element
@@ -74,39 +136,22 @@ export class WizardStepForm extends LitElement {
   override willUpdate(changed: PropertyValues) {
     if (changed.has('scrapedTokens') || changed.has('path') || changed.has('subType') || changed.has('theme')) {
       const requestedType = this.tokenAt?.$type;
+
+      if (!requestedType) {
+        return;
+      }
+
       const requestedSubType = this.subType;
 
-      // First filter staged tokens by type
-      const stagedTypeTokens = this.scrapedTokens.filter((token) => {
-        if (token.$extensions?.[EXTENSION_TOKEN_STAGED] !== true) {
-          return false;
-        }
-        if (token.$type !== requestedType) {
-          return false;
-        }
-        return true;
-      });
-
-      // Then filter by subType if requested
-      const stagedSubTypeTokens = stagedTypeTokens
-        .filter((token) => {
-          if (!requestedSubType) {
-            return true;
-          }
-          const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
-          return !Array.isArray(cssProperties) || cssProperties.includes(requestedSubType);
-        })
-        .toSorted(
-          (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
-        );
-
-      // If no tokens were found for the subType, fall back to the original type tokens
-      const filteredTokens = stagedSubTypeTokens.length ? stagedSubTypeTokens : stagedTypeTokens;
-
-      // Store the sorted tokens
-      this._tokens = filteredTokens.toSorted(
-        (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
-      );
+      // Store the sorted tokens and the source of the tokens
+      const relevantStagedTokens = this.#getRelevantStagedTokens(requestedType, requestedSubType);
+      if (relevantStagedTokens.length > 0) {
+        this._suggestedTokensSource = 'scraper';
+        this._tokens = relevantStagedTokens;
+      } else {
+        this._suggestedTokensSource = 'theme';
+        this._tokens = this.#getRelevantThemeTokens(requestedType, requestedSubType);
+      }
     }
   }
 
@@ -287,7 +332,9 @@ export class WizardStepForm extends LitElement {
         <clippy-stack size="4xl">
           <fieldset class="wizard-step-form__fieldset">
             <clippy-stack size="xl">
-              <legend class="wizard-step-form__legend">${t('wizard.stepForm.foundValues')}</legend>
+              <legend class="wizard-step-form__legend">
+                ${this._suggestedTokensSource === 'scraper' ? t('wizard.stepForm.foundScrapedValues') : t('wizard.stepForm.foundThemeValues')}
+              </legend>
 
               <clippy-card-radio-group name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
                 ${tokens.slice(0, tokenCountToShow).map((token, index) => {

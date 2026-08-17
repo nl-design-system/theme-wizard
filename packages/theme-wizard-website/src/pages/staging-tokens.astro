@@ -7,6 +7,10 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 ---
 
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+</script>
+
 <BaseLayout title="Review design tokens - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
@@ -34,14 +38,14 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
                 </wizard-container>
               </header>
 
-                <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
+              <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
 
-                <a class="nl-button nl-button--primary nl-button--icon" href="/wizard">
-                  <span class="nl-button__label">Huisstijl vastleggen</span>
-                  <span class="nl-button__icon-end">
-                    <IconArrowRight />
-                  </span>
-                </a>
+              <a class="nl-button nl-button--primary nl-button--icon" href="/wizard">
+                <span class="nl-button__label">Huisstijl vastleggen</span>
+                <span class="nl-button__icon-end">
+                  <IconArrowRight />
+                </span>
+              </a>
             </clippy-stack>
           </clippy-story-preview>
         </wizard-container>

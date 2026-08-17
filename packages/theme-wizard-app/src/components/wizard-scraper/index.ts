@@ -17,6 +17,7 @@ import { t } from '../../i18n';
 import Scraper from '../../lib/Scraper';
 import { scraperMachine, type ScraperMachine } from './state-machine';
 import styles from './styles';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 
 const tag = 'wizard-scraper';
 

@@ -141,6 +141,7 @@ export const en = {
   stagedTokens: {
     count: 'Count',
     deleteToken: 'Delete',
+    nothingFound: 'No tokens found.',
     preview: 'Preview',
     staged: 'Staged',
     title: 'Selected design tokens',
@@ -504,7 +505,8 @@ export const en = {
   wizard: {
     stepForm: {
       errorNoToken: 'Error: no token at path {{path}}, make sure to use a correct token path.',
-      foundValues: 'Found values on website',
+      foundScrapedValues: 'Found values on website',
+      foundThemeValues: 'Suggested values',
       noRecommendations: 'No recommendations to show.',
       sample: {
         button: 'Example button',
@@ -648,6 +650,7 @@ export const nl = {
   stagedTokens: {
     count: 'Aantal',
     deleteToken: 'Verwijder',
+    nothingFound: 'Geen ontwerpkeuzes gevonden.',
     preview: 'Voorvertoning',
     staged: 'Geselecteerd',
     title: 'Geselecteerde design tokens',
@@ -1005,7 +1008,8 @@ export const nl = {
   wizard: {
     stepForm: {
       errorNoToken: 'Error: geen token op pad {{path}}, zorg dat er een token bestaat op dit pad.',
-      foundValues: 'Gevonden waardes op website',
+      foundScrapedValues: 'Gevonden waardes op website',
+      foundThemeValues: 'Voorgestelde waardes',
       noRecommendations: 'Geen aanbevelingen om te tonen.',
       sample: {
         button: 'Voorbeeld van knop',
