@@ -112,6 +112,7 @@ export class WizardStepForm extends LitElement {
       if (
         token.$type === requestedType &&
         !isRef(token.$value) &&
+        // Scraper filters out transparent colors, but theme.tokens may still contain them
         !(isColorToken(token) && token.$value.alpha !== undefined && token.$value.alpha < 1)
       ) {
         typeTokens.set(stringifyToken(token), token);
@@ -143,7 +144,7 @@ export class WizardStepForm extends LitElement {
 
       const requestedSubType = this.subType;
 
-      // Store the sorted tokens and the source of the tokens
+      // Store the sorted tokens and the source of the tokens so we know which title to show on top of the list
       const relevantStagedTokens = this.#getRelevantStagedTokens(requestedType, requestedSubType);
       if (relevantStagedTokens.length > 0) {
         this._suggestedTokensSource = 'scraper';
