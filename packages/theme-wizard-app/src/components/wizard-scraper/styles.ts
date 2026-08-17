@@ -37,4 +37,10 @@ export default css`
       opacity: 100%;
     }
   }
+
+  .wizard-forward-link {
+    align-items: center;
+    display: inline-flex;
+    gap: var(--basis-space-text-sm);
+  }
 `;

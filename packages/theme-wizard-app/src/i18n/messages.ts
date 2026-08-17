@@ -105,10 +105,10 @@ export const en = {
     components: 'Components',
     configure: 'Edit branding',
     styleGuide: 'Style guide',
+    wizard: 'Start',
   },
   save: 'Save',
   scraper: {
-    directStart: html`Begin directly with <a href="/basis-tokens" class="nl-link">basic tokens</a>.`,
     errors: {
       connectionRefused: 'This website does not seem to exist.',
       error: 'Cannot analyze this website',
@@ -132,6 +132,7 @@ export const en = {
         text: 'Fetching styles from {{url}}',
       },
     },
+    proceedWithoutScrape: html`Continue without fetching brand elements`,
     scrapeFailed: 'Failed to scrape "{{url}}"',
     submit: 'Analyze',
     success: 'Done! Found {{tokenCount}} tokens.',
@@ -611,10 +612,10 @@ export const nl = {
     components: 'Componenten',
     configure: 'Huisstijl bewerken',
     styleGuide: 'Stijlgids',
+    wizard: 'Start',
   },
   save: 'Opslaan',
   scraper: {
-    directStart: html`Begin direct met <a href="/basis-tokens" class="nl-link">basis tokens</a>.`,
     errors: {
       connectionRefused: 'Deze website lijkt niet te bestaan.',
       error: 'Kan deze website niet analyseren',
@@ -638,6 +639,7 @@ export const nl = {
         text: 'Huisstijl ophalen van {{url}}',
       },
     },
+    proceedWithoutScrape: html`Doorgaan zonder huisstijl ophalen`,
     scrapeFailed: 'Kan "{{url}}" niet analyseren.',
     submit: 'Huisstijl ophalen',
     success: 'Gereed, {{tokenCount}} tokens gevonden',
