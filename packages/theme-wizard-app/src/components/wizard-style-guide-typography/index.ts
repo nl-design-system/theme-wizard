@@ -5,6 +5,7 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-toggletip';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import googleFonts from '@nl-design-system-community/clippy-components/assets/google-fonts.json' with { type: 'json' };
@@ -119,11 +120,11 @@ export class WizardStyleGuideTypography extends LitElement {
                 ({ name, displayValue, googleFontsSpecimen, tokenId, usage }) => html`
                   <tr class="utrecht-table__row">
                     <td class="utrecht-table__cell">
-                      <wizard-font-sample
-                        family=${displayValue}
-                        size="var(--basis-text-font-size-xl)"
+                      <clippy-token-sample-text
+                        font-family=${displayValue}
+                        font-size="var(--basis-text-font-size-xl)"
                         truncate
-                      ></wizard-font-sample>
+                      ></clippy-token-sample-text>
                       ${
                         googleFontsSpecimen
                           ? html`<p class="nl-paragraph">
@@ -206,7 +207,7 @@ export class WizardStyleGuideTypography extends LitElement {
                 ({ name, displayValue, tokenId, usage }) => html`
                   <tr class="utrecht-table__row">
                     <td class="utrecht-table__cell">
-                      <wizard-font-sample size=${displayValue} truncate></wizard-font-sample>
+                      <clippy-token-sample-text font-size=${displayValue} truncate></clippy-token-sample-text>
                     </td>
                     <td class="utrecht-table__cell">
                       <span class="nl-data-badge" id="${`basis-text-font-size-${name}`}">${tokenId}</span>
