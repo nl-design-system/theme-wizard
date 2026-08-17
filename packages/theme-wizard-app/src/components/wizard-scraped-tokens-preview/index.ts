@@ -2,6 +2,7 @@ import { consume } from '@lit/context';
 import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import {
   EXTENSION_AUTHORED_AS,
   EXTENSION_TOKEN_ID,
@@ -128,7 +129,7 @@ export class WizardScrapedTokensPreview extends LitElement {
 
     return html`
       <div class="wizard-scraped-tokens-preview">
-        <wizard-stack size="5xl">
+        <clippy-stack size="5xl">
           <clippy-heading level="2">${t('tokens.types.typography')}</clippy-heading>
 
           ${this.#renderTable(
@@ -174,7 +175,7 @@ export class WizardScrapedTokensPreview extends LitElement {
               },
             );
           })}
-        </wizard-stack>
+        </clippy-stack>
       </div>
     `;
   }

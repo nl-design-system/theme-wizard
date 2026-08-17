@@ -2,6 +2,7 @@ import { consume } from '@lit/context';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import ChevronLeft from '@tabler/icons/outline/chevron-left.svg?raw';
 import ChevronRight from '@tabler/icons/outline/chevron-right.svg?raw';
@@ -81,10 +82,10 @@ export class WizardTokensForm extends LitElement {
 
   private readonly renderSidebar = ({ items, title }: { title: string | TemplateResult; items: TemplateResult }) => {
     return html`
-      <wizard-stack size="4xl">
+      <clippy-stack size="4xl">
         <clippy-heading level="3">${title}</clippy-heading>
-        <wizard-stack size="2xl">${items}</wizard-stack>
-      </wizard-stack>
+        <clippy-stack size="2xl">${items}</clippy-stack>
+      </clippy-stack>
       <div class="wizard-tokens-form__footer">${this.renderSaveButton()}</div>
     `;
   };
@@ -136,7 +137,7 @@ export class WizardTokensForm extends LitElement {
                   `,
                 )}
               </nav>
-              <wizard-stack class="wizard-tokens-form__footer">
+              <clippy-stack class="wizard-tokens-form__footer">
                 <wizard-tokens-download></wizard-tokens-download>
                 <wizard-download-link
                   content=${this.theme.css}
@@ -146,7 +147,7 @@ export class WizardTokensForm extends LitElement {
                   ${t('tokenDownloadCss.triggerText')}
                 </wizard-download-link>
                 <wizard-theme-reset-button></wizard-theme-reset-button>
-              </wizard-stack>
+              </clippy-stack>
             `
           : nothing
       }
@@ -155,7 +156,7 @@ export class WizardTokensForm extends LitElement {
           ? this.renderSidebar({
               items: html`${fonts.map(
                 ({ docsUrl, label, path, token }) =>
-                  html`<wizard-stack class="wizard-form__field">
+                  html`<clippy-stack class="wizard-form__field">
                     <clippy-heading level="4">${label}</clippy-heading>
                     <wizard-font-input
                       .errors=${this.theme.issues.filter((error) => error.path === path)}
@@ -171,7 +172,7 @@ export class WizardTokensForm extends LitElement {
                         <span class="sr-only">${t('moreInformation', { text: label })}</span>
                       </a>
                     </p>
-                  </wizard-stack>`,
+                  </clippy-stack>`,
               )}`,
               title: t('tokens.fieldLabels.basis.typography'),
             })
@@ -183,7 +184,7 @@ export class WizardTokensForm extends LitElement {
               items: html`
                 ${Object.entries(colorDocs).map(
                   ([colorKey, docs]) => html`
-                    <wizard-stack size="lg" class="wizard-form__field">
+                    <clippy-stack size="lg" class="wizard-form__field">
                       <clippy-heading level="4"
                         >${t(`tokens.fieldLabels.basis.color.${colorKey}.label`)}</clippy-heading
                       >
@@ -201,7 +202,7 @@ export class WizardTokensForm extends LitElement {
                           ${t('moreInformation', { text: t(`tokens.fieldLabels.basis.color.${colorKey}.label`) })}
                         </span>
                       </a>
-                    </wizard-stack>
+                    </clippy-stack>
                   `,
                 )}
               `,

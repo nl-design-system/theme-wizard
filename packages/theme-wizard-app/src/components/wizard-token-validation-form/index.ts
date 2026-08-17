@@ -3,7 +3,7 @@ import { customElement, state } from 'lit/decorators.js';
 import type { WizardUploadEventDetail } from '../wizard-token-upload-form';
 import { t } from '../../i18n';
 import { type TokenFileResult, parseTokenFiles } from '../../lib/TokenFiles';
-import '../wizard-stack';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '../wizard-token-output';
 import '../wizard-token-upload-form';
 import styles from './styles';
@@ -47,14 +47,14 @@ export class WizardTokenValidationForm extends LitElement {
 
   override render() {
     return html`
-      <wizard-stack size="3xl">
+      <clippy-stack size="3xl">
         <wizard-token-upload-form
           @wizard-upload=${this.handleUpload}
           submit-label=${t('tokenValidationForm.submit')}
         ></wizard-token-upload-form>
 
         ${this.result === null ? nothing : this.renderResult(this.result)}
-      </wizard-stack>
+      </clippy-stack>
     `;
   }
 }

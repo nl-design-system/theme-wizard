@@ -4,6 +4,7 @@ import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import { BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
@@ -281,9 +282,9 @@ export class WizardStepForm extends LitElement {
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
-        <wizard-stack size="4xl">
+        <clippy-stack size="4xl">
           <fieldset class="wizard-step-form__fieldset">
-            <wizard-stack size="xl">
+            <clippy-stack size="xl">
               <legend class="wizard-step-form__legend">${t('wizard.stepForm.foundValues')}</legend>
 
               <clippy-card-radio-group name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
@@ -293,7 +294,7 @@ export class WizardStepForm extends LitElement {
               </clippy-card-radio-group>
 
               ${this.renderShowMoreButton()}
-            </wizard-stack>
+            </clippy-stack>
           </fieldset>
 
           <div class="utrecht-action-group utrecht-action-group--row">
@@ -302,7 +303,7 @@ export class WizardStepForm extends LitElement {
               <span class="nl-button__label">${t('cancel')}</span>
             </a>
           </div>
-        </wizard-stack>
+        </clippy-stack>
       </form>
     `;
   }

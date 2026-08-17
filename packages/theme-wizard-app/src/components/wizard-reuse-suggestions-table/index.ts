@@ -13,7 +13,7 @@ import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { t } from '../../i18n';
-import '../wizard-stack';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '../wizard-table-scroller';
 import '../wizard-token-output';
 import styles from './styles';
@@ -76,7 +76,7 @@ export class WizardReuseSuggestionsTable extends LitElement {
 
     return html`
       <form @submit=${this.handleApplySuggestions}>
-        <wizard-stack size="3xl">
+        <clippy-stack size="3xl">
           <div class="utrecht-form-field utrecht-form-field--text">
             <div class="utrecht-form-field__label">
               <label for="suggestions-table" class="utrecht-form-label">${t('tokenReuseForm.suggestions.label')}</label>
@@ -129,7 +129,7 @@ export class WizardReuseSuggestionsTable extends LitElement {
               ? html`<wizard-token-output .json=${updatedJson} .downloadJson=${updatedJson}></wizard-token-output>`
               : nothing
           }
-        </wizard-stack>
+        </clippy-stack>
       </form>
     `;
   }
