@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import WithPageNav from '@/components/WithPageNav.astro';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import StyleGuideNav from '@/components/StyleGuideNav.astro';
 
@@ -21,40 +22,40 @@ const SECTION_IDS = {
       <div slot="main" class="wizard-main">
         <wizard-container>
           <clippy-story-preview size="lg">
-            <wizard-stack size="4xl">
+            <clippy-stack size="4xl">
               <clippy-heading level="1">Design tokens</clippy-heading>
               <WithPageNav>
                 <div slot="page-nav">
                   <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
                 </div>
-                <wizard-stack size="3xl" slot="page-content">
+                <clippy-stack size="3xl" slot="page-content">
                   <section>
-                    <wizard-stack size="2xl">
+                    <clippy-stack size="2xl">
                       <clippy-heading level="2" id={SECTION_IDS.typography}>Typografie</clippy-heading>
                       <wizard-style-guide-typography></wizard-style-guide-typography>
-                    </wizard-stack>
+                    </clippy-stack>
                   </section>
                   <section>
-                    <wizard-stack size="2xl">
+                    <clippy-stack size="2xl">
                       <h2 id={SECTION_IDS.colors}>Kleuren</h2>
                       <wizard-style-guide-colors></wizard-style-guide-colors>
-                    </wizard-stack>
+                    </clippy-stack>
                   </section>
                   <section>
-                    <wizard-stack size="2xl">
+                    <clippy-stack size="2xl">
                       <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
                       <wizard-style-guide-spacing></wizard-style-guide-spacing>
-                    </wizard-stack>
+                    </clippy-stack>
                   </section>
                   <section>
-                    <wizard-stack size="2xl">
+                    <clippy-stack size="2xl">
                       <h2 id={SECTION_IDS.components}>Componenten</h2>
                       <wizard-style-guide-components></wizard-style-guide-components>
-                    </wizard-stack>
+                    </clippy-stack>
                   </section>
-                </wizard-stack>
+                </clippy-stack>
               </WithPageNav>
-            </wizard-stack>
+            </clippy-stack>
           </clippy-story-preview>
         </wizard-container>
       </div>

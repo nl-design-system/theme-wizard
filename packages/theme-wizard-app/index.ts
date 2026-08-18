@@ -21,7 +21,6 @@ export * from './src/components/wizard-scraper';
 export * from './src/components/wizard-scraper-loader';
 export * from './src/components/wizard-scroll-container';
 export * from './src/components/wizard-sidebar-link';
-export * from './src/components/wizard-stack';
 export * from './src/components/wizard-step-form';
 export * from './src/components/wizard-step-form-task-navigation';
 export * from './src/components/wizard-step-form-task-navigation-list';

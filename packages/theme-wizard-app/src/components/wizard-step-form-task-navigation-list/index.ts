@@ -1,6 +1,7 @@
 import '../wizard-step-form-task-navigation';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { stepsStorage } from '../../utils/wizard-steps-storage';
@@ -51,7 +52,7 @@ export class WizardStepFormTaskNavigationList extends LitElement {
 
   override render() {
     return html`
-      <wizard-stack size="3xl">
+      <clippy-stack size="3xl">
         <div>
           ${STEPS.map((step) => {
             const href = `/wizard/${step.path.replaceAll('.', '-')}`;
@@ -77,7 +78,7 @@ export class WizardStepFormTaskNavigationList extends LitElement {
               `
             : nothing
         }
-      </wizard-stack>
+      </clippy-stack>
     `;
   }
 }
