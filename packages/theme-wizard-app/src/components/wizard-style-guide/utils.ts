@@ -2,6 +2,7 @@ import type { ClippyModal } from '@nl-design-system-community/clippy-components/
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   type ColorValue,
   type ColorToken as ColorTokenType,
@@ -81,13 +82,13 @@ export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
     case 'color':
       return html`<clippy-color-sample color=${token.displayValue}></clippy-color-sample>`;
     case 'fontSize':
-      return html`<wizard-font-sample size=${token.displayValue} truncate></wizard-font-sample>`;
+      return html`<clippy-token-sample-text font-size=${token.displayValue} truncate></clippy-token-sample-text>`;
     case 'fontFamily':
-      return html`<wizard-font-sample
-        family=${token.displayValue}
-        size="var(--basis-text-font-size-xl)"
+      return html`<clippy-token-sample-text
+        font-family=${token.displayValue}
+        font-size="var(--basis-text-font-size-xl)"
         truncate
-      ></wizard-font-sample>`;
+      ></clippy-token-sample-text>`;
     case 'dimension':
       return renderSpacingExample(token.displayValue, token.metadata?.['space']);
     default:

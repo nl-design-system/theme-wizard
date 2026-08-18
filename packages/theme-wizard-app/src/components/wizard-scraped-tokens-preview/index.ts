@@ -3,6 +3,7 @@ import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-stack';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   EXTENSION_AUTHORED_AS,
   EXTENSION_TOKEN_ID,
@@ -136,18 +137,20 @@ export class WizardScrapedTokensPreview extends LitElement {
             t('tokens.types.fontFamilies'),
             families,
             (token) =>
-              html`<wizard-font-sample
-                family=${token.$extensions[EXTENSION_AUTHORED_AS]}
-                size="var(--basis-text-font-size-xl)"
+              html`<clippy-token-sample-text
+                font-family=${token.$extensions[EXTENSION_AUTHORED_AS]}
+                font-size="var(--basis-text-font-size-xl)"
                 truncate
-              ></wizard-font-sample>`,
+              ></clippy-token-sample-text>`,
             (token) => (Array.isArray(token.$value) ? html`<code class="nl-code">${token.$value[0]}</code>` : nothing),
           )}
           ${this.#renderTable(
             t('tokens.types.fontSizes'),
             sizes,
             (token) =>
-              html`<wizard-font-sample size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}></wizard-font-sample>`,
+              html`<clippy-token-sample-text
+                font-size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}
+              ></clippy-token-sample-text>`,
             (token) => html`<code class="nl-code">${token.$extensions?.[EXTENSION_AUTHORED_AS]}</code>`,
           )}
 
