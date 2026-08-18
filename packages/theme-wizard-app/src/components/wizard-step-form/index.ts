@@ -6,13 +6,11 @@ import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
-import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import {
   BaseDesignToken,
-  isColorToken,
-  isRef,
+  ColorValue,
+  compareContrast,
   stringifyToken,
-  walkTokens,
 } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
 import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
@@ -24,11 +22,12 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
-import { EXTENSION_TOKEN_STAGED, type StagedDesignToken } from '../../utils/types';
-import { markStepComplete } from '../../utils/wizard-steps-storage';
+import { type StagedDesignToken } from '../../utils/types';
 import '../wizard-color-description';
+import { markStepComplete } from '../../utils/wizard-steps-storage';
 import styles from './styles';
 
 export { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
@@ -58,7 +57,7 @@ export class WizardStepForm extends LitElement {
 
   @consume({ context: scrapedTokensContext, subscribe: true })
   @property({ attribute: false })
-  scrapedTokens: StagedDesignToken[] = [];
+  private readonly scrapedTokens!: StagedDesignToken[];
 
   @property({ type: String })
   returnUrl: string = '';
@@ -73,63 +72,8 @@ export class WizardStepForm extends LitElement {
   showAll: boolean = false;
 
   private _tokens: BaseDesignToken[] = [];
-  private _suggestedTokensSource: 'scraper' | 'theme' = 'scraper';
-
-  #getRelevantStagedTokens(requestedType: string, requestedSubType: string): BaseDesignToken[] {
-    // First filter staged tokens by type
-    const stagedTypeTokens = this.scrapedTokens.filter((token) => {
-      if (token.$extensions?.[EXTENSION_TOKEN_STAGED] !== true) {
-        return false;
-      }
-      if (token.$type !== requestedType) {
-        return false;
-      }
-      return true;
-    });
-
-    // Then filter by subType if requested
-    const stagedSubTypeTokens = stagedTypeTokens.filter((token) => {
-      if (!requestedSubType) {
-        return true;
-      }
-      const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
-      return !Array.isArray(cssProperties) || cssProperties.includes(requestedSubType);
-    });
-
-    // If no tokens were found for the subType, fall back to the original type tokens
-    const filteredTokens = stagedSubTypeTokens.length > 0 ? stagedSubTypeTokens : stagedTypeTokens;
-
-    return filteredTokens.toSorted(
-      (a, b) => (b.$extensions?.[EXTENSION_USAGE_COUNT] || 0) - (a.$extensions?.[EXTENSION_USAGE_COUNT] || 0),
-    );
-  }
-
-  #getRelevantThemeTokens(requestedType: string, requestedSubType: string): BaseDesignToken[] {
-    // Storing tokens in a Map so we get guaranteed unique values
-    const typeTokens: Map<string, BaseDesignToken> = new Map();
-
-    walkTokens(this.theme.tokens, (token) => {
-      if (
-        token.$type === requestedType &&
-        !isRef(token.$value) &&
-        // Scraper filters out transparent colors, but theme.tokens may still contain them
-        !(isColorToken(token) && token.$value.alpha !== undefined && token.$value.alpha < 1)
-      ) {
-        typeTokens.set(stringifyToken(token), token);
-      }
-    });
-
-    const tokens = Array.from(typeTokens.values());
-    const subTypeTokens = tokens.filter((token) => {
-      if (!requestedSubType) {
-        return true;
-      }
-      const cssProperties = token.$extensions?.[EXTENSION_CSS_PROPERTIES];
-      return !Array.isArray(cssProperties) || cssProperties.includes(requestedSubType);
-    });
-
-    return subTypeTokens.length > 0 ? subTypeTokens : tokens;
-  }
+  // Store the origin of the selected so we can swap the headin text accordingly
+  private _suggestedTokensSource: RelevantTokensResult['source'] = 'scraper';
 
   /**
    * Updating this._tokens here so we don't re-compute this array for each sub-render in this element
@@ -142,17 +86,19 @@ export class WizardStepForm extends LitElement {
         return;
       }
 
-      const requestedSubType = this.subType;
+      const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
 
-      // Store the sorted tokens and the source of the tokens so we know which title to show on top of the list
-      const relevantStagedTokens = this.#getRelevantStagedTokens(requestedType, requestedSubType);
-      if (relevantStagedTokens.length > 0) {
-        this._suggestedTokensSource = 'scraper';
-        this._tokens = relevantStagedTokens;
-      } else {
-        this._suggestedTokensSource = 'theme';
-        this._tokens = this.#getRelevantThemeTokens(requestedType, requestedSubType);
+      if (this.type === 'color' && this.subType === 'color') {
+        const bgDocument = this.theme.at('basis.color.default.bg-default').$value;
+        tokens.sort((a, b) => {
+          return (
+            compareContrast(b.$value as ColorValue, bgDocument) - compareContrast(a.$value as ColorValue, bgDocument)
+          );
+        });
       }
+
+      this._tokens = tokens;
+      this._suggestedTokensSource = source;
     }
   }
 
@@ -228,21 +174,6 @@ export class WizardStepForm extends LitElement {
       `;
     }
 
-    if (this.path.includes('action-1.bg-default') && tokenType === 'color') {
-      const color =
-        token.$type === 'color' ? `color-mix(in hsl, contrast-color(${stringified}) 95%, ${stringified})` : undefined;
-      return html`
-        <clippy-html-image
-          style=${styleMap({
-            '--nl-button-primary-background-color': stringified,
-            '--nl-button-primary-color': color,
-          })}
-        >
-          <clippy-button purpose="primary">${t('wizard.stepForm.sample.button')}</clippy-button>
-        </clippy-html-image>
-      `;
-    }
-
     return html`
       <clippy-token-sample-text
         font-family=${tokenType === 'fontFamily' ? stringified : undefined}
@@ -276,19 +207,21 @@ export class WizardStepForm extends LitElement {
 
   private renderRadioCardOption(token: BaseDesignToken, index: number, tokenType: BaseDesignToken['$type']) {
     const stringified = stringifyToken(token);
-    return html` <clippy-card-radio-option value=${String(index)}>
-      ${this.renderIconStart(tokenType, stringified)} ${stringified}
-      ${
-        tokenType === 'color'
-          ? html`<wizard-color-description color=${stringified} slot="description"></wizard-color-description>`
-          : nothing
-      }
-      <clippy-reset-theme slot="body">
-        <wizard-preview-theme>
-          <div class="wizard-step-form__sample wizard-step-form__sample-body">${this.renderSample(token)}</div>
-        </wizard-preview-theme>
-      </clippy-reset-theme>
-    </clippy-card-radio-option>`;
+    return html`
+      <clippy-card-radio-option value=${String(index)}>
+        ${this.renderIconStart(tokenType, stringified)} ${stringified}
+        ${
+          tokenType === 'color'
+            ? html`<wizard-color-description color=${stringified} slot="description"></wizard-color-description>`
+            : nothing
+        }
+        <clippy-reset-theme slot="body">
+          <wizard-preview-theme>
+            <div class="wizard-step-form__sample wizard-step-form__sample-body">${this.renderSample(token)}</div>
+          </wizard-preview-theme>
+        </clippy-reset-theme>
+      </clippy-card-radio-option>
+    `;
   }
 
   private renderShowMoreButton() {
