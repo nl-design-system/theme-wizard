@@ -8,7 +8,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { t } from '../../i18n';
 import fileInputStyles from '../wizard-file-input/styles';
 import '../wizard-form-field-checkbox';
-import '../wizard-stack';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import styles from './styles';
 
 const tag = 'wizard-token-upload-form';
@@ -76,7 +76,7 @@ export class WizardTokenUploadForm extends LitElement {
     const fileInputId = 'input-file';
     return html`
       <form @submit=${this.handleSubmit}>
-        <wizard-stack size="3xl">
+        <clippy-stack size="3xl">
           <div
             class="utrecht-form-field utrecht-form-field--text ${classMap({
               'utrecht-form-field--invalid': this.invalid,
@@ -117,7 +117,7 @@ export class WizardTokenUploadForm extends LitElement {
           ></wizard-form-field-checkbox>
 
           <button class="nl-button nl-button--primary" type="submit">${this.submitLabel}</button>
-        </wizard-stack>
+        </clippy-stack>
       </form>
     `;
   }

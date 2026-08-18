@@ -1,3 +1,4 @@
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
@@ -112,13 +113,13 @@ export class WizardScraper extends LitElement {
       ${
         isIdle || isError
           ? html`
-              <wizard-stack size="xl">
+              <clippy-stack size="xl">
                 <clippy-story-preview size="lg">
-                  <wizard-stack size="3xl">
+                  <clippy-stack size="3xl">
                     <clippy-heading level="1">${t('scraper.title')}</clippy-heading>
                     <p class="nl-paragraph nl-paragraph--lead">${t('scraper.intro')}</p>
                     <form @submit=${this.#handleSubmit}>
-                      <wizard-stack size="3xl">
+                      <clippy-stack size="3xl">
                         <div
                           class="utrecht-form-field utrecht-form-field--text ${classMap({
                             'utrecht-form-field--invalid': isError,
@@ -144,12 +145,12 @@ export class WizardScraper extends LitElement {
                         </div>
 
                         <button class="nl-button nl-button--primary" type="submit">${t('scraper.submit')}</button>
-                      </wizard-stack>
+                      </clippy-stack>
                     </form>
-                  </wizard-stack>
+                  </clippy-stack>
                 </clippy-story-preview>
                 <p class="nl-paragraph">${t('scraper.directStart')}</p>
-              </wizard-stack>
+              </clippy-stack>
             `
           : nothing
       }

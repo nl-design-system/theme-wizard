@@ -4,6 +4,8 @@ import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@nl-design-system-community/clippy-components/clippy-stack';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import { BaseDesignToken, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
@@ -176,7 +178,7 @@ export class WizardStepForm extends LitElement {
             ${t('wizard.stepForm.sample.heading')}
           </clippy-heading>
         </clippy-html-image>
-        <wizard-font-sample>${t('wizard.stepForm.sample.paragraph')}</wizard-font-sample>
+        <clippy-token-sample-text>${t('wizard.stepForm.sample.paragraph')}</clippy-token-sample-text>
       `;
     }
 
@@ -196,13 +198,12 @@ export class WizardStepForm extends LitElement {
     }
 
     return html`
-      <wizard-font-sample
-        wrap
-        family=${tokenType === 'fontFamily' ? stringified : undefined}
+      <clippy-token-sample-text
+        font-family=${tokenType === 'fontFamily' ? stringified : undefined}
         color=${tokenType === 'color' ? stringified : undefined}
       >
         ${t('wizard.stepForm.sample.paragraph')}
-      </wizard-font-sample>
+      </clippy-token-sample-text>
     `;
   }
 
@@ -216,7 +217,9 @@ export class WizardStepForm extends LitElement {
         <div class="wizard-step-form__sample wizard-step-form__sample-start" slot="start">
           <clippy-reset-theme>
             <wizard-preview-theme>
-              <wizard-font-sample size="var(--basis-text-font-size-lg)" family=${value}>Ag</wizard-font-sample>
+              <clippy-token-sample-text font-size="var(--basis-text-font-size-lg)" font-family=${value}
+                >Ag</clippy-token-sample-text
+              >
             </wizard-preview-theme>
           </clippy-reset-theme>
         </div>
@@ -281,9 +284,9 @@ export class WizardStepForm extends LitElement {
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
-        <wizard-stack size="4xl">
+        <clippy-stack size="4xl">
           <fieldset class="wizard-step-form__fieldset">
-            <wizard-stack size="xl">
+            <clippy-stack size="xl">
               <legend class="wizard-step-form__legend">${t('wizard.stepForm.foundValues')}</legend>
 
               <clippy-card-radio-group name=${path} value=${checkedIndex >= 0 ? String(checkedIndex) : ''}>
@@ -293,7 +296,7 @@ export class WizardStepForm extends LitElement {
               </clippy-card-radio-group>
 
               ${this.renderShowMoreButton()}
-            </wizard-stack>
+            </clippy-stack>
           </fieldset>
 
           <div class="utrecht-action-group utrecht-action-group--row">
@@ -302,7 +305,7 @@ export class WizardStepForm extends LitElement {
               <span class="nl-button__label">${t('cancel')}</span>
             </a>
           </div>
-        </wizard-stack>
+        </clippy-stack>
       </form>
     `;
   }

@@ -293,31 +293,4 @@ export default class Theme {
   get css() {
     return this.stylesheet.cssRules[0].cssText;
   }
-
-  async toTokensJSON({ format = 'legacy' }: { format?: 'legacy' } = {}) {
-    const StyleDictionary = await import('style-dictionary');
-    const platform = 'json';
-    const tokens = format === 'legacy' ? this.toLegacyTokens() : this.tokens;
-    const sd = new StyleDictionary.default({
-      log: {
-        errors: {
-          brokenReferences: 'console', // don't throw broken reference errors, we should expect to handle that with schemas
-        },
-        verbosity: 'silent', // ignore logging since it goes to browser console
-      },
-      platforms: {
-        [platform]: {
-          files: [
-            {
-              destination: 'tokens.json',
-              format: 'json',
-            },
-          ],
-        },
-      },
-      tokens,
-    });
-    const outputs = await sd.formatPlatform(platform);
-    return outputs.reduce((acc, { output }) => `${acc}\n${output}`, '');
-  }
 }
