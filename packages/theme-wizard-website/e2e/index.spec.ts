@@ -16,10 +16,10 @@ test('Accessibility basics', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
-test('Allows going to the wizard without scraping', async ({ page, wizardPage }) => {
+test('Allows going to the wizard without scraping', async ({ page, wizardIndexPage }) => {
   const link = page.getByRole('link', { name: 'Doorgaan zonder huisstijl ophalen' });
   await expect.soft(link).toBeVisible();
-  await expect(link).toHaveAttribute('href', wizardPage.url);
+  await expect(link).toHaveAttribute('href', wizardIndexPage.url);
 });
 
 test.describe('scraping css design tokens', () => {

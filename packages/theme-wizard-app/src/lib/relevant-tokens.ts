@@ -55,7 +55,7 @@ const getThemeTokens = (theme: Theme, type: BaseDesignToken['$type'], subType?: 
     if (
       token.$type === type &&
       !isRef(token.$value) &&
-      // Scraper filters out transparent colors, but theme.tokens may still contain them
+      // Don't suggest semi-transparent colors
       !(isColorToken(token) && token.$value.alpha !== undefined && token.$value.alpha < 1)
     ) {
       typeTokens.set(stringifyToken(token), token);

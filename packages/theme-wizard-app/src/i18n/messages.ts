@@ -516,6 +516,9 @@ export const en = {
       showFewerTokens: 'Show fewer options',
       showMoreTokens: 'Show all options ({{tokenCount}})',
     },
+    taskNavigation: {
+      done: 'Task completed',
+    },
   },
 };
 
@@ -1018,6 +1021,9 @@ export const nl = {
       },
       showFewerTokens: 'Toon minder opties',
       showMoreTokens: 'Toon meer opties ({{tokenCount}})',
+    },
+    taskNavigation: {
+      done: 'Taak afgerond',
     },
   },
 } satisfies typeof en;
