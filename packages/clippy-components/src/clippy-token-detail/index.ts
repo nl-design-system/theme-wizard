@@ -5,9 +5,11 @@ import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
 import {
   getTokenColor,
+  getTokenDimensionSpaceConcept,
   getTokenPath,
   getTokenReferenceCount,
   getTokenReferencedAt,
+  getTokenSubType,
   getTokenValue,
 } from '@src/lib/tokens';
 import descriptionListCss from '@utrecht/data-list-css/dist/index.css?inline';
@@ -55,11 +57,27 @@ export class ClippyTokenDetail extends LitElement {
     switch (this.token.$type) {
       case 'color':
         return html`<clippy-color-sample color=${getTokenColor(this.token)}></clippy-color-sample>`;
-      // case 'fontSize':
-      //   return html`<clippy-token-sample-text
-      //     font-size=${this.token.displayValue}
-      //     truncate
-      //   ></clippy-token-sample-text>`;
+      case 'dimension': {
+        const subType = getTokenSubType(this.token);
+        switch (subType) {
+          case 'font-size':
+            return html`<clippy-token-sample-text
+              font-size=${getTokenValue(this.token)}
+              truncate
+            ></clippy-token-sample-text>`;
+          case 'space-block':
+          case 'space-inline':
+          case 'space-text':
+          case 'space-column':
+          case 'space-row':
+            return html`<clippy-token-sample-spacing
+              size=${getTokenValue(this.token)}
+              concept=${getTokenDimensionSpaceConcept(this.token)}
+            ></clippy-token-sample-spacing>`;
+          default:
+            return nothing;
+        }
+      }
       // case 'fontFamily':
       //   return html`<clippy-token-sample-text
       //     font-family=${this.token.displayValue}

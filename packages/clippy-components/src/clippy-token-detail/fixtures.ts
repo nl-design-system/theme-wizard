@@ -1,5 +1,5 @@
 import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
-import { BorderDisplayToken, SpacingDisplayToken, TextDisplayToken } from './types';
+import { BorderDisplayToken, TextDisplayToken } from './types';
 
 export const colorFixture: BaseDesignToken = {
   $extensions: {
@@ -22,23 +22,30 @@ export const colorFixture: BaseDesignToken = {
   },
 };
 
-export const spacingFixture: SpacingDisplayToken = {
-  displayValue: '1.5rem',
-  metadata: {
-    concept: 'inline',
+export const spacingFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.space.inline.6xl',
+    'nl.nldesignsystem.token-subtype': 'space-inline',
   },
-  tokenId: 'basis.space.inline.6xl',
-  tokenType: 'dimension',
-  usage: [],
-  usageCount: 0,
+  $type: 'dimension',
+  $value: {
+    unit: 'px',
+    value: 64,
+  },
 };
 
-export const textFontSizeFixture: TextDisplayToken = {
-  displayValue: '2.5rem',
-  tokenId: 'basis.text.font-size.4xl',
-  tokenType: 'fontSize',
-  usage: ['utrecht.heading-4.font-size', 'utrecht.paragraph.lead.font-size'],
-  usageCount: 2,
+export const textFontSizeFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.text.font-size.3xl',
+    'nl.nldesignsystem.reference-count': 0,
+    'nl.nldesignsystem.referenced-at': [],
+    'nl.nldesignsystem.token-subtype': 'font-size',
+  },
+  $type: 'dimension',
+  $value: {
+    unit: 'rem',
+    value: 2,
+  },
 };
 
 export const textFontFamilyFixture: TextDisplayToken = {

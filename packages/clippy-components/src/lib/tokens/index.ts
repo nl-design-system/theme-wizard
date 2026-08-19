@@ -7,6 +7,7 @@ import {
   EXTENSION_TOKEN_PATH,
   EXTENSION_TOKEN_SUBTYPE,
   isRef,
+  ModernDimensionToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color, { type ColorTypes } from 'colorjs.io';
 
@@ -40,7 +41,16 @@ export const getTokenValue = (token: BaseDesignToken): string => {
       const color = getTokenColor(token);
       return color?.toString({ format: 'hex' }) || '';
     }
+    case 'dimension': {
+      const { $value } = token as ModernDimensionToken;
+      return $value.value?.toString() + $value.unit;
+    }
     default:
       return '';
   }
+};
+
+export const getTokenDimensionSpaceConcept = (token: BaseDesignToken): string => {
+  const subType = getTokenSubType(token);
+  return subType.startsWith('space-') ? subType.split('-')[1] : '';
 };

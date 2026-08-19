@@ -3,9 +3,9 @@ import {
   // borderRadiusFixture,
   // borderWidthFixture,
   colorFixture,
-  // spacingFixture,
+  spacingFixture,
   // textFontFamilyFixture,
-  // textFontSizeFixture,
+  textFontSizeFixture,
   // textFontWeightFixture,
   // textLineHeightFixture,
 } from '@nl-design-system-community/clippy-components/src/clippy-token-detail/fixtures.js';
@@ -43,17 +43,17 @@ export const Default: Story = {
   name: 'Color',
 };
 
-// export const Spacing: Story = {
-//   args: {
-//     token: spacingFixture,
-//   },
-// };
+export const Spacing: Story = {
+  args: {
+    token: spacingFixture,
+  },
+};
 
-// export const FontSize: Story = {
-//   args: {
-//     token: textFontSizeFixture,
-//   },
-// };
+export const FontSize: Story = {
+  args: {
+    token: textFontSizeFixture,
+  },
+};
 
 // export const FontFamily: Story = {
 //   args: {
