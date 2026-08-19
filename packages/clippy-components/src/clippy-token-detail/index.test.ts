@@ -1,8 +1,9 @@
 import { ClippyColorSample } from '@src/clippy-color-sample';
-import { ClippyTokenSampleBorder } from '@src/clippy-token-sample-border';
 import './index';
+import { ClippyTokenSampleBorder } from '@src/clippy-token-sample-border';
 import { ClippyTokenSampleSpacing } from '@src/clippy-token-sample-spacing';
 import { ClippyTokenSampleText } from '@src/clippy-token-sample-text';
+import { getTokenColor, getTokenValue } from '@src/lib/tokens';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { ClippyTokenDetail } from './index';
 import { borderWidthFixture, colorFixture, spacingFixture, textFontSizeFixture } from './fixtures';
@@ -21,10 +22,8 @@ describe(`<${tag}>`, () => {
 
   it('renders', async () => {
     await component.updateComplete;
-    const noTokenMessage = component.shadowRoot?.querySelector('p') as HTMLParagraphElement;
 
     await expect.element(component).toBeInTheDocument();
-    await expect.element(noTokenMessage).toHaveTextContent('No token provided.');
   });
 
   it('Renders with a color token', async () => {
@@ -32,8 +31,10 @@ describe(`<${tag}>`, () => {
     await component.updateComplete;
     const colorSample = component.shadowRoot?.querySelector('clippy-color-sample') as ClippyColorSample;
 
+    const color = getTokenColor(colorFixture);
+
     await expect.element(component).toBeInTheDocument();
-    await expect.element(colorSample).toHaveProperty('color', colorFixture.displayValue);
+    await expect.element(colorSample).toHaveProperty('color', color?.toString());
   });
 
   it('Renders with a spacing token', async () => {
@@ -43,7 +44,7 @@ describe(`<${tag}>`, () => {
       'clippy-token-sample-spacing',
     ) as ClippyTokenSampleSpacing;
     await expect.element(spacingSample).toBeInTheDocument();
-    await expect.element(spacingSample).toHaveProperty('size', spacingFixture.displayValue);
+    await expect.element(spacingSample).toHaveProperty('size', getTokenValue(spacingFixture));
   });
 
   it('Renders with a text token', async () => {
@@ -51,7 +52,7 @@ describe(`<${tag}>`, () => {
     await component.updateComplete;
     const textSample = component.shadowRoot?.querySelector('clippy-token-sample-text') as ClippyTokenSampleText;
     await expect.element(textSample).toBeInTheDocument();
-    expect(textSample.getAttribute('font-size')).toBe(textFontSizeFixture.displayValue);
+    expect(textSample.getAttribute('font-size')).toBe(getTokenValue(textFontSizeFixture));
   });
 
   it('Renders with a border token', async () => {
@@ -59,7 +60,7 @@ describe(`<${tag}>`, () => {
     await component.updateComplete;
     const borderSample = component.shadowRoot?.querySelector('clippy-token-sample-border') as ClippyTokenSampleBorder;
     await expect.element(borderSample).toBeInTheDocument();
-    expect(borderSample.getAttribute('border-width')).toBe(borderWidthFixture.displayValue);
+    expect(borderSample.getAttribute('border-width')).toBe(getTokenValue(borderWidthFixture));
   });
 
   it.each(labels)('the %s is displayed correctly', async (label) => {

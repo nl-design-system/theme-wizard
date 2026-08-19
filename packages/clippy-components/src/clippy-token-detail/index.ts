@@ -75,7 +75,9 @@ export class ClippyTokenDetail extends LitElement {
               concept=${getTokenDimensionSpaceConcept(this.token)}
             ></clippy-token-sample-spacing>`;
           case 'border-width':
-            return html`<clippy-token-sample-border width=${getTokenValue(this.token)}></clippy-token-sample-border>`;
+            return html`<clippy-token-sample-border
+              border-width=${getTokenValue(this.token)}
+            ></clippy-token-sample-border>`;
           case 'border-radius':
             return html`<clippy-token-sample-border
               border-radius=${getTokenValue(this.token)}
