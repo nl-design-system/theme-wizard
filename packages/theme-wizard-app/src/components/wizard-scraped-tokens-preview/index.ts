@@ -1,5 +1,6 @@
 import { consume } from '@lit/context';
 import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
+import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-stack';
@@ -32,7 +33,13 @@ declare global {
 
 @customElement(tag)
 export class WizardScrapedTokensPreview extends LitElement {
-  static override readonly styles = [styles, unsafeCSS(codeStyles), unsafeCSS(tableCss), unsafeCSS(srOnlyStyles)];
+  static override readonly styles = [
+    styles,
+    unsafeCSS(paragraphStyles),
+    unsafeCSS(codeStyles),
+    unsafeCSS(tableCss),
+    unsafeCSS(srOnlyStyles),
+  ];
 
   // TODO: this shouldn't use storage directly but talk to this.scrapedTokens
   readonly #scrapedTokensStorage = new PersistentStorage({ prefix: 'scraped-tokens' });
@@ -113,12 +120,18 @@ export class WizardScrapedTokensPreview extends LitElement {
   `;
 
   override render() {
+    if (this.scrapedTokens.length === 0) {
+      // This is practically almost unreachable but still showing it for good measure.
+      return html`<p class="nl-paragraph">${t('stagedTokens.nothingFound')}</p>`;
+    }
+
     const families = this.scrapedTokens
       .filter((token) => token.$type === 'fontFamily')
       .toSorted((a, b) => {
         return a.$value[0].localeCompare(b.$value[0]);
       });
     const sizes = this.scrapedTokens
+      // Scraper only scrapes font-sizes as dimensions, so we don't have to filter this down to token-subtypes
       .filter((token) => token.$type === 'dimension')
       .toSorted((a, b) => {
         const normalizedA = dimensionToPx(a.$value);
@@ -150,6 +163,7 @@ export class WizardScrapedTokensPreview extends LitElement {
             (token) =>
               html`<clippy-token-sample-text
                 font-size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}
+                truncate
               ></clippy-token-sample-text>`,
             (token) => html`<code class="nl-code">${token.$extensions?.[EXTENSION_AUTHORED_AS]}</code>`,
           )}
