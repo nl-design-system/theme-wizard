@@ -3,6 +3,7 @@ import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
+import ArrowRight from '@tabler/icons/outline/arrow-right.svg?raw';
 import formFieldStyles from '@utrecht/form-field-css?inline';
 import formFieldErrorCss from '@utrecht/form-field-error-message-css?inline';
 import formLabelStyles from '@utrecht/form-label-css?inline';
@@ -10,6 +11,7 @@ import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { createActor, type Actor, type SnapshotFrom } from 'xstate';
 import { t } from '../../i18n';
 import Scraper from '../../lib/Scraper';
@@ -145,11 +147,14 @@ export class WizardScraper extends LitElement {
                         </div>
 
                         <button class="nl-button nl-button--primary" type="submit">${t('scraper.submit')}</button>
+
+                        <a class="nl-link wizard-forward-link" href="/wizard">
+                          ${t('scraper.proceedWithoutScrape')} ${unsafeSVG(ArrowRight)}
+                        </a>
                       </clippy-stack>
                     </form>
                   </clippy-stack>
                 </clippy-story-preview>
-                <p class="nl-paragraph">${t('scraper.directStart')}</p>
               </clippy-stack>
             `
           : nothing

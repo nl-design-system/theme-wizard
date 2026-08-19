@@ -6,7 +6,8 @@ import { MinifyTokensPage } from '../pages/MinifyTokensPage';
 import { ReuseTokensPage } from '../pages/ReuseTokensPage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
 import { ValidateTokensPage } from '../pages/ValidateTokensPage';
-import { WizardPage } from '../pages/WizardPage';
+import { WizardIndexPage } from '../pages/WizardIndexPage';
+import { WizardStepFormPage } from '../pages/WizardStepFormPage';
 
 type MatcherResult =
   | {
@@ -77,7 +78,8 @@ export const test = baseTest.extend<{
   stagingTokensPage: StagingTokensPage;
   componentPage: ComponentPage;
   validateTokensPage: ValidateTokensPage;
-  wizardPage: WizardPage;
+  wizardIndexPage: WizardIndexPage;
+  wizardStepFormPage: WizardStepFormPage;
 }>({
   basisTokensPage: async ({ page }, use) => {
     const themeWizard = new BasisTokensPage(page);
@@ -107,8 +109,12 @@ export const test = baseTest.extend<{
     const validateTokensPage = new ValidateTokensPage(page);
     await use(validateTokensPage);
   },
-  wizardPage: async ({ page }, use) => {
-    const wizardPage = new WizardPage(page);
-    await use(wizardPage);
+  wizardIndexPage: async ({ page }, use) => {
+    const wizardIndexPage = new WizardIndexPage(page);
+    await use(wizardIndexPage);
+  },
+  wizardStepFormPage: async ({ page }, use) => {
+    const wizardStepFormPage = new WizardStepFormPage(page);
+    await use(wizardStepFormPage);
   },
 });
