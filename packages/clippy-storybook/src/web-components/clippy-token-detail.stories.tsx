@@ -1,24 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
-  borderRadiusFixture,
-  borderWidthFixture,
+  // borderRadiusFixture,
+  // borderWidthFixture,
   colorFixture,
-  spacingFixture,
-  textFontFamilyFixture,
-  textFontSizeFixture,
-  textFontWeightFixture,
-  textLineHeightFixture,
+  // spacingFixture,
+  // textFontFamilyFixture,
+  // textFontSizeFixture,
+  // textFontWeightFixture,
+  // textLineHeightFixture,
 } from '@nl-design-system-community/clippy-components/src/clippy-token-detail/fixtures.js';
 import '@nl-design-system-community/clippy-components/clippy-token-detail';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-token-detail/README.md?raw';
-import {
-  ColorDisplayToken,
-  DisplayToken,
-} from '@nl-design-system-community/clippy-components/src/clippy-token-detail/types.js';
+import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
 import React from 'react';
 
 interface TokenDetailStoryArgs {
-  token: DisplayToken | ColorDisplayToken;
+  token: BaseDesignToken;
 }
 
 const meta = {
@@ -42,46 +39,48 @@ const meta = {
 export default meta;
 type Story = StoryObj<TokenDetailStoryArgs>;
 
-export const Default: Story = {};
-
-export const Spacing: Story = {
-  args: {
-    token: spacingFixture,
-  },
+export const Default: Story = {
+  name: 'Color',
 };
 
-export const FontSize: Story = {
-  args: {
-    token: textFontSizeFixture,
-  },
-};
+// export const Spacing: Story = {
+//   args: {
+//     token: spacingFixture,
+//   },
+// };
 
-export const FontFamily: Story = {
-  args: {
-    token: textFontFamilyFixture,
-  },
-};
+// export const FontSize: Story = {
+//   args: {
+//     token: textFontSizeFixture,
+//   },
+// };
 
-export const FontWeight: Story = {
-  args: {
-    token: textFontWeightFixture,
-  },
-};
+// export const FontFamily: Story = {
+//   args: {
+//     token: textFontFamilyFixture,
+//   },
+// };
 
-export const LineHeight: Story = {
-  args: {
-    token: textLineHeightFixture,
-  },
-};
+// export const FontWeight: Story = {
+//   args: {
+//     token: textFontWeightFixture,
+//   },
+// };
 
-export const BorderWidth: Story = {
-  args: {
-    token: borderWidthFixture,
-  },
-};
+// export const LineHeight: Story = {
+//   args: {
+//     token: textLineHeightFixture,
+//   },
+// };
 
-export const BorderRadius: Story = {
-  args: {
-    token: borderRadiusFixture,
-  },
-};
+// export const BorderWidth: Story = {
+//   args: {
+//     token: borderWidthFixture,
+//   },
+// };
+
+// export const BorderRadius: Story = {
+//   args: {
+//     token: borderRadiusFixture,
+//   },
+// };

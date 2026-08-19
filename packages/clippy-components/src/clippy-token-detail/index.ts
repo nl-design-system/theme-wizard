@@ -2,18 +2,25 @@ import { safeCustomElement } from '@lib/decorators';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
+import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
+import {
+  getTokenColor,
+  getTokenPath,
+  getTokenReferenceCount,
+  getTokenReferencedAt,
+  getTokenValue,
+} from '@src/lib/tokens';
 import descriptionListCss from '@utrecht/data-list-css/dist/index.css?inline';
 import unorderedListCss from '@utrecht/unordered-list-css/dist/index.css?inline';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
-import srOnly from '../lib/sr-only';
-import styles from './styles';
 import '../clippy-color-sample';
 import '../clippy-token-sample-spacing';
 import '../clippy-token-sample-text';
 import '../clippy-heading';
 import '../clippy-stack';
-import { DisplayToken } from './types';
+import srOnly from '../lib/sr-only';
+import styles from './styles';
 
 const tag = 'clippy-token-detail';
 
@@ -36,7 +43,7 @@ export class ClippyTokenDetail extends LitElement {
   ];
 
   @property({ type: Object })
-  token?: DisplayToken;
+  token?: BaseDesignToken;
 
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
@@ -44,48 +51,83 @@ export class ClippyTokenDetail extends LitElement {
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
 
   renderTokenExample() {
-    switch (this.token?.tokenType) {
+    if (!this.token) return nothing;
+    switch (this.token.$type) {
       case 'color':
-        return html`<clippy-color-sample color=${this.token.displayValue}></clippy-color-sample>`;
-      case 'fontSize':
-        return html`<clippy-token-sample-text
-          font-size=${this.token.displayValue}
-          truncate
-        ></clippy-token-sample-text>`;
-      case 'fontFamily':
-        return html`<clippy-token-sample-text
-          font-family=${this.token.displayValue}
-          font-size="var(--basis-text-font-size-xl)"
-          truncate
-        ></clippy-token-sample-text>`;
-      case 'fontWeight':
-        return html`<clippy-token-sample-text
-          font-weight=${this.token.displayValue}
-          font-size="var(--basis-text-font-size-xl)"
-          truncate
-        ></clippy-token-sample-text>`;
-      case 'lineHeight':
-        return html`<clippy-token-sample-text
-          line-height=${this.token.displayValue}
-          font-size="var(--basis-text-font-size-xl)"
-        ></clippy-token-sample-text>`;
-      case 'borderWidth':
-        return html`<clippy-token-sample-border border-width=${this.token.displayValue}></clippy-token-sample-border>`;
-      case 'borderRadius':
-        return html`<clippy-token-sample-border border-radius=${this.token.displayValue}></clippy-token-sample-border>`;
-      case 'dimension':
-        return html`<clippy-token-sample-spacing
-          size=${this.token.displayValue}
-          concept=${this.token.metadata?.['concept']}
-        ></clippy-token-sample-spacing>`;
+        return html`<clippy-color-sample color=${getTokenColor(this.token)}></clippy-color-sample>`;
+      // case 'fontSize':
+      //   return html`<clippy-token-sample-text
+      //     font-size=${this.token.displayValue}
+      //     truncate
+      //   ></clippy-token-sample-text>`;
+      // case 'fontFamily':
+      //   return html`<clippy-token-sample-text
+      //     font-family=${this.token.displayValue}
+      //     font-size="var(--basis-text-font-size-xl)"
+      //     truncate
+      //   ></clippy-token-sample-text>`;
+      // case 'fontWeight':
+      //   return html`<clippy-token-sample-text
+      //     font-weight=${this.token.displayValue}
+      //     font-size="var(--basis-text-font-size-xl)"
+      //     truncate
+      //   ></clippy-token-sample-text>`;
+      // case 'lineHeight':
+      //   return html`<clippy-token-sample-text
+      //     line-height=${this.token.displayValue}
+      //     font-size="var(--basis-text-font-size-xl)"
+      //   ></clippy-token-sample-text>`;
+      // case 'borderWidth':
+      //   return html`<clippy-token-sample-border border-width=${this.token.displayValue}></clippy-token-sample-border>`;
+      // case 'borderRadius':
+      //   return html`<clippy-token-sample-border border-radius=${this.token.displayValue}></clippy-token-sample-border>`;
+      // case 'dimension':
+      //   return html`<clippy-token-sample-spacing
+      //     size=${this.token.displayValue}
+      //     concept=${this.token.metadata?.['concept']}
+      //   ></clippy-token-sample-spacing>`;
+      default:
+        return nothing;
+    }
+  }
+
+  renderTokenExtras() {
+    if (!this.token) return nothing;
+    switch (this.token.$type) {
+      case 'color': {
+        const color = getTokenColor(this.token);
+        return html`
+          <div class="utrecht-data-list__item">
+            <dt class="utrecht-data-list__item-key">OKLCH</dt>
+            <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+              <code class="nl-code">${color?.toString({ format: 'oklch' })}</code>
+            </dd>
+          </div>
+          <div class="utrecht-data-list__item">
+            <dt class="utrecht-data-list__item-key">P3 Color</dt>
+            <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+              <code class="nl-code">${color?.toString({ format: 'color' })}</code>
+            </dd>
+          </div>
+          <div class="utrecht-data-list__item">
+            <dt class="utrecht-data-list__item-key">RGB</dt>
+            <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+              <code class="nl-code">${color?.toString({ format: 'rgb' })}</code>
+            </dd>
+          </div>
+        `;
+      }
       default:
         return nothing;
     }
   }
 
   override render() {
-    if (!this.token) return html`<p>No token provided.</p>`;
+    if (!this.token) return nothing;
 
+    const tokenPath = getTokenPath(this.token);
+    const referencedAt = getTokenReferencedAt(this.token);
+    const referenceCount = getTokenReferenceCount(this.token);
     return html`
       <clippy-stack size="2xl">
         <clippy-stack>
@@ -95,55 +137,42 @@ export class ClippyTokenDetail extends LitElement {
             <div class="utrecht-data-list__item">
               <dt class="utrecht-data-list__item-key">Token type</dt>
               <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">${this.token.tokenType}</code>
+                <code class="nl-code">${this.token.$type}</code>
               </dd>
             </div>
             <div class="utrecht-data-list__item">
               <dt class="utrecht-data-list__item-key">Token ID</dt>
               <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <span class="nl-data-badge">${this.token.tokenId}</span>
+                <span class="nl-data-badge">${tokenPath}</span>
               </dd>
             </div>
             <div class="utrecht-data-list__item">
               <dt class="utrecht-data-list__item-key">CSS Variable</dt>
               <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">${`--${this.token.tokenId.replaceAll('.', '-')}`}</code>
+                <code class="nl-code">${`--${tokenPath.replaceAll('.', '-')}`}</code>
               </dd>
             </div>
             <div class="utrecht-data-list__item">
               <dt class="utrecht-data-list__item-key" data-testid="value-label">${this.valueLabel}</dt>
               <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">${this.token.displayValue}</code>
+                <code class="nl-code">${getTokenValue(this.token)}</code>
               </dd>
             </div>
-            ${
-              this.token.metadata
-                ? Object.entries(this.token.metadata).map(
-                    ([key, value]) => html`
-                      <div class="utrecht-data-list__item">
-                        <dt class="utrecht-data-list__item-key">${key}</dt>
-                        <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                          <code class="nl-code">${value}</code>
-                        </dd>
-                      </div>
-                    `,
-                  )
-                : nothing
-            }
+            ${this.renderTokenExtras()}
           </dl>
         </clippy-stack>
 
         <clippy-stack>
           <clippy-heading level=${3}>
             <span data-testid="reference-title-label">${this.referenceTitleLabel}</span>
-            <data>(${this.token.usage.length}&times;)</data>
+            <data>(${referenceCount}&times;)</data>
           </clippy-heading>
 
           ${
-            this.token.usage.length > 0
+            referencedAt.length > 0
               ? html`
                   <ul class="utrecht-unordered-list" role="list">
-                    ${this.token.usage.map(
+                    ${referencedAt.map(
                       (referrer) => html`
                         <li class="utrecht-unordered-list__item">
                           <span class="nl-data-badge">${referrer}</span>

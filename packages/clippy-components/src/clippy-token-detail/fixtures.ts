@@ -1,37 +1,25 @@
-import Color from 'colorjs.io';
-import { BorderDisplayToken, ColorDisplayToken, SpacingDisplayToken, TextDisplayToken } from './types';
+import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
+import { BorderDisplayToken, SpacingDisplayToken, TextDisplayToken } from './types';
 
-const color = new Color('#c9aaf3');
-
-export const colorFixture: ColorDisplayToken = {
-  displayValue: color.toString({ format: 'hex' }),
-  metadata: {
-    OKLCH: color.toString({ format: 'oklch' }),
-    'P3 Color': color.toString({ format: 'color' }),
-    RGB: color.toString({ format: 'rgb' }),
+export const colorFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.color.accent-1.border-default',
+    'nl.nldesignsystem.reference-count': 5,
+    'nl.nldesignsystem.referenced-at': [
+      'basis.color.accent-2.border-default',
+      'basis.color.accent-3.border-default',
+      'basis.color.action-1.border-default',
+      'basis.color.action-2.border-default',
+      'basis.color.selected.border-default',
+    ],
+    'nl.nldesignsystem.token-subtype': 'border-color',
   },
-  tokenId: 'basis.color.default.border-subtle',
-  tokenType: 'color',
-  usage: [
-    'basis.color.disabled.border-subtle',
-    'utrecht.accordion.section.border-color',
-    'utrecht.accordion.section.hover.border-color',
-    'utrecht.drawer.border-color',
-    'utrecht.table.header.border-block-end-color',
-    'utrecht.table.row.border-block-end-color',
-    'todo.drawer.border-color',
-    'todo.drawer.header.border-color',
-    'todo.drawer.footer.border-color',
-    'todo.form-summary.item.border-color',
-    'todo.table.footer.border-block-start-color',
-    'ams.dialog.border-color',
-    'denhaag.description-list.border-color',
-    'denhaag.file.border-color',
-    'denhaag.tabs.border-color',
-    'denhaag.action.border-color',
-    'rhc.navigation-list.item.border-color',
-  ],
-  usageCount: 17,
+  $type: 'color',
+  $value: {
+    alpha: 1,
+    colorSpace: 'srgb',
+    components: [0.3607843137254902, 0.5372549019607843, 0.7450980392156863],
+  },
 };
 
 export const spacingFixture: SpacingDisplayToken = {
