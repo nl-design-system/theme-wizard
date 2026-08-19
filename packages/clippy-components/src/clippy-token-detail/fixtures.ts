@@ -48,12 +48,19 @@ export const textFontSizeFixture: BaseDesignToken = {
   },
 };
 
-export const textFontFamilyFixture: TextDisplayToken = {
-  displayValue: 'IBM Plex Mono, monospace',
-  tokenId: 'basis.text.font-family.default',
-  tokenType: 'fontFamily',
-  usage: ['basis.form-control.font-family'],
-  usageCount: 1,
+export const textFontFamilyFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.text.font-family.monospace',
+    'nl.nldesignsystem.reference-count': 4,
+    'nl.nldesignsystem.referenced-at': [
+      'utrecht.code.font-family',
+      'utrecht.code-block.font-family',
+      'nl.code.font-family',
+      'nl.code-block.font-family',
+    ],
+  },
+  $type: 'fontFamily',
+  $value: ['IBM Plex Mono', 'monospace'],
 };
 
 export const textFontWeightFixture: TextDisplayToken = {

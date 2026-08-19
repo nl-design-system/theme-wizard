@@ -78,12 +78,13 @@ export class ClippyTokenDetail extends LitElement {
             return nothing;
         }
       }
-      // case 'fontFamily':
-      //   return html`<clippy-token-sample-text
-      //     font-family=${this.token.displayValue}
-      //     font-size="var(--basis-text-font-size-xl)"
-      //     truncate
-      //   ></clippy-token-sample-text>`;
+      // TODO: Google fonts?
+      case 'fontFamily':
+        return html`<clippy-token-sample-text
+          font-family=${getTokenValue(this.token)}
+          font-size="var(--basis-text-font-size-xl)"
+          truncate
+        ></clippy-token-sample-text>`;
       // case 'fontWeight':
       //   return html`<clippy-token-sample-text
       //     font-weight=${this.token.displayValue}

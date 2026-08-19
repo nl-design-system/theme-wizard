@@ -45,6 +45,8 @@ export const getTokenValue = (token: BaseDesignToken): string => {
       const { $value } = token as ModernDimensionToken;
       return $value.value?.toString() + $value.unit;
     }
+    case 'fontFamily':
+      return Array.isArray(token.$value) ? token.$value.join(', ') : (token.$value as string);
     default:
       return '';
   }

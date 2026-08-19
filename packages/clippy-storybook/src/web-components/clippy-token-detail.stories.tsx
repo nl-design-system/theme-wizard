@@ -4,7 +4,7 @@ import {
   // borderWidthFixture,
   colorFixture,
   spacingFixture,
-  // textFontFamilyFixture,
+  textFontFamilyFixture,
   textFontSizeFixture,
   // textFontWeightFixture,
   // textLineHeightFixture,
@@ -55,11 +55,11 @@ export const FontSize: Story = {
   },
 };
 
-// export const FontFamily: Story = {
-//   args: {
-//     token: textFontFamilyFixture,
-//   },
-// };
+export const FontFamily: Story = {
+  args: {
+    token: textFontFamilyFixture,
+  },
+};
 
 // export const FontWeight: Story = {
 //   args: {
