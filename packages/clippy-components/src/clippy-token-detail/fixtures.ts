@@ -63,12 +63,18 @@ export const textFontFamilyFixture: BaseDesignToken = {
   $value: ['IBM Plex Mono', 'monospace'],
 };
 
-export const textFontWeightFixture: TextDisplayToken = {
-  displayValue: '700',
-  tokenId: 'basis.text.font-weight.bold',
-  tokenType: 'fontWeight',
-  usage: ['basis.form-control.font-weight'],
-  usageCount: 1,
+export const textFontWeightFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.text.font-weight.bold',
+    'nl.nldesignsystem.reference-count': 2,
+    'nl.nldesignsystem.referenced-at': ['basis.heading.font-weight', 'utrecht.button.font-weight'],
+    'nl.nldesignsystem.token-subtype': 'font-weight',
+    'studio.tokens': {
+      originalType: 'fontWeights',
+    },
+  },
+  $type: 'number',
+  $value: 700,
 };
 
 export const textLineHeightFixture: TextDisplayToken = {

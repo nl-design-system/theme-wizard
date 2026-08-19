@@ -35,7 +35,7 @@ export const getTokenReferenceCount = (token: BaseDesignToken): number => {
   return (token.$extensions?.[EXTENSION_REFERENCE_COUNT] as number) || 0;
 };
 
-export const getTokenValue = (token: BaseDesignToken): string => {
+export const getTokenValue = (token: BaseDesignToken): string | number => {
   switch (token.$type) {
     case 'color': {
       const color = getTokenColor(token);
@@ -48,7 +48,7 @@ export const getTokenValue = (token: BaseDesignToken): string => {
     case 'fontFamily':
       return Array.isArray(token.$value) ? token.$value.join(', ') : (token.$value as string);
     default:
-      return '';
+      return typeof token.$value === 'string' || typeof token.$value === 'number' ? token.$value : '';
   }
 };
 

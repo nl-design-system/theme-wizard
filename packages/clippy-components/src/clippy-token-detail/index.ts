@@ -85,12 +85,19 @@ export class ClippyTokenDetail extends LitElement {
           font-size="var(--basis-text-font-size-xl)"
           truncate
         ></clippy-token-sample-text>`;
-      // case 'fontWeight':
-      //   return html`<clippy-token-sample-text
-      //     font-weight=${this.token.displayValue}
-      //     font-size="var(--basis-text-font-size-xl)"
-      //     truncate
-      //   ></clippy-token-sample-text>`;
+      case 'number': {
+        const subType = getTokenSubType(this.token);
+        switch (subType) {
+          case 'font-weight':
+            return html`<clippy-token-sample-text
+              font-weight=${getTokenValue(this.token)}
+              font-size="var(--basis-text-font-size-xl)"
+              truncate
+            ></clippy-token-sample-text>`;
+          default:
+            return nothing;
+        }
+      }
       // case 'lineHeight':
       //   return html`<clippy-token-sample-text
       //     line-height=${this.token.displayValue}
