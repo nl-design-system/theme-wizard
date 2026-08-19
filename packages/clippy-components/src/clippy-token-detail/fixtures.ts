@@ -1,5 +1,4 @@
 import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
-import { BorderDisplayToken } from './types';
 
 export const colorFixture: BaseDesignToken = {
   $extensions: {
@@ -119,10 +118,21 @@ export const borderWidthFixture: BaseDesignToken = {
   },
 };
 
-export const borderRadiusFixture: BorderDisplayToken = {
-  displayValue: '0.5rem',
-  tokenId: 'basis.border.radius.md',
-  tokenType: 'borderRadius',
-  usage: [],
-  usageCount: 0,
+export const borderRadiusFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.border-radius.md',
+    'nl.nldesignsystem.reference-count': 4,
+    'nl.nldesignsystem.referenced-at': [
+      'utrecht.button.border-radius',
+      'todo.progress-list.button.border-radius',
+      'nl.button.border-radius',
+      'lux.login-link.border-radius',
+    ],
+    'nl.nldesignsystem.token-subtype': 'border-radius',
+  },
+  $type: 'dimension',
+  $value: {
+    unit: 'px',
+    value: 8,
+  },
 };

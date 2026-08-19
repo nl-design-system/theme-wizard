@@ -76,6 +76,10 @@ export class ClippyTokenDetail extends LitElement {
             ></clippy-token-sample-spacing>`;
           case 'border-width':
             return html`<clippy-token-sample-border width=${getTokenValue(this.token)}></clippy-token-sample-border>`;
+          case 'border-radius':
+            return html`<clippy-token-sample-border
+              border-radius=${getTokenValue(this.token)}
+            ></clippy-token-sample-border>`;
           default:
             return nothing;
         }
@@ -106,11 +110,6 @@ export class ClippyTokenDetail extends LitElement {
             return nothing;
         }
       }
-      // case 'borderWidth':
-      //   return html`<clippy-token-sample-border border-width=${this.token.displayValue}></clippy-token-sample-border>`;
-      // case 'borderRadius':
-      //   return html`<clippy-token-sample-border border-radius=${this.token.displayValue}></clippy-token-sample-border>`;
-      //   ></clippy-token-sample-spacing>`;
       default:
         return nothing;
     }

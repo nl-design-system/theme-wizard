@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
-  // borderRadiusFixture,
+  borderRadiusFixture,
   borderWidthFixture,
   colorFixture,
   spacingFixture,
@@ -79,8 +79,8 @@ export const BorderWidth: Story = {
   },
 };
 
-// export const BorderRadius: Story = {
-//   args: {
-//     token: borderRadiusFixture,
-//   },
-// };
+export const BorderRadius: Story = {
+  args: {
+    token: borderRadiusFixture,
+  },
+};
