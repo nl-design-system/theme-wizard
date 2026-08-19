@@ -16,12 +16,10 @@ import '../clippy-color-sample';
 import '../clippy-modal';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import type { ColorGroup, TokenCollection } from './types';
+import type { TokenCollection } from './types';
 import { ClippyModal } from '../clippy-modal';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
-
-export type { ColorGroup } from './types';
 
 const tag = 'clippy-token-table-color';
 
@@ -37,9 +35,6 @@ export class ClippyTokenTableColor extends LitElement {
 
   @query('clippy-modal')
   dialog?: ClippyModal;
-
-  @property({ type: Array })
-  groups: ColorGroup[] = [];
 
   @property({ type: Array })
   collection: TokenCollection = [];
