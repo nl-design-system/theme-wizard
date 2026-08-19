@@ -7,7 +7,7 @@ import {
   textFontFamilyFixture,
   textFontSizeFixture,
   textFontWeightFixture,
-  // textLineHeightFixture,
+  textLineHeightFixture,
 } from '@nl-design-system-community/clippy-components/src/clippy-token-detail/fixtures.js';
 import '@nl-design-system-community/clippy-components/clippy-token-detail';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-token-detail/README.md?raw';
@@ -67,11 +67,11 @@ export const FontWeight: Story = {
   },
 };
 
-// export const LineHeight: Story = {
-//   args: {
-//     token: textLineHeightFixture,
-//   },
-// };
+export const LineHeight: Story = {
+  args: {
+    token: textLineHeightFixture,
+  },
+};
 
 // export const BorderWidth: Story = {
 //   args: {

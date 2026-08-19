@@ -1,5 +1,5 @@
 import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
-import { BorderDisplayToken, TextDisplayToken } from './types';
+import { BorderDisplayToken } from './types';
 
 export const colorFixture: BaseDesignToken = {
   $extensions: {
@@ -77,12 +77,15 @@ export const textFontWeightFixture: BaseDesignToken = {
   $value: 700,
 };
 
-export const textLineHeightFixture: TextDisplayToken = {
-  displayValue: '1.5',
-  tokenId: 'basis.text.line-height.default',
-  tokenType: 'lineHeight',
-  usage: ['basis.form-control.line-height'],
-  usageCount: 1,
+export const textLineHeightFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.text.line-height.md',
+    'nl.nldesignsystem.reference-count': 1,
+    'nl.nldesignsystem.referenced-at': ['basis.form-control.line-height'],
+    'nl.nldesignsystem.token-subtype': 'line-height',
+  },
+  $type: 'number',
+  $value: 1.5,
 };
 
 export const borderWidthFixture: BorderDisplayToken = {
