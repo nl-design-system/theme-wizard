@@ -14,7 +14,7 @@ import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import Color, { ColorTypes } from 'colorjs.io';
 import '../clippy-color-sample';
 import '../clippy-modal';
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import type { TokenCollection } from './types';
 import { ClippyModal } from '../clippy-modal';
@@ -147,7 +147,7 @@ export class ClippyTokenTableColor extends LitElement {
   }
 
   override render() {
-    if (this.collection.length === 0) return html`<p>No collections provided</p>`;
+    if (this.collection.length === 0) return nothing;
     return html`<div class="utrecht-table-container utrecht-table-container--overflow-inline">
         <table class="utrecht-table">
           <thead class="utrecht-table__header">
