@@ -1,4 +1,10 @@
-import { extractRef, isRef, isTokenGroup, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
+import {
+  extractRef,
+  isRef,
+  isTokenGroup,
+  isTokenLike,
+  ThemeLike,
+} from '@nl-design-system-community/design-tokens-schema';
 
 /**
  * Given a color scale group path (e.g. 'basis.color.accent-1') and its parent group object
@@ -54,17 +60,20 @@ export function getSiblingGroupsWithOnlyRefsTo(groupPath: string, parentGroup: u
  */
 export function filterRedundantGroups(
   groupKeys: string[],
-  colors: Record<string, unknown>,
+  tokens: ThemeLike,
   prefixes: string[],
-  basePath = 'basis.color',
+  basePath = 'basis.color.',
 ): string[] {
   const seenGroupKeys: string[] = [];
+  const cleanBasePath = basePath === '' || basePath.endsWith('.') ? basePath : `${basePath}.`;
 
   return groupKeys.filter((groupKey) => {
     const isRedundant =
       prefixes.some((prefix) => groupKey.startsWith(prefix)) &&
       seenGroupKeys.some((seenGroupKey) =>
-        getSiblingGroupsWithOnlyRefsTo(`${basePath}.${seenGroupKey}`, colors).includes(`${basePath}.${groupKey}`),
+        getSiblingGroupsWithOnlyRefsTo(`${cleanBasePath}${seenGroupKey}`, tokens).includes(
+          `${cleanBasePath}${groupKey}`,
+        ),
       );
 
     seenGroupKeys.push(groupKey);
