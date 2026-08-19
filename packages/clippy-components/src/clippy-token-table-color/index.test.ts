@@ -1,7 +1,8 @@
-import { describe, expect, it, afterEach, beforeEach } from 'vitest';
+import { colorTokenValueToColorJS, ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import './index';
+import { describe, expect, it, afterEach, beforeEach } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
-import { colorGroups } from './fixtures';
+import { tokenCollection } from './fixtures';
 
 const tag = 'clippy-token-table-color';
 
@@ -22,7 +23,7 @@ const labels = [
 
 describe(`<${tag}>`, () => {
   beforeEach(() => {
-    document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)}></${tag}>`;
+    document.body.innerHTML = `<${tag} collection=${JSON.stringify(tokenCollection)}></${tag}>`;
   });
 
   afterEach(() => {
@@ -57,8 +58,8 @@ describe(`<${tag}>`, () => {
     expect(headers).toHaveLength(2);
 
     // Verify that the row headers have the correct text content
-    colorGroups.forEach((group, index) => {
-      expect(headers[index].textContent.replace(/[\n\r]+|\s{2,}/g, ' ').trim()).toBe(group.key);
+    tokenCollection.forEach((group, index) => {
+      expect(headers[index].textContent.replace(/[\n\r]+|\s{2,}/g, ' ').trim()).toBe(group.name.split('.').pop());
     });
   });
 
@@ -69,15 +70,16 @@ describe(`<${tag}>`, () => {
     expect(samples).toHaveLength(14);
 
     // Verify that each color sample matches the corresponding color entry
-    colorGroups[0].colorEntries.forEach((entry, index) => {
+    tokenCollection[0].tokens.forEach((token, index) => {
       const sample = samples[index];
+      const color = colorTokenValueToColorJS(token.$value as ColorValue);
       expect(sample).toBeTruthy();
-      expect(sample.getAttribute('color')).toBe(entry.displayValue);
+      expect(sample.getAttribute('color')).toBe(color.toString());
     });
   });
 
   it.each(labels)('the %s is displayed correctly', async (label) => {
-    document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)} ${label}="${label} label"></${tag}>`;
+    document.body.innerHTML = `<${tag} collection=${JSON.stringify(tokenCollection)} ${label}="${label} label"></${tag}>`;
     const component = getComponent();
     await component.updateComplete;
     const exampleLabelElement = component.shadowRoot.querySelector(`[data-testid="${label}"]`);
@@ -86,7 +88,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('the reference-empty-label is displayed correctly', async () => {
-    document.body.innerHTML = `<${tag} groups=${JSON.stringify(colorGroups)} reference-empty-label="Reference empty label"></${tag}>`;
+    document.body.innerHTML = `<${tag} collection=${JSON.stringify(tokenCollection)} reference-empty-label="Reference empty label"></${tag}>`;
     const component = getComponent();
     await component.updateComplete;
 
