@@ -1,13 +1,22 @@
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
+import {
+  BaseDesignToken,
+  colorTokenValueToColorJS,
+  ColorValue,
+  EXTENSION_REFERENCE_COUNT,
+  EXTENSION_REFERENCED_AT,
+  EXTENSION_TOKEN_PATH,
+  isRef,
+} from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import Color from 'colorjs.io';
-import { LitElement, html, unsafeCSS } from 'lit';
+import Color, { ColorTypes } from 'colorjs.io';
 import '../clippy-color-sample';
 import '../clippy-modal';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import type { ColorEntry, ColorGroup } from './types';
+import type { ColorGroup, TokenCollection } from './types';
 import { ClippyModal } from '../clippy-modal';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
@@ -32,7 +41,10 @@ export class ClippyTokenTableColor extends LitElement {
   @property({ type: Array })
   groups: ColorGroup[] = [];
 
-  #currentColorEntry?: ColorEntry = undefined;
+  @property({ type: Array })
+  collection: TokenCollection = [];
+
+  #currentToken?: BaseDesignToken = undefined;
 
   /**
    * Labels for titles, labels, buttons, etc. Consumers can override these,
@@ -46,8 +58,19 @@ export class ClippyTokenTableColor extends LitElement {
   @property({ attribute: 'border-label', type: String }) borderLabel = 'Borders and lines';
   @property({ attribute: 'foreground-label', type: String }) foregroundLabel = 'Foreground';
 
-  #openDialog({ entry }: { entry: ColorEntry }) {
-    this.#currentColorEntry = entry;
+  #getTokenID(token: BaseDesignToken): string {
+    return (token.$extensions?.[EXTENSION_TOKEN_PATH] as string) || '';
+  }
+
+  #getTokenColor(token: BaseDesignToken) {
+    if (typeof token.$value === 'string' && !isRef(token.$value)) {
+      return new Color(token.$value as ColorTypes);
+    }
+    return colorTokenValueToColorJS(token.$value as ColorValue);
+  }
+
+  #openDialog({ token }: { token: BaseDesignToken }) {
+    this.#currentToken = token;
     this.requestUpdate();
 
     if (!this.dialog) return;
@@ -55,14 +78,17 @@ export class ClippyTokenTableColor extends LitElement {
   }
 
   #renderDialog() {
-    const entry = this.#currentColorEntry;
-    if (!entry) return html``;
+    const token = this.#currentToken;
+    if (!token) return html``;
 
-    const color = new Color(entry.displayValue);
+    const color = this.#getTokenColor(token);
+    const tokenID = this.#getTokenID(token);
+    const tokenUsage = (token.$extensions?.[EXTENSION_REFERENCED_AT] as string[]) || [];
+    const usageCount = (token.$extensions?.[EXTENSION_REFERENCE_COUNT] as number) || 0;
     return html`
-      <clippy-modal title="${entry.tokenId}" actions="none">
+      <clippy-modal title="${tokenID}" actions="none">
         <clippy-heading level=${3} data-testid="example-label">${this.exampleLabel}</clippy-heading>
-        <clippy-color-sample color=${entry.displayValue}></clippy-color-sample>
+        <clippy-color-sample color=${color.toString()}></clippy-color-sample>
         <dl>
           <dt>Token type</dt>
           <dd>
@@ -70,15 +96,15 @@ export class ClippyTokenTableColor extends LitElement {
           </dd>
           <dt>Token ID</dt>
           <dd>
-            <span class="nl-data-badge">${entry.tokenId}</span>
+            <span class="nl-data-badge">${tokenID}</span>
           </dd>
           <dt>CSS Variable</dt>
           <dd>
-            <code class="nl-code">${`--${entry.tokenId.replaceAll('.', '-')}`}</code>
+            <code class="nl-code">${`--${tokenID.replaceAll('.', '-')}`}</code>
           </dd>
           <dt data-testid="value-label">${this.valueLabel}</dt>
           <dd>
-            <code class="nl-code">${entry.displayValue}</code>
+            <code class="nl-code">${color.toString({ format: 'hex' })}</code>
           </dd>
           <dt>OKLCH</dt>
           <dd>
@@ -96,14 +122,14 @@ export class ClippyTokenTableColor extends LitElement {
 
         <clippy-heading level=${3}>
           <span data-testid="reference-title-label">${this.referenceTitleLabel}</span>
-          <data>(${entry.usage.length}&times;)</data>
+          <data>(${usageCount}&times;)</data>
         </clippy-heading>
 
         ${
-          entry.usage.length > 0
+          tokenUsage.length > 0
             ? html`
                 <ul>
-                  ${entry.usage.map(
+                  ${tokenUsage.map(
                     (referrer) => html`
                       <li>
                         <span class="nl-data-badge">${referrer}</span>
@@ -122,10 +148,11 @@ export class ClippyTokenTableColor extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.#currentColorEntry = this.groups[0].colorEntries[0];
+    this.#currentToken = this.collection[0].tokens[0];
   }
 
   override render() {
+    if (this.collection.length === 0) return html`<p>No collections provided</p>`;
     return html`<div class="utrecht-table-container utrecht-table-container--overflow-inline">
         <table class="utrecht-table">
           <thead class="utrecht-table__header">
@@ -194,21 +221,21 @@ export class ClippyTokenTableColor extends LitElement {
             </tr>
           </thead>
           <tbody class="utrecht-table__body">
-            ${this.groups.map(
-              ({ colorEntries, key: groupName }) =>
+            ${this.collection.map(
+              ({ name, tokens }) =>
                 html`<tr class="utrecht-table__row">
                   <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="row">
-                    ${groupName}
+                    ${name.split('.').pop()}
                   </th>
-                  ${colorEntries.map((entry) => {
+                  ${tokens.map((token) => {
                     return html`<td class="clippy-token-table-color__cell | utrecht-table__cell">
                       <button
                         class="clippy-token-table-color__button-sample"
                         type="button"
-                        @click=${() => this.#openDialog({ entry })}
+                        @click=${() => this.#openDialog({ token })}
                       >
-                        <clippy-color-sample color="${entry.displayValue}"></clippy-color-sample>
-                        <span class="sr-only">${entry.tokenId}</span>
+                        <clippy-color-sample color="${this.#getTokenColor(token).toString()}"></clippy-color-sample>
+                        <span class="sr-only">${this.#getTokenID(token)}</span>
                       </button>
                     </td>`;
                   })}

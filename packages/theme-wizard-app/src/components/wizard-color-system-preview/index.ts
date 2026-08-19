@@ -1,10 +1,11 @@
-import type { ColorGroup } from '@nl-design-system-community/clippy-components/clippy-token-table-color';
+// import type { ColorGroup } from '@nl-design-system-community/clippy-components/clippy-token-table-color';
 import '@nl-design-system-community/clippy-components/clippy-token-table-color';
 import { consume } from '@lit/context';
 import '../wizard-table-scroller';
 
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
+import { TokenCollection } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/types.js';
 import { type TokenPath } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, type PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
@@ -35,6 +36,8 @@ export class WizardColorSystemPreview extends LitElement {
   @property({ attribute: 'skip-redundant-groups', converter: arrayFromCommaList })
   skipRedundantGroups: string[] = [];
 
+  #visibleTokenCollection: TokenCollection = [];
+
   protected override willUpdate(changedProperties: PropertyValues) {
     if (
       !changedProperties.has('theme') &&
@@ -43,38 +46,37 @@ export class WizardColorSystemPreview extends LitElement {
     ) {
       return;
     }
-    console.log('======');
-    console.log('groups', this.groups);
     const groupPaths: TokenPath[] = this.groups.map((str) => str.split('.'));
     const colorCollection = getTokenCollectionByTokenPaths(this.theme.tokens, groupPaths);
-    console.log('colorCollection', colorCollection);
+    const basisTokens = this.theme.tokens['basis'] as Record<string, unknown>;
+    const colorTokens = basisTokens['color'] as Record<string, unknown>;
 
-    // const visibleGroups =
-    //   this.skipRedundantGroups.length > 0
-    //     ? filterRedundantGroups(requestedGroups, colors, this.skipRedundantGroups)
-    //     : requestedGroups;
+    const requestedGroups = this.groups.length > 0 ? this.groups : colorCollection.map((group) => group.name);
+    const visibleGroups =
+      this.skipRedundantGroups.length > 0
+        ? filterRedundantGroups(requestedGroups, colorTokens, this.skipRedundantGroups, '')
+        : requestedGroups;
 
-    // this.#visibleTokenGroups = this.#filterColorGroups(visibleGroups, colorTokenGroups);
+    this.#visibleTokenCollection = this.#filterColorCollection(visibleGroups, colorCollection);
   }
 
-  // #filterColorGroups(groups: string[], colorTokenGroups: ColorGroup[]) {
-  //   if (groups.length === 0) return colorTokenGroups;
+  #filterColorCollection(groups: string[], tokenCollection: TokenCollection) {
+    if (groups.length === 0) return tokenCollection;
 
-  //   const foundGroups = groups.map((groupKey) => colorTokenGroups.find((group) => group.key === groupKey));
-  //   return foundGroups.filter((group): group is NonNullable<typeof group> => group !== undefined);
-  // }
+    const foundGroups = groups.map((groupKey) => tokenCollection.find((group) => group.name === groupKey));
+    return foundGroups.filter((group): group is NonNullable<typeof group> => group !== undefined);
+  }
 
   override render() {
-    return html`<mark>Color table</mark>`;
-    // return html`<clippy-token-table-color
-    //   .groups=${this.#visibleTokenGroups}
-    //   example-label="${t('styleGuide.sample')}"
-    //   value-label="${t('styleGuide.value')}"
-    //   reference-title-label="${t('styleGuide.detailsDialog.tokenReferenceList.title')}"
-    //   reference-empty-label="${t('styleGuide.detailsDialog.tokenReferenceList.empty')}"
-    //   background-label="${t('styleGuide.colorSystem.background')}"
-    //   border-label="${t('styleGuide.colorSystem.border')}"
-    //   foreground-label="${t('styleGuide.colorSystem.foreground')}"
-    // ></clippy-token-table-color>`;
+    return html`<clippy-token-table-color
+      .collection=${this.#visibleTokenCollection}
+      example-label="${t('styleGuide.sample')}"
+      value-label="${t('styleGuide.value')}"
+      reference-title-label="${t('styleGuide.detailsDialog.tokenReferenceList.title')}"
+      reference-empty-label="${t('styleGuide.detailsDialog.tokenReferenceList.empty')}"
+      background-label="${t('styleGuide.colorSystem.background')}"
+      border-label="${t('styleGuide.colorSystem.border')}"
+      foreground-label="${t('styleGuide.colorSystem.foreground')}"
+    ></clippy-token-table-color>`;
   }
 }

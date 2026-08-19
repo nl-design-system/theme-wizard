@@ -51,7 +51,7 @@ export function getTokensByPath({ basePath, tokens }: { tokens: ThemeLike; baseP
   Object.keys(tokensAtPath).forEach((key) => {
     const token = tokensAtPath[key];
     if (isTokenLike(token)) {
-      const resolvedValue = isRef(token.$value) ? resolveRef(tokens, token.$value) : token.$value;
+      const resolvedValue = isRef(token.$value) ? resolveRef(tokens, token.$value)?.$value : token.$value;
       result.push({ ...token, $value: resolvedValue });
     }
   });
