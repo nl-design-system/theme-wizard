@@ -88,12 +88,35 @@ export const textLineHeightFixture: BaseDesignToken = {
   $value: 1.5,
 };
 
-export const borderWidthFixture: BorderDisplayToken = {
-  displayValue: '0.125rem',
-  tokenId: 'basis.border.width.md',
-  tokenType: 'borderWidth',
-  usage: [],
-  usageCount: 0,
+export const borderWidthFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.border-width.md',
+    'nl.nldesignsystem.reference-count': 16,
+    'nl.nldesignsystem.referenced-at': [
+      'basis.focus.outline-width',
+      'basis.form-control.active.border-width',
+      'basis.form-control.focus.border-width',
+      'basis.form-control.hover.border-width',
+      'basis.form-control.invalid.border-width',
+      'utrecht.alert.border-width',
+      'utrecht.form-fieldset.invalid.border-inline-start-width',
+      'utrecht.form-field.invalid.border-inline-start-width',
+      'utrecht.table.header.border-block-end-width',
+      'todo.progress-list.connector.border-width',
+      'todo.progress-list.step-marker.border-width',
+      'todo.table.footer.border-block-start-width',
+      'denhaag.process-steps.step-marker.border-width',
+      'denhaag.process-steps.step-marker.checked.border-width',
+      'denhaag.process-steps.step-marker.current.border-width',
+      'denhaag.step-marker.border-width',
+    ],
+    'nl.nldesignsystem.token-subtype': 'border-width',
+  },
+  $type: 'dimension',
+  $value: {
+    unit: 'rem',
+    value: 0.125,
+  },
 };
 
 export const borderRadiusFixture: BorderDisplayToken = {
