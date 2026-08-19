@@ -12,6 +12,7 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
   import '@nl-design-system-community/clippy-components/clippy-code';
   import '@nl-design-system-community/clippy-components/clippy-token-sample-border';
   import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+  import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
   import '@nl-design-system-community/clippy-components/clippy-heading';
 </script>
@@ -23,16 +24,15 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
       <StyleGuideNav />
 
       <wizard-container slot="main">
-        <wizard-stack size="5xl">
+        <clippy-stack size="5xl">
           <clippy-heading level="1">Randen en lijnen systeem</clippy-heading>
 
           <clippy-story-preview>
-            <wizard-stack size="5xl">
-              <clippy-heading level="2">Lijndiktes</clippy-heading>
-              {/* TODO: add documentation partials here, from https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#basis-tokens-voor-kader--of-lijndikte */}
-              <wizard-stack size="5xl">
+            <clippy-stack size="5xl">
+              <wizard-token-docs groups={`basis.border-width`} heading-level="2"></wizard-token-docs>
+              <clippy-stack size="5xl">
                 {widths.map((width) => (
-                  <wizard-stack size="3xl">
+                  <clippy-stack size="3xl">
                     <clippy-heading level="3">{capitalize(width)}</clippy-heading>
                     <clippy-code>
                       <wizard-token-value path={`basis.border-width.${width}`}></wizard-token-value>
@@ -43,19 +43,18 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
                       </wizard-preview-theme>
                     </clippy-reset-theme>
                     <TokenStoryMatches groups={`basis.border-width.${width}`} />
-                  </wizard-stack>
+                  </clippy-stack>
                 ))}
-              </wizard-stack>
-            </wizard-stack>
+              </clippy-stack>
+            </clippy-stack>
           </clippy-story-preview>
 
           <clippy-story-preview>
-            <wizard-stack size="5xl">
-              <clippy-heading level="2">Afgeronde hoeken</clippy-heading>
-              {/* TODO: add documentation partials here, from https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#basis-tokens-voor-afgeronde-hoeken */}
-              <wizard-stack size="5xl">
+            <clippy-stack size="5xl">
+              <wizard-token-docs groups={`basis.border-radius`} heading-level="2"></wizard-token-docs>
+              <clippy-stack size="5xl">
                 {radii.map((radius) => (
-                  <wizard-stack size="3xl">
+                  <clippy-stack size="3xl">
                     <clippy-heading level="3">{capitalize(radius)}</clippy-heading>
                     <clippy-code>
                       <wizard-token-value path={`basis.border-radius.${radius}`}></wizard-token-value>
@@ -66,13 +65,13 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
                       </wizard-preview-theme>
                     </clippy-reset-theme>
                     <TokenStoryMatches groups={`basis.border-width.${radius}`} />
-                  </wizard-stack>
+                  </clippy-stack>
                 ))}
-              </wizard-stack>
-            </wizard-stack>
+              </clippy-stack>
+            </clippy-stack>
           </clippy-story-preview>
 
-        </wizard-stack>
+        </clippy-stack>
       </wizard-container>
     </wizard-layout>
   </theme-wizard-app>

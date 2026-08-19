@@ -2,9 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '@nl-design-system-candidate/button-css/button.css'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 ---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+</script>
 
 <BaseLayout title="Review design tokens - Theme Wizard">
   <theme-wizard-app>
@@ -12,10 +18,10 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
       <main slot="main" class="wizard-main">
         <wizard-container size="3xl">
           <clippy-story-preview size="lg">
-            <wizard-stack size="5xl">
+            <clippy-stack size="5xl">
               <header>
                 <wizard-container size="md" class="header-container">
-                  <wizard-stack size="xl">
+                  <clippy-stack size="xl">
                     <a class="nl-link wizard-back-link" href="/">
                       <IconArrowLeft />
                       Vorige stap
@@ -29,19 +35,19 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
                         <IconArrowRight />
                       </span>
                     </a>
-                  </wizard-stack>
+                  </clippy-stack>
                 </wizard-container>
               </header>
 
-                <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
+              <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
 
-                <a class="nl-button nl-button--primary nl-button--icon" href="/wizard">
-                  <span class="nl-button__label">Huisstijl vastleggen</span>
-                  <span class="nl-button__icon-end">
-                    <IconArrowRight />
-                  </span>
-                </a>
-            </wizard-stack>
+              <a class="nl-button nl-button--primary nl-button--icon" href="/wizard">
+                <span class="nl-button__label">Huisstijl vastleggen</span>
+                <span class="nl-button__icon-end">
+                  <IconArrowRight />
+                </span>
+              </a>
+            </clippy-stack>
           </clippy-story-preview>
         </wizard-container>
       </main>

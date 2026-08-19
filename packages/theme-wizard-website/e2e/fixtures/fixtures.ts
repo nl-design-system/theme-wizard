@@ -2,10 +2,12 @@ import { expect as baseExpect, test as baseTest, type Locator } from '@playwrigh
 import { BasisTokensPage } from '../pages/BasisTokensPage';
 import { ComponentPage } from '../pages/ComponentPage';
 import { HomePage } from '../pages/HomePage';
+import { MinifyTokensPage } from '../pages/MinifyTokensPage';
 import { ReuseTokensPage } from '../pages/ReuseTokensPage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
 import { ValidateTokensPage } from '../pages/ValidateTokensPage';
-import { WizardPage } from '../pages/WizardPage';
+import { WizardIndexPage } from '../pages/WizardIndexPage';
+import { WizardStepFormPage } from '../pages/WizardStepFormPage';
 
 type MatcherResult =
   | {
@@ -71,11 +73,13 @@ export const expect = baseExpect.extend({
 export const test = baseTest.extend<{
   basisTokensPage: BasisTokensPage;
   homePage: HomePage;
+  minifyTokensPage: MinifyTokensPage;
   reuseTokensPage: ReuseTokensPage;
   stagingTokensPage: StagingTokensPage;
   componentPage: ComponentPage;
   validateTokensPage: ValidateTokensPage;
-  wizardPage: WizardPage;
+  wizardIndexPage: WizardIndexPage;
+  wizardStepFormPage: WizardStepFormPage;
 }>({
   basisTokensPage: async ({ page }, use) => {
     const themeWizard = new BasisTokensPage(page);
@@ -89,6 +93,10 @@ export const test = baseTest.extend<{
     const homePage = new HomePage(page);
     await use(homePage);
   },
+  minifyTokensPage: async ({ page }, use) => {
+    const minifyTokensPage = new MinifyTokensPage(page);
+    await use(minifyTokensPage);
+  },
   reuseTokensPage: async ({ page }, use) => {
     const reuseTokensPage = new ReuseTokensPage(page);
     await use(reuseTokensPage);
@@ -101,8 +109,12 @@ export const test = baseTest.extend<{
     const validateTokensPage = new ValidateTokensPage(page);
     await use(validateTokensPage);
   },
-  wizardPage: async ({ page }, use) => {
-    const wizardPage = new WizardPage(page);
-    await use(wizardPage);
+  wizardIndexPage: async ({ page }, use) => {
+    const wizardIndexPage = new WizardIndexPage(page);
+    await use(wizardIndexPage);
+  },
+  wizardStepFormPage: async ({ page }, use) => {
+    const wizardStepFormPage = new WizardStepFormPage(page);
+    await use(wizardStepFormPage);
   },
 });

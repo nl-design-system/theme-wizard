@@ -13,6 +13,7 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
 <script>
   import '@nl-design-system-community/clippy-components/clippy-code';
   import '@nl-design-system-community/clippy-components/clippy-graph-paper';
+  import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 </script>
 
@@ -23,16 +24,15 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
       <StyleGuideNav />
 
       <wizard-container slot="main">
-        <wizard-stack size="5xl">
+        <clippy-stack size="5xl">
           <clippy-heading level="1">Typografie systeem</clippy-heading>
 
-          <wizard-stack size="4xl">
-            <clippy-heading level="2">Lettertype</clippy-heading>
-            <wizard-stack size="3xl">
-              {fontFamilies.map((family) => (
-                <clippy-story-preview>
-                  <wizard-stack size="2xl">
-                    <clippy-heading level="3">{capitalize(family)}</clippy-heading>
+          <clippy-story-preview>
+            <clippy-stack size="5xl">
+              <clippy-heading level="2">Lettertype</clippy-heading>
+                {fontFamilies.map((family) => (
+                  <clippy-stack size="2xl">
+                    <wizard-token-docs groups={`basis.text.font-family.${family}`} heading-level="3"></wizard-token-docs>
                     <clippy-code>
                       <wizard-token-value path={`basis.text.font-family.${family}`}></wizard-token-value>
                     </clippy-code>
@@ -46,89 +46,82 @@ const lineHeights = ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'] as const;
                       </clippy-reset-theme>
                     </clippy-graph-paper>
                     <TokenStoryMatches groups={`basis.text.font-family.${family}`} />
-                  </wizard-stack>
-                </clippy-story-preview>
+                  </clippy-stack>
               ))}
-            </wizard-stack>
-          </wizard-stack>
+          </clippy-stack>
+        </clippy-story-preview>
 
-          <wizard-stack size="4xl">
+        <clippy-story-preview>
+          <clippy-stack size="5xl">
             <clippy-heading level="2">Lettergewicht</clippy-heading>
-            <wizard-stack size="3xl">
               {fontWeights.map((weight) => (
-                <clippy-story-preview>
-                  <wizard-stack size="2xl">
-                    <clippy-heading level="3">{capitalize(weight)}</clippy-heading>
-                    <clippy-code>
-                      <wizard-token-value path={`basis.text.font-weight.${weight}`}></wizard-token-value>
-                    </clippy-code>
-                    <clippy-graph-paper>
-                      <clippy-reset-theme>
-                        <wizard-preview-theme>
-                          <clippy-token-sample-text font-weight={`var(--basis-text-font-weight-${weight})`} truncate>
-                            Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                          </clippy-token-sample-text>
-                        </wizard-preview-theme>
-                      </clippy-reset-theme>
-                    </clippy-graph-paper>
-                    <TokenStoryMatches groups={`basis.text.font-weight.${weight}`} />
-                  </wizard-stack>
-                </clippy-story-preview>
-              ))}
-            </wizard-stack>
-          </wizard-stack>
-
-          <wizard-stack size="4xl">
-            <clippy-heading level="2">Lettergrootte</clippy-heading>
-            <wizard-stack size="3xl">
-              {fontSizes.map((size) => (
-                <clippy-story-preview>
-                  <wizard-stack size="2xl">
-                    <clippy-heading level="3">{capitalize(size)}</clippy-heading>
-                    <clippy-code>
-                      <wizard-token-value path={`basis.text.font-size.${size}`}></wizard-token-value>
-                    </clippy-code>
-                    <clippy-graph-paper>
-                      <clippy-reset-theme>
-                        <wizard-preview-theme>
-                          <clippy-token-sample-text font-size={`var(--basis-text-font-size-${size})`} truncate>
-                            Op brute wijze ving de schooljuf de quasi-kalme lynx.
-                          </clippy-token-sample-text>
-                        </wizard-preview-theme>
-                      </clippy-reset-theme>
-                    </clippy-graph-paper>
-                    <TokenStoryMatches groups={`basis.text.font-size.${size}`} />
-                  </wizard-stack>
-                </clippy-story-preview>
-              ))}
-            </wizard-stack>
-          </wizard-stack>
-
-          <wizard-stack size="4xl">
-            <clippy-heading level="2">Regelhoogte</clippy-heading>
-            <wizard-stack size="3xl">
-              {lineHeights.map((lineHeight) => (
-                <clippy-story-preview>
-                  <wizard-stack size="2xl">
-                    <clippy-heading level="3">{capitalize(lineHeight)}</clippy-heading>
-                    <clippy-code>
-                      <wizard-token-value path={`basis.text.line-height.${lineHeight}`}></wizard-token-value>
-                    </clippy-code>
+                <clippy-stack size="2xl">
+                  <wizard-token-docs groups={`basis.text.font-weight.${weight}`} heading-level="3"></wizard-token-docs>
+                  <clippy-code>
+                    <wizard-token-value path={`basis.text.font-weight.${weight}`}></wizard-token-value>
+                  </clippy-code>
+                  <clippy-graph-paper>
                     <clippy-reset-theme>
                       <wizard-preview-theme>
-                        <clippy-token-sample-text line-height={`var(--basis-text-line-height-${lineHeight})`} truncate>
+                        <clippy-token-sample-text font-weight={`var(--basis-text-font-weight-${weight})`} truncate>
                           Op brute wijze ving de schooljuf de quasi-kalme lynx.
                         </clippy-token-sample-text>
                       </wizard-preview-theme>
                     </clippy-reset-theme>
-                    <TokenStoryMatches groups={`basis.text.line-height.${lineHeight}`} />
-                  </wizard-stack>
-                </clippy-story-preview>
+                  </clippy-graph-paper>
+                  <TokenStoryMatches groups={`basis.text.font-weight.${weight}`} />
+                </clippy-stack>
               ))}
-            </wizard-stack>
-          </wizard-stack>
+          </clippy-stack>
+        </clippy-story-preview>
 
-        </wizard-stack>
+        <clippy-story-preview>
+          <clippy-stack size="5xl">
+            <wizard-token-docs groups="basis.text.font-size" heading-level="2"></wizard-token-docs>
+              {fontSizes.map((size) => (
+                <clippy-stack size="2xl">
+                  <clippy-heading level="3">{capitalize(size)}</clippy-heading>
+                  <clippy-code>
+                    <wizard-token-value path={`basis.text.font-size.${size}`}></wizard-token-value>
+                  </clippy-code>
+                  <clippy-graph-paper>
+                    <clippy-reset-theme>
+                      <wizard-preview-theme>
+                        <clippy-token-sample-text font-size={`var(--basis-text-font-size-${size})`} truncate>
+                          Op brute wijze ving de schooljuf de quasi-kalme lynx.
+                        </clippy-token-sample-text>
+                      </wizard-preview-theme>
+                    </clippy-reset-theme>
+                  </clippy-graph-paper>
+                  <TokenStoryMatches groups={`basis.text.font-size.${size}`} />
+                </clippy-stack>
+              ))}
+          </clippy-stack>
+        </clippy-story-preview>
+
+        <clippy-story-preview>
+          <clippy-stack size="5xl">
+            <wizard-token-docs groups="basis.text.line-height" heading-level="2"></wizard-token-docs>
+              {lineHeights.map((lineHeight) => (
+                <clippy-stack size="2xl">
+                  <clippy-heading level="3">{capitalize(lineHeight)}</clippy-heading>
+                  <clippy-code>
+                    <wizard-token-value path={`basis.text.line-height.${lineHeight}`}></wizard-token-value>
+                  </clippy-code>
+                  <clippy-reset-theme>
+                    <wizard-preview-theme>
+                      <clippy-token-sample-text line-height={`var(--basis-text-line-height-${lineHeight})`} truncate>
+                        Op brute wijze ving de schooljuf de quasi-kalme lynx.
+                      </clippy-token-sample-text>
+                    </wizard-preview-theme>
+                  </clippy-reset-theme>
+                  <TokenStoryMatches groups={`basis.text.line-height.${lineHeight}`} />
+                </clippy-stack>
+              ))}
+            </clippy-stack>
+          </clippy-story-preview>
+
+        </clippy-stack>
       </wizard-container>
     </wizard-layout>
   </theme-wizard-app>

@@ -6,6 +6,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
   import '@nl-design-system-community/clippy-components/clippy-reset-theme';
 </script>
@@ -17,56 +18,56 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       <StyleGuideNav />
 
       <wizard-container slot="main">
-        <wizard-stack size="5xl">
+        <clippy-stack size="5xl">
           <clippy-heading level="1">Kleur systeem</clippy-heading>
 
-          <wizard-stack size="3xl">
+          <clippy-stack size="3xl">
             <section>
               <clippy-story-preview>
-                <wizard-stack size="4xl">
+                <clippy-stack size="4xl">
                   <clippy-heading level="2">Huisstijl</clippy-heading>
+                  <wizard-token-docs groups="basis.color.default, basis.color.accent-1, basis.color.accent-2, basis.color.accent-3" skip-redundant-groups="basis.color.accent-2, basis.color.accent-3" heading-level="3"></wizard-token-docs>
                   <wizard-color-system-preview groups="default, accent-1, accent-2, accent-3" skip-redundant-groups="accent-2, accent-3"></wizard-color-system-preview>
-
                   <TokenStoryMatches groups="basis.color.default, basis.color.default-inverse, basis.color.accent-1, basis.color.accent-1-inverse, basis.color.accent-2, basis.color.accent-2-inverse, basis.color.accent-3, basis.color.accent-3-inverse" />
-                </wizard-stack>
+                </clippy-stack>
               </clippy-story-preview>
             </section>
 
             <section>
               <clippy-story-preview>
-                <wizard-stack size="2xl">
+                <clippy-stack size="2xl">
                   <clippy-heading level="2">Interactie</clippy-heading>
+                  <wizard-token-docs groups="basis.color.action-1, basis.color.action-2, basis.color.disabled" skip-redundant-groups="basis.color.action-2" heading-level="3"></wizard-token-docs>
                   <wizard-color-system-preview groups="action-1, action-2, disabled" skip-redundant-groups="action-2"></wizard-color-system-preview>
-
                   <TokenStoryMatches groups="basis.color.action-1, basis.color.action-1-inverse, basis.color.action-2, basis.color.action-2-inverse, basis.color.disabled, basis.color.disabled-inverse" />
-                </wizard-stack>
+                </clippy-stack>
               </clippy-story-preview>
             </section>
 
             <section>
               <clippy-story-preview>
-                <wizard-stack size="2xl">
+                <clippy-stack size="2xl">
                   <clippy-heading level="2">Signaal</clippy-heading>
+                  <wizard-token-docs groups="basis.color.info, basis.color.positive, basis.color.negative, basis.color.warning" heading-level="3"></wizard-token-docs>
                   <wizard-color-system-preview groups="info, positive, negative, warning"></wizard-color-system-preview>
-
                   <TokenStoryMatches groups="basis.color.info, basis.color.info-inverse, basis.color.positive, basis.color.positive-inverse, basis.color.negative, basis.color.negative-inverse, basis.color.warning, basis.color.warning-inverse" />
-                </wizard-stack>
+                </clippy-stack>
               </clippy-story-preview>
             </section>
 
             <section>
               <clippy-story-preview>
-                <wizard-stack size="2xl">
+                <clippy-stack size="2xl">
                   <clippy-heading level="2">Overig</clippy-heading>
+                  <wizard-token-docs groups="basis.color.highlight, basis.color.selected" heading-level="3"></wizard-token-docs>
                   <wizard-color-system-preview groups="highlight, selected"></wizard-color-system-preview>
-
                   <TokenStoryMatches groups="basis.color.highlight, basis.color.highlight-inverse, basis.color.selected, basis.color.selected-inverse" />
-                </wizard-stack>
+                </clippy-stack>
               </clippy-story-preview>
             </section>
 
-          </wizard-stack>
-        </wizard-stack>
+          </clippy-stack>
+        </clippy-stack>
       </wizard-container>
     </wizard-layout>
   </theme-wizard-app>

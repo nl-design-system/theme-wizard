@@ -16,6 +16,9 @@ const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
 ---
 
 <script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
   import '@nl-design-system-community/clippy-components/clippy-task-navigation';
 </script>
 
@@ -26,19 +29,19 @@ const { title = 'Wizard - Theme Wizard', backLink } = Astro.props;
       <main slot="main" class="wizard-main">
         <wizard-container size="lg">
           <clippy-story-preview size="lg">
-            <wizard-stack size="3xl">
+            <clippy-stack size="4xl">
                 <a class="nl-link wizard-back-link" href={backLink?.href ?? './'}>
                   <IconArrowLeft />
                   {backLink?.label ?? 'Naar overzicht'}
                 </a>
               <header>
-                <wizard-stack size="xl">
+                <clippy-stack size="xl">
                   <clippy-heading level="1">{title}</clippy-heading>
                   <slot name="header" />
-                </wizard-stack>
+                </clippy-stack>
               </header>
               <slot />
-            </wizard-stack>
+            </clippy-stack>
           </clippy-story-preview>
         </wizard-container>
       </main>

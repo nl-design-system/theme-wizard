@@ -10,8 +10,8 @@ import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import { getSiblingGroupsWithOnlyRefsTo } from '../../lib/ColorScale/siblings';
-import { countUsagePerToken, prepareColorGroups } from '../wizard-style-guide/utils';
+import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
+import { prepareColorGroups } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-color-system-preview';
 
@@ -47,13 +47,12 @@ export class WizardColorSystemPreview extends LitElement {
 
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const colors = basis['color'] as Record<string, unknown>;
-    const tokenUsage = countUsagePerToken(this.theme.tokens);
 
-    const colorTokenGroups = prepareColorGroups(colors, tokenUsage);
+    const colorTokenGroups = prepareColorGroups(colors);
     const requestedGroups = this.groups.length > 0 ? this.groups : colorTokenGroups.map((group) => group.key);
     const visibleGroups =
       this.skipRedundantGroups.length > 0
-        ? this.#dropRedundantGroups(requestedGroups, colors, this.skipRedundantGroups)
+        ? filterRedundantGroups(requestedGroups, colors, this.skipRedundantGroups)
         : requestedGroups;
 
     this.#visibleTokenGroups = this.#filterColorGroups(visibleGroups, colorTokenGroups);
@@ -64,22 +63,6 @@ export class WizardColorSystemPreview extends LitElement {
 
     const foundGroups = groups.map((groupKey) => colorTokenGroups.find((group) => group.key === groupKey));
     return foundGroups.filter((group): group is NonNullable<typeof group> => group !== undefined);
-  }
-
-  /** Drops each group matching `prefixes` that is entirely composed of references into an earlier group, e.g. accent-3 re-pointing at accent-1 or accent-2. */
-  #dropRedundantGroups(groupKeys: string[], colors: Record<string, unknown>, prefixes: string[]) {
-    const seenGroupKeys: string[] = [];
-
-    return groupKeys.filter((groupKey) => {
-      const isRedundant =
-        prefixes.some((prefix) => groupKey.startsWith(prefix)) &&
-        seenGroupKeys.some((seenGroupKey) =>
-          getSiblingGroupsWithOnlyRefsTo(`basis.color.${seenGroupKey}`, colors).includes(`basis.color.${groupKey}`),
-        );
-
-      seenGroupKeys.push(groupKey);
-      return !isRedundant;
-    });
   }
 
   override render() {

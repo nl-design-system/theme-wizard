@@ -20,6 +20,7 @@ export type PageNavItem = {
 @customElement(tag)
 export class WizardPageNav extends LitElement {
   @property({ type: Array }) items: PageNavItem[] = [
+    { href: '/wizard', title: t('nav.wizard') },
     { href: '/basis-tokens', title: t('nav.configure') },
     { href: '/components', title: t('nav.components') },
     { href: '/style-guide', title: t('nav.styleGuide') },

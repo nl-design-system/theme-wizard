@@ -2,21 +2,22 @@ import type { ClippyModal } from '@nl-design-system-community/clippy-components/
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
 import '@nl-design-system-community/clippy-components/clippy-modal';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import type { DesignTokens } from 'style-dictionary/types';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   type ColorValue,
   type ColorToken as ColorTokenType,
-  extractRef,
   isValueObject,
   stringifyColor,
-  walkTokensWithRef,
+  EXTENSION_REFERENCED_AT,
+  EXTENSION_TOKEN_PATH,
 } from '@nl-design-system-community/design-tokens-schema';
+import dlv from 'dlv';
 import { html, nothing } from 'lit';
 import type { ColorGroup, DisplayToken } from './types';
 import { t } from '../../i18n';
 import { resolveColorValue } from '../wizard-colorscale-input';
 
-export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: Map<string, string[]>): ColorGroup[] {
+export function prepareColorGroups(colors: Record<string, unknown>): ColorGroup[] {
   return Object.entries(colors)
     .filter(([key]) => !key.includes('inverse') && !key.includes('transparent'))
     .filter(([, value]) => typeof value === 'object' && value !== null)
@@ -26,26 +27,14 @@ export function prepareColorGroups(colors: Record<string, unknown>, tokenUsage: 
         .map(([colorKey, token]) => {
           const color = resolveColorValue(token as ColorTokenType);
           const displayValue = color ? stringifyColor(color) : '#000';
-          const tokenId = `basis.color.${key}.${colorKey}`;
-          const usage = tokenUsage.get(tokenId) || [];
+          const tokenId = (token && dlv(token, ['$extensions', EXTENSION_TOKEN_PATH])) ?? '';
+          const usage = (token && dlv(token, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
           const usageCount = usage.length;
           return { colorKey, displayValue, tokenId, usage, usageCount };
         })
         .filter(({ displayValue }) => displayValue !== null);
       return { colorEntries, key };
     });
-}
-
-export function countUsagePerToken(tokens: DesignTokens): Map<string, string[]> {
-  const tokenUsage = new Map<string, string[]>();
-  walkTokensWithRef(tokens, tokens, (token, path) => {
-    const tokenId = extractRef(token.$value);
-    if (path.includes('$extensions')) return;
-    const stored = tokenUsage.get(tokenId) || [];
-    stored.push(path.join('.'));
-    tokenUsage.set(tokenId, stored);
-  });
-  return tokenUsage;
 }
 
 export function stringifyTokenValue(token: unknown): string {
@@ -93,13 +82,13 @@ export function renderTokenExample(token: Omit<DisplayToken, 'usage'>) {
     case 'color':
       return html`<clippy-color-sample color=${token.displayValue}></clippy-color-sample>`;
     case 'fontSize':
-      return html`<wizard-font-sample size=${token.displayValue} truncate></wizard-font-sample>`;
+      return html`<clippy-token-sample-text font-size=${token.displayValue} truncate></clippy-token-sample-text>`;
     case 'fontFamily':
-      return html`<wizard-font-sample
-        family=${token.displayValue}
-        size="var(--basis-text-font-size-xl)"
+      return html`<clippy-token-sample-text
+        font-family=${token.displayValue}
+        font-size="var(--basis-text-font-size-xl)"
         truncate
-      ></wizard-font-sample>`;
+      ></clippy-token-sample-text>`;
     case 'dimension':
       return renderSpacingExample(token.displayValue, token.metadata?.['space']);
     default:

@@ -19,12 +19,7 @@ import type { DisplayToken } from '../wizard-style-guide/types';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import styles from '../wizard-style-guide/styles';
-import {
-  countUsagePerToken,
-  openTokenDialog,
-  prepareColorGroups,
-  renderTokenDialog,
-} from '../wizard-style-guide/utils';
+import { openTokenDialog, prepareColorGroups, renderTokenDialog } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-style-guide-colors';
 
@@ -77,8 +72,7 @@ export class WizardStyleGuideColors extends LitElement {
   override render() {
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const colors = basis['color'] as Record<string, unknown>;
-    const tokenUsage = countUsagePerToken(this.theme.tokens);
-    const colorGroups = prepareColorGroups(colors, tokenUsage);
+    const colorGroups = prepareColorGroups(colors);
 
     return html`
       <div class="wizard-style-guide">

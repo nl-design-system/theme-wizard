@@ -1,7 +1,10 @@
 import { consume } from '@lit/context';
 import codeStyles from '@nl-design-system-candidate/code-css/code.css?inline';
+import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import '@nl-design-system-community/clippy-components/clippy-color-sample';
+import '@nl-design-system-community/clippy-components/clippy-stack';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   EXTENSION_AUTHORED_AS,
   EXTENSION_TOKEN_ID,
@@ -30,7 +33,13 @@ declare global {
 
 @customElement(tag)
 export class WizardScrapedTokensPreview extends LitElement {
-  static override readonly styles = [styles, unsafeCSS(codeStyles), unsafeCSS(tableCss), unsafeCSS(srOnlyStyles)];
+  static override readonly styles = [
+    styles,
+    unsafeCSS(paragraphStyles),
+    unsafeCSS(codeStyles),
+    unsafeCSS(tableCss),
+    unsafeCSS(srOnlyStyles),
+  ];
 
   // TODO: this shouldn't use storage directly but talk to this.scrapedTokens
   readonly #scrapedTokensStorage = new PersistentStorage({ prefix: 'scraped-tokens' });
@@ -111,12 +120,18 @@ export class WizardScrapedTokensPreview extends LitElement {
   `;
 
   override render() {
+    if (this.scrapedTokens.length === 0) {
+      // This is practically almost unreachable but still showing it for good measure.
+      return html`<p class="nl-paragraph">${t('stagedTokens.nothingFound')}</p>`;
+    }
+
     const families = this.scrapedTokens
       .filter((token) => token.$type === 'fontFamily')
       .toSorted((a, b) => {
         return a.$value[0].localeCompare(b.$value[0]);
       });
     const sizes = this.scrapedTokens
+      // Scraper only scrapes font-sizes as dimensions, so we don't have to filter this down to token-subtypes
       .filter((token) => token.$type === 'dimension')
       .toSorted((a, b) => {
         const normalizedA = dimensionToPx(a.$value);
@@ -128,25 +143,28 @@ export class WizardScrapedTokensPreview extends LitElement {
 
     return html`
       <div class="wizard-scraped-tokens-preview">
-        <wizard-stack size="5xl">
+        <clippy-stack size="5xl">
           <clippy-heading level="2">${t('tokens.types.typography')}</clippy-heading>
 
           ${this.#renderTable(
             t('tokens.types.fontFamilies'),
             families,
             (token) =>
-              html`<wizard-font-sample
-                family=${token.$extensions[EXTENSION_AUTHORED_AS]}
-                size="var(--basis-text-font-size-xl)"
+              html`<clippy-token-sample-text
+                font-family=${token.$extensions[EXTENSION_AUTHORED_AS]}
+                font-size="var(--basis-text-font-size-xl)"
                 truncate
-              ></wizard-font-sample>`,
+              ></clippy-token-sample-text>`,
             (token) => (Array.isArray(token.$value) ? html`<code class="nl-code">${token.$value[0]}</code>` : nothing),
           )}
           ${this.#renderTable(
             t('tokens.types.fontSizes'),
             sizes,
             (token) =>
-              html`<wizard-font-sample size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}></wizard-font-sample>`,
+              html`<clippy-token-sample-text
+                font-size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}
+                truncate
+              ></clippy-token-sample-text>`,
             (token) => html`<code class="nl-code">${token.$extensions?.[EXTENSION_AUTHORED_AS]}</code>`,
           )}
 
@@ -174,7 +192,7 @@ export class WizardScrapedTokensPreview extends LitElement {
               },
             );
           })}
-        </wizard-stack>
+        </clippy-stack>
       </div>
     `;
   }
