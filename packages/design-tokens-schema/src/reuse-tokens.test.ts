@@ -1,16 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { applyReusableTokens, findReusableTokens, reuseBasisTokens } from './reuse-tokens';
-import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
+import { type DimensionSubtype, EXTENSION_TOKEN_SUBTYPE } from './token-subtype';
 
 const SUBTYPE = EXTENSION_TOKEN_SUBTYPE;
 
-const createDimensionToken = (value: number, unit: string, subtype: string) => ({
+const createDimensionToken = (value: number, unit: string, subtype: DimensionSubtype) => ({
   $extensions: { [SUBTYPE]: subtype },
   $type: 'dimension',
   $value: { unit, value },
 });
 
-const basisToken = (value: number, unit: string, subtype: string) => createDimensionToken(value, unit, subtype);
+const basisToken = (value: number, unit: string, subtype: DimensionSubtype) =>
+  createDimensionToken(value, unit, subtype);
 
 describe('findReusableTokens', () => {
   it('returns empty when no basis tokens', () => {

@@ -1,13 +1,11 @@
 import { parse_dimension } from '@projectwallace/css-parser';
 import type { BaseDesignToken, TokenPath } from './tokens/base-token';
-import { setExtension } from './extensions';
 import { resolveRef } from './resolve-refs';
+import { setColorSubtype, setDimensionSubtype, setLineHeightSubtype, setNumberSubtype } from './token-subtype';
 import { parseColor } from './tokens/color-token';
 import { splitFontFamily } from './tokens/fontfamily-token';
 import { isRef, isTokenLike } from './tokens/token-reference';
 import { walkTokens } from './walker';
-
-export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.token-subtype';
 
 /**
  * @description Process a lineHeight value and return its target type and transformed value
@@ -67,26 +65,26 @@ const addDimensionSubType = (token: BaseDesignToken, tokenPath: TokenPath): void
   const path = tokenPath.join('.');
 
   if (path.includes('font-size')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
+    setDimensionSubtype(token, 'font-size');
   } else if (path.includes('line-height')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
+    setLineHeightSubtype(token);
   } else if (path.includes('margin-block') || path.includes('padding-block') || path.includes('space.block')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-block');
+    setDimensionSubtype(token, 'space-block');
   } else if (path.includes('margin-inline') || path.includes('padding-inline') || path.includes('space.inline')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-inline');
+    setDimensionSubtype(token, 'space-inline');
   } else if (path.includes('column-gap') || path.includes('space.column')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-column');
+    setDimensionSubtype(token, 'space-column');
   } else if (path.includes('row-gap') || path.includes('space.row')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-row');
+    setDimensionSubtype(token, 'space-row');
   } else if (path.includes('space.text')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-text');
+    setDimensionSubtype(token, 'space-text');
   } else if (path.includes('border-radius')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-radius');
+    setDimensionSubtype(token, 'border-radius');
   } else if (path.includes('border-') && path.includes('-width')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-width');
+    setDimensionSubtype(token, 'border-width');
   } else if (path.includes('size')) {
     // font-size does not match because that was caught earlier
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'size');
+    setDimensionSubtype(token, 'size');
   }
 };
 
@@ -146,9 +144,9 @@ const upgradeColorToken = (token: BaseDesignToken): void => {
  */
 const upgradeNumberToken = (token: BaseDesignToken, path: TokenPath): void => {
   if (path.includes('line-height')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
+    setLineHeightSubtype(token);
   } else if (path.includes('font-weight')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-weight');
+    setNumberSubtype(token, 'font-weight');
   }
 
   if (typeof token.$value === 'string' && !isRef(token.$value)) {
@@ -182,11 +180,11 @@ const addColorSubType = (token: BaseDesignToken, tokenPath: TokenPath): void => 
   const path = tokenPath.join('.');
 
   if (path.includes('.bg-') || path.endsWith('.background-color')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'background-color');
+    setColorSubtype(token, 'background-color');
   } else if (path.includes('.border-')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-color');
+    setColorSubtype(token, 'border-color');
   } else if (path.includes('.color-') || path.endsWith('.color')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'color');
+    setColorSubtype(token, 'color');
   }
 };
 
@@ -247,12 +245,12 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
       case 'fontSize':
       case 'fontSizes':
         upgradeFontSizeToken(token);
-        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
+        setDimensionSubtype(token, 'font-size');
         break;
       case 'lineHeight':
       case 'lineHeights':
         upgradeLineHeightToken(token, rootConfig);
-        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
+        setLineHeightSubtype(token);
         break;
       case 'color':
         upgradeColorToken(token);
@@ -270,7 +268,7 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
       case 'fontWeight':
       case 'fontWeights':
         upgradeFontWeightToken(token);
-        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-weight');
+        setNumberSubtype(token, 'font-weight');
         break;
     }
   });

@@ -19,8 +19,8 @@ import {
   type ContrastExtension,
   excludeParentKeys,
 } from './theme';
+import { EXTENSION_TOKEN_SUBTYPE } from './token-subtype';
 import { parseColor, type ColorToken } from './tokens/color-token';
-import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
 
@@ -1325,6 +1325,43 @@ describe('line-height validations', () => {
       expect(result.error?.issues).toHaveLength(1);
       expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
     });
+  });
+});
+
+describe('validate token sub-type extension', () => {
+  it('passes when the sub-type extension is valid for the token $type', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(
+      config,
+      'nl.test.token',
+      createToken(
+        'color',
+        { colorSpace: 'srgb', components: [0, 0, 0] },
+        { [EXTENSION_TOKEN_SUBTYPE]: 'background-color' },
+      ),
+    );
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+  });
+
+  it('flags a sub-type extension that is not valid for the token $type', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(
+      config,
+      'nl.test.token',
+      createToken('color', { colorSpace: 'srgb', components: [0, 0, 0] }, { [EXTENSION_TOKEN_SUBTYPE]: 'font-size' }),
+    );
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(false);
+    expect(result.error?.issues).toEqual([
+      {
+        actual: 'font-size',
+        code: 'custom',
+        ERROR_CODE: ERROR_CODES.INVALID_TOKEN_SUBTYPE,
+        message: 'Sub-type "font-size" is not valid for a "color" token',
+        path: ['nl', 'test', 'token', '$extensions', EXTENSION_TOKEN_SUBTYPE],
+      },
+    ]);
   });
 });
 
