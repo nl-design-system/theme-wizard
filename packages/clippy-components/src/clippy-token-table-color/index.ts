@@ -8,6 +8,7 @@ import {
   EXTENSION_REFERENCED_AT,
   EXTENSION_TOKEN_PATH,
   isRef,
+  stringifyColor,
 } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
@@ -74,7 +75,9 @@ export class ClippyTokenTableColor extends LitElement {
 
   #renderDialog() {
     const token = this.#currentToken;
-    if (!token) return html``;
+    if (!token) {
+      return html``;
+    }
 
     const color = this.#getTokenColor(token);
     const tokenID = this.#getTokenID(token);
@@ -220,7 +223,7 @@ export class ClippyTokenTableColor extends LitElement {
               ({ name, tokens }) =>
                 html`<tr class="utrecht-table__row">
                   <th class="clippy-token-table-color__header-cell | utrecht-table__header-cell" scope="row">
-                    ${name.split('.').pop()}
+                    ${name.split('.').at(-1)}
                   </th>
                   ${tokens.map((token) => {
                     return html`<td class="clippy-token-table-color__cell | utrecht-table__cell">
@@ -229,7 +232,9 @@ export class ClippyTokenTableColor extends LitElement {
                         type="button"
                         @click=${() => this.#openDialog({ token })}
                       >
-                        <clippy-color-sample color="${this.#getTokenColor(token).toString()}"></clippy-color-sample>
+                        <clippy-color-sample
+                          color="${stringifyColor(token.$value as ColorValue)}"
+                        ></clippy-color-sample>
                         <span class="sr-only">${this.#getTokenID(token)}</span>
                       </button>
                     </td>`;

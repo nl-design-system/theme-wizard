@@ -1,4 +1,3 @@
-// import type { ColorGroup } from '@nl-design-system-community/clippy-components/clippy-token-table-color';
 import '@nl-design-system-community/clippy-components/clippy-token-table-color';
 import { consume } from '@lit/context';
 import '../wizard-table-scroller';

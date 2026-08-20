@@ -74,7 +74,7 @@ describe(`<${tag}>`, () => {
       const sample = samples[index];
       const color = colorTokenValueToColorJS(token.$value as ColorValue);
       expect(sample).toBeTruthy();
-      expect(sample.getAttribute('color')).toBe(color.toString());
+      expect(sample.getAttribute('color')).toBe(color.toString({ format: 'hex' }));
     });
   });
 
