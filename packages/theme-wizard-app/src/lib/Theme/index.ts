@@ -7,7 +7,7 @@ import {
   stringifyFontFamily,
   stringifyDimension,
   EXTENSION_RESOLVED_FROM,
-  EXTENSION_TOKEN_SUBTYPE,
+  getTokenSubtype,
   walkTokens,
   SKIP,
   setExtension,
@@ -219,7 +219,7 @@ export default class Theme {
             $value: stringifyFontFamily(obj.$value),
           };
         } else if (obj.$type === 'dimension' && typeof obj.$value === 'object' && obj.$value?.unit) {
-          const subtype = obj['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
+          const subtype = getTokenSubtype(obj as BaseDesignToken);
           const value = stringifyDimension(obj.$value);
 
           if (subtype === 'font-size') {
@@ -242,7 +242,7 @@ export default class Theme {
             $value: value,
           };
         } else if (obj.$type === 'number') {
-          const subtype = obj['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
+          const subtype = getTokenSubtype(obj as BaseDesignToken);
 
           if (subtype === 'font-weight') {
             return {

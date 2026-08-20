@@ -4,9 +4,10 @@ import { type Option } from '@nl-design-system-community/clippy-components/clipp
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import {
   EXTENSION_RESOLVED_AS,
-  EXTENSION_TOKEN_SUBTYPE,
   extractRef,
+  getTokenSubtype,
   isRef,
+  isTokenLike,
   type TokenReference,
 } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing, unsafeCSS } from 'lit';
@@ -66,15 +67,15 @@ export class WizardTokenField extends WizardTokenNavigator {
     // Build options for referencing basis tokens
     // TODO: only do this once and cache it, ideally in lib/Theme or its context provider,
     // rather than on every field instance.
-    const expectedSubType = this.token?.['$extensions']?.[EXTENSION_TOKEN_SUBTYPE];
+    const expectedSubType = isTokenLike(this.token) && getTokenSubtype(this.token);
     this.#options =
       basisTokens && typeof basisTokens !== 'string'
         ? Object.entries(Theme.flatten(basisTokens))
             .filter(filterByTypeAndPosition)
             .filter(([, token]) => {
               // Filter out the correct token sub-types
-              if (typeof expectedSubType === 'string') {
-                return token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === expectedSubType;
+              if (expectedSubType && isTokenLike(token)) {
+                return getTokenSubtype(token) === expectedSubType;
               }
               // Filter out only scraped tokens that were selected in the staging area
               if (token['$extensions']?.[EXTENSION_TOKEN_STAGED] === false) {
