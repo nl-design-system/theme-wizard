@@ -15,6 +15,7 @@ import {
   addComponentContrastExtensions,
   addBasisContrastExtensions,
   upgradeLegacyTokens,
+  addTokenSubTypeExtensions,
   resolveConfigRefs,
   useOriginalValue,
   removeExtensions,
@@ -121,6 +122,7 @@ export default class Theme {
   #runThemeProcessors(tokens: DesignTokens) {
     useOriginalValue(tokens);
     upgradeLegacyTokens(tokens);
+    addTokenSubTypeExtensions(tokens);
     addComponentContrastExtensions(tokens);
     addBasisContrastExtensions(tokens);
     resolveConfigRefs(tokens);

@@ -1,3 +1,5 @@
+import dlv from 'dlv';
+import { dset } from 'dset';
 import { it, describe, expect } from 'vitest';
 import type { BaseDesignToken } from './tokens/base-token';
 import {
@@ -7,6 +9,7 @@ import {
   setColorSubtype,
   setLineHeightSubtype,
   getTokenSubtype,
+  addTokenSubTypeExtensions,
   DimensionSubtypeSchema,
   NumberSubtypeSchema,
   ColorSubtypeSchema,
@@ -192,5 +195,112 @@ describe('TokenSubtypeSchema', () => {
 
   it('rejects an unknown value', () => {
     expect(TokenSubtypeSchema.safeParse('unknown-subtype').success).toBe(false);
+  });
+});
+
+describe('addTokenSubTypeExtensions', () => {
+  it.each([
+    ['basis.text.font-size.md', 'font-size'],
+    ['basis.text.line-height.md', 'line-height'],
+    ['basis.margin-block.md', 'space-block'],
+    ['basis.padding-block.md', 'space-block'],
+    ['basis.space.block.md', 'space-block'],
+    ['basis.margin-inline.md', 'space-inline'],
+    ['basis.padding-inline.md', 'space-inline'],
+    ['basis.space.inline.md', 'space-inline'],
+    ['basis.column-gap.md', 'space-column'],
+    ['basis.space.column.md', 'space-column'],
+    ['basis.row-gap.md', 'space-row'],
+    ['basis.space.row.md', 'space-row'],
+    ['basis.space.text.md', 'space-text'],
+    ['basis.border-radius.md', 'border-radius'],
+    ['basis.border-inline-width.md', 'border-width'],
+    ['basis.icon.size.md', 'size'],
+  ])('sets dimension sub-type for path "%s" to "%s"', (path, expected) => {
+    const config = {};
+    dset(config, path, { $type: 'dimension', $value: { unit: 'px', value: 16 } });
+
+    addTokenSubTypeExtensions(config);
+
+    const token = dlv(config, path) as BaseDesignToken;
+    expect(getTokenSubtype(token)).toBe(expected);
+  });
+
+  it('leaves a dimension token untouched when its path matches no known pattern', () => {
+    const config = {};
+    dset(config, 'basis.unrelated.md', { $type: 'dimension', $value: { unit: 'px', value: 16 } });
+
+    addTokenSubTypeExtensions(config);
+
+    const token = dlv(config, 'basis.unrelated.md') as BaseDesignToken;
+    expect(getTokenSubtype(token)).toBeUndefined();
+  });
+
+  it.each([
+    ['basis.color.default.bg-default', 'background-color'],
+    ['nl.button.background-color', 'background-color'],
+    ['basis.color.default.border-default', 'border-color'],
+    ['nl.button.color-default', 'color'],
+    ['nl.button.color', 'color'],
+  ])('sets color sub-type for path "%s" to "%s"', (path, expected) => {
+    const config = {};
+    dset(config, path, { $type: 'color', $value: { colorSpace: 'srgb', components: [0, 0, 0] } });
+
+    addTokenSubTypeExtensions(config);
+
+    const token = dlv(config, path) as BaseDesignToken;
+    expect(getTokenSubtype(token)).toBe(expected);
+  });
+
+  it('leaves a color token untouched when its path matches no known pattern', () => {
+    const config = {};
+    dset(config, 'basis.unrelated.md', { $type: 'color', $value: { colorSpace: 'srgb', components: [0, 0, 0] } });
+
+    addTokenSubTypeExtensions(config);
+
+    const token = dlv(config, 'basis.unrelated.md') as BaseDesignToken;
+    expect(getTokenSubtype(token)).toBeUndefined();
+  });
+
+  it.each([
+    ['nl.button.line-height', 'line-height'],
+    ['nl.button.font-weight', 'font-weight'],
+  ])('sets number sub-type for path "%s" to "%s"', (path, expected) => {
+    const config = {};
+    dset(config, path, { $type: 'number', $value: 1.5 });
+
+    addTokenSubTypeExtensions(config);
+
+    const token = dlv(config, path) as BaseDesignToken;
+    expect(getTokenSubtype(token)).toBe(expected);
+  });
+
+  it('leaves a number token untouched when its path matches no known pattern', () => {
+    const config = {};
+    dset(config, 'nl.button.unrelated', { $type: 'number', $value: 1.5 });
+
+    addTokenSubTypeExtensions(config);
+
+    const token = dlv(config, 'nl.button.unrelated') as BaseDesignToken;
+    expect(getTokenSubtype(token)).toBeUndefined();
+  });
+
+  it('does not touch tokens whose $type has no sub-type concept (e.g. fontFamily)', () => {
+    const config = {};
+    dset(config, 'nl.button.font-family', { $type: 'fontFamily', $value: 'Arial' });
+
+    addTokenSubTypeExtensions(config);
+
+    const token = dlv(config, 'nl.button.font-family') as BaseDesignToken;
+    expect(token.$extensions).toBeUndefined();
+  });
+
+  it('returns the same (mutated) rootConfig it was given', () => {
+    const config = {};
+    dset(config, 'nl.button.size', { $type: 'dimension', $value: { unit: 'px', value: 16 } });
+
+    const result = addTokenSubTypeExtensions(config);
+
+    expect(result).toBe(config);
   });
 });

@@ -26,7 +26,12 @@ import {
 import { setExtension } from './extensions';
 import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
-import { EXTENSION_TOKEN_SUBTYPE, getTokenSubtype, hasInvalidSubtype } from './token-subtype';
+import {
+  EXTENSION_TOKEN_SUBTYPE,
+  addTokenSubTypeExtensions,
+  getTokenSubtype,
+  hasInvalidSubtype,
+} from './token-subtype';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, createReference, extractRef, isRef, isValueObject } from './tokens/token-reference';
 import { upgradeLegacyTokens } from './upgrade-legacy-tokens';
@@ -315,9 +320,13 @@ export const preprocessThemeStrict = (input: unknown): Record<string, unknown> =
   data = useOriginalValue(data);
   // Clean up non-token properties for faster processing
   data = removeNonTokenProperties(data);
-  // Upgrade legacy token formats
+  // Upgrade legacy token formats to their modern $type/$value - must run before addTokenSubTypeExtensions
+  // (which relies on modern types) and before the other processors below (which rely on modern values,
+  // e.g. parsed colors/dimensions), so keep this near the front of the pipeline.
   data = upgradeLegacyTokens(data);
-  // Add extensions
+  // Add extensions:
+  // Add path-based sub-type extensions (e.g. font-size, background-color) to modern-typed tokens
+  data = addTokenSubTypeExtensions(data);
   data = addBasisContrastExtensions(data);
   data = addBasisColorScalePositionExtensions(data);
   data = addComponentContrastExtensions(data);
