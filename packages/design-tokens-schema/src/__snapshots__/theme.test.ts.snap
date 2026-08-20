@@ -749,7 +749,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 24,
@@ -861,7 +861,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -873,7 +873,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "section": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -1677,7 +1677,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -1735,7 +1735,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "row-gap": {
         "2xl": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 64,
@@ -1746,7 +1746,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "l": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -1757,7 +1757,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "xl": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -2295,7 +2295,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "menu": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -2341,7 +2341,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -2559,7 +2559,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "logo-link": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -2612,7 +2612,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "menu": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -2623,7 +2623,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -2652,7 +2652,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -2757,7 +2757,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "navigation": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -2768,7 +2768,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -14372,6 +14372,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column": {
         "2xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14379,6 +14382,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "2xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14386,6 +14392,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "3xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14393,6 +14402,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "4xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14400,6 +14412,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "5xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14407,6 +14422,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "6xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14414,6 +14432,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "lg": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14422,6 +14443,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "max": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14429,6 +14453,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14436,6 +14463,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14443,6 +14473,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14450,6 +14483,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14457,6 +14493,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14464,6 +14503,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14471,6 +14513,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14478,6 +14523,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14485,6 +14533,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14492,6 +14543,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14500,6 +14554,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "md": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14508,6 +14565,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "min": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14515,6 +14575,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14522,6 +14585,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14529,6 +14595,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14536,6 +14605,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14543,6 +14615,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14550,6 +14625,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14557,6 +14635,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14564,6 +14645,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14571,6 +14655,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14578,6 +14665,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -14586,6 +14676,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "sm": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14593,6 +14686,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14600,6 +14696,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14952,6 +15051,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row": {
         "2xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14959,6 +15061,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "2xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14966,6 +15071,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "3xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14973,6 +15081,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "4xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14980,6 +15091,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "5xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14987,6 +15101,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "6xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -14994,6 +15111,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "lg": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15002,6 +15122,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "max": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15009,6 +15132,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15016,6 +15142,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15023,6 +15152,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15030,6 +15162,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15037,6 +15172,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15044,6 +15182,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15051,6 +15192,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15058,6 +15202,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15065,6 +15212,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15072,6 +15222,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15080,6 +15233,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "md": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15088,6 +15244,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "min": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15095,6 +15254,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15102,6 +15264,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15109,6 +15274,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15116,6 +15284,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15123,6 +15294,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15130,6 +15304,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15137,6 +15314,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15144,6 +15324,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15151,6 +15334,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15158,6 +15344,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -15166,6 +15355,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "sm": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15173,6 +15365,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15180,6 +15375,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
         },
         "xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15190,6 +15388,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "text": {
         "2xl": {
           "$description": "2ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15198,6 +15399,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "2xs": {
           "$description": "0.25ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15206,6 +15410,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "3xl": {
           "$description": "3ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15214,6 +15421,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "3xs": {
           "$description": "0.125ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15222,6 +15432,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "lg": {
           "$description": "1.5ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15230,6 +15443,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "md": {
           "$description": "1ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15238,6 +15454,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "sm": {
           "$description": "0.75ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15246,6 +15465,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "xl": {
           "$description": "1.75ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -15254,6 +15476,9 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "xs": {
           "$description": "0.5ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -18255,7 +18480,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 24,
@@ -19472,7 +19697,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 12,
@@ -19731,7 +19956,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -19757,7 +19982,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "large-vw": {
           "column-gap": {
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.token-subtype": "space-column",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 24,
@@ -19772,7 +19997,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "large-vw": {
           "row-gap": {
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.token-subtype": "space-row",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 16,
@@ -19784,7 +20009,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 12,
@@ -19919,7 +20144,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "large-vw": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 12,
@@ -19992,7 +20217,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -20068,7 +20293,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "list": {
           "column-gap": {
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.token-subtype": "space-column",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 12,
@@ -20137,7 +20362,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -21055,7 +21280,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -21484,7 +21709,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -21623,7 +21848,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -21946,7 +22171,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -22014,7 +22239,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "large-vw": {
           "column-gap": {
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.token-subtype": "space-column",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 32,
@@ -22124,7 +22349,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -22248,7 +22473,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "large-vw": {
             "column-gap": {
               "$extensions": {
-                "nl.nldesignsystem.token-subtype": "space-inline",
+                "nl.nldesignsystem.token-subtype": "space-column",
                 "nl.nldesignsystem.value-resolved-as": {
                   "unit": "px",
                   "value": 24,
@@ -22358,7 +22583,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
           "row-gap": {
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.token-subtype": "space-row",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 16,
@@ -22373,7 +22598,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "content": {
           "row-gap": {
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.token-subtype": "space-row",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 8,
@@ -22385,7 +22610,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -22916,7 +23141,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "item": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -23059,7 +23284,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -29420,7 +29645,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -29893,7 +30118,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -30035,7 +30260,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -30048,7 +30273,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "column-gap": {
             "$description": "[code-only]",
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.token-subtype": "space-column",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 8,
@@ -30060,7 +30285,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "row-gap": {
             "$description": "[code-only]",
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.token-subtype": "space-row",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 4,
@@ -30429,7 +30654,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "breadcrumb-nav": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -30605,7 +30830,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -31490,7 +31715,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 12,
@@ -32268,7 +32493,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -32395,7 +32620,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "figure": {
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -32408,7 +32633,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "form-field-error-message": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -33701,7 +33926,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -34204,7 +34429,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -35251,7 +35476,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "step-body": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -35264,7 +35489,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "step-header": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -35955,7 +36180,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "sub-step-header": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -36036,7 +36261,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "spotlight-section": {
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -36649,7 +36874,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "item": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 12,
@@ -36694,7 +36919,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -36811,7 +37036,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "toolbar-button": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -37475,7 +37700,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 0,
@@ -37575,7 +37800,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -37632,7 +37857,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -37736,7 +37961,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -37748,7 +37973,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "content": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -38038,7 +38263,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "message": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -38328,7 +38553,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "badge-list": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -38339,7 +38564,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -38618,7 +38843,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -39162,7 +39387,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -44420,7 +44645,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -44611,7 +44836,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "link": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -44662,7 +44887,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -53617,7 +53842,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 24,
@@ -53727,7 +53952,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -53739,7 +53964,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "section": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -54539,7 +54764,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -54597,7 +54822,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "row-gap": {
         "2xl": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 64,
@@ -54608,7 +54833,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "l": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -54619,7 +54844,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "xl": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -55155,7 +55380,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "menu": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -55201,7 +55426,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -55415,7 +55640,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "logo-link": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -55468,7 +55693,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "menu": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -55479,7 +55704,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -55508,7 +55733,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -55613,7 +55838,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "navigation": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -55624,7 +55849,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -67048,6 +67273,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column": {
         "2xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67055,6 +67283,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "2xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67062,6 +67293,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "3xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67069,6 +67303,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "4xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67076,6 +67313,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "5xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67083,6 +67323,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "6xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67090,6 +67333,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "lg": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67098,6 +67344,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "max": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67105,6 +67354,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67112,6 +67364,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67119,6 +67374,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67126,6 +67384,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67133,6 +67394,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67140,6 +67404,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67147,6 +67414,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67154,6 +67424,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67161,6 +67434,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67168,6 +67444,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67176,6 +67455,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "md": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67184,6 +67466,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "min": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67191,6 +67476,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67198,6 +67486,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67205,6 +67496,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67212,6 +67506,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67219,6 +67516,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67226,6 +67526,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67233,6 +67536,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67240,6 +67546,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67247,6 +67556,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67254,6 +67566,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67262,6 +67577,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "sm": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67269,6 +67587,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67276,6 +67597,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67628,6 +67952,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row": {
         "2xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67635,6 +67962,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "2xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67642,6 +67972,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "3xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67649,6 +67982,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "4xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67656,6 +67992,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "5xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67663,6 +68002,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "6xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67670,6 +68012,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "lg": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67678,6 +68023,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "max": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67685,6 +68033,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67692,6 +68043,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67699,6 +68053,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67706,6 +68063,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67713,6 +68073,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67720,6 +68083,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67727,6 +68093,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67734,6 +68103,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67741,6 +68113,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67748,6 +68123,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67756,6 +68134,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "md": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67764,6 +68145,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "min": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67771,6 +68155,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67778,6 +68165,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67785,6 +68175,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67792,6 +68185,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67799,6 +68195,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67806,6 +68205,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67813,6 +68215,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67820,6 +68225,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67827,6 +68235,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67834,6 +68245,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -67842,6 +68256,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "sm": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67849,6 +68266,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67856,6 +68276,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           },
         },
         "xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67866,6 +68289,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "text": {
         "2xl": {
           "$description": "2ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67874,6 +68300,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "2xs": {
           "$description": "0.25ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67882,6 +68311,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "3xl": {
           "$description": "3ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67890,6 +68322,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "3xs": {
           "$description": "0.125ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67898,6 +68333,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "lg": {
           "$description": "1.5ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67906,6 +68344,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "md": {
           "$description": "1ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67914,6 +68355,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "sm": {
           "$description": "0.75ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67922,6 +68366,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "xl": {
           "$description": "1.75ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -67930,6 +68377,9 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "xs": {
           "$description": "0.5ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -70775,7 +71225,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 24,
@@ -71988,7 +72438,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 12,
@@ -72213,7 +72663,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -78552,7 +79002,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -78565,7 +79015,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           "column-gap": {
             "$description": "[code-only]",
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.token-subtype": "space-column",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 8,
@@ -78577,7 +79027,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           "row-gap": {
             "$description": "[code-only]",
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.token-subtype": "space-row",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 4,
@@ -78942,7 +79392,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     "breadcrumb-nav": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -79116,7 +79566,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -79974,7 +80424,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 12,
@@ -80752,7 +81202,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -80877,7 +81327,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     "figure": {
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -80890,7 +81340,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     "form-field-error-message": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -82177,7 +82627,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -82680,7 +83130,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -83727,7 +84177,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "step-body": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -83740,7 +84190,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "step-header": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -84427,7 +84877,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "sub-step-header": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -84508,7 +84958,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     "spotlight-section": {
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -85117,7 +85567,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "item": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 12,
@@ -85162,7 +85612,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -85279,7 +85729,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     "toolbar-button": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -85932,7 +86382,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 0,
@@ -86032,7 +86482,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -86089,7 +86539,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -86193,7 +86643,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -86205,7 +86655,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "content": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -86495,7 +86945,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "message": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -87049,7 +87499,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -87591,7 +88041,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -92833,7 +93283,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -93024,7 +93474,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       "link": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -93075,7 +93525,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -100105,7 +100555,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 24,
@@ -100215,7 +100665,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -100227,7 +100677,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "section": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -101023,7 +101473,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -101081,7 +101531,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "row-gap": {
         "2xl": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 64,
@@ -101092,7 +101542,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "l": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -101103,7 +101553,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "xl": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -101639,7 +102089,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "menu": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -101685,7 +102135,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -101899,7 +102349,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "logo-link": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -101952,7 +102402,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "menu": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -101963,7 +102413,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -101992,7 +102442,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -102097,7 +102547,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "navigation": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 32,
@@ -102108,7 +102558,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -113825,6 +114275,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column": {
         "2xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113832,6 +114285,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "2xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113839,6 +114295,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "3xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113846,6 +114305,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "4xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113853,6 +114315,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "5xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113860,6 +114325,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "6xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113867,6 +114335,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "lg": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113875,6 +114346,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "max": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113882,6 +114356,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113889,6 +114366,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113896,6 +114376,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113903,6 +114386,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113910,6 +114396,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113917,6 +114406,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113924,6 +114416,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113931,6 +114426,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113938,6 +114436,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113945,6 +114446,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113953,6 +114457,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "md": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -113961,6 +114468,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "min": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113968,6 +114478,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113975,6 +114488,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113982,6 +114498,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113989,6 +114508,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -113996,6 +114518,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114003,6 +114528,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114010,6 +114538,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114017,6 +114548,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114024,6 +114558,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114031,6 +114568,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-column",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114039,6 +114579,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "sm": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114046,6 +114589,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114053,6 +114599,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-column",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114405,6 +114954,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row": {
         "2xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114412,6 +114964,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "2xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114419,6 +114974,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "3xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114426,6 +114984,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "4xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114433,6 +114994,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "5xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114440,6 +115004,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "6xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114447,6 +115014,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "lg": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114455,6 +115025,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "max": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114462,6 +115035,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114469,6 +115045,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114476,6 +115055,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114483,6 +115065,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114490,6 +115075,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114497,6 +115085,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114504,6 +115095,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114511,6 +115105,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114518,6 +115115,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114525,6 +115125,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114533,6 +115136,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "md": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114541,6 +115147,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "min": {
           "2xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114548,6 +115157,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "2xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114555,6 +115167,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "3xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114562,6 +115177,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "4xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114569,6 +115187,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "5xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114576,6 +115197,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "6xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114583,6 +115207,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "lg": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114590,6 +115217,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "md": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114597,6 +115227,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "sm": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114604,6 +115237,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xl": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114611,6 +115247,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
             },
           },
           "xs": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-row",
+            },
             "$type": "dimension",
             "$value": {
               "unit": "px",
@@ -114619,6 +115258,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "sm": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114626,6 +115268,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "xl": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114633,6 +115278,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           },
         },
         "xs": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-row",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114643,6 +115291,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "text": {
         "2xl": {
           "$description": "2ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114651,6 +115302,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "2xs": {
           "$description": "0.25ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114659,6 +115313,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "3xl": {
           "$description": "3ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114667,6 +115324,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "3xs": {
           "$description": "0.125ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114675,6 +115335,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "lg": {
           "$description": "1.5ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114683,6 +115346,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "md": {
           "$description": "1ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114691,6 +115357,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "sm": {
           "$description": "0.75ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114699,6 +115368,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "xl": {
           "$description": "1.75ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -114707,6 +115379,9 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "xs": {
           "$description": "0.5ch",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-text",
+          },
           "$type": "dimension",
           "$value": {
             "unit": "px",
@@ -117457,7 +118132,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 24,
@@ -118539,7 +119214,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 12,
@@ -118743,7 +119418,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -124202,7 +124877,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -124215,7 +124890,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           "column-gap": {
             "$description": "[code-only]",
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.token-subtype": "space-column",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 8,
@@ -124227,7 +124902,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           "row-gap": {
             "$description": "[code-only]",
             "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.token-subtype": "space-row",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
                 "value": 4,
@@ -124571,7 +125246,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     "breadcrumb-nav": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -124743,7 +125418,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -125580,7 +126255,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 12,
@@ -126336,7 +127011,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -126461,7 +127136,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     "figure": {
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -126474,7 +127149,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     "form-field-error-message": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -127729,7 +128404,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -128230,7 +128905,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -129277,7 +129952,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "step-body": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -129290,7 +129965,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "step-header": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -129872,7 +130547,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "sub-step-header": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 24,
@@ -129953,7 +130628,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     "spotlight-section": {
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -130457,7 +131132,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "item": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 12,
@@ -130502,7 +131177,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 16,
@@ -130619,7 +131294,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     "toolbar-button": {
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -131205,7 +131880,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
         },
         "$type": "dimension",
         "$value": {
@@ -131302,7 +131977,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -131355,7 +132030,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -131437,7 +132112,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -131449,7 +132124,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "content": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 16,
@@ -131692,7 +132367,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "message": {
         "row-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.token-subtype": "space-row",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 8,
@@ -132174,7 +132849,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
@@ -132673,7 +133348,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -137637,7 +138312,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "column-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.token-subtype": "space-column",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 4,
@@ -137825,7 +138500,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       "link": {
         "column-gap": {
           "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
               "value": 4,
@@ -137874,7 +138549,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
       },
       "row-gap": {
         "$extensions": {
-          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.token-subtype": "space-row",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
             "value": 8,
