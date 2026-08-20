@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-token-table-color';
-import { colorGroups } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/fixtures.js';
-import { ColorGroup } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/types.js';
+import { tokenCollection } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/fixtures.js';
+import { TokenCollection } from '@nl-design-system-community/clippy-components/src/clippy-token-table-color/types.js';
 import React from 'react';
 
 type TableColorStoryArgs = {
-  groups?: ColorGroup[];
+  collection?: TokenCollection[];
 };
 
 const meta = {
@@ -17,7 +17,7 @@ const meta = {
       },
     },
   },
-  render: () => React.createElement('clippy-token-table-color', { groups: colorGroups }),
+  render: () => React.createElement('clippy-token-table-color', { collection: tokenCollection }),
   tags: ['autodocs'],
   title: 'Clippy/Token Table Color',
 } satisfies Meta<TableColorStoryArgs>;
