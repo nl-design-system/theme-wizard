@@ -70,20 +70,16 @@ const addDimensionSubType = (token: BaseDesignToken, tokenPath: TokenPath): void
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
   } else if (path.includes('line-height')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
-  } else if (
-    path.includes('margin-block') ||
-    path.includes('padding-block') ||
-    path.includes('row-gap') ||
-    path.includes('space.block')
-  ) {
+  } else if (path.includes('margin-block') || path.includes('padding-block') || path.includes('space.block')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-block');
-  } else if (
-    path.includes('margin-inline') ||
-    path.includes('padding-inline') ||
-    path.includes('column-gap') ||
-    path.includes('space.inline')
-  ) {
+  } else if (path.includes('margin-inline') || path.includes('padding-inline') || path.includes('space.inline')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-inline');
+  } else if (path.includes('column-gap') || path.includes('space.column')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-column');
+  } else if (path.includes('row-gap') || path.includes('space.row')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-row');
+  } else if (path.includes('space.text')) {
+    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-text');
   } else if (path.includes('border-radius')) {
     setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-radius');
   } else if (path.includes('border-') && path.includes('-width')) {
