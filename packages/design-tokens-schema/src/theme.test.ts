@@ -1365,6 +1365,32 @@ describe('validate token sub-type extension', () => {
   });
 });
 
+describe('preprocessThemeStrict adds path-based sub-type extensions', () => {
+  it('sets a sub-type on an already-modern dimension token, without needing a legacy $type upgrade', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'nl.card.border-radius', createToken('dimension', { unit: 'px', value: 8 }));
+
+    const result = StrictThemeSchema.safeParse(config);
+
+    expect(result.success).toBe(true);
+    expect(dlv(result.data, 'nl.card.border-radius.$extensions')).toMatchObject({
+      [EXTENSION_TOKEN_SUBTYPE]: 'border-radius',
+    });
+  });
+
+  it('sets a sub-type on a dimension token that was upgraded from a legacy fontSize $type', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'nl.card.font-size', createToken('fontSize', '16px'));
+
+    const result = StrictThemeSchema.safeParse(config);
+
+    expect(result.success).toBe(true);
+    expect(dlv(result.data, 'nl.card.font-size.$extensions')).toMatchObject({
+      [EXTENSION_TOKEN_SUBTYPE]: 'font-size',
+    });
+  });
+});
+
 describe('strictly validate known basis themes', () => {
   describe('source files', () => {
     it('validates Start theme', () => {
