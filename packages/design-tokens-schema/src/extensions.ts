@@ -7,7 +7,9 @@ const PROTO_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
  * Set a value for an extension. Warning: overwrites existing values if present.
  */
 export const setExtension = (token: BaseDesignToken, key: string, value: unknown): void => {
-  if (PROTO_KEYS.has(key)) return;
+  if (PROTO_KEYS.has(key)) {
+    return;
+  }
   // Make sure $extensions exists
   token['$extensions'] ??= {};
 
