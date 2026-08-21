@@ -38,13 +38,16 @@ export class ClippyTokenTableColor extends LitElement {
    * Labels for titles, labels, buttons, etc. Consumers can override these,
    * e.g. with localized strings.
    */
+  @property({ attribute: 'background-label', type: String }) backgroundLabel = 'Background';
+  @property({ attribute: 'border-label', type: String }) borderLabel = 'Borders and lines';
+  @property({ attribute: 'foreground-label', type: String }) foregroundLabel = 'Foreground';
+
+  // TODO: fix prop-drilling with composition. These are passed down to the `clippy-token-detail` component.
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
   @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
-  @property({ attribute: 'background-label', type: String }) backgroundLabel = 'Background';
-  @property({ attribute: 'border-label', type: String }) borderLabel = 'Borders and lines';
-  @property({ attribute: 'foreground-label', type: String }) foregroundLabel = 'Foreground';
+  @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
 
   #openDialog({ token }: { token: BaseDesignToken }) {
     this.#currentToken = token;
@@ -63,7 +66,15 @@ export class ClippyTokenTableColor extends LitElement {
     const tokenPath = getTokenPath(token);
     return html`
       <clippy-modal title="${tokenPath}" actions="none">
-        <clippy-token-detail .token=${token}></clippy-token-detail>
+        <clippy-token-detail
+          .token=${token}
+          example-label="${this.exampleLabel}"
+          value-label="${this.valueLabel}"
+          reference-title-label="${this.referenceTitleLabel}"
+          reference-empty-label="${this.referenceEmptyLabel}"
+          copy-to-clipboard-label="${this.copyToClipboardLabel}"
+        >
+        </clippy-token-detail>
       </clippy-modal>
     `;
   }
