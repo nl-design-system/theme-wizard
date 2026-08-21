@@ -147,12 +147,15 @@ export class ClippyTokenDetail extends LitElement {
   }) {
     return html` <div class="utrecht-data-list__item" data-testid="${testId}">
       <dt class="utrecht-data-list__item-key">${term}</dt>
-      <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+      <dd
+        class="clippy-token-detail__definition | utrecht-data-list__item-value utrecht-data-list__item-value--html-dd"
+      >
         ${isBadge ? html`<span class="nl-data-badge">${definition}</span>` : html`<code class="nl-code">${definition}</code>`}
         ${
           copyable
             ? html`<clippy-toggletip text=${`${this.copyToClipboardLabel}${definition}`}>
                 <clippy-button
+                  class="clippy-token-detail__copy-button"
                   icon-only
                   purpose="subtle"
                   size="small"

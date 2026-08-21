@@ -27,12 +27,13 @@ detail.token = {
 
 ## Attributes
 
-| Attribute / Property    | Type              | Description                                 | Default                       |
-| ----------------------- | ----------------- | ------------------------------------------- | ----------------------------- |
-| `token`                 | `BaseDesignToken` | The token to display in detail              | `undefined`                   |
-| `example-label`         | `string`          | Label for the example title in the modal    | `'Example'`                   |
-| `value-label`           | `string`          | Label for the value definition in the modal | `'Value'`                     |
-| `reference-title-label` | `string`          | Label for the reference title in the modal  | `'Where is this token used?'` |
+| Attribute / Property      | Type              | Description                                 | Default                       |
+| ------------------------- | ----------------- | ------------------------------------------- | ----------------------------- |
+| `token`                   | `BaseDesignToken` | The token to display in detail              | `undefined`                   |
+| `example-label`           | `string`          | Label for the example title in the modal    | `'Example'`                   |
+| `value-label`             | `string`          | Label for the value definition in the modal | `'Value'`                     |
+| `reference-title-label`   | `string`          | Label for the reference title in the modal  | `'Where is this token used?'` |
+| `copy-to-clipboard-label` | `string`          | Label for the copy to clipboard button      | `'Copy to clipboard: '`       |
 
 ## CSS Custom Properties
 

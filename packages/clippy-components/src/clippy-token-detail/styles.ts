@@ -26,4 +26,18 @@ export default css`
     font-size: var(--_clippy-token-detail-font-size);
     line-height: var(--_clippy-token-detail-line-height);
   }
+
+  .clippy-token-detail__definition {
+    display: flex;
+    align-items: start;
+    gap: var(--basis-space-row-xs);
+  }
+
+  /**
+   * Shift the toggletip up to align visually with the definition text without disturbing spacing flow
+   */
+  clippy-toggletip {
+    display: inline-block;
+    translate: 0 calc(var(--nl-button-icon-only-padding-block-start) * -1);
+  }
 `;
