@@ -2,15 +2,13 @@ import { safeCustomElement } from '@lib/decorators';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignToken, getTokenSubtype, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import {
   getTokenColor,
   getTokenDimensionSpaceConcept,
   getTokenPath,
   getTokenReferenceCount,
   getTokenReferencedAt,
-  getTokenSubType,
-  getTokenValue,
 } from '@src/lib/tokens';
 import descriptionListCss from '@utrecht/data-list-css/dist/index.css?inline';
 import unorderedListCss from '@utrecht/unordered-list-css/dist/index.css?inline';
@@ -53,16 +51,19 @@ export class ClippyTokenDetail extends LitElement {
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
 
   renderTokenExample() {
-    if (!this.token) return nothing;
+    if (!this.token) {
+      return nothing;
+    }
     switch (this.token.$type) {
       case 'color':
-        return html`<clippy-color-sample color=${getTokenColor(this.token)}></clippy-color-sample>`;
+        return html`<clippy-color-sample color=${stringifyToken(this.token)}></clippy-color-sample>`;
       case 'dimension': {
-        const subType = getTokenSubType(this.token);
+        // dimensions have a lot of different subtypes
+        const subType = getTokenSubtype(this.token);
         switch (subType) {
           case 'font-size':
             return html`<clippy-token-sample-text
-              font-size=${getTokenValue(this.token)}
+              font-size=${stringifyToken(this.token)}
               truncate
             ></clippy-token-sample-text>`;
           case 'space-block':
@@ -71,16 +72,16 @@ export class ClippyTokenDetail extends LitElement {
           case 'space-column':
           case 'space-row':
             return html`<clippy-token-sample-spacing
-              size=${getTokenValue(this.token)}
+              size=${stringifyToken(this.token)}
               concept=${getTokenDimensionSpaceConcept(this.token)}
             ></clippy-token-sample-spacing>`;
           case 'border-width':
             return html`<clippy-token-sample-border
-              border-width=${getTokenValue(this.token)}
+              border-width=${stringifyToken(this.token)}
             ></clippy-token-sample-border>`;
           case 'border-radius':
             return html`<clippy-token-sample-border
-              border-radius=${getTokenValue(this.token)}
+              border-radius=${stringifyToken(this.token)}
             ></clippy-token-sample-border>`;
           default:
             return nothing;
@@ -89,22 +90,22 @@ export class ClippyTokenDetail extends LitElement {
       // TODO: Google fonts?
       case 'fontFamily':
         return html`<clippy-token-sample-text
-          font-family=${getTokenValue(this.token)}
+          font-family=${stringifyToken(this.token)}
           font-size="var(--basis-text-font-size-xl)"
           truncate
         ></clippy-token-sample-text>`;
       case 'number': {
-        const subType = getTokenSubType(this.token);
+        const subType = getTokenSubtype(this.token);
         switch (subType) {
           case 'font-weight':
             return html`<clippy-token-sample-text
-              font-weight=${getTokenValue(this.token)}
+              font-weight=${stringifyToken(this.token)}
               font-size="var(--basis-text-font-size-xl)"
               truncate
             ></clippy-token-sample-text>`;
           case 'line-height':
             return html`<clippy-token-sample-text
-              line-height=${getTokenValue(this.token)}
+              line-height=${stringifyToken(this.token)}
               font-size="var(--basis-text-font-size-xl)"
               truncate
             ></clippy-token-sample-text>`;
@@ -117,6 +118,9 @@ export class ClippyTokenDetail extends LitElement {
     }
   }
 
+  /**
+   * Some token types have some extra information to show
+   */
   renderTokenExtras() {
     if (!this.token) return nothing;
     switch (this.token.$type) {
@@ -166,22 +170,28 @@ export class ClippyTokenDetail extends LitElement {
                 <code class="nl-code">${this.token.$type}</code>
               </dd>
             </div>
-            <div class="utrecht-data-list__item">
-              <dt class="utrecht-data-list__item-key">Token ID</dt>
-              <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <span class="nl-data-badge">${tokenPath}</span>
-              </dd>
-            </div>
-            <div class="utrecht-data-list__item">
-              <dt class="utrecht-data-list__item-key">CSS Variable</dt>
-              <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">${`--${tokenPath.replaceAll('.', '-')}`}</code>
-              </dd>
-            </div>
+            ${
+              tokenPath
+                ? html`
+                    <div class="utrecht-data-list__item">
+                      <dt class="utrecht-data-list__item-key">Token ID</dt>
+                      <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+                        <span class="nl-data-badge">${tokenPath}</span>
+                      </dd>
+                    </div>
+                    <div class="utrecht-data-list__item">
+                      <dt class="utrecht-data-list__item-key">CSS Variable</dt>
+                      <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+                        <code class="nl-code">${`--${tokenPath.replaceAll('.', '-')}`}</code>
+                      </dd>
+                    </div>
+                  `
+                : nothing
+            }
             <div class="utrecht-data-list__item">
               <dt class="utrecht-data-list__item-key" data-testid="value-label">${this.valueLabel}</dt>
               <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">${getTokenValue(this.token)}</code>
+                <code class="nl-code">${stringifyToken(this.token)}</code>
               </dd>
             </div>
             ${this.renderTokenExtras()}
