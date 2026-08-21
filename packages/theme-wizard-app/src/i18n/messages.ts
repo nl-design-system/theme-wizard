@@ -156,6 +156,7 @@ export const en = {
     },
     details: 'Details',
     detailsDialog: {
+      copyToClipboard: 'Copy to clipboard: ',
       tokenReferenceList: {
         empty: 'This token is unused',
         title: 'Where is this token used?',
@@ -668,6 +669,7 @@ export const nl = {
     },
     details: 'Details',
     detailsDialog: {
+      copyToClipboard: 'Kopieer naar klembord: ',
       tokenReferenceList: {
         empty: 'Deze token wordt niet gebruikt',
         title: 'Waar wordt deze token gebruikt?',
