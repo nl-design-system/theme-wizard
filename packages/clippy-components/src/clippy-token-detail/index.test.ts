@@ -6,7 +6,7 @@ import { ClippyTokenSampleSpacing } from '@src/clippy-token-sample-spacing';
 import { ClippyTokenSampleText } from '@src/clippy-token-sample-text';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { ClippyTokenDetail } from './index';
-import { borderWidthFixture, colorFixture, spacingFixture, textFontSizeFixture } from './fixtures';
+import { borderWidthFixture, colorFixture, noTokenPath, spacingFixture, textFontSizeFixture } from './fixtures';
 
 const tag = 'clippy-token-detail';
 
@@ -78,5 +78,16 @@ describe(`<${tag}>`, () => {
     const exampleLabelElement = component.shadowRoot?.querySelector('[data-testid="reference-empty-label"]');
     expect(exampleLabelElement).toBeTruthy();
     expect(exampleLabelElement?.textContent).toBe('Reference empty label');
+  });
+
+  it('Renders with a token without a path', async () => {
+    component.token = noTokenPath;
+    await component.updateComplete;
+
+    const tokenIdElement = component.shadowRoot?.querySelector('[data-testid="token-id"]');
+    expect(tokenIdElement).not.toBeInTheDocument();
+
+    const cssVariableElement = component.shadowRoot?.querySelector('[data-testid="css-variable"]');
+    expect(cssVariableElement).not.toBeInTheDocument();
   });
 });

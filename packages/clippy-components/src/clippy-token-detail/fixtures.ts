@@ -136,3 +136,23 @@ export const borderRadiusFixture: BaseDesignToken = {
     value: 8,
   },
 };
+
+export const noTokenPath: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.reference-count': 5,
+    'nl.nldesignsystem.referenced-at': [
+      'basis.color.accent-2.border-default',
+      'basis.color.accent-3.border-default',
+      'basis.color.action-1.border-default',
+      'basis.color.action-2.border-default',
+      'basis.color.selected.border-default',
+    ],
+    'nl.nldesignsystem.token-subtype': 'border-color',
+  },
+  $type: 'color',
+  $value: {
+    alpha: 1,
+    colorSpace: 'srgb',
+    components: [0.3607843137254902, 0.5372549019607843, 0.7450980392156863],
+  },
+};

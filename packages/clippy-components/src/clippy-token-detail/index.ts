@@ -173,13 +173,13 @@ export class ClippyTokenDetail extends LitElement {
             ${
               tokenPath
                 ? html`
-                    <div class="utrecht-data-list__item">
+                    <div class="utrecht-data-list__item" data-testid="token-id">
                       <dt class="utrecht-data-list__item-key">Token ID</dt>
                       <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
                         <span class="nl-data-badge">${tokenPath}</span>
                       </dd>
                     </div>
-                    <div class="utrecht-data-list__item">
+                    <div class="utrecht-data-list__item" data-testid="css-variable">
                       <dt class="utrecht-data-list__item-key">CSS Variable</dt>
                       <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
                         <code class="nl-code">${`--${tokenPath.replaceAll('.', '-')}`}</code>
