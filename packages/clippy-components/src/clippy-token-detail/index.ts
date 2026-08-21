@@ -41,7 +41,7 @@ declare global {
  * @cssprop --clippy-token-detail-font-size - Font size of the text
  * @cssprop --clippy-token-detail-line-height - Line height of the text
  * @cssprop --clippy-token-detail-key-color - Color of the key text
- * @cssprop --clippy-token-detail-key-font-wight - Font weight of the key text
+ * @cssprop --clippy-token-detail-key-font-weight - Font weight of the key text
  */
 @safeCustomElement(tag)
 export class ClippyTokenDetail extends LitElement {

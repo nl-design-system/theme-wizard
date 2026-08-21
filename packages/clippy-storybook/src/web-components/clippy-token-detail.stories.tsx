@@ -23,7 +23,6 @@ const meta = {
   args: {
     token: colorFixture,
   },
-  // argTypes: {},
   parameters: {
     docs: {
       description: {

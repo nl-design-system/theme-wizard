@@ -72,6 +72,39 @@ describe('remove all extensions', () => {
     removeExtensions(tokens);
     expect(tokens.color.red).not.toHaveProperty('$extensions');
   });
+
+  it('removes $extensions from a token group', () => {
+    const tokens = {
+      basis: {
+        color: {
+          'accent-1': {
+            $extensions: { 'nl.nldesignsystem.theme-wizard.color-scale-seed-color': '#3366ff' },
+            50: {
+              $type: 'color',
+              $value: '#f0f4ff',
+            },
+          },
+        },
+      },
+    };
+    removeExtensions(tokens);
+    expect(tokens.basis.color['accent-1']).not.toHaveProperty('$extensions');
+    expect(tokens.basis.color['accent-1'][50]).not.toHaveProperty('$extensions');
+  });
+
+  it('removes $extensions from the root object', () => {
+    const tokens = {
+      $extensions: { 'nl.nldesignsystem.theme-wizard.some-key': 'value' },
+      color: {
+        red: {
+          $type: 'color',
+          $value: '#ff0000',
+        },
+      },
+    };
+    removeExtensions(tokens);
+    expect(tokens).not.toHaveProperty('$extensions');
+  });
 });
 
 describe('remove specific extensions (only)', () => {
@@ -144,6 +177,27 @@ describe('remove specific extensions (only)', () => {
     removeExtensions(tokens, { include: ['sub-type'] });
     removeExtensions(tokens, { include: ['sub-type'] });
     expect(tokens.color.red.$extensions).toEqual({ 'contrast-with': ['blue'] });
+  });
+
+  it('removes only the specified key from a token group', () => {
+    const tokens = {
+      basis: {
+        color: {
+          'accent-1': {
+            $extensions: {
+              'nl.nldesignsystem.theme-wizard.color-scale-seed-color': '#3366ff',
+              other: 'keep',
+            },
+            50: {
+              $type: 'color',
+              $value: '#f0f4ff',
+            },
+          },
+        },
+      },
+    };
+    removeExtensions(tokens, { include: ['nl.nldesignsystem.theme-wizard.color-scale-seed-color'] });
+    expect(tokens.basis.color['accent-1'].$extensions).toEqual({ other: 'keep' });
   });
 });
 

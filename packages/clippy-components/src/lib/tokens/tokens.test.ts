@@ -1,4 +1,10 @@
-import { BaseDesignToken, EXTENSION_TOKEN_SUBTYPE } from '@nl-design-system-community/design-tokens-schema';
+import {
+  BaseDesignToken,
+  EXTENSION_REFERENCE_COUNT,
+  EXTENSION_REFERENCED_AT,
+  EXTENSION_TOKEN_PATH,
+  EXTENSION_TOKEN_SUBTYPE,
+} from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
 import { describe, expect, it } from 'vitest';
 import {
@@ -40,7 +46,7 @@ describe('getTokenPath', () => {
       ...tokenFullFixture,
       $extensions: {
         ...tokenFullFixture.$extensions,
-        'nl.nldesignsystem.path': undefined,
+        [EXTENSION_TOKEN_PATH]: undefined,
       },
     });
     expect(result).toBe('');
@@ -58,7 +64,7 @@ describe('getTokenReferencedAt', () => {
       ...tokenFullFixture,
       $extensions: {
         ...tokenFullFixture.$extensions,
-        'nl.nldesignsystem.referenced-at': undefined,
+        [EXTENSION_REFERENCED_AT]: undefined,
       },
     });
     expect(result).toEqual([]);
@@ -76,7 +82,7 @@ describe('getTokenReferenceCount', () => {
       ...tokenFullFixture,
       $extensions: {
         ...tokenFullFixture.$extensions,
-        'nl.nldesignsystem.reference-count': undefined,
+        [EXTENSION_REFERENCE_COUNT]: undefined,
       },
     });
     expect(result).toBe(0);
@@ -102,7 +108,7 @@ describe('getTokenDimensionSpaceConcept', () => {
     expect(result).toBe('inline');
   });
 
-  it('should return empty string for token without dimension space subtype', () => {
+  it('should return empty string for token without dimension space concept', () => {
     const result = getTokenDimensionSpaceConcept({
       ...tokenSpacingFixture,
       $extensions: {

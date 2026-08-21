@@ -29,7 +29,7 @@ export const createReference = (path: TokenPath): TokenReference => {
 };
 
 export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
-  return obj !== null && typeof obj === 'object';
+  return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
 };
 
 export const isTokenLike = (obj: unknown): obj is BaseDesignToken => {
