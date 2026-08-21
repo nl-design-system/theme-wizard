@@ -68,13 +68,14 @@ Each tokens array is expected to contain all fourteen columns rendered by the ta
 
 ## Attributes & properties
 
-| Attribute / Property    | Type                | Description                                      | Default                       |
-| ----------------------- | ------------------- | ------------------------------------------------ | ----------------------------- |
-| `collection`            | `TokenCollection[]` | Token collection to render, one per table row    | `[]`                          |
-| `example-label`         | `string`            | Label for the example title in the modal         | `'Example'`                   |
-| `value-label`           | `string`            | Label for the value definition in the modal      | `'Value'`                     |
-| `reference-title-label` | `string`            | Label for the reference title in the modal       | `'Where is this token used?'` |
-| `reference-empty-label` | `string`            | Label for the reference empty state in the modal | `'This token is not used.'`   |
-| `background-label`      | `string`            | Label for the background header in the table     | `'Background'`                |
-| `border-label`          | `string`            | Label for the border header in the table         | `'Borders and lines'`         |
-| `foreground-label`      | `string`            | Label for the foreground header in the table     | `'Foreground'`                |
+| Attribute / Property      | Type                | Description                                         | Default                       |
+| ------------------------- | ------------------- | --------------------------------------------------- | ----------------------------- |
+| `collection`              | `TokenCollection[]` | Token collection to render, one per table row       | `[]`                          |
+| `background-label`        | `string`            | Label for the background header in the table        | `'Background'`                |
+| `border-label`            | `string`            | Label for the border header in the table            | `'Borders and lines'`         |
+| `foreground-label`        | `string`            | Label for the foreground header in the table        | `'Foreground'`                |
+| `example-label`           | `string`            | Label for the example title in the modal            | `'Example'`                   |
+| `value-label`             | `string`            | Label for the value definition in the modal         | `'Value'`                     |
+| `reference-title-label`   | `string`            | Label for the reference title in the modal          | `'Where is this token used?'` |
+| `reference-empty-label`   | `string`            | Label for the reference empty state in the modal    | `'This token is not used.'`   |
+| `copy-to-clipboard-label` | `string`            | Label for the copy to clipboard button in the modal | `'Copy to clipboard: '`       |

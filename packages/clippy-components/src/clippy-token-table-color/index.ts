@@ -1,20 +1,12 @@
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import {
-  BaseDesignToken,
-  colorTokenValueToColorJS,
-  ColorValue,
-  EXTENSION_REFERENCE_COUNT,
-  EXTENSION_REFERENCED_AT,
-  EXTENSION_TOKEN_PATH,
-  isRef,
-  stringifyColor,
-} from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignToken, ColorValue, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
+import { getTokenPath } from '@src/lib/tokens';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import Color, { ColorTypes } from 'colorjs.io';
 import '../clippy-color-sample';
 import '../clippy-modal';
+import '../clippy-token-detail';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import type { TokenCollection } from './types';
@@ -46,24 +38,16 @@ export class ClippyTokenTableColor extends LitElement {
    * Labels for titles, labels, buttons, etc. Consumers can override these,
    * e.g. with localized strings.
    */
-  @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
-  @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
-  @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
-  @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
   @property({ attribute: 'background-label', type: String }) backgroundLabel = 'Background';
   @property({ attribute: 'border-label', type: String }) borderLabel = 'Borders and lines';
   @property({ attribute: 'foreground-label', type: String }) foregroundLabel = 'Foreground';
 
-  #getTokenID(token: BaseDesignToken): string {
-    return (token.$extensions?.[EXTENSION_TOKEN_PATH] as string) || '';
-  }
-
-  #getTokenColor(token: BaseDesignToken) {
-    if (typeof token.$value === 'string' && !isRef(token.$value)) {
-      return new Color(token.$value as ColorTypes);
-    }
-    return colorTokenValueToColorJS(token.$value as ColorValue);
-  }
+  // TODO: fix prop-drilling with composition. These are passed down to the `clippy-token-detail` component.
+  @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
+  @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
+  @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
+  @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
+  @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
 
   #openDialog({ token }: { token: BaseDesignToken }) {
     this.#currentToken = token;
@@ -79,67 +63,18 @@ export class ClippyTokenTableColor extends LitElement {
       return html``;
     }
 
-    const color = this.#getTokenColor(token);
-    const tokenID = this.#getTokenID(token);
-    const tokenUsage = (token.$extensions?.[EXTENSION_REFERENCED_AT] as string[]) || [];
-    const usageCount = (token.$extensions?.[EXTENSION_REFERENCE_COUNT] as number) || 0;
+    const tokenPath = getTokenPath(token);
     return html`
-      <clippy-modal title="${tokenID}" actions="none">
-        <clippy-heading level=${3} data-testid="example-label">${this.exampleLabel}</clippy-heading>
-        <clippy-color-sample color=${color.toString()}></clippy-color-sample>
-        <dl>
-          <dt>Token type</dt>
-          <dd>
-            <code class="nl-code">color</code>
-          </dd>
-          <dt>Token ID</dt>
-          <dd>
-            <span class="nl-data-badge">${tokenID}</span>
-          </dd>
-          <dt>CSS Variable</dt>
-          <dd>
-            <code class="nl-code">${`--${tokenID.replaceAll('.', '-')}`}</code>
-          </dd>
-          <dt data-testid="value-label">${this.valueLabel}</dt>
-          <dd>
-            <code class="nl-code">${color.toString({ format: 'hex' })}</code>
-          </dd>
-          <dt>OKLCH</dt>
-          <dd>
-            <code class="nl-code">${color.toString({ format: 'oklch' })}</code>
-          </dd>
-          <dt>P3 Color</dt>
-          <dd>
-            <code class="nl-code">${color.toString({ format: 'color' })}</code>
-          </dd>
-          <dt>RGB</dt>
-          <dd>
-            <code class="nl-code">${color.toString({ format: 'rgb' })}</code>
-          </dd>
-        </dl>
-
-        <clippy-heading level=${3}>
-          <span data-testid="reference-title-label">${this.referenceTitleLabel}</span>
-          <data>(${usageCount}&times;)</data>
-        </clippy-heading>
-
-        ${
-          tokenUsage.length > 0
-            ? html`
-                <ul>
-                  ${tokenUsage.map(
-                    (referrer) => html`
-                      <li>
-                        <span class="nl-data-badge">${referrer}</span>
-                      </li>
-                    `,
-                  )}
-                </ul>
-              `
-            : html`
-                <utrecht-paragraph data-testid="reference-empty-label">${this.referenceEmptyLabel}</utrecht-paragraph>
-              `
-        }
+      <clippy-modal title="${tokenPath}" actions="none">
+        <clippy-token-detail
+          .token=${token}
+          example-label="${this.exampleLabel}"
+          value-label="${this.valueLabel}"
+          reference-title-label="${this.referenceTitleLabel}"
+          reference-empty-label="${this.referenceEmptyLabel}"
+          copy-to-clipboard-label="${this.copyToClipboardLabel}"
+        >
+        </clippy-token-detail>
       </clippy-modal>
     `;
   }
@@ -235,7 +170,7 @@ export class ClippyTokenTableColor extends LitElement {
                         <clippy-color-sample
                           color="${stringifyColor(token.$value as ColorValue)}"
                         ></clippy-color-sample>
-                        <span class="sr-only">${this.#getTokenID(token)}</span>
+                        <span class="sr-only">${getTokenPath(token)}</span>
                       </button>
                     </td>`;
                   })}
