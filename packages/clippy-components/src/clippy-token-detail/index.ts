@@ -10,15 +10,18 @@ import {
   getTokenReferenceCount,
   getTokenReferencedAt,
 } from '@src/lib/tokens';
+import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import descriptionListCss from '@utrecht/data-list-css/dist/index.css?inline';
 import unorderedListCss from '@utrecht/unordered-list-css/dist/index.css?inline';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
-import { property } from 'lit/decorators.js';
 import '../clippy-color-sample';
 import '../clippy-token-sample-spacing';
 import '../clippy-token-sample-text';
 import '../clippy-heading';
 import '../clippy-stack';
+import '../clippy-toggletip';
+import { property } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
 
@@ -59,6 +62,7 @@ export class ClippyTokenDetail extends LitElement {
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
   @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
+  @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
 
   renderTokenExample() {
     if (!this.token) {
@@ -128,34 +132,88 @@ export class ClippyTokenDetail extends LitElement {
     }
   }
 
+  #renderDefinition({
+    copyable,
+    definition,
+    isBadge,
+    term,
+    testId,
+  }: {
+    term: string;
+    definition: string;
+    testId: string;
+    isBadge?: boolean;
+    copyable?: boolean;
+  }) {
+    return html` <div class="utrecht-data-list__item" data-testid="${testId}">
+      <dt class="utrecht-data-list__item-key">${term}</dt>
+      <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
+        ${isBadge ? html`<span class="nl-data-badge">${definition}</span>` : html`<code class="nl-code">${definition}</code>`}
+        ${
+          copyable
+            ? html`<clippy-toggletip text=${`${this.copyToClipboardLabel}${definition}`}>
+                <clippy-button
+                  icon-only
+                  purpose="subtle"
+                  size="small"
+                  @click=${() => navigator.clipboard.writeText(definition)}
+                >
+                  ${this.copyToClipboardLabel}${definition}
+                  <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                </clippy-button>
+              </clippy-toggletip>`
+            : nothing
+        }
+      </dd>
+    </div>`;
+  }
+
   /**
    * Some token types have some extra information to show
    */
-  renderTokenExtras() {
+  #renderTokenExtras() {
     if (!this.token) return nothing;
     switch (this.token.$type) {
       case 'color': {
         const color = getTokenColor(this.token);
         return html`
-          <div class="utrecht-data-list__item">
-            <dt class="utrecht-data-list__item-key">OKLCH</dt>
-            <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-              <code class="nl-code">${color?.toString({ format: 'oklch' })}</code>
-            </dd>
-          </div>
-          <div class="utrecht-data-list__item">
-            <dt class="utrecht-data-list__item-key">P3 Color</dt>
-            <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-              <code class="nl-code">${color?.toString({ format: 'color' })}</code>
-            </dd>
-          </div>
-          <div class="utrecht-data-list__item">
-            <dt class="utrecht-data-list__item-key">RGB</dt>
-            <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-              <code class="nl-code">${color?.toString({ format: 'rgb' })}</code>
-            </dd>
-          </div>
+          ${this.#renderDefinition({
+            copyable: true,
+            definition: color?.toString({ format: 'oklch' }) as string,
+            term: 'OKLCH',
+            testId: 'token-oklch-value',
+          })}
+          ${this.#renderDefinition({
+            copyable: true,
+            definition: color?.toString({ format: 'color' }) as string,
+            term: 'P3 Color',
+            testId: 'token-p3-color-value',
+          })}
+          ${this.#renderDefinition({
+            copyable: true,
+            definition: color?.toString({ format: 'rgb' }) as string,
+            term: 'RGB',
+            testId: 'token-rgb-value',
+          })}
         `;
+      }
+      case 'dimension': {
+        const subType = getTokenSubtype(this.token);
+        switch (subType) {
+          case 'space-block':
+          case 'space-inline':
+          case 'space-text':
+          case 'space-column':
+          case 'space-row':
+            return this.#renderDefinition({
+              definition: getTokenDimensionSpaceConcept(this.token) as string,
+              term: 'Spacing concept',
+              testId: 'token-spacing-concept',
+            });
+
+          default:
+            return nothing;
+        }
       }
       default:
         return nothing;
@@ -164,47 +222,49 @@ export class ClippyTokenDetail extends LitElement {
 
   override render() {
     if (!this.token) return nothing;
+    const token = this.token;
 
-    const tokenPath = getTokenPath(this.token);
-    const referencedAt = getTokenReferencedAt(this.token);
-    const referenceCount = getTokenReferenceCount(this.token);
+    const tokenPath = getTokenPath(token);
+    const cssVariable = tokenPath ? `--${tokenPath.replaceAll('.', '-')}` : '';
+    const referencedAt = getTokenReferencedAt(token);
+    const referenceCount = getTokenReferenceCount(token);
     return html`
       <clippy-stack size="2xl">
         <clippy-stack>
           <clippy-heading level=${3} data-testid="example-label">${this.exampleLabel}</clippy-heading>
           ${this.renderTokenExample()}
           <dl class="utrecht-data-list utrecht-data-list--html-dl utrecht-data-list--rows">
-            <div class="utrecht-data-list__item">
-              <dt class="utrecht-data-list__item-key">Token type</dt>
-              <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">${this.token.$type}</code>
-              </dd>
-            </div>
+            ${this.#renderDefinition({
+              definition: token.$type,
+              term: 'Token type',
+              testId: 'token-type',
+            })}
             ${
               tokenPath
                 ? html`
-                    <div class="utrecht-data-list__item" data-testid="token-id">
-                      <dt class="utrecht-data-list__item-key">Token ID</dt>
-                      <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                        <span class="nl-data-badge">${tokenPath}</span>
-                      </dd>
-                    </div>
-                    <div class="utrecht-data-list__item" data-testid="css-variable">
-                      <dt class="utrecht-data-list__item-key">CSS Variable</dt>
-                      <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                        <code class="nl-code">${`--${tokenPath.replaceAll('.', '-')}`}</code>
-                      </dd>
-                    </div>
+                    ${this.#renderDefinition({
+                      copyable: true,
+                      definition: tokenPath,
+                      isBadge: true,
+                      term: 'Token ID',
+                      testId: 'token-id',
+                    })}
+                    ${this.#renderDefinition({
+                      copyable: true,
+                      definition: cssVariable,
+                      term: 'CSS Variable',
+                      testId: 'token-css-variable',
+                    })}
                   `
                 : nothing
             }
-            <div class="utrecht-data-list__item">
-              <dt class="utrecht-data-list__item-key" data-testid="value-label">${this.valueLabel}</dt>
-              <dd class="utrecht-data-list__item-value utrecht-data-list__item-value--html-dd">
-                <code class="nl-code">${stringifyToken(this.token)}</code>
-              </dd>
-            </div>
-            ${this.renderTokenExtras()}
+            ${this.#renderDefinition({
+              copyable: true,
+              definition: stringifyToken(token),
+              term: this.valueLabel,
+              testId: 'token-value',
+            })}
+            ${this.#renderTokenExtras()}
           </dl>
         </clippy-stack>
 
