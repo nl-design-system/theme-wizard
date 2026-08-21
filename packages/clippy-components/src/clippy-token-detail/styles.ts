@@ -34,10 +34,10 @@ export default css`
   }
 
   /**
-   * Shift the toggletip up to align visually with the definition text without disturbing spacing flow
+   * Shift the toggletip up by it's own padding to align visually with the definition text without disturbing spacing flow
    */
   clippy-toggletip {
     display: inline-block;
-    translate: 0 calc(var(--nl-button-icon-only-padding-block-start) * -1);
+    margin-block-start: calc(var(--nl-button-icon-only-padding-block-start) * -1);
   }
 `;

@@ -146,16 +146,15 @@ export class ClippyTokenDetail extends LitElement {
     copyable?: boolean;
   }) {
     return html` <div class="utrecht-data-list__item" data-testid="${testId}">
-      <dt class="utrecht-data-list__item-key">${term}</dt>
+      <dt class="utrecht-data-list__item-key" data-testid="term">${term}</dt>
       <dd
         class="clippy-token-detail__definition | utrecht-data-list__item-value utrecht-data-list__item-value--html-dd"
       >
-        ${isBadge ? html`<span class="nl-data-badge">${definition}</span>` : html`<code class="nl-code">${definition}</code>`}
+        ${isBadge ? html`<span class="nl-data-badge" data-testid="definition">${definition}</span>` : html`<code class="nl-code" data-testid="definition">${definition}</code>`}
         ${
           copyable
             ? html`<clippy-toggletip text=${`${this.copyToClipboardLabel}${definition}`}>
                 <clippy-button
-                  class="clippy-token-detail__copy-button"
                   icon-only
                   purpose="subtle"
                   size="small"
@@ -190,7 +189,7 @@ export class ClippyTokenDetail extends LitElement {
             copyable: true,
             definition: color?.toString({ format: 'color' }) as string,
             term: 'P3 Color',
-            testId: 'token-p3-color-value',
+            testId: 'token-p3-value',
           })}
           ${this.#renderDefinition({
             copyable: true,
