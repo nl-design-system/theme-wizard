@@ -15,7 +15,6 @@ export default css`
       --clippy-token-detail-key-font-weight,
       var(--basis-text-font-weight-bold)
     );
-
     --utrecht-data-list-item-key-color: var(--_clippy-token-detail-key-color);
     --utrecht-data-list-item-key-font-weight: var(--_clippy-token-detail-key-font-weight);
     --utrecht-data-list-rows-gap: var(--basis-space-row-md);
@@ -28,8 +27,8 @@ export default css`
   }
 
   .clippy-token-detail__definition {
-    display: flex;
     align-items: start;
+    display: flex;
     gap: var(--basis-space-row-xs);
   }
 
