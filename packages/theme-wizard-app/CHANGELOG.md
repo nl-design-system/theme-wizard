@@ -1,5 +1,28 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 2.2.0
+
+### Minor Changes
+
+- b729804: Add `clippy-graph-paper` component
+
+### Patch Changes
+
+- Updated dependencies [b729804]
+- Updated dependencies [0e7130c]
+- Updated dependencies [816f086]
+- Updated dependencies [93fbbc1]
+- Updated dependencies [e3d2ef4]
+- Updated dependencies [ce2dd5e]
+- Updated dependencies [c96d598]
+- Updated dependencies [9f2df2b]
+- Updated dependencies [98a23f5]
+- Updated dependencies [7a4dfa2]
+- Updated dependencies [8b20e01]
+  - @nl-design-system-community/clippy-components@3.3.0
+  - @nl-design-system-community/design-tokens-schema@2.3.0
+  - @nl-design-system-community/css-scraper@1.2.2
+
 ## 2.1.2
 
 ### Patch Changes
