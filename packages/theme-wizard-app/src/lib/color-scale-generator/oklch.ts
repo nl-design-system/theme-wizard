@@ -1,12 +1,6 @@
-// OKLCH <-> sRGB conversions via colorjs.io's ColorSpace objects, used directly
-// instead of the `Color` class in oklchToHex/clampChroma: `space.to(otherSpace,
-// coords)` skips the per-call object construction and format-sniffing that
-// `new Color(x)` does, and clampChroma's gamut bisection calls this dozens of
-// times per token. `parseToOklch` is the one exception — it only runs once per
-// seed, so it uses colorjs.io's full CSS color parser to accept any valid CSS
-// color (hex, rgb(), hsl(), oklch(), named colors, ...), not just hex.
-import { OKLCH as OKLCHSpace, ColorSpace, parse, sRGB, sRGB_Linear } from 'colorjs.io/fn';
-import 'colorjs.io/spaces'; // registers every space, so `parse` recognizes all CSS color syntaxes
+// OKLCH <-> sRGB conversions via colorjs.io.
+import Color from 'colorjs.io';
+import { inGamut as colorIsInGamut } from 'colorjs.io/fn';
 
 export interface OKLCH {
   /** Lightness, 0..1 */
@@ -19,49 +13,38 @@ export interface OKLCH {
 
 /** Parse any valid CSS color (hex, `rgb()`, `hsl()`, `oklch()`, named colors, ...) to OKLCH. */
 export const parseToOklch = (color: string): OKLCH => {
-  const parsed = parse(color);
-  const space = ColorSpace.get(parsed.spaceId);
-  const [L, C, H] = space.to(OKLCHSpace, parsed.coords);
+  const [L, C, H] = new Color(color).to('oklch').coords;
   return { C: C ?? 0, H: H ?? 0, L: L ?? 0 };
 };
 
-const toHexByte = (value: number): string => {
-  const byte = Math.round(Math.min(255, Math.max(0, value)));
-  return byte.toString(16).padStart(2, '0');
-};
-
 export const oklchToHex = ({ C, H, L }: OKLCH): string => {
-  const [r, g, b] = OKLCHSpace.to(sRGB, [L, C, H]); // gamma-encoded sRGB 0..1 (may exceed on OOG)
-  return `#${toHexByte((r ?? 0) * 255)}${toHexByte((g ?? 0) * 255)}${toHexByte((b ?? 0) * 255)}`.toUpperCase();
-};
-
-const EPS = 1e-4;
-const inGamut = (L: number, C: number, H: number): boolean => {
-  const [r, g, b] = OKLCHSpace.to(sRGB_Linear, [L, C, H]); // in [0,1] linear == in sRGB gamut
-  return (
-    (r ?? 0) >= -EPS &&
-    (r ?? 0) <= 1 + EPS &&
-    (g ?? 0) >= -EPS &&
-    (g ?? 0) <= 1 + EPS &&
-    (b ?? 0) >= -EPS &&
-    (b ?? 0) <= 1 + EPS
-  );
+  return new Color('oklch', [L, C, H])
+    .to('srgb')
+    .toString({ collapse: false, format: 'hex', inGamut: true }) // clamps to gamut if out of range
+    .toUpperCase();
 };
 
 /**
- * Reduce chroma until (L, C, H) fits in sRGB, holding L and H fixed.
- * colorjs.io's toGamut() shifts L and C together (perceptual gamut mapping), which
- * we don't want — the masks and the contrast bump rely on L and H staying put — so
- * we bisect chroma against the raw OKLCH → linear-sRGB conversion instead.
+ * Reduce chroma until (L, C, H) fits in sRGB, while not changing L and H.
+ * colorjs.io's own `toGamut()` changes the H and L which is against the masks that we made.
  */
 export const clampChroma = (L: number, C: number, H: number): number => {
-  if (inGamut(L, C, H)) return C;
-  let lo = 0;
-  let hi = C;
-  for (let i = 0; i < 28; i++) {
-    const mid = (lo + hi) / 2;
-    if (inGamut(L, mid, H)) lo = mid;
-    else hi = mid;
+  const inGamut = (chroma: number): boolean => colorIsInGamut({ coords: [L, chroma, H], space: 'oklch' }, 'srgb');
+
+  if (inGamut(C)) {
+    return C;
   }
-  return lo;
+
+  let lowChroma = 0;
+  let highChroma = C;
+  const BISECTION_ITERATIONS = 28;
+  for (let iteration = 0; iteration < BISECTION_ITERATIONS; iteration++) {
+    const midChroma = (lowChroma + highChroma) / 2;
+    if (inGamut(midChroma)) {
+      lowChroma = midChroma;
+    } else {
+      highChroma = midChroma;
+    }
+  }
+  return lowChroma;
 };

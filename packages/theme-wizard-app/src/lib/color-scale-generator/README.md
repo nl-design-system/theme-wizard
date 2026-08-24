@@ -4,7 +4,7 @@ Generate a full 14-token color scale (`bg-document` → `color-document`) from a
 single seed color, using lightness / chroma / hue masks extracted from the
 NL Design System Start theme (`common.basis.color`).
 
-Color-space math is handled by [`colorjs.io`](https://colorjs.io) (OKLCH, gamut, sRGB), used via its `ColorSpace` objects directly rather than the `Color` class — see `oklch.ts` for why. OKLCH throughout, with per-token gamut clamping.
+Color-space math is handled by [`colorjs.io`](https://colorjs.io) (OKLCH, gamut, sRGB). OKLCH throughout, with per-token gamut clamping that holds a token's lightness and hue fixed while reducing chroma — see `oklch.ts` for why that can't use colorjs.io's own `toGamut()`.
 
 ## Why masks
 
