@@ -1,12 +1,12 @@
 import { COLOR_SPACES, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import type { ProfileName, TokenName, Mask } from './masks.js';
 import type { OKLCH } from './oklch.js';
-import { contrastRatio } from './contrast.js';
+import { contrastFromLuminance, relativeLuminanceOfOklch } from './contrast.js';
 import { MASKS, TOKENS } from './masks.js';
-import { parseToOklch, clampChroma, oklchToHex } from './oklch.js';
+import { parseToOklch, clampChroma } from './oklch.js';
 
-const clampToUnitRange = (value: number): number => {
-  return Math.min(1, Math.max(0, value));
+const clamp = (value: number, min: number, max: number): number => {
+  return Math.min(max, Math.max(min, value));
 };
 
 /** Contrast requirements from the NL Design System handbook (per set). */
@@ -50,6 +50,18 @@ const DEFAULT_TARGETS: ContrastTargets = { border: 3, text: 4.5 };
 const PROFILE_TARGETS: Partial<Record<ProfileName, ContrastTargets>> = {
   disabled: { border: null, text: 3 },
 };
+
+/** Lower bound for `minLightnessGap`: 0 means no headroom, bumping is allowed to reach pure black/white. */
+const MIN_LIGHTNESS_GAP = 0;
+/**
+ * Upper bound for `minLightnessGap`. The gap is used as both boundary lightnesses
+ * (`gap` near black and `1 - gap` near white); at 0.5 those two boundaries would
+ * meet, and past it they'd cross, leaving no room to bump into. 0.49 keeps a
+ * sliver of usable lightness range regardless of how large a gap is requested.
+ */
+const MAX_LIGHTNESS_GAP = 0.49;
+/** Default `minLightnessGap` when the caller doesn't set one. See `ContrastConfig`. */
+const DEFAULT_LIGHTNESS_GAP = 0.02;
 
 export interface GenerateOptions {
   profile: ProfileName;
@@ -144,7 +156,7 @@ const buildRamp = (seed: string, options: GenerateOptions): RampContext => {
 
   const data = {} as OklchScale;
   for (let tokenIndex = 0; tokenIndex < TOKENS.length; tokenIndex++) {
-    const lightness = clampToUnitRange(mask.L[tokenIndex] + lightnessShift);
+    const lightness = clamp(mask.L[tokenIndex] + lightnessShift, 0, 1);
     const hue = computeTokenHue(mask, tokenIndex, seedHue, hueReference);
     const tokenChroma = clampChroma(lightness, mask.C[tokenIndex] * chromaScale, hue);
     data[TOKENS[tokenIndex]] = { C: tokenChroma, H: hue, L: lightness };
@@ -163,6 +175,7 @@ const resolveContrastTargets = (profile: ProfileName, config: ContrastConfig): C
 
 interface BumpDirection {
   boundaryLightness: number;
+  contrastAtBoundary: number;
   shouldLighten: boolean;
 }
 
@@ -171,12 +184,18 @@ interface BumpDirection {
  * against the background, and how far it's allowed to go (the lightness guard).
  * Against a light background only darkening helps; against a dark background
  * only lightening helps — comparing both boundaries resolves both cases, and ties.
+ * Also returns the contrast already computed at the chosen boundary, so callers
+ * don't need to re-evaluate it.
  */
 const pickBumpDirection = (contrastAtLightness: (lightness: number) => number, gap: number): BumpDirection => {
   const contrastNearWhite = contrastAtLightness(1 - gap);
   const contrastNearBlack = contrastAtLightness(gap);
   const shouldLighten = contrastNearWhite >= contrastNearBlack;
-  return { boundaryLightness: shouldLighten ? 1 - gap : gap, shouldLighten };
+  return {
+    boundaryLightness: shouldLighten ? 1 - gap : gap,
+    contrastAtBoundary: shouldLighten ? contrastNearWhite : contrastNearBlack,
+    shouldLighten,
+  };
 };
 
 /**
@@ -226,10 +245,12 @@ const enforceRequirement = (params: EnforceRequirementParams): EnforceRequiremen
   const { enforce, gap, profileLabel, ramp, ratio, requirement, tokenIndex } = params;
   const { data, mask } = ramp;
 
-  const backgroundHex = oklchToHex(data[requirement.bg]);
+  // The background never changes within this call, so its luminance is computed
+  // once here and reused, instead of recomputing it on every candidate lightness
+  // the bump search evaluates below.
+  const backgroundLuminance = relativeLuminanceOfOklch(data[requirement.bg]);
   const foregroundOklch = data[requirement.token];
-  const foregroundHex = oklchToHex(foregroundOklch);
-  const currentRatio = contrastRatio(foregroundHex, backgroundHex);
+  const currentRatio = contrastFromLuminance(relativeLuminanceOfOklch(foregroundOklch), backgroundLuminance);
 
   if (currentRatio >= ratio) {
     return {};
@@ -249,19 +270,17 @@ const enforceRequirement = (params: EnforceRequirementParams): EnforceRequiremen
     return { C: chroma, H: hue, L: lightness };
   };
   const contrastAtLightness = (lightness: number): number => {
-    return contrastRatio(oklchToHex(oklchAtLightness(lightness)), backgroundHex);
+    return contrastFromLuminance(relativeLuminanceOfOklch(oklchAtLightness(lightness)), backgroundLuminance);
   };
 
-  const { boundaryLightness, shouldLighten } = pickBumpDirection(contrastAtLightness, gap);
+  const { boundaryLightness, contrastAtBoundary, shouldLighten } = pickBumpDirection(contrastAtLightness, gap);
 
-  if (contrastAtLightness(boundaryLightness) < ratio) {
+  if (contrastAtBoundary < ratio) {
     // Target unreachable without crossing the guard: stop at the boundary and warn.
-    const boundaryOklch = oklchAtLightness(boundaryLightness);
-    data[requirement.token] = boundaryOklch;
-    const boundaryRatio = contrastRatio(oklchToHex(boundaryOklch), backgroundHex);
+    data[requirement.token] = oklchAtLightness(boundaryLightness);
     const boundaryName = shouldLighten ? 'white' : 'black';
     return {
-      warning: `${requirementLabel}: ${boundaryRatio.toFixed(2)}:1 < ${ratio}:1 (kept ${gap} off ${boundaryName})`,
+      warning: `${requirementLabel}: ${contrastAtBoundary.toFixed(2)}:1 < ${ratio}:1 (kept ${gap} off ${boundaryName})`,
     };
   }
 
@@ -291,7 +310,8 @@ export const generateScale = (seed: string, options: GenerateOptions): GenerateR
 
   const contrastConfig = options.contrast ?? {};
   const enforce = contrastConfig.enforce ?? true;
-  const gap = Math.max(0, Math.min(0.49, contrastConfig.minLightnessGap ?? 0.02));
+  const requestedGap = contrastConfig.minLightnessGap ?? DEFAULT_LIGHTNESS_GAP;
+  const gap = clamp(requestedGap, MIN_LIGHTNESS_GAP, MAX_LIGHTNESS_GAP);
   const targets = resolveContrastTargets(profile, contrastConfig);
   const profileLabel = `${profile}${inverse ? '-inverse' : ''}`;
 

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { contrastRatio, relativeLuminance } from './contrast.js';
+import { contrastRatio, relativeLuminance, relativeLuminanceOfOklch } from './contrast.js';
+import { parseToOklch } from './oklch.js';
 
 describe('relativeLuminance', () => {
   it('is 1 for white and 0 for black', () => {
@@ -10,6 +11,18 @@ describe('relativeLuminance', () => {
   it('matches the WCAG mid-gray reference value', () => {
     // #767676 is the canonical "just passes 4.5:1 on white" WCAG example color.
     expect(relativeLuminance('#767676')).toBeCloseTo(0.1812, 3);
+  });
+});
+
+describe('relativeLuminanceOfOklch', () => {
+  it('agrees with relativeLuminance(hex) for the same color', () => {
+    const hex = '#767676';
+    expect(relativeLuminanceOfOklch(parseToOklch(hex))).toBeCloseTo(relativeLuminance(hex), 9);
+  });
+
+  it('is 1 for white and 0 for black', () => {
+    expect(relativeLuminanceOfOklch(parseToOklch('#FFFFFF'))).toBeCloseTo(1, 9);
+    expect(relativeLuminanceOfOklch(parseToOklch('#000000'))).toBeCloseTo(0, 9);
   });
 });
 
