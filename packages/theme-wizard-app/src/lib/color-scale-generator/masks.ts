@@ -1,5 +1,4 @@
-// AUTO-GENERATED from nl-design-system/themes start.tokens.json (common.basis.color).
-// Regenerate by re-running the extraction script; do not hand-edit.
+// Generated from nl-design-system/themes start.tokens.json (common.basis.color).
 //
 // Note: neutral & disabled are pure gray in the source theme, so their chroma
 // shape (flat 1.0) and hue offset (0) are synthetic defaults for optional tinting,

@@ -1,32 +1,23 @@
-# @nl-design-system/color-scale-gen
+# color-scale-generator
 
-Generate a full 14-token color scale (`bg-document` → `color-document`) from a
-single seed color, using lightness / chroma / hue masks extracted from the
-NL Design System Start theme (`common.basis.color`).
-
-Color-space math is handled by [`colorjs.io`](https://colorjs.io) (OKLCH, gamut, sRGB). OKLCH throughout, with per-token gamut clamping that holds a token's lightness and hue fixed while reducing chroma — see `oklch.ts` for why that can't use colorjs.io's own `toGamut()`.
+Generate a full 14-token color scale (`bg-document` → `color-document`) from a single seed color, using lightness / chroma / hue masks extracted from the [NL Design System Start theme](https://github.com/nl-design-system/themes/tree/main/packages/start-design-tokens) (`common.basis.color`).
 
 ## Why masks
 
 Analysis of the Start theme showed the tokens decompose cleanly along three axes:
 
-- **Lightness** is a _fixed template_, seed-independent. Nearly every chromatic
-  group shares the same L ramp (within ~0.005). `bg-document` is ~0.99 no matter
-  the seed, so by default lightness is never scaled by the seed — only the
-  template is applied.
-- **Chroma** follows a normalised _shape_ per profile, scaled by the seed's own
-  chroma. The peak location differs by role: accents peak at the foreground text,
-  status colors peak at the borders, highlight peaks at the background fills.
-- **Hue** is the seed hue plus a small per-token offset (real ramps rotate ~10°
-  across the scale; storing that offset makes reconstruction exact).
+- **Lightness** is a _fixed template_, seed-independent. Nearly every chromatic group shares the same L ramp (within ~0.005). `bg-document` is ~0.99 no matter the seed, so by default lightness is never scaled by the seed — only the template is applied.
+- **Chroma** follows a normalised _shape_ per profile, scaled by the seed's own chroma. The peak location differs by role: accents peak at the foreground text, status colors peak at the borders, highlight peaks at the background fills.
+- **Hue** is the seed hue plus a small per-token offset (real ramps rotate ~10° across the scale; storing that offset makes reconstruction exact).
 
-Reconstructing the original theme tokens from these masks is accurate to within
-**1/255** per channel (rounding).
+Reconstructing the original theme tokens from these masks is accurate to within **1/255** per channel (rounding).
 
 ## Usage
 
+This lives inside `theme-wizard-app`, not as its own published package — import it by relative path from `src/lib/color-scale-generator` (see `wizard-colorscale-input` for a real consumer):
+
 ```ts
-import { generateScale } from '@nl-design-system/color-scale-gen';
+import { generateScale, oklchToHex } from '../../lib/color-scale-generator';
 
 const { data, warnings } = generateScale('#7C3AED', { profile: 'accent' });
 // data: { 'bg-document': { colorSpace: 'oklch', components: [L, C, H], alpha: 1 }, … }
@@ -54,7 +45,7 @@ const anchored = generateScale('#7C3AED', {
   profile: 'accent',
   anchor: 'auto',
 }).data;
-// the seed's exact L, C and H appear verbatim at one token (here: border-active)
+// the seed's exact L, C and H appear verbatim at whichever token anchor: 'auto' picks
 
 // ...or pin it to a specific token yourself:
 const pinned = generateScale('#7C3AED', {
@@ -86,26 +77,16 @@ const tintedDisabled = generateScale('#7C3AED', {
 
 ## Anchoring (making the seed return in the scale)
 
-By default the seed donates only **hue and chroma**; lightness comes from the
-fixed template, so `bg-document` stays ~white whatever you seed. The seed color
-itself won't appear verbatim in the output.
+By default the seed donates only **hue and chroma**; lightness comes from the fixed template, so `bg-document` stays ~white whatever you seed. The seed color itself won't appear verbatim in the output.
 
-Pass `anchor` to pin the seed into the ramp. The output at the anchor token
-equals the seed exactly (L, C and H); the rest is derived around it: the
-lightness template is shifted so the anchor lands on the seed's lightness, hue
-offsets are re-referenced to the anchor, and chroma is scaled so the anchor
-matches the seed's chroma.
+Pass `anchor` to pin the seed into the ramp. The output at the anchor token equals the seed exactly (L, C and H); the rest is derived around it: the lightness template is shifted so the anchor lands on the seed's lightness, hue offsets are re-referenced to the anchor, and chroma is scaled so the anchor matches the seed's chroma.
 
-**`anchor: 'auto'` is the recommended mode when you just want the seed to appear
-somewhere sensible.** It picks the token whose template lightness is closest to
-the seed's, so the seed lands in the slot it naturally belongs in and the rest of
-the ramp barely moves. In practice this means mid-lightness brand colors land on
-the border/text tokens, pastels on the backgrounds — matching what people expect:
+`anchor: 'auto'` picks the token whose template lightness is closest to the seed's, so the seed lands in the slot it naturally belongs in and the rest of the ramp barely moves. In practice this means mid-lightness brand colors land near the border/text tokens, pastels near the backgrounds — matching what people expect:
 
 ```ts
-generateScale('#7C3AED', { profile: 'accent', anchor: 'auto' }); // lands at border-active
-generateScale('#FACC15', { profile: 'accent', anchor: 'auto' }); // lands at border-subtle
-generateScale('#991B1B', { profile: 'accent', anchor: 'auto' }); // lands at color-default
+generateScale('#7C3AED', { profile: 'accent', anchor: 'auto' }); // mid-lightness seed lands near the middle of the ramp (border tokens)
+generateScale('#FACC15', { profile: 'accent', anchor: 'auto' }); // light seed lands near the light end (bg/border-subtle tokens)
+generateScale('#991B1B', { profile: 'accent', anchor: 'auto' }); // dark seed lands near the dark end (color tokens)
 ```
 
 You can also name the token explicitly:
@@ -114,14 +95,6 @@ You can also name the token explicitly:
 oklchToHex(generateScale('#7C3AED', { profile: 'accent', anchor: 'border-default' }).data['border-default']);
 // === '#7C3AED'
 ```
-
-**Caveat (explicit anchors only):** anchoring shifts the whole L ramp by
-`seedL − templateL[anchor]`. If the seed's lightness is far from the named
-token's natural lightness, the opposite end of the ramp clamps (e.g. pinning a
-mid-lightness seed to the dark `color-hover` slot pushes the backgrounds to pure
-white). `'auto'` avoids this by construction — it always chooses the
-closest-lightness slot, so the shift is minimal. Leave `anchor` off entirely to
-keep the fixed, guaranteed-well-distributed L ramp with no seed placement.
 
 ## Return value
 
@@ -132,20 +105,13 @@ interface GenerateResult {
 }
 ```
 
-`warnings` is empty when every enforced token meets its target. Entries look like
-`accent · color-subtle vs bg-subtle: 4.46:1 < 4.5:1 (kept 0.02 off white)` — the
-token, the background it's checked against, the ratio it reached, and why (it hit
-the lightness guard).
+`warnings` is empty when every enforced token meets its target. Entries look like `accent · color-subtle vs bg-subtle: 4.46:1 < 4.5:1 (kept 0.02 off white)` — the token, the background it's checked against, the ratio it reached, and why (it hit the lightness guard).
 
 ## Contrast enforcement
 
-After generating the ramp, the generator checks each foreground/border token
-against its reference background and, if it falls short, nudges that token's
-**lightness away from the background** (darker in the regular set, lighter in the
-inverse set) until it passes — hue fixed, chroma re-clamped to gamut at the new
-lightness. The metric is the WCAG 2.x contrast ratio (sRGB relative luminance).
+After generating the ramp, the generator checks each foreground/border token against its reference background and, if it falls short, nudges that token's **lightness away from the background** (darker in the regular set, lighter in the inverse set) until it passes — hue fixed, chroma re-clamped to gamut at the new lightness. The metric is the WCAG 2.x contrast ratio (sRGB relative luminance).
 
-Requirements, per set (from the NL Design System handbook):
+Requirements, per set ([from the NL Design System handbook](https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#as-2-toepassing)):
 
 | Token                                               | Ratio | Against          |
 | --------------------------------------------------- | ----- | ---------------- |
@@ -154,7 +120,7 @@ Requirements, per set (from the NL Design System handbook):
 | `color-subtle` / `color-document`                   | 4.5:1 | `bg-subtle`      |
 | `border-subtle`, all `bg-*`                         | —     | (no requirement) |
 
-`disabled` uses a looser target — 3:1 for text, borders unenforced. Note: the handbook does not publish exact numbers for disabled (it defers to WCAG 1.4.3, which formally exempts inactive components); these are pragmatic defaults and are configurable.
+`disabled` uses a looser target — 3:1 for text, borders unenforced. Note the handbook does not publish exact numbers for disabled (it defers to [WCAG 1.4.3](https://www.w3.org/TR/WCAG22/#contrast-minimum), which formally exempts inactive components); these are pragmatic defaults and are configurable.
 
 ```ts
 interface ContrastConfig {
@@ -164,53 +130,26 @@ interface ContrastConfig {
 }
 ```
 
-**The lightness guard (`minLightnessGap`).** A token is never pushed within this
-much OKLCH lightness of pure black or white just to force a pass. If the target
-can only be met past that boundary — or the background sits in a luminance
-dead-zone where the ratio is unreachable from either side — the token stops at the
-boundary (its best achievable contrast) and a warning is emitted instead of
-producing a near-black/near-white color. Set a `null` target to disable a check.
+**The lightness guard (`minLightnessGap`).** A token is never pushed within this much OKLCH lightness of pure black or white just to force a pass. If the target can only be met past that boundary — or the background sits in a luminance dead-zone where the ratio is unreachable from either side — the token stops at the boundary (its best achievable contrast) and a warning is emitted instead of producing a near-black/near-white color. Set a `null` target to disable a check.
 
 ```ts
 generateScale(seed, { profile: 'accent', contrast: false }); // skip entirely
 generateScale(seed, { profile: 'accent', contrast: { enforce: false } }); // report only
 generateScale(seed, { profile: 'accent', contrast: { minLightnessGap: 0.05 } }); // wider guard
 generateScale(seed, {
-  profile: 'action-1',
-  contrast: { targets: { 'action-1': { text: 7 } } },
+  profile: 'accent',
+  contrast: { targets: { accent: { text: 7 } } },
 });
 ```
 
 ## Choosing a profile
 
-The seed **cannot** tell you the profile: a red seed could be a `negative`
-status or an `accent`. Pass the intent explicitly.
+The seed **cannot** tell you the profile: a red seed could be a `negative` status or an `accent`. Pass the intent explicitly.
 
-- `neutral` — near-gray. Tints toward the seed hue when the seed has chroma;
-  a gray seed (or `chroma: 0`) yields the exact original gray ramp. Use a small
-  `chroma` (e.g. 0.2–0.4) for a subtle tinted-gray palette.
-- `accent` — chroma rises toward the foreground text tokens. Also the shape used
-  by action / info / selected in the source theme (all aliased to accent).
+- `neutral` — near-gray. Tints toward the seed hue when the seed has chroma; a gray seed (or `chroma: 0`) yields the exact original gray ramp. Use a small `chroma` (e.g. 0.2–0.4) for a subtle tinted-gray palette.
+- `accent` — chroma rises toward the foreground text tokens. Also the shape used by action / info / selected in the source theme (all aliased to accent).
 - `negative` / `positive` / `warning` — status colors; chroma peaks at the borders.
 - `highlight` — chroma peaks at the background fills.
-- `disabled` — flattened bands: bg / border / color each collapse to a single
-  lightness (no hover/active progression, by design). Tints toward the seed hue
-  like `neutral`.
+- `disabled` — flattened bands: bg / border / color each collapse to a single lightness (no hover/active progression, by design). Tints toward the seed hue like `neutral`.
 
-> `neutral` and `disabled` are pure gray in the source theme, so their chroma
-> shape (flat) and hue offset (zero) are **synthetic defaults** for optional
-> tinting, not extracted values. Everything else is extracted from the theme.
-
-## Regenerating the masks
-
-`masks.ts` is auto-generated from `start.tokens.json`
-(`common.basis.color`). If the theme changes, re-run the extraction script to
-refresh it — do not hand-edit.
-
-## Demo
-
-`demo.html` is a standalone inspector — open it directly, no build step. It loads
-`colorjs.io` from a CDN at runtime (raw ESM from jsdelivr, with esm.run and
-esm.sh as fallbacks) and runs the same generator logic as the package (verified
-byte-identical), so it needs a network connection. If no CDN can be reached it
-shows a message instead of failing silently.
+> `neutral` and `disabled` are pure gray in the source theme, so their chroma shape (flat) and hue offset (zero) are **synthetic defaults** for optional tinting, not extracted values. Everything else is extracted from the theme.
