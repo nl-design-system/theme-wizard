@@ -29,14 +29,18 @@ Reconstructing the original theme tokens from these masks is accurate to within
 import { generateScale } from '@nl-design-system/color-scale-gen';
 
 const { data, warnings } = generateScale('#7C3AED', { profile: 'accent' });
-// data: { 'bg-document': '#…', … }   warnings: string[]  (contrast it couldn't fix)
+// data: { 'bg-document': { colorSpace: 'oklch', components: [L, C, H], alpha: 1 }, … }
+// warnings: string[]  (contrast it couldn't fix)
 
 // The seed accepts any valid CSS color, not just hex:
 generateScale('rgb(124 58 237)', { profile: 'accent' });
 generateScale('hsl(262 84% 58%)', { profile: 'accent' });
 generateScale('oklch(0.54 0.25 293)', { profile: 'accent' });
 generateScale('rebeccapurple', { profile: 'accent' });
-// Output tokens are always hex, regardless of the seed's format.
+// Output tokens are always a design-tokens-schema `ColorValue` in the oklch color
+// space, regardless of the seed's format — convert with `stringifyColor()` /
+// `colorTokenValueToColorJS()` from `@nl-design-system-community/design-tokens-schema`,
+// or use this package's own `oklchToHex({ L, C, H })` for a plain hex string.
 
 const accentDark = generateScale('#7C3AED', {
   profile: 'accent',
@@ -50,14 +54,14 @@ const anchored = generateScale('#7C3AED', {
   profile: 'accent',
   anchor: 'auto',
 }).data;
-// '#7C3AED' appears verbatim at one token (here: border-active)
+// the seed's exact L, C and H appear verbatim at one token (here: border-active)
 
 // ...or pin it to a specific token yourself:
 const pinned = generateScale('#7C3AED', {
   profile: 'accent',
   anchor: 'color-hover',
 }).data;
-// pinned['color-hover'] === '#7C3AED'
+// oklchToHex(pinned['color-hover']) === '#7C3AED'
 
 // Tinted neutrals / disabled (see below):
 const tintedGray = generateScale('#7C3AED', {
@@ -107,7 +111,7 @@ generateScale('#991B1B', { profile: 'accent', anchor: 'auto' }); // lands at col
 You can also name the token explicitly:
 
 ```ts
-generateScale('#7C3AED', { profile: 'accent', anchor: 'border-default' }).data['border-default'];
+oklchToHex(generateScale('#7C3AED', { profile: 'accent', anchor: 'border-default' }).data['border-default']);
 // === '#7C3AED'
 ```
 
@@ -123,7 +127,7 @@ keep the fixed, guaranteed-well-distributed L ramp with no seed placement.
 
 ```ts
 interface GenerateResult {
-  data: Record<TokenName, string>; // the 14 hex tokens
+  data: Record<TokenName, ColorValue>; // the 14 tokens, each an oklch ColorValue
   warnings: string[]; // contrast rules that couldn't be satisfied
 }
 ```

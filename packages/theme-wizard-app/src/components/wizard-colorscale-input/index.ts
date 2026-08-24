@@ -23,7 +23,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
-import { generateScale, type ProfileName } from '../../lib/color-scale-generator';
+import { generateScale, type ColorScale, type ProfileName } from '../../lib/color-scale-generator';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
@@ -69,9 +69,9 @@ const profileForName = (name: string): ProfileName => {
   return PROFILE_BY_COLOR_KEY[colorKey] ?? 'accent';
 };
 
-const toColorScaleObject = (scale: Record<string, string>): ColorScaleObject =>
+const toColorScaleObject = (scale: ColorScale): ColorScaleObject =>
   Object.fromEntries(
-    Object.entries(scale).map(([key, hex]) => [key, { $type: 'color', $value: parseColor(hex) } as ColorTokenType]),
+    Object.entries(scale).map(([key, value]) => [key, { $type: 'color', $value: value } as ColorTokenType]),
   );
 
 /**
@@ -109,11 +109,11 @@ export class WizardColorscaleInput extends WizardTokenInput {
     return profileForName(this.name);
   }
 
-  get #regularScale(): Record<string, string> {
+  get #regularScale(): ColorScale {
     return generateScale(this.currentColorValue, { anchor: 'auto', profile: this.#profile }).data;
   }
 
-  get #inverseScale(): Record<string, string> {
+  get #inverseScale(): ColorScale {
     return generateScale(this.currentColorValue, { anchor: 'auto', inverse: true, profile: this.#profile }).data;
   }
 
@@ -256,7 +256,8 @@ export class WizardColorscaleInput extends WizardTokenInput {
         >
         </clippy-token-combobox>
         <div role="presentation" class="wizard-colorscale-input__list">
-          ${Object.entries(this.#regularScale).map(([key, hex]) => {
+          ${Object.entries(this.#regularScale).map(([key, value]) => {
+            const hex = stringifyColor(value).toUpperCase();
             return html`
               <div
                 class="${classMap({

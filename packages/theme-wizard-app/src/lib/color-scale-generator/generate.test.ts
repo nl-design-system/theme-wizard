@@ -1,10 +1,18 @@
 import { describe, expect, it } from 'vitest';
+import type { ColorScale } from './generate.js';
 import type { ProfileName, TokenName } from './masks.js';
 import { contrastRatio } from './contrast.js';
 import { generateScale } from './generate.js';
 import { TOKENS } from './masks.js';
+import { oklchToHex } from './oklch.js';
 
 const PROFILES: ProfileName[] = ['neutral', 'accent', 'negative', 'positive', 'warning', 'highlight', 'disabled'];
+
+/** Convert a generated token's oklch ColorValue back to hex, for assertions. */
+const hexOf = (scale: ColorScale, token: TokenName): string => {
+  const [L, C, H] = scale[token].components as [number, number, number];
+  return oklchToHex({ C, H, L });
+};
 
 // Mirrors the README's documented contrast requirements table.
 const REQUIREMENTS: { token: TokenName; bg: TokenName; ratio: number }[] = [
@@ -24,11 +32,12 @@ const DISABLED_REQUIREMENTS = REQUIREMENTS.filter((r) => r.token.startsWith('col
 }));
 
 describe('generateScale', () => {
-  it.each(PROFILES)('produces all 14 tokens as valid hex for profile %s', (profile) => {
+  it.each(PROFILES)('produces all 14 tokens as oklch ColorValue for profile %s', (profile) => {
     const { data } = generateScale('#3366CC', { profile });
     expect(Object.keys(data).sort()).toEqual([...TOKENS].sort());
-    for (const hex of Object.values(data)) {
-      expect(hex).toMatch(/^#[0-9A-F]{6}$/);
+    for (const value of Object.values(data)) {
+      expect(value.colorSpace).toBe('oklch');
+      expect(value.components).toHaveLength(3);
     }
   });
 
@@ -37,7 +46,7 @@ describe('generateScale', () => {
     expect(warnings).toEqual([]);
     const reqs = profile === 'disabled' ? DISABLED_REQUIREMENTS : REQUIREMENTS;
     for (const { bg, ratio, token } of reqs) {
-      expect(contrastRatio(data[token], data[bg])).toBeGreaterThanOrEqual(ratio - 0.01);
+      expect(contrastRatio(hexOf(data, token), hexOf(data, bg))).toBeGreaterThanOrEqual(ratio - 0.01);
     }
   });
 
@@ -45,8 +54,8 @@ describe('generateScale', () => {
     const regular = generateScale('#7C3AED', { profile: 'accent' });
     const inverse = generateScale('#7C3AED', { inverse: true, profile: 'accent' });
     expect(regular.data).not.toEqual(inverse.data);
-    for (const hex of Object.values(inverse.data)) {
-      expect(hex).toMatch(/^#[0-9A-F]{6}$/);
+    for (const value of Object.values(inverse.data)) {
+      expect(value.colorSpace).toBe('oklch');
     }
   });
 
@@ -56,19 +65,20 @@ describe('generateScale', () => {
     const named = generateScale('rebeccapurple', { profile: 'accent' });
 
     expect(rgbSeed.data).toEqual(hexSeed.data);
-    for (const hex of Object.values(named.data)) {
-      expect(hex).toMatch(/^#[0-9A-F]{6}$/);
+    for (const token of TOKENS) {
+      expect(hexOf(named.data, token)).toMatch(/^#[0-9A-F]{6}$/);
     }
   });
 
   it('anchor "auto" places the seed verbatim in the scale', () => {
     const { data } = generateScale('#7C3AED', { anchor: 'auto', profile: 'accent' });
-    expect(Object.values(data)).toContain('#7C3AED');
+    const hexes = TOKENS.map((token) => hexOf(data, token));
+    expect(hexes).toContain('#7C3AED');
   });
 
   it('anchor to a specific token pins the seed there exactly', () => {
     const { data } = generateScale('#7C3AED', { anchor: 'color-hover', profile: 'accent' });
-    expect(data['color-hover']).toBe('#7C3AED');
+    expect(hexOf(data, 'color-hover')).toBe('#7C3AED');
   });
 
   it('throws for an unknown anchor token', () => {
@@ -79,10 +89,9 @@ describe('generateScale', () => {
 
   it('chroma: 0 desaturates the whole scale', () => {
     const { data } = generateScale('#7C3AED', { chroma: 0, profile: 'accent' });
-    // A desaturated OKLCH color's R, G and B channels are (near-)equal.
-    for (const hex of Object.values(data)) {
-      const [r, g, b] = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map((h) => parseInt(h, 16));
-      expect(Math.max(r, g, b) - Math.min(r, g, b)).toBeLessThanOrEqual(1);
+    for (const value of Object.values(data)) {
+      const chroma = value.components[1];
+      expect(chroma).toBeCloseTo(0, 9);
     }
   });
 

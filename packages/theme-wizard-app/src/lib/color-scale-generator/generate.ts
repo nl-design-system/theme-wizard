@@ -1,18 +1,22 @@
+import { COLOR_SPACES, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import type { ProfileName, TokenName, Mask } from './masks.js';
+import type { OKLCH } from './oklch.js';
 import { contrastRatio } from './contrast.js';
 import { MASKS, TOKENS } from './masks.js';
 import { parseToOklch, clampChroma, oklchToHex } from './oklch.js';
 
-const clamp = (x: number): number => Math.min(1, Math.max(0, x));
+const clampToUnitRange = (value: number): number => {
+  return Math.min(1, Math.max(0, value));
+};
 
 /** Contrast requirements from the NL Design System handbook (per set). */
 interface ContrastRequirement {
-  token: TokenName;
   bg: TokenName;
   kind: 'text' | 'border';
+  token: TokenName;
 }
 
-const REQUIREMENTS: ContrastRequirement[] = [
+const CONTRAST_REQUIREMENTS: ContrastRequirement[] = [
   { bg: 'bg-default', kind: 'border', token: 'border-default' },
   { bg: 'bg-hover', kind: 'border', token: 'border-hover' },
   { bg: 'bg-active', kind: 'border', token: 'border-active' },
@@ -56,53 +60,219 @@ export interface GenerateOptions {
   contrast?: ContrastConfig | false;
 }
 
-export type ColorScale = Record<TokenName, string>;
+/** The 14 output tokens, each a design-tokens-schema `ColorValue` in the `oklch` color space. */
+export type ColorScale = Record<TokenName, ColorValue>;
 export interface GenerateResult {
   data: ColorScale;
   warnings: string[];
 }
 
-/** @param seed Any valid CSS color: hex, `rgb()`, `hsl()`, `oklch()`, a named color, ... */
-const baseScale = (seed: string, opts: GenerateOptions) => {
-  const { anchor, chroma = 1, inverse = false, profile } = opts;
-  const mask: Mask = MASKS[profile][inverse ? 'inverse' : 'regular'];
-  const { C: seedC, H: seedH, L: seedL } = parseToOklch(seed);
+/** Working ramp during generation: one OKLCH triple per token, not yet converted to a `ColorValue`. */
+type OklchScale = Record<TokenName, OKLCH>;
 
-  const anchored = anchor !== undefined;
-  let idx: number;
+const toColorValue = (oklch: OKLCH): ColorValue => {
+  return { alpha: 1, colorSpace: COLOR_SPACES.OKLCH, components: [oklch.L, oklch.C, oklch.H] };
+};
+
+const toColorScale = (oklchScale: OklchScale): ColorScale => {
+  const entries = TOKENS.map((token): [TokenName, ColorValue] => [token, toColorValue(oklchScale[token])]);
+  return Object.fromEntries(entries) as ColorScale;
+};
+
+/**
+ * Find which token index the seed should be measured against.
+ * - `anchor: 'auto'` picks the token whose template lightness is closest to the seed's.
+ * - `anchor: TokenName` picks that token, exactly.
+ * - no anchor picks the mask's own `seedSlot` (a hue/chroma reference only — the ramp
+ *   isn't pinned to it, see `isAnchored` in `buildRamp`).
+ */
+const resolveAnchorIndex = (mask: Mask, anchor: TokenName | 'auto' | undefined, seedLightness: number): number => {
   if (anchor === 'auto') {
-    idx = 0;
-    let best = Infinity;
-    for (let i = 0; i < mask.L.length; i++) {
-      const d = Math.abs(mask.L[i] - seedL);
-      if (d < best) {
-        best = d;
-        idx = i;
+    let closestIndex = 0;
+    let smallestLightnessDifference = Infinity;
+    for (let index = 0; index < mask.L.length; index++) {
+      const lightnessDifference = Math.abs(mask.L[index] - seedLightness);
+      if (lightnessDifference < smallestLightnessDifference) {
+        smallestLightnessDifference = lightnessDifference;
+        closestIndex = index;
       }
     }
-  } else if (anchored) {
-    idx = TOKENS.indexOf(anchor);
-    if (idx < 0) {
+    return closestIndex;
+  }
+
+  if (anchor !== undefined) {
+    const tokenIndex = TOKENS.indexOf(anchor);
+    if (tokenIndex < 0) {
       throw new Error(`Unknown token: ${anchor}`);
     }
-  } else {
-    idx = TOKENS.indexOf(mask.seedSlot);
+    return tokenIndex;
   }
 
-  const scale = mask.C[idx] > 0 ? (seedC * chroma) / mask.C[idx] : 0;
-  const lShift = anchored ? seedL - mask.L[idx] : 0;
-  const hRef = anchored ? mask.H[idx] : 0;
+  return TOKENS.indexOf(mask.seedSlot);
+};
 
-  const data = {} as ColorScale;
-  const lchL: Record<string, number> = {};
-  for (let i = 0; i < TOKENS.length; i++) {
-    const L = clamp(mask.L[i] + lShift);
-    const H = (seedH + (mask.H[i] - hRef) + 360) % 360;
-    const C = clampChroma(L, mask.C[i] * scale, H);
-    data[TOKENS[i]] = oklchToHex({ C, H, L });
-    lchL[TOKENS[i]] = L;
+/** The seed hue, offset by this token's position in the mask's hue ramp. */
+const computeTokenHue = (mask: Mask, tokenIndex: number, seedHue: number, hueReference: number): number => {
+  return (seedHue + (mask.H[tokenIndex] - hueReference) + 360) % 360;
+};
+
+interface RampContext {
+  chromaScale: number;
+  data: OklchScale;
+  hueReference: number;
+  mask: Mask;
+  seedHue: number;
+}
+
+/**
+ * Generate the base 14-token ramp from the seed and mask, before contrast
+ * enforcement. Also returns the pieces enforcement needs to regenerate a
+ * single token's color at a different lightness (same hue and chroma shape).
+ * @param seed Any valid CSS color: hex, `rgb()`, `hsl()`, `oklch()`, a named color, ...
+ */
+const buildRamp = (seed: string, options: GenerateOptions): RampContext => {
+  const { anchor, chroma = 1, inverse = false, profile } = options;
+  const mask: Mask = MASKS[profile][inverse ? 'inverse' : 'regular'];
+  const { C: seedChroma, H: seedHue, L: seedLightness } = parseToOklch(seed);
+
+  const isAnchored = anchor !== undefined;
+  const anchorIndex = resolveAnchorIndex(mask, anchor, seedLightness);
+
+  const chromaScale = mask.C[anchorIndex] > 0 ? (seedChroma * chroma) / mask.C[anchorIndex] : 0;
+  const lightnessShift = isAnchored ? seedLightness - mask.L[anchorIndex] : 0;
+  const hueReference = isAnchored ? mask.H[anchorIndex] : 0;
+
+  const data = {} as OklchScale;
+  for (let tokenIndex = 0; tokenIndex < TOKENS.length; tokenIndex++) {
+    const lightness = clampToUnitRange(mask.L[tokenIndex] + lightnessShift);
+    const hue = computeTokenHue(mask, tokenIndex, seedHue, hueReference);
+    const tokenChroma = clampChroma(lightness, mask.C[tokenIndex] * chromaScale, hue);
+    data[TOKENS[tokenIndex]] = { C: tokenChroma, H: hue, L: lightness };
   }
-  return { data, hRef, lShift, mask, scale, seedH };
+
+  return { chromaScale, data, hueReference, mask, seedHue };
+};
+
+const resolveContrastTargets = (profile: ProfileName, config: ContrastConfig): ContrastTargets => {
+  return {
+    ...DEFAULT_TARGETS,
+    ...PROFILE_TARGETS[profile],
+    ...config.targets?.[profile],
+  };
+};
+
+interface BumpDirection {
+  boundaryLightness: number;
+  shouldLighten: boolean;
+}
+
+/**
+ * Decide which direction (toward black or white) actually raises contrast
+ * against the background, and how far it's allowed to go (the lightness guard).
+ * Against a light background only darkening helps; against a dark background
+ * only lightening helps — comparing both boundaries resolves both cases, and ties.
+ */
+const pickBumpDirection = (contrastAtLightness: (lightness: number) => number, gap: number): BumpDirection => {
+  const contrastNearWhite = contrastAtLightness(1 - gap);
+  const contrastNearBlack = contrastAtLightness(gap);
+  const shouldLighten = contrastNearWhite >= contrastNearBlack;
+  return { boundaryLightness: shouldLighten ? 1 - gap : gap, shouldLighten };
+};
+
+/**
+ * Contrast rises monotonically from `startLightness` toward `boundaryLightness`;
+ * bisect for the minimal-move lightness that just meets the ratio.
+ * `startLightness` must fail `meetsRatio` and `boundaryLightness` must pass it.
+ */
+const bisectForLightness = (
+  meetsRatio: (lightness: number) => boolean,
+  startLightness: number,
+  boundaryLightness: number,
+): number => {
+  let lowLightness = startLightness;
+  let highLightness = boundaryLightness;
+  const BISECTION_ITERATIONS = 24;
+  for (let iteration = 0; iteration < BISECTION_ITERATIONS; iteration++) {
+    const midLightness = (lowLightness + highLightness) / 2;
+    if (meetsRatio(midLightness)) {
+      highLightness = midLightness;
+    } else {
+      lowLightness = midLightness;
+    }
+  }
+  return highLightness;
+};
+
+interface EnforceRequirementParams {
+  enforce: boolean;
+  gap: number;
+  profileLabel: string;
+  ramp: RampContext;
+  ratio: number;
+  requirement: ContrastRequirement;
+  tokenIndex: number;
+}
+
+interface EnforceRequirementResult {
+  warning?: string;
+}
+
+/**
+ * Check one token/background pair against its target ratio and, if it fails,
+ * nudge the token's lightness away from the background until it passes (or
+ * warn if the lightness guard is hit first). Mutates `ramp.data` in place.
+ */
+const enforceRequirement = (params: EnforceRequirementParams): EnforceRequirementResult => {
+  const { enforce, gap, profileLabel, ramp, ratio, requirement, tokenIndex } = params;
+  const { data, mask } = ramp;
+
+  const backgroundHex = oklchToHex(data[requirement.bg]);
+  const foregroundOklch = data[requirement.token];
+  const foregroundHex = oklchToHex(foregroundOklch);
+  const currentRatio = contrastRatio(foregroundHex, backgroundHex);
+
+  if (currentRatio >= ratio) {
+    return {};
+  }
+
+  const requirementLabel = `${profileLabel} · ${requirement.token} vs ${requirement.bg}`;
+
+  if (!enforce) {
+    return { warning: `${requirementLabel}: ${currentRatio.toFixed(2)}:1 < ${ratio}:1` };
+  }
+
+  const hue = computeTokenHue(mask, tokenIndex, ramp.seedHue, ramp.hueReference);
+  const unclampedChroma = mask.C[tokenIndex] * ramp.chromaScale;
+
+  const oklchAtLightness = (lightness: number): OKLCH => {
+    const chroma = clampChroma(lightness, unclampedChroma, hue);
+    return { C: chroma, H: hue, L: lightness };
+  };
+  const contrastAtLightness = (lightness: number): number => {
+    return contrastRatio(oklchToHex(oklchAtLightness(lightness)), backgroundHex);
+  };
+
+  const { boundaryLightness, shouldLighten } = pickBumpDirection(contrastAtLightness, gap);
+
+  if (contrastAtLightness(boundaryLightness) < ratio) {
+    // Target unreachable without crossing the guard: stop at the boundary and warn.
+    const boundaryOklch = oklchAtLightness(boundaryLightness);
+    data[requirement.token] = boundaryOklch;
+    const boundaryRatio = contrastRatio(oklchToHex(boundaryOklch), backgroundHex);
+    const boundaryName = shouldLighten ? 'white' : 'black';
+    return {
+      warning: `${requirementLabel}: ${boundaryRatio.toFixed(2)}:1 < ${ratio}:1 (kept ${gap} off ${boundaryName})`,
+    };
+  }
+
+  const bumpedLightness = bisectForLightness(
+    (lightness) => contrastAtLightness(lightness) >= ratio,
+    foregroundOklch.L,
+    boundaryLightness,
+  );
+  data[requirement.token] = oklchAtLightness(bumpedLightness); // silent successful bump
+
+  return {};
 };
 
 /**
@@ -110,73 +280,33 @@ const baseScale = (seed: string, opts: GenerateOptions) => {
  * requirements by nudging failing tokens away from their background.
  * @param seed Any valid CSS color: hex, `rgb()`, `hsl()`, `oklch()`, a named color, ...
  */
-export const generateScale = (seed: string, opts: GenerateOptions): GenerateResult => {
-  const { inverse = false, profile } = opts;
-  const contrast = opts.contrast;
-  const { data, hRef, mask, scale, seedH } = baseScale(seed, opts);
+export const generateScale = (seed: string, options: GenerateOptions): GenerateResult => {
+  const { inverse = false, profile } = options;
+  const ramp = buildRamp(seed, options);
   const warnings: string[] = [];
 
-  if (contrast === false) return { data, warnings };
-
-  const cfg = contrast ?? {};
-  const enforce = cfg.enforce ?? true;
-  const gap = Math.max(0, Math.min(0.49, cfg.minLightnessGap ?? 0.02));
-  const targets: ContrastTargets = {
-    ...DEFAULT_TARGETS,
-    ...PROFILE_TARGETS[profile],
-    ...cfg.targets?.[profile],
-  };
-  const setLabel = `${profile}${inverse ? '-inverse' : ''}`;
-
-  for (let i = 0; i < TOKENS.length; i++) {
-    const req = REQUIREMENTS.find((r) => r.token === TOKENS[i]);
-    if (!req) continue;
-    const ratio = req.kind === 'text' ? targets.text : targets.border;
-    if (ratio === null) continue;
-
-    const bgHex = data[req.bg];
-    let hex = data[req.token];
-    if (contrastRatio(hex, bgHex) >= ratio) continue;
-
-    const H = (seedH + (mask.H[i] - hRef) + 360) % 360;
-    const C0 = mask.C[i] * scale;
-    const emit = (L: number) => oklchToHex({ C: clampChroma(L, C0, H), H, L });
-    // Pick the direction that actually raises contrast: compare what each guard
-    // boundary achieves. (Against a light bg only darkening helps; against a
-    // dark bg only lightening helps — this resolves both, and ties.)
-    const upBoundary = contrastRatio(emit(1 - gap), bgHex);
-    const downBoundary = contrastRatio(emit(gap), bgHex);
-    const up = upBoundary >= downBoundary;
-    const limit = up ? 1 - gap : gap; // closeness guard: never past this L
-    const passes = (L: number) => contrastRatio(emit(L), bgHex) >= ratio;
-
-    if (!enforce) {
-      warnings.push(`${setLabel} · ${req.token} vs ${req.bg}: ${contrastRatio(hex, bgHex).toFixed(2)}:1 < ${ratio}:1`);
-      continue;
-    }
-
-    if (!passes(limit)) {
-      // Target unreachable without crossing the guard: stop at the boundary and warn.
-      hex = emit(limit);
-      data[req.token] = hex;
-      warnings.push(
-        `${setLabel} · ${req.token} vs ${req.bg}: ${contrastRatio(hex, bgHex).toFixed(2)}:1 ` +
-          `< ${ratio}:1 (kept ${gap} off ${up ? 'white' : 'black'})`,
-      );
-      continue;
-    }
-
-    // Contrast rises monotonically from startL toward limit; bisect for the
-    // minimal-move lightness that just meets the ratio. lo fails, hi passes.
-    let lo = parseToOklch(hex).L;
-    let hi = limit;
-    for (let k = 0; k < 24; k++) {
-      const mid = (lo + hi) / 2;
-      if (passes(mid)) hi = mid;
-      else lo = mid;
-    }
-    data[req.token] = emit(hi); // silent successful bump
+  if (options.contrast === false) {
+    return { data: toColorScale(ramp.data), warnings };
   }
 
-  return { data, warnings };
+  const contrastConfig = options.contrast ?? {};
+  const enforce = contrastConfig.enforce ?? true;
+  const gap = Math.max(0, Math.min(0.49, contrastConfig.minLightnessGap ?? 0.02));
+  const targets = resolveContrastTargets(profile, contrastConfig);
+  const profileLabel = `${profile}${inverse ? '-inverse' : ''}`;
+
+  for (const requirement of CONTRAST_REQUIREMENTS) {
+    const ratio = requirement.kind === 'text' ? targets.text : targets.border;
+    if (ratio === null) {
+      continue;
+    }
+
+    const tokenIndex = TOKENS.indexOf(requirement.token);
+    const { warning } = enforceRequirement({ enforce, gap, profileLabel, ramp, ratio, requirement, tokenIndex });
+    if (warning) {
+      warnings.push(warning);
+    }
+  }
+
+  return { data: toColorScale(ramp.data), warnings };
 };

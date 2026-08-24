@@ -18,6 +18,7 @@ describe('index exports', () => {
   it('generateScale works end-to-end through the barrel', () => {
     const { data, warnings } = ColorScaleGenerator.generateScale('#7C3AED', { profile: 'accent' });
     expect(warnings).toEqual([]);
-    expect(data['border-active']).toMatch(/^#[0-9A-F]{6}$/);
+    expect(data['border-active'].colorSpace).toBe('oklch');
+    expect(data['border-active'].components).toHaveLength(3);
   });
 });
