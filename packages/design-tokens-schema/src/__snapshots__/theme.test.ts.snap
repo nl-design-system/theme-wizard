@@ -3823,7 +3823,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -3859,7 +3859,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -3931,7 +3931,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -3967,7 +3967,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -4189,7 +4189,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -4225,7 +4225,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -4297,7 +4297,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -4333,7 +4333,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -4567,7 +4567,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -4605,7 +4605,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -4681,7 +4681,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -4719,7 +4719,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -4954,7 +4954,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -4992,7 +4992,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5068,7 +5068,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5106,7 +5106,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -5341,7 +5341,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5379,7 +5379,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5455,7 +5455,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5493,7 +5493,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -5728,7 +5728,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5766,7 +5766,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5842,7 +5842,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -5880,7 +5880,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -6114,7 +6114,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6152,7 +6152,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6228,7 +6228,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6266,7 +6266,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -6501,7 +6501,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6539,7 +6539,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6615,7 +6615,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6653,7 +6653,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -6876,7 +6876,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6912,7 +6912,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -6984,7 +6984,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -7020,7 +7020,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -7242,7 +7242,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -7278,7 +7278,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -7350,7 +7350,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -7386,7 +7386,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -7608,7 +7608,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -7644,7 +7644,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -7716,7 +7716,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -7752,7 +7752,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -7974,7 +7974,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -8010,7 +8010,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -8082,7 +8082,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -8118,7 +8118,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -8289,7 +8289,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8306,7 +8306,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8340,7 +8340,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8357,7 +8357,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8529,7 +8529,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8546,7 +8546,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8580,7 +8580,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8597,7 +8597,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -8820,7 +8820,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -8856,7 +8856,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -8928,7 +8928,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -8964,7 +8964,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -9186,7 +9186,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -9222,7 +9222,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -9294,7 +9294,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -9330,7 +9330,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -9552,7 +9552,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -9588,7 +9588,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -9660,7 +9660,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -9696,7 +9696,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -9918,7 +9918,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -9954,7 +9954,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10026,7 +10026,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10062,7 +10062,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -10284,7 +10284,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10320,7 +10320,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10392,7 +10392,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10428,7 +10428,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -10650,7 +10650,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10686,7 +10686,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10758,7 +10758,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -10794,7 +10794,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -11016,7 +11016,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11052,7 +11052,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11124,7 +11124,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11160,7 +11160,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -11382,7 +11382,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11418,7 +11418,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11490,7 +11490,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11526,7 +11526,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -11760,7 +11760,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11798,7 +11798,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11874,7 +11874,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -11912,7 +11912,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -12147,7 +12147,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -12185,7 +12185,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -12261,7 +12261,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -12299,7 +12299,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -12534,7 +12534,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -12570,7 +12570,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -12642,7 +12642,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -12678,7 +12678,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -12900,7 +12900,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -12936,7 +12936,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -13008,7 +13008,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -13044,7 +13044,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20570,7 +20570,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20586,7 +20586,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20602,7 +20602,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20716,7 +20716,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20732,7 +20732,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20748,7 +20748,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20862,7 +20862,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20878,7 +20878,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -20894,7 +20894,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -21008,7 +21008,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -21024,7 +21024,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -21040,7 +21040,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -56684,7 +56684,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -56720,7 +56720,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -56792,7 +56792,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -56828,7 +56828,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -57050,7 +57050,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57086,7 +57086,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57158,7 +57158,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57194,7 +57194,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -57428,7 +57428,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57466,7 +57466,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57542,7 +57542,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57580,7 +57580,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -57815,7 +57815,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57853,7 +57853,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57929,7 +57929,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -57967,7 +57967,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -58202,7 +58202,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -58240,7 +58240,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -58316,7 +58316,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -58354,7 +58354,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -58589,7 +58589,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -58627,7 +58627,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -58703,7 +58703,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -58741,7 +58741,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -58976,7 +58976,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59014,7 +59014,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59090,7 +59090,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59128,7 +59128,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -59363,7 +59363,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59401,7 +59401,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59477,7 +59477,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59515,7 +59515,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -59750,7 +59750,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59788,7 +59788,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59864,7 +59864,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -59902,7 +59902,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -60137,7 +60137,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60175,7 +60175,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60251,7 +60251,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60289,7 +60289,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -60512,7 +60512,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60548,7 +60548,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60620,7 +60620,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60656,7 +60656,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -60878,7 +60878,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60914,7 +60914,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -60986,7 +60986,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -61022,7 +61022,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -61193,7 +61193,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61210,7 +61210,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61244,7 +61244,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61261,7 +61261,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61433,7 +61433,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61450,7 +61450,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61484,7 +61484,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61501,7 +61501,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -61724,7 +61724,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -61760,7 +61760,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -61832,7 +61832,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -61868,7 +61868,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -62090,7 +62090,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62126,7 +62126,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62198,7 +62198,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62234,7 +62234,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -62456,7 +62456,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62492,7 +62492,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62564,7 +62564,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62600,7 +62600,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -62822,7 +62822,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62858,7 +62858,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62930,7 +62930,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -62966,7 +62966,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -63188,7 +63188,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -63224,7 +63224,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -63296,7 +63296,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -63332,7 +63332,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -63554,7 +63554,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -63590,7 +63590,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -63662,7 +63662,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -63698,7 +63698,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -63920,7 +63920,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -63956,7 +63956,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64028,7 +64028,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64064,7 +64064,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -64286,7 +64286,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64322,7 +64322,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64394,7 +64394,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64430,7 +64430,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -64664,7 +64664,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64702,7 +64702,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64778,7 +64778,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -64816,7 +64816,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -65051,7 +65051,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65089,7 +65089,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65165,7 +65165,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65203,7 +65203,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -65438,7 +65438,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65474,7 +65474,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65546,7 +65546,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65582,7 +65582,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -65804,7 +65804,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65840,7 +65840,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65912,7 +65912,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -65948,7 +65948,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
           },
           "$type": "color",
@@ -103405,7 +103405,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -103443,7 +103443,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -103519,7 +103519,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -103557,7 +103557,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -103792,7 +103792,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -103830,7 +103830,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -103906,7 +103906,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -103944,7 +103944,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -104179,7 +104179,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -104217,7 +104217,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -104293,7 +104293,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -104331,7 +104331,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -104566,7 +104566,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -104604,7 +104604,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -104680,7 +104680,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -104718,7 +104718,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -104953,7 +104953,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -104991,7 +104991,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105067,7 +105067,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105105,7 +105105,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -105340,7 +105340,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105378,7 +105378,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105454,7 +105454,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105492,7 +105492,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -105727,7 +105727,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105765,7 +105765,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105841,7 +105841,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -105879,7 +105879,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -106114,7 +106114,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -106152,7 +106152,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -106228,7 +106228,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -106266,7 +106266,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -106501,7 +106501,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -106539,7 +106539,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -106615,7 +106615,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -106653,7 +106653,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -106888,7 +106888,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -106926,7 +106926,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107002,7 +107002,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107040,7 +107040,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -107275,7 +107275,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107313,7 +107313,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107389,7 +107389,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107427,7 +107427,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -107662,7 +107662,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107700,7 +107700,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107776,7 +107776,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -107814,7 +107814,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -107986,7 +107986,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108003,7 +108003,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108037,7 +108037,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108054,7 +108054,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108226,7 +108226,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108243,7 +108243,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108277,7 +108277,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108294,7 +108294,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108529,7 +108529,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -108567,7 +108567,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -108643,7 +108643,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -108681,7 +108681,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -108916,7 +108916,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -108954,7 +108954,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109030,7 +109030,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109068,7 +109068,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -109303,7 +109303,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109341,7 +109341,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109417,7 +109417,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109455,7 +109455,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -109690,7 +109690,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109728,7 +109728,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109804,7 +109804,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -109842,7 +109842,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -110077,7 +110077,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110115,7 +110115,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110191,7 +110191,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110229,7 +110229,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -110464,7 +110464,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110502,7 +110502,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110578,7 +110578,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110616,7 +110616,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -110851,7 +110851,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110889,7 +110889,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -110965,7 +110965,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -111003,7 +111003,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -111238,7 +111238,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -111276,7 +111276,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -111352,7 +111352,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -111390,7 +111390,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -111625,7 +111625,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -111663,7 +111663,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -111739,7 +111739,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -111777,7 +111777,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -112012,7 +112012,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112050,7 +112050,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112126,7 +112126,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112164,7 +112164,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -112411,7 +112411,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112449,7 +112449,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112525,7 +112525,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112563,7 +112563,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
@@ -112798,7 +112798,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-active": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 13,
+            "nl.nldesignsystem.color-scale-position": 12,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112836,7 +112836,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-default": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 11,
+            "nl.nldesignsystem.color-scale-position": 10,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112912,7 +112912,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-hover": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 12,
+            "nl.nldesignsystem.color-scale-position": 11,
             "nl.nldesignsystem.contrast-with": [
               {
                 "color": {
@@ -112950,7 +112950,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "color-subtle": {
           "$extensions": {
-            "nl.nldesignsystem.color-scale-position": 10,
+            "nl.nldesignsystem.color-scale-position": 13,
             "nl.nldesignsystem.token-subtype": "color",
             "nl.nldesignsystem.value-resolved-as": {
               "alpha": 1,
