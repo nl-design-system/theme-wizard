@@ -144,23 +144,16 @@ export class WizardApp extends LitElement {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 
     if (target instanceof WizardColorscaleInput) {
-      const scaleColors = Object.values(target.value);
-      const reversedScale = scaleColors.toReversed();
-
-      // Set regular and inversed scale simultaneously
-      // We know this is not the exact desired behaviour but it'll do for now
-      const updates = Object.entries(target.value).flatMap(([colorKey, value], index) => {
-        return [
-          {
-            path: `${target.name}.${colorKey}`,
-            value: value.$value,
-          },
-          {
-            path: `${target.name}-inverse.${colorKey}`,
-            value: reversedScale.at(index)?.$value,
-          },
-        ];
-      });
+      const updates = [
+        ...Object.entries(target.value).map(([colorKey, value]) => ({
+          path: `${target.name}.${colorKey}`,
+          value: value.$value,
+        })),
+        ...Object.entries(target.inverseValue).map(([colorKey, value]) => ({
+          path: `${target.name}-inverse.${colorKey}`,
+          value: value.$value,
+        })),
+      ];
       this.theme.updateMany(updates);
 
       // Add $extensions for seed-color for the changed token, as well as for any siblings
