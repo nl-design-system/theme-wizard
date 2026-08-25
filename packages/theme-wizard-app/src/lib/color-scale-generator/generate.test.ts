@@ -125,4 +125,29 @@ describe('generateScale', () => {
     // 21:1 is only achievable by pure black-on-white; some tokens must fall short.
     expect(warnings.length).toBeGreaterThan(0);
   });
+
+  it('minLightnessGap widens the boundary an unreachable target stops at', () => {
+    // 21:1 is unreachable, so enforcement stops at the lightness guard and warns.
+    const targets = { accent: { text: 21 } };
+    const defaultGap = generateScale('#3366CC', { contrast: { targets }, profile: 'accent' });
+    const widerGap = generateScale('#3366CC', { contrast: { minLightnessGap: 0.1, targets }, profile: 'accent' });
+    expect(widerGap.warnings.some((warning) => warning.includes('kept 0.1 off'))).toBe(true);
+    expect(widerGap.data).not.toEqual(defaultGap.data);
+  });
+
+  it('minLightnessGap: 0 lets the boundary reach pure black or white', () => {
+    const targets = { accent: { text: 21 } };
+    const { warnings } = generateScale('#3366CC', { contrast: { minLightnessGap: 0, targets }, profile: 'accent' });
+    expect(warnings.some((warning) => /kept 0 off/.test(warning))).toBe(true);
+  });
+
+  it('minLightnessGap is clamped to the valid range (0 - 0.49)', () => {
+    const targets = { accent: { text: 21 } };
+    const tooLarge = generateScale('#3366CC', { contrast: { minLightnessGap: 5, targets }, profile: 'accent' });
+    const atMax = generateScale('#3366CC', { contrast: { minLightnessGap: 0.49, targets }, profile: 'accent' });
+    const negative = generateScale('#3366CC', { contrast: { minLightnessGap: -1, targets }, profile: 'accent' });
+    const atMin = generateScale('#3366CC', { contrast: { minLightnessGap: 0, targets }, profile: 'accent' });
+    expect(tooLarge.data).toEqual(atMax.data);
+    expect(negative.data).toEqual(atMin.data);
+  });
 });
