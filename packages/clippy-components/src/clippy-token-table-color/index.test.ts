@@ -1,7 +1,6 @@
 import { colorTokenValueToColorJS, ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
-import { page, userEvent } from 'vitest/browser';
 import { tokenCollection } from './fixtures';
 
 const tag = 'clippy-token-table-color';
@@ -12,13 +11,14 @@ function getComponent() {
   return document.querySelector(tag) as unknown as ComponentElement;
 }
 
-const labels = [
+const labels = ['background-label', 'border-label', 'foreground-label'];
+
+const detailLabels = [
   'example-label',
   'value-label',
   'reference-title-label',
-  'background-label',
-  'border-label',
-  'foreground-label',
+  'reference-empty-label',
+  'copy-to-clipboard-label',
 ];
 
 describe(`<${tag}>`, () => {
@@ -87,16 +87,12 @@ describe(`<${tag}>`, () => {
     expect(exampleLabelElement?.textContent).toBe(`${label} label`);
   });
 
-  it('the reference-empty-label is displayed correctly', async () => {
-    document.body.innerHTML = `<${tag} collection=${JSON.stringify(tokenCollection)} reference-empty-label="Reference empty label"></${tag}>`;
+  it.each(detailLabels)('the %s is displayed correctly', async (label) => {
+    document.body.innerHTML = `<${tag} collection=${JSON.stringify(tokenCollection)} ${label}="${label} label"></${tag}>`;
     const component = getComponent();
     await component.updateComplete;
-
-    const buttonWithNoReferences = page.getByRole('button', { name: 'basis.color.default.color-hover' });
-    await userEvent.click(buttonWithNoReferences);
-
-    const exampleLabelElement = component.shadowRoot.querySelector('[data-testid="reference-empty-label"]');
-    expect(exampleLabelElement).toBeTruthy();
-    expect(exampleLabelElement?.textContent).toBe('Reference empty label');
+    const tokenDetailElement = component.shadowRoot.querySelector('clippy-token-detail');
+    expect(tokenDetailElement).toBeTruthy();
+    expect(tokenDetailElement?.getAttribute(label)).toBe(`${label} label`);
   });
 });

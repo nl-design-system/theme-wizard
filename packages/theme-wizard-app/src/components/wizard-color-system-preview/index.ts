@@ -73,6 +73,7 @@ export class WizardColorSystemPreview extends LitElement {
       value-label="${t('styleGuide.value')}"
       reference-title-label="${t('styleGuide.detailsDialog.tokenReferenceList.title')}"
       reference-empty-label="${t('styleGuide.detailsDialog.tokenReferenceList.empty')}"
+      copy-to-clipboard-label="${t('styleGuide.detailsDialog.copyToClipboard')}"
       background-label="${t('styleGuide.colorSystem.background')}"
       border-label="${t('styleGuide.colorSystem.border')}"
       foreground-label="${t('styleGuide.colorSystem.foreground')}"
