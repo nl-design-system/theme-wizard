@@ -110,7 +110,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
   }
 
   get #regularScale(): ColorScale {
-    return generateScale(this.currentColorValue, { anchor: 'auto', profile: this.#profile }).data;
+    return generateScale(this.currentColorValue, { anchor: 'auto', chroma: 1.2, profile: this.#profile }).data;
   }
 
   get #inverseScale(): ColorScale {
