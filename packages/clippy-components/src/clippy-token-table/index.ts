@@ -1,20 +1,23 @@
+import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import { BaseDesignToken, getTokenSubtype, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import '../clippy-color-sample';
 import '../clippy-modal';
 import '../clippy-token-detail';
+import { BaseDesignToken, getTokenSubtype, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
 import { getTokenDimensionSpaceConcept, getTokenPath } from '@src/lib/tokens';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import srOnly from '../lib/sr-only';
 import '../clippy-color-sample';
 import '../clippy-token-sample-spacing';
 import '../clippy-token-sample-text';
 import '../clippy-token-sample-border';
 import '../clippy-graph-paper';
+import '../clippy-token-detail';
+import { ClippyModal } from '../clippy-modal';
+import srOnly from '../lib/sr-only';
 import styles from './styles';
 
 const tag = 'clippy-token-table';
@@ -27,7 +30,16 @@ declare global {
 
 @safeCustomElement(tag)
 export class ClippyTokenTable extends LitElement {
-  static override readonly styles = [unsafeCSS(dataBadgeCss), unsafeCSS(codeCss), styles, srOnly];
+  static override readonly styles = [
+    unsafeCSS(buttonStyles),
+    unsafeCSS(dataBadgeCss),
+    unsafeCSS(codeCss),
+    styles,
+    srOnly,
+  ];
+
+  @query('clippy-modal')
+  dialog?: ClippyModal;
 
   @property({ type: Object })
   tokens?: BaseDesignToken[];
@@ -36,6 +48,44 @@ export class ClippyTokenTable extends LitElement {
   @property({ attribute: 'token-id-label', type: String }) tokenIdLabel = 'Token ID';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
   @property({ attribute: 'details-label', type: String }) detailsLabel = 'Details';
+  @property({ attribute: 'show-details-label', type: String }) showDetailsLabel = 'Show details';
+
+  // TODO: fix prop-drilling with composition. These are passed down to the `clippy-token-detail` component.
+  @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
+  @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
+  @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
+
+  #currentToken?: BaseDesignToken = undefined;
+
+  #openDialog({ token }: { token: BaseDesignToken }) {
+    this.#currentToken = token;
+    this.requestUpdate();
+
+    if (!this.dialog) return;
+    this.dialog.open();
+  }
+
+  #renderDialog() {
+    const token = this.#currentToken;
+    if (!token) {
+      return html``;
+    }
+
+    const tokenPath = getTokenPath(token);
+    return html`
+      <clippy-modal title="${tokenPath}" actions="none">
+        <clippy-token-detail
+          .token=${token}
+          example-label="${this.exampleLabel}"
+          value-label="${this.valueLabel}"
+          reference-title-label="${this.referenceTitleLabel}"
+          reference-empty-label="${this.referenceEmptyLabel}"
+          copy-to-clipboard-label="${this.copyToClipboardLabel}"
+        >
+        </clippy-token-detail>
+      </clippy-modal>
+    `;
+  }
 
   #renderTokenExample({ token }: { token: BaseDesignToken }) {
     if (!token) {
@@ -105,6 +155,11 @@ export class ClippyTokenTable extends LitElement {
     }
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    this.#currentToken = this.tokens?.[0];
+  }
+
   override render() {
     return html`
       <div role="table" class="clippy-token-table__table">
@@ -154,13 +209,20 @@ export class ClippyTokenTable extends LitElement {
                   <span aria-hidden="true" class="clippy-token-table__head clippy-token-table__head--visual-small">
                     ${this.detailsLabel}
                   </span>
-                  <mark>details</mark>
+                  <button
+                    type="button"
+                    class="clippy-token-table__details-button | nl-button nl-button--subtle"
+                    @click=${() => this.#openDialog({ token })}
+                  >
+                    ${this.showDetailsLabel}<span class="sr-only">: ${getTokenPath(token)}</span>
+                  </button>
                 </div>
               </div>
             `;
           })}
         </div>
       </div>
+      ${this.#renderDialog()}
     `;
   }
 }

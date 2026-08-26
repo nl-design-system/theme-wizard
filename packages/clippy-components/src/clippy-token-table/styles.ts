@@ -69,6 +69,15 @@ export default css`
     --clippy-graph-paper-line-color: transparent;
   }
 
+  /**
+   * Extends nl-button--subtle
+   * 1. Because the subtle button has a transparent background we want to align the button label
+   *    with the rest of the table, so we pull it to the side.
+   */
+  .clippy-token-table__details-button {
+    margin-inline-start: calc(-1 * var(--nl-button-padding-inline-start));
+  }
+
   @container clippy-token-table (inline-size >= 40rem) {
     .clippy-token-table__table {
       column-gap: var(--basis-space-column-4xl);
