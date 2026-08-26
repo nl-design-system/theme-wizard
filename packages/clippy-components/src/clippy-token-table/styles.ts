@@ -7,11 +7,29 @@ export default css`
 
   :host {
     --clippy-graph-paper-major-line-color: transparent;
+    --_clippy-token-table-font-family: var(--clippy-token-table-font-family, var(--basis-text-font-family-default));
+    --_clippy-token-table-font-size: var(--clippy-token-table-font-size, var(--basis-text-font-size-md));
+    --_clippy-token-table-line-height: var(--clippy-token-table-line-height, var(--basis-text-line-height-md));
+    --_clippy-token-table-row-gap: var(--clippy-token-table-row-gap, var(--basis-space-row-lg));
+    --_clippy-token-table-column-gap: var(--clippy-token-table-column-gap, var(--basis-space-column-4xl));
+
+    /* Head */
+    --_clippy-token-table-head-font-weight: var(
+      --clippy-token-table-head-font-weight,
+      var(--basis-text-font-weight-bold)
+    );
+
+    /* Row */
+    --_clippy-token-table-row-border-color: var(
+      --clippy-token-table-row-border-color,
+      var(--basis-color-default-border-subtle)
+    );
+    --_clippy-token-table-row-padding-block: var(--clippy-token-table-row-padding-block, var(--basis-space-row-2xl));
 
     container: clippy-token-table / inline-size;
-    font-family: var(--basis-text-font-family-default);
-    font-size: var(--basis-text-font-size-md);
-    line-height: var(--basis-text-line-height-md);
+    font-family: var(--_clippy-token-table-font-family);
+    font-size: var(--_clippy-token-table-font-size);
+    line-height: var(--_clippy-token-table-line-height);
   }
 
   .clippy-token-table__table {
@@ -39,15 +57,15 @@ export default css`
   }
 
   .clippy-token-table__row {
-    border-block-end-color: var(--basis-color-default-border-subtle);
+    border-block-end-color: var(--_clippy-token-table-row-border-color);
     border-block-end-style: solid;
     border-block-end-width: 1px;
     display: grid;
-    padding-block-end: var(--basis-space-row-2xl);
-    row-gap: var(--basis-space-row-lg);
+    padding-block-end: var(--_clippy-token-table-row-padding-block);
+    row-gap: var(--_clippy-token-table-row-gap);
 
     & + & {
-      padding-block-start: var(--basis-space-row-2xl);
+      padding-block-start: var(--_clippy-token-table-row-padding-block);
     }
   }
 
@@ -87,7 +105,7 @@ export default css`
 
   @container clippy-token-table (inline-size >= 40rem) {
     .clippy-token-table__table {
-      column-gap: var(--basis-space-column-4xl);
+      column-gap: var(--_clippy-token-table-column-gap);
       grid-template-columns: 1fr 1fr;
     }
 
@@ -111,7 +129,7 @@ export default css`
 
     .clippy-token-table__row {
       align-items: center;
-      padding-block-start: var(--basis-space-row-2xl);
+      padding-block-start: var(--_clippy-token-table-row-padding-block);
     }
   }
 `;
