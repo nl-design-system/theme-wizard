@@ -196,6 +196,9 @@ export class ClippyTokenTable extends LitElement {
   }
 
   override render() {
+    if (!this.tokens?.length) {
+      return nothing;
+    }
     return html`
       <div role="table" class="clippy-token-table__table">
         <div role="row" class="clippy-token-table__header">
