@@ -20,15 +20,17 @@ export default css`
 
   .clippy-token-table__header {
     @container clippy-token-table (inline-size < 64rem) {
-      position: absolute;
-      inline-size: 1px;
+      /* stylelint-disable */
       block-size: 1px;
-      padding: 0;
+      border-width: 0;
+      clip: rect(0, 0, 0, 0);
+      inline-size: 1px;
       margin: -1px;
       overflow: hidden;
-      clip: rect(0, 0, 0, 0);
+      padding: 0;
+      position: absolute;
       white-space: nowrap;
-      border-width: 0;
+      /* stylelint-enable */
     }
   }
 
@@ -37,19 +39,16 @@ export default css`
   }
 
   .clippy-token-table__row {
-    display: grid;
-    row-gap: var(--basis-space-row-lg);
-    border-block-end-width: 1px;
     border-block-end-color: var(--basis-color-default-border-subtle);
     border-block-end-style: solid;
+    border-block-end-width: 1px;
+    display: grid;
     padding-block-end: var(--basis-space-row-2xl);
+    row-gap: var(--basis-space-row-lg);
 
     & + & {
       padding-block-start: var(--basis-space-row-2xl);
     }
-  }
-
-  .clippy-token-table__cell {
   }
 
   .clippy-token-table__head {
@@ -57,16 +56,13 @@ export default css`
     font-weight: var(--basis-text-font-weight-bold);
   }
 
-  .clippy-token-table__head--visual-small {
-  }
-
   .clippy-token-table__example {
+    border-color: var(--basis-color-default-border-subtle);
+    border-style: solid;
+    border-width: 1px;
     display: block;
     padding-block: var(--basis-space-block-lg);
     padding-inline: var(--basis-space-inline-lg);
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--basis-color-default-border-subtle);
   }
 
   .clippy-token-table__example--clean {
@@ -75,16 +71,16 @@ export default css`
 
   @container clippy-token-table (inline-size >= 40rem) {
     .clippy-token-table__table {
-      grid-template-columns: 1fr 1fr;
       column-gap: var(--basis-space-column-4xl);
+      grid-template-columns: 1fr 1fr;
     }
 
     .clippy-token-table__header,
     .clippy-token-table__body,
     .clippy-token-table__row {
       display: grid;
-      grid-template-columns: subgrid;
       grid-column: 1 / -1;
+      grid-template-columns: subgrid;
     }
   }
 
