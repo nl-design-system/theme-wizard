@@ -7,15 +7,17 @@ import '../clippy-token-detail';
 import { BaseDesignToken, getTokenSubtype, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
 import { getTokenDimensionSpaceConcept, getTokenPath } from '@src/lib/tokens';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import '../clippy-color-sample';
 import '../clippy-token-sample-spacing';
 import '../clippy-token-sample-text';
 import '../clippy-token-sample-border';
 import '../clippy-graph-paper';
 import '../clippy-token-detail';
+import { classMap } from 'lit/directives/class-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { ClippyModal } from '../clippy-modal';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
@@ -155,6 +157,39 @@ export class ClippyTokenTable extends LitElement {
     }
   }
 
+  #renderValue({
+    copyable,
+    isBadge,
+    testId,
+    text,
+  }: {
+    text: string;
+    testId: string;
+    isBadge?: boolean;
+    copyable?: boolean;
+  }): TemplateResult {
+    return html`
+      <div class="clippy-token-table__value" .data-testid="${testId}">
+        ${isBadge ? html`<span class="nl-data-badge" data-testid="text">${text}</span>` : html`<code class="nl-code" data-testid="text">${text}</code>`}
+        ${
+          copyable
+            ? html`<clippy-toggletip text=${`${this.copyToClipboardLabel}${text}`}>
+                <clippy-button
+                  icon-only
+                  purpose="subtle"
+                  size="small"
+                  @click=${() => navigator.clipboard.writeText(text)}
+                >
+                  ${this.copyToClipboardLabel}${text}
+                  <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
+                </clippy-button>
+              </clippy-toggletip>`
+            : nothing
+        }
+      </div>
+    `;
+  }
+
   override connectedCallback() {
     super.connectedCallback();
     this.#currentToken = this.tokens?.[0];
@@ -197,13 +232,22 @@ export class ClippyTokenTable extends LitElement {
                   <span aria-hidden="true" class="clippy-token-table__head clippy-token-table__head--visual-small">
                     ${this.tokenIdLabel}
                   </span>
-                  <span class="nl-data-badge">${getTokenPath(token)}</span>
+                  ${this.#renderValue({
+                    copyable: true,
+                    isBadge: true,
+                    testId: 'token-id',
+                    text: getTokenPath(token),
+                  })}
                 </div>
                 <div class="clippy-token-table__cell">
                   <span aria-hidden="true" class="clippy-token-table__head clippy-token-table__head--visual-small">
                     ${this.valueLabel}
                   </span>
-                  <code class="nl-code">${stringifyToken(token)}</code>
+                  ${this.#renderValue({
+                    copyable: true,
+                    testId: 'token-value',
+                    text: stringifyToken(token),
+                  })}
                 </div>
                 <div class="clippy-token-table__cell">
                   <span aria-hidden="true" class="clippy-token-table__head clippy-token-table__head--visual-small">
