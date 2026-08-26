@@ -51,11 +51,11 @@ export class ClippyTokenTable extends LitElement {
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
   @property({ attribute: 'details-label', type: String }) detailsLabel = 'Details';
   @property({ attribute: 'show-details-label', type: String }) showDetailsLabel = 'Show details';
+  @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
 
   // TODO: fix prop-drilling with composition. These are passed down to the `clippy-token-detail` component.
   @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
-  @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
 
   #currentToken?: BaseDesignToken = undefined;
 
