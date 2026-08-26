@@ -8,13 +8,14 @@ import { safeCustomElement } from '@src/lib/decorators';
 import { getTokenDimensionSpaceConcept, getTokenPath } from '@src/lib/tokens';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import srOnly from '../lib/sr-only';
-import styles from './styles';
 import '../clippy-color-sample';
 import '../clippy-token-sample-spacing';
 import '../clippy-token-sample-text';
 import '../clippy-token-sample-border';
 import '../clippy-graph-paper';
+import styles from './styles';
 
 const tag = 'clippy-token-table';
 
@@ -121,13 +122,19 @@ export class ClippyTokenTable extends LitElement {
         </div>
         <div role="rowgroup" class="clippy-token-table__body">
           ${this.tokens?.map((token) => {
+            const subType = getTokenSubtype(token);
             return html`
               <div role="row" class="clippy-token-table__row">
                 <div class="clippy-token-table__cell">
                   <span aria-hidden="true" class="clippy-token-table__head clippy-token-table__head--visual-small">
                     ${this.exampleLabel}
                   </span>
-                  <clippy-graph-paper class="clippy-token-table__example">
+                  <clippy-graph-paper
+                    class=${classMap({
+                      'clippy-token-table__example': true,
+                      'clippy-token-table__example--clean': subType === 'line-height',
+                    })}
+                  >
                     ${this.#renderTokenExample({ token })}
                   </clippy-graph-paper>
                 </div>

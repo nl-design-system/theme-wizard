@@ -6,7 +6,7 @@ export default css`
   }
 
   :host {
-    /*--clippy-graph-paper-line-color: red;*/
+    --clippy-graph-paper-major-line-color: transparent;
 
     container: clippy-token-table / inline-size;
     font-family: var(--basis-text-font-family-default);
@@ -67,6 +67,10 @@ export default css`
     border-width: 1px;
     border-style: solid;
     border-color: var(--basis-color-default-border-subtle);
+  }
+
+  .clippy-token-table__example--clean {
+    --clippy-graph-paper-line-color: transparent;
   }
 
   @container clippy-token-table (inline-size >= 40rem) {
