@@ -23,7 +23,7 @@ const meta = {
   },
   render: (args: TokenSampleBorderStoryArgs) => React.createElement('clippy-token-sample-border', args),
   tags: ['autodocs'],
-  title: 'Clippy/Token Sample: Border',
+  title: 'Clippy/Design Tokens/Token Sample Border',
 } satisfies Meta<TokenSampleBorderStoryArgs>;
 
 export default meta;

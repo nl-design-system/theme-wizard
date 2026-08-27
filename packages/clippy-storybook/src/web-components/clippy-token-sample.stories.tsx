@@ -32,7 +32,7 @@ const meta = {
   },
   render: (args: TokenSampleStoryArgs) => React.createElement('clippy-token-sample', args),
   tags: ['autodocs'],
-  title: 'Clippy/Tokens/Token Sample',
+  title: 'Clippy/Design Tokens/Token Sample',
 } satisfies Meta<TokenSampleStoryArgs>;
 
 export default meta;

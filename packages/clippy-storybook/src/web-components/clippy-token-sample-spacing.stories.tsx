@@ -33,7 +33,7 @@ const meta = {
   },
   render: (args: TokenSampleSpacingStoryArgs) => React.createElement('clippy-token-sample-spacing', args),
   tags: ['autodocs'],
-  title: 'Clippy/Token Sample: Spacing',
+  title: 'Clippy/Design Tokens/Token Sample Spacing',
 } satisfies Meta<TokenSampleSpacingStoryArgs>;
 
 export default meta;

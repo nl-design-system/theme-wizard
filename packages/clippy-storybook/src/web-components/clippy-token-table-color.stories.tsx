@@ -19,7 +19,7 @@ const meta = {
   },
   render: () => React.createElement('clippy-token-table-color', { collection: tokenCollection }),
   tags: ['autodocs'],
-  title: 'Clippy/Token Table Color',
+  title: 'Clippy/Design Tokens/Token Table Color',
 } satisfies Meta<TableColorStoryArgs>;
 
 export default meta;
