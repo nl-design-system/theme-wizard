@@ -6,14 +6,11 @@ import '../clippy-modal';
 import '../clippy-token-detail';
 import { BaseDesignToken, getTokenSubtype, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
-import { getTokenDimensionSpaceConcept, getTokenPath } from '@src/lib/tokens';
+import { getTokenPath } from '@src/lib/tokens';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import '../clippy-color-sample';
-import '../clippy-token-sample-spacing';
-import '../clippy-token-sample-text';
-import '../clippy-token-sample-border';
+import '../clippy-token-sample';
 import '../clippy-graph-paper';
 import '../clippy-token-detail';
 import { classMap } from 'lit/directives/class-map.js';
@@ -102,74 +99,6 @@ export class ClippyTokenTable extends LitElement {
     `;
   }
 
-  #renderTokenExample({ token }: { token: BaseDesignToken }) {
-    if (!token) {
-      return nothing;
-    }
-    switch (token.$type) {
-      case 'color':
-        return html`<clippy-color-sample color=${stringifyToken(token)}></clippy-color-sample>`;
-      case 'dimension': {
-        // dimensions have a lot of different subtypes
-        const subType = getTokenSubtype(token);
-        switch (subType) {
-          case 'font-size':
-            return html`<clippy-token-sample-text
-              font-size=${stringifyToken(token)}
-              truncate
-            ></clippy-token-sample-text>`;
-          case 'space-block':
-          case 'space-inline':
-          case 'space-text':
-          case 'space-column':
-          case 'space-row':
-            return html`<clippy-token-sample-spacing
-              size=${stringifyToken(token)}
-              concept=${getTokenDimensionSpaceConcept(token)}
-            ></clippy-token-sample-spacing>`;
-          case 'border-width':
-            return html`<clippy-token-sample-border
-              border-width=${stringifyToken(token)}
-            ></clippy-token-sample-border>`;
-          case 'border-radius':
-            return html`<clippy-token-sample-border
-              border-radius=${stringifyToken(token)}
-            ></clippy-token-sample-border>`;
-          default:
-            return nothing;
-        }
-      }
-      // TODO: Google fonts?
-      case 'fontFamily':
-        return html`<clippy-token-sample-text
-          font-family=${stringifyToken(token)}
-          font-size="var(--basis-text-font-size-xl)"
-          truncate
-        ></clippy-token-sample-text>`;
-      case 'number': {
-        const subType = getTokenSubtype(token);
-        switch (subType) {
-          case 'font-weight':
-            return html`<clippy-token-sample-text
-              font-weight=${stringifyToken(token)}
-              font-size="var(--basis-text-font-size-xl)"
-              truncate
-            ></clippy-token-sample-text>`;
-          case 'line-height':
-            return html`<clippy-token-sample-text
-              line-height=${stringifyToken(token)}
-              font-size="var(--basis-text-font-size-xl)"
-              truncate
-            ></clippy-token-sample-text>`;
-          default:
-            return nothing;
-        }
-      }
-      default:
-        return nothing;
-    }
-  }
-
   #renderValue({
     copyable,
     isBadge,
@@ -241,7 +170,7 @@ export class ClippyTokenTable extends LitElement {
                       'clippy-token-table__example--clean': subType === 'line-height',
                     })}
                   >
-                    ${this.#renderTokenExample({ token })}
+                    <clippy-token-sample .token=${token}></clippy-token-sample>
                   </clippy-graph-paper>
                 </div>
                 <div class="clippy-token-table__cell">

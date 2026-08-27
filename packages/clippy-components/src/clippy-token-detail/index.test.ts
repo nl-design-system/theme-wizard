@@ -31,7 +31,9 @@ describe(`<${tag}>`, () => {
     component.token = colorFixture;
     await component.updateComplete;
     const color = getTokenColor(colorFixture);
-    const colorSample = component.shadowRoot?.querySelector('clippy-color-sample') as ClippyColorSample;
+    const colorSample = component.shadowRoot
+      ?.querySelector('clippy-token-sample')
+      ?.shadowRoot?.querySelector('clippy-color-sample') as ClippyColorSample;
     const oklchElement = component.shadowRoot?.querySelector(
       '[data-testid="token-oklch-value"] [data-testid="definition"]',
     ) as HTMLElement;
@@ -52,9 +54,9 @@ describe(`<${tag}>`, () => {
   it('Renders with a spacing token', async () => {
     component.token = spacingFixture;
     await component.updateComplete;
-    const spacingSample = component.shadowRoot?.querySelector(
-      'clippy-token-sample-spacing',
-    ) as ClippyTokenSampleSpacing;
+    const spacingSample = component.shadowRoot
+      ?.querySelector('clippy-token-sample')
+      ?.shadowRoot?.querySelector('clippy-token-sample-spacing') as ClippyTokenSampleSpacing;
     await expect.element(spacingSample).toBeInTheDocument();
     await expect.element(spacingSample).toHaveProperty('size', stringifyToken(spacingFixture));
   });
@@ -62,7 +64,9 @@ describe(`<${tag}>`, () => {
   it('Renders with a text token', async () => {
     component.token = textFontSizeFixture;
     await component.updateComplete;
-    const textSample = component.shadowRoot?.querySelector('clippy-token-sample-text') as ClippyTokenSampleText;
+    const textSample = component.shadowRoot
+      ?.querySelector('clippy-token-sample')
+      ?.shadowRoot?.querySelector('clippy-token-sample-text') as ClippyTokenSampleText;
     await expect.element(textSample).toBeInTheDocument();
     expect(textSample.getAttribute('font-size')).toBe(stringifyToken(textFontSizeFixture));
   });
@@ -70,7 +74,9 @@ describe(`<${tag}>`, () => {
   it('Renders with a border token', async () => {
     component.token = borderWidthFixture;
     await component.updateComplete;
-    const borderSample = component.shadowRoot?.querySelector('clippy-token-sample-border') as ClippyTokenSampleBorder;
+    const borderSample = component.shadowRoot
+      ?.querySelector('clippy-token-sample')
+      ?.shadowRoot?.querySelector('clippy-token-sample-border') as ClippyTokenSampleBorder;
     await expect.element(borderSample).toBeInTheDocument();
     expect(borderSample.getAttribute('border-width')).toBe(stringifyToken(borderWidthFixture));
   });
