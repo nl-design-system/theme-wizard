@@ -5,7 +5,13 @@ import { ClippyTokenSampleBorder } from '@src/clippy-token-sample-border';
 import { ClippyTokenSampleSpacing } from '@src/clippy-token-sample-spacing';
 import { ClippyTokenSampleText } from '@src/clippy-token-sample-text';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { borderWidthFixture, colorFixture, spacingFixture, textFontSizeFixture } from './fixtures';
+import {
+  borderWidthFixture,
+  colorFixture,
+  incompatibleTokenType,
+  spacingFixture,
+  textFontSizeFixture,
+} from './fixtures';
 import { ClippyTokenSample } from './index';
 
 const tag = 'clippy-token-sample';
@@ -57,5 +63,20 @@ describe(`<${tag}>`, () => {
     const borderSample = component.shadowRoot?.querySelector('clippy-token-sample-border') as ClippyTokenSampleBorder;
     await expect.element(borderSample).toBeInTheDocument();
     expect(borderSample.getAttribute('border-width')).toBe(stringifyToken(borderWidthFixture));
+  });
+
+  it('renders nothing with an undefined token', async () => {
+    component.token = undefined;
+    await component.updateComplete;
+    const elements = component.shadowRoot?.querySelectorAll('[data-testid="token-sample-element"]');
+    expect(elements?.length).toBeFalsy();
+  });
+
+  it('renders nothing with an incompatible token', async () => {
+    component.token = incompatibleTokenType;
+    await component.updateComplete;
+    const elements = component.shadowRoot?.querySelectorAll('[data-testid="token-sample-element"]');
+    console.log('=== elements', elements);
+    expect(elements?.length).toBeFalsy();
   });
 });
