@@ -1,11 +1,11 @@
-# `<clippy-token-color-table>`
+# `<clippy-token-table-color>`
 
 Renders a table of color token groups, one row per group, with a `<clippy-color-sample>` swatch per token (background, border, and foreground columns). Each cell carries a screen-reader-only label with the full token ID.
 
 ## Installation
 
 ```js
-import '@nl-design-system-community/clippy-components/clippy-token-color-table';
+import '@nl-design-system-community/clippy-components/clippy-token-table-color';
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ import '@nl-design-system-community/clippy-components/clippy-token-color-table';
 Set the `collection` property with tokens from a theme, for example the `default` and `accent-1` color groups from the [NL Design System Start theme](https://nldesignsystem.nl/handboek/huisstijl/themas/start-thema):
 
 ```js
-const table = document.querySelector('clippy-token-color-table');
+const table = document.querySelector('clippy-token-table-color');
 
 table.collection = [
   {
@@ -61,10 +61,10 @@ table.collection = [
 ```
 
 ```html
-<clippy-token-color-table></clippy-token-color-table>
+<clippy-token-table-color></clippy-token-table-color>
 ```
 
-Each tokens array is expected to contain all fourteen columns rendered by the table (bg-document, bg-subtle, bg-default, bg-hover, bg-active, border-subtle, border-default, border-hover, border-active, color-subtle, color-default, color-hover, color-active, color-document), in that exact order. See [fixtures.ts](https://github.com/nl-design-system/theme-wizard/blob/main/packages/clippy-components/src/clippy-token-color-table/fixtures.ts) for a complete example.
+Each tokens array is expected to contain all fourteen columns rendered by the table (bg-document, bg-subtle, bg-default, bg-hover, bg-active, border-subtle, border-default, border-hover, border-active, color-subtle, color-default, color-hover, color-active, color-document), in that exact order. See [fixtures.ts](https://github.com/nl-design-system/theme-wizard/blob/main/packages/clippy-components/src/clippy-token-table-color/fixtures.ts) for a complete example.
 
 ## Attributes & properties
 
