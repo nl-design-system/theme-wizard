@@ -10,6 +10,8 @@ import {
   BaseDesignToken,
   ColorValue,
   compareContrast,
+  isColorToken,
+  stringifyColor,
   stringifyToken,
 } from '@nl-design-system-community/design-tokens-schema';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
@@ -22,6 +24,8 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { generateScale, TOKENS, type TokenName } from '../../lib/color-scale-generator';
+import { profileForName } from '../../lib/color-scale-profile';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
@@ -35,6 +39,37 @@ export type { SubmitSaveTokenFormEvent } from '../../utils/events';
 
 const tokenEquals = (a: BaseDesignToken, b: BaseDesignToken): boolean => {
   return dequal(a.$value, b.$value) && a.$type === b.$type;
+};
+
+const INVERSE_SUFFIX = '-inverse';
+
+interface ColorScaleParams {
+  /** e.g. `basis.color.accent-1` */
+  regularGroupPath: string;
+  /** e.g. `basis.color.accent-1-inverse` */
+  inverseGroupPath: string;
+  profile: ReturnType<typeof profileForName>;
+}
+
+/** Qualifies only when path's last segment is one of the 14 canonical slot names. */
+const getColorScaleParams = (path: string): ColorScaleParams | undefined => {
+  const segments = path.split('.');
+  const slot = segments.at(-1);
+  const group = segments.at(-2);
+
+  if (!slot || !group || !TOKENS.includes(slot as TokenName)) {
+    return undefined;
+  }
+
+  const prefix = segments.slice(0, -2);
+  const isInverse = group.endsWith(INVERSE_SUFFIX);
+  const groupBase = isInverse ? group.slice(0, -INVERSE_SUFFIX.length) : group;
+
+  return {
+    inverseGroupPath: [...prefix, `${groupBase}${INVERSE_SUFFIX}`].join('.'),
+    profile: profileForName(groupBase),
+    regularGroupPath: [...prefix, groupBase].join('.'),
+  };
 };
 
 const tag = 'wizard-step-form';
@@ -109,8 +144,8 @@ export class WizardStepForm extends LitElement {
     }
     const formData = new FormData(event.target);
 
-    // Make a list of path+token based on what's inside FormData
-    const tokens: UpdateDesignTokensDetail = Array.from(formData.entries()).flatMap(([path, value]) => {
+    // Keep submitted paths separate from the possibly-expanded token list below (for markStepComplete).
+    const selections = Array.from(formData.entries()).flatMap(([path, value]) => {
       if (typeof value !== 'string' || value === '') {
         return [];
       }
@@ -118,7 +153,32 @@ export class WizardStepForm extends LitElement {
       if (!token) {
         return [];
       }
-      return [{ path, value: token.$value }];
+      return [{ path, token }];
+    });
+
+    // A color-scale slot path expands into its whole 14-token ramp (regular + paired inverse group).
+    const tokens: UpdateDesignTokensDetail = selections.flatMap(({ path, token }) => {
+      if (!isColorToken(token)) {
+        return [{ path, value: token.$value }];
+      }
+
+      const scaleParams = getColorScaleParams(path);
+      if (!scaleParams) {
+        return [{ path, value: token.$value }];
+      }
+
+      const { inverseGroupPath, profile, regularGroupPath } = scaleParams;
+      const seed = stringifyColor(token.$value);
+      // Neutral's chroma template is flat synthetic (masks.ts), so anchoring shifts the
+      // ramp and clamps to gray near the edges. Other profiles anchor safely.
+      const anchor = profile === 'neutral' ? undefined : 'auto';
+      const regular = generateScale(seed, { anchor, contrast: { enforce: true }, profile }).data;
+      const inverse = generateScale(seed, { anchor, contrast: { enforce: true }, inverse: true, profile }).data;
+
+      return TOKENS.flatMap((tokenName) => [
+        { path: `${regularGroupPath}.${tokenName}`, value: regular[tokenName] },
+        { path: `${inverseGroupPath}.${tokenName}`, value: inverse[tokenName] },
+      ]);
     });
 
     // Emit custom event that lets Theme do updateMany()
@@ -130,10 +190,11 @@ export class WizardStepForm extends LitElement {
       }),
     );
 
-    for (const { path } of tokens) {
+    for (const { path } of selections) {
       markStepComplete(path);
     }
 
+    // Redirect after submission
     if (this.returnUrl) {
       location.assign(this.returnUrl);
     }

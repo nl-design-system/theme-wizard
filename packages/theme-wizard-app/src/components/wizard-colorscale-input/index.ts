@@ -24,6 +24,7 @@ import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { generateScale, type ColorScale, type ProfileName } from '../../lib/color-scale-generator';
+import { profileForName } from '../../lib/color-scale-profile';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
@@ -43,30 +44,6 @@ const getSupportsCSSColorValues = () => {
   const hasSupport = el.value !== '#000000';
   el.remove();
   return hasSupport;
-};
-
-// The color scale generator works off a structural profile (masks extracted from the
-// NL Design System theme), not the group name — several group names in BASIS_COLOR_NAMES
-// alias to the same 'accent' shape, per the generator's README.
-const PROFILE_BY_COLOR_KEY: Record<string, ProfileName> = {
-  'accent-1': 'accent',
-  'accent-2': 'accent',
-  'accent-3': 'accent',
-  'action-1': 'accent',
-  'action-2': 'accent',
-  default: 'neutral',
-  disabled: 'disabled',
-  highlight: 'highlight',
-  info: 'accent',
-  negative: 'negative',
-  positive: 'positive',
-  selected: 'accent',
-  warning: 'warning',
-};
-
-const profileForName = (name: string): ProfileName => {
-  const colorKey = name.split('.').at(-1) ?? '';
-  return PROFILE_BY_COLOR_KEY[colorKey] ?? 'accent';
 };
 
 const toColorScaleObject = (scale: ColorScale): ColorScaleObject =>
