@@ -7,10 +7,7 @@ type TokenSampleStoryArgs = {};
 
 const meta = {
   id: 'clippy-token-sample',
-  args: {
-    borderRadius: '',
-    borderWidth: '1px',
-  },
+  args: {},
   parameters: {
     docs: {
       description: {
