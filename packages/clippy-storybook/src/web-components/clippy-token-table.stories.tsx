@@ -23,7 +23,7 @@ const meta = {
       tokens: tokensFixture,
     }),
   tags: ['autodocs'],
-  title: 'Clippy/Token Table',
+  title: 'Clippy/Design Tokens/Token Table',
 } satisfies Meta<TokenTableStoryArgs>;
 
 export default meta;

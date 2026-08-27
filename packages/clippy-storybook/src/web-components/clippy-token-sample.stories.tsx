@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import '@nl-design-system-community/clippy-components/clippy-token-sample';
 import {
   borderRadiusFixture,
   borderWidthFixture,
@@ -8,18 +9,17 @@ import {
   textFontSizeFixture,
   textFontWeightFixture,
   textLineHeightFixture,
-} from '@nl-design-system-community/clippy-components/src/clippy-token-detail/fixtures.js';
-import '@nl-design-system-community/clippy-components/clippy-token-detail';
-import readme from '@nl-design-system-community/clippy-components/src/clippy-token-detail/README.md?raw';
+} from '@nl-design-system-community/clippy-components/src/clippy-token-sample/fixtures.js';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-token-sample/README.md?raw';
 import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
 import React from 'react';
 
-interface TokenDetailStoryArgs {
+type TokenSampleStoryArgs = {
   token: BaseDesignToken;
-}
+};
 
 const meta = {
-  id: 'clippy-token-detail',
+  id: 'clippy-token-sample',
   args: {
     token: colorFixture,
   },
@@ -30,16 +30,17 @@ const meta = {
       },
     },
   },
-  render: (args: TokenDetailStoryArgs) => React.createElement('clippy-token-detail', args),
+  render: (args: TokenSampleStoryArgs) => React.createElement('clippy-token-sample', args),
   tags: ['autodocs'],
-  title: 'Clippy/Design Tokens/Token Detail',
-} satisfies Meta<TokenDetailStoryArgs>;
+  title: 'Clippy/Design Tokens/Token Sample',
+} satisfies Meta<TokenSampleStoryArgs>;
 
 export default meta;
-type Story = StoryObj<TokenDetailStoryArgs>;
+
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  name: 'Color',
+  name: 'Default',
 };
 
 export const Spacing: Story = {

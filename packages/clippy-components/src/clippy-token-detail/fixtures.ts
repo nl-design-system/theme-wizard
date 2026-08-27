@@ -156,3 +156,8 @@ export const noTokenPath: BaseDesignToken = {
     components: [0.3607843137254902, 0.5372549019607843, 0.7450980392156863],
   },
 };
+
+export const incompatibleTokenType: BaseDesignToken = {
+  $type: 'dinosaur',
+  $value: 'roar',
+};
