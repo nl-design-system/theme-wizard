@@ -26,7 +26,8 @@ export default css`
     );
     --_clippy-token-table-row-padding-block: var(--clippy-token-table-row-padding-block, var(--basis-space-row-2xl));
 
-    container: clippy-token-table / inline-size;
+    container-name: clippy-token-table;
+    container-type: inline-size;
     font-family: var(--_clippy-token-table-font-family);
     font-size: var(--_clippy-token-table-font-size);
     line-height: var(--_clippy-token-table-line-height);
