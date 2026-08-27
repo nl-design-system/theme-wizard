@@ -6,6 +6,13 @@ Renders a sample of a token. Used to illustrate token types and subtypes in the 
 
 ```js
 import '@nl-design-system-community/clippy-components/clippy-token-sample';
+
+const detail = document.querySelector('clippy-token-sample');
+
+detail.token = {
+  $type: 'color',
+  $value: '#ff0000',
+};
 ```
 
 ```html
@@ -15,10 +22,6 @@ import '@nl-design-system-community/clippy-components/clippy-token-sample';
 
 ## Attributes & properties
 
-| Attribute / Property | Type | Description | Default |
-| -------------------- | ---- | ----------- | ------- |
-
-## CSS Custom Properties
-
-| Property | Description | Default |
-| -------- | ----------- | ------- |
+| Attribute / Property | Type              | Description                      | Default     |
+| -------------------- | ----------------- | -------------------------------- | ----------- |
+| `token`              | `BaseDesignToken` | The token to display as a sample | `undefined` |
