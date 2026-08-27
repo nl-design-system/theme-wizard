@@ -182,7 +182,7 @@ export class ClippyTokenTable extends LitElement {
     copyable?: boolean;
   }): TemplateResult {
     return html`
-      <div class="clippy-token-table__value" .data-testid="${testId}">
+      <div class="clippy-token-table__value" data-testid="${testId}">
         ${isBadge ? html`<span class="nl-data-badge" data-testid="text">${text}</span>` : html`<code class="nl-code" data-testid="text">${text}</code>`}
         ${
           copyable
