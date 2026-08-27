@@ -76,7 +76,6 @@ describe(`<${tag}>`, () => {
     component.token = incompatibleTokenType;
     await component.updateComplete;
     const elements = component.shadowRoot?.querySelectorAll('[data-testid="token-sample-element"]');
-    console.log('=== elements', elements);
     expect(elements?.length).toBeFalsy();
   });
 });
