@@ -36,19 +36,20 @@ export default css`
     display: grid;
   }
 
+  /* On smaller container sizes */
   .clippy-token-table__header {
     @container clippy-token-table (inline-size < 64rem) {
-      /* stylelint-disable */
       block-size: 1px;
       border-width: 0;
-      clip: rect(0, 0, 0, 0);
+      clip-path: rect(0, 0, 0, 0);
       inline-size: 1px;
-      margin: -1px;
+      margin-block: -1px;
+      margin-inline: -1px;
       overflow: hidden;
-      padding: 0;
+      padding-block: 0;
+      padding-inline: 0;
       position: absolute;
       white-space: nowrap;
-      /* stylelint-enable */
     }
   }
 
@@ -88,8 +89,8 @@ export default css`
   }
 
   .clippy-token-table__value {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: var(--basis-space-text-md);
   }
 
