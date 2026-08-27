@@ -4,7 +4,4 @@ export default css`
   :host(:not([hidden])) {
     display: block;
   }
-
-  :host {
-  }
 `;
