@@ -30,6 +30,19 @@ declare global {
   }
 }
 
+/**
+ * Clippy Token Table Component
+ *
+ * @cssprop --clippy-token-table-font-family - Font family of table
+ * @cssprop --clippy-token-table-font-size - Font size of table
+ * @cssprop --clippy-token-table-line-height - Line height of table
+ * @cssprop --clippy-token-table-row-gap - Default row gap
+ * @cssprop --clippy-token-table-column-gap - Default column gap
+ * @cssprop --clippy-token-table-head-font-weight - Font weight of the table head
+ * @cssprop --clippy-token-table-row-border-color - Border color between rows
+ * @cssprop --clippy-token-table-row-padding-block - Padding of the rows
+
+ */
 @safeCustomElement(tag)
 export class ClippyTokenTable extends LitElement {
   static override readonly styles = [

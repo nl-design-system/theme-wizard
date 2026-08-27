@@ -50,3 +50,16 @@ table.tokens = [
 | `copy-to-clipboard-label` | `string`            | Label for the copy to clipboard button           | `'Copy to clipboard: '`       |
 | `reference-title-label`   | `string`            | Label for the reference label in the modal       | `'Where is this token used?'` |
 | `reference-empty-label`   | `string`            | Label for the empty reference label in the modal | `'This token is not used.'`   |
+
+## CSS Custom Properties
+
+| Property                                 | Type     | Description                   |
+| ---------------------------------------- | -------- | ----------------------------- |
+| `--clippy-token-table-font-family`       | `string` | Font family of the table      |
+| `--clippy-token-table-font-size`         | `string` | Font size of the table        |
+| `--clippy-token-table-line-height`       | `string` | Line height of the table      |
+| `--clippy-token-table-row-gap`           | `string` | Default row gap               |
+| `--clippy-token-table-column-gap`        | `string` | Default column gap            |
+| `--clippy-token-table-head-font-weight`  | `string` | Font weight of the table head |
+| `--clippy-token-table-row-border-color`  | `string` | Border color between rows     |
+| `--clippy-token-table-row-padding-block` | `string` | Padding of the rows           |
