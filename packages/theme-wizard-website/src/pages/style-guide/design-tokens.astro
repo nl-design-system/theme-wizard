@@ -13,52 +13,55 @@ const SECTION_IDS = {
 }
 ---
 
-<BaseLayout title="Stijlgids design tokens - Theme Wizard">
+<BaseLayout title="Design tokens - Stijlgids - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <StyleGuideNav />
 
-      <div slot="main" class="wizard-main">
-        <wizard-container>
-          <clippy-story-preview size="lg">
-            <clippy-stack size="4xl">
-              <clippy-heading level="1">Design tokens</clippy-heading>
-              <WithPageNav>
-                <div slot="page-nav">
-                  <wizard-anchor-nav items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
-                </div>
-                <clippy-stack size="3xl" slot="page-content">
-                  <section>
-                    <clippy-stack size="2xl">
-                      <clippy-heading level="2" id={SECTION_IDS.typography}>Typografie</clippy-heading>
-                      <wizard-style-guide-typography></wizard-style-guide-typography>
-                    </clippy-stack>
-                  </section>
-                  <section>
-                    <clippy-stack size="2xl">
-                      <h2 id={SECTION_IDS.colors}>Kleuren</h2>
-                      <wizard-style-guide-colors></wizard-style-guide-colors>
-                    </clippy-stack>
-                  </section>
-                  <section>
-                    <clippy-stack size="2xl">
-                      <h2 id={SECTION_IDS.spacing}>Witruimte</h2>
-                      <wizard-style-guide-spacing></wizard-style-guide-spacing>
-                    </clippy-stack>
-                  </section>
-                  <section>
-                    <clippy-stack size="2xl">
-                      <h2 id={SECTION_IDS.components}>Componenten</h2>
-                      <wizard-style-guide-components></wizard-style-guide-components>
-                    </clippy-stack>
-                  </section>
+      <wizard-container slot="main">
+        <clippy-stack size="3xl">
+          <clippy-heading level="1">Design tokens</clippy-heading>
+
+          <clippy-stack size="5xl">
+            <section>
+              <clippy-story-preview size="lg">
+                <clippy-stack size="2xl">
+                  <clippy-heading level="2" id={SECTION_IDS.typography}>Typografie</clippy-heading>
+                  <wizard-style-guide-typography></wizard-style-guide-typography>
                 </clippy-stack>
-              </WithPageNav>
-            </clippy-stack>
-          </clippy-story-preview>
-        </wizard-container>
-      </div>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview size="lg">
+                <clippy-stack size="2xl">
+                  <clippy-heading level="2" id={SECTION_IDS.colors}>Kleuren</clippy-heading>
+                  <wizard-style-guide-colors></wizard-style-guide-colors>
+                </clippy-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview size="lg">
+                <clippy-stack size="2xl">
+                  <clippy-heading level="2" id={SECTION_IDS.spacing}>Witruimte</clippy-heading>
+                  <wizard-style-guide-spacing></wizard-style-guide-spacing>
+                </clippy-stack>
+              </clippy-story-preview>
+            </section>
+
+            <section>
+              <clippy-story-preview size="lg">
+                <clippy-stack size="2xl">
+                  <clippy-heading level="2" id={SECTION_IDS.components}>Componenten</clippy-heading>
+                  <wizard-style-guide-components></wizard-style-guide-components>
+                </clippy-stack>
+              </clippy-story-preview>
+            </section>
+          </clippy-stack>
+        </clippy-stack>
+      </wizard-container>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
