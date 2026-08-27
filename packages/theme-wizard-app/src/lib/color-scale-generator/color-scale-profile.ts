@@ -1,8 +1,8 @@
-import type { ProfileName } from './color-scale-generator';
+import type { ProfileName } from './masks.js';
 
-// The color scale generator works off a structural profile (masks extracted from the
-// NL Design System theme), not the group name — several group names in BASIS_COLOR_NAMES
-// alias to the same 'accent' shape, per the generator's README.
+// The generator works off a structural profile (masks extracted from the NL Design
+// System theme), not the group name — several group names in BASIS_COLOR_NAMES alias
+// to the same 'accent' shape, per README.md.
 const PROFILE_BY_COLOR_KEY: Record<string, ProfileName> = {
   'accent-1': 'accent',
   'accent-2': 'accent',
