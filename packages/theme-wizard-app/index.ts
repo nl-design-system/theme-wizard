@@ -35,6 +35,7 @@ export * from './src/components/wizard-style-guide-typography';
 export * from './src/components/wizard-table-scroller';
 export * from './src/components/wizard-theme-reset-button';
 export * from './src/components/wizard-token-docs';
+export * from './src/components/wizard-token-table';
 export * from './src/components/wizard-token-field';
 export * from './src/components/wizard-token-input';
 export * from './src/components/wizard-token-minify-form';
