@@ -2,13 +2,7 @@ import { consume } from '@lit/context';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import {
-  isRef,
-  resolveRef,
-  SKIP,
-  walkTokens,
-  type BaseDesignToken,
-} from '@nl-design-system-community/design-tokens-schema';
+import { SKIP, walkTokens, type BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
@@ -38,7 +32,6 @@ export class WizardStyleGuideComponents extends LitElement {
     walkTokens(componentConfig, (token) => {
       tokens.push({
         ...token,
-        // $value: isRef(token.$value) ? resolveRef(this.theme.tokens, token.$value)?.$value : token.$value,
       });
       return SKIP;
     });
@@ -49,7 +42,6 @@ export class WizardStyleGuideComponents extends LitElement {
   override render() {
     const components = this.theme.tokens['nl'];
     if (!components) return nothing;
-    console.log('components', components);
 
     return html`
       <div class="wizard-style-guide">
@@ -59,7 +51,6 @@ export class WizardStyleGuideComponents extends LitElement {
 
         ${Object.entries(components).map(([componentId, componentConfig]) => {
           const tokens = this.#collectComponentTokens(componentConfig);
-          console.log('tokens', tokens);
 
           return html`
             <clippy-heading level="3">${`nl.${componentId}`}</clippy-heading>
