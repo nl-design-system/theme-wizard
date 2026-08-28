@@ -153,7 +153,8 @@ export class WizardStepForm extends LitElement {
       this._tokens = tokens;
       this._suggestedTokensSource = source;
 
-      // Show all options instead of cutting off if the selected option is below the default cutoff
+      // Reveal the full list up front when the checked option (e.g. a color-scale's seed match)
+      // would otherwise be hidden behind the default show-more cutoff.
       if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
         this.showAll = true;
       }
