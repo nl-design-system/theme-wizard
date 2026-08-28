@@ -138,10 +138,31 @@ interface RampContext {
   seedHue: number;
 }
 
+/** Flat black/white tokens (no chroma) are seed-independent by design and must not shift with the anchor. */
+const isPinnedExtreme = (mask: Mask, tokenIndex: number): boolean => {
+  return mask.C[tokenIndex] === 0 && (mask.L[tokenIndex] === 0 || mask.L[tokenIndex] === 1);
+};
+
+const buildRampToken = (mask: Mask, tokenIndex: number, params: BuildRampTokenParams): OKLCH => {
+  const { chromaScale, hueReference, lightnessShift, seedHue } = params;
+  const lightness = isPinnedExtreme(mask, tokenIndex)
+    ? mask.L[tokenIndex]
+    : clamp(mask.L[tokenIndex] + lightnessShift, 0, 1);
+  const hue = computeTokenHue(mask, tokenIndex, seedHue, hueReference);
+  const chroma = clampChroma(lightness, mask.C[tokenIndex] * chromaScale, hue);
+  return { C: chroma, H: hue, L: lightness };
+};
+
+interface BuildRampTokenParams {
+  chromaScale: number;
+  hueReference: number;
+  lightnessShift: number;
+  seedHue: number;
+}
+
 /**
- * Generate the base 14-token ramp from the seed and mask, before contrast
- * enforcement. Also returns the pieces enforcement needs to regenerate a
- * single token's color at a different lightness (same hue and chroma shape).
+ * Generate the base 14-token ramp from the seed and mask, before contrast enforcement. Also returns the pieces
+ * enforcement needs to regenerate a single token's color at a different lightness (same hue and chroma shape).
  * @param seed Any valid CSS color: hex, `rgb()`, `hsl()`, `oklch()`, a named color, ...
  */
 const buildRamp = (seed: string, options: GenerateOptions): RampContext => {
@@ -155,17 +176,11 @@ const buildRamp = (seed: string, options: GenerateOptions): RampContext => {
   const chromaScale = mask.C[anchorIndex] > 0 ? (seedChroma * chroma) / mask.C[anchorIndex] : 0;
   const lightnessShift = isAnchored ? seedLightness - mask.L[anchorIndex] : 0;
   const hueReference = isAnchored ? mask.H[anchorIndex] : 0;
+  const tokenParams = { chromaScale, hueReference, lightnessShift, seedHue };
 
   const data = {} as OklchScale;
   for (let tokenIndex = 0; tokenIndex < TOKENS.length; tokenIndex++) {
-    // Tokens pinned to a flat extreme (no chroma, full black/white) are seed-independent
-    // by design (e.g. "always white text on dark bg") — shifting them with the anchor
-    // would corrupt that invariant whenever the seed sits far from the anchor's template.
-    const isPinned = mask.C[tokenIndex] === 0 && (mask.L[tokenIndex] === 0 || mask.L[tokenIndex] === 1);
-    const lightness = isPinned ? mask.L[tokenIndex] : clamp(mask.L[tokenIndex] + lightnessShift, 0, 1);
-    const hue = computeTokenHue(mask, tokenIndex, seedHue, hueReference);
-    const tokenChroma = clampChroma(lightness, mask.C[tokenIndex] * chromaScale, hue);
-    data[TOKENS[tokenIndex]] = { C: tokenChroma, H: hue, L: lightness };
+    data[TOKENS[tokenIndex]] = buildRampToken(mask, tokenIndex, tokenParams);
   }
 
   return { chromaScale, data, hueReference, mask, seedHue };
@@ -212,9 +227,13 @@ const pickShouldLighten = (apcaAtLightness: (lightness: number) => number, gap: 
 };
 
 /** One bump direction per family, from the `-default` member, so hover/active don't flip independently. */
-const resolveFamilyDirections = (ramp: RampContext, gap: number, targets: ContrastTargets): Map<string, boolean> => {
+const resolveFamilyDirections = (
+  ramp: RampContext,
+  gap: number,
+  targets: ContrastTargets,
+): Map<NonNullable<ContrastRequirement['family']>, boolean> => {
   const { data } = ramp;
-  const directions = new Map<string, boolean>();
+  const directions = new Map<NonNullable<ContrastRequirement['family']>, boolean>();
   for (const requirement of CONTRAST_REQUIREMENTS) {
     if (!requirement.family || directions.has(requirement.family) || !requirement.token.endsWith('-default')) {
       continue;
