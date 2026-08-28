@@ -1,5 +1,10 @@
 import { type Locator, type Page } from '@playwright/test';
 
+/** Minimal shape of `<theme-wizard-app>`'s `theme` property we need in-page. */
+type ThemeWizardAppElement = HTMLElement & {
+  theme?: { tokens: unknown };
+};
+
 export class WizardStepFormPage {
   readonly legend: Locator;
   readonly options: Locator;
@@ -39,5 +44,14 @@ export class WizardStepFormPage {
   async save() {
     await this.saveButton.click();
     await this.page.waitForURL('**/wizard/');
+  }
+
+  /** The full design token tree currently held by `<theme-wizard-app>`, for before/after diffing. */
+  async getTokenTree(): Promise<unknown> {
+    await this.options.first().waitFor();
+    return this.page.evaluate(() => {
+      const host = document.querySelector('theme-wizard-app') as ThemeWizardAppElement | null;
+      return host?.theme?.tokens;
+    });
   }
 }

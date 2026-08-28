@@ -1,11 +1,6 @@
-import {
-  BaseDesignToken,
-  getTokenSubtype,
-  isTokenLike,
-  stringifyToken,
-} from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignToken, getTokenSubtype, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
-import { getTokenDimensionSpaceConcept } from '@src/lib/tokens';
+import { getTokenDimensionSpaceConcept, stringifyTokenValue } from '@src/lib/tokens';
 import { LitElement, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles from './styles';
@@ -43,7 +38,7 @@ export class ClippyTokenSample extends LitElement {
       case 'color':
         return html`<clippy-color-sample
           data-testid=${testId}
-          color=${stringifyToken(this.token)}
+          color=${stringifyTokenValue(this.token)}
         ></clippy-color-sample>`;
       case 'dimension': {
         // dimensions have a lot of different subtypes
@@ -52,7 +47,7 @@ export class ClippyTokenSample extends LitElement {
           case 'font-size':
             return html`<clippy-token-sample-text
               data-testid=${testId}
-              font-size=${stringifyToken(this.token)}
+              font-size=${stringifyTokenValue(this.token)}
               truncate
             ></clippy-token-sample-text>`;
           case 'space-block':
@@ -62,18 +57,18 @@ export class ClippyTokenSample extends LitElement {
           case 'space-row':
             return html`<clippy-token-sample-spacing
               data-testid=${testId}
-              size=${stringifyToken(this.token)}
+              size=${stringifyTokenValue(this.token)}
               concept=${getTokenDimensionSpaceConcept(this.token)}
             ></clippy-token-sample-spacing>`;
           case 'border-width':
             return html`<clippy-token-sample-border
               data-testid=${testId}
-              border-width=${stringifyToken(this.token)}
+              border-width=${stringifyTokenValue(this.token)}
             ></clippy-token-sample-border>`;
           case 'border-radius':
             return html`<clippy-token-sample-border
               data-testid=${testId}
-              border-radius=${stringifyToken(this.token)}
+              border-radius=${stringifyTokenValue(this.token)}
             ></clippy-token-sample-border>`;
           default:
             return nothing;
@@ -83,7 +78,7 @@ export class ClippyTokenSample extends LitElement {
       case 'fontFamily':
         return html`<clippy-token-sample-text
           data-testid=${testId}
-          font-family=${stringifyToken(this.token)}
+          font-family=${stringifyTokenValue(this.token)}
           font-size="var(--basis-text-font-size-xl)"
           truncate
         ></clippy-token-sample-text>`;
@@ -93,14 +88,14 @@ export class ClippyTokenSample extends LitElement {
           case 'font-weight':
             return html`<clippy-token-sample-text
               data-testid=${testId}
-              font-weight=${stringifyToken(this.token)}
+              font-weight=${stringifyTokenValue(this.token)}
               font-size="var(--basis-text-font-size-xl)"
               truncate
             ></clippy-token-sample-text>`;
           case 'line-height':
             return html`<clippy-token-sample-text
               data-testid=${testId}
-              line-height=${stringifyToken(this.token)}
+              line-height=${stringifyTokenValue(this.token)}
               font-size="var(--basis-text-font-size-xl)"
               truncate
             ></clippy-token-sample-text>`;

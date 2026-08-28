@@ -7,7 +7,14 @@ import { ClippyTokenSampleText } from '@src/clippy-token-sample-text';
 import { getTokenColor } from '@src/lib/tokens';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { ClippyTokenDetail } from './index';
-import { borderWidthFixture, colorFixture, noTokenPath, spacingFixture, textFontSizeFixture } from './fixtures';
+import {
+  borderWidthFixture,
+  colorFixture,
+  noTokenPath,
+  referenceFixture,
+  spacingFixture,
+  textFontSizeFixture,
+} from './fixtures';
 
 const tag = 'clippy-token-detail';
 
@@ -108,6 +115,18 @@ describe(`<${tag}>`, () => {
     const exampleLabelElement = component.shadowRoot?.querySelector('[data-testid="reference-empty-label"]');
     expect(exampleLabelElement).toBeTruthy();
     expect(exampleLabelElement?.textContent).toBe('Reference empty label');
+  });
+
+  it('the reference-to-label is displayed correctly', async () => {
+    document.body.innerHTML = `<${tag} token='${JSON.stringify(referenceFixture)}' reference-to-label="Reference to label"></${tag}>`;
+    component = document.querySelector(tag) as ClippyTokenDetail;
+    await component.updateComplete;
+
+    const labelLabelElement = component.shadowRoot?.querySelector(
+      '[data-testid="reference-to-label"] [data-testid="term"]',
+    );
+    expect(labelLabelElement).toBeTruthy();
+    expect(labelLabelElement?.textContent).toBe('Reference to label');
   });
 
   it('Renders with a token without a path', async () => {
