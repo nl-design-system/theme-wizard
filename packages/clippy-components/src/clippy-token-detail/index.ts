@@ -2,13 +2,15 @@ import { safeCustomElement } from '@lib/decorators';
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-import { BaseDesignToken, getTokenSubtype, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignToken, getTokenSubtype, isRef } from '@nl-design-system-community/design-tokens-schema';
 import {
   getTokenColor,
   getTokenDimensionSpaceConcept,
   getTokenPath,
   getTokenReferenceCount,
   getTokenReferencedAt,
+  stringifyReferenceValue,
+  stringifyTokenValue,
 } from '@src/lib/tokens';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import descriptionListCss from '@utrecht/data-list-css/dist/index.css?inline';
@@ -58,6 +60,7 @@ export class ClippyTokenDetail extends LitElement {
 
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
+  @property({ attribute: 'reference-to-label', type: String }) referenceToLabel = 'Reference to';
   @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
   @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
@@ -190,9 +193,20 @@ export class ClippyTokenDetail extends LitElement {
                   `
                 : nothing
             }
+            ${
+              isRef(token.$value)
+                ? this.#renderDefinition({
+                    copyable: true,
+                    definition: stringifyReferenceValue(token),
+                    isBadge: true,
+                    term: this.referenceToLabel,
+                    testId: 'reference-to-label',
+                  })
+                : nothing
+            }
             ${this.#renderDefinition({
               copyable: true,
-              definition: stringifyToken(token),
+              definition: stringifyTokenValue(token),
               term: this.valueLabel,
               testId: 'token-value',
             })}

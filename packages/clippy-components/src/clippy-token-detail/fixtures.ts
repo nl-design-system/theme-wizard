@@ -157,6 +157,28 @@ export const noTokenPath: BaseDesignToken = {
   },
 };
 
+export const referenceFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'basis.color.accent-1.border-default',
+    'nl.nldesignsystem.reference-count': 5,
+    'nl.nldesignsystem.referenced-at': [
+      'basis.color.accent-2.border-default',
+      'basis.color.accent-3.border-default',
+      'basis.color.action-1.border-default',
+      'basis.color.action-2.border-default',
+      'basis.color.selected.border-default',
+    ],
+    'nl.nldesignsystem.token-subtype': 'border-color',
+    'nl.nldesignsystem.value-resolved-as': {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [0.3607843137254902, 0.5372549019607843, 0.7450980392156863],
+    },
+  },
+  $type: 'color',
+  $value: '{path.to.other.token}',
+};
+
 export const incompatibleTokenType: BaseDesignToken = {
   $type: 'dinosaur',
   $value: 'roar',

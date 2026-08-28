@@ -3,6 +3,7 @@ import {
   borderRadiusFixture,
   borderWidthFixture,
   colorFixture,
+  referenceFixture,
   spacingFixture,
   textFontFamilyFixture,
   textFontSizeFixture,
@@ -81,5 +82,11 @@ export const BorderWidth: Story = {
 export const BorderRadius: Story = {
   args: {
     token: borderRadiusFixture,
+  },
+};
+
+export const ReferencedToken: Story = {
+  args: {
+    token: referenceFixture,
   },
 };

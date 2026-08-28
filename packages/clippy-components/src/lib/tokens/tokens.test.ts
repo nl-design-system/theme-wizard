@@ -13,6 +13,7 @@ import {
   getTokenPath,
   getTokenReferenceCount,
   getTokenReferencedAt,
+  stringifyTokenValue,
 } from './index';
 
 const tokenFullFixture: BaseDesignToken = {
@@ -23,7 +24,24 @@ const tokenFullFixture: BaseDesignToken = {
     'nl.nldesignsystem.token-subtype': 'border-color',
   },
   $type: 'color',
-  $value: '#ff0000',
+  $value: {
+    alpha: 1,
+    colorSpace: 'srgb',
+    components: [0.9882352941176471, 0.9882352941176471, 0.9882352941176471],
+  },
+};
+
+const tokenReferenceFixture: BaseDesignToken = {
+  $extensions: {
+    'nl.nldesignsystem.path': 'path.to.token',
+    'nl.nldesignsystem.value-resolved-as': {
+      alpha: 1,
+      colorSpace: 'srgb',
+      components: [0.3607843137254902, 0.5372549019607843, 0.7450980392156863],
+    },
+  },
+  $type: 'color',
+  $value: '{path.to.other.token}',
 };
 
 export const tokenSpacingFixture: BaseDesignToken = {
@@ -34,6 +52,18 @@ export const tokenSpacingFixture: BaseDesignToken = {
   $type: 'dimension',
   $value: '64px',
 };
+
+describe('stringifyTokenValue', () => {
+  it('should return the value as a string', () => {
+    const result = stringifyTokenValue(tokenFullFixture);
+    expect(result).toBe('#fcfcfc');
+  });
+
+  it('should return the referenced value as a string', () => {
+    const result = stringifyTokenValue(tokenReferenceFixture);
+    expect(result).toBe('#5c89be');
+  });
+});
 
 describe('getTokenPath', () => {
   it('should return token path from extension', () => {
@@ -99,6 +129,12 @@ describe('getTokenColor', () => {
   it('should return undefined for token without color type', () => {
     const result = getTokenColor(tokenSpacingFixture);
     expect(result).toBeUndefined();
+  });
+
+  it('should return a referenced color', () => {
+    const result = getTokenColor(tokenReferenceFixture);
+    expect(result).toBeDefined();
+    expect(result).toBeInstanceOf(Color);
   });
 });
 
