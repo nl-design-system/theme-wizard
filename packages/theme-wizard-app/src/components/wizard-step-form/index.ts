@@ -1,5 +1,6 @@
 import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
+import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
@@ -29,8 +30,9 @@ import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant
 import Theme from '../../lib/Theme';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { type StagedDesignToken } from '../../utils/types';
-import '../wizard-color-description';
 import { markStepComplete } from '../../utils/wizard-steps-storage';
+import '../wizard-color-description';
+import { EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import styles from './styles';
 
 export { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
@@ -98,7 +100,7 @@ declare global {
 
 @safeCustomElement(tag)
 export class WizardStepForm extends LitElement {
-  static override readonly styles = [unsafeCSS(buttonCss), unsafeCSS(paragraphCss), styles];
+  static override readonly styles = [unsafeCSS(buttonCss), unsafeCSS(linkCss), unsafeCSS(paragraphCss), styles];
 
   private static readonly defaultItemsToShow = 8;
 
@@ -139,7 +141,7 @@ export class WizardStepForm extends LitElement {
 
       const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
 
-      if (this.type === 'color' && this.subType === 'color') {
+      if (this.type === 'color' && this.path === 'basis.color.default.color-default') {
         const bgDocument = this.theme.at('basis.color.default.bg-default').$value;
         tokens.sort((a, b) => {
           return (
@@ -150,7 +152,33 @@ export class WizardStepForm extends LitElement {
 
       this._tokens = tokens;
       this._suggestedTokensSource = source;
+
+      // Reveal the full list up front when the checked option (e.g. a color-scale's seed match)
+      // would otherwise be hidden behind the default show-more cutoff.
+      if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
+        this.showAll = true;
+      }
     }
+  }
+
+  /** Index of the option matching the current value, or the group's color-scale seed. */
+  private getCheckedIndex(tokens: BaseDesignToken[], tokenAt: BaseDesignToken, path: string): number {
+    const scaleParams = getColorScaleParams(path);
+    const seedColor = scaleParams
+      ? (this.theme.at(scaleParams.regularGroupPath) as BaseDesignToken | undefined)?.$extensions?.[
+          EXTENSION_COLORSCALE_SEED
+        ]
+      : undefined;
+
+    return tokens.findIndex((token) => {
+      if (tokenEquals(token, tokenAt)) {
+        return true;
+      }
+      if (seedColor !== undefined && dequal(token.$value, seedColor)) {
+        return true;
+      }
+      return false;
+    });
   }
 
   private handleSubmit(event: SubmitEvent) {
@@ -172,8 +200,10 @@ export class WizardStepForm extends LitElement {
       return [{ path, token }];
     });
 
-    // A color-scale slot path expands into its whole 14-token ramp (regular + paired inverse group).
-    const tokens: UpdateDesignTokensDetail = selections.flatMap(({ path, token }) => {
+    // A color-scale slot path expands into its whole 14-token ramp (regular + paired inverse group),
+    // and records the picked color as both groups' seed so it can reproduce exactly there later.
+    const groupSeeds: NonNullable<UpdateDesignTokensDetail['groupSeeds']> = [];
+    const tokens: UpdateDesignTokensDetail['tokens'] = selections.flatMap(({ path, token }) => {
       if (!isColorToken(token)) {
         return [{ path, value: token.$value }];
       }
@@ -192,6 +222,11 @@ export class WizardStepForm extends LitElement {
         profile,
       }).data;
 
+      groupSeeds.push(
+        { groupPath: regularGroupPath, seed: token.$value },
+        { groupPath: inverseGroupPath, seed: token.$value },
+      );
+
       return TOKENS.flatMap((tokenName) => [
         { path: `${regularGroupPath}.${tokenName}`, value: regular[tokenName] },
         { path: `${inverseGroupPath}.${tokenName}`, value: inverse[tokenName] },
@@ -203,7 +238,7 @@ export class WizardStepForm extends LitElement {
       new CustomEvent<UpdateDesignTokensDetail>(UPDATE_DESIGN_TOKENS_EVENT, {
         bubbles: true,
         composed: true,
-        detail: tokens,
+        detail: { groupSeeds, tokens },
       }),
     );
 
@@ -252,7 +287,7 @@ export class WizardStepForm extends LitElement {
       `;
     }
 
-    if (this.path.includes('.action-1') && isColorToken(token)) {
+    if (this.path.includes('.action-1-inverse') && isColorToken(token)) {
       const exampleScale = generateScale(stringified, {
         anchor: 'bg-default',
         inverse: true,
@@ -269,6 +304,30 @@ export class WizardStepForm extends LitElement {
           <clippy-reset-theme>
             <wizard-preview-theme>
               <clippy-button purpose="primary" style=${styleMap(style)}>Klik mij!</clippy-button>
+            </wizard-preview-theme>
+          </clippy-reset-theme>
+        </clippy-html-image>
+      `;
+    }
+
+    if (this.path.includes('.action-2') && isColorToken(token)) {
+      const exampleScale = generateScale(stringified, {
+        profile: 'accent',
+      }).data;
+      const style = {
+        '--nl-link-color': stringifyColor(exampleScale['color-default']),
+        '--nl-link-text-decoration-color': stringifyColor(exampleScale['color-default']),
+      };
+
+      return html`
+        <clippy-html-image>
+          <clippy-reset-theme>
+            <wizard-preview-theme>
+              <p class="nl-paragraph">
+                Voorbeeldtekst met
+                <a href="" class="nl-link" style=${styleMap(style)}>een link</a>
+                die je kunt aanklikken.
+              </p>
             </wizard-preview-theme>
           </clippy-reset-theme>
         </clippy-html-image>
@@ -360,7 +419,7 @@ export class WizardStepForm extends LitElement {
     const tokenType = tokenAt.$type;
     const tokenCountToShow =
       !this.showAll || tokens.length < WizardStepForm.defaultItemsToShow ? WizardStepForm.defaultItemsToShow : Infinity;
-    const checkedIndex: number | undefined = tokens.findIndex((token) => tokenEquals(token, tokenAt));
+    const checkedIndex = this.getCheckedIndex(tokens, tokenAt, path);
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>
