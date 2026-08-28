@@ -38,7 +38,7 @@ export class WizardStyleGuideComponents extends LitElement {
     walkTokens(componentConfig, (token) => {
       tokens.push({
         ...token,
-        $value: isRef(token.$value) ? resolveRef(this.theme.tokens, token.$value)?.$value : token.$value,
+        // $value: isRef(token.$value) ? resolveRef(this.theme.tokens, token.$value)?.$value : token.$value,
       });
       return SKIP;
     });
@@ -49,6 +49,7 @@ export class WizardStyleGuideComponents extends LitElement {
   override render() {
     const components = this.theme.tokens['nl'];
     if (!components) return nothing;
+    console.log('components', components);
 
     return html`
       <div class="wizard-style-guide">
