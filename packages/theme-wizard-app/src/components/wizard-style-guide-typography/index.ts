@@ -48,6 +48,7 @@ export class WizardStyleGuideTypography extends LitElement {
           example-label=${t('styleGuide.sample')}
           token-id-label=${t('styleGuide.tokenName')}
           value-label=${t('styleGuide.value')}
+          reference-to-label=${t('styleGuide.referenceTo')}
           details-label=${t('styleGuide.details')}
           show-details-label=${t('styleGuide.showDetails')}
           copy-to-clipboard-label=${t('styleGuide.detailsDialog.copyToClipboard')}
@@ -71,6 +72,7 @@ export class WizardStyleGuideTypography extends LitElement {
           example-label=${t('styleGuide.sample')}
           token-id-label=${t('styleGuide.tokenName')}
           value-label=${t('styleGuide.value')}
+          reference-to-label=${t('styleGuide.referenceTo')}
           details-label=${t('styleGuide.details')}
           show-details-label=${t('styleGuide.showDetails')}
           copy-to-clipboard-label=${t('styleGuide.detailsDialog.copyToClipboard')}
