@@ -153,8 +153,7 @@ export class WizardStepForm extends LitElement {
       this._tokens = tokens;
       this._suggestedTokensSource = source;
 
-      // Reveal the full list up front when the checked option (e.g. a color-scale's seed match)
-      // would otherwise be hidden behind the default show-more cutoff.
+      // Show all options instead of cutting off if the selected option is below the default cutoff
       if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
         this.showAll = true;
       }
@@ -163,6 +162,10 @@ export class WizardStepForm extends LitElement {
 
   /** Index of the option matching the current value, or the group's color-scale seed. */
   private getCheckedIndex(tokens: BaseDesignToken[], tokenAt: BaseDesignToken, path: string): number {
+    if (!isColorToken(tokenAt)) {
+      return tokens.findIndex((token) => tokenEquals(token, tokenAt));
+    }
+
     const scaleParams = getColorScaleParams(path);
     const seedColor = scaleParams
       ? (this.theme.at(scaleParams.regularGroupPath) as BaseDesignToken | undefined)?.$extensions?.[
