@@ -12,6 +12,7 @@ const labels = [
   'example-label',
   'token-id-label',
   'value-label',
+  'reference-to-label',
   'details-label',
   'show-details-label',
   'reference-title-label',

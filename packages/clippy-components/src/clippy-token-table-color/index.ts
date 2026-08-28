@@ -45,6 +45,7 @@ export class ClippyTokenTableColor extends LitElement {
   // TODO: fix prop-drilling with composition. These are passed down to the `clippy-token-detail` component.
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
+  @property({ attribute: 'reference-to-label', type: String }) referenceToLabel = 'Reference to';
   @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
   @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
@@ -70,6 +71,7 @@ export class ClippyTokenTableColor extends LitElement {
           .token=${token}
           example-label="${this.exampleLabel}"
           value-label="${this.valueLabel}"
+          reference-to-label="${this.referenceToLabel}"
           reference-title-label="${this.referenceTitleLabel}"
           reference-empty-label="${this.referenceEmptyLabel}"
           copy-to-clipboard-label="${this.copyToClipboardLabel}"

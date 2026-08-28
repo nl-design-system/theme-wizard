@@ -4,9 +4,9 @@ import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.
 import '../clippy-color-sample';
 import '../clippy-modal';
 import '../clippy-token-detail';
-import { BaseDesignToken, getTokenSubtype, stringifyToken } from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignToken, getTokenSubtype } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
-import { getTokenPath } from '@src/lib/tokens';
+import { getTokenPath, stringifyTokenValue } from '@src/lib/tokens';
 import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property, query } from 'lit/decorators.js';
@@ -64,6 +64,7 @@ export class ClippyTokenTable extends LitElement {
   @property({ attribute: 'copy-to-clipboard-label', type: String }) copyToClipboardLabel = 'Copy to clipboard: ';
 
   // TODO: fix prop-drilling with composition. These are passed down to the `clippy-token-detail` component.
+  @property({ attribute: 'reference-to-label', type: String }) referenceToLabel = 'Reference to';
   @property({ attribute: 'reference-title-label', type: String }) referenceTitleLabel = 'Where is this token used?';
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
 
@@ -90,6 +91,7 @@ export class ClippyTokenTable extends LitElement {
           .token=${token}
           example-label="${this.exampleLabel}"
           value-label="${this.valueLabel}"
+          reference-to-label="${this.referenceToLabel}"
           reference-title-label="${this.referenceTitleLabel}"
           reference-empty-label="${this.referenceEmptyLabel}"
           copy-to-clipboard-label="${this.copyToClipboardLabel}"
@@ -191,7 +193,7 @@ export class ClippyTokenTable extends LitElement {
                   ${this.#renderValue({
                     copyable: true,
                     testId: 'token-value',
-                    text: stringifyToken(token),
+                    text: stringifyTokenValue(token),
                   })}
                 </div>
                 <div class="clippy-token-table__cell">

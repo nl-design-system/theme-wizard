@@ -16,6 +16,7 @@ const labels = ['background-label', 'border-label', 'foreground-label'];
 const detailLabels = [
   'example-label',
   'value-label',
+  'reference-to-label',
   'reference-title-label',
   'reference-empty-label',
   'copy-to-clipboard-label',
