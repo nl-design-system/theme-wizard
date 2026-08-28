@@ -48,6 +48,8 @@ interface ColorScaleParams {
   /** e.g. `basis.color.accent-1-inverse` */
   inverseGroupPath: string;
   profile: ReturnType<typeof profileForName>;
+  /** The slot the user picked a color for, e.g. `bg-default`. */
+  slot: TokenName;
 }
 
 /** Qualifies only when path's last segment is one of the 14 canonical slot names. */
@@ -68,6 +70,7 @@ const getColorScaleParams = (path: string): ColorScaleParams | undefined => {
     inverseGroupPath: [...prefix, `${groupBase}${INVERSE_SUFFIX}`].join('.'),
     profile: profileForName(groupBase),
     regularGroupPath: [...prefix, groupBase].join('.'),
+    slot: slot as TokenName,
   };
 };
 
@@ -166,13 +169,23 @@ export class WizardStepForm extends LitElement {
         return [{ path, value: token.$value }];
       }
 
-      const { inverseGroupPath, profile, regularGroupPath } = scaleParams;
+      const { inverseGroupPath, profile, regularGroupPath, slot } = scaleParams;
       const seed = stringifyColor(token.$value);
-      // Neutral's chroma template is flat synthetic (masks.ts), so anchoring shifts the
-      // ramp and clamps to gray near the edges. Other profiles anchor safely.
-      const anchor = profile === 'neutral' ? undefined : 'auto';
-      const regular = generateScale(seed, { anchor, contrast: { enforce: true }, profile }).data;
-      const inverse = generateScale(seed, { anchor, contrast: { enforce: true }, inverse: true, profile }).data;
+      const isInversePick = path.includes('-inverse');
+      // Neutral's template is flat synthetic, so it skips anchoring. Others anchor to the
+      // picked slot, except an inverse bg-default pick: forcing that vivid color onto
+      // regular's pale bg-default would look wrong, so regular stays unanchored (natural).
+      let regularAnchor: TokenName | undefined;
+      if (profile !== 'neutral') {
+        regularAnchor = isInversePick && slot === 'bg-default' ? undefined : slot;
+      }
+      const inverseAnchor = profile === 'neutral' ? undefined : slot;
+      const regular = generateScale(seed, { anchor: regularAnchor, contrast: { enforce: true }, profile }).data;
+      const inverse = generateScale(seed, {
+        anchor: inverseAnchor,
+        inverse: true,
+        profile,
+      }).data;
 
       return TOKENS.flatMap((tokenName) => [
         { path: `${regularGroupPath}.${tokenName}`, value: regular[tokenName] },
@@ -231,6 +244,29 @@ export class WizardStepForm extends LitElement {
           </clippy-heading>
         </clippy-html-image>
         <clippy-token-sample-text>${t('wizard.stepForm.sample.paragraph')}</clippy-token-sample-text>
+      `;
+    }
+
+    if (this.path.includes('.action-1') && isColorToken(token)) {
+      const exampleScale = generateScale(stringified, {
+        anchor: 'bg-default',
+        inverse: true,
+        profile: 'accent',
+      }).data;
+      const style = {
+        '--nl-button-primary-background-color': stringifyColor(exampleScale['bg-default']),
+        '--nl-button-primary-border-color': stringifyColor(exampleScale['border-default']),
+        '--nl-button-primary-color': stringifyColor(exampleScale['color-default']),
+      };
+
+      return html`
+        <clippy-html-image>
+          <clippy-reset-theme>
+            <wizard-preview-theme>
+              <clippy-button purpose="primary" style=${styleMap(style)}>Klik mij!</clippy-button>
+            </wizard-preview-theme>
+          </clippy-reset-theme>
+        </clippy-html-image>
       `;
     }
 

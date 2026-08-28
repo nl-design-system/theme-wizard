@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { ColorScale } from './generate.js';
 import type { ProfileName, TokenName } from './masks.js';
-import { contrastRatio } from './contrast.js';
+import { apcaContrast } from './contrast.js';
 import { generateScale } from './generate.js';
 import { TOKENS } from './masks.js';
 import { oklchToHex } from './oklch.js';
@@ -14,21 +14,21 @@ const hexOf = (scale: ColorScale, token: TokenName): string => {
   return oklchToHex({ C, H, L });
 };
 
-// Mirrors the README's documented contrast requirements table.
+// Mirrors the README's documented contrast requirements table (APCA Lc targets).
 const REQUIREMENTS: { token: TokenName; bg: TokenName; ratio: number }[] = [
-  { bg: 'bg-default', ratio: 3, token: 'border-default' },
-  { bg: 'bg-hover', ratio: 3, token: 'border-hover' },
-  { bg: 'bg-active', ratio: 3, token: 'border-active' },
-  { bg: 'bg-default', ratio: 4.5, token: 'color-default' },
-  { bg: 'bg-hover', ratio: 4.5, token: 'color-hover' },
-  { bg: 'bg-active', ratio: 4.5, token: 'color-active' },
-  { bg: 'bg-subtle', ratio: 4.5, token: 'color-subtle' },
-  { bg: 'bg-subtle', ratio: 4.5, token: 'color-document' },
+  { bg: 'bg-default', ratio: 30, token: 'border-default' },
+  { bg: 'bg-hover', ratio: 30, token: 'border-hover' },
+  { bg: 'bg-active', ratio: 30, token: 'border-active' },
+  { bg: 'bg-default', ratio: 60, token: 'color-default' },
+  { bg: 'bg-hover', ratio: 60, token: 'color-hover' },
+  { bg: 'bg-active', ratio: 60, token: 'color-active' },
+  { bg: 'bg-subtle', ratio: 60, token: 'color-subtle' },
+  { bg: 'bg-subtle', ratio: 60, token: 'color-document' },
 ];
 // disabled uses a looser text target and disables border enforcement entirely.
 const DISABLED_REQUIREMENTS = REQUIREMENTS.filter((r) => r.token.startsWith('color-')).map((r) => ({
   ...r,
-  ratio: 3,
+  ratio: 30,
 }));
 
 describe('generateScale', () => {
@@ -46,7 +46,7 @@ describe('generateScale', () => {
     expect(warnings).toEqual([]);
     const reqs = profile === 'disabled' ? DISABLED_REQUIREMENTS : REQUIREMENTS;
     for (const { bg, ratio, token } of reqs) {
-      expect(contrastRatio(hexOf(data, token), hexOf(data, bg))).toBeGreaterThanOrEqual(ratio - 0.01);
+      expect(Math.abs(apcaContrast(hexOf(data, bg), hexOf(data, token)))).toBeGreaterThanOrEqual(ratio - 0.1);
     }
   });
 
@@ -108,8 +108,8 @@ describe('generateScale', () => {
   });
 
   it('contrast: { enforce: false } reports failures without changing the data', () => {
-    // An unreachably high target (21:1) guarantees some tokens fail.
-    const targets = { accent: { text: 21 } };
+    // Lc 150 exceeds APCA's ~108 max, so some tokens must fail.
+    const targets = { accent: { text: 150 } };
     const enforced = generateScale('#3366CC', { contrast: { targets }, profile: 'accent' });
     const reportOnly = generateScale('#3366CC', { contrast: { enforce: false, targets }, profile: 'accent' });
     expect(reportOnly.data).toEqual(generateScale('#3366CC', { contrast: false, profile: 'accent' }).data);
@@ -119,16 +119,16 @@ describe('generateScale', () => {
 
   it('custom targets override the defaults', () => {
     const { warnings } = generateScale('#3366CC', {
-      contrast: { targets: { accent: { text: 21 } } },
+      contrast: { targets: { accent: { text: 150 } } },
       profile: 'accent',
     });
-    // 21:1 is only achievable by pure black-on-white; some tokens must fall short.
+    // Lc 150 is above the achievable max; some tokens must fall short.
     expect(warnings.length).toBeGreaterThan(0);
   });
 
   it('minLightnessGap widens the boundary an unreachable target stops at', () => {
-    // 21:1 is unreachable, so enforcement stops at the lightness guard and warns.
-    const targets = { accent: { text: 21 } };
+    // Lc 150 is unreachable, so enforcement stops at the lightness guard and warns.
+    const targets = { accent: { text: 150 } };
     const defaultGap = generateScale('#3366CC', { contrast: { targets }, profile: 'accent' });
     const widerGap = generateScale('#3366CC', { contrast: { minLightnessGap: 0.1, targets }, profile: 'accent' });
     expect(widerGap.warnings.some((warning) => warning.includes('kept 0.1 off'))).toBe(true);
@@ -136,13 +136,13 @@ describe('generateScale', () => {
   });
 
   it('minLightnessGap: 0 lets the boundary reach pure black or white', () => {
-    const targets = { accent: { text: 21 } };
+    const targets = { accent: { text: 150 } };
     const { warnings } = generateScale('#3366CC', { contrast: { minLightnessGap: 0, targets }, profile: 'accent' });
     expect(warnings.some((warning) => /kept 0 off/.test(warning))).toBe(true);
   });
 
   it('minLightnessGap is clamped to the valid range (0 - 0.49)', () => {
-    const targets = { accent: { text: 21 } };
+    const targets = { accent: { text: 150 } };
     const tooLarge = generateScale('#3366CC', { contrast: { minLightnessGap: 5, targets }, profile: 'accent' });
     const atMax = generateScale('#3366CC', { contrast: { minLightnessGap: 0.49, targets }, profile: 'accent' });
     const negative = generateScale('#3366CC', { contrast: { minLightnessGap: -1, targets }, profile: 'accent' });

@@ -1,7 +1,7 @@
 import { COLOR_SPACES, type ColorValue } from '@nl-design-system-community/design-tokens-schema';
 import type { ProfileName, TokenName, Mask } from './masks.js';
 import type { OKLCH } from './oklch.js';
-import { contrastFromLuminance, relativeLuminanceOfOklch } from './contrast.js';
+import { apcaContrastOfOklch } from './contrast.js';
 import { MASKS, TOKENS } from './masks.js';
 import { parseToOklch, clampChroma } from './oklch.js';
 
@@ -14,20 +14,22 @@ interface ContrastRequirement {
   bg: TokenName;
   kind: 'text' | 'border';
   token: TokenName;
+  /** Groups default/hover/active variants sharing one bump direction — see `resolveFamilyDirections`. */
+  family?: 'border' | 'color';
 }
 
 const CONTRAST_REQUIREMENTS: ContrastRequirement[] = [
-  { bg: 'bg-default', kind: 'border', token: 'border-default' },
-  { bg: 'bg-hover', kind: 'border', token: 'border-hover' },
-  { bg: 'bg-active', kind: 'border', token: 'border-active' },
-  { bg: 'bg-default', kind: 'text', token: 'color-default' },
-  { bg: 'bg-hover', kind: 'text', token: 'color-hover' },
-  { bg: 'bg-active', kind: 'text', token: 'color-active' },
+  { bg: 'bg-default', family: 'border', kind: 'border', token: 'border-default' },
+  { bg: 'bg-hover', family: 'border', kind: 'border', token: 'border-hover' },
+  { bg: 'bg-active', family: 'border', kind: 'border', token: 'border-active' },
+  { bg: 'bg-default', family: 'color', kind: 'text', token: 'color-default' },
+  { bg: 'bg-hover', family: 'color', kind: 'text', token: 'color-hover' },
+  { bg: 'bg-active', family: 'color', kind: 'text', token: 'color-active' },
   { bg: 'bg-subtle', kind: 'text', token: 'color-subtle' },
   { bg: 'bg-subtle', kind: 'text', token: 'color-document' },
 ];
 
-/** Target ratios. `null` disables enforcement for that kind. */
+/** Target APCA Lc scores (0..~108, compared as magnitude). `null` disables enforcement for that kind. */
 export interface ContrastTargets {
   text: number | null;
   border: number | null;
@@ -38,17 +40,17 @@ export interface ContrastConfig {
   enforce?: boolean;
   /**
    * Minimum lightness headroom to keep from pure black/white (OKLCH L units).
-   * If reaching the target ratio would push a token within this of L=0 or L=1,
+   * If reaching the target Lc would push a token within this of L=0 or L=1,
    * it stops at the boundary and emits a warning instead. Default 0.02.
    */
   minLightnessGap?: number;
-  /** Per-profile ratio overrides. Defaults: 4.5 text / 3 border; disabled 3 text / off border. */
+  /** Per-profile Lc overrides. Defaults: 60 text / 30 border; disabled 30 text / off border. */
   targets?: Partial<Record<ProfileName, Partial<ContrastTargets>>>;
 }
 
-const DEFAULT_TARGETS: ContrastTargets = { border: 3, text: 4.5 };
+const DEFAULT_TARGETS: ContrastTargets = { border: 30, text: 60 };
 const PROFILE_TARGETS: Partial<Record<ProfileName, ContrastTargets>> = {
-  disabled: { border: null, text: 3 },
+  disabled: { border: null, text: 30 },
 };
 
 /** Lower bound for `minLightnessGap`: 0 means no headroom, bumping is allowed to reach pure black/white. */
@@ -68,7 +70,7 @@ export interface GenerateOptions {
   inverse?: boolean;
   chroma?: number;
   anchor?: TokenName | 'auto';
-  /** WCAG contrast enforcement. Omit for defaults (enforce on). Pass `false` to skip entirely. */
+  /** APCA contrast enforcement. Omit for defaults (enforce on). Pass `false` to skip entirely. */
   contrast?: ContrastConfig | false;
 }
 
@@ -156,7 +158,11 @@ const buildRamp = (seed: string, options: GenerateOptions): RampContext => {
 
   const data = {} as OklchScale;
   for (let tokenIndex = 0; tokenIndex < TOKENS.length; tokenIndex++) {
-    const lightness = clamp(mask.L[tokenIndex] + lightnessShift, 0, 1);
+    // Tokens pinned to a flat extreme (no chroma, full black/white) are seed-independent
+    // by design (e.g. "always white text on dark bg") — shifting them with the anchor
+    // would corrupt that invariant whenever the seed sits far from the anchor's template.
+    const isPinned = mask.C[tokenIndex] === 0 && (mask.L[tokenIndex] === 0 || mask.L[tokenIndex] === 1);
+    const lightness = isPinned ? mask.L[tokenIndex] : clamp(mask.L[tokenIndex] + lightnessShift, 0, 1);
     const hue = computeTokenHue(mask, tokenIndex, seedHue, hueReference);
     const tokenChroma = clampChroma(lightness, mask.C[tokenIndex] * chromaScale, hue);
     data[TOKENS[tokenIndex]] = { C: tokenChroma, H: hue, L: lightness };
@@ -173,34 +179,67 @@ const resolveContrastTargets = (profile: ProfileName, config: ContrastConfig): C
   };
 };
 
-interface BumpDirection {
-  boundaryLightness: number;
-  contrastAtBoundary: number;
-  shouldLighten: boolean;
+interface TokenLightnessFns {
+  apcaAtLightness: (lightness: number) => number;
+  oklchAtLightness: (lightness: number) => OKLCH;
 }
 
-/**
- * Decide which direction (toward black or white) actually raises contrast
- * against the background, and how far it's allowed to go (the lightness guard).
- * Against a light background only darkening helps; against a dark background
- * only lightening helps — comparing both boundaries resolves both cases, and ties.
- * Also returns the contrast already computed at the chosen boundary, so callers
- * don't need to re-evaluate it.
- */
-const pickBumpDirection = (contrastAtLightness: (lightness: number) => number, gap: number): BumpDirection => {
-  const contrastNearWhite = contrastAtLightness(1 - gap);
-  const contrastNearBlack = contrastAtLightness(gap);
-  const shouldLighten = contrastNearWhite >= contrastNearBlack;
-  return {
-    boundaryLightness: shouldLighten ? 1 - gap : gap,
-    contrastAtBoundary: shouldLighten ? contrastNearWhite : contrastNearBlack,
-    shouldLighten,
+/** Hue/chroma-locked color and |APCA Lc| at a given lightness, for one requirement's token. */
+const buildTokenLightnessFns = (
+  ramp: RampContext,
+  requirement: ContrastRequirement,
+  tokenIndex: number,
+): TokenLightnessFns => {
+  const { data, mask } = ramp;
+  const background = data[requirement.bg];
+  const hue = computeTokenHue(mask, tokenIndex, ramp.seedHue, ramp.hueReference);
+  const unclampedChroma = mask.C[tokenIndex] * ramp.chromaScale;
+
+  const oklchAtLightness = (lightness: number): OKLCH => {
+    const chroma = clampChroma(lightness, unclampedChroma, hue);
+    return { C: chroma, H: hue, L: lightness };
   };
+  const apcaAtLightness = (lightness: number): number => {
+    return Math.abs(apcaContrastOfOklch(background, oklchAtLightness(lightness)));
+  };
+
+  return { apcaAtLightness, oklchAtLightness };
+};
+
+/** Which direction (black or white) scores higher |Lc| against the background. */
+const pickShouldLighten = (apcaAtLightness: (lightness: number) => number, gap: number): boolean => {
+  return apcaAtLightness(1 - gap) >= apcaAtLightness(gap);
+};
+
+/** One bump direction per family, from the `-default` member, so hover/active don't flip independently. */
+const resolveFamilyDirections = (ramp: RampContext, gap: number, targets: ContrastTargets): Map<string, boolean> => {
+  const { data } = ramp;
+  const directions = new Map<string, boolean>();
+  for (const requirement of CONTRAST_REQUIREMENTS) {
+    if (!requirement.family || directions.has(requirement.family) || !requirement.token.endsWith('-default')) {
+      continue;
+    }
+    const ratio = requirement.kind === 'text' ? targets.text : targets.border;
+    const backgroundOklch = data[requirement.bg];
+    const foregroundOklch = data[requirement.token];
+    const currentApca = Math.abs(apcaContrastOfOklch(backgroundOklch, foregroundOklch));
+
+    let shouldLighten: boolean;
+    if (ratio === null || currentApca >= ratio) {
+      shouldLighten = foregroundOklch.L > backgroundOklch.L;
+    } else {
+      const tokenIndex = TOKENS.indexOf(requirement.token);
+      const { apcaAtLightness } = buildTokenLightnessFns(ramp, requirement, tokenIndex);
+      shouldLighten = pickShouldLighten(apcaAtLightness, gap);
+    }
+    directions.set(requirement.family, shouldLighten);
+  }
+  return directions;
 };
 
 /**
- * Contrast rises monotonically from `startLightness` toward `boundaryLightness`;
- * bisect for the minimal-move lightness that just meets the ratio.
+ * |Lc| rises monotonically from `startLightness` toward `boundaryLightness`;
+ * bisect for the minimal-move lightness that just meets the target.
  * `startLightness` must fail `meetsRatio` and `boundaryLightness` must pass it.
  */
 const bisectForLightness = (
@@ -229,6 +268,8 @@ interface EnforceRequirementParams {
   ramp: RampContext;
   ratio: number;
   requirement: ContrastRequirement;
+  /** Family-decided direction, if any; per-token choice otherwise. */
+  shouldLighten?: boolean;
   tokenIndex: number;
 }
 
@@ -237,56 +278,51 @@ interface EnforceRequirementResult {
 }
 
 /**
- * Check one token/background pair against its target ratio and, if it fails,
+ * Check one token/background pair against its target |Lc| and, if it fails,
  * nudge the token's lightness away from the background until it passes (or
  * warn if the lightness guard is hit first). Mutates `ramp.data` in place.
  */
 const enforceRequirement = (params: EnforceRequirementParams): EnforceRequirementResult => {
   const { enforce, gap, profileLabel, ramp, ratio, requirement, tokenIndex } = params;
-  const { data, mask } = ramp;
+  const { data } = ramp;
 
-  // The background never changes within this call, so its luminance is computed
-  // once here and reused, instead of recomputing it on every candidate lightness
-  // the bump search evaluates below.
-  const backgroundLuminance = relativeLuminanceOfOklch(data[requirement.bg]);
+  const backgroundOklch = data[requirement.bg];
   const foregroundOklch = data[requirement.token];
-  const currentRatio = contrastFromLuminance(relativeLuminanceOfOklch(foregroundOklch), backgroundLuminance);
+  const currentApca = Math.abs(apcaContrastOfOklch(backgroundOklch, foregroundOklch));
 
-  if (currentRatio >= ratio) {
+  // A passing token can still be on the wrong side of its family's direction.
+  const onFamilySide =
+    params.shouldLighten === undefined ? true : params.shouldLighten === foregroundOklch.L > backgroundOklch.L;
+
+  if (currentApca >= ratio && onFamilySide) {
     return {};
   }
 
   const requirementLabel = `${profileLabel} · ${requirement.token} vs ${requirement.bg}`;
 
   if (!enforce) {
-    return { warning: `${requirementLabel}: ${currentRatio.toFixed(2)}:1 < ${ratio}:1` };
+    return { warning: `${requirementLabel}: Lc ${currentApca.toFixed(1)} < Lc ${ratio}` };
   }
 
-  const hue = computeTokenHue(mask, tokenIndex, ramp.seedHue, ramp.hueReference);
-  const unclampedChroma = mask.C[tokenIndex] * ramp.chromaScale;
+  const { apcaAtLightness, oklchAtLightness } = buildTokenLightnessFns(ramp, requirement, tokenIndex);
+  const shouldLighten = params.shouldLighten ?? pickShouldLighten(apcaAtLightness, gap);
+  const boundaryLightness = shouldLighten ? 1 - gap : gap;
+  const apcaAtBoundary = apcaAtLightness(boundaryLightness);
 
-  const oklchAtLightness = (lightness: number): OKLCH => {
-    const chroma = clampChroma(lightness, unclampedChroma, hue);
-    return { C: chroma, H: hue, L: lightness };
-  };
-  const contrastAtLightness = (lightness: number): number => {
-    return contrastFromLuminance(relativeLuminanceOfOklch(oklchAtLightness(lightness)), backgroundLuminance);
-  };
-
-  const { boundaryLightness, contrastAtBoundary, shouldLighten } = pickBumpDirection(contrastAtLightness, gap);
-
-  if (contrastAtBoundary < ratio) {
+  if (apcaAtBoundary < ratio) {
     // Target unreachable without crossing the guard: stop at the boundary and warn.
     data[requirement.token] = oklchAtLightness(boundaryLightness);
     const boundaryName = shouldLighten ? 'white' : 'black';
     return {
-      warning: `${requirementLabel}: ${contrastAtBoundary.toFixed(2)}:1 < ${ratio}:1 (kept ${gap} off ${boundaryName})`,
+      warning: `${requirementLabel}: Lc ${apcaAtBoundary.toFixed(1)} < Lc ${ratio} (kept ${gap} off ${boundaryName})`,
     };
   }
 
+  // Bisection needs a same-side start; off-side falls back to the background's own lightness.
+  const bisectStart = onFamilySide ? foregroundOklch.L : backgroundOklch.L;
   const bumpedLightness = bisectForLightness(
-    (lightness) => contrastAtLightness(lightness) >= ratio,
-    foregroundOklch.L,
+    (lightness) => apcaAtLightness(lightness) >= ratio,
+    bisectStart,
     boundaryLightness,
   );
   data[requirement.token] = oklchAtLightness(bumpedLightness); // silent successful bump
@@ -314,6 +350,7 @@ export const generateScale = (seed: string, options: GenerateOptions): GenerateR
   const gap = clamp(requestedGap, MIN_LIGHTNESS_GAP, MAX_LIGHTNESS_GAP);
   const targets = resolveContrastTargets(profile, contrastConfig);
   const profileLabel = `${profile}${inverse ? '-inverse' : ''}`;
+  const familyDirections = resolveFamilyDirections(ramp, gap, targets);
 
   for (const requirement of CONTRAST_REQUIREMENTS) {
     const ratio = requirement.kind === 'text' ? targets.text : targets.border;
@@ -322,7 +359,17 @@ export const generateScale = (seed: string, options: GenerateOptions): GenerateR
     }
 
     const tokenIndex = TOKENS.indexOf(requirement.token);
-    const { warning } = enforceRequirement({ enforce, gap, profileLabel, ramp, ratio, requirement, tokenIndex });
+    const shouldLighten = requirement.family ? familyDirections.get(requirement.family) : undefined;
+    const { warning } = enforceRequirement({
+      enforce,
+      gap,
+      profileLabel,
+      ramp,
+      ratio,
+      requirement,
+      shouldLighten,
+      tokenIndex,
+    });
     if (warning) {
       warnings.push(warning);
     }

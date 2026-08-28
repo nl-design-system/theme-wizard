@@ -73,7 +73,7 @@ const tintedDisabled = generateScale('#7C3AED', {
 | `inverse`  | `boolean`                                                                       | `false` | Dark-mode template (foreground → white, chroma in the fills).         |
 | `chroma`   | `number`                                                                        | `1`     | Multiplier on top of the seed's chroma. `<1` mutes, `>1` pushes.      |
 | `anchor`   | `TokenName \| 'auto'`                                                           | —       | Pin the seed into the scale. `'auto'` picks the best slot. See below. |
-| `contrast` | `ContrastConfig \| false`                                                       | on      | WCAG contrast enforcement. `false` skips it. See below.               |
+| `contrast` | `ContrastConfig \| false`                                                       | on      | APCA contrast enforcement. `false` skips it. See below.               |
 
 ## Anchoring (making the seed return in the scale)
 
@@ -105,22 +105,22 @@ interface GenerateResult {
 }
 ```
 
-`warnings` is empty when every enforced token meets its target. Entries look like `accent · color-subtle vs bg-subtle: 4.46:1 < 4.5:1 (kept 0.02 off white)` — the token, the background it's checked against, the ratio it reached, and why (it hit the lightness guard).
+`warnings` is empty when every enforced token meets its target. Entries look like `accent · color-subtle vs bg-subtle: Lc 58.2 < Lc 60 (kept 0.02 off white)` — the token, the background it's checked against, the |Lc| it reached, and why (it hit the lightness guard).
 
 ## Contrast enforcement
 
-After generating the ramp, the generator checks each foreground/border token against its reference background and, if it falls short, nudges that token's **lightness away from the background** (darker in the regular set, lighter in the inverse set) until it passes — hue fixed, chroma re-clamped to gamut at the new lightness. The metric is the WCAG 2.x contrast ratio (sRGB relative luminance).
+After generating the ramp, the generator checks each foreground/border token against its reference background and, if it falls short, nudges that token's **lightness away from the background** (darker in the regular set, lighter in the inverse set) until it passes — hue fixed, chroma re-clamped to gamut at the new lightness. The metric is APCA `Lc` (compared as magnitude, since APCA's sign just encodes polarity). Default/hover/active variants of the same token share one bump direction, decided from the `-default` member, so a family never ends up mixing black and white.
 
-Requirements, per set ([from the NL Design System handbook](https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#as-2-toepassing)):
+Requirements, per set ([from the NL Design System handbook](https://nldesignsystem.nl/handboek/huisstijl/basis-tokens/#as-2-toepassing), targets re-expressed in APCA Lc):
 
-| Token                                               | Ratio | Against          |
-| --------------------------------------------------- | ----- | ---------------- |
-| `border-default` / `border-hover` / `border-active` | 3:1   | matching `bg-*`  |
-| `color-default` / `color-hover` / `color-active`    | 4.5:1 | matching `bg-*`  |
-| `color-subtle` / `color-document`                   | 4.5:1 | `bg-subtle`      |
-| `border-subtle`, all `bg-*`                         | —     | (no requirement) |
+| Token                                               | Target Lc | Against          |
+| --------------------------------------------------- | --------- | ---------------- |
+| `border-default` / `border-hover` / `border-active` | 30        | matching `bg-*`  |
+| `color-default` / `color-hover` / `color-active`    | 60        | matching `bg-*`  |
+| `color-subtle` / `color-document`                   | 60        | `bg-subtle`      |
+| `border-subtle`, all `bg-*`                         | —         | (no requirement) |
 
-`disabled` uses a looser target — 3:1 for text, borders unenforced. Note the handbook does not publish exact numbers for disabled (it defers to [WCAG 1.4.3](https://www.w3.org/TR/WCAG22/#contrast-minimum), which formally exempts inactive components); these are pragmatic defaults and are configurable.
+`disabled` uses a looser target — Lc 30 for text, borders unenforced. Note the handbook does not publish exact numbers for disabled (it defers to [WCAG 1.4.3](https://www.w3.org/TR/WCAG22/#contrast-minimum), which formally exempts inactive components); these are pragmatic defaults and are configurable.
 
 ```ts
 interface ContrastConfig {
@@ -130,7 +130,7 @@ interface ContrastConfig {
 }
 ```
 
-**The lightness guard (`minLightnessGap`).** A token is never pushed within this much OKLCH lightness of pure black or white just to force a pass. If the target can only be met past that boundary — or the background sits in a luminance dead-zone where the ratio is unreachable from either side — the token stops at the boundary (its best achievable contrast) and a warning is emitted instead of producing a near-black/near-white color. Set a `null` target to disable a check.
+**The lightness guard (`minLightnessGap`).** A token is never pushed within this much OKLCH lightness of pure black or white just to force a pass. If the target can only be met past that boundary — or the background sits in a luminance dead-zone where it's unreachable from either side — the token stops at the boundary (its best achievable Lc) and a warning is emitted instead of producing a near-black/near-white color. Set a `null` target to disable a check.
 
 ```ts
 generateScale(seed, { profile: 'accent', contrast: false }); // skip entirely
@@ -138,7 +138,7 @@ generateScale(seed, { profile: 'accent', contrast: { enforce: false } }); // rep
 generateScale(seed, { profile: 'accent', contrast: { minLightnessGap: 0.05 } }); // wider guard
 generateScale(seed, {
   profile: 'accent',
-  contrast: { targets: { accent: { text: 7 } } },
+  contrast: { targets: { accent: { text: 75 } } },
 });
 ```
 
