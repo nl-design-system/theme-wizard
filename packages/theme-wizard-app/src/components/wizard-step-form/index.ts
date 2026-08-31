@@ -3,10 +3,6 @@ import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline'
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
-import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
-import '@nl-design-system-community/clippy-components/clippy-html-image';
-import '@nl-design-system-community/clippy-components/clippy-stack';
-import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   BaseDesignToken,
   ColorValue,
@@ -15,8 +11,13 @@ import {
   stringifyColor,
   stringifyToken,
 } from '@nl-design-system-community/design-tokens-schema';
+import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
+import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@nl-design-system-community/clippy-components/clippy-stack';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
 import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
+import alertCss from '@utrecht/alert-css/dist/index.css?raw';
 import { dequal } from 'dequal';
 import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
@@ -100,7 +101,13 @@ declare global {
 
 @safeCustomElement(tag)
 export class WizardStepForm extends LitElement {
-  static override readonly styles = [unsafeCSS(buttonCss), unsafeCSS(linkCss), unsafeCSS(paragraphCss), styles];
+  static override readonly styles = [
+    unsafeCSS(alertCss),
+    unsafeCSS(buttonCss),
+    unsafeCSS(linkCss),
+    unsafeCSS(paragraphCss),
+    styles,
+  ];
 
   private static readonly defaultItemsToShow = 8;
 
@@ -290,51 +297,82 @@ export class WizardStepForm extends LitElement {
       `;
     }
 
-    if (this.path.includes('.action-1-inverse') && isColorToken(token)) {
-      const exampleScale = generateScale(stringified, {
-        anchor: 'bg-default',
-        inverse: true,
-        profile: 'accent',
-      }).data;
-      const style = {
-        '--nl-button-primary-background-color': stringifyColor(exampleScale['bg-default']),
-        '--nl-button-primary-border-color': stringifyColor(exampleScale['border-default']),
-        '--nl-button-primary-color': stringifyColor(exampleScale['color-default']),
-      };
+    if (isColorToken(token)) {
+      if (this.path.includes('.action-1-inverse')) {
+        const exampleScale = generateScale(stringified, {
+          anchor: 'bg-default',
+          inverse: true,
+          profile: 'accent',
+        }).data;
+        const style = {
+          '--nl-button-primary-background-color': stringifyColor(exampleScale['bg-default']),
+          '--nl-button-primary-border-color': stringifyColor(exampleScale['border-default']),
+          '--nl-button-primary-color': stringifyColor(exampleScale['color-default']),
+        };
 
-      return html`
-        <clippy-html-image>
-          <clippy-reset-theme>
-            <wizard-preview-theme>
-              <clippy-button purpose="primary" style=${styleMap(style)}>Klik mij!</clippy-button>
-            </wizard-preview-theme>
-          </clippy-reset-theme>
-        </clippy-html-image>
-      `;
-    }
+        return html`
+          <clippy-html-image>
+            <clippy-reset-theme>
+              <wizard-preview-theme>
+                <clippy-button purpose="primary" style=${styleMap(style)}>Klik mij!</clippy-button>
+              </wizard-preview-theme>
+            </clippy-reset-theme>
+          </clippy-html-image>
+        `;
+      }
 
-    if (this.path.includes('.action-2') && isColorToken(token)) {
-      const exampleScale = generateScale(stringified, {
-        profile: 'accent',
-      }).data;
-      const style = {
-        '--nl-link-color': stringifyColor(exampleScale['color-default']),
-        '--nl-link-text-decoration-color': stringifyColor(exampleScale['color-default']),
-      };
+      if (this.path.includes('.action-2')) {
+        const exampleScale = generateScale(stringified, {
+          profile: 'accent',
+        }).data;
+        const style = {
+          '--nl-link-color': stringifyColor(exampleScale['color-default']),
+          '--nl-link-text-decoration-color': stringifyColor(exampleScale['color-default']),
+        };
 
-      return html`
-        <clippy-html-image>
-          <clippy-reset-theme>
-            <wizard-preview-theme>
-              <p class="nl-paragraph">
-                Voorbeeldtekst met
-                <a href="" class="nl-link" style=${styleMap(style)}>een link</a>
-                die je kunt aanklikken.
-              </p>
-            </wizard-preview-theme>
-          </clippy-reset-theme>
-        </clippy-html-image>
-      `;
+        return html`
+          <clippy-html-image>
+            <clippy-reset-theme>
+              <wizard-preview-theme>
+                <p class="nl-paragraph">
+                  Voorbeeldtekst met
+                  <a href="" class="nl-link" style=${styleMap(style)}>een link</a>
+                  die je kunt aanklikken.
+                </p>
+              </wizard-preview-theme>
+            </clippy-reset-theme>
+          </clippy-html-image>
+        `;
+      }
+
+      if (this.path === 'basis.color.negative-inverse.bg-default') {
+        const exampleScale = generateScale(stringified, {
+          profile: 'negative',
+        }).data;
+        const style = {
+          '--basis-color-negative-bg-subtle': stringifyColor(exampleScale['bg-subtle']),
+          '--basis-color-negative-color-default': stringifyColor(exampleScale['color-default']),
+        };
+        return html`
+          <clippy-html-image>
+            <clippy-reset-theme>
+              <wizard-preview-theme>
+                <div class="utrecht-alert utrecht-alert--info" style=${styleMap(style)}>
+                  <div class="utrecht-alert__content">
+                    <div class="utrecht-alert__message" role="status">
+                      <h2 class="utrecht-heading-2">Lorem ipsum</h2>
+                      <p class="utrecht-paragraph">
+                        Dit is een voorbeeldtekst die een gebruiker zou kunnen zien. Eventueel zouden we deze tekst
+                        kunnen aanvullen om meer ruimte in te nemen.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </wizard-preview-theme>
+            </clippy-reset-theme>
+          </clippy-html-image>
+        `;
+      }
     }
 
     return html`
