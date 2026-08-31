@@ -1,5 +1,6 @@
 import '@nl-design-system-community/clippy-components/clippy-token-table';
 import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+import '../wizard-preview-theme';
 import { consume } from '@lit/context';
 import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';

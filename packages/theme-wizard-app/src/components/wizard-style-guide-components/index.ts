@@ -2,6 +2,9 @@ import { consume } from '@lit/context';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import '@nl-design-system-community/clippy-components/clippy-token-table';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+import '../wizard-preview-theme';
 import { SKIP, walkTokens, type BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -54,18 +57,22 @@ export class WizardStyleGuideComponents extends LitElement {
 
           return html`
             <clippy-heading level="3">${`nl.${componentId}`}</clippy-heading>
-            <clippy-token-table
-              .tokens=${tokens}
-              example-label=${t('styleGuide.sample')}
-              token-id-label=${t('styleGuide.tokenName')}
-              value-label=${t('styleGuide.value')}
-              reference-to-label=${t('styleGuide.referenceTo')}
-              details-label=${t('styleGuide.details')}
-              show-details-label=${t('styleGuide.showDetails')}
-              copy-to-clipboard-label=${t('styleGuide.detailsDialog.copyToClipboard')}
-              reference-title-label=${t('styleGuide.detailsDialog.tokenReferenceList.title')}
-              reference-empty-label=${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
-            ></clippy-token-table>
+            <clippy-reset-theme>
+              <wizard-preview-theme>
+                <clippy-token-table
+                  .tokens=${tokens}
+                  example-label=${t('styleGuide.sample')}
+                  token-id-label=${t('styleGuide.tokenName')}
+                  value-label=${t('styleGuide.value')}
+                  reference-to-label=${t('styleGuide.referenceTo')}
+                  details-label=${t('styleGuide.details')}
+                  show-details-label=${t('styleGuide.showDetails')}
+                  copy-to-clipboard-label=${t('styleGuide.detailsDialog.copyToClipboard')}
+                  reference-title-label=${t('styleGuide.detailsDialog.tokenReferenceList.title')}
+                  reference-empty-label=${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
+                ></clippy-token-table>
+              </wizard-preview-theme>
+            </clippy-reset-theme>
           `;
         })}
       </div>
