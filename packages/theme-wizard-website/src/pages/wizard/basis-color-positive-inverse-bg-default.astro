@@ -1,0 +1,11 @@
+---
+import WizardLayout from '../../layouts/WizardLayout.astro';
+---
+
+<WizardLayout title="Kleur voor positief signaal">
+  <header slot="header">
+    <p class="nl-paragraph nl-paragraph--lead">Deze kleur wordt specifiek toegepast op alerts, knoppen, etc. Je kunt dit later altijd aanpassen.</p>
+  </header>
+
+  <wizard-step-form returnUrl="./" path="basis.color.positive-inverse.bg-default" subType="background-color"></wizard-step-form>
+</WizardLayout>
