@@ -513,6 +513,30 @@ export const en = {
         button: 'Example button',
         heading: 'Example of a heading.',
         paragraph: 'Example text. The quick brown fox jumps over the lazy dog.',
+        preview: {
+          alert: {
+            error: {
+              heading: 'Example: something went wrong',
+            },
+            info: {
+              heading: 'Example: for your information',
+            },
+            paragraph:
+              'This is example text a user might see. We could add more text here to take up more space if needed.',
+            positive: {
+              heading: 'Example: that worked',
+            },
+            warning: {
+              heading: 'Example: watch out',
+            },
+          },
+          button: 'Click me!',
+          link: {
+            linkText: 'a link',
+            prefix: 'Example text with',
+            suffix: 'you can click on.',
+          },
+        },
       },
       showFewerTokens: 'Show fewer options',
       showMoreTokens: 'Show all options ({{tokenCount}})',
@@ -1020,6 +1044,30 @@ export const nl = {
         button: 'Voorbeeld van knop',
         heading: 'Voorbeeld van een koptekst.',
         paragraph: 'Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.',
+        preview: {
+          alert: {
+            error: {
+              heading: 'Voorbeeld: er ging iets fout',
+            },
+            info: {
+              heading: 'Voorbeeld: ter informatie',
+            },
+            paragraph:
+              'Dit is een voorbeeldtekst die een gebruiker zou kunnen zien. Eventueel zouden we deze tekst kunnen aanvullen om meer ruimte in te nemen.',
+            positive: {
+              heading: 'Voorbeeld: het is gelukt',
+            },
+            warning: {
+              heading: 'Voorbeeld: let op',
+            },
+          },
+          button: 'Klik mij!',
+          link: {
+            linkText: 'een link',
+            prefix: 'Voorbeeldtekst met',
+            suffix: 'die je kunt aanklikken.',
+          },
+        },
       },
       showFewerTokens: 'Toon minder opties',
       showMoreTokens: 'Toon meer opties ({{tokenCount}})',

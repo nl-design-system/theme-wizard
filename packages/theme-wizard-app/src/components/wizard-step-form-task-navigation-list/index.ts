@@ -42,6 +42,21 @@ const STEPS = [
     label: 'Kleur voor negatief signaal',
     path: 'basis.color.negative-inverse.bg-default',
   },
+  {
+    icon: 'palette',
+    label: 'Kleur voor positief signaal',
+    path: 'basis.color.positive-inverse.bg-default',
+  },
+  {
+    icon: 'palette',
+    label: 'Kleur voor waarschuwend signaal',
+    path: 'basis.color.warning-inverse.bg-default',
+  },
+  {
+    icon: 'palette',
+    label: 'Kleur voor informatief signaal',
+    path: 'basis.color.info-inverse.bg-default',
+  },
 ] as const;
 
 const tag = 'wizard-step-form-task-navigation-list';

@@ -45,6 +45,43 @@ const tokenEquals = (a: BaseDesignToken, b: BaseDesignToken): boolean => {
 
 const INVERSE_SUFFIX = '-inverse';
 
+interface AlertPreviewConfig {
+  /** Path segment identifying the group, e.g. `negative-inverse`. */
+  pathSegment: string;
+  /** Utrecht alert modifier, e.g. `error` in `.utrecht-alert--error`. */
+  modifier: string;
+  profile: ReturnType<typeof profileForName>;
+  /** i18n key for the alert heading, e.g. `wizard.stepForm.sample.preview.alert.error.heading`. */
+  headingKey: string;
+}
+
+const ALERT_PREVIEW_CONFIGS: AlertPreviewConfig[] = [
+  {
+    headingKey: 'wizard.stepForm.sample.preview.alert.error.heading',
+    modifier: 'error',
+    pathSegment: 'negative-inverse',
+    profile: 'negative',
+  },
+  {
+    headingKey: 'wizard.stepForm.sample.preview.alert.warning.heading',
+    modifier: 'warning',
+    pathSegment: 'warning-inverse',
+    profile: 'warning',
+  },
+  {
+    headingKey: 'wizard.stepForm.sample.preview.alert.positive.heading',
+    modifier: 'ok',
+    pathSegment: 'positive-inverse',
+    profile: 'positive',
+  },
+  {
+    headingKey: 'wizard.stepForm.sample.preview.alert.info.heading',
+    modifier: 'info',
+    pathSegment: 'info-inverse',
+    profile: 'accent',
+  },
+];
+
 interface ColorScaleParams {
   /** e.g. `basis.color.accent-1` */
   regularGroupPath: string;
@@ -314,7 +351,9 @@ export class WizardStepForm extends LitElement {
           <clippy-html-image>
             <clippy-reset-theme>
               <wizard-preview-theme>
-                <clippy-button purpose="primary" style=${styleMap(style)}>Klik mij!</clippy-button>
+                <clippy-button purpose="primary" style=${styleMap(style)}>
+                  ${t('wizard.stepForm.sample.preview.button')}
+                </clippy-button>
               </wizard-preview-theme>
             </clippy-reset-theme>
           </clippy-html-image>
@@ -335,9 +374,11 @@ export class WizardStepForm extends LitElement {
             <clippy-reset-theme>
               <wizard-preview-theme>
                 <p class="nl-paragraph">
-                  Voorbeeldtekst met
-                  <a href="" class="nl-link" style=${styleMap(style)}>een link</a>
-                  die je kunt aanklikken.
+                  ${t('wizard.stepForm.sample.preview.link.prefix')}
+                  <a href="" class="nl-link" style=${styleMap(style)}
+                    >${t('wizard.stepForm.sample.preview.link.linkText')}</a
+                  >
+                  ${t('wizard.stepForm.sample.preview.link.suffix')}
                 </p>
               </wizard-preview-theme>
             </clippy-reset-theme>
@@ -345,33 +386,9 @@ export class WizardStepForm extends LitElement {
         `;
       }
 
-      if (this.path === 'basis.color.negative-inverse.bg-default') {
-        const exampleScale = generateScale(stringified, {
-          profile: 'negative',
-        }).data;
-        const style = {
-          '--basis-color-negative-bg-subtle': stringifyColor(exampleScale['bg-subtle']),
-          '--basis-color-negative-color-default': stringifyColor(exampleScale['color-default']),
-        };
-        return html`
-          <clippy-html-image>
-            <clippy-reset-theme>
-              <wizard-preview-theme>
-                <div class="utrecht-alert utrecht-alert--info" style=${styleMap(style)}>
-                  <div class="utrecht-alert__content">
-                    <div class="utrecht-alert__message" role="status">
-                      <h2 class="utrecht-heading-2">Lorem ipsum</h2>
-                      <p class="utrecht-paragraph">
-                        Dit is een voorbeeldtekst die een gebruiker zou kunnen zien. Eventueel zouden we deze tekst
-                        kunnen aanvullen om meer ruimte in te nemen.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </wizard-preview-theme>
-            </clippy-reset-theme>
-          </clippy-html-image>
-        `;
+      const alertConfig = ALERT_PREVIEW_CONFIGS.find((config) => this.path.includes(config.pathSegment));
+      if (alertConfig) {
+        return this.renderAlertSample(stringified, alertConfig);
       }
     }
 
@@ -382,6 +399,35 @@ export class WizardStepForm extends LitElement {
       >
         ${t('wizard.stepForm.sample.paragraph')}
       </clippy-token-sample-text>
+    `;
+  }
+
+  private renderAlertSample(stringified: string, config: AlertPreviewConfig) {
+    const exampleScale = generateScale(stringified, { profile: config.profile }).data;
+    const style = {
+      ['--nl-heading-level-3-color']: stringifyColor(exampleScale['color-document']),
+      ['--nl-paragraph-color']: stringifyColor(exampleScale['color-document']),
+      [`--utrecht-alert-${config.modifier}-background-color`]: stringifyColor(exampleScale['bg-default']),
+      [`--utrecht-alert-${config.modifier}-border-color`]: stringifyColor(exampleScale['border-default']),
+      [`--utrecht-alert-${config.modifier}-color`]: stringifyColor(exampleScale['color-document']),
+      [`--utrecht-alert-icon-${config.modifier}-color`]: stringifyColor(exampleScale['color-default']),
+    };
+
+    return html`
+      <clippy-html-image>
+        <clippy-reset-theme>
+          <wizard-preview-theme>
+            <div class="utrecht-alert utrecht-alert--${config.modifier}" style=${styleMap(style)}>
+              <div class="utrecht-alert__content">
+                <div class="utrecht-alert__message" role="status">
+                  <clippy-heading level="3">${t(config.headingKey)}</clippy-heading>
+                  <p class="nl-paragraph">${t('wizard.stepForm.sample.preview.alert.paragraph')}</p>
+                </div>
+              </div>
+            </div>
+          </wizard-preview-theme>
+        </clippy-reset-theme>
+      </clippy-html-image>
     `;
   }
 
