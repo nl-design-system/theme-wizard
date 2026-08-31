@@ -49,17 +49,23 @@ export class WizardTokenTable extends LitElement {
   }
 
   override render() {
-    return html`<clippy-token-table
-      .tokens=${this.#visibleTokens}
-      example-label=${t('styleGuide.sample')}
-      token-id-label=${t('styleGuide.tokenName')}
-      value-label=${t('styleGuide.value')}
-      reference-to-label=${t('styleGuide.referenceTo')}
-      details-label=${t('styleGuide.details')}
-      show-details-label=${t('styleGuide.showDetails')}
-      copy-to-clipboard-label=${t('styleGuide.detailsDialog.copyToClipboard')}
-      reference-title-label=${t('styleGuide.detailsDialog.tokenReferenceList.title')}
-      reference-empty-label=${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
-    ></clippy-token-table>`;
+    return html`
+      <clippy-reset-theme>
+        <wizard-preview-theme>
+          <clippy-token-table
+            .tokens=${this.#visibleTokens}
+            example-label=${t('styleGuide.sample')}
+            token-id-label=${t('styleGuide.tokenName')}
+            value-label=${t('styleGuide.value')}
+            reference-to-label=${t('styleGuide.referenceTo')}
+            details-label=${t('styleGuide.details')}
+            show-details-label=${t('styleGuide.showDetails')}
+            copy-to-clipboard-label=${t('styleGuide.detailsDialog.copyToClipboard')}
+            reference-title-label=${t('styleGuide.detailsDialog.tokenReferenceList.title')}
+            reference-empty-label=${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
+          ></clippy-token-table>
+        </wizard-preview-theme>
+      </clippy-reset-theme>
+    `;
   }
 }
