@@ -15,8 +15,12 @@ import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
 import '@nl-design-system-community/clippy-components/clippy-html-image';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
+import IconAlertCircle from '@tabler/icons/outline/alert-circle.svg?raw';
+import IconAlertTriangle from '@tabler/icons/outline/alert-triangle.svg?raw';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
 import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
+import IconCircleCheck from '@tabler/icons/outline/circle-check.svg?raw';
+import IconInfoCircle from '@tabler/icons/outline/info-circle.svg?raw';
 import alertCss from '@utrecht/alert-css/dist/index.css?raw';
 import { dequal } from 'dequal';
 import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
@@ -31,8 +35,8 @@ import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant
 import Theme from '../../lib/Theme';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { type StagedDesignToken } from '../../utils/types';
-import { markStepComplete } from '../../utils/wizard-steps-storage';
 import '../wizard-color-description';
+import { markStepComplete } from '../../utils/wizard-steps-storage';
 import { EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import styles from './styles';
 
@@ -53,29 +57,34 @@ interface AlertPreviewConfig {
   profile: ReturnType<typeof profileForName>;
   /** i18n key for the alert heading, e.g. `wizard.stepForm.sample.preview.alert.error.heading`. */
   headingKey: string;
+  icon: string;
 }
 
 const ALERT_PREVIEW_CONFIGS: AlertPreviewConfig[] = [
   {
     headingKey: 'wizard.stepForm.sample.preview.alert.error.heading',
+    icon: IconAlertCircle,
     modifier: 'error',
     pathSegment: 'negative-inverse',
     profile: 'negative',
   },
   {
     headingKey: 'wizard.stepForm.sample.preview.alert.warning.heading',
+    icon: IconAlertTriangle,
     modifier: 'warning',
     pathSegment: 'warning-inverse',
     profile: 'warning',
   },
   {
     headingKey: 'wizard.stepForm.sample.preview.alert.positive.heading',
+    icon: IconCircleCheck,
     modifier: 'ok',
     pathSegment: 'positive-inverse',
     profile: 'positive',
   },
   {
     headingKey: 'wizard.stepForm.sample.preview.alert.info.heading',
+    icon: IconInfoCircle,
     modifier: 'info',
     pathSegment: 'info-inverse',
     profile: 'accent',
@@ -407,10 +416,10 @@ export class WizardStepForm extends LitElement {
     const style = {
       ['--nl-heading-level-3-color']: stringifyColor(exampleScale['color-document']),
       ['--nl-paragraph-color']: stringifyColor(exampleScale['color-document']),
+      ['--utrecht-alert-icon-color']: stringifyColor(exampleScale['color-default']),
       [`--utrecht-alert-${config.modifier}-background-color`]: stringifyColor(exampleScale['bg-default']),
       [`--utrecht-alert-${config.modifier}-border-color`]: stringifyColor(exampleScale['border-default']),
-      [`--utrecht-alert-${config.modifier}-color`]: stringifyColor(exampleScale['color-document']),
-      [`--utrecht-alert-icon-${config.modifier}-color`]: stringifyColor(exampleScale['color-default']),
+      [`--utrecht-alert-${config.modifier}-color`]: stringifyColor(exampleScale['color-default']),
     };
 
     return html`
@@ -418,6 +427,7 @@ export class WizardStepForm extends LitElement {
         <clippy-reset-theme>
           <wizard-preview-theme>
             <div class="utrecht-alert utrecht-alert--${config.modifier}" style=${styleMap(style)}>
+              <div class="utrecht-alert__icon">${unsafeSVG(config.icon)}</div>
               <div class="utrecht-alert__content">
                 <div class="utrecht-alert__message" role="status">
                   <clippy-heading level="3">${t(config.headingKey)}</clippy-heading>
