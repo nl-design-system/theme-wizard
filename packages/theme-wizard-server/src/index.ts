@@ -21,6 +21,7 @@ import { withScrapingErrorHandler } from './scraping-error-handler.js';
 
 const OPEN_ONLINE_TOKEN = 'OPEN_ONLINE_TOKEN';
 const X_THEME_WIZARD_TOKEN_HEADER_NAME = 'X-Theme-Wizard-Token';
+const SCRAPE_TIMEOUT = 30_000;
 
 // This tricks Vercel into deploying this as a HonoJS app
 /* @__PURE__ */ import('hono');
@@ -132,7 +133,7 @@ app.openapi(
     if (process.env[OPEN_ONLINE_TOKEN]) {
       extraHeaders.set(X_THEME_WIZARD_TOKEN_HEADER_NAME, process.env[OPEN_ONLINE_TOKEN]);
     }
-    const css = await getCss(url, { extraHeaders });
+    const css = await getCss(url, { extraHeaders, timeout: SCRAPE_TIMEOUT });
     endTime(c, 'scraping');
 
     c.res.headers.set('content-type', 'text/css; charset=utf-8');
@@ -204,7 +205,7 @@ app.openapi(
     if (process.env[OPEN_ONLINE_TOKEN]) {
       extraHeaders.set(X_THEME_WIZARD_TOKEN_HEADER_NAME, process.env[OPEN_ONLINE_TOKEN]);
     }
-    const css = await getCss(url, { extraHeaders });
+    const css = await getCss(url, { extraHeaders, timeout: SCRAPE_TIMEOUT });
     const tokens = getDesignTokens(css);
     endTime(c, 'scraping');
 
