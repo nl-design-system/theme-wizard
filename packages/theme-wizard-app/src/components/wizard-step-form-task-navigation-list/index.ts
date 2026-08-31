@@ -37,6 +37,11 @@ const STEPS = [
     label: 'Kleur voor links',
     path: 'basis.color.action-2.color-default',
   },
+  {
+    icon: 'palette',
+    label: 'Kleur voor negatief signaal',
+    path: 'basis.color.negative-inverse.bg-default',
+  },
 ] as const;
 
 const tag = 'wizard-step-form-task-navigation-list';
