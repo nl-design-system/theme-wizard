@@ -24,7 +24,7 @@ import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant
 import Theme from '../../lib/Theme';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
-import { anyChanged } from '../../utils/lit';
+import { hasChangedProperty } from '../../utils/lit';
 import { type StagedDesignToken } from '../../utils/types';
 import { markStepComplete } from '../../utils/wizard-steps-storage';
 import '../wizard-color-description';
@@ -129,7 +129,7 @@ export class WizardStepForm extends LitElement {
    * Updating this._tokens here so we don't re-compute this array for each sub-render in this element
    */
   override willUpdate(changed: PropertyValues) {
-    if (!anyChanged(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
+    if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
       return;
     }
 

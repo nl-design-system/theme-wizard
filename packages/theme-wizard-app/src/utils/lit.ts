@@ -1,4 +1,4 @@
-import { PropertyValues } from 'lit';
+import type { PropertyValues } from 'lit';
 
 /**
  * @description
@@ -9,13 +9,13 @@ import { PropertyValues } from 'lit';
  * ```ts
  * class MyComponent extends LitElement {
  *   override willUpdate(changed: PropertyValues) {
- *     if(anyChanged(changed, ['theme', 'token', 'path'])) {
+ *     if(hasChangedProperty(changed, ['theme', 'token', 'path'])) {
  *       // Your code here
  *     }
  *   }
  * }
  * ```
  */
-export const anyChanged = (changed: PropertyValues, keys: string[]): boolean => {
+export const hasChangedProperty = (changed: PropertyValues, keys: string[]): boolean => {
   return keys.some((key) => changed.has(key));
 };

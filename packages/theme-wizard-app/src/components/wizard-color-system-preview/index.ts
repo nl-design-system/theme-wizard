@@ -12,7 +12,7 @@ import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
-import { anyChanged } from '../../utils/lit';
+import { hasChangedProperty } from '../../utils/lit';
 import { getTokenCollectionByTokenPaths } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-color-system-preview';
@@ -39,7 +39,7 @@ export class WizardColorSystemPreview extends LitElement {
   #visibleTokenCollection: TokenCollection = [];
 
   protected override willUpdate(changedProperties: PropertyValues) {
-    if (!anyChanged(changedProperties, ['theme', 'groups', 'skipRedundantGroups'])) {
+    if (!hasChangedProperty(changedProperties, ['theme', 'groups', 'skipRedundantGroups'])) {
       return;
     }
     const groupPaths: TokenPath[] = this.groups.map((str) => str.split('.'));
