@@ -40,9 +40,4 @@ export default css`
   .wizard-step-form__sample-start {
     align-items: center;
   }
-
-  .wizard-step-form__sample-body {
-    padding-block: var(--basis-space-block-lg);
-    padding-inline: var(--basis-space-inline-xl);
-  }
 `;

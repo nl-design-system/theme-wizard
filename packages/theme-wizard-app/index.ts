@@ -22,6 +22,7 @@ export * from './src/components/wizard-scraper-loader';
 export * from './src/components/wizard-scroll-container';
 export * from './src/components/wizard-sidebar-link';
 export * from './src/components/wizard-step-form';
+export * from './src/components/wizard-step-form-sample';
 export * from './src/components/wizard-step-form-task-navigation';
 export * from './src/components/wizard-step-form-task-navigation-list';
 export * from './src/components/wizard-story-example';
