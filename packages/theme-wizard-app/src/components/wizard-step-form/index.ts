@@ -24,9 +24,10 @@ import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant
 import Theme from '../../lib/Theme';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
+import { hasChangedProperty } from '../../utils/lit';
 import { type StagedDesignToken } from '../../utils/types';
-import '../wizard-color-description';
 import { markStepComplete } from '../../utils/wizard-steps-storage';
+import '../wizard-color-description';
 import { EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import '../wizard-step-form-sample';
 import styles from './styles';
@@ -128,26 +129,28 @@ export class WizardStepForm extends LitElement {
    * Updating this._tokens here so we don't re-compute this array for each sub-render in this element
    */
   override willUpdate(changed: PropertyValues) {
-    if (changed.has('scrapedTokens') || changed.has('path') || changed.has('subType') || changed.has('theme')) {
-      const requestedType = this.tokenAt?.$type;
+    if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
+      return;
+    }
 
-      if (!requestedType) {
-        return;
-      }
+    const requestedType = this.tokenAt?.$type;
 
-      const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
+    if (!requestedType) {
+      return;
+    }
 
-      if (this.type === 'color') {
-        this._tokens = sortTokensForPath(tokens, this.path, this.theme);
-      } else {
-        this._tokens = tokens;
-      }
-      this._suggestedTokensSource = source;
+    const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
 
-      // Show all options instead of cutting off if the selected option is below the default cutoff
-      if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
-        this.showAll = true;
-      }
+    if (this.type === 'color') {
+      this._tokens = sortTokensForPath(tokens, this.path, this.theme);
+    } else {
+      this._tokens = tokens;
+    }
+    this._suggestedTokensSource = source;
+
+    // Show all options instead of cutting off if the selected option is below the default cutoff
+    if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
+      this.showAll = true;
     }
   }
 
