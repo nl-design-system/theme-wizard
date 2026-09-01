@@ -140,6 +140,28 @@ describe('brand', () => {
       expect.soft(result.data).toEqual(config);
     });
 
+    it('allows a colorscale seed $extensions on a nested color scale', () => {
+      const config = {
+        name: {
+          $type: 'text',
+          $value: 'my-brand',
+        },
+        color: {
+          indigo: {
+            $extensions: {
+              'nl.nldesignsystem.theme-wizard.color-scale-seed-color': {
+                colorSpace: 'srgb',
+                components: [1, 0, 0],
+              },
+            },
+            '1': modernWhite,
+          },
+        },
+      };
+      const result = BrandSchema.safeParse(config);
+      expect.soft(result.success).toBeTruthy();
+    });
+
     it('fails on invalid top-level colors', () => {
       const config = {
         name: {
@@ -238,6 +260,19 @@ describe('basis', () => {
         }),
       ]),
     );
+  });
+
+  it('allows a colorscale seed $extensions on a basis color group', () => {
+    const basis = getBasis();
+    dset(basis, 'color.accent-1.$extensions', {
+      'nl.nldesignsystem.theme-wizard.color-scale-seed-color': {
+        colorSpace: 'srgb',
+        components: [1, 0, 0],
+      },
+    });
+    const result = BasisTokensSchema.safeParse(basis);
+
+    expect(result.success).toBeTruthy();
   });
 
   it('does not allow incorrect token types', () => {

@@ -1,14 +1,15 @@
 import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
 import * as z from 'zod';
 import { buildSchema } from './schema-builder';
-import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
+import { BaseDesignTokenIdentifierSchema, withGroupExtensions } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 
 const ColorOrColorScaleSchema = z.union([
   ColorTokenValidationSchema,
   // For now we allow basic design tokens names, eventually we may want to consider only allowing
   // 1 | 2 | 3 | 5..12 | accent
-  z.record(BaseDesignTokenIdentifierSchema, ColorTokenValidationSchema),
+  // Uses catchall (not z.record) so a $extensions key (e.g. colorscale seed) can sit alongside the shade keys.
+  z.object(withGroupExtensions({})).catchall(ColorTokenValidationSchema),
 ]);
 export type ColorOrColorScale = z.infer<typeof ColorOrColorScaleSchema>;
 

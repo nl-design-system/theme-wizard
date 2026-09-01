@@ -195,6 +195,8 @@ export class WizardColorscaleInput extends WizardTokenInput {
   readonly handleColorChange = (event: Event) => {
     const target = event.target;
     if (target instanceof ClippyTokenCombobox && target.value) {
+      // Do not propagate *this* event, but emit a new one later on
+      event.stopPropagation();
       const rawValue = target.value;
       let color: Color;
       let value: ColorValue;
