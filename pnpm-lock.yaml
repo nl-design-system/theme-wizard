@@ -255,7 +255,7 @@ importers:
         version: 5.0.3(esbuild@0.28.1)(rolldown@1.2.2)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/clippy-storybook:
     dependencies:
@@ -379,7 +379,7 @@ importers:
         version: 5.0.3(esbuild@0.28.1)(rolldown@1.2.2)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/css-scraper:
     dependencies:
@@ -422,7 +422,7 @@ importers:
         version: 8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0)
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/design-tokens-lint:
     dependencies:
@@ -459,7 +459,7 @@ importers:
         version: 8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0)
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/design-tokens-schema:
     dependencies:
@@ -559,7 +559,7 @@ importers:
         version: 5.0.3(esbuild@0.28.1)(rolldown@1.2.2)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/theme-wizard-app:
     dependencies:
@@ -770,19 +770,19 @@ importers:
         version: 5.0.3(esbuild@0.28.1)(rolldown@1.2.2)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/theme-wizard-server:
     dependencies:
       '@hono/node-server':
         specifier: 2.1.0
-        version: 2.1.0(hono@4.13.0)
+        version: 2.1.0(hono@4.13.5)
       '@hono/swagger-ui':
         specifier: 0.6.1
-        version: 0.6.1(hono@4.13.0)
+        version: 0.6.1(hono@4.13.5)
       '@hono/zod-openapi':
         specifier: 1.5.1
-        version: 1.5.1(hono@4.13.0)(zod@4.4.3)
+        version: 1.5.1(hono@4.13.5)(zod@4.4.3)
       '@nl-design-system-community/css-scraper':
         specifier: workspace:*
         version: link:../css-scraper
@@ -790,15 +790,15 @@ importers:
         specifier: 1.1.1
         version: 1.1.1
       hono:
-        specifier: 4.13.0
-        version: 4.13.0
+        specifier: 4.13.5
+        version: 4.13.5
       zod:
         specifier: 4.4.3
         version: 4.4.3
     devDependencies:
       '@hono/vite-dev-server':
         specifier: 0.26.1
-        version: 0.26.1(hono@4.13.0)
+        version: 0.26.1(hono@4.13.5)
       '@nl-design-system-community/vite-plugin-terse-log':
         specifier: workspace:*
         version: link:../vite-plugin-terse-log
@@ -822,7 +822,7 @@ importers:
         version: 8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0)
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/theme-wizard-templates:
     dependencies:
@@ -1181,7 +1181,7 @@ importers:
         version: 5.0.3(esbuild@0.28.1)(rolldown@1.2.2)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
 
   proprietary/assets: {}
 
@@ -6277,8 +6277,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  hono@4.13.0:
-    resolution: {integrity: sha512-jhunvfHWxd7J5EFfSgH4xsYJzSe/lfqbUCxiyyeaQasUsXeEHXtzVid+7EOGByc5JnFa23SSFL3Y2RV/z1T+eQ==}
+  hono@4.13.5:
+    resolution: {integrity: sha512-O6+/eCYRkzzzy0rPWwKLiGBR1nFuUPZynnwjxN1MBA62NNqbT0wQEzQyK2gSO5yDIDB336sXQleAhOHrzlYyKw==}
     engines: {node: '>=16.9.0'}
 
   hookified@1.15.1:
@@ -10295,35 +10295,35 @@ snapshots:
     dependencies:
       keycode: 2.2.1
 
-  '@hono/node-server@1.19.14(hono@4.13.0)':
+  '@hono/node-server@1.19.14(hono@4.13.5)':
     dependencies:
-      hono: 4.13.0
+      hono: 4.13.5
 
-  '@hono/node-server@2.1.0(hono@4.13.0)':
+  '@hono/node-server@2.1.0(hono@4.13.5)':
     dependencies:
-      hono: 4.13.0
+      hono: 4.13.5
 
-  '@hono/swagger-ui@0.6.1(hono@4.13.0)':
+  '@hono/swagger-ui@0.6.1(hono@4.13.5)':
     dependencies:
-      hono: 4.13.0
+      hono: 4.13.5
 
-  '@hono/vite-dev-server@0.26.1(hono@4.13.0)':
+  '@hono/vite-dev-server@0.26.1(hono@4.13.5)':
     dependencies:
-      '@hono/node-server': 1.19.14(hono@4.13.0)
-      hono: 4.13.0
+      '@hono/node-server': 1.19.14(hono@4.13.5)
+      hono: 4.13.5
       minimatch: 9.0.9
 
-  '@hono/zod-openapi@1.5.1(hono@4.13.0)(zod@4.4.3)':
+  '@hono/zod-openapi@1.5.1(hono@4.13.5)(zod@4.4.3)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 8.5.0(zod@4.4.3)
-      '@hono/zod-validator': 0.9.0(hono@4.13.0)(zod@4.4.3)
-      hono: 4.13.0
+      '@hono/zod-validator': 0.9.0(hono@4.13.5)(zod@4.4.3)
+      hono: 4.13.5
       openapi3-ts: 4.5.0
       zod: 4.4.3
 
-  '@hono/zod-validator@0.9.0(hono@4.13.0)(zod@4.4.3)':
+  '@hono/zod-validator@0.9.0(hono@4.13.5)(zod@4.4.3)':
     dependencies:
-      hono: 4.13.0
+      hono: 4.13.5
       zod: 4.4.3
 
   '@humanfs/core@0.19.2':
@@ -12840,7 +12840,7 @@ snapshots:
       '@vitest/mocker': 4.1.10(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
       playwright: 1.62.1
       tinyrainbow: 3.1.0
-      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -12856,7 +12856,7 @@ snapshots:
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.1.0
-      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
       ws: 8.21.2
     transitivePeerDependencies:
       - bufferutil
@@ -12876,7 +12876,7 @@ snapshots:
       obug: 2.1.4
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
     optionalDependencies:
       '@vitest/browser': 4.1.10(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(vitest@4.1.10)
 
@@ -12888,7 +12888,7 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 8.66.0(@typescript-eslint/parser@8.66.0(eslint@10.8.0(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.8.0(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
       typescript: 6.0.3
-      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest: 4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -14670,7 +14670,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  hono@4.13.0: {}
+  hono@4.13.5: {}
 
   hookified@1.15.1: {}
 
@@ -17545,7 +17545,7 @@ snapshots:
     optionalDependencies:
       vite: 8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0)
 
-  vitest@4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0)):
+  vitest@4.1.10(@edge-runtime/vm@3.2.0)(@types/node@24.13.3)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(esbuild@0.28.1)(tsx@4.21.0)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(yaml@2.9.0):
     dependencies:
       '@vitest/expect': 4.1.10
       '@vitest/mocker': 4.1.10(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
@@ -17573,7 +17573,18 @@ snapshots:
       '@vitest/browser-playwright': 4.1.10(playwright@1.62.1)(vite@8.2.0(@types/node@24.13.3)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))(vitest@4.1.10)
       '@vitest/coverage-v8': 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
     transitivePeerDependencies:
+      - '@vitejs/devtools'
+      - esbuild
+      - jiti
+      - less
       - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - yaml
 
   volar-service-css@0.0.71(@volar/language-service@2.4.28):
     dependencies:
