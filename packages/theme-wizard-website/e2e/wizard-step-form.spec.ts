@@ -84,6 +84,21 @@ test.describe('basis color', () => {
     expect(changedPaths).toEqual(expect.arrayContaining(expectedRegularPaths));
   });
 
+  test('Setting a color for color.action-1 marks the used option as checked when re-entering the page', async ({
+    wizardStepFormPage,
+  }) => {
+    const path = '/wizard/basis-color-action-1-inverse-bg-default';
+    await wizardStepFormPage.goto(path);
+
+    const lastLabel = await wizardStepFormPage.getOptionLabel(wizardStepFormPage.options.last());
+    await wizardStepFormPage.optionCard(lastLabel).click();
+    await wizardStepFormPage.save();
+
+    await wizardStepFormPage.goto(path);
+
+    await expect(wizardStepFormPage.options.last()).toBeChecked();
+  });
+
   test('basis heading color: picking a color only changes basis.heading.color', async ({ wizardStepFormPage }) => {
     const path = '/wizard/basis-heading-color';
     await wizardStepFormPage.goto(path);

@@ -32,6 +32,11 @@ const STEPS = [
     label: 'Kleur voor knoppen',
     path: 'basis.color.action-1-inverse.bg-default',
   },
+  {
+    icon: 'palette',
+    label: 'Kleur voor links',
+    path: 'basis.color.action-2.color-default',
+  },
 ] as const;
 
 const tag = 'wizard-step-form-task-navigation-list';
