@@ -4,6 +4,12 @@ import * as z from 'zod';
 export const ExtensionsSchema = z.record(z.string(), z.unknown());
 export type Extensions = z.infer<typeof ExtensionsSchema>;
 
+/** Adds an optional `$extensions` key to a group/token shape, same as tokens support natively. */
+export const withGroupExtensions = <T extends z.ZodRawShape>(shape: T) => ({
+  ...shape,
+  $extensions: ExtensionsSchema.optional(),
+});
+
 // 5.1 Name and value
 
 export const BaseDesignTokenIdentifierSchema = z.custom<string>((value) => {
