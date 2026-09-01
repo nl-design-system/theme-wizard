@@ -25,9 +25,10 @@ import { generateScale, profileForName, TOKENS, type TokenName } from '../../lib
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
+import { anyChanged } from '../../utils/lit';
 import { type StagedDesignToken } from '../../utils/types';
-import '../wizard-color-description';
 import { markStepComplete } from '../../utils/wizard-steps-storage';
+import '../wizard-color-description';
 import { EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import '../wizard-step-form-sample';
 import styles from './styles';
@@ -129,31 +130,33 @@ export class WizardStepForm extends LitElement {
    * Updating this._tokens here so we don't re-compute this array for each sub-render in this element
    */
   override willUpdate(changed: PropertyValues) {
-    if (changed.has('scrapedTokens') || changed.has('path') || changed.has('subType') || changed.has('theme')) {
-      const requestedType = this.tokenAt?.$type;
+    if (!anyChanged(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
+      return;
+    }
 
-      if (!requestedType) {
-        return;
-      }
+    const requestedType = this.tokenAt?.$type;
 
-      const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
+    if (!requestedType) {
+      return;
+    }
 
-      if (this.type === 'color' && this.path === 'basis.color.default.color-default') {
-        const bgDocument = this.theme.at('basis.color.default.bg-default').$value;
-        tokens.sort((a, b) => {
-          return (
-            compareContrast(b.$value as ColorValue, bgDocument) - compareContrast(a.$value as ColorValue, bgDocument)
-          );
-        });
-      }
+    const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
 
-      this._tokens = tokens;
-      this._suggestedTokensSource = source;
+    if (this.type === 'color' && this.path === 'basis.color.default.color-default') {
+      const bgDocument = this.theme.at('basis.color.default.bg-default').$value;
+      tokens.sort((a, b) => {
+        return (
+          compareContrast(b.$value as ColorValue, bgDocument) - compareContrast(a.$value as ColorValue, bgDocument)
+        );
+      });
+    }
 
-      // Show all options instead of cutting off if the selected option is below the default cutoff
-      if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
-        this.showAll = true;
-      }
+    this._tokens = tokens;
+    this._suggestedTokensSource = source;
+
+    // Show all options instead of cutting off if the selected option is below the default cutoff
+    if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
+      this.showAll = true;
     }
   }
 
