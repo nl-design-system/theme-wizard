@@ -4,8 +4,6 @@ import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.cs
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import {
   BaseDesignToken,
-  ColorValue,
-  compareContrast,
   isColorToken,
   stringifyColor,
   stringifyToken,
@@ -24,6 +22,7 @@ import { t } from '../../i18n';
 import { generateScale, profileForName, TOKENS, type TokenName } from '../../lib/color-scale-generator';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
+import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { type StagedDesignToken } from '../../utils/types';
 import '../wizard-color-description';
@@ -138,16 +137,11 @@ export class WizardStepForm extends LitElement {
 
       const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
 
-      if (this.type === 'color' && this.path === 'basis.color.default.color-default') {
-        const bgDocument = this.theme.at('basis.color.default.bg-default').$value;
-        tokens.sort((a, b) => {
-          return (
-            compareContrast(b.$value as ColorValue, bgDocument) - compareContrast(a.$value as ColorValue, bgDocument)
-          );
-        });
+      if (this.type === 'color') {
+        this._tokens = sortTokensForPath(tokens, this.path, this.theme);
+      } else {
+        this._tokens = tokens;
       }
-
-      this._tokens = tokens;
       this._suggestedTokensSource = source;
 
       // Show all options instead of cutting off if the selected option is below the default cutoff
