@@ -141,12 +141,12 @@ export class WizardStepForm extends LitElement {
 
     const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
 
-      if (this.type === 'color') {
-        this._tokens = sortTokensForPath(tokens, this.path, this.theme);
-      } else {
-        this._tokens = tokens;
-      }
-      this._suggestedTokensSource = source;
+    if (this.type === 'color') {
+      this._tokens = sortTokensForPath(tokens, this.path, this.theme);
+    } else {
+      this._tokens = tokens;
+    }
+    this._suggestedTokensSource = source;
 
     // Show all options instead of cutting off if the selected option is below the default cutoff
     if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
