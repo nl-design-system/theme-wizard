@@ -81,6 +81,33 @@ describe('generateScale', () => {
     expect(hexOf(data, 'color-hover')).toBe('#7C3AED');
   });
 
+  // Real-world seed colors that would partially turn into full-white or dark-gray scales for bg-document→border-subtle
+  it.each(['#61a41d', '#28a745', '#212529'])(
+    'anchored to color-hover, near-edge bg/border-subtle tokens stay distinct for seed %s (not white or collapsed)',
+    (seed) => {
+      const { data } = generateScale(seed, { anchor: 'color-hover', profile: 'accent' });
+      const offendingTokens: TokenName[] = [
+        'bg-document',
+        'bg-subtle',
+        'bg-default',
+        'bg-hover',
+        'bg-active',
+        'border-subtle',
+      ];
+      const lightnesses = offendingTokens.map((token) => data[token].components[0] as number);
+
+      for (const lightness of lightnesses) {
+        expect(lightness).toBeLessThan(1);
+      }
+      // .toFixed() to prevent rounding errors
+      const uniqueLightnesses = new Set(lightnesses.map((lightness) => lightness.toFixed(4)));
+      expect(uniqueLightnesses.size).toBe(offendingTokens.length);
+      for (const token of offendingTokens) {
+        expect(hexOf(data, token)).not.toBe('#FFFFFF');
+      }
+    },
+  );
+
   it('throws for an unknown anchor token', () => {
     expect(() => generateScale('#7C3AED', { anchor: 'not-a-token' as TokenName, profile: 'accent' })).toThrow(
       /Unknown token/,

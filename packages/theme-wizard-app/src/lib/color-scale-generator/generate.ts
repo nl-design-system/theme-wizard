@@ -143,21 +143,56 @@ const isPinnedExtreme = (mask: Mask, tokenIndex: number): boolean => {
   return mask.C[tokenIndex] === 0 && (mask.L[tokenIndex] === 0 || mask.L[tokenIndex] === 1);
 };
 
+/**
+ * Pins the anchor token to `seedLightness` and rescales every other token's headroom
+ * to the same edge (1 above the anchor, 0 below) by the same ratio, so tokens near an
+ * edge (e.g. near-white bg-* templates) stay distinct instead of clipping to 0/1.
+ */
+const shiftLightness = (templateL: number, anchorL: number, seedLightness: number): number => {
+  if (templateL === anchorL) {
+    return seedLightness;
+  }
+
+  if (templateL > anchorL) {
+    const headroom = 1 - anchorL;
+    if (headroom <= 0) {
+      return seedLightness;
+    }
+    return seedLightness + (templateL - anchorL) * ((1 - seedLightness) / headroom);
+  }
+
+  const headroom = anchorL;
+  if (headroom <= 0) {
+    return seedLightness;
+  }
+  return seedLightness + (templateL - anchorL) * (seedLightness / headroom);
+};
+
 const buildRampToken = (mask: Mask, tokenIndex: number, params: BuildRampTokenParams): OKLCH => {
-  const { chromaScale, hueReference, lightnessShift, seedHue } = params;
-  const lightness = isPinnedExtreme(mask, tokenIndex)
-    ? mask.L[tokenIndex]
-    : clamp(mask.L[tokenIndex] + lightnessShift, 0, 1);
+  const { anchorLightness, chromaScale, hueReference, seedHue, seedLightness } = params;
+  const templateL = mask.L[tokenIndex];
+
+  let lightness: number;
+  if (isPinnedExtreme(mask, tokenIndex)) {
+    lightness = templateL;
+  } else if (anchorLightness === undefined) {
+    lightness = clamp(templateL, 0, 1);
+  } else {
+    lightness = clamp(shiftLightness(templateL, anchorLightness, seedLightness), 0, 1);
+  }
+
   const hue = computeTokenHue(mask, tokenIndex, seedHue, hueReference);
   const chroma = clampChroma(lightness, mask.C[tokenIndex] * chromaScale, hue);
   return { C: chroma, H: hue, L: lightness };
 };
 
 interface BuildRampTokenParams {
+  /** Anchor token's template lightness, or `undefined` when the ramp isn't anchored (no lightness shift). */
+  anchorLightness: number | undefined;
   chromaScale: number;
   hueReference: number;
-  lightnessShift: number;
   seedHue: number;
+  seedLightness: number;
 }
 
 /**
@@ -174,9 +209,9 @@ const buildRamp = (seed: string, options: GenerateOptions): RampContext => {
   const anchorIndex = resolveAnchorIndex(mask, anchor, seedLightness);
 
   const chromaScale = mask.C[anchorIndex] > 0 ? (seedChroma * chroma) / mask.C[anchorIndex] : 0;
-  const lightnessShift = isAnchored ? seedLightness - mask.L[anchorIndex] : 0;
+  const anchorLightness = isAnchored ? mask.L[anchorIndex] : undefined;
   const hueReference = isAnchored ? mask.H[anchorIndex] : 0;
-  const tokenParams = { chromaScale, hueReference, lightnessShift, seedHue };
+  const tokenParams = { anchorLightness, chromaScale, hueReference, seedHue, seedLightness };
 
   const data = {} as OklchScale;
   for (let tokenIndex = 0; tokenIndex < TOKENS.length; tokenIndex++) {
