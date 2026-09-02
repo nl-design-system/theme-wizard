@@ -4,8 +4,18 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import { capitalize } from 'es-toolkit/string';
 
-const widths = ['none', 'sm', 'md', 'lg'] as const
-const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
+const SECTIONS = [
+  {
+    name: "Kader- of lijndikte",
+    id: 'border-width',
+    tokens: ['none', 'sm', 'md', 'lg'],
+  },
+  {
+    name: "Afgeronde hoeken",
+    id: 'border-radius',
+    tokens: ['none', 'sm', 'md', 'lg', 'round'],
+  },
+]
 ---
 
 <script>
@@ -19,43 +29,40 @@ const radii = ['none', 'sm', 'md', 'lg', 'round'] as const
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <StyleGuideNav />
-
+      <wizard-anchor-nav slot="aside-nav" items={JSON.stringify(SECTIONS.map(section => ({title: section.name, id: section.id})))}></wizard-anchor-nav>
       <wizard-container slot="main">
-        <clippy-stack size="5xl">
+        <clippy-stack size="3xl">
           <clippy-heading level="1">Randen en lijnen systeem</clippy-heading>
 
-          <clippy-story-preview>
-            <clippy-stack size="5xl">
-              <wizard-token-docs groups={`basis.border-width`} heading-level="2"></wizard-token-docs>
-              <clippy-stack size="5xl">
-                {widths.map((width) => (
-                  <clippy-stack size="3xl">
-                    <clippy-heading level="3">{capitalize(width)}</clippy-heading>
-                    <wizard-token-table groups={`basis.border-width.${width}`}></wizard-token-table>
-                    <TokenStoryMatches groups={`basis.border-width.${width}`} />
-                  </clippy-stack>
-                ))}
-              </clippy-stack>
-            </clippy-stack>
-          </clippy-story-preview>
-
-          <clippy-story-preview>
-            <clippy-stack size="5xl">
-              <wizard-token-docs groups={`basis.border-radius`} heading-level="2"></wizard-token-docs>
-              <clippy-stack size="5xl">
-                {radii.map((radius) => (
-                  <clippy-stack size="3xl">
-                    <clippy-heading level="3">{capitalize(radius)}</clippy-heading>
-                    <wizard-token-table groups={`basis.border-radius.${radius}`}></wizard-token-table>
-                    <TokenStoryMatches groups={`basis.border-radius.${radius}`} />
-                  </clippy-stack>
-                ))}
-              </clippy-stack>
-            </clippy-stack>
-          </clippy-story-preview>
+          <clippy-stack size="5xl">
+            {SECTIONS.map(section => (
+              <section class="wizard-token-section" id={section.id}>
+                <clippy-stack size="xl">
+                  <wizard-token-docs groups={`basis.${section.id}`} heading-level="2"></wizard-token-docs>
+                  <clippy-story-preview size="lg">
+                    <clippy-stack size="5xl">
+                      {section.tokens.map((token) => (
+                        <clippy-stack size="2xl">
+                          <clippy-heading level="3">{capitalize(token)}</clippy-heading>
+                          <wizard-token-table groups={`basis.${section.id}.${token}`}></wizard-token-table>
+                          <TokenStoryMatches groups={`basis.${section.id}.${token}`} />
+                        </clippy-stack>
+                      ))}
+                    </clippy-stack>
+                  </clippy-story-preview>
+                </clippy-stack>
+              </section>
+            ))}
+          </clippy-stack>
 
         </clippy-stack>
       </wizard-container>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<style>
+  .wizard-token-section {
+    scroll-margin-block: calc(var(--wizard-page-nav-block-size, 4rem) + var(--basis-space-row-xl));
+  }
+</style>
