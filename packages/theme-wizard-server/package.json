@@ -45,7 +45,7 @@
     "typescript": "6.0.3",
     "vercel": "57.0.0",
     "vite": "8.2.0",
-    "vitest": "4.1.10"
+    "vitest": "4.1.11"
   },
   "dependencies": {
     "@hono/node-server": "2.1.0",
