@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/color-scale-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "types": "./dist/index.d.ts",
   "module": "./dist/color-scale-generator.js",
