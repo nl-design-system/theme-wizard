@@ -217,6 +217,9 @@ export const en = {
     tokenName: 'Name',
     value: 'Value',
   },
+  themePresetForm: {
+    submit: 'Use theme',
+  },
   themeResetDialog: {
     body: 'Are you sure you want to reset all token values to their defaults? This cannot be undone.',
     cancel: () => t('cancel'),
@@ -769,6 +772,9 @@ export const nl = {
     title: 'Stijlgids',
     tokenName: 'Naam',
     value: 'Waarde',
+  },
+  themePresetForm: {
+    submit: 'Thema gebruiken',
   },
   themeResetDialog: {
     body: 'Weet je zeker dat je alle tokenwaarden wilt terugzetten naar de standaardwaarden? Dit kan niet ongedaan worden gemaakt.',

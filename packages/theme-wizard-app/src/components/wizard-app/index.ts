@@ -10,7 +10,12 @@ import { getSiblingGroupsWithOnlyRefsTo } from '../../lib/ColorScale/siblings';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
-import { UPDATE_DESIGN_TOKENS_EVENT, type SubmitSaveTokenFormEvent } from '../../utils/events';
+import {
+  SET_THEME_TOKENS_EVENT,
+  UPDATE_DESIGN_TOKENS_EVENT,
+  type SetThemeTokensEvent,
+  type SubmitSaveTokenFormEvent,
+} from '../../utils/events';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
@@ -79,6 +84,7 @@ export class WizardApp extends LitElement {
 
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.addEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
+    this.addEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
   }
@@ -87,6 +93,7 @@ export class WizardApp extends LitElement {
     super.disconnectedCallback();
     this.removeEventListener('wizard-scraper-done', this.#handleScrapeDone);
     this.removeEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
+    this.removeEventListener(SET_THEME_TOKENS_EVENT, this.#handleSetThemeTokens);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
   }
@@ -131,6 +138,14 @@ export class WizardApp extends LitElement {
       }));
     this.#scrapedTokensStorage.setJSON(this.scrapedTokens);
     this.dispatchEvent(new Event('scrape-success'));
+  };
+
+  readonly #handleSetThemeTokens = (event: Event) => {
+    const { detail } = event as SetThemeTokensEvent;
+    this.theme.tokens = detail.tokens;
+    this.#forceUpdateTokens();
+    this.#themeStorage.setJSON(this.theme.tokens);
+    this.dispatchEvent(new Event('theme-upload'));
   };
 
   readonly #handleReset = () => {
