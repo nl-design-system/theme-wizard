@@ -44,7 +44,7 @@
     "premove": "4.0.0",
     "typescript": "6.0.3",
     "vercel": "57.0.0",
-    "vite": "8.2.0",
+    "vite": "8.2.2",
     "vitest": "4.1.10"
   },
   "dependencies": {
