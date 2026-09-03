@@ -43,7 +43,7 @@
     "@vitest/coverage-v8": "4.1.11",
     "premove": "4.0.0",
     "typescript": "6.0.3",
-    "vercel": "57.0.0",
+    "vercel": "59.11.2",
     "vite": "8.2.2",
     "vitest": "4.1.11"
   },
