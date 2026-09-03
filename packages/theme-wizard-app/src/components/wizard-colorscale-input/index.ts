@@ -2,6 +2,12 @@ import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-color-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import {
+  generateScale,
+  profileForName,
+  type ColorScale,
+  type ProfileName,
+} from '@nl-design-system-community/color-scale-generator';
 import { EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import {
   ColorValue,
@@ -23,7 +29,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
-import { generateScale, profileForName, type ColorScale, type ProfileName } from '../../lib/color-scale-generator';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';

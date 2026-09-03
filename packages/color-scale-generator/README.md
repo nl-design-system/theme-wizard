@@ -2,22 +2,16 @@
 
 Generate a full 14-token color scale (`bg-document` → `color-document`) from a single seed color, using lightness / chroma / hue masks extracted from the [NL Design System Start theme](https://github.com/nl-design-system/themes/tree/main/packages/start-design-tokens) (`common.basis.color`).
 
-## Why masks
+## Installation
 
-Analysis of the Start theme showed the tokens decompose cleanly along three axes:
-
-- **Lightness** is a _fixed template_, seed-independent. Nearly every chromatic group shares the same L ramp (within ~0.005). `bg-document` is ~0.99 no matter the seed, so by default lightness is never scaled by the seed — only the template is applied.
-- **Chroma** follows a normalised _shape_ per profile, scaled by the seed's own chroma. The peak location differs by role: accents peak at the foreground text, status colors peak at the borders, highlight peaks at the background fills.
-- **Hue** is the seed hue plus a small per-token offset (real ramps rotate ~10° across the scale; storing that offset makes reconstruction exact).
-
-Reconstructing the original theme tokens from these masks is accurate to within **1/255** per channel (rounding).
+```sh
+npm install @nl-design-system-community/color-scale-generator
+```
 
 ## Usage
 
-This lives inside `theme-wizard-app`, not as its own published package — import it by relative path from `src/lib/color-scale-generator` (see `wizard-colorscale-input` for a real consumer):
-
 ```ts
-import { generateScale, oklchToHex } from '../../lib/color-scale-generator';
+import { generateScale, oklchToHex } from '@nl-design-system-community/color-scale-generator';
 
 const { data, warnings } = generateScale('#7C3AED', { profile: 'accent' });
 // data: { 'bg-document': { colorSpace: 'oklch', components: [L, C, H], alpha: 1 }, … }

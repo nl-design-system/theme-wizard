@@ -1,4 +1,4 @@
-import { TOKENS as COLOR_SCALE_SLOTS } from '../../theme-wizard-app/src/lib/color-scale-generator';
+import { TOKENS as COLOR_SCALE_SLOTS } from '@nl-design-system-community/color-scale-generator';
 import { test, expect } from './fixtures/fixtures';
 import { diffDesignTokenPaths, localeCompare } from './lib/design-token-diff';
 import { storageStatePath } from './project-setup';

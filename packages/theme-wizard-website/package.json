@@ -68,6 +68,7 @@
     "@nl-design-system-candidate/skip-link-react": "1.1.7",
     "@nl-design-system-candidate/skip-link-tokens": "1.0.4",
     "@nl-design-system-community/clippy-components": "workspace:*",
+    "@nl-design-system-community/color-scale-generator": "workspace:*",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "6.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
