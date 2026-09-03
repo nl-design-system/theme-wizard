@@ -278,8 +278,8 @@ importers:
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.7)(react@19.2.8)
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 8.0.0
+        version: 8.0.0
       '@utrecht/fieldset-react':
         specifier: 1.0.13
         version: 1.0.13(@babel/runtime@7.29.7)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -434,8 +434,8 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 8.0.0
+        version: 8.0.0
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -531,8 +531,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 8.0.0
+        version: 8.0.0
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 12.0.0
         version: 12.0.0
@@ -645,8 +645,8 @@ importers:
         specifier: 1.11.0
         version: 1.11.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 8.0.0
+        version: 8.0.0
       '@tabler/icons':
         specifier: 3.46.0
         version: 3.46.0
@@ -890,8 +890,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 8.0.0
+        version: 8.0.0
       '@tabler/icons-react':
         specifier: 3.46.0
         version: 3.46.0(react@19.2.8)
@@ -3016,8 +3016,8 @@ packages:
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0':
     resolution: {integrity: sha512-txcrXfIEMuid+OxJaDB4LYYLbYXjUwXwWUiq3YpdXRPKfsBlHSCx9lY8zKbTXn2pnymIa+DK2HiRGv9VsynOdA==}
 
-  '@nl-design-system-unstable/start-design-tokens@7.0.0':
-    resolution: {integrity: sha512-50+9g1OlY0HNc0ebzvDPJW9hJqDsoEPypcWINRYIRLDfqDo0GT7gRz+rW7xCSxD3sUjUn9Kdv4XJxySy5YolZw==}
+  '@nl-design-system-unstable/start-design-tokens@8.0.0':
+    resolution: {integrity: sha512-blc+mGXD2ysUYLVsbIY3356lHl9orAiUpgp0NLCYEsQ5RiX8nvbNb4+O01EekpSHc847KTpkpK35PW6uURFDOA==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@12.0.0':
     resolution: {integrity: sha512-cjfcaDrrWsOV05VfPVzMN3hAtvmB7rCfCD/G/1hH3/VOO41KtmfHNpZEySv5G4LFrdKzvnuqbYDW/qeiDueYeg==}
@@ -11213,7 +11213,7 @@ snapshots:
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@7.0.0': {}
+  '@nl-design-system-unstable/start-design-tokens@8.0.0': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@12.0.0': {}
 
