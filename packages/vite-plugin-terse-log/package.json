@@ -39,12 +39,12 @@
     "test-build": "vitest run --coverage"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "4.1.10",
+    "@vitest/coverage-v8": "4.1.11",
     "premove": "4.0.0",
     "typescript": "6.0.3",
-    "vite": "8.2.0",
-    "vite-plugin-dts": "5.0.3",
-    "vitest": "4.1.10"
+    "vite": "8.2.2",
+    "vite-plugin-dts": "5.1.0",
+    "vitest": "4.1.11"
   },
   "peerDependencies": {
     "vite": "^8.0.0"

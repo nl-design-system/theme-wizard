@@ -44,13 +44,13 @@
     "@nl-design-system-unstable/start-design-tokens": "7.0.0",
     "@nl-design-system-unstable/voorbeeld-design-tokens": "12.0.0",
     "@types/dlv": "1.1.5",
-    "@vitest/coverage-v8": "4.1.10",
+    "@vitest/coverage-v8": "4.1.11",
     "dset": "3.1.4",
     "premove": "4.0.0",
     "typescript": "6.0.3",
-    "vite": "8.2.0",
-    "vite-plugin-dts": "5.0.3",
-    "vitest": "4.1.10"
+    "vite": "8.2.2",
+    "vite-plugin-dts": "5.1.0",
+    "vitest": "4.1.11"
   },
   "dependencies": {
     "@nl-design-system-candidate/button-tokens": "1.0.0",
@@ -65,11 +65,11 @@
     "@nl-design-system-candidate/paragraph-tokens": "1.1.3",
     "@nl-design-system-candidate/skip-link-tokens": "1.0.4",
     "@nl-design-system-unstable/basis-design-tokens": "3.1.1",
-    "@projectwallace/css-parser": "0.18.2",
+    "@projectwallace/css-parser": "0.18.6",
     "colorjs.io": "0.7.1",
     "dequal": "2.0.3",
     "dlv": "1.1.3",
-    "es-toolkit": "1.50.0",
-    "zod": "4.4.3"
+    "es-toolkit": "1.52.0",
+    "zod": "4.5.4"
   }
 }
