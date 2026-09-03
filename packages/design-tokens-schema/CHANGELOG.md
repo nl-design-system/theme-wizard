@@ -1,5 +1,16 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.3.0
+
+### Minor Changes
+
+- 93fbbc1: add validations and string typing for token sub-types
+
+### Patch Changes
+
+- 0589fca: update all dependencies to latest
+- c96d598: set correct space concept token sub-type for row and column concepts
+
 ## 2.2.0
 
 ### Minor Changes

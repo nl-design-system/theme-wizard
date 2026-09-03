@@ -1,5 +1,35 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 2.2.0
+
+### Minor Changes
+
+- b729804: Add `clippy-graph-paper` component
+
+### Patch Changes
+
+- 0589fca: update all dependencies to latest
+- b460298: publish color-scale-generator as standalone package
+- Updated dependencies [b729804]
+- Updated dependencies [816f086]
+- Updated dependencies [0589fca]
+- Updated dependencies [816f086]
+- Updated dependencies [816f086]
+- Updated dependencies [93fbbc1]
+- Updated dependencies [816f086]
+- Updated dependencies [816f086]
+- Updated dependencies [c96d598]
+- Updated dependencies [9f2df2b]
+- Updated dependencies [816f086]
+- Updated dependencies [816f086]
+- Updated dependencies [271f427]
+- Updated dependencies [b460298]
+- Updated dependencies [816f086]
+  - @nl-design-system-community/clippy-components@3.3.0
+  - @nl-design-system-community/css-scraper@1.2.2
+  - @nl-design-system-community/design-tokens-schema@2.3.0
+  - @nl-design-system-community/color-scale-generator@1.0.1
+
 ## 2.1.2
 
 ### Patch Changes

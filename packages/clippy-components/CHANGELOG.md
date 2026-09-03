@@ -1,5 +1,26 @@
 # @nl-design-system-community/clippy-components
 
+## 3.3.0
+
+### Minor Changes
+
+- b729804: Add `clippy-graph-paper` component
+- 816f086: Added clippy-stack component
+- 816f086: added clippy-token-table-color component
+- 816f086: Added `clippy-token-table` component
+- 816f086: Added `clippy-token-detail` component
+- 816f086: Added clippy-token-sample-spacing component
+- 9f2df2b: color-sample renders different aspect ratios correctly and supports a label attribute
+- 816f086: Added `clippy-token-sample-border` component
+- 816f086: Extended clippy-token-table-color with a modal per color-sample
+- 271f427: - Added `clippy-token-sample` component
+  - Updated `clippy-token-detail` and `clippy-token-table` to use `clippy-token-sample`
+- 816f086: Added `clippy-token-sample-text` component
+
+### Patch Changes
+
+- 0589fca: update all dependencies to latest
+
 ## 3.2.0
 
 ### Minor Changes
