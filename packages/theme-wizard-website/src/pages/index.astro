@@ -8,7 +8,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <main slot="main" class="wizard-main">
         <wizard-container size="md">
-          TEST
+          <clippy-story-preview size="lg">
+            <wizard-starter-picker></wizard-starter-picker>
+          </clippy-story-preview>
         </wizard-container>
       </main>
      </wizard-layout>
@@ -24,8 +26,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <script>
   import { navigate } from "astro:transitions/client";
+  import {
+    WIZARD_STARTER_PICKER_SUBMIT_EVENT,
+    type WizardStarterPickerSubmitEventDetail,
+  } from "@nl-design-system-community/theme-wizard-app/components/wizard-starter-picker";
 
-  document.querySelector('theme-wizard-app')?.addEventListener('scrape-success', () => {
-    navigate('/staging-tokens')
+  document.querySelector('theme-wizard-app')?.addEventListener(WIZARD_STARTER_PICKER_SUBMIT_EVENT, (event) => {
+    const { value } = (event as CustomEvent<WizardStarterPickerSubmitEventDetail>).detail;
+
+    if (value === 'url') {
+      navigate('/scrape-tokens');
+    } else if (value === 'start') {
+      navigate('/wizard');
+    }
   })
 </script>
