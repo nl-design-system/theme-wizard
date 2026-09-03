@@ -20,6 +20,7 @@ const SORT_STRATEGIES: Record<string, SortStrategy> = {
   'basis.color.negative-inverse.bg-default': { target: 'red', type: 'hueProximity' },
   'basis.color.positive-inverse.bg-default': { target: 'green', type: 'hueProximity' },
   'basis.color.warning-inverse.bg-default': { target: 'orange', type: 'hueProximity' },
+  'basis.heading.color': { against: 'basis.color.default.bg-default', type: 'contrast' },
 };
 
 /** Circular distance between two hue angles (degrees), wrapped at 360. */
@@ -42,10 +43,14 @@ export const sortTokensForPath = (tokens: BaseDesignToken[], path: string, theme
     );
   }
 
-  const targetHue = parseToOklch(strategy.target).H;
-  return tokens.toSorted((a, b) => {
-    const hueA = parseToOklch(stringifyColor(a.$value as ColorValue)).H;
-    const hueB = parseToOklch(stringifyColor(b.$value as ColorValue)).H;
-    return hueDistance(hueA, targetHue) - hueDistance(hueB, targetHue);
-  });
+  if (strategy.type === 'hueProximity') {
+    const targetHue = parseToOklch(strategy.target).H;
+    return tokens.toSorted((a, b) => {
+      const hueA = parseToOklch(stringifyColor(a.$value as ColorValue)).H;
+      const hueB = parseToOklch(stringifyColor(b.$value as ColorValue)).H;
+      return hueDistance(hueA, targetHue) - hueDistance(hueB, targetHue);
+    });
+  }
+
+  return tokens;
 };
