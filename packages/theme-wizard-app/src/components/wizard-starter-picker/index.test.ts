@@ -21,7 +21,7 @@ describe(`<${tag}>`, () => {
     localStorage.clear();
   });
 
-  it('exposes an accessible group with 2 radio options, "url" preselected', async () => {
+  it('exposes an accessible group with 3 radio options, "url" preselected', async () => {
     const el = await mount();
 
     expect(page.getByRole('group', { name: label('wizard.starterPicker.groupLabel') }).element()).toBeTruthy();
@@ -31,9 +31,9 @@ describe(`<${tag}>`, () => {
     // can't find it), so we fall back to a plain DOM query for the group itself.
     expect(el.shadowRoot?.querySelector('clippy-card-radio-group')).toBeTruthy();
 
-    expect(page.getByRole('radio').elements()).toHaveLength(2);
+    expect(page.getByRole('radio').elements()).toHaveLength(3);
     expect(page.getByRole('radio', { name: label('wizard.starterPicker.url.name') }).elements()).toHaveLength(1);
-    // expect(page.getByRole('radio', { name: label('wizard.starterPicker.json.name') }).elements()).toHaveLength(1);
+    expect(page.getByRole('radio', { name: label('wizard.starterPicker.json.name') }).elements()).toHaveLength(1);
     expect(page.getByRole('radio', { name: label('wizard.starterPicker.startTheme.name') }).elements()).toHaveLength(1);
 
     expect(
