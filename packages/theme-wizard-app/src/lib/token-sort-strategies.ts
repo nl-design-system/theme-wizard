@@ -1,3 +1,4 @@
+import { parseToOklch } from '@nl-design-system-community/color-scale-generator';
 import {
   BaseDesignToken,
   ColorValue,
@@ -5,7 +6,6 @@ import {
   stringifyColor,
 } from '@nl-design-system-community/design-tokens-schema';
 import type Theme from './Theme';
-import { parseToOklch } from './color-scale-generator/oklch';
 
 type SortStrategy =
   /** Highest contrast (WCAG 2.1) against the token at `against` sorts first. */

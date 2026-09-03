@@ -2,14 +2,15 @@ import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline'
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
+import { generateScale, profileForName } from '@nl-design-system-community/color-scale-generator';
+import '@nl-design-system-community/clippy-components/clippy-html-image';
+import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   BaseDesignToken,
   isColorToken,
   stringifyColor,
   stringifyToken,
 } from '@nl-design-system-community/design-tokens-schema';
-import '@nl-design-system-community/clippy-components/clippy-html-image';
-import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import IconAlertCircle from '@tabler/icons/outline/alert-circle.svg?raw';
 import IconAlertTriangle from '@tabler/icons/outline/alert-triangle.svg?raw';
 import IconCircleCheck from '@tabler/icons/outline/circle-check.svg?raw';
@@ -20,7 +21,6 @@ import { property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { t } from '../../i18n';
-import { generateScale, profileForName } from '../../lib/color-scale-generator';
 import styles from './styles';
 
 const tag = 'wizard-step-form-sample';

@@ -1,6 +1,6 @@
+import { oklchToHex, parseToOklch } from '@nl-design-system-community/color-scale-generator';
 import { type BaseDesignToken, parseColor } from '@nl-design-system-community/design-tokens-schema';
 import { describe, expect, it } from 'vitest';
-import { oklchToHex, parseToOklch } from './color-scale-generator/oklch';
 import Theme from './Theme';
 import { sortTokensForPath } from './token-sort-strategies';
 

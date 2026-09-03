@@ -3,13 +3,19 @@ import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline'
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
 import {
+  generateScale,
+  profileForName,
+  TOKENS,
+  type TokenName,
+} from '@nl-design-system-community/color-scale-generator';
+import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
+import '@nl-design-system-community/clippy-components/clippy-stack';
+import {
   BaseDesignToken,
   isColorToken,
   stringifyColor,
   stringifyToken,
 } from '@nl-design-system-community/design-tokens-schema';
-import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
-import '@nl-design-system-community/clippy-components/clippy-stack';
 import ChevronDown from '@tabler/icons/outline/chevron-down.svg?raw';
 import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
 import { dequal } from 'dequal';
@@ -19,7 +25,6 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import { generateScale, profileForName, TOKENS, type TokenName } from '../../lib/color-scale-generator';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';

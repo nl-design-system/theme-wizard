@@ -1,0 +1,55 @@
+{
+  "name": "@nl-design-system-community/color-scale-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/color-scale-generator.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/color-scale-generator.js"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nl-design-system/theme-wizard.git",
+    "directory": "packages/color-scale-generator"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite build --watch --mode development",
+    "types": "tsc -p tsconfig.json --emitDeclarationOnly",
+    "type-check": "tsc --noEmit --project tsconfig.json",
+    "build": "pnpm run type-check && vite build && publint",
+    "clean": "premove dist/",
+    "lint": "pnpm run --sequential '/^lint:.+$/'",
+    "lint:js": "eslint",
+    "lint-fix:js": "eslint --fix",
+    "lint-build": "tsc --noEmit --project tsconfig.json",
+    "test": "pnpm run '/^test:.+$/'",
+    "test-build": "vitest --run --coverage",
+    "test:unit": "vitest --run",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@nl-design-system-community/design-tokens-schema": "workspace:*",
+    "colorjs.io": "0.7.1"
+  },
+  "devDependencies": {
+    "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
+    "@vitest/coverage-v8": "4.1.11",
+    "premove": "4.0.0",
+    "publint": "0.3.24",
+    "typescript": "6.0.3",
+    "unplugin-dts": "1.1.0",
+    "vite": "8.2.2",
+    "vitest": "4.1.11"
+  }
+}
