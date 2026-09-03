@@ -43,7 +43,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@amsterdam/design-system-css": "4.3.0",
+    "@amsterdam/design-system-css": "4.4.0",
     "@gemeente-denhaag/action": "4.4.1",
     "@nl-design-system-candidate/button-css": "1.1.0",
     "@nl-design-system-candidate/button-tokens": "1.0.0",
@@ -70,7 +70,7 @@
     "@utrecht/data-list-css": "3.0.1",
     "@utrecht/listbox-css": "3.0.1",
     "@utrecht/table-css": "3.0.1",
-    "@utrecht/textbox-css": "4.0.1",
+    "@utrecht/textbox-css": "4.1.0",
     "@utrecht/unordered-list-css": "3.1.1",
     "colorjs.io": "0.7.1",
     "debounce": "3.0.0",
@@ -94,7 +94,7 @@
     "premove": "4.0.0",
     "typescript": "6.0.3",
     "vite": "8.2.2",
-    "vite-plugin-dts": "5.0.3",
+    "vite-plugin-dts": "5.1.0",
     "vitest": "4.1.11"
   }
 }
