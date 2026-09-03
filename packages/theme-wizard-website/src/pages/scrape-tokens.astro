@@ -1,5 +1,12 @@
 ---
+import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const scraperUrl = withRelatedProject({
+  projectName: 'theme-wizard-server',
+  // Fallback API host
+  defaultHost: process.env.API_HOST || '',
+});
 ---
 
 <BaseLayout title="Theme Wizard">
@@ -8,7 +15,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <main slot="main" class="wizard-main">
         <wizard-container size="md">
-          TEST
+          <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
         </wizard-container>
       </main>
      </wizard-layout>
