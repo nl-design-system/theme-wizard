@@ -1,10 +1,11 @@
 import { expect as baseExpect, test as baseTest, type Locator } from '@playwright/test';
 import { BasisTokensPage } from '../pages/BasisTokensPage';
 import { ComponentPage } from '../pages/ComponentPage';
-import { HomePage } from '../pages/HomePage';
 import { MinifyTokensPage } from '../pages/MinifyTokensPage';
 import { ReuseTokensPage } from '../pages/ReuseTokensPage';
+import { ScraperPage } from '../pages/ScraperPage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
+import { StarterPickerPage } from '../pages/StarterPickerPage';
 import { ValidateTokensPage } from '../pages/ValidateTokensPage';
 import { WizardIndexPage } from '../pages/WizardIndexPage';
 import { WizardStepFormPage } from '../pages/WizardStepFormPage';
@@ -72,10 +73,11 @@ export const expect = baseExpect.extend({
 
 export const test = baseTest.extend<{
   basisTokensPage: BasisTokensPage;
-  homePage: HomePage;
+  scraperPage: ScraperPage;
   minifyTokensPage: MinifyTokensPage;
   reuseTokensPage: ReuseTokensPage;
   stagingTokensPage: StagingTokensPage;
+  starterPickerPage: StarterPickerPage;
   componentPage: ComponentPage;
   validateTokensPage: ValidateTokensPage;
   wizardIndexPage: WizardIndexPage;
@@ -89,10 +91,6 @@ export const test = baseTest.extend<{
     const componentPage = new ComponentPage(page);
     await use(componentPage);
   },
-  homePage: async ({ page }, use) => {
-    const homePage = new HomePage(page);
-    await use(homePage);
-  },
   minifyTokensPage: async ({ page }, use) => {
     const minifyTokensPage = new MinifyTokensPage(page);
     await use(minifyTokensPage);
@@ -101,9 +99,17 @@ export const test = baseTest.extend<{
     const reuseTokensPage = new ReuseTokensPage(page);
     await use(reuseTokensPage);
   },
+  scraperPage: async ({ page }, use) => {
+    const scraperPage = new ScraperPage(page);
+    await use(scraperPage);
+  },
   stagingTokensPage: async ({ page }, use) => {
     const stagingTokensPage = new StagingTokensPage(page);
     await use(stagingTokensPage);
+  },
+  starterPickerPage: async ({ page }, use) => {
+    const starterPickerPage = new StarterPickerPage(page);
+    await use(starterPickerPage);
   },
   validateTokensPage: async ({ page }, use) => {
     const validateTokensPage = new ValidateTokensPage(page);

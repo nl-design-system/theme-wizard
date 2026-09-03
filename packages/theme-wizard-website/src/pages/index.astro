@@ -1,14 +1,5 @@
 ---
-import { withRelatedProject } from '@vercel/related-projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '@nl-design-system-candidate/link-css/link.css'
-import '@nl-design-system-candidate/paragraph-css/paragraph.css'
-
-const scraperUrl = withRelatedProject({
-  projectName: 'theme-wizard-server',
-  // Fallback API host
-  defaultHost: process.env.API_HOST || '',
-});
 ---
 
 <BaseLayout title="Theme Wizard">
@@ -17,7 +8,9 @@ const scraperUrl = withRelatedProject({
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
       <main slot="main" class="wizard-main">
         <wizard-container size="md">
-          <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
+          <clippy-story-preview size="lg">
+            <wizard-starter-picker></wizard-starter-picker>
+          </clippy-story-preview>
         </wizard-container>
       </main>
      </wizard-layout>
@@ -33,8 +26,18 @@ const scraperUrl = withRelatedProject({
 
 <script>
   import { navigate } from "astro:transitions/client";
+  import {
+    WIZARD_STARTER_PICKER_SUBMIT_EVENT,
+    type WizardStarterPickerSubmitEventDetail,
+  } from "@nl-design-system-community/theme-wizard-app/components/wizard-starter-picker";
 
-  document.querySelector('theme-wizard-app')?.addEventListener('scrape-success', () => {
-    navigate('/staging-tokens')
+  document.querySelector('theme-wizard-app')?.addEventListener(WIZARD_STARTER_PICKER_SUBMIT_EVENT, (event) => {
+    const { value } = (event as CustomEvent<WizardStarterPickerSubmitEventDetail>).detail;
+
+    if (value === 'url') {
+      navigate('/scrape-tokens');
+    } else if (value === 'start') {
+      navigate('/wizard');
+    }
   })
 </script>

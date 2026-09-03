@@ -1,0 +1,38 @@
+---
+import { withRelatedProject } from '@vercel/related-projects';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const scraperUrl = withRelatedProject({
+  projectName: 'theme-wizard-server',
+  // Fallback API host
+  defaultHost: process.env.API_HOST || '',
+});
+---
+
+<BaseLayout title="Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <main slot="main" class="wizard-main">
+        <wizard-container size="md">
+          <wizard-scraper scraperUrl={scraperUrl}></wizard-scraper>
+        </wizard-container>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-main {
+    display: grid;
+    place-content: center;
+  }
+</style>
+
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  document.querySelector('theme-wizard-app')?.addEventListener('scrape-success', () => {
+    navigate('/staging-tokens')
+  })
+</script>

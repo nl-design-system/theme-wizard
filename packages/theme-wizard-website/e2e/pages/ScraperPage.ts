@@ -1,6 +1,6 @@
 import { type Page, type Locator } from '@playwright/test';
 
-export class HomePage {
+export class ScraperPage {
   public readonly input: Locator;
 
   constructor(public readonly page: Page) {
@@ -8,7 +8,7 @@ export class HomePage {
   }
 
   get url() {
-    return '/';
+    return '/scrape-tokens';
   }
 
   async goto() {
