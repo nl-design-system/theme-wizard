@@ -684,8 +684,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       '@utrecht/web-component-library-stencil':
-        specifier: 4.2.1
-        version: 4.2.1
+        specifier: 5.0.0
+        version: 5.0.0
       '@vanillawc/wc-markdown':
         specifier: 1.6.11
         version: 1.6.11
@@ -917,8 +917,8 @@ importers:
         specifier: 4.0.6
         version: 4.0.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@utrecht/web-component-library-stencil':
-        specifier: 4.2.1
-        version: 4.2.1
+        specifier: 5.0.0
+        version: 5.0.0
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -4719,9 +4719,6 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
-
-  '@utrecht/web-component-library-stencil@4.2.1':
-    resolution: {integrity: sha512-LDGLtg4Z4YSSshiAucH1293cfMV85cD2XCx2cklJS0gGRahbTSB6x0D3P1gEGrwz5+IjHXDBp0KZUuHQTBdp3Q==}
 
   '@utrecht/web-component-library-stencil@5.0.0':
     resolution: {integrity: sha512-vTN2Foi/qjyCM0mJyqOK7EQXwy7KjR1i5gP/O3IYNwhkJ+HWcWvj4nFXLP7Zy/5lUblMPYoEzkXG34+bGzwoBw==}
@@ -12713,10 +12710,6 @@ snapshots:
       '@utrecht/web-component-library-stencil': 5.0.0
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
-
-  '@utrecht/web-component-library-stencil@4.2.1':
-    dependencies:
-      '@stencil/core': 4.18.3
 
   '@utrecht/web-component-library-stencil@5.0.0':
     dependencies:
