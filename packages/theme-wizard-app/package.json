@@ -95,7 +95,7 @@
     "@utrecht/table-css": "3.0.1",
     "@utrecht/textarea-css": "4.1.0",
     "@utrecht/textbox-css": "4.1.0",
-    "@utrecht/web-component-library-stencil": "4.2.1",
+    "@utrecht/web-component-library-stencil": "5.0.0",
     "@vanillawc/wc-markdown": "1.6.11",
     "color-sorter": "8.0.2",
     "colorjs.io": "0.7.1",
