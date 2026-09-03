@@ -52,7 +52,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "@utrecht/component-library-css": "9.0.15",
-    "@utrecht/component-library-react": "14.0.2",
+    "@utrecht/component-library-react": "15.0.0",
     "@utrecht/web-component-library-react": "4.0.6",
     "@whitespace/storybook-addon-html": "9.0.0",
     "lit": "3.3.3",
