@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Upload je thema - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <main slot="main" class="wizard-main">
+        <wizard-container size="xl">
+          <clippy-story-preview size="lg">
+            <clippy-stack size="3xl">
+              <clippy-heading level="1">Upload je thema</clippy-heading>
+              <wizard-theme-preset-form></wizard-theme-preset-form>
+            </clippy-stack>
+          </clippy-story-preview>
+        </wizard-container>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<script>
+import { navigate } from "astro:transitions/client"
+
+  document.querySelector('theme-wizard-app')?.addEventListener('theme-upload', () => {
+    navigate('/basis-tokens')
+  })
+</script>
+
+<style>
+  .wizard-main {
+    padding-block: var(--basis-space-block-5xl);
+  }
+
+  wizard-container {
+    margin-inline: auto;
+  }
+</style>

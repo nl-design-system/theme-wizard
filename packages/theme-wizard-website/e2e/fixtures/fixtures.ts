@@ -6,6 +6,7 @@ import { ReuseTokensPage } from '../pages/ReuseTokensPage';
 import { ScraperPage } from '../pages/ScraperPage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
 import { StarterPickerPage } from '../pages/StarterPickerPage';
+import { UploadTokensPage } from '../pages/UploadTokensPage';
 import { ValidateTokensPage } from '../pages/ValidateTokensPage';
 import { WizardIndexPage } from '../pages/WizardIndexPage';
 import { WizardStepFormPage } from '../pages/WizardStepFormPage';
@@ -79,6 +80,7 @@ export const test = baseTest.extend<{
   stagingTokensPage: StagingTokensPage;
   starterPickerPage: StarterPickerPage;
   componentPage: ComponentPage;
+  uploadTokensPage: UploadTokensPage;
   validateTokensPage: ValidateTokensPage;
   wizardIndexPage: WizardIndexPage;
   wizardStepFormPage: WizardStepFormPage;
@@ -110,6 +112,10 @@ export const test = baseTest.extend<{
   starterPickerPage: async ({ page }, use) => {
     const starterPickerPage = new StarterPickerPage(page);
     await use(starterPickerPage);
+  },
+  uploadTokensPage: async ({ page }, use) => {
+    const uploadTokensPage = new UploadTokensPage(page);
+    await use(uploadTokensPage);
   },
   validateTokensPage: async ({ page }, use) => {
     const validateTokensPage = new ValidateTokensPage(page);

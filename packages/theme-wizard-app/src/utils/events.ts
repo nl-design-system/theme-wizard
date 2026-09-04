@@ -1,4 +1,4 @@
-import type { DesignToken } from 'style-dictionary/types';
+import type { DesignToken, DesignTokens } from 'style-dictionary/types';
 
 export const UPDATE_DESIGN_TOKENS_EVENT = 'update-design-tokens';
 
@@ -9,3 +9,11 @@ export type UpdateDesignTokensDetail = {
 };
 
 export type SubmitSaveTokenFormEvent = CustomEvent<UpdateDesignTokensDetail>;
+
+export const SET_THEME_TOKENS_EVENT = 'set-theme-tokens';
+
+export type SetThemeTokensDetail = {
+  tokens: DesignTokens;
+};
+
+export type SetThemeTokensEvent = CustomEvent<SetThemeTokensDetail>;
