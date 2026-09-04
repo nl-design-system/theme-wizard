@@ -12,6 +12,9 @@ describe('parseThemePreset', () => {
     expect(result.success).toBe(true);
     if (!result.success) return;
     expect(dlv(result.data, 'basis.color.accent-1.bg-default')).toBeDefined();
+    expect(result.uploadedTokenCount).toBe(0);
+    expect(result.filledFromDefaultsPaths.length).toBeGreaterThan(0);
+    expect(result.filledFromDefaultsPaths).toContain('basis.color.accent-1.bg-default');
   });
 
   it('allows a theme with only a soft issue (font-size below minimum)', async () => {
@@ -28,6 +31,10 @@ describe('parseThemePreset', () => {
     const result = await parseThemePreset([toFile(upload)], false);
 
     expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.uploadedTokenCount).toBe(1);
+    expect(result.softIssues.length).toBeGreaterThan(0);
+    expect(result.filledFromDefaultsPaths).not.toContain('basis.text.font-size.sm');
   });
 
   it('rejects a theme with a structural issue (invalid token reference)', async () => {

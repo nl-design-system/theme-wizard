@@ -9,8 +9,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <main slot="main" class="wizard-main">
         <wizard-container size="xl">
           <clippy-story-preview size="lg">
-            <clippy-heading level="1">Upload je thema</clippy-heading>
-            <wizard-theme-preset-form></wizard-theme-preset-form>
+            <clippy-stack size="3xl">
+              <clippy-heading level="1">Upload je thema</clippy-heading>
+              <wizard-theme-preset-form></wizard-theme-preset-form>
+            </clippy-stack>
           </clippy-story-preview>
         </wizard-container>
       </main>
