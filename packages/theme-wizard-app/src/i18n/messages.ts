@@ -163,6 +163,7 @@ export const en = {
       },
     },
     reference: 'Reference',
+    referenceTo: 'Reference to',
     sample: 'Sample',
     sections: {
       colors: {
@@ -700,6 +701,7 @@ export const nl = {
       },
     },
     reference: 'Referentie',
+    referenceTo: 'Referentie naar',
     sample: 'Voorbeeld',
     sections: {
       colors: {

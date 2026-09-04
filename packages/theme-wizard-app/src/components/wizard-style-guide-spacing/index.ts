@@ -3,26 +3,20 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-toggletip';
+import '@nl-design-system-community/clippy-components/clippy-reset-theme';
+import '../wizard-preview-theme';
 import linkCss from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
-import {
-  type DimensionToken,
-  EXTENSION_REFERENCED_AT,
-  EXTENSION_TOKEN_PATH,
-} from '@nl-design-system-community/design-tokens-schema';
-import ClipboardCopyIcon from '@tabler/icons/outline/clipboard-copy.svg?raw';
+import { TokenGroup, TokenPath } from '@nl-design-system-community/clippy-components/clippy-reset-theme';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
-import dlv from 'dlv';
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
-import type { DisplayToken, SpaceToken } from '../wizard-style-guide/types';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import styles from '../wizard-style-guide/styles';
-import { openTokenDialog, renderSpacingExample, renderTokenDialog } from '../wizard-style-guide/utils';
+import { getTokenCollectionByTokenPaths } from '../wizard-style-guide/utils';
 
 const tag = 'wizard-style-guide-spacing';
 
@@ -38,8 +32,6 @@ export class WizardStyleGuideSpacing extends LitElement {
   @state()
   private readonly theme!: Theme;
 
-  @state() private activeToken?: DisplayToken;
-
   static override readonly styles = [
     unsafeCSS(dataBadgeCss),
     unsafeCSS(tableCss),
@@ -50,33 +42,19 @@ export class WizardStyleGuideSpacing extends LitElement {
     styles,
   ];
 
-  #prepareSpaceTokens(basis: Record<string, unknown>, space: string): SpaceToken[] {
-    return Object.entries((basis['space'] as Record<string, unknown>)[space] as Record<string, unknown>)
-      .filter(([name]) => !['min', 'max'].includes(name))
-      .reverse()
-      .map(([name, tokenValue]) => {
-        const value = (tokenValue as DimensionToken).$value;
-        const stringifiedValue = typeof value === 'string' ? value : value.value + value.unit;
-        const tokenId = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_TOKEN_PATH])) ?? '';
-        const usage = (tokenValue && dlv(tokenValue, ['$extensions', EXTENSION_REFERENCED_AT])) ?? [];
-        const usageCount = usage.length ?? 0;
-        return { name, tokenId, usage, usageCount, value: stringifiedValue };
-      });
-  }
-
-  #openDialog(token: DisplayToken) {
-    openTokenDialog(token, this.renderRoot, (t) => {
-      this.activeToken = t;
-    });
-  }
-
   override render() {
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
-    const spaceTypes = ['block', 'inline', 'text', 'column', 'row'];
-    const spacingData = spaceTypes.map((space) => ({
-      space,
-      tokens: this.#prepareSpaceTokens(basis, space),
-    }));
+    const spaceTypes = ['inline', 'block', 'text', 'column', 'row'];
+
+    const paths: TokenPath[] = Object.keys(basis['space'] as TokenGroup).map((key) => `basis.space.${key}`.split('.'));
+    const tokenCollection = getTokenCollectionByTokenPaths(this.theme.tokens, paths);
+
+    // sort tokencollection based on spaceTypes
+    tokenCollection.sort((a, b) => {
+      const aType = a.name.split('.')[2];
+      const bType = b.name.split('.')[2];
+      return spaceTypes.indexOf(aType) - spaceTypes.indexOf(bType);
+    });
 
     return html`
       <div class="wizard-style-guide">
@@ -90,93 +68,41 @@ export class WizardStyleGuideSpacing extends LitElement {
           </a>
         </p>
 
-        ${spacingData.map(({ space, tokens }) => {
-          const captionId = `styleguide-section-space-${space}-title`;
+        ${tokenCollection.map(({ name, tokens }) => {
+          const concept = name.split('.').slice(-1)[0];
+          const captionId = `styleguide-section-${concept}-title`;
           return html`
-            <wizard-table-scroller>
-              <table class="utrecht-table" aria-labelledby=${captionId}>
-                <caption class="utrecht-table__caption" id=${captionId}>
-                  ${t(`styleGuide.sections.space.${space}.title`)}
-                </caption>
-                <thead class="utrecht-table__header">
-                  <tr class="utrecht-table__row">
-                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.sample')}</th>
-                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.tokenName')}</th>
-                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.value')}</th>
-                    <th scope="col" class="utrecht-table__header-cell">${t('styleGuide.details')}</th>
-                  </tr>
-                </thead>
-                <tbody class="utrecht-table__body">
-                  ${tokens.map(
-                    ({ name, tokenId, usage, value }) => html`
-                      <tr class="utrecht-table__row">
-                        <td class="utrecht-table__cell">${renderSpacingExample(value, space)}</td>
-                        <td class="utrecht-table__cell">
-                          <span class="nl-data-badge" id="${`basis-space-${space}-${name}`}">${tokenId}</span>
-                          <clippy-toggletip text=${t('copyToClipboard')}>
-                            <clippy-button
-                              icon-only
-                              purpose="subtle"
-                              size="small"
-                              @click=${() => navigator.clipboard.writeText(tokenId)}
-                            >
-                              ${t('copyValueToClipboard', { value: tokenId })}
-                              <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
-                            </clippy-button>
-                          </clippy-toggletip>
-                        </td>
-                        <td class="utrecht-table__cell">
-                          <code class="nl-code">${value}</code>
-                          <clippy-toggletip text=${t('copyToClipboard')}>
-                            <clippy-button
-                              icon-only
-                              purpose="subtle"
-                              size="small"
-                              @click=${() => navigator.clipboard.writeText(value)}
-                            >
-                              ${t('copyValueToClipboard', { value })}
-                              <clippy-icon size="small" slot="iconEnd">${unsafeSVG(ClipboardCopyIcon)}</clippy-icon>
-                            </clippy-button>
-                          </clippy-toggletip>
-                        </td>
-
-                        <td class="utrecht-table__cell">
-                          <button
-                            type="button"
-                            class="utrecht-link-button utrecht-link-button--html-button"
-                            @click=${() =>
-                              this.#openDialog({
-                                displayValue: value,
-                                metadata: { space },
-                                tokenId,
-                                tokenType: 'dimension',
-                                usage,
-                              })}
-                          >
-                            ${t('styleGuide.showDetails')}
-                          </button>
-                        </td>
-                      </tr>
-                    `,
-                  )}
-                </tbody>
-              </table>
-            </wizard-table-scroller>
-
+            <clippy-heading level="3" id=${captionId}
+              >${t(`styleGuide.sections.space.${concept}.title`)}</clippy-heading
+            >
             <p class="nl-paragraph">
               <a
                 class="nl-link"
-                href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/#${space}"
+                href="https://nldesignsystem.nl/richtlijnen/stijl/ruimte/spacing-concepten/#${concept}"
                 target="_blank"
               >
                 docs
               </a>
             </p>
+            <clippy-reset-theme>
+              <wizard-preview-theme>
+                <clippy-token-table
+                  .tokens=${tokens}
+                  example-label=${t('styleGuide.sample')}
+                  token-id-label=${t('styleGuide.tokenName')}
+                  value-label=${t('styleGuide.value')}
+                  reference-to-label=${t('styleGuide.referenceTo')}
+                  details-label=${t('styleGuide.details')}
+                  show-details-label=${t('styleGuide.showDetails')}
+                  copy-to-clipboard-label=${t('styleGuide.detailsDialog.copyToClipboard')}
+                  reference-title-label=${t('styleGuide.detailsDialog.tokenReferenceList.title')}
+                  reference-empty-label=${t('styleGuide.detailsDialog.tokenReferenceList.empty')}
+                ></clippy-token-table>
+              </wizard-preview-theme>
+            </clippy-reset-theme>
           `;
         })}
       </div>
-
-      ${renderTokenDialog(this.activeToken)}
     `;
   }
 }

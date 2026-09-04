@@ -1,8 +1,8 @@
 import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
-import { BaseDesignToken, ColorValue, stringifyColor } from '@nl-design-system-community/design-tokens-schema';
+import { BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
 import { safeCustomElement } from '@src/lib/decorators';
-import { getTokenPath } from '@src/lib/tokens';
+import { getTokenPath, stringifyTokenValue } from '@src/lib/tokens';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import '../clippy-color-sample';
 import '../clippy-modal';
@@ -169,9 +169,7 @@ export class ClippyTokenTableColor extends LitElement {
                         type="button"
                         @click=${() => this.#openDialog({ token })}
                       >
-                        <clippy-color-sample
-                          color="${stringifyColor(token.$value as ColorValue)}"
-                        ></clippy-color-sample>
+                        <clippy-color-sample color="${stringifyTokenValue(token)}"></clippy-color-sample>
                         <span class="sr-only">${getTokenPath(token)}</span>
                       </button>
                     </td>`;
