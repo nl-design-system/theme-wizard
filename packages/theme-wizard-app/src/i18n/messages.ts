@@ -218,7 +218,20 @@ export const en = {
     value: 'Value',
   },
   themePresetForm: {
+    confirm: 'Continue with this theme',
     submit: 'Use theme',
+    summary: {
+      filledFromDefaults: ({ count }: { count: number }) =>
+        count === 1
+          ? '1 token was completed using the Start-thema:'
+          : `${count} tokens were completed using the Start-thema:`,
+      softIssues: ({ count }: { count: number }) =>
+        count === 1
+          ? '1 quality warning found (contrast, font size, or line height)'
+          : `${count} quality warnings found (contrast, font size, or line height)`,
+      uploadedTokens: ({ count }: { count: number }) =>
+        count === 1 ? 'Found 1 token in your file' : `Found ${count} tokens in your file`,
+    },
   },
   themeResetDialog: {
     body: 'Are you sure you want to reset all token values to their defaults? This cannot be undone.',
@@ -774,7 +787,20 @@ export const nl = {
     value: 'Waarde',
   },
   themePresetForm: {
+    confirm: 'Doorgaan met dit thema',
     submit: 'Thema gebruiken',
+    summary: {
+      filledFromDefaults: ({ count }: { count: number }) =>
+        count === 1
+          ? '1 token is aangevuld vanuit het Start-thema:'
+          : `${count} tokens zijn aangevuld vanuit het Start-thema:`,
+      softIssues: ({ count }: { count: number }) =>
+        count === 1
+          ? '1 kwaliteitswaarschuwing gevonden (contrast, lettergrootte of regelhoogte)'
+          : `${count} kwaliteitswaarschuwingen gevonden (contrast, lettergrootte of regelhoogte)`,
+      uploadedTokens: ({ count }: { count: number }) =>
+        count === 1 ? '1 token gevonden in je bestand' : `${count} tokens gevonden in je bestand`,
+    },
   },
   themeResetDialog: {
     body: 'Weet je zeker dat je alle tokenwaarden wilt terugzetten naar de standaardwaarden? Dit kan niet ongedaan worden gemaakt.',

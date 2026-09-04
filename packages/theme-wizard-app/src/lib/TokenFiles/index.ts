@@ -1,3 +1,4 @@
+import type { DesignTokens } from 'style-dictionary/types';
 import {
   ERROR_CODES,
   StrictThemeSchema,
@@ -9,8 +10,20 @@ import {
 } from '@nl-design-system-community/design-tokens-schema';
 import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tokens.json';
 import { $ZodIssue } from 'zod/v4/core';
+import { flattenTokens } from '../Theme/lib';
 
 export type TokenFileResult = { success: true; data: Theme } | { success: false; error: $ZodIssue[] };
+
+export type ThemePresetResult =
+  | {
+      success: true;
+      data: Theme;
+      /** Token paths present in `data` but missing from the uploaded file(s), filled in from the Start-thema defaults. */
+      filledFromDefaultsPaths: string[];
+      softIssues: $ZodIssue[];
+      uploadedTokenCount: number;
+    }
+  | { success: false; error: $ZodIssue[] };
 
 export async function readTokenFiles(files: File[], shouldExcludeParentKeys: boolean) {
   const fileTexts = await Promise.all(files.map((file) => file.text()));
@@ -41,13 +54,24 @@ const SOFT_ERROR_CODES: ReadonlySet<string> = new Set([
  * the Start-thema defaults, and cosmetic/threshold issues (contrast, font-size,
  * line-height) don't block the upload — only structural issues do.
  */
-export async function parseThemePreset(files: File[], shouldExcludeParentKeys: boolean): Promise<TokenFileResult> {
+export async function parseThemePreset(files: File[], shouldExcludeParentKeys: boolean): Promise<ThemePresetResult> {
   const uploaded = await readTokenFiles(files, shouldExcludeParentKeys);
+  const uploadedPaths = new Set(Object.keys(flattenTokens(uploaded as DesignTokens)));
   const merged = mergeTokens([startTokens, uploaded]);
+
+  const toResult = (data: Theme, softIssues: $ZodIssue[]): ThemePresetResult => ({
+    data,
+    filledFromDefaultsPaths: Object.keys(flattenTokens(data as DesignTokens)).filter(
+      (path) => !uploadedPaths.has(path),
+    ),
+    softIssues,
+    success: true,
+    uploadedTokenCount: uploadedPaths.size,
+  });
 
   const parsed = StrictThemeSchema.safeParse(merged);
   if (parsed.success) {
-    return parsed;
+    return toResult(parsed.data, []);
   }
 
   const hardIssues = parsed.error.issues.filter(
@@ -60,5 +84,5 @@ export async function parseThemePreset(files: File[], shouldExcludeParentKeys: b
   // Only soft issues remain, so shape/refs/types already passed. `safeParse` withholds
   // `.data` whenever any superRefine issue fires (soft or not), so re-derive the
   // processed tree ourselves via the same transform `StrictThemeSchema` pipes through.
-  return { data: preprocessThemeStrict(merged) as Theme, success: true };
+  return toResult(preprocessThemeStrict(merged) as Theme, parsed.error.issues);
 }
