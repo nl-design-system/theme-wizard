@@ -5,7 +5,7 @@ import { state } from 'lit/decorators.js';
 import type { WizardUploadEventDetail } from '../wizard-token-upload-form';
 import { t } from '../../i18n';
 import '../wizard-token-upload-form';
-import { type TokenFileResult, parseTokenFiles } from '../../lib/TokenFiles';
+import { type TokenFileResult, parseThemePreset } from '../../lib/TokenFiles';
 import { SET_THEME_TOKENS_EVENT, type SetThemeTokensDetail } from '../../utils/events';
 import styles from './styles';
 
@@ -28,7 +28,7 @@ export class WizardThemePresetForm extends LitElement {
 
   readonly #handleUpload = async (event: CustomEvent<WizardUploadEventDetail>) => {
     const { excludeParentKeys, files } = event.detail;
-    const result = await parseTokenFiles(files, excludeParentKeys);
+    const result = await parseThemePreset(files, excludeParentKeys);
     this.result = result;
 
     if (!result.success) {
