@@ -28,7 +28,7 @@ const config: PlaywrightTestConfig = {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        channel: 'chrome', // opt-in for headless mode
+        channel: 'chrome',
         // Set Playwright explicitly in the user-agent string for easy allow-listing in firewall and checking logs
         userAgent: devices['Desktop Chrome'].userAgent + ' (Playwright Test)',
       },
