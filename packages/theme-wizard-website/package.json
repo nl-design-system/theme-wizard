@@ -21,7 +21,6 @@
     "lint-fix:js": "eslint --fix",
     "preview": "astro preview",
     "astro": "astro",
-    "test-install-browsers": "playwright install chromium --no-shell",
     "test-e2e": "playwright test"
   },
   "dependencies": {
