@@ -10,7 +10,7 @@ const scrapedTokensFixture = JSON.parse(
 
 export default async function globalSetup(config: FullConfig) {
   const baseURL = config.projects[0].use.baseURL;
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ channel: 'chrome' });
   const page = await browser.newPage();
 
   await page.goto(`${baseURL}/`);
