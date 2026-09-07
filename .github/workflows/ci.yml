@@ -201,8 +201,8 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Install headless browsers for end-to-end testing
-        run: pnpm run test-install-browsers
+      # - name: Install headless browsers for end-to-end testing
+      #   run: pnpm run test-install-browsers
 
       - name: End-to-end tests
         run: pnpm run test-e2e
