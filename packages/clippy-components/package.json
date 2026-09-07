@@ -38,7 +38,6 @@
     "lint-build": "tsc --noEmit --project tsconfig.json",
     "test": "pnpm run '/^test:.+$/'",
     "test-build": "vitest --run --coverage",
-    "test-install-browsers": "playwright install chromium",
     "test:unit": "vitest --run",
     "preview": "vite preview"
   },
