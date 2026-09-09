@@ -1,6 +1,6 @@
 import dlv from 'dlv';
 import * as z from 'zod';
-import { BaseDesignTokenSchema } from './tokens/base-token';
+import { BaseDesignTokenSchema, withGroupExtensions } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 import { DimensionTokenSchema } from './tokens/dimension-token';
 import { FontFamilyTokenSchema } from './tokens/fontfamily-token';
@@ -60,5 +60,5 @@ export const buildSchema = (node: Record<string, unknown>): z.ZodTypeAny => {
       shape[key] = buildSchema(value as Record<string, unknown>);
     }
   }
-  return z.strictObject(shape);
+  return z.strictObject(withGroupExtensions(shape));
 };

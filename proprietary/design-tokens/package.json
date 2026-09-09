@@ -28,6 +28,6 @@
   "devDependencies": {
     "chokidar-cli": "3.0.0",
     "premove": "4.0.0",
-    "style-dictionary": "5.5.0"
+    "style-dictionary": "5.5.2"
   }
 }

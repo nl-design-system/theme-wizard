@@ -1,6 +1,18 @@
 import type { Locator } from '@playwright/test';
+import dlv from 'dlv';
 import { test, expect } from './fixtures/fixtures';
 import { storageStatePath } from './project-setup';
+
+// Mirrors `EXTENSION_COLORSCALE_SEED` from `wizard-colorscale-input`. Not imported directly:
+// that module is a `@customElement`, which breaks decorator handling in this Node-side test bundle.
+const EXTENSION_COLORSCALE_SEED = 'nl.nldesignsystem.theme-wizard.color-scale-seed-color';
+
+/** Reads a group's colorscale seed extension. Not passed through `dlv`: the extension key itself
+ * contains dots, which `dlv` would otherwise split into (nonexistent) nested segments. */
+const getSeedExtension = (tokens: unknown, groupPath: string): unknown => {
+  const group = dlv(tokens as object, groupPath) as { $extensions?: Record<string, unknown> } | undefined;
+  return group?.$extensions?.[EXTENSION_COLORSCALE_SEED];
+};
 
 test('page has accessibility basics', async ({ basisTokensPage }) => {
   await basisTokensPage.goto();
@@ -10,7 +22,7 @@ test('page has accessibility basics', async ({ basisTokensPage }) => {
   expect.soft(title).toBeTruthy();
 
   // Has document language specified
-  await expect.soft(basisTokensPage.page.locator('html')).toHaveAttribute('lang', 'nl-NL');
+  await expect(basisTokensPage.page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 });
 
 test.describe('change fonts', () => {
@@ -362,6 +374,12 @@ test.describe('colorscale inputs', () => {
     expect
       .soft(await basisTokensPage.getColorStops('Accent 1'))
       .toEqual(await basisTokensPage.getColorStops('Accent 2'));
+
+    // The seed color is stored as a group-level $extensions entry, on both the
+    // changed group and the sibling that exclusively referenced it.
+    const tokens = await basisTokensPage.getTokenTree();
+    expect(getSeedExtension(tokens, 'basis.color.accent-1')).toBeDefined();
+    expect(getSeedExtension(tokens, 'basis.color.accent-2')).toBeDefined();
   });
 
   test.describe('Updating Accent 2 decouples it from Accent 1', () => {
@@ -380,9 +398,9 @@ test.describe('colorscale inputs', () => {
       // Accent 1 and 2 should no longer be the same
       await expect.soft(accent1Input).not.toHaveValue('#ff0f00');
       await expect.soft(accent2Input).toHaveValue('#ff0f00');
-      expect
-        .soft(await basisTokensPage.getColorStops('Accent 1'))
-        .not.toEqual(await basisTokensPage.getColorStops('Accent 2'));
+      expect(await basisTokensPage.getColorStops('Accent 1')).not.toEqual(
+        await basisTokensPage.getColorStops('Accent 2'),
+      );
     });
 
     test('Updating Accent 1 after Accent 2 keeps value of Accent 2 intact', async ({ basisTokensPage }) => {
@@ -390,9 +408,9 @@ test.describe('colorscale inputs', () => {
 
       await expect.soft(accent1Input).toHaveValue('#00ff00');
       await expect.soft(accent2Input).toHaveValue('#ff0f00');
-      expect
-        .soft(await basisTokensPage.getColorStops('Accent 1'))
-        .not.toEqual(await basisTokensPage.getColorStops('Accent 2'));
+      expect(await basisTokensPage.getColorStops('Accent 1')).not.toEqual(
+        await basisTokensPage.getColorStops('Accent 2'),
+      );
     });
   });
 });

@@ -505,6 +505,22 @@ export const en = {
     },
   },
   wizard: {
+    starterPicker: {
+      groupLabel: 'How do you want to start?',
+      json: {
+        name: 'Start with JSON',
+        description: 'Upload an existing design tokens JSON file.',
+      },
+      startTheme: {
+        name: 'Start Theme',
+        description: 'Start from the default Start Theme.',
+      },
+      submit: 'Next step',
+      url: {
+        name: 'Start from a URL',
+        description: 'Scrape an existing website for its design tokens.',
+      },
+    },
     stepForm: {
       errorNoToken: 'Error: no token at path {{path}}, make sure to use a correct token path.',
       foundScrapedValues: 'Found values on website',
@@ -514,6 +530,30 @@ export const en = {
         button: 'Example button',
         heading: 'Example of a heading.',
         paragraph: 'Example text. The quick brown fox jumps over the lazy dog.',
+        preview: {
+          alert: {
+            error: {
+              heading: 'Example: something went wrong',
+            },
+            info: {
+              heading: 'Example: for your information',
+            },
+            paragraph:
+              'This is example text a user might see. We could add more text here to take up more space if needed.',
+            positive: {
+              heading: 'Example: that worked',
+            },
+            warning: {
+              heading: 'Example: watch out',
+            },
+          },
+          button: 'Click me!',
+          link: {
+            linkText: 'a link',
+            prefix: 'Example text with',
+            suffix: 'you can click on.',
+          },
+        },
       },
       showFewerTokens: 'Show fewer options',
       showMoreTokens: 'Show all options ({{tokenCount}})',
@@ -1013,6 +1053,22 @@ export const nl = {
     },
   },
   wizard: {
+    starterPicker: {
+      groupLabel: 'Hoe wil je starten?',
+      json: {
+        name: 'Met een eigen thema',
+        description: 'Upload je eigen JSON bestand.',
+      },
+      startTheme: {
+        name: 'Met het Start Thema',
+        description: 'Start met het Start Thema en pas aan waar nodig.',
+      },
+      submit: 'Volgende stap',
+      url: {
+        name: 'Met de huisstijl van een bestaande website',
+        description: 'Vul een URL in.',
+      },
+    },
     stepForm: {
       errorNoToken: 'Error: geen token op pad {{path}}, zorg dat er een token bestaat op dit pad.',
       foundScrapedValues: 'Gevonden waardes op website',
@@ -1022,6 +1078,30 @@ export const nl = {
         button: 'Voorbeeld van knop',
         heading: 'Voorbeeld van een koptekst.',
         paragraph: 'Voorbeeld van een tekst. Op brute wijze ving de schooljuf de quasi-kalme lynx.',
+        preview: {
+          alert: {
+            error: {
+              heading: 'Voorbeeld: er ging iets fout',
+            },
+            info: {
+              heading: 'Voorbeeld: ter informatie',
+            },
+            paragraph:
+              'Dit is een voorbeeldtekst die een gebruiker zou kunnen zien. Eventueel zouden we deze tekst kunnen aanvullen om meer ruimte in te nemen.',
+            positive: {
+              heading: 'Voorbeeld: het is gelukt',
+            },
+            warning: {
+              heading: 'Voorbeeld: let op',
+            },
+          },
+          button: 'Klik mij!',
+          link: {
+            linkText: 'een link',
+            prefix: 'Voorbeeldtekst met',
+            suffix: 'die je kunt aanklikken.',
+          },
+        },
       },
       showFewerTokens: 'Toon minder opties',
       showMoreTokens: 'Toon meer opties ({{tokenCount}})',

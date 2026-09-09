@@ -102,7 +102,10 @@ export class WizardApp extends LitElement {
 
   readonly #handleUpdateTokens = (event: Event) => {
     const { detail } = event as SubmitSaveTokenFormEvent;
-    this.theme.updateMany(detail);
+    this.theme.updateMany(detail.tokens);
+    for (const { groupPath, seed } of detail.groupSeeds ?? []) {
+      this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, seed);
+    }
     this.#forceUpdateTokens();
     this.#themeStorage.setJSON(this.theme.tokens);
   };

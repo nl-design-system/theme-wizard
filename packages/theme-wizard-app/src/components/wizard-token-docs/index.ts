@@ -11,6 +11,7 @@ import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import { filterRedundantGroups } from '../../lib/ColorScale/siblings';
 import { tokenDocs } from '../../lib/tokenDocs';
+import { hasChangedProperty } from '../../utils/lit';
 import '@nl-design-system-community/clippy-components/clippy-stack';
 
 const tag = 'wizard-token-docs';
@@ -62,11 +63,7 @@ export class WizardTokenDocs extends LitElement {
   headingLevel = 2;
 
   protected override willUpdate(changedProperties: PropertyValues) {
-    if (
-      !changedProperties.has('theme') &&
-      !changedProperties.has('groups') &&
-      !changedProperties.has('skipRedundantGroups')
-    ) {
+    if (!hasChangedProperty(changedProperties, ['theme', 'groups', 'skipRedundantGroups'])) {
       return;
     }
 

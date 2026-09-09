@@ -2,14 +2,16 @@ import { consume } from '@lit/context';
 import buttonCss from '@nl-design-system-candidate/button-css/button.css?inline';
 import paragraphCss from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/src/lib/decorators/index.js';
+import {
+  generateScale,
+  profileForName,
+  TOKENS,
+  type TokenName,
+} from '@nl-design-system-community/color-scale-generator';
 import '@nl-design-system-community/clippy-components/clippy-card-radio-group';
-import '@nl-design-system-community/clippy-components/clippy-html-image';
 import '@nl-design-system-community/clippy-components/clippy-stack';
-import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import {
   BaseDesignToken,
-  ColorValue,
-  compareContrast,
   isColorToken,
   stringifyColor,
   stringifyToken,
@@ -19,18 +21,20 @@ import ChevronUp from '@tabler/icons/outline/chevron-up.svg?raw';
 import { dequal } from 'dequal';
 import { LitElement, PropertyValues, html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
-import { generateScale, profileForName, TOKENS, type TokenName } from '../../lib/color-scale-generator';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
+import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
+import { hasChangedProperty } from '../../utils/lit';
 import { type StagedDesignToken } from '../../utils/types';
-import '../wizard-color-description';
 import { markStepComplete } from '../../utils/wizard-steps-storage';
+import '../wizard-color-description';
+import { EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
+import '../wizard-step-form-sample';
 import styles from './styles';
 
 export { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
@@ -48,6 +52,10 @@ interface ColorScaleParams {
   /** e.g. `basis.color.accent-1-inverse` */
   inverseGroupPath: string;
   profile: ReturnType<typeof profileForName>;
+  /** Anchor for generating the regular scale. */
+  regularAnchor: TokenName | undefined;
+  /** Anchor for generating the inverse scale. */
+  inverseAnchor: TokenName | undefined;
 }
 
 /** Qualifies only when path's last segment is one of the 14 canonical slot names. */
@@ -63,10 +71,23 @@ const getColorScaleParams = (path: string): ColorScaleParams | undefined => {
   const prefix = segments.slice(0, -2);
   const isInverse = group.endsWith(INVERSE_SUFFIX);
   const groupBase = isInverse ? group.slice(0, -INVERSE_SUFFIX.length) : group;
+  const profile = profileForName(groupBase);
+
+  // Anchor both scales to the picked slot so the seed reproduces exactly there.
+  // Exception: picking the inverse group's bg-default (a vivid fill) shouldn't force
+  // that color onto regular's bg-default (a pale background) — leave regular
+  // unanchored there instead. Neutral's template can't anchor at all.
+  let regularAnchor: TokenName | undefined;
+  if (profile !== 'neutral') {
+    regularAnchor = isInverse && slot === 'bg-default' ? undefined : (slot as TokenName);
+  }
+  const inverseAnchor = profile === 'neutral' ? undefined : (slot as TokenName);
 
   return {
+    inverseAnchor,
     inverseGroupPath: [...prefix, `${groupBase}${INVERSE_SUFFIX}`].join('.'),
-    profile: profileForName(groupBase),
+    profile,
+    regularAnchor,
     regularGroupPath: [...prefix, groupBase].join('.'),
   };
 };
@@ -113,27 +134,53 @@ export class WizardStepForm extends LitElement {
    * Updating this._tokens here so we don't re-compute this array for each sub-render in this element
    */
   override willUpdate(changed: PropertyValues) {
-    if (changed.has('scrapedTokens') || changed.has('path') || changed.has('subType') || changed.has('theme')) {
-      const requestedType = this.tokenAt?.$type;
-
-      if (!requestedType) {
-        return;
-      }
-
-      const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
-
-      if (this.type === 'color' && this.subType === 'color') {
-        const bgDocument = this.theme.at('basis.color.default.bg-default').$value;
-        tokens.sort((a, b) => {
-          return (
-            compareContrast(b.$value as ColorValue, bgDocument) - compareContrast(a.$value as ColorValue, bgDocument)
-          );
-        });
-      }
-
-      this._tokens = tokens;
-      this._suggestedTokensSource = source;
+    if (!hasChangedProperty(changed, ['scrapedTokens', 'path', 'subType', 'theme'])) {
+      return;
     }
+
+    const requestedType = this.tokenAt?.$type;
+
+    if (!requestedType) {
+      return;
+    }
+
+    const { source, tokens } = getRelevantTokens(this.theme, this.scrapedTokens, requestedType, this.subType);
+
+    if (this.type === 'color') {
+      this._tokens = sortTokensForPath(tokens, this.path, this.theme);
+    } else {
+      this._tokens = tokens;
+    }
+    this._suggestedTokensSource = source;
+
+    // Show all options instead of cutting off if the selected option is below the default cutoff
+    if (this.tokenAt && this.getCheckedIndex(tokens, this.tokenAt, this.path) >= WizardStepForm.defaultItemsToShow) {
+      this.showAll = true;
+    }
+  }
+
+  /** Index of the option matching the current value, or the group's color-scale seed. */
+  private getCheckedIndex(tokens: BaseDesignToken[], tokenAt: BaseDesignToken, path: string): number {
+    if (!isColorToken(tokenAt)) {
+      return tokens.findIndex((token) => tokenEquals(token, tokenAt));
+    }
+
+    const scaleParams = getColorScaleParams(path);
+    const seedColor = scaleParams
+      ? (this.theme.at(scaleParams.regularGroupPath) as BaseDesignToken | undefined)?.$extensions?.[
+          EXTENSION_COLORSCALE_SEED
+        ]
+      : undefined;
+
+    return tokens.findIndex((token) => {
+      if (tokenEquals(token, tokenAt)) {
+        return true;
+      }
+      if (seedColor !== undefined && dequal(token.$value, seedColor)) {
+        return true;
+      }
+      return false;
+    });
   }
 
   private handleSubmit(event: SubmitEvent) {
@@ -155,8 +202,10 @@ export class WizardStepForm extends LitElement {
       return [{ path, token }];
     });
 
-    // A color-scale slot path expands into its whole 14-token ramp (regular + paired inverse group).
-    const tokens: UpdateDesignTokensDetail = selections.flatMap(({ path, token }) => {
+    // A color-scale slot path expands into its whole 14-token ramp (regular + paired inverse group),
+    // and records the picked color as both groups' seed so it can reproduce exactly there later.
+    const groupSeeds: NonNullable<UpdateDesignTokensDetail['groupSeeds']> = [];
+    const tokens: UpdateDesignTokensDetail['tokens'] = selections.flatMap(({ path, token }) => {
       if (!isColorToken(token)) {
         return [{ path, value: token.$value }];
       }
@@ -166,13 +215,19 @@ export class WizardStepForm extends LitElement {
         return [{ path, value: token.$value }];
       }
 
-      const { inverseGroupPath, profile, regularGroupPath } = scaleParams;
+      const { inverseAnchor, inverseGroupPath, profile, regularAnchor, regularGroupPath } = scaleParams;
       const seed = stringifyColor(token.$value);
-      // Neutral's chroma template is flat synthetic (masks.ts), so anchoring shifts the
-      // ramp and clamps to gray near the edges. Other profiles anchor safely.
-      const anchor = profile === 'neutral' ? undefined : 'auto';
-      const regular = generateScale(seed, { anchor, contrast: { enforce: true }, profile }).data;
-      const inverse = generateScale(seed, { anchor, contrast: { enforce: true }, inverse: true, profile }).data;
+      const regular = generateScale(seed, { anchor: regularAnchor, contrast: { enforce: true }, profile }).data;
+      const inverse = generateScale(seed, {
+        anchor: inverseAnchor,
+        inverse: true,
+        profile,
+      }).data;
+
+      groupSeeds.push(
+        { groupPath: regularGroupPath, seed: token.$value },
+        { groupPath: inverseGroupPath, seed: token.$value },
+      );
 
       return TOKENS.flatMap((tokenName) => [
         { path: `${regularGroupPath}.${tokenName}`, value: regular[tokenName] },
@@ -185,7 +240,7 @@ export class WizardStepForm extends LitElement {
       new CustomEvent<UpdateDesignTokensDetail>(UPDATE_DESIGN_TOKENS_EVENT, {
         bubbles: true,
         composed: true,
-        detail: tokens,
+        detail: { groupSeeds, tokens },
       }),
     );
 
@@ -209,39 +264,6 @@ export class WizardStepForm extends LitElement {
 
   get tokens() {
     return this._tokens;
-  }
-
-  private renderSample(token: BaseDesignToken) {
-    const tokenType = this.tokenAt!.$type;
-    const stringified = stringifyToken(token);
-
-    if (this.path.includes('heading')) {
-      const color = tokenType === 'color' ? stringified : undefined;
-      const fontFamily = tokenType === 'fontFamily' ? stringified : undefined;
-      return html`
-        <clippy-html-image>
-          <clippy-heading
-            style=${styleMap({
-              '--nl-heading-level-2-color': color,
-              '--nl-heading-level-2-font-family': fontFamily,
-            })}
-            level="2"
-          >
-            ${t('wizard.stepForm.sample.heading')}
-          </clippy-heading>
-        </clippy-html-image>
-        <clippy-token-sample-text>${t('wizard.stepForm.sample.paragraph')}</clippy-token-sample-text>
-      `;
-    }
-
-    return html`
-      <clippy-token-sample-text
-        font-family=${tokenType === 'fontFamily' ? stringified : undefined}
-        color=${tokenType === 'color' ? stringified : undefined}
-      >
-        ${t('wizard.stepForm.sample.paragraph')}
-      </clippy-token-sample-text>
-    `;
   }
 
   private renderIconStart(tokenType: string, value: string) {
@@ -277,7 +299,7 @@ export class WizardStepForm extends LitElement {
         }
         <clippy-reset-theme slot="body">
           <wizard-preview-theme>
-            <div class="wizard-step-form__sample wizard-step-form__sample-body">${this.renderSample(token)}</div>
+            <wizard-step-form-sample .token=${token} path=${this.path}></wizard-step-form-sample>
           </wizard-preview-theme>
         </clippy-reset-theme>
       </clippy-card-radio-option>
@@ -319,7 +341,7 @@ export class WizardStepForm extends LitElement {
     const tokenType = tokenAt.$type;
     const tokenCountToShow =
       !this.showAll || tokens.length < WizardStepForm.defaultItemsToShow ? WizardStepForm.defaultItemsToShow : Infinity;
-    const checkedIndex: number | undefined = tokens.findIndex((token) => tokenEquals(token, tokenAt));
+    const checkedIndex = this.getCheckedIndex(tokens, tokenAt, path);
 
     return html`
       <form method="POST" @submit=${this.handleSubmit}>

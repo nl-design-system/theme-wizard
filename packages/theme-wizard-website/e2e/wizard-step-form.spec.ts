@@ -1,4 +1,4 @@
-import { TOKENS as COLOR_SCALE_SLOTS } from '../../theme-wizard-app/src/lib/color-scale-generator';
+import { TOKENS as COLOR_SCALE_SLOTS } from '@nl-design-system-community/color-scale-generator';
 import { test, expect } from './fixtures/fixtures';
 import { diffDesignTokenPaths, localeCompare } from './lib/design-token-diff';
 import { storageStatePath } from './project-setup';
@@ -82,6 +82,21 @@ test.describe('basis color', () => {
     // coincidentally land back on the same white — only the regular side is asserted in full.
     const expectedRegularPaths = COLOR_SCALE_SLOTS.map((slot) => `basis.color.default.${slot}`).sort(localeCompare);
     expect(changedPaths).toEqual(expect.arrayContaining(expectedRegularPaths));
+  });
+
+  test('Setting a color for color.action-1 marks the used option as checked when re-entering the page', async ({
+    wizardStepFormPage,
+  }) => {
+    const path = '/wizard/basis-color-action-1-inverse-bg-default';
+    await wizardStepFormPage.goto(path);
+
+    const lastLabel = await wizardStepFormPage.getOptionLabel(wizardStepFormPage.options.last());
+    await wizardStepFormPage.optionCard(lastLabel).click();
+    await wizardStepFormPage.save();
+
+    await wizardStepFormPage.goto(path);
+
+    await expect(wizardStepFormPage.options.last()).toBeChecked();
   });
 
   test('basis heading color: picking a color only changes basis.heading.color', async ({ wizardStepFormPage }) => {
