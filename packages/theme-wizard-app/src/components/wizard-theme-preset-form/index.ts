@@ -55,7 +55,7 @@ export class WizardThemePresetForm extends LitElement {
 
   #renderSummary(result: SuccessResult) {
     return html`
-      <clippy-stack size="lg" class="wizard-theme-preset-form__summary">
+      <clippy-stack size="lg">
         <p>${t('themePresetForm.summary.uploadedTokens', { count: result.uploadedTokenCount })}</p>
 
         ${
