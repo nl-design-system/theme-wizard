@@ -7,7 +7,7 @@ export default css`
 
   :host {
     --nl-color-sample-block-size: var(--basis-pointer-target-min-block-size, 44px);
-    --nl-color-sample-inline-size: 4rem;
+    --nl-color-sample-inline-size: var(--nl-color-sample-block-size);
     --utrecht-table-cell-padding-inline-end: 0.5rem;
     --utrecht-table-cell-padding-inline-start: 0.5rem;
   }
@@ -53,6 +53,7 @@ export default css`
     padding-block: 0;
     padding-inline: 0;
     position: relative;
+    border-radius: var(--nl-color-sample-border-radius);
 
     &:hover,
     &:focus-visible {
