@@ -7,9 +7,10 @@ export default css`
 
   :host {
     --nl-color-sample-block-size: var(--basis-pointer-target-min-block-size, 44px);
-    --nl-color-sample-inline-size: var(--nl-color-sample-block-size);
-    --utrecht-table-cell-padding-inline-end: 0.5rem;
-    --utrecht-table-cell-padding-inline-start: 0.5rem;
+    --nl-color-sample-inline-size: 4rem;
+    --nl-color-sample-border-radius: var(--basis-border-radius-md);
+    --utrecht-table-cell-padding-inline-end: 0.25rem;
+    --utrecht-table-cell-padding-inline-start: 0.25rem;
   }
 
   .clippy-token-table-color__header-cell {
@@ -23,7 +24,7 @@ export default css`
 
       font-size: var(--basis-text-font-size-sm);
       line-height: var(--basis-text-line-height-sm);
-      min-inline-size: 5rem;
+      min-inline-size: 4.5rem;
     }
 
     &[scope='row'] {
