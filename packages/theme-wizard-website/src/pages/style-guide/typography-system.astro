@@ -53,7 +53,7 @@ const SECTIONS = [
               <section class="wizard-token-section" id={section.id}>
                 <clippy-stack size="xl">
                   {['line-height', 'font-size'].includes(section.id) ? (
-                    <wizard-token-docs groups="basis.text.line-height" heading-level="2"></wizard-token-docs>
+                    <wizard-token-docs groups={`basis.text.${section.id}`} heading-level="2"></wizard-token-docs>
                   ) : (
                     <clippy-heading level="2">{section.name}</clippy-heading>
                   )}
@@ -61,7 +61,11 @@ const SECTIONS = [
                     <clippy-stack size="5xl">
                       {section.tokens.map((token) => (
                         <clippy-stack size="2xl">
-                          <wizard-token-docs groups={`basis.text.${section.id}.${token}`} heading-level="3"></wizard-token-docs>
+                          {['line-height', 'font-size'].includes(section.id) ? (
+                            <clippy-heading level="3">{capitalize(token)}</clippy-heading>
+                          ) : (
+                            <wizard-token-docs groups={`basis.text.${section.id}.${token}`} heading-level="3"></wizard-token-docs>
+                          )}
                           <wizard-token-table groups={`basis.text.${section.id}.${token}`}></wizard-token-table>
                           <TokenStoryMatches groups={`basis.text.${section.id}.${token}`} />
                         </clippy-stack>
