@@ -504,6 +504,22 @@ export const en = {
     },
   },
   wizard: {
+    starterPicker: {
+      groupLabel: 'How do you want to start?',
+      json: {
+        name: 'Start with JSON',
+        description: 'Upload an existing design tokens JSON file.',
+      },
+      startTheme: {
+        name: 'Start Theme',
+        description: 'Start from the default Start Theme.',
+      },
+      submit: 'Next step',
+      url: {
+        name: 'Start from a URL',
+        description: 'Scrape an existing website for its design tokens.',
+      },
+    },
     stepForm: {
       errorNoToken: 'Error: no token at path {{path}}, make sure to use a correct token path.',
       foundScrapedValues: 'Found values on website',
@@ -1035,6 +1051,22 @@ export const nl = {
     },
   },
   wizard: {
+    starterPicker: {
+      groupLabel: 'Hoe wil je starten?',
+      json: {
+        name: 'Met een eigen thema',
+        description: 'Upload je eigen JSON bestand.',
+      },
+      startTheme: {
+        name: 'Met het Start Thema',
+        description: 'Start met het Start Thema en pas aan waar nodig.',
+      },
+      submit: 'Volgende stap',
+      url: {
+        name: 'Met de huisstijl van een bestaande website',
+        description: 'Vul een URL in.',
+      },
+    },
     stepForm: {
       errorNoToken: 'Error: geen token op pad {{path}}, zorg dat er een token bestaat op dit pad.',
       foundScrapedValues: 'Gevonden waardes op website',
