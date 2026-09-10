@@ -59,14 +59,14 @@ export default css`
   }
 
   .clippy-token-table__row {
-    border-block-end-color: var(--_clippy-token-table-row-border-color);
-    border-block-end-style: solid;
-    border-block-end-width: 1px;
     display: grid;
     padding-block-end: var(--_clippy-token-table-row-padding-block);
     row-gap: var(--_clippy-token-table-row-gap);
 
     & + & {
+      border-block-start-color: var(--_clippy-token-table-row-border-color);
+      border-block-start-style: solid;
+      border-block-start-width: 1px;
       padding-block-start: var(--_clippy-token-table-row-padding-block);
     }
   }

@@ -56,6 +56,7 @@ export class ClippyTokenTable extends LitElement {
   @property({ type: Object })
   tokens?: BaseDesignToken[];
 
+  @property({ attribute: 'caption', type: String }) caption: string | undefined = undefined;
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'token-id-label', type: String }) tokenIdLabel = 'Token ID';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
@@ -69,6 +70,8 @@ export class ClippyTokenTable extends LitElement {
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
 
   #currentToken?: BaseDesignToken = undefined;
+
+  readonly #inputId = crypto.randomUUID();
 
   #openDialog({ token }: { token: BaseDesignToken }) {
     this.#currentToken = token;
@@ -144,7 +147,14 @@ export class ClippyTokenTable extends LitElement {
       return nothing;
     }
     return html`
-      <div role="table" class="clippy-token-table__table">
+      <div role="table" aria-labelledby=${this.caption ? this.#inputId : nothing} class="clippy-token-table__table">
+        ${
+          this.caption
+            ? html`<caption id=${this.#inputId} class="sr-only">
+                ${this.caption}
+              </caption>`
+            : nothing
+        }
         <div role="row" class="clippy-token-table__header">
           <span role="columnheader" class="clippy-token-table__cell clippy-token-table__head">
             ${this.exampleLabel}

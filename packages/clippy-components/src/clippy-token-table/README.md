@@ -42,6 +42,7 @@ table.tokens = [
 | Attribute / Property      | Type                | Description                                      | Default                       |
 | ------------------------- | ------------------- | ------------------------------------------------ | ----------------------------- |
 | `tokens`                  | `BaseDesignToken[]` | The design tokens to display.                    | `[]`                          |
+| `caption`                 | `string`            | Labels the table.                                | `undefined`                   |
 | `example-label`           | `string`            | Label for the example header                     | `'Example'`                   |
 | `token-id-label`          | `string`            | Label for the token-id header                    | `'Token ID'`                  |
 | `value-label`             | `string`            | Label for the value header                       | `'Value'`                     |

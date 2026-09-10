@@ -68,6 +68,7 @@ export class WizardColorSystemPreview extends LitElement {
       .collection=${this.#visibleTokenCollection}
       example-label="${t('styleGuide.sample')}"
       value-label="${t('styleGuide.value')}"
+      reference-to-label="${t('styleGuide.referenceTo')}"
       reference-title-label="${t('styleGuide.detailsDialog.tokenReferenceList.title')}"
       reference-empty-label="${t('styleGuide.detailsDialog.tokenReferenceList.empty')}"
       copy-to-clipboard-label="${t('styleGuide.detailsDialog.copyToClipboard')}"

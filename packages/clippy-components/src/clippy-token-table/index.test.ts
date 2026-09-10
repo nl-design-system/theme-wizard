@@ -33,6 +33,13 @@ describe(`<${tag}>`, () => {
     expect(component.shadowRoot?.querySelector('[role="table"]')).toBeTruthy();
   });
 
+  it('Applies name attribute correctly', async () => {
+    component.caption = 'Table';
+    await component.updateComplete;
+    const table = page.getByRole('table', { name: 'Table' });
+    await expect(table).toBeVisible();
+  });
+
   it.each(labels)('the %s is displayed correctly', async (label) => {
     document.body.innerHTML = `<${tag} ${label}="${label} label" tokens='${JSON.stringify(tokensFixture)}'></${tag}>`;
     component = document.querySelector(tag) as ClippyTokenTable;
