@@ -56,6 +56,7 @@ export class ClippyTokenTable extends LitElement {
   @property({ type: Object })
   tokens?: BaseDesignToken[];
 
+  @property({ attribute: 'name', type: String }) name: string | undefined = undefined;
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'token-id-label', type: String }) tokenIdLabel = 'Token ID';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
@@ -144,7 +145,7 @@ export class ClippyTokenTable extends LitElement {
       return nothing;
     }
     return html`
-      <div role="table" class="clippy-token-table__table">
+      <div role="table" aria-label=${this.name || nothing} class="clippy-token-table__table">
         <div role="row" class="clippy-token-table__header">
           <span role="columnheader" class="clippy-token-table__cell clippy-token-table__head">
             ${this.exampleLabel}
