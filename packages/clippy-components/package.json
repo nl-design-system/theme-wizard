@@ -78,7 +78,6 @@
     "memoize": "11.0.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "slugify": "1.6.9",
     "style-dictionary": "5.5.2"
   },
   "devDependencies": {

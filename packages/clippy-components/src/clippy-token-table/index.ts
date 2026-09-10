@@ -15,7 +15,6 @@ import '../clippy-graph-paper';
 import '../clippy-token-detail';
 import { classMap } from 'lit/directives/class-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import slugify from 'slugify';
 import { ClippyModal } from '../clippy-modal';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
@@ -71,6 +70,8 @@ export class ClippyTokenTable extends LitElement {
   @property({ attribute: 'reference-empty-label', type: String }) referenceEmptyLabel = 'This token is not used.';
 
   #currentToken?: BaseDesignToken = undefined;
+
+  readonly #inputId = crypto.randomUUID();
 
   #openDialog({ token }: { token: BaseDesignToken }) {
     this.#currentToken = token;
@@ -145,20 +146,11 @@ export class ClippyTokenTable extends LitElement {
     if (!this.tokens?.length) {
       return nothing;
     }
-    const id = this.caption
-      ? slugify(this.caption, {
-          lower: true,
-        })
-      : '';
     return html`
-      <div
-        role="table"
-        aria-labelledby=${this.caption ? `clippy-token-table__caption--${id}` : nothing}
-        class="clippy-token-table__table"
-      >
+      <div role="table" aria-labelledby=${this.caption ? this.#inputId : nothing} class="clippy-token-table__table">
         ${
           this.caption
-            ? html`<caption id="clippy-token-table__caption--${id}" class="sr-only">
+            ? html`<caption id=${this.#inputId} class="sr-only">
                 ${this.caption}
               </caption>`
             : nothing
