@@ -50,14 +50,16 @@ export class WizardTokenOutput extends LitElement {
           <div class="utrecht-form-field__label">
             <label for="token-output" class="utrecht-form-label">${t('tokenValidationForm.result.label')}</label>
           </div>
-          ${this.description
-            ? html`<div
-                id="token-output-description"
-                class="utrecht-form-field-description utrecht-form-field__description"
-              >
-                ${this.description}
-              </div>`
-            : nothing}
+          ${
+            this.description
+              ? html`<div
+                  id="token-output-description"
+                  class="utrecht-form-field-description utrecht-form-field__description"
+                >
+                  ${this.description}
+                </div>`
+              : nothing
+          }
           <div class="utrecht-form-field__input">
             <textarea
               dir="auto"

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
+import { EXTENSION_TOKEN_SUBTYPE } from './token-subtype';
 import {
   SKIP,
   walkObject,

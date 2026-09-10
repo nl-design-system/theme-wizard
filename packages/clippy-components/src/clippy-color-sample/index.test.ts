@@ -38,6 +38,14 @@ describe(`<${tag}>`, () => {
     expect(getSvgComputedColor(component)).toBe('rgb(255, 0, 0)');
   });
 
+  it('renders a color-sample by default without a label', async () => {
+    document.body.innerHTML = `<${tag} color="red"></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+
+    expect(component.shadowRoot.querySelector('title')).toBeFalsy();
+  });
+
   it('updates the SVG computed color when the color property changes', async () => {
     document.body.innerHTML = `<${tag} color="rgb(0, 0, 255)"></${tag}>`;
     const component = getComponent() as ComponentElement & { color: string };
@@ -61,5 +69,14 @@ describe(`<${tag}>`, () => {
 
     expect(getSvgComputedColor(first)).toBe('rgb(255, 0, 0)');
     expect(getSvgComputedColor(second)).toBe('rgb(0, 0, 255)');
+  });
+
+  it('renders a color-sample with a label', async () => {
+    document.body.innerHTML = `<${tag} color="red" label="Label"></${tag}>`;
+    const component = getComponent();
+    await component.updateComplete;
+
+    expect(component.shadowRoot.querySelector('title')).toBeTruthy();
+    expect(component.shadowRoot.querySelector('title')!.textContent).toBe('Label');
   });
 });

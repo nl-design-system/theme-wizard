@@ -1,3 +1,4 @@
+import { getTokenSubtype } from './token-subtype';
 import { BaseDesignToken, TokenPath } from './tokens/base-token';
 import { ColorToken } from './tokens/color-token';
 import { DimensionToken, DimensionTokenSchema } from './tokens/dimension-token';
@@ -10,7 +11,6 @@ import {
   type TokenRefError,
   type TokenWithRefLike,
 } from './tokens/token-reference';
-import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 
 /** Return from a walkObject/walkTokens callback to skip recursing into children */
 export const SKIP = Symbol('skip');
@@ -85,7 +85,7 @@ export const walkTokensWithRef = (
 };
 
 const isLineHeightToken = (token: unknown): token is BaseDesignToken => {
-  return isTokenLike(token) && token['$extensions']?.[EXTENSION_TOKEN_SUBTYPE] === 'line-height';
+  return isTokenLike(token) && getTokenSubtype(token) === 'line-height';
 };
 
 export const walkLineHeights = (

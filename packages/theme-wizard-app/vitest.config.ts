@@ -7,7 +7,11 @@ export default defineConfig({
       enabled: true,
       headless: true,
       instances: [{ browser: 'chromium' }],
-      provider: playwright(),
+      provider: playwright({
+        launchOptions: {
+          channel: 'chrome',
+        },
+      }),
       screenshotDirectory: new URL('./tmp/__screenshots__', import.meta.url).pathname,
     },
   },

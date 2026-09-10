@@ -10,6 +10,7 @@ import { getSiblingGroupsWithOnlyRefsTo } from '../../lib/ColorScale/siblings';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
+import { UPDATE_DESIGN_TOKENS_EVENT, type SubmitSaveTokenFormEvent } from '../../utils/events';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
@@ -28,12 +29,12 @@ declare global {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: App;
+    [tag]: WizardApp;
   }
 }
 
 @customElement(tag)
-export class App extends LitElement {
+export class WizardApp extends LitElement {
   static override readonly styles = componentStyles;
 
   readonly #themeStorage = new PersistentStorage({
@@ -77,6 +78,7 @@ export class App extends LitElement {
     }
 
     this.addEventListener('wizard-scraper-done', this.#handleScrapeDone);
+    this.addEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.addEventListener('change', this.#handleTokenChange);
     this.addEventListener('reset', this.#handleReset);
   }
@@ -84,6 +86,7 @@ export class App extends LitElement {
   override disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('wizard-scraper-done', this.#handleScrapeDone);
+    this.removeEventListener(UPDATE_DESIGN_TOKENS_EVENT, this.#handleUpdateTokens);
     this.removeEventListener('change', this.#handleTokenChange);
     this.removeEventListener('reset', this.#handleReset);
   }
@@ -95,6 +98,16 @@ export class App extends LitElement {
     this.theme = this.theme.clone();
     this.requestUpdate();
     this.dispatchEvent(new CustomEvent('theme-update', { bubbles: true, detail: { theme: this.theme } }));
+  };
+
+  readonly #handleUpdateTokens = (event: Event) => {
+    const { detail } = event as SubmitSaveTokenFormEvent;
+    this.theme.updateMany(detail.tokens);
+    for (const { groupPath, seed } of detail.groupSeeds ?? []) {
+      this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, seed);
+    }
+    this.#forceUpdateTokens();
+    this.#themeStorage.setJSON(this.theme.tokens);
   };
 
   readonly #handleScrapeDone = (event: Event) => {
@@ -126,27 +139,24 @@ export class App extends LitElement {
     this.#themeStorage.setJSON(this.theme.tokens);
   };
 
+  /**
+   * @deprecated Use `this.handleUpdateTokens()` instead in the future.
+   * This implies that all token changes should become `SubmitSaveTokenFormEvent` events.
+   */
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 
     if (target instanceof WizardColorscaleInput) {
-      const scaleColors = Object.values(target.value);
-      const reversedScale = scaleColors.toReversed();
-
-      // Set regular and inversed scale simultaneously
-      // We know this is not the exact desired behaviour but it'll do for now
-      const updates = Object.entries(target.value).flatMap(([colorKey, value], index) => {
-        return [
-          {
-            path: `${target.name}.${colorKey}`,
-            value: value.$value,
-          },
-          {
-            path: `${target.name}-inverse.${colorKey}`,
-            value: reversedScale.at(index)?.$value,
-          },
-        ];
-      });
+      const updates = [
+        ...Object.entries(target.value).map(([colorKey, value]) => ({
+          path: `${target.name}.${colorKey}`,
+          value: value.$value,
+        })),
+        ...Object.entries(target.inverseValue).map(([colorKey, value]) => ({
+          path: `${target.name}-inverse.${colorKey}`,
+          value: value.$value,
+        })),
+      ];
       this.theme.updateMany(updates);
 
       // Add $extensions for seed-color for the changed token, as well as for any siblings

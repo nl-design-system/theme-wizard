@@ -358,17 +358,19 @@ export class WizardTokenPreset extends LitElement {
                   @change=${() => this.onOptionChange(index)}
                 />
                 <span
-                  class="nl-button nl-button--secondary wizard-token-preset__button ${isSelected
-                    ? 'nl-button--pressed'
-                    : ''}"
+                  class="nl-button nl-button--secondary wizard-token-preset__button ${
+                    isSelected ? 'nl-button--pressed' : ''
+                  }"
                 >
                   <span class="nl-paragraph wizard-token-preset__option-title">${option.name}</span>
 
-                  ${option.description
-                    ? html`<span class="nl-paragraph wizard-token-preset__option-description"
-                        >${option.description}</span
-                      >`
-                    : nothing}
+                  ${
+                    option.description
+                      ? html`<span class="nl-paragraph wizard-token-preset__option-description"
+                          >${option.description}</span
+                        >`
+                      : nothing
+                  }
                 </span>
               </label>
               ${isSelected ? this.renderTokenDetails(option) : nothing}

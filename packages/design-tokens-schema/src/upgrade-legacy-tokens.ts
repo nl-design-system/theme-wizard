@@ -1,13 +1,10 @@
 import { parse_dimension } from '@projectwallace/css-parser';
-import type { BaseDesignToken, TokenPath } from './tokens/base-token';
-import { setExtension } from './extensions';
+import type { BaseDesignToken } from './tokens/base-token';
 import { resolveRef } from './resolve-refs';
 import { parseColor } from './tokens/color-token';
 import { splitFontFamily } from './tokens/fontfamily-token';
 import { isRef, isTokenLike } from './tokens/token-reference';
 import { walkTokens } from './walker';
-
-export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.token-subtype';
 
 /**
  * @description Process a lineHeight value and return its target type and transformed value
@@ -63,37 +60,6 @@ const upgradeDimensionToken = (token: BaseDesignToken): void => {
   token.$value = parseDimensionValue(token.$value);
 };
 
-const addDimensionSubType = (token: BaseDesignToken, tokenPath: TokenPath): void => {
-  const path = tokenPath.join('.');
-
-  if (path.includes('font-size')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
-  } else if (path.includes('line-height')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
-  } else if (
-    path.includes('margin-block') ||
-    path.includes('padding-block') ||
-    path.includes('row-gap') ||
-    path.includes('space.block')
-  ) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-block');
-  } else if (
-    path.includes('margin-inline') ||
-    path.includes('padding-inline') ||
-    path.includes('column-gap') ||
-    path.includes('space.inline')
-  ) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'space-inline');
-  } else if (path.includes('border-radius')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-radius');
-  } else if (path.includes('border-') && path.includes('-width')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-width');
-  } else if (path.includes('size')) {
-    // font-size does not match because that was caught earlier
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'size');
-  }
-};
-
 /**
  * @description Upgrade a fontSize token (convert to dimension type, parse value, set subtype)
  */
@@ -146,15 +112,9 @@ const upgradeColorToken = (token: BaseDesignToken): void => {
 };
 
 /**
- * @description Upgrade a number token (set line-height subtype if applicable)
+ * @description Upgrade a number token (parse a stringified value to an actual number)
  */
-const upgradeNumberToken = (token: BaseDesignToken, path: TokenPath): void => {
-  if (path.includes('line-height')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
-  } else if (path.includes('font-weight')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-weight');
-  }
-
+const upgradeNumberToken = (token: BaseDesignToken): void => {
   if (typeof token.$value === 'string' && !isRef(token.$value)) {
     const parsedValue = Number(token.$value);
     if (Number.isFinite(parsedValue)) {
@@ -182,18 +142,6 @@ const upgradeFontFamilyTokenWithLegacyValue = (token: BaseDesignToken): void => 
   }
 };
 
-const addColorSubType = (token: BaseDesignToken, tokenPath: TokenPath): void => {
-  const path = tokenPath.join('.');
-
-  if (path.includes('.bg-') || path.endsWith('.background-color')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'background-color');
-  } else if (path.includes('.border-')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'border-color');
-  } else if (path.includes('.color-') || path.endsWith('.color')) {
-    setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'color');
-  }
-};
-
 const fontWeightMap: Record<string, number> = {
   /* eslint-disable perfectionist/sort-objects */
   thin: 100,
@@ -213,6 +161,9 @@ const fontWeightMap: Record<string, number> = {
   heavy: 900,
 };
 
+/**
+ * @description Convert `'700'` to `700`, or `normal` to `400`, etc.
+ */
 export const parseFontWeight = (input: string): number | null => {
   const normalized = input.toLowerCase();
   if (Object.hasOwn(fontWeightMap, normalized)) {
@@ -225,6 +176,9 @@ export const parseFontWeight = (input: string): number | null => {
   return null;
 };
 
+/**
+ * @description set the correct $type and $value on a font-weight token
+ */
 const upgradeFontWeightToken = (token: BaseDesignToken): void => {
   token.$type = 'number';
 
@@ -239,31 +193,28 @@ const upgradeFontWeightToken = (token: BaseDesignToken): void => {
 };
 
 /**
- * @description NLDS themes use $type: fontSize, fontSizes and lineHeight instead of number/dimension, so a quick round of preprocessing helps to get them in order.
+ * @description NLDS themes use $type: fontSize, fontSizes and lineHeight instead of number/dimension,
+ * so a quick round of preprocessing helps to get them in order.
  */
 export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record<string, unknown> => {
-  walkTokens(rootConfig, (token, path) => {
+  walkTokens(rootConfig, (token) => {
     switch (token.$type) {
       case 'dimension':
         upgradeDimensionToken(token);
-        addDimensionSubType(token, path);
         break;
       case 'fontSize':
       case 'fontSizes':
         upgradeFontSizeToken(token);
-        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-size');
         break;
       case 'lineHeight':
       case 'lineHeights':
         upgradeLineHeightToken(token, rootConfig);
-        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'line-height');
         break;
       case 'color':
         upgradeColorToken(token);
-        addColorSubType(token, path);
         break;
       case 'number':
-        upgradeNumberToken(token, path);
+        upgradeNumberToken(token);
         break;
       case 'fontFamilies':
         upgradeLegacyFontFamiliesToken(token);
@@ -274,7 +225,6 @@ export const upgradeLegacyTokens = (rootConfig: Record<string, unknown>): Record
       case 'fontWeight':
       case 'fontWeights':
         upgradeFontWeightToken(token);
-        setExtension(token, EXTENSION_TOKEN_SUBTYPE, 'font-weight');
         break;
     }
   });

@@ -19,9 +19,9 @@ import { dequal } from 'dequal';
 import { dset } from 'dset';
 
 const PROTO_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+import { getTokenSubtype } from './token-subtype';
 import { BaseDesignToken, TokenPath } from './tokens/base-token';
 import { isRef, createReference } from './tokens/token-reference';
-import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { walkTokens } from './walker';
 
 /**
@@ -41,8 +41,7 @@ export type TokenCandidate = {
 type BasisEntry = { path: TokenPath; token: BaseDesignToken };
 
 /** Subtype when set, otherwise `$type` as fallback (e.g. for `fontFamily`). */
-const matchKey = (token: BaseDesignToken): string =>
-  (token.$extensions?.[EXTENSION_TOKEN_SUBTYPE] as string | undefined) ?? token.$type;
+const matchKey = (token: BaseDesignToken): string => getTokenSubtype(token) ?? token.$type;
 
 /** Collects all basis tokens with resolved (non-ref) values into a flat list. */
 const collectBasisTokens = (root: Record<string, unknown>): BasisEntry[] => {

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Verklein Thema - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <main slot="main" class="wizard-main">
+        <wizard-container size="xl">
+          <clippy-story-preview size="lg">
+            <clippy-heading level="1">Verklein je thema</clippy-heading>
+            <p class="nl-paragraph nl-paragraph--lead">Laat de Theme Wizard jouw thema (.json) verkleinen door allerlei theme-wizard-specifieke velden te verwijderen.</p>
+            <wizard-token-minify-form></wizard-token-minify-form>
+          </clippy-story-preview>
+        </wizard-container>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-main {
+    padding-block: var(--basis-space-block-5xl);
+  }
+
+  wizard-container {
+    margin-inline: auto;
+  }
+</style>

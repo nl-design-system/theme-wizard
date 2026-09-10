@@ -1,3 +1,4 @@
+import { terseLog } from '@nl-design-system-community/vite-plugin-terse-log';
 import { resolve } from 'node:path';
 import dts from 'unplugin-dts/vite';
 import { defineConfig } from 'vite';
@@ -21,5 +22,5 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [dts()],
+  plugins: [terseLog(), dts()],
 });

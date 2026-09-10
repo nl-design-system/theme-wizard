@@ -1,5 +1,10 @@
 import { type Page, type Locator, expect } from '@playwright/test';
 
+/** Minimal shape of `<theme-wizard-app>`'s `theme` property we need in-page. */
+type ThemeWizardAppElement = HTMLElement & {
+  theme?: { tokens: unknown };
+};
+
 export class BasisTokensPage {
   readonly preview: Locator;
   readonly sidebar: Locator;
@@ -75,6 +80,14 @@ export class BasisTokensPage {
 
     await input.focus(); // trigger the dropdown with options
     return field.getByRole('option');
+  }
+
+  /** The full design token tree currently held by `<theme-wizard-app>`, for reading `$extensions` etc. */
+  async getTokenTree(): Promise<unknown> {
+    return this.page.evaluate(() => {
+      const host = document.querySelector('theme-wizard-app') as ThemeWizardAppElement | null;
+      return host?.theme?.tokens;
+    });
   }
 
   getErrorAlert(): Locator {

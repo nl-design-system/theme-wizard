@@ -1,18 +1,19 @@
 import { consume } from '@lit/context';
+import { removeExtensions } from '@nl-design-system-community/design-tokens-schema';
 import Download from '@tabler/icons/outline/download.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
-import { LitElement, html, unsafeCSS } from 'lit';
 import '../wizard-layout';
 import '../wizard-preview';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';
 import '../wizard-scraper';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import type Theme from '../../lib/Theme';
-import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import '@nl-design-system-community/clippy-components/clippy-heading';
+import type { WizardDownloadConfirmation } from '../wizard-download-confirmation';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import componentStyles from './styles';
@@ -35,9 +36,11 @@ export class WizardTokensDownload extends LitElement {
   @query('wizard-download-confirmation')
   private readonly dialogElement?: WizardDownloadConfirmation;
 
-  readonly #downloadJSON = async () => {
-    const data = await this.theme.toTokensJSON();
-    const encoded = encodeURIComponent(data);
+  readonly #downloadJSON = () => {
+    const tokens = this.theme.toLegacyTokens();
+    removeExtensions(tokens);
+    const json = JSON.stringify(tokens);
+    const encoded = encodeURIComponent(json);
     const href = `data:application/json,${encoded}`;
     const anchor = document.createElement('a');
     anchor.download = 'tokens.json';

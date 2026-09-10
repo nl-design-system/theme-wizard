@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/theme-wizard-server",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "author": "Community for NL Design System",
   "description": "Web server with REST API for scraping websites to extract design tokens",
   "license": "EUPL-1.2",
@@ -34,25 +34,26 @@
     "lint-fix:js": "eslint --fix",
     "test-build": "vitest run --coverage",
     "build": "tsc",
-    "clean": "rimraf dist/"
+    "clean": "premove dist/"
   },
   "devDependencies": {
-    "@hono/vite-dev-server": "0.26.0",
-    "@types/node": "24.13.1",
-    "@vitest/coverage-v8": "4.1.8",
-    "rimraf": "6.1.3",
+    "@hono/vite-dev-server": "0.26.1",
+    "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
+    "@types/node": "24.13.3",
+    "@vitest/coverage-v8": "4.1.11",
+    "premove": "4.0.0",
     "typescript": "6.0.3",
-    "vercel": "54.10.2",
-    "vite": "8.0.16",
-    "vitest": "4.1.8"
+    "vercel": "59.11.2",
+    "vite": "8.2.2",
+    "vitest": "4.1.11"
   },
   "dependencies": {
-    "@hono/node-server": "2.0.4",
+    "@hono/node-server": "2.1.1",
     "@hono/swagger-ui": "0.6.1",
-    "@hono/zod-openapi": "1.4.0",
+    "@hono/zod-openapi": "1.6.1",
     "@nl-design-system-community/css-scraper": "workspace:*",
-    "@vercel/related-projects": "1.1.0",
-    "hono": "4.12.25",
-    "zod": "4.4.3"
+    "@vercel/related-projects": "1.1.1",
+    "hono": "4.13.5",
+    "zod": "4.5.4"
   }
 }

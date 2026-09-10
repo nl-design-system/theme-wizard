@@ -1,0 +1,39 @@
+---
+interface Props {
+  groups: string;
+}
+
+const { groups } = Astro.props;
+---
+
+<section class="wizard-story-samples">
+  <clippy-heading level="3">Voorbeelden</clippy-heading>
+  <wizard-story-matches groups={groups}></wizard-story-matches>
+</section>
+
+<script>
+  import type { WizardStoryMatches } from '@nl-design-system-community/theme-wizard-app/components/wizard-story-matches';
+  import { components } from '@/lib/components';
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+
+  await import('@nl-design-system-community/theme-wizard-app/components/wizard-story-matches');
+
+  for (const element of document.querySelectorAll<WizardStoryMatches>('wizard-story-matches')) {
+    element.components = components;
+  }
+</script>
+
+<style>
+  .wizard-story-samples {
+    background-color: var(--basis-color-default-bg-subtle);
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--basis-space-block-3xl);
+    padding-inline: var(--basis-space-inline-4xl);
+    row-gap: var(--basis-space-row-3xl);
+  }
+
+  .wizard-story-samples:has(wizard-story-matches[hidden]) {
+    display: none;
+  }
+</style>

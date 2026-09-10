@@ -1,0 +1,163 @@
+import { test, expect } from './fixtures/fixtures';
+
+test('page has accessibility basics', async ({ page }) => {
+  await page.goto('/style-guide/design-tokens');
+
+  // Has <title>
+  const title = await page.title();
+  expect.soft(title).toBeTruthy();
+
+  // Has document language specified
+  await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
+});
+
+test('shows sidebar with all styleguide pages', async ({ page }) => {
+  await page.goto('/style-guide/design-tokens');
+  await expect(page.locator('wizard-sidebar-link')).not.toHaveCount(0);
+});
+
+test('page uses values as stored by the configuration page', async ({ basisTokensPage, page }) => {
+  // Set Accent 1 to red
+  await basisTokensPage.goto();
+  await page.getByRole('button', { name: 'Kleuren' }).click();
+  await basisTokensPage.changeColor('Accent 1', '#ff0000');
+
+  // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
+  await page.goto('/style-guide/design-tokens');
+  const table = page.getByRole('table', { name: 'Accent 1' });
+  await expect(table).toBeVisible();
+  await expect(table.getByRole('button', { name: 'Kopieer naar klembord: #ff0000' })).toBeVisible();
+});
+
+test.describe('interaction tests', () => {
+  test.beforeEach(async ({ context, page }) => {
+    // Enable clipboard access to we can test working of copy-to-clipboard buttons
+    await context.grantPermissions(['clipboard-write', 'clipboard-read']);
+    await page.goto('/style-guide/design-tokens');
+    // Make sure to wait for page to be fully rendered
+    await expect(page.getByRole('heading', { name: 'Design Tokens' })).toBeVisible();
+  });
+
+  test.describe('colors', () => {
+    test('Shows a colors section', async ({ page }) => {
+      const heading = page.getByRole('heading', { name: 'Kleuren', level: 2 });
+      await expect(heading).toBeVisible();
+
+      const table = page.getByRole('table', { name: 'Accent 1' });
+      await expect(table).toBeVisible();
+
+      const rows = table.getByRole('row');
+      expect(await rows.all()).toHaveLength(15); // 14 colors + 1 table header row
+    });
+
+    test('Token name can be copied to clipboard', async ({ page }) => {
+      const tokenName = 'basis.color.accent-1.bg-hover';
+      await page
+        .getByRole('table', { name: 'Accent 1' })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenName}`, exact: true })
+        .click();
+      const clipboardText = await page.evaluate(async () => {
+        return await navigator.clipboard.readText();
+      });
+      expect(clipboardText).toBe(tokenName);
+    });
+
+    test('Token value can be copied to clipboard', async ({ page }) => {
+      const tokenValue = '#fbfcfd';
+      await page
+        .getByRole('table', { name: 'Accent 1' })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenValue}`, exact: true })
+        .click();
+      const clipboardText = await page.evaluate(async () => {
+        return await navigator.clipboard.readText();
+      });
+      expect(clipboardText).toBe(tokenValue);
+    });
+
+    test('Token detail dialog is shown', async ({ page }) => {
+      await page.getByRole('table', { name: 'Accent 1' }).getByRole('button', { name: 'Toon details' }).first().click();
+      const modal = page.getByRole('dialog', { name: 'basis.color.accent-1.bg-document' });
+      await expect(modal).toBeVisible();
+    });
+  });
+
+  test.describe('Typography', () => {
+    test('Shows a typography section', async ({ page }) => {
+      const heading = page.getByRole('heading', { name: 'Typografie', level: 2 });
+      expect(heading).toBeVisible();
+    });
+
+    test.describe('font-size', () => {
+      test('Token name can be copied to clipboard', async ({ page }) => {
+        const tokenName = 'basis.text.font-size.4xl';
+        await page
+          .getByRole('table', { name: 'Lettergroottes' })
+          .getByRole('button', { name: `Kopieer naar klembord: ${tokenName}`, exact: true })
+          .click();
+        const clipboardText = await page.evaluate(async () => {
+          return await navigator.clipboard.readText();
+        });
+        expect(clipboardText).toBe(tokenName);
+      });
+
+      test('Token value can be copied to clipboard', async ({ page }) => {
+        const tokenValue = '2.5rem';
+        await page
+          .getByRole('table', { name: 'Lettergroottes' })
+          .getByRole('button', { name: `Kopieer naar klembord: ${tokenValue}` })
+          .click();
+        const clipboardText = await page.evaluate(async () => {
+          return await navigator.clipboard.readText();
+        });
+        expect(clipboardText).toBe(tokenValue);
+      });
+
+      test('Token detail dialog is shown', async ({ page }) => {
+        await page
+          .getByRole('table', { name: 'Lettergroottes' })
+          .getByRole('button', { name: 'Toon details' })
+          .nth(1)
+          .click();
+        const modal = page.getByRole('dialog', { name: 'basis.text.font-size.md' });
+        await expect(modal).toBeVisible();
+      });
+    });
+  });
+
+  test.describe('Spacing', () => {
+    test('Shows a spacing section', async ({ page }) => {
+      const heading = page.getByRole('heading', { name: 'Witruimte', level: 2 });
+      expect(heading).toBeVisible();
+    });
+
+    test('Token name can be copied to clipboard', async ({ page }) => {
+      const tokenName = 'basis.space.block.6xl';
+      await page
+        .getByRole('table', { name: 'Block' })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenName}` })
+        .click();
+      const clipboardText = await page.evaluate(async () => {
+        return await navigator.clipboard.readText();
+      });
+      expect(clipboardText).toBe(tokenName);
+    });
+
+    test('Token value can be copied to clipboard', async ({ page }) => {
+      const tokenValue = '64px';
+      await page
+        .getByRole('table', { name: 'Block' })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenValue}` })
+        .click();
+      const clipboardText = await page.evaluate(async () => {
+        return await navigator.clipboard.readText();
+      });
+      expect(clipboardText).toBe(tokenValue);
+    });
+
+    test('Token detail dialog is shown', async ({ page }) => {
+      await page.getByRole('table', { name: 'Block' }).getByRole('button', { name: 'Toon details' }).nth(3).click();
+      const modal = page.getByRole('dialog', { name: 'basis.space.block.md' });
+      await expect(modal).toBeVisible();
+    });
+  });
+});

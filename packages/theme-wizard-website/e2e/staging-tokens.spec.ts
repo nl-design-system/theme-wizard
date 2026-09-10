@@ -19,28 +19,28 @@ test.describe('after scraping a website', () => {
     await expect.soft(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
 
     // Has a <h1>
-    await expect.soft(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   });
 
-  test('page allows to go back to start', async ({ baseURL, homePage, page }) => {
+  test('page allows to go back to start', async ({ baseURL, page, scraperPage }) => {
     const link = page.getByRole('link', { name: 'Vorige stap' });
     await expect(link).toBeVisible();
     await link.click();
-    expect(page.url()).toBe(baseURL + homePage.url);
+    expect(page.url()).toBe(new URL(scraperPage.url, baseURL).toString());
   });
 
-  test('page allows to skip staging and go to basis tokens', async ({ baseURL, basisTokensPage, page }) => {
+  test('page allows to skip staging and go to basis tokens', async ({ baseURL, page, wizardIndexPage }) => {
     const link = page.getByRole('link', { name: 'Huisstijl vastleggen' }).first(); // there are 2 identical buttons on this page
     await expect.soft(link).toBeVisible();
     await link.click();
-    expect(page.url()).toBe(baseURL + basisTokensPage.url);
+    expect(page.url()).toBe(new URL(wizardIndexPage.url, baseURL).toString());
   });
 
   test.describe('Shows tables with tokens', () => {
     test('Shows the tables', async ({ page }) => {
       const tables = page.getByRole('table');
       const tableNames = ['Lettertypes', 'Lettergroottes', 'Grijs'];
-      expect.soft(await tables.count()).toBeGreaterThanOrEqual(tableNames.length);
+      expect(await tables.count()).toBeGreaterThanOrEqual(tableNames.length);
 
       for (let i = 0; i < tableNames.length; i += 1) {
         const table = tables.nth(i);

@@ -48,3 +48,4 @@ import '@nl-design-system-community/clippy-components/clippy-modal';
 | [`<clippy-reset-theme>`](src/clippy-reset-theme/README.md)       | Resets CSS custom properties to basis token values                 |
 | [`<clippy-story-preview>`](src/clippy-story-preview/README.md)   | Storybook-style preview container                                  |
 | [`<clippy-toggletip>`](src/clippy-toggletip/README.md)           | Tooltip that shows on hover or focus                               |
+| [`<clippy-token-detail>`](src/clippy-token-detail/README.md)     | Displays detailed information about a token                        |

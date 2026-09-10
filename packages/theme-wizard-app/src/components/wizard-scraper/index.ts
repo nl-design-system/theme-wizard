@@ -1,7 +1,9 @@
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import buttonStyles from '@nl-design-system-candidate/button-css/button.css?inline';
 import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
 import paragraphStyles from '@nl-design-system-candidate/paragraph-css/paragraph.css?inline';
+import ArrowRight from '@tabler/icons/outline/arrow-right.svg?raw';
 import formFieldStyles from '@utrecht/form-field-css?inline';
 import formFieldErrorCss from '@utrecht/form-field-error-message-css?inline';
 import formLabelStyles from '@utrecht/form-label-css?inline';
@@ -9,6 +11,7 @@ import textboxStyles from '@utrecht/textbox-css?inline';
 import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { createActor, type Actor, type SnapshotFrom } from 'xstate';
 import { t } from '../../i18n';
 import Scraper from '../../lib/Scraper';
@@ -109,68 +112,75 @@ export class WizardScraper extends LitElement {
       : nothing;
 
     return html`
-      ${isIdle || isError
-        ? html`
-            <wizard-stack size="xl">
-              <clippy-story-preview size="lg">
-                <wizard-stack size="3xl">
-                  <clippy-heading level="1">${t('scraper.title')}</clippy-heading>
-                  <p class="nl-paragraph nl-paragraph--lead">${t('scraper.intro')}</p>
-                  <form @submit=${this.#handleSubmit}>
-                    <wizard-stack size="3xl">
-                      <div
-                        class="utrecht-form-field utrecht-form-field--text ${classMap({
-                          'utrecht-form-field--invalid': isError,
-                        })}"
-                      >
-                        <div class="utrecht-form-field__label">
-                          <label for="scraper-url" class="utrecht-form-label">${t('scraper.input.label')}</label>
+      ${
+        isIdle || isError
+          ? html`
+              <clippy-stack size="xl">
+                <clippy-story-preview size="lg">
+                  <clippy-stack size="3xl">
+                    <clippy-heading level="1">${t('scraper.title')}</clippy-heading>
+                    <p class="nl-paragraph nl-paragraph--lead">${t('scraper.intro')}</p>
+                    <form @submit=${this.#handleSubmit}>
+                      <clippy-stack size="3xl">
+                        <div
+                          class="utrecht-form-field utrecht-form-field--text ${classMap({
+                            'utrecht-form-field--invalid': isError,
+                          })}"
+                        >
+                          <div class="utrecht-form-field__label">
+                            <label for="scraper-url" class="utrecht-form-label">${t('scraper.input.label')}</label>
+                          </div>
+                          <div class="utrecht-form-field__description">${t('scraper.input.description')}</div>
+                          ${errorMessage}
+                          <div class="utrecht-form-field__input">
+                            <input
+                              aria-errormessage=${ariaErrorMessage}
+                              aria-invalid=${ariaInvalid}
+                              class="utrecht-textbox utrecht-textbox--html-input"
+                              id="scraper-url"
+                              inputmode="url"
+                              name="url"
+                              type="text"
+                              value=${submittedUrl ?? ''}
+                            />
+                          </div>
                         </div>
-                        <div class="utrecht-form-field__description">${t('scraper.input.description')}</div>
-                        ${errorMessage}
-                        <div class="utrecht-form-field__input">
-                          <input
-                            aria-errormessage=${ariaErrorMessage}
-                            aria-invalid=${ariaInvalid}
-                            class="utrecht-textbox utrecht-textbox--html-input"
-                            id="scraper-url"
-                            inputmode="url"
-                            name="url"
-                            type="text"
-                            value=${submittedUrl ?? ''}
-                          />
-                        </div>
-                      </div>
 
-                      <button class="nl-button nl-button--primary" type="submit">${t('scraper.submit')}</button>
-                    </wizard-stack>
-                  </form>
-                </wizard-stack>
-              </clippy-story-preview>
-              <p class="nl-paragraph">${t('scraper.directStart')}</p>
-            </wizard-stack>
-          `
-        : nothing}
-      ${isLoading
-        ? html`
-            <div class="wizard-scraper__loaders">
-              <wizard-scraper-loader
-                aria-hidden=${loader1AriaHidden}
-                class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader1' })}
-                emoji="🧙"
-                heading=${t('scraper.loaders.loader1.heading')}
-                text=${t('scraper.loaders.loader1.text', { url: submittedUrl })}
-              ></wizard-scraper-loader>
-              <wizard-scraper-loader
-                aria-hidden=${loader2AriaHidden}
-                class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader2' })}
-                emoji="🎨"
-                heading=${t('scraper.loaders.loader2.heading')}
-                text=${t('scraper.loaders.loader2.text', { url: submittedUrl })}
-              ></wizard-scraper-loader>
-            </div>
-          `
-        : nothing}
+                        <button class="nl-button nl-button--primary" type="submit">${t('scraper.submit')}</button>
+
+                        <a class="nl-link wizard-forward-link" href="/wizard">
+                          ${t('scraper.proceedWithoutScrape')} ${unsafeSVG(ArrowRight)}
+                        </a>
+                      </clippy-stack>
+                    </form>
+                  </clippy-stack>
+                </clippy-story-preview>
+              </clippy-stack>
+            `
+          : nothing
+      }
+      ${
+        isLoading
+          ? html`
+              <div class="wizard-scraper__loaders">
+                <wizard-scraper-loader
+                  aria-hidden=${loader1AriaHidden}
+                  class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader1' })}
+                  emoji="🧙"
+                  heading=${t('scraper.loaders.loader1.heading')}
+                  text=${t('scraper.loaders.loader1.text', { url: submittedUrl })}
+                ></wizard-scraper-loader>
+                <wizard-scraper-loader
+                  aria-hidden=${loader2AriaHidden}
+                  class=${classMap({ 'wizard-scraper__loader--active': this.#timerState === 'loader2' })}
+                  emoji="🎨"
+                  heading=${t('scraper.loaders.loader2.heading')}
+                  text=${t('scraper.loaders.loader2.text', { url: submittedUrl })}
+                ></wizard-scraper-loader>
+              </div>
+            `
+          : nothing
+      }
     `;
   }
 }

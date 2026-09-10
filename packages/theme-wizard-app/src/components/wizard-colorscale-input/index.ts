@@ -2,9 +2,14 @@ import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-color-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import { ClippyTokenCombobox, type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import {
+  generateScale,
+  profileForName,
+  type ColorScale,
+  type ProfileName,
+} from '@nl-design-system-community/color-scale-generator';
 import { EXTENSION_AUTHORED_AS } from '@nl-design-system-community/css-scraper';
 import {
-  COLOR_KEYS,
   ColorValue,
   ColorValueSchema,
   EXTENSION_RESOLVED_AS,
@@ -18,24 +23,19 @@ import {
   type ColorToken as ColorTokenType,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
-import { dequal } from 'dequal';
 import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import type Theme from '../../lib/Theme';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
-import ColorScale from '../../lib/ColorScale';
-import ColorToken from '../../lib/ColorToken';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { WizardTokenInput } from '../wizard-token-input';
 import styles from './styles';
 
 type ColorScaleObject = Record<string, ColorTokenType>;
 
-const DEFAULT_FROM = new ColorToken({
-  $value: parseColor('black'),
-});
+const DEFAULT_SEED: ColorValue = parseColor('black');
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/color
@@ -50,12 +50,10 @@ const getSupportsCSSColorValues = () => {
   return hasSupport;
 };
 
-/**
- * Transform ColorScale output (numeric keys "1"-"14") to COLOR_KEYS format
- */
-const transformScaleToColorKeys = (scaleObject: ColorScaleObject) => {
-  return Object.fromEntries(COLOR_KEYS.map((key, index) => [key, scaleObject[String(index + 1)]]));
-};
+const toColorScaleObject = (scale: ColorScale): ColorScaleObject =>
+  Object.fromEntries(
+    Object.entries(scale).map(([key, value]) => [key, { $type: 'color', $value: value } as ColorTokenType]),
+  );
 
 /**
  * Extract the resolved color value from a token.
@@ -80,8 +78,7 @@ declare global {
 
 @customElement(tag)
 export class WizardColorscaleInput extends WizardTokenInput {
-  readonly #scale = new ColorScale(DEFAULT_FROM);
-  #value = this.#scale.toObject();
+  #seed: ColorValue = DEFAULT_SEED;
 
   #options: Option[] = [];
 
@@ -89,36 +86,41 @@ export class WizardColorscaleInput extends WizardTokenInput {
 
   static override readonly styles = [styles];
 
+  get #profile(): ProfileName {
+    return profileForName(this.name);
+  }
+
+  get #regularScale(): ColorScale {
+    return generateScale(this.currentColorValue, { anchor: 'auto', chroma: 1.2, profile: this.#profile }).data;
+  }
+
+  get #inverseScale(): ColorScale {
+    return generateScale(this.currentColorValue, { anchor: 'auto', inverse: true, profile: this.#profile }).data;
+  }
+
   override get value(): ColorScaleObject {
-    return transformScaleToColorKeys(this.#value);
+    return toColorScaleObject(this.#regularScale);
   }
 
   override set value(val) {
-    const oldValue = this.#value;
-    // Store the transformed value (with COLOR_KEYS)
-    let transformedVal: ColorScaleObject;
-    const valObj = val;
-
-    // Check if this looks like a COLOR_KEYS formatted object (has color-default key)
-    if (typeof val === 'object' && val !== null && 'color-default' in valObj) {
-      transformedVal = Object.fromEntries(COLOR_KEYS.map((key, index) => [String(index + 1), valObj[key]])) as Record<
-        string,
-        ColorTokenType
-      >;
-      // When restoring from persisted data, extract the base color to update the input
-      const baseColorToken = valObj['color-default'];
+    const oldValue = this.value;
+    if (val && typeof val === 'object' && 'color-default' in val) {
+      const baseColorToken = (val as ColorScaleObject)['color-default'];
       if (baseColorToken && typeof baseColorToken === 'object' && '$value' in baseColorToken) {
         const colorValue = baseColorToken.$value;
         if (colorValue && typeof colorValue === 'object') {
-          this.#scale.from = new ColorToken({ $value: colorValue });
+          this.#seed = colorValue as ColorValue;
+          this.currentColorValue = stringifyColor(colorValue);
         }
       }
-    } else {
-      transformedVal = val;
     }
-    this.#value = transformedVal;
-    this.internals_.setFormValue(JSON.stringify(val));
+    this.internals_.setFormValue(JSON.stringify(this.value));
     this.requestUpdate('value', oldValue);
+  }
+
+  /** The scale's dark-mode counterpart, e.g. for a `${name}-inverse` token group. */
+  get inverseValue(): ColorScaleObject {
+    return toColorScaleObject(this.#inverseScale);
   }
 
   @consume({ context: themeContext, subscribe: true })
@@ -130,7 +132,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
   scrapedTokens: StagedDesignToken[] = [];
 
   @state()
-  private currentColorValue: string = '';
+  private currentColorValue: string = stringifyColor(DEFAULT_SEED);
 
   get #colorToken(): ColorTokenType | undefined {
     return this.theme?.at(`${this.name}.color-default`) as ColorTokenType | undefined;
@@ -146,7 +148,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
   }
 
   get seedColor(): ColorValue {
-    return this.#scale.from.$value;
+    return this.#seed;
   }
 
   #updateColorFromToken(colorToken: ColorTokenType | undefined) {
@@ -154,7 +156,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
     try {
       const colorValue = resolveColorValue(colorToken);
       if (colorValue) {
-        this.#scale.from = new ColorToken({ $value: colorValue });
+        this.#seed = colorValue;
         this.currentColorValue = stringifyColor(colorValue);
       }
     } catch {
@@ -162,32 +164,27 @@ export class WizardColorscaleInput extends WizardTokenInput {
     }
   }
 
-  #updateScaleValue() {
-    this.#value = this.#scale.toObject();
-    this.internals_.setFormValue(JSON.stringify(transformScaleToColorKeys(this.#value)));
-  }
-
   override willUpdate(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('theme') || changedProperties.has('name')) {
       const seedColor = this.#seedColor;
       if (seedColor) {
-        this.#scale.from = new ColorToken({ $value: seedColor });
+        this.#seed = seedColor;
         this.currentColorValue = stringifyColor(seedColor);
       } else {
         this.#updateColorFromToken(this.#colorToken);
       }
-      this.#updateScaleValue();
+      this.internals_.setFormValue(JSON.stringify(this.value));
     }
   }
 
   get colorSpace(): ColorSpace {
-    return this.#scale.from.$value.colorSpace;
+    return this.#seed.colorSpace;
   }
 
   override connectedCallback() {
     super.connectedCallback();
-    this.value = this.#scale.toObject();
-    this.currentColorValue = stringifyColor(this.#scale.from.$value);
+    this.currentColorValue = stringifyColor(this.#seed);
+    this.internals_.setFormValue(JSON.stringify(this.value));
 
     this.#options = this.scrapedTokens.reduce((acc, token) => {
       if (token.$type === 'color' && token.$extensions[EXTENSION_TOKEN_STAGED] !== false) {
@@ -203,6 +200,8 @@ export class WizardColorscaleInput extends WizardTokenInput {
   readonly handleColorChange = (event: Event) => {
     const target = event.target;
     if (target instanceof ClippyTokenCombobox && target.value) {
+      // Do not propagate *this* event, but emit a new one later on
+      event.stopPropagation();
       const rawValue = target.value;
       let color: Color;
       let value: ColorValue;
@@ -216,12 +215,9 @@ export class WizardColorscaleInput extends WizardTokenInput {
       const newColorValue: string = colorJSToHex(color);
       // Skip initialization-triggered events where the value hasn't actually changed
       if (newColorValue === this.currentColorValue) return;
-      const newToken = new ColorToken({
-        $value: value,
-      });
-      this.#scale.from = newToken;
-      this.value = this.#scale.toObject();
+      this.#seed = value;
       this.currentColorValue = newColorValue;
+      this.internals_.setFormValue(JSON.stringify(this.value));
       if (!this.isConnected) return;
       this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
@@ -229,6 +225,7 @@ export class WizardColorscaleInput extends WizardTokenInput {
 
   override render() {
     const resolvedValueToken: ColorTokenType = { $type: 'color', $value: parseColor(this.currentColorValue) };
+    const seedHex = this.currentColorValue.toUpperCase();
 
     return html`
       <div class="wizard-colorscale-input">
@@ -242,18 +239,18 @@ export class WizardColorscaleInput extends WizardTokenInput {
         >
         </clippy-token-combobox>
         <div role="presentation" class="wizard-colorscale-input__list">
-          ${this.#scale.list().map((stop, index) => {
-            const cssColor = stop.toCSSColorFunction();
+          ${Object.entries(this.#regularScale).map(([key, value]) => {
+            const hex = stringifyColor(value).toUpperCase();
             return html`
               <div
                 class="${classMap({
                   'wizard-colorscale-input__stop': true,
-                  'wizard-colorscale-input__stop--seed': dequal(this.seedColor, stop.$value),
+                  'wizard-colorscale-input__stop--seed': hex === seedHex,
                 })}"
-                style=${`background-color: ${cssColor}`}
-                title=${`${COLOR_KEYS.at(index)}: ${cssColor}`}
+                style=${`background-color: ${hex}`}
+                title=${`${key}: ${hex}`}
                 data-testid="color-scale-stop"
-                data-value=${cssColor}
+                data-value=${hex}
               ></div>
             `;
           })}

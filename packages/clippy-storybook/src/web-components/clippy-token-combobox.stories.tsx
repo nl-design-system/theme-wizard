@@ -9,7 +9,7 @@ import {
   StrictThemeSchema,
   SKIP,
   DimensionToken,
-  EXTENSION_TOKEN_SUBTYPE,
+  getTokenSubtype,
   walkTokens,
   BaseDesignToken,
 } from '@nl-design-system-community/design-tokens-schema';
@@ -52,12 +52,8 @@ walkTokens(parsedTokens, (token, path) => {
 
 const colorTokens = designTokens.filter(({ token }) => token.$type === 'color');
 const fontFamilyTokens = designTokens.filter(({ token }) => token.$type === 'fontFamily');
-const borderWidthTokens = designTokens.filter(
-  ({ token }) => token.$extensions?.[EXTENSION_TOKEN_SUBTYPE] === 'border-width',
-);
-const lineHeightTokens = designTokens.filter(
-  ({ token }) => token.$extensions?.[EXTENSION_TOKEN_SUBTYPE] === 'line-height',
-);
+const borderWidthTokens = designTokens.filter(({ token }) => getTokenSubtype(token) === 'border-width');
+const lineHeightTokens = designTokens.filter(({ token }) => getTokenSubtype(token) === 'line-height');
 
 const colorOptions = resolveRefs(colorTokens);
 const fontFamilyOptions = resolveRefs(fontFamilyTokens);

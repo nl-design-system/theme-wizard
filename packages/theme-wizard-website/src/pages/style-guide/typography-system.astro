@@ -1,0 +1,85 @@
+---
+import StyleGuideNav from "@/components/StyleGuideNav.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
+import { capitalize } from 'es-toolkit/string';
+
+const SECTIONS = [
+  {
+    name: "Lettertype",
+    id: 'font-family',
+    tokens: ['default', 'monospace'],
+  },
+  {
+    name: "Lettergewicht",
+    id: 'font-weight',
+    tokens: ['default', 'bold'],
+  },
+  {
+    name: "Lettergrootte",
+    id: 'font-size',
+    tokens: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
+  },
+  {
+    name: "Regelafstand",
+    id: 'line-height',
+    tokens: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'],
+  },
+]
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+</script>
+
+<BaseLayout title="Typografie systeem - Stijlgids - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <StyleGuideNav />
+      <wizard-anchor-nav slot="aside-nav" items={JSON.stringify(SECTIONS.map(section => ({title: section.name, id: section.id})))}></wizard-anchor-nav>
+      <wizard-container slot="main">
+        <clippy-stack size="3xl">
+          <clippy-heading level="1">Typografie systeem</clippy-heading>
+
+          <clippy-stack size="5xl">
+            {SECTIONS.map(section => (
+              <section class="wizard-token-section" id={section.id}>
+                <clippy-stack size="xl">
+                  {['line-height', 'font-size'].includes(section.id) ? (
+                    <wizard-token-docs groups={`basis.text.${section.id}`} heading-level="2"></wizard-token-docs>
+                  ) : (
+                    <clippy-heading level="2">{section.name}</clippy-heading>
+                  )}
+                  <clippy-story-preview size="lg">
+                    <clippy-stack size="5xl">
+                      {section.tokens.map((token) => (
+                        <clippy-stack size="2xl">
+                          {['line-height', 'font-size'].includes(section.id) ? (
+                            <clippy-heading level="3">{capitalize(token)}</clippy-heading>
+                          ) : (
+                            <wizard-token-docs groups={`basis.text.${section.id}.${token}`} heading-level="3"></wizard-token-docs>
+                          )}
+                          <wizard-token-table groups={`basis.text.${section.id}.${token}`}></wizard-token-table>
+                          <TokenStoryMatches groups={`basis.text.${section.id}.${token}`} />
+                        </clippy-stack>
+                      ))}
+                    </clippy-stack>
+                  </clippy-story-preview>
+                </clippy-stack>
+              </section>
+            ))}
+          </clippy-stack>
+
+        </clippy-stack>
+      </wizard-container>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<style>
+  .wizard-token-section {
+    scroll-margin-block: calc(var(--wizard-page-nav-block-size, 4rem) + var(--basis-space-row-xl));
+  }
+</style>

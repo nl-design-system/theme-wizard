@@ -10,7 +10,7 @@ export default css`
    */
   .wizard-layout {
     --wizard-layout-padding-inline: var(--basis-space-inline-xl);
-    --wizard-layout-body-padding-block: var(--basis-space-block-xl);
+    --wizard-layout-body-padding-block: var(--basis-space-block-3xl);
     --wizard-layout-body-template-rows: minmax(var(--basis-size-md), auto) 1fr;
     --wizard-layout-nav-padding-block: var(--basis-space-block-xl);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
@@ -53,6 +53,7 @@ export default css`
     display: flex;
     gap: var(--basis-space-column-4xl);
     grid-area: content;
+    min-inline-size: 0;
     padding-block: var(--wizard-layout-body-padding-block);
     padding-inline: var(--wizard-layout-padding-inline);
   }
@@ -60,6 +61,13 @@ export default css`
   .wizard-layout__sidebar:not([hidden]) {
     flex-basis: 20rem;
     flex-grow: 1;
+    order: 1;
+  }
+
+  .wizard-layout__aside:not([hidden]) {
+    flex-basis: 12rem;
+    flex-grow: 1;
+    order: 3;
   }
 
   .wizard-layout__logo {
@@ -72,10 +80,17 @@ export default css`
    ============================================ */
 
   .wizard-layout__main {
+    column-gap: var(--basis-space-row-4xl);
     display: grid;
     flex-basis: 0;
     flex-grow: 999;
-    min-inline-size: 64%;
+    min-inline-size: 62%;
+    order: 2;
+  }
+
+  /* prevent slotted content from overflowing the grid layout */
+  ::slotted([slot='main']) {
+    min-inline-size: 0;
   }
 
   @media print {

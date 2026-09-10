@@ -6,6 +6,7 @@ export const ERROR_CODES = {
   FONT_SIZE_TOO_SMALL: 'font_size_too_small',
   INSUFFICIENT_CONTRAST: 'insufficient_contrast',
   INVALID_REF: 'invalid_ref',
+  INVALID_TOKEN_SUBTYPE: 'invalid_token_subtype',
   LINE_HEIGHT_TOO_SMALL: 'line_height_too_small',
   UNEXPECTED_UNIT: 'unexpected_unit',
 } as const;
@@ -74,12 +75,39 @@ export type MinFontSizeIssue = z.core.$ZodSuperRefineIssue & {
   minimum: string;
 };
 
+export type InvalidTokenSubtypeIssue = z.core.$ZodSuperRefineIssue & {
+  ERROR_CODE: typeof ERROR_CODES.INVALID_TOKEN_SUBTYPE;
+  code: 'custom';
+  message: string;
+  path: TokenPath;
+  actual: unknown;
+};
+
+export const createInvalidTokenSubtypeIssue = ({
+  actual,
+  path,
+  tokenType,
+}: {
+  actual: unknown;
+  path: TokenPath;
+  tokenType: string;
+}): InvalidTokenSubtypeIssue => {
+  return {
+    actual,
+    code: 'custom',
+    ERROR_CODE: ERROR_CODES.INVALID_TOKEN_SUBTYPE,
+    message: `Sub-type ${JSON.stringify(actual)} is not valid for a "${tokenType}" token`,
+    path,
+  };
+};
+
 export type ThemeValidationIssue =
   | (z.core.$ZodIssue & {
       ERROR_CODE?: (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
     })
   | ContrastIssue
   | InvalidRefIssue
+  | InvalidTokenSubtypeIssue
   | LineHeightUnitIssue
   | MinFontSizeIssue;
 

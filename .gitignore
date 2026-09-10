@@ -11,6 +11,7 @@ build/
 coverage/
 dist/
 tmp/
+.vitest-attachments/
 
 # Ignore archives
 *.7z

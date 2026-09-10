@@ -3,7 +3,7 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import type { WizardUploadEventDetail } from '../wizard-token-upload-form';
 import '../wizard-reuse-suggestions-table';
-import '../wizard-stack';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '../wizard-token-upload-form';
 import { t } from '../../i18n';
 import { type TokenFileResult, parseTokenFiles } from '../../lib/TokenFiles';
@@ -46,7 +46,7 @@ export class WizardTokensReuseForm extends LitElement {
 
   override render() {
     return html`
-      <wizard-stack size="3xl">
+      <clippy-stack size="3xl">
         <wizard-token-upload-form
           @wizard-upload=${this.handleUpload}
           ?invalid=${this.parsedTokens?.success === false}
@@ -54,13 +54,15 @@ export class WizardTokensReuseForm extends LitElement {
           submit-label=${t('tokenReuseForm.submit')}
         ></wizard-token-upload-form>
 
-        ${this.parsedTokens?.success
-          ? html`<wizard-reuse-suggestions-table
-              .suggestions=${this.suggestedReusableTokens}
-              .tokens=${this.parsedTokens.data}
-            ></wizard-reuse-suggestions-table>`
-          : nothing}
-      </wizard-stack>
+        ${
+          this.parsedTokens?.success
+            ? html`<wizard-reuse-suggestions-table
+                .suggestions=${this.suggestedReusableTokens}
+                .tokens=${this.parsedTokens.data}
+              ></wizard-reuse-suggestions-table>`
+            : nothing
+        }
+      </clippy-stack>
     `;
   }
 }

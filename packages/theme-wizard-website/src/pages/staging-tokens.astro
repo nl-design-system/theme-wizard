@@ -2,9 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '@nl-design-system-candidate/button-css/button.css'
 import '@nl-design-system-candidate/paragraph-css/paragraph.css'
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import '@nl-design-system-community/clippy-components/clippy-story-preview';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 ---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-stack';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
+</script>
 
 <BaseLayout title="Review design tokens - Theme Wizard">
   <theme-wizard-app>
@@ -12,36 +18,36 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
       <main slot="main" class="wizard-main">
         <wizard-container size="3xl">
           <clippy-story-preview size="lg">
-            <wizard-stack size="5xl">
+            <clippy-stack size="5xl">
               <header>
                 <wizard-container size="md" class="header-container">
-                  <wizard-stack size="xl">
-                    <a class="nl-link wizard-back-link" href="/">
+                  <clippy-stack size="xl">
+                    <a class="nl-link wizard-back-link" href="/scrape-tokens">
                       <IconArrowLeft />
                       Vorige stap
                     </a>
                     <h1 class="wizard-page-title">Ontwerpkeuzes gevonden!</h1>
                     <p class="nl-paragraph nl-paragraph--lead">Bij NL Design System noemen wij deze ontwerpkeuzes: design tokens. Je kunt deze design tokens als opties gebruiken om je huisstijl vast te leggen.</p>
                     <p class="nl-paragraph">Selecteer de design tokens die je wilt kunnen gebruiken. Geen zorgen: je kunt deze selectie altijd aanpassen.</p>
-                    <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
+                    <a class="nl-button nl-button--primary nl-button--icon" href="/wizard">
                       <span class="nl-button__label">Huisstijl vastleggen</span>
                       <span class="nl-button__icon-end">
                         <IconArrowRight />
                       </span>
                     </a>
-                  </wizard-stack>
+                  </clippy-stack>
                 </wizard-container>
               </header>
 
-                <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
+              <wizard-scraped-tokens-preview></wizard-scraped-tokens-preview>
 
-                <a class="nl-button nl-button--primary nl-button--icon" href="/basis-tokens">
-                  <span class="nl-button__label">Huisstijl vastleggen</span>
-                  <span class="nl-button__icon-end">
-                    <IconArrowRight />
-                  </span>
-                </a>
-            </wizard-stack>
+              <a class="nl-button nl-button--primary nl-button--icon" href="/wizard">
+                <span class="nl-button__label">Huisstijl vastleggen</span>
+                <span class="nl-button__icon-end">
+                  <IconArrowRight />
+                </span>
+              </a>
+            </clippy-stack>
           </clippy-story-preview>
         </wizard-container>
       </main>

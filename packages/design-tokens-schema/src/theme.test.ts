@@ -19,8 +19,8 @@ import {
   type ContrastExtension,
   excludeParentKeys,
 } from './theme';
+import { EXTENSION_TOKEN_SUBTYPE } from './token-subtype';
 import { parseColor, type ColorToken } from './tokens/color-token';
-import { EXTENSION_TOKEN_SUBTYPE } from './upgrade-legacy-tokens';
 import { ERROR_CODES, type ThemeValidationIssue } from './validation-issue';
 import { MINIMUM_LINE_HEIGHT } from './validations';
 
@@ -621,7 +621,7 @@ describe('validating color contrast', () => {
     });
 
     it('does not crash when re-validating pre-processed tokens with hex-string contrast extensions', () => {
-      // Regression test: toTokensJSON calls toLegacyTokens which converts ColorJS $value
+      // Regression test: toLegacyTokens converts ColorJS $value
       // objects back to hex strings, including inside contrast extension color objects.
       // When that downloaded JSON is re-uploaded, the stale hex-string contrast extension
       // must not reach superRefine as-is — it would crash with "color.components is undefined".
@@ -1324,6 +1324,69 @@ describe('line-height validations', () => {
       expect(result.success).toBe(false);
       expect(result.error?.issues).toHaveLength(1);
       expect(result.error?.issues[0]).toMatchObject(unexpectedUnitError);
+    });
+  });
+});
+
+describe('validate token sub-type extension', () => {
+  it('passes when the sub-type extension is valid for the token $type', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(
+      config,
+      'nl.test.token',
+      createToken(
+        'color',
+        { colorSpace: 'srgb', components: [0, 0, 0] },
+        { [EXTENSION_TOKEN_SUBTYPE]: 'background-color' },
+      ),
+    );
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(true);
+  });
+
+  it('flags a sub-type extension that is not valid for the token $type', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(
+      config,
+      'nl.test.token',
+      createToken('color', { colorSpace: 'srgb', components: [0, 0, 0] }, { [EXTENSION_TOKEN_SUBTYPE]: 'font-size' }),
+    );
+    const result = StrictThemeSchema.safeParse(config);
+    expect(result.success).toBe(false);
+    expect(result.error?.issues).toEqual([
+      {
+        actual: 'font-size',
+        code: 'custom',
+        ERROR_CODE: ERROR_CODES.INVALID_TOKEN_SUBTYPE,
+        message: 'Sub-type "font-size" is not valid for a "color" token',
+        path: ['nl', 'test', 'token', '$extensions', EXTENSION_TOKEN_SUBTYPE],
+      },
+    ]);
+  });
+});
+
+describe('preprocessThemeStrict adds path-based sub-type extensions', () => {
+  it('sets a sub-type on an already-modern dimension token, without needing a legacy $type upgrade', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'nl.card.border-radius', createToken('dimension', { unit: 'px', value: 8 }));
+
+    const result = StrictThemeSchema.safeParse(config);
+
+    expect(result.success).toBe(true);
+    expect(dlv(result.data, 'nl.card.border-radius.$extensions')).toMatchObject({
+      [EXTENSION_TOKEN_SUBTYPE]: 'border-radius',
+    });
+  });
+
+  it('sets a sub-type on a dimension token that was upgraded from a legacy fontSize $type', () => {
+    const config = { basis: getBasis(), brand: brandConfig };
+    dset(config, 'nl.card.font-size', createToken('fontSize', '16px'));
+
+    const result = StrictThemeSchema.safeParse(config);
+
+    expect(result.success).toBe(true);
+    expect(dlv(result.data, 'nl.card.font-size.$extensions')).toMatchObject({
+      [EXTENSION_TOKEN_SUBTYPE]: 'font-size',
     });
   });
 });

@@ -26,19 +26,26 @@ import {
 import { setExtension } from './extensions';
 import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
+import {
+  EXTENSION_TOKEN_SUBTYPE,
+  addTokenSubTypeExtensions,
+  getTokenSubtype,
+  hasInvalidSubtype,
+} from './token-subtype';
 import { ColorValue, compareContrast, type ColorToken } from './tokens/color-token';
 import { TokenReference, createReference, extractRef, isRef, isValueObject } from './tokens/token-reference';
-import { EXTENSION_TOKEN_SUBTYPE, upgradeLegacyTokens } from './upgrade-legacy-tokens';
+import { upgradeLegacyTokens } from './upgrade-legacy-tokens';
 import {
   ERROR_CODES,
   type InvalidRefIssue,
   LineHeightUnitIssue,
   MinFontSizeIssue,
   createContrastIssue,
+  createInvalidTokenSubtypeIssue,
   createMinLineHeightIssue,
 } from './validation-issue';
 import { validateFontSize, MIN_FONT_SIZE_PX, MIN_FONT_SIZE_REM, validateMinLineHeight, remToPx } from './validations';
-import { isColorToken, walkColors, walkDimensions, walkLineHeights, walkObject, SKIP } from './walker';
+import { isColorToken, walkColors, walkDimensions, walkLineHeights, walkObject, walkTokens, SKIP } from './walker';
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
@@ -313,9 +320,13 @@ export const preprocessThemeStrict = (input: unknown): Record<string, unknown> =
   data = useOriginalValue(data);
   // Clean up non-token properties for faster processing
   data = removeNonTokenProperties(data);
-  // Upgrade legacy token formats
+  // Upgrade legacy token formats to their modern $type/$value - must run before addTokenSubTypeExtensions
+  // (which relies on modern types) and before the other processors below (which rely on modern values,
+  // e.g. parsed colors/dimensions), so keep this near the front of the pipeline.
   data = upgradeLegacyTokens(data);
-  // Add extensions
+  // Add extensions:
+  // Add path-based sub-type extensions (e.g. font-size, background-color) to modern-typed tokens
+  data = addTokenSubTypeExtensions(data);
   data = addBasisContrastExtensions(data);
   data = addBasisColorScalePositionExtensions(data);
   data = addComponentContrastExtensions(data);
@@ -327,6 +338,9 @@ export const preprocessThemeStrict = (input: unknown): Record<string, unknown> =
 export const ThemeSchema = z.unknown().transform(preprocessTheme).pipe(ThemeShapeSchema);
 
 export type Theme = z.infer<typeof ThemeShapeSchema>;
+
+/** Like Theme, but less restrictive and less inference based */
+export type ThemeLike = Record<string, unknown>;
 
 const getActualValue = <TValue>(token: { $value: TValue; $extensions?: Record<string, unknown> }): TValue => {
   return (token.$extensions?.[EXTENSION_RESOLVED_AS] as TValue) ?? token.$value;
@@ -387,7 +401,7 @@ export const StrictThemeSchema = z
     // Validation 3: font must have minimum size
     walkDimensions(root, (token, path) => {
       // Sub-type must be font-size
-      if (token.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') return;
+      if (getTokenSubtype(token) !== 'font-size') return;
       // Do not attempt to process refs
       if (isRef(token.$value)) return;
 
@@ -463,4 +477,19 @@ export const StrictThemeSchema = z
         }
       }
     }
+
+    // Validation 6: a sub-type extension (if set) must be valid for the token's $type
+    walkTokens(root, (token, path) => {
+      if (!hasInvalidSubtype(token)) {
+        return;
+      }
+
+      ctx.addIssue(
+        createInvalidTokenSubtypeIssue({
+          actual: token.$extensions?.[EXTENSION_TOKEN_SUBTYPE],
+          path: [...path, '$extensions', EXTENSION_TOKEN_SUBTYPE],
+          tokenType: token.$type,
+        }),
+      );
+    });
   });

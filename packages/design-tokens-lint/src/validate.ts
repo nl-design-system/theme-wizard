@@ -8,8 +8,7 @@ export type ValidateOptions = {
 };
 
 export type ValidateResult =
-  | { success: true; data: ParseSuccess['data'] }
-  | { success: false; issues: ParseFailure['error']['issues'] };
+  { success: true; data: ParseSuccess['data'] } | { success: false; issues: ParseFailure['error']['issues'] };
 
 export function validateTokens(tokens: unknown, options: ValidateOptions = {}): ValidateResult {
   const processed = options.excludeParentKeys ? excludeParentKeys(tokens as Record<string, unknown>) : tokens;

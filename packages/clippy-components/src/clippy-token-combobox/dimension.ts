@@ -6,7 +6,7 @@ import {
   EXTENSION_RESOLVED_AS,
   isRef,
   stringifyDimension,
-  EXTENSION_TOKEN_SUBTYPE,
+  getTokenSubtype,
 } from '@nl-design-system-community/design-tokens-schema';
 import { parse_dimension } from '@projectwallace/css-parser/parse-dimension';
 import RulerMeasureIcon from '@tabler/icons/outline/ruler-measure.svg?raw';
@@ -51,7 +51,7 @@ export const valueToQuery = <T extends { $value: DimensionToken['$value'] }>({ $
 };
 
 export const preview = <T extends { label: string; value: DimensionToken }>({ value }: T) => {
-  if (value.$extensions?.[EXTENSION_TOKEN_SUBTYPE] !== 'font-size') {
+  if (getTokenSubtype(value) !== 'font-size') {
     return defaultIconStartPreview();
   }
 

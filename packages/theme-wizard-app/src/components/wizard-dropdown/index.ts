@@ -69,16 +69,20 @@ export class WizardDropdown extends LitElement {
         </button>
         ${this.options.map(
           (option) => html`
-            ${this.isOptgroup
-              ? html` <optgroup label="${option.name}">
-                  ${option.detail?.map(
-                    (detail) =>
-                      html` <option value="${detail.value}" ?selected=${detail.value === this.value}>
-                        ${detail.name}
-                      </option>`,
-                  )}
-                </optgroup>`
-              : html` <option value="${option.value}" ?selected=${option.value === this.value}>${option.name}</option>`}
+            ${
+              this.isOptgroup
+                ? html` <optgroup label="${option.name}">
+                    ${option.detail?.map(
+                      (detail) =>
+                        html` <option value="${detail.value}" ?selected=${detail.value === this.value}>
+                          ${detail.name}
+                        </option>`,
+                    )}
+                  </optgroup>`
+                : html` <option value="${option.value}" ?selected=${option.value === this.value}>
+                    ${option.name}
+                  </option>`
+            }
           `,
         )}
       </select>

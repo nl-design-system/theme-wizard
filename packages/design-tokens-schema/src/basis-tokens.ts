@@ -1,14 +1,15 @@
 import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
 import * as z from 'zod';
 import { buildSchema } from './schema-builder';
-import { BaseDesignTokenIdentifierSchema } from './tokens/base-token';
+import { BaseDesignTokenIdentifierSchema, withGroupExtensions } from './tokens/base-token';
 import { ColorTokenValidationSchema } from './tokens/color-token';
 
 const ColorOrColorScaleSchema = z.union([
   ColorTokenValidationSchema,
   // For now we allow basic design tokens names, eventually we may want to consider only allowing
   // 1 | 2 | 3 | 5..12 | accent
-  z.record(BaseDesignTokenIdentifierSchema, ColorTokenValidationSchema),
+  // Uses catchall (not z.record) so a $extensions key (e.g. colorscale seed) can sit alongside the shade keys.
+  z.object(withGroupExtensions({})).catchall(ColorTokenValidationSchema),
 ]);
 export type ColorOrColorScale = z.infer<typeof ColorOrColorScaleSchema>;
 
@@ -39,10 +40,10 @@ export const isBorderColor = (key: string) => BORDER_COLOR_KEYS.includes(key as 
 
 // Ordered list of foreground color names
 export const FOREGROUND_COLOR_KEYS = [
-  'color-subtle',
   'color-default',
   'color-hover',
   'color-active',
+  'color-subtle',
   'color-document',
 ] as const;
 export type ForegroundColorKey = (typeof FOREGROUND_COLOR_KEYS)[number];

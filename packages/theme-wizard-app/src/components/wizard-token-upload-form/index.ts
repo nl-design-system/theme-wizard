@@ -8,7 +8,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { t } from '../../i18n';
 import fileInputStyles from '../wizard-file-input/styles';
 import '../wizard-form-field-checkbox';
-import '../wizard-stack';
+import '@nl-design-system-community/clippy-components/clippy-stack';
 import styles from './styles';
 
 const tag = 'wizard-token-upload-form';
@@ -76,7 +76,7 @@ export class WizardTokenUploadForm extends LitElement {
     const fileInputId = 'input-file';
     return html`
       <form @submit=${this.handleSubmit}>
-        <wizard-stack size="3xl">
+        <clippy-stack size="3xl">
           <div
             class="utrecht-form-field utrecht-form-field--text ${classMap({
               'utrecht-form-field--invalid': this.invalid,
@@ -85,11 +85,13 @@ export class WizardTokenUploadForm extends LitElement {
             <div class="utrecht-form-field__label">
               <label for=${fileInputId} class="utrecht-form-label">${t('tokenValidationForm.fileInput.label')}</label>
             </div>
-            ${this.invalid
-              ? html`<div id=${errorId} class="utrecht-form-field-description utrecht-form-field__description">
-                  ${t('tokenValidationForm.result.errors', { count: this.errors.length })}
-                </div>`
-              : nothing}
+            ${
+              this.invalid
+                ? html`<div id=${errorId} class="utrecht-form-field-description utrecht-form-field__description">
+                    ${t('tokenValidationForm.result.errors', { count: this.errors.length })}
+                  </div>`
+                : nothing
+            }
             <input
               type="file"
               class="wizard-file-input"
@@ -100,11 +102,13 @@ export class WizardTokenUploadForm extends LitElement {
               name=${fileInputId}
               aria-describedby=${this.invalid ? errorId : nothing}
             />
-            ${this.invalid && this.errors.length > 0
-              ? html`<ul>
-                  ${this.errors.map((error) => html`<li>${error.message} (${error.path.join('.')})</li>`)}
-                </ul>`
-              : nothing}
+            ${
+              this.invalid && this.errors.length > 0
+                ? html`<ul>
+                    ${this.errors.map((error) => html`<li>${error.message} (${error.path.join('.')})</li>`)}
+                  </ul>`
+                : nothing
+            }
           </div>
 
           <wizard-form-field-checkbox
@@ -113,7 +117,7 @@ export class WizardTokenUploadForm extends LitElement {
           ></wizard-form-field-checkbox>
 
           <button class="nl-button nl-button--primary" type="submit">${this.submitLabel}</button>
-        </wizard-stack>
+        </clippy-stack>
       </form>
     `;
   }
