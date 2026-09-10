@@ -24,7 +24,7 @@ test.describe('uploading the full Start-thema', () => {
   test('is accepted without warnings or filled-in tokens', async ({ uploadTokensPage }) => {
     await expect.soft(uploadTokensPage.fileInputError).not.toBeVisible();
     await expect.soft(uploadTokensPage.filledFromDefaultsDetails).not.toBeVisible();
-    await expect.soft(uploadTokensPage.softIssuesDetails).not.toBeVisible();
+    await expect(uploadTokensPage.softIssuesDetails).not.toBeVisible();
   });
 
   test('continuing moves to the basis-tokens page', async ({ basisTokensPage, page, uploadTokensPage }) => {

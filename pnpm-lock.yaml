@@ -1181,8 +1181,8 @@ importers:
         version: 19.2.8(react@19.2.8)
     devDependencies:
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 8.0.0
+        version: 8.0.0
       '@playwright/test':
         specifier: 1.62.1
         version: 1.62.1
@@ -3061,9 +3061,6 @@ packages:
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0':
     resolution: {integrity: sha512-txcrXfIEMuid+OxJaDB4LYYLbYXjUwXwWUiq3YpdXRPKfsBlHSCx9lY8zKbTXn2pnymIa+DK2HiRGv9VsynOdA==}
-
-  '@nl-design-system-unstable/start-design-tokens@7.0.0':
-    resolution: {integrity: sha512-50+9g1OlY0HNc0ebzvDPJW9hJqDsoEPypcWINRYIRLDfqDo0GT7gRz+rW7xCSxD3sUjUn9Kdv4XJxySy5YolZw==}
 
   '@nl-design-system-unstable/start-design-tokens@8.0.0':
     resolution: {integrity: sha512-blc+mGXD2ysUYLVsbIY3356lHl9orAiUpgp0NLCYEsQ5RiX8nvbNb4+O01EekpSHc847KTpkpK35PW6uURFDOA==}
@@ -11104,8 +11101,6 @@ snapshots:
   '@nl-design-system-unstable/documentation@1.11.0': {}
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0': {}
-
-  '@nl-design-system-unstable/start-design-tokens@7.0.0': {}
 
   '@nl-design-system-unstable/start-design-tokens@8.0.0': {}
 
