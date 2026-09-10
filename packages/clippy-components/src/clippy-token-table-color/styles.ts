@@ -50,11 +50,11 @@ export default css`
     appearance: none;
     background: none;
     border: none;
+    border-radius: var(--nl-color-sample-border-radius);
     outline: none;
     padding-block: 0;
     padding-inline: 0;
     position: relative;
-    border-radius: var(--nl-color-sample-border-radius);
 
     &:hover,
     &:focus-visible {
