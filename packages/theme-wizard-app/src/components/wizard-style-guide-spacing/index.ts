@@ -84,7 +84,7 @@ export class WizardStyleGuideSpacing extends LitElement {
             </p>
             <clippy-token-table
               .tokens=${tokens}
-              name=${t(`styleGuide.sections.space.${concept}.title`)}
+              caption=${t(`styleGuide.sections.space.${concept}.title`)}
               example-label=${t('styleGuide.sample')}
               token-id-label=${t('styleGuide.tokenName')}
               value-label=${t('styleGuide.value')}

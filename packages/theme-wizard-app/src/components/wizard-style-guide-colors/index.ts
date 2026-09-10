@@ -44,7 +44,7 @@ export class WizardStyleGuideColors extends LitElement {
             <clippy-heading level="3">${t(`tokens.fieldLabels.${name}.label`)}</clippy-heading>
             <clippy-token-table
               .tokens=${tokens}
-              name=${t(`tokens.fieldLabels.${name}.label`)}
+              caption=${t(`tokens.fieldLabels.${name}.label`)}
               example-label=${t('styleGuide.sample')}
               token-id-label=${t('styleGuide.tokenName')}
               value-label=${t('styleGuide.value')}
