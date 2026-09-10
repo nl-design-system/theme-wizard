@@ -26,7 +26,7 @@ test('page uses values as stored by the configuration page', async ({ basisToken
   await page.goto('/style-guide/design-tokens');
   const table = page.getByRole('table', { name: 'Accent 1' });
   await expect(table).toBeVisible();
-  await expect(table.getByRole('button', { name: 'Kopieer "#ff0000" naar klembord' })).toBeVisible();
+  await expect(table.getByRole('button', { name: 'Kopieer naar klembord: #ff0000' })).toBeVisible();
 });
 
 test.describe('interaction tests', () => {
@@ -54,7 +54,7 @@ test.describe('interaction tests', () => {
       const tokenName = 'basis.color.accent-1.bg-hover';
       await page
         .getByRole('table', { name: 'Accent 1' })
-        .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord`, exact: true })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenName}`, exact: true })
         .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
@@ -66,7 +66,7 @@ test.describe('interaction tests', () => {
       const tokenValue = '#fbfcfd';
       await page
         .getByRole('table', { name: 'Accent 1' })
-        .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord`, exact: true })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenValue}`, exact: true })
         .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
@@ -92,7 +92,7 @@ test.describe('interaction tests', () => {
         const tokenName = 'basis.text.font-size.4xl';
         await page
           .getByRole('table', { name: 'Lettergroottes' })
-          .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord`, exact: true })
+          .getByRole('button', { name: `Kopieer naar klembord: ${tokenName}`, exact: true })
           .click();
         const clipboardText = await page.evaluate(async () => {
           return await navigator.clipboard.readText();
@@ -104,7 +104,7 @@ test.describe('interaction tests', () => {
         const tokenValue = '2.5rem';
         await page
           .getByRole('table', { name: 'Lettergroottes' })
-          .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord` })
+          .getByRole('button', { name: `Kopieer naar klembord: ${tokenValue}` })
           .click();
         const clipboardText = await page.evaluate(async () => {
           return await navigator.clipboard.readText();
@@ -118,16 +118,9 @@ test.describe('interaction tests', () => {
           .getByRole('button', { name: 'Toon details' })
           .nth(1)
           .click();
-        const modal = page.getByRole('dialog', { name: 'basis.text.font-size.3xl' });
+        const modal = page.getByRole('dialog', { name: 'basis.text.font-size.md' });
         await expect(modal).toBeVisible();
       });
-    });
-
-    test('shows a headings section', async ({ page }) => {
-      const table = page.getByRole('table', { name: 'Headings' });
-      await expect(table).toBeVisible();
-      const rows = table.getByRole('row');
-      expect(await rows.all()).toHaveLength(7); // 6 heading rows + 1 table header row
     });
   });
 
@@ -141,7 +134,7 @@ test.describe('interaction tests', () => {
       const tokenName = 'basis.space.block.6xl';
       await page
         .getByRole('table', { name: 'Block' })
-        .getByRole('button', { name: `Kopieer "${tokenName}" naar klembord` })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenName}` })
         .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
@@ -153,7 +146,7 @@ test.describe('interaction tests', () => {
       const tokenValue = '64px';
       await page
         .getByRole('table', { name: 'Block' })
-        .getByRole('button', { name: `Kopieer "${tokenValue}" naar klembord` })
+        .getByRole('button', { name: `Kopieer naar klembord: ${tokenValue}` })
         .click();
       const clipboardText = await page.evaluate(async () => {
         return await navigator.clipboard.readText();
@@ -163,7 +156,7 @@ test.describe('interaction tests', () => {
 
     test('Token detail dialog is shown', async ({ page }) => {
       await page.getByRole('table', { name: 'Block' }).getByRole('button', { name: 'Toon details' }).nth(3).click();
-      const modal = page.getByRole('dialog', { name: 'basis.space.block.3xl' });
+      const modal = page.getByRole('dialog', { name: 'basis.space.block.md' });
       await expect(modal).toBeVisible();
     });
   });

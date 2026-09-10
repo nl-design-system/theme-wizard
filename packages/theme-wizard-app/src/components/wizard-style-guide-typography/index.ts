@@ -46,6 +46,7 @@ export class WizardStyleGuideTypography extends LitElement {
 
         <clippy-token-table
           .tokens=${Object.values(text['font-family'] as TokenGroup)}
+          name=${t('styleGuide.sections.typography.families.title')}
           example-label=${t('styleGuide.sample')}
           token-id-label=${t('styleGuide.tokenName')}
           value-label=${t('styleGuide.value')}
@@ -70,6 +71,7 @@ export class WizardStyleGuideTypography extends LitElement {
         <clippy-heading level="3">${t('styleGuide.sections.typography.sizes.title')}</clippy-heading>
         <clippy-token-table
           .tokens=${Object.values(text['font-size'] as TokenGroup)}
+          name=${t('styleGuide.sections.typography.sizes.title')}
           example-label=${t('styleGuide.sample')}
           token-id-label=${t('styleGuide.tokenName')}
           value-label=${t('styleGuide.value')}

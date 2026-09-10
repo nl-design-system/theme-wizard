@@ -38,7 +38,6 @@ export class WizardTokenTable extends LitElement {
       return;
     }
 
-    /* Do something */
     const tokens = this.groups.map((group) => {
       return dlv(this.theme.tokens, group);
     });

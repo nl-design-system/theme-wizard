@@ -57,6 +57,7 @@ export class WizardStyleGuideComponents extends LitElement {
             <clippy-heading level="3">${`nl.${componentId}`}</clippy-heading>
             <clippy-token-table
               .tokens=${tokens}
+              name=${`nl.${componentId}`}
               example-label=${t('styleGuide.sample')}
               token-id-label=${t('styleGuide.tokenName')}
               value-label=${t('styleGuide.value')}
