@@ -59,7 +59,7 @@ export default css`
   }
 
   .wizard-layout__aside:not([hidden]) {
-    flex-basis: auto;
+    flex-basis: 12rem;
     flex-grow: 1;
     order: 3;
   }
