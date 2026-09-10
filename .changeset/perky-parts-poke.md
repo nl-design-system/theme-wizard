@@ -2,4 +2,4 @@
 '@nl-design-system-community/clippy-components': minor
 ---
 
-Added clippy-token-sample-spacing component
+Add `clippy-token-sample-spacing` component
