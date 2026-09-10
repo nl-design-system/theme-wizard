@@ -1,6 +1,6 @@
 {
   "name": "@nl-design-system-community/vite-plugin-terse-log",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Community for NL Design System",
   "description": "Shared Vite plugin that quiets dev/watch output down to a single line",
   "license": "EUPL-1.2",
