@@ -145,7 +145,11 @@ export class ClippyTokenTable extends LitElement {
     if (!this.tokens?.length) {
       return nothing;
     }
-    const id = this.caption ? slugify(this.caption) : '';
+    const id = this.caption
+      ? slugify(this.caption, {
+          lower: true,
+        })
+      : '';
     return html`
       <div
         role="table"
