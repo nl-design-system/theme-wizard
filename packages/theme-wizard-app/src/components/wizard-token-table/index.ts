@@ -9,6 +9,7 @@ import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { hasChangedProperty } from '../../utils/lit';
 
 const tag = 'wizard-token-table';
 
@@ -30,11 +31,7 @@ export class WizardTokenTable extends LitElement {
   #visibleTokens: BaseDesignToken[] = [];
 
   protected override willUpdate(changedProperties: PropertyValues) {
-    if (
-      !changedProperties.has('theme') &&
-      !changedProperties.has('groups') &&
-      !changedProperties.has('skipRedundantGroups')
-    ) {
+    if (!hasChangedProperty(changedProperties, ['theme', 'groups', 'skipRedundantGroups'])) {
       return;
     }
 

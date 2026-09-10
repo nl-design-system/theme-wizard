@@ -54,7 +54,7 @@ export const getTokensByPath = ({
   const tokensAtPath = dlv(tokens, basePath);
   Object.entries(tokensAtPath).forEach(([, token]) => {
     if (isTokenLike(token)) {
-      result.push({ ...token });
+      result.push(token);
     }
   });
 

@@ -31,9 +31,7 @@ export class WizardStyleGuideComponents extends LitElement {
     const tokens: BaseDesignToken[] = [];
 
     walkTokens(componentConfig, (token) => {
-      tokens.push({
-        ...token,
-      });
+      tokens.push(token);
       return SKIP;
     });
 

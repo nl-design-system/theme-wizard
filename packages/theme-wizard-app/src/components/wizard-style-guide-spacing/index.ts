@@ -67,7 +67,7 @@ export class WizardStyleGuideSpacing extends LitElement {
         </p>
 
         ${tokenCollection.map(({ name, tokens }) => {
-          const concept = name.split('.').slice(-1)[0];
+          const concept = name.split('.').at(-1);
           const captionId = `styleguide-section-${concept}-title`;
           return html`
             <clippy-heading level="3" id=${captionId}
