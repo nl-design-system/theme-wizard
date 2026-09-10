@@ -21,6 +21,32 @@ test('shows step-by-step navigation with tasks and completion status', async ({ 
   }
 });
 
+test('page allows to go back to staging tokens when that is where it came from', async ({
+  baseURL,
+  page,
+  stagingTokensPage,
+}) => {
+  await page.goto('/wizard?from=staging-tokens');
+
+  const link = page.getByRole('link', { name: 'Vorige stap' });
+  await expect(link).toBeVisible();
+  await link.click();
+  expect(page.url()).toBe(new URL(stagingTokensPage.url, baseURL).toString());
+});
+
+test('page allows to go back to start when reached directly (e.g. starting from scratch)', async ({
+  baseURL,
+  page,
+  wizardIndexPage,
+}) => {
+  await wizardIndexPage.goto();
+
+  const link = page.getByRole('link', { name: 'Terug naar start' });
+  await expect(link).toBeVisible();
+  await link.click();
+  expect(page.url()).toBe(new URL('/', baseURL).toString());
+});
+
 test('marks a task as done after saving a value', async ({ page, wizardStepFormPage }) => {
   await wizardStepFormPage.goto();
 

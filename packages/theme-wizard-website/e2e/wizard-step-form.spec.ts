@@ -3,6 +3,15 @@ import { test, expect } from './fixtures/fixtures';
 import { diffDesignTokenPaths, localeCompare } from './lib/design-token-diff';
 import { storageStatePath } from './project-setup';
 
+test('page allows to go back to the wizard overview', async ({ baseURL, page, wizardStepFormPage }) => {
+  await wizardStepFormPage.goto();
+
+  const link = page.getByRole('link', { name: 'Naar overzicht' });
+  await expect(link).toBeVisible();
+  await link.click();
+  expect(page.url()).toBe(new URL('/wizard/', baseURL).toString());
+});
+
 test.describe('basis text font family (theme values)', () => {
   test('shows suggested theme values', async ({ wizardStepFormPage }) => {
     await wizardStepFormPage.goto();
