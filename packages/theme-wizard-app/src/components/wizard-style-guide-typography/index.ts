@@ -30,12 +30,6 @@ export class WizardStyleGuideTypography extends LitElement {
 
   static override readonly styles = [unsafeCSS(linkCss), unsafeCSS(paragraphCss), styles];
 
-  // #linkToGoogleFontsSpecimen(family: string): string | null {
-  //   const googleFont = googleFonts.find((font) => font.label === family);
-  //   if (!googleFont) return null;
-  //   return `https://fonts.google.com/specimen/${googleFont.label.replaceAll(/\s+/g, '+')}`;
-  // }
-
   override render() {
     const basis = this.theme.tokens['basis'] as Record<string, unknown>;
     const text = basis['text'] as Record<string, unknown>;
