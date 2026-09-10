@@ -33,7 +33,7 @@ test.describe('after scraping a website', () => {
     const link = page.getByRole('link', { name: 'Huisstijl vastleggen' }).first(); // there are 2 identical buttons on this page
     await expect.soft(link).toBeVisible();
     await link.click();
-    expect(page.url()).toBe(new URL(wizardIndexPage.url, baseURL).toString());
+    expect(page.url()).toBe(new URL(`${wizardIndexPage.url}?from=staging-tokens`, baseURL).toString());
   });
 
   test.describe('Shows tables with tokens', () => {

@@ -1180,6 +1180,9 @@ importers:
         specifier: 19.2.8
         version: 19.2.8(react@19.2.8)
     devDependencies:
+      '@nl-design-system-unstable/start-design-tokens':
+        specifier: 8.0.0
+        version: 8.0.0
       '@playwright/test':
         specifier: 1.62.1
         version: 1.62.1
@@ -1195,6 +1198,9 @@ importers:
       '@types/react-dom':
         specifier: 19.2.5
         version: 19.2.5(@types/react@19.2.18)
+      dset:
+        specifier: 3.1.4
+        version: 3.1.4
       postcss-html:
         specifier: 2.0.0
         version: 2.0.0(postcss@8.5.26)

@@ -12,7 +12,7 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { t } from '../../i18n';
 import styles from './styles';
 
-export type StarterOptionValue = 'start' | 'url'; // Add 'json' later
+export type StarterOptionValue = 'start' | 'url' | 'json';
 
 export interface WizardStarterPickerSubmitEventDetail {
   value: StarterOptionValue;
@@ -72,16 +72,11 @@ export class WizardStarterPicker extends LitElement {
                 <span slot="description">${t('wizard.starterPicker.url.description')}</span>
               </clippy-card-radio-option>
 
-              <!--
-                ADDING THIS IN NEXT PR
-
               <clippy-card-radio-option value="json" class="wizard-starter-picker__option">
                 <span class="wizard-starter-picker__icon" slot="start">${unsafeSVG(IconFileCode)}</span>
                 ${t('wizard.starterPicker.json.name')}
                 <span slot="description">${t('wizard.starterPicker.json.description')}</span>
               </clippy-card-radio-option>
-
-              -->
 
               <clippy-card-radio-option value="start" class="wizard-starter-picker__option">
                 <span class="wizard-starter-picker__icon" slot="start">${unsafeSVG(IconFileSpark)}</span>
