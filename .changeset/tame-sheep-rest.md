@@ -3,4 +3,4 @@
 "@nl-design-system-community/theme-wizard-app": patch
 ---
 
-publish color-scale-generator as standalone package
+Publish color-scale-generator as standalone package

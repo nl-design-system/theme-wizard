@@ -8,4 +8,4 @@
 "@nl-design-system-community/vite-plugin-terse-log": patch
 ---
 
-update all dependencies to latest
+Update all dependencies to latest

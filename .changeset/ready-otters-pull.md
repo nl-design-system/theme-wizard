@@ -2,4 +2,5 @@
 '@nl-design-system-community/clippy-components': minor
 ---
 
-color-sample renders different aspect ratios correctly and supports a label attribute
+- `clippy-color-sample` renders different aspect ratios correctly
+- `clippy-color-sample` supports a label attribute

@@ -2,5 +2,4 @@
 '@nl-design-system-community/clippy-components': minor
 ---
 
-- Added `clippy-token-sample` component
-- Updated `clippy-token-detail` and `clippy-token-table` to use `clippy-token-sample`
+- Add `clippy-token-sample` component as a wrapper for other `clippy-token-sample-X` components.

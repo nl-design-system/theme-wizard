@@ -71,7 +71,7 @@ export class ClippyTokenTable extends LitElement {
 
   #currentToken?: BaseDesignToken = undefined;
 
-  readonly #inputId = crypto.randomUUID();
+  readonly #tableId = crypto.randomUUID();
 
   #openDialog({ token }: { token: BaseDesignToken }) {
     this.#currentToken = token;
@@ -147,10 +147,10 @@ export class ClippyTokenTable extends LitElement {
       return nothing;
     }
     return html`
-      <div role="table" aria-labelledby=${this.caption ? this.#inputId : nothing} class="clippy-token-table__table">
+      <div role="table" aria-labelledby=${this.caption ? this.#tableId : nothing} class="clippy-token-table__table">
         ${
           this.caption
-            ? html`<caption id=${this.#inputId} class="sr-only">
+            ? html`<caption id=${this.#tableId} class="sr-only">
                 ${this.caption}
               </caption>`
             : nothing
