@@ -34,7 +34,7 @@ describe(`<${tag}>`, () => {
   });
 
   it('Applies name attribute correctly', async () => {
-    component.name = 'Table';
+    component.caption = 'Table';
     await component.updateComplete;
     const table = page.getByRole('table', { name: 'Table' });
     await expect(table).toBeVisible();

@@ -15,6 +15,7 @@ import '../clippy-graph-paper';
 import '../clippy-token-detail';
 import { classMap } from 'lit/directives/class-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import slugify from 'slugify';
 import { ClippyModal } from '../clippy-modal';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
@@ -56,7 +57,7 @@ export class ClippyTokenTable extends LitElement {
   @property({ type: Object })
   tokens?: BaseDesignToken[];
 
-  @property({ attribute: 'name', type: String }) name: string | undefined = undefined;
+  @property({ attribute: 'caption', type: String }) caption: string | undefined = undefined;
   @property({ attribute: 'example-label', type: String }) exampleLabel = 'Example';
   @property({ attribute: 'token-id-label', type: String }) tokenIdLabel = 'Token ID';
   @property({ attribute: 'value-label', type: String }) valueLabel = 'Value';
@@ -144,8 +145,20 @@ export class ClippyTokenTable extends LitElement {
     if (!this.tokens?.length) {
       return nothing;
     }
+    const id = this.caption ? slugify(this.caption) : '';
     return html`
-      <div role="table" aria-label=${this.name || nothing} class="clippy-token-table__table">
+      <div
+        role="table"
+        aria-labelledby=${this.caption ? `clippy-token-table__caption--${id}` : nothing}
+        class="clippy-token-table__table"
+      >
+        ${
+          this.caption
+            ? html`<caption id="clippy-token-table__caption--${id}" class="sr-only">
+                ${this.caption}
+              </caption>`
+            : nothing
+        }
         <div role="row" class="clippy-token-table__header">
           <span role="columnheader" class="clippy-token-table__cell clippy-token-table__head">
             ${this.exampleLabel}
