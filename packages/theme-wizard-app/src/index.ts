@@ -1,19 +1,14 @@
 export * from './components/wizard-anchor-nav';
 export * from './components/wizard-app';
-export * from './components/wizard-colorscale-input';
 export * from './components/wizard-color-description';
 export * from './components/wizard-color-system-preview';
 export * from './components/wizard-container';
 export * from './components/wizard-download-confirmation';
 export * from './components/wizard-download-link';
-export * from './components/wizard-dropdown';
-export * from './components/wizard-font-input';
 export * from './components/wizard-form-field-checkbox';
 export * from './components/wizard-layout';
 export * from './components/wizard-logo';
 export * from './components/wizard-page-nav';
-export * from './components/wizard-preview';
-export * from './components/wizard-preview-picker';
 export * from './components/wizard-preview-theme';
 export * from './components/wizard-reuse-suggestions-table';
 export * from './components/wizard-scraped-tokens-preview';
@@ -49,7 +44,6 @@ export * from './components/wizard-token-upload-form';
 export * from './components/wizard-token-validation-form';
 export * from './components/wizard-token-value';
 export * from './components/wizard-tokens-download';
-export * from './components/wizard-tokens-form';
 export * from './components/wizard-tokens-reuse-form';
 export * from './components/wizard-validation-issues-alert';
 

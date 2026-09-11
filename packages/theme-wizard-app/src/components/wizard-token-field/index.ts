@@ -3,6 +3,7 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import { type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import {
+  BaseDesignToken,
   EXTENSION_RESOLVED_AS,
   extractRef,
   getTokenSubtype,
@@ -41,7 +42,7 @@ export class WizardTokenField extends WizardTokenNavigator {
   #options: Option[] = [];
 
   @state() get token() {
-    return this.theme?.at(this.path);
+    return this.theme?.at(this.path) as BaseDesignToken | undefined;
   }
 
   @state() get options() {
@@ -70,7 +71,7 @@ export class WizardTokenField extends WizardTokenNavigator {
     const expectedSubType = isTokenLike(this.token) && getTokenSubtype(this.token);
     this.#options =
       basisTokens && typeof basisTokens !== 'string'
-        ? Object.entries(Theme.flatten(basisTokens))
+        ? Object.entries(Theme.flatten(basisTokens as Record<string, BaseDesignToken>))
             .filter(filterByTypeAndPosition)
             .filter(([, token]) => {
               // Filter out the correct token sub-types

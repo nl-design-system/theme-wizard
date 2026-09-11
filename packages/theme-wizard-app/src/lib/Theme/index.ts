@@ -3,9 +3,7 @@ import {
   type Theme as ThemeType,
   type BaseDesignToken,
   EXTENSION_RESOLVED_AS,
-  stringifyColor,
-  stringifyFontFamily,
-  stringifyDimension,
+  stringifyToken,
   EXTENSION_RESOLVED_FROM,
   getTokenSubtype,
   walkTokens,
@@ -28,18 +26,22 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import { dequal } from 'dequal';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
 import { flattenTokens, refToCssVariable } from './lib';
 import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
-export const PREVIEW_THEME_CLASS = 'preview-theme';
-const DEFAULT_SELECTOR = `.${PREVIEW_THEME_CLASS}, :host`;
+const DEFAULT_SELECTOR = ':host';
 
+type DesignTokens = Record<string, unknown>;
+type DesignToken = {
+  $type?: string;
+  $value?: unknown;
+  [key: string]: unknown;
+};
 export default class Theme {
   name = 'wizard';
   selector: string = DEFAULT_SELECTOR;
-  readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
+  readonly #defaults: Record<string, unknown>; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
   readonly #rule: CSSRule;
@@ -51,7 +53,7 @@ export default class Theme {
    * @param tokens
    * @returns
    */
-  static flatten(tokens: DesignTokens): Record<string, DesignToken> {
+  static flatten(tokens: DesignTokens): Record<string, BaseDesignToken> {
     return flattenTokens(tokens);
   }
 
@@ -60,7 +62,6 @@ export default class Theme {
    * @param stylesheet Stylesheet instance to carry over so that adopted stylesheets can be preserved across new Theme instances.
    */
   constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
-    // @TODO: make sure that parsed tokens conform to DesignTokens type;
     this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
     const [styleSheet, rule] = createStylesheet(stylesheet, DEFAULT_SELECTOR);
     this.#rule = rule;
@@ -200,90 +201,46 @@ export default class Theme {
     this.#modified = false;
   }
 
-  toLegacyTokens() {
-    // TODO: replace with a design-tokens-schema transform to make sure all token types have a legacy format
-    const clonedTokens = structuredClone(this.tokens);
+  toLegacyTokens(): DesignTokens {
+    const legacyTokens = structuredClone(this.tokens);
 
-    function convertTokens(obj: DesignToken): DesignToken {
-      if (obj && typeof obj === 'object') {
-        if (Array.isArray(obj)) {
-          return obj?.map(convertTokens);
-        }
-
-        if (obj.$type === 'color' && typeof obj.$value !== 'string') {
-          return {
-            ...obj,
-            $value: stringifyColor(obj.$value),
-          };
-        } else if (obj.$type === 'fontFamily' && typeof obj.$value !== 'string') {
-          return {
-            ...obj,
-            $value: stringifyFontFamily(obj.$value),
-          };
-        } else if (obj.$type === 'dimension' && typeof obj.$value === 'object' && obj.$value?.unit) {
-          const subtype = getTokenSubtype(obj as BaseDesignToken);
-          const value = stringifyDimension(obj.$value);
-
-          if (subtype === 'font-size') {
-            return {
-              ...obj,
-              $type: 'fontSize',
-              $value: value,
-            };
-          } else if (subtype === 'line-height') {
-            return {
-              ...obj,
-              $type: 'lineHeight',
-              $value: value,
-            };
-          }
-
-          // For other dimension tokens, keep as-is
-          return {
-            ...obj,
-            $value: value,
-          };
-        } else if (obj.$type === 'number') {
-          const subtype = getTokenSubtype(obj as BaseDesignToken);
-
-          if (subtype === 'font-weight') {
-            return {
-              ...obj,
-              $type: 'fontWeight',
-            };
-          } else if (subtype === 'line-height') {
-            return {
-              ...obj,
-              $type: 'lineHeight',
-            };
-          }
-
-          return obj;
-        }
-
-        const result: Record<string, DesignToken> = {};
-        for (const [key, value] of Object.entries(obj)) {
-          result[key] = convertTokens(value);
-        }
-        return result;
+    walkTokens(legacyTokens, (token) => {
+      // Compute the stringified value before renaming $type, since stringifyToken dispatches on the original type.
+      if (typeof token.$value !== 'string' && typeof token.$value !== 'number') {
+        token.$value = stringifyToken(token);
       }
 
-      return obj;
-    }
+      const subtype = getTokenSubtype(token);
+      if (subtype === 'font-size') {
+        token.$type = 'fontSize';
+      } else if (subtype === 'font-weight') {
+        token.$type = 'fontWeight';
+      } else if (subtype === 'line-height') {
+        token.$type = 'lineHeight';
+      }
 
-    return convertTokens(clonedTokens);
+      return SKIP;
+    });
+
+    return legacyTokens;
   }
 
   async toCSS() {
-    const tokens = this.toLegacyTokens();
+    const stringifiableTypes = new Set(['color', 'dimension', 'fontFamily', 'number']);
 
-    walkTokens(tokens, (token, path) => {
-      if (token.$value === 'undefined') {
+    walkTokens(this.tokens, (token, path) => {
+      let stringified = token.$value;
+
+      if (typeof stringified !== 'string' && typeof stringified !== 'number' && stringifiableTypes.has(token.$type)) {
+        stringified = stringifyToken(token);
+      }
+
+      if (stringified === 'undefined') {
         unsetToken(this.#rule, path);
-      } else if (typeof token.$value === 'string' || typeof token.$value === 'number') {
+      } else if (typeof stringified === 'string' || typeof stringified === 'number') {
         // Only set tokens that we've confirmed to be strings or numbers. CSS will ignore
         // it otherwise and this should not happen anyway, so this is a fail-safe.
-        setToken(this.#rule, path, refToCssVariable(token.$value.toString()));
+        setToken(this.#rule, path, refToCssVariable(stringified.toString()));
       }
       // Prevent walking deeper into the token's extensions
       return SKIP;

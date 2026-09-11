@@ -71,8 +71,6 @@
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "7.0.0",
     "@nl-design-system-community/theme-wizard-app": "workspace:*",
-    "@nl-design-system-community/theme-wizard-templates": "workspace:*",
-    "@profpowell/browser-window": "1.4.7",
     "@storybook/react-vite": "10.5.10",
     "@tabler/icons-react": "3.46.0",
     "@utrecht/body-css": "4.0.1",
