@@ -53,7 +53,7 @@ export default class Theme {
    * @param tokens
    * @returns
    */
-  static flatten(tokens: DesignTokens): Record<string, DesignToken> {
+  static flatten(tokens: DesignTokens): Record<string, BaseDesignToken> {
     return flattenTokens(tokens);
   }
 

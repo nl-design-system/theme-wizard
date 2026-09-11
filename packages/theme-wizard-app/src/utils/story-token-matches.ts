@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { DesignTokens } from 'style-dictionary/types';
 import { isRef, extractRef, type TokenPath } from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
 import { getStories } from './csf-utils';
@@ -97,7 +96,7 @@ function referencesGroup(ref: string, groupPath: string): boolean {
 // so follow the chain until we find a match, a dead end, or a cycle.
 // Returns the basis ref that matched, so callers can show *why* something matched.
 function resolveMatchingRef(
-  themeTokens: DesignTokens,
+  themeTokens: Record<string, unknown>,
   path: string,
   groupPaths: string[],
   seen: Set<string> = new Set(),
@@ -128,7 +127,7 @@ function resolveMatchingRef(
  */
 export function findMatchingStories(
   groupPaths: string[],
-  themeTokens: DesignTokens,
+  themeTokens: Record<string, unknown>,
   candidates: StoryCandidate[],
 ): StoryMatch[] {
   const matches: StoryMatch[] = [];

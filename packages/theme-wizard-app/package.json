@@ -105,7 +105,6 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "rosetta": "1.1.0",
-    "style-dictionary": "5.5.2",
     "xstate": "5.32.6",
     "zod": "4.5.4"
   },
