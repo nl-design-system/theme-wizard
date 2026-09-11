@@ -21,9 +21,10 @@ export type PageNavItem = {
 export class WizardPageNav extends LitElement {
   @property({ type: Array }) items: PageNavItem[] = [
     { href: '/wizard', title: t('nav.wizard') },
-    { href: '/basis-tokens', title: t('nav.configure') },
+    { href: '/basis-tokens', title: t('nav.identity') },
     { href: '/components', title: t('nav.components') },
     { href: '/style-guide', title: t('nav.styleGuide') },
+    { href: '/publish-tokens', title: t('nav.publish') },
   ];
 
   static override readonly styles = [unsafeCSS(linkStyles), styles];

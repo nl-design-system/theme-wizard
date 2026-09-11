@@ -9,15 +9,11 @@ export class BasisTokensPage {
   readonly preview: Locator;
   readonly sidebar: Locator;
   readonly templateSelect: Locator;
-  readonly downloadJsonButton: Locator;
-  readonly downloadCssButton: Locator;
 
   constructor(public readonly page: Page) {
     this.preview = this.page.getByTestId('preview');
     this.sidebar = this.page.locator('wizard-tokens-form');
     this.templateSelect = this.page.getByLabel('Weergave');
-    this.downloadJsonButton = this.page.getByRole('button', { name: 'Thema downloaden (JSON)' });
-    this.downloadCssButton = this.page.getByRole('link', { name: 'Thema downloaden (CSS)' });
   }
 
   get url() {
@@ -92,10 +88,5 @@ export class BasisTokensPage {
 
   getErrorAlert(): Locator {
     return this.page.getByTestId('validation-errors-alert');
-  }
-
-  async reset() {
-    await this.page.getByRole('button', { name: 'Begin opnieuw' }).click();
-    await this.page.getByRole('dialog').getByRole('button', { name: 'Opnieuw beginnen' }).click();
   }
 }

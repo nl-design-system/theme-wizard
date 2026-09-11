@@ -2,6 +2,7 @@ import { expect as baseExpect, test as baseTest, type Locator } from '@playwrigh
 import { BasisTokensPage } from '../pages/BasisTokensPage';
 import { ComponentPage } from '../pages/ComponentPage';
 import { MinifyTokensPage } from '../pages/MinifyTokensPage';
+import { PublishPage } from '../pages/PublishPage';
 import { ReuseTokensPage } from '../pages/ReuseTokensPage';
 import { ScraperPage } from '../pages/ScraperPage';
 import { StagingTokensPage } from '../pages/StagingTokensPage';
@@ -76,6 +77,7 @@ export const test = baseTest.extend<{
   basisTokensPage: BasisTokensPage;
   scraperPage: ScraperPage;
   minifyTokensPage: MinifyTokensPage;
+  publishPage: PublishPage;
   reuseTokensPage: ReuseTokensPage;
   stagingTokensPage: StagingTokensPage;
   starterPickerPage: StarterPickerPage;
@@ -96,6 +98,10 @@ export const test = baseTest.extend<{
   minifyTokensPage: async ({ page }, use) => {
     const minifyTokensPage = new MinifyTokensPage(page);
     await use(minifyTokensPage);
+  },
+  publishPage: async ({ page }, use) => {
+    const publishPage = new PublishPage(page);
+    await use(publishPage);
   },
   reuseTokensPage: async ({ page }, use) => {
     const reuseTokensPage = new ReuseTokensPage(page);
