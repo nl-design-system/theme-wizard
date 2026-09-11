@@ -22,6 +22,7 @@ export default css`
       inset-block-end: 0;
       padding-block: var(--basis-space-block-lg);
       position: sticky;
+      z-index: 3;
     }
   }
 
