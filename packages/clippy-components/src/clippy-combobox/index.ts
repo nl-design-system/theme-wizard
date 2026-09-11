@@ -274,7 +274,14 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
     }
   };
 
+  /**
+   * When the virtualkeyboard is open we want to scroll the input into pla
+   * @returns
+   */
   readonly #scrollInputIntoPlace = () => {
+    if (!this.virtualKeyboardOpen) {
+      return;
+    }
     const inputRect = this.shadowRoot?.querySelector('input')?.getBoundingClientRect();
     if (!inputRect) return;
 
@@ -542,8 +549,8 @@ export class ClippyCombobox<T extends Option = Option> extends FormElement<T['va
                           };
                           return html`<li
                             class="clippy-combobox__option | utrecht-listbox__option utrecht-listbox__option--html-li ${classMap(
-                            interactionClasses,
-                          )}"
+                              interactionClasses,
+                            )}"
                             role="option"
                             id=${ifDefined(this.#getOptionId(index))}
                             aria-selected=${selected}
