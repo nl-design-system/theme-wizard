@@ -25,15 +25,15 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
+import { EXTENSION_COLORSCALE_SEED } from '../../lib/ColorScale/siblings';
 import { getRelevantTokens, type RelevantTokensResult } from '../../lib/relevant-tokens';
 import Theme from '../../lib/Theme';
 import { sortTokensForPath } from '../../lib/token-sort-strategies';
 import { UPDATE_DESIGN_TOKENS_EVENT, type UpdateDesignTokensDetail } from '../../utils/events';
 import { hasChangedProperty } from '../../utils/lit';
 import { type StagedDesignToken } from '../../utils/types';
-import { markStepComplete } from '../../utils/wizard-steps-storage';
 import '../wizard-color-description';
-import { EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
+import { markStepComplete } from '../../utils/wizard-steps-storage';
 import '../wizard-step-form-sample';
 import styles from './styles';
 

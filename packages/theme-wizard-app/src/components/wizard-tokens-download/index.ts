@@ -3,7 +3,6 @@ import { removeExtensions } from '@nl-design-system-community/design-tokens-sche
 import Download from '@tabler/icons/outline/download.svg?raw';
 import buttonLinkStyles from '@utrecht/link-button-css?inline';
 import '../wizard-layout';
-import '../wizard-preview';
 import '../wizard-token-field';
 import '../wizard-download-confirmation';
 import '../wizard-validation-issues-alert';

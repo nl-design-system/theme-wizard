@@ -1,20 +1,7 @@
-import { type Page, type Locator, expect } from '@playwright/test';
-
-/** Minimal shape of `<theme-wizard-app>`'s `theme` property we need in-page. */
-type ThemeWizardAppElement = HTMLElement & {
-  theme?: { tokens: unknown };
-};
+import { type Page } from '@playwright/test';
 
 export class BasisTokensPage {
-  readonly preview: Locator;
-  readonly sidebar: Locator;
-  readonly templateSelect: Locator;
-
-  constructor(public readonly page: Page) {
-    this.preview = this.page.getByTestId('preview');
-    this.sidebar = this.page.locator('wizard-tokens-form');
-    this.templateSelect = this.page.getByLabel('Weergave');
-  }
+  constructor(public readonly page: Page) {}
 
   get url() {
     return '/basis-tokens';
@@ -22,71 +9,5 @@ export class BasisTokensPage {
 
   async goto() {
     await this.page.goto(this.url);
-    await expect(this.preview).toBeVisible();
-  }
-
-  async selectTemplate(templateName: string) {
-    await this.templateSelect.selectOption({ label: templateName });
-  }
-
-  /** @param colorHexValue A 6-digit hex value */
-  async changeColor(label: string, colorHexValue: string) {
-    const input = this.page.getByLabel(label).first();
-    await input.fill(colorHexValue);
-    await input.press('Enter');
-  }
-
-  async changeHeadingFont(fontName: string) {
-    const input = this.page.getByLabel('Koppen');
-    await input.fill(fontName);
-    await input.press('Enter');
-  }
-
-  async changeBodyFont(fontName: string) {
-    const input = this.page.getByLabel('Lopende tekst');
-    await input.fill(fontName);
-    await input.press('Enter');
-  }
-
-  getPreviewChild(): Locator {
-    return this.preview.locator(':first-child').first();
-  }
-
-  getCollageComponents(): Locator {
-    return this.preview.locator('.theme-wizard-collage-component');
-  }
-
-  getHeading(level: number): Locator {
-    return this.preview.getByRole('heading', { level }).first();
-  }
-
-  getParagraph(): Locator {
-    return this.preview.getByRole('paragraph').first();
-  }
-
-  async getColorStops(label: string): Promise<(string | null)[]> {
-    const input = this.page.locator(`wizard-colorscale-input[label="${label}"]`);
-    const stops = await input.getByTestId('color-scale-stop').all();
-    return Promise.all(stops.map((stop) => stop.getAttribute('data-value')));
-  }
-
-  async getInputOptions(label: string) {
-    const input = this.page.getByLabel(label);
-    const field = this.page.locator(`[label="${label}"]`);
-
-    await input.focus(); // trigger the dropdown with options
-    return field.getByRole('option');
-  }
-
-  /** The full design token tree currently held by `<theme-wizard-app>`, for reading `$extensions` etc. */
-  async getTokenTree(): Promise<unknown> {
-    return this.page.evaluate(() => {
-      const host = document.querySelector('theme-wizard-app') as ThemeWizardAppElement | null;
-      return host?.theme?.tokens;
-    });
-  }
-
-  getErrorAlert(): Locator {
-    return this.page.getByTestId('validation-errors-alert');
   }
 }

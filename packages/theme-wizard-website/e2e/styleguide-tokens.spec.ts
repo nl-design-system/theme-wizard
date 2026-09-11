@@ -16,17 +16,19 @@ test('shows sidebar with all styleguide pages', async ({ page }) => {
   await expect(page.locator('wizard-sidebar-link')).not.toHaveCount(0);
 });
 
-test('page uses values as stored by the configuration page', async ({ basisTokensPage, page }) => {
-  // Set Accent 1 to red
-  await basisTokensPage.goto();
-  await page.getByRole('button', { name: 'Kleuren' }).click();
-  await basisTokensPage.changeColor('Accent 1', '#ff0000');
+test('page uses values as stored by the configuration page', async ({ page, wizardStepFormPage }) => {
+  // Set the seed color for basis.color.default
+  await wizardStepFormPage.goto('/wizard/basis-color-default-color-document');
+  const colorLabel = await wizardStepFormPage.getOptionLabel(wizardStepFormPage.options.last());
+  await wizardStepFormPage.optionCard(colorLabel).click();
+  await wizardStepFormPage.save();
 
-  // Style guide page uses the same storage and theme, thus showing a red-ish initial for accent-1.border-default
+  // Style guide page uses the same storage and theme, thus showing the exact color set in the wizard
+  // for the seeded token: basis.color.default.color-document
   await page.goto('/style-guide/design-tokens');
-  const table = page.getByRole('table', { name: 'Accent 1' });
+  const table = page.getByRole('table', { name: 'Standaard' });
   await expect(table).toBeVisible();
-  await expect(table.getByRole('button', { name: 'Kopieer naar klembord: #ff0000' })).toBeVisible();
+  await expect(table.getByRole('button', { name: `Kopieer naar klembord: ${colorLabel}` })).toBeVisible();
 });
 
 test.describe('interaction tests', () => {

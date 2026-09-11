@@ -708,9 +708,6 @@ importers:
       '@utrecht/link-css':
         specifier: 3.0.1
         version: 3.0.1
-      '@utrecht/select-css':
-        specifier: 3.0.1
-        version: 3.0.1
       '@utrecht/table-css':
         specifier: 3.0.1
         version: 3.0.1
@@ -1137,12 +1134,6 @@ importers:
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
-      '@nl-design-system-community/theme-wizard-templates':
-        specifier: workspace:*
-        version: link:../theme-wizard-templates
-      '@profpowell/browser-window':
-        specifier: 1.4.7
-        version: 1.4.7
       '@storybook/react-vite':
         specifier: 10.5.10
         version: 10.5.10(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(esbuild@0.28.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.10(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.1)(tsx@4.21.0)(yaml@2.9.0))
@@ -3600,9 +3591,6 @@ packages:
 
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
-
-  '@profpowell/browser-window@1.4.7':
-    resolution: {integrity: sha512-/JW7uNSc9aFYyaKDHMRBw0NeJo4dsradXjR3IbP+JzG6fhyhmFkSYVxvPnvxsoQDe/EKQvluhVdKuSDIUodfYA==}
 
   '@projectwallace/css-analyzer@9.9.3':
     resolution: {integrity: sha512-qyoW3eRPHgQvJGhLCCaypG/YuCPF+lrCIHtCjRxwG6HNWk+BMvFJ7qzTicBIkehfSJFQXrT+T4mvBpZmUgzlDg==}
@@ -11412,8 +11400,6 @@ snapshots:
   '@pnpm/deps.graph-sequencer@1100.0.1': {}
 
   '@polka/url@1.0.0-next.29': {}
-
-  '@profpowell/browser-window@1.4.7': {}
 
   '@projectwallace/css-analyzer@9.9.3':
     dependencies:

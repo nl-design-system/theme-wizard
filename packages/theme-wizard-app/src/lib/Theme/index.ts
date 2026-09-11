@@ -1,3 +1,4 @@
+import type { DesignToken, DesignTokens } from 'style-dictionary/types';
 import {
   StrictThemeSchema,
   type Theme as ThemeType,
@@ -28,17 +29,16 @@ import startTokens from '@nl-design-system-unstable/start-design-tokens/dist/tok
 import { dequal } from 'dequal';
 import dlv from 'dlv';
 import { dset } from 'dset';
-import { DesignToken, DesignTokens } from 'style-dictionary/types';
 import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
 import { flattenTokens, refToCssVariable } from './lib';
 import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
-export const PREVIEW_THEME_CLASS = 'preview-theme';
-const DEFAULT_SELECTOR = `.${PREVIEW_THEME_CLASS}, :host`;
+const DEFAULT_SELECTOR = ':host';
 
 export default class Theme {
   name = 'wizard';
   selector: string = DEFAULT_SELECTOR;
+  /** @TODO avoid using Style Dictionary here */
   readonly #defaults: DesignTokens; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
