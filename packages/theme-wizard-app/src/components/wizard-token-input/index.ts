@@ -27,7 +27,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
   @property() name = '';
   @property() errors: ValidationIssue[] = [];
   internals_ = this.attachInternals();
-  #token: BaseDesignToken = Object.create(null);
+  #token: BaseDesignToken | null = null;
 
   static readonly formAssociated = true;
   static override readonly styles = [styles];
@@ -53,7 +53,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
     const oldToken = this.#token;
     const oldValue = oldToken?.$value;
 
-    if (oldValue) {
+    if (oldValue && this.#token) {
       this.#token.$value = value;
     } else {
       this.#token = value as Token;

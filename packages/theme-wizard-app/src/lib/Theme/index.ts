@@ -226,9 +226,14 @@ export default class Theme {
   }
 
   async toCSS() {
+    const stringifiableTypes = new Set(['color', 'dimension', 'fontFamily', 'number']);
+
     walkTokens(this.tokens, (token, path) => {
-      const stringified =
-        typeof token.$value === 'string' || typeof token.$value === 'number' ? token.$value : stringifyToken(token);
+      let stringified = token.$value;
+
+      if (typeof stringified !== 'string' && typeof stringified !== 'number' && stringifiableTypes.has(token.$type)) {
+        stringified = stringifyToken(token);
+      }
 
       if (stringified === 'undefined') {
         unsetToken(this.#rule, path);

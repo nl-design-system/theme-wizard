@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Theme > can export to css custom properties 1`] = `
-:host {
+":host {
 	--ams-avatar-aspect-ratio: 1
 	--ams-avatar-background-color: var(--basis-color-accent-1-inverse-bg-default)
 	--ams-avatar-border-color: var(--basis-color-transparent)
@@ -3020,7 +3020,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 `;
 
 exports[`Theme > has a different CSS output after token update 1`] = `
-:host {
+":host {
 	--ams-avatar-aspect-ratio: 1
 	--ams-avatar-background-color: var(--basis-color-accent-1-inverse-bg-default)
 	--ams-avatar-border-color: var(--basis-color-transparent)
