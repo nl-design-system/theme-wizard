@@ -54,7 +54,7 @@ export class WizardApp extends LitElement {
 
   @provide({ context: themeContext })
   @state()
-  protected theme: Theme = this.#theme;
+  theme: Theme = this.#theme;
 
   readonly #scrapedTokensStorage = new PersistentStorage({
     onChange: () => {

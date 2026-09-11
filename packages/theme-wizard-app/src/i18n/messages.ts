@@ -103,7 +103,8 @@ export const en = {
   moreInformationCompact: 'More information',
   nav: {
     components: 'Components',
-    configure: 'Edit branding',
+    identity: 'Identity',
+    publish: 'Publish',
     styleGuide: 'Style guide',
     wizard: 'Start',
   },
@@ -673,7 +674,8 @@ export const nl = {
   moreInformationCompact: 'Meer informatie',
   nav: {
     components: 'Componenten',
-    configure: 'Huisstijl bewerken',
+    identity: 'Huisstijl',
+    publish: 'Publiceren',
     styleGuide: 'Stijlgids',
     wizard: 'Start',
   },

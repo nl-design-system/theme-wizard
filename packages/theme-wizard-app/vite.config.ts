@@ -21,14 +21,13 @@ export function getFiles(pattern: string | string[], relativeTo = 'src') {
 export default defineConfig(() => ({
   build: {
     lib: {
-      entry: 'index.ts',
+      entry: 'src/index.ts',
       formats: ['es'],
     },
     minify: false,
     rollupOptions: {
       external: (id) => deps.some((dep) => id === dep || id.startsWith(`${dep}/`)),
       input: {
-        index: fileURLToPath(new URL('index.ts', import.meta.url)),
         ...getFiles(['src/**/index.ts', '!src/test/**/*.ts']),
       },
       output: {
@@ -50,12 +49,6 @@ export default defineConfig(() => ({
       entryRoot: 'src',
       exclude: ['**/*.test.*', '**/styles.ts'],
       include: ['src/**/*'],
-    }),
-    dts({
-      compilerOptions: { declarationMap: false },
-      entryRoot: '.',
-      exclude: ['**/*.test.*', '**/styles.ts'],
-      include: ['index.ts'],
     }),
   ],
   resolve: {

@@ -90,14 +90,11 @@ test.describe('change fonts', () => {
 });
 
 test.describe('Download tokens', () => {
-  test.beforeEach(async ({ basisTokensPage }) => {
-    await basisTokensPage.goto();
-  });
-
   test.describe('Download JSON', () => {
-    test('initial button state is correct', async ({ basisTokensPage }) => {
-      await expect(basisTokensPage.downloadJsonButton).toBeVisible();
-      await expect(basisTokensPage.downloadJsonButton).toBeDisabled();
+    test('initial button state is correct', async ({ publishPage }) => {
+      await publishPage.goto();
+      await expect(publishPage.downloadJsonButton).toBeVisible();
+      await expect(publishPage.downloadJsonButton).toBeDisabled();
     });
 
     // Skipped because we can't set individual colors for contrast errors
@@ -105,15 +102,19 @@ test.describe('Download tokens', () => {
     test.skip('does not show confirmation modal when there are no validation errors', async ({
       basisTokensPage,
       page,
+      publishPage,
     }) => {
+      await basisTokensPage.goto();
       await basisTokensPage.changeColor('Accent 1', '#00238b');
-      await expect(basisTokensPage.downloadJsonButton).toBeEnabled();
+
+      await publishPage.goto();
+      await expect(publishPage.downloadJsonButton).toBeEnabled();
 
       const downloadPromise = page.waitForEvent('download');
-      await basisTokensPage.downloadJsonButton.click();
+      await publishPage.downloadJsonButton.click();
 
       // Confirmation dialog for errors should not appear.
-      const dialog = basisTokensPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+      const dialog = publishPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
       await expect(dialog).toHaveCount(0);
 
       const download = await downloadPromise;
@@ -121,38 +122,41 @@ test.describe('Download tokens', () => {
     });
 
     test.describe('download confirmation modal', () => {
-      test.beforeEach(async ({ basisTokensPage }) => {
+      test.beforeEach(async ({ basisTokensPage, publishPage }) => {
+        await basisTokensPage.goto();
         await basisTokensPage.page.getByRole('button', { name: 'Kleuren' }).click();
         await basisTokensPage.changeColor('Accent 1', '#3d87f5');
         await basisTokensPage.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
-        await expect(basisTokensPage.downloadJsonButton).toBeEnabled();
+
+        await publishPage.goto();
+        await expect(publishPage.downloadJsonButton).toBeEnabled();
       });
 
-      test('opens when downloading with validation errors', async ({ basisTokensPage }) => {
-        await basisTokensPage.downloadJsonButton.click();
+      test('opens when downloading with validation errors', async ({ publishPage }) => {
+        await publishPage.downloadJsonButton.click();
 
-        const dialog = basisTokensPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+        const dialog = publishPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
         await expect(dialog).toBeVisible();
       });
 
-      test('can cancel download from the modal', async ({ basisTokensPage }) => {
-        await basisTokensPage.downloadJsonButton.click();
+      test('can cancel download from the modal', async ({ publishPage }) => {
+        await publishPage.downloadJsonButton.click();
 
-        const dialog = basisTokensPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+        const dialog = publishPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
         await expect(dialog).toBeVisible();
 
-        await basisTokensPage.page.getByRole('button', { name: 'Annuleren' }).click();
+        await publishPage.page.getByRole('button', { name: 'Annuleren' }).click();
         await expect(dialog).not.toBeVisible();
       });
 
-      test('can confirm download from the modal', async ({ basisTokensPage, page }) => {
-        await basisTokensPage.downloadJsonButton.click();
+      test('can confirm download from the modal', async ({ page, publishPage }) => {
+        await publishPage.downloadJsonButton.click();
 
-        const dialog = basisTokensPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
+        const dialog = publishPage.page.getByRole('dialog', { name: 'Thema bevat nog fouten' });
         await expect(dialog).toBeVisible();
 
         const downloadPromise = page.waitForEvent('download');
-        await basisTokensPage.page.getByRole('button', { name: 'Toch downloaden' }).click();
+        await publishPage.page.getByRole('button', { name: 'Toch downloaden' }).click();
         const download = await downloadPromise;
 
         expect(download.suggestedFilename()).toBe('tokens.json');
@@ -162,28 +166,32 @@ test.describe('Download tokens', () => {
 
     test.describe('after changing a token', () => {
       test.beforeEach(async ({ basisTokensPage }) => {
+        await basisTokensPage.goto();
         await basisTokensPage.page.getByRole('button', { name: 'Typografie' }).click();
         await basisTokensPage.changeBodyFont('system-ui');
         await basisTokensPage.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
       });
 
-      test('Button becomes active after changes made', async ({ basisTokensPage }) => {
-        await expect(basisTokensPage.downloadJsonButton).toBeEnabled();
+      test('Button becomes active after changes made', async ({ publishPage }) => {
+        await publishPage.goto();
+        await expect(publishPage.downloadJsonButton).toBeEnabled();
       });
 
-      test('Button downloads JSON file after click', async ({ basisTokensPage, page }) => {
+      test('Button downloads JSON file after click', async ({ page, publishPage }) => {
+        await publishPage.goto();
         const downloadPromise = page.waitForEvent('download');
-        await basisTokensPage.downloadJsonButton.click();
+        await publishPage.downloadJsonButton.click();
         const download = await downloadPromise;
         expect(download.suggestedFilename()).toBe('tokens.json');
       });
 
-      test('Button becomes inactive after "Reset tokens" is clicked', async ({ basisTokensPage }) => {
-        await basisTokensPage.reset();
-        await expect(basisTokensPage.downloadJsonButton).toBeDisabled();
+      test('Button becomes inactive after "Reset tokens" is clicked', async ({ publishPage }) => {
+        await publishPage.goto();
+        await publishPage.reset();
+        await expect(publishPage.downloadJsonButton).toBeDisabled();
       });
 
-      test('Button remains enabled when validation errors are found', async ({ basisTokensPage }) => {
+      test('Button remains enabled when validation errors are found', async ({ basisTokensPage, publishPage }) => {
         await basisTokensPage.page.getByRole('button', { name: 'Kleuren' }).click();
 
         // Trigger a contrast warning
@@ -191,23 +199,26 @@ test.describe('Download tokens', () => {
         await basisTokensPage.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
 
         // The button should stay enabled, but show a confirmation dialog on click.
-        await expect(basisTokensPage.downloadJsonButton).toBeEnabled();
+        await publishPage.goto();
+        await expect(publishPage.downloadJsonButton).toBeEnabled();
       });
 
-      test('Button is enabled when user made changes in previous session', async ({ basisTokensPage, page }) => {
+      test('Button is enabled when user made changes in previous session', async ({ page, publishPage }) => {
+        await publishPage.goto();
         await page.reload();
-        await expect(basisTokensPage.downloadJsonButton).toBeEnabled();
+        await expect(publishPage.downloadJsonButton).toBeEnabled();
       });
     });
   });
 
   test.describe('Download CSS', () => {
-    test('Can download the CSS', async ({ basisTokensPage, page }) => {
-      await expect(basisTokensPage.downloadCssButton).toBeVisible();
-      await expect(basisTokensPage.downloadCssButton).toBeEnabled();
+    test('Can download the CSS', async ({ page, publishPage }) => {
+      await publishPage.goto();
+      await expect(publishPage.downloadCssButton).toBeVisible();
+      await expect(publishPage.downloadCssButton).toBeEnabled();
 
       const downloadPromise = page.waitForEvent('download');
-      await basisTokensPage.downloadCssButton.click();
+      await publishPage.downloadCssButton.click();
       const download = await downloadPromise;
       expect(download.suggestedFilename()).toBe('theme-wizard-tokens.css');
     });
@@ -322,11 +333,15 @@ test.describe('colorscale inputs', () => {
     expect(beforeColor).not.toBe(afterColor);
   });
 
-  test('Reset restores value to initial value', async ({ basisTokensPage }) => {
+  test('Reset restores value to initial value', async ({ basisTokensPage, publishPage }) => {
     const input = basisTokensPage.page.getByLabel('Accent 1');
     await basisTokensPage.changeColor('Accent 1', '#ff0000');
     await basisTokensPage.page.getByRole('button', { name: 'Terug naar overzicht' }).click();
-    await basisTokensPage.reset();
+
+    await publishPage.goto();
+    await publishPage.reset();
+
+    await basisTokensPage.goto();
     await basisTokensPage.page.getByRole('button', { name: 'Kleuren' }).click();
     await expect(input).toHaveValue(INITIAL_COLOR);
   });

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Publiceer Thema - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <main slot="main" class="wizard-main">
+        <wizard-container size="xl">
+          <clippy-story-preview size="lg">
+            <clippy-heading level="1">Publiceer thema</clippy-heading>
+            <p class="nl-paragraph nl-paragraph--lead">Download hier je thema.</p>
+            <clippy-stack size="lg">
+              <wizard-tokens-download></wizard-tokens-download>
+              <wizard-download-link
+                filename="theme-wizard-tokens.css"
+                content-type="text/css"
+              >
+                Thema downloaden (CSS)
+              </wizard-download-link>
+              <wizard-theme-reset-button></wizard-theme-reset-button>
+            </clippy-stack>
+          </clippy-story-preview>
+        </wizard-container>
+      </main>
+     </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
+
+<script>
+  import type { WizardApp, WizardDownloadLink } from '@nl-design-system-community/theme-wizard-app'
+  const app = document.querySelector('theme-wizard-app') as WizardApp
+  const cssButton = document.querySelector('wizard-download-link') as WizardDownloadLink
+  cssButton.content = app.theme.css
+</script>
+
+<style>
+  .wizard-main {
+    padding-block: var(--basis-space-block-5xl);
+  }
+
+  wizard-container {
+    margin-inline: auto;
+  }
+</style>
