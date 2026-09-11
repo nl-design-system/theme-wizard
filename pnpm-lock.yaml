@@ -108,6 +108,12 @@ importers:
       '@gemeente-denhaag/action':
         specifier: 4.4.1
         version: 4.4.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@gemeente-denhaag/iconbutton':
+        specifier: 3.2.2
+        version: 3.2.2(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@gemeente-denhaag/side-navigation':
+        specifier: 4.2.3
+        version: 4.2.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@nl-design-system-candidate/button-css':
         specifier: 1.1.0
         version: 1.1.0

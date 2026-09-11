@@ -5,7 +5,7 @@ Renders space between child elements, used to create visual hierarchy.
 ## Usage
 
 ```js
-import '@nl-design-system-community/clippy-components/side-navigation';
+import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 ```
 
 ```html
