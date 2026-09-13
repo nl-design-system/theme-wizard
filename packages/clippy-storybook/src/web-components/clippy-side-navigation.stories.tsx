@@ -7,11 +7,13 @@ import React from 'react';
 
 type TokenSampleStoryArgs = {
   items: SideNavigationItems;
+  'eager-collapse': boolean;
 };
 
 const meta = {
   id: 'clippy-side-navigation',
   args: {
+    'eager-collapse': false,
     items: full,
   },
   parameters: {
@@ -32,4 +34,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Default',
+};
+
+export const EagerCollapse: Story = {
+  name: 'Sluit alle subitems',
+  args: {
+    'eager-collapse': true,
+  },
 };

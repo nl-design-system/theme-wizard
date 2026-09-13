@@ -29,6 +29,9 @@ export class ClippySideNavigation extends LitElement {
   @property({ type: Object })
   items?: SideNavigationItems;
 
+  @property({ attribute: 'eager-collapse', type: Boolean })
+  eagerCollapse?: false;
+
   override willUpdate(changed: Map<string, unknown>) {
     super.willUpdate(changed);
     if (changed.has('items') && this.items) {
@@ -72,7 +75,9 @@ export class ClippySideNavigation extends LitElement {
       // If the item is expanded: Collapse
       next.delete(item);
       // And collapse nested items as well
-      for (const h of this.#collectDescendantItems(item)) next.delete(h);
+      if (this.eagerCollapse) {
+        for (const h of this.#collectDescendantItems(item)) next.delete(h);
+      }
     } else {
       // Expand the item
       next.add(item);
