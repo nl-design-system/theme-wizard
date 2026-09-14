@@ -40,7 +40,6 @@ type DesignToken = {
 };
 export default class Theme {
   name = 'wizard';
-  selector: string = DEFAULT_SELECTOR;
   readonly #defaults: Record<string, unknown>; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
   #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
@@ -246,10 +245,10 @@ export default class Theme {
       return SKIP;
     });
 
-    return this.stylesheet.cssRules[0].cssText;
+    return this.#rule.cssText;
   }
 
   get css() {
-    return this.stylesheet.cssRules[0].cssText;
+    return this.#rule.cssText;
   }
 }

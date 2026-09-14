@@ -13,7 +13,7 @@ export const tokenPathToCSSCustomProperty = (tokenPath: BaseDesignTokenIdentifie
 export const flattenTokens = (
   tokens: Record<string, unknown>,
   basePath: string = '',
-  accumulator: Record<string, BaseDesignToken> = {},
+  accumulator: Record<string, BaseDesignToken> = Object.create(null),
 ): Record<string, BaseDesignToken> => {
   for (const [key, token] of Object.entries(tokens)) {
     const path = basePath ? `${basePath}.${key}` : key;
@@ -44,16 +44,16 @@ export const presetTokensToUpdateMany = (
   tokens: unknown,
   basePath = '',
 ): { path: string; value: BaseDesignToken['$value'] }[] => {
-  if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return [];
+  if (!isValueObject(tokens)) {
+    return [];
+  }
 
-  const obj = tokens as Record<string, unknown>;
-
-  if (Object.hasOwn(obj, '$value')) {
-    const result = { path: basePath, value: obj['$value'] };
+  if (Object.hasOwn(tokens, '$value')) {
+    const result = { path: basePath, value: tokens['$value'] };
     return [result];
   }
 
-  return Object.entries(obj).flatMap(([key, value]) =>
+  return Object.entries(tokens).flatMap(([key, value]) =>
     presetTokensToUpdateMany(value, basePath ? `${basePath}.${key}` : key),
   );
 };
@@ -68,7 +68,7 @@ export const tokensToStyle = (tokens: TokenGroup) => {
 
   walkTokens(tokens, (token, path) => {
     if (typeof token.$value === 'string') {
-      const cssProperty = `--${path.join('-')}`;
+      const cssProperty = tokenPathToCSSCustomProperty(path);
       const cssValue = refToCssVariable(token.$value);
       style[cssProperty] = cssValue;
     }
