@@ -1,6 +1,6 @@
 import type { ModernDimensionValue } from './tokens/dimension-token';
 
-export const PX_PER_REM = 16;
+const PX_PER_REM = 16;
 export const MIN_FONT_SIZE_PX = 14;
 export const MIN_FONT_SIZE_REM = MIN_FONT_SIZE_PX / PX_PER_REM;
 
