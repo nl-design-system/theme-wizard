@@ -108,9 +108,13 @@ export default class Theme {
   // Unlike the non-private instance method `updateAt`, this method does not mark the theme as modified.
   static #updateAt(tokens: DesignTokens, path: string, value: DesignToken['$value']) {
     const { $extensions, ...original } = dlv(tokens, path);
-    delete $extensions?.[EXTENSION_RESOLVED_AS]; // Clear resolvedAs since the value is changing, it may no longer be valid
-    delete $extensions?.[EXTENSION_RESOLVED_FROM]; // Clear resolvedFrom since the value is changing, it may no longer be valid
-    delete $extensions?.[EXTENSION_CONTRAST_WITH]; // The value might change a ref, so need to re-caculate the extension
+    removeExtensions(tokens, {
+      include: [
+        EXTENSION_RESOLVED_AS, // value is changing, it may no longer be valid
+        EXTENSION_RESOLVED_FROM, // value is changing, it may no longer be valid
+        EXTENSION_CONTRAST_WITH, // The value might change a ref, so need to re-caculate the extension
+      ],
+    });
     dset(tokens, path, {
       ...original,
       $extensions,
