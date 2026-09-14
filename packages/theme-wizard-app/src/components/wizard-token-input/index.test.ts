@@ -86,9 +86,9 @@ describe(`<${tag}>`, () => {
   });
 
   describe('value handling', () => {
-    it('returns empty object when no value is set', async () => {
+    it('returns null when no value is set', async () => {
       const element = await renderTokenInput();
-      expect(element.value).toEqual({});
+      expect(element.value).toBeNull();
     });
 
     it.each([
@@ -142,9 +142,9 @@ describe(`<${tag}>`, () => {
     it('dispatches a change event when the textarea value changes', async () => {
       const mockEventHandler = vi.fn();
       document.addEventListener('change', mockEventHandler);
-      await page.getByRole('textbox').fill('null');
+      await page.getByRole('textbox').fill('"test"');
       await userEvent.tab();
-      expect(mockEventHandler).toBeCalled();
+      expect(mockEventHandler).toHaveBeenCalled();
     });
 
     it('parses valid JSON and updates value', async () => {

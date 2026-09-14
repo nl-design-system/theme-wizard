@@ -1,3 +1,5 @@
+// Using import from '@nl-design-system-community/theme-wizard-app' causes
+// "Browser APIs are not available on the server." error when building, caused by Prism + WCMarkdown.
 import { tokensToStyle } from '../../../theme-wizard-app/src/lib/Theme/lib';
 import { getStories } from '../../../theme-wizard-app/src/utils/csf-utils';
 import { components } from './components';

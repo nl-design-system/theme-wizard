@@ -1,4 +1,3 @@
-import type { DesignTokens } from 'style-dictionary/types';
 import {
   ERROR_CODES,
   StrictThemeSchema,
@@ -56,14 +55,12 @@ const SOFT_ERROR_CODES: ReadonlySet<string> = new Set([
  */
 export async function parseThemePreset(files: File[], shouldExcludeParentKeys: boolean): Promise<ThemePresetResult> {
   const uploaded = await readTokenFiles(files, shouldExcludeParentKeys);
-  const uploadedPaths = new Set(Object.keys(flattenTokens(uploaded as DesignTokens)));
+  const uploadedPaths = new Set(Object.keys(flattenTokens(uploaded)));
   const merged = mergeTokens([startTokens, uploaded]);
 
   const toResult = (data: Theme, softIssues: $ZodIssue[]): ThemePresetResult => ({
     data,
-    filledFromDefaultsPaths: Object.keys(flattenTokens(data as DesignTokens)).filter(
-      (path) => !uploadedPaths.has(path),
-    ),
+    filledFromDefaultsPaths: Object.keys(flattenTokens(data)).filter((path) => !uploadedPaths.has(path)),
     softIssues,
     success: true,
     uploadedTokenCount: uploadedPaths.size,

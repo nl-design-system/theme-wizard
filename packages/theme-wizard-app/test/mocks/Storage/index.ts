@@ -36,8 +36,3 @@ class MockStorage {
 
 export const mockLocalStorage = new MockStorage();
 export const mockSessionStorage = new MockStorage();
-
-export default {
-  localStorage: mockLocalStorage,
-  sessionStorage: mockSessionStorage,
-};

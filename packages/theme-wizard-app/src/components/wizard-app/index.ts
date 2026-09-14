@@ -6,7 +6,7 @@ import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
-import { getSiblingGroupsWithOnlyRefsTo } from '../../lib/ColorScale/siblings';
+import { EXTENSION_COLORSCALE_SEED } from '../../lib/ColorScale/siblings';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
@@ -17,7 +17,6 @@ import {
   type SubmitSaveTokenFormEvent,
 } from '../../utils/events';
 import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
-import { WizardColorscaleInput, EXTENSION_COLORSCALE_SEED } from '../wizard-colorscale-input';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
 import { WizardTokenPreset } from '../wizard-token-presets';
@@ -161,31 +160,7 @@ export class WizardApp extends LitElement {
   readonly #handleTokenChange = async (event: Event) => {
     const target = event.composedPath().shift(); // @see https://lit.dev/docs/components/events/#shadowdom-retargeting
 
-    if (target instanceof WizardColorscaleInput) {
-      const updates = [
-        ...Object.entries(target.value).map(([colorKey, value]) => ({
-          path: `${target.name}.${colorKey}`,
-          value: value.$value,
-        })),
-        ...Object.entries(target.inverseValue).map(([colorKey, value]) => ({
-          path: `${target.name}-inverse.${colorKey}`,
-          value: value.$value,
-        })),
-      ];
-      this.theme.updateMany(updates);
-
-      // Add $extensions for seed-color for the changed token, as well as for any siblings
-      // that exclusively point to the changed token's values.
-      // -> accent-2 points exclusively to accent-1, so update accent-2's seed-color as well
-      const nameParts = target.name.split('.'); // e.g. ['basis', 'color', 'accent-1']
-      const parentGroup = nameParts.length > 1 ? this.theme.at(nameParts.slice(0, -1).join('.')) : null; // e.g. basis.color group
-      const siblingGroupsWithOnlyRefsToSelf = getSiblingGroupsWithOnlyRefsTo(target.name, parentGroup);
-
-      // Set the seed on the updated group and any siblings that exclusively reference it
-      for (const groupPath of [target.name, ...siblingGroupsWithOnlyRefsToSelf]) {
-        this.theme.setGroupExtension(groupPath, EXTENSION_COLORSCALE_SEED, target.seedColor);
-      }
-    } else if (target instanceof ClippyTokenCombobox) {
+    if (target instanceof ClippyTokenCombobox) {
       this.theme.updateAt(target.name, target.value?.$value);
     } else if (target instanceof WizardTokenInput) {
       this.theme.updateAt(target.name, target.value);

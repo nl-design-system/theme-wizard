@@ -83,7 +83,6 @@ export const en = {
   continue: 'Continue',
   copyToClipboard: 'Copy to clipboard',
   copyValueToClipboard: ({ value }: { value: string }) => `Copy "${value}" to clipboard`,
-  display: 'Display',
   footer: {
     colophon: {
       about: html`The Theme Wizard is developed by the Expert team Digital Accessibility as part of
@@ -654,7 +653,6 @@ export const nl = {
   continue: 'Doorgaan',
   copyToClipboard: 'Kopieer naar klembord',
   copyValueToClipboard: ({ value }: { value: string }) => `Kopieer "${value}" naar klembord`,
-  display: 'Weergave',
   footer: {
     colophon: {
       about: html`De Theme Wizard is ontwikkeld door het Expertteam Digitale Toegankelijkheid in opdracht van
