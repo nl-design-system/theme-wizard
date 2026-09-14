@@ -1,7 +1,12 @@
 import type { ModernDimensionValue } from './tokens/dimension-token';
 
-const PX_PER_REM = 16;
+/** @public */
+export const PX_PER_REM = 16;
+
+/** @public */
 export const MIN_FONT_SIZE_PX = 14;
+
+/** @public */
 export const MIN_FONT_SIZE_REM = MIN_FONT_SIZE_PX / PX_PER_REM;
 
 export const remToPx = (rem: number): number => {
