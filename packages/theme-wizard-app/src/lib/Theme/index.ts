@@ -30,19 +30,18 @@ import ValidationIssue, { GroupedIssues } from '../ValidationIssue';
 import { flattenTokens, refToCssVariable } from './lib';
 import { createStylesheet, setToken, unsetToken } from './token-stylesheet';
 
-const DEFAULT_SELECTOR = ':host';
-
 type DesignTokens = Record<string, unknown>;
 type DesignToken = {
+  $value: unknown;
   $type?: string;
-  $value?: unknown;
   [key: string]: unknown;
 };
+
 export default class Theme {
   name = 'wizard';
   readonly #defaults: Record<string, unknown>; // Every Theme has private defaults to revert to.
   #modified: boolean = false;
-  #tokens: DesignTokens = {}; // In practice this will be set via the this.tokens() setter in the constructor
+  #tokens: DesignTokens = Object.create(null); // In practice this will be set via the this.tokens() setter in the constructor
   readonly #rule: CSSRule;
   readonly #stylesheet: CSSStyleSheet;
   #validationIssues: ValidationIssue[] = [];
@@ -62,7 +61,7 @@ export default class Theme {
    */
   constructor(tokens?: DesignTokens, stylesheet?: CSSStyleSheet) {
     this.#defaults = structuredClone(tokens || (StrictThemeSchema.parse(startTokens) as DesignTokens));
-    const [styleSheet, rule] = createStylesheet(stylesheet, DEFAULT_SELECTOR);
+    const [styleSheet, rule] = createStylesheet(stylesheet);
     this.#rule = rule;
     this.#stylesheet = styleSheet;
     this.#runThemeProcessors(this.#defaults);
@@ -224,7 +223,7 @@ export default class Theme {
     return legacyTokens;
   }
 
-  async toCSS() {
+  toCSS() {
     const stringifiableTypes = new Set(['color', 'dimension', 'fontFamily', 'number']);
 
     walkTokens(this.tokens, (token, path) => {
