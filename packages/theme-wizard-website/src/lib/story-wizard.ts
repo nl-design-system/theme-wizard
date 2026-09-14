@@ -1,5 +1,4 @@
-import { tokensToStyle } from '../../../theme-wizard-app/src/lib/Theme/lib';
-import { getStories } from '../../../theme-wizard-app/src/utils/csf-utils';
+import { tokensToStyle, getStories } from '@nl-design-system-community/theme-wizard-app';
 import { components } from './components';
 
 export type StoryWizardPresetOption = {

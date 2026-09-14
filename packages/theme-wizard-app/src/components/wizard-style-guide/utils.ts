@@ -6,13 +6,7 @@ import '@nl-design-system-community/clippy-components/clippy-token-sample-text';
 import { ThemeLike, BaseDesignToken, TokenPath, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
 import dlv from 'dlv';
 
-export const getTokensByPath = ({
-  basePath,
-  tokens,
-}: {
-  tokens: ThemeLike;
-  basePath: TokenPath;
-}): BaseDesignToken[] => {
+const getTokensByPath = ({ basePath, tokens }: { tokens: ThemeLike; basePath: TokenPath }): BaseDesignToken[] => {
   const result: BaseDesignToken[] = [];
 
   const tokensAtPath = dlv(tokens, basePath);

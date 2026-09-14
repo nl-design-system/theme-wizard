@@ -48,3 +48,4 @@ export * from './components/wizard-tokens-reuse-form';
 export * from './components/wizard-validation-issues-alert';
 
 export * from './utils/index';
+export * from './lib/Theme/lib';

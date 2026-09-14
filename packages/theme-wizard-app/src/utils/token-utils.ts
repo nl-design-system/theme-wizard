@@ -1,6 +1,6 @@
 import { type ModernDimensionValue } from '@nl-design-system-community/design-tokens-schema';
 
-export const PX_PER_REM = 16;
+const PX_PER_REM = 16;
 
 export const dimensionToPx = (value: ModernDimensionValue) => {
   const normalized = { ...value };
