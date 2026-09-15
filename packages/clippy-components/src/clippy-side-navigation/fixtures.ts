@@ -41,8 +41,12 @@ export const full: SideNavigationItems = [
                 href: '#',
                 label: 'Page 3.2.1.1',
               },
+              {
+                href: '#',
+                label: 'Page 3.2.1.2 with a very long title',
+              },
             ],
-            label: 'Page 3.2.1',
+            label: 'Page 3.2.1 with a very long title',
           },
           {
             href: '#',
