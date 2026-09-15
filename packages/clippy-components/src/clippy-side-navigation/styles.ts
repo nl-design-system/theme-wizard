@@ -24,7 +24,7 @@ export default css`
       border-color: transparent;
       border-inline-start-style: solid;
       border-inline-start-width: var(--basis-border-width-lg);
-      translate: calc(var(--basis-border-width-lg) * -1);
+      margin-inline-start: calc(var(--basis-border-width-lg) * -1);
     }
   }
 
