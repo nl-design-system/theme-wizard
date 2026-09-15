@@ -63,3 +63,63 @@ export const full: SideNavigationItems = [
     label: 'Page 4',
   },
 ];
+
+export const simple: SideNavigationItems = [
+  {
+    active: true,
+    href: '#',
+    label: 'Page 1',
+  },
+  {
+    href: '#',
+    label: 'Page 2',
+  },
+];
+
+export const nestedWithActive: SideNavigationItems = [
+  { href: '#', label: 'Page 1' },
+  {
+    href: '#',
+    items: [
+      { href: '#', label: 'Page 1.1' },
+      {
+        href: '#',
+        items: [
+          { href: '#', label: 'Page 1.1.1' },
+          { active: true, href: '#', label: 'Page 1.1.2' },
+        ],
+        label: 'Page 1.2',
+      },
+    ],
+    label: 'Page 2',
+  },
+];
+
+export const twoBranches: SideNavigationItems = [
+  {
+    href: '#',
+    items: [{ href: '#', label: 'Page 1.1' }],
+    label: 'Page 1',
+  },
+  {
+    href: '#',
+    items: [{ href: '#', label: 'Page 2.1' }],
+    label: 'Page 2',
+  },
+];
+
+export const unrelatedActive: SideNavigationItems = [
+  {
+    href: '#',
+    items: [
+      { href: '#', label: 'Page 1.1' },
+      { active: true, href: '#', label: 'Page 1.2' },
+    ],
+    label: 'Page 1',
+  },
+  {
+    href: '#',
+    items: [{ href: '#', label: 'Page 2.2' }],
+    label: 'Page 2',
+  },
+];
