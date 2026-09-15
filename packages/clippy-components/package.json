@@ -44,6 +44,8 @@
   "dependencies": {
     "@amsterdam/design-system-css": "4.4.0",
     "@gemeente-denhaag/action": "4.4.1",
+    "@gemeente-denhaag/iconbutton": "3.2.2",
+    "@gemeente-denhaag/side-navigation": "4.2.3",
     "@nl-design-system-candidate/button-css": "1.1.0",
     "@nl-design-system-candidate/button-tokens": "1.0.0",
     "@nl-design-system-candidate/code-block-tokens": "2.0.3",
