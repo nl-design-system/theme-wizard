@@ -107,7 +107,6 @@ export default css`
   /* ============================================
    Clippy overrides
    ============================================ */
-
   .denhaag-side-navigation__item {
     & > .denhaag-side-navigation__list {
       display: none;
