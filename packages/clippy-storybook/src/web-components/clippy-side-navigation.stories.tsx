@@ -7,7 +7,7 @@ import React from 'react';
 
 type TokenSampleStoryArgs = {
   items: SideNavigationItems;
-  'eager-collapse': boolean;
+  'cascade-collapse': boolean;
   caption: string | undefined;
 };
 
@@ -15,7 +15,7 @@ const meta = {
   id: 'clippy-side-navigation',
   args: {
     caption: undefined,
-    'eager-collapse': false,
+    'cascade-collapse': false,
     items: full,
   },
   parameters: {
@@ -39,9 +39,9 @@ export const Default: Story = {
 };
 
 export const EagerCollapse: Story = {
-  name: 'Sluit alle subitems (eager-collapse)',
+  name: 'Sluit alle subitems (cascade-collapse)',
   args: {
-    'eager-collapse': true,
+    'cascade-collapse': true,
   },
 };
 

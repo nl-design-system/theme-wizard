@@ -30,8 +30,8 @@ export class ClippySideNavigation extends LitElement {
   @property({ type: Object })
   items?: SideNavigationItems;
 
-  @property({ attribute: 'eager-collapse', type: Boolean })
-  eagerCollapse?: false;
+  @property({ attribute: 'cascade-collapse', type: Boolean })
+  cascadeCollapse?: boolean = false;
 
   @property({ attribute: 'caption', type: String }) caption: string | undefined = undefined;
 
@@ -80,7 +80,7 @@ export class ClippySideNavigation extends LitElement {
       // If the item is expanded: Collapse
       next.delete(item);
       // And collapse nested items as well
-      if (this.eagerCollapse) {
+      if (this.cascadeCollapse) {
         for (const h of this.#collectDescendantItems(item)) next.delete(h);
       }
     } else {
@@ -131,6 +131,10 @@ export class ClippySideNavigation extends LitElement {
   }
 
   override render() {
+    if (!this.items?.length) {
+      return nothing;
+    }
+
     return html`
       <nav class="denhaag-side-navigation" aria-labelledby=${this.caption ? this.#navId : nothing}>
         ${this.caption ? html`<span id=${this.#navId} class="sr-only">${this.caption}</span>` : nothing}
