@@ -37,7 +37,7 @@ export const full: SideNavigationItems = [
             href: '#',
             items: [
               {
-                active: true,
+                current: true,
                 href: '#',
                 label: 'Page 3.2.1.1',
               },
@@ -66,7 +66,7 @@ export const full: SideNavigationItems = [
 
 export const simple: SideNavigationItems = [
   {
-    active: true,
+    current: true,
     href: '#',
     label: 'Page 1',
   },
@@ -86,7 +86,7 @@ export const nestedWithActive: SideNavigationItems = [
         href: '#',
         items: [
           { href: '#', label: 'Page 1.1.1' },
-          { active: true, href: '#', label: 'Page 1.1.2' },
+          { current: true, href: '#', label: 'Page 1.1.2' },
         ],
         label: 'Page 1.2',
       },
@@ -113,7 +113,7 @@ export const unrelatedActive: SideNavigationItems = [
     href: '#',
     items: [
       { href: '#', label: 'Page 1.1' },
-      { active: true, href: '#', label: 'Page 1.2' },
+      { current: true, href: '#', label: 'Page 1.2' },
     ],
     label: 'Page 1',
   },
@@ -121,5 +121,16 @@ export const unrelatedActive: SideNavigationItems = [
     href: '#',
     items: [{ href: '#', label: 'Page 2.2' }],
     label: 'Page 2',
+  },
+];
+
+export const linkAttributes: SideNavigationItems = [
+  {
+    current: true,
+    href: '#',
+    hreflang: 'nl',
+    label: 'Page 1',
+    lang: 'nl',
+    target: '_blank',
   },
 ];

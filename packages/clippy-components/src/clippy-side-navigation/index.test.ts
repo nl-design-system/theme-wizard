@@ -1,7 +1,7 @@
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
 import { page } from 'vitest/browser';
-import { nestedWithActive, simple, twoBranches, unrelatedActive } from './fixtures';
+import { linkAttributes, nestedWithActive, simple, twoBranches, unrelatedActive } from './fixtures';
 import { ClippySideNavigation } from './index';
 
 const tag = 'clippy-side-navigation';
@@ -128,7 +128,7 @@ describe(`<${tag}>`, () => {
       expect(getAriaExpanded(buttons[0])).toBe('false');
     });
 
-    it('collapsing a node only applies aria-expanded="false" the collapsed node', async () => {
+    it('collapsing a node only applies aria-expanded="false" to the collapsed node', async () => {
       component.items = nestedWithActive;
       await component.updateComplete;
       const buttons = getExpandButtons();
@@ -138,9 +138,19 @@ describe(`<${tag}>`, () => {
       buttons[0].click();
       await component.updateComplete;
 
-      const updated = getExpandButtons();
-      expect(getAriaExpanded(updated[0])).toBe('false');
-      expect(getAriaExpanded(updated[1])).toBe('true');
+      // Subtree is removed so the second button isn’t there anymore
+      const updatedButtonsAfterClose = getExpandButtons();
+      expect(getAriaExpanded(updatedButtonsAfterClose[0])).toBe('false');
+      expect(updatedButtonsAfterClose[1]).toBeFalsy();
+
+      // Open it again
+      buttons[0].click();
+      await component.updateComplete;
+
+      // Both buttons will be true
+      const updatedButtonsAfterExpand = getExpandButtons();
+      expect(getAriaExpanded(updatedButtonsAfterExpand[0])).toBe('true');
+      expect(getAriaExpanded(updatedButtonsAfterExpand[1])).toBe('true');
     });
 
     it('expanding a node does not affect other branches', async () => {
@@ -168,9 +178,27 @@ describe(`<${tag}>`, () => {
       buttons[0].click();
       await component.updateComplete;
 
-      const updated = getExpandButtons();
-      expect(getAriaExpanded(updated[0])).toBe('false');
-      expect(getAriaExpanded(updated[1])).toBe('false');
+      const updatedAfterClose = getExpandButtons();
+      expect(getAriaExpanded(updatedAfterClose[0])).toBe('false');
+      expect(updatedAfterClose[1]).toBeFalsy();
+
+      buttons[0].click();
+      await component.updateComplete;
+
+      const updatedButtonsAfterExpand = getExpandButtons();
+      expect(getAriaExpanded(updatedButtonsAfterExpand[0])).toBe('true');
+      expect(getAriaExpanded(updatedButtonsAfterExpand[1])).toBe('false');
+    });
+  });
+
+  describe('link attributes', () => {
+    it('applies a selection of HTMLAnchorElemnt’s properties', async () => {
+      component.items = linkAttributes;
+      await component.updateComplete;
+      const links = getLinks();
+      expect(links[0].getAttribute('hreflang')).toBe('nl');
+      expect(links[0].getAttribute('lang')).toBe('nl');
+      expect(links[0].getAttribute('target')).toBe('_blank');
     });
   });
 });

@@ -52,9 +52,9 @@ export class ClippySideNavigation extends LitElement {
       let subtreeActive = false;
       for (const node of nodes) {
         const childActive = node.items?.length ? walk(node.items) : false;
-        if (node.active || childActive) {
+        if (node.current || childActive) {
           subtreeActive = true;
-          if (node.items?.length > 0) {
+          if (node.items?.length) {
             set.add(node);
           }
         }
@@ -104,7 +104,14 @@ export class ClippySideNavigation extends LitElement {
     return html`
       <li class="denhaag-side-navigation__item">
         <span class="denhaag-side-navigation__tree-item-label-wrapper">
-          <a class="denhaag-side-navigation__link" href=${item.href} aria-current=${item.active ? 'page' : nothing}>
+          <a
+            class="denhaag-side-navigation__link"
+            href=${item.href}
+            aria-current=${item.current ? 'page' : nothing}
+            target=${item.target || nothing}
+            hreflang=${item.hreflang || nothing}
+            lang=${item.lang || nothing}
+          >
             ${item.label}
           </a>
           ${

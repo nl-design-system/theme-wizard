@@ -1,9 +1,10 @@
+type SelectedHTMLAnchorElementAttrs = 'href' | 'target' | 'hreflang' | 'lang';
+
 // Currently infinite levels deep, update when we want to restrict the levels
-export type SideNavigationItem = {
-  href: string;
+export interface SideNavigationItem extends Partial<Pick<HTMLAnchorElement, SelectedHTMLAnchorElementAttrs>> {
   label: string;
-  active?: boolean;
+  current?: boolean;
   items?: SideNavigationItem[];
-};
+}
 
 export type SideNavigationItems = SideNavigationItem[];
