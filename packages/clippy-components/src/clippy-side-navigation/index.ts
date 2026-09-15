@@ -34,6 +34,8 @@ export class ClippySideNavigation extends LitElement {
   cascadeCollapse?: boolean = false;
 
   @property({ attribute: 'caption', type: String }) caption: string | undefined = undefined;
+  @property({ attribute: 'label-expand-open', type: String }) labelExpandOpen: string = 'Open submenu for:';
+  @property({ attribute: 'label-expand-close', type: String }) labelExpandClose: string = 'Close submenu for:';
 
   readonly #navId = crypto.randomUUID();
 
@@ -106,12 +108,14 @@ export class ClippySideNavigation extends LitElement {
               ? html`
                   <span class="denhaag-side-navigation__expand-separator"></span>
                   <button
-                    aria-label="Open submenu Link 2 met submenu"
                     aria-expanded=${isOpen ? 'true' : 'false'}
                     class="denhaag-icon-button denhaag-side-navigation__expand-button"
                     @click=${() => this.#toggle(item)}
                   >
                     ${unsafeSVG(ChevronDown)}
+                    <span class="sr-only">
+                      ${isOpen ? `${this.labelExpandClose} ${item.label}` : `${this.labelExpandOpen} ${item.label}`}
+                    </span>
                   </button>
                 `
               : nothing

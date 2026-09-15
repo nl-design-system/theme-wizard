@@ -74,6 +74,24 @@ describe(`<${tag}>`, () => {
       const buttons = getExpandButtons();
       buttons.forEach((b) => expect(getAriaExpanded(b)).toBe('false'));
     });
+
+    it('expand buttons have default open and closed labels', async () => {
+      component.items = unrelatedActive;
+      await component.updateComplete;
+      const buttons = getExpandButtons();
+      expect(buttons[0].textContent.trim()).toBe('Close submenu for: Page 1');
+      expect(buttons[1].textContent.trim()).toBe('Open submenu for: Page 2');
+    });
+
+    it('expand buttons can have custom open and closed labels', async () => {
+      component.items = unrelatedActive;
+      component.labelExpandOpen = 'Open:';
+      component.labelExpandClose = 'Close:';
+      await component.updateComplete;
+      const buttons = getExpandButtons();
+      expect(buttons[0].textContent.trim()).toBe('Close: Page 1');
+      expect(buttons[1].textContent.trim()).toBe('Open: Page 2');
+    });
   });
 
   describe('auto-expansion for active nested items', () => {
