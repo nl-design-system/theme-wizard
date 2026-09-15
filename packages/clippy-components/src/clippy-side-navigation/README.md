@@ -18,6 +18,6 @@ import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 | -------------------- | --------------------- | --------------------------------------------------------- | -------------------- |
 | `items`              | `SideNavigationItems` | Array of items to display in the navigation               | `[]`                 |
 | `eagerCollapse`      | `boolean`             | When an item is collapsed, collapse all sub-items as well | `false`              |
-| `caption`            | `string`              | The description of the navigation                         | `undefined`          |
+| `label`              | `string`              | The description of the navigation                         | `undefined`          |
 | `label-expand-open`  | `string`              | Label for the expand button in closed state               | `Open submenu for:`  |
 | `label-expand-close` | `string`              | Label for the expand button in open state                 | `Close submenu for:` |

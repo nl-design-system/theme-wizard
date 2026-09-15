@@ -52,9 +52,9 @@ describe(`<${tag}>`, () => {
       expect(getAriaCurrent(links[1])).toBeNull();
     });
 
-    it('correctly applies caption', async () => {
+    it('correctly applies label', async () => {
       component.items = simple;
-      component.caption = 'Nav label';
+      component.label = 'Nav label';
       await component.updateComplete;
       expect(page.getByLabelText('Nav label')).toBeTruthy();
     });

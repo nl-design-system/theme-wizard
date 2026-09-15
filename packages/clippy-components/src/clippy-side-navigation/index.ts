@@ -33,7 +33,7 @@ export class ClippySideNavigation extends LitElement {
   @property({ attribute: 'cascade-collapse', type: Boolean })
   cascadeCollapse?: boolean = false;
 
-  @property({ attribute: 'caption', type: String }) caption: string | undefined = undefined;
+  @property({ type: String }) label: string | undefined = undefined;
   @property({ attribute: 'label-expand-open', type: String }) labelExpandOpen: string = 'Open submenu for:';
   @property({ attribute: 'label-expand-close', type: String }) labelExpandClose: string = 'Close submenu for:';
 
@@ -140,8 +140,8 @@ export class ClippySideNavigation extends LitElement {
     }
 
     return html`
-      <nav class="denhaag-side-navigation" aria-labelledby=${this.caption ? this.#navId : nothing}>
-        ${this.caption ? html`<span id=${this.#navId} class="sr-only">${this.caption}</span>` : nothing}
+      <nav class="denhaag-side-navigation" aria-labelledby=${this.label ? this.#navId : nothing}>
+        ${this.label ? html`<span id=${this.#navId} class="sr-only">${this.label}</span>` : nothing}
         <ul class="denhaag-side-navigation__list">
           ${map(this.items, (item) => this.#renderItem(item))}
         </ul>

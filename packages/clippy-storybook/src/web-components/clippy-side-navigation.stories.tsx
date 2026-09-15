@@ -8,15 +8,15 @@ import React from 'react';
 type TokenSampleStoryArgs = {
   items: SideNavigationItems;
   'cascade-collapse': boolean;
-  caption: string | undefined;
+  label: string | undefined;
 };
 
 const meta = {
   id: 'clippy-side-navigation',
   args: {
-    caption: undefined,
     'cascade-collapse': false,
     items: full,
+    label: undefined,
   },
   parameters: {
     docs: {
@@ -45,9 +45,9 @@ export const EagerCollapse: Story = {
   },
 };
 
-export const Caption: Story = {
+export const Label: Story = {
   name: 'Gelabeld',
   args: {
-    caption: 'Named nav',
+    label: 'Named nav',
   },
 };
