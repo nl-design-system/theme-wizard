@@ -54,7 +54,9 @@ export class ClippySideNavigation extends LitElement {
         const childActive = node.items?.length ? walk(node.items) : false;
         if (node.active || childActive) {
           subtreeActive = true;
-          if (node.items?.length) set.add(node);
+          if (node.items?.length > 0) {
+            set.add(node);
+          }
         }
       }
       return subtreeActive;
@@ -65,9 +67,9 @@ export class ClippySideNavigation extends LitElement {
 
   #collectDescendantItems(item: SideNavigationItem): SideNavigationItem[] {
     const items: SideNavigationItem[] = [];
-    const walk = (n: SideNavigationItem) => {
-      if (!n.items?.length) return;
-      for (const child of n.items) {
+    const walk = (node: SideNavigationItem) => {
+      if (!node.items?.length) return;
+      for (const child of node.items) {
         items.push(child);
         walk(child);
       }
@@ -83,7 +85,9 @@ export class ClippySideNavigation extends LitElement {
       next.delete(item);
       // And collapse nested items as well
       if (this.cascadeCollapse) {
-        for (const h of this.#collectDescendantItems(item)) next.delete(h);
+        for (const nestedItem of this.#collectDescendantItems(item)) {
+          next.delete(nestedItem);
+        }
       }
     } else {
       // Expand the item
