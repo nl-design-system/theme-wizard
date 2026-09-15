@@ -21,7 +21,7 @@ export default css`
     padding-inline-start: var(--basis-space-inline-xl);
 
     @media (forced-colors: none) {
-      border-color: transparent;
+      border-color: var(--basis-color-transparent);
       border-inline-start-style: solid;
       border-inline-start-width: var(--basis-border-width-lg);
       margin-inline-start: calc(var(--basis-border-width-lg) * -1);
