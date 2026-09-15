@@ -6,6 +6,7 @@ import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import srOnly from '../lib/sr-only';
 import styles from './styles';
 import { SideNavigationItem, SideNavigationItems } from './types';
 
@@ -22,7 +23,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class ClippySideNavigation extends LitElement {
-  static override readonly styles = [unsafeCSS(buttonCSS), unsafeCSS(navStyles), styles];
+  static override readonly styles = [unsafeCSS(buttonCSS), unsafeCSS(navStyles), styles, srOnly];
 
   @state() private expandedItems = new Set<SideNavigationItem>();
 
@@ -31,6 +32,10 @@ export class ClippySideNavigation extends LitElement {
 
   @property({ attribute: 'eager-collapse', type: Boolean })
   eagerCollapse?: false;
+
+  @property({ attribute: 'caption', type: String }) caption: string | undefined = undefined;
+
+  readonly #navId = crypto.randomUUID();
 
   override willUpdate(changed: Map<string, unknown>) {
     super.willUpdate(changed);
@@ -127,7 +132,8 @@ export class ClippySideNavigation extends LitElement {
 
   override render() {
     return html`
-      <nav class="denhaag-side-navigation">
+      <nav class="denhaag-side-navigation" aria-labelledby=${this.caption ? this.#navId : nothing}>
+        ${this.caption ? html`<span id=${this.#navId} class="sr-only">${this.caption}</span>` : nothing}
         <ul class="denhaag-side-navigation__list">
           ${map(this.items, (item) => this.#renderItem(item))}
         </ul>

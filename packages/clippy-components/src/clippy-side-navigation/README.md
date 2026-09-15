@@ -1,6 +1,6 @@
 # `<clippy-side-navigation>`
 
-Renders space between child elements, used to create visual hierarchy.
+A side navigation component. Based on [SideNavigation from Gemeente Den Haag](https://nl-design-system.github.io/denhaag/?path=/docs/css-sidenavigation--docs) and some [enhancements for nested items from the NL Design System website](https://github.com/nl-design-system/documentatie/blob/5f1e57f4d601fd3926ada8f968d137366e263825/packages/website/src/styles/missing-tokens.css#L160).
 
 ## Usage
 
@@ -12,18 +12,10 @@ import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 <clippy-side-navigation></clippy-side-navigation>
 ```
 
-## Slots
-
-| Slot      | Description           |
-| --------- | --------------------- |
-| `default` | Slot for the children |
-
 ## Attributes & properties
 
-| Attribute / Property | Type | Description | Default |
-| -------------------- | ---- | ----------- | ------- |
-
-## CSS Custom Properties
-
-| Property | Description | Default |
-| -------- | ----------- | ------- |
+| Attribute / Property | Type                  | Description                                               | Default     |
+| -------------------- | --------------------- | --------------------------------------------------------- | ----------- |
+| `items`              | `SideNavigationItems` | Array of items to display in the navigation               | `[]`        |
+| `eagerCollapse`      | `boolean`             | When an item is collapsed, collapse all sub-items as well | `false`     |
+| `caption`            | `string`              | The description of the navigation                         | `undefined` |
