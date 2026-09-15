@@ -41,7 +41,7 @@ export class ClippySideNavigation extends LitElement {
 
   override willUpdate(changed: Map<string, unknown>) {
     super.willUpdate(changed);
-    if (changed.has('items') && this.items) {
+    if (changed.has('items') && this.items && this.items.length) {
       this.expandedItems = this.#updateInitiaExpandedItems(this.items);
     }
   }
