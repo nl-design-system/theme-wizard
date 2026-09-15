@@ -28,7 +28,6 @@
     "@astrojs/vercel": "11.0.9",
     "@fontsource/fira-sans": "5.3.0",
     "@fontsource/source-sans-pro": "5.3.0",
-    "@gemeente-denhaag/design-tokens": "1.4.3",
     "@nl-design-system-candidate/button-css": "1.1.0",
     "@nl-design-system-candidate/button-react": "1.1.0",
     "@nl-design-system-candidate/button-tokens": "1.0.0",
@@ -85,6 +84,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.10",
     "@nl-design-system-unstable/start-design-tokens": "8.0.0",
     "@playwright/test": "1.62.1",
     "@tabler/icons": "3.46.0",

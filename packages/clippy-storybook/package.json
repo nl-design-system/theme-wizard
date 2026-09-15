@@ -48,7 +48,6 @@
     "@storybook/react": "10.5.10",
     "@storybook/react-vite": "10.5.10",
     "@storybook/web-components-vite": "10.5.10",
-    "@types/lodash-es": "4.17.12",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "@utrecht/component-library-css": "9.0.15",
@@ -61,9 +60,7 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "storybook": "10.5.10",
-    "vite": "8.2.2",
-    "vite-plugin-dts": "5.1.0",
-    "vitest": "4.1.11"
+    "vite": "8.2.2"
   },
   "dependencies": {
     "@amsterdam/design-system-assets": "2.6.0",

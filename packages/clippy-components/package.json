@@ -83,7 +83,6 @@
   "devDependencies": {
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
-    "@types/dlv": "1.1.5",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "@vitest/browser-playwright": "4.1.11",

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-lintignore"],
+  "workspaces": {
+    ".": {},
+    "packages/clippy-storybook": {
+      // Doc-only MDX pages aren't matched by knip's story-file heuristic, so declare them as entries manually
+      "entry": ["src/documentation/**/*.mdx"]
+    }
+  },
+  "ignoreDependencies": [
+    // NL Design System convention is to have http-server available to start it easily from the root
+    "http-server",
+    // Renderer peer required by @storybook/react-vite; resolved by Storybook itself, never imported directly
+    "@storybook/react",
+    // Consumed as raw markdown via a hardcoded node_modules path in theme-wizard-app/src/lib/tokenDocs.ts, not a JS import
+    "@nl-design-system-unstable/documentation",
+    // Peer required by stylelint-config-astro; resolved by stylelint itself, never imported directly
+    "postcss-html"
+  ],
+  "storybook": {
+    // clippy-storybook uses --config-dir ./config/ instead of the default .storybook/
+    "config": ["packages/clippy-storybook/config/main.ts"],
+    "entry": ["packages/clippy-storybook/config/{manager,preview,index,vitest.setup}.{js,jsx,ts,tsx}"],
+    "project": ["packages/clippy-storybook/config/**/*.{js,jsx,ts,tsx,mts}"]
+  },
+  "ignoreFiles": [".ncurc.major.mjs", ".ncurc.minor.mjs", ".ncurc.patch.mjs"],
+  "ignore": [
+    // Notoriously problematic files because they are not maintained
+    "packages/theme-wizard-templates/**",
+    "packages/clippy-storybook/src/patterns/**"
+  ]
+}

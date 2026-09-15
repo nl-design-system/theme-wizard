@@ -279,6 +279,7 @@ export const useOriginalValue = (root: Record<string, unknown>) => {
 
 /**
  * @deprecated This was a really confusing name. Use `useOriginalValue()` instead.
+ * @alias
  */
 export const useRefAsValue = useOriginalValue;
 

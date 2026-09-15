@@ -1,4 +1,4 @@
-export type StoryWizardSelectedOption = {
+type StoryWizardSelectedOption = {
   optionLabel: string;
   previewStyle: string;
   tokens: unknown;

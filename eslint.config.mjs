@@ -72,6 +72,13 @@ export default defineConfig([
     ...json.configs.recommended,
   },
   {
+    // knip.json uses `//` comments (knip's loader supports JSONC), so parse it as JSONC instead of strict JSON
+    name: 'eslint/json/jsonc-with-comments',
+    files: ['knip.json'],
+    language: 'json/jsonc',
+    ...json.configs.recommended,
+  },
+  {
     name: 'eslint-plugin-react',
     files: ['**/*.{js,cjs,mjs,jsx,ts,tsx}'],
     plugins: { react },
