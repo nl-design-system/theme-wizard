@@ -28,8 +28,7 @@ export default css`
     }
   }
 
-  .denhaag-side-navigation__link--current,
-  .denhaag-side-navigation__link[aria-current='page'] {
+  .denhaag-side-navigation__link[aria-current] {
     /* denhaag.side-navigation.link.current.background-color */
     background-color: var(--basis-color-accent-1-bg-default);
 
@@ -95,31 +94,11 @@ export default css`
     }
   }
 
-  .denhaag-side-navigation__expand-button--expanded,
   .denhaag-side-navigation__expand-button[aria-expanded='true'] {
     transform: none !important;
 
     svg {
       transform: rotate(-180deg);
-    }
-  }
-
-  /* ============================================
-   Clippy overrides
-   ============================================ */
-  .denhaag-side-navigation__item {
-    & > .denhaag-side-navigation__list {
-      display: none;
-    }
-
-    &:where(
-        :has(
-          > .denhaag-side-navigation__tree-item-label-wrapper
-            > .denhaag-side-navigation__expand-button[aria-expanded='true']
-        )
-      )
-      > .denhaag-side-navigation__list {
-      display: block;
     }
   }
 `;

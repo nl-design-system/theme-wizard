@@ -126,7 +126,7 @@ export class ClippySideNavigation extends LitElement {
           }
         </span>
         ${
-          hasSubItems
+          hasSubItems && isOpen
             ? html`
                 <ul class="denhaag-side-navigation__list">
                   ${map(item.items!, (child) => this.#renderItem(child))}
