@@ -1,4 +1,3 @@
-// @ts-expect-error We need to change how theme-wizard-app is bundled so we can get this type
 import type { WizardStoryExample } from '@nl-design-system-community/theme-wizard-app';
 import { components } from '@/lib/components';
 

@@ -73,6 +73,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build workspace dependencies required for lint
+        run: pnpm --filter @nl-design-system-community/vite-plugin-terse-log run build
+
       - name: Lint
         run: pnpm run lint
 

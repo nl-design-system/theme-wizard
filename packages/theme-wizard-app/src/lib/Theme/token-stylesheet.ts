@@ -1,7 +1,7 @@
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
 import { tokenPathToCSSCustomProperty } from './lib';
 
-export const createStylesheet = (styleSheet = new CSSStyleSheet(), selector = ':root'): [CSSStyleSheet, CSSRule] => {
+export const createStylesheet = (styleSheet = new CSSStyleSheet(), selector = ':host'): [CSSStyleSheet, CSSRule] => {
   styleSheet.replaceSync(`${selector} {}`);
   return [styleSheet, styleSheet.cssRules[0]];
 };

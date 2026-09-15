@@ -83,7 +83,6 @@ export const en = {
   continue: 'Continue',
   copyToClipboard: 'Copy to clipboard',
   copyValueToClipboard: ({ value }: { value: string }) => `Copy "${value}" to clipboard`,
-  display: 'Display',
   footer: {
     colophon: {
       about: html`The Theme Wizard is developed by the Expert team Digital Accessibility as part of
@@ -103,7 +102,8 @@ export const en = {
   moreInformationCompact: 'More information',
   nav: {
     components: 'Components',
-    configure: 'Edit branding',
+    identity: 'Identity',
+    publish: 'Publish',
     styleGuide: 'Style guide',
     wizard: 'Start',
   },
@@ -653,7 +653,6 @@ export const nl = {
   continue: 'Doorgaan',
   copyToClipboard: 'Kopieer naar klembord',
   copyValueToClipboard: ({ value }: { value: string }) => `Kopieer "${value}" naar klembord`,
-  display: 'Weergave',
   footer: {
     colophon: {
       about: html`De Theme Wizard is ontwikkeld door het Expertteam Digitale Toegankelijkheid in opdracht van
@@ -673,7 +672,8 @@ export const nl = {
   moreInformationCompact: 'Meer informatie',
   nav: {
     components: 'Componenten',
-    configure: 'Huisstijl bewerken',
+    identity: 'Huisstijl',
+    publish: 'Publiceren',
     styleGuide: 'Stijlgids',
     wizard: 'Start',
   },

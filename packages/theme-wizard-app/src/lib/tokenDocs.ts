@@ -12,16 +12,3 @@ export const tokenDocs: Record<string, string> = Object.fromEntries(
     return [key, content as string];
   }),
 );
-
-/**
- * Scopes `tokenDocs` to one domain prefix and strips it, e.g. `getTokenDocs('color')` turns
- * `color-accent-1` into `accent-1`. Pass `''` (default) to get the full map unprefixed.
- */
-export function getTokenDocs(prefix = ''): Record<string, string> {
-  const withDash = prefix ? `${prefix}-` : '';
-  return Object.fromEntries(
-    Object.entries(tokenDocs)
-      .filter(([key]) => key.startsWith(withDash))
-      .map(([key, docs]) => [key.slice(withDash.length), docs]),
-  );
-}

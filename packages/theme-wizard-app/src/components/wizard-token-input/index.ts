@@ -1,15 +1,17 @@
-import { ColorToken, DimensionToken, FontFamilyToken } from '@nl-design-system-community/design-tokens-schema';
+import {
+  BaseDesignToken,
+  ColorToken,
+  DimensionToken,
+  FontFamilyToken,
+} from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { DesignToken } from 'style-dictionary/types';
 import type ValidationIssue from '../../lib/ValidationIssue';
 import { t } from '../../i18n';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
-// TODO: use uniform token type that both conforms to the types of
-// `@nl-design-system-community/design-tokens-schema` and `style-dictionary`
-export type Token = ColorToken | DimensionToken | FontFamilyToken | DesignToken;
+export type Token = ColorToken | DimensionToken | FontFamilyToken | BaseDesignToken;
 
 const tag = 'wizard-token-input';
 
@@ -25,7 +27,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
   @property() name = '';
   @property() errors: ValidationIssue[] = [];
   internals_ = this.attachInternals();
-  #token: Token = {};
+  #token: BaseDesignToken | null = null;
 
   static readonly formAssociated = true;
   static override readonly styles = [styles];
@@ -51,7 +53,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
     const oldToken = this.#token;
     const oldValue = oldToken?.$value;
 
-    if (oldValue) {
+    if (oldValue && this.#token) {
       this.#token.$value = value;
     } else {
       this.#token = value as Token;
@@ -67,7 +69,7 @@ export class WizardTokenInput extends WizardTokenNavigator {
   readonly #handleChange = (event: Event) => {
     if (event.target instanceof HTMLTextAreaElement) {
       try {
-        this.value = JSON.parse(event.target.value) as DesignToken;
+        this.value = JSON.parse(event.target.value) as BaseDesignToken;
         this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
       } catch {
         // reset to previous version when parsing fails

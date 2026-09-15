@@ -6,6 +6,8 @@ import {
   ThemeLike,
 } from '@nl-design-system-community/design-tokens-schema';
 
+export const EXTENSION_COLORSCALE_SEED = 'nl.nldesignsystem.theme-wizard.color-scale-seed-color';
+
 /**
  * Given a color scale group path (e.g. 'basis.color.accent-1') and its parent group object
  * (e.g. the 'basis.color' group), returns the paths of sibling groups whose every token is

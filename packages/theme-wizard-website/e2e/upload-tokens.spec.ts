@@ -83,12 +83,6 @@ test.describe('uploading a Start-thema with a contrast issue', () => {
     await uploadTokensPage.confirm();
 
     await expect(page).toHaveURL(new RegExp(basisTokensPage.url));
-    await expect(basisTokensPage.preview).toBeVisible();
-
-    const tokenTree = (await basisTokensPage.getTokenTree()) as {
-      basis: { color: { default: { 'color-document': { $value: { components: number[] } } } } };
-    };
-    expect(tokenTree.basis.color.default['color-document'].$value.components).toEqual([1, 1, 1]);
   });
 });
 

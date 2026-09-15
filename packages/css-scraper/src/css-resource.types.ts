@@ -1,12 +1,12 @@
 type UrlLike = string | URL;
 
-export type CSSLocalFileResource = {
+type CSSLocalFileResource = {
   type: 'local-file';
   name: string;
   css: string;
 };
 
-export type CSSFileResource = {
+type CSSFileResource = {
   type: 'file';
   href: string;
   css: string;

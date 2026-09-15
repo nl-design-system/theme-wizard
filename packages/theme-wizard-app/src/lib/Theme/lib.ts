@@ -1,22 +1,27 @@
 import type { TokenGroup } from '@nl-design-system-community/clippy-components/clippy-reset-theme';
-import { BaseDesignTokenIdentifier, isTokenLike, walkTokens } from '@nl-design-system-community/design-tokens-schema';
-import { DesignToken, DesignTokens } from 'style-dictionary/types';
+import {
+  BaseDesignToken,
+  BaseDesignTokenIdentifier,
+  isTokenLike,
+  isValueObject,
+  walkTokens,
+} from '@nl-design-system-community/design-tokens-schema';
 
 export const tokenPathToCSSCustomProperty = (tokenPath: BaseDesignTokenIdentifier[]): string =>
   '--' + tokenPath.join('-');
 
 export const flattenTokens = (
-  tokens: DesignTokens,
+  tokens: Record<string, unknown>,
   basePath: string = '',
-  accumulator: Record<string, DesignToken> = {},
-): Record<string, DesignToken> => {
+  accumulator: Record<string, BaseDesignToken> = Object.create(null),
+): Record<string, BaseDesignToken> => {
   for (const [key, token] of Object.entries(tokens)) {
     const path = basePath ? `${basePath}.${key}` : key;
 
     if (isTokenLike(token)) {
       accumulator[path] = token;
-    } else if (token && typeof token === 'object' && !Array.isArray(token)) {
-      flattenTokens(token as DesignTokens, path, accumulator);
+    } else if (isValueObject(token)) {
+      flattenTokens(token, path, accumulator);
     }
   }
 
@@ -27,7 +32,7 @@ export const flattenTokens = (
  * Replace `{example.component.property}` with `var(--example-component-property)`
  */
 export const refToCssVariable = (value: string): string =>
-  value.replaceAll(/\{([^}]+)\}/g, (_, tokenName) => {
+  value.replaceAll(/\{([^{}]+)\}/g, (_, tokenName) => {
     return `var(--${tokenName.replaceAll('.', '-')})`;
   });
 
@@ -38,17 +43,17 @@ export const refToCssVariable = (value: string): string =>
 export const presetTokensToUpdateMany = (
   tokens: unknown,
   basePath = '',
-): { path: string; value: DesignToken['$value'] }[] => {
-  if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return [];
+): { path: string; value: BaseDesignToken['$value'] }[] => {
+  if (!isValueObject(tokens)) {
+    return [];
+  }
 
-  const obj = tokens as Record<string, unknown>;
-
-  if (Object.hasOwn(obj, '$value')) {
-    const result = { path: basePath, value: obj['$value'] as DesignToken['$value'] };
+  if (Object.hasOwn(tokens, '$value')) {
+    const result = { path: basePath, value: tokens['$value'] };
     return [result];
   }
 
-  return Object.entries(obj).flatMap(([key, value]) =>
+  return Object.entries(tokens).flatMap(([key, value]) =>
     presetTokensToUpdateMany(value, basePath ? `${basePath}.${key}` : key),
   );
 };
@@ -63,7 +68,7 @@ export const tokensToStyle = (tokens: TokenGroup) => {
 
   walkTokens(tokens, (token, path) => {
     if (typeof token.$value === 'string') {
-      const cssProperty = `--${path.join('-')}`;
+      const cssProperty = tokenPathToCSSCustomProperty(path);
       const cssValue = refToCssVariable(token.$value);
       style[cssProperty] = cssValue;
     }
