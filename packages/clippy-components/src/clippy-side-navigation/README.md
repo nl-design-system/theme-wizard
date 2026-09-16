@@ -6,6 +6,19 @@ A side navigation component. Based on [SideNavigation from Gemeente Den Haag](ht
 
 ```js
 import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+
+const sideNavigation = document.querySelector('clippy-side-navigation');
+sideNavigation.items = [
+  {
+    label: 'Page 1',
+    href: '#',
+    current: true,
+  },
+  {
+    label: 'Page 2',
+    href: '#',
+  },
+];
 ```
 
 ```html
@@ -14,10 +27,26 @@ import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 
 ## Attributes & properties
 
-| Attribute / Property | Type                  | Description                                               | Default              |
-| -------------------- | --------------------- | --------------------------------------------------------- | -------------------- |
-| `items`              | `SideNavigationItems` | Array of items to display in the navigation               | `[]`                 |
-| `eagerCollapse`      | `boolean`             | When an item is collapsed, collapse all sub-items as well | `false`              |
-| `label`              | `string`              | The description of the navigation                         | `undefined`          |
-| `label-expand-open`  | `string`              | Label for the expand button in closed state               | `Open submenu for:`  |
-| `label-expand-close` | `string`              | Label for the expand button in open state                 | `Close submenu for:` |
+| Attribute / Property | Type                            | Description                                               | Default              |
+| -------------------- | ------------------------------- | --------------------------------------------------------- | -------------------- |
+| `items`              | [`SideNavigationItems`](#types) | Array of items to display in the navigation               | `[]`                 |
+| `eagerCollapse`      | `boolean`                       | When an item is collapsed, collapse all sub-items as well | `false`              |
+| `label`              | `string`                        | The description of the navigation                         | `undefined`          |
+| `label-expand-open`  | `string`                        | Label for the expand button in closed state               | `Open submenu for:`  |
+| `label-expand-close` | `string`                        | Label for the expand button in open state                 | `Close submenu for:` |
+
+## Types
+
+```ts
+interface SideNavigationItem {
+  label: string;
+  href: string;
+  current?: boolean;
+  items?: SideNavigationItem[];
+  target?: string;
+  hreflang?: string;
+  lang?: string;
+}
+
+type SideNavigationItems = SideNavigationItem[];
+```

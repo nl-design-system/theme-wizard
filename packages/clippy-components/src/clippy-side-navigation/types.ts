@@ -1,7 +1,8 @@
-type SelectedHTMLAnchorElementAttrs = 'href' | 'target' | 'hreflang' | 'lang';
+type SelectedHTMLAnchorElementProps = Pick<HTMLAnchorElement, 'href'> &
+  Partial<Pick<HTMLAnchorElement, 'target' | 'hreflang' | 'lang'>>;
 
 // Currently infinite levels deep, update when we want to restrict the levels
-export interface SideNavigationItem extends Partial<Pick<HTMLAnchorElement, SelectedHTMLAnchorElementAttrs>> {
+export interface SideNavigationItem extends SelectedHTMLAnchorElementProps {
   label: string;
   current?: boolean;
   items?: SideNavigationItem[];
