@@ -3,8 +3,6 @@ import '@nl-design-system-community/clippy-components/clippy-page-layout';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-page-layout/README.md?raw';
 import React from 'react';
 
-type TokenSampleStoryArgs = {};
-
 const meta = {
   id: 'clippy-page-layout',
   args: {},
@@ -15,14 +13,14 @@ const meta = {
       },
     },
   },
-  render: (args: TokenSampleStoryArgs) =>
+  render: (args) =>
     React.createElement('clippy-page-layout', args, [
       React.createElement(
         'mark',
         {
           slot: 'header',
         },
-        'masthead',
+        'header',
       ),
       React.createElement(
         'mark',
@@ -35,7 +33,7 @@ const meta = {
     ]),
   tags: ['autodocs'],
   title: 'Clippy/Layout/Page Layout',
-} satisfies Meta<TokenSampleStoryArgs>;
+} satisfies Meta;
 
 export default meta;
 

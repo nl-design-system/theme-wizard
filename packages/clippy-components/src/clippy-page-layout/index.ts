@@ -16,6 +16,8 @@ declare global {
  * @slot - Main content
  * @slot header - Header content
  * @slot footer - Footer content
+ * @cssprop --clippy-page-layout-header-block-size - The block-size of the header (updated with JS)
+ * @cssprop --clippy-page-layout-background-color - The background color
  */
 @safeCustomElement(tag)
 export class ClippyPageLayout extends LitElement {
