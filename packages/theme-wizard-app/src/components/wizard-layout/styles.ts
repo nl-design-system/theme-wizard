@@ -12,6 +12,7 @@ export default css`
     --wizard-layout-nav-padding-block: var(--basis-space-block-xl);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
+    --clippy-page-layout-background-color: var(--basis-color-accent-1-bg-subtle);
 
     font-family: var(--basis-text-font-family-default, inherit);
   }
