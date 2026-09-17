@@ -3,6 +3,8 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getBasisTokenTree, toSideNavigationItems, getBreadcrumbTrail } from '@/lib/basis-token-nav';
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
+import dlv from 'dlv'
 
 const tree = getBasisTokenTree();
 
@@ -16,7 +18,8 @@ const segments = (Astro.params.slug as string).split('/') as TokenPath;
 const node = findTreeNode(tree, segments)!;
 const navItems = toSideNavigationItems(tree, segments);
 const crumbs = getBreadcrumbTrail(tree, segments);
-const tokenPath = `basis.${segments.join('.')}`;
+const tokenPath = `basis.${segments.join('.')}`; // 'basis.color.accent-1'
+const isColorGroup = segments.at(0) === 'color' && segments.length === 2; // ['color', 'accent-1']
 ---
 
 <script>
@@ -43,22 +46,26 @@ const tokenPath = `basis.${segments.join('.')}`;
           <main>
             <clippy-stack size="lg">
               <clippy-heading level="1">{node.key}</clippy-heading>
-
               <wizard-token-docs groups={tokenPath} heading-level="2"></wizard-token-docs>
+
               {
                 node.isLeaf ? (
                   <wizard-token-field path={tokenPath} />
                 ) : (
-                  // TODO: make list of card-as-link
-                  // TODO: Show seed color if `node` is a color group
-                  // TODO: Show child colors if `node` is a color group
-                  <ul>
-                    {node.children.map((child) => (
-                      <li>
-                        <a href={`/basis-tokens/${child.path.join('/')}`}>{child.key}</a>
-                      </li>
-                    ))}
-                  </ul>
+                  <>
+                    {isColorGroup && (
+                      <wizard-color-system-preview groups={tokenPath}></wizard-color-system-preview>
+                    )}
+                    {/* // TODO: Show seed color if `node` is a color group */}
+                    {/* // TODO: make list of card-as-link */}
+                    <ul>
+                      {node.children.map((child) => (
+                        <li>
+                          <a href={`/basis-tokens/${child.path.join('/')}`}>{child.key}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
                 )
               }
             </clippy-stack>
