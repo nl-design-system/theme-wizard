@@ -2,10 +2,10 @@ import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css
 import linkCss from '@utrecht/link-css/dist/index.css?inline';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { t } from '../../i18n';
 import '../wizard-logo';
 import styles from './styles';
+import '@nl-design-system-community/clippy-components/clippy-page-layout';
 
 const tag = 'wizard-layout';
 
@@ -35,14 +35,14 @@ export class WizardLayout extends LitElement {
 
   override render() {
     return html`
-      <div class="ma-theme wizard-layout ${classMap({ 'wizard-layout--has-sidebar': this.hasSidebar })}">
-        <header class="wizard-layout__header">
+      <clippy-page-layout class="wizard-layout | ma-theme">
+        <div class="wizard-layout__header" slot="header">
           <a class="wizard-layout__logo" href="/">
             <wizard-logo></wizard-logo>
           </a>
 
           <slot name="page-nav"></slot>
-        </header>
+        </div>
 
         <div class="wizard-layout__body">
           <div class="wizard-layout__sidebar" ?hidden=${!this.hasSidebar}>
@@ -56,7 +56,7 @@ export class WizardLayout extends LitElement {
           </section>
         </div>
 
-        <footer class="wizard-layout__footer">
+        <div class="wizard-layout__footer" slot="footer">
           <div class="wizard-layout__footer-logo">
             <wizard-logo></wizard-logo>
           </div>
@@ -88,8 +88,8 @@ export class WizardLayout extends LitElement {
               ${t('footer.otherLinks.minifyTokens')}
             </a>
           </nav>
-        </footer>
-      </div>
+        </div>
+      </clippy-page-layout>
     `;
   }
 }

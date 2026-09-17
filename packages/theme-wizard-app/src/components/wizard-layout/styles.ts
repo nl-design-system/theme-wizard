@@ -2,7 +2,7 @@ import { css } from 'lit';
 
 export default css`
   :host(:not([hidden])) {
-    display: block;
+    display: contents;
   }
 
   .wizard-layout {
@@ -13,15 +13,7 @@ export default css`
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
 
-    background-color: var(--basis-color-accent-1-bg-subtle);
-    column-gap: var(--basis-space-inline-lg);
-    container-type: inline-size;
-    display: grid;
     font-family: var(--basis-text-font-family-default, inherit);
-    grid-template-areas: 'header' 'content' 'footer';
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    min-block-size: 100vh;
   }
 
   .wizard-layout__header {
@@ -29,7 +21,6 @@ export default css`
     background-color: var(--wizard-layout-nav-background-color);
     color: var(--basis-color-accent-1-inverse-color-default);
     display: grid;
-    grid-area: header;
     grid-template-columns: auto 1fr;
     inset-block-start: 0;
     padding-inline: var(--wizard-layout-padding-inline);
@@ -46,7 +37,6 @@ export default css`
     align-items: stretch;
     display: flex;
     gap: var(--basis-space-column-4xl);
-    grid-area: content;
     min-inline-size: 0;
     padding-block: var(--wizard-layout-body-padding-block);
     padding-inline: var(--wizard-layout-padding-inline);
@@ -109,7 +99,6 @@ export default css`
     color: var(--basis-color-accent-1-inverse-color-default);
     column-gap: var(--basis-space-column-4xl);
     display: grid;
-    grid-area: footer;
     padding-block-end: var(--basis-space-block-6xl);
     padding-block-start: var(--basis-space-block-5xl);
     padding-inline: var(--wizard-layout-padding-inline);

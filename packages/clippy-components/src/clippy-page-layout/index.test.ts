@@ -1,15 +1,15 @@
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
-import { ClippyLayout } from './index';
+import { ClippyPageLayout } from './index';
 
-const tag = 'clippy-layout';
+const tag = 'clippy-page-layout';
 
 describe(`<${tag}>`, () => {
-  let component: ClippyLayout;
+  let component: ClippyPageLayout;
 
   beforeEach(() => {
     document.body.innerHTML = `<${tag}></${tag}>`;
-    component = document.querySelector(tag) as ClippyLayout;
+    component = document.querySelector(tag) as ClippyPageLayout;
   });
 
   afterEach(() => {
