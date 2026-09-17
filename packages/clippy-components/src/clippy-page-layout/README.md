@@ -22,7 +22,7 @@ import '@nl-design-system-community/clippy-components/clippy-page-layout';
 
 ## CSS Custom Properties
 
-| Attribute / Property                     | Type     | Description                                                                                                        | Default                                 |
-| ---------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
-| `--clippy-page-layout-header-block-size` | `length` | The block-size of the header, for use in you own application. Is automatically updated with JS on load and resize. | `1lh`                                   |
-| `--clippy-page-layout-background-color`  | `color`  | The background color                                                                                               | `var(--basis-color-accent-1-bg-subtle)` |
+| Attribute / Property                     | Type     | Description                                                                                                        | Default                                  |
+| ---------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
+| `--clippy-page-layout-header-block-size` | `length` | The block-size of the header, for use in you own application. Is automatically updated with JS on load and resize. | `1lh`                                    |
+| `--clippy-page-layout-background-color`  | `color`  | The background color                                                                                               | `var(--basis-color-default-bg-document)` |
