@@ -24,20 +24,22 @@ const navItems = toSideNavigationItems(tree, []);
       ></clippy-side-navigation>
 
       <wizard-container slot="main">
-        <clippy-stack size="lg">
-          <clippy-heading level="1">Basis tokens</clippy-heading>
+        <main>
+          <clippy-stack size="lg">
+            <clippy-heading level="1">Basis tokens</clippy-heading>
 
-          <!-- TODO: make list of card-as-link -->
-          <ul>
-            {
-              tree.map((group) => (
-                <li>
-                  <a href={`/basis-tokens/${group.path.join('/')}`}>{group.key}</a>
-                </li>
-              ))
-            }
-          </ul>
-        </clippy-stack>
+            <!-- TODO: make list of card-as-link -->
+            <ul>
+              {
+                tree.map((group) => (
+                  <li>
+                    <a href={`/basis-tokens/${group.path.join('/')}`}>{group.key}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </clippy-stack>
+        </main>
       </wizard-container>
     </wizard-layout>
   </theme-wizard-app>

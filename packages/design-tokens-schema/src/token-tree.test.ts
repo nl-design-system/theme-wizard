@@ -88,6 +88,7 @@ describe('buildTokenTree', () => {
     });
 
     expect(tree[0]?.children.map((child) => child.key)).toEqual(['default']);
+    expect(flattenTreePaths(tree)).toHaveLength(2); // `color` and `color.default`
   });
 
   it('skips $-prefixed keys at the root', () => {

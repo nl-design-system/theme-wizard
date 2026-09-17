@@ -40,23 +40,29 @@ const tokenPath = `basis.${segments.join('.')}`;
       <wizard-container slot="main">
         <clippy-stack size="lg">
           <utrecht-breadcrumb-nav json={JSON.stringify(crumbs)}></utrecht-breadcrumb-nav>
+          <main>
+            <clippy-stack size="lg">
+              <clippy-heading level="1">{node.key}</clippy-heading>
 
-          <clippy-heading level="1">{node.key}</clippy-heading>
-
-          {
-            node.isLeaf ? (
-              <wizard-token-field path={tokenPath} />
-            ) : (
-              // TODO: make list of card-as-link
-              <ul>
-                {node.children.map((child) => (
-                  <li>
-                    <a href={`/basis-tokens/${child.path.join('/')}`}>{child.key}</a>
-                  </li>
-                ))}
-              </ul>
-            )
-          }
+              <wizard-token-docs groups={tokenPath} heading-level="2"></wizard-token-docs>
+              {
+                node.isLeaf ? (
+                  <wizard-token-field path={tokenPath} />
+                ) : (
+                  // TODO: make list of card-as-link
+                  // TODO: Show seed color if `node` is a color group
+                  // TODO: Show child colors if `node` is a color group
+                  <ul>
+                    {node.children.map((child) => (
+                      <li>
+                        <a href={`/basis-tokens/${child.path.join('/')}`}>{child.key}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )
+              }
+            </clippy-stack>
+          </main>
         </clippy-stack>
       </wizard-container>
     </wizard-layout>
