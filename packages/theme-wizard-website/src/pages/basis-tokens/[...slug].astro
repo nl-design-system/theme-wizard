@@ -20,7 +20,9 @@ const tokenPath = `basis.${segments.join('.')}`;
 ---
 
 <script>
+  import '@nl-design-system-community/clippy-components/clippy-heading'
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+  import '@nl-design-system-community/clippy-components/clippy-stack'
 </script>
 
 <BaseLayout title={`${node.key} - Basis tokens - Theme Wizard`}>
@@ -45,6 +47,7 @@ const tokenPath = `basis.${segments.join('.')}`;
             node.isLeaf ? (
               <wizard-token-field path={tokenPath} />
             ) : (
+              // TODO: make list of card-as-link
               <ul>
                 {node.children.map((child) => (
                   <li>
@@ -59,8 +62,3 @@ const tokenPath = `basis.${segments.join('.')}`;
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-<script>
-  import '@nl-design-system-community/clippy-components/clippy-heading'
-  import '@nl-design-system-community/clippy-components/clippy-stack'
-</script>

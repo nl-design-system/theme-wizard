@@ -58,7 +58,12 @@ export interface BreadcrumbItem {
 }
 
 export const getBreadcrumbTrail = (tree: TokenTreeNode[], currentPath: TokenPath): BreadcrumbItem[] => {
-  const crumbs: BreadcrumbItem[] = [];
+  const crumbs: BreadcrumbItem[] = [
+    {
+      href: BASIS_TOKENS_BASE_PATH,
+      title: 'basis',
+    },
+  ];
   let nodes = tree;
   for (const segment of currentPath) {
     const node = nodes.find((candidate) => candidate.key === segment);

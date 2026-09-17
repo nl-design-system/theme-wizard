@@ -237,7 +237,7 @@ describe('findTreeNode', () => {
   });
 
   it('returns undefined when the path goes deeper than an existing leaf', () => {
-    expect(findTreeNode(tree, ['color', 'default', 'bg-default', 'too-deep'])).toBeUndefined();
+    expect(findTreeNode(tree, ['color', 'default', 'bg-default', 'in-too-deep'])).toBeUndefined();
   });
 
   it('returns undefined for an empty path', () => {
