@@ -1,11 +1,40 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getBasisTokenTree, toSideNavigationItems } from '@/lib/basis-token-nav';
+
+const tree = getBasisTokenTree();
+const navItems = toSideNavigationItems(tree, []);
 ---
 
-<BaseLayout title="Huisstijl bewerken - Theme Wizard">
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+</script>
+
+<BaseLayout title="Basis tokens - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
       <wizard-page-nav slot="page-nav"></wizard-page-nav>
-     </wizard-layout>
+
+      <clippy-side-navigation
+        slot="sidebar"
+        label="Basis tokens"
+        cascade-collapse
+        items={JSON.stringify(navItems)}
+      ></clippy-side-navigation>
+
+      <wizard-container slot="main">
+        <h1>Basis tokens</h1>
+
+        <ul>
+          {
+            tree.map((group) => (
+              <li>
+                <a href={`/basis-tokens/${group.path.join('/')}`}>{group.key}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </wizard-container>
+    </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>

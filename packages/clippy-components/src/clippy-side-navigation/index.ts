@@ -10,6 +10,8 @@ import srOnly from '../lib/sr-only';
 import styles from './styles';
 import { SideNavigationItem, SideNavigationItems } from './types';
 
+export type { SideNavigationItem, SideNavigationItems } from './types';
+
 const tag = 'clippy-side-navigation';
 
 declare global {
