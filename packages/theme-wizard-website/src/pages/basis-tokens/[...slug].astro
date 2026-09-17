@@ -3,8 +3,6 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getBasisTokenTree, toSideNavigationItems, getBreadcrumbTrail } from '@/lib/basis-token-nav';
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
-import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
-import dlv from 'dlv'
 
 const tree = getBasisTokenTree();
 
@@ -19,7 +17,7 @@ const node = findTreeNode(tree, segments)!;
 const navItems = toSideNavigationItems(tree, segments);
 const crumbs = getBreadcrumbTrail(tree, segments);
 const tokenPath = `basis.${segments.join('.')}`; // 'basis.color.accent-1'
-const isColorGroup = segments.at(0) === 'color' && segments.length === 2; // ['color', 'accent-1']
+const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.length === 2; // ['color', 'accent-1']
 ---
 
 <script>

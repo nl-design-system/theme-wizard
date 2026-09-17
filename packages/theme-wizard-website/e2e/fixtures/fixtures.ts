@@ -1,4 +1,5 @@
 import { expect as baseExpect, test as baseTest, type Locator } from '@playwright/test';
+import { BasisTokenPage } from '../pages/BasisTokenPage';
 import { BasisTokensPage } from '../pages/BasisTokensPage';
 import { ComponentPage } from '../pages/ComponentPage';
 import { MinifyTokensPage } from '../pages/MinifyTokensPage';
@@ -74,6 +75,7 @@ export const expect = baseExpect.extend({
 });
 
 export const test = baseTest.extend<{
+  basisTokenPage: BasisTokenPage;
   basisTokensPage: BasisTokensPage;
   scraperPage: ScraperPage;
   minifyTokensPage: MinifyTokensPage;
@@ -87,6 +89,10 @@ export const test = baseTest.extend<{
   wizardIndexPage: WizardIndexPage;
   wizardStepFormPage: WizardStepFormPage;
 }>({
+  basisTokenPage: async ({ page }, use) => {
+    const basisTokenPage = new BasisTokenPage(page);
+    await use(basisTokenPage);
+  },
   basisTokensPage: async ({ page }, use) => {
     const themeWizard = new BasisTokensPage(page);
     await use(themeWizard);
