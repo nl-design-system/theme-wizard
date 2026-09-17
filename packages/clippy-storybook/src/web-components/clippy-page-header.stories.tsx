@@ -6,11 +6,13 @@ import React from 'react';
 
 type StoryArgs = {
   navigationItems: NavigationItems;
+  inverse: boolean;
 };
 
 const meta = {
   id: 'clippy-page-header',
   args: {
+    inverse: false,
     navigationItems: [],
   },
   parameters: {
@@ -32,4 +34,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Default',
+};
+
+export const Inverse: Story = {
+  name: 'Inverse',
+  args: {
+    inverse: true,
+  },
 };
