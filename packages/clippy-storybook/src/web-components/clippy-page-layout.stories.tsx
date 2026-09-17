@@ -12,6 +12,7 @@ const meta = {
         component: readme,
       },
     },
+    layout: 'fullscreen',
   },
   render: (args) =>
     React.createElement('clippy-page-layout', args, [
