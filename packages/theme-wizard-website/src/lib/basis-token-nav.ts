@@ -6,7 +6,7 @@ import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/desig
 import { buildTokenTree } from '@nl-design-system-community/design-tokens-schema';
 import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
 
-export const BASIS_TOKENS_BASE_PATH = '/basis-tokens';
+const BASIS_TOKENS_BASE_PATH = '/basis-tokens';
 
 // Display order for the top-level basis groups. Groups not listed here (e.g. new ones added
 // upstream later) are appended after these, in their original source order.
