@@ -1,5 +1,16 @@
 # @nl-design-system-community/theme-wizard-app
 
+## 2.2.1
+
+### Patch Changes
+
+- af0ed6e: Add `clippy-page-layout` component
+  Update `theme-wizard-layout` to use `clippy-page-layout`
+- Updated dependencies [af0ed6e]
+- Updated dependencies [9ebc7d9]
+- Updated dependencies [9ebc7d9]
+  - @nl-design-system-community/clippy-components@3.4.0
+
 ## 2.2.0
 
 ### Minor Changes
