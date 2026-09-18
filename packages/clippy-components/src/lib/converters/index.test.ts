@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { arrayFromCommaList, arrayFromTokenList, allowedValuesConverter } from './index';
+import { arrayFromCommaList, arrayFromTokenList, allowedValuesConverter, nullableNumber } from './index';
 
 describe('arrayFromTokenList', () => {
   it('should return null for null input', () => {
@@ -112,6 +112,33 @@ describe('arrayFromCommaList', () => {
   it('should fall back to splitting for invalid JSON', () => {
     const result = arrayFromCommaList('a,b');
     expect(result).toEqual(['a', 'b']);
+  });
+});
+
+describe('nullableNumber', () => {
+  it('should return null for null input', () => {
+    const result = nullableNumber(null);
+    expect(result).toBeNull();
+  });
+
+  it('should return null for empty string', () => {
+    const result = nullableNumber('');
+    expect(result).toBeNull();
+  });
+
+  it('should return null for "none"', () => {
+    const result = nullableNumber('none');
+    expect(result).toBeNull();
+  });
+
+  it('should parse a numeric string', () => {
+    const result = nullableNumber('3');
+    expect(result).toBe(3);
+  });
+
+  it('should parse a float string', () => {
+    const result = nullableNumber('3.14');
+    expect(result).toBe(3.14);
   });
 });
 

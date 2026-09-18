@@ -24,6 +24,14 @@ const createArrayConverter =
 export const arrayFromTokenList: AttributeConverterFrom<Array<unknown> | null> = createArrayConverter(/\s+/);
 export const arrayFromCommaList: AttributeConverterFrom<Array<unknown> | null> = createArrayConverter(',');
 
+/** Reads a numeric attribute, treating null/empty/"none" as null so a numeric property can be omitted. */
+export const nullableNumber: AttributeConverterFrom<number | null> = (value) => {
+  if (value === null || value === '' || value === 'none') {
+    return null;
+  }
+  return Number(value);
+};
+
 export const allowedValuesConverter = <T extends string, const AllowedValues extends readonly T[]>(
   allowedValues: AllowedValues,
   defaultValue?: AllowedValues[number],
