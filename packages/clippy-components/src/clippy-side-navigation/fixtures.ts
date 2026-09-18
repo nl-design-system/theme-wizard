@@ -1,6 +1,6 @@
-import { SideNavigationItems } from './types';
+import { NavigationItems } from '../clippy-navigation-bar/types';
 
-export const full: SideNavigationItems = [
+export const full: NavigationItems = [
   {
     href: '#',
     label: 'Page 1',
@@ -64,7 +64,7 @@ export const full: SideNavigationItems = [
   },
 ];
 
-export const simple: SideNavigationItems = [
+export const simple: NavigationItems = [
   {
     current: true,
     href: '#',
@@ -76,7 +76,7 @@ export const simple: SideNavigationItems = [
   },
 ];
 
-export const nestedWithActive: SideNavigationItems = [
+export const nestedWithActive: NavigationItems = [
   { href: '#', label: 'Page 1' },
   {
     href: '#',
@@ -95,7 +95,7 @@ export const nestedWithActive: SideNavigationItems = [
   },
 ];
 
-export const twoBranches: SideNavigationItems = [
+export const twoBranches: NavigationItems = [
   {
     href: '#',
     items: [{ href: '#', label: 'Page 1.1' }],
@@ -108,7 +108,7 @@ export const twoBranches: SideNavigationItems = [
   },
 ];
 
-export const unrelatedActive: SideNavigationItems = [
+export const unrelatedActive: NavigationItems = [
   {
     href: '#',
     items: [
@@ -124,7 +124,7 @@ export const unrelatedActive: SideNavigationItems = [
   },
 ];
 
-export const linkAttributes: SideNavigationItems = [
+export const linkAttributes: NavigationItems = [
   {
     current: true,
     href: '#',
