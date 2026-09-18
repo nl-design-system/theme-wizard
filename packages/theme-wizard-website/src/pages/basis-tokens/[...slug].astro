@@ -1,7 +1,7 @@
 ---
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getBasisTokenTree, toSideNavigationItems, getBreadcrumbTrail } from '@/lib/basis-token-nav';
+import { getBasisTokenTree, toNavigationItems, getBreadcrumbTrail } from '@/lib/basis-token-nav';
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
 
@@ -15,7 +15,7 @@ export function getStaticPaths() {
 
 const segments = (Astro.params.slug as string).split('/') as TokenPath;
 const node = findTreeNode(tree, segments)!;
-const navItems = toSideNavigationItems(tree, segments);
+const navItems = toNavigationItems(tree, segments);
 const crumbs = getBreadcrumbTrail(tree, segments);
 const tokenPath = `basis.${segments.join('.')}`; // 'basis.color.accent-1'
 const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.length === 2; // ['color', 'accent-1']

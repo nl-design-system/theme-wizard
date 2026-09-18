@@ -11,6 +11,7 @@ export default css`
      *    Gets overwritten by JS in the component
      */
     --clippy-page-layout-header-block-size: 0px; /* [1] */
+    --clippy-page-layout-content-max-inline-size: var(--basis-page-max-inline-size);
 
     background-color: var(--clippy-page-layout-background-color, var(--basis-color-default-bg-document));
     container-name: clippy-page-layout;
