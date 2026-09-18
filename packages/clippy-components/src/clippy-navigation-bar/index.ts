@@ -33,9 +33,9 @@ export class ClippyNavigationBar extends LitElement {
 
   #renderItem(item: NavigationItem): TemplateResult {
     return html`
-      <li>
+      <li class="clippy-navigation-bar__list-item">
         <a
-          class="ma-navigation-bar__item"
+          class="clippy-navigation-bar__item | ma-navigation-bar__item"
           href=${item.href}
           aria-current=${item.current ? 'page' : nothing}
           target=${item.target || nothing}

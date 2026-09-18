@@ -11,4 +11,12 @@ export default css`
       var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
     );
   }
+
+  .clippy-navigation-bar__list-item {
+    display: flex;
+  }
+
+  .clippy-navigation-bar__item {
+    align-items: center;
+  }
 `;
