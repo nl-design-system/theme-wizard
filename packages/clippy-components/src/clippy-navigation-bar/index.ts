@@ -1,5 +1,6 @@
+import navBarCSS from '@nl-design-system-community/ma-navigation-bar-css/dist/ma-navigation-bar.css?inline';
 import { safeCustomElement } from '@src/lib/decorators';
-import { LitElement, TemplateResult, html, nothing } from 'lit';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import srOnly from '../lib/sr-only';
@@ -21,7 +22,7 @@ declare global {
  */
 @safeCustomElement(tag)
 export class ClippyNavigationBar extends LitElement {
-  static override readonly styles = [styles, srOnly];
+  static override readonly styles = [unsafeCSS(navBarCSS), styles, srOnly];
 
   @property({ type: Object })
   items?: NavigationItems;
@@ -33,17 +34,16 @@ export class ClippyNavigationBar extends LitElement {
   #renderItem(item: NavigationItem): TemplateResult {
     return html`
       <li>
-        <span>
-          <a
-            href=${item.href}
-            aria-current=${item.current ? 'page' : nothing}
-            target=${item.target || nothing}
-            hreflang=${item.hreflang || nothing}
-            lang=${item.lang || nothing}
-          >
-            ${item.label}
-          </a>
-        </span>
+        <a
+          class="ma-navigation-bar__item"
+          href=${item.href}
+          aria-current=${item.current ? 'page' : nothing}
+          target=${item.target || nothing}
+          hreflang=${item.hreflang || nothing}
+          lang=${item.lang || nothing}
+        >
+          ${item.label}
+        </a>
       </li>
     `;
   }
@@ -54,11 +54,13 @@ export class ClippyNavigationBar extends LitElement {
     }
 
     return html`
-      <nav aria-labelledby=${this.label ? this.#navId : nothing}>
+      <nav class="ma-navigation-bar" aria-labelledby=${this.label ? this.#navId : nothing}>
         ${this.label ? html`<span id=${this.#navId} class="sr-only">${this.label}</span>` : nothing}
-        <ul>
-          ${map(this.items, (item) => this.#renderItem(item))}
-        </ul>
+        <div class="clippy-navigation-bar__content | ma-navigation-bar__content">
+          <ul class="ma-navigation-bar__list">
+            ${map(this.items, (item) => this.#renderItem(item))}
+          </ul>
+        </div>
       </nav>
     `;
   }

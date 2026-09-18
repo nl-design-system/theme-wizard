@@ -25,7 +25,7 @@ const meta = {
   },
   render: (args: StoryArgs) => React.createElement('clippy-navigation-bar', args),
   tags: ['autodocs'],
-  title: 'Clippy/Side Navigation',
+  title: 'Clippy/Navigation Bar',
 } satisfies Meta<StoryArgs>;
 
 export default meta;

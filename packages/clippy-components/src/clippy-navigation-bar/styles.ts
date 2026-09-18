@@ -4,4 +4,11 @@ export default css`
   :host(:not([hidden])) {
     display: contents;
   }
+
+  :host {
+    --ma-navigation-bar-content-max-inline-size: var(
+      --clippy-navigation-bar-content-max-inline-size,
+      var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
+    );
+  }
 `;
