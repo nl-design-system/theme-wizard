@@ -34,7 +34,6 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
       <clippy-side-navigation
         slot="sidebar"
         label="Basis tokens"
-        cascade-collapse
         items={JSON.stringify(navItems)}
       ></clippy-side-navigation>
 
@@ -51,9 +50,6 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                   <wizard-token-field path={tokenPath} />
                 ) : (
                   <>
-                    {isColorGroup && (
-                      <wizard-color-system-preview groups={tokenPath}></wizard-color-system-preview>
-                    )}
                     <ul>
                       {node.children.map((child) => (
                         <li>
@@ -61,6 +57,9 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                         </li>
                       ))}
                     </ul>
+                    {isColorGroup && (
+                      <wizard-color-system-preview groups={tokenPath}></wizard-color-system-preview>
+                    )}
                   </>
                 )
               }
