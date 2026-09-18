@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-modal/README.md?raw';
 import React from 'react';
 
-interface ModalStoryArgs {
+export interface ModalStoryArgs {
   'aria-describedby'?: string;
   actions: 'none' | 'cancel' | 'confirm' | 'both';
   cancelLabel: string;
