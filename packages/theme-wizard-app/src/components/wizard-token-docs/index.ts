@@ -1,6 +1,6 @@
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import { arrayFromCommaList } from '@nl-design-system-community/clippy-components/lib/converters';
+import { arrayFromCommaList, nullableNumber } from '@nl-design-system-community/clippy-components/lib/converters';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
 import '@vanillawc/wc-markdown';
 import dlv from 'dlv';
@@ -59,8 +59,9 @@ export class WizardTokenDocs extends LitElement {
   @property({ attribute: 'skip-redundant-groups', converter: arrayFromCommaList })
   skipRedundantGroups: string[] = [];
 
-  @property({ attribute: 'heading-level', type: Number })
-  headingLevel = 2;
+  /** Attribute value "none" hides the heading entirely (e.g. when the page already renders its own). */
+  @property({ attribute: 'heading-level', converter: nullableNumber })
+  headingLevel: number | null = 2;
 
   protected override willUpdate(changedProperties: PropertyValues) {
     if (!hasChangedProperty(changedProperties, ['theme', 'groups', 'skipRedundantGroups'])) {
@@ -103,7 +104,13 @@ export class WizardTokenDocs extends LitElement {
 
           return html`
             <clippy-stack size="none">
-              <clippy-heading level=${this.headingLevel}>${t(`tokens.fieldLabels.${path}.label`)}</clippy-heading>
+              ${
+                this.headingLevel === null
+                  ? nothing
+                  : html`<clippy-heading level=${this.headingLevel}>
+                      ${t(`tokens.fieldLabels.${path}.label`)}
+                    </clippy-heading>`
+              }
               <wc-markdown class="wizard-token-docs__markdown" .textContent=${docs}></wc-markdown>
             </clippy-stack>
           `;

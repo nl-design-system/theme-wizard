@@ -44,7 +44,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
           <main>
             <clippy-stack size="lg">
               <clippy-heading level="1">{node.key}</clippy-heading>
-              <wizard-token-docs groups={tokenPath} heading-level="2"></wizard-token-docs>
+              <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
 
               {
                 node.isLeaf ? (
@@ -54,8 +54,6 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                     {isColorGroup && (
                       <wizard-color-system-preview groups={tokenPath}></wizard-color-system-preview>
                     )}
-                    {/* // TODO: Show seed color if `node` is a color group */}
-                    {/* // TODO: make list of card-as-link */}
                     <ul>
                       {node.children.map((child) => (
                         <li>
