@@ -1,5 +1,14 @@
 # @nl-design-system-community/clippy-components
 
+## 3.4.0
+
+### Minor Changes
+
+- af0ed6e: Add `clippy-page-layout` component
+  Update `theme-wizard-layout` to use `clippy-page-layout`
+- 9ebc7d9: Add `clippy-side-navigation` component
+- 9ebc7d9: Add `clippy-drawer` component
+
 ## 3.3.0
 
 ### Minor Changes
