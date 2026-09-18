@@ -24,7 +24,7 @@ const CSS_SYNTAX_TO_DTCG_TYPE: Record<string, string> = {
  * Map each of the documented DTCG $types to one of our schemas,
  * using BaseDesignTokenSchema when we don't have a dedicated one
  */
-const DTCG_TYPE_TO_SCHEMA: Record<string, z.ZodTypeAny> = {
+const DTCG_TYPE_TO_SCHEMA: Record<string, z.ZodType> = {
   boxShadow: BaseDesignTokenSchema,
   color: ColorTokenValidationSchema,
   cursor: BaseDesignTokenSchema,
@@ -46,15 +46,15 @@ const LEGACY_SYNTAX_PATH = ['extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
  * @param node An NL Design System tokens.json definition structure
  * @returns Zod schema with all node-based validations for all supported design tokens
  */
-export const buildSchema = (node: Record<string, unknown>): z.ZodTypeAny => {
-  if ('$type' in node) {
+export const buildSchema = (node: Record<string, unknown>): z.ZodType => {
+  if (Object.hasOwn(node, '$type')) {
     // Look in both legacy extensions and modern $extensions because some design token JSON files
     // might use the legacy format.
     const syntax = dlv(node, MODERN_SYNTAX_PATH) ?? dlv(node, LEGACY_SYNTAX_PATH);
     const dtcgType = typeof syntax === 'string' ? CSS_SYNTAX_TO_DTCG_TYPE[syntax] : undefined;
     return DTCG_TYPE_TO_SCHEMA[dtcgType ?? ''] ?? BaseDesignTokenSchema;
   }
-  const shape: Record<string, z.ZodTypeAny> = Object.create(null);
+  const shape: Record<string, z.ZodType> = Object.create(null);
   for (const [key, value] of Object.entries(node)) {
     if (!key.startsWith('$')) {
       shape[key] = buildSchema(value as Record<string, unknown>);

@@ -16,6 +16,7 @@ export * from './stringify-token';
 export * from './theme';
 export * from './token-path';
 export * from './token-subtype';
+export * from './token-tree';
 export * from './token-usage';
 export * from './upgrade-legacy-tokens';
 export * from './walker';

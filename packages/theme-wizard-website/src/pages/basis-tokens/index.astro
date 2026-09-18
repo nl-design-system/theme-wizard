@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getBasisTokenTree, toSideNavigationItems } from '@/lib/basis-token-nav';
+
+const tree = getBasisTokenTree();
+const navItems = toSideNavigationItems(tree, []);
+---
+
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading';
+  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+</script>
+
+<BaseLayout title="Basis tokens - Theme Wizard">
+  <theme-wizard-app>
+    <wizard-layout>
+      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+
+      <clippy-side-navigation
+        slot="sidebar"
+        label="Basis tokens"
+        items={JSON.stringify(navItems)}
+      ></clippy-side-navigation>
+
+      <wizard-container slot="main">
+        <main>
+          <clippy-stack size="lg">
+            <clippy-heading level="1">Basis tokens</clippy-heading>
+
+            <!-- TODO: make list of card-as-link -->
+            <ul>
+              {
+                tree.map((group) => (
+                  <li>
+                    <a href={`/basis-tokens/${group.path.join('/')}`}>{group.key}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </clippy-stack>
+        </main>
+      </wizard-container>
+    </wizard-layout>
+  </theme-wizard-app>
+</BaseLayout>
