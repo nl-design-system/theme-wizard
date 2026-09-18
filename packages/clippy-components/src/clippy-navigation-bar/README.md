@@ -1,6 +1,6 @@
 # `<clippy-navigation-bar>`
 
-A navigation bar component. Renders one layer of navigation items.
+A navigation bar component based on the [Mooi en Anders Navigation Bar component](https://github.com/nl-design-system/gebruikersonderzoeken/tree/main/packages/components-css/ma-navigation-bar-css). Renders one layer of navigation items.
 
 ## Usage
 
