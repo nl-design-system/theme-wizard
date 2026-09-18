@@ -22,6 +22,7 @@ export default css`
     background-color: var(--wizard-layout-nav-background-color);
     color: var(--basis-color-accent-1-inverse-color-default);
     display: grid;
+    gap: var(--basis-space-column-4xl);
     grid-template-columns: auto 1fr;
     inset-block-start: 0;
     padding-inline: var(--wizard-layout-padding-inline);
