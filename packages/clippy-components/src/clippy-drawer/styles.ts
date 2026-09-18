@@ -10,8 +10,8 @@ export default css`
       --ams-dialog-inline-size: calc(100% - var(--clippy-drawer-backdrop-min-size));
       --ams-dialog-medium-inline-size: var(--ams-dialog-inline-size);
       --ams-dialog-max-inline-size: var(--clippy-drawer-max-inline-size);
-      --ams-dialog-border-radius: 0px;
-      --ams-dialog-border-width: 0px;
+      --ams-dialog-border-radius: var(--basis-border-radius-none);
+      --ams-dialog-border-width: var(--basis-border-width-none);
 
       block-size: 100vb;
     }
@@ -19,13 +19,13 @@ export default css`
 
   :host([side='inline-start']) {
     .ams-dialog {
-      margin-inline-start: 0;
+      margin-inline-start: var(--basis-space-none);
     }
   }
 
   :host([side='inline-end']) {
     .ams-dialog {
-      margin-inline-end: 0;
+      margin-inline-end: var(--basis-space-none);
     }
   }
 `;
