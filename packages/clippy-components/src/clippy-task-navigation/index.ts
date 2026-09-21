@@ -1,8 +1,6 @@
-import actionCss from '@gemeente-denhaag/action/index.css?inline';
 import { safeCustomElement } from '@lib/decorators';
-import linkStyles from '@nl-design-system-candidate/link-css/link.css?inline';
-import { LitElement, html, unsafeCSS } from 'lit';
-import { property } from 'lit/decorators.js';
+import { ClippyCard } from '@src/clippy-card';
+import cardAsLinkOverlay from '../lib/card-as-link-overlay';
 import styles from './styles';
 
 const tag = 'clippy-task-navigation';
@@ -13,28 +11,19 @@ declare global {
   }
 }
 
+/**
+ * A compact, horizontal `clippy-card` composition for a single row in a task/step navigation
+ * list: `header` and `footer` sit side by side in a row, with an optional `body` slot for
+ * supplementary detail (e.g. a due date) between them. Slot a real `<a>` as a direct child of
+ * `header` (with any icon/label nested inside it, not the other way around) to make the whole
+ * row a single clickable link — a `::slotted(a)::after` overlay stretches its hit area to cover
+ * the row, purely via CSS. See `clippy-card-as-link-horizontal`, which this is based on.
+ *
+ * @slot header - Task label region — put your `<a>` here (as a direct child) for the task link
+ * @slot body - Supplementary detail, e.g. a due date
+ * @slot footer - Trailing content, e.g. a chevron icon
+ */
 @safeCustomElement(tag)
-export class ClippyTaskNavigation extends LitElement {
-  @property({ type: String }) href = '';
-
-  static override readonly styles = [unsafeCSS(linkStyles), unsafeCSS(actionCss), styles];
-
-  override render() {
-    return html`
-      <a class="nl-link denhaag-action denhaag-action--single" href=${this.href}>
-        <slot name="iconStart"></slot>
-        <div class="denhaag-action__content">
-          <strong><slot></slot></strong>
-        </div>
-        <div class="denhaag-action__context">
-          <div class="denhaag-action__details">
-            <slot name="details"></slot>
-          </div>
-          <div class="denhaag-action__actions">
-            <slot name="actions"></slot>
-          </div>
-        </div>
-      </a>
-    `;
-  }
+export class ClippyTaskNavigation extends ClippyCard {
+  static override readonly styles = [...ClippyCard.styles, cardAsLinkOverlay, styles];
 }

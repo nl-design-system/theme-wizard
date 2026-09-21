@@ -38,16 +38,19 @@ export class WizardStepFormTaskNavigation extends LitElement {
   @property({ type: String }) icon = '';
   @property({ type: Boolean }) done = false;
 
-  readonly #id = crypto.randomUUID();
-
   override render() {
     const icon = isIconName(this.icon) ? ICON_MAP[this.icon] : null;
-    const descriptionId = `${this.#id}-description`;
 
     return html`
-      <clippy-task-navigation href=${this.href} aria-labelledby=${descriptionId}>
+      <clippy-task-navigation>
+        <a class="wizard-step-form-task-navigation-link" slot="header" href=${this.href}>
+          <span>
+            ${this.done ? html`<span class="sr-only">${t('wizard.taskNavigation.done')}:</span>` : nothing}
+            <slot></slot>
+          </span>
+        </a>
         <span
-          slot="iconStart"
+          slot="pre-header"
           class="wizard-step-form-task-navigation-icon-start ${classMap({
             'wizard-step-form-task-navigation-icon-start--checked': this.done,
           })}"
@@ -55,11 +58,7 @@ export class WizardStepFormTaskNavigation extends LitElement {
         >
           ${unsafeSVG(this.done ? CheckIcon : icon)}
         </span>
-        <span id=${descriptionId}>
-          ${this.done ? html`<span class="sr-only">${t('wizard.taskNavigation.done')}:</span>` : nothing}
-          <slot></slot>
-        </span>
-        <span slot="actions" aria-hidden="true">${unsafeSVG(ChevronRightIcon)}</span>
+        <span slot="footer" aria-hidden="true">${unsafeSVG(ChevronRightIcon)}</span>
       </clippy-task-navigation>
     `;
   }

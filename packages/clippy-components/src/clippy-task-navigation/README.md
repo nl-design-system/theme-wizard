@@ -1,8 +1,31 @@
 # `<clippy-task-navigation>`
 
-Navigation item linking to a single task. Renders a styled anchor with optional icon, details, and action slots. Focus styles work without needing Den Haag design tokens loaded.
+A compact, horizontal [`clippy-card`](../clippy-card/README.md) composition
+for a single row in a task/step navigation list: `header` and `footer` sit
+side by side in a row, with an optional `body` slot for supplementary detail
+(e.g. a due date) between them.
 
-Based on [`@gemeente-denhaag/action`](https://npmx.dev/package/@gemeente-denhaag/action). See the [Den Haag action documentation](https://nl-design-system.github.io/denhaag/?path=/docs/css-action--docs) for available design tokens and guidelines.
+Slot a real `<a href>` as a **direct child** of the `header` slot (with any
+icon/label nested inside it, not the other way around) to make the whole row
+a single clickable link — a `::slotted(a)::after` overlay stretches that
+anchor's clickable/hoverable/focusable area to cover the whole row, purely
+via CSS. See [`clippy-card`'s README](../clippy-card/README.md) for why the
+nesting has to go this way, and the general caveats of the pattern (e.g.
+z-index if you need a second interactive element inside the row).
+
+This is the same composition as
+[`clippy-card-as-link-horizontal`](../clippy-card-as-link-horizontal/README.md),
+with an added `body` slot for a piece of detail between the label and the
+trailing content.
+
+```html
+<clippy-task-navigation>
+  <span slot="start">🎨</span>
+  <a slot="header" href="/wizard/typography"> Task description </a>
+  <time slot="body" datetime="2025-01-01">1 jan 2025</time>
+  <span slot="footer">→</span>
+</clippy-task-navigation>
+```
 
 ## Usage
 
@@ -10,37 +33,11 @@ Based on [`@gemeente-denhaag/action`](https://npmx.dev/package/@gemeente-denhaag
 import '@nl-design-system-community/clippy-components/clippy-task-navigation';
 ```
 
-```html
-<clippy-task-navigation href="/wizard/typography">Task description</clippy-task-navigation>
-```
+## CSS Custom Properties
 
-With icon and action indicator:
-
-```html
-<clippy-task-navigation href="/wizard/typography">
-  <clippy-icon slot="iconStart"><svg>…</svg></clippy-icon>
-  Task description
-  <clippy-icon slot="actions"><svg>…</svg></clippy-icon>
-</clippy-task-navigation>
-```
-
-## Attributes & properties
-
-| Attribute / Property | Type   | Description | Default |
-| -------------------- | ------ | ----------- | ------- |
-| `href`               | string | Link URL    | `''`    |
-
-## Slots
-
-| Slot        | Description                                                                                          |
-| ----------- | ---------------------------------------------------------------------------------------------------- |
-| _(default)_ | Task label                                                                                           |
-| `iconStart` | Icon placed before the label                                                                         |
-| `details`   | Supplementary info (e.g. due date) shown below or next to the label, depending on screen real estate |
-| `actions`   | Action indicator (e.g. chevron) shown at the end                                                     |
-
-## CSS custom properties
-
-| Property                                    | Description                           |
-| ------------------------------------------- | ------------------------------------- |
-| `--clippy-task-navigation-icon-start-align` | `align-self` for the `iconStart` slot |
+Inherits `clippy-card`'s full token surface — see
+[`clippy-card`'s README](../clippy-card/README.md). This component adds no
+custom properties of its own: the row layout (`flex-direction: row`, centered
+alignment, the header growing to fill the row, zero footer start-padding) is
+a baked-in default, and the hover/focus/active states are styled directly
+from `--basis-*` design tokens, not through an additional overridable layer.

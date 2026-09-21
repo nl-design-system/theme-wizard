@@ -1,113 +1,76 @@
-import { beforeEach, describe, expect, it } from 'vitest';
 import './index';
+import { afterEach, describe, expect, it } from 'vitest';
+import { ClippyTaskNavigation } from './index';
 
 const tag = 'clippy-task-navigation';
 
 describe(`<${tag}>`, () => {
-  beforeEach(() => {
+  let component: ClippyTaskNavigation;
+
+  afterEach(() => {
     document.body.innerHTML = '';
   });
 
-  it('renders an anchor with Den Haag action classes', async () => {
-    document.body.innerHTML = `<${tag}>Task</${tag}>`;
-    const component = document.querySelector(tag) as unknown as {
-      updateComplete: Promise<void>;
-      shadowRoot?: ShadowRoot;
-    };
-    await component.updateComplete;
+  describe('Basic rendering', () => {
+    it('renders', async () => {
+      document.body.innerHTML = `<${tag}></${tag}>`;
+      component = document.querySelector(tag) as ClippyTaskNavigation;
+      await component.updateComplete;
+      await expect.element(component).toBeInTheDocument();
+    });
 
-    const anchor = component.shadowRoot?.querySelector('a');
-    expect(anchor).toBeTruthy();
-    expect(anchor?.classList.contains('denhaag-action')).toBe(true);
-    expect(anchor?.classList.contains('denhaag-action--single')).toBe(true);
-    expect(anchor?.classList.contains('nl-link')).toBe(true);
+    it('inherits the header/body/footer slots from clippy-card', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <span slot="header">header</span>
+          <span slot="body">body</span>
+          <span slot="footer">footer</span>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyTaskNavigation;
+      await component.updateComplete;
+      const root = component.shadowRoot;
+
+      const textOf = (selector: string): string =>
+        (root?.querySelector(selector) as HTMLSlotElement)
+          .assignedNodes()
+          .map((n) => n.textContent?.trim())
+          .join('');
+
+      expect(textOf('slot[name="header"]')).toBe('header');
+      expect(textOf('slot[name="body"]')).toBe('body');
+      expect(textOf('slot[name="footer"]')).toBe('footer');
+    });
+
+    it('lays out as a row', async () => {
+      document.body.innerHTML = `<${tag}></${tag}>`;
+      component = document.querySelector(tag) as ClippyTaskNavigation;
+      await component.updateComplete;
+      expect(getComputedStyle(component).flexDirection).toBe('row');
+    });
   });
 
-  it('sets the href attribute on the anchor', async () => {
-    document.body.innerHTML = `<${tag} href="/tasks/1">Task</${tag}>`;
-    const component = document.querySelector(tag) as unknown as {
-      updateComplete: Promise<void>;
-      shadowRoot?: ShadowRoot;
-    };
-    await component.updateComplete;
+  describe('stretched-link overlay', () => {
+    it('generates a stretched ::after overlay on a directly-slotted <a>', async () => {
+      document.body.innerHTML = `<${tag}><a slot="header" href="/tasks/1">Task</a></${tag}>`;
+      component = document.querySelector(tag) as ClippyTaskNavigation;
+      await component.updateComplete;
+      const anchor = component.querySelector('a') as HTMLAnchorElement;
+      const after = getComputedStyle(anchor, '::after');
 
-    const anchor = component.shadowRoot?.querySelector('a');
-    expect(anchor?.getAttribute('href')).toBe('/tasks/1');
+      expect(after.content).not.toBe('none');
+      expect(after.position).toBe('absolute');
+    });
   });
 
-  it('renders the default slot inside denhaag-action__content > strong', async () => {
-    document.body.innerHTML = `<${tag}>My Task</${tag}>`;
-    const component = document.querySelector(tag) as unknown as {
-      updateComplete: Promise<void>;
-      shadowRoot?: ShadowRoot;
-    };
-    await component.updateComplete;
-
-    const strong = component.shadowRoot?.querySelector('.denhaag-action__content strong');
-    expect(strong).toBeTruthy();
-
-    const slot = strong?.querySelector('slot:not([name])');
-    const slottedText =
-      slot instanceof HTMLSlotElement
-        ? slot
-            .assignedNodes({ flatten: true })
-            .map((n) => n.textContent ?? '')
-            .join('')
-        : '';
-    expect(slottedText).toContain('My Task');
-  });
-
-  it('renders the details slot inside denhaag-action__details', async () => {
-    document.body.innerHTML = `<${tag}><time slot="details">1 jan 2025</time>Task</${tag}>`;
-    const component = document.querySelector(tag) as unknown as {
-      updateComplete: Promise<void>;
-      shadowRoot?: ShadowRoot;
-    };
-    await component.updateComplete;
-
-    const detailsSlot = component.shadowRoot?.querySelector('.denhaag-action__details slot[name="details"]');
-    expect(detailsSlot).toBeTruthy();
-  });
-
-  it('renders the actions slot inside denhaag-action__actions', async () => {
-    document.body.innerHTML = `<${tag}><span slot="actions">→</span>Task</${tag}>`;
-    const component = document.querySelector(tag) as unknown as {
-      updateComplete: Promise<void>;
-      shadowRoot?: ShadowRoot;
-    };
-    await component.updateComplete;
-
-    const actionsSlot = component.shadowRoot?.querySelector('.denhaag-action__actions slot[name="actions"]');
-    expect(actionsSlot).toBeTruthy();
-  });
-
-  it('the inner anchor is focusable', async () => {
-    document.body.innerHTML = `<${tag} href="/tasks/1">Task</${tag}>`;
-    const component = document.querySelector(tag) as unknown as {
-      updateComplete: Promise<void>;
-      shadowRoot?: ShadowRoot;
-    };
-    await component.updateComplete;
-
-    const anchor = component.shadowRoot?.querySelector('a');
-    anchor?.focus();
-    expect(component.shadowRoot?.activeElement).toBe(anchor);
-  });
-
-  it('renders the iconStart slot before denhaag-action__content', async () => {
-    document.body.innerHTML = `<${tag}><span slot="iconStart">★</span>Task</${tag}>`;
-    const component = document.querySelector(tag) as unknown as {
-      updateComplete: Promise<void>;
-      shadowRoot?: ShadowRoot;
-    };
-    await component.updateComplete;
-
-    const anchor = component.shadowRoot?.querySelector('a');
-    const children = Array.from(anchor?.children ?? []);
-    const slotIndex = children.findIndex((el) => el.matches('slot[name="iconStart"]'));
-    const contentIndex = children.findIndex((el) => el.matches('.denhaag-action__content'));
-
-    expect(slotIndex).toBeGreaterThanOrEqual(0);
-    expect(slotIndex).toBeLessThan(contentIndex);
+  describe('focus', () => {
+    it(':focus-within matches when the slotted anchor is focused', async () => {
+      document.body.innerHTML = `<${tag}><a slot="header" href="/tasks/1">Task</a></${tag}>`;
+      component = document.querySelector(tag) as ClippyTaskNavigation;
+      await component.updateComplete;
+      const anchor = component.querySelector('a') as HTMLAnchorElement;
+      anchor.focus();
+      expect(component.matches(':focus-within')).toBe(true);
+    });
   });
 });

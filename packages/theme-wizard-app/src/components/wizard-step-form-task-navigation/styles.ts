@@ -1,6 +1,14 @@
 import { css } from 'lit';
 
 export default css`
+  .wizard-step-form-task-navigation-link {
+    align-items: center;
+    column-gap: var(--basis-space-column-lg);
+    display: flex;
+    font-weight: var(--basis-text-font-weight-bold);
+    inline-size: 100%;
+  }
+
   .wizard-step-form-task-navigation-icon-start {
     --wizard-step-form-task-navigation-border-style: dashed;
     --wizard-step-form-task-navigation-border-color: var(--basis-color-default-border-subtle);
@@ -18,9 +26,10 @@ export default css`
     inline-size: var(--basis-size-md);
 
     & svg {
+      align-self: center;
       block-size: var(--basis-size-icon-md);
       color: inherit;
-      place-self: center center;
+      justify-self: center;
     }
   }
 
