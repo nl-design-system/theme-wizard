@@ -3,14 +3,7 @@ import '@nl-design-system-community/clippy-components/clippy-card';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-card/README.md?raw';
 import { html } from 'lit';
 import React from 'react';
-import {
-  ChevronRightIcon,
-  CircleCheckIcon,
-  LinkIcon,
-  chevronRightSvg,
-  circleCheckSvg,
-  linkSvg,
-} from '../utils/cardIcons';
+import { CircleCheckIcon, circleCheckSvg } from '../utils/cardIcons';
 import { templateToHtml } from '../utils/templateToHtml';
 
 const headingStyleCss = (colorVar = '--_clippy-card-heading-color') =>
@@ -145,21 +138,6 @@ const createDefaultTemplate = () => html`
       <a href="#" slot="footer" style="${linkStyleCss}">Bekijk zaak</a>
     </clippy-card>
   </div>
-`;
-
-const createHorizontalTemplate = () => html`
-  <clippy-card
-    style="--clippy-card-footer-padding-inline-start: var(--basis-space-none); align-items: center; display: flex; flex-direction: row; justify-content: space-between; max-width: 22rem;"
-  >
-    <div slot="header" style="align-items: center; display: flex; gap: 0.75rem;">
-      ${linkSvg('style="color: var(--basis-color-action-1-color-default); flex-shrink: 0;"')}
-      <div>
-        <strong style="display: block;">Met de huisstijl van een bestaande website</strong>
-        <span style="color: var(--basis-color-default-color-subtle);">Vul een URL in.</span>
-      </div>
-    </div>
-    <div slot="footer">${chevronRightSvg}</div>
-  </clippy-card>
 `;
 
 const meta = {
@@ -375,52 +353,5 @@ export const Default: Story = {
         ),
         React.createElement('a', { href: '#', slot: 'footer', style: linkStyle }, 'Bekijk zaak'),
       ),
-    ),
-};
-
-export const Horizontal: Story = {
-  name: 'Horizontal (compact link)',
-  parameters: {
-    controls: { disable: true },
-    docs: {
-      description: {
-        story:
-          "A horizontal layout composed from the same `header`/`footer` slots, by setting the host to `display: flex` from outside — the header and footer wrapper divs become flex siblings instead of stacked blocks. The footer's own start padding is trimmed via the `--clippy-card-footer-padding-inline-start` custom property so the chevron sits flush against the right edge.",
-      },
-      source: {
-        transform: () => templateToHtml(createHorizontalTemplate()),
-        type: 'code',
-      },
-    },
-  },
-  render: () =>
-    React.createElement(
-      'clippy-card',
-      {
-        style: {
-          '--clippy-card-footer-padding-inline-start': 'var(--basis-space-none)',
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          maxWidth: '22rem',
-        } as React.CSSProperties & Record<string, string>,
-      },
-      React.createElement(
-        'div',
-        { slot: 'header', style: { alignItems: 'center', display: 'flex', gap: '0.75rem' } },
-        LinkIcon({ style: { color: 'var(--basis-color-action-1-color-default)', flexShrink: 0 } }),
-        React.createElement(
-          'div',
-          {},
-          React.createElement('strong', { style: { display: 'block' } }, 'Met de huisstijl van een bestaande website'),
-          React.createElement(
-            'span',
-            { style: { color: 'var(--basis-color-default-color-subtle)' } },
-            'Vul een URL in.',
-          ),
-        ),
-      ),
-      React.createElement('div', { slot: 'footer' }, ChevronRightIcon()),
     ),
 };
