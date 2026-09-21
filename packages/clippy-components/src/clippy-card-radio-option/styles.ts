@@ -1,20 +1,21 @@
 import { css } from 'lit';
 
 export const radioStyles = css`
-  :host(:not([hidden])) {
-    display: block;
-  }
-
   /* ELEMENTS */
 
   :host {
-    --_clippy-card-radio-option-border-radius: var(--basis-border-radius-md);
+    /* Own body/footer padding, distinct from clippy-card's defaults — overriding the public
+       custom properties this way (rather than restyling .clippy-card__body/__footer directly)
+       keeps the override visible/discoverable through clippy-card's own documented API. */
+    --clippy-card-body-padding-block-end: var(--basis-space-inline-xl);
+    --clippy-card-body-padding-block-start: var(--basis-space-none);
+    --clippy-card-body-padding-inline-end: var(--basis-space-inline-xl);
+    --clippy-card-body-padding-inline-start: var(--basis-space-inline-xl);
+    --clippy-card-footer-padding-block-end: var(--basis-space-inline-xl);
+    --clippy-card-footer-padding-block-start: var(--basis-space-none);
+    --clippy-card-footer-padding-inline-end: var(--basis-space-inline-xl);
+    --clippy-card-footer-padding-inline-start: var(--basis-space-inline-xl);
 
-    background-color: var(--basis-color-default-bg-document);
-    border-color: var(--basis-color-default-border-subtle);
-    border-radius: var(--_clippy-card-radio-option-border-radius);
-    border-style: solid;
-    border-width: var(--basis-border-width-sm);
     min-inline-size: var(--basis-pointer-target-min-inline-size);
     position: relative;
   }
@@ -24,7 +25,6 @@ export const radioStyles = css`
    *    This element also takes care of the additional border-width on interaction and [checked] state.
    */
   .clippy-card-radio-option__label {
-    /* [1] */
     color: var(--basis-color-default-color-document);
     font-family: var(--basis-text-font-family-default);
     font-size: var(--basis-text-font-size-md);
@@ -34,7 +34,7 @@ export const radioStyles = css`
     /* [1] */
     &::after {
       border-color: var(--basis-form-control-border-color);
-      border-radius: var(--_clippy-card-radio-option-border-radius);
+      border-radius: var(--_clippy-card-border-radius);
       border-style: solid;
       border-width: var(--basis-border-width-none);
       content: '';
@@ -75,20 +75,6 @@ export const radioStyles = css`
     align-self: start;
     flex: 1;
     min-inline-size: 0;
-  }
-
-  .clippy-radio-card__body {
-    padding-block-end: var(--basis-space-inline-xl);
-    padding-block-start: var(--basis-space-none);
-    padding-inline-end: var(--basis-space-inline-xl);
-    padding-inline-start: var(--basis-space-inline-xl);
-  }
-
-  .clippy-radio-card__footer {
-    padding-block-end: var(--basis-space-inline-xl);
-    padding-block-start: var(--basis-space-none);
-    padding-inline-end: var(--basis-space-inline-xl);
-    padding-inline-start: var(--basis-space-inline-xl);
   }
 
   /* HOST STATES */

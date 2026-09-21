@@ -2,7 +2,7 @@
 
 Form-associated radiogroup wrapping `<clippy-card-radio-option>` children. Handles roving tabindex, arrow-key navigation, name propagation, and native form participation via `ElementInternals`.
 
-Importing the group also registers `<clippy-card-radio-option>`.
+Importing the group also registers `<clippy-card-radio-option>`. Each `<clippy-card-radio-option>` is a composition of [`<clippy-card>`](../clippy-card/README.md) — it extends the class for its card chrome (background, border, design tokens) and its `body`/`footer` regions, while its own header (the hidden radio input, `start`/`description` slots) is custom. See `clippy-card-radio-option`'s README for details.
 
 ## Usage
 

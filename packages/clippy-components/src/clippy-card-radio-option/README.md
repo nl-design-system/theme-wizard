@@ -1,6 +1,8 @@
 # `<clippy-card-radio-option>`
 
-Single selectable card for use inside `<clippy-card-radio-group>`. The hidden `<input type="radio">` participates in form submission; the card is the visual surface. `delegatesFocus: true` forwards host focus to the hidden input.
+Single selectable card for use inside `<clippy-card-radio-group>`. Extends `<clippy-card>` for its card chrome (background, border, design tokens) and its `body`/`footer` regions; the hidden `<input type="radio">` participates in form submission, and the card is the visual surface. `delegatesFocus: true` forwards host focus to the hidden input.
+
+Since it extends `clippy-card`, it also inherits clippy-card's CSS custom property surface (see [`clippy-card`'s README](../clippy-card/README.md)) — e.g. `--clippy-card-border-radius`, `--clippy-card-background-color`. The `start`/default/`description` header region is specific to this component and isn't part of that shared surface.
 
 `inputTabIndex` and `checked` are managed by the parent `<clippy-card-radio-group>` — do not set them manually.
 
