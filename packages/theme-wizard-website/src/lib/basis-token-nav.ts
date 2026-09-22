@@ -1,7 +1,7 @@
 import type {
-  SideNavigationItem,
-  SideNavigationItems,
-} from '@nl-design-system-community/clippy-components/clippy-side-navigation';
+  NavigationItem,
+  NavigationItems,
+} from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
 import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { buildTokenTree } from '@nl-design-system-community/design-tokens-schema';
 import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
@@ -43,11 +43,11 @@ const pathsEqual = (a: TokenPath, b: TokenPath) => a.length === b.length && a.ev
 export const getBasisTokenTree = (): TokenTreeNode[] =>
   buildTokenTree(basisTokens.basis as Record<string, unknown>).sort(byTopLevelOrder);
 
-export const toSideNavigationItems = (tree: TokenTreeNode[], currentPath: TokenPath): SideNavigationItems =>
-  tree.map((node): SideNavigationItem => ({
+export const toNavigationItems = (tree: TokenTreeNode[], currentPath: TokenPath): NavigationItems =>
+  tree.map((node): NavigationItem => ({
     current: pathsEqual(node.path, currentPath),
     href: hrefFor(node.path),
-    items: node.children.length > 0 ? toSideNavigationItems(node.children, currentPath) : undefined,
+    items: node.children.length > 0 ? toNavigationItems(node.children, currentPath) : undefined,
     label: node.key,
   }));
 

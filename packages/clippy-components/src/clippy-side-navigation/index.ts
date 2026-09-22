@@ -6,11 +6,9 @@ import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { NavigationItem, NavigationItems } from '../clippy-navigation-bar/types';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
-import { SideNavigationItem, SideNavigationItems } from './types';
-
-export type { SideNavigationItem, SideNavigationItems } from './types';
 
 const tag = 'clippy-side-navigation';
 
@@ -27,10 +25,10 @@ declare global {
 export class ClippySideNavigation extends LitElement {
   static override readonly styles = [unsafeCSS(buttonCSS), unsafeCSS(navStyles), styles, srOnly];
 
-  @state() private expandedItems = new Set<SideNavigationItem>();
+  @state() private expandedItems = new Set<NavigationItem>();
 
   @property({ type: Object })
-  items?: SideNavigationItems;
+  items?: NavigationItems;
 
   @property({ attribute: 'cascade-collapse', type: Boolean })
   cascadeCollapse?: boolean = false;
@@ -48,9 +46,9 @@ export class ClippySideNavigation extends LitElement {
     }
   }
 
-  #updateInitiaExpandedItems(items: SideNavigationItems): Set<SideNavigationItem> {
-    const set = new Set<SideNavigationItem>();
-    const walk = (nodes: SideNavigationItems): boolean => {
+  #updateInitiaExpandedItems(items: NavigationItems): Set<NavigationItem> {
+    const set = new Set<NavigationItem>();
+    const walk = (nodes: NavigationItems): boolean => {
       let subtreeActive = false;
       for (const node of nodes) {
         const childActive = node.items?.length ? walk(node.items) : false;
@@ -67,9 +65,9 @@ export class ClippySideNavigation extends LitElement {
     return set;
   }
 
-  #collectDescendantItems(item: SideNavigationItem): SideNavigationItem[] {
-    const items: SideNavigationItem[] = [];
-    const walk = (node: SideNavigationItem) => {
+  #collectDescendantItems(item: NavigationItem): NavigationItem[] {
+    const items: NavigationItem[] = [];
+    const walk = (node: NavigationItem) => {
       if (!node.items?.length) return;
       for (const child of node.items) {
         items.push(child);
@@ -80,7 +78,7 @@ export class ClippySideNavigation extends LitElement {
     return items;
   }
 
-  #toggle(item: SideNavigationItem) {
+  #toggle(item: NavigationItem) {
     const next = new Set(this.expandedItems);
     if (next.has(item)) {
       // If the item is expanded: Collapse
@@ -99,7 +97,7 @@ export class ClippySideNavigation extends LitElement {
     this.requestUpdate();
   }
 
-  #renderItem(item: SideNavigationItem): TemplateResult {
+  #renderItem(item: NavigationItem): TemplateResult {
     const hasSubItems = (item.items?.length ?? 0) > 0;
     const isOpen = this.expandedItems.has(item);
 

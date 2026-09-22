@@ -27,26 +27,26 @@ sideNavigation.items = [
 
 ## Attributes & properties
 
-| Attribute / Property | Type                            | Description                                               | Default              |
-| -------------------- | ------------------------------- | --------------------------------------------------------- | -------------------- |
-| `items`              | [`SideNavigationItems`](#types) | Array of items to display in the navigation               | `[]`                 |
-| `eagerCollapse`      | `boolean`                       | When an item is collapsed, collapse all sub-items as well | `false`              |
-| `label`              | `string`                        | The description of the navigation                         | `undefined`          |
-| `label-expand-open`  | `string`                        | Label for the expand button in closed state               | `Open submenu for:`  |
-| `label-expand-close` | `string`                        | Label for the expand button in open state                 | `Close submenu for:` |
+| Attribute / Property | Type                        | Description                                               | Default              |
+| -------------------- | --------------------------- | --------------------------------------------------------- | -------------------- |
+| `items`              | [`NavigationItems`](#types) | Array of items to display in the navigation               | `[]`                 |
+| `eagerCollapse`      | `boolean`                   | When an item is collapsed, collapse all sub-items as well | `false`              |
+| `label`              | `string`                    | The description of the navigation                         | `undefined`          |
+| `label-expand-open`  | `string`                    | Label for the expand button in closed state               | `Open submenu for:`  |
+| `label-expand-close` | `string`                    | Label for the expand button in open state                 | `Close submenu for:` |
 
 ## Types
 
 ```ts
-interface SideNavigationItem {
+interface NavigationItem {
   label: string;
   href: string;
   current?: boolean;
-  items?: SideNavigationItem[];
+  items?: NavigationItem[];
   target?: string;
   hreflang?: string;
   lang?: string;
 }
 
-type SideNavigationItems = SideNavigationItem[];
+type NavigationItems = NavigationItem[];
 ```
