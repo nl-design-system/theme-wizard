@@ -1,4 +1,7 @@
-import { css } from 'lit';
+import { css, unsafeCSS } from 'lit';
+
+// Reflected onto the host by index.ts; exported so the CSS selector below can't drift from it.
+export const focusVisibleAttribute = 'link-focus-visible';
 
 export default css`
   :host {
@@ -25,11 +28,8 @@ export default css`
     background-color: var(--basis-color-default-bg-active);
   }
 
-  /* Reflected by index.ts, not selected via :focus-visible/:has() directly — see its comment.
-     Declared last: same specificity as :host(:hover)/:host(:active) above, so on a tie (e.g. the
-     pointer resting over an already-focused card) this must win, not lose silently to hover. */
   /* [2] Prevent the outline being clipped when other cards/elements are rendered too close to this card */
-  :host([link-focus-visible]) {
+  :host([${unsafeCSS(focusVisibleAttribute)}]) {
     background-color: var(--basis-focus-background-color);
     color: var(--basis-focus-color);
     outline-color: var(--basis-focus-outline-color);
