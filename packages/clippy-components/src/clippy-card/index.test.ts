@@ -84,5 +84,27 @@ describe(`<${tag}>`, () => {
       expect(root?.querySelector('.clippy-card__body')).not.toBeNull();
       expect(root?.querySelector('.clippy-card__footer')).toBeNull();
     });
+
+    it('renders header first in the shadow/a11y tree, ahead of link, pre-header, body, and footer', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <span slot="pre-header">pre-header</span>
+          <span slot="header">header</span>
+          <a slot="link" href="#">link</a>
+          <span slot="body">body</span>
+          <span slot="footer">footer</span>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyCard;
+      await component.updateComplete;
+      await component.updateComplete;
+      const root = component.shadowRoot;
+
+      const slotOrder = Array.from(root?.querySelectorAll('slot') ?? []).map((slot) => slot.name);
+
+      // DOM order (not light-DOM author order) drives AT reading order. Visual order is
+      // handled separately via CSS `order` — see index.ts render() comment and styles.ts.
+      expect(slotOrder).toEqual(['header', 'link', 'pre-header', 'body', 'footer']);
+    });
   });
 });
