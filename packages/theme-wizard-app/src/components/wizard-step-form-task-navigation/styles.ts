@@ -2,11 +2,7 @@ import { css } from 'lit';
 
 export default css`
   [slot='header'] {
-    align-items: center;
-    column-gap: var(--basis-space-column-lg);
-    display: flex;
     font-weight: var(--basis-text-font-weight-bold);
-    inline-size: 100%;
   }
 
   .wizard-step-form-task-navigation-icon-start {

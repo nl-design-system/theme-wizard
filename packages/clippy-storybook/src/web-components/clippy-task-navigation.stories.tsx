@@ -3,7 +3,6 @@ import '@nl-design-system-community/clippy-components/clippy-task-navigation';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-task-navigation/README.md?raw';
 import { html } from 'lit';
 import React from 'react';
-import { chevronRightSvg } from '../utils/cardIcons';
 import { templateToHtml } from '../utils/templateToHtml';
 
 /* The `link` slot's <a> is a direct child of the host, separate from the visible label in
@@ -15,7 +14,7 @@ const createDefaultTemplate = () => html`
     <span slot="header">
       <span>Task description</span>
     </span>
-    <div slot="footer">${chevronRightSvg}</div>
+    <div slot="footer">→</div>
   </clippy-task-navigation>
 `;
 
@@ -32,7 +31,7 @@ const createWithBodyDetailTemplate = () => html`
     >
       1 jan 2025
     </time>
-    <div slot="footer">${chevronRightSvg}</div>
+    <div slot="footer">→</div>
   </clippy-task-navigation>
 `;
 
@@ -43,7 +42,7 @@ const createWithIconBeforeTemplate = () => html`
     <span slot="header">
       <span>Task description</span>
     </span>
-    <div slot="footer">${chevronRightSvg}</div>
+    <div slot="footer">→</div>
   </clippy-task-navigation>
 `;
 

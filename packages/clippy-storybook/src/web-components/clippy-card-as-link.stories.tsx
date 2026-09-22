@@ -3,14 +3,13 @@ import '@nl-design-system-community/clippy-components/clippy-card-as-link';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-card-as-link/README.md?raw';
 import { html } from 'lit';
 import React from 'react';
-import { ChevronRightIcon, LinkIcon, chevronRightSvg, linkSvg } from '../utils/cardIcons';
 import { templateToHtml } from '../utils/templateToHtml';
 
 const createDefaultTemplate = () => html`
   <clippy-card-as-link style="max-width: 20rem;">
-    <a slot="link" href="#">Met de huisstijl van een bestaande website</a>
     <h2 slot="header">Met de huisstijl van een bestaande website</h2>
     <p slot="body">Vul een URL in.</p>
+    <a slot="link" href="#">Haal design tokens op van website</a>
   </clippy-card-as-link>
 `;
 
@@ -20,15 +19,15 @@ const createDefaultTemplate = () => html`
  * `variant="list-item"` styling — no overrides needed here. */
 const createListItemTemplate = () => html`
   <clippy-card-as-link variant="list-item" style="max-width: 22rem;">
-    <a slot="link" href="#">Met de huisstijl van een bestaande website</a>
     <span slot="header" style="align-items: center; display: flex; gap: 0.75rem;">
-      ${linkSvg('style="color: var(--basis-color-action-1-color-default); flex-shrink: 0;"')}
+      🔗
       <span>
         <h2 style="font-size: inherit; margin: 0;">Met de huisstijl van een bestaande website</h2>
         <span style="color: var(--basis-color-default-color-subtle);">Vul een URL in.</span>
       </span>
     </span>
-    <div slot="footer">${chevronRightSvg}</div>
+    <div slot="footer">→</div>
+    <a slot="link" href="#">Haal design tokens op van website</a>
   </clippy-card-as-link>
 `;
 
@@ -66,13 +65,9 @@ export const Default: Story = {
     },
   },
   render: () =>
-    React.createElement(
-      'clippy-card-as-link',
-      { style: { maxWidth: '20rem' } },
-      React.createElement('a', { href: '#', slot: 'link' }, 'Met de huisstijl van een bestaande website'),
-      React.createElement('h2', { slot: 'header' }, 'Met de huisstijl van een bestaande website'),
-      React.createElement('p', { slot: 'body' }, 'Vul een URL in.'),
-    ),
+    React.createElement('div', {
+      dangerouslySetInnerHTML: { __html: templateToHtml(createDefaultTemplate()) },
+    }),
 };
 
 export const ListItem: Story = {
@@ -91,29 +86,7 @@ export const ListItem: Story = {
     },
   },
   render: () =>
-    React.createElement(
-      'clippy-card-as-link',
-      { style: { maxWidth: '22rem' }, variant: 'list-item' },
-      React.createElement('a', { href: '#', slot: 'link' }, 'Met de huisstijl van een bestaande website'),
-      React.createElement(
-        'span',
-        { slot: 'header', style: { alignItems: 'center', display: 'flex', gap: '0.75rem' } },
-        LinkIcon({ style: { color: 'var(--basis-color-action-1-color-default)', flexShrink: 0 } }),
-        React.createElement(
-          'span',
-          {},
-          React.createElement(
-            'h2',
-            { style: { fontSize: 'inherit', margin: 0 } },
-            'Met de huisstijl van een bestaande website',
-          ),
-          React.createElement(
-            'span',
-            { style: { color: 'var(--basis-color-default-color-subtle)' } },
-            'Vul een URL in.',
-          ),
-        ),
-      ),
-      React.createElement('div', { slot: 'footer' }, ChevronRightIcon()),
-    ),
+    React.createElement('div', {
+      dangerouslySetInnerHTML: { __html: templateToHtml(createListItemTemplate()) },
+    }),
 };
