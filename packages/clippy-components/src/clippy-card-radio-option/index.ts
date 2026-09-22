@@ -76,7 +76,7 @@ export class ClippyCardRadioOption extends ClippyCard {
           </div>
         </div>
       </div>
-      ${this.renderBody()}${this.renderFooter()}
+      ${this.renderBody()} ${this.renderFooter()}
     `;
   }
 }

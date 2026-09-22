@@ -1,17 +1,17 @@
 # `<clippy-task-navigation>`
 
-A compact, horizontal [`clippy-card`](../clippy-card/README.md) composition
-for a single row in a task/step navigation list: `header` and `footer` sit
-side by side in a row, with an optional `body` slot for supplementary detail
-(e.g. a due date) between them.
+A compact, horizontal [`clippy-card-as-link`](../clippy-card-as-link/README.md)
+composition for a single row in a task/step navigation list: `header` and
+`footer` sit side by side in a row, with an optional `body` slot for
+supplementary detail (e.g. a due date) between them.
 
-Slot a real `<a href>` as a **direct child** of the `header` slot (with any
-icon/label nested inside it, not the other way around) to make the whole row
-a single clickable link — a `::slotted(a)::after` overlay stretches that
-anchor's clickable/hoverable/focusable area to cover the whole row, purely
-via CSS. See [`clippy-card`'s README](../clippy-card/README.md) for why the
-nesting has to go this way, and the general caveats of the pattern (e.g.
-z-index if you need a second interactive element inside the row).
+Slot a real `<a slot="link" href>` as a direct child, with its text content
+carrying the link's accessible name, to make the whole row a single
+clickable link. See
+[`clippy-card-as-link`'s README](../clippy-card-as-link/README.md) for how
+the `link` slot is stretched to cover the whole row, and the general
+caveats of the pattern (e.g. z-index if you need a second interactive
+element inside the row).
 
 This is the same composition as
 [`clippy-card-as-link-horizontal`](../clippy-card-as-link-horizontal/README.md),
@@ -20,8 +20,11 @@ trailing content.
 
 ```html
 <clippy-task-navigation>
-  <span slot="start">🎨</span>
-  <a slot="header" href="/wizard/typography"> Task description </a>
+  <a slot="link" href="/wizard/typography">Task description</a>
+  <span slot="header">
+    <span slot="start">🎨</span>
+    <span>Task description</span>
+  </span>
   <time slot="body" datetime="2025-01-01">1 jan 2025</time>
   <span slot="footer">→</span>
 </clippy-task-navigation>

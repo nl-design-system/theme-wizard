@@ -6,22 +6,25 @@ import React from 'react';
 import { chevronRightSvg } from '../utils/cardIcons';
 import { templateToHtml } from '../utils/templateToHtml';
 
-/* The label nests INSIDE the anchor (not the other way around): ::slotted() only matches direct
- * children of the host, so the <a> — carrying the slot attribute — must be the direct child. */
+/* The `link` slot's <a> is a direct child of the host, separate from the visible label in
+ * `header` — its text is the link's accessible name, visually hidden and stretched to cover the
+ * whole row. */
 const createDefaultTemplate = () => html`
   <clippy-task-navigation style="max-width: 22rem;">
-    <a slot="header" href="#">
+    <a slot="link" href="#">Task description</a>
+    <span slot="header">
       <span>Task description</span>
-    </a>
+    </span>
     <div slot="footer">${chevronRightSvg}</div>
   </clippy-task-navigation>
 `;
 
 const createWithBodyDetailTemplate = () => html`
   <clippy-task-navigation style="max-width: 22rem;">
-    <a slot="header" href="#">
+    <a slot="link" href="#">Task description</a>
+    <span slot="header">
       <span>Task description</span>
-    </a>
+    </span>
     <time
       slot="body"
       datetime="2025-01-01"
@@ -35,23 +38,28 @@ const createWithBodyDetailTemplate = () => html`
 
 const createWithIconBeforeTemplate = () => html`
   <clippy-task-navigation style="max-width: 22rem;">
+    <a slot="link" href="#">Task description</a>
     <span slot="pre-header" aria-hidden="true">📋</span>
-    <a slot="header" href="#">
+    <span slot="header">
       <span>Task description</span>
-    </a>
+    </span>
     <div slot="footer">${chevronRightSvg}</div>
   </clippy-task-navigation>
 `;
 
 const createWithLongContentTemplate = () => html`
   <clippy-task-navigation style="max-width: 22rem;">
+    <a slot="link" href="#">
+      Icon before and a lot of content that should surely make this task navigation item wrap, but some more words
+      appear here, just in case.
+    </a>
     <span slot="pre-header" aria-hidden="true">📋</span>
-    <a slot="header" href="#">
+    <span slot="header">
       <span>
         Icon before and a lot of content that should surely make this task navigation item wrap, but some more words
         appear here, just in case.
       </span>
-    </a>
+    </span>
   </clippy-task-navigation>
 `;
 
@@ -80,7 +88,7 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          'The whole row is a single link — clicking anywhere navigates. The `<a>` is a direct child of the `header` slot; a `::slotted(a)::after` overlay stretches its hit area to the full row, in pure CSS.',
+          'The whole row is a single link — clicking anywhere navigates. The `<a slot="link">` is a direct child carrying the accessible name; it is stretched to cover the full row while the visible label lives independently in the `header` slot.',
       },
       source: {
         transform: () => templateToHtml(createDefaultTemplate()),

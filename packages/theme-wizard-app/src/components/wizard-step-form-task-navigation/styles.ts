@@ -1,7 +1,7 @@
 import { css } from 'lit';
 
 export default css`
-  .wizard-step-form-task-navigation-link {
+  [slot='header'] {
     align-items: center;
     column-gap: var(--basis-space-column-lg);
     display: flex;

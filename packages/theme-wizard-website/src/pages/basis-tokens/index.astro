@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getBasisTokenTree, toNavigationItems } from '@/lib/basis-token-nav';
+import { IconArrowRight } from '@tabler/icons-react';
 
 const tree = getBasisTokenTree();
 const navItems = toNavigationItems(tree, []);
@@ -10,6 +11,7 @@ const navItems = toNavigationItems(tree, []);
   import '@nl-design-system-community/clippy-components/clippy-heading';
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
   import '@nl-design-system-community/clippy-components/clippy-card-as-link-horizontal';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
 </script>
 
 <BaseLayout title="Basis tokens - Theme Wizard">
@@ -25,21 +27,27 @@ const navItems = toNavigationItems(tree, []);
 
       <wizard-container slot="main">
         <main>
-          <clippy-stack size="lg">
-            <clippy-heading level="1">Basis tokens</clippy-heading>
+          <clippy-story-preview size="lg">
+            <clippy-stack size="lg">
+              <clippy-heading level="1">Basis tokens</clippy-heading>
 
-            <ul role="list" class="wizard-secretly-a-list">
-              {
-                tree.map((group) => (
-                  <li>
-                    <clippy-card-as-link-horizontal>
-                      <a slot="header" href={`/basis-tokens/${group.path.join('/')}`}>{group.key}</a>
-                    </clippy-card-as-link-horizontal>
-                  </li>
-                ))
-              }
-            </ul>
-          </clippy-stack>
+              <ul role="list" class="wizard-secretly-a-list">
+                {
+                  tree.map((group) => (
+                    <li>
+                      <clippy-card-as-link-horizontal>
+                        <a slot="link" href={`/basis-tokens/${group.path.join('/')}`}>
+                          Bewerk <q>{group.key}</q>
+                        </a>
+                        <span slot="header">{group.key}</span>
+                        <IconArrowRight slot="footer" />
+                      </clippy-card-as-link-horizontal>
+                    </li>
+                  ))
+                }
+              </ul>
+            </clippy-stack>
+          </clippy-story-preview>
         </main>
       </wizard-container>
     </wizard-layout>
@@ -53,5 +61,9 @@ const navItems = toNavigationItems(tree, []);
     display: flex;
     flex-direction: column;
     row-gap: var(--basis-space-row-md);
+  }
+
+  [slot="header"] {
+    text-transform: capitalize;
   }
 </style>

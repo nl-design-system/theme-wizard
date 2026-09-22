@@ -17,6 +17,8 @@ declare global {
  * slot content in or extend the class — e.g. `clippy-card-as-link` (appearance variants) or
  * `clippy-card-radio-option` (a selectable card).
  *
+ * @slot link - Reserved for card-as-link variants (e.g. `clippy-card-as-link`) — a direct-child
+ *   `<a>` here is rendered inert unless paired with such a variant's styles
  * @slot pre-header - Content above the header, e.g. a status or category label
  * @slot header - Card heading region
  * @slot body - Main card content
@@ -142,9 +144,12 @@ export class ClippyCard extends LitElement {
   }
 
   override render() {
-    // Header renders before pre-header in the DOM/shadow-tree order — that's what drives
-    // assistive-technology reading order (the flattened tree), not light-DOM author order. The
-    // pre-header is still shown visually above the header via CSS `order` (see styles.ts).
-    return html`${this.renderHeader()}${this.renderPreHeader()}${this.renderBody()}${this.renderFooter()}`;
+    // Header (then the reserved link slot) renders before pre-header in the DOM/shadow-tree
+    // order — that's what drives assistive-technology reading order (the flattened tree), not
+    // light-DOM author order. The pre-header is still shown visually above the header via CSS
+    // `order` (see styles.ts).
+    return html`${this.renderHeader()}
+      <slot name="link"></slot>
+      ${this.renderPreHeader()}${this.renderBody()}${this.renderFooter()}`;
   }
 }

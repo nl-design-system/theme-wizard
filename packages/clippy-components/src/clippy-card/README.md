@@ -24,12 +24,13 @@ has slotted content — an empty region contributes no layout.
 
 ## Slots
 
-| Slot         | Description                                            |
-| ------------ | ------------------------------------------------------ |
-| `pre-header` | Content above the header, e.g. a status/category label |
-| `header`     | Card heading region                                    |
-| `body`       | Main card content                                      |
-| `footer`     | Footer content, e.g. actions or metadata               |
+| Slot         | Description                                                                                                                                                                         |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `link`       | Reserved for card-as-link variants (e.g. [`clippy-card-as-link`](../clippy-card-as-link/README.md)) — a direct-child `<a>` here is inert unless paired with such a variant's styles |
+| `pre-header` | Content above the header, e.g. a status/category label                                                                                                                              |
+| `header`     | Card heading region                                                                                                                                                                 |
+| `body`       | Main card content                                                                                                                                                                   |
+| `footer`     | Footer content, e.g. actions or metadata                                                                                                                                            |
 
 ## Extending
 

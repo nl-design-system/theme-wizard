@@ -4,6 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getBasisTokenTree, toNavigationItems, getBreadcrumbTrail } from '@/lib/basis-token-nav';
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import {IconArrowRight} from '@tabler/icons-react';
 
 const tree = getBasisTokenTree();
 
@@ -25,6 +26,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
   import '@nl-design-system-community/clippy-components/clippy-heading'
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
   import '@nl-design-system-community/clippy-components/clippy-stack'
+  import '@nl-design-system-community/clippy-components/clippy-card-as-link-horizontal'
 </script>
 
 <BaseLayout title={`${node.key} - Basis tokens - Theme Wizard`}>
@@ -52,13 +54,22 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                     <wizard-token-field path={tokenPath} />
                   ) : (
                     <>
-                      <ul>
-                        {node.children.map((child) => (
-                          <li>
-                            <a href={`/basis-tokens/${child.path.join('/')}`}>{child.key}</a>
-                          </li>
-                        ))}
+                      <ul role="list" class="wizard-secretly-a-list">
+                        {
+                          node.children.map((child) => (
+                            <li>
+                              <clippy-card-as-link-horizontal>
+                                <a slot="link" href={`/basis-tokens/${child.path.join('/')}`}>
+                                  Bewerk <q>{child.key}</q>
+                                </a>
+                                <span slot="header">{child.key}</span>
+                                <IconArrowRight slot="footer" />
+                              </clippy-card-as-link-horizontal>
+                            </li>
+                          ))
+                        }
                       </ul>
+
                       {isColorGroup && (
                         <wizard-color-system-preview groups={tokenPath}></wizard-color-system-preview>
                       )}
@@ -77,3 +88,19 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+
+<style>
+  .wizard-secretly-a-list {
+    padding-inline-start: var(--basis-space-none);
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--basis-space-row-md);
+  }
+
+  [slot="header"],
+  clippy-heading {
+    text-transform: capitalize;
+  }
+</style>

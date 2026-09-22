@@ -1,14 +1,12 @@
 import '@nl-design-system-community/clippy-components/clippy-task-navigation';
-import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
 import CheckIcon from '@tabler/icons/filled/check.svg?raw';
-import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
+import ArrowRightIcon from '@tabler/icons/outline/arrow-right.svg?raw';
 import FileTypographyIcon from '@tabler/icons/outline/file-typography.svg?raw';
 import PaletteIcon from '@tabler/icons/outline/palette.svg?raw';
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { t } from '../../i18n';
 import styles from './styles';
 
 const tag = 'wizard-step-form-task-navigation';
@@ -32,10 +30,11 @@ function isIconName(name: string): name is IconName {
 
 @customElement(tag)
 export class WizardStepFormTaskNavigation extends LitElement {
-  static override readonly styles = [srOnlyStyles, styles];
+  static override readonly styles = [styles];
 
   @property({ type: String }) href = '';
   @property({ type: String }) icon = '';
+  @property({ type: String }) label = '';
   @property({ type: Boolean }) done = false;
 
   override render() {
@@ -43,12 +42,8 @@ export class WizardStepFormTaskNavigation extends LitElement {
 
     return html`
       <clippy-task-navigation>
-        <a class="wizard-step-form-task-navigation-link" slot="header" href=${this.href}>
-          <span>
-            ${this.done ? html`<span class="sr-only">${t('wizard.taskNavigation.done')}:</span>` : nothing}
-            <slot></slot>
-          </span>
-        </a>
+        <a slot="link" href=${this.href}>Edit <q>${this.label}</q></a>
+        <span slot="header">${this.label}</span>
         <span
           slot="pre-header"
           class="wizard-step-form-task-navigation-icon-start ${classMap({
@@ -58,7 +53,7 @@ export class WizardStepFormTaskNavigation extends LitElement {
         >
           ${unsafeSVG(this.done ? CheckIcon : icon)}
         </span>
-        <span slot="footer" aria-hidden="true">${unsafeSVG(ChevronRightIcon)}</span>
+        <span slot="footer" aria-hidden="true">${unsafeSVG(ArrowRightIcon)}</span>
       </clippy-task-navigation>
     `;
   }

@@ -3,7 +3,6 @@ import { css } from 'lit';
 export default css`
   :host(:not([hidden])) {
     display: flex;
-    flex-direction: column;
   }
 
   :host {
@@ -99,6 +98,7 @@ export default css`
     border-style: solid;
     border-width: var(--_clippy-card-border-width);
     color: var(--_clippy-card-color);
+    flex-direction: column;
     max-inline-size: var(--_clippy-card-max-inline-size);
     min-block-size: var(--_clippy-card-min-block-size);
   }

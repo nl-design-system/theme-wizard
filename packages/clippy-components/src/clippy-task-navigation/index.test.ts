@@ -50,25 +50,33 @@ describe(`<${tag}>`, () => {
     });
   });
 
-  describe('stretched-link overlay', () => {
-    it('generates a stretched ::after overlay on a directly-slotted <a>', async () => {
-      document.body.innerHTML = `<${tag}><a slot="header" href="/tasks/1">Task</a></${tag}>`;
+  describe('stretched link', () => {
+    it('positions the slotted link absolutely, stretched over the row', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <a slot="link" href="/tasks/1">Task</a>
+          <span slot="header">Task</span>
+        </${tag}>
+      `;
       component = document.querySelector(tag) as ClippyTaskNavigation;
       await component.updateComplete;
-      const anchor = component.querySelector('a') as HTMLAnchorElement;
-      const after = getComputedStyle(anchor, '::after');
+      const anchor = component.querySelector('a[slot="link"]') as HTMLAnchorElement;
 
-      expect(after.content).not.toBe('none');
-      expect(after.position).toBe('absolute');
+      expect(getComputedStyle(anchor).position).toBe('absolute');
     });
   });
 
   describe('focus', () => {
-    it(':focus-within matches when the slotted anchor is focused', async () => {
-      document.body.innerHTML = `<${tag}><a slot="header" href="/tasks/1">Task</a></${tag}>`;
+    it(':focus-within matches when the link is focused', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <a slot="link" href="/tasks/1">Task</a>
+          <span slot="header">Task</span>
+        </${tag}>
+      `;
       component = document.querySelector(tag) as ClippyTaskNavigation;
       await component.updateComplete;
-      const anchor = component.querySelector('a') as HTMLAnchorElement;
+      const anchor = component.querySelector('a[slot="link"]') as HTMLAnchorElement;
       anchor.focus();
       expect(component.matches(':focus-within')).toBe(true);
     });
