@@ -19,7 +19,6 @@ declare global {
 
 /**
  * Clippy Side Navigation Component
- * @slot - Main content
  */
 @safeCustomElement(tag)
 export class ClippyPageHeaderCompact extends LitElement {
@@ -84,12 +83,8 @@ export class ClippyPageHeaderCompact extends LitElement {
           </section>
         </div>
 
-        <div class="clippy-page-header__bottom">
-          <section class="clippy-page-header__content clippy-page-header__content--bottom">
-            ${this.#renderNavBar('bottom')}
-          </section>
-        </div>
-        <clippy-drawer actions="none" hide-title>
+        <div class="clippy-page-header__bottom">${this.#renderNavBar('bottom')}</div>
+        <clippy-drawer actions="none">
           <span class="sr-only" slot="title">${this.labelDrawerTitle}</span>
           <slot name="navigation-drawer"></slot>
         </clippy-drawer>
