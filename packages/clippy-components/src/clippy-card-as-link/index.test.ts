@@ -95,4 +95,26 @@ describe(`<${tag}>`, () => {
       expect(component.hasAttribute('link-focus-visible')).toBe(false);
     });
   });
+
+  describe('variant="list-item"', () => {
+    it('lays out as a row', async () => {
+      document.body.innerHTML = `<${tag} variant="list-item"></${tag}>`;
+      component = document.querySelector(tag) as ClippyCardAsLink;
+      await component.updateComplete;
+      expect(getComputedStyle(component).flexDirection).toBe('row');
+    });
+
+    it('positions the slotted link absolutely, stretched over the row', async () => {
+      document.body.innerHTML = `
+        <${tag} variant="list-item">
+          <a slot="link" href="/x">Title</a>
+          <h2 slot="header">Title</h2>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyCardAsLink;
+      await component.updateComplete;
+      const anchor = component.querySelector('a[slot="link"]') as HTMLAnchorElement;
+      expect(getComputedStyle(anchor).position).toBe('absolute');
+    });
+  });
 });

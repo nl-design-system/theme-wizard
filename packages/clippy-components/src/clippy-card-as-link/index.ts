@@ -1,5 +1,6 @@
 import { safeCustomElement } from '@lib/decorators';
 import { ClippyCard } from '@src/clippy-card';
+import { property } from 'lit/decorators.js';
 import styles from './styles';
 
 const tag = 'clippy-card-as-link';
@@ -26,7 +27,8 @@ declare global {
  * independent of the link, so its hover/active/focus-visible states read as "the whole card"
  * rather than an inline snippet.
  *
- * `clippy-card-as-link-horizontal` builds its row layout on top of this.
+ * Set `variant="list-item"` for a compact, horizontal composition: header and footer sit side
+ * by side in a single row instead of stacking.
  *
  * @slot link - The card's link — a direct-child `<a href>`; its text content is the accessible name
  * @slot pre-header - Content above the header, e.g. a status or category label
@@ -37,6 +39,8 @@ declare global {
 @safeCustomElement(tag)
 export class ClippyCardAsLink extends ClippyCard {
   static override readonly styles = [...ClippyCard.styles, styles];
+
+  @property({ reflect: true }) variant?: 'list-item';
 
   override connectedCallback() {
     super.connectedCallback();

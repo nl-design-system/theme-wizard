@@ -10,7 +10,7 @@ const navItems = toNavigationItems(tree, []);
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading';
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
-  import '@nl-design-system-community/clippy-components/clippy-card-as-link-horizontal';
+  import '@nl-design-system-community/clippy-components/clippy-card-as-link';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
 </script>
 
@@ -35,13 +35,13 @@ const navItems = toNavigationItems(tree, []);
                 {
                   tree.map((group) => (
                     <li>
-                      <clippy-card-as-link-horizontal>
+                      <clippy-card-as-link variant="list-item">
                         <a slot="link" href={`/basis-tokens/${group.path.join('/')}`}>
                           Bewerk <q>{group.key}</q>
                         </a>
-                        <span slot="header">{group.key}</span>
+                        <span slot="header" class="wizard-token-group-name">{group.key}</span>
                         <IconArrowRight slot="footer" />
-                      </clippy-card-as-link-horizontal>
+                      </clippy-card-as-link>
                     </li>
                   ))
                 }
@@ -63,7 +63,7 @@ const navItems = toNavigationItems(tree, []);
     row-gap: var(--basis-space-row-md);
   }
 
-  [slot="header"] {
+  .wizard-token-group-name {
     text-transform: capitalize;
   }
 </style>

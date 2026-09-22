@@ -26,7 +26,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
   import '@nl-design-system-community/clippy-components/clippy-heading'
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
   import '@nl-design-system-community/clippy-components/clippy-stack'
-  import '@nl-design-system-community/clippy-components/clippy-card-as-link-horizontal'
+  import '@nl-design-system-community/clippy-components/clippy-card-as-link'
 </script>
 
 <BaseLayout title={`${node.key} - Basis tokens - Theme Wizard`}>
@@ -58,13 +58,13 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                         {
                           node.children.map((child) => (
                             <li>
-                              <clippy-card-as-link-horizontal>
+                              <clippy-card-as-link variant="list-item">
                                 <a slot="link" href={`/basis-tokens/${child.path.join('/')}`}>
                                   Bewerk <q>{child.key}</q>
                                 </a>
                                 <span slot="header">{child.key}</span>
                                 <IconArrowRight slot="footer" />
-                              </clippy-card-as-link-horizontal>
+                              </clippy-card-as-link>
                             </li>
                           ))
                         }

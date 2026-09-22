@@ -14,7 +14,7 @@ caveats of the pattern (e.g. z-index if you need a second interactive
 element inside the row).
 
 This is the same composition as
-[`clippy-card-as-link-horizontal`](../clippy-card-as-link-horizontal/README.md),
+[`clippy-card-as-link`](../clippy-card-as-link/README.md)'s `variant="list-item"`,
 with an added `body` slot for a piece of detail between the label and the
 trailing content.
 

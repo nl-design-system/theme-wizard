@@ -1,17 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import '@nl-design-system-community/clippy-components/clippy-card-as-link-horizontal';
-import readme from '@nl-design-system-community/clippy-components/src/clippy-card-as-link-horizontal/README.md?raw';
+import '@nl-design-system-community/clippy-components/clippy-card-as-link';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-card-as-link/README.md?raw';
 import { html } from 'lit';
 import React from 'react';
 import { ChevronRightIcon, LinkIcon, chevronRightSvg, linkSvg } from '../utils/cardIcons';
 import { templateToHtml } from '../utils/templateToHtml';
 
+const createDefaultTemplate = () => html`
+  <clippy-card-as-link style="max-width: 20rem;">
+    <a slot="link" href="#">Met de huisstijl van een bestaande website</a>
+    <h2 slot="header">Met de huisstijl van een bestaande website</h2>
+    <p slot="body">Vul een URL in.</p>
+  </clippy-card-as-link>
+`;
+
 /* The `link` slot's <a> is a direct child of the host, separate from the visible heading in
  * `header` — its text is the link's accessible name, visually hidden and stretched to cover the
  * whole row. Row layout, alignment and the footer's zeroed start-padding are all baked into the
- * component — no overrides needed here. */
-const createDefaultTemplate = () => html`
-  <clippy-card-as-link-horizontal style="max-width: 22rem;">
+ * `variant="list-item"` styling — no overrides needed here. */
+const createListItemTemplate = () => html`
+  <clippy-card-as-link variant="list-item" style="max-width: 22rem;">
     <a slot="link" href="#">Met de huisstijl van een bestaande website</a>
     <span slot="header" style="align-items: center; display: flex; gap: 0.75rem;">
       ${linkSvg('style="color: var(--basis-color-action-1-color-default); flex-shrink: 0;"')}
@@ -21,11 +29,11 @@ const createDefaultTemplate = () => html`
       </span>
     </span>
     <div slot="footer">${chevronRightSvg}</div>
-  </clippy-card-as-link-horizontal>
+  </clippy-card-as-link>
 `;
 
 const meta = {
-  id: 'clippy-card-as-link-horizontal',
+  id: 'clippy-card-as-link',
   args: {},
   parameters: {
     docs: {
@@ -35,7 +43,7 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-  title: 'clippy/Card As Link Horizontal',
+  title: 'clippy/Card As Link',
 } satisfies Meta;
 
 export default meta;
@@ -49,7 +57,7 @@ export const Default: Story = {
     docs: {
       description: {
         story:
-          'The whole row is a single link — clicking anywhere navigates. The `<a slot="link">` is a direct child carrying the accessible name; it is stretched to cover the full row while the visible heading lives independently in the `header` slot.',
+          'The whole card is a single link — clicking anywhere navigates. The `<a slot="link">` is a direct child carrying the accessible name; it is stretched to cover the full card while the visible heading/body live independently in the regular slots.',
       },
       source: {
         transform: () => templateToHtml(createDefaultTemplate()),
@@ -59,8 +67,33 @@ export const Default: Story = {
   },
   render: () =>
     React.createElement(
-      'clippy-card-as-link-horizontal',
-      { style: { maxWidth: '22rem' } },
+      'clippy-card-as-link',
+      { style: { maxWidth: '20rem' } },
+      React.createElement('a', { href: '#', slot: 'link' }, 'Met de huisstijl van een bestaande website'),
+      React.createElement('h2', { slot: 'header' }, 'Met de huisstijl van een bestaande website'),
+      React.createElement('p', { slot: 'body' }, 'Vul een URL in.'),
+    ),
+};
+
+export const ListItem: Story = {
+  name: 'Variant: list-item',
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          'Set `variant="list-item"` for a compact, horizontal composition: `header` and `footer` sit side by side in a single row instead of stacking. Typically used for a short link row — a leading icon, a title (plus optional subtitle), and a trailing icon.',
+      },
+      source: {
+        transform: () => templateToHtml(createListItemTemplate()),
+        type: 'code',
+      },
+    },
+  },
+  render: () =>
+    React.createElement(
+      'clippy-card-as-link',
+      { style: { maxWidth: '22rem' }, variant: 'list-item' },
       React.createElement('a', { href: '#', slot: 'link' }, 'Met de huisstijl van een bestaande website'),
       React.createElement(
         'span',

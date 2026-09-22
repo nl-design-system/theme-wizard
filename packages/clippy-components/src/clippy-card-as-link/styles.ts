@@ -38,4 +38,13 @@ export default css`
     outline-width: var(--basis-focus-outline-width);
     z-index: 1; /* [2] */
   }
+
+  /* VARIANTS */
+
+  :host([variant='list-item']) {
+    --clippy-card-footer-padding-inline-start: var(--basis-space-none);
+
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;

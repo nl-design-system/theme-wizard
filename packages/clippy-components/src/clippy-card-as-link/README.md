@@ -5,8 +5,8 @@ single `<a slot="link">` — a direct child of the host, whose text content is
 the link's accessible name.
 
 > **Low-level building block.** Mainly a base for concrete layouts like
-> [`clippy-card-as-link-horizontal`](../clippy-card-as-link-horizontal/README.md).
-> On its own it holds little value.
+> [`clippy-task-navigation`](../clippy-task-navigation/README.md). On its own
+> it holds little value.
 
 ```html
 <clippy-card-as-link>
@@ -40,8 +40,24 @@ If a card needs a second interactive element (e.g. a button in the footer),
 give it `position: relative` and a higher `z-index` than the link so it
 stays reachable above it.
 
-For a compact, horizontal row layout built on top of this, see
-[`clippy-card-as-link-horizontal`](../clippy-card-as-link-horizontal/README.md).
+## Variants
+
+Set `variant="list-item"` for a compact, horizontal composition: `header`
+and `footer` sit side by side in a single row instead of stacking, typically
+for a short link row — a leading icon, a title (plus optional subtitle), and
+a trailing icon.
+
+```html
+<clippy-card-as-link variant="list-item">
+  <a slot="link" href="/settings/theme">Met de huisstijl van een bestaande website</a>
+  <span slot="header">
+    <span slot="start">🔗</span>
+    <h2>Met de huisstijl van een bestaande website</h2>
+    <span>Vul een URL in.</span>
+  </span>
+  <span slot="footer">→</span>
+</clippy-card-as-link>
+```
 
 ## Usage
 
@@ -59,9 +75,18 @@ import '@nl-design-system-community/clippy-components/clippy-card-as-link';
 | `body`       | Main card content                                                            |
 | `footer`     | Footer content, e.g. actions or metadata                                     |
 
+## Attributes
+
+| Attribute | Description                                                                       |
+| --------- | --------------------------------------------------------------------------------- |
+| `variant` | `"list-item"` switches to the compact, horizontal row layout — see Variants above |
+
 ## CSS Custom Properties
 
 Inherits `clippy-card`'s full token surface — see
 [`clippy-card`'s README](../clippy-card/README.md). This component adds no
 custom properties of its own: the link's hover/focus/active states are
-styled directly from `--basis-*` design tokens.
+styled directly from `--basis-*` design tokens, and the `list-item` variant's
+row layout (`flex-direction: row`, centered/spread alignment, zero footer
+start-padding) is a baked-in default rather than an additional overridable
+layer.
