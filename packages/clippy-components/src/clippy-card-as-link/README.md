@@ -4,6 +4,10 @@ A [`clippy-card`](../clippy-card/README.md) made entirely clickable by a
 single `<a slot="link">` — a direct child of the host, whose text content is
 the link's accessible name.
 
+> **Low-level building block.** Mainly a base for concrete layouts like
+> [`clippy-card-as-link-horizontal`](../clippy-card-as-link-horizontal/README.md).
+> On its own it holds little value.
+
 ```html
 <clippy-card-as-link>
   <a slot="link" href="/settings/theme">Met de huisstijl van een bestaande website</a>

@@ -23,56 +23,6 @@ declare global {
  * @slot header - Card heading region
  * @slot body - Main card content
  * @slot footer - Footer content, e.g. actions or metadata
- *
- * @cssprop --clippy-card-background-color - background color
- * @cssprop --clippy-card-border-color - border color
- * @cssprop --clippy-card-border-radius - border radius
- * @cssprop --clippy-card-border-width - border width
- * @cssprop --clippy-card-color - color
- * @cssprop --clippy-card-max-inline-size - max inline size
- * @cssprop --clippy-card-min-block-size - min block size
- * @cssprop --clippy-card-body-column-gap - body column gap
- * @cssprop --clippy-card-body-padding-block-end - body padding block end
- * @cssprop --clippy-card-body-padding-block-start - body padding block start
- * @cssprop --clippy-card-body-padding-inline-end - body padding inline end
- * @cssprop --clippy-card-body-padding-inline-start - body padding inline start
- * @cssprop --clippy-card-body-row-gap - body row gap
- * @cssprop --clippy-card-description-font-size - description font size
- * @cssprop --clippy-card-description-line-height - description line height
- * @cssprop --clippy-card-footer-column-gap - footer column gap
- * @cssprop --clippy-card-footer-padding-block-end - footer padding block end
- * @cssprop --clippy-card-footer-padding-block-start - footer padding block start
- * @cssprop --clippy-card-footer-padding-inline-end - footer padding inline end
- * @cssprop --clippy-card-footer-padding-inline-start - footer padding inline start
- * @cssprop --clippy-card-footer-row-gap - footer row gap
- * @cssprop --clippy-card-header-column-gap - header column gap
- * @cssprop --clippy-card-header-padding-block-end - header padding block end
- * @cssprop --clippy-card-header-padding-block-start - header padding block start
- * @cssprop --clippy-card-header-padding-inline-end - header padding inline end
- * @cssprop --clippy-card-header-padding-inline-start - header padding inline start
- * @cssprop --clippy-card-header-row-gap - header row gap
- * @cssprop --clippy-card-heading-color - heading color
- * @cssprop --clippy-card-heading-font-family - heading font family
- * @cssprop --clippy-card-heading-font-size - heading font size
- * @cssprop --clippy-card-heading-font-weight - heading font weight
- * @cssprop --clippy-card-heading-line-height - heading line height
- * @cssprop --clippy-card-heading-text-decoration - heading text decoration
- * @cssprop --clippy-card-icon-color - icon color
- * @cssprop --clippy-card-icon-size - icon size
- * @cssprop --clippy-card-label-color - label color
- * @cssprop --clippy-card-label-font-family - label font family
- * @cssprop --clippy-card-label-font-size - label font size
- * @cssprop --clippy-card-label-font-weight - label font weight
- * @cssprop --clippy-card-label-line-height - label line height
- * @cssprop --clippy-card-label-text-decoration - label text decoration
- * @cssprop --clippy-card-link-icon-color - link icon color
- * @cssprop --clippy-card-link-icon-size - link icon size
- * @cssprop --clippy-card-pre-header-column-gap - pre header column gap
- * @cssprop --clippy-card-pre-header-padding-block-end - pre header padding block end
- * @cssprop --clippy-card-pre-header-padding-block-start - pre header padding block start
- * @cssprop --clippy-card-pre-header-padding-inline-end - pre header padding inline end
- * @cssprop --clippy-card-pre-header-padding-inline-start - pre header padding inline start
- * @cssprop --clippy-card-pre-header-row-gap - pre header row gap
  */
 @safeCustomElement(tag)
 export class ClippyCard extends LitElement {

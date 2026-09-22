@@ -111,9 +111,6 @@ importers:
       '@amsterdam/design-system-css':
         specifier: 4.4.0
         version: 4.4.0(@amsterdam/design-system-assets@2.6.0)(@amsterdam/design-system-tokens@4.3.0)
-      '@gemeente-denhaag/action':
-        specifier: 4.4.1
-        version: 4.4.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@gemeente-denhaag/iconbutton':
         specifier: 3.2.2
         version: 3.2.2(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

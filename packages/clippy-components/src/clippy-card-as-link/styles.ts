@@ -36,6 +36,6 @@ export default css`
     outline-offset: var(--basis-focus-outline-offset);
     outline-style: var(--basis-focus-outline-style);
     outline-width: var(--basis-focus-outline-width);
-    z-index: 1;
+    z-index: 1; /* [2] */
   }
 `;

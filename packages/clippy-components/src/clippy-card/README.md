@@ -4,6 +4,10 @@ Non-interactive bare card. Provides the `pre-header`/`header`/`body`/`footer`
 slots and a generic card design-token surface as CSS custom properties.
 Use this component as a primitive for building components like `clippy-card-as-link` or `clippy-card-radio-option` (a selectable card).
 
+> **Low-level building block.** Intended to be extended or composed into
+> concrete card components (like the ones above), not used directly in
+> product code. On its own it holds little value.
+
 ## Usage
 
 ```js
