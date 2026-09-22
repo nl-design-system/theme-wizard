@@ -3,11 +3,11 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles from './styles';
 
-const tag = 'clippy-page-header';
+const tag = 'clippy-page-header-compact';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyPageHeader;
+    [tag]: ClippyPageHeaderCompact;
   }
 }
 
@@ -16,7 +16,7 @@ declare global {
  * @slot - Main content
  */
 @safeCustomElement(tag)
-export class ClippyPageHeader extends LitElement {
+export class ClippyPageHeaderCompact extends LitElement {
   static override readonly styles = [styles];
 
   @property({ reflect: true, type: Boolean })

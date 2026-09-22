@@ -1,15 +1,15 @@
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
-import { ClippyPageHeader } from './index';
+import { ClippyPageHeaderCompact } from './index';
 
-const tag = 'clippy-page-header';
+const tag = 'clippy-page-header-compact';
 
 describe(`<${tag}>`, () => {
-  let component: ClippyPageHeader;
+  let component: ClippyPageHeaderCompact;
 
   beforeEach(() => {
     document.body.innerHTML = `<${tag}></${tag}>`;
-    component = document.querySelector(tag) as ClippyPageHeader;
+    component = document.querySelector(tag) as ClippyPageHeaderCompact;
   });
 
   afterEach(() => {
