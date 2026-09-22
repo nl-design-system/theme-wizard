@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getBasisTokenTree, toSideNavigationItems } from '@/lib/basis-token-nav';
+import { getBasisTokenTree, toNavigationItems } from '@/lib/basis-token-nav';
 
 const tree = getBasisTokenTree();
-const navItems = toSideNavigationItems(tree, []);
+const navItems = toNavigationItems(tree, []);
 ---
 
 <script>
