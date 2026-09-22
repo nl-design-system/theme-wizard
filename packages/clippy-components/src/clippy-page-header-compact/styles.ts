@@ -10,6 +10,8 @@ export default css`
       --clippy-page-header-content-max-inline-size,
       var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
     );
+    --ma-navigation-bar-content-padding-inline-end: 0px;
+    --ma-navigation-bar-content-padding-inline-start: 0px;
   }
 
   .clippy-page-header {
@@ -22,6 +24,8 @@ export default css`
   }
 
   .clippy-page-header__top {
+    padding-block-end: var(--ma-page-header-content-padding-block-end);
+    padding-block-start: var(--ma-page-header-content-padding-block-start);
   }
 
   .clippy-page-header__bottom {
@@ -36,16 +40,13 @@ export default css`
     max-inline-size: var(--ma-page-header-content-max-inline-size);
     padding-inline-end: var(--ma-page-header-content-padding-inline-end);
     padding-inline-start: var(--ma-page-header-content-padding-inline-start);
-
-    :where(.clippy-page-header__top) > & {
-      padding-block-end: var(--ma-page-header-content-padding-block-end);
-      padding-block-start: var(--ma-page-header-content-padding-block-start);
-    }
   }
 
   .clippy-page-header__group {
     display: flex;
     flex: 1;
+    align-items: center;
+    column-gap: var(--basis-space-column-3xl);
   }
 
   .clippy-page-header__group--start {
@@ -60,31 +61,65 @@ export default css`
     justify-content: end;
   }
 
-  .clippy-page-header__navigation {
+  .clippy-page-header__wrap-navigation {
     display: none;
   }
 
   @container clippy-page-header (width < 20rem) {
     .clippy-page-header__content {
       flex-direction: column;
+      row-gap: var(--basis-space-row-lg);
+    }
+    .clippy-page-header__group {
+      justify-content: center;
     }
   }
 
   @container clippy-page-header (width >= 48rem) {
-    .clippy-page-header__content {
-      border-block-end-style: none;
+    .clippy-page-header__top {
       padding-block-end: var(--ma-page-header-content-large-vw-padding-block-end);
       padding-block-start: var(--ma-page-header-content-large-vw-padding-block-start);
+    }
+
+    .clippy-page-header__content {
       padding-inline-end: var(--ma-page-header-content-large-vw-padding-inline-end);
       padding-inline-start: var(--ma-page-header-content-large-vw-padding-inline-start);
+      justify-content: space-between;
+    }
+
+    .clippy-page-header__group {
+      flex: 0 1 auto;
     }
 
     .clippy-page-header__group--start {
       display: none;
     }
 
-    .clippy-page-header__navigation {
-      display: unset;
+    .clippy-page-header__group--center {
+      justify-content: start;
+    }
+
+    .clippy-page-header__group--end {
+    }
+
+    .clippy-page-header__wrap-navigation {
+      display: flex;
+      align-self: stretch;
+    }
+
+    :host([variant='compact']) {
+      .clippy-page-header__top {
+        padding-block: 0px;
+      }
+
+      .clippy-page-header__group--end,
+      .clippy-page-header__wrap-logo {
+        padding-block-end: var(--ma-page-header-content-padding-block-end);
+        padding-block-start: var(--ma-page-header-content-padding-block-start);
+      }
+    }
+
+    :host([variant='compact']) {
     }
   }
 `;
