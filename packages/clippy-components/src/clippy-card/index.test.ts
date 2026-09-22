@@ -89,22 +89,26 @@ describe(`<${tag}>`, () => {
       document.body.innerHTML = `
         <${tag}>
           <span slot="pre-header">pre-header</span>
-          <span slot="header">header</span>
+          <h2 slot="header">header</h2>
           <a slot="link" href="#">link</a>
-          <span slot="body">body</span>
+          <p slot="body">body</p>
           <span slot="footer">footer</span>
         </${tag}>
       `;
       component = document.querySelector(tag) as ClippyCard;
       await component.updateComplete;
       await component.updateComplete;
-      const root = component.shadowRoot;
-
-      const slotOrder = Array.from(root?.querySelectorAll('slot') ?? []).map((slot) => slot.name);
 
       // DOM order (not light-DOM author order) drives AT reading order. Visual order is
       // handled separately via CSS `order` — see index.ts render() comment and styles.ts.
-      expect(slotOrder).toEqual(['header', 'link', 'pre-header', 'body', 'footer']);
+      await expect.element(component).toMatchAriaInlineSnapshot(`
+        - heading "header" [level=2]
+        - link "link":
+          - /url: "#"
+        - text: pre-header
+        - paragraph: body
+        - text: footer
+      `);
     });
   });
 });
