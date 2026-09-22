@@ -99,9 +99,6 @@ export default css`
       justify-content: start;
     }
 
-    .clippy-page-header__group--end {
-    }
-
     .clippy-page-header__wrap-navigation {
       display: flex;
       align-self: stretch;
@@ -117,9 +114,6 @@ export default css`
         padding-block-end: var(--ma-page-header-content-padding-block-end);
         padding-block-start: var(--ma-page-header-content-padding-block-start);
       }
-    }
-
-    :host([variant='compact']) {
     }
   }
 `;
