@@ -31,6 +31,7 @@ export default css`
   /* [2] Prevent the outline being clipped when other cards/elements are rendered too close to this card */
   :host([${unsafeCSS(focusVisibleAttribute)}]) {
     background-color: var(--basis-focus-background-color);
+    border-width: var(--basis-border-width-none);
     color: var(--basis-focus-color);
     outline-color: var(--basis-focus-outline-color);
     outline-offset: var(--basis-focus-outline-offset);
@@ -44,6 +45,7 @@ export default css`
   :host([variant='list-item']) {
     --clippy-card-footer-padding-inline-start: var(--basis-space-none);
 
+    align-items: center;
     flex-direction: row;
     justify-content: space-between;
   }

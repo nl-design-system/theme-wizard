@@ -4,9 +4,6 @@ export const radioStyles = css`
   /* ELEMENTS */
 
   :host {
-    /* Own body/footer padding, distinct from clippy-card's defaults — overriding the public
-       custom properties this way (rather than restyling .clippy-card__body/__footer directly)
-       keeps the override visible/discoverable through clippy-card's own documented API. */
     --clippy-card-body-padding-block-end: var(--basis-space-inline-xl);
     --clippy-card-body-padding-block-start: var(--basis-space-none);
     --clippy-card-body-padding-inline-end: var(--basis-space-inline-xl);

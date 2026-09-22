@@ -1,61 +1,29 @@
 # `<clippy-card-as-link>`
 
-A [`clippy-card`](../clippy-card/README.md) made entirely clickable by a
-single `<a slot="link">` — a direct child of the host, whose text content is
-the link's accessible name.
-
-> **Low-level building block.** Mainly a base for concrete layouts like
-> [`clippy-task-navigation`](../clippy-task-navigation/README.md). On its own
-> it holds little value.
+- **Low-level building block.** A [`clippy-card`](../clippy-card/README.md) made entirely clickable by a single `<a slot="link">` — a direct child of the host, whose text content is the link's accessible name.
+- The top-level `slot="link"` both forces the author to come up with an accessible label for the anchor tag and lets the `clippy-card` component put the link in a relevant position in the accessibility tree.
+- This inversion-of-control pattern also keeps any link-related logic out of the component, so any affordances of an `<a>` work out of the box! (shift+click to open in a new tab, right click for context menu, middle-click to open in background tab, etc.)
 
 ```html
 <clippy-card-as-link>
-  <a slot="link" href="/settings/theme">Met de huisstijl van een bestaande website</a>
-  <h2 slot="header">Met de huisstijl van een bestaande website</h2>
+  <h2 slot="header">Huisstijl bewerken</h2>
+  <a slot="link" href="/settings/theme">Ga naar <q>Huisstijl bewerken</q></a>
 </clippy-card-as-link>
 ```
 
-## How it works
-
-`clippy-card` itself already renders the `link` slot (right after `header`,
-for assistive-technology reading order) — this component adds no markup of
-its own beyond a small focus listener. The slotted anchor is stretched
-(`position: absolute; inset: 0`) to cover the whole card, and its own text
-is visually hidden — not `display: none`, assistive tech still reads it —
-since the visible heading/icon/etc. live independently in the regular
-`pre-header`/`header`/`body`/`footer` slots. `:host` must not set its own
-`position`; the component sets `position: relative` for the anchor to
-stretch against.
-
-`:hover`/`:active` read as "the whole card" via plain `:host(:hover)`/
-`:host(:active)` — normal event bubbling, no special handling needed.
-`:focus-visible` does need a small JS assist: `:host(:has(:focus-visible))`
-doesn't reliably re-invalidate across the shadow boundary on dynamic
-pseudo-class changes ([w3c/csswg-drafts#5893](https://github.com/w3c/csswg-drafts/issues/5893)),
-and `::slotted(a:focus-visible)` can only style the anchor itself, not the
-whole card. So a `focusin`/`focusout` listener reflects a `link-focus-visible`
-attribute onto the host, which `:host([link-focus-visible])` styles instead.
-
-If a card needs a second interactive element (e.g. a button in the footer),
-give it `position: relative` and a higher `z-index` than the link so it
-stays reachable above it.
-
 ## Variants
 
-Set `variant="list-item"` for a compact, horizontal composition: `header`
-and `footer` sit side by side in a single row instead of stacking, typically
-for a short link row — a leading icon, a title (plus optional subtitle), and
-a trailing icon.
+Set `variant="list-item"` for a compact, horizontal composition.
 
 ```html
 <clippy-card-as-link variant="list-item">
-  <a slot="link" href="/settings/theme">Met de huisstijl van een bestaande website</a>
   <span slot="header">
     <span slot="start">🔗</span>
     <h2>Met de huisstijl van een bestaande website</h2>
     <span>Vul een URL in.</span>
   </span>
   <span slot="footer">→</span>
+  <a slot="link" href="/settings/theme">Navigeer naar <q>huisstijl van een bestaande website halen</q></a>
 </clippy-card-as-link>
 ```
 
@@ -80,13 +48,3 @@ import '@nl-design-system-community/clippy-components/clippy-card-as-link';
 | Attribute | Description                                                                       |
 | --------- | --------------------------------------------------------------------------------- |
 | `variant` | `"list-item"` switches to the compact, horizontal row layout — see Variants above |
-
-## CSS Custom Properties
-
-Inherits `clippy-card`'s full token surface — see
-[`clippy-card`'s README](../clippy-card/README.md). This component adds no
-custom properties of its own: the link's hover/focus/active states are
-styled directly from `--basis-*` design tokens, and the `list-item` variant's
-row layout (`flex-direction: row`, centered/spread alignment, zero footer
-start-padding) is a baked-in default rather than an additional overridable
-layer.

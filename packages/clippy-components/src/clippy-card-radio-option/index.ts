@@ -32,6 +32,9 @@ export class ClippyCardRadioOption extends ClippyCard {
   @property({ type: String }) name = '';
   @property({ reflect: true, type: Boolean }) checked = false;
   @property({ attribute: false, type: Number }) inputTabIndex = -1;
+
+  // TODO: let consumers pass this input via a slot - then we can reuse clippy-card even more and we can remove all the
+  //       custom logic to keep track of the selected item etc.
   @query('input') input!: HTMLInputElement;
 
   readonly #inputId = crypto.randomUUID();

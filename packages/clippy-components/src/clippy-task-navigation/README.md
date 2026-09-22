@@ -20,13 +20,13 @@ trailing content.
 
 ```html
 <clippy-task-navigation>
-  <a slot="link" href="/wizard/typography">Task description</a>
   <span slot="header">
     <span slot="start">🎨</span>
     <span>Task description</span>
   </span>
   <time slot="body" datetime="2025-01-01">1 jan 2025</time>
   <span slot="footer">→</span>
+  <a slot="link" href="/tasks/1">Navigate to <q>Task</q></a>
 </clippy-task-navigation>
 ```
 
@@ -35,12 +35,3 @@ trailing content.
 ```js
 import '@nl-design-system-community/clippy-components/clippy-task-navigation';
 ```
-
-## CSS Custom Properties
-
-Inherits `clippy-card`'s full token surface — see
-[`clippy-card`'s README](../clippy-card/README.md). This component adds no
-custom properties of its own: the row layout (`flex-direction: row`, centered
-alignment, the header growing to fill the row, zero footer start-padding) is
-a baked-in default, and the hover/focus/active states are styled directly
-from `--basis-*` design tokens, not through an additional overridable layer.
