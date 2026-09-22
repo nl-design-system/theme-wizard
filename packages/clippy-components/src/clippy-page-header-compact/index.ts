@@ -1,5 +1,5 @@
 import { safeCustomElement } from '@src/lib/decorators';
-import { LitElement, html } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles from './styles';
 
@@ -23,6 +23,21 @@ export class ClippyPageHeaderCompact extends LitElement {
   inverse: boolean = false;
 
   override render() {
-    return html`<slot>Hello world</slot>`;
+    return html`
+      <div class= clippy-page-header">
+        <div class="clippy-page-header__top">
+          <section class="clippy-page-header__content">
+            <div class="clippy-page-header__group clippy-page-header__group--start"><mark>start</mark></div>
+            <div class="clippy-page-header__group clippy-page-header__group--center"><mark>center</mark></div>
+            <div class="clippy-page-header__group clippy-page-header__group--end"><mark>end</mark></div>
+          </section>
+        </div>
+        <div class="clippy-page-header__bottom">
+          <section class="clippy-page-header__content">
+            <mark>nav</mark>
+          </section>
+        </div>
+      </div>
+    `;
   }
 }
