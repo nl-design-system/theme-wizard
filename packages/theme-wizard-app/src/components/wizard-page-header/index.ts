@@ -46,13 +46,9 @@ export class WizardPageHeader extends LitElement {
       ...item,
       current: this.isCurrentPage(item.href),
     }));
-
-    console.log('this.#parsedNavigationItems', this.#parsedNavigationItems);
   }
 
   override render() {
-    console.log('this.items', this.navigationItems);
-    console.log('this.#parsedNavigationItems', this.#parsedNavigationItems);
     return html`
       <clippy-page-header variant="compact">
         <clippy-navigation-bar .items=${this.#parsedNavigationItems} slot="navigation-bar"></clippy-navigation-bar>
