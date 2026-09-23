@@ -32,7 +32,11 @@ const meta = {
       React.createElement('span', { slot: 'logo' }, '🎉 Logo'),
       React.createElement('clippy-navigation-bar', { items: simple, slot: 'navigation-bar' }),
       React.createElement('clippy-side-navigation', { items: full, slot: 'navigation-drawer' }),
-      React.createElement('clippy-button', { purpose: 'subtle', slot: 'end' }, 'Nederlands'),
+      React.createElement(
+        'clippy-button',
+        { purpose: args.variant === 'default' ? 'subtle' : 'subtle-inverse', slot: 'end' },
+        'Nederlands',
+      ),
     ]),
   tags: ['autodocs'],
   title: 'Clippy/Page Header/Compact',

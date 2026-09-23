@@ -62,7 +62,7 @@ export class ClippyPageHeaderCompact extends LitElement {
           <section class="clippy-page-header__content">
             <div class="clippy-page-header__group clippy-page-header__group--start">
               <clippy-button
-                purpose="subtle"
+                purpose=${this.variant === 'compact' ? 'subtle-inverse' : 'subtle'}
                 @click=${() => {
                   this.#openDrawer();
                 }}
