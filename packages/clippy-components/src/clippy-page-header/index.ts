@@ -9,11 +9,11 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import srOnly from '../lib/sr-only';
 import styles from './styles';
 
-const tag = 'clippy-page-header-compact';
+const tag = 'clippy-page-header';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyPageHeaderCompact;
+    [tag]: ClippyPageHeader;
   }
 }
 
@@ -21,11 +21,8 @@ declare global {
  * Clippy Side Navigation Component
  */
 @safeCustomElement(tag)
-export class ClippyPageHeaderCompact extends LitElement {
+export class ClippyPageHeader extends LitElement {
   static override readonly styles = [styles, srOnly];
-
-  @property({ reflect: true, type: Boolean })
-  inverse: boolean = false;
 
   @property({ reflect: true, type: String })
   variant: 'default' | 'compact' = 'compact';

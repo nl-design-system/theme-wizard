@@ -6,6 +6,7 @@ import { t } from '../../i18n';
 import '../wizard-logo';
 import styles from './styles';
 import '@nl-design-system-community/clippy-components/clippy-page-layout';
+import '@nl-design-system-community/clippy-components/clippy-page-header';
 
 const tag = 'wizard-layout';
 
@@ -36,6 +37,8 @@ export class WizardLayout extends LitElement {
   override render() {
     return html`
       <clippy-page-layout class="wizard-layout | ma-theme">
+        <clippy-page-header></clippy-page-header>
+
         <div class="wizard-layout__header" slot="header">
           <a class="wizard-layout__logo" href="/">
             <wizard-logo></wizard-logo>

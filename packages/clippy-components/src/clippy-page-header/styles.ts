@@ -64,10 +64,11 @@ export default css`
   }
 
   :host([variant='compact']) {
+    --ma-page-header-background-color: var(--ma-navigation-bar-background-color);
+    --ma-page-header-border-block-end-width: 0px;
     --ma-navigation-bar-content-padding-inline-end: 0px;
     --ma-navigation-bar-content-padding-inline-start: 0px;
 
-    --ma-page-header-background-color: var(--ma-navigation-bar-background-color);
     color: var(--ma-navigation-bar-item-color);
   }
 

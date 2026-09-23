@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-page-layout';
-import '@nl-design-system-community/clippy-components/clippy-page-header-compact';
+import '@nl-design-system-community/clippy-components/clippy-page-header';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-page-layout/README.md?raw';
 import React from 'react';
 

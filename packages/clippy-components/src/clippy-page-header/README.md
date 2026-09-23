@@ -1,15 +1,15 @@
-# `<clippy-page-header-compact>`
+# `<clippy-page-header>`
 
-A component that provides a compact page header.
+A component that provides a page header.
 
 ## Usage
 
 ```js
-import '@nl-design-system-community/clippy-components/clippy-page-header-compact';
+import '@nl-design-system-community/clippy-components/clippy-page-header';
 ```
 
 ```html
-<clippy-page-header-compact></clippy-page-header-compact>
+<clippy-page-header></clippy-page-header>
 ```
 
 ## Slots
