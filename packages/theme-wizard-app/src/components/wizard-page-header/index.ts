@@ -54,7 +54,7 @@ export class WizardPageHeader extends LitElement {
     console.log('this.items', this.navigationItems);
     console.log('this.#parsedNavigationItems', this.#parsedNavigationItems);
     return html`
-      <clippy-page-header>
+      <clippy-page-header variant="compact">
         <clippy-navigation-bar .items=${this.#parsedNavigationItems} slot="navigation-bar"></clippy-navigation-bar>
         <clippy-side-navigation .items=${this.#parsedNavigationItems} slot="navigation-drawer"></clippy-side-navigation>
         <a class="wizard-page-header__logo" href="/" slot="logo">

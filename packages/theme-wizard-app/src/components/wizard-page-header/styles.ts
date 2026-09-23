@@ -6,7 +6,6 @@ export default css`
   }
 
   .wizard-page-header__logo {
-    padding-block: var(--wizard-layout-nav-padding-block);
     text-decoration: none;
   }
 `;
