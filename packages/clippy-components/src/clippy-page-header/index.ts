@@ -26,7 +26,7 @@ export class ClippyPageHeader extends LitElement {
   static override readonly styles = [styles, srOnly];
 
   @property({ reflect: true, type: String })
-  variant: 'default' | 'compact' = 'compact';
+  variant: 'default' | 'compact' = 'default';
 
   @property({ attribute: 'label-menu-item', type: String }) labelMenuItem: string = 'Menu';
   @property({ attribute: 'label-drawer-title', type: String }) labelDrawerTitle: string = 'Hoofdnavigatie';
