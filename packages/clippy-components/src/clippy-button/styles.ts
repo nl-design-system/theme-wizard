@@ -11,8 +11,8 @@ export default css`
    * Subtle inverse
    * An easy solution to add an extra purpose for a subtle button on a inverse background.
    * 'nl-button--subtle-inverse' is combined in the component with the 'nl-button--subtle' class.
-   * Changes are proposed in this PR: https://github.com/nl-design-system/themes/pull/1368
-   * If those changes are accepted we need to refactor the component to support the 'clippy' purpose.
+   * Tokens are proposed in this PR: https://github.com/nl-design-system/themes/pull/1368.
+   * TODO: when there is a definitive solution update/remove this code.
    */
   .nl-button:where(.nl-button--subtle-inverse) {
     color: var(--basis-color-accent-1-inverse-color-default);
