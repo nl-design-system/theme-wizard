@@ -75,7 +75,6 @@ export default css`
   @container clippy-page-header (width < 20rem) {
     .clippy-page-header__content {
       flex-direction: column;
-      row-gap: var(--basis-space-row-lg);
     }
     .clippy-page-header__group {
       justify-content: center;
