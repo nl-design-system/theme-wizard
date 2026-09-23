@@ -13,7 +13,7 @@ const componentList = await Promise.all(Object.entries(components).map(async ([s
 <BaseLayout title="Componenten - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <wizard-page-header slot="page-header"></wizard-page-header>
       <nav slot="sidebar">
         {componentList.map(({slug, title}) => (
           <wizard-sidebar-link href={`/components/${slug}`}>{title}</wizard-sidebar-link>

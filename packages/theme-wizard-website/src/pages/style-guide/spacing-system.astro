@@ -17,7 +17,7 @@ const concepts = ['inline', 'block', 'text', 'column', 'row']
 <BaseLayout title="Witruimte systeem - Stijlgids - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <wizard-page-header slot="page-header"></wizard-page-header>
       <StyleGuideNav />
       <wizard-anchor-nav slot="aside-nav" items={JSON.stringify(concepts.map(concept => ({title: capitalize(concept), id: concept})))}></wizard-anchor-nav>
 
@@ -54,6 +54,6 @@ const concepts = ['inline', 'block', 'text', 'column', 'row']
 
 <style>
   .wizard-token-section {
-    scroll-margin-block: calc(var(--wizard-page-nav-block-size, 4rem) + var(--basis-space-row-xl));
+    scroll-margin-block: calc(var(--clippy-page-layout-header-block-size, 4rem) + var(--basis-space-row-xl));
   }
 </style>

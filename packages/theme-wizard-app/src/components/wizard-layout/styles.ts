@@ -8,30 +8,11 @@ export default css`
   .wizard-layout {
     --wizard-layout-padding-inline: var(--basis-space-inline-xl);
     --wizard-layout-body-padding-block: var(--basis-space-block-3xl);
-    --wizard-layout-body-template-rows: minmax(var(--basis-size-md), auto) 1fr;
-    --wizard-layout-nav-padding-block: var(--basis-space-block-xl);
     --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
     --clippy-page-layout-background-color: var(--basis-color-accent-1-bg-subtle);
 
     font-family: var(--basis-text-font-family-default, inherit);
-  }
-
-  .wizard-layout__header {
-    align-items: center;
-    background-color: var(--wizard-layout-nav-background-color);
-    color: var(--basis-color-accent-1-inverse-color-default);
-    display: grid;
-    gap: var(--basis-space-column-4xl);
-    grid-template-columns: auto 1fr;
-    inset-block-start: 0;
-    padding-inline: var(--wizard-layout-padding-inline);
-    position: sticky;
-    z-index: 1;
-
-    @media (forced-colors: active) {
-      border-block-end: var(--basis-border-width-sm) solid;
-    }
   }
 
   /* Currently non-responsive, add flex-wrap: wrap to enable wrapping */
@@ -54,11 +35,6 @@ export default css`
     flex-basis: 12rem;
     flex-grow: 1;
     order: 3;
-  }
-
-  .wizard-layout__logo {
-    padding-block: var(--wizard-layout-nav-padding-block);
-    text-decoration: none;
   }
 
   /* ============================================
