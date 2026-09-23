@@ -9,7 +9,7 @@ interface ButtonStoryArgs {
   hint?: 'positive' | 'negative';
   'icon-only': boolean;
   pressed: boolean;
-  purpose: 'primary' | 'secondary' | 'subtle';
+  purpose: 'primary' | 'secondary' | 'subtle' | 'subtle-inverse';
   size: 'small' | 'medium';
   toggle: boolean;
 }
@@ -89,6 +89,7 @@ export const Purpose: Story = {
       React.createElement('clippy-button', { purpose: 'primary' }, 'Primary'),
       React.createElement('clippy-button', { purpose: 'secondary' }, 'Secondary'),
       React.createElement('clippy-button', { purpose: 'subtle' }, 'Subtle'),
+      React.createElement('clippy-button', { purpose: 'subtle-inverse' }, 'Subtle Inverse'),
     ),
 };
 
