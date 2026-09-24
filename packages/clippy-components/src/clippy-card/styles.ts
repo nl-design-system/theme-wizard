@@ -133,7 +133,7 @@ export default css`
     padding-inline-end: var(--_clippy-card-header-padding-inline-end);
     padding-inline-start: var(--_clippy-card-header-padding-inline-start);
     row-gap: var(--_clippy-card-header-row-gap);
-    text-decoration: var(--clippy-card-heading-text-decoration);
+    text-decoration: var(--clippy-card-heading-text-decoration, underline);
   }
 
   .clippy-card__body {
