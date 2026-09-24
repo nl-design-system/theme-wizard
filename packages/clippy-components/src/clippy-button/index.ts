@@ -26,6 +26,8 @@ export class ClippyButton<T = unknown> extends FormElement<T> {
   @property({ type: Boolean }) toggle = undefined;
   @property({ type: Boolean }) pressed = false;
   @property({ type: Boolean }) busy = false;
+  @property({ type: Boolean }) expanded: boolean = false;
+  @property({ type: String }) controls: string | undefined = undefined;
   @property({
     converter: {
       fromAttribute: (value: string | null): Hint | undefined => {
@@ -87,6 +89,8 @@ export class ClippyButton<T = unknown> extends FormElement<T> {
         type=${this.type}
         aria-pressed=${this.toggle ? this.pressed : nothing}
         aria-disabled=${this.disabled || nothing}
+        aria-expanded=${this.expanded || nothing}
+        aria-controls=${this.controls || nothing}
         class=${classMap({
           [`clippy-button--${this.size}`]: this.size !== defaultSize,
           [`nl-button--${this.hint}`]: !!this.hint,
