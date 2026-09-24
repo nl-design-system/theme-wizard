@@ -23,10 +23,10 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
 ---
 
 <script>
+  import '@nl-design-system-community/clippy-components/clippy-card-as-link'
   import '@nl-design-system-community/clippy-components/clippy-heading'
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
   import '@nl-design-system-community/clippy-components/clippy-stack'
-  import '@nl-design-system-community/clippy-components/clippy-card-as-link'
 </script>
 
 <BaseLayout title={`${node.key} - Basis tokens - Theme Wizard`}>
@@ -92,10 +92,10 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
 
 <style>
   .wizard-secretly-a-list {
-    padding-inline-start: var(--basis-space-none);
-    list-style-type: none;
     display: flex;
     flex-direction: column;
+    list-style-type: none;
+    padding-inline-start: var(--basis-space-none);
     row-gap: var(--basis-space-row-md);
   }
 

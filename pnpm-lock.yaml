@@ -150,9 +150,6 @@ importers:
       '@nl-design-system-candidate/heading-tokens':
         specifier: 1.1.2
         version: 1.1.2
-      '@nl-design-system-candidate/link-css':
-        specifier: 2.0.3
-        version: 2.0.3
       '@nl-design-system-candidate/link-tokens':
         specifier: 3.0.3
         version: 3.0.3
