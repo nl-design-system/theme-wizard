@@ -111,7 +111,12 @@ export class ClippyPageHeader extends LitElement {
           </section>
         </div>
 
-        <div class="clippy-page-header__bottom">${this.#renderNavBar('bottom')}</div>
+        ${
+          this.variant === 'default'
+            ? html`<div class="clippy-page-header__bottom">${this.#renderNavBar('bottom')}</div>`
+            : nothing
+        }
+
         <clippy-drawer actions="none" id="clippy-mobile-menu-drawer">
           <span class="sr-only" slot="title">${this.labelDrawerTitle}</span>
           <slot name="navigation-drawer" @slotchange=${this.#onNavigationDrawerSlotChange}></slot>
