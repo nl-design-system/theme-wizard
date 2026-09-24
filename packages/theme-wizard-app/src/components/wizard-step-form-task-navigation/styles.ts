@@ -1,11 +1,11 @@
 import { css } from 'lit';
 
 export default css`
-  [slot='header'] {
+  .wizard-step-form-task-navigation__title {
     font-weight: var(--basis-text-font-weight-bold);
   }
 
-  .wizard-step-form-task-navigation-icon-start {
+  .wizard-step-form-task-navigation__icon {
     --wizard-step-form-task-navigation-border-style: dashed;
     --wizard-step-form-task-navigation-border-color: var(--basis-color-default-border-subtle);
     --wizard-step-form-task-navigation-background-color: transparent;
@@ -27,13 +27,17 @@ export default css`
       color: inherit;
       justify-self: center;
     }
+
+    :host(:focus-within) &:not(.wizard-step-form-task-navigation__icon--checked) {
+      --wizard-step-form-task-navigation-border-color: var(--basis-focus-border-color);
+    }
   }
 
   /**
    * 1. Add border in the same color as background: this helps with adding a border in high contrast mode
    *    and keeps the size the same as the 'checked' state.
    */
-  .wizard-step-form-task-navigation-icon-start--checked {
+  .wizard-step-form-task-navigation__icon--checked {
     --wizard-step-form-task-navigation-color: var(--basis-color-positive-inverse-color-default);
     --wizard-step-form-task-navigation-background-color: var(--basis-color-positive-inverse-bg-default);
     --wizard-step-form-task-navigation-border-color: var(--wizard-step-form-task-navigation-background-color); /* [1] */

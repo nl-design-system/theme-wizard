@@ -44,21 +44,23 @@ export class WizardStepFormTaskNavigation extends LitElement {
 
     return html`
       <clippy-task-navigation>
-        <span slot="header">
-          ${this.label} ${this.done ? html`<span class="sr-only">(${t('wizard.taskNavigation.done')})</span>` : nothing}
-        </span>
+        <span slot="header" class="wizard-step-form-task-navigation__title"> ${this.label} </span>
+
         <span
           slot="pre-header"
-          class="wizard-step-form-task-navigation-icon-start ${classMap({
-            'wizard-step-form-task-navigation-icon-start--checked': this.done,
-          })}"
           aria-hidden="true"
+          class="wizard-step-form-task-navigation__icon ${classMap({
+            'wizard-step-form-task-navigation__icon--checked': this.done,
+          })}"
         >
           ${unsafeSVG(this.done ? CheckIcon : icon)}
         </span>
+
         <span slot="footer" aria-hidden="true">${unsafeSVG(ArrowRightIcon)}</span>
+
         <a slot="link" href=${this.href}>
-          ${t('wizard.taskNavigation.navigateTo', { item: html`<q>${this.label}</q>` })}
+          ${t('wizard.taskNavigation.navigateTo', { item: this.label })}
+          ${this.done ? `(${t('wizard.taskNavigation.done')})` : nothing}
         </a>
       </clippy-task-navigation>
     `;

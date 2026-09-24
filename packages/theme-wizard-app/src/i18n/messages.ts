@@ -576,7 +576,7 @@ export const en = {
     },
     taskNavigation: {
       done: 'Task completed',
-      navigateTo: ({ item }: { item: TemplateResult }): TemplateResult => html`Navigate to ${item}`,
+      navigateTo: 'Navigate to ‘{{item}}’',
     },
   },
 };
@@ -1141,7 +1141,7 @@ export const nl = {
     },
     taskNavigation: {
       done: 'Taak afgerond',
-      navigateTo: ({ item }: { item: TemplateResult }): TemplateResult => html`Navigeer naar ${item}`,
+      navigateTo: 'Navigeer naar ‘{{item}}’',
     },
   },
 } satisfies typeof en;
