@@ -58,9 +58,6 @@ export default css`
     text-decoration: var(--clippy-card-label-text-decoration);
   }
 
-  /*
-   * [1] The underline is a visual affordance to indicate that this card is a link
-   */
   .clippy-card__header {
     color: var(--clippy-card-heading-color);
     column-gap: var(--clippy-card-header-column-gap);
@@ -73,7 +70,7 @@ export default css`
     padding-inline-end: var(--clippy-card-header-padding-inline-end);
     padding-inline-start: var(--clippy-card-header-padding-inline-start);
     row-gap: var(--clippy-card-header-row-gap);
-    text-decoration: var(--clippy-card-header-text-decoration, underline); /* [1] */
+    text-decoration: var(--clippy-card-header-text-decoration);
   }
 
   .clippy-card__body {
