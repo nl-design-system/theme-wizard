@@ -33,6 +33,13 @@ Set `variant="list-item"` for a compact, horizontal composition.
 import '@nl-design-system-community/clippy-components/clippy-card-as-link';
 ```
 
+## Features
+
+- Builds on `clippy-card` for accessbility primitives
+- Highly composable element
+- Shows an text underline by default in the header slot to act as a visual affordance that this element is clickable
+- Shows in `LinkText` color in high contrast mode and forces the text underline back
+
 ## Slots
 
 | Slot         | Description                                                                  |

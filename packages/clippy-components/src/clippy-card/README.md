@@ -21,6 +21,12 @@ import '@nl-design-system-community/clippy-components/clippy-card';
 Each region only renders a wrapper `<div>` (for padding/gap) when it actually
 has slotted content — an empty region contributes no layout.
 
+## Features
+
+- Highly composable element
+- Solves DOM order vs. visual order for the 'eyebrow'/pre-header slot
+- Renders a 1px border by default as an affordance that this is in fact a card
+
 ## Slots
 
 | Slot         | Description                                                                                                                                                                         |
