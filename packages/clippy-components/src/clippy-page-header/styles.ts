@@ -41,10 +41,10 @@ export default css`
   }
 
   .clippy-page-header__group {
-    display: flex;
-    flex: 1;
     align-items: center;
     column-gap: var(--basis-space-column-3xl);
+    display: flex;
+    flex: 1;
   }
 
   .clippy-page-header__group--start {
@@ -88,9 +88,9 @@ export default css`
     }
 
     .clippy-page-header__content {
+      justify-content: space-between;
       padding-inline-end: var(--ma-page-header-content-large-vw-padding-inline-end);
       padding-inline-start: var(--ma-page-header-content-large-vw-padding-inline-start);
-      justify-content: space-between;
     }
 
     .clippy-page-header__group {
@@ -107,16 +107,17 @@ export default css`
 
     .clippy-page-header__wrap-navigation {
       display: block;
-      /*align-self: stretch;*/
+
+      /* align-self: stretch; */
     }
 
     :host([variant='compact']) {
       .clippy-page-header__top {
-        padding-block: 0px;
+        padding-block: 0;
       }
       .clippy-page-header__wrap-navigation {
-        display: flex;
         align-self: stretch;
+        display: flex;
       }
 
       .clippy-page-header__group--end,
