@@ -20,12 +20,15 @@ export default css`
     --clippy-card-color: var(--basis-color-default-color-default);
     --clippy-card-max-inline-size: 48rem;
 
+    /* Clippy-card:hover */
     --clippy-card-hover-background-color: var(--basis-color-default-bg-hover);
     --clippy-card-hover-border-color: var(--clippy-card-border-color);
 
+    /* Clippy-card:active */
     --clippy-card-active-background-color: var(--basis-color-default-bg-active);
     --clippy-card-active-border-color: var(--clippy-card-border-color);
 
+    /* Clippy-card pre-header */
     --clippy-card-pre-header-column-gap: var(--basis-space-column-md);
     --clippy-card-pre-header-padding-block-end: var(--basis-space-block-lg);
     --clippy-card-pre-header-padding-block-start: var(--basis-space-block-lg);
@@ -33,6 +36,7 @@ export default css`
     --clippy-card-pre-header-padding-inline-start: var(--basis-space-inline-xl);
     --clippy-card-pre-header-row-gap: var(--basis-space-row-md);
 
+    /* Clippy-card header */
     --clippy-card-header-column-gap: var(--basis-space-column-md);
     --clippy-card-header-padding-block-end: var(--basis-space-block-lg);
     --clippy-card-header-padding-block-start: var(--basis-space-block-lg);
@@ -41,6 +45,7 @@ export default css`
     --clippy-card-header-row-gap: var(--basis-space-row-md);
     --clippy-card-header-text-decoration: none;
 
+    /* Clippy-card body */
     --clippy-card-body-column-gap: var(--basis-space-column-md);
     --clippy-card-body-padding-block-end: var(--basis-space-block-lg);
     --clippy-card-body-padding-block-start: var(--basis-space-block-lg);
@@ -48,6 +53,7 @@ export default css`
     --clippy-card-body-padding-inline-start: var(--basis-space-inline-xl);
     --clippy-card-body-row-gap: var(--basis-space-row-md);
 
+    /* Clippy-card footer */
     --clippy-card-footer-column-gap: var(--basis-space-column-md);
     --clippy-card-footer-padding-block-end: var(--basis-space-block-lg);
     --clippy-card-footer-padding-block-start: var(--basis-space-block-lg);
