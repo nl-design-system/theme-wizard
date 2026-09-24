@@ -6,21 +6,21 @@ import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 
 const createPlainTemplate = () => html`
-  <clippy-card style="max-width: 20rem;">
+  <clippy-card style="--clippy-card-max-inline-size: 20rem;">
     <h2 slot="header">Card title</h2>
     <p slot="body">Some body content for this card.</p>
   </clippy-card>
 `;
 
 const createSlotPreHeaderTemplate = () => html`
-  <clippy-card style="max-width: 20rem;">
+  <clippy-card style="--clippy-card-max-inline-size: 20rem;">
     <h2 slot="header">Card title</h2>
     <span slot="pre-header">Category label</span>
   </clippy-card>
 `;
 
 const createSlotBodyTemplate = () => html`
-  <clippy-card style="max-width: 20rem;">
+  <clippy-card style="--clippy-card-max-inline-size: 20rem;">
     <p slot="body">
       Only the body slot is filled — the pre-header, header and footer regions render no wrapper at all.
     </p>
@@ -28,14 +28,14 @@ const createSlotBodyTemplate = () => html`
 `;
 
 const createSlotFooterTemplate = () => html`
-  <clippy-card style="max-width: 20rem;">
+  <clippy-card style="--clippy-card-max-inline-size: 20rem;">
     <h2 slot="header">Card title</h2>
     <div slot="footer">Footer actions</div>
   </clippy-card>
 `;
 
 const createAllSlotsTemplate = () => html`
-  <clippy-card style="max-width: 20rem;">
+  <clippy-card style="--clippy-card-max-inline-size: 20rem;">
     <h2 slot="header">Card title</h2>
     <span slot="pre-header">Category label</span>
     <p slot="body">Main card content.</p>
@@ -79,7 +79,7 @@ export const Plain: Story = {
   render: () =>
     React.createElement(
       'clippy-card',
-      { style: { maxWidth: '20rem' } },
+      { style: { '--clippy-card-max-inline-size': '20rem' } as React.CSSProperties },
       React.createElement('h2', { slot: 'header' }, 'Card title'),
       React.createElement('p', { slot: 'body' }, 'Some body content for this card.'),
     ),
@@ -102,7 +102,7 @@ export const SlotPreHeader: Story = {
   render: () =>
     React.createElement(
       'clippy-card',
-      { style: { maxWidth: '20rem' } },
+      { style: { '--clippy-card-max-inline-size': '20rem' } as React.CSSProperties },
       React.createElement('h2', { slot: 'header' }, 'Card title'),
       React.createElement('span', { slot: 'pre-header' }, 'Category label'),
     ),
@@ -126,7 +126,7 @@ export const SlotBody: Story = {
   render: () =>
     React.createElement(
       'clippy-card',
-      { style: { maxWidth: '20rem' } },
+      { style: { '--clippy-card-max-inline-size': '20rem' } as React.CSSProperties },
       React.createElement(
         'p',
         { slot: 'body' },
@@ -152,7 +152,7 @@ export const SlotFooter: Story = {
   render: () =>
     React.createElement(
       'clippy-card',
-      { style: { maxWidth: '20rem' } },
+      { style: { '--clippy-card-max-inline-size': '20rem' } as React.CSSProperties },
       React.createElement('h2', { slot: 'header' }, 'Card title'),
       React.createElement('div', { slot: 'footer' }, 'Footer actions'),
     ),
@@ -175,7 +175,7 @@ export const AllSlots: Story = {
   render: () =>
     React.createElement(
       'clippy-card',
-      { style: { maxWidth: '20rem' } },
+      { style: { '--clippy-card-max-inline-size': '20rem' } as React.CSSProperties },
       React.createElement('h2', { slot: 'header' }, 'Card title'),
       React.createElement('span', { slot: 'pre-header' }, 'Category label'),
       React.createElement('p', { slot: 'body' }, 'Main card content.'),

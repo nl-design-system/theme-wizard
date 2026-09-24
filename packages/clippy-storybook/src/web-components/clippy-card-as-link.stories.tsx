@@ -6,19 +6,15 @@ import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 
 const createDefaultTemplate = () => html`
-  <clippy-card-as-link style="max-width: 20rem;">
+  <clippy-card-as-link style="--clippy-card-max-inline-size: 20rem;">
     <h2 slot="header">Met de huisstijl van een bestaande website</h2>
     <p slot="body">Vul een URL in.</p>
     <a slot="link" href="#">Haal design tokens op van website</a>
   </clippy-card-as-link>
 `;
 
-/* The `link` slot's <a> is a direct child of the host, separate from the visible heading in
- * `header` — its text is the link's accessible name, visually hidden and stretched to cover the
- * whole row. Row layout, alignment and the footer's zeroed start-padding are all baked into the
- * `variant="list-item"` styling — no overrides needed here. */
 const createListItemTemplate = () => html`
-  <clippy-card-as-link variant="list-item" style="max-width: 22rem;">
+  <clippy-card-as-link variant="list-item" style="--clippy-card-max-inline-size: 20rem;">
     <span slot="header" style="align-items: center; display: flex; gap: 0.75rem;">
       🔗
       <span>
