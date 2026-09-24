@@ -34,7 +34,8 @@ export class ClippyPageHeader extends LitElement {
   @query('clippy-drawer')
   readonly drawerElement!: ClippyDrawer;
 
-  @state() private hasDrawerNavigation = false;
+  @state() private hasDrawerNavigation: boolean = false;
+  @state() private isDrawerOpen: boolean = false;
 
   /**
    * Render the navigation bar
@@ -51,13 +52,27 @@ export class ClippyPageHeader extends LitElement {
     `;
   }
 
-  #openDrawer() {
+  #openDrawer = () => {
     this.drawerElement?.open();
-  }
+    this.isDrawerOpen = true;
+  };
 
-  #onNavigationDrawerSlotChange(e: Event) {
+  #onDrawerClose = () => {
+    this.isDrawerOpen = false;
+  };
+
+  #onNavigationDrawerSlotChange = (e: Event) => {
     const slot = e.target as HTMLSlotElement;
     this.hasDrawerNavigation = !isSlotEmpty(slot);
+  };
+
+  override firstUpdated() {
+    this.drawerElement.addEventListener('close', this.#onDrawerClose);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.drawerElement.removeEventListener('close', this.#onDrawerClose);
   }
 
   override render() {
@@ -71,6 +86,8 @@ export class ClippyPageHeader extends LitElement {
                   ? html`
                       <clippy-button
                         purpose=${this.variant === 'compact' ? 'subtle-inverse' : 'subtle'}
+                        .expanded=${this.isDrawerOpen}
+                        controls="clippy-mobile-menu-drawer"
                         @click=${() => {
                           this.#openDrawer();
                         }}
@@ -95,7 +112,7 @@ export class ClippyPageHeader extends LitElement {
         </div>
 
         <div class="clippy-page-header__bottom">${this.#renderNavBar('bottom')}</div>
-        <clippy-drawer actions="none">
+        <clippy-drawer actions="none" id="clippy-mobile-menu-drawer">
           <span class="sr-only" slot="title">${this.labelDrawerTitle}</span>
           <slot name="navigation-drawer" @slotchange=${this.#onNavigationDrawerSlotChange}></slot>
         </clippy-drawer>
