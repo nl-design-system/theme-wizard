@@ -29,7 +29,6 @@ describe(`<${tag}>`, () => {
     });
 
     it('renders the bottom section for default variant', async () => {
-      component.variant = 'default';
       await component.updateComplete;
       const bottomSection = component.shadowRoot?.querySelector('.clippy-page-header__bottom');
       expect(bottomSection).toBeTruthy();
@@ -88,6 +87,7 @@ describe(`<${tag}>`, () => {
 
   describe('Navigation bar rendering', () => {
     it('renders navigation bar content in bottom for default variant', async () => {
+      component.variant = 'default';
       component.innerHTML = '<span slot="navigation-bar">Nav content</span>';
       await component.updateComplete;
 
@@ -95,6 +95,14 @@ describe(`<${tag}>`, () => {
         '.clippy-page-header__bottom .clippy-page-header__wrap-navigation',
       );
       expect(navBarBottom).toBeTruthy();
+
+      const slot = navBarBottom?.querySelector('slot[name="navigation-bar"]');
+      expect(slot).toBeTruthy();
+
+      const assignedElements = slot?.assignedElements();
+      expect(assignedElements).toHaveLength(1);
+      expect(assignedElements?.[0].textContent).toBe('Nav content');
+
       const navBarTop = component.shadowRoot?.querySelector(
         '.clippy-page-header__top .clippy-page-header__wrap-navigation',
       );
@@ -106,14 +114,22 @@ describe(`<${tag}>`, () => {
       component.innerHTML = '<span slot="navigation-bar">Nav content</span>';
       await component.updateComplete;
 
-      const navBarBottom = component.shadowRoot?.querySelector(
-        '.clippy-page-header__bottom .clippy-page-header__wrap-navigation',
-      );
-      expect(navBarBottom).toBeFalsy();
       const navBarTop = component.shadowRoot?.querySelector(
         '.clippy-page-header__top .clippy-page-header__wrap-navigation',
       );
       expect(navBarTop).toBeTruthy();
+
+      const slot = navBarTop?.querySelector('slot[name="navigation-bar"]');
+      expect(slot).toBeTruthy();
+
+      const assignedElements = slot?.assignedElements();
+      expect(assignedElements).toHaveLength(1);
+      expect(assignedElements?.[0].textContent).toBe('Nav content');
+
+      const navBarBottom = component.shadowRoot?.querySelector(
+        '.clippy-page-header__bottom .clippy-page-header__wrap-navigation',
+      );
+      expect(navBarBottom).toBeFalsy();
     });
   });
 
@@ -192,7 +208,7 @@ describe(`<${tag}>`, () => {
       await component.updateComplete;
 
       // The drawer uses native dialog element, check if it's open
-      const dialogElement = drawer?.shadowRoot?.querySelector('dialog');
+      const dialogElement = drawer?.shadowRoot?.querySelector('dialog') as HTMLDialogElement;
       expect(dialogElement?.open).toBe(true);
     });
 
@@ -214,29 +230,46 @@ describe(`<${tag}>`, () => {
   });
 
   describe('Slots', () => {
-    it('renders logo slot in center group', async () => {
+    it('renders logo slot content in center group', async () => {
       component.innerHTML = '<span slot="logo">Logo content</span>';
       await component.updateComplete;
 
-      const logoWrap = component.shadowRoot?.querySelector('.clippy-page-header__wrap-logo');
-      const logoSlot = logoWrap?.querySelector('slot[name="logo"]');
+      const logoWrap = component.shadowRoot?.querySelector(
+        '.clippy-page-header__group--center .clippy-page-header__wrap-logo',
+      );
+      const logoSlot = logoWrap?.querySelector('slot[name="logo"]') as HTMLSlotElement;
       expect(logoSlot).toBeTruthy();
+
+      const assignedElements = logoSlot?.assignedElements();
+      expect(assignedElements).toHaveLength(1);
+      expect(assignedElements?.[0].textContent).toBe('Logo content');
     });
 
-    it('renders end slot in end group', async () => {
+    it('renders end slot content in end group', async () => {
+      component.innerHTML = '<span slot="end">End content</span>';
       await component.updateComplete;
 
       const endGroup = component.shadowRoot?.querySelector('.clippy-page-header__group--end');
-      const endSlot = endGroup?.querySelector('slot[name="end"]');
+      const endSlot = endGroup?.querySelector('slot[name="end"]') as HTMLSlotElement;
       expect(endSlot).toBeTruthy();
+
+      const assignedElements = endSlot?.assignedElements();
+      expect(assignedElements).toHaveLength(1);
+      expect(assignedElements?.[0].textContent).toBe('End content');
     });
 
-    it('renders navigation-bar slot', async () => {
+    it('renders navigation-drawer slot content', async () => {
+      component.innerHTML = '<span slot="navigation-drawer">Drawer nav content</span>';
       await component.updateComplete;
+      await component.drawerElement?.updateComplete;
 
-      // The navigation-bar slot is conditionally rendered based on variant
-      const navigationBarSlot = component.shadowRoot?.querySelector('slot[name="navigation-bar"]');
-      expect(navigationBarSlot).toBeTruthy();
+      const drawer = component.shadowRoot?.querySelector('clippy-drawer');
+      const navDrawerSlot = drawer?.querySelector('slot[name="navigation-drawer"]') as HTMLSlotElement;
+      expect(navDrawerSlot).toBeTruthy();
+
+      const assignedElements = navDrawerSlot?.assignedElements();
+      expect(assignedElements).toHaveLength(1);
+      expect(assignedElements?.[0].textContent).toBe('Drawer nav content');
     });
   });
 });
