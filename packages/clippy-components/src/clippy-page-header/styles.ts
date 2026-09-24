@@ -107,8 +107,6 @@ export default css`
 
     .clippy-page-header__wrap-navigation {
       display: block;
-
-      /* align-self: stretch; */
     }
 
     :host([variant='compact']) {
