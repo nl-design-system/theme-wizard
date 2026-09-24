@@ -22,12 +22,26 @@ export default css`
     white-space: nowrap;
   }
 
+  ::slotted([slot='header']) {
+    text-decoration: var(--clippy-card-header-text-decoration, underline);
+
+    @media (forced-colors: active) {
+      --clippy-card-header-text-decoration: underline;
+    }
+  }
+
   :host(:hover) {
-    background-color: var(--clippy-card-as-link-hover-background-color, var(--basis-color-default-bg-hover));
+    --_clippy-card-state-color: var(--clippy-card-hover-color);
+    --_clippy-card-forced-colors-color: LinkText;
+    --clippy-card-background-color: var(--clippy-card-hover-background-color);
+    --clippy-card-border-color: var(--clippy-card-hover-border-color);
   }
 
   :host(:active) {
-    background-color: var(--clippy-card-as-link-active-background-color, var(--basis-color-default-bg-active));
+    --_clippy-card-state-color: var(--clippy-card-active-color);
+    --_clippy-card-forced-colors-color: LinkText;
+    --clippy-card-background-color: var(--clippy-card-active-background-color);
+    --clippy-card-border-color: var(--clippy-card-active-border-color);
   }
 
   /*
@@ -35,14 +49,14 @@ export default css`
    * [2] Prevent the outline being clipped when other cards/elements are rendered too close to this card
    */
   :host([${unsafeCSS(focusVisibleAttribute)}]) {
-    background-color: var(--clippy-card-as-link-focus-background-color, var(--basis-focus-background-color));
-    border-color: var(--clippy-card-as-link-focus-border-color, var(--basis-color-transparent));
+    background-color: var(--clippy-card-focus-background-color, var(--basis-focus-background-color));
+    border-color: var(--clippy-card-focus-border-color, var(--basis-color-transparent));
     border-radius: var(--clippy-card-border-radius); /* [1] */
-    color: var(--clippy-card-as-link-focus-color, var(--basis-focus-color));
-    outline-color: var(--clippy-card-as-link-focus-outline-color, var(--basis-focus-outline-color));
-    outline-offset: var(--clippy-card-as-link-focus-outline-offset, var(--basis-focus-outline-offset));
-    outline-style: var(--clippy-card-as-link-focus-outline-style, var(--basis-focus-outline-style));
-    outline-width: var(--clippy-card-as-link-focus-outline-width, var(--basis-focus-outline-width));
+    color: var(--clippy-card-focus-color, var(--basis-focus-color));
+    outline-color: var(--clippy-card-focus-outline-color, var(--basis-focus-outline-color));
+    outline-offset: var(--clippy-card-focus-outline-offset, var(--basis-focus-outline-offset));
+    outline-style: var(--clippy-card-focus-outline-style, var(--basis-focus-outline-style));
+    outline-width: var(--clippy-card-focus-outline-width, var(--basis-focus-outline-width));
     z-index: 1; /* [2] */
   }
 
