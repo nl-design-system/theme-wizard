@@ -31,7 +31,7 @@ export const radioStyles = css`
     /* [1] */
     &::after {
       border-color: var(--basis-form-control-border-color);
-      border-radius: var(--_clippy-card-border-radius);
+      border-radius: var(--clippy-card-border-radius);
       border-style: solid;
       border-width: var(--basis-border-width-none);
       content: '';

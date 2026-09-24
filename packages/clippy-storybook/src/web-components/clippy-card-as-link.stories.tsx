@@ -15,10 +15,10 @@ const createDefaultTemplate = () => html`
 
 const createListItemTemplate = () => html`
   <clippy-card-as-link variant="list-item" style="--clippy-card-max-inline-size: 20rem;">
+    <span slot="pre-header">🔗</span>
     <span slot="header" style="align-items: center; display: flex; gap: 0.75rem;">
-      🔗
       <span>
-        <h2 style="font-size: inherit; margin: 0;">Met de huisstijl van een bestaande website</h2>
+        <h2>Met de huisstijl van een bestaande website</h2>
         <span style="color: var(--basis-color-default-color-subtle);">Vul een URL in.</span>
       </span>
     </span>
