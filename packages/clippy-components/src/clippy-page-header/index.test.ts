@@ -96,7 +96,7 @@ describe(`<${tag}>`, () => {
       );
       expect(navBarBottom).toBeTruthy();
 
-      const slot = navBarBottom?.querySelector('slot[name="navigation-bar"]');
+      const slot = navBarBottom?.querySelector('slot[name="navigation-bar"]') as HTMLSlotElement;
       expect(slot).toBeTruthy();
 
       const assignedElements = slot?.assignedElements();
@@ -119,7 +119,7 @@ describe(`<${tag}>`, () => {
       );
       expect(navBarTop).toBeTruthy();
 
-      const slot = navBarTop?.querySelector('slot[name="navigation-bar"]');
+      const slot = navBarTop?.querySelector('slot[name="navigation-bar"]') as HTMLSlotElement;
       expect(slot).toBeTruthy();
 
       const assignedElements = slot?.assignedElements();
