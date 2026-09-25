@@ -12,7 +12,7 @@ declare global {
 }
 
 /**
- * Clippy Side Navigation Component
+ * Clippy Page Layout Component
  * @slot - Main content
  * @slot header - Header content
  * @slot footer - Footer content
