@@ -17,8 +17,6 @@ export default css`
     container-name: clippy-page-header;
     container-type: inline-size;
     inline-size: 100%;
-    position: relative;
-    z-index: 0;
   }
 
   .clippy-page-header__top {
@@ -34,6 +32,7 @@ export default css`
   .clippy-page-header__content {
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     margin-inline: auto;
     max-inline-size: var(--ma-page-header-content-max-inline-size);
     padding-inline-end: var(--ma-page-header-content-padding-inline-end);
@@ -45,18 +44,7 @@ export default css`
     column-gap: var(--basis-space-column-3xl);
     display: flex;
     flex: 1;
-  }
-
-  .clippy-page-header__group--start {
-    justify-content: start;
-  }
-
-  .clippy-page-header__group--center {
     justify-content: center;
-  }
-
-  .clippy-page-header__group--end {
-    justify-content: end;
   }
 
   .clippy-page-header__wrap-navigation {
@@ -72,16 +60,24 @@ export default css`
     color: var(--ma-navigation-bar-item-color);
   }
 
-  @container clippy-page-header (width < 20rem) {
+  @container clippy-page-header (inline-size >= 20rem) {
     .clippy-page-header__content {
-      flex-direction: column;
+      flex-direction: row;
     }
-    .clippy-page-header__group {
+    .clippy-page-header__group--start {
+      justify-content: start;
+    }
+
+    .clippy-page-header__group--center {
       justify-content: center;
+    }
+
+    .clippy-page-header__group--end {
+      justify-content: end;
     }
   }
 
-  @container clippy-page-header (width >= 48rem) {
+  @container clippy-page-header (inline-size >= 48rem) {
     .clippy-page-header__top {
       padding-block-end: var(--ma-page-header-content-large-vw-padding-block-end);
       padding-block-start: var(--ma-page-header-content-large-vw-padding-block-start);
