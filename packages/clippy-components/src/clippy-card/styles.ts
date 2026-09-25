@@ -31,13 +31,8 @@ export default css`
   }
 
   /*
-   * Header renders before pre-header in the DOM (see index.ts, for AT reading order).
-   * Pull pre-header back to the top visually.
+   * [1] Header renders before pre-header in the DOM (see index.ts, for AT reading order).
    */
-  .clippy-card__pre-header {
-    order: -1;
-  }
-
   .clippy-card__pre-header {
     color: var(--clippy-card-pre-header-color);
     column-gap: var(--clippy-card-pre-header-column-gap);
@@ -45,6 +40,7 @@ export default css`
     font-size: var(--clippy-card-pre-header-font-size);
     font-weight: var(--clippy-card-pre-header-font-weight);
     line-height: var(--clippy-card-pre-header-line-height);
+    order: -1; /* [1] */
     padding-block-end: var(--clippy-card-pre-header-padding-block-end);
     padding-block-start: var(--clippy-card-pre-header-padding-block-start);
     padding-inline-end: var(--clippy-card-pre-header-padding-inline-end);
