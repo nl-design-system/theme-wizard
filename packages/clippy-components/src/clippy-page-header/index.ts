@@ -1,4 +1,4 @@
-import { ClippyDrawer } from '@src/clippy-drawer';
+import type { ClippyDrawer } from '@src/clippy-drawer';
 import { safeCustomElement } from '@src/lib/decorators';
 import { isSlotEmpty } from '@src/lib/slot';
 import Menu2Icon from '@tabler/icons/outline/menu-2.svg?raw';
