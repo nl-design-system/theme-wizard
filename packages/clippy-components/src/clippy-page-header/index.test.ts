@@ -1,5 +1,7 @@
 import './index';
+import type { ClippyDrawer } from '@src/clippy-drawer';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
+import { page } from 'vitest/browser';
 import { ClippyPageHeader } from './index';
 
 const tag = 'clippy-page-header';
@@ -175,9 +177,10 @@ describe(`<${tag}>`, () => {
       component.labelDrawerTitle = 'Main Navigation';
       await component.updateComplete;
 
-      const drawer = component.shadowRoot?.querySelector('clippy-drawer');
-      const titleSlot = drawer?.querySelector('[slot="title"]');
-      expect(titleSlot?.textContent?.trim()).toBe('Main Navigation');
+      const drawer = component.shadowRoot?.querySelector('clippy-drawer') as ClippyDrawer;
+      drawer.open();
+      const dialogElement = page.getByRole('dialog', { name: 'Main Navigation' });
+      await expect.element(dialogElement).toBeInTheDocument();
     });
 
     it('drawer title is screen reader only', async () => {
@@ -185,7 +188,6 @@ describe(`<${tag}>`, () => {
 
       const drawer = component.shadowRoot?.querySelector('clippy-drawer');
       const titleSlot = drawer?.querySelector('.sr-only');
-      expect(drawer).toHaveAccessibleName('Main navigation');
       expect(titleSlot).not.toBeVisible();
     });
 
