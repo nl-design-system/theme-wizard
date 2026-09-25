@@ -24,6 +24,11 @@ declare global {
  * @slot header - Card heading region
  * @slot body - Main card content
  * @slot footer - Footer content, e.g. actions or metadata
+ *
+ * @csspart pre-header - Styling hook for the pre-header element
+ * @csspart header - Styling hook for the header element
+ * @csspart body - Styling hook for the body element
+ * @csspart footer - Styling hook for the footer element
  */
 @safeCustomElement(tag)
 export class ClippyCard extends LitElement {
@@ -67,7 +72,7 @@ export class ClippyCard extends LitElement {
 
   protected renderPreHeader() {
     return this.hasPreHeader
-      ? html`<div class="clippy-card__pre-header">
+      ? html`<div class="clippy-card__pre-header" part="pre-header">
           <slot name="pre-header" @slotchange=${this.onPreHeaderSlotChange}></slot>
         </div>`
       : html`<slot name="pre-header" @slotchange=${this.onPreHeaderSlotChange}></slot>`;
@@ -75,7 +80,7 @@ export class ClippyCard extends LitElement {
 
   protected renderHeader() {
     return this.hasHeader
-      ? html`<div class="clippy-card__header">
+      ? html`<div class="clippy-card__header" part="header">
           <slot name="header" @slotchange=${this.onHeaderSlotChange}></slot>
         </div>`
       : html`<slot name="header" @slotchange=${this.onHeaderSlotChange}></slot>`;
@@ -83,7 +88,7 @@ export class ClippyCard extends LitElement {
 
   protected renderBody() {
     return this.hasBody
-      ? html`<div class="clippy-card__body">
+      ? html`<div class="clippy-card__body" part="body">
           <slot name="body" @slotchange=${this.onBodySlotChange}></slot>
         </div>`
       : html`<slot name="body" @slotchange=${this.onBodySlotChange}></slot>`;
@@ -91,7 +96,7 @@ export class ClippyCard extends LitElement {
 
   protected renderFooter() {
     return this.hasFooter
-      ? html`<div class="clippy-card__footer">
+      ? html`<div class="clippy-card__footer" part="footer">
           <slot name="footer" @slotchange=${this.onFooterSlotChange}></slot>
         </div>`
       : html`<slot name="footer" @slotchange=${this.onFooterSlotChange}></slot>`;
@@ -102,8 +107,10 @@ export class ClippyCard extends LitElement {
     // order — that's what drives assistive-technology reading order (the flattened tree), not
     // light-DOM author order. The pre-header is still shown visually above the header via CSS
     // `order` (see styles.ts).
-    return html`${this.renderHeader()}
+    return html`
+      ${this.renderHeader()}
       <slot name="link"></slot>
-      ${this.renderPreHeader()}${this.renderBody()}${this.renderFooter()}`;
+      ${this.renderPreHeader()} ${this.renderBody()} ${this.renderFooter()}
+    `;
   }
 }

@@ -6,6 +6,10 @@ export const focusVisibleAttribute = 'link-focus-visible';
 export default css`
   :host {
     position: relative;
+
+    @media (forced-colors: active) {
+      color: var(--_clippy-card-state-color, LinkText);
+    }
   }
 
   /*
