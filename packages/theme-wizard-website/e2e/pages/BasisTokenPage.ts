@@ -29,7 +29,7 @@ export class BasisTokenPage {
   }
 
   get sidebar(): Locator {
-    return this.page.locator('clippy-side-navigation');
+    return this.page.locator('clippy-side-navigation[label="Basis tokens"]');
   }
 
   sidebarLink(label: string): Locator {

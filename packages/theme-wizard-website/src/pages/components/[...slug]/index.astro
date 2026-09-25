@@ -31,7 +31,7 @@ const wizard = await StoryWizardModel.fromComponentId(slug)
 <BaseLayout title={`${slug} - Theme Wizard`}>
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <wizard-page-header slot="page-header"></wizard-page-header>
 
       <!-- TODO: implement proper sidenav https://github.com/nl-design-system/theme-wizard/issues/532 -->
       <nav slot="sidebar">

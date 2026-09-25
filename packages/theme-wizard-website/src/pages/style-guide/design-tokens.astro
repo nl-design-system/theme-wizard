@@ -15,7 +15,7 @@ const SECTION_IDS = {
 <BaseLayout title="Design tokens - Stijlgids - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <wizard-page-header slot="page-header"></wizard-page-header>
       <StyleGuideNav />
       <wizard-anchor-nav slot="aside-nav" items={JSON.stringify([{title: "Typografie", id: SECTION_IDS.typography}, {title: "Kleuren", id: SECTION_IDS.colors}, {title: "Witruimte", id: SECTION_IDS.spacing}, {title: "Componenten", id: SECTION_IDS.components}])}></wizard-anchor-nav>
       <wizard-container slot="main">
@@ -68,6 +68,6 @@ const SECTION_IDS = {
 
 <style>
   .wizard-token-section {
-    scroll-margin-block: calc(var(--wizard-page-nav-block-size, 4rem) + var(--basis-space-row-xl));
+    scroll-margin-block: calc(var(--clippy-page-layout-header-block-size, 4rem) + var(--basis-space-row-xl));
   }
 </style>

@@ -36,7 +36,7 @@ const SECTIONS = [
 <BaseLayout title="Typografie systeem - Stijlgids - Theme Wizard">
   <theme-wizard-app>
     <wizard-layout>
-      <wizard-page-nav slot="page-nav"></wizard-page-nav>
+      <wizard-page-header slot="page-header"></wizard-page-header>
       <StyleGuideNav />
       <wizard-anchor-nav slot="aside-nav" items={JSON.stringify(SECTIONS.map(section => ({title: section.name, id: section.id})))}></wizard-anchor-nav>
       <wizard-container slot="main">
@@ -80,6 +80,6 @@ const SECTIONS = [
 
 <style>
   .wizard-token-section {
-    scroll-margin-block: calc(var(--wizard-page-nav-block-size, 4rem) + var(--basis-space-row-xl));
+    scroll-margin-block: calc(var(--clippy-page-layout-header-block-size, 4rem) + var(--basis-space-row-xl));
   }
 </style>
