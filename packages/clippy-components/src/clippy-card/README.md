@@ -18,8 +18,7 @@ import '@nl-design-system-community/clippy-components/clippy-card';
 </clippy-card>
 ```
 
-Each region only renders a wrapper `<div>` (for padding/gap) when it actually
-has slotted content — an empty region contributes no layout.
+Each region's wrapper `<div>` (for padding/gap) is hidden via the `hidden` attribute when it has no slotted content — an empty region contributes no layout.
 
 ## Features
 

@@ -50,7 +50,7 @@ describe(`<${tag}>`, () => {
   });
 
   describe('Region wrappers', () => {
-    it('wraps a region in a container div once it has slotted content', async () => {
+    it('unhides a region container once it has slotted content', async () => {
       document.body.innerHTML = `
         <${tag}>
           <span slot="pre-header">pre-header</span>
@@ -66,23 +66,23 @@ describe(`<${tag}>`, () => {
       await component.updateComplete;
       const root = component.shadowRoot;
 
-      expect(root?.querySelector('.clippy-card__pre-header')).not.toBeNull();
-      expect(root?.querySelector('.clippy-card__header')).not.toBeNull();
-      expect(root?.querySelector('.clippy-card__body')).not.toBeNull();
-      expect(root?.querySelector('.clippy-card__footer')).not.toBeNull();
+      expect(root?.querySelector('.clippy-card__pre-header')).not.toHaveAttribute('hidden');
+      expect(root?.querySelector('.clippy-card__header')).not.toHaveAttribute('hidden');
+      expect(root?.querySelector('.clippy-card__body')).not.toHaveAttribute('hidden');
+      expect(root?.querySelector('.clippy-card__footer')).not.toHaveAttribute('hidden');
     });
 
-    it('renders no wrapper div for a region without slotted content', async () => {
+    it('hides a region container for a region without slotted content', async () => {
       document.body.innerHTML = `<${tag}><span slot="body">body only</span></${tag}>`;
       component = document.querySelector(tag) as ClippyCard;
       await component.updateComplete;
       await component.updateComplete;
       const root = component.shadowRoot;
 
-      expect(root?.querySelector('.clippy-card__pre-header')).toBeNull();
-      expect(root?.querySelector('.clippy-card__header')).toBeNull();
-      expect(root?.querySelector('.clippy-card__body')).not.toBeNull();
-      expect(root?.querySelector('.clippy-card__footer')).toBeNull();
+      expect(root?.querySelector('.clippy-card__pre-header')).toHaveAttribute('hidden');
+      expect(root?.querySelector('.clippy-card__header')).toHaveAttribute('hidden');
+      expect(root?.querySelector('.clippy-card__body')).not.toHaveAttribute('hidden');
+      expect(root?.querySelector('.clippy-card__footer')).toHaveAttribute('hidden');
     });
 
     it('renders header first in the shadow/a11y tree, ahead of link, pre-header, body, and footer', async () => {

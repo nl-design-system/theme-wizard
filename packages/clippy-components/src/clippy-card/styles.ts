@@ -30,6 +30,13 @@ export default css`
     flex-wrap: wrap;
   }
 
+  .clippy-card__pre-header[hidden],
+  .clippy-card__header[hidden],
+  .clippy-card__body[hidden],
+  .clippy-card__footer[hidden] {
+    display: none;
+  }
+
   /*
    * [1] Header renders before pre-header in the DOM (see index.ts, for AT reading order).
    */

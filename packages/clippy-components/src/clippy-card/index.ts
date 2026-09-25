@@ -71,35 +71,27 @@ export class ClippyCard extends LitElement {
   }
 
   protected renderPreHeader() {
-    return this.hasPreHeader
-      ? html`<div class="clippy-card__pre-header" part="pre-header">
-          <slot name="pre-header" @slotchange=${this.onPreHeaderSlotChange}></slot>
-        </div>`
-      : html`<slot name="pre-header" @slotchange=${this.onPreHeaderSlotChange}></slot>`;
+    return html`<div class="clippy-card__pre-header" part="pre-header" ?hidden=${!this.hasPreHeader}>
+      <slot name="pre-header" @slotchange=${this.onPreHeaderSlotChange}></slot>
+    </div>`;
   }
 
   protected renderHeader() {
-    return this.hasHeader
-      ? html`<div class="clippy-card__header" part="header">
-          <slot name="header" @slotchange=${this.onHeaderSlotChange}></slot>
-        </div>`
-      : html`<slot name="header" @slotchange=${this.onHeaderSlotChange}></slot>`;
+    return html`<div class="clippy-card__header" part="header" ?hidden=${!this.hasHeader}>
+      <slot name="header" @slotchange=${this.onHeaderSlotChange}></slot>
+    </div>`;
   }
 
   protected renderBody() {
-    return this.hasBody
-      ? html`<div class="clippy-card__body" part="body">
-          <slot name="body" @slotchange=${this.onBodySlotChange}></slot>
-        </div>`
-      : html`<slot name="body" @slotchange=${this.onBodySlotChange}></slot>`;
+    return html`<div class="clippy-card__body" part="body" ?hidden=${!this.hasBody}>
+      <slot name="body" @slotchange=${this.onBodySlotChange}></slot>
+    </div>`;
   }
 
   protected renderFooter() {
-    return this.hasFooter
-      ? html`<div class="clippy-card__footer" part="footer">
-          <slot name="footer" @slotchange=${this.onFooterSlotChange}></slot>
-        </div>`
-      : html`<slot name="footer" @slotchange=${this.onFooterSlotChange}></slot>`;
+    return html`<div class="clippy-card__footer" part="footer" ?hidden=${!this.hasFooter}>
+      <slot name="footer" @slotchange=${this.onFooterSlotChange}></slot>
+    </div>`;
   }
 
   override render() {
