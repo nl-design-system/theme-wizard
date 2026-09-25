@@ -13,6 +13,7 @@ export default css`
   }
 
   /*
+   * Stretch the anchor over the whole card
    * [1] this anchor is the actual focused element, so prevent browser-default outline
    */
   ::slotted([slot='link']) {

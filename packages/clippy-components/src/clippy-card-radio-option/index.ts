@@ -25,7 +25,7 @@ declare global {
  */
 @safeCustomElement(radioTag)
 export class ClippyCardRadioOption extends ClippyCard {
-  static override readonly styles = [srOnly, ...ClippyCard.styles, radioStyles];
+  static override readonly styles = [...ClippyCard.styles, radioStyles, srOnly];
   static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String }) value = '';

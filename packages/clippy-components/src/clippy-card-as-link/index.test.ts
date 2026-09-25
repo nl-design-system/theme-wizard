@@ -35,7 +35,7 @@ describe(`<${tag}>`, () => {
       expect(assigned?.getAttribute('href')).toBe('/x');
     });
 
-    it('renders the link slot right after the header, before pre-header/body/footer', async () => {
+    it('renders the slots in the correct DOM order', async () => {
       document.body.innerHTML = `
         <${tag}>
           <a slot="link" href="/x">Title</a>
