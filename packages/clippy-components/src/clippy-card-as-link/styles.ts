@@ -50,19 +50,17 @@ export default css`
   }
 
   /*
-   * [1] Make sure the focus outline follows the card's radius
-   * [2] Prevent the outline being clipped when other cards/elements are rendered too close to this card
+   * [1] Prevent the outline being clipped when other cards/elements are rendered too close to this card
    */
   :host([${unsafeCSS(focusVisibleAttribute)}]) {
     background-color: var(--clippy-card-focus-background-color, var(--basis-focus-background-color));
     border-color: var(--clippy-card-focus-border-color, var(--basis-color-transparent));
-    border-radius: var(--clippy-card-border-radius); /* [1] */
     color: var(--clippy-card-focus-color, var(--basis-focus-color));
     outline-color: var(--clippy-card-focus-outline-color, var(--basis-focus-outline-color));
     outline-offset: var(--clippy-card-focus-outline-offset, var(--basis-focus-outline-offset));
     outline-style: var(--clippy-card-focus-outline-style, var(--basis-focus-outline-style));
     outline-width: var(--clippy-card-focus-outline-width, var(--basis-focus-outline-width));
-    z-index: 1; /* [2] */
+    z-index: 1; /* [1] */
   }
 
   /* VARIANTS */

@@ -25,11 +25,12 @@ declare global {
 export class ClippyCardAsLink extends ClippyCard {
   static override readonly styles = [...ClippyCard.styles, styles];
 
+  /** Variant is reflected on the element for styling purposes */
   @property({ reflect: true }) variant?: 'list-item';
 
   override connectedCallback() {
     super.connectedCallback();
-    // Setup focus listeners so we can minic `:host(:has(:focus-within))`
+    // Setup focus listeners so we can mimic `:host(:has(:focus-within))`
     this.addEventListener('focusin', this.#handleFocusIn);
     this.addEventListener('focusout', this.#handleFocusOut);
   }

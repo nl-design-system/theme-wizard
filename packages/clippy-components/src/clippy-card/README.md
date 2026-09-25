@@ -37,6 +37,15 @@ has slotted content — an empty region contributes no layout.
 | `body`       | Main card content                                                                                                                                                                   |
 | `footer`     | Footer content, e.g. actions or metadata                                                                                                                                            |
 
+## CSS Parts
+
+| Part                 | Description                             |
+| -------------------- | --------------------------------------- |
+| `::part(pre-header)` | Styling hook for the pre-header element |
+| `::part(header)`     | Styling hook for the header element     |
+| `::part(body)`       | Styling hook for the body element       |
+| `::part(footer)`     | Styling hook for the footer element     |
+
 ## Extending
 
 `ClippyCard`'s `renderPreHeader()`/`renderHeader()`/`renderBody()`/
