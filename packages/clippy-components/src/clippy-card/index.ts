@@ -1,4 +1,5 @@
 import { safeCustomElement } from '@lib/decorators';
+import { isSlotEmpty } from '@src/lib/slot';
 import { LitElement, html } from 'lit';
 import { state } from 'lit/decorators.js';
 import styles from './styles';
@@ -34,24 +35,27 @@ export class ClippyCard extends LitElement {
   @state() protected hasFooter = false;
 
   protected readonly onPreHeaderSlotChange = (event: Event) => {
-    this.hasPreHeader = (event.target as HTMLSlotElement).assignedNodes({ flatten: true }).length > 0;
+    this.hasPreHeader = !isSlotEmpty(event.target as HTMLSlotElement);
   };
 
   protected readonly onHeaderSlotChange = (event: Event) => {
-    this.hasHeader = (event.target as HTMLSlotElement).assignedNodes({ flatten: true }).length > 0;
+    this.hasHeader = !isSlotEmpty(event.target as HTMLSlotElement);
   };
 
   protected readonly onBodySlotChange = (event: Event) => {
-    this.hasBody = (event.target as HTMLSlotElement).assignedNodes({ flatten: true }).length > 0;
+    this.hasBody = !isSlotEmpty(event.target as HTMLSlotElement);
   };
 
   protected readonly onFooterSlotChange = (event: Event) => {
-    this.hasFooter = (event.target as HTMLSlotElement).assignedNodes({ flatten: true }).length > 0;
+    this.hasFooter = !isSlotEmpty(event.target as HTMLSlotElement);
   };
 
   protected hasAssignedNodes(slotName: string): boolean {
     const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(`slot[name="${slotName}"]`);
-    return (slot?.assignedNodes({ flatten: true }).length ?? 0) > 0;
+    if (!slot) {
+      return false;
+    }
+    return !isSlotEmpty(slot);
   }
 
   protected override firstUpdated() {
