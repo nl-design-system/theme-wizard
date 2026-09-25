@@ -1,15 +1,15 @@
-# `<clippy-main-layout>`
+# `<clippy-layout-detail>`
 
-A component that provides a layout for the page content.
+A component that provides a layout for a detail view.
 
 ## Usage
 
 ```js
-import '@nl-design-system-community/clippy-components/clippy-main-layout';
+import '@nl-design-system-community/clippy-components/clippy-layout-detail';
 ```
 
 ```html
-<clippy-main-layout></clippy-main-layout>
+<clippy-layout-detail></clippy-layout-detail>
 ```
 
 ## Slots
