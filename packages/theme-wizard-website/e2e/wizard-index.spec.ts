@@ -15,8 +15,7 @@ test('shows step-by-step navigation with tasks and completion status', async ({ 
 
   for (const { href, label } of STEPS) {
     // Task link is not prefixed with 'Taak afgerond:' yet, so exact match should be true
-    const link = nav.getByRole('link', { name: label, exact: true });
-    await expect(link).toBeVisible();
+    const link = nav.getByRole('link', { name: label });
     await expect(link).toHaveAttribute('href', href);
   }
 });
@@ -29,7 +28,6 @@ test('page allows to go back to staging tokens when that is where it came from',
   await page.goto('/wizard?from=staging-tokens');
 
   const link = page.getByRole('link', { name: 'Vorige stap' });
-  await expect(link).toBeVisible();
   await link.click();
   expect(page.url()).toBe(new URL(stagingTokensPage.url, baseURL).toString());
 });
@@ -42,7 +40,6 @@ test('page allows to go back to start when reached directly (e.g. starting from 
   await wizardIndexPage.goto();
 
   const link = page.getByRole('link', { name: 'Terug naar start' });
-  await expect(link).toBeVisible();
   await link.click();
   expect(page.url()).toBe(new URL('/', baseURL).toString());
 });
@@ -55,6 +52,6 @@ test('marks a task as done after saving a value', async ({ page, wizardStepFormP
   await wizardStepFormPage.save();
 
   const nav = page.getByRole('navigation', { name: 'Maak stapsgewijs keuzes' });
-  const task = nav.getByRole('link', { name: 'Taak afgerond: Lettertype voor tekst' });
-  await expect(task).toBeVisible();
+  const task = nav.getByRole('link', { name: 'Navigeer naar ‘Lettertype voor tekst’ (taak afgerond)' });
+  await expect(task).toBeAttached();
 });

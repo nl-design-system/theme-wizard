@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getBasisTokenTree, toNavigationItems } from '@/lib/basis-token-nav';
+import { IconArrowRight } from '@tabler/icons-react';
 
 const tree = getBasisTokenTree();
 const navItems = toNavigationItems(tree, []);
@@ -9,6 +10,8 @@ const navItems = toNavigationItems(tree, []);
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading';
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+  import '@nl-design-system-community/clippy-components/clippy-card-as-link';
+  import '@nl-design-system-community/clippy-components/clippy-story-preview';
 </script>
 
 <BaseLayout title="Basis tokens - Theme Wizard">
@@ -24,22 +27,43 @@ const navItems = toNavigationItems(tree, []);
 
       <wizard-container slot="main">
         <main>
-          <clippy-stack size="lg">
-            <clippy-heading level="1">Basis tokens</clippy-heading>
+          <clippy-story-preview size="lg">
+            <clippy-stack size="lg">
+              <clippy-heading level="1">Basis tokens</clippy-heading>
 
-            <!-- TODO: make list of card-as-link -->
-            <ul>
-              {
-                tree.map((group) => (
-                  <li>
-                    <a href={`/basis-tokens/${group.path.join('/')}`}>{group.key}</a>
-                  </li>
-                ))
-              }
-            </ul>
-          </clippy-stack>
+              <ul role="list" class="wizard-secretly-a-list">
+                {
+                  tree.map((group) => (
+                    <li>
+                      <clippy-card-as-link variant="list-item">
+                        <a slot="link" href={`/basis-tokens/${group.path.join('/')}`}>
+                          Bewerk <q>{group.key}</q>
+                        </a>
+                        <span slot="header" class="wizard-token-group-name">{group.key}</span>
+                        <IconArrowRight slot="footer" />
+                      </clippy-card-as-link>
+                    </li>
+                  ))
+                }
+              </ul>
+            </clippy-stack>
+          </clippy-story-preview>
         </main>
       </wizard-container>
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
+
+<style>
+  .wizard-secretly-a-list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding-inline-start: var(--basis-space-none);
+    row-gap: var(--basis-space-row-md);
+  }
+
+  .wizard-token-group-name {
+    text-transform: capitalize;
+  }
+</style>

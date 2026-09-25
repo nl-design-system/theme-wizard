@@ -1,6 +1,7 @@
 import { safeCustomElement } from '@lib/decorators';
+import { ClippyCard } from '@src/clippy-card';
 import { LitElement, html } from 'lit';
-import { property, query, state } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import srOnly from '../lib/sr-only';
 import { radioStyles } from './styles';
 
@@ -13,8 +14,9 @@ declare global {
 }
 
 /**
- * Radio option styled as a card. The `<input type="radio">` is sr-only; the card is the
- * visual surface. `delegatesFocus: true` forwards host focus to the hidden input.
+ * Radio option styled as a card. Extends `clippy-card` for its card chrome (background, border,
+ * design-token surface) and its `body`/`footer` regions; the `<input type="radio">` is sr-only,
+ * the card is the visual surface. `delegatesFocus: true` forwards host focus to the hidden input.
  *
  * `inputTabIndex` is controlled by the parent `ClippyCardRadioGroup` for roving tabindex.
  * `focusInput()` lets the parent move focus programmatically during arrow-key navigation.
@@ -22,16 +24,17 @@ declare global {
  * Slots: default (label), `start` (leading icon), `description` (aria-describedby), `body`, `footer`.
  */
 @safeCustomElement(radioTag)
-export class ClippyCardRadioOption extends LitElement {
-  static override readonly styles = [srOnly, radioStyles];
+export class ClippyCardRadioOption extends ClippyCard {
+  static override readonly styles = [...ClippyCard.styles, radioStyles, srOnly];
   static override readonly shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String }) value = '';
   @property({ type: String }) name = '';
   @property({ reflect: true, type: Boolean }) checked = false;
   @property({ attribute: false, type: Number }) inputTabIndex = -1;
-  @state() private hasBody = false;
-  @state() private hasFooter = false;
+
+  // TODO: let consumers pass this input via a slot - then we can reuse clippy-card even more and we can remove all the
+  //       custom logic to keep track of the selected item etc.
   @query('input') input!: HTMLInputElement;
 
   readonly #inputId = crypto.randomUUID();
@@ -41,15 +44,10 @@ export class ClippyCardRadioOption extends LitElement {
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 
-  readonly #onBodySlotChange = (event: Event) => {
-    const slot = event.target as HTMLSlotElement;
-    this.hasBody = slot.assignedNodes({ flatten: true }).length > 0;
-  };
-
-  readonly #onFooterSlotChange = (event: Event) => {
-    const slot = event.target as HTMLSlotElement;
-    this.hasFooter = slot.assignedNodes({ flatten: true }).length > 0;
-  };
+  protected override firstUpdated() {
+    this.hasBody = this.hasAssignedNodes('body');
+    this.hasFooter = this.hasAssignedNodes('footer');
+  }
 
   focusInput() {
     this.input.focus();
@@ -81,20 +79,7 @@ export class ClippyCardRadioOption extends LitElement {
           </div>
         </div>
       </div>
-      ${
-        this.hasBody
-          ? html`<div class="clippy-radio-card__body">
-              <slot name="body" @slotchange=${this.#onBodySlotChange}></slot>
-            </div>`
-          : html`<slot name="body" @slotchange=${this.#onBodySlotChange}></slot>`
-      }
-      ${
-        this.hasFooter
-          ? html`<div class="clippy-radio-card__footer">
-              <slot name="footer" @slotchange=${this.#onFooterSlotChange}></slot>
-            </div>`
-          : html`<slot name="footer" @slotchange=${this.#onFooterSlotChange}></slot>`
-      }
+      ${this.renderBody()} ${this.renderFooter()}
     `;
   }
 }

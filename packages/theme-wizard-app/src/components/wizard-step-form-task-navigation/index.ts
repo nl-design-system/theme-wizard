@@ -1,7 +1,7 @@
 import '@nl-design-system-community/clippy-components/clippy-task-navigation';
-import srOnlyStyles from '@nl-design-system-community/clippy-components/lib/sr-only';
+import srOnly from '@nl-design-system-community/clippy-components/lib/sr-only';
 import CheckIcon from '@tabler/icons/filled/check.svg?raw';
-import ChevronRightIcon from '@tabler/icons/outline/chevron-right.svg?raw';
+import ArrowRightIcon from '@tabler/icons/outline/arrow-right.svg?raw';
 import FileTypographyIcon from '@tabler/icons/outline/file-typography.svg?raw';
 import PaletteIcon from '@tabler/icons/outline/palette.svg?raw';
 import { LitElement, html, nothing } from 'lit';
@@ -32,34 +32,36 @@ function isIconName(name: string): name is IconName {
 
 @customElement(tag)
 export class WizardStepFormTaskNavigation extends LitElement {
-  static override readonly styles = [srOnlyStyles, styles];
+  static override readonly styles = [srOnly, styles];
 
   @property({ type: String }) href = '';
   @property({ type: String }) icon = '';
+  @property({ type: String }) label = '';
   @property({ type: Boolean }) done = false;
-
-  readonly #id = crypto.randomUUID();
 
   override render() {
     const icon = isIconName(this.icon) ? ICON_MAP[this.icon] : null;
-    const descriptionId = `${this.#id}-description`;
 
     return html`
-      <clippy-task-navigation href=${this.href} aria-labelledby=${descriptionId}>
+      <clippy-task-navigation>
+        <span slot="header" class="wizard-step-form-task-navigation__title"> ${this.label} </span>
+
         <span
-          slot="iconStart"
-          class="wizard-step-form-task-navigation-icon-start ${classMap({
-            'wizard-step-form-task-navigation-icon-start--checked': this.done,
-          })}"
+          slot="pre-header"
           aria-hidden="true"
+          class="wizard-step-form-task-navigation__icon ${classMap({
+            'wizard-step-form-task-navigation__icon--checked': this.done,
+          })}"
         >
           ${unsafeSVG(this.done ? CheckIcon : icon)}
         </span>
-        <span id=${descriptionId}>
-          ${this.done ? html`<span class="sr-only">${t('wizard.taskNavigation.done')}:</span>` : nothing}
-          <slot></slot>
-        </span>
-        <span slot="actions" aria-hidden="true">${unsafeSVG(ChevronRightIcon)}</span>
+
+        <span slot="footer" aria-hidden="true">${unsafeSVG(ArrowRightIcon)}</span>
+
+        <a slot="link" href=${this.href}>
+          ${t('wizard.taskNavigation.navigateTo', { item: this.label })}
+          ${this.done ? `(${t('wizard.taskNavigation.done')})` : nothing}
+        </a>
       </clippy-task-navigation>
     `;
   }

@@ -91,9 +91,8 @@ export class WizardStepFormTaskNavigationList extends LitElement {
                 href=${href}
                 ?done=${this.completedPaths.has(step.path)}
                 icon=${step.icon}
-              >
-                ${step.label}
-              </wizard-step-form-task-navigation>
+                label=${step.label}
+              ></wizard-step-form-task-navigation>
             `;
           })}
         </div>
