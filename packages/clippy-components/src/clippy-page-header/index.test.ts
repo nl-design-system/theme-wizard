@@ -185,7 +185,8 @@ describe(`<${tag}>`, () => {
 
       const drawer = component.shadowRoot?.querySelector('clippy-drawer');
       const titleSlot = drawer?.querySelector('.sr-only');
-      expect(titleSlot).toBeTruthy();
+      expect(drawer).toHaveAccessibleName('Main navigation');
+      expect(titleSlot).not.toBeVisible();
     });
 
     it('drawer contains navigation-drawer slot', async () => {

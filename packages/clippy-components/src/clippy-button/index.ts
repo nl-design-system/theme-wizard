@@ -95,7 +95,7 @@ export class ClippyButton<T = unknown> extends FormElement<T> {
           [`clippy-button--${this.size}`]: this.size !== defaultSize,
           [`nl-button--${this.hint}`]: !!this.hint,
           // if the purpose is not subtle-inverse apply the purpose
-          [`nl-button--${this.purpose}`]: !!this.purpose && this.purpose !== 'subtle-inverse',
+          [`nl-button--${this.purpose}`]: Boolean(this.purpose) && this.purpose !== 'subtle-inverse',
           'nl-button': true,
           'nl-button--busy': this.busy,
           'nl-button--disabled': this.disabled,
