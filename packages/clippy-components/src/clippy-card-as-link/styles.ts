@@ -66,10 +66,16 @@ export default css`
   /* VARIANTS */
 
   :host([variant='list-item']) {
-    --clippy-card-footer-padding-inline-start: var(--basis-space-none);
-
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
+  }
+
+  :host([variant='list-item']) .clippy-card__header {
+    flex-grow: 1;
+  }
+
+  :host([variant='list-item']) .clippy-card__pre-header,
+  :host([variant='list-item']) .clippy-card__footer {
+    flex-shrink: 0;
   }
 `;

@@ -1,5 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { IconLink, IconArrowRight, IconFileSpark, IconFileCode } from '@tabler/icons-react'
+
+export const items = [
+  {
+    title: 'Met de huisstijl van een website',
+    linkLabel: 'Navigeer naar \'Huisstijl ophalen\'',
+    description: 'Jij vult een URL in. Wij halen de huisstijl op.',
+    href: '/scrape-tokens',
+    icon: IconLink
+  },
+  {
+    title: 'Met het Start thema',
+    linkLabel: 'Navigeer naar \'Start\'',
+    description: 'Begin met het Start thema en pas aan waar nodig.',
+    href: '/wizard',
+    icon: IconFileSpark
+  },
+  {
+    title: 'Met een eigen thema',
+    linkLabel: 'Navigeer naar \'Thema uploaden\'',
+    description: 'Upload je JSON bestand',
+    href: '/upload-tokens',
+    icon: IconFileCode,
+  }
+]
 ---
 
 <BaseLayout title="Theme Wizard">
@@ -9,7 +34,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <main slot="main" class="wizard-main">
         <wizard-container size="md">
           <clippy-story-preview size="lg">
-            <wizard-starter-picker></wizard-starter-picker>
+            <clippy-stack size="4xl">
+              <clippy-heading level="1">Hoe wil je starten?</clippy-heading>
+
+              <clippy-stack size="lg">
+                {items.map(link => (
+                  <clippy-card-as-link variant="list-item" class="wizard-card">
+                    <a href={link.href} slot="link">{link.linkLabel}</a>
+                    <span slot="pre-header" class="wizard-card__pre-header" aria-hidden="true">
+                      <link.icon />
+                    </span>
+                    <span slot="header">
+                      <p class="nl-paragraph wizard-card__title">{link.title}</p>
+                      <p class="nl-paragraph wizard-card__description">{link.description}</p>
+                    </span>
+                    <span slot="footer" class="wizard-card__footer" aria-hidden="true">
+                      <IconArrowRight />
+                    </span>
+                  </clippy-card-as-link>
+                ))}
+              </clippy-stack>
+            </clippy-stack>
           </clippy-story-preview>
         </wizard-container>
       </main>
@@ -17,29 +62,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </theme-wizard-app>
 </BaseLayout>
 
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading'
+  import '@nl-design-system-community/clippy-components/clippy-card-as-link'
+  import '@nl-design-system-community/clippy-components/clippy-stack'
+  import '@nl-design-system-community/clippy-components/clippy-story-preview'
+</script>
+
 <style>
   .wizard-main {
     display: grid;
     place-content: center;
   }
-</style>
 
-<script>
-  import { navigate } from "astro:transitions/client";
-  import {
-    WIZARD_STARTER_PICKER_SUBMIT_EVENT,
-    type WizardStarterPickerSubmitEventDetail,
-  } from "@nl-design-system-community/theme-wizard-app/components/wizard-starter-picker";
+  .wizard-card {
+    --clippy-card-pre-header-padding-inline-end: var(--basis-space-none);
+  }
 
-  document.querySelector('theme-wizard-app')?.addEventListener(WIZARD_STARTER_PICKER_SUBMIT_EVENT, (event) => {
-    const { value } = (event as CustomEvent<WizardStarterPickerSubmitEventDetail>).detail;
+  .wizard-card__pre-header {
+    color: var(--basis-color-accent-1-color-default);
+  }
 
-    if (value === 'url') {
-      navigate('/scrape-tokens');
-    } else if (value === 'start') {
-      navigate('/wizard');
-    } else if (value === 'json') {
-      navigate('/upload-tokens')
+  .wizard-card__title {
+    font-weight: var(--basis-text-font-weight-bold);
+    margin-block-end: var(--basis-space-block-sm);
+    margin-block-start: var(--basis-space-none);
+  }
+
+  .wizard-card__description {
+    color: var(--basis-color-default-color-subtle);
+    margin-block: var(--basis-space-none);
+  }
+
+  .wizard-card__footer {
+    color: var(--basis-color-default-color-subtle);
+    transition: translate 100ms ease-out;
+
+    @media not (prefers-reduced-motion: reduce) {
+      .wizard-card:hover & {
+        translate: var(--basis-space-inline-sm);
+      }
     }
-  })
-</script>
+  }
+</style>

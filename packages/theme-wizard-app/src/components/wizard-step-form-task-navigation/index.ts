@@ -56,7 +56,9 @@ export class WizardStepFormTaskNavigation extends LitElement {
           ${unsafeSVG(this.done ? CheckIcon : icon)}
         </span>
 
-        <span slot="footer" aria-hidden="true">${unsafeSVG(ArrowRightIcon)}</span>
+        <span slot="footer" aria-hidden="true" class="wizard-step-form-task-navigation__arrow">
+          ${unsafeSVG(ArrowRightIcon)}
+        </span>
 
         <a slot="link" href=${this.href}>
           ${t('wizard.taskNavigation.navigateTo', { item: this.label })}
