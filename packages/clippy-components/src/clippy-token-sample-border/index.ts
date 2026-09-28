@@ -14,8 +14,8 @@ declare global {
 /**
  * Clippy Token Sample Border Component
  *
- * @cssprop --clippy-token-sample-background-color - (deprecated) Background color of the component
- * @cssprop --clippy-token-sample-border-color - (deprecated) Border color of the entire component, not that of the sample
+ * @cssprop --clippy-token-sample-background-color - (deprecated: should not be part of this element) Background color of the component
+ * @cssprop --clippy-token-sample-border-color - (deprecated: should not be part of this element) Border color of the entire component, not that of the sample
  * @cssprop --clippy-token-sample-border-size - Size of the component
  * @cssprop --clippy-token-sample-border-radius - Border radius of the border
  * @cssprop --clippy-token-sample-border-width - Width of the border
