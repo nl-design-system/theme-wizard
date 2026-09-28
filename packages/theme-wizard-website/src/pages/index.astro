@@ -45,7 +45,7 @@ export const items = [
                       <link.icon />
                     </span>
                     <span slot="header">
-                      <p class="nl-paragraph wizard-card__title">{link.title}</p>
+                      <clippy-heading level="2" class="wizard-card__title">{link.title}</clippy-heading>
                       <p class="nl-paragraph wizard-card__description">{link.description}</p>
                     </span>
                     <span slot="footer" class="wizard-card__footer" aria-hidden="true">
@@ -76,17 +76,12 @@ export const items = [
   }
 
   .wizard-card {
+    --nl-heading-level-2-font-size: var(--basis-text-font-size-md);
     --clippy-card-pre-header-padding-inline-end: var(--basis-space-none);
   }
 
   .wizard-card__pre-header {
     color: var(--basis-color-accent-1-color-default);
-  }
-
-  .wizard-card__title {
-    font-weight: var(--basis-text-font-weight-bold);
-    margin-block-end: var(--basis-space-block-sm);
-    margin-block-start: var(--basis-space-none);
   }
 
   .wizard-card__description {
