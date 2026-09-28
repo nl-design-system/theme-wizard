@@ -59,7 +59,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                               <wizard-card-as-link variant="list-item">
                                 <div slot="pre-header">
                                   {child.isLeaf && (
-                                    <wizard-token-sample path={`basis.${child.path.join('.')}`} />
+                                    <wizard-token-sample path={`basis.${child.path.join('.')}`} class="wizard-token-sample">Aa</wizard-token-sample>
                                   )}
                                 </div>
                                 <a slot="link" href={`/basis-tokens/${child.path.join('/')}`}>Bewerk '{child.key}'</a>
@@ -90,18 +90,19 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
 </BaseLayout>
 
 <style>
-  wizard-card-as-link {
-    --clippy-token-sample-border-size: 2em;
-    --nl-color-sample-inline-size: 2em;
-    --nl-color-sample-block-size: 2em;
-  }
-
-  wizard-token-sample {
-    inline-size: var(--basis-size-md);
-    block-size: var(--basis-size-md);
+  .wizard-token-sample {
+    --wizard-basis-token-sample-size: var(--basis-size-sm);
+    --clippy-token-sample-border-size: var(--wizard-basis-token-sample-size);
+    --clippy-token-sample-background-color: var(--basis-color-transparent);
+    --clippy-token-sample-border-color: var(--basis-color-transparent);
+    --clippy-token-sample-text-border-subtle: var(--basis-color-transparent);
+    background-color: var(--basis-color-default-bg-default);
     display: inline-block;
+    min-block-size: var(--wizard-basis-token-sample-size);
+    min-inline-size: var(--wizard-basis-token-sample-size);
     overflow: clip;
     place-content: center;
+    text-align: center;
   }
 
   .wizard-secretly-a-list {

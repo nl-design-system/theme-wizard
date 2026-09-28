@@ -6,6 +6,14 @@ export default css`
   }
 
   :host {
+    --_clippy-token-sample-background-color: var(
+      --clippy-token-sample-background-color,
+      var(--basis-color-default-bg-document)
+    );
+    --_clippy-token-sample-border-color: var(
+      --clippy-token-sample-border-color,
+      var(--basis-color-default-border-subtle)
+    );
     --_clippy-token-sample-border-size: var(--clippy-token-sample-border-size, var(--basis-size-lg));
     --_clippy-token-sample-border-radius: var(
       --clippy-token-sample-border-radius,
@@ -16,9 +24,9 @@ export default css`
       var(--_clippy-internal-token-sample-border-width, 1px)
     );
 
-    background-color: var(--basis-color-default-bg-document);
+    background-color: var(--_clippy-token-sample-background-color);
     block-size: var(--_clippy-token-sample-border-size);
-    border-color: var(--basis-color-default-border-subtle);
+    border-color: var(--_clippy-token-sample-border-color);
     border-style: solid;
     border-width: var(--basis-border-width-sm);
     color: var(--basis-color-default-color-document);

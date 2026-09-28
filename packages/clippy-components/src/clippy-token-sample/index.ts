@@ -17,6 +17,8 @@ declare global {
   }
 }
 
+const FALLBACK_TEXT = 'Op brute wijze ving de schooljuf de quasi-kalme lynx.';
+
 /**
  * Clippy Token Sample Component
  *
@@ -49,7 +51,9 @@ export class ClippyTokenSample extends LitElement {
               data-testid=${testId}
               font-size=${stringifyTokenValue(this.token)}
               truncate
-            ></clippy-token-sample-text>`;
+            >
+              <slot>${FALLBACK_TEXT}</slot>
+            </clippy-token-sample-text>`;
           case 'space-block':
           case 'space-inline':
           case 'space-text':
@@ -79,9 +83,10 @@ export class ClippyTokenSample extends LitElement {
         return html`<clippy-token-sample-text
           data-testid=${testId}
           font-family=${stringifyTokenValue(this.token)}
-          font-size="var(--basis-text-font-size-xl)"
           truncate
-        ></clippy-token-sample-text>`;
+        >
+          <slot>${FALLBACK_TEXT}</slot>
+        </clippy-token-sample-text>`;
       case 'number': {
         const subType = getTokenSubtype(this.token);
         switch (subType) {
@@ -89,16 +94,18 @@ export class ClippyTokenSample extends LitElement {
             return html`<clippy-token-sample-text
               data-testid=${testId}
               font-weight=${stringifyTokenValue(this.token)}
-              font-size="var(--basis-text-font-size-xl)"
               truncate
-            ></clippy-token-sample-text>`;
+            >
+              <slot>${FALLBACK_TEXT}</slot>
+            </clippy-token-sample-text>`;
           case 'line-height':
             return html`<clippy-token-sample-text
               data-testid=${testId}
               line-height=${stringifyTokenValue(this.token)}
-              font-size="var(--basis-text-font-size-xl)"
               truncate
-            ></clippy-token-sample-text>`;
+            >
+              <slot>${FALLBACK_TEXT}</slot>
+            </clippy-token-sample-text>`;
           default:
             return nothing;
         }

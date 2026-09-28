@@ -14,6 +14,8 @@ declare global {
 /**
  * Clippy Token Sample Border Component
  *
+ * @cssprop --clippy-token-sample-background-color - (deprecated) Background color of the component
+ * @cssprop --clippy-token-sample-border-color - (deprecated) Border color of the entire component, not that of the sample
  * @cssprop --clippy-token-sample-border-size - Size of the component
  * @cssprop --clippy-token-sample-border-radius - Border radius of the border
  * @cssprop --clippy-token-sample-border-width - Width of the border
@@ -36,9 +38,7 @@ export class ClippyTokenSampleBorder extends LitElement {
       this.style.setProperty('--_clippy-internal-token-sample-border-width', this.borderWidth);
     }
     if (changed.has('borderRadius')) {
-      if (this.borderRadius === undefined) {
-        this.borderRadius = '';
-      }
+      this.borderRadius ??= '';
       this.style.setProperty('--_clippy-internal-token-sample-border-radius', this.borderRadius);
     }
   }

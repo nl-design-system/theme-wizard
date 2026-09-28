@@ -27,6 +27,10 @@ export class WizardTokenSample extends LitElement {
   }
 
   protected override render() {
-    return html`<clippy-token-sample .token=${this.token}></clippy-token-sample>`;
+    return html`
+      <clippy-token-sample .token=${this.token}>
+        <slot></slot>
+      </clippy-token-sample>
+    `;
   }
 }
