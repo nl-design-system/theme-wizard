@@ -40,6 +40,7 @@ export * from './components/wizard-token-minify-form';
 export * from './components/wizard-token-navigator';
 export * from './components/wizard-token-output';
 export * from './components/wizard-token-presets';
+export * from './components/wizard-token-sample';
 export * from './components/wizard-token-upload-form';
 export * from './components/wizard-token-validation-form';
 export * from './components/wizard-token-value';
