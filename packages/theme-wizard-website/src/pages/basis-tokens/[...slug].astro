@@ -57,11 +57,9 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                           node.children.map((child) => (
                             <li>
                               <wizard-card-as-link variant="list-item" class="wizard-link-to-token">
-                                <div slot="pre-header">
                                   {child.isLeaf && (
-                                    <wizard-token-sample path={`basis.${child.path.join('.')}`} class="wizard-token-sample">Aa</wizard-token-sample>
+                                      <wizard-token-sample  slot="pre-header" path={`basis.${child.path.join('.')}`} class="wizard-token-sample">Aa</wizard-token-sample>
                                   )}
-                                </div>
                                 <a slot="link" href={`/basis-tokens/${child.path.join('/')}`}>Bewerk '{child.key}'</a>
                                 <span slot="header">{child.key}</span>
                               </wizard-card-as-link>
