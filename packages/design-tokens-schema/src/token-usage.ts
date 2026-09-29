@@ -25,6 +25,13 @@ export const countUsagePerToken = (tokens: ThemeLike): Map<string, string[]> => 
 export const EXTENSION_REFERENCED_AT = 'nl.nldesignsystem.referenced-at';
 export const EXTENSION_REFERENCE_COUNT = 'nl.nldesignsystem.reference-count';
 
+declare module './extensions' {
+  interface ExtensionTypeMap {
+    [EXTENSION_REFERENCED_AT]: string[];
+    [EXTENSION_REFERENCE_COUNT]: number;
+  }
+}
+
 export const addTokenCountExtensions = (tokens: ThemeLike): ThemeLike => {
   const usage = countUsagePerToken(tokens);
 

@@ -5,6 +5,12 @@ import { walkTokens } from './walker';
 
 export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.token-subtype';
 
+declare module './extensions' {
+  interface ExtensionTypeMap {
+    [EXTENSION_TOKEN_SUBTYPE]: TokenSubtype;
+  }
+}
+
 export const DimensionSubtypeSchema = z.enum([
   'font-size',
   'line-height',

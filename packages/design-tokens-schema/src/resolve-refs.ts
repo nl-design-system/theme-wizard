@@ -13,7 +13,15 @@ import {
 import { walkObject, walkTokensWithRef } from './walker';
 
 export const EXTENSION_RESOLVED_FROM = 'nl.nldesignsystem.value-resolved-from';
+// EXTENSION_RESOLVED_AS isn't in ExtensionTypeMap: its value is whatever $value the reference
+// resolved to, so it varies per token type (see call sites for the concrete casts).
 export const EXTENSION_RESOLVED_AS = 'nl.nldesignsystem.value-resolved-as';
+
+declare module './extensions' {
+  interface ExtensionTypeMap {
+    [EXTENSION_RESOLVED_FROM]: TokenReference;
+  }
+}
 
 export type ResolvedToken = BaseDesignToken & {
   $value: TokenReference;

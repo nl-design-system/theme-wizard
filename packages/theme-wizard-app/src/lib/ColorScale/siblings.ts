@@ -4,9 +4,16 @@ import {
   isTokenGroup,
   isTokenLike,
   ThemeLike,
+  type ColorValue,
 } from '@nl-design-system-community/design-tokens-schema';
 
 export const EXTENSION_COLORSCALE_SEED = 'nl.nldesignsystem.theme-wizard.color-scale-seed-color';
+
+declare module '@nl-design-system-community/design-tokens-schema' {
+  interface ExtensionTypeMap {
+    [EXTENSION_COLORSCALE_SEED]: ColorValue;
+  }
+}
 
 /**
  * Given a color scale group path (e.g. 'basis.color.accent-1') and its parent group object
