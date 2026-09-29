@@ -24,31 +24,31 @@ export default css`
 
   .clippy-layout-detail__content {
     box-sizing: border-box;
+    container-name: clippy-layout;
+    container-type: inline-size;
+    margin-inline: auto;
     max-inline-size: var(--_clippy-layout-detail-content-max-inline-size);
     padding-inline-end: var(--_clippy-layout-detail-content-padding-inline-end);
     padding-inline-start: var(--_clippy-layout-detail-content-padding-inline-start);
-    margin-inline: auto;
-    container-name: clippy-layout-detail;
-    container-type: inline-size;
   }
 
   .clippy-layout-detail__grid {
     column-gap: var(--_clippy-layout-detail-column-gap);
     display: grid;
-    grid-template-rows: auto auto auto auto 1fr;
     grid-template-areas:
       'sidebar'
       'breadcrumb'
       'header'
       'aside'
       'body';
+    grid-template-rows: auto auto auto auto 1fr;
 
-    @container clippy-layout-detail (inline-size >= 1140px) {
+    @container clippy-layout (inline-size >= 1140px) {
       grid-template-areas: 'sidebar breadcrumb' 'sidebar header' 'sidebar aside' 'sidebar body';
       grid-template-columns: var(--_clippy-layout-detail-sidebar-inline-size) 1fr;
     }
 
-    @container clippy-layout-detail (inline-size >= 1280px) {
+    @container clippy-layout (inline-size >= 1280px) {
       grid-template-areas: 'sidebar breadcrumb breadcrumb' 'sidebar header aside' 'sidebar body aside';
       grid-template-columns: var(--_clippy-layout-detail-sidebar-inline-size) 1fr var(
           --_clippy-layout-detail-sidebar-inline-size
@@ -66,27 +66,16 @@ export default css`
   }
 
   .clippy-layout-detail__wrap-main {
+    border: 3px solid purple;
     display: grid;
+    grid-column-end: aside;
+
+    /* outline-offset: 5px; */
+
+    grid-column-start: header;
+    grid-row-end: body;
+    grid-row-start: header;
     grid-template-columns: subgrid;
     grid-template-rows: subgrid;
-    grid-row: header / body;
-    outline: 5px solid hotpink;
-
-    @container clippy-layout-detail (inline-size >= 1280px) {
-      grid-column: header / aside;
-    }
-  }
-
-  .test-header {
-    background-color: red;
-    grid-area: header;
-  }
-  .test-body {
-    background-color: blue;
-    grid-area: body;
-  }
-  .test-aside {
-    background-color: green;
-    grid-area: aside;
   }
 `;

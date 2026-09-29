@@ -11,7 +11,7 @@ declare global {
 }
 
 /**
- * Clippy Main Layout Component
+ * Clippy Layout Detail Component
  * @slot - Main content
  */
 @safeCustomElement(tag)
@@ -31,11 +31,7 @@ export class ClippyLayoutDetail extends LitElement {
           </div>
 
           <div class="clippy-layout-detail__wrap-main">
-            <slot>
-              <div class="test-header"><mark>header</mark></div>
-              <div class="test-aside"><mark>aside</mark></div>
-              <div class="test-body"><mark>body</mark></div>
-            </slot>
+            <slot></slot>
           </div>
         </div>
       </div>

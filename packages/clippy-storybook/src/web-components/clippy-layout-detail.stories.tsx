@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-layout-detail';
+import '@nl-design-system-community/clippy-components/clippy-layout-main';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-layout-detail/README.md?raw';
 import React from 'react';
 
@@ -14,7 +15,26 @@ const meta = {
     },
     layout: 'fullscreen',
   },
-  render: (args) => React.createElement('clippy-layout-detail', args, []),
+  render: (args) =>
+    React.createElement('clippy-layout-detail', args, [
+      React.createElement('clippy-layout-main', {}, [
+        React.createElement(
+          'mark',
+          {
+            slot: 'header',
+          },
+          'header',
+        ),
+        React.createElement(
+          'mark',
+          {
+            slot: 'aside',
+          },
+          'aside',
+        ),
+        React.createElement('mark', {}, 'body'),
+      ]),
+    ]),
   tags: ['autodocs'],
   title: 'Clippy/Layout/Detail',
 } satisfies Meta;
