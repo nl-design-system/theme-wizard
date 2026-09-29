@@ -11,32 +11,22 @@ test('Accessibility basics', async ({ page }) => {
 
   // Has document language specified
   await expect(page.locator('html')).toHaveAttribute('lang', 'nl-NL');
+
+  // Page has an <h1>
+  await expect(page.getByRole('heading', { level: 1 })).toBeInViewport();
 });
 
-test('"url" option is preselected by default', async ({ page }) => {
-  const urlOption = page.getByRole('radio', { name: 'Met de huisstijl van een bestaande website' });
-  await expect(urlOption).toBeChecked();
-});
-
-test('submitting without changing the selection redirects to the scraper page', async ({
-  page,
-  scraperPage,
-  starterPickerPage,
-}) => {
-  await starterPickerPage.submitButton.click();
+test('choosing "Met de huisstijl van een website" redirects to the scraper page', async ({ page, scraperPage }) => {
+  await page.getByRole('link', { name: "Navigeer naar 'Huisstijl ophalen'" }).click();
   await expect(page).toHaveURL(new RegExp(scraperPage.url));
 });
 
-test('choosing "Met de huisstijl van een bestaande website" redirects to the scraper page', async ({
-  page,
-  scraperPage,
-  starterPickerPage,
-}) => {
-  await starterPickerPage.choose('Met de huisstijl van een bestaande website');
-  await expect(page).toHaveURL(new RegExp(scraperPage.url));
-});
-
-test('choosing "Met het Start Thema" redirects to the wizard', async ({ page, starterPickerPage, wizardIndexPage }) => {
-  await starterPickerPage.choose('Met het Start Thema');
+test('choosing "Met het Start Thema" redirects to the wizard page', async ({ page, wizardIndexPage }) => {
+  await page.getByRole('link', { name: "Navigeer naar 'Start'" }).click();
   await expect(page).toHaveURL(new RegExp(wizardIndexPage.url));
+});
+
+test('choosing "Met een eigen thema" redirects to the theme upload page', async ({ page, uploadTokensPage }) => {
+  await page.getByRole('link', { name: "Navigeer naar 'Thema uploaden'" }).click();
+  await expect(page).toHaveURL(new RegExp(uploadTokensPage.url));
 });

@@ -1,5 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { IconLink, IconFileSpark, IconFileCode } from '@tabler/icons-react'
+
+export const items = [
+  {
+    title: 'Met de huisstijl van een website',
+    linkLabel: 'Navigeer naar \'Huisstijl ophalen\'',
+    description: 'Jij vult een URL in. Wij halen de huisstijl op.',
+    href: '/scrape-tokens',
+    icon: IconLink
+  },
+  {
+    title: 'Met het Start thema',
+    linkLabel: 'Navigeer naar \'Start\'',
+    description: 'Begin met het Start thema en pas aan waar nodig.',
+    href: '/wizard',
+    icon: IconFileSpark
+  },
+  {
+    title: 'Met een eigen thema',
+    linkLabel: 'Navigeer naar \'Thema uploaden\'',
+    description: 'Upload je JSON bestand',
+    href: '/upload-tokens',
+    icon: IconFileCode,
+  }
+]
 ---
 
 <BaseLayout title="Theme Wizard">
@@ -9,7 +34,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <main slot="main" class="wizard-main">
         <wizard-container size="md">
           <clippy-story-preview size="lg">
-            <wizard-starter-picker></wizard-starter-picker>
+            <clippy-stack size="4xl">
+              <clippy-heading level="1">Hoe wil je starten?</clippy-heading>
+
+              <clippy-stack size="lg">
+                {items.map(link => (
+                  <wizard-card-as-link>
+                    <a href={link.href} slot="link">{link.linkLabel}</a>
+                    <link.icon slot="pre-header" aria-hidden="true" />
+                    <clippy-heading level="2" slot="header">{link.title}</clippy-heading>
+                    <p class="nl-paragraph" slot="body">{link.description}</p>
+                  </wizard-card-as-link>
+                ))}
+              </clippy-stack>
+            </clippy-stack>
           </clippy-story-preview>
         </wizard-container>
       </main>
@@ -17,29 +55,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </theme-wizard-app>
 </BaseLayout>
 
+<script>
+  import '@nl-design-system-community/clippy-components/clippy-heading'
+  import '@nl-design-system-community/clippy-components/clippy-stack'
+  import '@nl-design-system-community/clippy-components/clippy-story-preview'
+</script>
+
 <style>
   .wizard-main {
     display: grid;
     place-content: center;
   }
 </style>
-
-<script>
-  import { navigate } from "astro:transitions/client";
-  import {
-    WIZARD_STARTER_PICKER_SUBMIT_EVENT,
-    type WizardStarterPickerSubmitEventDetail,
-  } from "@nl-design-system-community/theme-wizard-app/components/wizard-starter-picker";
-
-  document.querySelector('theme-wizard-app')?.addEventListener(WIZARD_STARTER_PICKER_SUBMIT_EVENT, (event) => {
-    const { value } = (event as CustomEvent<WizardStarterPickerSubmitEventDetail>).detail;
-
-    if (value === 'url') {
-      navigate('/scrape-tokens');
-    } else if (value === 'start') {
-      navigate('/wizard');
-    } else if (value === 'json') {
-      navigate('/upload-tokens')
-    }
-  })
-</script>

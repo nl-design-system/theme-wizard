@@ -89,6 +89,29 @@ describe(`<${tag}>`, () => {
     `);
   });
 
+  describe('variant="list-item"', () => {
+    it('groups header and body under a single header-body part, still in front of link/pre-header/footer', async () => {
+      document.body.innerHTML = `
+        <${tag} variant="list-item">
+          <a slot="link" href="/x">Title</a>
+          <span slot="pre-header">pre-header</span>
+          <span slot="header">header</span>
+          <span slot="body">body</span>
+          <span slot="footer">footer</span>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyCardAsLink;
+      await component.updateComplete;
+
+      const headerBody = component.shadowRoot?.querySelector('[part="header-body"]');
+      expect(headerBody?.querySelector('slot[name="header"]')).not.toBeNull();
+      expect(headerBody?.querySelector('slot[name="body"]')).not.toBeNull();
+
+      const slotNames = [...(component.shadowRoot?.querySelectorAll('slot') ?? [])].map((slot) => slot.name);
+      expect(slotNames).toEqual(['header', 'body', 'link', 'pre-header', 'footer']);
+    });
+  });
+
   describe('focus', () => {
     it(':focus-within matches when the link is focused', async () => {
       document.body.innerHTML = `
