@@ -14,15 +14,12 @@ declare global {
 }
 
 /**
- * A `clippy-card-as-link` (`variant="list-item"`) styled for the wizard's start page. Extends
- * `clippy-card-as-link` rather than wrapping it, so the empty-slot handling for pre-header/header/body,
- * the header+body stacking, the stretched-link overlay and focus behavior are all inherited instead
- * of reimplemented.
+ * A `clippy-card-as-link` (`variant="list-item"`) extended so we don't have to re-implement all the tricky bits.
  *
  * @slot link - The card's link — a direct-child `<a href>`; its text content is the accessible name
- * @slot pre-header - Content above the header, e.g. an icon
- * @slot header - Card heading region
- * @slot body - Main card content
+ * @slot pre-header - Content before the header, e.g. an icon or token sample
+ * @slot header - Card heading region, most likely a title
+ * @slot body - Main card content or description
  * @slot footer - Footer content. Defaults to an arrow-right icon when left empty
  *
  * @element wizard-card-as-link

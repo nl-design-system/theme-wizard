@@ -59,15 +59,16 @@ export class ClippyCardAsLink extends ClippyCard {
    * header and body stack above one another in the middle.
    */
   override render() {
-    if (this.variant !== 'list-item') {
-      return super.render();
+    if (this.variant === 'list-item') {
+      return html`
+        <div class="clippy-card__header-body" part="header-body" ?hidden=${!this.hasHeader && !this.hasBody}>
+          ${this.renderHeader()} ${this.renderBody()}
+        </div>
+        <slot name="link"></slot>
+        ${this.renderPreHeader()} ${this.renderFooter()}
+      `;
     }
-    return html`
-      <div class="clippy-card__header-body" part="header-body" ?hidden=${!this.hasHeader && !this.hasBody}>
-        ${this.renderHeader()} ${this.renderBody()}
-      </div>
-      <slot name="link"></slot>
-      ${this.renderPreHeader()} ${this.renderFooter()}
-    `;
+
+    return super.render();
   }
 }
