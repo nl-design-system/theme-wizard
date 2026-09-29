@@ -44,7 +44,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
           <main>
             <clippy-story-preview size="lg">
               <clippy-stack size="lg">
-                <clippy-heading level="1">{node.key}</clippy-heading>
+                <clippy-heading level="1" class="wizard-page-title">{node.key}</clippy-heading>
                 <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
 
                 {
@@ -56,7 +56,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                         {
                           node.children.map((child) => (
                             <li>
-                              <wizard-card-as-link variant="list-item">
+                              <wizard-card-as-link variant="list-item" class="wizard-link-to-token">
                                 <div slot="pre-header">
                                   {child.isLeaf && (
                                     <wizard-token-sample path={`basis.${child.path.join('.')}`} class="wizard-token-sample">Aa</wizard-token-sample>
@@ -90,6 +90,24 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
 </BaseLayout>
 
 <style>
+  .wizard-page-title {
+    text-transform: capitalize;
+  }
+
+  .wizard-secretly-a-list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding-inline-start: var(--basis-space-none);
+    row-gap: var(--basis-space-row-md);
+  }
+
+  .wizard-link-to-token {
+    [slot='header'] {
+      text-transform: capitalize;
+    }
+  }
+
   .wizard-token-sample {
     --wizard-basis-token-sample-size: var(--basis-size-sm);
     --clippy-token-sample-border-size: var(--wizard-basis-token-sample-size);
@@ -104,18 +122,5 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
     overflow: clip;
     place-content: center;
     text-align: center;
-  }
-
-  .wizard-secretly-a-list {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    padding-inline-start: var(--basis-space-none);
-    row-gap: var(--basis-space-row-md);
-  }
-
-  [slot="header"],
-  clippy-heading {
-    text-transform: capitalize;
   }
 </style>

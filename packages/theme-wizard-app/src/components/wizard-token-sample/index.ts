@@ -14,6 +14,9 @@ declare global {
   }
 }
 
+/**
+ * @description Wrapper element around `<clippy-token-sample>` that injects the token from the Theme context
+ */
 @customElement(tag)
 export class WizardTokenSample extends LitElement {
   @consume({ context: themeContext, subscribe: true })
@@ -23,6 +26,7 @@ export class WizardTokenSample extends LitElement {
   @property({ type: String }) path = '';
 
   private get token(): BaseDesignToken | undefined {
+    // Pass the result through as-is, because clippy-token-sample validates whether this is a proper token
     return this.theme?.at(this.path) as BaseDesignToken | undefined;
   }
 
