@@ -35,13 +35,12 @@ const navItems = toNavigationItems(tree, []);
                 {
                   tree.map((group) => (
                     <li>
-                      <clippy-card-as-link variant="list-item">
+                      <wizard-card-as-link>
                         <a slot="link" href={`/basis-tokens/${group.path.join('/')}`}>
-                          Bewerk <q>{group.key}</q>
+                          Bewerk '{group.key}'
                         </a>
                         <span slot="header" class="wizard-token-group-name">{group.key}</span>
-                        <IconArrowRight slot="footer" />
-                      </clippy-card-as-link>
+                      </wizard-card-as-link>
                     </li>
                   ))
                 }

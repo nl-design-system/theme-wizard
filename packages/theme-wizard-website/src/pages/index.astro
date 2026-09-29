@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { IconLink, IconArrowRight, IconFileSpark, IconFileCode } from '@tabler/icons-react'
+import { IconLink, IconFileSpark, IconFileCode } from '@tabler/icons-react'
 
 export const items = [
   {
@@ -39,19 +39,12 @@ export const items = [
 
               <clippy-stack size="lg">
                 {items.map(link => (
-                  <clippy-card-as-link variant="list-item" class="wizard-card">
+                  <wizard-card-as-link>
                     <a href={link.href} slot="link">{link.linkLabel}</a>
-                    <span slot="pre-header" class="wizard-card__pre-header" aria-hidden="true">
-                      <link.icon />
-                    </span>
-                    <span slot="header">
-                      <clippy-heading level="2" class="wizard-card__title">{link.title}</clippy-heading>
-                      <p class="nl-paragraph wizard-card__description">{link.description}</p>
-                    </span>
-                    <span slot="footer" class="wizard-card__footer" aria-hidden="true">
-                      <IconArrowRight />
-                    </span>
-                  </clippy-card-as-link>
+                    <link.icon slot="pre-header" aria-hidden="true" />
+                    <clippy-heading level="2" slot="header">{link.title}</clippy-heading>
+                    <p class="nl-paragraph" slot="body">{link.description}</p>
+                  </wizard-card-as-link>
                 ))}
               </clippy-stack>
             </clippy-stack>
@@ -64,7 +57,6 @@ export const items = [
 
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading'
-  import '@nl-design-system-community/clippy-components/clippy-card-as-link'
   import '@nl-design-system-community/clippy-components/clippy-stack'
   import '@nl-design-system-community/clippy-components/clippy-story-preview'
 </script>
@@ -73,30 +65,5 @@ export const items = [
   .wizard-main {
     display: grid;
     place-content: center;
-  }
-
-  .wizard-card {
-    --nl-heading-level-2-font-size: var(--basis-text-font-size-md);
-    --clippy-card-pre-header-padding-inline-end: var(--basis-space-none);
-  }
-
-  .wizard-card__pre-header {
-    color: var(--basis-color-accent-1-color-default);
-  }
-
-  .wizard-card__description {
-    color: var(--basis-color-default-color-subtle);
-    margin-block: var(--basis-space-none);
-  }
-
-  .wizard-card__footer {
-    color: var(--basis-color-default-color-subtle);
-    transition: translate 100ms ease-out;
-
-    @media not (prefers-reduced-motion: reduce) {
-      .wizard-card:hover & {
-        translate: var(--basis-space-inline-sm);
-      }
-    }
   }
 </style>

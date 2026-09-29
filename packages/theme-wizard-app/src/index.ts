@@ -1,5 +1,6 @@
 export * from './components/wizard-anchor-nav';
 export * from './components/wizard-app';
+export * from './components/wizard-card-as-link';
 export * from './components/wizard-color-description';
 export * from './components/wizard-color-system-preview';
 export * from './components/wizard-container';
