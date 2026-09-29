@@ -8,6 +8,7 @@ import '../clippy-color-sample';
 import '../clippy-token-sample-spacing';
 import '../clippy-token-sample-text';
 import '../clippy-token-sample-border';
+import '../clippy-html-image';
 
 const tag = 'clippy-token-sample';
 
@@ -59,21 +60,33 @@ export class ClippyTokenSample extends LitElement {
           case 'space-text':
           case 'space-column':
           case 'space-row':
-            return html`<clippy-token-sample-spacing
-              data-testid=${testId}
-              size=${stringifyTokenValue(this.token)}
-              concept=${getTokenDimensionSpaceConcept(this.token)}
-            ></clippy-token-sample-spacing>`;
+            return html`
+              <clippy-html-image>
+                <clippy-token-sample-spacing
+                  data-testid=${testId}
+                  size=${stringifyTokenValue(this.token)}
+                  concept=${getTokenDimensionSpaceConcept(this.token)}
+                ></clippy-token-sample-spacing>
+              </clippy-html-image>
+            `;
           case 'border-width':
-            return html`<clippy-token-sample-border
-              data-testid=${testId}
-              border-width=${stringifyTokenValue(this.token)}
-            ></clippy-token-sample-border>`;
+            return html`
+              <clippy-html-image>
+                <clippy-token-sample-border
+                  data-testid=${testId}
+                  border-width=${stringifyTokenValue(this.token)}
+                ></clippy-token-sample-border>
+              </clippy-html-image>
+            `;
           case 'border-radius':
-            return html`<clippy-token-sample-border
-              data-testid=${testId}
-              border-radius=${stringifyTokenValue(this.token)}
-            ></clippy-token-sample-border>`;
+            return html`
+              <clippy-html-image>
+                <clippy-token-sample-border
+                  data-testid=${testId}
+                  border-radius=${stringifyTokenValue(this.token)}
+                ></clippy-token-sample-border>
+              </clippy-html-image>
+            `;
           default:
             return nothing;
         }
