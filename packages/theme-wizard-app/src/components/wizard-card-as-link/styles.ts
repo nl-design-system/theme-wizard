@@ -3,10 +3,10 @@ import { css } from 'lit';
 export default css`
   :host {
     --clippy-card-pre-header-padding-inline-end: var(--basis-space-none);
-    --clippy-card-header-padding-block-start: var(--basis-space-none);
     --clippy-card-header-padding-block-end: var(--basis-space-none);
-    --clippy-card-body-padding-block-start: var(--basis-space-block-sm);
+    --clippy-card-header-padding-block-start: var(--basis-space-none);
     --clippy-card-body-padding-block-end: var(--basis-space-none);
+    --clippy-card-body-padding-block-start: var(--basis-space-block-sm);
 
     /* Use the default font-size when using a <clippy-heading> for the slot=heading */
     --nl-heading-level-2-font-size: var(--basis-text-font-size-md);
@@ -17,8 +17,8 @@ export default css`
   }
 
   .clippy-card__header-body {
-    padding-block-start: var(--basis-space-block-lg);
     padding-block-end: var(--basis-space-block-lg);
+    padding-block-start: var(--basis-space-block-lg);
   }
 
   ::slotted([slot='body']) {
