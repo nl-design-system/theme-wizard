@@ -11,24 +11,22 @@ export default css`
     grid-column-end: aside;
     grid-column-start: header;
     grid-row-end: body;
-
-    /* grid-row: header / body; */
     grid-row-start: header;
     grid-template-columns: subgrid;
     grid-template-rows: subgrid;
   }
 
-  ::slotted([slot='header']) {
+  .clippy-layout-main__header {
     background-color: blue;
     grid-area: header;
   }
 
-  ::slotted([slot='aside']) {
+  .clippy-layout-main__aside {
     background-color: green;
     grid-area: aside;
   }
 
-  ::slotted(:not([slot])) {
+  .clippy-layout-main__body {
     background-color: red;
     grid-area: body;
   }

@@ -23,9 +23,15 @@ export class ClippyLayoutMain extends LitElement {
   override render() {
     return html`
       <main id="content">
-        <slot name="header"><mark>header</mark></slot>
-        <slot name="aside"><mark>aside</mark></slot>
-        <slot><mark>body</mark></slot>
+        <div class="clippy-layout-main__header">
+          <slot name="header"></slot>
+        </div>
+        <div class="clippy-layout-main__aside">
+          <slot name="aside"></slot>
+        </div>
+        <div class="clippy-layout-main__body">
+          <slot></slot>
+        </div>
       </main>
     `;
   }

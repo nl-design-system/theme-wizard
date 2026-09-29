@@ -17,6 +17,13 @@ const meta = {
   },
   render: (args) =>
     React.createElement('clippy-layout-detail', args, [
+      React.createElement(
+        'p',
+        {
+          slot: 'breadcrumb',
+        },
+        'Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.',
+      ),
       React.createElement('clippy-layout-main', {}, [
         React.createElement(
           'mark',
@@ -32,7 +39,21 @@ const meta = {
           },
           'aside',
         ),
-        React.createElement('mark', {}, 'body'),
+        React.createElement(
+          'a',
+          {
+            href: '#content',
+            slot: 'aside',
+          },
+          'linkje',
+        ),
+        [...Array(50)].map((_, index) =>
+          React.createElement(
+            'p',
+            { key: index },
+            'Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.',
+          ),
+        ),
       ]),
     ]),
   tags: ['autodocs'],
