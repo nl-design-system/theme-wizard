@@ -70,12 +70,17 @@ export default css`
     flex-direction: row;
   }
 
-  :host([variant='list-item']) .clippy-card__header {
+  :host([variant='list-item']) .clippy-card__header-body {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
   }
 
-  :host([variant='list-item']) .clippy-card__pre-header,
-  :host([variant='list-item']) .clippy-card__footer {
+  :host([variant='list-item']) .clippy-card__header-body[hidden] {
+    display: none;
+  }
+
+  :host([variant='list-item']) :is(.clippy-card__pre-header, .clippy-card__footer) {
     flex-shrink: 0;
   }
 `;

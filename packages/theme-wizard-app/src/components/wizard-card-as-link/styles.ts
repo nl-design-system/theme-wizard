@@ -5,7 +5,7 @@ export default css`
     --clippy-card-pre-header-padding-inline-end: var(--basis-space-none);
     --clippy-card-header-padding-block-start: var(--basis-space-none);
     --clippy-card-header-padding-block-end: var(--basis-space-none);
-    --clippy-card-body-padding-block-start: var(--basis-space-none);
+    --clippy-card-body-padding-block-start: var(--basis-space-block-sm);
     --clippy-card-body-padding-block-end: var(--basis-space-none);
 
     /* Use the default font-size when using a <clippy-heading> for the slot=heading */
@@ -16,10 +16,7 @@ export default css`
     --nl-heading-level-6-font-size: var(--basis-text-font-size-md);
   }
 
-  .wizard-card-as-link__header-body {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+  .clippy-card__header-body {
     padding-block-start: var(--basis-space-block-lg);
     padding-block-end: var(--basis-space-block-lg);
   }

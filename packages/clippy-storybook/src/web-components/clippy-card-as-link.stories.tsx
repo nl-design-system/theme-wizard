@@ -16,12 +16,8 @@ const createDefaultTemplate = () => html`
 const createListItemTemplate = () => html`
   <clippy-card-as-link variant="list-item" style="--clippy-card-max-inline-size: 20rem;">
     <span slot="pre-header">🔗</span>
-    <span slot="header" style="align-items: center; display: flex; gap: 0.75rem;">
-      <span>
-        <h2>Met de huisstijl van een bestaande website</h2>
-        <span style="color: var(--basis-color-default-color-subtle);">Vul een URL in.</span>
-      </span>
-    </span>
+    <h2 slot="header">Met de huisstijl van een bestaande website</h2>
+    <span slot="body" style="color: var(--basis-color-default-color-subtle);">Vul een URL in.</span>
     <div slot="footer">→</div>
     <a slot="link" href="#">Haal design tokens op van website</a>
   </clippy-card-as-link>
@@ -73,7 +69,7 @@ export const ListItem: Story = {
     docs: {
       description: {
         story:
-          'Set `variant="list-item"` for a compact, horizontal composition: `header` and `footer` sit side by side in a single row instead of stacking. Typically used for a short link row — a leading icon, a title (plus optional subtitle), and a trailing icon.',
+          'Set `variant="list-item"` for a compact, horizontal composition: `pre-header`, `header`+`body`, and `footer` sit side by side in a single row, while `header` and `body` stack on top of one another within that middle column. Typically used for a short link row — a leading icon, a title with subtitle, and a trailing icon.',
       },
       source: {
         transform: () => templateToHtml(createListItemTemplate()),
