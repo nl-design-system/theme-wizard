@@ -59,6 +59,7 @@ export default css`
 
   .clippy-layout-detail__sidebar {
     grid-area: sidebar;
+    background-color: green;
   }
 
   .clippy-layout-detail__breadcrumb {

@@ -22,7 +22,7 @@ export class ClippyLayoutMain extends LitElement {
 
   override render() {
     return html`
-      <main id="content">
+      <main>
         <div class="clippy-layout-main__header">
           <slot name="header"></slot>
         </div>
