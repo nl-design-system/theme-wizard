@@ -11,24 +11,7 @@ export default css`
 
   main {
     display: grid;
-    grid-template-areas:
-      'header'
-      'aside'
-      'body';
-    grid-template-rows: auto auto 1fr;
     row-gap: var(--_clippy-main-row-gap);
-  }
-
-  .clippy-main__header {
-    grid-area: header;
-  }
-
-  .clippy-main__aside {
-    grid-area: aside;
-  }
-
-  .clippy-main__body {
-    grid-area: body;
   }
 
   /**
@@ -47,6 +30,18 @@ export default css`
       grid-template-columns: subgrid;
       grid-template-rows: subgrid;
       grid-template-areas: initial;
+    }
+
+    .clippy-main__header {
+      grid-area: header;
+    }
+
+    .clippy-main__aside {
+      grid-area: aside;
+    }
+
+    .clippy-main__body {
+      grid-area: body;
     }
   }
 `;

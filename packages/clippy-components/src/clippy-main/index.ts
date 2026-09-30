@@ -30,16 +30,51 @@ export class ClippyMain extends LitElement {
   override render() {
     return html`
       <main>
-        <div class="clippy-main__header">
-          <slot name="header"></slot>
+        <div class="clippy-main__header" ?hidden=${!this.#hasHeaderContent}>
+          <slot name="header" @slotchange=${this.#handleSlotChange}></slot>
         </div>
-        <div class="clippy-main__aside">
-          <slot name="aside"></slot>
-        </div>
-        <div class="clippy-main__body">
-          <slot></slot>
+        <aside class="clippy-main__aside" ?hidden=${!this.#hasAsideContent}>
+          <slot name="aside" @slotchange=${this.#handleSlotChange}></slot>
+        </aside>
+        <div class="clippy-main__body" ?hidden=${!this.#hasBodyContent}>
+          <slot @slotchange=${this.#handleSlotChange}></slot>
         </div>
       </main>
     `;
+  }
+
+  #hasHeaderContent = false;
+  #hasAsideContent = false;
+  #hasBodyContent = false;
+
+  override firstUpdated() {
+    // Initialize slot content states after first render
+    this.#updateSlotStates();
+  }
+
+  #updateSlotStates() {
+    const headerSlot = this.renderRoot?.querySelector<HTMLSlotElement>('slot[name="header"]');
+    const asideSlot = this.renderRoot?.querySelector<HTMLSlotElement>('slot[name="aside"]');
+    const bodySlot = this.renderRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+
+    this.#hasHeaderContent = (headerSlot?.assignedElements().length ?? 0) > 0;
+    this.#hasAsideContent = (asideSlot?.assignedElements().length ?? 0) > 0;
+    this.#hasBodyContent = (bodySlot?.assignedElements().length ?? 0) > 0;
+    this.requestUpdate();
+  }
+
+  #handleSlotChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    const slotName = slot.name || '';
+    const hasContent = slot.assignedElements().length > 0;
+
+    if (slotName === 'header') {
+      this.#hasHeaderContent = hasContent;
+    } else if (slotName === 'aside') {
+      this.#hasAsideContent = hasContent;
+    } else {
+      this.#hasBodyContent = hasContent;
+    }
+    this.requestUpdate();
   }
 }
