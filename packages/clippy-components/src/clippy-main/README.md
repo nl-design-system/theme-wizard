@@ -1,15 +1,15 @@
-# `<clippy-layout-main>`
+# `<clippy-main>`
 
 A component that provides the `main` element.
 
 ## Usage
 
 ```js
-import '@nl-design-system-community/clippy-components/clippy-layout-main';
+import '@nl-design-system-community/clippy-components/clippy-main';
 ```
 
 ```html
-<clippy-layout-main></clippy-layout-main>
+<clippy-main></clippy-main>
 ```
 
 ## Slots

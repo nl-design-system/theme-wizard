@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-layout-detail';
-import '@nl-design-system-community/clippy-components/clippy-layout-main';
+import '@nl-design-system-community/clippy-components/clippy-main';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-layout-detail/README.md?raw';
 import React from 'react';
 
@@ -31,7 +31,7 @@ const meta = {
         },
         'Sidebar',
       ),
-      React.createElement('clippy-layout-main', { id: 'content', variant: 'detail' }, [
+      React.createElement('clippy-main', { id: 'content', variant: 'detail' }, [
         React.createElement(
           'mark',
           {
@@ -46,13 +46,7 @@ const meta = {
           },
           'Aside',
         ),
-        [...Array(50)].map((_, index) =>
-          React.createElement(
-            'p',
-            { key: index },
-            'Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.',
-          ),
-        ),
+        React.createElement('mark', {}, 'content'),
       ]),
     ]),
   tags: ['autodocs'],

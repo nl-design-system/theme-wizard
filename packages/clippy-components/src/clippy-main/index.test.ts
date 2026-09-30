@@ -1,17 +1,17 @@
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
-import { ClippyLayoutMain } from './index';
+import { ClippyMain } from './index';
 
-const tag = 'clippy-layout-main';
+const tag = 'clippy-main';
 
 describe(`<${tag}>`, () => {
-  let component: ClippyLayoutMain;
+  let component: ClippyMain;
 
   beforeEach(() => {
     document.body.innerHTML = `
       <${tag}></${tag}>
     `;
-    component = document.querySelector(tag) as ClippyLayoutMain;
+    component = document.querySelector(tag) as ClippyMain;
   });
 
   afterEach(() => {

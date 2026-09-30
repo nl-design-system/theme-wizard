@@ -4,11 +4,11 @@ import { property } from 'lit/decorators.js';
 import styles from './styles';
 import { Variant } from './types';
 
-const tag = 'clippy-layout-main';
+const tag = 'clippy-main';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyLayoutMain;
+    [tag]: ClippyMain;
   }
 }
 
@@ -17,9 +17,11 @@ declare global {
  * @slot - Default body content
  * @slot aside - Complementary content, eg. anchor-navigation, authors, etc.
  * @slot header - Header content, eg titles, hero images, etc.
+ *
+ * @cssprop --clippy-main-row-gap - The gap between the header, aside and the body
  */
 @safeCustomElement(tag)
-export class ClippyLayoutMain extends LitElement {
+export class ClippyMain extends LitElement {
   static override readonly styles = [styles];
 
   @property({ reflect: true, type: String })
@@ -28,13 +30,13 @@ export class ClippyLayoutMain extends LitElement {
   override render() {
     return html`
       <main>
-        <div class="clippy-layout-main__header">
+        <div class="clippy-main__header">
           <slot name="header"></slot>
         </div>
-        <div class="clippy-layout-main__aside">
+        <div class="clippy-main__aside">
           <slot name="aside"></slot>
         </div>
-        <div class="clippy-layout-main__body">
+        <div class="clippy-main__body">
           <slot></slot>
         </div>
       </main>
