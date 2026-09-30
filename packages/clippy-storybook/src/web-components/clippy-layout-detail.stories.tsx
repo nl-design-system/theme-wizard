@@ -1,8 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import '@nl-design-system-community/clippy-components/clippy-layout-detail';
 import '@nl-design-system-community/clippy-components/clippy-main';
+import '@nl-design-system-community/clippy-components/clippy-side-navigation';
+import '@nl-design-system-community/clippy-components/clippy-heading';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-layout-detail/README.md?raw';
+import { full } from '@nl-design-system-community/clippy-components/src/clippy-side-navigation/fixtures.js';
+import { html } from 'lit';
 import React from 'react';
+import { templateToHtml } from '../utils/templateToHtml';
+import '@nl-design-system-candidate/paragraph-css/paragraph.css';
+
+// Prettier ignore to prevent double-quotes
+// prettier-ignore
+export const createTemplate = () => html`
+  <clippy-layout-detail>
+    <clippy-side-navigation items='${JSON.stringify(full)}' slot="sidebar"></clippy-side-navigation>
+    <mark slot="breadcrumb">Home / Blog / De titel van een artikel</mark>
+    <clippy-main variant="detail">
+      <clippy-heading level="2" slot="header">De titel van een artikel</clippy-heading>
+      <p class="nl-paragraph" slot="aside">Geschreven door: Piet Pietersen</p>
+      <p class="nl-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
+    </clippy-main>
+  </clippy-layout-detail>
+`;
 
 const meta = {
   id: 'clippy-layout-detail',
@@ -12,43 +32,17 @@ const meta = {
       description: {
         component: readme,
       },
+      source: {
+        transform: () => templateToHtml(createTemplate()),
+        type: 'code',
+      },
     },
     layout: 'fullscreen',
   },
-  render: (args) =>
-    React.createElement('clippy-layout-detail', args, [
-      React.createElement(
-        'mark',
-        {
-          slot: 'breadcrumb',
-        },
-        'Breadcrumbs',
-      ),
-      React.createElement(
-        'mark',
-        {
-          slot: 'sidebar',
-        },
-        'Sidebar',
-      ),
-      React.createElement('clippy-main', { id: 'content', variant: 'detail' }, [
-        React.createElement(
-          'mark',
-          {
-            slot: 'header',
-          },
-          'Header',
-        ),
-        React.createElement(
-          'mark',
-          {
-            slot: 'aside',
-          },
-          'Aside',
-        ),
-        React.createElement('mark', {}, 'content'),
-      ]),
-    ]),
+  render: () =>
+    React.createElement('div', {
+      dangerouslySetInnerHTML: { __html: templateToHtml(createTemplate()) },
+    }),
   tags: ['autodocs'],
   title: 'Clippy/Layout/Detail',
 } satisfies Meta;
