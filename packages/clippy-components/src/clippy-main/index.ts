@@ -1,4 +1,5 @@
 import { safeCustomElement } from '@src/lib/decorators';
+import { isSlotEmpty } from '@src/lib/slot';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles from './styles';
@@ -27,6 +28,41 @@ export class ClippyMain extends LitElement {
   @property({ reflect: true, type: String })
   public variant: Variant = 'default';
 
+  #hasHeaderContent = false;
+  #hasAsideContent = false;
+  #hasBodyContent = false;
+
+  #handleSlotChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    const slotName = slot.name || '';
+    const hasContent = !isSlotEmpty(slot);
+
+    if (slotName === 'header') {
+      this.#hasHeaderContent = hasContent;
+    } else if (slotName === 'aside') {
+      this.#hasAsideContent = hasContent;
+    } else {
+      this.#hasBodyContent = hasContent;
+    }
+    this.requestUpdate();
+  }
+
+  #hasAssignedNodes(slotName: string): boolean {
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(
+      slotName === '' ? 'slot:not([name])' : `slot[name="${slotName}"]`,
+    );
+    if (!slot) {
+      return false;
+    }
+    return !isSlotEmpty(slot);
+  }
+
+  protected override firstUpdated() {
+    this.#hasHeaderContent = this.#hasAssignedNodes('header');
+    this.#hasAsideContent = this.#hasAssignedNodes('aside');
+    this.#hasBodyContent = this.#hasAssignedNodes('');
+  }
+
   override render() {
     return html`
       <main>
@@ -41,40 +77,5 @@ export class ClippyMain extends LitElement {
         </div>
       </main>
     `;
-  }
-
-  #hasHeaderContent = false;
-  #hasAsideContent = false;
-  #hasBodyContent = false;
-
-  override firstUpdated() {
-    // Initialize slot content states after first render
-    this.#updateSlotStates();
-  }
-
-  #updateSlotStates() {
-    const headerSlot = this.renderRoot?.querySelector<HTMLSlotElement>('slot[name="header"]');
-    const asideSlot = this.renderRoot?.querySelector<HTMLSlotElement>('slot[name="aside"]');
-    const bodySlot = this.renderRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
-
-    this.#hasHeaderContent = (headerSlot?.assignedElements().length ?? 0) > 0;
-    this.#hasAsideContent = (asideSlot?.assignedElements().length ?? 0) > 0;
-    this.#hasBodyContent = (bodySlot?.assignedElements().length ?? 0) > 0;
-    this.requestUpdate();
-  }
-
-  #handleSlotChange(event: Event) {
-    const slot = event.target as HTMLSlotElement;
-    const slotName = slot.name || '';
-    const hasContent = slot.assignedElements().length > 0;
-
-    if (slotName === 'header') {
-      this.#hasHeaderContent = hasContent;
-    } else if (slotName === 'aside') {
-      this.#hasAsideContent = hasContent;
-    } else {
-      this.#hasBodyContent = hasContent;
-    }
-    this.requestUpdate();
   }
 }
