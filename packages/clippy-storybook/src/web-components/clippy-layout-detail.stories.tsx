@@ -18,34 +18,33 @@ const meta = {
   render: (args) =>
     React.createElement('clippy-layout-detail', args, [
       React.createElement(
-        'p',
+        'mark',
         {
           slot: 'breadcrumb',
         },
-        'Breadcrumbs: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.',
+        'Breadcrumbs',
       ),
-      React.createElement('clippy-layout-main', { id: 'content' }, [
+      React.createElement(
+        'mark',
+        {
+          slot: 'sidebar',
+        },
+        'Sidebar',
+      ),
+      React.createElement('clippy-layout-main', { id: 'content', variant: 'detail' }, [
         React.createElement(
           'mark',
           {
             slot: 'header',
           },
-          'header',
+          'Header',
         ),
         React.createElement(
           'mark',
           {
             slot: 'aside',
           },
-          'aside',
-        ),
-        React.createElement(
-          'a',
-          {
-            href: '#content',
-            slot: 'aside',
-          },
-          'linkje',
+          'Aside',
         ),
         [...Array(50)].map((_, index) =>
           React.createElement(

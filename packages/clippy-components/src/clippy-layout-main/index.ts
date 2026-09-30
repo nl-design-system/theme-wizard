@@ -1,6 +1,8 @@
 import { safeCustomElement } from '@src/lib/decorators';
 import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
 import styles from './styles';
+import { Variant } from './types';
 
 const tag = 'clippy-layout-main';
 
@@ -19,6 +21,9 @@ declare global {
 @safeCustomElement(tag)
 export class ClippyLayoutMain extends LitElement {
   static override readonly styles = [styles];
+
+  @property({ reflect: true, type: String })
+  public variant: Variant = 'default';
 
   override render() {
     return html`

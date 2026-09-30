@@ -18,6 +18,14 @@ export default css`
       --clippy-layout-detail-content-padding-inline-end,
       var(--basis-space-inline-xl)
     );
+    --_clippy-layout-detail-content-padding-block-start: var(
+      --clippy-layout-detail-content-padding-block-start,
+      var(--basis-space-block-3xl)
+    );
+    --_clippy-layout-detail-content-padding-block-end: var(
+      --clippy-layout-detail-content-padding-block-end,
+      var(--basis-space-block-3xl)
+    );
     --_clippy-layout-detail-column-gap: var(--clippy-layout-detail-column-gap, var(--basis-space-column-4xl));
     --_clippy-layout-detail-sidebar-inline-size: var(--clippy-layout-detail-sidebar-inline-size, 300px);
   }
@@ -30,6 +38,8 @@ export default css`
     max-inline-size: var(--_clippy-layout-detail-content-max-inline-size);
     padding-inline-end: var(--_clippy-layout-detail-content-padding-inline-end);
     padding-inline-start: var(--_clippy-layout-detail-content-padding-inline-start);
+    padding-block-end: var(--_clippy-layout-detail-content-padding-block-end);
+    padding-block-start: var(--_clippy-layout-detail-content-padding-block-start);
   }
 
   .clippy-layout-detail__grid {
@@ -59,7 +69,6 @@ export default css`
 
   .clippy-layout-detail__sidebar {
     grid-area: sidebar;
-    background-color: green;
   }
 
   .clippy-layout-detail__breadcrumb {
@@ -67,12 +76,8 @@ export default css`
   }
 
   .clippy-layout-detail__wrap-main {
-    border: 3px solid purple;
     display: grid;
     grid-column-end: aside;
-
-    /* outline-offset: 5px; */
-
     grid-column-start: header;
     grid-row-end: body;
     grid-row-start: header;

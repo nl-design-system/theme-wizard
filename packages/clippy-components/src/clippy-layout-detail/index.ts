@@ -13,6 +13,7 @@ declare global {
 /**
  * Clippy Layout Detail Component
  * @slot - Main content
+ * @slot sidebar - Sidebar content, for side navigation purposes
  */
 @safeCustomElement(tag)
 export class ClippyLayoutDetail extends LitElement {
@@ -23,14 +24,14 @@ export class ClippyLayoutDetail extends LitElement {
       <div class="clippy-layout-detail__content">
         <div class="clippy-layout-detail__grid">
           <div class="clippy-layout-detail__sidebar">
-            <slot name="sidebar"><mark>sidebar</mark></slot>
+            <slot name="sidebar"></slot>
           </div>
 
           <div class="clippy-layout-detail__breadcrumb">
-            <slot name="breadcrumb"><mark>breadcrumb</mark></slot>
+            <slot name="breadcrumb"></slot>
           </div>
 
-          <div class="clippy-layout-detail__wrap-main">
+          <div class="clippy-layout-detail__wrap-main" id="content">
             <slot></slot>
           </div>
         </div>
