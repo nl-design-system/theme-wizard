@@ -66,10 +66,21 @@ export default css`
   /* VARIANTS */
 
   :host([variant='list-item']) {
-    --clippy-card-footer-padding-inline-start: var(--basis-space-none);
-
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
+  }
+
+  :host([variant='list-item']) .clippy-card__header-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  :host([variant='list-item']) .clippy-card__header-body[hidden] {
+    display: none;
+  }
+
+  :host([variant='list-item']) :is(.clippy-card__pre-header, .clippy-card__footer) {
+    flex-shrink: 0;
   }
 `;

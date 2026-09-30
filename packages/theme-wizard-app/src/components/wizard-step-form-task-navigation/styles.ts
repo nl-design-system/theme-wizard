@@ -24,13 +24,16 @@ export default css`
     & svg {
       align-self: center;
       block-size: var(--basis-size-icon-md);
-      color: inherit;
       justify-self: center;
     }
 
     :host(:focus-within) &:not(.wizard-step-form-task-navigation__icon--checked) {
       --wizard-step-form-task-navigation-border-color: var(--basis-focus-border-color);
     }
+  }
+
+  .wizard-step-form-task-navigation__arrow {
+    color: var(--basis-color-default-color-subtle);
   }
 
   /**

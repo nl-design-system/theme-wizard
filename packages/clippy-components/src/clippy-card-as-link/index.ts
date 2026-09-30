@@ -1,5 +1,6 @@
 import { safeCustomElement } from '@lib/decorators';
 import { ClippyCard } from '@src/clippy-card';
+import { html } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles, { focusVisibleAttribute } from './styles';
 
@@ -20,6 +21,8 @@ declare global {
  * @slot header - Card heading region
  * @slot body - Main card content
  * @slot footer - Footer content, e.g. actions or metadata
+ *
+ * @csspart header-body - `variant="list-item"` only — styling hook for the header+body wrapper
  */
 @safeCustomElement(tag)
 export class ClippyCardAsLink extends ClippyCard {
@@ -49,4 +52,23 @@ export class ClippyCardAsLink extends ClippyCard {
   readonly #handleFocusOut = () => {
     this.removeAttribute(focusVisibleAttribute);
   };
+
+  /**
+   * `list-item` lays header/pre-header/body/footer out in a row, as siblings — wrap header and
+   * body in their own column so pre-header/footer stay pinned to the row's start/end while the
+   * header and body stack above one another in the middle.
+   */
+  override render() {
+    if (this.variant === 'list-item') {
+      return html`
+        <div class="clippy-card__header-body" part="header-body" ?hidden=${!this.hasHeader && !this.hasBody}>
+          ${this.renderHeader()} ${this.renderBody()}
+        </div>
+        <slot name="link"></slot>
+        ${this.renderPreHeader()} ${this.renderFooter()}
+      `;
+    }
+
+    return super.render();
+  }
 }

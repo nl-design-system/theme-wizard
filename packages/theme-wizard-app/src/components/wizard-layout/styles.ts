@@ -17,7 +17,7 @@ export default css`
     --clippy-card-border-color: var(--basis-color-default-border-subtle);
     --clippy-card-border-radius: var(--basis-border-radius-md);
     --clippy-card-border-width: var(--basis-border-width-sm);
-    --clippy-card-color: var(--basis-color-default-color-default);
+    --clippy-card-color: var(--basis-color-default-color-document);
     --clippy-card-max-inline-size: 48rem;
 
     /* Clippy-card:hover */

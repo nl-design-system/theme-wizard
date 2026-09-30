@@ -1,5 +1,20 @@
 # @nl-design-system-community/clippy-components
 
+## 3.4.0
+
+### Minor Changes
+
+- af0ed6e: Add `clippy-page-layout` component
+  Update `theme-wizard-layout` to use `clippy-page-layout`
+- 9ebc7d9: Add `clippy-card` and `clippy-card-as-link`
+- 9ebc7d9: Add `clippy-side-navigation` component
+- 9ebc7d9: Add `clippy-drawer` component
+- 9ebc7d9: Add `clippy-navigation-bar` component
+- c65eac1: Add `clippy-page-header` component
+  Add `subtle-inverse` purpose to `clippy-button`
+  Add `expanded` and `controls` properties to `clippy-button`
+  Add `isSlotEmpty()` helper
+
 ## 3.3.0
 
 ### Minor Changes

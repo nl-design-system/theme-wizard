@@ -13,15 +13,14 @@
 
 ## Variants
 
-Set `variant="list-item"` for a compact, horizontal composition.
+Set `variant="list-item"` for a compact, horizontal composition: `pre-header`, `header`+`body`, and `footer`
+sit side by side in a single row — `header` and `body` stack on top of one another within that middle column.
 
 ```html
 <clippy-card-as-link variant="list-item">
-  <span slot="header">
-    <span slot="start">🔗</span>
-    <h2>Met de huisstijl van een bestaande website</h2>
-    <span>Vul een URL in.</span>
-  </span>
+  <span slot="pre-header">🔗</span>
+  <h2 slot="header">Met de huisstijl van een bestaande website</h2>
+  <span slot="body">Vul een URL in.</span>
   <span slot="footer">→</span>
   <a slot="link" href="/settings/theme">Navigeer naar <q>huisstijl van een bestaande website halen</q></a>
 </clippy-card-as-link>

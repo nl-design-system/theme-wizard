@@ -1,5 +1,6 @@
 export * from './components/wizard-anchor-nav';
 export * from './components/wizard-app';
+export * from './components/wizard-card-as-link';
 export * from './components/wizard-color-description';
 export * from './components/wizard-color-system-preview';
 export * from './components/wizard-container';
@@ -16,7 +17,6 @@ export * from './components/wizard-scraper';
 export * from './components/wizard-scraper-loader';
 export * from './components/wizard-scroll-container';
 export * from './components/wizard-sidebar-link';
-export * from './components/wizard-starter-picker';
 export * from './components/wizard-step-form';
 export * from './components/wizard-step-form-sample';
 export * from './components/wizard-step-form-task-navigation';
