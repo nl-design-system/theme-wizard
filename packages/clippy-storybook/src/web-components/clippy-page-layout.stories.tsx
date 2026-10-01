@@ -38,30 +38,6 @@ const meta = {
     },
     layout: 'fullscreen',
   },
-  // render: (args) =>
-  //   React.createElement('clippy-page-layout', args, [
-  //     React.createElement(
-  //       'clippy-page-header',
-  //       {
-  //         slot: 'header',
-  //         variant: 'default',
-  //       },
-  //       [
-  //         React.createElement('span', { slot: 'logo' }, '🎉 Logo'),
-  //         React.createElement('clippy-navigation-bar', { items: simple, slot: 'navigation-bar' }),
-  //         React.createElement('clippy-side-navigation', { items: full, slot: 'navigation-drawer' }),
-  //         React.createElement('clippy-button', { purpose: 'subtle', slot: 'end' }, 'Nederlands'),
-  //       ],
-  //     ),
-  //     React.createElement(
-  //       'mark',
-  //       {
-  //         slot: 'footer',
-  //       },
-  //       'footer',
-  //     ),
-  //     React.createElement('mark', {}, 'content'),
-  //   ]),
   render: () =>
     React.createElement('div', {
       dangerouslySetInnerHTML: { __html: templateToHtml(createTemplate()) },
