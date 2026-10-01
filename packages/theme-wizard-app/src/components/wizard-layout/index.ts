@@ -33,7 +33,7 @@ export class WizardLayout extends LitElement {
 
   override render() {
     return html`
-      <clippy-page-layout class="wizard-layout | ma-theme">
+      <clippy-page-layout class="wizard-layout">
         <slot name="page-header" slot="header"></slot>
 
         <div class="wizard-layout__body">
