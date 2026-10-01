@@ -56,7 +56,7 @@ describe(`<${tag}>`, () => {
 
       const mainSlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
       const assigned = mainSlot.assignedElements();
-      expect(assigned.length).toBe(1);
+      expect(assigned).toHaveLength(1);
       expect(assigned[0].textContent).toBe('Main content');
     });
 
@@ -71,7 +71,7 @@ describe(`<${tag}>`, () => {
 
       const sidebarSlot = component.shadowRoot?.querySelector('slot[name="sidebar"]') as HTMLSlotElement;
       const assigned = sidebarSlot.assignedElements();
-      expect(assigned.length).toBe(1);
+      expect(assigned).toHaveLength(1);
       expect(assigned[0].textContent).toBe('Navigation');
     });
 
@@ -86,7 +86,7 @@ describe(`<${tag}>`, () => {
 
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
       const assigned = breadcrumbSlot.assignedElements();
-      expect(assigned.length).toBe(1);
+      expect(assigned).toHaveLength(1);
       expect(assigned[0].textContent).toBe('Home / Page');
     });
 
@@ -108,9 +108,9 @@ describe(`<${tag}>`, () => {
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
       const mainSlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
 
-      expect(sidebarSlot.assignedElements().length).toBe(2);
-      expect(breadcrumbSlot.assignedElements().length).toBe(2);
-      expect(mainSlot.assignedElements().length).toBe(2);
+      expect(sidebarSlot.assignedElements()).toHaveLength(2);
+      expect(breadcrumbSlot.assignedElements()).toHaveLength(2);
+      expect(mainSlot.assignedElements()).toHaveLength(2);
     });
 
     it('renders all three slots with content simultaneously', async () => {
@@ -128,9 +128,9 @@ describe(`<${tag}>`, () => {
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
       const mainSlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
 
-      expect(sidebarSlot.assignedElements().length).toBe(1);
-      expect(breadcrumbSlot.assignedElements().length).toBe(1);
-      expect(mainSlot.assignedElements().length).toBe(1);
+      expect(sidebarSlot.assignedElements()).toHaveLength(1);
+      expect(breadcrumbSlot.assignedElements()).toHaveLength(1);
+      expect(mainSlot.assignedElements()).toHaveLength(1);
     });
   });
 
@@ -139,7 +139,7 @@ describe(`<${tag}>`, () => {
       await component.updateComplete;
 
       const sidebarSlot = component.shadowRoot?.querySelector('slot[name="sidebar"]') as HTMLSlotElement;
-      expect(sidebarSlot.assignedElements().length).toBe(0);
+      expect(sidebarSlot.assignedElements()).toHaveLength(0);
 
       const nav = document.createElement('nav');
       nav.slot = 'sidebar';
@@ -147,7 +147,7 @@ describe(`<${tag}>`, () => {
       component.appendChild(nav);
 
       await component.updateComplete;
-      expect(sidebarSlot.assignedElements().length).toBe(1);
+      expect(sidebarSlot.assignedElements()).toHaveLength(1);
       expect(sidebarSlot.assignedElements()[0].textContent).toBe('Dynamic sidebar');
     });
 
@@ -155,7 +155,7 @@ describe(`<${tag}>`, () => {
       await component.updateComplete;
 
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
-      expect(breadcrumbSlot.assignedElements().length).toBe(0);
+      expect(breadcrumbSlot.assignedElements()).toHaveLength(0);
 
       const div = document.createElement('div');
       div.slot = 'breadcrumb';
@@ -163,7 +163,7 @@ describe(`<${tag}>`, () => {
       component.appendChild(div);
 
       await component.updateComplete;
-      expect(breadcrumbSlot.assignedElements().length).toBe(1);
+      expect(breadcrumbSlot.assignedElements()).toHaveLength(1);
       expect(breadcrumbSlot.assignedElements()[0].textContent).toBe('Dynamic breadcrumb');
     });
 
@@ -171,14 +171,14 @@ describe(`<${tag}>`, () => {
       await component.updateComplete;
 
       const mainSlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
-      expect(mainSlot.assignedElements().length).toBe(0);
+      expect(mainSlot.assignedElements()).toHaveLength(0);
 
       const main = document.createElement('main');
       main.textContent = 'Dynamic main content';
       component.appendChild(main);
 
       await component.updateComplete;
-      expect(mainSlot.assignedElements().length).toBe(1);
+      expect(mainSlot.assignedElements()).toHaveLength(1);
       expect(mainSlot.assignedElements()[0].textContent).toBe('Dynamic main content');
     });
 
@@ -197,16 +197,16 @@ describe(`<${tag}>`, () => {
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
       const mainSlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
 
-      expect(sidebarSlot.assignedElements().length).toBe(1);
-      expect(breadcrumbSlot.assignedElements().length).toBe(1);
-      expect(mainSlot.assignedElements().length).toBe(1);
+      expect(sidebarSlot.assignedElements()).toHaveLength(1);
+      expect(breadcrumbSlot.assignedElements()).toHaveLength(1);
+      expect(mainSlot.assignedElements()).toHaveLength(1);
 
       // Remove sidebar content
       const nav = component.querySelector('nav');
       nav?.remove();
 
       await component.updateComplete;
-      expect(sidebarSlot.assignedElements().length).toBe(0);
+      expect(sidebarSlot.assignedElements()).toHaveLength(0);
     });
   });
 

@@ -58,7 +58,7 @@ describe(`<${tag}>`, () => {
 
       const headerSlot = component.shadowRoot?.querySelector('slot[name="header"]') as HTMLSlotElement;
       const assigned = headerSlot.assignedElements();
-      expect(assigned.length).toBe(1);
+      expect(assigned).toHaveLength(1);
       expect(assigned[0].textContent).toBe('Title');
     });
 
@@ -73,7 +73,7 @@ describe(`<${tag}>`, () => {
 
       const asideSlot = component.shadowRoot?.querySelector('slot[name="aside"]') as HTMLSlotElement;
       const assigned = asideSlot.assignedElements();
-      expect(assigned.length).toBe(1);
+      expect(assigned).toHaveLength(1);
       expect(assigned[0].textContent).toBe('Navigation');
     });
 
@@ -88,7 +88,7 @@ describe(`<${tag}>`, () => {
 
       const bodySlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
       const assigned = bodySlot.assignedElements();
-      expect(assigned.length).toBe(1);
+      expect(assigned).toHaveLength(1);
       expect(assigned[0].textContent).toBe('Body content');
     });
 
@@ -110,9 +110,9 @@ describe(`<${tag}>`, () => {
       const asideSlot = component.shadowRoot?.querySelector('slot[name="aside"]') as HTMLSlotElement;
       const bodySlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
 
-      expect(headerSlot.assignedElements().length).toBe(2);
-      expect(asideSlot.assignedElements().length).toBe(2);
-      expect(bodySlot.assignedElements().length).toBe(2);
+      expect(headerSlot.assignedElements()).toHaveLength(2);
+      expect(asideSlot.assignedElements()).toHaveLength(2);
+      expect(bodySlot.assignedElements()).toHaveLength(2);
     });
   });
 
