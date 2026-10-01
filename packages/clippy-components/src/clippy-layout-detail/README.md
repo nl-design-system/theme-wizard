@@ -1,6 +1,6 @@
 # `<clippy-layout-detail>`
 
-A component that provides a layout for a detail view. Uses a responsive grid layout with container queries to adapt the layout based on available space.
+A component that provides a layout for a detail view. Roughly based on the `ma-layout-detail` grid on the NLDS website.
 
 ## Usage
 
