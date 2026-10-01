@@ -27,9 +27,9 @@ export default css`
       grid-column-start: header;
       grid-row-end: body;
       grid-row-start: header;
+      grid-template-areas: initial;
       grid-template-columns: subgrid;
       grid-template-rows: subgrid;
-      grid-template-areas: initial;
     }
 
     .clippy-main__header {

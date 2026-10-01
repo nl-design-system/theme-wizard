@@ -1,4 +1,5 @@
 import { safeCustomElement } from '@src/lib/decorators';
+import { isSlotEmpty } from '@src/lib/slot';
 import { LitElement, html } from 'lit';
 import styles from './styles';
 
@@ -28,16 +29,47 @@ declare global {
 export class ClippyLayoutDetail extends LitElement {
   static override readonly styles = [styles];
 
+  #hasSidebarContent = false;
+  #hasBreadcrumbContent = false;
+
+  #handleSlotChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    const slotName = slot.name || '';
+    const hasContent = !isSlotEmpty(slot);
+
+    if (slotName === 'sidebar') {
+      this.#hasSidebarContent = hasContent;
+    } else if (slotName === 'breadcrumb') {
+      this.#hasBreadcrumbContent = hasContent;
+    }
+    this.requestUpdate();
+  }
+
+  #hasAssignedNodes(slotName: string): boolean {
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(
+      slotName === '' ? 'slot:not([name])' : `slot[name="${slotName}"]`,
+    );
+    if (!slot) {
+      return false;
+    }
+    return !isSlotEmpty(slot);
+  }
+
+  protected override firstUpdated() {
+    this.#hasSidebarContent = this.#hasAssignedNodes('sidebar');
+    this.#hasBreadcrumbContent = this.#hasAssignedNodes('breadcrumb');
+  }
+
   override render() {
     return html`
       <div class="clippy-layout-detail__content">
         <div class="clippy-layout-detail__grid">
-          <div class="clippy-layout-detail__sidebar">
-            <slot name="sidebar"></slot>
+          <div class="clippy-layout-detail__sidebar" ?hidden=${!this.#hasSidebarContent}>
+            <slot name="sidebar" @slotchange=${this.#handleSlotChange}></slot>
           </div>
 
-          <div class="clippy-layout-detail__breadcrumb">
-            <slot name="breadcrumb"></slot>
+          <div class="clippy-layout-detail__breadcrumb" ?hidden=${!this.#hasBreadcrumbContent}>
+            <slot name="breadcrumb" @slotchange=${this.#handleSlotChange}></slot>
           </div>
 
           <div class="clippy-layout-detail__wrap-main">
