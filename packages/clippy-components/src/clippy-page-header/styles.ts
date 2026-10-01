@@ -77,7 +77,7 @@ export default css`
     }
   }
 
-  @container clippy-page-header (inline-size >= 48rem) {
+  @container clippy-page-header (inline-size >= 72rem) {
     .clippy-page-header__top {
       padding-block-end: var(--ma-page-header-content-large-vw-padding-block-end);
       padding-block-start: var(--ma-page-header-content-large-vw-padding-block-start);
