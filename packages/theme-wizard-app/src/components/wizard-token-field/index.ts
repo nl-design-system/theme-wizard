@@ -6,6 +6,7 @@ import {
   BaseDesignToken,
   EXTENSION_RESOLVED_AS,
   extractRef,
+  getExtension,
   getTokenSubtype,
   isRef,
   isTokenLike,
@@ -79,7 +80,7 @@ export class WizardTokenField extends WizardTokenNavigator {
                 return getTokenSubtype(token) === expectedSubType;
               }
               // Filter out only scraped tokens that were selected in the staging area
-              if (token['$extensions']?.[EXTENSION_TOKEN_STAGED] === false) {
+              if (getExtension(token, EXTENSION_TOKEN_STAGED) === false) {
                 return false;
               }
               return true;
@@ -87,7 +88,7 @@ export class WizardTokenField extends WizardTokenNavigator {
             .map(([path, { $type, ...token }]) => {
               // Find the resolved value for color tokens to show in the combobox options.
               // Since tokens can reference other tokens, we check if the token is a reference and use the resolved value if so.
-              const resolved = isRef(token.$value) ? token['$extensions']?.[EXTENSION_RESOLVED_AS] : token.$value;
+              const resolved = isRef(token.$value) ? getExtension(token, EXTENSION_RESOLVED_AS) : token.$value;
               const $value = `{basis.${path}}` satisfies TokenReference;
               const $extensions = {
                 ...token['$extensions'],

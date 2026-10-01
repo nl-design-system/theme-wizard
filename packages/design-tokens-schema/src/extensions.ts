@@ -1,23 +1,51 @@
 import { dequal } from 'dequal';
+import type { TokenSubtype } from './token-subtype';
 import type { BaseDesignToken } from './tokens/base-token';
+import type { ColorValue } from './tokens/color-token';
 import { isValueObject } from './tokens/token-reference';
 
 const PROTO_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 
+// Known extension keys used by `@nl-design-system-community/css-scraper` to annotate scraped tokens.
+export const EXTENSION_AUTHORED_AS = 'nl.nldesignsystem.theme-wizard.css-authored-as';
+export const EXTENSION_CSS_PROPERTIES = 'nl.nldesignsystem.theme-wizard.css-properties';
+export const EXTENSION_TOKEN_ID = 'nl.nldesignsystem.theme-wizard.token-id';
+export const EXTENSION_USAGE_COUNT = 'nl.nldesignsystem.theme-wizard.usage-count';
+/**
+ * @deprecated Same concept as `EXTENSION_TOKEN_SUBTYPE`, just under the scraper's own historic key.
+ * TODO: migrate css-scraper onto `EXTENSION_TOKEN_SUBTYPE` and drop this.
+ */
+export const EXTENSION_SCRAPED_SUBTYPE = 'nl.nldesignsystem.theme-wizard.token-subtype';
+
+// Known extension keys used by theme-wizard-app.
+export const EXTENSION_TOKEN_STAGED = 'nl.nldesignsystem.theme-wizard.token-staged';
+export const EXTENSION_COLORSCALE_SEED = 'nl.nldesignsystem.theme-wizard.color-scale-seed-color';
+
 /**
  * Maps extension keys (the string literal type of an `EXTENSION_*` const) to their value type.
- * Other packages can add entries for their own `EXTENSION_*` consts via declaration merging:
+ *
+ * This package is the source of truth for every known `EXTENSION_*` key used across the
+ * community monorepo (scraper, theme-wizard-app, etc.), even keys that only one consuming
+ * package cares about. Declare new ones directly as members here, next to the others:
  *
  * ```ts
- * declare module '@nl-design-system-community/design-tokens-schema' {
- *   interface ExtensionTypeMap {
- *     [EXTENSION_COLORSCALE_SEED]: string;
- *   }
+ * export const EXTENSION_FOO = 'nl.nldesignsystem.foo';
+ *
+ * export interface ExtensionTypeMap {
+ *   // ...
+ *   [EXTENSION_FOO]: string;
  * }
  * ```
  */
 export interface ExtensionTypeMap {
   [key: string]: unknown;
+  [EXTENSION_AUTHORED_AS]: string;
+  [EXTENSION_CSS_PROPERTIES]: string[];
+  [EXTENSION_TOKEN_ID]: string;
+  [EXTENSION_USAGE_COUNT]: number;
+  [EXTENSION_SCRAPED_SUBTYPE]: TokenSubtype;
+  [EXTENSION_TOKEN_STAGED]: boolean;
+  [EXTENSION_COLORSCALE_SEED]: ColorValue;
 }
 
 /**

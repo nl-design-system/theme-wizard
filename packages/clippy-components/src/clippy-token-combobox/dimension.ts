@@ -4,6 +4,7 @@ import {
   type ModernDimensionValue,
   type ModernDimensionToken,
   EXTENSION_RESOLVED_AS,
+  getExtension,
   isRef,
   stringifyDimension,
   getTokenSubtype,
@@ -15,10 +16,9 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
 const getActualValue = (token: DimensionToken): DimensionToken['$value'] => {
-  const { $extensions, $value } = token;
-  const resolvedAs = $extensions?.[EXTENSION_RESOLVED_AS];
+  const { $value } = token;
   if (isRef($value)) {
-    return resolvedAs as ModernDimensionValue;
+    return getExtension(token, EXTENSION_RESOLVED_AS) as ModernDimensionValue;
   }
   return $value;
 };

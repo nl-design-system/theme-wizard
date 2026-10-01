@@ -2,6 +2,7 @@ import '@src/clippy-html-image';
 import {
   type NumberToken,
   EXTENSION_RESOLVED_AS,
+  getExtension,
   isRef,
   getTokenSubtype,
   DimensionToken,
@@ -21,10 +22,9 @@ const stringifyValue = (value: string | number | DimensionToken['$value']): stri
 };
 
 const getActualValue = (token: NumberToken | DimensionToken): NumberToken['$value'] | DimensionToken['$value'] => {
-  const { $extensions, $value } = token;
-  const resolvedAs = $extensions?.[EXTENSION_RESOLVED_AS];
+  const { $value } = token;
   if (isRef($value)) {
-    return resolvedAs as number;
+    return getExtension(token, EXTENSION_RESOLVED_AS) as number;
   }
   return $value;
 };

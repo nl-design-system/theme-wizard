@@ -6,6 +6,7 @@ import {
   stringifyColor,
   colorTokenValueToColorJS,
   EXTENSION_RESOLVED_AS,
+  getExtension,
   ColorValueSchema,
 } from '@nl-design-system-community/design-tokens-schema';
 import Color from 'colorjs.io';
@@ -60,7 +61,7 @@ export const preview = <T extends { value: ColorToken }>({ value }: T) => {
   if (!value) {
     return nothing;
   }
-  const resolvedColor = isRef(value.$value) ? value.$extensions?.[EXTENSION_RESOLVED_AS] : value.$value;
+  const resolvedColor = isRef(value.$value) ? getExtension(value, EXTENSION_RESOLVED_AS) : value.$value;
   const parsedColor = ColorValueSchema.safeParse(resolvedColor);
   if (!parsedColor.success) return nothing;
   const colorValue = stringifyColor(parsedColor.data);

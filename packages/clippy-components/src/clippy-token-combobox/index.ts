@@ -4,6 +4,7 @@ import colorSampleCss from '@nl-design-system-candidate/color-sample-css/color-s
 import dataBadgeCss from '@nl-design-system-candidate/data-badge-css/data-badge.css?inline';
 import {
   EXTENSION_RESOLVED_AS,
+  getExtension,
   isRef,
   stringifyDimension,
   type ColorToken,
@@ -116,7 +117,7 @@ export class ClippyTokenCombobox extends LocalizationMixin(C) {
       let color = undefined;
       if (this.type === 'color') {
         if (isRef(value?.$value)) {
-          color = libColor.parse(value.$extensions[EXTENSION_RESOLVED_AS]);
+          color = libColor.parse(getExtension(value, EXTENSION_RESOLVED_AS));
         } else {
           color = libColor.parse(value.$value);
         }
