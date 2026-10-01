@@ -1,4 +1,3 @@
-import maTheme from '@nl-design-system-community/ma-design-tokens/dist/theme.css?inline';
 import linkCss from '@utrecht/link-css/dist/index.css?inline';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -19,7 +18,7 @@ declare global {
 
 @customElement(tag)
 export class WizardLayout extends LitElement {
-  static override readonly styles = [unsafeCSS(maTheme), unsafeCSS(linkCss), styles];
+  static override readonly styles = [unsafeCSS(linkCss), styles];
 
   @state() private hasSidebar = false;
   @state() private hasAside = false;
@@ -36,7 +35,7 @@ export class WizardLayout extends LitElement {
 
   override render() {
     return html`
-      <clippy-page-layout class="wizard-layout | ma-theme">
+      <clippy-page-layout class="wizard-layout">
         <slot name="page-header" slot="header"></slot>
 
         <div class="wizard-layout__body">
