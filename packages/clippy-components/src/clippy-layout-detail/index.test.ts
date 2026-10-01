@@ -209,4 +209,216 @@ describe(`<${tag}>`, () => {
       expect(sidebarSlot.assignedElements().length).toBe(0);
     });
   });
+
+  describe('Slot wrapper visibility', () => {
+    it('hides sidebar wrapper when sidebar slot is empty', async () => {
+      await component.updateComplete;
+
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      expect(sidebarWrapper).toHaveAttribute('hidden');
+    });
+
+    it('hides breadcrumb wrapper when breadcrumb slot is empty', async () => {
+      await component.updateComplete;
+
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      expect(breadcrumbWrapper).toHaveAttribute('hidden');
+    });
+
+    it('shows sidebar wrapper when sidebar slot has content', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <nav slot="sidebar">Navigation</nav>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyLayoutDetail;
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      expect(sidebarWrapper).not.toHaveAttribute('hidden');
+    });
+
+    it('shows breadcrumb wrapper when breadcrumb slot has content', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <div slot="breadcrumb">Home / Page</div>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyLayoutDetail;
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      expect(breadcrumbWrapper).not.toHaveAttribute('hidden');
+    });
+
+    it('always shows main wrapper regardless of content', async () => {
+      await component.updateComplete;
+
+      const mainWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__wrap-main');
+      expect(mainWrapper).not.toHaveAttribute('hidden');
+
+      // Also test with content
+      document.body.innerHTML = `
+        <${tag}>
+          <main>Main content</main>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyLayoutDetail;
+      await component.updateComplete;
+
+      const mainWrapperWithContent = component.shadowRoot?.querySelector('.clippy-layout-detail__wrap-main');
+      expect(mainWrapperWithContent).not.toHaveAttribute('hidden');
+    });
+
+    it('hides sidebar wrapper when content is dynamically removed', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <nav slot="sidebar">Sidebar</nav>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyLayoutDetail;
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      expect(sidebarWrapper).not.toHaveAttribute('hidden');
+
+      // Remove sidebar content
+      const nav = component.querySelector('nav');
+      nav?.remove();
+
+      // Wait for slotchange to fire for removal
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      await component.updateComplete;
+      expect(sidebarWrapper).toHaveAttribute('hidden');
+    });
+
+    it('hides breadcrumb wrapper when content is dynamically removed', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <div slot="breadcrumb">Breadcrumb</div>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyLayoutDetail;
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      expect(breadcrumbWrapper).not.toHaveAttribute('hidden');
+
+      // Remove breadcrumb content
+      const div = component.querySelector('div');
+      div?.remove();
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      expect(breadcrumbWrapper).toHaveAttribute('hidden');
+    });
+
+    it('shows sidebar wrapper when content is dynamically added', async () => {
+      await component.updateComplete;
+
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      expect(sidebarWrapper).toHaveAttribute('hidden');
+
+      const nav = document.createElement('nav');
+      nav.slot = 'sidebar';
+      nav.textContent = 'Dynamic sidebar';
+      component.appendChild(nav);
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      expect(sidebarWrapper).not.toHaveAttribute('hidden');
+    });
+
+    it('shows breadcrumb wrapper when content is dynamically added', async () => {
+      await component.updateComplete;
+
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      expect(breadcrumbWrapper).toHaveAttribute('hidden');
+
+      const div = document.createElement('div');
+      div.slot = 'breadcrumb';
+      div.textContent = 'Dynamic breadcrumb';
+      component.appendChild(div);
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      expect(breadcrumbWrapper).not.toHaveAttribute('hidden');
+    });
+
+    it('handles multiple wrapper visibility states correctly', async () => {
+      document.body.innerHTML = `
+        <${tag}>
+          <nav slot="sidebar">Sidebar</nav>
+        </${tag}>
+      `;
+      component = document.querySelector(tag) as ClippyLayoutDetail;
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      const sidebarWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__sidebar');
+      const breadcrumbWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__breadcrumb');
+      const mainWrapper = component.shadowRoot?.querySelector('.clippy-layout-detail__wrap-main');
+
+      // Sidebar has content, breadcrumb and main are empty
+      expect(sidebarWrapper).not.toHaveAttribute('hidden');
+      expect(breadcrumbWrapper).toHaveAttribute('hidden');
+      expect(mainWrapper).not.toHaveAttribute('hidden');
+
+      // Add breadcrumb content
+      const div = document.createElement('div');
+      div.slot = 'breadcrumb';
+      div.textContent = 'Breadcrumb';
+      component.appendChild(div);
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      expect(sidebarWrapper).not.toHaveAttribute('hidden');
+      expect(breadcrumbWrapper).not.toHaveAttribute('hidden');
+      expect(mainWrapper).not.toHaveAttribute('hidden');
+
+      // Remove sidebar content
+      const nav = component.querySelector('nav');
+      nav?.remove();
+
+      await component.updateComplete;
+      // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
+      // update cycle — await updateComplete again to flush it (documented Lit behavior).
+      await component.updateComplete;
+
+      expect(sidebarWrapper).toHaveAttribute('hidden');
+      expect(breadcrumbWrapper).not.toHaveAttribute('hidden');
+      expect(mainWrapper).not.toHaveAttribute('hidden');
+    });
+  });
 });

@@ -71,7 +71,12 @@ export default css`
   }
 
   .clippy-layout-detail__sidebar {
+    display: none;
     grid-area: sidebar;
+
+    @container clippy-layout (inline-size >= 72rem) {
+      display: block;
+    }
   }
 
   .clippy-layout-detail__breadcrumb {
