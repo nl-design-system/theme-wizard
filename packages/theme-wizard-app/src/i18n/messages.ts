@@ -86,7 +86,7 @@ export const en = {
   footer: {
     colophon: {
       about: html`The Theme Wizard is developed by the Expert team Digital Accessibility as part of
-        <a href="https://nldesignsystem.nl">NL Design System</a>.`,
+        <a class="nl-link" href="https://nldesignsystem.nl">NL Design System</a>.`,
       accessibilityStatement: 'Accessbility',
       contact: 'Contact',
       privacyStatement: 'Privacy statement',
