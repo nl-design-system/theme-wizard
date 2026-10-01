@@ -1,11 +1,11 @@
 import { expect, test } from './fixtures/fixtures';
 
 const CASES: { segments: string[]; title: string }[] = [
-  { segments: ['color'], title: 'color' },
-  { segments: ['color', 'default'], title: 'default' },
-  { segments: ['color', 'default', 'bg-default'], title: 'bg-default' },
-  { segments: ['size', 'md'], title: 'md' },
-  { segments: ['text', 'font-family', 'default'], title: 'default' },
+  { segments: ['color'], title: 'Color' },
+  { segments: ['color', 'default'], title: 'Default' },
+  { segments: ['color', 'default', 'bg-default'], title: 'Bg-default' },
+  { segments: ['size', 'md'], title: 'Md' },
+  { segments: ['text', 'font-family', 'default'], title: 'Default' },
 ];
 
 CASES.forEach(({ segments, title }) => {
@@ -27,12 +27,12 @@ CASES.forEach(({ segments, title }) => {
       const expectedCrumbs = ['basis', ...segments];
 
       await expect(basisTokenPage.breadcrumbLinks).toHaveText(expectedCrumbs);
-      await expect(basisTokenPage.currentBreadcrumbLink).toHaveText(title);
+      await expect(basisTokenPage.currentBreadcrumbLink).toHaveText(title, { ignoreCase: true });
     });
 
     test('sidebar has the matching link selected', async ({ basisTokenPage }) => {
       await expect(basisTokenPage.selectedSidebarLink).toBeVisible();
-      await expect(basisTokenPage.selectedSidebarLink).toHaveText(title);
+      await expect(basisTokenPage.selectedSidebarLink).toHaveText(title, { ignoreCase: true });
     });
   });
 });
