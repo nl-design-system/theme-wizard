@@ -38,7 +38,9 @@ export class ClippyTokenSampleBorder extends LitElement {
       this.style.setProperty('--_clippy-internal-token-sample-border-width', this.borderWidth);
     }
     if (changed.has('borderRadius')) {
-      this.borderRadius ??= '';
+      if (this.borderRadius === undefined) {
+        this.borderRadius = '';
+      }
       this.style.setProperty('--_clippy-internal-token-sample-border-radius', this.borderRadius);
     }
   }
