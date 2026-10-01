@@ -753,13 +753,13 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: 2.1.1
-        version: 2.1.1(hono@4.13.5)
+        version: 2.1.1(hono@4.13.12)
       '@hono/swagger-ui':
         specifier: 0.6.1
-        version: 0.6.1(hono@4.13.5)
+        version: 0.6.1(hono@4.13.12)
       '@hono/zod-openapi':
         specifier: 1.6.1
-        version: 1.6.1(hono@4.13.5)(zod@4.5.4)
+        version: 1.6.1(hono@4.13.12)(zod@4.5.4)
       '@nl-design-system-community/css-scraper':
         specifier: workspace:*
         version: link:../css-scraper
@@ -767,15 +767,15 @@ importers:
         specifier: 1.1.1
         version: 1.1.1
       hono:
-        specifier: 4.13.5
-        version: 4.13.5
+        specifier: 4.13.12
+        version: 4.13.12
       zod:
         specifier: 4.5.4
         version: 4.5.4
     devDependencies:
       '@hono/vite-dev-server':
         specifier: 0.26.1
-        version: 0.26.1(hono@4.13.5)
+        version: 0.26.1(hono@4.13.12)
       '@nl-design-system-community/vite-plugin-terse-log':
         specifier: workspace:*
         version: link:../vite-plugin-terse-log
@@ -5493,8 +5493,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  hono@4.13.5:
-    resolution: {integrity: sha512-O6+/eCYRkzzzy0rPWwKLiGBR1nFuUPZynnwjxN1MBA62NNqbT0wQEzQyK2gSO5yDIDB336sXQleAhOHrzlYyKw==}
+  hono@4.13.12:
+    resolution: {integrity: sha512-6E2QDAc9Ick9Sq77ZrGS/dk2WUYni91aufTw6LJKpV7w8kW5/GxVUc650FOADOmlwg3K+f7Pun6XlV+pYmW6gw==}
     engines: {node: '>=16.9.0'}
 
   hookified@1.15.1:
@@ -8950,35 +8950,35 @@ snapshots:
     dependencies:
       keycode: 2.2.1
 
-  '@hono/node-server@1.19.14(hono@4.13.5)':
+  '@hono/node-server@1.19.14(hono@4.13.12)':
     dependencies:
-      hono: 4.13.5
+      hono: 4.13.12
 
-  '@hono/node-server@2.1.1(hono@4.13.5)':
+  '@hono/node-server@2.1.1(hono@4.13.12)':
     dependencies:
-      hono: 4.13.5
+      hono: 4.13.12
 
-  '@hono/swagger-ui@0.6.1(hono@4.13.5)':
+  '@hono/swagger-ui@0.6.1(hono@4.13.12)':
     dependencies:
-      hono: 4.13.5
+      hono: 4.13.12
 
-  '@hono/vite-dev-server@0.26.1(hono@4.13.5)':
+  '@hono/vite-dev-server@0.26.1(hono@4.13.12)':
     dependencies:
-      '@hono/node-server': 1.19.14(hono@4.13.5)
-      hono: 4.13.5
+      '@hono/node-server': 1.19.14(hono@4.13.12)
+      hono: 4.13.12
       minimatch: 9.0.9
 
-  '@hono/zod-openapi@1.6.1(hono@4.13.5)(zod@4.5.4)':
+  '@hono/zod-openapi@1.6.1(hono@4.13.12)(zod@4.5.4)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 9.1.0(zod@4.5.4)
-      '@hono/zod-validator': 0.9.0(hono@4.13.5)(zod@4.5.4)
-      hono: 4.13.5
+      '@hono/zod-validator': 0.9.0(hono@4.13.12)(zod@4.5.4)
+      hono: 4.13.12
       openapi3-ts: 4.6.1
       zod: 4.5.4
 
-  '@hono/zod-validator@0.9.0(hono@4.13.5)(zod@4.5.4)':
+  '@hono/zod-validator@0.9.0(hono@4.13.12)(zod@4.5.4)':
     dependencies:
-      hono: 4.13.5
+      hono: 4.13.12
       zod: 4.5.4
 
   '@humanfs/core@0.19.2':
@@ -12710,7 +12710,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  hono@4.13.5: {}
+  hono@4.13.12: {}
 
   hookified@1.15.1: {}
 
