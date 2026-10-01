@@ -1,7 +1,5 @@
-import linkCss from '@utrecht/link-css/dist/index.css?inline';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { t } from '../../i18n';
 import '../wizard-logo';
 import styles from './styles';
 import '@nl-design-system-community/clippy-components/clippy-page-layout';
@@ -18,7 +16,7 @@ declare global {
 
 @customElement(tag)
 export class WizardLayout extends LitElement {
-  static override readonly styles = [unsafeCSS(linkCss), styles];
+  static override readonly styles = [styles];
 
   @state() private hasSidebar = false;
   @state() private hasAside = false;
@@ -50,39 +48,7 @@ export class WizardLayout extends LitElement {
           </section>
         </div>
 
-        <div class="wizard-layout__footer" slot="footer">
-          <div class="wizard-layout__footer-logo">
-            <wizard-logo></wizard-logo>
-          </div>
-          <div class="wizard-layout__footer-about">
-            <p>${t('footer.colophon.about')}</p>
-          </div>
-          <nav class="wizard-layout__footer-nav">
-            <a class="nl-link wizard-layout__footer-nav-link" href="https://nldesignsystem.nl/project/kernteam/">
-              ${t('footer.colophon.contact')}
-            </a>
-            <a class="nl-link wizard-layout__footer-nav-link" href="https://nldesignsystem.nl/privacyverklaring/">
-              ${t('footer.colophon.privacyStatement')}
-            </a>
-            <a
-              class="nl-link wizard-layout__footer-nav-link"
-              href="https://nldesignsystem.nl/toegankelijkheidsverklaring/"
-            >
-              ${t('footer.colophon.accessibilityStatement')}
-            </a>
-          </nav>
-          <nav class="wizard-layout__footer-nav">
-            <a class="nl-link wizard-layout__footer-nav-link" href="/validate-tokens">
-              ${t('footer.otherLinks.validateTokens')}
-            </a>
-            <a class="nl-link wizard-layout__footer-nav-link" href="/reuse-tokens">
-              ${t('footer.otherLinks.reuseTokens')}
-            </a>
-            <a class="nl-link wizard-layout__footer-nav-link" href="/minify-tokens">
-              ${t('footer.otherLinks.minifyTokens')}
-            </a>
-          </nav>
-        </div>
+        <wizard-page-footer slot="footer"></wizard-page-footer>
       </clippy-page-layout>
     `;
   }

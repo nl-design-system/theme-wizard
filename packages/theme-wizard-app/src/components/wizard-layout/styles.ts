@@ -8,7 +8,6 @@ export default css`
   .wizard-layout {
     --wizard-layout-padding-inline: var(--basis-space-inline-xl);
     --wizard-layout-body-padding-block: var(--basis-space-block-3xl);
-    --wizard-layout-nav-background-color: var(--basis-color-accent-1-inverse-bg-default);
     --utrecht-listbox-option-hover-background-color: var(--basis-color-accent-1-bg-hover);
     --clippy-page-layout-background-color: var(--basis-color-accent-1-bg-subtle);
 
@@ -114,57 +113,5 @@ export default css`
     .wizard-layout *:not(:has(.wizard-layout__main), .wizard-layout__main, .wizard-layout__main *) {
       display: none;
     }
-  }
-
-  /* ============================================
-   FOOTER
-   ============================================ */
-
-  .wizard-layout__footer {
-    align-items: start;
-    background-color: var(--wizard-layout-nav-background-color);
-    color: var(--basis-color-accent-1-inverse-color-default);
-    column-gap: var(--basis-space-column-4xl);
-    display: grid;
-    padding-block-end: var(--basis-space-block-6xl);
-    padding-block-start: var(--basis-space-block-5xl);
-    padding-inline: var(--wizard-layout-padding-inline);
-    row-gap: var(--basis-space-row-2xl);
-
-    @media (forced-colors: active) {
-      border-block-start: var(--basis-border-width-sm) solid;
-    }
-
-    @container (inline-size > 44rem) {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-
-    @container (inline-size > 86rem) {
-      column-gap: var(--basis-space-column-5xl);
-      grid-template-columns: repeat(auto-fit, fit-content);
-    }
-
-    :any-link {
-      color: var(--basis-color-accent-1-inverse-color-default);
-    }
-  }
-
-  .wizard-layout__footer-about {
-    text-wrap: balance;
-
-    /* Vertically align with the first link in the nav to have the same baseline */
-    > :first-child {
-      margin-block-start: var(--basis-space-block-md);
-    }
-  }
-
-  .wizard-layout__footer-nav {
-    display: grid;
-    row-gap: var(--basis-space-row-lg);
-  }
-
-  .wizard-layout__footer-nav-link {
-    display: block;
-    padding-block: var(--basis-space-block-sm);
   }
 `;
