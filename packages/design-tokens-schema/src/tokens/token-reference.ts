@@ -33,9 +33,13 @@ export const isValueObject = (obj: unknown): obj is Record<string, unknown> => {
 };
 
 export const isTokenLike = (obj: unknown): obj is BaseDesignToken => {
-  if (!isValueObject(obj)) return false;
+  if (!isValueObject(obj)) {
+    return false;
+  }
   // Must have a `$type: string`
-  if (!Object.hasOwn(obj, '$type') || typeof obj['$type'] !== 'string') return false;
+  if (!Object.hasOwn(obj, '$type') || typeof obj['$type'] !== 'string') {
+    return false;
+  }
   // Must have a `$value`
   return Object.hasOwn(obj, '$value');
 };
@@ -57,7 +61,9 @@ export const isRef = (value: unknown): value is TokenReference => {
 export const extractRef = (ref: TokenReference): string => ref.slice(1, -1);
 
 const isTokenWithRefLike = (obj: unknown): obj is TokenWithRefLike => {
-  if (!isTokenLike(obj)) return false;
+  if (!isTokenLike(obj)) {
+    return false;
+  }
   return isRef(obj['$value']);
 };
 
@@ -84,7 +90,9 @@ export const isTokenWithRef = (
   onError: (error: TokenRefError) => void,
 ): token is TokenWithRefLike => {
   // Check that we're dealing with a token-like object with a ref in the $value
-  if (!isTokenWithRefLike(token)) return false;
+  if (!isTokenWithRefLike(token)) {
+    return false;
+  }
 
   // Grab the `{path.to.ref} -> path.to.ref` and find it inside root
   const referencedPath = extractRef(token.$value);
