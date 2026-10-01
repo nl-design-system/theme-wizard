@@ -1,6 +1,7 @@
 import { EXTENSION_CSS_PROPERTIES, EXTENSION_USAGE_COUNT } from '@nl-design-system-community/css-scraper';
 import {
-  BaseDesignToken,
+  type BaseDesignToken,
+  EXTENSION_TOKEN_STAGED,
   getExtension,
   isColorToken,
   isRef,
@@ -8,7 +9,7 @@ import {
   walkTokens,
 } from '@nl-design-system-community/design-tokens-schema';
 import type Theme from './Theme';
-import { EXTENSION_TOKEN_STAGED, type StagedDesignToken } from '../utils/types';
+import { type StagedDesignToken } from '../utils/types';
 
 export type RelevantTokensResult = {
   tokens: BaseDesignToken[];

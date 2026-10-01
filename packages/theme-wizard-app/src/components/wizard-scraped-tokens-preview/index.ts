@@ -10,16 +10,16 @@ import {
   EXTENSION_TOKEN_ID,
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
-import { getExtension } from '@nl-design-system-community/design-tokens-schema';
+import { getExtension, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import { color_group as colorGroupName, convert as convertColor } from 'color-sorter';
 import Color from 'colorjs.io';
 import { html, LitElement, nothing, TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import type { StagedDesignToken } from '../../utils';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
-import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { dimensionToPx } from '../../utils/token-utils';
 import styles from './styles';
 
