@@ -14,7 +14,6 @@ export default css`
     --_wizard-page-footer-content-padding-inline-end: var(--basis-space-inline-xl);
     --_wizard-page-footer-content-padding-block-start: var(--basis-space-block-5xl);
     --_wizard-page-footer-content-padding-block-end: var(--basis-space-block-6xl);
-
     --_wizard-page-footer-color: var(--basis-color-accent-1-inverse-color-default);
     --_wizard-page-footer-background-color: var(--basis-color-accent-1-inverse-bg-default);
 
@@ -27,22 +26,22 @@ export default css`
 
     :any-link {
       --nl-link-text-decoration-color: var(--_wizard-page-footer-color);
+
       color: var(--_wizard-page-footer-color);
     }
   }
 
   .wizard-page-footer__content {
+    align-items: start;
     box-sizing: border-box;
+    column-gap: var(--basis-space-column-4xl);
+    display: grid;
     margin-inline: auto;
     max-inline-size: var(--_wizard-page-footer-content-max-inline-size);
     padding-block-end: var(--_wizard-page-footer-content-padding-block-end);
     padding-block-start: var(--_wizard-page-footer-content-padding-block-start);
     padding-inline-end: var(--_wizard-page-footer-content-padding-inline-end);
     padding-inline-start: var(--_wizard-page-footer-content-padding-inline-start);
-
-    display: grid;
-    align-items: start;
-    column-gap: var(--basis-space-column-4xl);
     row-gap: var(--basis-space-row-2xl);
 
     @container (inline-size > 44rem) {
