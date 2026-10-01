@@ -3,9 +3,7 @@ import WizardLayout from '../../layouts/WizardLayout.astro';
 ---
 
 <WizardLayout title="Kleur voor tekst">
-  <header slot="header">
-    <p class="nl-paragraph nl-paragraph--lead">Deze kleur wordt bijvoorbeeld toegepast op paragrafen, formulier elementen, en tabellen. Je kunt dit later altijd aanpassen.</p>
-  </header>
+  <p class="nl-paragraph nl-paragraph--lead" slot="header">Deze kleur wordt bijvoorbeeld toegepast op paragrafen, formulier elementen, en tabellen. Je kunt dit later altijd aanpassen.</p>
 
   <wizard-step-form returnUrl="./" path="basis.color.default.color-document" subType="color"></wizard-step-form>
 </WizardLayout>

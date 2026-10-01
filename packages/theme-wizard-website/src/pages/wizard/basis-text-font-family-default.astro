@@ -3,9 +3,7 @@ import WizardLayout from '../../layouts/WizardLayout.astro';
 ---
 
 <WizardLayout title="Lettertype voor tekst">
-  <header slot="header">
-    <p class="nl-paragraph nl-paragraph--lead">Dit lettertype wordt bijvoorbeeld toegepast op alinea's, knoppen, en formulier elementen. Je kunt dit later altijd aanpassen.</p>
-  </header>
+  <p class="nl-paragraph nl-paragraph--lead" slot="header">Dit lettertype wordt bijvoorbeeld toegepast op alinea's, knoppen, en formulier elementen. Je kunt dit later altijd aanpassen.</p>
 
   <wizard-step-form returnUrl="./" path="basis.text.font-family.default"></wizard-step-form>
 </WizardLayout>
