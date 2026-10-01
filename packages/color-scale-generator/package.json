@@ -48,7 +48,7 @@
     "premove": "4.0.0",
     "publint": "0.3.24",
     "typescript": "6.0.3",
-    "unplugin-dts": "1.1.0",
+    "unplugin-dts": "1.1.1",
     "vite": "8.2.2",
     "vitest": "4.1.11"
   }
