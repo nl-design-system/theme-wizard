@@ -24,11 +24,11 @@ import '@nl-design-system-community/clippy-components/clippy-layout-detail';
 
 ## Slots
 
-| Slot         | Description                                |
-| ------------ | ------------------------------------------ |
-| _(default)_  | Main content of the page                   |
-| `sidebar`    | Sidebar content, typically side navigation |
-| `breadcrumb` | Breadcrumb navigation area                 |
+| Slot         | Description                                                       |
+| ------------ | ----------------------------------------------------------------- |
+| _(default)_  | Main content of the page, place your `clippy-main` or `main` here |
+| `sidebar`    | Sidebar content, typically side navigation                        |
+| `breadcrumb` | Breadcrumb navigation area                                        |
 
 ## CSS Custom Properties
 
