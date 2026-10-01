@@ -4,6 +4,7 @@ export * from './tokens/dimension-token';
 export * from './tokens/fontfamily-token';
 export * from './tokens/merge-tokens';
 export * from './tokens/number-token';
+export * from './tokens/token-group';
 export * from './tokens/token-reference';
 export * from './validation-issue';
 export * from './basis-tokens';
