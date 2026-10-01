@@ -1,6 +1,7 @@
 import dlv from 'dlv';
 import { setExtension } from './extensions';
 import { ThemeLike } from './theme';
+import { TokenPath } from './tokens/base-token';
 import { extractRef, isTokenLike } from './tokens/token-reference';
 import { walkTokensWithRef } from './walker';
 
@@ -8,8 +9,8 @@ import { walkTokensWithRef } from './walker';
  * Create a Map of which other tokens reference each token, keyed by referenced token id,
  * with values being the dot-joined paths of tokens that reference it.
  */
-export const countUsagePerToken = (tokens: ThemeLike): Map<string, string[]> => {
-  const tokenUsage = new Map<string, string[]>();
+export const countUsagePerToken = (tokens: ThemeLike): Map<string, TokenPath> => {
+  const tokenUsage = new Map<string, TokenPath>();
   walkTokensWithRef(tokens, tokens, (token, path) => {
     const tokenId = extractRef(token.$value);
     if (path.includes('$extensions')) {
@@ -24,6 +25,13 @@ export const countUsagePerToken = (tokens: ThemeLike): Map<string, string[]> => 
 
 export const EXTENSION_REFERENCED_AT = 'nl.nldesignsystem.referenced-at';
 export const EXTENSION_REFERENCE_COUNT = 'nl.nldesignsystem.reference-count';
+
+declare module './extensions' {
+  interface ExtensionTypeMap {
+    [EXTENSION_REFERENCED_AT]: TokenPath;
+    [EXTENSION_REFERENCE_COUNT]: number;
+  }
+}
 
 export const addTokenCountExtensions = (tokens: ThemeLike): ThemeLike => {
   const usage = countUsagePerToken(tokens);

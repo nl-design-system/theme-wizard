@@ -4,6 +4,12 @@ import { walkTokens } from './walker';
 
 export const EXTENSION_TOKEN_PATH = 'nl.nldesignsystem.path';
 
+declare module './extensions' {
+  interface ExtensionTypeMap {
+    [EXTENSION_TOKEN_PATH]: string;
+  }
+}
+
 /**
  * Warning: mutates input!
  * Adds an $extension with the path.to.token

@@ -1,6 +1,5 @@
 import { consume } from '@lit/context';
 import '@nl-design-system-community/clippy-components/clippy-token-sample';
-import { type BaseDesignToken } from '@nl-design-system-community/design-tokens-schema';
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
@@ -25,9 +24,10 @@ export class WizardTokenSample extends LitElement {
 
   @property({ type: String }) path = '';
 
-  private get token(): BaseDesignToken | undefined {
+  private get token() {
     // Pass the result through as-is, because clippy-token-sample validates whether this is a proper token
-    return this.theme?.at(this.path) as BaseDesignToken | undefined;
+    const value = this.theme?.at(this.path);
+    return value;
   }
 
   protected override render() {

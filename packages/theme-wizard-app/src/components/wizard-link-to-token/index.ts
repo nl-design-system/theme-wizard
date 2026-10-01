@@ -37,8 +37,6 @@ export class WizardLinkToToken extends LitElement {
 
   private get shouldRenderSample(): boolean {
     const token = this.token;
-    // Later on we'll extend this to be true for color-groups as well. First need
-    // PR https://github.com/nl-design-system/theme-wizard/pull/1027 to land
     return isTokenLike(token);
   }
 

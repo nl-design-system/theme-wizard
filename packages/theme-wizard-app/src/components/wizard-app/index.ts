@@ -1,12 +1,13 @@
 import type { ScrapedDesignToken } from '@nl-design-system-community/css-scraper';
 import { provide } from '@lit/context';
 import { ClippyTokenCombobox } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
+import { EXTENSION_COLORSCALE_SEED, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
 import { defineCustomElements } from '@utrecht/web-component-library-stencil/loader/index.js';
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import type { StagedDesignToken } from '../../utils/types';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { themeContext } from '../../contexts/theme';
-import { EXTENSION_COLORSCALE_SEED } from '../../lib/ColorScale/siblings';
 import PersistentStorage from '../../lib/PersistentStorage';
 import Theme from '../../lib/Theme';
 import { presetTokensToUpdateMany } from '../../lib/Theme/lib';
@@ -16,7 +17,6 @@ import {
   type SetThemeTokensEvent,
   type SubmitSaveTokenFormEvent,
 } from '../../utils/events';
-import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils/types';
 import { WizardScraper } from '../wizard-scraper';
 import { WizardTokenInput } from '../wizard-token-input';
 import { WizardTokenPreset } from '../wizard-token-presets';

@@ -23,7 +23,7 @@ import {
   isBorderColor,
   COLOR_KEYS,
 } from './basis-tokens';
-import { setExtension } from './extensions';
+import { getExtension, setExtension } from './extensions';
 import { removeNonTokenProperties } from './remove-non-token-properties';
 import { validateRefs, resolveRefs, EXTENSION_RESOLVED_FROM, EXTENSION_RESOLVED_AS } from './resolve-refs';
 import {
@@ -49,6 +49,13 @@ import { isColorToken, walkColors, walkDimensions, walkLineHeights, walkObject, 
 
 export const EXTENSION_CONTRAST_WITH = 'nl.nldesignsystem.contrast-with';
 export const EXTENSION_COLOR_SCALE_POSITION = 'nl.nldesignsystem.color-scale-position';
+
+declare module './extensions' {
+  interface ExtensionTypeMap {
+    [EXTENSION_CONTRAST_WITH]: ContrastExtension[];
+    [EXTENSION_COLOR_SCALE_POSITION]: number;
+  }
+}
 
 export const MIN_CONTRAST_DISABLED = 3;
 export const MIN_CONTRAST_FUNCTIONAL = 4.5;
@@ -145,7 +152,7 @@ export type ContrastExtension = {
  * extensions (no EXTENSION_RESOLVED_FROM) are left intact.
  */
 const clearComputedContrastExtensions = (token: ColorToken) => {
-  const existing = token.$extensions?.[EXTENSION_CONTRAST_WITH] as ContrastExtension[] | undefined;
+  const existing = getExtension(token, EXTENSION_CONTRAST_WITH);
   if (!Array.isArray(existing)) return;
   token.$extensions![EXTENSION_CONTRAST_WITH] = existing.filter(
     (ext) => !ext.color?.$extensions?.[EXTENSION_RESOLVED_FROM],
@@ -364,9 +371,9 @@ export const StrictThemeSchema = z
 
     // Validation 2: Check that colors have sufficient contrast
     walkColors(root, (token, path) => {
-      if (!Array.isArray(token.$extensions?.[EXTENSION_CONTRAST_WITH])) return;
+      const comparisons = getExtension(token, EXTENSION_CONTRAST_WITH);
+      if (!Array.isArray(comparisons)) return;
 
-      const comparisons = token.$extensions[EXTENSION_CONTRAST_WITH];
       const baseColor = getActualValue<ColorValue>(token);
 
       for (const { color: background, expectedRatio } of comparisons) {
@@ -374,8 +381,8 @@ export const StrictThemeSchema = z
 
         const contrast = compareContrast(baseColor, compareColor);
         const tokenAPath = path.join('.');
-        const tokenBPathRaw = background.$extensions?.[EXTENSION_RESOLVED_FROM] as string | undefined;
-        const tokenBPath = tokenBPathRaw ? extractRef(tokenBPathRaw as TokenReference) : undefined;
+        const tokenBPathRaw = getExtension(background, EXTENSION_RESOLVED_FROM);
+        const tokenBPath = tokenBPathRaw ? extractRef(tokenBPathRaw) : undefined;
 
         if (contrast < expectedRatio) {
           ctx.addIssue(

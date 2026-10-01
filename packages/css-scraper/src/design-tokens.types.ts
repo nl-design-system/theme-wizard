@@ -3,20 +3,27 @@ import {
   ModernDimensionTokenSchema,
   ModernFontFamilyTokenSchema,
   ModernFontFamilyNameSchema,
+  EXTENSION_AUTHORED_AS,
+  EXTENSION_CSS_PROPERTIES,
+  EXTENSION_SCRAPED_SUBTYPE,
+  EXTENSION_TOKEN_ID,
+  EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/design-tokens-schema';
 import * as z from 'zod';
 
-export const EXTENSION_TOKEN_ID = 'nl.nldesignsystem.theme-wizard.token-id';
-export const EXTENSION_USAGE_COUNT = 'nl.nldesignsystem.theme-wizard.usage-count';
-export const EXTENSION_AUTHORED_AS = 'nl.nldesignsystem.theme-wizard.css-authored-as';
-export const EXTENSION_CSS_PROPERTIES = 'nl.nldesignsystem.theme-wizard.css-properties';
-export const EXTENSION_TOKEN_SUBTYPE = 'nl.nldesignsystem.theme-wizard.token-subtype';
+export {
+  EXTENSION_AUTHORED_AS,
+  EXTENSION_CSS_PROPERTIES,
+  EXTENSION_SCRAPED_SUBTYPE,
+  EXTENSION_TOKEN_ID,
+  EXTENSION_USAGE_COUNT,
+};
 
 export const TokenExtensionsSchema = z.object({
   [EXTENSION_AUTHORED_AS]: z.string().trim(),
   [EXTENSION_CSS_PROPERTIES]: z.array(z.string().trim()),
+  [EXTENSION_SCRAPED_SUBTYPE]: z.literal('font-size').optional(),
   [EXTENSION_TOKEN_ID]: z.string().trim(),
-  [EXTENSION_TOKEN_SUBTYPE]: z.literal('font-size').optional(),
   [EXTENSION_USAGE_COUNT]: z.int().positive(),
 });
 export type TokenExtensions = z.infer<typeof TokenExtensionsSchema>;

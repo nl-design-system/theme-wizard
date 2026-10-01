@@ -38,6 +38,12 @@ const DTCG_TYPE_TO_SCHEMA: Record<string, z.ZodType> = {
 
 export const EXTENSION_CSS_PROPERTY_SYNTAX = 'nl.nldesignsystem.css-property-syntax';
 
+declare module './extensions' {
+  interface ExtensionTypeMap {
+    [EXTENSION_CSS_PROPERTY_SYNTAX]: string;
+  }
+}
+
 const MODERN_SYNTAX_PATH = ['$extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
 const LEGACY_SYNTAX_PATH = ['extensions', EXTENSION_CSS_PROPERTY_SYNTAX];
 

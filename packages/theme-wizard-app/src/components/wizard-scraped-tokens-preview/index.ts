@@ -10,15 +10,16 @@ import {
   EXTENSION_TOKEN_ID,
   EXTENSION_USAGE_COUNT,
 } from '@nl-design-system-community/css-scraper';
+import { getExtension, EXTENSION_TOKEN_STAGED } from '@nl-design-system-community/design-tokens-schema';
 import tableCss from '@utrecht/table-css/dist/index.css?inline';
 import { color_group as colorGroupName, convert as convertColor } from 'color-sorter';
 import Color from 'colorjs.io';
 import { html, LitElement, nothing, TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import type { StagedDesignToken } from '../../utils';
 import { scrapedTokensContext } from '../../contexts/scraped-tokens';
 import { t } from '../../i18n';
 import PersistentStorage from '../../lib/PersistentStorage';
-import { EXTENSION_TOKEN_STAGED, StagedDesignToken } from '../../utils';
 import { dimensionToPx } from '../../utils/token-utils';
 import styles from './styles';
 
@@ -56,7 +57,7 @@ export class WizardScrapedTokensPreview extends LitElement {
     // TODO: this shouldn't write to storage directly but call enable/disable on a tokenStore
     this.#scrapedTokensStorage.setJSON(
       this.scrapedTokens.map((token) => {
-        if (token.$extensions[EXTENSION_TOKEN_ID] === target.id) {
+        if (getExtension(token, EXTENSION_TOKEN_ID) === target.id) {
           token.$extensions[EXTENSION_TOKEN_STAGED] = isStaged;
         }
         return token;
@@ -68,7 +69,7 @@ export class WizardScrapedTokensPreview extends LitElement {
     const groups: Record<string, StagedDesignToken[]> = {};
 
     for (const color of colors) {
-      const normalized = convertColor(color.$extensions[EXTENSION_AUTHORED_AS]);
+      const normalized = convertColor(getExtension(color, EXTENSION_AUTHORED_AS)!);
       const group = colorGroupName(normalized);
       groups[group] ??= [];
       groups[group].push(color);
@@ -104,13 +105,13 @@ export class WizardScrapedTokensPreview extends LitElement {
                   <input
                     type="checkbox"
                     name="enabled-tokens"
-                    id=${token.$extensions[EXTENSION_TOKEN_ID]}
-                    ?checked=${token.$extensions[EXTENSION_TOKEN_STAGED] === true}
+                    id=${getExtension(token, EXTENSION_TOKEN_ID)}
+                    ?checked=${getExtension(token, EXTENSION_TOKEN_STAGED) === true}
                   />
                 </td>
                 <td class="utrecht-table__cell">${renderSample(token)}</td>
                 <td class="utrecht-table__cell">${renderValue(token)}</td>
-                <td class="utrecht-table__cell">${token.$extensions[EXTENSION_USAGE_COUNT]}</td>
+                <td class="utrecht-table__cell">${getExtension(token, EXTENSION_USAGE_COUNT)}</td>
               </tr>
             `,
           )}
@@ -151,7 +152,7 @@ export class WizardScrapedTokensPreview extends LitElement {
             families,
             (token) =>
               html`<clippy-token-sample-text
-                font-family=${token.$extensions[EXTENSION_AUTHORED_AS]}
+                font-family=${getExtension(token, EXTENSION_AUTHORED_AS)}
                 font-size="var(--basis-text-font-size-xl)"
                 truncate
               ></clippy-token-sample-text>`,
@@ -162,10 +163,10 @@ export class WizardScrapedTokensPreview extends LitElement {
             sizes,
             (token) =>
               html`<clippy-token-sample-text
-                font-size=${token.$extensions?.[EXTENSION_AUTHORED_AS]}
+                font-size=${getExtension(token, EXTENSION_AUTHORED_AS)}
                 truncate
               ></clippy-token-sample-text>`,
-            (token) => html`<code class="nl-code">${token.$extensions?.[EXTENSION_AUTHORED_AS]}</code>`,
+            (token) => html`<code class="nl-code">${getExtension(token, EXTENSION_AUTHORED_AS)}</code>`,
           )}
 
           <clippy-heading level="2">${t('tokens.types.colors')}</clippy-heading>
@@ -174,9 +175,9 @@ export class WizardScrapedTokensPreview extends LitElement {
               t(`colors.${colorGroupName}`),
               tokens,
               (token) =>
-                html`<clippy-color-sample color=${token.$extensions[EXTENSION_AUTHORED_AS]}></clippy-color-sample>`,
+                html`<clippy-color-sample color=${getExtension(token, EXTENSION_AUTHORED_AS)}></clippy-color-sample>`,
               (token) => {
-                const parsedColor = new Color(token.$extensions[EXTENSION_AUTHORED_AS]);
+                const parsedColor = new Color(getExtension(token, EXTENSION_AUTHORED_AS) as string);
                 return html`
                   Rgb:
                   <code class="nl-code"

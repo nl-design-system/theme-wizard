@@ -3,23 +3,24 @@ import codeCss from '@nl-design-system-candidate/code-css/code.css?inline';
 import { type Option } from '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import '@nl-design-system-community/clippy-components/clippy-token-combobox';
 import {
-  BaseDesignToken,
+  type BaseDesignToken,
+  type TokenReference,
   EXTENSION_RESOLVED_AS,
+  EXTENSION_TOKEN_STAGED,
   extractRef,
+  getExtension,
   getTokenSubtype,
   isRef,
   isTokenLike,
-  type TokenReference,
 } from '@nl-design-system-community/design-tokens-schema';
 import { html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import type ValidationIssue from '../../lib/ValidationIssue';
+import type { Token } from '../wizard-token-input';
 import { themeContext } from '../../contexts/theme';
 import { t } from '../../i18n';
 import Theme from '../../lib/Theme';
-import { EXTENSION_TOKEN_STAGED } from '../../utils';
-import { Token } from '../wizard-token-input';
 import { WizardTokenNavigator } from '../wizard-token-navigator';
 import styles from './styles';
 
@@ -79,7 +80,7 @@ export class WizardTokenField extends WizardTokenNavigator {
                 return getTokenSubtype(token) === expectedSubType;
               }
               // Filter out only scraped tokens that were selected in the staging area
-              if (token['$extensions']?.[EXTENSION_TOKEN_STAGED] === false) {
+              if (getExtension(token, EXTENSION_TOKEN_STAGED) === false) {
                 return false;
               }
               return true;
@@ -87,7 +88,7 @@ export class WizardTokenField extends WizardTokenNavigator {
             .map(([path, { $type, ...token }]) => {
               // Find the resolved value for color tokens to show in the combobox options.
               // Since tokens can reference other tokens, we check if the token is a reference and use the resolved value if so.
-              const resolved = isRef(token.$value) ? token['$extensions']?.[EXTENSION_RESOLVED_AS] : token.$value;
+              const resolved = isRef(token.$value) ? getExtension(token, EXTENSION_RESOLVED_AS) : token.$value;
               const $value = `{basis.${path}}` satisfies TokenReference;
               const $extensions = {
                 ...token['$extensions'],
