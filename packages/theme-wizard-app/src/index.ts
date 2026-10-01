@@ -8,6 +8,7 @@ export * from './components/wizard-download-confirmation';
 export * from './components/wizard-download-link';
 export * from './components/wizard-form-field-checkbox';
 export * from './components/wizard-layout';
+export * from './components/wizard-link-to-token';
 export * from './components/wizard-logo';
 export * from './components/wizard-page-header';
 export * from './components/wizard-preview-theme';

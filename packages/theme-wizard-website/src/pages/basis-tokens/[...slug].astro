@@ -4,6 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getBasisTokenTree, toNavigationItems, getBreadcrumbTrail } from '@/lib/basis-token-nav';
 import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
 import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import { capitalize } from 'es-toolkit';
 
 const tree = getBasisTokenTree();
 
@@ -44,7 +45,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
           <main>
             <clippy-story-preview size="lg">
               <clippy-stack size="lg">
-                <clippy-heading level="1" class="wizard-page-title">{node.key}</clippy-heading>
+                <clippy-heading level="1">{capitalize(node.key)}</clippy-heading>
                 <wizard-token-docs groups={tokenPath} heading-level="none"></wizard-token-docs>
 
                 {
@@ -56,13 +57,10 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                         {
                           node.children.map((child) => (
                             <li>
-                              <wizard-card-as-link variant="list-item" class="wizard-link-to-token">
-                                  {child.isLeaf && (
-                                      <wizard-token-sample  slot="pre-header" path={`basis.${child.path.join('.')}`} class="wizard-token-sample">Aa</wizard-token-sample>
-                                  )}
+                              <wizard-link-to-token path={`basis.${child.path.join('.')}`}>
                                 <a slot="link" href={`/basis-tokens/${child.path.join('/')}`}>Bewerk '{child.key}'</a>
-                                <span slot="header">{child.key}</span>
-                              </wizard-card-as-link>
+                                {capitalize(child.key)}
+                              </wizard-link-to-token>
                             </li>
                           ))
                         }
@@ -88,37 +86,11 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
 </BaseLayout>
 
 <style>
-  .wizard-page-title {
-    text-transform: capitalize;
-  }
-
   .wizard-secretly-a-list {
     display: flex;
     flex-direction: column;
     list-style-type: none;
     padding-inline-start: var(--basis-space-none);
     row-gap: var(--basis-space-row-md);
-  }
-
-  .wizard-link-to-token {
-    [slot='header'] {
-      text-transform: capitalize;
-    }
-  }
-
-  .wizard-token-sample {
-    --wizard-basis-token-sample-size: var(--basis-size-sm);
-    --clippy-token-sample-border-size: var(--wizard-basis-token-sample-size);
-    --clippy-token-sample-background-color: var(--basis-color-transparent);
-    --clippy-token-sample-border-color: var(--basis-color-transparent);
-    --clippy-token-sample-text-border-subtle: var(--basis-color-transparent);
-
-    background-color: var(--basis-color-default-bg-default);
-    display: inline-block;
-    min-block-size: var(--wizard-basis-token-sample-size);
-    min-inline-size: var(--wizard-basis-token-sample-size);
-    overflow: clip;
-    place-content: center;
-    text-align: center;
   }
 </style>

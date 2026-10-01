@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getBasisTokenTree, toNavigationItems } from '@/lib/basis-token-nav';
-import { IconArrowRight } from '@tabler/icons-react';
+import { capitalize } from 'es-toolkit';
 
 const tree = getBasisTokenTree();
 const navItems = toNavigationItems(tree, []);
@@ -10,7 +10,6 @@ const navItems = toNavigationItems(tree, []);
 <script>
   import '@nl-design-system-community/clippy-components/clippy-heading';
   import '@nl-design-system-community/clippy-components/clippy-side-navigation';
-  import '@nl-design-system-community/clippy-components/clippy-card-as-link';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
 </script>
 
@@ -35,12 +34,12 @@ const navItems = toNavigationItems(tree, []);
                 {
                   tree.map((group) => (
                     <li>
-                      <wizard-card-as-link>
+                      <wizard-link-to-token path={`basis.${group.path.join('.')}`}>
                         <a slot="link" href={`/basis-tokens/${group.path.join('/')}`}>
                           Bewerk '{group.key}'
                         </a>
-                        <span slot="header" class="wizard-token-group-name">{group.key}</span>
-                      </wizard-card-as-link>
+                        {capitalize(group.key)}
+                      </wizard-link-to-token>
                     </li>
                   ))
                 }
@@ -60,9 +59,5 @@ const navItems = toNavigationItems(tree, []);
     list-style-type: none;
     padding-inline-start: var(--basis-space-none);
     row-gap: var(--basis-space-row-md);
-  }
-
-  .wizard-token-group-name {
-    text-transform: capitalize;
   }
 </style>
