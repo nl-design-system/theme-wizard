@@ -308,6 +308,15 @@ describe('getTokenGroupType', () => {
     ).toBeUndefined();
   });
 
+  it('skips tokens without their own $type and still finds the shared type', () => {
+    expect(
+      getTokenGroupType({
+        'bg-document': { $value: '#ffffff' },
+        'color-default': colorTokenWhite,
+      }),
+    ).toBe('color');
+  });
+
   it('returns undefined when obj is not a token group', () => {
     // @ts-expect-error testing runtime behavior for invalid input
     expect(getTokenGroupType(colorTokenWhite)).toBeUndefined();
