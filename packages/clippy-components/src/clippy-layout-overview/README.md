@@ -1,15 +1,15 @@
-# `<clippy-layout-detail>`
+# `<clippy-layout-overview>`
 
-A component that provides a layout for a detail view. Roughly based on the `ma-layout-detail` grid on the NLDS website.
+A component that provides a layout for a overview page. Roughly based on the `ma-layout-overview` grid on the NLDS website.
 
 ## Usage
 
 ```js
-import '@nl-design-system-community/clippy-components/clippy-layout-detail';
+import '@nl-design-system-community/clippy-components/clippy-layout-overview';
 ```
 
 ```html
-<clippy-layout-detail>
+<clippy-layout-overview>
   <clippy-side-nav slot="sidebar">
     <!-- Side navigation -->
   </clippy-side-nav>
@@ -19,7 +19,7 @@ import '@nl-design-system-community/clippy-components/clippy-layout-detail';
   <clippy-main>
     <!-- Main page content -->
   </clippy-main>
-</clippy-layout-detail>
+</clippy-layout-overview>
 ```
 
 ## Slots
