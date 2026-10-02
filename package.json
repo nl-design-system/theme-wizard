@@ -39,7 +39,7 @@
     "eslint-plugin-regexp": "3.2.0",
     "eslint-plugin-sonarjs": "4.2.0",
     "eslint-plugin-unicorn": "76.0.0",
-    "eslint-plugin-zod": "4.12.0",
+    "eslint-plugin-zod": "5.0.0",
     "husky": "9.1.7",
     "knip": "6.35.1",
     "lint-staged": "17.4.1",
