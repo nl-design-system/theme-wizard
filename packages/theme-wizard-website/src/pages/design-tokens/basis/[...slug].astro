@@ -1,25 +1,16 @@
 ---
 import TokenStoryMatches from '@/components/TokenStoryMatches.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getBasisTokenTree, toNavigationItems, getBreadcrumbTrail } from '@/lib/basis-token-nav';
-import { findTreeNode, flattenTreePaths } from '@nl-design-system-community/design-tokens-schema';
-import type { TokenPath } from '@nl-design-system-community/design-tokens-schema';
+import { getBasisTokenTree, getStaticSlugs, resolveSlugPage } from '@/lib/basis-token-nav';
+import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
 import { capitalize } from 'es-toolkit';
 
-const tree = getBasisTokenTree();
-
 export function getStaticPaths() {
-  return flattenTreePaths(getBasisTokenTree()).map((path) => ({
-    params: { slug: path.join('/') },
-  }));
+  return getStaticSlugs(getBasisTokenTree());
 }
 
-const segments = (Astro.params.slug as string).split('/') as TokenPath;
-const node = findTreeNode(tree, segments)!;
-const navItems = toNavigationItems(tree, segments);
-const crumbs = getBreadcrumbTrail(tree, segments);
-const tokenPath = `basis.${segments.join('.')}`; // 'basis.color.accent-1'
-const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.length === 2; // ['color', 'accent-1']
+const { crumbs, node, segments, tokenPath } = resolveSlugPage(getBasisTokenTree(), Astro.params.slug);
+const navItems = getDesignTokensNavItems({ namespace: 'basis', segments });
 ---
 
 <script>
@@ -35,7 +26,7 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
 
       <clippy-side-navigation
         slot="sidebar"
-        label="Basis tokens"
+        label="Design tokens"
         items={JSON.stringify(navItems)}
       ></clippy-side-navigation>
 
@@ -52,28 +43,22 @@ const isColorGroup = !node.isLeaf && segments.at(0) === 'color' && segments.leng
                   node.isLeaf ? (
                     <wizard-token-field path={tokenPath} />
                   ) : (
-                    <>
-                      <ul role="list" class="wizard-secretly-a-list">
-                        {
-                          node.children.map((child) => (
-                            <li>
-                              <wizard-link-to-token path={`basis.${child.path.join('.')}`}>
-                                <a slot="link" href={`/basis-tokens/${child.path.join('/')}`}>Bewerk '{child.key}'</a>
-                                {capitalize(child.key)}
-                              </wizard-link-to-token>
-                            </li>
-                          ))
-                        }
-                      </ul>
-
-                      {isColorGroup && (
-                        <wizard-color-system-preview groups={tokenPath}></wizard-color-system-preview>
-                      )}
-                    </>
+                    <ul role="list" class="wizard-secretly-a-list">
+                      {
+                        node.children.map((child) => (
+                          <li>
+                            <wizard-link-to-token path={`basis.${child.path.join('.')}`}>
+                              <a slot="link" href={`/design-tokens/basis/${child.path.join('/')}`}>Bewerk '{child.key}'</a>
+                              {capitalize(child.key)}
+                            </wizard-link-to-token>
+                          </li>
+                        ))
+                      }
+                    </ul>
                   )
                 }
 
-                {(node.isLeaf || isColorGroup) &&
+                {node.isLeaf &&
                   <TokenStoryMatches groups={tokenPath} />
                 }
               </clippy-stack>
