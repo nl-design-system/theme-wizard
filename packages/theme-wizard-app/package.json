@@ -65,9 +65,9 @@
     "@nl-design-system-community/css-scraper": "workspace:*",
     "@nl-design-system-community/design-tokens-schema": "workspace:*",
     "@nl-design-system-community/ma-design-tokens": "7.0.0",
-    "@nl-design-system-unstable/documentation": "1.11.0",
+    "@nl-design-system-unstable/documentation": "1.12.0",
     "@nl-design-system-unstable/start-design-tokens": "8.0.0",
-    "@tabler/icons": "3.46.0",
+    "@tabler/icons": "3.48.0",
     "@utrecht/alert-css": "4.0.2",
     "@utrecht/checkbox-css": "3.1.0",
     "@utrecht/form-field-css": "3.0.1",
@@ -88,24 +88,24 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "rosetta": "1.1.0",
-    "xstate": "5.32.6",
-    "zod": "4.5.4"
+    "xstate": "5.33.2",
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
-    "@projectwallace/css-parser": "0.18.6",
-    "@storybook/react-vite": "10.5.10",
+    "@projectwallace/css-parser": "0.18.8",
+    "@storybook/react-vite": "10.6.1",
     "@types/dlv": "1.1.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitest/browser-playwright": "4.1.11",
     "@vitest/coverage-v8": "4.1.11",
-    "playwright": "1.62.1",
+    "playwright": "1.63.0",
     "postcss-lit": "1.4.1",
     "premove": "4.0.0",
     "typescript": "6.0.3",
-    "vite": "8.2.2",
-    "vite-plugin-dts": "5.1.0",
+    "vite": "8.3.2",
+    "vite-plugin-dts": "5.1.1",
     "vitest": "4.1.11"
   }
 }
