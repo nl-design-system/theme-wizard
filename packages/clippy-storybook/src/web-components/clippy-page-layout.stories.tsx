@@ -8,8 +8,8 @@ import { full } from '@nl-design-system-community/clippy-components/src/clippy-s
 import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml.js';
+import { createTemplate as clippyLayoutDefaultTemplate } from './clippy-layout-default.template.js';
 import { createTemplate as clippyLayoutDetailTemplate } from './clippy-layout-detail.template.js';
-import { createTemplate as clippyLayoutFocusTemplate } from './clippy-layout-focus.template.js';
 
 // Prettier ignore to prevent double-quotes
 // prettier-ignore
@@ -37,7 +37,7 @@ const createAlignmentCenterTemplate = () => html`
       <clippy-button slot="end" purpose="subtle">Nederlands</clippy-button>
     </clippy-page-header>
 
-    ${templateToHtml(clippyLayoutFocusTemplate())}
+    ${templateToHtml(clippyLayoutDefaultTemplate())}
 
     <mark slot="footer">Footer</mark>
   </clippy-page-layout>

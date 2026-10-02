@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import readme from '@nl-design-system-community/clippy-components/src/clippy-layout-focus/README.md?raw';
+import readme from '@nl-design-system-community/clippy-components/src/clippy-layout-default/README.md?raw';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
-import { createTemplate } from './clippy-layout-focus.template';
+import { createTemplate } from './clippy-layout-default.template';
 
 const meta = {
-  id: 'clippy-layout-focus',
+  id: 'clippy-layout-default',
   args: {},
   parameters: {
     docs: {
@@ -25,7 +25,7 @@ const meta = {
       dangerouslySetInnerHTML: { __html: templateToHtml(createTemplate()) },
     }),
   tags: ['autodocs'],
-  title: 'Clippy/Layout/Focus',
+  title: 'Clippy/Layout/Default',
 } satisfies Meta;
 
 export default meta;

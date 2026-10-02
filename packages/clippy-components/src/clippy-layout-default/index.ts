@@ -3,11 +3,11 @@ import { isSlotEmpty } from '@src/lib/slot';
 import { LitElement, html } from 'lit';
 import styles from './styles';
 
-const tag = 'clippy-layout-focus';
+const tag = 'clippy-layout-default';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyLayoutFocus;
+    [tag]: ClippyLayoutDefault;
   }
 }
 
@@ -16,14 +16,14 @@ declare global {
  * @slot - Main content
  * @slot breadcrumb - Area for the page breadcrumb
  *
- * @cssprop --clippy-layout-content-max-inline-size - Max inline size of the content area, defaults the page-layout inline size
- * @cssprop --clippy-layout-content-padding-inline-start - Inline start padding of the content element
- * @cssprop --clippy-layout-content-padding-inline-end - Inline end padding of the content element
- * @cssprop --clippy-layout-content-padding-block-start - block start padding of the content element
- * @cssprop --clippy-layout-content-padding-block-end - block end padding of the content element
+ * @cssprop --clippy-layout-default-content-max-inline-size - Max inline size of the content area, defaults the page-layout inline size
+ * @cssprop --clippy-layout-default-content-padding-inline-start - Inline start padding of the content element
+ * @cssprop --clippy-layout-default-content-padding-inline-end - Inline end padding of the content element
+ * @cssprop --clippy-layout-default-content-padding-block-start - block start padding of the content element
+ * @cssprop --clippy-layout-default-content-padding-block-end - block end padding of the content element
  */
 @safeCustomElement(tag)
-export class ClippyLayoutFocus extends LitElement {
+export class ClippyLayoutDefault extends LitElement {
   static override readonly styles = [styles];
 
   #hasBreadcrumbContent = false;
@@ -53,12 +53,12 @@ export class ClippyLayoutFocus extends LitElement {
 
   override render() {
     return html`
-      <div class="clippy-layout-focus__content">
-        <div class="clippy-layout-focus__breadcrumb" ?hidden=${!this.#hasBreadcrumbContent}>
+      <div class="clippy-layout-default__content">
+        <div class="clippy-layout-default__breadcrumb" ?hidden=${!this.#hasBreadcrumbContent}>
           <slot name="breadcrumb" @slotchange=${this.#handleSlotChange}></slot>
         </div>
 
-        <div class="clippy-layout-focus__wrap-main">
+        <div class="clippy-layout-default__wrap-main">
           <slot></slot>
         </div>
       </div>
