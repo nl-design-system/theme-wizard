@@ -9,10 +9,11 @@ import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml.js';
 import { createTemplate as clippyLayoutDetailTemplate } from './clippy-layout-detail.template.js';
+import { createTemplate as clippyLayoutFocusTemplate } from './clippy-layout-focus.template.js';
 
 // Prettier ignore to prevent double-quotes
 // prettier-ignore
-const createTemplate = () => html`
+const createDetailTemplate = () => html`
   <clippy-page-layout>
     <clippy-page-header slot="header" variant="default">
       <span slot="logo">🎉 Logo</span>
@@ -22,6 +23,21 @@ const createTemplate = () => html`
     </clippy-page-header>
 
     ${templateToHtml(clippyLayoutDetailTemplate())}
+
+    <mark slot="footer">Footer</mark>
+  </clippy-page-layout>
+`;
+
+const createFocusTemplate = () => html`
+  <clippy-page-layout variant="focus">
+    <clippy-page-header slot="header" variant="default">
+      <span slot="logo">🎉 Logo</span>
+      <clippy-navigation-bar slot="navigation-bar" items='${JSON.stringify(simple)}'></clippy-navigation-bar>
+      <clippy-side-navigation slot="navigation-drawer" items='${JSON.stringify(full)}'><clippy-side-navigation>
+      <clippy-button slot="end" purpose="subtle">Nederlands</clippy-button>
+    </clippy-page-header>
+
+    ${templateToHtml(clippyLayoutFocusTemplate())}
 
     <mark slot="footer">Footer</mark>
   </clippy-page-layout>
@@ -40,7 +56,7 @@ const meta = {
   },
   render: () =>
     React.createElement('div', {
-      dangerouslySetInnerHTML: { __html: templateToHtml(createTemplate()) },
+      dangerouslySetInnerHTML: { __html: templateToHtml(createDetailTemplate()) },
     }),
   tags: ['autodocs'],
   title: 'Clippy/Layout/Page Layout',
@@ -52,4 +68,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   name: 'Default',
+};
+
+export const Focus: Story = {
+  name: 'Focus',
+  render: () =>
+    React.createElement('div', {
+      dangerouslySetInnerHTML: { __html: templateToHtml(createFocusTemplate()) },
+    }),
 };

@@ -24,4 +24,16 @@ export default css`
     grid-template-rows: auto 1fr auto;
     min-block-size: 100vb;
   }
+
+  /**
+   * Variant: focus
+   * Vertically centers everything which is slotted into the default slot.
+   */
+  :host([variant='focus']) {
+    .clippy-page-layout__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
 `;

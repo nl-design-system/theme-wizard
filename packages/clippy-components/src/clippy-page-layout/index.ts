@@ -1,6 +1,6 @@
 import { safeCustomElement } from '@src/lib/decorators';
 import { LitElement, html } from 'lit';
-import { query } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import styles from './styles';
 
 const tag = 'clippy-page-layout';
@@ -25,6 +25,9 @@ declare global {
 @safeCustomElement(tag)
 export class ClippyPageLayout extends LitElement {
   static override readonly styles = [styles];
+
+  @property({ reflect: true, type: String })
+  variant: 'default' | 'focus' = 'default';
 
   @query('header') private headerElement!: HTMLElement;
 
