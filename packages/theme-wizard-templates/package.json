@@ -68,13 +68,13 @@
     "@utrecht/web-component-library-stencil": "5.0.0",
     "clsx": "2.1.1",
     "lit": "3.3.3",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "astro": "7.2.10",
     "premove": "4.0.0",
     "typescript": "6.0.3",
