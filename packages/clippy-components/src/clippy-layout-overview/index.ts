@@ -23,6 +23,7 @@ declare global {
  * @cssprop --clippy-layout-content-padding-block-start - block start padding of the content element
  * @cssprop --clippy-layout-content-padding-block-end - block end padding of the content element
  * @cssprop --clippy-layout-column-gap - Column gap of the grid
+ * @cssprop --clippy-layout-row-gap - Row gap of the grid
  * @cssprop --clippy-layout-sidebar-inline-size - Inline size of the sidebar and the aside
  */
 @safeCustomElement(tag)

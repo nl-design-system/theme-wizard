@@ -10,9 +10,9 @@ import '@nl-design-system-community/clippy-components/clippy-layout-overview';
 
 ```html
 <clippy-layout-overview>
-  <clippy-side-nav slot="sidebar">
+  <clippy-side-navigation slot="sidebar">
     <!-- Side navigation -->
-  </clippy-side-nav>
+  </clippy-side-navigation>
   <div slot="breadcrumb">
     <!-- Breadcrumb content -->
   </div>
@@ -40,4 +40,5 @@ import '@nl-design-system-community/clippy-components/clippy-layout-overview';
 | `--clippy-layout-content-padding-block-start`  | `length` | Block start padding of the content element  | `var(--basis-space-block-3xl)`                      |
 | `--clippy-layout-content-padding-block-end`    | `length` | Block end padding of the content element    | `var(--basis-space-block-3xl)`                      |
 | `--clippy-layout-column-gap`                   | `length` | Column gap of the grid                      | `var(--basis-space-column-4xl)`                     |
+| `--clippy-layout-row-gap`                      | `length` | Row gap of the grid                         | `var(--basis-space-row-xl)`                         |
 | `--clippy-layout-sidebar-inline-size`          | `length` | Inline size of the sidebar and the aside    | `300px`                                             |
