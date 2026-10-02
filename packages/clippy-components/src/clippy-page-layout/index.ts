@@ -26,8 +26,8 @@ declare global {
 export class ClippyPageLayout extends LitElement {
   static override readonly styles = [styles];
 
-  @property({ reflect: true, type: String })
-  variant: 'default' | 'focus' = 'default';
+  @property({ attribute: 'layout-block-alignment', reflect: true, type: String })
+  layoutBlockAlignment: 'start' | 'center' = 'start';
 
   @query('header') private headerElement!: HTMLElement;
 

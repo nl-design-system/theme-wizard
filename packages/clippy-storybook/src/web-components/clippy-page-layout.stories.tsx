@@ -28,8 +28,8 @@ const createDetailTemplate = () => html`
   </clippy-page-layout>
 `;
 
-const createFocusTemplate = () => html`
-  <clippy-page-layout variant="focus">
+const createAlignmentCenterTemplate = () => html`
+  <clippy-page-layout layout-block-alignment="center">
     <clippy-page-header slot="header" variant="default">
       <span slot="logo">🎉 Logo</span>
       <clippy-navigation-bar slot="navigation-bar" items='${JSON.stringify(simple)}'></clippy-navigation-bar>
@@ -70,10 +70,10 @@ export const Default: Story = {
   name: 'Default',
 };
 
-export const Focus: Story = {
-  name: 'Focus',
+export const Center: Story = {
+  name: 'layout-block-alignment: center',
   render: () =>
     React.createElement('div', {
-      dangerouslySetInnerHTML: { __html: templateToHtml(createFocusTemplate()) },
+      dangerouslySetInnerHTML: { __html: templateToHtml(createAlignmentCenterTemplate()) },
     }),
 };

@@ -25,14 +25,19 @@ export default css`
     min-block-size: 100vb;
   }
 
-  /**
-   * Variant: focus
-   * Vertically centers everything which is slotted into the default slot.
-   */
-  :host([variant='focus']) {
+  .clippy-page-layout__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :host([layout-block-alignment='start']) {
     .clippy-page-layout__content {
-      display: flex;
-      flex-direction: column;
+      justify-content: start;
+    }
+  }
+
+  :host([layout-block-alignment='center']) {
+    .clippy-page-layout__content {
       justify-content: center;
     }
   }
