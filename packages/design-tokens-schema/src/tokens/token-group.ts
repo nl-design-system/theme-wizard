@@ -60,3 +60,64 @@ export const isTokenGroup = (obj: unknown): obj is TokenGroup => {
 
   return TokenGroupSchema.safeParse(obj).success;
 };
+
+export const getGroupTokens = (tokenGroup: TokenGroup): BaseDesignToken[] => {
+  const tokens: BaseDesignToken[] = [];
+
+  for (const [key, tokenOrGroup] of Object.entries(tokenGroup)) {
+    if (KNOWN_GROUP_PROPERTIES.has(key)) {
+      continue;
+    }
+    if (isValueObject(tokenOrGroup) && Object.hasOwn(tokenOrGroup, '$value')) {
+      tokens.push(tokenOrGroup as BaseDesignToken);
+    }
+  }
+
+  return tokens;
+};
+
+export const getTokenGroupType = (tokenGroup: TokenGroup): TokenGroup['$type'] => {
+  // Not an object, or it has a `$value` of its own (making it a token, not a group)
+  if (!isValueObject(tokenGroup) || Object.hasOwn(tokenGroup, '$value')) {
+    return undefined;
+  }
+
+  // Return the group's $type if present
+  if (Object.hasOwn(tokenGroup, '$type')) {
+    return tokenGroup.$type;
+  }
+
+  const tokens = getGroupTokens(tokenGroup);
+  let firstType: TokenGroup['$type'];
+
+  // All $types must match
+  for (const token of tokens) {
+    // No $type present: token inherits $type from group
+    if (!Object.hasOwn(token, '$type')) {
+      continue;
+    }
+
+    // No $type known yet for this group, so define it here
+    if (firstType === undefined) {
+      firstType = token.$type;
+      continue;
+    }
+
+    // Explicit $type set on the token: must match the other $types in the group
+    if (token.$type !== firstType) {
+      return undefined;
+    }
+  }
+
+  return firstType;
+};
+
+/**
+ *
+ */
+export const isTokenGroupOfType = <T extends TokenGroup['$type']>(
+  tokenGroup: TokenGroup,
+  $type: T,
+): tokenGroup is TokenGroup & { $type: T } => {
+  return getTokenGroupType(tokenGroup) === $type;
+};

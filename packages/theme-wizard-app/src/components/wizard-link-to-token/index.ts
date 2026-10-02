@@ -1,7 +1,6 @@
 import { consume } from '@lit/context';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
-import { isTokenLike } from '@nl-design-system-community/design-tokens-schema';
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
 import '../wizard-card-as-link';
@@ -35,11 +34,6 @@ export class WizardLinkToToken extends LitElement {
     return this.theme.at(this.path);
   }
 
-  private get shouldRenderSample(): boolean {
-    const token = this.token;
-    return isTokenLike(token);
-  }
-
   override render() {
     return html`
       <wizard-card-as-link>
@@ -47,15 +41,7 @@ export class WizardLinkToToken extends LitElement {
           <slot></slot>
         </span>
         <slot name="link" slot="link"></slot>
-        ${
-          this.shouldRenderSample
-            ? html`
-                <wizard-token-sample slot="pre-header" path=${this.path} class="wizard-token-sample">
-                  Aa
-                </wizard-token-sample>
-              `
-            : nothing
-        }
+        <wizard-token-sample slot="pre-header" path=${this.path} class="wizard-token-sample"> Aa </wizard-token-sample>
       </wizard-card-as-link>
     `;
   }

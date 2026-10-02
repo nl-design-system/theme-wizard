@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isTokenGroup, TokenGroupSchema } from './token-group';
+import { getGroupTokens, getTokenGroupType, isTokenGroup, isTokenGroupOfType, TokenGroupSchema } from './token-group';
 
 describe('isTokenGroup', () => {
   const colorTokenWhite = { $type: 'color', $value: '#ffffff' };
@@ -212,5 +212,203 @@ describe('TokenGroupSchema', () => {
         }).success,
       ).toBe(false);
     });
+  });
+});
+
+describe('getGroupTokens', () => {
+  const colorTokenWhite = { $type: 'color', $value: '#ffffff' };
+
+  it('returns direct tokens of the group', () => {
+    const colorTokenBlack = { $type: 'color', $value: '#000000' };
+    expect(
+      getGroupTokens({
+        'bg-document': colorTokenWhite,
+        'color-default': colorTokenBlack,
+      }),
+    ).toEqual([colorTokenWhite, colorTokenBlack]);
+  });
+
+  it('excludes $-prefixed group properties', () => {
+    expect(
+      getGroupTokens({
+        $description: 'The accent colors',
+        $type: 'color',
+        'bg-document': colorTokenWhite,
+      }),
+    ).toEqual([colorTokenWhite]);
+  });
+
+  it('excludes nested groups', () => {
+    expect(
+      getGroupTokens({
+        accent: {
+          'accent-1': { $type: 'color', $value: '#ff0000' },
+        },
+        'bg-document': colorTokenWhite,
+      }),
+    ).toEqual([colorTokenWhite]);
+  });
+
+  it('returns an empty array when the group has no direct tokens', () => {
+    expect(getGroupTokens({})).toEqual([]);
+  });
+
+  it('returns an empty array when the group only has nested groups', () => {
+    expect(
+      getGroupTokens({
+        accent: {
+          'accent-1': { $type: 'color', $value: '#ff0000' },
+        },
+      }),
+    ).toEqual([]);
+  });
+});
+
+describe('getTokenGroupType', () => {
+  const colorTokenWhite = { $type: 'color', $value: '#ffffff' };
+
+  it('returns the group own $type when present', () => {
+    expect(
+      getTokenGroupType({
+        $type: 'color',
+        'bg-document': { $value: '#ffffff' },
+      }),
+    ).toBe('color');
+  });
+
+  it('returns the shared $type of its direct tokens when all explicit types match', () => {
+    expect(
+      getTokenGroupType({
+        'bg-document': colorTokenWhite,
+        'color-default': { $type: 'color', $value: '#000000' },
+      }),
+    ).toBe('color');
+  });
+
+  it('returns undefined when direct tokens have conflicting $type', () => {
+    expect(
+      getTokenGroupType({
+        color: colorTokenWhite,
+        'font-size': { $type: 'dimension', $value: '16px' },
+      }),
+    ).toBeUndefined();
+  });
+
+  it('returns undefined when no $type can be determined', () => {
+    expect(getTokenGroupType({})).toBeUndefined();
+  });
+
+  it('ignores nested groups, only looking at direct tokens', () => {
+    expect(
+      getTokenGroupType({
+        accent: {
+          'accent-1': { $type: 'dimension', $value: '4px' },
+        },
+      }),
+    ).toBeUndefined();
+  });
+
+  it('skips tokens without their own $type and still finds the shared type', () => {
+    expect(
+      getTokenGroupType({
+        'bg-document': { $value: '#ffffff' },
+        'color-default': colorTokenWhite,
+      }),
+    ).toBe('color');
+  });
+
+  it('returns undefined when obj is not a token group', () => {
+    // @ts-expect-error testing runtime behavior for invalid input
+    expect(getTokenGroupType(colorTokenWhite)).toBeUndefined();
+  });
+
+  it.each([null, undefined])('returns undefined for %s', (val) => {
+    // @ts-expect-error testing runtime behavior for invalid input
+    expect(getTokenGroupType(val)).toBeUndefined();
+  });
+});
+
+describe('isTokenGroupOfType', () => {
+  const colorTokenWhite = { $type: 'color', $value: '#ffffff' };
+
+  it('returns true when all token children match the given $type', () => {
+    expect(
+      isTokenGroupOfType(
+        {
+          'bg-document': colorTokenWhite,
+          'color-default': { $type: 'color', $value: '#000000' },
+        },
+        'color',
+      ),
+    ).toBe(true);
+  });
+
+  describe('group must have at least one token of matching $type', () => {
+    it('applies to token with explicit $type', () => {
+      const basisColor = {
+        'bg-default': {
+          $type: 'color',
+          $value: '#ff0000',
+        },
+      };
+      expect(isTokenGroupOfType(basisColor, 'color')).toBe(true);
+    });
+
+    it('applies to token with inherited $type', () => {
+      const basisColor = {
+        $type: 'color',
+        'bg-default': {
+          $value: '#ff0000',
+        },
+      };
+      expect(isTokenGroupOfType(basisColor, 'color')).toBe(true);
+    });
+  });
+
+  it('returns false when it is a mixed group (like form-control, or heading)', () => {
+    expect(
+      isTokenGroupOfType(
+        {
+          color: colorTokenWhite,
+          'font-size': { $type: 'dimension', $value: '16px' },
+        },
+        'color',
+      ),
+    ).toBe(false);
+  });
+
+  it('checks the $type property of the group itself', () => {
+    expect(
+      isTokenGroupOfType(
+        {
+          $type: 'dimension',
+          color: colorTokenWhite,
+        },
+        'color',
+      ),
+    ).toBe(false);
+  });
+
+  it('does not recurse into nested groups', () => {
+    expect(
+      isTokenGroupOfType(
+        {
+          accent: {
+            'accent-1': { $type: 'dimension', $value: '4px' },
+          },
+        },
+        'color',
+      ),
+    ).toBe(false);
+  });
+
+  it('returns false when obj is not a token group', () => {
+    // @ts-expect-error testing runtime behavior for invalid input
+    expect(isTokenGroupOfType(colorTokenWhite, 'color')).toBe(false);
+  });
+
+  it.each([null, undefined, {}])('returns false for %s', (val) => {
+    // @ts-expect-error testing runtime behavior for invalid input
+    expect(isTokenGroupOfType(val, 'color')).toBe(false);
   });
 });
