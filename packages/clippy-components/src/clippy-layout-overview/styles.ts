@@ -12,19 +12,19 @@ export default css`
     );
     --_clippy-layout-content-padding-inline-start: var(
       --clippy-layout-content-padding-inline-start,
-      var(--basis-space-inline-xl)
+      var(--clippy-page-layout-content-inline-padding, var(--basis-space-inline-xl))
     );
     --_clippy-layout-content-padding-inline-end: var(
       --clippy-layout-content-padding-inline-end,
-      var(--basis-space-inline-xl)
+      var(--clippy-page-layout-content-inline-padding, var(--basis-space-inline-xl))
     );
     --_clippy-layout-content-padding-block-start: var(
       --clippy-layout-content-padding-block-start,
-      var(--basis-space-block-3xl)
+      var(--clippy-page-layout-content-block-padding, var(--basis-space-block-3xl))
     );
     --_clippy-layout-content-padding-block-end: var(
       --clippy-layout-content-padding-block-end,
-      var(--basis-space-block-3xl)
+      var(--clippy-page-layout-content-block-padding, var(--basis-space-block-3xl))
     );
     --_clippy-layout-column-gap: var(--clippy-layout-column-gap, var(--basis-space-column-4xl));
     --_clippy-layout-row-gap: var(--clippy-layout-row-gap, var(--basis-space-row-xl));

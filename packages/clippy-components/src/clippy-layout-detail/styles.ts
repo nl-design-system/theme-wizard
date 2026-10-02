@@ -1,5 +1,8 @@
 import { css } from 'lit';
 
+/**
+ * This component extends the styling from `clippy-layout-overview`.
+ */
 export default css`
   .clippy-layout__grid {
     @container clippy-layout (inline-size >= 80rem) {
