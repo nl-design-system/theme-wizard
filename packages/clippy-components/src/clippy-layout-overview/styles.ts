@@ -36,15 +36,6 @@ export default css`
 
   .clippy-layout__content {
     box-sizing: border-box;
-    margin-inline: auto;
-    max-inline-size: var(--_clippy-layout-content-max-inline-size);
-    padding-block-end: var(--_clippy-layout-content-padding-block-end);
-    padding-block-start: var(--_clippy-layout-content-padding-block-start);
-    padding-inline-end: var(--_clippy-layout-content-padding-inline-end);
-    padding-inline-start: var(--_clippy-layout-content-padding-inline-start);
-  }
-
-  .clippy-layout__grid {
     column-gap: var(--_clippy-layout-column-gap);
     display: grid;
     grid-template-areas:
@@ -54,6 +45,12 @@ export default css`
       'aside'
       'body';
     grid-template-rows: auto auto auto auto 1fr;
+    margin-inline: auto;
+    max-inline-size: var(--_clippy-layout-content-max-inline-size);
+    padding-block-end: var(--_clippy-layout-content-padding-block-end);
+    padding-block-start: var(--_clippy-layout-content-padding-block-start);
+    padding-inline-end: var(--_clippy-layout-content-padding-inline-end);
+    padding-inline-start: var(--_clippy-layout-content-padding-inline-start);
 
     @container clippy-layout (inline-size >= 72rem) {
       grid-template-areas: 'sidebar breadcrumb' 'sidebar header' 'sidebar aside' 'sidebar body';

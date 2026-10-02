@@ -31,15 +31,6 @@ export default css`
 
   .clippy-layout-focus__content {
     box-sizing: border-box;
-    margin-inline: auto;
-    max-inline-size: var(--_clippy-layout-focus-content-max-inline-size);
-    padding-block-end: var(--_clippy-layout-focus-content-padding-block-end);
-    padding-block-start: var(--_clippy-layout-focus-content-padding-block-start);
-    padding-inline-end: var(--_clippy-layout-focus-content-padding-inline-end);
-    padding-inline-start: var(--_clippy-layout-focus-content-padding-inline-start);
-  }
-
-  .clippy-layout-focus__grid {
     display: grid;
     grid-template-areas:
       'breadcrumb'
@@ -47,6 +38,12 @@ export default css`
       'aside'
       'body';
     grid-template-rows: auto auto auto 1fr;
+    margin-inline: auto;
+    max-inline-size: var(--_clippy-layout-focus-content-max-inline-size);
+    padding-block-end: var(--_clippy-layout-focus-content-padding-block-end);
+    padding-block-start: var(--_clippy-layout-focus-content-padding-block-start);
+    padding-inline-end: var(--_clippy-layout-focus-content-padding-inline-end);
+    padding-inline-start: var(--_clippy-layout-focus-content-padding-inline-start);
   }
 
   .clippy-layout-focus__breadcrumb {

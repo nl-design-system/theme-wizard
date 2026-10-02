@@ -62,18 +62,16 @@ export class ClippyLayoutOverview extends LitElement {
   override render() {
     return html`
       <div class="clippy-layout__content">
-        <div class="clippy-layout__grid">
-          <div class="clippy-layout__sidebar" ?hidden=${!this.#hasSidebarContent}>
-            <slot name="sidebar" @slotchange=${this.#handleSlotChange}></slot>
-          </div>
+        <div class="clippy-layout__sidebar" ?hidden=${!this.#hasSidebarContent}>
+          <slot name="sidebar" @slotchange=${this.#handleSlotChange}></slot>
+        </div>
 
-          <div class="clippy-layout__breadcrumb" ?hidden=${!this.#hasBreadcrumbContent}>
-            <slot name="breadcrumb" @slotchange=${this.#handleSlotChange}></slot>
-          </div>
+        <div class="clippy-layout__breadcrumb" ?hidden=${!this.#hasBreadcrumbContent}>
+          <slot name="breadcrumb" @slotchange=${this.#handleSlotChange}></slot>
+        </div>
 
-          <div class="clippy-layout__wrap-main">
-            <slot></slot>
-          </div>
+        <div class="clippy-layout__wrap-main">
+          <slot></slot>
         </div>
       </div>
     `;

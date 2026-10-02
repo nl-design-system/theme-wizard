@@ -54,14 +54,12 @@ export class ClippyLayoutFocus extends LitElement {
   override render() {
     return html`
       <div class="clippy-layout-focus__content">
-        <div class="clippy-layout-focus__grid">
-          <div class="clippy-layout-focus__breadcrumb" ?hidden=${!this.#hasBreadcrumbContent}>
-            <slot name="breadcrumb" @slotchange=${this.#handleSlotChange}></slot>
-          </div>
+        <div class="clippy-layout-focus__breadcrumb" ?hidden=${!this.#hasBreadcrumbContent}>
+          <slot name="breadcrumb" @slotchange=${this.#handleSlotChange}></slot>
+        </div>
 
-          <div class="clippy-layout-focus__wrap-main">
-            <slot></slot>
-          </div>
+        <div class="clippy-layout-focus__wrap-main">
+          <slot></slot>
         </div>
       </div>
     `;
