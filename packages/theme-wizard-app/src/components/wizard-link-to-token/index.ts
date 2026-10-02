@@ -1,6 +1,6 @@
 import { consume } from '@lit/context';
 import { safeCustomElement } from '@nl-design-system-community/clippy-components/lib/decorators';
-import { isTokenLike } from '@nl-design-system-community/design-tokens-schema';
+import { getTokenGroupType, isTokenGroup, isTokenLike } from '@nl-design-system-community/design-tokens-schema';
 import { LitElement, html, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import type Theme from '../../lib/Theme';
@@ -37,7 +37,16 @@ export class WizardLinkToToken extends LitElement {
 
   private get shouldRenderSample(): boolean {
     const token = this.token;
-    return isTokenLike(token);
+
+    if (isTokenLike(token)) {
+      return true;
+    }
+
+    if (isTokenGroup(token) && getTokenGroupType(token) === 'color') {
+      return true;
+    }
+
+    return false;
   }
 
   override render() {
