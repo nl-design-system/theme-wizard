@@ -1,5 +1,14 @@
 # @nl-design-system-community/design-tokens-schema
 
+## 2.4.0
+
+### Minor Changes
+
+- 495f6f1: chore: add `getExtension()` for type-safe access to `token.$extensions`'
+- af5bca7: feat: add `getTokenGroupType(tokenGroup): string`
+  feat: add `isTokenGroupOfType(tokenGroup, type): boolean`
+  feat: add `getGroupTokens(tokenGroup): BaseDesignToken[]`
+
 ## 2.3.0
 
 ### Minor Changes
