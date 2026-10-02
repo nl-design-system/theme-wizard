@@ -59,7 +59,7 @@
     "prettier": "3.9.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "storybook": "10.5.10",
+    "storybook": "10.6.1",
     "vite": "8.2.2"
   },
   "dependencies": {
