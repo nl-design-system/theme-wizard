@@ -36,9 +36,7 @@ const byTopLevelOrder = (a: TokenTreeNode, b: TokenTreeNode): number => {
 export const getBasisTokenTree = (): TokenTreeNode[] =>
   buildTokenTree(basisTokens.basis as Record<string, unknown>).sort(byTopLevelOrder);
 
-export const { getBreadcrumbTrail, getStaticSlugs, resolveSlugPage, toNavigationItems } = createTokenTreeNav(
+export const { getStaticSlugs, resolveSlugPage, toNavigationItems } = createTokenTreeNav(
   BASIS_TOKENS_BASE_PATH,
   'basis',
 );
-
-export type { BreadcrumbItem } from './token-tree-nav';
