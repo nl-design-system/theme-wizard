@@ -27,7 +27,7 @@ const FALLBACK_COLOR = 'color-default';
 const INVERSE_FALLBACK_COLOR = 'bg-default';
 
 // Picks a representative color token for a color token group: seed color, path-based fallback, or sole member
-function getColorGroupSample(value: TokenGroup, path: string) {
+export function getColorGroupSample(value: TokenGroup, path: string) {
   const seedColor = getExtension(value, EXTENSION_COLORSCALE_SEED);
 
   if (seedColor) {
@@ -37,10 +37,16 @@ function getColorGroupSample(value: TokenGroup, path: string) {
     };
   }
 
-  const fallbackKey = path.includes('-inverse') ? INVERSE_FALLBACK_COLOR : FALLBACK_COLOR;
+  if (
+    path.includes('-inverse') &&
+    Object.hasOwn(value, INVERSE_FALLBACK_COLOR) &&
+    isColorToken(value[INVERSE_FALLBACK_COLOR])
+  ) {
+    return value[INVERSE_FALLBACK_COLOR];
+  }
 
-  if (Object.hasOwn(value, fallbackKey) && isColorToken(value[fallbackKey])) {
-    return value[fallbackKey];
+  if (Object.hasOwn(value, FALLBACK_COLOR) && isColorToken(value[FALLBACK_COLOR])) {
+    return value[FALLBACK_COLOR];
   }
 
   // If none of the fallback tokens are available, check if there's maybe one single token in the group:
