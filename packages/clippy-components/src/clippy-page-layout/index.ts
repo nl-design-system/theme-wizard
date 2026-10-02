@@ -18,6 +18,9 @@ declare global {
  * @slot footer - Footer content
  * @cssprop --clippy-page-layout-header-block-size - The block-size of the header (updated with JS)
  * @cssprop --clippy-page-layout-background-color - The background color
+ * @cssprop --clippy-page-layout-content-max-inline-size - Shared max-inline-size for layouts
+ * @cssprop --clippy-page-layout-content-inline-padding - Shared inline padding for layouts
+ * @cssprop --clippy-page-layout-content-block-padding - Shared block padding for layouts
  */
 @safeCustomElement(tag)
 export class ClippyPageLayout extends LitElement {
