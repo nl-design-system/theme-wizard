@@ -45,10 +45,8 @@ export class ClippyLayoutOverview extends LitElement {
     this.requestUpdate();
   }
 
-  #hasAssignedNodes(slotName: string): boolean {
-    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(
-      slotName === '' ? 'slot:not([name])' : `slot[name="${slotName}"]`,
-    );
+  #hasAssignedNodes(slotName: 'sidebar' | 'breadcrumb'): boolean {
+    const slot = this.shadowRoot?.querySelector<HTMLSlotElement>(`slot[name="${slotName}"]`);
     if (!slot) {
       return false;
     }
