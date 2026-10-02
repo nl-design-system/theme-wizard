@@ -1,12 +1,9 @@
-import type {
-  NavigationItem,
-  NavigationItems,
-} from '@nl-design-system-community/clippy-components/clippy-navigation-bar';
-import type { TokenPath, TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
+import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { buildTokenTree } from '@nl-design-system-community/design-tokens-schema';
 import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
+import { createTokenTreeNav } from './token-tree-nav';
 
-const BASIS_TOKENS_BASE_PATH = '/basis-tokens';
+const BASIS_TOKENS_BASE_PATH = '/design-tokens/basis';
 
 // Display order for the top-level basis groups. Groups not listed here (e.g. new ones added
 // upstream later) are appended after these, in their original source order.
@@ -36,46 +33,12 @@ const byTopLevelOrder = (a: TokenTreeNode, b: TokenTreeNode): number => {
   return indexOfA - indexOfB;
 };
 
-const hrefFor = (path: TokenPath) => `${BASIS_TOKENS_BASE_PATH}/${path.join('/')}`;
-
-const pathsEqual = (a: TokenPath, b: TokenPath) => a.length === b.length && a.every((segment, i) => segment === b[i]);
-
 export const getBasisTokenTree = (): TokenTreeNode[] =>
   buildTokenTree(basisTokens.basis as Record<string, unknown>).sort(byTopLevelOrder);
 
-export const toNavigationItems = (tree: TokenTreeNode[], currentPath: TokenPath): NavigationItems =>
-  tree.map((node): NavigationItem => ({
-    current: pathsEqual(node.path, currentPath),
-    href: hrefFor(node.path),
-    items: node.children.length > 0 ? toNavigationItems(node.children, currentPath) : undefined,
-    label: node.key,
-  }));
+export const { getBreadcrumbTrail, getStaticSlugs, resolveSlugPage, toNavigationItems } = createTokenTreeNav(
+  BASIS_TOKENS_BASE_PATH,
+  'basis',
+);
 
-export interface BreadcrumbItem {
-  href: string;
-  title: string;
-  current?: boolean;
-}
-
-export const getBreadcrumbTrail = (tree: TokenTreeNode[], currentPath: TokenPath): BreadcrumbItem[] => {
-  const crumbs: BreadcrumbItem[] = [
-    {
-      href: BASIS_TOKENS_BASE_PATH,
-      title: 'basis',
-    },
-  ];
-  let nodes = tree;
-  for (const segment of currentPath) {
-    const node = nodes.find((candidate) => candidate.key === segment);
-    if (!node) {
-      break;
-    }
-    crumbs.push({
-      current: pathsEqual(node.path, currentPath),
-      href: hrefFor(node.path),
-      title: node.key,
-    });
-    nodes = node.children;
-  }
-  return crumbs;
-};
+export type { BreadcrumbItem } from './token-tree-nav';

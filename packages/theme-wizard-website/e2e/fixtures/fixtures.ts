@@ -3,6 +3,8 @@ import { BasisTokenPage } from '../pages/BasisTokenPage';
 import { BasisTokensPage } from '../pages/BasisTokensPage';
 import { ComponentPage } from '../pages/ComponentPage';
 import { MinifyTokensPage } from '../pages/MinifyTokensPage';
+import { NlTokenPage } from '../pages/NlTokenPage';
+import { NlTokensPage } from '../pages/NlTokensPage';
 import { PublishPage } from '../pages/PublishPage';
 import { ReuseTokensPage } from '../pages/ReuseTokensPage';
 import { ScraperPage } from '../pages/ScraperPage';
@@ -77,6 +79,8 @@ export const expect = baseExpect.extend({
 export const test = baseTest.extend<{
   basisTokenPage: BasisTokenPage;
   basisTokensPage: BasisTokensPage;
+  nlTokenPage: NlTokenPage;
+  nlTokensPage: NlTokensPage;
   scraperPage: ScraperPage;
   minifyTokensPage: MinifyTokensPage;
   publishPage: PublishPage;
@@ -104,6 +108,14 @@ export const test = baseTest.extend<{
   minifyTokensPage: async ({ page }, use) => {
     const minifyTokensPage = new MinifyTokensPage(page);
     await use(minifyTokensPage);
+  },
+  nlTokenPage: async ({ page }, use) => {
+    const nlTokenPage = new NlTokenPage(page);
+    await use(nlTokenPage);
+  },
+  nlTokensPage: async ({ page }, use) => {
+    const nlTokensPage = new NlTokensPage(page);
+    await use(nlTokensPage);
   },
   publishPage: async ({ page }, use) => {
     const publishPage = new PublishPage(page);
