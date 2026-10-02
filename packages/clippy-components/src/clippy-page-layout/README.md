@@ -20,6 +20,12 @@ import '@nl-design-system-community/clippy-components/clippy-page-layout';
 | `header`             | The header of the page  |
 | `footer`             | The footer of the page  |
 
+## Properties
+
+| Attribute / Property     | Type                  | Description                        | Default   |
+| ------------------------ | --------------------- | ---------------------------------- | --------- |
+| `layout-block-alignment` | `"start" \| "center"` | Layout alignment on the block-axis | `"start"` |
+
 ## CSS Custom Properties
 
 | Attribute / Property                           | Type     | Description                                                                                                        | Default                                  |

@@ -24,4 +24,21 @@ export default css`
     grid-template-rows: auto 1fr auto;
     min-block-size: 100vb;
   }
+
+  .clippy-page-layout__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :host([layout-block-alignment='start']) {
+    .clippy-page-layout__content {
+      justify-content: start;
+    }
+  }
+
+  :host([layout-block-alignment='center']) {
+    .clippy-page-layout__content {
+      justify-content: center;
+    }
+  }
 `;
