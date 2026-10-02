@@ -3,4 +3,4 @@
 ---
 
 feat: Add `clippy-layout-focus` component
-feat: Add `variant="focus"` to `clippy-page-layout`
+feat: Add `layout-block-alignment` attribute to `clippy-page-layout`
