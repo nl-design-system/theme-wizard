@@ -1,5 +1,14 @@
 # @nl-design-system-community/color-scale-generator
 
+## 1.0.2
+
+### Patch Changes
+
+- afbc7e1: chore: bump packages that didn't have a changeset for a while but need a prod release
+- Updated dependencies [495f6f1]
+- Updated dependencies [af5bca7]
+  - @nl-design-system-community/design-tokens-schema@2.4.0
+
 ## 1.0.1
 
 ### Patch Changes
