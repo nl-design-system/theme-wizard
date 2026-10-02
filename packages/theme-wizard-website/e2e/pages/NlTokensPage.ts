@@ -1,8 +1,8 @@
 import { type Page } from '@playwright/test';
 import { DesignTokensIndexPage } from './DesignTokensIndexPage';
 
-export class BasisTokensPage extends DesignTokensIndexPage {
+export class NlTokensPage extends DesignTokensIndexPage {
   constructor(page: Page) {
-    super(page, 'basis');
+    super(page, 'nl');
   }
 }
