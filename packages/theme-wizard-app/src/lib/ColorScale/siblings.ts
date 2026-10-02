@@ -3,7 +3,7 @@ import {
   isRef,
   isTokenGroup,
   isTokenLike,
-  ThemeLike,
+  type ThemeLike,
 } from '@nl-design-system-community/design-tokens-schema';
 
 /**
@@ -40,7 +40,9 @@ export function getSiblingGroupsWithOnlyRefsTo(groupPath: string, parentGroup: u
 
   return Object.entries(parentGroup)
     .filter(([siblingKey, siblingGroup]) => {
-      if (siblingKey === selfKey || !isTokenGroup(siblingGroup)) return false;
+      if (siblingKey === selfKey || !isTokenGroup(siblingGroup)) {
+        return false;
+      }
       // Every token in the sibling must reference this group, e.g. {basis.color.accent-1.bg-default}
       return (
         Object.entries(siblingGroup)
