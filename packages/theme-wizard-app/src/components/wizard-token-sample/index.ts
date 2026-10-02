@@ -38,7 +38,7 @@ export class WizardTokenSample extends LitElement {
 
   private get token() {
     // Pass the result through as-is, because clippy-token-sample validates whether this is a proper token
-    const value = this.theme?.at(this.path);
+    const value = this.theme?.at(this.path) as unknown;
 
     if (isTokenLike(value)) {
       return value;
@@ -55,7 +55,6 @@ export class WizardTokenSample extends LitElement {
         };
       }
 
-      // No seed color available
       if (this.path.includes('-inverse')) {
         if (Object.hasOwn(value, INVERSE_FALLBACK_COLOR) && isColorToken(value[INVERSE_FALLBACK_COLOR])) {
           return value[INVERSE_FALLBACK_COLOR];
