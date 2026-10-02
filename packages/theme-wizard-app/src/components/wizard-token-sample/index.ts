@@ -50,7 +50,7 @@ export function getColorGroupSample(value: TokenGroup, path: string) {
   }
 
   // If none of the fallback tokens are available, check if there's maybe one single token in the group:
-  // (i.e. in `basis.form.control.placeholder`)
+  // (i.e. in `basis.form-control.placeholder`)
   const tokensInGroup = getGroupTokens(value);
   return tokensInGroup.length === 1 ? tokensInGroup.at(0) : undefined;
 }
