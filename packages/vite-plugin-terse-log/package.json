@@ -44,7 +44,7 @@
     "premove": "4.0.0",
     "publint": "0.3.24",
     "typescript": "6.0.3",
-    "vite": "8.2.2",
+    "vite": "8.3.1",
     "vite-plugin-dts": "5.1.0",
     "vitest": "4.1.11"
   },
