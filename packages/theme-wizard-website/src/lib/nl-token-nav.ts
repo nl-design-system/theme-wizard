@@ -33,7 +33,4 @@ const COMPONENT_TOKENS: Record<string, unknown> = {
 
 export const getNlTokenTree = () => buildTokenTree(COMPONENT_TOKENS);
 
-export const { getBreadcrumbTrail, getStaticSlugs, resolveSlugPage, toNavigationItems } = createTokenTreeNav(
-  NL_TOKENS_BASE_PATH,
-  'nl',
-);
+export const { getStaticSlugs, resolveSlugPage, toNavigationItems } = createTokenTreeNav(NL_TOKENS_BASE_PATH, 'nl');
