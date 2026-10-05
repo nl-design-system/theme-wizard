@@ -550,8 +550,8 @@ importers:
         version: 4.6.5
     devDependencies:
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 7.1.1
-        version: 7.1.1
+        specifier: 8.0.1
+        version: 8.0.1
       '@nl-design-system-community/purmerend-design-tokens':
         specifier: 1.2.3
         version: 1.2.3
@@ -625,8 +625,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 7.1.1
-        version: 7.1.1
+        specifier: 8.0.1
+        version: 8.0.1
       '@nl-design-system-unstable/documentation':
         specifier: 1.12.0
         version: 1.12.0
@@ -858,8 +858,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 7.1.1
-        version: 7.1.1
+        specifier: 8.0.1
+        version: 8.0.1
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -1066,8 +1066,8 @@ importers:
         specifier: workspace:*
         version: link:../design-tokens-schema
       '@nl-design-system-community/ma-design-tokens':
-        specifier: 7.1.1
-        version: 7.1.1
+        specifier: 8.0.1
+        version: 8.0.1
       '@nl-design-system-community/theme-wizard-app':
         specifier: workspace:*
         version: link:../theme-wizard-app
@@ -2547,8 +2547,8 @@ packages:
   '@nl-design-system-candidate/skip-link-tokens@1.0.4':
     resolution: {integrity: sha512-MD1+m55nRqkj2eATcBNOLE8N5jWfvjJg2ax+POX8zXm49wJcBGTS6B/kK4kzIPbMuivYnxVtNlmA+Cz/upFBZA==}
 
-  '@nl-design-system-community/ma-design-tokens@7.1.1':
-    resolution: {integrity: sha512-vqdmAjtTjPMlrd2Be4R2lpSH8VUxprJO82ZdqoSFySr7w3M7307lyJUUU1QL8Ycsu7uOscxyMGgSqniI5Bx/Lg==}
+  '@nl-design-system-community/ma-design-tokens@8.0.1':
+    resolution: {integrity: sha512-2NzXtc3WbwUbg/YIJaaRUK1IANX8RpMFjNtR2rGqecSFpyOlUyDtqAQdq3EJAvYQ4M1m9Hk/vtqq166PNAVcJQ==}
 
   '@nl-design-system-community/ma-navigation-bar-css@0.0.1':
     resolution: {integrity: sha512-jTxObh0iyoKI2zJC2iU4+QbVceugVMgVNLRO9CM0UdxU1ysn0r7kUAKu2ieeJYSKXTw4HzDbXiUTYk4ioaYU8Q==}
@@ -9467,7 +9467,7 @@ snapshots:
 
   '@nl-design-system-candidate/skip-link-tokens@1.0.4': {}
 
-  '@nl-design-system-community/ma-design-tokens@7.1.1': {}
+  '@nl-design-system-community/ma-design-tokens@8.0.1': {}
 
   '@nl-design-system-community/ma-navigation-bar-css@0.0.1': {}
 
