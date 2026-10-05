@@ -40,7 +40,7 @@
     "test-build": "vitest run --coverage"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/coverage-v8": "5.0.3",
     "premove": "4.0.0",
     "publint": "0.3.25",
     "typescript": "6.0.3",

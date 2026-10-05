@@ -40,7 +40,7 @@
     "@hono/vite-dev-server": "0.26.1",
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@types/node": "24.19.1",
-    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/coverage-v8": "5.0.3",
     "premove": "4.0.0",
     "typescript": "6.0.3",
     "vite": "8.3.2",

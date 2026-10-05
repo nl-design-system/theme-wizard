@@ -44,7 +44,7 @@
     "@nl-design-system-unstable/start-design-tokens": "8.1.0",
     "@nl-design-system-unstable/voorbeeld-design-tokens": "13.1.0",
     "@types/dlv": "1.1.5",
-    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/coverage-v8": "5.0.3",
     "dset": "3.1.4",
     "premove": "4.0.0",
     "typescript": "6.0.3",
