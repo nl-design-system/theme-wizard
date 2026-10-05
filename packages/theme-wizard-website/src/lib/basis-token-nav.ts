@@ -1,9 +1,6 @@
 import type { TokenTreeNode } from '@nl-design-system-community/design-tokens-schema';
 import { buildTokenTree } from '@nl-design-system-community/design-tokens-schema';
 import basisTokens from '@nl-design-system-unstable/basis-design-tokens/src/tokens.json' with { type: 'json' };
-import { createTokenTreeNav } from './token-tree-nav';
-
-const BASIS_TOKENS_BASE_PATH = '/design-tokens/basis';
 
 // Display order for the top-level basis groups. Groups not listed here (e.g. new ones added
 // upstream later) are appended after these, in their original source order.
@@ -35,8 +32,3 @@ const byTopLevelOrder = (a: TokenTreeNode, b: TokenTreeNode): number => {
 
 export const getBasisTokenTree = (): TokenTreeNode[] =>
   buildTokenTree(basisTokens.basis as Record<string, unknown>).sort(byTopLevelOrder);
-
-export const { getStaticSlugs, resolveSlugPage, toNavigationItems } = createTokenTreeNav(
-  BASIS_TOKENS_BASE_PATH,
-  'basis',
-);

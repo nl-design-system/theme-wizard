@@ -1,54 +1,21 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getDesignTokensNavItems } from '@/lib/design-tokens-nav';
-import { getNavigationItems } from '@/navigation.config';
-
-const navItems = getDesignTokensNavItems();
-const navigationItems = getNavigationItems(Astro.url.pathname);
+import DesignTokensLayout from '@/components/DesignTokensLayout.astro';
+import { TOKEN_NAMESPACES } from '@/lib/token-namespaces';
 ---
 
-<BaseLayout title="Design tokens - Theme Wizard">
-  <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header" navigation-items={JSON.stringify(navigationItems)}></wizard-page-header>
+<DesignTokensLayout title="Design tokens - Theme Wizard">
+  <clippy-heading level="1">Design tokens</clippy-heading>
 
-      <clippy-side-navigation
-        slot="sidebar"
-        label="Design tokens"
-        items={JSON.stringify(navItems)}
-      ></clippy-side-navigation>
-
-      <wizard-container slot="main">
-        <main>
-          <clippy-story-preview size="lg">
-            <clippy-stack size="lg">
-              <clippy-heading level="1">Design tokens</clippy-heading>
-
-              <wizard-unstyled-list>
-                <li>
-                  <wizard-link-to-token path="basis">
-                    <a slot="link" href="/design-tokens/basis">Ga naar 'basis' design tokens</a>
-                    Basis tokens
-                  </wizard-link-to-token>
-                </li>
-                <li>
-                  <wizard-link-to-token path="nl">
-                    <a slot="link" href="/design-tokens/nl">Ga naar 'nl' design tokens</a>
-                    Candidate components
-                  </wizard-link-to-token>
-                </li>
-              </wizard-unstyled-list>
-            </clippy-stack>
-          </clippy-story-preview>
-        </main>
-      </wizard-container>
-    </wizard-layout>
-  </theme-wizard-app>
-</BaseLayout>
-
-<script>
-  import '@nl-design-system-community/clippy-components/clippy-heading';
-  import '@nl-design-system-community/clippy-components/clippy-side-navigation';
-  import '@nl-design-system-community/clippy-components/clippy-stack';
-  import '@nl-design-system-community/clippy-components/clippy-story-preview';
-</script>
+  <wizard-unstyled-list>
+    {
+      TOKEN_NAMESPACES.map((namespace) => (
+        <li>
+          <wizard-link-to-token path={namespace.id}>
+            <a slot="link" href={namespace.href}>Ga naar '{namespace.id}' design tokens</a>
+            {namespace.label}
+          </wizard-link-to-token>
+        </li>
+      ))
+    }
+  </wizard-unstyled-list>
+</DesignTokensLayout>

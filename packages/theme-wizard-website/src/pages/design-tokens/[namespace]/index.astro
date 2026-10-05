@@ -1,0 +1,25 @@
+---
+import DesignTokensLayout from '@/components/DesignTokensLayout.astro';
+import TokenLinkList from '@/components/TokenLinkList.astro';
+import { TOKEN_NAMESPACES, getTokenNamespace } from '@/lib/token-namespaces';
+import type { BreadcrumbItem } from '@/lib/token-tree-nav';
+
+export function getStaticPaths() {
+  return TOKEN_NAMESPACES.map((namespace) => ({ params: { namespace: namespace.id } }));
+}
+
+const namespace = getTokenNamespace(Astro.params.namespace);
+const crumbs: BreadcrumbItem[] = [
+  { href: '/design-tokens', title: 'Design tokens' },
+  { href: namespace.href, title: namespace.pageTitle, current: true },
+];
+---
+
+<DesignTokensLayout
+  title={`${namespace.pageTitle} - Theme Wizard`}
+  current={{ namespace: namespace.id, segments: [] }}
+  crumbs={crumbs}
+>
+  <clippy-heading level="1">{namespace.heading}</clippy-heading>
+  <TokenLinkList namespace={namespace.id} nodes={namespace.getTree()} />
+</DesignTokensLayout>

@@ -10,9 +10,6 @@ import numberBadgeTokens from '@nl-design-system-candidate/number-badge-tokens';
 import paragraphTokens from '@nl-design-system-candidate/paragraph-tokens';
 import skipLinkTokens from '@nl-design-system-candidate/skip-link-tokens';
 import { buildTokenTree } from '@nl-design-system-community/design-tokens-schema';
-import { createTokenTreeNav } from './token-tree-nav';
-
-const NL_TOKENS_BASE_PATH = '/design-tokens/nl';
 
 // Each package's tokens.json is shaped `{ nl: { <slug>: { ...tokens } } }`.
 // Merge all installed components' subtrees into one root keyed by slug, so tree
@@ -32,5 +29,3 @@ const COMPONENT_TOKENS: Record<string, unknown> = {
 };
 
 export const getNlTokenTree = () => buildTokenTree(COMPONENT_TOKENS);
-
-export const { getStaticSlugs, resolveSlugPage, toNavigationItems } = createTokenTreeNav(NL_TOKENS_BASE_PATH, 'nl');
