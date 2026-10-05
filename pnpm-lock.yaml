@@ -284,8 +284,8 @@ importers:
         specifier: 2.2.2
         version: 2.2.2(@babel/runtime@7.29.7)(react@19.3.0)
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 8.1.0
-        version: 8.1.0
+        specifier: 9.0.1
+        version: 9.0.1
       '@utrecht/fieldset-react':
         specifier: 1.0.13
         version: 1.0.13(@babel/runtime@7.29.7)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -465,8 +465,8 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 8.1.0
-        version: 8.1.0
+        specifier: 9.0.1
+        version: 9.0.1
       '@types/dlv':
         specifier: 1.1.5
         version: 1.1.5
@@ -562,8 +562,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 8.1.0
-        version: 8.1.0
+        specifier: 9.0.1
+        version: 9.0.1
       '@nl-design-system-unstable/voorbeeld-design-tokens':
         specifier: 13.1.0
         version: 13.1.0
@@ -631,8 +631,8 @@ importers:
         specifier: 1.12.0
         version: 1.12.0
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 8.1.0
-        version: 8.1.0
+        specifier: 9.0.1
+        version: 9.0.1
       '@tabler/icons':
         specifier: 3.48.0
         version: 3.48.0
@@ -864,8 +864,8 @@ importers:
         specifier: workspace:*
         version: link:../theme-wizard-app
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 8.1.0
-        version: 8.1.0
+        specifier: 9.0.1
+        version: 9.0.1
       '@tabler/icons-react':
         specifier: 3.48.0
         version: 3.48.0(react@19.3.0)
@@ -1115,8 +1115,8 @@ importers:
         specifier: 0.9.10
         version: 0.9.10(prettier@3.9.9)(typescript@6.0.3)
       '@nl-design-system-unstable/start-design-tokens':
-        specifier: 8.1.0
-        version: 8.1.0
+        specifier: 9.0.1
+        version: 9.0.1
       '@playwright/test':
         specifier: 1.63.0
         version: 1.63.0
@@ -2553,8 +2553,8 @@ packages:
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0':
     resolution: {integrity: sha512-txcrXfIEMuid+OxJaDB4LYYLbYXjUwXwWUiq3YpdXRPKfsBlHSCx9lY8zKbTXn2pnymIa+DK2HiRGv9VsynOdA==}
 
-  '@nl-design-system-unstable/start-design-tokens@8.1.0':
-    resolution: {integrity: sha512-nQ4qVw7q4ugshJ41AJsafdVjATV7c6AjKI/ffNy8ACM+O8w9oXFJd6gXCkUhjnbgzgxxDojveGRj+5dM8jexwA==}
+  '@nl-design-system-unstable/start-design-tokens@9.0.1':
+    resolution: {integrity: sha512-cTXv4i1jfFP9GTnMVfU5oz0DxPwBszkwC3uxCv3KpvI8xuYCUx7vNoj5I/ldxO5beZ2Bmf2c/3b52muxtxTq6g==}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@13.1.0':
     resolution: {integrity: sha512-jby0jMYqCALr8zfbezAoGX376Ad+BfpZ+//Bm6BsXQAoDtgM3CotKCdkm0ekla3QM4yUBIOtm1uptcD+XN76IQ==}
@@ -9478,7 +9478,7 @@ snapshots:
 
   '@nl-design-system-unstable/leiden-design-tokens@3.0.0': {}
 
-  '@nl-design-system-unstable/start-design-tokens@8.1.0': {}
+  '@nl-design-system-unstable/start-design-tokens@9.0.1': {}
 
   '@nl-design-system-unstable/voorbeeld-design-tokens@13.1.0': {}
 
