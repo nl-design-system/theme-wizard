@@ -16,6 +16,8 @@ export default {
     '@etchteam/storybook-addon-status',
     '@whitespace/storybook-addon-html',
     'vite',
+    // Many community packages are not ready for TS 7 yet
+    'typescript',
   ],
   target: 'latest',
 };

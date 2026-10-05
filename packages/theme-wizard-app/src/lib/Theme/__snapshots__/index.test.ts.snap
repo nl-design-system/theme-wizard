@@ -81,31 +81,6 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-description-list-section-column-gap: var(--basis-space-column-xl)
 	--ams-description-list-term-font-weight: var(--basis-text-font-weight-bold)
 	--ams-description-list-wide-grid-template-columns: 1fr 1fr
-	--ams-dialog-backdrop-background-color: #24242433
-	--ams-dialog-background-color: var(--basis-color-default-bg-document)
-	--ams-dialog-body-medium-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-body-padding-block: var(--basis-space-none)
-	--ams-dialog-body-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-border-color: var(--basis-color-default-border-subtle)
-	--ams-dialog-border-radius: var(--basis-border-radius-lg)
-	--ams-dialog-border-style: solid
-	--ams-dialog-border-width: var(--basis-border-width-sm)
-	--ams-dialog-box-shadow: var(--basis-box-shadow-lg)
-	--ams-dialog-footer-medium-padding-block: var(--basis-space-block-3xl)
-	--ams-dialog-footer-medium-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-footer-padding-block: var(--basis-space-block-3xl)
-	--ams-dialog-footer-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-gap: var(--basis-space-none)
-	--ams-dialog-header-gap: var(--basis-space-column-xl)
-	--ams-dialog-header-medium-padding-block: var(--basis-space-block-xl)
-	--ams-dialog-header-medium-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-header-padding-block: var(--basis-space-block-xl)
-	--ams-dialog-header-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-inline-size: 328px
-	--ams-dialog-max-block-size: 80vh
-	--ams-dialog-max-inline-size: 640px
-	--ams-dialog-medium-inline-size: 640px
-	--ams-dialog-medium-max-block-size: 80vh
 	--ams-figure-caption-color: var(--basis-color-default-color-document)
 	--ams-figure-caption-font-family: var(--basis-text-font-family-default)
 	--ams-figure-caption-font-size: var(--basis-text-font-size-md)
@@ -184,7 +159,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-icon-button-disabled-cursor: disabled
 	--ams-icon-button-hover-background-color: var(--basis-color-action-1-bg-hover)
 	--ams-icon-button-hover-color: var(--basis-color-action-1-color-hover)
-	--ams-icon-button-inverse-background-color: #00000000
+	--ams-icon-button-inverse-background-color: var(--basis-color-transparent)
 	--ams-icon-button-inverse-color: var(--basis-color-action-1-inverse-color-default)
 	--ams-icon-button-inverse-disabled-background-color: var(--basis-color-disabled-inverse-bg-subtle)
 	--ams-icon-button-inverse-disabled-color: var(--basis-color-disabled-inverse-color-subtle)
@@ -192,6 +167,33 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--ams-icon-button-inverse-hover-color: var(--basis-color-action-1-inverse-color-hover)
 	--ams-icon-button-outline-offset: auto
 	--ams-image-aspect-ratio: 1.7778
+	--ams-modal-dialog-backdrop-background-color: #24242433
+	--ams-modal-dialog-background-color: var(--basis-color-default-bg-document)
+	--ams-modal-dialog-body-medium-padding-block: var(--basis-space-none)
+	--ams-modal-dialog-body-medium-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-body-min-block-size: var(--basis-pointer-target-min-block-size)
+	--ams-modal-dialog-body-padding-block: var(--basis-space-none)
+	--ams-modal-dialog-body-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-border-color: var(--basis-color-default-border-subtle)
+	--ams-modal-dialog-border-radius: var(--basis-border-radius-lg)
+	--ams-modal-dialog-border-style: solid
+	--ams-modal-dialog-border-width: var(--basis-border-width-sm)
+	--ams-modal-dialog-box-shadow: var(--basis-box-shadow-lg)
+	--ams-modal-dialog-footer-medium-padding-block: var(--basis-space-block-3xl)
+	--ams-modal-dialog-footer-medium-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-footer-padding-block: var(--basis-space-block-3xl)
+	--ams-modal-dialog-footer-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-header-column-gap: var(--basis-space-column-xl)
+	--ams-modal-dialog-header-medium-padding-block: var(--basis-space-block-xl)
+	--ams-modal-dialog-header-medium-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-header-padding-block: var(--basis-space-block-xl)
+	--ams-modal-dialog-header-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-header-row-gap: var(--basis-space-row-sm)
+	--ams-modal-dialog-inline-size: 328px
+	--ams-modal-dialog-max-block-size: 80vh
+	--ams-modal-dialog-max-inline-size: 640px
+	--ams-modal-dialog-medium-inline-size: 640px
+	--ams-modal-dialog-medium-max-block-size: 80vh
 	--ams-page-footer-menu-column-gap: var(--basis-space-column-4xl)
 	--ams-page-footer-menu-link-color: var(--basis-color-action-1-color-default)
 	--ams-page-footer-menu-link-font-family: var(--basis-text-font-family-default)
@@ -1831,10 +1833,6 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--todo-form-summary-item-value-row-padding-inline-end: var(--basis-space-none)
 	--todo-form-summary-item-value-row-padding-inline-start: var(--basis-space-none)
 	--todo-form-summary-line-height: var(--basis-text-line-height-md)
-	--todo-icon-only-button-padding-block-end: var(--basis-space-block-lg)
-	--todo-icon-only-button-padding-block-start: var(--basis-space-block-lg)
-	--todo-icon-only-button-padding-inline-end: var(--basis-space-inline-lg)
-	--todo-icon-only-button-padding-inline-start: var(--basis-space-inline-lg)
 	--todo-link-list-link-hover-text-decoration: underline
 	--todo-login-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-login-link-focus-visible-border-color: var(--basis-color-transparent)
@@ -2473,6 +2471,7 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-form-field-invalid-border-inline-start-color: var(--basis-color-negative-border-default)
 	--utrecht-form-field-invalid-border-inline-start-width: var(--basis-border-width-md)
 	--utrecht-form-field-invalid-padding-inline-start: var(--basis-space-inline-xl)
+	--utrecht-form-field-label-margin-block-end: var(--basis-space-block-lg)
 	--utrecht-form-field-margin-block-end: var(--basis-space-none)
 	--utrecht-form-field-margin-block-start: var(--basis-space-none)
 	--utrecht-form-fieldset-invalid-border-inline-start-color: var(--basis-color-negative-border-default)
@@ -2497,7 +2496,6 @@ exports[`Theme > can export to css custom properties 1`] = `
 	--utrecht-form-label-disabled-color: var(--basis-color-disabled-color-subtle)
 	--utrecht-form-label-font-size: var(--basis-text-font-size-md)
 	--utrecht-form-label-font-weight: var(--basis-text-font-weight-bold)
-	--utrecht-form-label-margin-block-end: var(--basis-space-block-lg)
 	--utrecht-form-label-radio-color: var(--basis-color-default-color-document)
 	--utrecht-form-label-radio-font-weight: var(--basis-text-font-weight-default)
 	--utrecht-form-toggle-accent-color: var(--basis-color-default-inverse-bg-default)
@@ -3100,31 +3098,6 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-description-list-section-column-gap: var(--basis-space-column-xl)
 	--ams-description-list-term-font-weight: var(--basis-text-font-weight-bold)
 	--ams-description-list-wide-grid-template-columns: 1fr 1fr
-	--ams-dialog-backdrop-background-color: #24242433
-	--ams-dialog-background-color: var(--basis-color-default-bg-document)
-	--ams-dialog-body-medium-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-body-padding-block: var(--basis-space-none)
-	--ams-dialog-body-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-border-color: var(--basis-color-default-border-subtle)
-	--ams-dialog-border-radius: var(--basis-border-radius-lg)
-	--ams-dialog-border-style: solid
-	--ams-dialog-border-width: var(--basis-border-width-sm)
-	--ams-dialog-box-shadow: var(--basis-box-shadow-lg)
-	--ams-dialog-footer-medium-padding-block: var(--basis-space-block-3xl)
-	--ams-dialog-footer-medium-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-footer-padding-block: var(--basis-space-block-3xl)
-	--ams-dialog-footer-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-gap: var(--basis-space-none)
-	--ams-dialog-header-gap: var(--basis-space-column-xl)
-	--ams-dialog-header-medium-padding-block: var(--basis-space-block-xl)
-	--ams-dialog-header-medium-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-header-padding-block: var(--basis-space-block-xl)
-	--ams-dialog-header-padding-inline: var(--basis-space-inline-xl)
-	--ams-dialog-inline-size: 328px
-	--ams-dialog-max-block-size: 80vh
-	--ams-dialog-max-inline-size: 640px
-	--ams-dialog-medium-inline-size: 640px
-	--ams-dialog-medium-max-block-size: 80vh
 	--ams-figure-caption-color: var(--basis-color-default-color-document)
 	--ams-figure-caption-font-family: var(--basis-text-font-family-default)
 	--ams-figure-caption-font-size: var(--basis-text-font-size-md)
@@ -3203,7 +3176,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-icon-button-disabled-cursor: disabled
 	--ams-icon-button-hover-background-color: var(--basis-color-action-1-bg-hover)
 	--ams-icon-button-hover-color: var(--basis-color-action-1-color-hover)
-	--ams-icon-button-inverse-background-color: #00000000
+	--ams-icon-button-inverse-background-color: var(--basis-color-transparent)
 	--ams-icon-button-inverse-color: var(--basis-color-action-1-inverse-color-default)
 	--ams-icon-button-inverse-disabled-background-color: var(--basis-color-disabled-inverse-bg-subtle)
 	--ams-icon-button-inverse-disabled-color: var(--basis-color-disabled-inverse-color-subtle)
@@ -3211,6 +3184,33 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--ams-icon-button-inverse-hover-color: var(--basis-color-action-1-inverse-color-hover)
 	--ams-icon-button-outline-offset: auto
 	--ams-image-aspect-ratio: 1.7778
+	--ams-modal-dialog-backdrop-background-color: #24242433
+	--ams-modal-dialog-background-color: var(--basis-color-default-bg-document)
+	--ams-modal-dialog-body-medium-padding-block: var(--basis-space-none)
+	--ams-modal-dialog-body-medium-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-body-min-block-size: var(--basis-pointer-target-min-block-size)
+	--ams-modal-dialog-body-padding-block: var(--basis-space-none)
+	--ams-modal-dialog-body-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-border-color: var(--basis-color-default-border-subtle)
+	--ams-modal-dialog-border-radius: var(--basis-border-radius-lg)
+	--ams-modal-dialog-border-style: solid
+	--ams-modal-dialog-border-width: var(--basis-border-width-sm)
+	--ams-modal-dialog-box-shadow: var(--basis-box-shadow-lg)
+	--ams-modal-dialog-footer-medium-padding-block: var(--basis-space-block-3xl)
+	--ams-modal-dialog-footer-medium-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-footer-padding-block: var(--basis-space-block-3xl)
+	--ams-modal-dialog-footer-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-header-column-gap: var(--basis-space-column-xl)
+	--ams-modal-dialog-header-medium-padding-block: var(--basis-space-block-xl)
+	--ams-modal-dialog-header-medium-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-header-padding-block: var(--basis-space-block-xl)
+	--ams-modal-dialog-header-padding-inline: var(--basis-space-inline-xl)
+	--ams-modal-dialog-header-row-gap: var(--basis-space-row-sm)
+	--ams-modal-dialog-inline-size: 328px
+	--ams-modal-dialog-max-block-size: 80vh
+	--ams-modal-dialog-max-inline-size: 640px
+	--ams-modal-dialog-medium-inline-size: 640px
+	--ams-modal-dialog-medium-max-block-size: 80vh
 	--ams-page-footer-menu-column-gap: var(--basis-space-column-4xl)
 	--ams-page-footer-menu-link-color: var(--basis-color-action-1-color-default)
 	--ams-page-footer-menu-link-font-family: var(--basis-text-font-family-default)
@@ -4850,10 +4850,6 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--todo-form-summary-item-value-row-padding-inline-end: var(--basis-space-none)
 	--todo-form-summary-item-value-row-padding-inline-start: var(--basis-space-none)
 	--todo-form-summary-line-height: var(--basis-text-line-height-md)
-	--todo-icon-only-button-padding-block-end: var(--basis-space-block-lg)
-	--todo-icon-only-button-padding-block-start: var(--basis-space-block-lg)
-	--todo-icon-only-button-padding-inline-end: var(--basis-space-inline-lg)
-	--todo-icon-only-button-padding-inline-start: var(--basis-space-inline-lg)
 	--todo-link-list-link-hover-text-decoration: underline
 	--todo-login-link-focus-visible-background-color: var(--basis-focus-background-color)
 	--todo-login-link-focus-visible-border-color: var(--basis-color-transparent)
@@ -5492,6 +5488,7 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-form-field-invalid-border-inline-start-color: var(--basis-color-negative-border-default)
 	--utrecht-form-field-invalid-border-inline-start-width: var(--basis-border-width-md)
 	--utrecht-form-field-invalid-padding-inline-start: var(--basis-space-inline-xl)
+	--utrecht-form-field-label-margin-block-end: var(--basis-space-block-lg)
 	--utrecht-form-field-margin-block-end: var(--basis-space-none)
 	--utrecht-form-field-margin-block-start: var(--basis-space-none)
 	--utrecht-form-fieldset-invalid-border-inline-start-color: var(--basis-color-negative-border-default)
@@ -5516,7 +5513,6 @@ exports[`Theme > has a different CSS output after token update 1`] = `
 	--utrecht-form-label-disabled-color: var(--basis-color-disabled-color-subtle)
 	--utrecht-form-label-font-size: var(--basis-text-font-size-md)
 	--utrecht-form-label-font-weight: var(--basis-text-font-weight-bold)
-	--utrecht-form-label-margin-block-end: var(--basis-space-block-lg)
 	--utrecht-form-label-radio-color: var(--basis-color-default-color-document)
 	--utrecht-form-label-radio-font-weight: var(--basis-text-font-weight-default)
 	--utrecht-form-toggle-accent-color: var(--basis-color-default-inverse-bg-default)
