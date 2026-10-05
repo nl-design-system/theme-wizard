@@ -46,7 +46,7 @@
     "publint": "0.3.25",
     "typescript": "6.0.3",
     "unplugin-dts": "1.1.2",
-    "vite": "8.2.2",
+    "vite": "8.3.2",
     "vitest": "4.1.11"
   },
   "dependencies": {
@@ -54,6 +54,6 @@
     "@projectwallace/css-design-tokens": "0.11.11",
     "@projectwallace/css-parser": "0.18.8",
     "linkedom": "0.18.13",
-    "zod": "4.5.4"
+    "zod": "4.6.5"
   }
 }

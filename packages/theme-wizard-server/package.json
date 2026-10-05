@@ -39,11 +39,11 @@
   "devDependencies": {
     "@hono/vite-dev-server": "0.26.1",
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
-    "@types/node": "24.13.6",
+    "@types/node": "24.19.1",
     "@vitest/coverage-v8": "4.1.11",
     "premove": "4.0.0",
     "typescript": "6.0.3",
-    "vite": "8.2.2",
+    "vite": "8.3.2",
     "vitest": "4.1.11"
   },
   "dependencies": {
@@ -53,6 +53,6 @@
     "@nl-design-system-community/css-scraper": "workspace:*",
     "@vercel/related-projects": "1.1.1",
     "hono": "4.13.13",
-    "zod": "4.5.4"
+    "zod": "4.6.5"
   }
 }
