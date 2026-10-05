@@ -19,6 +19,7 @@ export class WizardUnstyledList extends LitElement {
   static override readonly styles = [styles];
 
   override render() {
+    // Adding `role=list` because Safari removes list semantics when no list-style is applied
     return html`
       <ul role="list" class="wizard-unstyled-list">
         <slot></slot>
