@@ -46,9 +46,9 @@
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@vitest/coverage-v8": "4.1.11",
     "premove": "4.0.0",
-    "publint": "0.3.24",
+    "publint": "0.3.25",
     "typescript": "6.0.3",
-    "unplugin-dts": "1.1.0",
+    "unplugin-dts": "1.1.2",
     "vite": "8.2.2",
     "vitest": "4.1.11"
   }
