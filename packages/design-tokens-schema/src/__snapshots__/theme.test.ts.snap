@@ -712,7 +712,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -723,7 +723,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -901,6 +901,295 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "$description": "[code-only]",
           "$type": "other",
           "$value": "1fr 1fr",
+        },
+      },
+    },
+    "dialog": {
+      "backdrop": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+          },
+          "$type": "color",
+          "$value": {
+            "alpha": 0.2,
+            "colorSpace": "srgb",
+            "components": [
+              0.1411764705882353,
+              0.1411764705882353,
+              0.1411764705882353,
+            ],
+          },
+        },
+      },
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.9882352941176471,
+              0.9882352941176471,
+              0.9882352941176471,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.bg-document}",
+      },
+      "body": {
+        "medium": {
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 0,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.none}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "border-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.7607843137254902,
+              0.7686274509803922,
+              0.7764705882352941,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.border-subtle}",
+      },
+      "border-radius": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-radius",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 16,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-radius.lg}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-width",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 0.0625,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "box-shadow": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": "0 4px 8px 0 rgba(0,0,0,0.10), 0 16px 32px 0 rgba(0,0,0,0.08)",
+          "studio.tokens": {
+            "originalType": "boxShadow",
+          },
+        },
+        "$type": "shadow",
+        "$value": "{basis.box-shadow.lg}",
+      },
+      "footer": {
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 24,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.3xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 24,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.3xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "gap": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 0,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.none}",
+      },
+      "header": {
+        "gap": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.column.xl}",
+        },
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 328,
+        },
+      },
+      "max-block-size": {
+        "$description": "[code-only]",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": "80vh",
+      },
+      "max-inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 640,
+        },
+      },
+      "medium": {
+        "inline-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 640,
+          },
+        },
+        "max-block-size": {
+          "$description": "[code-only]",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": "80vh",
         },
       },
     },
@@ -1892,18 +2181,17 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
           },
           "$type": "color",
-          "$value": "{basis.color.transparent}",
+          "$value": {
+            "alpha": 0,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0,
+            ],
+          },
         },
         "color": {
           "$extensions": {
@@ -2001,319 +2289,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "$description": "[code-only]",
         "$type": "other",
         "$value": 1.7778,
-      },
-    },
-    "modal-dialog": {
-      "backdrop": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-          },
-          "$type": "color",
-          "$value": {
-            "alpha": 0.2,
-            "colorSpace": "srgb",
-            "components": [
-              0.1411764705882353,
-              0.1411764705882353,
-              0.1411764705882353,
-            ],
-          },
-        },
-      },
-      "background-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "background-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0.9882352941176471,
-              0.9882352941176471,
-              0.9882352941176471,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.bg-document}",
-      },
-      "body": {
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 0,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.none}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "min-block-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 3,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.pointer-target.min-block-size}",
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 0,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.none}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "border-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0.7607843137254902,
-              0.7686274509803922,
-              0.7764705882352941,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.border-subtle}",
-      },
-      "border-radius": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-radius",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 16,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-radius.lg}",
-      },
-      "border-style": {
-        "$description": "[code-only]",
-        "$type": "other",
-        "$value": "solid",
-      },
-      "border-width": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-width",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "rem",
-            "value": 0.0625,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-width.sm}",
-      },
-      "box-shadow": {
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "0 4px 8px 0 rgba(0,0,0,0.10), 0 16px 32px 0 rgba(0,0,0,0.08)",
-          "studio.tokens": {
-            "originalType": "boxShadow",
-          },
-        },
-        "$type": "shadow",
-        "$value": "{basis.box-shadow.lg}",
-      },
-      "footer": {
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 24,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.block.3xl}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 24,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.3xl}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "header": {
-        "column-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-column",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.column.xl}",
-        },
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.block.xl}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.xl}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-        "row-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-row",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 4,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.row.sm}",
-        },
-      },
-      "inline-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 328,
-        },
-      },
-      "max-block-size": {
-        "$description": "[code-only]",
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": "80vh",
-      },
-      "max-inline-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 640,
-        },
-      },
-      "medium": {
-        "inline-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-          },
-          "$type": "dimension",
-          "$value": {
-            "unit": "px",
-            "value": 640,
-          },
-        },
-        "max-block-size": {
-          "$description": "[code-only]",
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-          },
-          "$type": "dimension",
-          "$value": "80vh",
-        },
       },
     },
     "page-footer": {
@@ -3043,7 +3018,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -3054,7 +3029,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -3275,6 +3250,8 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
       },
     },
+  },
+  "amsterdam": {
     "unordered-list": {
       "color": {
         "$extensions": {
@@ -3336,11 +3313,11 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "$extensions": {
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 12,
+            "value": 8,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.row.lg}",
+        "$value": "{basis.border-radius.md}",
       },
       "inverse": {
         "color": {
@@ -3366,22 +3343,22 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 12,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.lg}",
+          "$value": "{basis.space.inline.md}",
         },
         "padding-inline-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.sm}",
+          "$value": "{basis.space.inline.lg}",
         },
       },
       "line-height": {
@@ -3443,22 +3420,22 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
               "nl.nldesignsystem.token-subtype": "space-inline",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
-                "value": 12,
+                "value": 8,
               },
             },
             "$type": "dimension",
-            "$value": "{basis.space.inline.lg}",
+            "$value": "{basis.space.inline.md}",
           },
           "padding-inline-start": {
             "$extensions": {
               "nl.nldesignsystem.token-subtype": "space-inline",
               "nl.nldesignsystem.value-resolved-as": {
                 "unit": "px",
-                "value": 4,
+                "value": 12,
               },
             },
             "$type": "dimension",
-            "$value": "{basis.space.inline.sm}",
+            "$value": "{basis.space.inline.lg}",
           },
         },
         "list-style-type": {
@@ -13682,44 +13659,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.sm}",
+        "$value": "{basis.space.block.lg}",
       },
       "padding-block-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.sm}",
+        "$value": "{basis.space.block.lg}",
       },
       "padding-inline-end": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.sm}",
+        "$value": "{basis.space.inline.lg}",
       },
       "padding-inline-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.sm}",
+        "$value": "{basis.space.inline.lg}",
       },
       "placeholder": {
         "color": {
@@ -17320,44 +17297,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.sm}",
+        "$value": "{basis.space.block.lg}",
       },
       "padding-block-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.sm}",
+        "$value": "{basis.space.block.lg}",
       },
       "padding-inline-end": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.sm}",
+        "$value": "{basis.space.inline.lg}",
       },
       "padding-inline-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.sm}",
+        "$value": "{basis.space.inline.lg}",
       },
     },
     "process-steps": {
@@ -18410,13 +18387,13 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "font-weight": {
             "$extensions": {
               "nl.nldesignsystem.token-subtype": "font-weight",
-              "nl.nldesignsystem.value-resolved-as": 400,
+              "nl.nldesignsystem.value-resolved-as": 700,
               "studio.tokens": {
                 "originalType": "fontWeights",
               },
             },
             "$type": "number",
-            "$value": "{basis.text.font-weight.default}",
+            "$value": "{basis.text.font-weight.bold}",
           },
         },
         "color": {
@@ -18470,22 +18447,22 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.lg}",
         },
         "padding-block-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.lg}",
         },
       },
       "list": {
@@ -18494,11 +18471,11 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 16,
+              "value": 32,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
+          "$value": "{basis.space.inline.4xl}",
         },
       },
       "min-width": {
@@ -19940,30 +19917,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     },
   },
   "ma": {
-    "body-copy-items": {
-      "max-inline-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": "65ch",
-      },
-    },
-    "card": {
-      "content": {
-        "row-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-row",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 24,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.row.3xl}",
-        },
-      },
-    },
     "card-as-link": {
       "background-color": {
         "$extensions": {
@@ -20521,123 +20474,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
           "$type": "dimension",
           "$value": "{basis.space.inline.md}",
-        },
-      },
-    },
-    "cardgroup": {
-      "card": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.9882352941176471,
-                0.9882352941176471,
-                0.9882352941176471,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.default.bg-document}",
-        },
-        "border-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.7607843137254902,
-                0.7686274509803922,
-                0.7764705882352941,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.default.border-subtle}",
-        },
-        "border-radius": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-radius",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 8,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-radius.md}",
-        },
-        "border-width": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "border-width",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 0.0625,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.border-width.sm}",
-        },
-        "color": {
-          "$extensions": {
-            "nl.nldesignsystem.contrast-with": [
-              {
-                "color": {
-                  "$extensions": {
-                    "nl.nldesignsystem.value-resolved-as": {
-                      "alpha": 1,
-                      "colorSpace": "srgb",
-                      "components": [
-                        0.9882352941176471,
-                        0.9882352941176471,
-                        0.9882352941176471,
-                      ],
-                    },
-                    "nl.nldesignsystem.value-resolved-from": "{ma.cardgroup.card.background-color}",
-                  },
-                  "$type": "color",
-                  "$value": "{basis.color.default.bg-document}",
-                },
-                "expectedRatio": 4.5,
-              },
-            ],
-            "nl.nldesignsystem.token-subtype": "color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.10588235294117647,
-                0.10980392156862745,
-                0.11372549019607843,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.default.color-document}",
-        },
-        "padding-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 24,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.3xl}",
-        },
-        "padding-block-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 12,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.lg}",
         },
       },
     },
@@ -21447,18 +21283,18 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             },
           },
           "$type": "color",
-          "$value": "{basis.color.accent-1-inverse.color-default}",
+          "$value": "{basis.color.action-1-inverse.color-default}",
         },
         "column-gap": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-column",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.text.xs}",
+          "$value": "{basis.space.text.md}",
         },
         "current": {
           "background-color": {
@@ -21468,14 +21304,14 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
                 "alpha": 1,
                 "colorSpace": "srgb",
                 "components": [
-                  0.34901960784313724,
-                  0.16470588235294117,
-                  0.403921568627451,
+                  0.20392156862745098,
+                  0.09411764705882353,
+                  0.23529411764705882,
                 ],
               },
             },
             "$type": "color",
-            "$value": "{basis.color.accent-1-inverse.bg-active}",
+            "$value": "{basis.color.action-1-inverse.bg-document}",
           },
           "border-color": {
             "$extensions": {
@@ -21491,31 +21327,10 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
               },
             },
             "$type": "color",
-            "$value": "{basis.color.accent-1-inverse.border-default}",
+            "$value": "{basis.color.action-1-inverse.border-default}",
           },
           "color": {
             "$extensions": {
-              "nl.nldesignsystem.contrast-with": [
-                {
-                  "color": {
-                    "$extensions": {
-                      "nl.nldesignsystem.value-resolved-as": {
-                        "alpha": 1,
-                        "colorSpace": "srgb",
-                        "components": [
-                          0.34901960784313724,
-                          0.16470588235294117,
-                          0.403921568627451,
-                        ],
-                      },
-                      "nl.nldesignsystem.value-resolved-from": "{ma.navigation-bar.item.current.background-color}",
-                    },
-                    "$type": "color",
-                    "$value": "{basis.color.accent-1-inverse.bg-active}",
-                  },
-                  "expectedRatio": 4.5,
-                },
-              ],
               "nl.nldesignsystem.token-subtype": "color",
               "nl.nldesignsystem.value-resolved-as": {
                 "alpha": 1,
@@ -21528,7 +21343,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
               },
             },
             "$type": "color",
-            "$value": "{basis.color.accent-1-inverse.color-document}",
+            "$value": "{basis.color.action-1-inverse.color-document}",
           },
         },
         "focus-visible": {
@@ -21668,44 +21483,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.md}",
+          "$value": "{basis.space.block.xl}",
         },
         "padding-block-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.md}",
+          "$value": "{basis.space.block.xl}",
         },
         "padding-inline-end": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.md}",
+          "$value": "{basis.space.inline.xl}",
         },
         "padding-inline-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.md}",
+          "$value": "{basis.space.inline.xl}",
         },
       },
       "line-height": {
@@ -22960,120 +22775,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
       },
     },
-    "space": {
-      "relative": {
-        "block": {
-          "2xl": {
-            "$type": "dimension",
-            "$value": "1.25em",
-          },
-          "2xs": {
-            "$type": "dimension",
-            "$value": "0.0625em",
-          },
-          "3xl": {
-            "$type": "dimension",
-            "$value": "1.5em",
-          },
-          "4xl": {
-            "$type": "dimension",
-            "$value": "2em",
-          },
-          "5xl": {
-            "$type": "dimension",
-            "$value": "3em",
-          },
-          "6xl": {
-            "$type": "dimension",
-            "$value": "4em",
-          },
-          "lg": {
-            "$type": "dimension",
-            "$value": "0.75em",
-          },
-          "md": {
-            "$type": "dimension",
-            "$value": "0.5em",
-          },
-          "sm": {
-            "$type": "dimension",
-            "$value": "0.25em",
-          },
-          "xl": {
-            "$type": "dimension",
-            "$value": "1em",
-          },
-          "xs": {
-            "$type": "dimension",
-            "$value": "0.125em",
-          },
-        },
-      },
-    },
-    "table-of-contents": {
-      "highlighted": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 1,
-              "colorSpace": "srgb",
-              "components": [
-                0.9803921568627451,
-                0.9607843137254902,
-                0.984313725490196,
-              ],
-            },
-          },
-          "$type": "color",
-          "$value": "{basis.color.accent-1.bg-subtle}",
-        },
-        "padding-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 32,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.4xl}",
-        },
-        "padding-block-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 20,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.2xl}",
-        },
-        "padding-inline-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-        "padding-inline-start": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-    },
     "tag": {
       "active": {
         "background-color": {
@@ -24277,44 +23978,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.md}",
         },
         "padding-block-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.md}",
         },
         "padding-inline-end": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.sm}",
+          "$value": "{basis.space.inline.md}",
         },
         "padding-inline-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.sm}",
+          "$value": "{basis.space.inline.md}",
         },
       },
       "min-block-size": {
@@ -24366,22 +24067,22 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.md}",
+        "$value": "{basis.space.inline.xl}",
       },
       "padding-inline-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.md}",
+        "$value": "{basis.space.inline.xl}",
       },
       "primary": {
         "active": {
@@ -28347,22 +28048,22 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.md}",
+        "$value": "{basis.space.block.xl}",
       },
       "padding-inline": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.md}",
+        "$value": "{basis.space.inline.xl}",
       },
     },
     "color-sample": {
@@ -29273,12 +28974,12 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "text-decoration-line": {
           "$type": "textDecoration",
-          "$value": "underline",
+          "$value": "None",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
           "$type": "other",
-          "$value": "0.3ex",
+          "$value": "auto",
         },
       },
       "text-decoration-color": {
@@ -29309,7 +29010,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "text-underline-offset": {
         "$description": "[code-only]",
         "$type": "other",
-        "$value": "0.3ex",
+        "$value": "auto",
       },
     },
     "mark": {
@@ -29805,22 +29506,22 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.md}",
+        "$value": "{basis.space.block.lg}",
       },
       "padding-inline": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 12,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.lg}",
+        "$value": "{basis.space.inline.xl}",
       },
       "text-decoration-thickness": {
         "$description": "[code-only]",
@@ -30315,7 +30016,10 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "size",
         },
         "$type": "dimension",
-        "$value": "100%",
+        "$value": {
+          "unit": "rem",
+          "value": 20.5,
+        },
       },
       "link": {
         "active": {
@@ -30380,44 +30084,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 12,
+            "value": 24,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.lg}",
+        "$value": "{basis.space.block.3xl}",
       },
       "padding-block-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.md}",
+        "$value": "{basis.space.block.xl}",
       },
       "padding-inline-end": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 12,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.lg}",
+        "$value": "{basis.space.inline.xl}",
       },
       "padding-inline-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 12,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.lg}",
+        "$value": "{basis.space.inline.xl}",
       },
       "row-gap": {
         "$extensions": {
@@ -34871,6 +34575,52 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         "$value": "{basis.text.line-height.md}",
       },
     },
+    "icon-only-button": {
+      "padding-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
+      },
+      "padding-block-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
+      },
+      "padding-inline-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.lg}",
+      },
+      "padding-inline-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.lg}",
+      },
+    },
     "link-list": {
       "link": {
         "hover": {
@@ -38695,8 +38445,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "components/button/nl",
     "components/button/utrecht",
     "components/calendar",
-    "components/card/ma",
-    "components/card/rhc",
+    "components/card",
     "components/card-as-link/ma",
     "components/card-as-link/amsterdam",
     "components/card-as-link/todo",
@@ -38739,6 +38488,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "components/icon",
     "components/icon-button/amsterdam",
     "components/icon-button/den-haag",
+    "components/icon-only-button",
     "components/image",
     "components/link/nl",
     "components/link/utrecht",
@@ -38779,7 +38529,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
     "components/step-marker",
     "components/switch",
     "components/table",
-    "components/table-of-contents",
     "components/tabs/amsterdam",
     "components/tabs/den-haag",
     "components/tag",
@@ -40632,44 +40381,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.lg}",
         },
         "padding-block-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.lg}",
         },
         "padding-inline-end": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 2,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.xs}",
+          "$value": "{basis.space.inline.md}",
         },
         "padding-inline-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 2,
+              "value": 8,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.xs}",
+          "$value": "{basis.space.inline.md}",
         },
       },
       "line-height": {
@@ -40831,7 +40580,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           },
           "text-decoration": {
             "$type": "textDecoration",
-            "$value": "underline",
+            "$value": "None",
           },
         },
         "text-decoration": {
@@ -41318,44 +41067,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.md}",
+        "$value": "{basis.space.block.lg}",
       },
       "padding-block-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 12,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.block.md}",
+        "$value": "{basis.space.block.lg}",
       },
       "padding-inline-end": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.md}",
+        "$value": "{basis.space.inline.xl}",
       },
       "padding-inline-start": {
         "$extensions": {
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 8,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.md}",
+        "$value": "{basis.space.inline.xl}",
       },
       "pressed": {
         "background-color": {
@@ -44812,19 +44561,6 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "$value": "{basis.space.inline.xl}",
         },
       },
-      "label": {
-        "margin-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 12,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.lg}",
-        },
-      },
       "margin-block-end": {
         "$description": "[code-only]",
         "$extensions": {
@@ -45391,6 +45127,17 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
+      },
+      "margin-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
       },
       "radio": {
         "color": {
@@ -46624,12 +46371,12 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
         },
         "text-decoration": {
           "$type": "textDecoration",
-          "$value": "underline",
+          "$value": "None",
         },
         "text-decoration-thickness": {
           "$description": "[code-only]",
           "$type": "other",
-          "$value": "0.3ex",
+          "$value": "auto",
         },
       },
       "icon": {
@@ -46673,7 +46420,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
       "text-underline-offset": {
         "$description": "[code-only]",
         "$type": "other",
-        "$value": "0.3ex",
+        "$value": "auto",
       },
       "visited": {
         "color": {
@@ -47146,7 +46893,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
@@ -47157,7 +46904,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
@@ -47515,44 +47262,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 20,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.md}",
+          "$value": "{basis.space.block.2xl}",
         },
         "padding-block-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 20,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.md}",
+          "$value": "{basis.space.block.2xl}",
         },
         "padding-inline-end": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.md}",
+          "$value": "{basis.space.inline.xl}",
         },
         "padding-inline-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.md}",
+          "$value": "{basis.space.inline.xl}",
         },
       },
     },
@@ -49590,11 +49337,11 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 16,
+            "value": 24,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.xl}",
+        "$value": "{basis.space.inline.3xl}",
       },
     },
     "page-body": {
@@ -52133,7 +51880,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -52144,7 +51891,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -52155,7 +51902,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -52166,7 +51913,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -52179,11 +51926,11 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "size",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 2,
+            "value": 4,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.size.5xs}",
+        "$value": "{basis.size.4xs}",
       },
       "color": {
         "$extensions": {
@@ -53468,44 +53215,44 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.lg}",
         },
         "padding-block-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-block",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 4,
+              "value": 12,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.block.sm}",
+          "$value": "{basis.space.block.lg}",
         },
         "padding-inline-end": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.md}",
+          "$value": "{basis.space.inline.xl}",
         },
         "padding-inline-start": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "space-inline",
             "nl.nldesignsystem.value-resolved-as": {
               "unit": "px",
-              "value": 8,
+              "value": 16,
             },
           },
           "$type": "dimension",
-          "$value": "{basis.space.inline.md}",
+          "$value": "{basis.space.inline.xl}",
         },
         "selected": {
           "background-color": {
@@ -54402,7 +54149,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -54413,7 +54160,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -54424,7 +54171,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -54435,7 +54182,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -54892,7 +54639,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -54903,7 +54650,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-block",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -54914,7 +54661,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -54925,7 +54672,7 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 4,
+            "value": 12,
           },
         },
         "$type": "dimension",
@@ -55084,11 +54831,11 @@ exports[`strictly validate known basis themes > dist files > Mooi & Anders theme
           "nl.nldesignsystem.token-subtype": "space-inline",
           "nl.nldesignsystem.value-resolved-as": {
             "unit": "px",
-            "value": 2,
+            "value": 16,
           },
         },
         "$type": "dimension",
-        "$value": "{basis.space.inline.xs}",
+        "$value": "{basis.space.inline.xl}",
       },
     },
   },
@@ -55988,6 +55735,295 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           "$description": "[code-only]",
           "$type": "other",
           "$value": "1fr 1fr",
+        },
+      },
+    },
+    "dialog": {
+      "backdrop": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+          },
+          "$type": "color",
+          "$value": {
+            "alpha": 0.2,
+            "colorSpace": "srgb",
+            "components": [
+              0.1411764705882353,
+              0.1411764705882353,
+              0.1411764705882353,
+            ],
+          },
+        },
+      },
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.9882352941176471,
+              0.9882352941176471,
+              0.9882352941176471,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.bg-document}",
+      },
+      "body": {
+        "medium": {
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 0,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.none}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "border-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.7686274509803922,
+              0.7686274509803922,
+              0.7686274509803922,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.border-subtle}",
+      },
+      "border-radius": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-radius",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 16,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-radius.lg}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-width",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 0.0625,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "box-shadow": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": "0 4px 8px 0 rgba(0,0,0,0.10), 0 16px 32px 0 rgba(0,0,0,0.08)",
+          "studio.tokens": {
+            "originalType": "boxShadow",
+          },
+        },
+        "$type": "shadow",
+        "$value": "{basis.box-shadow.lg}",
+      },
+      "footer": {
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 24,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.3xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 24,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.3xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "gap": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 0,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.none}",
+      },
+      "header": {
+        "gap": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.column.xl}",
+        },
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 328,
+        },
+      },
+      "max-block-size": {
+        "$description": "[code-only]",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": "80vh",
+      },
+      "max-inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 640,
+        },
+      },
+      "medium": {
+        "inline-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 640,
+          },
+        },
+        "max-block-size": {
+          "$description": "[code-only]",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": "80vh",
         },
       },
     },
@@ -56973,18 +57009,17 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
           },
           "$type": "color",
-          "$value": "{basis.color.transparent}",
+          "$value": {
+            "alpha": 0,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0,
+            ],
+          },
         },
         "color": {
           "$extensions": {
@@ -57082,319 +57117,6 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         "$description": "[code-only]",
         "$type": "other",
         "$value": 1.7778,
-      },
-    },
-    "modal-dialog": {
-      "backdrop": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-          },
-          "$type": "color",
-          "$value": {
-            "alpha": 0.2,
-            "colorSpace": "srgb",
-            "components": [
-              0.1411764705882353,
-              0.1411764705882353,
-              0.1411764705882353,
-            ],
-          },
-        },
-      },
-      "background-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "background-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0.9882352941176471,
-              0.9882352941176471,
-              0.9882352941176471,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.bg-document}",
-      },
-      "body": {
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 0,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.none}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "min-block-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 3,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.pointer-target.min-block-size}",
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 0,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.none}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "border-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0.7686274509803922,
-              0.7686274509803922,
-              0.7686274509803922,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.border-subtle}",
-      },
-      "border-radius": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-radius",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 16,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-radius.lg}",
-      },
-      "border-style": {
-        "$description": "[code-only]",
-        "$type": "other",
-        "$value": "solid",
-      },
-      "border-width": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-width",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "rem",
-            "value": 0.0625,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-width.sm}",
-      },
-      "box-shadow": {
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "0 4px 8px 0 rgba(0,0,0,0.10), 0 16px 32px 0 rgba(0,0,0,0.08)",
-          "studio.tokens": {
-            "originalType": "boxShadow",
-          },
-        },
-        "$type": "shadow",
-        "$value": "{basis.box-shadow.lg}",
-      },
-      "footer": {
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 24,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.block.3xl}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 24,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.3xl}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "header": {
-        "column-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-column",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.column.xl}",
-        },
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.block.xl}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.xl}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-        "row-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-row",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 4,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.row.sm}",
-        },
-      },
-      "inline-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 328,
-        },
-      },
-      "max-block-size": {
-        "$description": "[code-only]",
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": "80vh",
-      },
-      "max-inline-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 640,
-        },
-      },
-      "medium": {
-        "inline-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-          },
-          "$type": "dimension",
-          "$value": {
-            "unit": "px",
-            "value": 640,
-          },
-        },
-        "max-block-size": {
-          "$description": "[code-only]",
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-          },
-          "$type": "dimension",
-          "$value": "80vh",
-        },
       },
     },
     "page-footer": {
@@ -85317,6 +85039,52 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         "$value": "{basis.text.line-height.md}",
       },
     },
+    "icon-only-button": {
+      "padding-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
+      },
+      "padding-block-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
+      },
+      "padding-inline-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.lg}",
+      },
+      "padding-inline-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.lg}",
+      },
+    },
     "link-list": {
       "link": {
         "hover": {
@@ -89171,6 +88939,7 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
     "components/icon",
     "components/icon-button/amsterdam",
     "components/icon-button/denhaag",
+    "components/icon-only-button",
     "components/image",
     "components/link/nl",
     "components/link/utrecht",
@@ -95236,19 +95005,6 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
           "$value": "{basis.space.inline.xl}",
         },
       },
-      "label": {
-        "margin-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 12,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.lg}",
-        },
-      },
       "margin-block-end": {
         "$description": "[code-only]",
         "$extensions": {
@@ -95809,6 +95565,17 @@ exports[`strictly validate known basis themes > dist files > Start theme 1`] = `
         },
         "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
+      },
+      "margin-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
       },
       "radio": {
         "color": {
@@ -104443,6 +104210,291 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
       },
     },
+    "dialog": {
+      "backdrop": {
+        "background-color": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "background-color",
+          },
+          "$type": "color",
+          "$value": {
+            "alpha": 0.2,
+            "colorSpace": "srgb",
+            "components": [
+              0.13333333333333333,
+              0.23529411764705882,
+              0.3803921568627451,
+            ],
+          },
+        },
+      },
+      "background-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "background-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.bg-document}",
+      },
+      "body": {
+        "medium": {
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 0,
+          },
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "border-color": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-color",
+          "nl.nldesignsystem.value-resolved-as": {
+            "alpha": 1,
+            "colorSpace": "srgb",
+            "components": [
+              0.7529411764705882,
+              0.7803921568627451,
+              0.8235294117647058,
+            ],
+          },
+        },
+        "$type": "color",
+        "$value": "{basis.color.default.border-subtle}",
+      },
+      "border-radius": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-radius",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 16,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-radius.lg}",
+      },
+      "border-style": {
+        "$description": "[code-only]",
+        "$type": "other",
+        "$value": "solid",
+      },
+      "border-width": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "border-width",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "rem",
+            "value": 0.0625,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.border-width.sm}",
+      },
+      "box-shadow": {
+        "$extensions": {
+          "nl.nldesignsystem.value-resolved-as": "0 4px 8px 0 rgba(0,0,0,0.10), 0 16px 32px 0 rgba(0,0,0,0.08)",
+          "studio.tokens": {
+            "originalType": "boxShadow",
+          },
+        },
+        "$type": "shadow",
+        "$value": "{basis.box-shadow.lg}",
+      },
+      "footer": {
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 24,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.3xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 24,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.3xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 0,
+        },
+      },
+      "header": {
+        "gap": {
+          "$extensions": {
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.column.xl}",
+        },
+        "medium": {
+          "padding-block": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-block",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.block.xl}",
+          },
+          "padding-inline": {
+            "$extensions": {
+              "nl.nldesignsystem.token-subtype": "space-inline",
+              "nl.nldesignsystem.value-resolved-as": {
+                "unit": "px",
+                "value": 16,
+              },
+            },
+            "$type": "dimension",
+            "$value": "{basis.space.inline.xl}",
+          },
+        },
+        "padding-block": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-block",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.block.xl}",
+        },
+        "padding-inline": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "space-inline",
+            "nl.nldesignsystem.value-resolved-as": {
+              "unit": "px",
+              "value": 16,
+            },
+          },
+          "$type": "dimension",
+          "$value": "{basis.space.inline.xl}",
+        },
+      },
+      "inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 328,
+        },
+      },
+      "max-block-size": {
+        "$description": "[code-only]",
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": "80vh",
+      },
+      "max-inline-size": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "size",
+        },
+        "$type": "dimension",
+        "$value": {
+          "unit": "px",
+          "value": 640,
+        },
+      },
+      "medium": {
+        "inline-size": {
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": {
+            "unit": "px",
+            "value": 640,
+          },
+        },
+        "max-block-size": {
+          "$description": "[code-only]",
+          "$extensions": {
+            "nl.nldesignsystem.token-subtype": "size",
+          },
+          "$type": "dimension",
+          "$value": "80vh",
+        },
+      },
+    },
     "figure": {
       "caption": {
         "color": {
@@ -105425,18 +105477,17 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         "background-color": {
           "$extensions": {
             "nl.nldesignsystem.token-subtype": "background-color",
-            "nl.nldesignsystem.value-resolved-as": {
-              "alpha": 0,
-              "colorSpace": "srgb",
-              "components": [
-                0,
-                0,
-                0,
-              ],
-            },
           },
           "$type": "color",
-          "$value": "{basis.color.transparent}",
+          "$value": {
+            "alpha": 0,
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0,
+            ],
+          },
         },
         "color": {
           "$extensions": {
@@ -105534,319 +105585,6 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         "$description": "[code-only]",
         "$type": "other",
         "$value": 1.7778,
-      },
-    },
-    "modal-dialog": {
-      "backdrop": {
-        "background-color": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "background-color",
-          },
-          "$type": "color",
-          "$value": {
-            "alpha": 0.2,
-            "colorSpace": "srgb",
-            "components": [
-              0.13333333333333333,
-              0.23529411764705882,
-              0.3803921568627451,
-            ],
-          },
-        },
-      },
-      "background-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "background-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              1,
-              1,
-              1,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.bg-document}",
-      },
-      "body": {
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 0,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.none}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "min-block-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "rem",
-              "value": 3,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.pointer-target.min-block-size}",
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 0,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.none}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "border-color": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-color",
-          "nl.nldesignsystem.value-resolved-as": {
-            "alpha": 1,
-            "colorSpace": "srgb",
-            "components": [
-              0.7529411764705882,
-              0.7803921568627451,
-              0.8235294117647058,
-            ],
-          },
-        },
-        "$type": "color",
-        "$value": "{basis.color.default.border-subtle}",
-      },
-      "border-radius": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-radius",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "px",
-            "value": 16,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-radius.lg}",
-      },
-      "border-style": {
-        "$description": "[code-only]",
-        "$type": "other",
-        "$value": "solid",
-      },
-      "border-width": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "border-width",
-          "nl.nldesignsystem.value-resolved-as": {
-            "unit": "rem",
-            "value": 0.0625,
-          },
-        },
-        "$type": "dimension",
-        "$value": "{basis.border-width.sm}",
-      },
-      "box-shadow": {
-        "$extensions": {
-          "nl.nldesignsystem.value-resolved-as": "0 4px 8px 0 rgba(0,0,0,0.10), 0 16px 32px 0 rgba(0,0,0,0.08)",
-          "studio.tokens": {
-            "originalType": "boxShadow",
-          },
-        },
-        "$type": "shadow",
-        "$value": "{basis.box-shadow.lg}",
-      },
-      "footer": {
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 24,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.block.3xl}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 24,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.3xl}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-      },
-      "header": {
-        "column-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-column",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.column.xl}",
-        },
-        "medium": {
-          "padding-block": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-block",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.block.xl}",
-          },
-          "padding-inline": {
-            "$extensions": {
-              "nl.nldesignsystem.token-subtype": "space-inline",
-              "nl.nldesignsystem.value-resolved-as": {
-                "unit": "px",
-                "value": 16,
-              },
-            },
-            "$type": "dimension",
-            "$value": "{basis.space.inline.xl}",
-          },
-        },
-        "padding-block": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.xl}",
-        },
-        "padding-inline": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-inline",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 16,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.inline.xl}",
-        },
-        "row-gap": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-row",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 4,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.row.sm}",
-        },
-      },
-      "inline-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 328,
-        },
-      },
-      "max-block-size": {
-        "$description": "[code-only]",
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": "80vh",
-      },
-      "max-inline-size": {
-        "$extensions": {
-          "nl.nldesignsystem.token-subtype": "size",
-        },
-        "$type": "dimension",
-        "$value": {
-          "unit": "px",
-          "value": 640,
-        },
-      },
-      "medium": {
-        "inline-size": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-          },
-          "$type": "dimension",
-          "$value": {
-            "unit": "px",
-            "value": 640,
-          },
-        },
-        "max-block-size": {
-          "$description": "[code-only]",
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "size",
-          },
-          "$type": "dimension",
-          "$value": "80vh",
-        },
       },
     },
     "page-footer": {
@@ -132629,6 +132367,52 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         "$value": "{basis.text.line-height.md}",
       },
     },
+    "icon-only-button": {
+      "padding-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
+      },
+      "padding-block-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
+      },
+      "padding-inline-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.lg}",
+      },
+      "padding-inline-start": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-inline",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.inline.lg}",
+      },
+    },
     "link-list": {
       "link": {
         "hover": {
@@ -136247,6 +136031,7 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
     "components/icon",
     "components/icon-button/amsterdam",
     "components/icon-button/denhaag",
+    "components/icon-only-button",
     "components/image",
     "components/link/nl",
     "components/link/utrecht",
@@ -141794,19 +141579,6 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
           "$value": "{basis.space.inline.xl}",
         },
       },
-      "label": {
-        "margin-block-end": {
-          "$extensions": {
-            "nl.nldesignsystem.token-subtype": "space-block",
-            "nl.nldesignsystem.value-resolved-as": {
-              "unit": "px",
-              "value": 12,
-            },
-          },
-          "$type": "dimension",
-          "$value": "{basis.space.block.lg}",
-        },
-      },
       "margin-block-end": {
         "$description": "[code-only]",
         "$extensions": {
@@ -142356,6 +142128,17 @@ exports[`strictly validate known basis themes > dist files > Voorbeeld theme 1`]
         },
         "$type": "number",
         "$value": "{basis.text.font-weight.bold}",
+      },
+      "margin-block-end": {
+        "$extensions": {
+          "nl.nldesignsystem.token-subtype": "space-block",
+          "nl.nldesignsystem.value-resolved-as": {
+            "unit": "px",
+            "value": 12,
+          },
+        },
+        "$type": "dimension",
+        "$value": "{basis.space.block.lg}",
       },
       "radio": {
         "color": {

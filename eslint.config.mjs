@@ -107,11 +107,7 @@ export default defineConfig([
   },
   {
     name: 'eslint-plugin-zod',
-    ...eslintPluginZod.configs.strict,
-    ...eslintPluginZod.configs.stylistic,
-    rules: {
-      'zod/consistent-schema-output-type-style': ['error', { style: 'infer' }],
-    },
+    ...eslintPluginZod.configs.recommended,
   },
   {
     name: 'eslint-plugin-sonarjs',

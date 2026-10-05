@@ -37,20 +37,20 @@
     "clean": "premove dist/"
   },
   "devDependencies": {
-    "@nl-design-system-community/ma-design-tokens": "8.1.0",
+    "@nl-design-system-community/ma-design-tokens": "7.1.1",
     "@nl-design-system-community/purmerend-design-tokens": "1.2.3",
     "@nl-design-system-community/vite-plugin-terse-log": "workspace:*",
     "@nl-design-system-unstable/leiden-design-tokens": "3.0.0",
-    "@nl-design-system-unstable/start-design-tokens": "9.0.1",
-    "@nl-design-system-unstable/voorbeeld-design-tokens": "14.0.1",
+    "@nl-design-system-unstable/start-design-tokens": "8.1.0",
+    "@nl-design-system-unstable/voorbeeld-design-tokens": "13.1.0",
     "@types/dlv": "1.1.5",
-    "@vitest/coverage-v8": "5.0.3",
+    "@vitest/coverage-v8": "4.1.11",
     "dset": "3.1.4",
     "premove": "4.0.0",
     "typescript": "6.0.3",
     "vite": "8.3.2",
     "vite-plugin-dts": "5.1.2",
-    "vitest": "5.0.3"
+    "vitest": "4.1.11"
   },
   "dependencies": {
     "@nl-design-system-candidate/button-tokens": "1.0.0",
