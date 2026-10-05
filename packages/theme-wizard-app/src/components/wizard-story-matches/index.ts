@@ -58,9 +58,9 @@ export class WizardStoryMatches extends LitElement {
   // Guards against a slower, earlier prepare run overwriting a newer one.
   #prepareRun = 0;
 
-  protected override willUpdate(changedProperties: PropertyValues) {
+  protected override async willUpdate(changedProperties: PropertyValues) {
     if (changedProperties.has('components')) {
-      this.#prepareCandidates();
+      await this.#prepareCandidates();
       return;
     }
 
