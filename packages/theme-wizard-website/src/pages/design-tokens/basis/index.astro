@@ -39,7 +39,7 @@ const crumbs: BreadcrumbItem[] = [
               <clippy-stack size="lg">
                 <clippy-heading level="1">Basis tokens</clippy-heading>
 
-                <ul role="list" class="wizard-secretly-a-list">
+                <wizard-unstyled-list>
                   {
                     tree.map((group) => (
                       <li>
@@ -52,7 +52,7 @@ const crumbs: BreadcrumbItem[] = [
                       </li>
                     ))
                   }
-                </ul>
+                </wizard-unstyled-list>
               </clippy-stack>
             </clippy-story-preview>
           </main>
@@ -61,13 +61,3 @@ const crumbs: BreadcrumbItem[] = [
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-<style>
-  .wizard-secretly-a-list {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    padding-inline-start: var(--basis-space-none);
-    row-gap: var(--basis-space-row-md);
-  }
-</style>

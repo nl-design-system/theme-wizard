@@ -113,13 +113,13 @@ const subNavigationItems = getSubNavigationItems(navigationItems, '/components')
                   <div data-story-container={id}></div>
                 </clippy-story-preview>
                 {tokens.length > 0 && (
-                  <ul class="wizard-secretly-a-list">
+                  <wizard-unstyled-list>
                     {tokens.map((token) => (
                       <li>
                         <wizard-token-field label={token.path.join('.')} path={token.path.join('.')}></wizard-token-field>
                       </li>
                     ))}
-                  </ul>
+                  </wizard-unstyled-list>
                 )}
               </section>
             ))}
@@ -149,14 +149,6 @@ const subNavigationItems = getSubNavigationItems(navigationItems, '/components')
 
     display: grid;
     row-gap: var(--basis-space-row-xl);
-  }
-
-  .wizard-secretly-a-list {
-    display: grid;
-    gap: var(--basis-space-block-lg);
-    list-style: none;
-    margin-block: 0;
-    padding-inline: 0;
   }
 </style>
 

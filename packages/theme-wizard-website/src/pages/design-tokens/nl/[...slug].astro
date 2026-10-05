@@ -43,7 +43,7 @@ const navItems = getDesignTokensNavItems({ namespace: 'nl', segments });
                   node.isLeaf ? (
                     <wizard-token-field path={tokenPath} />
                   ) : (
-                    <ul role="list" class="wizard-secretly-a-list">
+                    <wizard-unstyled-list>
                       {
                         node.children.map((child) => (
                           <li>
@@ -54,7 +54,7 @@ const navItems = getDesignTokensNavItems({ namespace: 'nl', segments });
                           </li>
                         ))
                       }
-                    </ul>
+                    </wizard-unstyled-list>
                   )
                 }
 
@@ -69,13 +69,3 @@ const navItems = getDesignTokensNavItems({ namespace: 'nl', segments });
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-<style>
-  .wizard-secretly-a-list {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    padding-inline-start: var(--basis-space-none);
-    row-gap: var(--basis-space-row-md);
-  }
-</style>

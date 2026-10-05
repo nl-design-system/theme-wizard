@@ -24,7 +24,7 @@ const navigationItems = getNavigationItems(Astro.url.pathname);
             <clippy-stack size="lg">
               <clippy-heading level="1">Design tokens</clippy-heading>
 
-              <ul role="list" class="wizard-secretly-a-list">
+              <wizard-unstyled-list>
                 <li>
                   <wizard-link-to-token path="basis">
                     <a slot="link" href="/design-tokens/basis">Ga naar 'basis' design tokens</a>
@@ -37,7 +37,7 @@ const navigationItems = getNavigationItems(Astro.url.pathname);
                     Candidate components
                   </wizard-link-to-token>
                 </li>
-              </ul>
+              </wizard-unstyled-list>
             </clippy-stack>
           </clippy-story-preview>
         </main>
@@ -52,13 +52,3 @@ const navigationItems = getNavigationItems(Astro.url.pathname);
   import '@nl-design-system-community/clippy-components/clippy-stack';
   import '@nl-design-system-community/clippy-components/clippy-story-preview';
 </script>
-
-<style>
-  .wizard-secretly-a-list {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    padding-inline-start: var(--basis-space-none);
-    row-gap: var(--basis-space-row-md);
-  }
-</style>

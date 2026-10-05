@@ -394,19 +394,6 @@
   display: none;
 }
 
-.wizard-secretly-a-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--basis-space-block-lg);
-  list-style: none;
-  margin-block: 0;
-  padding-inline: 0;
-}
-
-.wizard-secretly-a-list--compact {
-  gap: var(--basis-space-block-md);
-}
-
 .wizard-token-preset {
   background: transparent;
   display: block;

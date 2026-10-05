@@ -46,7 +46,7 @@ const navigationItems = getNavigationItems(Astro.url.pathname);
                   node.isLeaf ? (
                     <wizard-token-field path={tokenPath} />
                   ) : (
-                    <ul role="list" class="wizard-secretly-a-list">
+                    <wizard-unstyled-list>
                       {
                         node.children.map((child) => (
                           <li>
@@ -57,7 +57,7 @@ const navigationItems = getNavigationItems(Astro.url.pathname);
                           </li>
                         ))
                       }
-                    </ul>
+                    </wizard-unstyled-list>
                   )
                 }
 
@@ -72,13 +72,3 @@ const navigationItems = getNavigationItems(Astro.url.pathname);
     </wizard-layout>
   </theme-wizard-app>
 </BaseLayout>
-
-<style>
-  .wizard-secretly-a-list {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    padding-inline-start: var(--basis-space-none);
-    row-gap: var(--basis-space-row-md);
-  }
-</style>
