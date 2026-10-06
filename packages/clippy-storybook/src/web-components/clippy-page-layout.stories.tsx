@@ -8,12 +8,14 @@ import { full } from '@nl-design-system-community/clippy-components/src/clippy-s
 import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml.js';
-import { createTemplate as clippyLayoutDetailTemplate } from './clippy-layout-detail.template.js';
-import { createTemplate as clippyLayoutTemplate } from './clippy-layout.template.js';
+import {
+  createOverviewTemplate as clippyOverviewTemplate,
+  createSingleColumnTemplate as clippySingleColumnTemplate,
+} from './clippy-layout.template.js';
 
 // Prettier ignore to prevent double-quotes
 // prettier-ignore
-const createDetailTemplate = () => html`
+const createDefaultTemplate = () => html`
   <clippy-page-layout>
     <clippy-page-header slot="header" variant="default">
       <span slot="logo">🎉 Logo</span>
@@ -22,13 +24,15 @@ const createDetailTemplate = () => html`
       <clippy-button slot="end" purpose="subtle">Nederlands</clippy-button>
     </clippy-page-header>
 
-    ${templateToHtml(clippyLayoutDetailTemplate())}
+    ${templateToHtml(clippyOverviewTemplate())}
 
     <mark slot="footer">Footer</mark>
   </clippy-page-layout>
 `;
 
-const createAlignmentCenterTemplate = () => html`
+// Prettier ignore to prevent double-quotes
+// prettier-ignore
+const createSingleColumnTemplate = () => html`
   <clippy-page-layout layout-block-alignment="center">
     <clippy-page-header slot="header" variant="default">
       <span slot="logo">🎉 Logo</span>
@@ -37,7 +41,7 @@ const createAlignmentCenterTemplate = () => html`
       <clippy-button slot="end" purpose="subtle">Nederlands</clippy-button>
     </clippy-page-header>
 
-    ${templateToHtml(clippyLayoutTemplate())}
+    ${templateToHtml(clippySingleColumnTemplate())}
 
     <mark slot="footer">Footer</mark>
   </clippy-page-layout>
@@ -56,7 +60,7 @@ const meta = {
   },
   render: () =>
     React.createElement('div', {
-      dangerouslySetInnerHTML: { __html: templateToHtml(createDetailTemplate()) },
+      dangerouslySetInnerHTML: { __html: templateToHtml(createDefaultTemplate()) },
     }),
   tags: ['autodocs'],
   title: 'Clippy/Layout/Page Layout',
@@ -74,6 +78,6 @@ export const Center: Story = {
   name: 'layout-block-alignment: center',
   render: () =>
     React.createElement('div', {
-      dangerouslySetInnerHTML: { __html: templateToHtml(createAlignmentCenterTemplate()) },
+      dangerouslySetInnerHTML: { __html: templateToHtml(createSingleColumnTemplate()) },
     }),
 };

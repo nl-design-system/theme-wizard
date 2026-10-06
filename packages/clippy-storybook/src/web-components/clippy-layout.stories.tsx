@@ -3,7 +3,7 @@ import readme from '@nl-design-system-community/clippy-components/src/clippy-lay
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
-import { createTemplate } from './clippy-layout.template';
+import { createOverviewTemplate, createDetailTemplate, createSingleColumnTemplate } from './clippy-layout.template';
 
 const meta = {
   id: 'clippy-layout',
@@ -14,7 +14,7 @@ const meta = {
         component: readme,
       },
       source: {
-        transform: () => templateToHtml(createTemplate()),
+        transform: () => templateToHtml(createOverviewTemplate()),
         type: 'code',
       },
     },
@@ -22,7 +22,7 @@ const meta = {
   },
   render: () =>
     React.createElement('div', {
-      dangerouslySetInnerHTML: { __html: templateToHtml(createTemplate()) },
+      dangerouslySetInnerHTML: { __html: templateToHtml(createOverviewTemplate()) },
     }),
   tags: ['autodocs'],
   title: 'Clippy/Layout/Content',
@@ -33,5 +33,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  name: 'Default',
+  name: 'Overview',
+};
+
+export const Detail: Story = {
+  name: 'Detail',
+  render: () =>
+    React.createElement('div', {
+      dangerouslySetInnerHTML: { __html: templateToHtml(createDetailTemplate()) },
+    }),
+};
+
+export const SingleColumn: Story = {
+  name: 'Single column',
+  render: () =>
+    React.createElement('div', {
+      dangerouslySetInnerHTML: { __html: templateToHtml(createSingleColumnTemplate()) },
+    }),
 };

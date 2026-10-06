@@ -8,8 +8,22 @@ import '@nl-design-system-candidate/paragraph-css/paragraph.css';
 
 // Prettier ignore to prevent double-quotes
 // prettier-ignore
-export const createTemplate = () => html`
-  <clippy-layout-default variant="detail">
+export const createOverviewTemplate = () => html`
+  <clippy-layout>
+    <clippy-side-navigation items='${JSON.stringify(full)}' slot="sidebar"></clippy-side-navigation>
+    <mark slot="breadcrumb">Home / Blog / De titel van een artikel</mark>
+    <clippy-main>
+      <clippy-heading level="2" slot="header">De titel van een artikel</clippy-heading>
+      <p class="nl-paragraph" slot="aside">Geschreven door: Piet Pietersen</p>
+      <p class="nl-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
+    </clippy-main>
+  </clippy-layout>
+`;
+
+// Prettier ignore to prevent double-quotes
+// prettier-ignore
+export const createDetailTemplate = () => html`
+  <clippy-layout variant="detail">
     <clippy-side-navigation items='${JSON.stringify(full)}' slot="sidebar"></clippy-side-navigation>
     <mark slot="breadcrumb">Home / Blog / De titel van een artikel</mark>
     <clippy-main variant="detail">
@@ -17,5 +31,18 @@ export const createTemplate = () => html`
       <p class="nl-paragraph" slot="aside">Geschreven door: Piet Pietersen</p>
       <p class="nl-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
     </clippy-main>
-  </clippy-layout-default>
+  </clippy-layout>
+`;
+
+// Prettier ignore to prevent double-quotes
+// prettier-ignore
+export const createSingleColumnTemplate = () => html`
+  <clippy-layout>
+    <mark slot="breadcrumb">Home / Blog / De titel van een artikel</mark>
+    <clippy-main>
+      <clippy-heading level="2" slot="header">De titel van een artikel</clippy-heading>
+      <p class="nl-paragraph" slot="aside">Geschreven door: Piet Pietersen</p>
+      <p class="nl-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
+    </clippy-main>
+  </clippy-layout>
 `;
