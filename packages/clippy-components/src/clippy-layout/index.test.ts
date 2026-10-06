@@ -1,17 +1,17 @@
 import './index';
 import { describe, expect, it, afterEach, beforeEach } from 'vitest';
-import { ClippyLayoutDefault } from './index';
+import { ClippyLayout } from './index';
 
-const tag = 'clippy-layout-default';
+const tag = 'clippy-layout';
 
 describe(`<${tag}>`, () => {
-  let component: ClippyLayoutDefault;
+  let component: ClippyLayout;
 
   beforeEach(() => {
     document.body.innerHTML = `
       <${tag}></${tag}>
     `;
-    component = document.querySelector(tag) as ClippyLayoutDefault;
+    component = document.querySelector(tag) as ClippyLayout;
   });
 
   afterEach(() => {
@@ -47,7 +47,7 @@ describe(`<${tag}>`, () => {
           <p>Main content</p>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDefault;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const mainSlot = component.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
@@ -62,7 +62,7 @@ describe(`<${tag}>`, () => {
           <div slot="breadcrumb">Home / Page</div>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDefault;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
@@ -80,7 +80,7 @@ describe(`<${tag}>`, () => {
           <p>Main paragraph 2</p>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDefault;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
@@ -130,7 +130,7 @@ describe(`<${tag}>`, () => {
           <main>Main content</main>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDefault;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const breadcrumbSlot = component.shadowRoot?.querySelector('slot[name="breadcrumb"]') as HTMLSlotElement;
@@ -162,7 +162,7 @@ describe(`<${tag}>`, () => {
           <div slot="breadcrumb">Home / Page</div>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDefault;
+      component = document.querySelector(tag) as ClippyLayout;
 
       await component.updateComplete;
       // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up
@@ -185,7 +185,7 @@ describe(`<${tag}>`, () => {
           <main>Main content</main>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDefault;
+      component = document.querySelector(tag) as ClippyLayout;
       await component.updateComplete;
 
       const mainWrapperWithContent = component.shadowRoot?.querySelector('.clippy-layout__wrap-main');
@@ -198,7 +198,7 @@ describe(`<${tag}>`, () => {
           <div slot="breadcrumb">Breadcrumb</div>
         </${tag}>
       `;
-      component = document.querySelector(tag) as ClippyLayoutDefault;
+      component = document.querySelector(tag) as ClippyLayout;
 
       await component.updateComplete;
       // firstUpdated() resolves slot presence and writes @state, scheduling a follow-up

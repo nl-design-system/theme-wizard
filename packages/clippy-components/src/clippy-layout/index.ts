@@ -4,16 +4,16 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles from './styles';
 
-const tag = 'clippy-layout-default';
+const tag = 'clippy-layout';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyLayoutDefault;
+    [tag]: ClippyLayout;
   }
 }
 
 /**
- * Clippy Layout Default Component
+ * Clippy Layout Component
  * @slot - Main content
  * @slot sidebar - Sidebar content, for side navigation
  * @slot breadcrumb - Area for the page breadcrumb
@@ -28,7 +28,7 @@ declare global {
  * @cssprop --clippy-layout-sidebar-inline-size - Inline size of the sidebar and the aside
  */
 @safeCustomElement(tag)
-export class ClippyLayoutDefault extends LitElement {
+export class ClippyLayout extends LitElement {
   static override readonly styles = [styles];
 
   @property({ reflect: true, type: String })

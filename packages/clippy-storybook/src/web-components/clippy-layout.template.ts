@@ -1,6 +1,6 @@
 import { full } from '@nl-design-system-community/clippy-components/src/clippy-side-navigation/fixtures.js';
 import { html } from 'lit';
-import '@nl-design-system-community/clippy-components/clippy-layout-default';
+import '@nl-design-system-community/clippy-components/clippy-layout';
 import '@nl-design-system-community/clippy-components/clippy-main';
 import '@nl-design-system-community/clippy-components/clippy-side-navigation';
 import '@nl-design-system-community/clippy-components/clippy-heading';
