@@ -3,7 +3,7 @@ import { isSlotEmpty } from '@src/lib/slot';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles from './styles';
-import { Variant } from './types';
+import { Purpose } from './types';
 
 const tag = 'clippy-main';
 
@@ -26,7 +26,7 @@ export class ClippyMain extends LitElement {
   static override readonly styles = [styles];
 
   @property({ reflect: true, type: String })
-  public variant: Variant = 'default';
+  public purpose: Purpose = 'default';
 
   #hasHeaderContent = false;
   #hasAsideContent = false;

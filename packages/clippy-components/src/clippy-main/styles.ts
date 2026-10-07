@@ -15,9 +15,10 @@ export default css`
   }
 
   /**
-   * If the main is inside a clippy-layout-detail component, place the items in that grid.
+   * If the main is inside a clippy-layout component with the 'detail' purpose enable
+   * the detail purpose here as well. This places the main as a subgrid on the clippy-layout component.
    */
-  :host([variant='detail']) {
+  :host([purpose='detail']) {
     /**
      * The host and the main need to pass the parent grid to the children
      */

@@ -1,33 +1,44 @@
 import { safeCustomElement } from '@src/lib/decorators';
 import { isSlotEmpty } from '@src/lib/slot';
 import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
 import styles from './styles';
+import { Purpose, Size } from './types';
 
-const tag = 'clippy-layout-overview';
+const tag = 'clippy-layout';
 
 declare global {
   interface HTMLElementTagNameMap {
-    [tag]: ClippyLayoutOverview;
+    [tag]: ClippyLayout;
   }
 }
 
 /**
- * Clippy Layout Single Column Component
+ * Clippy Layout Component
  * @slot - Main content
  * @slot sidebar - Sidebar content, for side navigation
  * @slot breadcrumb - Area for the page breadcrumb
  *
  * @cssprop --clippy-layout-content-max-inline-size - Max inline size of the content area, defaults the page-layout inline size
+ * @cssprop --clippy-layout-content-sm-max-inline-size - Max inline size of the content area with size="sm"
+ * @cssprop --clippy-layout-content-md-max-inline-size - Max inline size of the content area with size="md"
  * @cssprop --clippy-layout-content-padding-inline-start - Inline start padding of the content element
  * @cssprop --clippy-layout-content-padding-inline-end - Inline end padding of the content element
  * @cssprop --clippy-layout-content-padding-block-start - block start padding of the content element
  * @cssprop --clippy-layout-content-padding-block-end - block end padding of the content element
  * @cssprop --clippy-layout-column-gap - Column gap of the grid
+ * @cssprop --clippy-layout-row-gap - Row gap of the grid
  * @cssprop --clippy-layout-sidebar-inline-size - Inline size of the sidebar and the aside
  */
 @safeCustomElement(tag)
-export class ClippyLayoutOverview extends LitElement {
+export class ClippyLayout extends LitElement {
   static override readonly styles = [styles];
+
+  @property({ reflect: true, type: String })
+  size: Size = 'md';
+
+  @property({ reflect: true, type: String })
+  purpose: Purpose = 'default';
 
   #hasSidebarContent = false;
   #hasBreadcrumbContent = false;
