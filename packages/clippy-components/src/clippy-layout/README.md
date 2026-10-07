@@ -30,15 +30,24 @@ import '@nl-design-system-community/clippy-components/clippy-layout';
 | `sidebar`    | Sidebar content, typically side navigation                        |
 | `breadcrumb` | Breadcrumb navigation area                                        |
 
+## Attributes & properties
+
+| Attribute / Property | Type   | Values                    | Default   |
+| -------------------- | ------ | ------------------------- | --------- |
+| `purpose`            | string | `default` \| `detail`     | `default` |
+| `size`               | string | `default` \| `md` \| `sm` | `default` |
+
 ## CSS Custom Properties
 
-| Property                                       | Type     | Description                                 | Default                                             |
-| ---------------------------------------------- | -------- | ------------------------------------------- | --------------------------------------------------- |
-| `--clippy-layout-content-max-inline-size`      | `length` | Max inline size of the content area         | `var(--clippy-page-layout-content-max-inline-size)` |
-| `--clippy-layout-content-padding-inline-start` | `length` | Inline start padding of the content element | `var(--basis-space-inline-xl)`                      |
-| `--clippy-layout-content-padding-inline-end`   | `length` | Inline end padding of the content element   | `var(--basis-space-inline-xl)`                      |
-| `--clippy-layout-content-padding-block-start`  | `length` | Block start padding of the content element  | `var(--basis-space-block-3xl)`                      |
-| `--clippy-layout-content-padding-block-end`    | `length` | Block end padding of the content element    | `var(--basis-space-block-3xl)`                      |
-| `--clippy-layout-column-gap`                   | `length` | Column gap of the grid                      | `var(--basis-space-column-4xl)`                     |
-| `--clippy-layout-row-gap`                      | `length` | Row gap of the grid                         | `var(--basis-space-row-xl)`                         |
-| `--clippy-layout-sidebar-inline-size`          | `length` | Inline size of the sidebar and the aside    | `300px`                                             |
+| Property                                       | Type     | Description                                        | Default                                             |
+| ---------------------------------------------- | -------- | -------------------------------------------------- | --------------------------------------------------- |
+| `--clippy-layout-content-max-inline-size`      | `length` | Max inline size of the content area                | `var(--clippy-page-layout-content-max-inline-size)` |
+| `--clippy-layout-content-sm-max-inline-size`   | `length` | Max inline size of the content area with size="sm" | `640px`                                             |
+| `--clippy-layout-content-md-max-inline-size`   | `length` | Max inline size of the content area with size="md" | `960px`                                             |
+| `--clippy-layout-content-padding-inline-start` | `length` | Inline start padding of the content element        | `var(--basis-space-inline-xl)`                      |
+| `--clippy-layout-content-padding-inline-end`   | `length` | Inline end padding of the content element          | `var(--basis-space-inline-xl)`                      |
+| `--clippy-layout-content-padding-block-start`  | `length` | Block start padding of the content element         | `var(--basis-space-block-3xl)`                      |
+| `--clippy-layout-content-padding-block-end`    | `length` | Block end padding of the content element           | `var(--basis-space-block-3xl)`                      |
+| `--clippy-layout-column-gap`                   | `length` | Column gap of the grid                             | `var(--basis-space-column-4xl)`                     |
+| `--clippy-layout-row-gap`                      | `length` | Row gap of the grid                                | `var(--basis-space-row-xl)`                         |
+| `--clippy-layout-sidebar-inline-size`          | `length` | Inline size of the sidebar and the aside           | `300px`                                             |

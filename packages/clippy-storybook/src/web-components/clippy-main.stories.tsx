@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import readme from '@nl-design-system-community/clippy-components/src/clippy-main/README.md?raw';
-import { variants, type Variant } from '@nl-design-system-community/clippy-components/src/clippy-main/types.js';
+import { purposes, type Purpose } from '@nl-design-system-community/clippy-components/src/clippy-main/types.js';
 import '@nl-design-system-community/clippy-components/clippy-main';
 import '@nl-design-system-community/clippy-components/clippy-heading';
 import '@nl-design-system-community/clippy-components/clippy-layout';
@@ -10,22 +10,22 @@ import { templateToHtml } from '../utils/templateToHtml';
 import '@nl-design-system-candidate/paragraph-css/paragraph.css';
 
 interface StoryArgs {
-  variant: Variant;
+  purpose: Purpose;
 }
 
 const defaultArgs: StoryArgs = {
-  variant: 'default',
+  purpose: 'default',
 };
 
 const createTemplate = (args: StoryArgs = defaultArgs) => {
   const defaultTemplate = html`
-    <clippy-main variant=${args.variant}>
+    <clippy-main purpose=${args.purpose}>
       <clippy-heading level="2" slot="header">De titel van een artikel</clippy-heading>
       <p class="nl-paragraph" slot="aside">Geschreven door: Piet Pietersen</p>
       <p class="nl-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
     </clippy-main>
   `;
-  return args.variant === 'detail'
+  return args.purpose === 'detail'
     ? html`<clippy-layout purpose="detail"> ${templateToHtml(defaultTemplate)} </clippy-layout>`
     : defaultTemplate;
 };
@@ -34,9 +34,9 @@ const meta = {
   id: 'clippy-main',
   args: defaultArgs,
   argTypes: {
-    variant: {
+    purpose: {
       control: 'select',
-      options: variants,
+      options: purposes,
     },
   },
   parameters: {
@@ -64,22 +64,22 @@ export default meta;
 type Story = StoryObj<StoryArgs>;
 
 export const Default: Story = {
-  name: 'Variant: default',
+  name: 'Purpose: default',
 };
 
 export const Detail: Story = {
-  name: 'Variant: detail',
+  name: 'Purpose: detail',
   args: {
-    variant: 'detail',
+    purpose: 'detail',
   },
   parameters: {
     docs: {
       description: {
         story:
-          'When used inside a `clippy-layout-detail` component you can set the `variant` to `detail`. This ensures the clippy-main component places its children on the parent grid.',
+          'Set `purpose="detail"` when the main is inside a `clippy-layout[purpose="detail"]` to align with the grid structure in that layout.',
       },
       source: {
-        transform: () => templateToHtml(createTemplate({ variant: 'detail' })),
+        transform: () => templateToHtml(createTemplate({ purpose: 'detail' })),
         type: 'code',
       },
     },

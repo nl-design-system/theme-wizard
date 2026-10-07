@@ -3,6 +3,7 @@ import { isSlotEmpty } from '@src/lib/slot';
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import styles from './styles';
+import { Purpose, Size } from './types';
 
 const tag = 'clippy-layout';
 
@@ -19,6 +20,8 @@ declare global {
  * @slot breadcrumb - Area for the page breadcrumb
  *
  * @cssprop --clippy-layout-content-max-inline-size - Max inline size of the content area, defaults the page-layout inline size
+ * @cssprop --clippy-layout-content-sm-max-inline-size - Max inline size of the content area with size="sm"
+ * @cssprop --clippy-layout-content-md-max-inline-size - Max inline size of the content area with size="md"
  * @cssprop --clippy-layout-content-padding-inline-start - Inline start padding of the content element
  * @cssprop --clippy-layout-content-padding-inline-end - Inline end padding of the content element
  * @cssprop --clippy-layout-content-padding-block-start - block start padding of the content element
@@ -32,10 +35,10 @@ export class ClippyLayout extends LitElement {
   static override readonly styles = [styles];
 
   @property({ reflect: true, type: String })
-  size: 'default' | 'small' = 'default';
+  size: Size = 'default';
 
   @property({ reflect: true, type: String })
-  variant: 'default' | 'detail' = 'default';
+  purpose: Purpose = 'default';
 
   #hasSidebarContent = false;
   #hasBreadcrumbContent = false;

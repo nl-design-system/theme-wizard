@@ -23,10 +23,10 @@ export const createOverviewTemplate = () => html`
 // Prettier ignore to prevent double-quotes
 // prettier-ignore
 export const createDetailTemplate = () => html`
-  <clippy-layout variant="detail">
+  <clippy-layout purpose="detail">
     <clippy-side-navigation items='${JSON.stringify(full)}' slot="sidebar"></clippy-side-navigation>
     <mark slot="breadcrumb">Home / Blog / De titel van een artikel</mark>
-    <clippy-main variant="detail">
+    <clippy-main purpose="detail">
       <clippy-heading level="2" slot="header">De titel van een artikel</clippy-heading>
       <p class="nl-paragraph" slot="aside">Geschreven door: Piet Pietersen</p>
       <p class="nl-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
@@ -37,7 +37,7 @@ export const createDetailTemplate = () => html`
 // Prettier ignore to prevent double-quotes
 // prettier-ignore
 export const createSingleColumnTemplate = () => html`
-  <clippy-layout>
+  <clippy-layout size="sm">
     <mark slot="breadcrumb">Home / Blog / De titel van een artikel</mark>
     <clippy-main>
       <clippy-heading level="2" slot="header">De titel van een artikel</clippy-heading>
