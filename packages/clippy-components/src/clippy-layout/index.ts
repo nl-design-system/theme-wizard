@@ -35,7 +35,7 @@ export class ClippyLayout extends LitElement {
   static override readonly styles = [styles];
 
   @property({ reflect: true, type: String })
-  size: Size = 'default';
+  size: Size = 'md';
 
   @property({ reflect: true, type: String })
   purpose: Purpose = 'default';

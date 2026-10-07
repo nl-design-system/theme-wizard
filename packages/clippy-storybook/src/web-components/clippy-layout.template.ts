@@ -37,7 +37,7 @@ export const createDetailTemplate = () => html`
 // Prettier ignore to prevent double-quotes
 // prettier-ignore
 export const createSingleColumnTemplate = () => html`
-  <clippy-layout size="sm">
+  <clippy-layout size="xs">
     <mark slot="breadcrumb">Home / Blog / De titel van een artikel</mark>
     <clippy-main>
       <clippy-heading level="2" slot="header">De titel van een artikel</clippy-heading>

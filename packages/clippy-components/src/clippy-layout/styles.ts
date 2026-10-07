@@ -10,8 +10,8 @@ export default css`
       --clippy-layout-content-max-inline-size,
       var(--clippy-page-layout-content-max-inline-size, var(--basis-page-max-inline-size))
     );
-    --_clippy-layout-content-sm-max-inline-size: var(--clippy-layout-content-sm-max-inline-size, 640px);
-    --_clippy-layout-content-md-max-inline-size: var(--clippy-layout-content-md-max-inline-size, 960px);
+    --_clippy-layout-content-sm-max-inline-size: var(--clippy-layout-content-sm-max-inline-size, 960px);
+    --_clippy-layout-content-xs-max-inline-size: var(--clippy-layout-content-xs-max-inline-size, 640px);
     --_clippy-layout-content-padding-inline-start: var(
       --clippy-layout-content-padding-inline-start,
       var(--clippy-page-layout-content-inline-padding, var(--basis-space-inline-xl))
@@ -31,15 +31,16 @@ export default css`
     --_clippy-layout-column-gap: var(--clippy-layout-column-gap, var(--basis-space-column-4xl));
     --_clippy-layout-row-gap: var(--clippy-layout-row-gap, var(--basis-space-row-xl));
     --_clippy-layout-sidebar-inline-size: var(--clippy-layout-sidebar-inline-size, 300px);
+
     container-name: clippy-layout;
     container-type: inline-size;
   }
 
   .clippy-layout__content {
     box-sizing: border-box;
-    margin-inline: auto;
     container-name: clippy-layout-content;
     container-type: inline-size;
+    margin-inline: auto;
     max-inline-size: var(--_clippy-layout-content-max-inline-size);
     padding-block-end: var(--_clippy-layout-content-padding-block-end);
     padding-block-start: var(--_clippy-layout-content-padding-block-start);
@@ -59,12 +60,12 @@ export default css`
     grid-template-rows: auto auto auto auto 1fr;
   }
 
-  :host([size='sm']) {
-    --_clippy-layout-content-max-inline-size: var(--_clippy-layout-content-sm-max-inline-size);
+  :host([size='xs']) {
+    --_clippy-layout-content-max-inline-size: var(--_clippy-layout-content-xs-max-inline-size);
   }
 
-  :host([size='md']) {
-    --_clippy-layout-content-max-inline-size: var(--_clippy-layout-content-md-max-inline-size);
+  :host([size='sm']) {
+    --_clippy-layout-content-max-inline-size: var(--_clippy-layout-content-sm-max-inline-size);
   }
 
   .clippy-layout__grid:has(.clippy-layout__sidebar:not([hidden])) {
