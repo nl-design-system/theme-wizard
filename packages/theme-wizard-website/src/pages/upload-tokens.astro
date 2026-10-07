@@ -4,24 +4,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Upload je thema - Theme Wizard">
   <theme-wizard-app>
-    <wizard-layout>
-      <wizard-page-header slot="page-header"></wizard-page-header>
-      <main slot="main" class="wizard-main">
-        <wizard-container size="xl">
+    <clippy-page-layout layout-block-alignment="center">
+      <wizard-page-header slot="header"></wizard-page-header>
+      <clippy-layout size="xs">
+        <clippy-main id="content">
+          <header slot="header">
+            <clippy-heading level="1">Upload je thema</clippy-heading>
+          </header>
           <clippy-story-preview size="lg">
-            <clippy-stack size="3xl">
-              <clippy-heading level="1">Upload je thema</clippy-heading>
-              <wizard-theme-preset-form></wizard-theme-preset-form>
-            </clippy-stack>
+            <wizard-theme-preset-form></wizard-theme-preset-form>
           </clippy-story-preview>
-        </wizard-container>
-      </main>
-     </wizard-layout>
+        </clippy-main>
+      </clippy-layout>
+
+      <wizard-page-footer slot="footer"></wizard-page-footer>
+    </clippy-page-layout>
   </theme-wizard-app>
 </BaseLayout>
 
 <script>
-import { navigate } from "astro:transitions/client"
+  import { navigate } from "astro:transitions/client"
+  import '@nl-design-system-community/clippy-components/clippy-page-layout';
+  import '@nl-design-system-community/clippy-components/clippy-layout';
+  import '@nl-design-system-community/clippy-components/clippy-main';
+  import '@nl-design-system-community/clippy-components/clippy-heading';
 
   document.querySelector('theme-wizard-app')?.addEventListener('theme-upload', () => {
     navigate('/basis-tokens')
