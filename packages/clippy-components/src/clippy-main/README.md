@@ -12,21 +12,31 @@ import '@nl-design-system-community/clippy-components/clippy-main';
 
 ```html
 <clippy-main>
-  <div slot="header">Page header content</div>
+  <h1 slot="header">Page header content</h1>
   <div slot="aside">Complementary content</div>
   Body content
 </clippy-main>
 ```
 
-## Variants
+## Purpose
 
-Set `variant="detail"` when the main is inside a `clippy-layout-detail` component to align with that layout's grid structure.
+Set `purpose="detail"` when the main is inside a `clippy-layout[purpose="detail"]` align with that layout's grid structure.
+
+```html
+<clippy-layout purpose="detail">
+  <clippy-main purpose="detail">
+    <h1 slot="header">Page header content</h1>
+    <div slot="aside">Complementary content</div>
+    Body content
+  </clippy-main>
+</clippy-layout>
+```
 
 ## Attributes & properties
 
 | Attribute / Property | Type   | Values                | Default   |
 | -------------------- | ------ | --------------------- | --------- |
-| `variant`            | string | `default` \| `detail` | `default` |
+| `purpose`            | string | `default` \| `detail` | `default` |
 
 ## Slots
 

@@ -231,21 +231,21 @@ describe(`<${tag}>`, () => {
     });
   });
 
-  describe('Variant property', () => {
-    it('defaults to "default" variant', () => {
-      expect(component.variant).toBe('default');
+  describe('Purpose property', () => {
+    it('defaults to "default" purpose', () => {
+      expect(component.purpose).toBe('default');
     });
 
-    it('reflects the variant attribute', async () => {
-      component.variant = 'detail';
+    it('reflects the purpose attribute', async () => {
+      component.purpose = 'detail';
       await component.updateComplete;
-      expect(component.getAttribute('variant')).toBe('detail');
+      expect(component.getAttribute('purpose')).toBe('detail');
     });
 
-    it('updates variant from attribute', async () => {
-      component.setAttribute('variant', 'detail');
+    it('updates purpose from attribute', async () => {
+      component.setAttribute('purpose', 'detail');
       await component.updateComplete;
-      expect(component.variant).toBe('detail');
+      expect(component.purpose).toBe('detail');
     });
   });
 });

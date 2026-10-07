@@ -3,7 +3,7 @@ import readme from '@nl-design-system-community/clippy-components/src/clippy-mai
 import { variants, type Variant } from '@nl-design-system-community/clippy-components/src/clippy-main/types.js';
 import '@nl-design-system-community/clippy-components/clippy-main';
 import '@nl-design-system-community/clippy-components/clippy-heading';
-import '@nl-design-system-community/clippy-components/clippy-layout-detail';
+import '@nl-design-system-community/clippy-components/clippy-layout';
 import { html } from 'lit';
 import React from 'react';
 import { templateToHtml } from '../utils/templateToHtml';
@@ -26,7 +26,7 @@ const createTemplate = (args: StoryArgs = defaultArgs) => {
     </clippy-main>
   `;
   return args.variant === 'detail'
-    ? html`<clippy-layout-detail> ${templateToHtml(defaultTemplate)} </clippy-layout-detail>`
+    ? html`<clippy-layout purpose="detail"> ${templateToHtml(defaultTemplate)} </clippy-layout>`
     : defaultTemplate;
 };
 
